@@ -22,7 +22,7 @@ public class InputView {
 
 	public List<String> readPlayerNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-		String names = scanner.nextLine().replace(" ", "");
+		String names = readString().replace(" ", "");
 
 		validatePlayerNamesFormat(names);
 		return List.of(names.split(PLAYER_NAME_DELIMITER));
@@ -34,12 +34,36 @@ public class InputView {
 		}
 	}
 
+	public int readPlayerBettingMoney(String playerName) {
+		System.out.println(String.format("%n%s의 배팅 금액은?", playerName));
+		return readInt();
+	}
+
 	public Command readHitOrStand(final Player player) {
 		System.out.println(
 			String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", player.getName(), Command.YES.getText(),
 				Command.NO.getText()));
-		String command = scanner.nextLine();
+		String command = readString();
 
 		return Command.fromText(command);
+	}
+
+	private String readString() {
+		return scanner.nextLine();
+	}
+
+	private int readInt() {
+		String input = scanner.nextLine();
+		validateIntFormat(input);
+
+		return Integer.parseInt(input);
+	}
+
+	private void validateIntFormat(String input) {
+		try {
+			Integer.parseInt(input);
+		} catch (NumberFormatException exception) {
+			throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+		}
 	}
 }

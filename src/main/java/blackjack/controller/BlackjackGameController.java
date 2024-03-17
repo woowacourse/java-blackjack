@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffledDeckGenerator;
 import blackjack.domain.gamer.Dealer;
@@ -28,12 +29,24 @@ public class BlackjackGameController {
 
 	public void start() {
 		Players players = Players.fromNames(inputView.readPlayerNames());
+		Betting betting = betPlayers(players);
+
 		Dealer dealer = new Dealer();
 		Deck deck = createDeck();
 
 		dealInitCards(deck, dealer, players);
 		receiveAdditionalCard(deck, dealer, players);
 		printResult(dealer, players);
+	}
+
+	private Betting betPlayers(Players players) {
+		Betting betting = new Betting();
+		for (Player player : players.getPlayers()) {
+			int money = inputView.readPlayerBettingMoney(player.getName());
+			betting.add(player, money);
+		}
+
+		return betting;
 	}
 
 	private Deck createDeck() {
