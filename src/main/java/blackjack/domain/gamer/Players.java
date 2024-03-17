@@ -1,6 +1,6 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.supplies.Card;
+import blackjack.domain.card.Card;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,8 +19,9 @@ public class Players {
         }
     }
 
+
     public List<String> getNames() {
-        return players.stream().map(Player::getName).toList();
+        return players.stream().map(Player::name).toList();
     }
 
     public List<Player> getPlayers() {
@@ -29,5 +30,11 @@ public class Players {
 
     public int getPlayersCount() {
         return players.size();
+    }
+
+    public Long allProfit() {
+        return players.stream()
+                .mapToLong(Player::profit)
+                .sum();
     }
 }
