@@ -34,11 +34,6 @@ public abstract class Started implements State {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }

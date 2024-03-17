@@ -13,8 +13,6 @@ public interface State {
 
     boolean isFinished();
 
-    boolean isRunning();
-
     Hands getHands();
 
     int getScore();

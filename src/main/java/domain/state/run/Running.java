@@ -11,12 +11,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public final boolean isRunning() {
-        return true;
-    }
-
-    @Override
     public Result compareWith(final State state) {
-        return null;
+        throw new UnsupportedOperationException("끝나지 않은 상태에서는 결과를 비교할 수 없습니다");
     }
 }
