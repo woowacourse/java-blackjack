@@ -1,11 +1,9 @@
 package blackjack;
 
-import blackjack.domain.betting.Bets;
-import blackjack.domain.betting.Money;
-import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.PlayerResult;
+import blackjack.domain.money.Money;
+import blackjack.domain.participant.BettingPlayer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -20,31 +18,27 @@ public class BlackJackGameController {
 
     public void run() {
         BlackJackGame game = createBlackjackGame();
-        Bets bets = betting(game);
         drawStartCards(game);
         drawPlayersAdditionalCard(game);
         drawDealersAdditionalCard(game);
         printResult(game);
-        printPrize(bets, game);
+        printPrize(game);
     }
 
     private BlackJackGame createBlackjackGame() {
         List<String> playerNames = inputView.inputPlayerNames();
-        BlackJackGame game = new BlackJackGame(playerNames);
-        return game;
+        List<Integer> bets = betAllPlayer(playerNames);
+        return new BlackJackGame(playerNames, bets);
     }
 
-    private Bets betting(BlackJackGame game) {
-        List<Player> players = game.getPlayers().getPlayers();
-        List<OwnedMoney> bets = players.stream()
+    private List<Integer> betAllPlayer(List<String> names) {
+        return names.stream()
                 .map(this::betEachPlayer)
                 .toList();
-        return new Bets(bets);
     }
 
-    private OwnedMoney betEachPlayer(Player player) {
-        int bettingAmount = inputView.inputBettingAmount(player.getName());
-        return new OwnedMoney(player, bettingAmount);
+    private int betEachPlayer(String name) {
+        return inputView.inputBettingAmount(name);
     }
 
     private void drawStartCards(BlackJackGame game) {
@@ -60,7 +54,7 @@ public class BlackJackGameController {
     }
 
     private void drawEachPlayerAdditionalCard(Player player, Deck deck) {
-        if (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
+        while (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
             player.drawAdditionalCard(deck);
             outputView.printPlayerCards(player);
         }
@@ -80,24 +74,21 @@ public class BlackJackGameController {
         outputView.printEndingStatus(dealer, players);
     }
 
-    private void printPrize(Bets bets, BlackJackGame game) {
+    private void printPrize(BlackJackGame game) {
         outputView.printPrizeTitle();
-        List<PlayerResult> allGameResults = game.getAllGameResults();
-        printDealerPrize(bets, allGameResults);
-        printPlayersPrize(bets, allGameResults);
+        printDealerPrize(game);
+        printPlayersPrize(game.getDealer(), game.getPlayers());
     }
 
-    private void printDealerPrize(Bets bets, List<PlayerResult> allGameResults) {
-        Money dealerPrize = bets.calculateDealerPrize(allGameResults);
+    private void printDealerPrize(BlackJackGame game) {
+        Money dealerPrize = game.calculateDealerPrize();
         outputView.printDealerPrize(dealerPrize);
     }
 
-    private void printPlayersPrize(Bets bets, List<PlayerResult> allGameResults) {
-        List<OwnedMoney> prizes = allGameResults.stream()
-                .map(bets::getPrize)
-                .toList();
-        for (OwnedMoney prize : prizes) {
-            outputView.printPlayerPrize(prize.getOwner().getName(), prize.getMoney());
+    private void printPlayersPrize(Dealer dealer, Players players) {
+        for (BettingPlayer bettingPlayer : players.getBettingPlayers()) {
+            Money prize = bettingPlayer.calculatePrize(dealer);
+            outputView.printPlayerPrize(bettingPlayer.getName(), prize);
         }
     }
 }

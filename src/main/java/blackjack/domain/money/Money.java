@@ -1,4 +1,4 @@
-package blackjack.domain.betting;
+package blackjack.domain.money;
 
 import java.util.Objects;
 
@@ -18,6 +18,10 @@ public class Money {
 
     public Money multiply(double multipleAmount) {
         return new Money((int) (amount * multipleAmount));
+    }
+
+    public Money negate() {
+        return multiply(-1);
     }
 
     public int getAmount() {

@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.betting.OwnedMoney;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
@@ -56,7 +56,7 @@ public enum GameResult {
         return PLAYER_WIN;
     }
 
-    public OwnedMoney calculatePrize(OwnedMoney bet) {
+    public Money calculatePrize(Money bet) {
         return bet.multiply(betPrizeRatio);
     }
 }
