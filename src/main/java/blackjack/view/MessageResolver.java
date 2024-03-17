@@ -56,8 +56,8 @@ public class MessageResolver {
     }
 
     private String resolveCardMessage(Card card) {
-        String rankSymbol = CardRankMapper.toSymbol(card.cardRank());
-        String suitSymbol = CardSuitMapper.toSymbol(card.cardSuit());
+        String rankSymbol = CardRankMapper.toSymbol(card.getCardRank());
+        String suitSymbol = CardSuitMapper.toSymbol(card.getCardSuit());
         return String.format(CARD_FORMAT, rankSymbol, suitSymbol);
     }
 

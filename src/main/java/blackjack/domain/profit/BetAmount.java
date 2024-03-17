@@ -1,14 +1,11 @@
 package blackjack.domain.profit;
 
-public class BetAmount {
+public record BetAmount(double value) {
 
     private static final int UNIT = 10;
 
-    private final double value;
-
-    public BetAmount(double value) {
+    public BetAmount {
         validate(value);
-        this.value = value;
     }
 
     private void validate(double value) {
@@ -33,9 +30,5 @@ public class BetAmount {
         if (value % UNIT != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 10 단위여야 합니다.");
         }
-    }
-
-    public double getValue() {
-        return value;
     }
 }

@@ -11,7 +11,7 @@ public class Profit {
     }
 
     public Profit(BetAmount betAmount) {
-        this(betAmount.getValue());
+        this(betAmount.value());
     }
 
     public Profit multiply(double value) {
