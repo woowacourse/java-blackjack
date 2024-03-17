@@ -40,14 +40,6 @@ public class Players {
         }
     }
 
-    public int count() {
-        return players.size();
-    }
-
-    public Player findPlayerByIndex(final int playerIndex) {
-        return players.get(playerIndex);
-    }
-
     public void receiveCardFrom(final Dealer dealer) {
         for (final Player player : players) {
             final Card card = dealer.pickCard();

@@ -15,6 +15,7 @@ import java.util.Map;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.fixture.CardFixture.카드;
 import static blackjack.fixture.DealerFixture.딜러;
+import static blackjack.fixture.PlayerFixture.플레이어;
 import static blackjack.fixture.PlayerFixture.플레이어들;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -28,8 +29,8 @@ class BlackjackGameTest {
     @BeforeEach
     void setUp() {
         dealer = 딜러();
-        players = 플레이어들("pobi");
-        player = players.findPlayerByIndex(0);
+        player = 플레이어("pobi");
+        players = 플레이어들(player);
         blackjackGame = new BlackjackGame(dealer, players);
     }
 
