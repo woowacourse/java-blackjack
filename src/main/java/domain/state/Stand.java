@@ -14,6 +14,11 @@ public class Stand extends Finished {
     }
 
     @Override
+    public double profitRate() {
+        return 1;
+    }
+
+    @Override
     public State stand() {
         return this;
     }

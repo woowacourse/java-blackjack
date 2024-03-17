@@ -11,5 +11,9 @@ public interface State {
 
     int score();
 
+    double profitRate();
+
+    boolean isFinished();
+
     List<Card> hand();
 }

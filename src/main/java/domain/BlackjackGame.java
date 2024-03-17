@@ -1,7 +1,9 @@
 package domain;
 
 import dto.GameResult;
+import dto.PlayerResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackGame {
@@ -36,8 +38,17 @@ public class BlackjackGame {
     }
 
     public GameResult finishGame() {
-        final Rule rule = new Rule();
-        return rule.calculateProfits(players, dealer);
+        final List<PlayerResult> playerResults = new ArrayList<>();
+        int totalProfit = 0;
+        for (final Player player : players.getPlayers()) {
+            final int profit = player.profit(dealer);
+            totalProfit += profit;
+            System.out.println(player.name() + ": " + profit);
+            final PlayerResult playerResult = new PlayerResult(player.name(), profit);
+            playerResults.add(playerResult);
+        }
+        final PlayerResult dealerResult = new PlayerResult(dealer.name(), -totalProfit);
+        return new GameResult(playerResults, dealerResult);
     }
 
     public List<Player> getPlayers() {

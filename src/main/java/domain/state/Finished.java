@@ -29,6 +29,16 @@ public class Finished implements State {
     }
 
     @Override
+    public double profitRate() {
+        return 0;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
     public List<Card> hand() {
         return hand.cards();
     }

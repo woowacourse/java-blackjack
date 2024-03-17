@@ -14,6 +14,11 @@ public class Blackjack extends Finished {
     }
 
     @Override
+    public double profitRate() {
+        return 1.5;
+    }
+
+    @Override
     public State stand() {
         return this;
     }

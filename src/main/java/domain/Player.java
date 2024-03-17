@@ -35,4 +35,23 @@ public class Player extends Participant {
     public int betAmount() {
         return betAmount.toInt();
     }
+
+    public int profit(final Dealer dealer) {
+        if (isBlackjack() && dealer.isBlackjack()) {
+            return 0;
+        }
+        if (state.isFinished()) {
+            return (int) (state.profitRate() * betAmount());
+        }
+        if (dealer.isBust()) {
+            return betAmount();
+        }
+        if (dealer.score() > score()) {
+            return -betAmount();
+        }
+        if (dealer.score() < score()) {
+            return betAmount();
+        }
+        return 0;
+    }
 }
