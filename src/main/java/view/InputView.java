@@ -33,18 +33,9 @@ public class InputView {
             .toList();
     }
 
-    public static int askBet(Player player) {
+    public static String askBet(Player player) {
         System.out.printf(ASK_BET_MONEY, player.getName());
-        String amount = Console.readLine().strip();
-        return convertNumber(amount);
-    }
-
-    private static int convertNumber(String amount) {
-        try {
-            return Integer.parseInt(amount);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("정수만 입력 가능합니다.");
-        }
+        return Console.readLine().strip();
     }
 
     public static String askHitChoice(Player player) {

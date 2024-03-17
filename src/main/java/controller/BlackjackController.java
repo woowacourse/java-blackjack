@@ -54,7 +54,7 @@ public class BlackjackController {
 
     private Bet prepareBet(Player player) {
         return retryOnException(() -> {
-            int amount = InputView.askBet(player);
+            String amount = InputView.askBet(player);
             return new Bet(amount);
         });
     }

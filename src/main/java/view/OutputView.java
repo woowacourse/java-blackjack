@@ -73,7 +73,7 @@ public class OutputView {
     }
 
     private static void printProfit(ParticipantProfit dealerProfit) {
-        System.out.printf(PROFIT_RESULT_FORMAT, dealerProfit.getName(), dealerProfit.getProfit());
+        System.out.printf(PROFIT_RESULT_FORMAT, dealerProfit.getName(), dealerProfit.getProfit().intValue());
     }
 
     public static void printExceptionMessage(String message) {

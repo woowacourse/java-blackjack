@@ -1,20 +1,21 @@
 package model.game;
 
+import java.math.BigDecimal;
 import model.betting.Bet;
 
 public enum GameResult {
-    BLACKJACK_WIN(1.5),
-    WIN(1.0),
-    PUSH(1.0),
-    LOOSE(-1.0);
+    BLACKJACK_WIN(new BigDecimal("1.5")),
+    WIN(new BigDecimal("1.0")),
+    PUSH(new BigDecimal("1.0")),
+    LOOSE(new BigDecimal("-1.0"));
 
-    private final double profitRate;
+    private final BigDecimal profitRate;
 
-    GameResult(double profitRate) {
+    GameResult(BigDecimal profitRate) {
         this.profitRate = profitRate;
     }
 
-    public int calculateProfit(Bet bet) {
-        return (int) (bet.getAmount() * profitRate);
+    public BigDecimal calculateProfit(Bet bet) {
+        return bet.getAmount().multiply(profitRate);
     }
 }

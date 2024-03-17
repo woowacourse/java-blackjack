@@ -7,6 +7,7 @@ import static model.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,17 +100,17 @@ class BlackjackGameTest {
         blackjackGame.dealInitialCards(players);
 
         ParticipantProfits participantProfits = blackjackGame.calculateProfit(players, bets);
-        int dealerScore = participantProfits.getPlayerProfits()
+        BigDecimal dealerProfit = participantProfits.getPlayerProfits()
             .stream()
-            .mapToInt(ParticipantProfit::getProfit)
-            .sum() * -1;
+            .map(ParticipantProfit::getProfit)
+            .reduce(BigDecimal.ZERO, BigDecimal::subtract);
 
-        assertThat(dealerScore).isEqualTo(participantProfits.getDealerProfit().getProfit());
+        assertThat(dealerProfit).isEqualTo(participantProfits.getDealerProfit().getProfit());
     }
 
     private Bets prepareBets() {
         Map<String, Bet> bets = new HashMap<>();
-        bets.put("조조", new Bet(10000));
+        bets.put("조조", new Bet("10000"));
         return new Bets(bets);
     }
 }

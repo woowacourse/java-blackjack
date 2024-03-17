@@ -1,11 +1,13 @@
 package model.result;
 
+import java.math.BigDecimal;
+
 public class ParticipantProfit {
 
     private final String name;
-    private final int profit;
+    private final BigDecimal profit;
 
-    public ParticipantProfit(String name, int profit) {
+    public ParticipantProfit(String name, BigDecimal profit) {
         this.name = name;
         this.profit = profit;
     }
@@ -14,7 +16,7 @@ public class ParticipantProfit {
         return name;
     }
 
-    public int getProfit() {
+    public BigDecimal getProfit() {
         return profit;
     }
 }

@@ -35,8 +35,8 @@ class ParticipantProfitsTest {
         ParticipantProfit dealerProfit = participantProfits.getDealerProfit();
 
         assertAll(
-            () -> assertThat(jojoProfit.getProfit()).isEqualTo(15000),
-            () -> assertThat(dealerProfit.getProfit()).isEqualTo(-15000)
+            () -> assertThat(jojoProfit.getProfit().intValue()).isEqualTo(15000),
+            () -> assertThat(dealerProfit.getProfit().intValue()).isEqualTo(-15000)
         );
     }
 
@@ -49,7 +49,7 @@ class ParticipantProfitsTest {
 
     private Bets prepareBets() {
         Map<String, Bet> bets = new HashMap<>();
-        bets.put("조조", new Bet(10000));
+        bets.put("조조", new Bet("10000"));
         return new Bets(bets);
     }
 }

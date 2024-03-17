@@ -1,5 +1,6 @@
 package model.result;
 
+import java.math.BigDecimal;
 import java.util.List;
 import model.betting.Bet;
 import model.betting.Bets;
@@ -36,15 +37,15 @@ public class ParticipantProfits {
     private static ParticipantProfit calculateBetProfit(Player player, Dealer dealer, Bets bets) {
         Bet bet = bets.findByPlayer(player);
         GameResult resultStatus = dealer.judge(player);
-        int profit = resultStatus.calculateProfit(bet);
+        BigDecimal profit = resultStatus.calculateProfit(bet);
         return new ParticipantProfit(player.getName(), profit);
     }
 
     private static ParticipantProfit calculateDealerProfit(List<ParticipantProfit> playerProfits,
         Dealer dealer) {
-        int profit = playerProfits.stream()
-            .mapToInt(ParticipantProfit::getProfit)
-            .sum() * -1;
+        BigDecimal profit = playerProfits.stream()
+            .map(ParticipantProfit::getProfit)
+            .reduce(BigDecimal.ZERO, BigDecimal::subtract);
         return new ParticipantProfit(dealer.getName(), profit);
     }
 
