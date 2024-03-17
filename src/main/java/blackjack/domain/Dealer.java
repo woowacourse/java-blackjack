@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class Dealer extends Participant {
 
@@ -26,16 +25,11 @@ public class Dealer extends Participant {
     }
 
     public Result judgePlayersResult(Players players) {
-        Map<Player, Integer> playersScores = players.calculate();
         Map<Player, Integer> playersEarnings = new LinkedHashMap<>();
 
         int dealerScore = calculate();
-        // TODO: VO 생성? 리팩토링
-        for (Entry<Player, Integer> playerScore : playersScores.entrySet()) {
-            Player player = playerScore.getKey();
-            int playerBetting = player.getBetting();
-            ResultStatus status = getPlayerResult(dealerScore, playerScore.getValue());
-            playersEarnings.put(player, (int) (playerBetting * status.getMultiplier()));
+        for (Player player : players.getPlayers()) {
+            playersEarnings.put(player, getPlayerResult(dealerScore, player));
         }
         return new Result(playersEarnings);
     }
@@ -45,18 +39,26 @@ public class Dealer extends Participant {
         return calculate() <= DEALER_HIT_MAGINOT_VALUE;
     }
 
-    private ResultStatus getPlayerResult(int dealerScore, int playerScore) {
+    private int getPlayerResult(int dealerScore, Player player) {
+        int playerScore = player.calculate();
+        int betting = player.getBetting();
         if (isBustScore(playerScore)) {
-            return ResultStatus.LOSE;
+            return getEarning(betting, ResultStatus.LOSE);
         }
-        // TODO: 블랙잭인 경우 처리 추리
+        if (playerScore == dealerScore) {
+            return getEarning(betting, ResultStatus.DRAW);
+        }
+        if (player.isBlackjack()) {
+            return getEarning(betting, ResultStatus.BLACKJACK);
+        }
         if (isBustScore(dealerScore) || playerScore > dealerScore) {
-            return ResultStatus.WIN;
+            return getEarning(betting, ResultStatus.WIN);
         }
-        if (playerScore < dealerScore) {
-            return ResultStatus.LOSE;
-        }
-        return ResultStatus.DRAW;
+        return getEarning(betting, ResultStatus.LOSE);
+    }
+
+    private int getEarning(int betting, ResultStatus status) {
+        return (int) (betting * status.getMultiplier());
     }
 
     private boolean isBustScore(int score) {

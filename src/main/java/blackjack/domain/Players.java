@@ -1,10 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -27,12 +24,6 @@ public class Players {
             players.add(player);
         }
         return new Players(players);
-    }
-
-    public Map<Player, Integer> calculate() {
-        return players.stream()
-                .collect(Collectors.toMap(player -> player, player -> player.getHand().calculate(),
-                        (player1, player2) -> player2, LinkedHashMap::new));
     }
 
     public List<Player> getPlayers() {

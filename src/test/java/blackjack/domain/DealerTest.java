@@ -24,13 +24,12 @@ class DealerTest {
         assertThat(dealer.draw()).isEqualTo(new Card(CardSuit.DIAMOND, CardNumber.THREE));
     }
 
-    @DisplayName("플레이어의 점수가 딜러보다 높으면 이긴다")
+    @DisplayName("플레이어의 점수가 딜러보다 높으면 배팅 금액 만큼 수익을 얻는다")
     @Test
     void testJudgePlayersResult1() {
         Dealer dealer = new Dealer(new Deck(List.of()));
         Player player = new Player("mark", new Betting(1000));
         Players players = new Players(List.of(player));
-
         dealer.putCard(CardFixture.diamond3());
         player.putCard(CardFixture.heartJack());
 
@@ -39,12 +38,25 @@ class DealerTest {
         assertThat(result.getResults().get(player)).isEqualTo(1000);
     }
 
-    @DisplayName("플레이어가 버스트 되면 항상 진다")
+    @DisplayName("플레이어와 딜러의 점수가 같으면 수익이 없다")
     @Test
     void testJudgePlayersResult2() {
         Dealer dealer = new Dealer(new Deck(List.of()));
-        Player player = new Player("pk", new Betting(1000));
+        Player player = new Player("mark", new Betting(1000));
+        Players players = new Players(List.of(player));
+        dealer.putCard(CardFixture.diamond3());
+        player.putCard(CardFixture.diamond3());
 
+        Result result = dealer.judgePlayersResult(players);
+
+        assertThat(result.getResults().get(player)).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가 버스트 되면 항상 배팅 금액을 잃는다")
+    @Test
+    void testJudgePlayersResult3() {
+        Dealer dealer = new Dealer(new Deck(List.of()));
+        Player player = new Player("pk", new Betting(1000));
         player.putCard(CardFixture.heartJack());
         player.putCard(CardFixture.heartJack());
         player.putCard(CardFixture.heartJack());
@@ -54,17 +66,62 @@ class DealerTest {
         assertThat(result.getResults().get(player)).isEqualTo(-1000);
     }
 
-    @DisplayName("플레이어의 점수가 딜러보다 낮으면 배팅 금액을 잃는다")
+    @DisplayName("플레이어의 점수가 딜러 보다 낮으면 배팅 금액을 잃는다")
     @Test
-    void testJudgePlayersResult3() {
+    void testJudgePlayersResult4() {
         Dealer dealer = new Dealer(new Deck(List.of()));
         Player player = new Player("pk", new Betting(1000));
-
         dealer.putCard(CardFixture.heartJack());
         player.putCard(CardFixture.diamond3());
 
         Result result = dealer.judgePlayersResult(new Players(List.of(player)));
 
         assertThat(result.getResults().get(player)).isEqualTo(-1000);
+    }
+
+    @DisplayName("플레이어의 점수가 블랙잭이고 딜러가 블랙잭이 아니라면 배팅 금액의 1.5배의 수익을 얻는다")
+    @Test
+    void testJudgePlayersResult5() {
+        Dealer dealer = new Dealer(new Deck(List.of()));
+        Player player = new Player("pk", new Betting(1000));
+        dealer.putCard(CardFixture.heartJack());
+        dealer.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.cloverAce());
+
+        Result result = dealer.judgePlayersResult(new Players(List.of(player)));
+
+        assertThat(result.getResults().get(player)).isEqualTo(1500);
+    }
+
+    @DisplayName("플레이어와 딜러 모두 블랙잭이면 수익이 없다")
+    @Test
+    void testJudgePlayersResult6() {
+        Dealer dealer = new Dealer(new Deck(List.of()));
+        Player player = new Player("pk", new Betting(1000));
+        dealer.putCard(CardFixture.heartJack());
+        dealer.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.heartJack());
+
+        Result result = dealer.judgePlayersResult(new Players(List.of(player)));
+
+        assertThat(result.getResults().get(player)).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가 버스트되지 않고 딜러가 버스트된다면 배팅 금액 만큼 수익이 얻는다")
+    @Test
+    void testJudgePlayersResult7() {
+        Dealer dealer = new Dealer(new Deck(List.of()));
+        Player player = new Player("pk", new Betting(1000));
+        dealer.putCard(CardFixture.heartJack());
+        dealer.putCard(CardFixture.heartJack());
+        dealer.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.cloverAce());
+        player.putCard(CardFixture.diamond3());
+
+        Result result = dealer.judgePlayersResult(new Players(List.of(player)));
+
+        assertThat(result.getResults().get(player)).isEqualTo(1000);
     }
 }
