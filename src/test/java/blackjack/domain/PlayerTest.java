@@ -11,6 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.score.Score;
+import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -25,19 +28,19 @@ class PlayerTest {
     @ValueSource(strings = {"", " ", "      ", "\n"})
     @DisplayName("공백 이름으로는 플레이어를 생성하면 예외가 발생한다.")
     void throwsExceptionWhenNameIsBlankTest(String blankName) {
-        assertThatThrownBy(() -> Player.fromName(blankName))
+        assertThatThrownBy(() -> new Player(blankName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름이 비어있습니다.");
     }
 
     @Test
     @DisplayName("덱으로 부터 카드 한장을 받아올 수 있다.")
-    void drawCardTest() {
+    void hitTest() {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
-        player.draw(deck);
+        Player player = new Player("pedro");
+        player.hit(deck);
 
         List<Card> playerCards = player.getCards();
         assertThat(playerCards).hasSize(1);
@@ -49,15 +52,12 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
 
-        Score score = player.getScore();
-
-        Score expected = new Score(9);
-        assertThat(score).isEqualTo(expected);
+        assertThat(player.calculateScore().getScore()).isEqualTo(9);
     }
 
     @ParameterizedTest
@@ -66,20 +66,49 @@ class PlayerTest {
     void checkBustTest(List<Card> cards, boolean expected) {
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
 
-        boolean isBusted = player.isBusted();
+        Score score = player.calculateScore();
 
-        assertThat(isBusted).isEqualTo(expected);
+        assertThat(score.isBusted()).isEqualTo(expected);
     }
 
-    static Stream<Arguments> cardsAndBustStatus() {
+    private static Stream<Arguments> cardsAndBustStatus() {
         return Stream.of(
-                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)), false),
-                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, TWO)), true)
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, TWO)),
+                        true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("cardsAndShouldHit")
+    @DisplayName("자신의 버스트 여부를 판단할 수 있다.")
+    void shouldHitTest(List<Card> cards, boolean expected) {
+        Deck deck = new Deck(cards);
+
+        Player player = new Player("pedro");
+        for (int i = 0; i < cards.size(); i++) {
+            player.hit(deck);
+        }
+
+        assertThat(player.shouldHit()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> cardsAndShouldHit() {
+        return Stream.of(
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, TWO)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN)),
+                        true)
         );
     }
 }

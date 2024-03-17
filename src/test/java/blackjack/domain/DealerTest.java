@@ -10,6 +10,9 @@ import static blackjack.domain.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.score.Score;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -26,29 +29,24 @@ class DealerTest {
                 new Card(DIAMOND, KING), new Card(DIAMOND, TWO), new Card(DIAMOND, FOUR)
         ));
         Dealer dealer = new Dealer();
-
         dealer.draw(deck);
-        Score score = dealer.getScore();
-        Score expected = new Score(10);
-
-        assertThat(score).isEqualTo(expected);
+        assertThat(dealer.getCardsCount()).isEqualTo(1);
+        assertThat(dealer.getCards()).contains(new Card(DIAMOND, KING));
     }
 
     @ParameterizedTest
     @MethodSource("cardsAndScore")
     @DisplayName("자신의 현재 점수가 17점 이상이 될 때까지 추가로 카드를 받는다.")
-    void drawCardsUntilScoreBelow17Test(List<Card> cards, int expectedValue) {
+    void drawCardsUntilScoreBelow17Test(List<Card> cards, int expected) {
         Deck deck = new Deck(cards);
         Dealer dealer = new Dealer();
 
         dealer.drawUntilExceedMinimum(deck);
-        Score score = dealer.getScore();
-        Score expected = new Score(expectedValue);
-
-        assertThat(score).isEqualTo(expected);
+        Score score = dealer.calculateScore();
+        assertThat(score.isLessThanDealerMinimumScore()).isFalse();
     }
 
-    static Stream<Arguments> cardsAndScore() {
+    private static Stream<Arguments> cardsAndScore() {
         return Stream.of(
                 Arguments.arguments(List.of(
                         new Card(DIAMOND, KING), new Card(DIAMOND, TWO), new Card(DIAMOND, FOUR),

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 public record PlayerName(String name) {
     public PlayerName {

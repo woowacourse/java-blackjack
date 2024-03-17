@@ -1,14 +1,11 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.dto.PlayerDto;
 import blackjack.domain.dto.PlayerResultDto;
-import blackjack.view.description.GameResultDescription;
 import blackjack.view.description.ShapeDescription;
 import blackjack.view.description.ValueDescription;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     public void printPlayerInitialCards(List<PlayerDto> playerDtos) {
@@ -28,19 +25,6 @@ public class OutputView {
         System.out.println("딜러: " + generateCardDescription(dealerCard));
     }
 
-    private String generateCardsDescription(List<Card> cards) {
-        List<String> list = cards.stream()
-                .map(this::generateCardDescription)
-                .toList();
-        return String.join(", ", list);
-    }
-
-    private String generateCardDescription(Card card) {
-        String shapeDescription = ShapeDescription.getDescription(card.shape());
-        String valueDescription = ValueDescription.getDescription(card.value());
-        return shapeDescription + valueDescription;
-    }
-
     public void printInitialMessage(List<String> playerNames) {
         System.out.println("딜러와 " + String.join(", ", playerNames) + " 에게 2장을 나누었습니다.");
     }
@@ -48,6 +32,11 @@ public class OutputView {
     public void printPlayerCard(PlayerDto playerDto) {
         String name = playerDto.name();
         System.out.println(name + "카드: " + generateCardsDescription(playerDto.cards()));
+    }
+
+    public void printDealerDoesNotDraw() {
+        System.out.println();
+        System.out.println("플레이어가 모두 죽어 딜러는 카드를 뽑지 않습니다.");
     }
 
     public void printExtraDealerDraw(int extraDrawCount) {
@@ -75,17 +64,27 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void printDealerResult(Map<GameResult, Integer> dealerResult) {
+    public void printDealerMoney(int money) {
         String result = "## 최종 승패" + System.lineSeparator()
-                + "딜러: "
-                + dealerResult.get(GameResult.WIN) + GameResultDescription.WIN.getDescription()
-                + dealerResult.get(GameResult.DRAW) + GameResultDescription.DRAW.getDescription()
-                + dealerResult.get(GameResult.LOSE) + GameResultDescription.LOSE.getDescription();
+                + "딜러: " + money;
 
         System.out.println(result);
     }
 
-    public void printPlayerResult(String playerName, GameResult gameResult) {
-        System.out.println(playerName + ": " + GameResultDescription.getDescription(gameResult));
+    public void printPlayerMoney(String name, int playerName) {
+        System.out.println(name + ": " + playerName);
+    }
+
+    private String generateCardsDescription(List<Card> cards) {
+        List<String> list = cards.stream()
+                .map(this::generateCardDescription)
+                .toList();
+        return String.join(", ", list);
+    }
+
+    private String generateCardDescription(Card card) {
+        String shapeDescription = ShapeDescription.getDescription(card.shape());
+        String valueDescription = ValueDescription.getDescription(card.value());
+        return shapeDescription + valueDescription;
     }
 }

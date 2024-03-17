@@ -5,6 +5,8 @@ import static blackjack.domain.card.Shape.*;
 import static blackjack.domain.card.Value.*;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.score.Score;
+import blackjack.domain.player.PlayerCards;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +20,7 @@ class PlayerCardsTest {
     @DisplayName("한 장의 카드를 추가할 수 있다.")
     void addCardTest() {
         Card card = new Card(DIAMOND, ACE);
-        PlayerCards playerCards = PlayerCards.createEmptyCards();
+        PlayerCards playerCards = new PlayerCards();
 
         playerCards.append(card);
         List<Card> cards = playerCards.getCards();
@@ -34,11 +36,8 @@ class PlayerCardsTest {
                 new Card(DIAMOND, FOUR)
         );
         PlayerCards playerCards = new PlayerCards(cards);
-
         Score score = playerCards.calculateScore();
-        Score expected = new Score(9);
-
-        assertThat(score).isEqualTo(expected);
+        assertThat(score.getScore()).isEqualTo(9);
     }
 
     @Test
@@ -50,30 +49,33 @@ class PlayerCardsTest {
                 new Card(DIAMOND, KING)
         );
         PlayerCards playerCards = new PlayerCards(cards);
-
         Score score = playerCards.calculateScore();
-        Score expected = new Score(30);
-
-        assertThat(score).isEqualTo(expected);
+        assertThat(score.getScore()).isEqualTo(30);
     }
 
     @ParameterizedTest
     @MethodSource("cardsAndScore")
     @DisplayName("ACE 는 1점 혹은 11점으로 계산된다.")
-    void calculateScoreWithAce(List<Card> cards, int expectedValue) {
+    void calculateScoreWithAce(List<Card> cards, int expected) {
         PlayerCards playerCards = new PlayerCards(cards);
         Score score = playerCards.calculateScore();
-
-        Score expected = new Score(expectedValue);
-        assertThat(score).isEqualTo(expected);
+        assertThat(score.getScore()).isEqualTo(expected);
     }
 
     static Stream<Arguments> cardsAndScore() {
         return Stream.of(
                 Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)), 21),
                 Arguments.arguments(List.of(new Card(DIAMOND, NINE), new Card(DIAMOND, ACE), new Card(SPADE, ACE)), 21),
-                Arguments.arguments(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)), 21),
+                Arguments.arguments(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
+                        21),
                 Arguments.arguments(List.of(new Card(DIAMOND, ACE), new Card(CLOVER, ACE), new Card(SPADE, ACE)), 13)
         );
+    }
+
+    @Test
+    @DisplayName("시작 손패는 비어있다.")
+    void createEmptyCardsTest() {
+        PlayerCards emptyCards = new PlayerCards();
+        assertThat(emptyCards.size()).isZero();
     }
 }

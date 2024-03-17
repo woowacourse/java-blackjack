@@ -24,4 +24,10 @@ public class InputView {
         }
         throw new IllegalArgumentException("y 또는 n만 선택할 수 있습니다.");
     }
+
+    public int inputMoney(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+        String line = scanner.nextLine();
+        return Integer.parseInt(line);
+    }
 }
