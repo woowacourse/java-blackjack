@@ -32,6 +32,14 @@ public class Profit {
 
     @Override
     public String toString() {
-        return String.valueOf(amount);
+        return formatBigDecimal(amount);
+    }
+
+    public String formatBigDecimal(BigDecimal number) {
+        if (number.scale() <= 0) {
+            return number.setScale(0).toString(); // 소수점 이하 자리가 없을 때는 정수부분만 출력
+        } else {
+            return number.stripTrailingZeros().toPlainString(); // 소수점 이하 자리가 있을 때는 해당 자리까지만 출력
+        }
     }
 }

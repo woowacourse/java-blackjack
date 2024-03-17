@@ -93,7 +93,7 @@ public class PlayerTest {
         choco.win(dealer.getDealerProfit());
 
         //then
-        assertThat(choco.getProfit()).isEqualTo("25000.0");
+        assertThat(choco.getProfit()).isEqualTo("25000");
     }
 
     @DisplayName("무승부 시, 배팅금액을 돌려받는다.")

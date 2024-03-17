@@ -36,4 +36,24 @@ class ProfitTest {
         //then
         assertThat(profit.toString()).isEqualTo("-1000");
     }
+
+    @DisplayName("정수일 경우, 정수 부분만 출력한다.")
+    @Test
+    void toStringTest() {
+        //given
+        Profit integerProfit = Profit.initProfit();
+        Profit decimalProfit = Profit.initProfit();
+
+        BigDecimal integerAmount = new BigDecimal("1000");
+        BigDecimal decimalAmount = new BigDecimal("11000");
+        BigDecimal blackjackAmount = new BigDecimal("1000");
+
+        //when
+        integerProfit.earn(integerAmount);
+        decimalProfit.earnBlackjack(decimalAmount, blackjackAmount);
+
+        //then
+        assertThat(integerProfit.toString()).isEqualTo("1000");
+        assertThat(decimalProfit.toString()).isEqualTo("10000");
+    }
 }
