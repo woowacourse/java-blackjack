@@ -121,7 +121,7 @@ public class BlackjackController {
 
     private void printAllGamerRevenues(Dealer dealer, Players players) {
         Map<BlackjackGamer, Money> gamerRevenueMap = getGamerRevenueMap(dealer, players);
-        outputView.printRevenues(GamerRevenueDto.from(gamerRevenueMap));
+        outputView.printRevenues(GamerRevenueDto.fromOrderedMap(gamerRevenueMap));
     }
 
     private Map<BlackjackGamer, Money> getGamerRevenueMap(Dealer dealer, Players players) {
