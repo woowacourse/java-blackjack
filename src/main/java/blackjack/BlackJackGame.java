@@ -30,7 +30,7 @@ public class BlackJackGame {
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Players players = initPlayers(InputView.readPlayerNames(consoleReader), deck);
         final Referee referee = new Referee(new ResultRule(dealer), players);
-        final MoneyStaff moneyStaff = initMoneyStaff(new BettingRule(), players);
+        final MoneyStaff moneyStaff = initMoneyStaff(BettingRule.getInstance(), players);
 
         announceInitialCards(dealer, players);
         play(dealer, players, deck);

@@ -12,6 +12,15 @@ import blackjack.model.result.ResultCommand;
 
 public class BettingRule {
 
+    private static final BettingRule INSTANCE = new BettingRule();
+
+    private BettingRule() {
+    }
+
+    public static BettingRule getInstance() {
+        return INSTANCE;
+    }
+
     public ProfitRate calculateProfitRate(final Player player, final ResultCommand resultCommand) {
         if (resultCommand == WIN) {
             return calculateProfitRateWhenPlayerWin(player);
