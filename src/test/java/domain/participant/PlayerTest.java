@@ -4,6 +4,7 @@ import static domain.HandsTestFixture.bustHands;
 import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum21Size3Ace11;
+import static domain.amount.BetAmount.defaultBetAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,7 +22,7 @@ class PlayerTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        assertThatCode(() -> new Player(new Name("pobi"), Hands.createEmptyHands()))
+        assertThatCode(() -> new Player(new Name("pobi"), Hands.createEmptyHands(), defaultBetAmount))
                 .doesNotThrowAnyException();
     }
 
@@ -31,7 +32,7 @@ class PlayerTest {
         final Name name = new Name("딜러");
         final Hands hands = Hands.createEmptyHands();
 
-        assertThatThrownBy(() -> new Player(name, hands))
+        assertThatThrownBy(() -> new Player(name, hands, defaultBetAmount))
                 .isInstanceOf(ReservedPlayerNameException.class);
     }
 
@@ -40,7 +41,7 @@ class PlayerTest {
     @MethodSource("canNotDealParameterProvider")
     void canNotDeal(Hands hands) {
         final Name name = new Name("레디");
-        final Player player = new Player(name, hands);
+        final Player player = new Player(name, hands, defaultBetAmount);
         assertThat(player.canDeal()).isFalse();
     }
 
@@ -49,7 +50,7 @@ class PlayerTest {
     @MethodSource("canDealParameterProvider")
     void canDeal(Hands hands) {
         final Name name = new Name("레디");
-        final Player player = new Player(name, hands);
+        final Player player = new Player(name, hands, defaultBetAmount);
         assertThat(player.canDeal()).isTrue();
     }
 

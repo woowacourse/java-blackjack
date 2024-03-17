@@ -13,12 +13,13 @@ import static domain.HandsTestFixture.sum19Size3Ace1;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
+import static domain.amount.BetAmount.defaultBetAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.GameResult;
-import domain.amount.EarnAmount;
 import domain.amount.BetAmount;
+import domain.amount.EarnAmount;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -30,8 +31,8 @@ class PlayersTest {
     @DisplayName("참가자 중 버스트 되지 않은 참가자가 있다면 isAllBust가 False를 반환한다.")
     void isAllBustFalse() {
         //given
-        final Player bustPlayer = new Player(new Name("레디"), bustHands);
-        final Player noBustPlayer = new Player(new Name("제제"), noBustHands);
+        final Player bustPlayer = new Player(new Name("레디"), bustHands, defaultBetAmount);
+        final Player noBustPlayer = new Player(new Name("제제"), noBustHands, defaultBetAmount);
         final Players players = new Players(List.of(bustPlayer, noBustPlayer));
 
         //when && then
@@ -42,10 +43,10 @@ class PlayersTest {
     @DisplayName("모든 참가자가 버스트되면 isAllBust가 True를 반환한다.")
     void isAllBustTrue() {
         //given
-        final Player player1 = new Player(new Name("레디"), bustHands);
-        final Player player2 = new Player(new Name("제제"), bustHands);
-        final Player player3 = new Player(new Name("수달"), bustHands);
-        final Player player4 = new Player(new Name("피케이"), bustHands);
+        final Player player1 = new Player(new Name("레디"), bustHands, defaultBetAmount);
+        final Player player2 = new Player(new Name("제제"), bustHands, defaultBetAmount);
+        final Player player3 = new Player(new Name("수달"), bustHands, defaultBetAmount);
+        final Player player4 = new Player(new Name("피케이"), bustHands, defaultBetAmount);
 
         final Players players = new Players(List.of(player1, player2, player3, player4));
 
@@ -57,9 +58,9 @@ class PlayersTest {
     @DisplayName("참여자의 승패무를 판단한다.")
     void playerResult() {
         //given
-        final Player loser = new Player(new Name("레디"), sum18Size2);
-        final Player winner = new Player(new Name("제제"), sum21Size3);
-        final Player tier = new Player(new Name("수달"), sum20Size3);
+        final Player loser = new Player(new Name("레디"), sum18Size2, defaultBetAmount);
+        final Player winner = new Player(new Name("제제"), sum21Size3, defaultBetAmount);
+        final Player tier = new Player(new Name("수달"), sum20Size3, defaultBetAmount);
 
         final Players players = new Players(List.of(loser, winner, tier));
         final Dealer dealer = new Dealer(sum20Size3);
@@ -74,9 +75,9 @@ class PlayersTest {
     void all() {
         //given
         final Dealer bustDealer = new Dealer(bustHands);
-        final Player winner1 = new Player(new Name("레디"), sum18Size2);
-        final Player winner2 = new Player(new Name("브라운"), sum20Size2);
-        final Player loser = new Player(new Name("제제"), bustHands);
+        final Player winner1 = new Player(new Name("레디"), sum18Size2, defaultBetAmount);
+        final Player winner2 = new Player(new Name("브라운"), sum20Size2, defaultBetAmount);
+        final Player loser = new Player(new Name("제제"), bustHands, defaultBetAmount);
 
         final Players players = new Players(List.of(winner1, winner2, loser));
 
@@ -116,7 +117,8 @@ class PlayersTest {
         final Player loser = new Player(new Name("레디"), sum10Size2, new BetAmount(2_000));
         final Players players = new Players(List.of(blackJackPlayer, loser));
 
-        final Map<Player, EarnAmount> expected = Map.of(blackJackPlayer, new EarnAmount(15_000), loser, new EarnAmount(-2_000));
+        final Map<Player, EarnAmount> expected = Map.of(blackJackPlayer, new EarnAmount(15_000), loser,
+                new EarnAmount(-2_000));
 
         //when
         final Map<Player, EarnAmount> result = players.calculateResult(dealer);
@@ -132,7 +134,8 @@ class PlayersTest {
         final Player blackJackPlayer = new Player(new Name("수달"), blackJack, new BetAmount(10_000));
         final Player loser = new Player(new Name("레디"), sum18Size2, new BetAmount(2_000));
         final Players players = new Players(List.of(blackJackPlayer, loser));
-        final Map<Player, EarnAmount> expected = Map.of(blackJackPlayer, new EarnAmount(0), loser, new EarnAmount(-2_000));
+        final Map<Player, EarnAmount> expected = Map.of(blackJackPlayer, new EarnAmount(0), loser,
+                new EarnAmount(-2_000));
 
         //when
         final Map<Player, EarnAmount> result = players.calculateResult(dealer);

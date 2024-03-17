@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class BetAmount {
 
+    public static final BetAmount defaultBetAmount = new BetAmount(10);
     private static final int UNIT = 10;
     private static final int MIN_RANGE = 10;
     private static final int MAX_RANGE = 100_000_000;
