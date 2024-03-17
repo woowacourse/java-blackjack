@@ -5,7 +5,6 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.result.Status;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -57,7 +56,7 @@ class DealerTest {
         Player player = new Player(
                 new Name("capy"), new BetAmount(1000), List.of(new Card(7, Shape.CLUB), new Card(10, Shape.HEART)));
 
-        Assertions.assertThat(dealer.decideStatus(player)).isEqualTo(Status.WIN);
+        assertThat(dealer.decideStatus(player)).isEqualTo(Status.WIN);
     }
 
     @Test
@@ -69,7 +68,7 @@ class DealerTest {
 
         dealer.receive(new Card(2, Shape.CLUB));
 
-        Assertions.assertThat(dealer.decideStatus(player)).isEqualTo(Status.WIN);
+        assertThat(dealer.decideStatus(player)).isEqualTo(Status.WIN);
     }
 
     @Test
@@ -79,7 +78,7 @@ class DealerTest {
         Player player = new Player(
                 new Name("capy"), new BetAmount(1000), List.of(new Card(1, Shape.CLUB), new Card(10, Shape.HEART)));
 
-        Assertions.assertThat(dealer.decideStatus(player)).isEqualTo(Status.WIN_BLACKJACK);
+        assertThat(dealer.decideStatus(player)).isEqualTo(Status.WIN_BLACKJACK);
     }
 
     @Test
@@ -89,7 +88,7 @@ class DealerTest {
         Player player = new Player(
                 new Name("capy"), new BetAmount(1000), List.of(new Card(1, Shape.CLUB), new Card(10, Shape.HEART)));
 
-        Assertions.assertThat(dealer.decideStatus(player)).isEqualTo(Status.TIE);
+        assertThat(dealer.decideStatus(player)).isEqualTo(Status.TIE);
     }
 
     @Test
@@ -99,7 +98,7 @@ class DealerTest {
         Player player = new Player(
                 new Name("capy"), new BetAmount(1000), List.of(new Card(5, Shape.CLUB), new Card(10, Shape.HEART)));
 
-        Assertions.assertThat(dealer.decideStatus(player)).isEqualTo(Status.TIE);
+        assertThat(dealer.decideStatus(player)).isEqualTo(Status.TIE);
     }
 
     @Test
@@ -109,6 +108,6 @@ class DealerTest {
         Player player = new Player(
                 new Name("capy"), new BetAmount(1000), List.of(new Card(5, Shape.CLUB), new Card(10, Shape.HEART)));
 
-        Assertions.assertThat(dealer.decideStatus(player)).isEqualTo(Status.LOSE);
+        assertThat(dealer.decideStatus(player)).isEqualTo(Status.LOSE);
     }
 }

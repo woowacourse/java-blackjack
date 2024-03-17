@@ -3,9 +3,10 @@ package domain;
 import domain.participant.BetAmount;
 import domain.result.Income;
 import domain.result.Status;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BetAmountTest {
 
@@ -14,7 +15,7 @@ class BetAmountTest {
     void determineIncome_Win() {
         BetAmount betAmount = new BetAmount(1000);
 
-        Assertions.assertThat(betAmount.determineIncome(Status.WIN)).isEqualTo(new Income(1000));
+        assertThat(betAmount.determineIncome(Status.WIN)).isEqualTo(new Income(1000));
     }
 
     @Test
@@ -22,7 +23,7 @@ class BetAmountTest {
     void determineIncome_Tie() {
         BetAmount betAmount = new BetAmount(1000);
 
-        Assertions.assertThat(betAmount.determineIncome(Status.TIE)).isEqualTo(new Income(0));
+        assertThat(betAmount.determineIncome(Status.TIE)).isEqualTo(new Income(0));
     }
 
     @Test
@@ -30,6 +31,6 @@ class BetAmountTest {
     void determineIncome_Lose() {
         BetAmount betAmount = new BetAmount(1000);
 
-        Assertions.assertThat(betAmount.determineIncome(Status.LOSE)).isEqualTo(new Income(-1000));
+        assertThat(betAmount.determineIncome(Status.LOSE)).isEqualTo(new Income(-1000));
     }
 }
