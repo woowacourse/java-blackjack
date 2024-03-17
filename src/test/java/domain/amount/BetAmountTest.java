@@ -1,8 +1,7 @@
-package domain;
+package domain.amount;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.amount.BetAmount;
 import exception.InvalidBetAmountException;
 import exception.OutOfRangeBetAmount;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class BetEarnAmountTest {
+class BetAmountTest {
 
     @ParameterizedTest
     @DisplayName("베팅 금액이 0 이하일 시 예외가 발생한다.")

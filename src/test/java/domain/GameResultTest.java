@@ -1,12 +1,12 @@
 package domain;
 
-import static domain.HandsTestFixture.blackJack;
-import static domain.HandsTestFixture.bustHands;
-import static domain.HandsTestFixture.sum17Size3One;
-import static domain.HandsTestFixture.sum17Size3Two;
-import static domain.HandsTestFixture.sum20Size2;
-import static domain.HandsTestFixture.sum20Size3;
-import static domain.HandsTestFixture.sum21Size3;
+import static domain.participant.HandsTestFixture.blackJack;
+import static domain.participant.HandsTestFixture.bustHands;
+import static domain.participant.HandsTestFixture.sum17Size3One;
+import static domain.participant.HandsTestFixture.sum17Size3Two;
+import static domain.participant.HandsTestFixture.sum20Size2;
+import static domain.participant.HandsTestFixture.sum20Size3;
+import static domain.participant.HandsTestFixture.sum21Size3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

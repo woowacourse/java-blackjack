@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static domain.card.Rank.ACE;
 import static domain.card.Rank.EIGHT;
@@ -19,7 +19,6 @@ import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 
 import domain.card.Card;
-import domain.participant.Hands;
 import java.util.List;
 
 public class HandsTestFixture {

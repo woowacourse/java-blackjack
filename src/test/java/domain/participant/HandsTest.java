@@ -1,17 +1,16 @@
-package domain;
+package domain.participant;
 
-import static domain.HandsTestFixture.sum19Size3Ace1;
-import static domain.HandsTestFixture.sum19Size4Ace11;
-import static domain.HandsTestFixture.sum20Size2;
-import static domain.HandsTestFixture.sum20Size3Ace1;
-import static domain.HandsTestFixture.sum21Size3Ace11;
+import static domain.participant.HandsTestFixture.sum19Size3Ace1;
+import static domain.participant.HandsTestFixture.sum19Size4Ace11;
+import static domain.participant.HandsTestFixture.sum20Size2;
+import static domain.participant.HandsTestFixture.sum20Size3Ace1;
+import static domain.participant.HandsTestFixture.sum21Size3Ace11;
 import static domain.card.Rank.EIGHT;
 import static domain.card.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.Card;
-import domain.participant.Hands;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

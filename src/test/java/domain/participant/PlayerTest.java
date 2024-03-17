@@ -1,9 +1,9 @@
 package domain.participant;
 
-import static domain.HandsTestFixture.bustHands;
-import static domain.HandsTestFixture.sum18Size2;
-import static domain.HandsTestFixture.sum20Size2;
-import static domain.HandsTestFixture.sum21Size3Ace11;
+import static domain.participant.HandsTestFixture.bustHands;
+import static domain.participant.HandsTestFixture.sum18Size2;
+import static domain.participant.HandsTestFixture.sum20Size2;
+import static domain.participant.HandsTestFixture.sum21Size3Ace11;
 import static domain.amount.BetAmount.defaultBetAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
