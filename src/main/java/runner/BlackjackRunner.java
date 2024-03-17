@@ -44,7 +44,7 @@ public class BlackjackRunner {
     }
 
     private void doPlayersTurn(PlayerProfits playerProfits, Deck deck) {
-        playerProfits.forEachPlayer(player -> doPlayerTurn(deck, player));
+        playerProfits.doForAllPlayers(player -> doPlayerTurn(deck, player));
     }
 
     private void doPlayerTurn(Deck deck, Player player) {

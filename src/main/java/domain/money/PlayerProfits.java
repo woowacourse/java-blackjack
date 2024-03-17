@@ -2,11 +2,11 @@ package domain.money;
 
 import domain.user.Dealer;
 import domain.user.Player;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -18,8 +18,8 @@ public class PlayerProfits {
         this.playersMoney = playersMoney;
     }
 
-    public void forEachPlayer(Consumer<Player> consumer) {
-        playersMoney.keySet().forEach(consumer);
+    public void doForAllPlayers(Consumer<Player> playerAction) {
+        playersMoney.keySet().forEach(playerAction);
     }
 
     public PlayerProfits generateMoneyResult(Dealer dealer) {
@@ -56,7 +56,7 @@ public class PlayerProfits {
         return playersMoney.keySet();
     }
 
-    public void forEach(BiConsumer<Player, Profit> biConsumer) {
-        playersMoney.forEach(biConsumer);
+    public Map<Player, Profit> getPlayersMoney() {
+        return Collections.unmodifiableMap(playersMoney);
     }
 }

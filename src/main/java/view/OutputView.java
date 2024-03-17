@@ -65,7 +65,7 @@ public class OutputView {
     public static void printFinalResult(PlayerProfits playerProfits) {
         System.out.println("\n## 최종 수익");
         System.out.println(DEALER_NAME_VALUE + ": " + playerProfits.calculateDealerMoney());
-        playerProfits.forEach(((player, money) ->
-                System.out.println(player.getNameValue() + ": " + money.value())));
+        playerProfits.getPlayersMoney()
+                .forEach(((player, money) -> System.out.println(player.getNameValue() + ": " + money.value())));
     }
 }
