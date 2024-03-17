@@ -10,12 +10,8 @@ public class Betting {
 
     private final Map<PlayerName, BettingMoney> playerBettingMoney;
 
-    public Betting() {
-        this.playerBettingMoney = new HashMap<>();
-    }
-
-    public void addPlayerBettingMoney(final PlayerName playerName, final BettingMoney bettingMoney) {
-        playerBettingMoney.put(playerName, bettingMoney);
+    public Betting(final Map<PlayerName, BettingMoney> playerBettingMoney) {
+        this.playerBettingMoney = new HashMap<>(playerBettingMoney);
     }
 
     public int calculatePlayerBettingProfit(final PlayerName playerName, final MatchResult matchResult) {

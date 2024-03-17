@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.player.MatchResult;
 import blackjack.model.player.PlayerName;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,9 +16,10 @@ public class BettingTest {
 
     @BeforeEach
     void setUp() {
-        betting = new Betting();
         playerName = new PlayerName("dora");
-        betting.addPlayerBettingMoney(playerName, new BettingMoney(1000));
+        Map<PlayerName, BettingMoney> playerBettingMoney = new HashMap<>();
+        playerBettingMoney.put(playerName, new BettingMoney(1000));
+        betting = new Betting(playerBettingMoney);
     }
 
     @Test

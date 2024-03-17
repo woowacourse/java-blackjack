@@ -16,7 +16,9 @@ import blackjack.model.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.form.Command;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -47,12 +49,12 @@ public class BlackjackGame {
     }
 
     private Betting createBetting(Players players) {
-        Betting betting = new Betting();
+        Map<PlayerName, BettingMoney> playerBettingMoney = new HashMap<>();
         for (PlayerName playerName : players.getNames()) {
             BettingMoney bettingMoney = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
-            betting.addPlayerBettingMoney(playerName, bettingMoney);
+            playerBettingMoney.put(playerName, bettingMoney);
         }
-        return betting;
+        return new Betting(playerBettingMoney);
     }
 
     private void dealCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
