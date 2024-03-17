@@ -71,8 +71,8 @@ public class OutputView {
 
     private static String formatMoney(final Money money) {
         String formattedMoney = String.valueOf(money.value());
-        if (money.isInt()) {
-            formattedMoney = String.valueOf(money.toInt());
+        if (money.value() == (int) money.value()) {
+            formattedMoney = String.valueOf((int) money.value());
         }
         return formattedMoney;
     }
