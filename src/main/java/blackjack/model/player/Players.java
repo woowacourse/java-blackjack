@@ -59,9 +59,7 @@ public class Players {
 
     public List<PlayerBettingProfitOutcome> calculateBettingProfits(final Betting betting, final Dealer dealer) {
         return players.stream()
-                .map(player -> betting.calculatePlayerBettingProfit(
-                        player.getName(), player.determineMatchResult(dealer)
-                ))
+                .map(player -> PlayerBettingProfitOutcome.from(player, betting, dealer))
                 .toList();
     }
 

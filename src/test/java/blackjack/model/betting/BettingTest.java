@@ -2,7 +2,6 @@ package blackjack.model.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.player.MatchResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,40 +22,39 @@ public class BettingTest {
     @DisplayName("승리한 플레이어는 배팅 금액의 1배를 추가로 받는다")
     void calculateWinningPlayerProfitTest() {
         // when
-        PlayerBettingProfitOutcome outcome = betting.calculatePlayerBettingProfit(playerName, MatchResult.WIN);
+        int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.WIN);
 
         // then
-        assertThat(outcome.profit()).isEqualTo(1000);
+        assertThat(profit).isEqualTo(1000);
     }
 
     @Test
     @DisplayName("패배한 플레이어는 배팅 금액을 잃는다")
     void calculateLosingPlayerProfitTest() {
         // when
-        PlayerBettingProfitOutcome outcome = betting.calculatePlayerBettingProfit(playerName, MatchResult.LOSE);
+        int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.LOSE);
 
         // then
-        assertThat(outcome.profit()).isEqualTo(-1000);
+        assertThat(profit).isEqualTo(-1000);
     }
 
     @Test
     @DisplayName("무승부인 플레이어는 배팅 금액을 돌려받는다")
     void calculatePushPlayerProfitTest() {
         // when
-        PlayerBettingProfitOutcome outcome = betting.calculatePlayerBettingProfit(playerName, MatchResult.PUSH);
+        int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.PUSH);
 
         // then
-        assertThat(outcome.profit()).isEqualTo(0);
+        assertThat(profit).isEqualTo(0);
     }
 
     @Test
     @DisplayName("블랙잭 승리한 플레이어는 배팅 금액의 1.5배를 추가로 받는다")
     void calculateBlackjackWinningPlayerProfitTest() {
         // when
-        PlayerBettingProfitOutcome outcome
-                = betting.calculatePlayerBettingProfit(playerName, MatchResult.BLACKJACK_WIN);
+        int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.BLACKJACK_WIN);
 
         // then
-        assertThat(outcome.profit()).isEqualTo(1500);
+        assertThat(profit).isEqualTo(1500);
     }
 }

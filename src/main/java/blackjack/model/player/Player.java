@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.betting.Betting;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
@@ -42,8 +43,9 @@ public class Player {
         return cards.calculateScore();
     }
 
-    public MatchResult determineMatchResult(final Dealer dealer) {
-        return MatchResult.determine(dealer, this);
+    public int calculateBettingProfit(Betting betting, Dealer dealer) {
+        MatchResult matchResult = MatchResult.determine(dealer, this);
+        return betting.calculatePlayerBettingProfit(name, matchResult);
     }
 
     public boolean isBlackjack() {

@@ -13,7 +13,7 @@ public class OutputView {
     private static final String CARDS_FORM = "%s 카드: %s";
     private static final String DEALER_DRAWING_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.\n";
     private static final String TOTAL_SCORE_FORM = " - 결과: ";
-    private static final String BETTING_PROFIT_INTRO = "\n## 최종 수익";
+    private static final String BETTING_PROFIT_INTRO = "## 최종 수익";
     private static final String DEALER_NAME = "딜러";
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 

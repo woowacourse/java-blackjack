@@ -1,6 +1,5 @@
 package blackjack.model.betting;
 
-import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.player.MatchResult;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +17,7 @@ public class Betting {
         playerBettingMoney.put(playerName, bettingMoney);
     }
 
-    public PlayerBettingProfitOutcome calculatePlayerBettingProfit(String playerName, MatchResult matchResult) {
-        BettingMoney bettingMoney = findBettingMoneyByPlayerName(playerName);
-        return new PlayerBettingProfitOutcome(playerName, matchResult.calculateProfit(bettingMoney));
-    }
-
-    public int calculateBettingProfit(String playerName, MatchResult matchResult) {
+    public int calculatePlayerBettingProfit(String playerName, MatchResult matchResult) {
         BettingMoney bettingMoney = findBettingMoneyByPlayerName(playerName);
         return matchResult.calculateProfit(bettingMoney);
     }
