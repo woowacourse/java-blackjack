@@ -1,14 +1,36 @@
 package blackjack.model.deck;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Card {
+    private static final List<Card> CACHE;
+
     private final Shape shape;
     private final Score score;
 
-    public Card(final Shape shape, final Score score) {
+    static {
+        CACHE = Arrays.stream(Shape.values())
+                .flatMap(Card::matchScore)
+                .collect(Collectors.toList());
+    }
+
+    private Card(final Shape shape, final Score score) {
         this.shape = shape;
         this.score = score;
+    }
+
+    public static List<Card> getCards() {
+        return new ArrayList<>(CACHE);
+    }
+
+    private static Stream<Card> matchScore(Shape shape) {
+        return Arrays.stream(Score.values())
+                .map(score -> new Card(shape, score));
     }
 
     public boolean isAce() {
@@ -25,6 +47,13 @@ public class Card {
 
     public Shape getShape() {
         return shape;
+    }
+
+    public static Card from(final Shape shape, final Score score) {
+        return CACHE.stream()
+                .filter(card -> card.shape == shape && card.score == score)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 카드가 존재하지 않습니다."));
     }
 
     @Override
