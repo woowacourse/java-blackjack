@@ -2,10 +2,10 @@ package domain.card;
 
 public enum Shape {
 
-    HEART("하트"),
-    SPADE("스페이드"),
-    CLOVER("클로버"),
-    DIA("다이아몬드");
+    HEARTS("하트"),
+    SPADES("스페이드"),
+    CLUBS("클로버"),
+    DIAMONDS("다이아몬드");
 
     private final String name;
 

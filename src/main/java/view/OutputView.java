@@ -1,13 +1,8 @@
 package view;
 
-import domain.blackjack.BlackJackResult;
-import domain.blackjack.WinStatus;
+import domain.bet.BetResult;
 import domain.card.Card;
-import domain.participant.Dealer;
 import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Participants;
-
 import java.util.List;
 import java.util.Map;
 
@@ -19,22 +14,19 @@ public class OutputView {
 
     }
 
-    public static void printBeginDealingInformation(Participants participants) {
+    public static void printInitBlackJack(List<Name> names) {
         System.out.println();
-        System.out.printf(outputFormat.formatParticipantNames(participants));
-        System.out.println();
-        System.out.println();
-    }
-
-    public static void printDealerHands(Dealer dealer) {
-        Name name = dealer.getName();
-        List<Card> cards = dealer.getCards();
-        System.out.printf("%s카드: %s", name.getValue(), outputFormat.formatCard(cards.get(0)));
+        System.out.printf(outputFormat.formatPlayersNames(names));
         System.out.println();
     }
 
-    public static void printParticipantHands(Participant participant) {
-        System.out.printf(outputFormat.formatHands(participant));
+    public static void printDealerInitHands(List<Card> cards) {
+        System.out.printf("딜러: %s", outputFormat.formatCards(cards));
+        System.out.println();
+    }
+
+    public static void printPlayerHands(Name name, List<Card> cards) {
+        System.out.printf(outputFormat.formatHands(name, cards));
         System.out.println();
     }
 
@@ -46,19 +38,29 @@ public class OutputView {
         }
     }
 
-    public static void printParticipantResult(Participant participant) {
-        System.out.printf(outputFormat.formatParticipantResult(participant));
+    public static void printParticipantScore(Name name, List<Card> cards, int score) {
+        System.out.printf(outputFormat.formatParticipantScore(name, cards, score));
         System.out.println();
     }
 
-    public static void printBlackJackResult(BlackJackResult blackJackResult) {
+    public static void printBetResultMessage() {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf(outputFormat.formatDealerResult(blackJackResult));
-        System.out.println();
+        System.out.println("## 최종 수익");
+    }
 
-        for (Map.Entry<Participant, WinStatus> winStatusEntry : blackJackResult.getEntry()) {
-            System.out.println(outputFormat.formatBlackJackResult(winStatusEntry));
+    public static void printDealerBetResult(double dealerProfit) {
+        System.out.printf("딜러: %s", (int) dealerProfit);
+        System.out.println();
+    }
+
+    public static void printPlayersBetResult(BetResult betResult) {
+        Map<Name, Double> betAmountByParticipant = betResult.getBetAmountByParticipant();
+        for (Map.Entry<Name, Double> entry : betAmountByParticipant.entrySet()) {
+            System.out.println(outputFormat.formatBetResult(entry));
         }
+    }
+
+    public static void printBlank() {
+        System.out.println();
     }
 }

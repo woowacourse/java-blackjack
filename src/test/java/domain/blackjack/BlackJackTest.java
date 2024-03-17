@@ -1,90 +1,165 @@
 package domain.blackjack;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.bet.BetResult;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
 import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class BlackJackTest {
-
-    @DisplayName("카드를 두장씩 나눠준다.")
-    @Test
-    void beginDealing() {
-        Dealer dealer = new Dealer();
-        Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(dealer, participants);
-        blackJack.beginDealing();
-
-        Assertions.assertAll(
-                () -> assertThat(dealer.getCardCount()).isEqualTo(2),
-                () -> assertThat(participants.getValue().get(0).getCardCount()).isEqualTo(2),
-                () -> assertThat(participants.getValue().get(1).getCardCount()).isEqualTo(2)
-        );
-    }
 
     @DisplayName("참가자의 승패를 결정한다.")
     @Test
     void isWinner() {
         Dealer dealer = new Dealer();
-        Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(dealer, participants);
+        Players players = new Players(List.of(new Player("one", 1000), new Player("two", 1000)));
+        BlackJack blackJack = new BlackJack(dealer, players);
 
-        Participant one = participants.getValue().get(0);
-        one.receiveCard(new Card(Shape.HEART, Rank.KING));
+        Player one = players.getValue().get(0);
+        one.receiveCard(new Card(Shape.HEARTS, Rank.KING));
 
-        Participant two = participants.getValue().get(1);
-        two.receiveCard(new Card(Shape.DIA, Rank.KING));
-        two.receiveCard(new Card(Shape.DIA, Rank.FOUR));
+        Player two = players.getValue().get(1);
+        two.receiveCard(new Card(Shape.DIAMONDS, Rank.TWO));
+        two.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
 
-        dealer.receiveCard(new Card(Shape.DIA, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.DIA, Rank.ACE));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.FOUR));
         /*
-         * one 참가자의 점수: 10점
-         * two 참가자의 점수: 14점
-         * 딜러의 점수: 21점인 상황
+         * one 참가자의 점수: 10점, WIN
+         * two 참가자의 점수: 5점, LOSE
+         * 딜러의 점수: 7점인 상황
          */
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        assertThat(blackJackResult.getDealerWinCount()).isEqualTo(2);
+        BetResult betResult = blackJack.makeBetResult();
+        Assertions.assertAll(
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 1000.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), -1000.)
+
+        );
     }
 
     @DisplayName("참가자와 딜러의 점수가 같은경우 ")
     @Test
     void isWinnerWhenSameScore() {
         Dealer dealer = new Dealer();
-        Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(dealer, participants);
+        Players players = new Players(List.of(new Player("one", 1000), new Player("two", 1000)));
+        BlackJack blackJack = new BlackJack(dealer, players);
 
-        Participant one = participants.getValue().get(0);
-        one.receiveCard(new Card(Shape.HEART, Rank.KING));
-        one.receiveCard(new Card(Shape.HEART, Rank.TWO));
-        one.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
-        one.receiveCard(new Card(Shape.HEART, Rank.ACE));
+        Player one = players.getValue().get(0);
+        one.receiveCard(new Card(Shape.HEARTS, Rank.TWO));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.THREE));
 
-        Participant two = participants.getValue().get(1);
-        two.receiveCard(new Card(Shape.CLOVER, Rank.KING));
-        two.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
+        Player two = players.getValue().get(1);
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.THREE));
 
-        dealer.receiveCard(new Card(Shape.DIA, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.DIA, Rank.KING));
-        dealer.receiveCard(new Card(Shape.DIA, Rank.ACE));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.TWO));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
+
         /*
-         * one 참가자의 점수: 21점, 카드 4장
-         * two 참가자의 점수: 21점, 카드 2장
-         * 딜러의 점수: 21점인, 카드 3장인 상황
+         * one 참가자의 점수: 5점, PUSH
+         * two 참가자의 점수: 5점, PUSH
+         * 딜러의 점수: 5점인
          */
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
+        BetResult betResult = blackJack.makeBetResult();
         Assertions.assertAll(
-                () -> assertThat(blackJackResult.getTotalCount()).isEqualTo(2),
-                () -> assertThat(blackJackResult.getDealerWinCount()).isEqualTo(1)
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 0.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), 0.)
+        );
+    }
+
+    @DisplayName("참가자가 블랙잭인 경우 ")
+    @Test
+    void whenParticipantBlackJack() {
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of(new Player("one", 1000), new Player("two", 1000)));
+        BlackJack blackJack = new BlackJack(dealer, players);
+
+        Player one = players.getValue().get(0);
+        one.receiveCard(new Card(Shape.HEARTS, Rank.KING));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.ACE));
+
+        Player two = players.getValue().get(1);
+        two.receiveCard(new Card(Shape.CLUBS, Rank.ACE));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
+
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.QUEEN));
+        /*
+         * one 참가자의 점수: 블랙잭, BLACKJACK
+         * two 참가자의 점수: 13점, WIN
+         * 딜러의 점수: 10점인
+         */
+        BetResult betResult = blackJack.makeBetResult();
+        Assertions.assertAll(
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 1500.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), 1000.)
+        );
+    }
+
+    @DisplayName("참가자와 딜러가 블랙잭인 경우 ")
+    @Test
+    void whenParticipantAndDealerBlackJack() {
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of(new Player("one", 1000), new Player("two", 1000)));
+        BlackJack blackJack = new BlackJack(dealer, players);
+
+        Player one = players.getValue().get(0);
+        one.receiveCard(new Card(Shape.HEARTS, Rank.KING));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.ACE));
+
+        Player two = players.getValue().get(1);
+        two.receiveCard(new Card(Shape.CLUBS, Rank.ACE));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
+
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.KING));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.ACE));
+        /*
+         * one 참가자의 점수: 블랙잭, PUSH
+         * two 참가자의 점수: 13점, LOSE
+         * 딜러의 점수: 블랙잭
+         */
+        BetResult betResult = blackJack.makeBetResult();
+        Assertions.assertAll(
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 0.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), -1000.)
+        );
+    }
+
+    @DisplayName("딜러가 버스트시 참가자는 승리한다. ")
+    @Test
+    void whenDealerIsBust() {
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of(new Player("one", 1000), new Player("two", 1000)));
+        BlackJack blackJack = new BlackJack(dealer, players);
+
+        Player one = players.getValue().get(0);
+        one.receiveCard(new Card(Shape.HEARTS, Rank.TWO));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.THREE));
+
+        Player two = players.getValue().get(1);
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.THREE));
+
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.KING));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.JACK));
+        /*
+         * one 참가자의 점수: 5점, LOSE
+         * two 참가자의 점수: 5점, LOSE
+         * 딜러의 점수: 버스트
+         */
+        BetResult betResult = blackJack.makeBetResult();
+        Assertions.assertAll(
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 1000.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), 1000.)
         );
     }
 }
