@@ -1,7 +1,5 @@
 package domain.result;
 
-import java.util.EnumMap;
-
 import domain.participant.dealer.Dealer;
 import domain.participant.dealer.DealerResult;
 import domain.participant.player.PlayerResults;
@@ -18,11 +16,12 @@ public class BlackjackResult {
     }
 
     public static BlackjackResult of(final Dealer dealer, final Players players) {
-        DealerResult dealerResult = new DealerResult(dealer, new EnumMap<>(BlackjackResultStatus.class));
+        DealerResult dealerResult = new DealerResult(dealer);
         PlayerResults playerResults = new PlayerResults();
         players.forEach(player -> {
-            dealerResult.put(dealer.resultStatusAgainst(player));
-            playerResults.put(player, player.resultStatusAgainst(dealer));
+            Profit playerProfit = player.profitAgainst(dealer);
+            dealerResult.subtract(playerProfit);
+            playerResults.put(player, playerProfit);
         });
         return new BlackjackResult(dealerResult, playerResults);
     }

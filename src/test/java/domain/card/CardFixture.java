@@ -9,12 +9,19 @@ import static domain.card.Rank.TEN;
 import static domain.card.Rank.TWO;
 import static domain.card.Suit.SPADE;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CardFixture {
 
     public static Card cardOf(Rank rank) {
         return new Card(SPADE, rank);
+    }
+
+    public static List<Card> cardsOf(Rank... ranks) {
+        return Arrays.stream(ranks)
+                .map(CardFixture::cardOf)
+                .toList();
     }
 
     public static List<Card> cardsOfBlackjack() {
