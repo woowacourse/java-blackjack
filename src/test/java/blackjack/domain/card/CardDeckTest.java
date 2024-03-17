@@ -8,6 +8,7 @@ import fixture.CardFixture;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,7 @@ class CardDeckTest {
 
         // when & then
         assertThatThrownBy(cardDeck::popCard)
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(NoSuchElementException.class);
     }
 
     @DisplayName("카드 덱에서 카드를 한 장 빼내어 반환한다.")
@@ -59,7 +60,7 @@ class CardDeckTest {
         assertAll(
                 () -> assertThat(actual).isEqualTo(CardFixture.createAHeart()),
                 () -> assertThatThrownBy(cardDeck::popCard)
-                        .isInstanceOf(IllegalArgumentException.class)
+                        .isInstanceOf(NoSuchElementException.class)
         );
     }
 
