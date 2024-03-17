@@ -64,14 +64,14 @@ public class GameController {
         State state = game.determineState(command, player);
         UserDto userDto = UserDto.from(player);
         if (state == BUST || state == STAY) {
-            notifyBust(state, userDto);
+            showBust(state, userDto);
             return;
         }
         ResultView.printPlayerAndDeck(userDto);
         hitOrStay(game, player);
     }
 
-    private void notifyBust(State state, UserDto userDto) {
+    private void showBust(State state, UserDto userDto) {
         if (state == BUST) {
             ResultView.printBust(userDto);
         }
