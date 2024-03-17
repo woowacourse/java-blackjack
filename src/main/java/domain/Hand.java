@@ -32,10 +32,6 @@ public class Hand {
         return score.add(card.score());
     }
 
-    public void addAll(final List<Card> initialCards) {
-        cards.addAll(initialCards);
-    }
-
     public void add(final Card card) {
         cards.add(card);
     }
@@ -43,11 +39,7 @@ public class Hand {
     public boolean isBust() {
         return score().toInt() > BLACKJACK_CONDITION;
     }
-
-    public boolean isNotBust() {
-        return score().toInt() <= BLACKJACK_CONDITION;
-    }
-
+    
     public List<Card> cards() {
         return Collections.unmodifiableList(cards);
     }
