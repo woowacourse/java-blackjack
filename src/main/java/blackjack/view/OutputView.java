@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerInitialHandDto;
+import blackjack.dto.GamerEarningsDto;
 import blackjack.dto.GamerHandDto;
-import blackjack.dto.GamerRevenueDto;
 import java.util.List;
 
 public class OutputView {
@@ -88,10 +88,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printRevenues(GamerRevenueDto gamerRevenueDto) {
+    public void printRevenues(GamerEarningsDto gamerEarningsDto) {
         System.out.println("## 최종 수익");
-        gamerRevenueDto.nameRevenueMap().forEach((name, revenue) ->
-                System.out.println(name + COLON_WITH_SPACE + revenue)
+        gamerEarningsDto.nameEarningsMap().forEach((name, earning) ->
+                System.out.println(name + COLON_WITH_SPACE + earning)
         );
     }
 }
