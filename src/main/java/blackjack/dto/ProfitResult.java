@@ -22,7 +22,8 @@ public class ProfitResult {
     }
 
     public BigDecimal sumAllProfit() {
-        return profitResult.values().stream()
+        return profitResult.values()
+                .stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
