@@ -26,11 +26,11 @@ public enum Result {
         return DRAW;
     }
 
-    public static Result blackjackCompare(boolean current, boolean opponent) {
-        if (current && opponent) {
+    public static Result blackjackCompare(boolean isPlayerBlackjack, boolean isDealerBlackjack) {
+        if (isPlayerBlackjack && isDealerBlackjack) {
             return DRAW;
         }
-        if (current) {
+        if (isPlayerBlackjack) {
             return BLACKJACK;
         }
         return LOSE;
