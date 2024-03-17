@@ -52,21 +52,6 @@ public class Players {
         }
     }
 
-    public void drawAdditionalCard(Deck deck) {
-        for (Player player : players) {
-            player.drawAdditionalCard(deck);
-        }
-        dealer.drawAdditionalCard(deck);
-    }
-
-    public boolean isDealerDrawable() {
-        return dealer.isDrawable();
-    }
-
-    public void drawDealerCard(Deck deck) {
-        dealer.add(deck.draw());
-    }
-
     public List<PlayerResult> getAllResult() {
         return players.stream()
                 .map(this::getPlayerResult)

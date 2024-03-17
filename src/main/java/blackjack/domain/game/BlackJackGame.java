@@ -21,24 +21,6 @@ public class BlackJackGame {
         players.drawStartCards(deck);
     }
 
-    public void drawAdditionalCard() {
-        players.drawAdditionalCard(deck);
-    }
-
-    public boolean isDealerDrawable() {
-        return players.isDealerDrawable();
-    }
-
-    public void drawDealerCard() {
-        players.drawDealerCard(deck);
-    }
-
-    public List<Name> getPlayerNames() {
-        return players.getPlayers().stream()
-                .map(Player::getName)
-                .toList();
-    }
-
     public List<PlayerResult> getAllGameResults() {
         return players.getAllResult();
     }
