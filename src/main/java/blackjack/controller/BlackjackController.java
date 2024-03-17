@@ -135,7 +135,7 @@ public class BlackjackController {
     private List<ParticipantScoreDto> convertToParticipantScoreDtos(final Map<ParticipantName, Hands> handResult,
                                                                     final Map<ParticipantName, Score> scoreResult) {
         return handResult.entrySet().stream()
-                .map(entry -> ParticipantScoreDto.of(entry.getKey(), entry.getValue(), scoreResult.get(entry.getKey())))
+                .map(entry -> ParticipantScoreDto.of(entry, scoreResult))
                 .toList();
     }
 
