@@ -4,6 +4,7 @@ import domain.Betting;
 import domain.PlayerResult;
 import domain.Referee;
 import domain.card.Card;
+import domain.card.CardFactory;
 import domain.deck.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
@@ -29,7 +30,8 @@ public class BlackJackGame {
         Players players = readPlayers();
         Betting betting = readBetting(players);
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(new RandomShuffleStrategy());
+        CardFactory cardFactory = new CardFactory(new RandomShuffleStrategy());
+        Deck deck = new Deck(cardFactory);
         prepareCards(deck, dealer, players);
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(deck, dealer, players);

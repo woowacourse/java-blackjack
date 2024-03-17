@@ -1,11 +1,9 @@
 package domain.deck;
 
+import domain.card.CardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import strategy.RandomShuffleStrategy;
-import strategy.SettedShuffleStrategy;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,8 +19,8 @@ public class DeckTest {
         int expectedSize = DECK_SIZE;
 
         // when
-        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
-        Deck deck = new Deck(shuffleStrategy);
+        CardFactory cardFactory = new CardFactory(new RandomShuffleStrategy());
+        Deck deck = new Deck(cardFactory);
 
         // then
         assertThat(deck.getCards()).hasSize(expectedSize);
@@ -33,8 +31,8 @@ public class DeckTest {
     void drawDeckTest() {
         // given
         int expectedSize = DECK_SIZE - 1;
-        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
-        Deck deck = new Deck(shuffleStrategy);
+        CardFactory cardFactory = new CardFactory(new RandomShuffleStrategy());
+        Deck deck = new Deck(cardFactory);
 
         // when
         deck.draw();
@@ -47,8 +45,8 @@ public class DeckTest {
     @Test
     void emptyDeckTest() {
         // given
-        SettedShuffleStrategy shuffleStrategy = new SettedShuffleStrategy(List.of());
-        Deck deck = new Deck(shuffleStrategy);
+        CardFactory cardFactory = new CardFactory(new RandomShuffleStrategy());
+        Deck deck = new Deck(cardFactory);
         for (int i = 0; i < DECK_SIZE; i++) {
             deck.draw();
         }

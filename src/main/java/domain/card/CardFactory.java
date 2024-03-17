@@ -10,7 +10,13 @@ import java.util.stream.Stream;
 
 public class CardFactory {
 
-    public Stack<Card> createCards(ShuffleStrategy shuffleStrategy, int packCount) {
+    private final ShuffleStrategy shuffleStrategy;
+
+    public CardFactory(final ShuffleStrategy shuffleStrategy) {
+        this.shuffleStrategy = shuffleStrategy;
+    }
+
+    public Stack<Card> createCards(int packCount) {
         List<Card> cards = Stream.generate(this::createCardPack)
                 .limit(packCount)
                 .flatMap(Collection::stream)

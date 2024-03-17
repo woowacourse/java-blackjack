@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.CardFactory;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.deck.Deck;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("승패")
 class RefereeTest {
 
-    SettedShuffleStrategy shuffleStrategy;
+    CardFactory cardFactory;
     Deck deck;
     Dealer dealer;
     Players players;
@@ -82,8 +83,8 @@ class RefereeTest {
             Card card9 = Card.of(Symbol.DIAMOND, Rank.SEVEN);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
-            shuffleStrategy = new SettedShuffleStrategy(cards);
-            deck = new Deck(shuffleStrategy);
+            cardFactory = new CardFactory(new SettedShuffleStrategy(cards));
+            deck = new Deck(cardFactory);
             prepareCards(dealer, players);
             dealer.hit(deck.draw());
         }
@@ -152,8 +153,8 @@ class RefereeTest {
             Card card9 = Card.of(Symbol.DIAMOND, Rank.TEN);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
-            shuffleStrategy = new SettedShuffleStrategy(cards);
-            deck = new Deck(shuffleStrategy);
+            cardFactory = new CardFactory(new SettedShuffleStrategy(cards));
+            deck = new Deck(cardFactory);
             prepareCards(dealer, players);
         }
 
@@ -206,8 +207,8 @@ class RefereeTest {
             Card card9 = Card.of(Symbol.DIAMOND, Rank.NINE);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
-            shuffleStrategy = new SettedShuffleStrategy(cards);
-            deck = new Deck(shuffleStrategy);
+            cardFactory = new CardFactory(new SettedShuffleStrategy(cards));
+            deck = new Deck(cardFactory);
             prepareCards(dealer, players);
         }
 
