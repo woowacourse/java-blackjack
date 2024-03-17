@@ -11,8 +11,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class MoneyTest {
     @ParameterizedTest
     @DisplayName("양의 정수만 입력 가능하다")
-    @CsvSource(value = {"0", "-1", "abc"})
-    void validateMoneyTest(String money) {
+    @CsvSource(value = {"0", "-1"})
+    void validatePositiveTest(String money) {
+        assertThatThrownBy(() -> new Money(money)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @DisplayName("정수 형태만 입력 가능하다.")
+    @CsvSource(value = {"abc", "5.0"})
+    void validateNumberTypeTest(String money) {
         assertThatThrownBy(() -> new Money(money)).isInstanceOf(NumberFormatException.class);
     }
 }
