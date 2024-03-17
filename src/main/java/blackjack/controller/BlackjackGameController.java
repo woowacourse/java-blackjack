@@ -1,17 +1,13 @@
 package blackjack.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import blackjack.domain.GameResult;
-import blackjack.domain.bet.Betting;
+import blackjack.domain.betting.Bettings;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffledDeckGenerator;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.GamerResults;
 import blackjack.dto.gamer.PlayerInfo;
 import blackjack.dto.gamer.PlayerInfos;
 import blackjack.view.InputView;
@@ -19,107 +15,94 @@ import blackjack.view.OutputView;
 import blackjack.view.command.Command;
 
 public class BlackjackGameController {
-	private final InputView inputView;
-	private final OutputView outputView;
+    private final InputView inputView;
+    private final OutputView outputView;
 
-	public BlackjackGameController(final InputView inputView, final OutputView outputView) {
-		this.inputView = inputView;
-		this.outputView = outputView;
-	}
+    public BlackjackGameController(final InputView inputView, final OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
 
-	public void start() {
-		Players players = Players.fromNames(inputView.readPlayerNames());
-		Betting betting = betPlayers(players);
+    public void start() {
+        Players players = Players.fromNames(inputView.readPlayerNames());
+        Dealer dealer = new Dealer();
+        Deck deck = createDeck();
 
-		Dealer dealer = new Dealer();
-		Deck deck = createDeck();
+        Bettings bettings = betPlayers(players, dealer);
 
-		dealInitCards(deck, dealer, players);
-		receiveAdditionalCard(deck, dealer, players);
-		printResult(dealer, players);
-	}
+        dealInitCards(deck, dealer, players);
+        receiveAdditionalCard(deck, dealer, players);
 
-	private Betting betPlayers(Players players) {
-		Betting betting = new Betting();
-		for (Player player : players.getPlayers()) {
-			int money = inputView.readPlayerBettingMoney(player.getName());
-			betting.add(player, money);
-		}
+        GamerResults gamerResults = judgeGameResult(players, dealer);
 
-		return betting;
-	}
+        printResult(dealer, players);
+    }
 
-	private Deck createDeck() {
-		ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
-		return deckGenerator.generate();
-	}
+    private Bettings betPlayers(Players players, Dealer dealer) {
+        Bettings bettings = new Bettings();
+        bettings.add(dealer, 0);
 
-	private void dealInitCards(final Deck deck, final Dealer dealer, final Players players) {
-		for (Player player : players.getPlayers()) {
-			player.receiveInitCards(deck.drawInitCards());
-		}
-		dealer.receiveInitCards(deck.drawInitCards());
+        for (Player player : players.getPlayers()) {
+            int money = inputView.readPlayerBettingMoney(player.getName());
+            bettings.add(player, money);
+        }
 
-		outputView.printInitCardStatus(dealer.getFirstCard(), PlayerInfos.from(players));
-	}
+        return bettings;
+    }
 
-	private void receiveAdditionalCard(final Deck deck, final Dealer dealer, final Players players) {
-		for (Player player : players.getPlayers()) {
-			receivePlayerAdditionalCard(deck, player);
-		}
-		receiveDealerAdditionalCard(deck, dealer);
-	}
+    private Deck createDeck() {
+        ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
+        return deckGenerator.generate();
+    }
 
-	private void receivePlayerAdditionalCard(final Deck deck, final Player player) {
-		while (!player.isBust() && isPlayerInputHit(player)) {
-			player.receiveCard(deck.drawCard());
-			outputView.printCardsStatus(PlayerInfo.from(player));
-		}
-	}
+    private void dealInitCards(final Deck deck, final Dealer dealer, final Players players) {
+        for (Player player : players.getPlayers()) {
+            player.receiveInitCards(deck.drawInitCards());
+        }
+        dealer.receiveInitCards(deck.drawInitCards());
 
-	private boolean isPlayerInputHit(final Player player) {
-		return inputView.readHitOrStand(player).equals(Command.YES);
-	}
+        outputView.printInitCardStatus(dealer.getFirstCard(), PlayerInfos.from(players));
+    }
 
-	private void receiveDealerAdditionalCard(final Deck deck, final Dealer dealer) {
-		while (dealer.hasHitScore()) {
-			dealer.receiveCard(deck.drawCard());
-			outputView.printDealerHitMessage();
-		}
-	}
+    private void receiveAdditionalCard(final Deck deck, final Dealer dealer, final Players players) {
+        for (Player player : players.getPlayers()) {
+            receivePlayerAdditionalCard(deck, player);
+        }
+        receiveDealerAdditionalCard(deck, dealer);
+    }
 
-	public void printResult(final Dealer dealer, final Players players) {
-		printTotalCardStatus(dealer, players);
-		printGameResult(dealer, players);
-	}
+    private void receivePlayerAdditionalCard(final Deck deck, final Player player) {
+        while (!player.isBust() && isPlayerInputHit(player)) {
+            player.receiveCard(deck.drawCard());
+            outputView.printCardsStatus(PlayerInfo.from(player));
+        }
+    }
 
-	private void printTotalCardStatus(final Dealer dealer, final Players players) {
-		outputView.printTotalCardsStatus(dealer, players);
-	}
+    private boolean isPlayerInputHit(final Player player) {
+        return inputView.readHitOrStand(player).equals(Command.YES);
+    }
 
-	private void printGameResult(final Dealer dealer, final Players players) {
-		Map<Player, GameResult> playersResult = getPlayersResult(dealer,
-			players);
-		Map<GameResult, Long> dealerResult = getDealerResult(playersResult);
+    private void receiveDealerAdditionalCard(final Deck deck, final Dealer dealer) {
+        while (dealer.hasHitScore()) {
+            dealer.receiveCard(deck.drawCard());
+            outputView.printDealerHitMessage();
+        }
+    }
 
-		outputView.printGameResult(dealerResult, playersResult);
-	}
+    private GamerResults judgeGameResult(Players players, Dealer dealer) {
+        GamerResults gamerResults = new GamerResults();
+        for (final Player player : players.getPlayers()) {
+            gamerResults.add(player, GameResult.getGameResult(player, dealer));
+        }
 
-	private Map<Player, GameResult> getPlayersResult(Dealer dealer, Players players) {
-		Map<Player, GameResult> playerResults = new HashMap<>();
-		for (Player player : players.getPlayers()) {
-			playerResults.put(player, compareScore(dealer, player));
-		}
-		return playerResults;
-	}
+        return gamerResults;
+    }
 
-	private GameResult compareScore(final Dealer dealer, final Player player) {
-		return GameResult.of(dealer, player);
-	}
+    public void printResult(final Dealer dealer, final Players players) {
+        printTotalCardStatus(dealer, players);
+    }
 
-	private Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
-		return playerResults.values().stream()
-			.map(GameResult::reverse)
-			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-	}
+    private void printTotalCardStatus(final Dealer dealer, final Players players) {
+        outputView.printTotalCardsStatus(dealer, players);
+    }
 }

@@ -1,35 +1,45 @@
 package blackjack.domain.gamer;
 
-import java.util.Collections;
-import java.util.List;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-abstract class Gamer {
-	protected final Cards cards;
+import java.util.Collections;
+import java.util.List;
 
-	protected Gamer(final Cards cards) {
-		this.cards = cards;
-	}
+public abstract class Gamer {
+    public static final int BLACKJACK_CARD_SIZE = 2;
+    public static final int BLACKJACK_SCORE = 21;
 
-	public void receiveInitCards(final List<Card> cards) {
-		this.cards.addAll(cards);
-	}
+    protected final Cards cards;
 
-	public void receiveCard(final Card card) {
-		cards.add(card);
-	}
+    protected Gamer(final Cards cards) {
+        this.cards = cards;
+    }
 
-	public boolean isBust() {
-		return cards.isBurst();
-	}
+    public void receiveInitCards(final List<Card> cards) {
+        this.cards.addAll(cards);
+    }
 
-	public int getScore() {
-		return cards.calculateScore();
-	}
+    public void receiveCard(final Card card) {
+        cards.add(card);
+    }
 
-	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards.getCards());
-	}
+    public boolean isBust() {
+        return cards.isBurst();
+    }
+
+    public int getScore() {
+        return cards.calculateScore();
+    }
+
+    public boolean isBlackjack() {
+        if (cards.size() == BLACKJACK_CARD_SIZE && cards.calculateScore() == BLACKJACK_SCORE) {
+            return true;
+        }
+        return false;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards.getCards());
+    }
 }
