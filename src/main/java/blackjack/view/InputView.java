@@ -36,7 +36,7 @@ public class InputView {
         return convertInputToBettingMoney(input);
     }
 
-    private String formatAskBettingMoneyToPlayer(String playerName) {
+    private String formatAskBettingMoneyToPlayer(final String playerName) {
         return String.format(ASK_BETTING_MONEY_TO_PLAYER, playerName);
     }
 
@@ -45,7 +45,7 @@ public class InputView {
         return parseBettingMoneyAmountToBettingMoney(bettingMoneyAmount);
     }
 
-    private int parseInputToBettingMoneyAmount(String input) {
+    private int parseInputToBettingMoneyAmount(final String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
@@ -53,7 +53,7 @@ public class InputView {
         }
     }
 
-    private BettingMoney parseBettingMoneyAmountToBettingMoney(int amount) {
+    private BettingMoney parseBettingMoneyAmountToBettingMoney(final int amount) {
         return new BettingMoney(amount);
     }
 

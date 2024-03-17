@@ -43,7 +43,7 @@ public class Player {
         return cards.calculateScore();
     }
 
-    public int calculateBettingProfit(Betting betting, Dealer dealer) {
+    public int calculateBettingProfit(final Betting betting, final Dealer dealer) {
         MatchResult matchResult = MatchResult.determine(dealer, this);
         return betting.calculatePlayerBettingProfit(name, matchResult);
     }

@@ -13,16 +13,16 @@ public class Betting {
         this.playerBettingMoney = new HashMap<>();
     }
 
-    public void addPlayerBettingMoney(String playerName, BettingMoney bettingMoney) {
+    public void addPlayerBettingMoney(final String playerName, final BettingMoney bettingMoney) {
         playerBettingMoney.put(playerName, bettingMoney);
     }
 
-    public int calculatePlayerBettingProfit(String playerName, MatchResult matchResult) {
+    public int calculatePlayerBettingProfit(final String playerName, final MatchResult matchResult) {
         BettingMoney bettingMoney = findBettingMoneyByPlayerName(playerName);
         return matchResult.calculateProfit(bettingMoney);
     }
 
-    private BettingMoney findBettingMoneyByPlayerName(String playerName) {
+    private BettingMoney findBettingMoneyByPlayerName(final String playerName) {
         if (!playerBettingMoney.containsKey(playerName)) {
             throw new IllegalArgumentException(NOT_FOUND_BETTING_PLAYER);
         }

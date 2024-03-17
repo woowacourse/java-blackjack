@@ -22,7 +22,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean canAddCardWithinScoreLimit(int maxScoreThreshold) {
+    public boolean canAddCardWithinScoreLimit(final int maxScoreThreshold) {
         return calculateScore() <= maxScoreThreshold;
     }
 
@@ -43,7 +43,7 @@ public class Cards {
                 .anyMatch(card -> card.getDenomination().isAce());
     }
 
-    private int addAceScoreIfNotBust(int total) {
+    private int addAceScoreIfNotBust(final int total) {
         if (total + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
             return total + ACE_ADDITIONAL_SCORE;
         }

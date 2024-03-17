@@ -35,10 +35,10 @@ public class Dealer {
         return cards.calculateScore();
     }
 
-    public int calculateBettingProfit(List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+    public int calculateBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
         return playerBettingProfitOutcomes.stream()
                 .mapToInt(PlayerBettingProfitOutcome::profit)
-                .sum() * -1;
+                .sum() * -1; // TODO: view 로 옮기기
     }
 
     public boolean isBlackjack() {
