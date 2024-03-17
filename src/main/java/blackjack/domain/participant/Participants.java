@@ -33,6 +33,7 @@ public class Participants {
             throw new IllegalArgumentException("사용자 이름이 중복되었습니다.");
         }
     }
+
     private long getUniqueSize(List<String> playerNames) {
         return playerNames.stream()
                 .distinct()
