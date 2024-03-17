@@ -37,7 +37,7 @@ public class OutputView {
         System.out.println(playerCardsMessage(player));
     }
 
-    public String playerCardsMessage(Player player) {
+    private String playerCardsMessage(Player player) {
         return String.format("%s카드: %s%n", player.getName(), cardsMessage(player.getCards()));
     }
 
