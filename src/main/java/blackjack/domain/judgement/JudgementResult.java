@@ -1,6 +1,6 @@
 package blackjack.domain.judgement;
 
-import blackjack.domain.participant.PlayerMoney;
+import blackjack.domain.common.Money;
 
 public enum JudgementResult {
 
@@ -15,7 +15,7 @@ public enum JudgementResult {
         this.profitMultiplier = profitMultiplier;
     }
 
-    public PlayerMoney calculateProfit(PlayerMoney money) {
+    public Money calculateProfit(Money money) {
         return money.multiply(profitMultiplier);
     }
 }

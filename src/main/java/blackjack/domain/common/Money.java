@@ -1,15 +1,15 @@
-package blackjack.domain.participant;
+package blackjack.domain.common;
 
-public class PlayerMoney {
+public class Money {
 
     private final double amount;
 
-    public PlayerMoney(double amount) {
+    public Money(double amount) {
         this.amount = amount;
     }
 
-    public PlayerMoney multiply(double multiplier) {
-        return new PlayerMoney(amount * multiplier);
+    public Money multiply(double multiplier) {
+        return new Money(amount * multiplier);
     }
 
     public boolean isGreaterEqualThan(double target) {

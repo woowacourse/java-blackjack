@@ -9,9 +9,9 @@ import java.util.Map;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.common.Money;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ class ProfitTest {
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        Participants participants = new Participants(List.of("pobi"), List.of(new PlayerMoney(1000)));
+        Participants participants = new Participants(List.of("pobi"), List.of(new Money(1000)));
 
         assertThatCode(() -> new Profit(participants))
                 .doesNotThrowAnyException();
@@ -42,7 +42,7 @@ class ProfitTest {
     private Participants createAllPlayerBustParticipants() {
         Participants participants = new Participants(
                 List.of("pobi"),
-                List.of(new PlayerMoney(1000)));
+                List.of(new Money(1000)));
         List<Player> players = participants.getPlayers();
         for (Player player : players) {
             player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));

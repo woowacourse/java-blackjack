@@ -1,12 +1,14 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.common.Money;
+
 public class Player extends Participant {
 
     private static final int MIN_PLAYER_MONEY_AMOUNT = 1;
 
-    private final PlayerMoney money;
+    private final Money money;
 
-    public Player(String name, PlayerMoney money) {
+    public Player(String name, Money money) {
         super(name);
 
         if (!money.isGreaterEqualThan(MIN_PLAYER_MONEY_AMOUNT)) {
@@ -18,7 +20,7 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public PlayerMoney getMoney() {
+    public Money getMoney() {
         return money;
     }
 

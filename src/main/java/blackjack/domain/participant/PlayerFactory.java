@@ -2,19 +2,20 @@ package blackjack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import blackjack.domain.common.Money;
 
 public class PlayerFactory {
 
     private PlayerFactory() {
     }
 
-    public static List<Player> createPlayers(List<String> playerNames, List<PlayerMoney> playersMoney, Dealer dealer) {
+    public static List<Player> createPlayers(List<String> playerNames, List<Money> playersMoney, Dealer dealer) {
         validate(playerNames, playersMoney, dealer);
 
         return create(playerNames, playersMoney);
     }
 
-    private static void validate(List<String> playerNames, List<PlayerMoney> playersMoney, Dealer dealer) {
+    private static void validate(List<String> playerNames, List<Money> playersMoney, Dealer dealer) {
         validatePlayerSize(playerNames);
         validateDuplicatedPlayerNames(playerNames);
         validateSameSize(playerNames, playersMoney);
@@ -39,7 +40,7 @@ public class PlayerFactory {
                 .count();
     }
 
-    private static void validateSameSize(List<String> playerNames, List<PlayerMoney> playersMoney) {
+    private static void validateSameSize(List<String> playerNames, List<Money> playersMoney) {
         if (playerNames.size() != playersMoney.size()) {
             throw new IllegalArgumentException("사용자의 이름의 수와 돈의 수가 일치하지 않습니다.");
         }
@@ -51,7 +52,7 @@ public class PlayerFactory {
         }
     }
 
-    private static List<Player> create(List<String> playerNames, List<PlayerMoney> playersMoney) {
+    private static List<Player> create(List<String> playerNames, List<Money> playersMoney) {
         List<Player> players = new ArrayList<>();
         int totalPlayerSize = playerNames.size();
 
