@@ -15,8 +15,13 @@ public class Bust extends Finished {
     }
 
     @Override
-    public double profitRate() {
+    public double profitRate(final State state) {
         return -1;
+    }
+
+    @Override
+    public boolean isBust() {
+        return true;
     }
 
     @Override

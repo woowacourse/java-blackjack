@@ -14,7 +14,16 @@ public class Stand extends Finished {
     }
 
     @Override
-    public double profitRate() {
+    public double profitRate(final State state) {
+        if (state.isBust()) {
+            return 1;
+        }
+        if (state.isBlackjack() || state.score() > score()) {
+            return -1;
+        }
+        if (state.score() == score()) {
+            return 0;
+        }
         return 1;
     }
 

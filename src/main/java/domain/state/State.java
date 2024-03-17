@@ -11,9 +11,11 @@ public interface State {
 
     int score();
 
-    double profitRate();
+    double profitRate(State state);
 
-    boolean isFinished();
+    boolean isBust();
+
+    boolean isBlackjack();
 
     List<Card> hand();
 }

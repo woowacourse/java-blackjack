@@ -35,11 +35,15 @@ public class Players {
         return players.size() > 8;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public int totalProfit(final Dealer dealer) {
+        int totalProfit = 0;
+        for (final Player player : players) {
+            totalProfit += player.profit(dealer);
+        }
+        return totalProfit;
     }
 
-    public int size() {
-        return players.size();
+    public List<Player> getPlayers() {
+        return players;
     }
 }

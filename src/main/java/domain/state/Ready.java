@@ -36,12 +36,17 @@ public class Ready implements State {
     }
 
     @Override
-    public double profitRate() {
+    public double profitRate(final State state) {
         throw new UnsupportedOperationException("준비 상태에서는 수익률을 계산할 수 없습니다.");
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
         return false;
     }
 

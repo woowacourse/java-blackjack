@@ -29,13 +29,18 @@ public class Finished implements State {
     }
 
     @Override
-    public double profitRate() {
+    public double profitRate(final State state) {
         return 0;
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
     }
 
     @Override
