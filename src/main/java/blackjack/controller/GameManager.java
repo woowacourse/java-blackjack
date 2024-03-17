@@ -1,10 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.profit.PlayersProfit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -20,12 +20,12 @@ public class GameManager {
 
     public void start() {
         Players players = Players.create(inputView.readNames());
+        PlayersProfit playersProfit = players.bet(player -> inputView.readBetAmount(player.getName()));
         Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
         deal(players, dealer, cardDeck);
         draw(players, dealer, cardDeck);
-        judge(players, dealer);
     }
 
     private void deal(Players players, Dealer dealer, CardDeck cardDeck) {
@@ -61,10 +61,5 @@ public class GameManager {
             dealer.draw(cardDeck);
             outputView.printDrawToDealer();
         }
-    }
-
-    private void judge(Players players, Dealer dealer) {
-        PlayersResult playersResult = players.judge(dealer);
-        outputView.printAllResult(playersResult);
     }
 }

@@ -22,10 +22,16 @@ public class InputView {
         return splitAndTrim(scanner.nextLine());
     }
 
-    public List<String> splitAndTrim(String input) {
+    private List<String> splitAndTrim(String input) {
         return Arrays.stream(input.split(DELIMITER))
                 .map(String::trim)
                 .toList();
+    }
+
+    public int readBetAmount(PlayerName playerName) {
+        String message = String.format("%s의 배팅 금액은?", playerName.value());
+        System.out.println(String.join("", LINE_SEPARATOR, message));
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public DrawDecision readDrawDecision(PlayerName playerName) {

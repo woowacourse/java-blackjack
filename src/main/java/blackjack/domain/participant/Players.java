@@ -1,11 +1,12 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.game.PlayersResult;
-import blackjack.domain.game.Result;
+import blackjack.domain.profit.BetAmount;
+import blackjack.domain.profit.PlayersProfit;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -49,22 +50,22 @@ public class Players {
         return new Players(players);
     }
 
+    public PlayersProfit bet(Function<Player, Integer> betByPlayer) {
+        Map<Player, BetAmount> profits = players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> new BetAmount(betByPlayer.apply(player))
+                ));
+
+        return PlayersProfit.createInitial(profits);
+    }
+
     public void deal(CardDeck cardDeck) {
         players.forEach(player -> player.deal(cardDeck));
     }
 
     public void draw(Consumer<Player> drawToPlayer) {
         players.forEach(drawToPlayer);
-    }
-
-    public PlayersResult judge(Dealer dealer) {
-        Map<Player, Result> results = players.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> Result.determineResult(player, dealer)
-                ));
-
-        return new PlayersResult(results);
     }
 
     public List<Player> getPlayers() {
