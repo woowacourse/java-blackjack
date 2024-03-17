@@ -5,7 +5,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.BlackjackRevenueCalculator;
+import blackjack.domain.result.BlackjackEarningCalculator;
 import blackjack.dto.DealerInitialHandDto;
 import blackjack.dto.GamerHandDto;
 import blackjack.dto.GamerRevenueDto;
@@ -120,13 +120,13 @@ public class BlackjackController {
     }
 
     private Map<BlackjackGamer, Money> getGamerRevenueMap(Dealer dealer, Players players) {
-        BlackjackRevenueCalculator revenueCalculator = BlackjackRevenueCalculator.fromDealer(dealer);
+        BlackjackEarningCalculator earningCalculator = BlackjackEarningCalculator.fromDealer(dealer);
         Map<BlackjackGamer, Money> gamerRevenueMap = new LinkedHashMap<>();
 
-        gamerRevenueMap.put(dealer, revenueCalculator.calculateDealerRevenue(players));
+        gamerRevenueMap.put(dealer, earningCalculator.calculateDealerEarning(players));
         players.getPlayers().forEach(player -> {
             Money betAmount = players.getBetAmount(player);
-            Money revenue = revenueCalculator.calculatePlayerRevenue(player, betAmount);
+            Money revenue = earningCalculator.calculatePlayerEarning(player, betAmount);
             gamerRevenueMap.put(player, revenue);
         });
 

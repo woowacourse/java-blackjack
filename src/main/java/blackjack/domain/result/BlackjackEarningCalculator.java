@@ -6,24 +6,24 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import java.util.List;
 
-public class BlackjackRevenueCalculator {
+public class BlackjackEarningCalculator {
 
     private static final double BLACKJACK_REVENUE_RATIO = 1.5D;
     private static final double LOSE_REVENUE_RATIO = -1.0D;
 
     private final PlayerResultHandler playerResultHandler;
 
-    private BlackjackRevenueCalculator(PlayerResultHandler playerResultHandler) {
+    private BlackjackEarningCalculator(PlayerResultHandler playerResultHandler) {
         this.playerResultHandler = playerResultHandler;
     }
 
-    public static BlackjackRevenueCalculator fromDealer(Dealer dealer) {
+    public static BlackjackEarningCalculator fromDealer(Dealer dealer) {
         PlayerResultHandler resultHandler = new PlayerResultHandler(dealer);
 
-        return new BlackjackRevenueCalculator(resultHandler);
+        return new BlackjackEarningCalculator(resultHandler);
     }
 
-    public Money calculateDealerRevenue(Players players) {
+    public Money calculateDealerEarning(Players players) {
         List<Player> losePlayers = playerResultHandler.getLosePlayers(players.getPlayers());
 
         if (losePlayers.isEmpty()) {
@@ -35,13 +35,13 @@ public class BlackjackRevenueCalculator {
                 .reduce(Money.getZeroAmountMoney(), Money::add);
     }
 
-    public Money calculatePlayerRevenue(Player player, Money betAmount) {
+    public Money calculatePlayerEarning(Player player, Money betAmount) {
         GameResult gameResult = playerResultHandler.getPlayerResult(player);
 
-        return getRevenue(gameResult, betAmount);
+        return getPlayerEarning(gameResult, betAmount);
     }
 
-    private Money getRevenue(GameResult gameResult, Money betAmount) {
+    private Money getPlayerEarning(GameResult gameResult, Money betAmount) {
         if (gameResult == GameResult.BLACKJACK_WIN) {
             return betAmount.multiplyByRatio(BLACKJACK_REVENUE_RATIO);
         }
