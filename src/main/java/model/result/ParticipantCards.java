@@ -16,11 +16,15 @@ public class ParticipantCards {
 
     public static ParticipantCards createWithInitialCards(Dealer dealer, Players players) {
         ParticipantCard dealerCard = ParticipantCard.createWithFirstCard(dealer);
-        List<ParticipantCard> playerCards = players.getPlayers()
+        List<ParticipantCard> playerCards = createPlayerCards(players);
+        return new ParticipantCards(dealerCard, playerCards);
+    }
+
+    private static List<ParticipantCard> createPlayerCards(Players players) {
+        return players.getPlayers()
             .stream()
             .map(ParticipantCard::createWithAllCard)
             .toList();
-        return new ParticipantCards(dealerCard, playerCards);
     }
 
     public String dealerName() {

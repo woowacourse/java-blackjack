@@ -42,9 +42,9 @@ public class ParticipantProfits {
     }
 
     private static int calculateDealerProfit(List<ParticipantProfit> playersBetProfits) {
-        return (-1) * playersBetProfits.stream()
+        return playersBetProfits.stream()
             .mapToInt(ParticipantProfit::getProfit)
-            .sum();
+            .sum() * -1;
     }
 
     public ParticipantProfit getDealerProfit() {
