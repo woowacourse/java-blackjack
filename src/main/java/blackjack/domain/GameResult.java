@@ -21,24 +21,52 @@ public enum GameResult {
     }
 
     private static boolean isBlackJackCondition(final Dealer dealer, final Player player) {
+        return isPlayerOnlyBlackJack(dealer, player);
+    }
+
+    private static boolean isPlayerOnlyBlackJack(final Dealer dealer, final Player player) {
         return !dealer.isBlackJack() && player.isBlackJack();
     }
 
     private static boolean isWinCondition(final Dealer dealer, final Player player) {
         return (dealer.isBust()) ||
-                (!player.isBust() && player.calculateScore() > dealer.calculateScore());
+                isHigherThanDealerScore(dealer, player);
+    }
+
+    private static boolean isHigherThanDealerScore(final Dealer dealer, final Player player) {
+        return !player.isBust() && player.calculateScore() > dealer.calculateScore();
     }
 
     private static boolean isLoseCondition(final Dealer dealer, final Player player) {
         return player.isBust() ||
-                (dealer.isBlackJack() && !player.isBlackJack()) ||
-                (player.calculateScore() < dealer.calculateScore());
+                isDealerOnlyBlackJack(dealer, player) ||
+                isLowerThanDealerScore(dealer, player);
+    }
+
+    private static boolean isDealerOnlyBlackJack(final Dealer dealer, final Player player) {
+        return dealer.isBlackJack() && !player.isBlackJack();
+    }
+
+    private static boolean isLowerThanDealerScore(final Dealer dealer, final Player player) {
+        return player.calculateScore() < dealer.calculateScore();
     }
 
     private static boolean isPushCondition(final Dealer dealer, final Player player) {
-        return (dealer.isBust() && player.isBust()) ||
-                (dealer.isBlackJack() && player.isBlackJack()) ||
-                (!player.isBust() && player.calculateScore() == dealer.calculateScore());
+        return isBothBust(dealer, player) ||
+                isBothBlackJack(dealer, player) ||
+                isSameScore(dealer, player);
+    }
+
+    private static boolean isBothBust(final Dealer dealer, final Player player) {
+        return dealer.isBust() && player.isBust();
+    }
+
+    private static boolean isBothBlackJack(final Dealer dealer, final Player player) {
+        return dealer.isBlackJack() && player.isBlackJack();
+    }
+
+    private static boolean isSameScore(final Dealer dealer, final Player player) {
+        return !player.isBust() && player.calculateScore() == dealer.calculateScore();
     }
 
     public static GameResult findGameResult(final Dealer dealer, final Player player) {
