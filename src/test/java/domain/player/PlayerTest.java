@@ -16,7 +16,7 @@ public class PlayerTest {
     void canHit() {
         final Player player = new Player(new Name("종이"));
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
-        Assertions.assertThat(player.getState().isRunning()).isTrue();
+        Assertions.assertThat(player.getState().isFinished()).isFalse();
     }
 
     @DisplayName("플레이어는 카드의 합이 21이상이면 히트할 수 없다")
@@ -24,7 +24,7 @@ public class PlayerTest {
     void canNotHit() {
         final Player player = new Player(new Name("종이"));
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.ACE, Suit.CLUBS));
-        Assertions.assertThat(player.getState().isRunning()).isFalse();
+        Assertions.assertThat(player.getState().isFinished()).isTrue();
     }
 
     @DisplayName("플레이어가 블랙잭이 아니면서 이기면 배팅 금액만큼 얻는ㄴ다")
