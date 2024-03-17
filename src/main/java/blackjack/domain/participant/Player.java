@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Player extends Participant {
 
@@ -15,7 +15,7 @@ public class Player extends Participant {
         return calculate() < BLACKJACK_SCORE;
     }
 
-    public int getBetting() {
+    int getBetting() {
         return this.betting.getBetting();
     }
 }

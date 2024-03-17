@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,11 +13,11 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand() {
+    Hand() {
         this.cards = new ArrayList<>();
     }
 
-    public int calculate() {
+    int calculate() {
         int sum = calculateWithDefaultAceNumber();
 
         if (hasAce() && isAceAdditionalValueAddable(sum)) {
@@ -26,7 +27,7 @@ public class Hand {
         return sum;
     }
 
-    public void put(Card card) {
+    void put(Card card) {
         cards.add(card);
     }
 

@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
 
 public abstract class Participant {
 
@@ -7,7 +9,7 @@ public abstract class Participant {
     private final String name;
     private final Hand hand;
 
-    public Participant(String name) {
+    Participant(String name) {
         this.name = name;
         this.hand = new Hand();
     }

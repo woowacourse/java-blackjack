@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Betting {
 
@@ -12,7 +12,7 @@ public class Betting {
         this.betting = betting;
     }
 
-    public int getBetting() {
+    int getBetting() {
         return betting;
     }
 
