@@ -6,10 +6,10 @@ import blackjack.model.deck.Card;
 import blackjack.model.participant.Name;
 import blackjack.view.formatter.CardsFormatter;
 import blackjack.view.formatter.NameProfitFormat;
+import blackjack.view.formatter.NamesFormatter;
 import blackjack.view.formatter.PlayerNameFormatter;
-import blackjack.view.formatter.ScoreFormatter;
+import blackjack.view.formatter.ScoreResultFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -22,10 +22,7 @@ public class OutputView {
     }
 
     public static void printDistributionSubject(final List<Name> names) {
-        String formattedName = names.stream()
-                .map(Name::getValue)
-                .collect(Collectors.joining(", "));
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", formattedName);
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", NamesFormatter.format(names));
     }
 
     public static void printNameAndCards(final Name name, final List<Card> cards) {
@@ -43,7 +40,7 @@ public class OutputView {
     public static void printFinalCardsAndScore(final NameCardsScore nameCardsScore) {
         System.out.println(PlayerNameFormatter.formatWithCardComment(nameCardsScore.name())
                 + CardsFormatter.format(nameCardsScore.cards())
-                + ScoreFormatter.format(nameCardsScore.score()));
+                + ScoreResultFormatter.format(nameCardsScore.score()));
     }
 
     public static void printProfits(final List<NameProfit> playerProfits) {
