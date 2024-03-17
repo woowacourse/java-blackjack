@@ -6,8 +6,8 @@ public class Card {
     private final Denomination denomination;
     private final Suit suit;
 
-    public Card(final Denomination number, final Suit symbol) {
-        this.denomination = number;
+    public Card(final Denomination denomination, final Suit symbol) {
+        this.denomination = denomination;
         this.suit = symbol;
     }
 
