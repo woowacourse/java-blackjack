@@ -27,7 +27,7 @@ public class Hand {
     }
 
     public Score getTotalScore() {
-        return Scores.getScore(countTotalScore());
+        return Score.valueOf(countTotalScore());
     }
 
     private int countTotalScore() {

@@ -1,13 +1,12 @@
 package domain.playingcard;
 
 import domain.participant.Score;
-import domain.participant.Scores;
 
 public enum PlayingCardValue {
-    ACE(Scores.getScore(1)), TWO(Scores.getScore(2)), THREE(Scores.getScore(3)), FOUR(Scores.getScore(4)),
-    FIVE(Scores.getScore(5)), SIX(Scores.getScore(6)), SEVEN(Scores.getScore(7)), EIGHT(Scores.getScore(8)),
-    NINE(Scores.getScore(9)),
-    TEN(Scores.getScore(10)), JACK(Scores.getScore(10)), QUEEN(Scores.getScore(10)), KING(Scores.getScore(10));
+    ACE(Score.valueOf(1)), TWO(Score.valueOf(2)), THREE(Score.valueOf(3)), FOUR(Score.valueOf(4)),
+    FIVE(Score.valueOf(5)), SIX(Score.valueOf(6)), SEVEN(Score.valueOf(7)), EIGHT(Score.valueOf(8)),
+    NINE(Score.valueOf(9)),
+    TEN(Score.valueOf(10)), JACK(Score.valueOf(10)), QUEEN(Score.valueOf(10)), KING(Score.valueOf(10));
 
     private final Score score;
 
