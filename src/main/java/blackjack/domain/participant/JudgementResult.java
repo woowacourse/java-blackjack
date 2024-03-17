@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-public enum JudgementResult {
+enum JudgementResult {
 
     BLACKJACK_WIN(1.5),
     WIN(1),

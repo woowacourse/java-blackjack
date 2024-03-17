@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerFactory {
+class PlayerFactory {
 
     private PlayerFactory() {
     }

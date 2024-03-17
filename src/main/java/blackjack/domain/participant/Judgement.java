@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-public class Judgement {
+class Judgement {
 
     public JudgementResult judgePlayer(Dealer dealer, Player player) {
         int playerScore = player.calculateScore();
