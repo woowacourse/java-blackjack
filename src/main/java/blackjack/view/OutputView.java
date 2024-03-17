@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.supplies.Card;
+import blackjack.domain.card.Card;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +39,7 @@ public class OutputView {
     }
 
     private static String formatCard(Card card) {
-        return CardScoreName.convert(card.rank()) + CardSymbolName.convert(card.suit());
+        return RankName.convert(card.rank()) + SuitName.convert(card.suit());
     }
 
     public static void printErrorMessage(String message) {
@@ -62,11 +62,11 @@ public class OutputView {
         System.out.println(RESULT_FINAL_PROFIT);
     }
 
-    public static void printDealerProfit(int profit) {
+    public static void printDealerProfit(Long profit) {
         System.out.println(String.format(PROFIT_FORMAT, DEALER_NAME, profit));
     }
 
-    public static void printPlayerProfit(String name, int profit) {
+    public static void printPlayerProfit(String name, Long profit) {
         System.out.println(String.format(PROFIT_FORMAT, name, profit));
     }
 }
