@@ -18,13 +18,13 @@ class MoneyTest {
         assertThatCode(() -> new Money(10000)).doesNotThrowAnyException();
     }
 
-    @DisplayName("돈은 0보다 큰 자연수 여야 한다.")
+    @DisplayName("배팅 최소금액은 0원, 최대 금액은 1억원 이어야 한다.")
     @ParameterizedTest
-    @ValueSource(ints = {0, -1, -9999})
+    @ValueSource(ints = {0, -1, -9999, 1_000_000_000})
     void validateMoneyRange(int money) {
         assertThatThrownBy(() -> new Money(money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("돈은 0보다 큰 자연수여야 합니다.");
+                .hasMessage("배팅 최소금액은 0원, 최대 금액은 1억원 입니다.");
     }
 
     @DisplayName("결과 비율에 맞추어 돈을 계산한다")
@@ -37,10 +37,10 @@ class MoneyTest {
         PlayerResult lose = PlayerResult.LOSE;
 
         assertAll(
-                () -> assertThat(money.getResultMoney(blackJack)).isEqualTo(15000),
-                () -> assertThat(money.getResultMoney(win)).isEqualTo(10000),
-                () -> assertThat(money.getResultMoney(draw)).isEqualTo(0),
-                () -> assertThat(money.getResultMoney(lose)).isEqualTo(-10000)
+                () -> assertThat(money.getResultMoneyValue(blackJack)).isEqualTo(15000),
+                () -> assertThat(money.getResultMoneyValue(win)).isEqualTo(10000),
+                () -> assertThat(money.getResultMoneyValue(draw)).isEqualTo(0),
+                () -> assertThat(money.getResultMoneyValue(lose)).isEqualTo(-10000)
         );
     }
 }

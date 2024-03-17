@@ -9,12 +9,12 @@ public class Money {
     }
 
     private void validateMoneyRange(int money) {
-        if (money <= 0) {
-            throw new IllegalArgumentException("돈은 0보다 큰 자연수여야 합니다.");
+        if (money <= 0 || money > 100_000_000) {
+            throw new IllegalArgumentException("배팅 최소금액은 0원, 최대 금액은 1억원 입니다.");
         }
     }
 
-    public int getResultMoney(PlayerResult playerResult) {
+    public int getResultMoneyValue(PlayerResult playerResult) {
         double ratio = playerResult.getRatio();
         return (int) (ratio * money);
     }
