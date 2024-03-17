@@ -45,7 +45,7 @@ public class BlackjackController {
         OutputView.printFinalProfitAnnounce();
         OutputView.printDealerProfit(dealer.profit());
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.values()) {
             OutputView.printPlayerProfit(player.name(), player.profit());
         }
     }
@@ -53,16 +53,16 @@ public class BlackjackController {
     private void dealAndPrintResult(DeckMachine deckMachine, Dealer dealer, Players players) {
         deckMachine.deal(dealer, players);
 
-        OutputView.printDealAnnounce(players.getNames());
+        OutputView.printDealAnnounce(players.names());
         OutputView.printDealerDealCard(dealer.findPublicDealCard());
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.values()) {
             OutputView.printDealCards(player.name(), player.cards());
         }
     }
 
     private void askToPlayersHit(Players players, DeckMachine deckMachine) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.values()) {
             processHitOrStand(player, deckMachine);
         }
     }
@@ -115,7 +115,7 @@ public class BlackjackController {
     private void printAllPlayersHandResult(Dealer dealer, Players players) {
         OutputView.printDealerCards(dealer.cards(), dealer.score());
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.values()) {
             OutputView.printPlayerCards(player.name(), player.cards(), player.score());
         }
     }
@@ -124,7 +124,7 @@ public class BlackjackController {
         Referee referee = new Referee();
         ProfitCalculator calculator = new ProfitCalculator();
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.values()) {
             PlayerResult result = referee.judgePlayerResult(dealer, player);
             calculator.playerProfit(player, result);
         }

@@ -38,7 +38,7 @@ public class DeckMachineTest {
         deckMachine.deal(dealer, players);
 
         // then
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.values()) {
             assertThat(player.cards().size()).isEqualTo(2);
         }
         assertThat(dealer.cards().size()).isEqualTo(2);
