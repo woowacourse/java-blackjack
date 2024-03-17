@@ -6,69 +6,72 @@ import static domain.game.BlackJackGame.BLACKJACK_SCORE;
 import controller.dto.response.ParticipantHandStatus;
 import domain.card.Card;
 import domain.game.DecisionToContinue;
+import domain.game.Scoreboard;
 import domain.game.deck.Deck;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-
-    protected final String name;
-    protected final Hand hand;
+    protected final Scoreboard scoreboard;
 
     protected Participant(final String name) {
-        this.name = name;
-        this.hand = new Hand();
+        this.scoreboard = new Scoreboard(name);
     }
 
     public List<Card> pickCard(final Deck deck, final int count) {
         for (int index = 0; index < count; index++) {
-            hand.saveCard(deck.pick());
+            scoreboard.add(deck.pick());
         }
-        return hand.getCards();
+        return scoreboard.showCards();
     }
 
     public boolean isBlackJack() {
-        return hand.size() == BLACKJACK_CARD_SIZE && hand.calculateResultScore() == BLACKJACK_SCORE;
+        return scoreboard.cardSize() == BLACKJACK_CARD_SIZE
+                && scoreboard.resultScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBusted() {
-        return hand.calculateScore() > BLACKJACK_SCORE;
+        return scoreboard.score() > BLACKJACK_SCORE;
     }
 
     public boolean isNotBusted() {
         return !isBusted();
     }
 
-    protected int calculateScore() {
-        return hand.calculateScore();
-    }
-
-    private int calculateResultScore() {
-        return hand.calculateResultScore();
-    }
-
-    public ParticipantHandStatus createHandStatus() {
-        return new ParticipantHandStatus(name, hand);
-    }
-
     public boolean isNotSameScoreAs(final Participant other) {
-        return calculateResultScore() != other.calculateResultScore();
+        return other.doesNotEqualResultScore(scoreboard.resultScore());
+    }
+
+    private boolean doesNotEqualResultScore(final int score) {
+        return scoreboard.resultScore() != score;
     }
 
     public boolean hasMoreScoreThan(final Participant other) {
-        return calculateResultScore() > other.calculateResultScore();
+        return other.hasLessScore(scoreboard.resultScore());
+    }
+
+    private boolean hasLessScore(final int score) {
+        return scoreboard.resultScore() < score;
     }
 
     public boolean hasLessOrSameCardThan(final Participant other) {
-        return getCardSize() <= other.getCardSize();
+        return other.hasMoreOrSameCardSize(scoreboard.cardSize());
     }
 
-    public int getCardSize() {
-        return hand.size();
+    private boolean hasMoreOrSameCardSize(final int size) {
+        return scoreboard.cardSize() >= size;
     }
 
-    public String getName() {
-        return this.name;
+    public ParticipantHandStatus createHandStatus() {
+        return scoreboard.generateParticipantHandStatus();
+    }
+
+    public int cardSize() {
+        return scoreboard.cardSize();
+    }
+
+    public String name() {
+        return scoreboard.showName();
     }
 
     @Override
@@ -80,12 +83,12 @@ public abstract class Participant {
             return false;
         }
         final Participant that = (Participant) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(scoreboard, that.scoreboard);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(scoreboard);
     }
 
     public abstract boolean canPickCard(final DecisionToContinue decision);

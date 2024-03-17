@@ -58,10 +58,6 @@ public class Hand {
         return cards.size();
     }
 
-    public void clear() {
-        cards.clear();
-    }
-
     public List<Card> getCards() {
         return cards;
     }

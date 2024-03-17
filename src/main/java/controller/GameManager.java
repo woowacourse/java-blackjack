@@ -69,7 +69,7 @@ public class GameManager {
     private DecisionToContinue getDecisionToContinue(final Participant participant) {
         if (participant instanceof Player) {
             return () -> CardCommand.from(
-                    inputView.requestCommandWhetherGetMoreCard(participant.getName())
+                    inputView.requestCommandWhetherGetMoreCard(participant.name())
             );
         }
         return () -> CardCommand.HIT;

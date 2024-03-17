@@ -18,14 +18,14 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canPickCard(final DecisionToContinue decision) {
-        return calculateScore() <= CARD_PICK_THRESHOLD;
+        return scoreboard.resultScore() <= CARD_PICK_THRESHOLD;
     }
 
     @Override
     public ParticipantHandStatus createInitialHandStatus() {
-        List<Card> cardsExceptLastOne = new ArrayList<>(hand.getCards());
+        List<Card> cardsExceptLastOne = new ArrayList<>(scoreboard.showCards());
         cardsExceptLastOne.remove(cardsExceptLastOne.size() - 1);
-        return new ParticipantHandStatus(name, new Hand(cardsExceptLastOne));
+        return scoreboard.generateParticipantHandStatus(cardsExceptLastOne);
     }
 
     public int calculateDealerProfit(final List<ParticipantProfitResponse> playersProfit) {
@@ -36,9 +36,5 @@ public class Dealer extends Participant {
 
     public int toDealerProfit(final int playerProfit) {
         return MULTIPLIED_NUMBER_FOR_OPPOSITE_SIGN * playerProfit;
-    }
-
-    public void clear() {
-        hand.clear();
     }
 }

@@ -18,7 +18,7 @@ class PlayerTest {
     void saveCard() {
         Player player = new Player("pobi", 1);
         player.pickCard(new Deck(List.of(new Card(Denomination.ACE, Suit.CLOVER))), 1);
-        int totalSize = player.getCardSize();
+        int totalSize = player.cardSize();
         assertThat(totalSize).isEqualTo(1);
     }
 
