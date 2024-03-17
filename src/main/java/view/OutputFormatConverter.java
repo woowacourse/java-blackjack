@@ -1,12 +1,12 @@
 package view;
 
-import domain.constant.GameResult;
+import domain.game.GameResult;
 import domain.playingcard.PlayingCardShape;
 import domain.playingcard.PlayingCardValue;
 
 import java.util.Map;
 
-import static domain.constant.GameResult.*;
+import static domain.game.GameResult.*;
 import static domain.playingcard.PlayingCardShape.*;
 import static domain.playingcard.PlayingCardValue.*;
 import static java.util.Map.entry;

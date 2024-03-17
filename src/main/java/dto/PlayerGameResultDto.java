@@ -1,6 +1,6 @@
 package dto;
 
-import domain.constant.GameResult;
+import domain.game.GameResult;
 import domain.participant.PlayerName;
 
 public record PlayerGameResultDto(PlayerName playerName, GameResult gameResult) {

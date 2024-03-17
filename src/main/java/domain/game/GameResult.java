@@ -1,6 +1,4 @@
-package domain.constant;
-
-import domain.game.BettingMoney;
+package domain.game;
 
 import java.util.function.Function;
 

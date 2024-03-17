@@ -1,11 +1,11 @@
 package domain.participant;
 
-import domain.constant.GameResult;
+import domain.game.GameResult;
 import domain.game.BettingMoney;
 import domain.playingcard.Deck;
 
-import static domain.constant.GameResult.DRAW;
-import static domain.constant.GameResult.LOSE;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
 
 public class Player extends Participant {
     private static final int MAXIMUM_ENABLE_TOTAL_SCORE = 20;
