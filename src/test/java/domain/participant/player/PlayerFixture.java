@@ -10,6 +10,6 @@ public class PlayerFixture {
     }
 
     public static Player from(String name) {
-        return of(name, 0);
+        return of(name, 1000);
     }
 }
