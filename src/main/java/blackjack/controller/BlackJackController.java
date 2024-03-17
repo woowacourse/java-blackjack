@@ -16,9 +16,8 @@ import blackjack.view.dto.ExecutingPlayer;
 import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -48,12 +47,13 @@ public class BlackJackController {
     }
 
     private BettingBoard prepareBettingBoard(final Players players) {
-        Map<Name, BettingMoney> board = new HashMap<>();
+        List<Name> names = players.getNames();
+        List<BettingMoney> bettingMonies = new ArrayList<>(names.size());
         for (Name name : players.getNames()) {
             BettingMoney bettingMoney = retryOnException(() -> askBettingMoney(name));
-            board.put(name, bettingMoney);
+            bettingMonies.add(bettingMoney);
         }
-        return new BettingBoard(board);
+        return new BettingBoard(names, bettingMonies);
     }
 
     private void printDealingResult(final Players players, final Dealer dealer) {

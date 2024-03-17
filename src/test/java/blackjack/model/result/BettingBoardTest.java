@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,8 +19,8 @@ class BettingBoardTest {
     void determineEarningTest(MatchResult matchResult, int expectedEarning) {
         // given
         Name playerName = new Name("mia");
-        Map<Name, BettingMoney> bettingMoneys = Map.of(playerName, new BettingMoney(1000));
-        BettingBoard bettingBoard = new BettingBoard(bettingMoneys);
+        BettingMoney bettingMoney = new BettingMoney(1000);
+        BettingBoard bettingBoard = new BettingBoard(List.of(playerName), List.of(bettingMoney));
 
         // when
         PlayerEarning playerEarning = bettingBoard.determineEarning(playerName, matchResult);
