@@ -17,7 +17,7 @@ public class Player extends Gamer {
     }
 
     public int getProfit(PlayerResult playerResult) {
-        return money.getResultMoney(playerResult);
+        return money.getResultMoneyValue(playerResult);
     }
 
     public Name getName() {
