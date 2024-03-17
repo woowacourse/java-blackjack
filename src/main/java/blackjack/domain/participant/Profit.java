@@ -1,13 +1,7 @@
-package blackjack.domain.profit;
+package blackjack.domain.participant;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import blackjack.domain.judgement.Judgement;
-import blackjack.domain.judgement.JudgementResult;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Money;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 
 public class Profit {
 
