@@ -1,0 +1,36 @@
+package blackjack.domain.profit;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class ProfitTest {
+
+    @DisplayName("수익에 값을 곱한다.")
+    @Test
+    void testMultiply() {
+        // given
+        Profit profit = new Profit(1000);
+
+        // when
+        Profit actual = profit.multiply(1.5);
+
+        // then
+        assertThat(actual).isEqualTo(new Profit(1500));
+    }
+
+    @DisplayName("수익끼리 더한다.")
+    @Test
+    void testAdd() {
+        // given
+        Profit profit1 = new Profit(1000);
+        Profit profit2 = new Profit(1000);
+
+        // when
+        Profit actual = profit1.add(profit2);
+
+        // then
+        assertThat(actual).isEqualTo(new Profit(2000));
+    }
+}
