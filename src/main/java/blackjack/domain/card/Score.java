@@ -10,10 +10,6 @@ public class Score {
         this.value = value;
     }
 
-    public Score add(Score other) {
-        return new Score(this.value + other.value);
-    }
-
     public Score addAceScoreIfNotBust() {
         if (!new Score(this.value + ACE_ADDITIONAL_SCORE.value).isBust()) {
             return new Score(this.value + ACE_ADDITIONAL_SCORE.value);
