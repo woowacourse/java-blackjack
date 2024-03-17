@@ -14,12 +14,12 @@ public class Player {
         this.gameElements = new GameElements(cardDeck, betMoney);
     }
 
-    public BetMoney getBetMoney() {
-        return gameElements.getBetMoney();
-    }
-
     public Name getName() {
         return name;
+    }
+
+    public BetMoney getBetMoney() {
+        return gameElements.getBetMoney();
     }
 
     public Hand getCards() {
