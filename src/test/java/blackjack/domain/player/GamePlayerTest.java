@@ -89,7 +89,7 @@ public class GamePlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭이 아닌 21점이고 딜러는 블랙잭인 경우 패배한다.")
+    @DisplayName("플레이어가 블랙잭이 아닌 21점이고 딜러는 블랙잭인 경우 플레이어가 패배한다.")
     public void GamePlayer_Player_lose_when_not_blackjack_dealer_blackjack() {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.ACE, CardValue.TEN));
@@ -115,7 +115,7 @@ public class GamePlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 블랙잭이고 딜러는 블랙잭이 아닌 21점이라면 승리한다.")
+    @DisplayName("플레이어는 블랙잭이고 딜러는 블랙잭이 아닌 21점이라면 플레이어가 승리하고 1.5배의 수익을 받는다.")
     public void GamePlayer_Player_win_when_blackjack_dealer_not_blackjack_21() {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.TWO, CardValue.TEN, CardValue.NINE));
