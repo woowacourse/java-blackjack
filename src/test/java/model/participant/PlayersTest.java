@@ -21,7 +21,8 @@ class PlayersTest {
     void testValidSizeOfPlayers(List<String> playerNames) {
         Assertions.assertAll(
             () -> assertThatCode(() -> Players.from(playerNames)).doesNotThrowAnyException(),
-            () -> assertThat(Players.from(playerNames).names()).isEqualTo(playerNames)
+            () -> assertThat(Players.from(playerNames).names()).isEqualTo(playerNames),
+            () -> assertThat(Players.from(playerNames).size()).isEqualTo(playerNames.size())
         );
     }
 
