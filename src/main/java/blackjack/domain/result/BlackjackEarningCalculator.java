@@ -3,7 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.PlayerBetAmounts;
 import java.util.List;
 
 public class BlackjackEarningCalculator {
@@ -23,15 +23,15 @@ public class BlackjackEarningCalculator {
         return new BlackjackEarningCalculator(resultHandler);
     }
 
-    public Money calculateDealerEarning(Players players) {
-        List<Player> losePlayers = playerResultHandler.getLosePlayers(players.getPlayers());
+    public Money calculateDealerEarning(PlayerBetAmounts playerBetAmounts) {
+        List<Player> losePlayers = playerResultHandler.getLosePlayers(playerBetAmounts.getPlayers());
 
         if (losePlayers.isEmpty()) {
             return Money.getZeroAmountMoney();
         }
 
         return losePlayers.stream()
-                .map(players::getBetAmount)
+                .map(playerBetAmounts::getBetAmount)
                 .reduce(Money.getZeroAmountMoney(), Money::add);
     }
 

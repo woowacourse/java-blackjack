@@ -9,21 +9,21 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayersTest {
+class PlayerBetAmountsTest {
 
     @Test
     @DisplayName("플레이어는 2명부터 8명까지 허용된다.")
     void validPlayerNamesTest() {
-        assertThatCode(() -> createTestPlayersFromNames(List.of("a", "b")))
+        assertThatCode(() -> createFromNames(List.of("a", "b")))
                 .doesNotThrowAnyException();
-        assertThatCode(() -> createTestPlayersFromNames(List.of("a", "b", "c", "d", "e", "f", "g", "h")))
+        assertThatCode(() -> createFromNames(List.of("a", "b", "c", "d", "e", "f", "g", "h")))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("플레이어는 적어도 2명 이상이어야 한다.")
     void minimumPlayerCountTest() {
-        assertThatThrownBy(() -> createTestPlayersFromNames(List.of("a")))
+        assertThatThrownBy(() -> createFromNames(List.of("a")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 최소 2명에서 최대 8명까지 가능합니다.");
     }
@@ -31,12 +31,12 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어는 최대 8명까지만 가능하다.")
     void maximumPlayerCountTest() {
-        assertThatThrownBy(() -> createTestPlayersFromNames(List.of("a", "b", "c", "d", "e", "f", "g", "h", "i")))
+        assertThatThrownBy(() -> createFromNames(List.of("a", "b", "c", "d", "e", "f", "g", "h", "i")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 최소 2명에서 최대 8명까지 가능합니다.");
     }
 
-    private Players createTestPlayersFromNames(List<String> names) {
+    private PlayerBetAmounts createFromNames(List<String> names) {
         Map<Player, Money> playerBetAmountMap = new LinkedHashMap<>();
 
         for (String name : names) {
@@ -44,6 +44,6 @@ class PlayersTest {
             playerBetAmountMap.put(player, Money.getZeroAmountMoney());
         }
 
-        return new Players(playerBetAmountMap);
+        return new PlayerBetAmounts(playerBetAmountMap);
     }
 }

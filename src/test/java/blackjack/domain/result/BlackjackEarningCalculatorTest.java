@@ -8,7 +8,7 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.PlayerBetAmounts;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,13 +51,13 @@ class BlackjackEarningCalculatorTest {
                     new Card(Shape.HEART, Number.KING)
             ));
 
-            Players players = new Players(Map.of(
+            PlayerBetAmounts playerBetAmounts = new PlayerBetAmounts(Map.of(
                     winPlayer, new Money(10000L),
                     drawPlayer, new Money(20000L),
                     losePlayer, new Money(30000L)
             ));
 
-            assertThat(calculator.calculateDealerEarning(players))
+            assertThat(calculator.calculateDealerEarning(playerBetAmounts))
                     .isEqualTo(new Money(30000L));
         }
     }

@@ -1,18 +1,16 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Deck;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class Players {
+public class PlayerBetAmounts {
 
     private static final int MIN_PLAYER_COUNT = 2;
     private static final int MAX_PLAYER_COUNT = 8;
 
     private final Map<Player, Money> playerBetAmountMap;
 
-    public Players(Map<Player, Money> playerBetAmountMap) {
+    public PlayerBetAmounts(Map<Player, Money> playerBetAmountMap) {
         validatePlayerCount(playerBetAmountMap.size());
         this.playerBetAmountMap = playerBetAmountMap;
     }
@@ -25,15 +23,11 @@ public class Players {
         }
     }
 
-    public void initAllPlayersCard(Deck deck, int initialCardCount) {
-        playerBetAmountMap.keySet().forEach(player -> player.initCard(deck, initialCardCount));
-    }
-
     public Money getBetAmount(Player player) {
         return playerBetAmountMap.get(player);
     }
 
-    public Collection<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return List.copyOf(playerBetAmountMap.keySet());
     }
 }

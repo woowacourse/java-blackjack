@@ -4,7 +4,7 @@ import blackjack.domain.gamer.BlackjackGamer;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.PlayerBetAmounts;
 import blackjack.domain.result.BlackjackEarningCalculator;
 import blackjack.dto.DealerInitialHandDto;
 import blackjack.dto.GamerHandDto;
@@ -27,21 +27,22 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = getPlayers();
+        PlayerBetAmounts playerBetAmounts = createPlayersWithBetAmount();
+        List<Player> players = playerBetAmounts.getPlayers();
         Dealer dealer = new Dealer();
 
         setUpInitialHands(dealer, players);
         distributeCardToPlayers(dealer, players);
-        distributeCardToDealer(dealer, deck);
-        printAllGamerScores(dealer, players);
-        printAllGamerRevenues(dealer, players);
+        distributeCardToDealer(dealer);
+        printAllGamerScores(dealer, playerBetAmounts);
+        printAllGamerRevenues(dealer, playerBetAmounts);
     }
 
-    private Players getPlayers() {
+    private PlayerBetAmounts createPlayersWithBetAmount() {
         List<String> playerNames = inputView.receivePlayerNames();
         outputView.printBlankLine();
 
-        return new Players(createPlayerBetAmounts(playerNames));
+        return new PlayerBetAmounts(createPlayerBetAmounts(playerNames));
     }
 
     private Map<Player, Money> createPlayerBetAmounts(List<String> playerNames) {
@@ -56,14 +57,14 @@ public class BlackjackController {
         return playerBetAmountMap;
     }
 
-    private void setUpInitialHands(Dealer dealer, Players players) {
+    private void setUpInitialHands(Dealer dealer, List<Player> players) {
         dealer.setUpInitialCards(players);
         printInitialHands(players, dealer);
     }
 
-    private void printInitialHands(Players players, Dealer dealer) {
+    private void printInitialHands(List<Player> players, Dealer dealer) {
         DealerInitialHandDto dealerInitialHandDto = DealerInitialHandDto.fromDealer(dealer);
-        List<GamerHandDto> playerInitialHandDto = players.getPlayers().stream()
+        List<GamerHandDto> playerInitialHandDto = players.stream()
                 .map(GamerHandDto::fromGamer)
                 .toList();
 
@@ -71,8 +72,8 @@ public class BlackjackController {
         outputView.printBlankLine();
     }
 
-    private void distributeCardToPlayers(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
+    private void distributeCardToPlayers(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
             distributeCardToPlayer(dealer, player);
         }
     }
@@ -102,30 +103,30 @@ public class BlackjackController {
         outputView.printBlankLine();
     }
 
-    private void printAllGamerScores(Dealer dealer, Players players) {
+    private void printAllGamerScores(Dealer dealer, PlayerBetAmounts playerBetAmounts) {
         outputView.printScore(GamerHandDto.fromGamer(dealer), dealer.getScore());
-        printPlayersScores(players);
+        printPlayersScores(playerBetAmounts);
         outputView.printBlankLine();
     }
 
-    private void printPlayersScores(Players players) {
-        for (Player player : players.getPlayers()) {
+    private void printPlayersScores(PlayerBetAmounts playerBetAmounts) {
+        for (Player player : playerBetAmounts.getPlayers()) {
             outputView.printScore(GamerHandDto.fromGamer(player), player.getScore());
         }
     }
 
-    private void printAllGamerRevenues(Dealer dealer, Players players) {
-        Map<BlackjackGamer, Money> gamerRevenueMap = getGamerRevenueMap(dealer, players);
+    private void printAllGamerRevenues(Dealer dealer, PlayerBetAmounts playerBetAmounts) {
+        Map<BlackjackGamer, Money> gamerRevenueMap = getGamerRevenueMap(dealer, playerBetAmounts);
         outputView.printRevenues(GamerRevenueDto.fromOrderedMap(gamerRevenueMap));
     }
 
-    private Map<BlackjackGamer, Money> getGamerRevenueMap(Dealer dealer, Players players) {
+    private Map<BlackjackGamer, Money> getGamerRevenueMap(Dealer dealer, PlayerBetAmounts playerBetAmounts) {
         BlackjackEarningCalculator earningCalculator = BlackjackEarningCalculator.fromDealer(dealer);
         Map<BlackjackGamer, Money> gamerRevenueMap = new LinkedHashMap<>();
 
-        gamerRevenueMap.put(dealer, earningCalculator.calculateDealerEarning(players));
-        players.getPlayers().forEach(player -> {
-            Money betAmount = players.getBetAmount(player);
+        gamerRevenueMap.put(dealer, earningCalculator.calculateDealerEarning(playerBetAmounts));
+        playerBetAmounts.getPlayers().forEach(player -> {
+            Money betAmount = playerBetAmounts.getBetAmount(player);
             Money revenue = earningCalculator.calculatePlayerEarning(player, betAmount);
             gamerRevenueMap.put(player, revenue);
         });
