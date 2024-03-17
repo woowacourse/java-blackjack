@@ -37,23 +37,6 @@ class BlackjackTest {
                            .get(1), 15);
     }
 
-//    @Test
-//    @DisplayName("블랙잭은 게임 결과를 종합한다.")
-//    public void Dealer_Count_result() {
-//        GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
-//        Name name = new Name("딜러");
-//        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
-//        Dealer dealer = new Dealer(name, cards);
-//        var sut = new Blackjack(Deck.createPack());
-//
-//        var result = sut.compareResults(dealer, List.of(gamePlayer));
-//
-//        assertThat(result.getResult()
-//                         .get(gamePlayer.getName())).isEqualTo(new Profit(-10000));
-//        assertThat(result.getResult()
-//                         .get(name)).isEqualTo(new Profit(10000));
-//    }
-
     private void assertPlayer(Player player, int value) {
         assertThat(player.calculateScore()).isEqualTo(value);
     }

@@ -14,7 +14,6 @@ public enum ResultStatus {
         this.rate = rate;
     }
 
-
     public Profit calculateProfit(int bettingAmount) {
         return new Profit(rate * bettingAmount);
     }
