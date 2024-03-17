@@ -21,11 +21,11 @@ public class Money {
         }
     }
 
-    private static boolean lessThanMinimum(final BigDecimal money) {
+    private boolean lessThanMinimum(final BigDecimal money) {
         return money.compareTo(MINIMUM_MONEY) < 0;
     }
 
-    private static boolean moreThanMaximum(final BigDecimal money) {
+    private boolean moreThanMaximum(final BigDecimal money) {
         return money.compareTo(MAXIMUM_MONEY) > 0;
     }
 
