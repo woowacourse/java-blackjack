@@ -24,12 +24,12 @@ class ResultTest {
     void dealerResult() {
         Result result = new Result(
                 Map.of(new Player("mark", new Betting(1000)), 0,
-                        new Player("isang", new Betting(1000)), 1000,
+                        new Player("pk", new Betting(1000)), -1000,
                         new Player("isang", new Betting(1000)), 1000));
 
         int dealerEarning = result.calculateDealerEarning();
 
-        assertThat(dealerEarning).isEqualTo(-2000);
+        assertThat(dealerEarning).isEqualTo(0);
     }
 
 }

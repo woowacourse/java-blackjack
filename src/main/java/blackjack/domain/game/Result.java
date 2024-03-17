@@ -12,12 +12,9 @@ public class Result {
     }
 
     public int calculateDealerEarning() {
-        int dealerEarning = 0;
-        for (int playerEarning : results.values()) {
-            dealerEarning -= playerEarning;
-        }
-
-        return dealerEarning;
+        return results.values().stream()
+                .mapToInt(playerEarning -> -playerEarning)
+                .sum();
     }
 
     public Map<Player, Integer> getResults() {

@@ -47,21 +47,21 @@ public class Dealer extends Participant {
         int betting = player.getBetting();
         int playerScore = player.calculate();
         if (player.isBust()) {
-            return getEarning(betting, ResultStatus.LOSE);
+            return calculateEarning(betting, ResultStatus.LOSE);
         }
         if (playerScore == dealerScore) {
-            return getEarning(betting, ResultStatus.DRAW);
+            return calculateEarning(betting, ResultStatus.DRAW);
         }
         if (player.isBlackjack()) {
-            return getEarning(betting, ResultStatus.BLACKJACK);
+            return calculateEarning(betting, ResultStatus.BLACKJACK);
         }
         if (this.isBust() || playerScore > dealerScore) {
-            return getEarning(betting, ResultStatus.WIN);
+            return calculateEarning(betting, ResultStatus.WIN);
         }
-        return getEarning(betting, ResultStatus.LOSE);
+        return calculateEarning(betting, ResultStatus.LOSE);
     }
 
-    private int getEarning(int betting, ResultStatus status) {
+    private int calculateEarning(int betting, ResultStatus status) {
         return (int) (betting * status.getMultiplier());
     }
 }

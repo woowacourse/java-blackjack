@@ -17,13 +17,16 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_SIZE && calculate() == BLACKJACK_SCORE;
+    }
+
     int calculate() {
         int sum = calculateWithDefaultAceNumber();
 
-        if (hasAce() && isAceAdditionalValueAddable(sum)) {
-            sum += ACE_ADDITIONAL_VALUE;
+        if (isAceAdditionalValueAddable(sum)) {
+            return sum + ACE_ADDITIONAL_VALUE;
         }
-
         return sum;
     }
 
@@ -41,16 +44,12 @@ public class Hand {
                 .sum();
     }
 
+    private boolean isAceAdditionalValueAddable(int sum) {
+        return hasAce() && sum + ACE_ADDITIONAL_VALUE <= BLACKJACK_SCORE;
+    }
+
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    private boolean isAceAdditionalValueAddable(int sum) {
-        return sum + ACE_ADDITIONAL_VALUE <= BLACKJACK_SCORE;
-    }
-
-    public boolean isBlackjack() {
-        return cards.size() == INITIAL_SIZE && calculate() == BLACKJACK_SCORE;
     }
 }
