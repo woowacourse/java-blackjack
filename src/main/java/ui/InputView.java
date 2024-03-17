@@ -45,6 +45,17 @@ public class InputView {
                 .anyMatch(INVALID_PLAYER_NAMES::contains);
     }
 
+    public int readBettingAmount(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        String bettingAmount = scanner.nextLine().trim();
+        validateInput(bettingAmount);
+        try {
+            return Integer.parseInt(bettingAmount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
+        }
+    }
+
     public boolean askForMoreCard(String name) {
         System.out.printf("%s는 한 장의 카드를 더 받겠습니까? (예는 %s, 아니오는 %s)%n", name, YES, NO);
         String yesOrNo = scanner.nextLine().trim();
