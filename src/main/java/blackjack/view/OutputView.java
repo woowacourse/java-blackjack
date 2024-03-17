@@ -40,7 +40,7 @@ public class OutputView {
     }
 
     private String formatCard(final Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
+        return card.denomination().getName() + card.suit().getName();
     }
 
     public void printPlayerDrawingCards(final PlayerCardsOutcome playerCardsOutcome) {

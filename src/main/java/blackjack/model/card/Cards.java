@@ -28,7 +28,7 @@ public class Cards {
 
     public int calculateScore() {
         int total = cards.stream()
-                .map(Card::getDenomination)
+                .map(Card::denomination)
                 .mapToInt(Denomination::getScore)
                 .sum();
 
@@ -40,7 +40,7 @@ public class Cards {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getDenomination().isAce());
+                .anyMatch(card -> card.denomination().isAce());
     }
 
     private int addAceScoreIfNotBust(final int total) {
