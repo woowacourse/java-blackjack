@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Players {
     private static final int MINIMUM_PLAYER_SIZE = 1;
@@ -22,8 +21,8 @@ public class Players {
 
     public static Players of(final List<String> rawNames, final Deck deck) {
         validateNotDuplicateName(rawNames);
-        return IntStream.range(0, rawNames.size())
-                .mapToObj(index -> new Player(new Name(rawNames.get(index)), deck.distributeInitialCard()))
+        return rawNames.stream()
+                .map(rawName -> new Player(new Name(rawName), deck.distributeInitialCard()))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
