@@ -6,7 +6,6 @@ import model.card.CardNumber;
 import model.card.CardShape;
 import model.card.Cards;
 import model.player.Name;
-import model.player.Participant;
 
 public class UserCardDto {
 

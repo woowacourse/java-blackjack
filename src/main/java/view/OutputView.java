@@ -17,12 +17,12 @@ public class OutputView {
 
     public void printPlayerNames(ParticipantNamesDto participantNamesDto) {
         System.out.println(System.lineSeparator() +
-                DIVIDE_CARD_MESSAGE.formatted(String.join(", ",participantNamesDto.getNames())));
+                DIVIDE_CARD_MESSAGE.formatted(String.join(", ", participantNamesDto.getNames())));
     }
 
     public void printPlayerCards(List<UserCardDto> userCardDtos) {
         userCardDtos.forEach(userCardDto -> System.out.println(RECEIVED_CARD_MESSAGE
-                        .formatted(userCardDto.getName(), String.join(", ", userCardDto.getCards()))));
+                .formatted(userCardDto.getName(), String.join(", ", userCardDto.getCards()))));
     }
 
     public void printPlayerCardMessage(UserCardDto userCardDto) {

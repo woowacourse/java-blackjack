@@ -4,17 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
-import java.util.stream.Stream;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class UserTest {
 
@@ -28,9 +23,11 @@ class UserTest {
                 new Card(CardShape.SPACE, CardNumber.ACE));
 
         assertAll(
-                () -> Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), onlyOneCard) {})
+                () -> Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), onlyOneCard) {
+                        })
                         .isInstanceOf(IllegalArgumentException.class),
-                () -> Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), threeCards) {})
+                () -> Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), threeCards) {
+                        })
                         .isInstanceOf(IllegalArgumentException.class));
 
     }

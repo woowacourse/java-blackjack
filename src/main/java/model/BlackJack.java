@@ -48,7 +48,7 @@ public class BlackJack {
 
     private void decideParticipantPlay(Participant participant,
                                        Function<NameDto, Boolean> isMoreCard, Consumer<UserCardDto> callback) {
-        while (participant.isNotBust() && isMoreCard.apply(new NameDto(participant.getName()))) {//todo dto 생성?
+        while (participant.isNotBust() && isMoreCard.apply(new NameDto(participant.getName()))) {
             offerCardToParticipant(participant, CardSize.ONE);
             callback.accept(new UserCardDto(participant.getName(), participant.getCards()));
         }

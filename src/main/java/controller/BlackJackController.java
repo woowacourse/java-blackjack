@@ -51,7 +51,7 @@ public class BlackJackController {
                 .toList();
     }
 
-    private List<UserProfitDto> mapToUserProfitDtos(BlackJack blackJack) {//todo '딜러' 출력 부분 수정
+    private List<UserProfitDto> mapToUserProfitDtos(BlackJack blackJack) {
         List<UserProfitDto> userProfitDtos = mapToUserProfitDto(blackJack.getParticipantProfits());
         userProfitDtos.add(0, new UserProfitDto("딜러", blackJack.getDealerProfit()));
         return userProfitDtos;
