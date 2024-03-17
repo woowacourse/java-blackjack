@@ -30,4 +30,18 @@ class ResultTest {
 
         assertThat(Result.compare(current, opponentValue)).isEqualTo(result);
     }
+
+    @ParameterizedTest()
+    @CsvSource(value = {"true,false,BLACKJACK", "true,true,DRAW", "false,true,LOSE"})
+    @DisplayName("블랙잭이 발생한 경우를 판단한다.")
+    void compareBlackjackTest(boolean current, boolean opponent, Result result) {
+        assertThat(Result.blackjackCompare(current, opponent)).isEqualTo(result);
+    }
+
+    @ParameterizedTest()
+    @CsvSource(value = {"true,false,LOSE", "true,true,LOSE", "false,true,WIN"})
+    @DisplayName("버스트가 발생한 경우를 판단한다.")
+    void compareBustTest(boolean current, boolean opponent, Result result) {
+        assertThat(Result.bustCompare(current, opponent)).isEqualTo(result);
+    }
 }
