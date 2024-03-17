@@ -22,7 +22,7 @@ public class PlayerBettings {
         List<PlayerBetting> bettingResults = winningResult.getParticipantsResult().entrySet().stream()
                 .flatMap(entry -> playerBettings.stream()
                         .filter(playerBetting -> playerBetting.equalsName(entry.getKey()))
-                        .map(playerBetting -> playerBetting.applyWinStatus(entry.getValue())))
+                        .map(playerBetting -> playerBetting.applyWinStatus(entry.getValue().getBetMultiplier())))
                 .toList();
 
         return new PlayerBettings(bettingResults);

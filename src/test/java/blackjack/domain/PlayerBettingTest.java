@@ -22,7 +22,7 @@ class PlayerBettingTest {
         PlayerBetting playerBetting = PlayerBetting.create("kirby", 1000);
 
         // when
-        PlayerBetting bettingResult = playerBetting.applyWinStatus(winStatus);
+        PlayerBetting bettingResult = playerBetting.applyWinStatus(winStatus.getBetMultiplier());
 
         // then
         assertThat(bettingResult.getBetting()).isEqualTo(expected);

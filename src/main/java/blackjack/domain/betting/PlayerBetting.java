@@ -1,7 +1,6 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.ParticipantName;
-import blackjack.domain.result.WinStatus;
 
 public class PlayerBetting {
     private final ParticipantName name;
@@ -27,8 +26,8 @@ public class PlayerBetting {
         }
     }
 
-    public PlayerBetting applyWinStatus(final WinStatus winStatus) {
-        BettingMoney bettingMoney = this.bettingMoney.multiplyWith(winStatus.getBetMultiplier());
+    public PlayerBetting applyWinStatus(final double betMultiplier) {
+        BettingMoney bettingMoney = this.bettingMoney.multiplyWith(betMultiplier);
         return new PlayerBetting(this.name, bettingMoney);
     }
 
