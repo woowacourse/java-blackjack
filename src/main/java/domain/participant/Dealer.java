@@ -13,8 +13,7 @@ public class Dealer extends Participant {
     }
 
     public static Dealer init(final Deck deck) {
-        Hand hand = Hand.init();
-        initDraw(deck, hand);
+        Hand hand = Hand.init(deck);
         return new Dealer(hand);
     }
 

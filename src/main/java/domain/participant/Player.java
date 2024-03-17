@@ -20,8 +20,7 @@ public class Player extends Participant {
     }
 
     public static Player of(final PlayerName playerName, final BettingMoney bettingMoney, final Deck deck) {
-        Hand hand = Hand.init();
-        initDraw(deck, hand);
+        Hand hand = Hand.init(deck);
         return new Player(playerName, bettingMoney, hand);
     }
 

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
 
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ public class Hand {
         this.playingCards = playingCards;
     }
 
-    public static Hand init() {
-        return new Hand(new ArrayList<>());
+    public static Hand init(final Deck deck) {
+        return new Hand(new ArrayList<>(deck.initDrawn()));
     }
 
     public void addCard(final PlayingCard card) {

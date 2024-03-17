@@ -47,7 +47,7 @@ public class DealerTest {
         // Given
         PlayingCard playingCard = new PlayingCard(DIAMOND, TEN);
         Deck deck = new Deck(new ArrayDeque<>(List.of(playingCard)));
-        Hand initHand = Hand.init();
+        Hand initHand = Hand.init(deck);
         List<PlayingCard> playingCards = initHand.getPlayingCards();
         Dealer dealer = new Dealer(initHand);
 
@@ -62,7 +62,7 @@ public class DealerTest {
     @Test
     void calculateRevenueTest() {
         // Given
-        Dealer dealer = new Dealer(Hand.init());
+        Dealer dealer = new Dealer(Hand.init(Deck.init(PlayingCards.getValue())));
         List<Integer> playerRevenues = List.of(10000, 15000, -20000);
 
         // When

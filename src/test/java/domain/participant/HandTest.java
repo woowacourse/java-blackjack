@@ -1,6 +1,8 @@
 package domain.participant;
 
+import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
+import domain.playingcard.PlayingCards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -20,7 +22,7 @@ public class HandTest {
     @Test
     void createHandTest() {
         // When
-        Hand hand = Hand.init();
+        Hand hand = Hand.init(Deck.init(PlayingCards.getValue()));
 
         // Then
         assertThat(hand).isNotNull();
@@ -75,7 +77,7 @@ public class HandTest {
     void addCardTest() {
         // Given
         PlayingCard card = new PlayingCard(DIAMOND, NINE);
-        Hand hand = Hand.init();
+        Hand hand = Hand.init(Deck.init(PlayingCards.getValue()));
         List<PlayingCard> playingCards = hand.getPlayingCards();
 
         // When

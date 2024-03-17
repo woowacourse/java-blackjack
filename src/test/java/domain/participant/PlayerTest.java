@@ -55,7 +55,7 @@ public class PlayerTest {
     void drawTest() {
         // Given
         Deck deck = Deck.init(PlayingCards.getValue());
-        Hand initHand = Hand.init();
+        Hand initHand = Hand.init(deck);
         Player player = new Player(new PlayerName("kelly"), new BettingMoney(10000), initHand);
         int initHandCardsCount = player.getHandCards().size();
 
