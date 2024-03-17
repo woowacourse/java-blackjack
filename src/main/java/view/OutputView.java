@@ -77,7 +77,7 @@ public class OutputView {
         return "결과: %d".formatted(gamer.getTotalScore());
     }
 
-    public static void printFinalProfit(Map<String, Integer> totalProfit, List<Player> players) {
+    public static void printFinalProfit(Map<String, Double> totalProfit, List<Player> players) {
         System.out.println("\n## 최종 수익");
         printGamerProfit(DEALER_NAME, totalProfit.get(GamerIdentifier.DEALER_IDENTIFIER));
         players.stream()
@@ -85,7 +85,7 @@ public class OutputView {
                 .forEach(playerName -> printGamerProfit(playerName, totalProfit.get(playerName)));
     }
 
-    private static void printGamerProfit(String gamerName, int profit) {
-        System.out.printf("%s: %d%n", gamerName, profit);
+    private static void printGamerProfit(String gamerName, double profit) {
+        System.out.printf("%s: %f%n", gamerName, profit);
     }
 }

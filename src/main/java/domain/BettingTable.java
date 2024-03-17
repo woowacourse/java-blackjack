@@ -12,8 +12,8 @@ public class BettingTable {
         this.bettingAmounts = new HashMap<>(bettingAmounts);
     }
 
-    public Map<String, Integer> getTotalProfit(Map<String, GamerResult> totalResult) {
-        Map<String, Integer> totalProfit = new HashMap<>();
+    public Map<String, Double> getTotalProfit(Map<String, GamerResult> totalResult) {
+        Map<String, Double> totalProfit = new HashMap<>();
         totalResult.forEach((key, value) ->
                 totalProfit.put(
                         key,
@@ -23,8 +23,8 @@ public class BettingTable {
         return totalProfit;
     }
 
-    private int getDealerProfit(Map<String, Integer> totalProfit) {
+    private double getDealerProfit(Map<String, Double> totalProfit) {
         return totalProfit.values().stream()
-                .mapToInt(Integer::intValue).sum() * -1;
+                .mapToDouble(Double::doubleValue).sum() * -1;
     }
 }
