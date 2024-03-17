@@ -23,4 +23,11 @@ public class Player extends Participant {
     public Player stand() {
         return new Player(getName(), standHand());
     }
+
+    public Player decideHitOrStand(boolean hit, Deck deck) {
+        if (hit && canDraw()) {
+            return draw(deck);
+        }
+        return stand();
+    }
 }

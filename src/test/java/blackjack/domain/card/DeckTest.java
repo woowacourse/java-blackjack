@@ -3,11 +3,6 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +13,8 @@ public class DeckTest {
     @DisplayName("덱에서 카드를 한 장 뽑을 수 있다")
     @Test
     public void draw() {
-        CardFactory cardFactory = new CardFactory();
-        Deck deck = Deck.of(cardFactory, cards -> cards);
+        BlackjackCardFactory blackjackCardFactory = new BlackjackCardFactory();
+        Deck deck = Deck.of(blackjackCardFactory, cards -> cards);
 
         Card card = deck.draw();
 
@@ -30,7 +25,7 @@ public class DeckTest {
     @DisplayName("덱에 카드가 없는데 한 장을 뽑을 경우 에러가 발생한다")
     @Test
     public void drawFail() {
-        Deck deck = Deck.of(new CardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
 
         for (int i = 0; i < 52; i++) {
             deck.draw();
@@ -44,7 +39,7 @@ public class DeckTest {
     @DisplayName("덱에서 2장을 뽑아 핸드로 반환한다")
     @Test
     public void initializeHand() {
-        Deck deck = Deck.of(new CardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
 
         Hand hand = Hand.of(deck.draw(), deck.draw());
         List<Card> cards = hand.getCards();

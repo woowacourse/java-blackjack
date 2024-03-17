@@ -43,4 +43,11 @@ public class Dealer extends Participant {
         ArrayList<Card> copiedCards = new ArrayList<>(cards);
         return copiedCards.subList(0, copiedCards.size() - 1);
     }
+
+    public Dealer decideHitOrStand(Deck deck) {
+        if (canDraw()) {
+            return draw(deck);
+        }
+        return stand();
+    }
 }

@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.BlackjackCardFactory;
 import blackjack.domain.card.Deck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +31,7 @@ public class PlayersTest {
     @DisplayName("플레이어들의 핸드를 초기화한다")
     @Test
     public void initializePlayersHands() {
-        Deck deck = Deck.of(new CardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
         Players initialPlayers = Players.createInitialPlayers(List.of(new Name("이상"), new Name("이건상")));
 
         Players players = initialPlayers.initializePlayersHands(deck);

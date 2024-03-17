@@ -34,12 +34,12 @@ public abstract class Participant {
         return state.stand();
     }
 
-    final Hand getHand() {
-        return state.getHand();
-    }
-
     final double calculateProfitRate(Hand other) {
         return state.getProfitRate(other);
+    }
+
+    final Hand getHand() {
+        return state.getHand();
     }
 
     public final Name getName() {

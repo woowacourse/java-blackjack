@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.BlackjackCardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomShuffler;
 import blackjack.domain.participant.BetRecord;
@@ -33,13 +33,13 @@ public class BlackjackController {
     }
 
     private ProfitDetails playBlackjack(List<Name> playerNames, BetRecord betRecord) {
-        Deck deck = Deck.of(new CardFactory(), new RandomShuffler());
+        Deck deck = Deck.of(new BlackjackCardFactory(), new RandomShuffler());
         Players players = createAndInitializePlayers(playerNames, deck);
         Dealer dealer = createAndInitializeDealer(deck);
         outputView.printPlayersInitialHand(players, dealer);
 
-        players = playersTurn(players, deck);
-        dealer = dealerTurn(dealer, deck);
+        players = proceedPlayersTurn(players, deck);
+        dealer = proceedDealerTurn(dealer, deck);
         outputView.printParticipantResult(players, dealer);
 
         return betRecord.calculateProfit(players, dealer);
@@ -55,33 +55,29 @@ public class BlackjackController {
         return dealer.draw(deck);
     }
 
-    private Players playersTurn(Players players, Deck deck) {
+    private Players proceedPlayersTurn(Players players, Deck deck) {
         return players.getPlayers().stream()
-                .map(player -> hitUntilPlayerStand(player, deck))
+                .map(player -> proceedPlayerTurn(player, deck))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::updatePlayers));
     }
 
-    private Player hitUntilPlayerStand(Player player, Deck deck) {
-        while (player.canDraw()) {
-            player = drawOrStand(player, deck);
-            outputView.printParticipantHand(player);
+    private Player proceedPlayerTurn(Player player, Deck deck) {
+        boolean hit = inputView.readHitOrStand(player);
+        player = player.decideHitOrStand(hit, deck);
+        outputView.printParticipantHand(player);
+        if (player.isFinished()) {
+            return player;
         }
-        return player;
+        return proceedPlayerTurn(player, deck);
     }
 
-    private Player drawOrStand(Player player, Deck deck) {
-        if (repeat(() -> inputView.readHitOrStand(player))) {
-            return player.draw(deck);
+    private Dealer proceedDealerTurn(Dealer dealer, Deck deck) {
+        dealer = dealer.decideHitOrStand(deck);
+        if (dealer.isFinished()) {
+            return dealer;
         }
-        return player.stand();
-    }
-
-    private Dealer dealerTurn(Dealer dealer, Deck deck) {
-        while (dealer.canDraw()) {
-            outputView.printDealerDraw();
-            dealer = dealer.draw(deck);
-        }
-        return dealer;
+        outputView.printDealerDraw();
+        return proceedDealerTurn(dealer, deck);
     }
 
     private <T> T repeat(Supplier<T> supplier) {

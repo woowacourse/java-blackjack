@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.BlackjackCardFactory;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
@@ -20,7 +20,7 @@ public class BlackJackStateTest {
         BlackJackState blackJackState = new BlackJackState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
                 CardFixture.fromSuitCloverWith(Denomination.JACK)));
 
-        assertThatCode(() -> blackJackState.draw(Deck.of(new CardFactory(), cards -> cards)))
+        assertThatCode(() -> blackJackState.draw(Deck.of(new BlackjackCardFactory(), cards -> cards)))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("턴이 종료되어 드로우할 수 없는 상태입니다.");
     }
