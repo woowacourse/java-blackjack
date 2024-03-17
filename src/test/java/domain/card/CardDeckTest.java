@@ -1,9 +1,10 @@
 package domain.card;
 
 import static domain.participant.Dealer.DECK_SIZE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.NoMoreCardException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,17 +14,17 @@ class CardDeckTest {
     @Test
     void generate() {
         // given
-        CardDeck cardDeck = CardDeck.generate(DECK_SIZE);
+        final CardDeck cardDeck = CardDeck.generate(DECK_SIZE);
 
         // when && then
-        Assertions.assertThat(cardDeck.size()).isEqualTo(52 * 6);
+        assertThat(cardDeck.size()).isEqualTo(52 * 6);
     }
 
     @Test
     @DisplayName("카드가 없는데 카드를 뽑을 경우 예외가 발생한다.")
     void pop() {
         //given
-        CardDeck cardDeck = CardDeck.generate(1);
+        final CardDeck cardDeck = CardDeck.generate(1);
 
         //when
         int cardSize = 52;
@@ -33,7 +34,7 @@ class CardDeckTest {
         }
 
         //then
-        Assertions.assertThatThrownBy(cardDeck::pop)
+        assertThatThrownBy(cardDeck::pop)
                 .isInstanceOf(NoMoreCardException.class);
     }
 }

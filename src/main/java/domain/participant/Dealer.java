@@ -1,7 +1,9 @@
 package domain.participant;
 
-import domain.Answer;
-import domain.Result;
+import static domain.participant.Name.RESERVED_NAME;
+
+import domain.GameResult;
+import domain.amount.EarnAmount;
 import domain.card.Card;
 import domain.card.CardDeck;
 import java.util.ArrayDeque;
@@ -16,17 +18,16 @@ public class Dealer extends Participant {
     public static final int INIT_HANDS_SIZE = 2;
     public static final int THRESHOLD = 16;
     public static final int DECK_SIZE = 6;
-    public static final Name DEALER_NAME = new Name("딜러");
 
     private final CardDeck cardDeck;
 
     public Dealer() {
-        super(DEALER_NAME, Hands.createEmptyHands());
+        super(RESERVED_NAME, Hands.createEmptyHands());
         this.cardDeck = new CardDeck(generate());
     }
 
     public Dealer(final Hands hands) {
-        super(DEALER_NAME, hands);
+        super(RESERVED_NAME, hands);
         this.cardDeck = new CardDeck(generate());
     }
 
@@ -62,14 +63,23 @@ public class Dealer extends Participant {
         return handsSize() - INIT_HANDS_SIZE;
     }
 
-    public Map<Result, Integer> getDealerResult(final Players players) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+    public Map<GameResult, Integer> getDealerResult(final Players players) {
+        Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
 
-        for (Result value : players.getPlayersResult(this).values()) {
-            Result reversed = value.reverse();
+        for (GameResult value : players.getPlayersResult(this).values()) {
+            GameResult reversed = value.reverse();
             dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
         }
         return dealerResult;
+    }
+
+    public EarnAmount calculateRevenue(final Map<Player, EarnAmount> finalResult) {
+        long dealerAmount = finalResult.values()
+                .stream()
+                .map(EarnAmount::getValue)
+                .mapToLong(Long::longValue)
+                .sum();
+        return new EarnAmount(-dealerAmount);
     }
 
     @Override

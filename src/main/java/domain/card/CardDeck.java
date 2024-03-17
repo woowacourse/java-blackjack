@@ -16,7 +16,7 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    protected static CardDeck generate(int size) {
+    static CardDeck generate(int size) {
         final List<Card> deck = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {

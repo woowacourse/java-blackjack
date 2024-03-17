@@ -1,7 +1,7 @@
 package domain.participant;
 
+import domain.GameResult;
 import domain.card.Card;
-import domain.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +38,7 @@ public class Hands {
     }
 
     public boolean isBlackJack() {
-        return sum() == BLACK_JACK;
+        return sum() == BLACK_JACK && size() == 2;
     }
 
     private boolean hasAce() {
@@ -56,8 +56,8 @@ public class Hands {
                 .toList();
     }
 
-    public Result calculateResult(final Hands target) {
-        return Result.calculateOf(this, target);
+    public GameResult calculateResult(final Hands target) {
+        return GameResult.calculateOf(this, target);
     }
 
     private int calculateTotalByAce(final int total) {
@@ -84,5 +84,11 @@ public class Hands {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
+    }
+
+    @Override
+    public String toString() {
+        return "Hands=" +
+                cards;
     }
 }

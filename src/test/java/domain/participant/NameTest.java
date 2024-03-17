@@ -1,8 +1,9 @@
-package domain;
+package domain.participant;
 
-import domain.participant.Name;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import exception.InvalidPlayerNameException;
-import org.assertj.core.api.Assertions;
+import exception.ReservedPlayerNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
@@ -14,7 +15,7 @@ class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     void BlankInputThrowException(String value) {
-        Assertions.assertThatThrownBy(() -> new Name(value))
+        assertThatThrownBy(() -> new Name(value))
                 .isInstanceOf(InvalidPlayerNameException.class);
     }
 
@@ -22,7 +23,15 @@ class NameTest {
     @ParameterizedTest
     @NullSource
     void nullInputThrowException(String value) {
-        Assertions.assertThatThrownBy(() -> new Name(value))
+        assertThatThrownBy(() -> new Name(value))
                 .isInstanceOf(InvalidPlayerNameException.class);
+    }
+
+    @ParameterizedTest
+    @DisplayName("참여자 이름이 딜러이면 예외가 발생한다.")
+    @ValueSource(strings = {"딜러", "딜러 ", " 딜러", " 딜러 "})
+    void validateName(String value) {
+        assertThatThrownBy(() -> new Name(value))
+                .isInstanceOf(ReservedPlayerNameException.class);
     }
 }

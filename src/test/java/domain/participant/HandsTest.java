@@ -1,17 +1,17 @@
-package domain;
+package domain.participant;
 
-import static domain.HandsTestFixture.sum19Size3Ace1;
-import static domain.HandsTestFixture.sum19Size4Ace11;
-import static domain.HandsTestFixture.sum20Size2;
-import static domain.HandsTestFixture.sum20Size3Ace1;
-import static domain.HandsTestFixture.sum21Size3Ace11;
+import static domain.participant.HandsTestFixture.sum19Size3Ace1;
+import static domain.participant.HandsTestFixture.sum19Size4Ace11;
+import static domain.participant.HandsTestFixture.sum20Size2;
+import static domain.participant.HandsTestFixture.sum20Size3Ace1;
+import static domain.participant.HandsTestFixture.sum21Size3Ace11;
 import static domain.card.Rank.EIGHT;
 import static domain.card.Shape.CLOVER;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.Card;
-import domain.participant.Hands;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +23,7 @@ class HandsTest {
     @Test
     @DisplayName("카드를 가지고 있는 객체를 생성한다.")
     void createPacket() {
-        Assertions.assertThatCode(Hands::createEmptyHands)
+        assertThatCode(Hands::createEmptyHands)
                 .doesNotThrowAnyException();
     }
 
@@ -37,13 +37,13 @@ class HandsTest {
         hands.add(new Card(EIGHT, CLOVER));
 
         //then
-        Assertions.assertThat(hands.size()).isEqualTo(1);
+        assertThat(hands.size()).isEqualTo(1);
     }
 
     @DisplayName("카드의 합을 구한다.")
     @Test
     void sum() {
-        Assertions.assertThat(sum20Size2.sum()).isEqualTo(20);
+        assertThat(sum20Size2.sum()).isEqualTo(20);
     }
 
     @DisplayName("에이스를 11로 계산한다.")
@@ -54,7 +54,7 @@ class HandsTest {
         final int result = hands.sum();
 
         // then
-        Assertions.assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected);
     }
 
     @DisplayName("에이스를 1로 계산한다.")
@@ -65,7 +65,7 @@ class HandsTest {
         final int result = hands.sum();
 
         // then
-        Assertions.assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected);
     }
 
     static Stream<Arguments> sumAce11ParameterProvider() {

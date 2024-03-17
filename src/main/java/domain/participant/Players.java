@@ -1,19 +1,15 @@
 package domain.participant;
 
-import constants.ErrorCode;
-import domain.Result;
-import exception.DuplicatePlayerNameException;
-import exception.InvalidPlayersSizeException;
+import domain.GameResult;
+import domain.amount.EarnAmount;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class Players {
-
-    private static final int MIN_SIZE = 2;
-    private static final int MAX_SIZE = 8;
 
     private final List<Player> names;
 
@@ -21,13 +17,12 @@ public class Players {
         this.names = names;
     }
 
-    public static Players from(final List<String> names) {
-        validate(names);
-        return new Players(mapToPlayers(names));
-    }
-
     public void forEach(Consumer<? super Player> action) {
         names.forEach(action);
+    }
+
+    public Stream<Player> filter(Predicate<? super Player> predicate) {
+        return names.stream().filter(predicate);
     }
 
     public boolean isAllBust() {
@@ -35,36 +30,22 @@ public class Players {
                 .allMatch(Player::isBust);
     }
 
-    public Map<Player, Result> getPlayersResult(final Dealer dealer) {
-        final Map<Player, Result> result = new LinkedHashMap<>();
+    public Map<Player, GameResult> getPlayersResult(final Dealer dealer) {
+        final Map<Player, GameResult> result = new LinkedHashMap<>();
         for (Player name : names) {
             result.put(name, name.calculateResult(dealer));
         }
         return result;
     }
 
-    private static List<Player> mapToPlayers(final List<String> names) {
-        return names.stream()
-                .map(String::trim)
-                .map(name -> new Player(new Name(name), Hands.createEmptyHands()))
-                .toList();
-    }
+    public Map<Player, EarnAmount> calculateResult(final Dealer dealer) {
+        final Map<Player, EarnAmount> playerAmountMap = new LinkedHashMap<>();
 
-    private static void validate(final List<String> names) {
-        validateSize(names);
-        validateDuplicate(names);
-    }
-
-    private static void validateSize(final List<String> names) {
-        if (names.size() < MIN_SIZE || MAX_SIZE < names.size()) {
-            throw new InvalidPlayersSizeException(ErrorCode.INVALID_SIZE);
+        for (Player player : names) {
+            GameResult gameResult = player.calculateResult(dealer);
+            playerAmountMap.put(player, gameResult.apply(player.getBetAmount()));
         }
-    }
-
-    private static void validateDuplicate(final List<String> names) {
-        if (names.size() != Set.copyOf(names).size()) {
-            throw new DuplicatePlayerNameException(ErrorCode.DUPLICATE_NAME);
-        }
+        return playerAmountMap;
     }
 
     public List<Player> getPlayers() {

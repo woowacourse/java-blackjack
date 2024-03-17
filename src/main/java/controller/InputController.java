@@ -1,7 +1,8 @@
 package controller;
 
-import domain.Answer;
-import domain.participant.Players;
+import domain.participant.Answer;
+import domain.amount.BetAmount;
+import domain.participant.Names;
 import exception.CustomException;
 import java.util.List;
 import view.InputView;
@@ -17,12 +18,12 @@ public class InputController {
         this.outputView = outputView;
     }
 
-    public Players getPlayers() {
-        Players players;
+    public Names getNames() {
+        Names names;
         do {
-            players = readPlayers();
-        } while (players == null);
-        return players;
+            names = readNames();
+        } while (names == null);
+        return names;
     }
 
     public Answer getAnswer(String name) {
@@ -33,10 +34,18 @@ public class InputController {
         return answer;
     }
 
-    private Players readPlayers() {
+    public BetAmount getBetAmount(String name) {
+        BetAmount betAmount;
+        do {
+            betAmount = readBetAmount(name);
+        } while (betAmount == null);
+        return betAmount;
+    }
+
+    private Names readNames() {
         try {
             List<String> rawNames = inputView.readNames();
-            return Players.from(rawNames);
+            return Names.from(rawNames);
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return null;
@@ -47,6 +56,16 @@ public class InputController {
         try {
             String value = inputView.readAnswer(name);
             return Answer.from(value);
+        } catch (CustomException exception) {
+            outputView.printException(exception.getErrorCode());
+            return null;
+        }
+    }
+
+    private BetAmount readBetAmount(final String name) {
+        try {
+            Long value = inputView.readBetAmount(name);
+            return new BetAmount(value);
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return null;

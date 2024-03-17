@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Result;
+import domain.GameResult;
 import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +25,6 @@ public abstract class Participant {
         return hands.isBust();
     }
 
-    //TODO 시작시에 블랙잭일 때 쓸거에용
     public boolean isBlackJack() {
         return hands.isBlackJack();
     }
@@ -38,7 +37,7 @@ public abstract class Participant {
         return hands.size();
     }
 
-    public Result calculateResult(final Participant participant) {
+    public GameResult calculateResult(final Participant participant) {
         return hands.calculateResult(participant.getHands());
     }
 
@@ -62,11 +61,19 @@ public abstract class Participant {
         if (!(target instanceof Participant participant)) {
             return false;
         }
-        return Objects.equals(name, participant.name) && Objects.equals(hands, participant.hands);
+        return Objects.equals(name, participant.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hands);
+        return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "name=" + name +
+                ", hands=" + hands +
+                '}';
     }
 }

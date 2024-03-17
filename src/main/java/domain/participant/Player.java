@@ -1,25 +1,49 @@
 package domain.participant;
 
-import static domain.participant.Dealer.DEALER_NAME;
-
-import constants.ErrorCode;
-import exception.ReservedPlayerNameException;
+import domain.amount.BetAmount;
+import java.util.Objects;
 
 public class Player extends Participant {
 
-    public Player(final Name name, final Hands hands) {
+    private final BetAmount betAmount;
+
+    Player(final Name name, final Hands hands, final BetAmount betAmount) {
         super(name, hands);
-        validate(name);
+        this.betAmount = betAmount;
     }
 
-    private void validate(final Name name) {
-        if (DEALER_NAME.equals(name)) {
-            throw new ReservedPlayerNameException(ErrorCode.RESERVED_NAME);
-        }
+    public Player(final Name name, final BetAmount betAmount) {
+        super(name, Hands.createEmptyHands());
+        this.betAmount = betAmount;
+    }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
     }
 
     @Override
     public boolean canDeal() {
-        return handsSum() <= Hands.BLACK_JACK;
+        return handsSum() < Hands.BLACK_JACK;
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof Player player)) {
+            return false;
+        }
+        return Objects.equals(getName(), player.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getName());
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }
