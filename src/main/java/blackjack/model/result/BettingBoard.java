@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class BettingBoard {
-    private static final String PLAYER_NOT_FOUND = "배팅 보드에서 해당 플레이어를 찾을 수 없습니다.";
+    private static final String PLAYER_NOT_FOUND = " 플레이어를 배팅 보드에서 찾을 수 없습니다.";
 
     private final Map<Name, BettingMoney> bettings;
 
@@ -24,7 +24,7 @@ public class BettingBoard {
     private BettingMoney getBettingMoney(final Name playerName) {
         BettingMoney bettingMoney = bettings.get(playerName);
         if (bettingMoney == null) {
-            throw new NoSuchElementException(PLAYER_NOT_FOUND);
+            throw new NoSuchElementException(playerName + PLAYER_NOT_FOUND);
         }
         return bettingMoney;
     }
