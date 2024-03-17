@@ -15,7 +15,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -144,6 +143,6 @@ public class BlackjackController {
     private List<BettingResultDto> convertToBettingResultDtos(final PlayerBettings bettingResults) {
         return bettingResults.getPlayerBettings().stream()
                 .map(BettingResultDto::from)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

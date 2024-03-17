@@ -9,6 +9,7 @@ import blackjack.domain.dealer.Dealer;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -25,9 +26,11 @@ public class BettingsTest {
             "DRAW, 0, 0"})
     void applyWinStatus(WinStatus winStatus, int pobiExpected, int jasonExpected) {
         // given
-        WinningResult winningResult = new WinningResult(Map.of(
-                new ParticipantName("pobi"), winStatus,
-                new ParticipantName("jason"), winStatus));
+        LinkedHashMap<ParticipantName, WinStatus> rawWinningResult = new LinkedHashMap<>();
+        rawWinningResult.put(new ParticipantName("pobi"), winStatus);
+        rawWinningResult.put(new ParticipantName("jason"), winStatus);
+
+        WinningResult winningResult = new WinningResult(rawWinningResult);
 
         PlayerBetting pobiBetting = PlayerBetting.create("pobi", 10000);
         PlayerBetting jasonBetting = PlayerBetting.create("jason", 20000);
