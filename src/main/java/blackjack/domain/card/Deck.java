@@ -8,7 +8,7 @@ import java.util.List;
 public class Deck {
     private static final int PICK_CARD_INDEX = 0;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Deck(List<Card> cards) {
         this.cards = cards;
