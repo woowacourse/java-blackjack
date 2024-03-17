@@ -33,6 +33,6 @@ public class MoneyManagerTest {
         MoneyManager moneyManager = new MoneyManager(bettingManager);
         Map<Player, Profit> profitManager = moneyManager.calculateProfit(playerResults);
 
-        assertThat(profitManager.get(player)).isEqualTo(new Profit(0));
+        assertThat(profitManager.get(player).getValue()).isEqualTo(-1000);
     }
 }

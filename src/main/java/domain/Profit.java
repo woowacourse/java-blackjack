@@ -6,4 +6,8 @@ public class Profit {
     public Profit(double value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return (int) value;
+    }
 }
