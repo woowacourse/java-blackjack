@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.betting.Bets;
 import domain.betting.Money;
-import domain.betting.ProfitRate;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.PlayerName;
@@ -48,7 +47,7 @@ public class BlackJackGame {
         Map<Player, Result> playerResults = getGameResults();
 
         playerResults.forEach((player, result) -> {
-                    double rate = ProfitRate.from(result).get();
+                    double rate = result.getProfitRate();
                     PlayerName playerName = player.getName();
                     playerProfits.put(player, bets.get(playerName).multiply(rate));
                 }
