@@ -1,14 +1,8 @@
-package referee;
+package resultJudge;
 
 import card.Card;
 import card.CardNumber;
 import card.CardPattern;
-import gameResult.GameResult;
-import gameResult.PlayerBlackJack;
-import gameResult.PlayerBust;
-import gameResult.PlayerLose;
-import gameResult.PlayerPush;
-import gameResult.PlayerWin;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,11 +34,9 @@ public class RefereeTest {
             Dealer dealer = new Dealer(List.of(new Card(CardNumber.ACE, CardPattern.HEART_PATTERN),
                     new Card(CardNumber.JACK, CardPattern.DIA_PATTERN)));
 
-            Referee referee = new Referee();
-            GameResult result = referee.judge(player, dealer);
+            GameResult result = ResultJudge.judge(player, dealer);
 
-            Assertions.assertThat(result)
-                    .isInstanceOf(PlayerPush.class);
+            Assertions.assertThat(result).isEqualTo(GameResult.PLAYER_PUSH);
         }
 
         @DisplayName("딜러는 BlackJack이 아닌 경우 Player가 우승한 것으로 간주한다.")
@@ -53,14 +45,12 @@ public class RefereeTest {
             Dealer dealer = new Dealer(List.of(new Card(CardNumber.ACE, CardPattern.HEART_PATTERN),
                     new Card(CardNumber.SEVEN, CardPattern.DIA_PATTERN)));
 
-            Referee referee = new Referee();
             System.out.println(player.isBlackJack());
             System.out.println(player.getCardScore());
             System.out.println(dealer.getCardScore());
-            GameResult result = referee.judge(player, dealer);
+            GameResult result = ResultJudge.judge(player, dealer);
 
-            Assertions.assertThat(result)
-                    .isInstanceOf(PlayerBlackJack.class);
+            Assertions.assertThat(result).isEqualTo(GameResult.PLAYER_BLACKJACK);
         }
     }
 
@@ -80,11 +70,9 @@ public class RefereeTest {
                     new Card(CardNumber.JACK, CardPattern.DIA_PATTERN),
                     new Card(CardNumber.JACK, CardPattern.DIA_PATTERN)));
 
-            Referee referee = new Referee();
-            GameResult result = referee.judge(player, dealer);
+            GameResult result = ResultJudge.judge(player, dealer);
 
-            Assertions.assertThat(result)
-                    .isInstanceOf(PlayerBust.class);
+            Assertions.assertThat(result).isEqualTo(GameResult.PLAYER_BUST);
         }
     }
 
@@ -106,11 +94,9 @@ public class RefereeTest {
             Dealer dealer = new Dealer(List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
                     new Card(CardNumber.TEN, CardPattern.SPADE_PATTERN)));
 
-            Referee referee = new Referee();
-            GameResult result = referee.judge(player, dealer);
+            GameResult result = ResultJudge.judge(player, dealer);
 
-            Assertions.assertThat(result)
-                    .isInstanceOf(PlayerLose.class);
+            Assertions.assertThat(result).isEqualTo(GameResult.PLAYER_LOSE);
         }
 
         @DisplayName("플레이어의 점수가 딜러보다 높다")
@@ -119,11 +105,9 @@ public class RefereeTest {
             Dealer dealer = new Dealer(List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
                     new Card(CardNumber.SEVEN, CardPattern.SPADE_PATTERN)));
 
-            Referee referee = new Referee();
-            GameResult result = referee.judge(player, dealer);
+            GameResult result = ResultJudge.judge(player, dealer);
 
-            Assertions.assertThat(result)
-                    .isInstanceOf(PlayerWin.class);
+            Assertions.assertThat(result).isEqualTo(GameResult.PLAYER_WIN);
         }
 
         @DisplayName("플레이어의 점수와 딜러의 점수가 같다")
@@ -132,11 +116,9 @@ public class RefereeTest {
             Dealer dealer = new Dealer(List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
                     new Card(CardNumber.NINE, CardPattern.HEART_PATTERN)));
 
-            Referee referee = new Referee();
-            GameResult result = referee.judge(player, dealer);
+            GameResult result = ResultJudge.judge(player, dealer);
 
-            Assertions.assertThat(result)
-                    .isInstanceOf(PlayerPush.class);
+            Assertions.assertThat(result).isEqualTo(GameResult.PLAYER_PUSH);
         }
 
         @DisplayName("딜러가 버스트인 경우 플레이어의 점수가 딜러보다 낮아도 우승이다")
@@ -146,11 +128,9 @@ public class RefereeTest {
                     new Card(CardNumber.NINE, CardPattern.HEART_PATTERN),
                     new Card(CardNumber.JACK, CardPattern.HEART_PATTERN)));
 
-            Referee referee = new Referee();
-            GameResult result = referee.judge(player, dealer);
+            GameResult result = ResultJudge.judge(player, dealer);
 
-            Assertions.assertThat(result)
-                    .isInstanceOf(PlayerWin.class);
+            Assertions.assertThat(result).isEqualTo(GameResult.PLAYER_WIN);
         }
     }
 }

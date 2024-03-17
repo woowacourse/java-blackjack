@@ -1,4 +1,4 @@
-package referee;
+package resultJudge;
 
 public enum GameResult {
 

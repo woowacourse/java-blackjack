@@ -1,13 +1,13 @@
 package participant.player;
 
-import gameResult.GameResult;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import participant.dealer.Dealer;
-import referee.Referee;
+import resultJudge.GameResult;
+import resultJudge.ResultJudge;
 
 public class Players {
 
@@ -33,11 +33,12 @@ public class Players {
 
     public Map<Name, Integer> getPlayerResults(Dealer dealer) {
         Map<Name, Integer> playerResult = new LinkedHashMap<>();
-        Referee referee = new Referee();
 
         for (Player player : players) {
-            GameResult gameResult = referee.judge(player, dealer);
-            playerResult.put(player.getName(), gameResult.profitMoney(player.getBetMoney()));
+            GameResult gameResult = ResultJudge.judge(player, dealer);
+            BetMoney betMoney = player.getBetMoney();
+
+            playerResult.put(player.getName(), betMoney.betMoneyResult(gameResult.getMoneyReturnPercent()));
         }
 
         return playerResult;
