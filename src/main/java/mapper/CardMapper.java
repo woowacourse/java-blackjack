@@ -4,18 +4,21 @@ import domain.card.*;
 import view.dto.card.CardDto;
 import view.dto.card.CardsDto;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CardMapper {
     public static CardDto cardToCardDto(final Card card) {
-        return new CardDto(convertToPhrase(card.number()), card.shape().value());
+        return new CardDto(convertToPhrase(card.number()), card.shape()
+                                                               .value());
     }
 
     private static String convertToPhrase(final CardNumber cardNumber) {
-        if (cardNumber.phrase() != CardPhrase.UN_DETERMINE) {
-            return cardNumber.phrase().getPhrase();
-        }
-        return String.valueOf(cardNumber.value());
+        return Arrays.stream(CardPhrase.values())
+                     .filter(cardPhrase -> cardPhrase.getCardNumber() == cardNumber)
+                     .map(CardPhrase::getPhrase)
+                     .findFirst()
+                     .orElse(String.valueOf(cardNumber.value()));
     }
 
     public static CardsDto cardsToCardsDto(final Cards cards, final int score) {
