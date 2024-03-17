@@ -43,7 +43,7 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public boolean hasExactlyTwoCards() {
+    boolean hasExactlyTwoCards() {
         return cards.size() == 2;
     }
 

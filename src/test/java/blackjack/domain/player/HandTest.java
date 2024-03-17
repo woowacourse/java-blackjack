@@ -48,6 +48,25 @@ public class HandTest {
     }
 
     @Test
+    void 패가_오직_두_장_있다면_참을_반환한다() {
+        Hand hand = new Hand();
+        hand.add(new Card(ACE, SPADE));
+        hand.add(new Card(KING, SPADE));
+
+        assertThat(hand.hasExactlyTwoCards()).isTrue();
+    }
+
+    @Test
+    void 패가_세_장_있다면_거짓을_반환한다() {
+        Hand hand = new Hand();
+        hand.add(new Card(ACE, SPADE));
+        hand.add(new Card(KING, SPADE));
+        hand.add(new Card(QUEEN, SPADE));
+
+        assertThat(hand.hasExactlyTwoCards()).isFalse();
+    }
+
+    @Test
     void 첫_번째_카드를_반환한다() {
         Hand hand = new Hand();
         hand.add(new Card(ACE, SPADE));
