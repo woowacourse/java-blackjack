@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -7,23 +7,28 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
-import blackjack.model.card.CardProperties;
-import blackjack.model.deck.HandDeck;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandDeckTest {
 
+    HandDeck handDeck;
+
+    @BeforeEach
+    void beforeEach() {
+        handDeck = new HandDeck();
+    }
+
     @DisplayName("덱에 카드를 추가한다.")
     @Test
-    void addCard() {
+    void add() {
         //given
-        HandDeck handDeck = new HandDeck();
-        Card card = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
+        Card card = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
 
         //when
-        handDeck.addCard(card);
+        handDeck.add(card);
         List<Card> cards = handDeck.getCards();
 
         //then
@@ -32,45 +37,42 @@ class HandDeckTest {
 
     @DisplayName("덱에 카드를 추가할 때 동일한 카드가 있는 경우 예외를 발생시킨다.")
     @Test
-    void addCard_duplicateCard() {
+    void add_duplicateCard() {
         //given
-        HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
-        Card card2 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.CLOVER, CardNumber.ACE);
 
-        handDeck.addCard(card1);
+        handDeck.add(card1);
         //when, then
-        assertThatThrownBy(() -> handDeck.addCard(card2))
+        assertThatThrownBy(() -> handDeck.add(card2))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("덱에 있는 모든 카드의 합을 계산한다.")
     @Test
-    void calculateTotalScore() {
+    void calculateCardScore() {
         //given
-        HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
-        Card card2 = new Card(new CardProperties(CardPattern.SPADE, CardNumber.EIGHT));
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.EIGHT);
 
         //when
-        handDeck.addCard(card1);
-        handDeck.addCard(card2);
+        handDeck.add(card1);
+        handDeck.add(card2);
 
         //then
-        assertThat(handDeck.calculateTotalScore()).isEqualTo(16);
+        assertThat(handDeck.calculateCardScore()).isEqualTo(16);
     }
 
     @DisplayName("덱에 11값으로 설정된 Ace 카드의 갯수를 반환한다.")
     @Test
     void countElevenAce() {
         //given
-        HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
-        Card card2 = new Card(new CardProperties(CardPattern.SPADE, CardNumber.ACE));
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.ACE);
 
         //when
-        handDeck.addCard(card1);
-        handDeck.addCard(card2);
+        handDeck.add(card1);
+        handDeck.add(card2);
 
         //then
         assertThat(handDeck.countElevenAce()).isEqualTo(2);
@@ -80,13 +82,12 @@ class HandDeckTest {
     @Test
     void switchAceValueInRow() {
         //given
-        HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
-        Card card2 = new Card(new CardProperties(CardPattern.SPADE, CardNumber.ACE));
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.ACE);
 
         //when
-        handDeck.addCard(card1);
-        handDeck.addCard(card2);
+        handDeck.add(card1);
+        handDeck.add(card2);
         handDeck.switchAceValueInRow();
 
         //then

@@ -1,22 +1,26 @@
 package blackjack.model.gamer;
 
-import blackjack.model.GameRule;
+import blackjack.model.gameRule.GameRule;
 
 public class Player extends Gamer {
 
-    private final Name playerName;
+    private final Name name;
 
-    public Player(String playerName) {
-        this.playerName = new Name(playerName);
+    private Player(Name name) {
+        this.name = name;
     }
 
-    public String getPlayerName() {
-        return playerName.getName();
+    public Player(String name) {
+        this(new Name(name));
     }
 
     @Override
     public boolean canHit() {
-        int cardScore = handDeck.calculateTotalScore();
-        return GameRule.playerHitRule(cardScore);
+        int score = calculateScore().getScore();
+        return score <= GameRule.PLAYER_HIT_MAX_SCORE;
+    }
+
+    public String getName() {
+        return name.getName();
     }
 }

@@ -5,28 +5,24 @@ import java.util.Objects;
 public class Card {
 
     private final CardProperties cardProperties;
-    private int score;
+    private Score score;
 
-    public Card(CardProperties cardProperties) {
+    private Card(CardProperties cardProperties) {
         this.cardProperties = cardProperties;
-        this.score = cardProperties.getCardNumber().getNumber();
+        this.score = new Score(cardProperties.getCardNumber().getNumber());
     }
 
-    public CardPattern pattern() {
-        return cardProperties.getCardPattern();
-    }
-
-    public CardNumber number() {
-        return cardProperties.getCardNumber();
+    public Card(CardPattern cardPattern, CardNumber cardNumber) {
+        this(new CardProperties(cardPattern, cardNumber));
     }
 
     public boolean isElevenAce() {
-        return score == 11 && cardProperties.getCardNumber() == CardNumber.ACE;
+        return score.getScore() == 11 && cardProperties.getCardNumber() == CardNumber.ACE;
     }
 
     public void switchAceValue() {
-        if (score == CardNumber.ACE.getNumber()) {
-            score = 1;
+        if (score.getScore() == CardNumber.ACE.getNumber()) {
+            score = new Score(1);
         }
     }
 
@@ -39,15 +35,23 @@ public class Card {
             return false;
         }
         Card card = (Card) object;
-        return score == card.score && Objects.equals(cardProperties, card.cardProperties);
+        return score.getScore() == card.score.getScore() && Objects.equals(cardProperties, card.cardProperties);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardProperties, score);
+        return Objects.hash(cardProperties, score.getScore());
+    }
+
+    public CardPattern getPattern() {
+        return cardProperties.getCardPattern();
+    }
+
+    public CardNumber getNumber() {
+        return cardProperties.getCardNumber();
     }
 
     public int getScore() {
-        return score;
+        return score.getScore();
     }
 }

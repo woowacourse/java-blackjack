@@ -1,6 +1,9 @@
 package blackjack.dto;
 
+import java.util.List;
+
 public record PlayerDto(
         String name,
-        HandDeckDto handDeckDto) {
+        List<CardDto> cardDtos,
+        int score) {
 }

@@ -1,17 +1,17 @@
 package blackjack.model.gamer;
 
-import blackjack.model.GameRule;
 import blackjack.model.card.Card;
+import blackjack.model.gameRule.GameRule;
 
 public class Dealer extends Gamer {
 
-    public Card getFirstCard() {
-        return handDeck.getCards().get(0);
+    public Card getFistCard() {
+        return getCards().get(0);
     }
 
     @Override
     public boolean canHit() {
-        int cardScore = handDeck.calculateTotalScore();
-        return GameRule.dealerHitRule(cardScore);
+        int score = calculateScore().getScore();
+        return score <= GameRule.DEALER_HIT_MAX_SCORE;
     }
 }

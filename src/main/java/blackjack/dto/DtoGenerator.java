@@ -2,72 +2,77 @@ package blackjack.dto;
 
 import blackjack.model.card.Card;
 import blackjack.model.gamer.Dealer;
-import blackjack.model.gamer.Gamer;
+import blackjack.model.gamer.Gamers;
 import blackjack.model.gamer.Player;
-import blackjack.model.result.GameResult;
-import java.util.LinkedHashMap;
+import blackjack.model.betting.BettingInfo;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DtoGenerator {
 
-    public static List<PlayerDto> createPlayerDtos(List<Player> players) {
+    public static GamersDto createGamersDtoByInitialCard(Gamers gamers) {
+        List<PlayerDto> playerDtos = createPlayerDtos(gamers.getPlayers());
+        DealerDto dealerDto = createInitialDealerDto(gamers.getDealer());
+        return new GamersDto(dealerDto, playerDtos);
+    }
+
+    public static GamersDto createGamersDto(Gamers gamers) {
+        List<PlayerDto> playerDtos = createPlayerDtos(gamers.getPlayers());
+        DealerDto dealerDto = createDealerDto(gamers.getDealer());
+        return new GamersDto(dealerDto, playerDtos);
+    }
+
+    public static GamersNetProfitDto createGamersNetProfitDto(BettingInfo bettingInfo, List<Player> players) {
+        int dealerNetProfit = bettingInfo.calculateDealerNetProfit();
+        Map<String, Integer> playersNetProfit = bringPlayersNetProfit(bettingInfo, players);
+        return new GamersNetProfitDto(dealerNetProfit, playersNetProfit);
+    }
+
+    private static List<PlayerDto> createPlayerDtos(List<Player> players) {
         return players.stream()
                 .map(DtoGenerator::createPlayerDto)
                 .toList();
     }
 
     public static PlayerDto createPlayerDto(Player player) {
-        return new PlayerDto(player.getPlayerName(), createHandDeckDto(player));
+        String playerName = player.getName();
+        List<CardDto> cardDtos = createCardDtos(player.getCards());
+        int score = player.calculateScore().getScore();
+        return new PlayerDto(playerName, cardDtos, score);
     }
 
-    public static DealerDto createInitialDealerDto(Card card) {
-        return new DealerDto(createHandDeckDtoByCard(card));
+    private static DealerDto createInitialDealerDto(Dealer dealer) {
+        CardDto cardDto = createCardDto(dealer.getFistCard());
+        return new DealerDto(List.of(cardDto), 0);
     }
 
-    public static DealerDto createDealerDto(Dealer dealer) {
-        return new DealerDto(createHandDeckDto(dealer));
+    private static DealerDto createDealerDto(Dealer dealer) {
+        List<CardDto> cardDtos = createCardDtos(dealer.getCards());
+        int score = dealer.calculateScore().getScore();
+        return new DealerDto(cardDtos, score);
     }
 
-    public static PlayersResultDto createPlayerResultDto(List<Player> players, GameResult gameResult) {
-        Map<String, String> playersResult = new LinkedHashMap<>();
-        for (Player player : players) {
-            String playerName = player.getPlayerName();
-            String playerResult = gameResult.findPlayerResult(player).getName();
-            playersResult.put(playerName, playerResult);
-        }
-
-        return new PlayersResultDto(playersResult);
-    }
-
-    public static DealerResultDto createDealerResultDro(GameResult gameResult) {
-        return new DealerResultDto(
-                gameResult.countDealerWins(),
-                gameResult.countDealerTies(),
-                gameResult.countDealerLoses()
-        );
-    }
-
-    private static HandDeckDto createHandDeckDto(Gamer gamer) {
-        List<CardDto> cardDtos = gamer.getHandDeck().stream()
+    private static List<CardDto> createCardDtos(List<Card> cards) {
+        return cards.stream()
                 .map(DtoGenerator::createCardDto)
                 .toList();
-
-        int score = gamer.calculateTotalScore();
-
-        return new HandDeckDto(cardDtos, score);
-    }
-
-    private static HandDeckDto createHandDeckDtoByCard(Card card) {
-        List<CardDto> cardDto = List.of(createCardDto(card));
-        int score = card.getScore();
-
-        return new HandDeckDto(cardDto, score);
     }
 
     private static CardDto createCardDto(Card card) {
-        String cardNumber = card.number().getName();
-        String cardPattern = card.pattern().getName();
+        String cardNumber = card.getNumber().getName();
+        String cardPattern = card.getPattern().getName();
         return new CardDto(cardNumber, cardPattern);
+    }
+
+    private static Map<String, Integer> bringPlayersNetProfit(BettingInfo bettingInfo, List<Player> players) {
+        Map<String, Integer> playersNetProfit = new HashMap<>();
+        for (Player player : players) {
+            String playerName = player.getName();
+            int netProfit = bettingInfo.calculatePlayerNetProfit(player);
+            playersNetProfit.put(playerName, netProfit);
+        }
+
+        return playersNetProfit;
     }
 }
