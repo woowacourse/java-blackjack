@@ -13,7 +13,7 @@ public class BlackjackRevenueCalculator {
 
     private final PlayerResultHandler playerResultHandler;
 
-    public BlackjackRevenueCalculator(PlayerResultHandler playerResultHandler) {
+    private BlackjackRevenueCalculator(PlayerResultHandler playerResultHandler) {
         this.playerResultHandler = playerResultHandler;
     }
 

@@ -77,8 +77,7 @@ class BlackjackRevenueCalculatorTest {
                     new Card(Shape.HEART, Number.QUEEN),
                     new Card(Shape.DIAMOND, Number.QUEEN)
             ));
-            PlayerResultHandler handler = new PlayerResultHandler(dealer);
-            calculator = new BlackjackRevenueCalculator(handler);
+            calculator = BlackjackRevenueCalculator.fromDealer(dealer);
             betAmount = new Money(10000L);
         }
 
