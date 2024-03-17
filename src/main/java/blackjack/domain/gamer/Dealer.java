@@ -79,7 +79,6 @@ public class Dealer extends BlackjackGamer {
 
     public Money informPlayerEarning(Player player, Money betAmount) {
         BlackjackEarningCalculator calculator = BlackjackEarningCalculator.fromDealer(this);
-
         return calculator.calculatePlayerEarning(player, betAmount);
     }
 
