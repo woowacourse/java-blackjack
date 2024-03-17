@@ -57,7 +57,12 @@ public class BlackjackController {
 
     private Players proceedPlayersTurn(Players players, Deck deck) {
         return players.getPlayers().stream()
-                .map(player -> proceedPlayerTurn(player, deck))
+                .map(player -> {
+                    if (player.isFinished()) {
+                        return player;
+                    }
+                    return proceedPlayerTurn(player, deck);
+                })
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::updatePlayers));
     }
 
