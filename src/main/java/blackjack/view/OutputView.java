@@ -1,13 +1,10 @@
 package blackjack.view;
 
-import static blackjack.domain.cardgame.WinningStatus.LOSE;
-import static blackjack.domain.cardgame.WinningStatus.WIN;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -48,27 +45,6 @@ public class OutputView {
         System.out.println(playerCardInfo + " - 결과: " + player.getScore());
     }
 
-    public static void printResult(final CardGameResult cardGameResult) {
-        printResultOfDealer(cardGameResult);
-        printResultOfEachPlayer(cardGameResult);
-    }
-
-    private static void printResultOfDealer(final CardGameResult cardGameResult) {
-        printLineSeparator();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " +
-                cardGameResult.getDealerWinCount() + WIN.getValue() + " " +
-                cardGameResult.getDealerLoseCount() + LOSE.getValue());
-    }
-
-    private static void printResultOfEachPlayer(final CardGameResult cardGameResult) {
-        cardGameResult.getTotalResult()
-                .entrySet()
-                .stream()
-                .map(result -> result.getKey().getName() + ": " + result.getValue().getValue())
-                .forEach(System.out::println);
-    }
-
     private static String getPlayerCardInfo(final Player player) {
         return player.getName() + "카드: " +
                 player.getCards()
@@ -82,7 +58,15 @@ public class OutputView {
                 CardShapeStrings.mapCardShapeToString(card.getShape());
     }
 
+    public static void printProfits(final Map<Player, Integer> playerProfits) {
+        printLineSeparator();
+        System.out.println("## 최종 수익");
+        playerProfits.forEach(
+                (player, profit) -> System.out.println(String.format("%s: %d", player.getName(), profit)));
+    }
+
     private static void printLineSeparator() {
         System.out.println();
     }
+
 }

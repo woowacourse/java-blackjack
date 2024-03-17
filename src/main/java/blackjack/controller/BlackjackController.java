@@ -1,8 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.cardgame.BlackjackGame;
-import blackjack.domain.cardgame.CardGameJudge;
-import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
@@ -25,7 +23,7 @@ public class BlackjackController {
         giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
 
         printHandStatusOfEachPlayer(dealer, players);
-        printCardGameResult(dealer, players);
+        printPlayerProfits(dealer);
     }
 
     private static List<Player> createPlayersByNames(final List<String> names) {
@@ -69,9 +67,7 @@ public class BlackjackController {
         }
     }
 
-    private void printCardGameResult(final Dealer dealer, final List<Player> players) {
-        final CardGameJudge cardGameJudge = new CardGameJudge();
-        final CardGameResult cardGameResult = cardGameJudge.judge(dealer, players);
-        OutputView.printResult(cardGameResult);
+    private void printPlayerProfits(final Dealer dealer) {
+        OutputView.printProfits(dealer.findPlayerProfits());
     }
 }

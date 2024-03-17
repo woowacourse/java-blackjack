@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.cardgame.Status;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -10,7 +10,7 @@ public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
 
-    private final Map<Player, Integer> playerBetting = new HashMap<>();
+    private final Map<Player, Integer> playerBetting = new LinkedHashMap<>();
 
     public Dealer() {
         super(NAME);
