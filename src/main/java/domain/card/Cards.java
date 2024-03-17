@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    private static final int INIT_CARD_COUNT = 2;
-    private static final int BONUS_SCORE = 10;
+    private static final int BLACKJACK_CARD_COUNT = 2;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BONUS_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -47,7 +47,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == INIT_CARD_COUNT && sumAllCards() == BLACKJACK_SCORE;
+        return cards.size() == BLACKJACK_CARD_COUNT && sumAllCards() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
