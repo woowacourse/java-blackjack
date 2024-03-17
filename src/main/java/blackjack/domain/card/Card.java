@@ -1,4 +1,4 @@
-package blackjack.domain.supplies;
+package blackjack.domain.card;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -6,7 +6,7 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.toMap;
 
 public class Card {
-    private static final Map<String, Card> pool = blackjack.domain.supplies.Suit.stream()
+    private static final Map<String, Card> pool = blackjack.domain.card.Suit.stream()
             .flatMap(suit -> Rank.stream().map(rank -> new Card(rank, suit)))
             .collect(toMap(it -> toKey(it.rank, it.suit), Function.identity()));
 

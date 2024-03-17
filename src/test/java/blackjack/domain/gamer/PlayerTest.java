@@ -1,18 +1,18 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.supplies.Card;
-import blackjack.domain.supplies.Chip;
+import blackjack.domain.card.Card;
+import blackjack.domain.money.Chip;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.supplies.Rank.ACE;
-import static blackjack.domain.supplies.Rank.KING;
-import static blackjack.domain.supplies.Rank.NINE;
-import static blackjack.domain.supplies.Rank.TEN;
-import static blackjack.domain.supplies.Suit.CLUB;
-import static blackjack.domain.supplies.Suit.DIAMOND;
+import static blackjack.domain.card.Rank.ACE;
+import static blackjack.domain.card.Rank.KING;
+import static blackjack.domain.card.Rank.NINE;
+import static blackjack.domain.card.Rank.TEN;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("플레이어")
@@ -28,7 +28,7 @@ public class PlayerTest {
         player.draw(List.of(Card.of(ACE, CLUB), Card.of(NINE, CLUB)));
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(2);
+        assertThat(player.cards().size()).isEqualTo(2);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class PlayerTest {
         player.draw(Card.of(KING, DIAMOND));
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(1);
+        assertThat(player.cards().size()).isEqualTo(1);
     }
 
     @Test

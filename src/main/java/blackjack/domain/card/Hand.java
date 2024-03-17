@@ -1,4 +1,4 @@
-package blackjack.domain.supplies;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return score().isMaxScore() && getNumberOfCards() == INIT_COUNT;
+        return score().isMaxScore() && numberOfCards() == INIT_COUNT;
     }
 
     public boolean isBust() {
@@ -52,15 +52,15 @@ public class Hand {
         return score().isMaxScore();
     }
 
-    public int getNumberOfCards() {
+    public int numberOfCards() {
         return myCards.size();
     }
 
-    public List<Card> getMyCards() {
+    public List<Card> myCards() {
         return myCards;
     }
 
-    public Card getMyCardAt(int index) {
+    public Card myCardAt(int index) {
         return myCards.get(index);
     }
 }

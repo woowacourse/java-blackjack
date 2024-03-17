@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.supplies.Suit;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class SuitNameTest {
         // given & when & then
         assertThatCode(() ->
                 Arrays.stream(Suit.values())
-                        .forEach(CardSymbolName::convert)
+                        .forEach(SuitName::convert)
         )
                 .doesNotThrowAnyException();
     }

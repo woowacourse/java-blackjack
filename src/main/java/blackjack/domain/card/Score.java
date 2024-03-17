@@ -1,4 +1,4 @@
-package blackjack.domain.supplies;
+package blackjack.domain.card;
 
 public class Score {
     public static final Score ACE_ADDITIONAL_SCORE = new Score(10);

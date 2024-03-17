@@ -1,27 +1,27 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.supplies.Card;
-import blackjack.domain.supplies.Chip;
+import blackjack.domain.money.Chip;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.supplies.Rank.ACE;
-import static blackjack.domain.supplies.Rank.EIGHT;
-import static blackjack.domain.supplies.Rank.FIVE;
-import static blackjack.domain.supplies.Rank.JACK;
-import static blackjack.domain.supplies.Rank.KING;
-import static blackjack.domain.supplies.Rank.NINE;
-import static blackjack.domain.supplies.Rank.QUEEN;
-import static blackjack.domain.supplies.Rank.SEVEN;
-import static blackjack.domain.supplies.Rank.THREE;
-import static blackjack.domain.supplies.Rank.TWO;
-import static blackjack.domain.supplies.Suit.CLUB;
-import static blackjack.domain.supplies.Suit.SPADE;
+import static blackjack.domain.card.Rank.ACE;
+import static blackjack.domain.card.Rank.EIGHT;
+import static blackjack.domain.card.Rank.FIVE;
+import static blackjack.domain.card.Rank.JACK;
+import static blackjack.domain.card.Rank.KING;
+import static blackjack.domain.card.Rank.NINE;
+import static blackjack.domain.card.Rank.QUEEN;
+import static blackjack.domain.card.Rank.SEVEN;
+import static blackjack.domain.card.Rank.THREE;
+import static blackjack.domain.card.Rank.TWO;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("심판")
@@ -35,10 +35,9 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB)));
         dealer.draw(List.of(Card.of(EIGHT, SPADE), Card.of(QUEEN, CLUB)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.WIN);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -50,10 +49,9 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB), Card.of(THREE, CLUB)));
         dealer.draw(List.of(Card.of(EIGHT, SPADE), Card.of(QUEEN, CLUB), Card.of(TWO, SPADE)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.LOSE);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -65,10 +63,9 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(THREE, CLUB)));
         dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(THREE, SPADE)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.PUSH);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.PUSH);
     }
 
     @Test
@@ -80,10 +77,9 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(ACE, CLUB), Card.of(JACK, CLUB)));
         dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(FIVE, CLUB)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.WIN);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.BLACKJACK_WIN);
     }
 
     @Test
@@ -95,10 +91,9 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(TWO, CLUB), Card.of(JACK, CLUB)));
         dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(FIVE, CLUB)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.LOSE);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -110,10 +105,9 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
         dealer.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.LOSE);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -125,10 +119,9 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB)));
         dealer.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.WIN);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -140,9 +133,8 @@ public class RefereeTest {
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(NINE, CLUB), Card.of(TWO, CLUB)));
         dealer.draw(List.of(Card.of(ACE, CLUB), Card.of(JACK, CLUB)));
-        referee.calculatePlayerResult(dealer, player);
 
-        assertThat(referee.findPlayerResult(player))
-                .isEqualTo(PlayerWinStatus.LOSE);
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.LOSE);
     }
 }

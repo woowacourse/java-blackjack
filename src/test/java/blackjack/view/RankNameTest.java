@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.supplies.Rank;
+import blackjack.domain.card.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class RankNameTest {
         // given & when & then
         assertThatCode(() ->
                 Arrays.stream(Rank.values())
-                        .forEach(CardScoreName::convert)
+                        .forEach(RankName::convert)
         )
                 .doesNotThrowAnyException();
     }

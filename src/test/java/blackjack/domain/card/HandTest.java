@@ -1,20 +1,20 @@
-package blackjack.domain.supplies;
+package blackjack.domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.supplies.Rank.ACE;
-import static blackjack.domain.supplies.Rank.EIGHT;
-import static blackjack.domain.supplies.Rank.FIVE;
-import static blackjack.domain.supplies.Rank.NINE;
-import static blackjack.domain.supplies.Rank.QUEEN;
-import static blackjack.domain.supplies.Rank.TWO;
-import static blackjack.domain.supplies.Suit.CLUB;
-import static blackjack.domain.supplies.Suit.DIAMOND;
-import static blackjack.domain.supplies.Suit.HEART;
-import static blackjack.domain.supplies.Suit.SPADE;
+import static blackjack.domain.card.Rank.ACE;
+import static blackjack.domain.card.Rank.EIGHT;
+import static blackjack.domain.card.Rank.FIVE;
+import static blackjack.domain.card.Rank.NINE;
+import static blackjack.domain.card.Rank.QUEEN;
+import static blackjack.domain.card.Rank.TWO;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.DIAMOND;
+import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("패")

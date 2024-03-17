@@ -3,13 +3,13 @@ package blackjack.domain.game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.game.PlayerWinStatus.LOSE;
-import static blackjack.domain.game.PlayerWinStatus.PUSH;
-import static blackjack.domain.game.PlayerWinStatus.WIN;
+import static blackjack.domain.game.PlayerResult.LOSE;
+import static blackjack.domain.game.PlayerResult.PUSH;
+import static blackjack.domain.game.PlayerResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("게임 결과")
-public class PlayerWinStatusTest {
+public class PlayerResultTest {
 
     @Test
     @DisplayName("게임 결과가 반대로도 출력되는지 확인한다.")

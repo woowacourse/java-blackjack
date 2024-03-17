@@ -3,14 +3,14 @@ package blackjack.domain.game;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.supplies.Deck;
+import blackjack.domain.card.Deck;
 
-public class BlackjackGame {
+public class DeckMachine {
     public static final int DEAL_CARDS_COUNT = 2;
 
     private final Deck deck;
 
-    public BlackjackGame(Deck deck) {
+    public DeckMachine(Deck deck) {
         this.deck = deck;
     }
 
