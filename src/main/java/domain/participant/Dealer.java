@@ -10,6 +10,7 @@ import java.util.List;
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
     private static final int CARD_PICK_THRESHOLD = 16;
+    private static final int MULTIPLIED_NUMBER_FOR_OPPOSITE_SIGN = -1;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -35,7 +36,7 @@ public class Dealer extends Participant {
     }
 
     private int toDealerProfit(final int playerProfit) {
-        return (-1) * playerProfit;
+        return MULTIPLIED_NUMBER_FOR_OPPOSITE_SIGN * playerProfit;
     }
 
     public void clear() {
