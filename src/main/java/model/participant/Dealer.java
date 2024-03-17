@@ -25,28 +25,31 @@ public class Dealer extends Participant implements JudgeAction {
 
     @Override
     public GameResult judge(Player player) {
-        int playerScore = player.score();
-        int dealerScore = score();
-
-        if (player.isBlackjack() && isNotBlackjack()) {
+        if (isBlackjackWin(player)) {
             return GameResult.BLACKJACK_WIN;
         }
-        if (player.isBlackjack() && isBlackjack()) {
-            return GameResult.PUSH;
-        }
-        if (player.isBurst()) {
-            return GameResult.LOOSE;
-        }
-        if (isBurst()) {
+        if (isWin(player)) {
             return GameResult.WIN;
         }
-        if (player.isNotBurst() && playerScore > dealerScore) {
-            return GameResult.WIN;
-        }
-        if (isNotBurst() && playerScore < dealerScore) {
+        if (isLoose(player)) {
             return GameResult.LOOSE;
         }
         return GameResult.PUSH;
+    }
+
+    private boolean isBlackjackWin(Player player) {
+        return player.isBlackjack() && isNotBlackjack();
+    }
+
+    private boolean isWin(Player player) {
+        return player.isNotBurst() && (isBurst() || player.score() > score());
+    }
+
+    private boolean isLoose(Player player) {
+        if (isBlackjack() && player.isNotBlackjack() || player.isBurst()) {
+            return true;
+        }
+        return isNotBurst() && player.score() < score();
     }
 
     public Card getFirstCard() {
