@@ -1,5 +1,8 @@
 package blackjack.domain.game;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public enum PlayerState {
 
     BLACKJACK(1.5, "승"),
@@ -13,6 +16,29 @@ public enum PlayerState {
     PlayerState(double multiple, String description) {
         this.multiple = multiple;
         this.description = description;
+    }
+
+    public static PlayerState of(Player player, Dealer dealer) {
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return BLACKJACK;
+        }
+        if (player.isBusted()) {
+            return LOSE;
+        }
+        if (dealer.isBusted()) {
+            return WIN;
+        }
+        return decidePlayerStateByScore(player, dealer);
+    }
+
+    private static PlayerState decidePlayerStateByScore(Player player, Dealer dealer) {
+        if (player.isBiggerThan(dealer)) {
+            return WIN;
+        }
+        if (dealer.isBiggerThan(player)) {
+            return LOSE;
+        }
+        return TIE;
     }
 
     public double getMultiple() {

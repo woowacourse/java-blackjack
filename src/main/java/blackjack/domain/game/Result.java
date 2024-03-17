@@ -18,36 +18,10 @@ public class Result {
 
     public static Result of(List<Player> players, Dealer dealer) {
         Map<Player, PlayerState> currentResultMap = new LinkedHashMap<>();
-
         for (Player player : players) {
-            PlayerState playerState = decidePlayerState(player, dealer);
-            currentResultMap.put(player, playerState);
+            currentResultMap.put(player, PlayerState.of(player, dealer));
         }
-
         return new Result(currentResultMap);
-    }
-
-    private static PlayerState decidePlayerState(Player player, Dealer dealer) {
-        if (player.isBlackjack() && !dealer.isBlackjack()) {
-            return PlayerState.BLACKJACK;
-        }
-        if (player.isBusted()) {
-            return PlayerState.LOSE;
-        }
-        if (dealer.isBusted()) {
-            return PlayerState.WIN;
-        }
-        return decidePlayerStateByScore(player, dealer);
-    }
-
-    private static PlayerState decidePlayerStateByScore(Player player, Dealer dealer) {
-        if (player.isBiggerThan(dealer)) {
-            return PlayerState.WIN;
-        }
-        if (dealer.isBiggerThan(player)) {
-            return PlayerState.LOSE;
-        }
-        return PlayerState.TIE;
     }
 
     public Map<PlayerState, Long> countDealerResults() {
