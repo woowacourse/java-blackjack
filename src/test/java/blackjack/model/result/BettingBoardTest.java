@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BettingBoardTest {
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} 1000 -> {1}")
     @MethodSource("provideMatchResultAndExpectedEarning")
     @DisplayName("플레이어의 게임 결과로 수익을 구한다")
     void determineEarningTest(MatchResult matchResult, int expectedEarning) {

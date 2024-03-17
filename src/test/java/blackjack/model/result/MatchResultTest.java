@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MatchResultTest {
-    @ParameterizedTest
+    @ParameterizedTest(name = "player: {0}, dealer: {1}, expectedResult: {2}")
     @MethodSource("provideCardsAndExpectedResult")
     @DisplayName("딜러와 플레이어의 카드 합을 비교하여 승패를 가린다")
     void determineOutcomeTest(List<Card> playerCards, List<Card> dealerCards, MatchResult expectedResult) {
@@ -53,7 +53,7 @@ class MatchResultTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "player: {0}, dealer: {1}, expectedResult: {2}")
     @MethodSource("provideBustCardsAndExpectedResult")
     @DisplayName("버스트인 쪽이 패배한다. 플레이어와 딜러가 둘 다 버스트면 플레이어가 패배한다")
     public void ensurePlayerWinWhenBothBustTest(List<Card> playerCards, List<Card> dealerCards, MatchResult expectedResult) {
@@ -102,7 +102,7 @@ class MatchResultTest {
         return dealer;
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} 1000 -> {1}")
     @MethodSource("provideMatchResultAndExpectedEarning")
     @DisplayName("게임 결과로 수익을 구한다")
     void calculateEarningTest(MatchResult matchResult, int expectedEarning) {

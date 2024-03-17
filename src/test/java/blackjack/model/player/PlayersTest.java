@@ -22,7 +22,7 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "names: {0}")
     @MethodSource("provideDuplicatedNames")
     @DisplayName("참여자 이름은 중복되면 예외가 발생한다")
     void validateDuplicatedNamesTest(List<String> names) {
