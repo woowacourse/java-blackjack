@@ -22,10 +22,6 @@ public class Players {
     }
 
     private void validate(final List<Player> players) {
-        validatePlayerNumbers(players);
-    }
-
-    private void validatePlayerNumbers(final List<Player> players) {
         if (isInvalidPlayersNumber(players)) {
             throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
         }
