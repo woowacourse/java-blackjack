@@ -56,7 +56,7 @@ public class BlackJackStateTest {
 
     @DisplayName("플레이어가 블랙잭이고, 딜러가 블랙잭이 아니면 1.5를 반환한다")
     @Test
-    public void getProfitRate() {
+    public void whenPlayerBlackjackButDealerNotThenReturnOnePointFive() {
         BlackJackState blackJackState = new BlackJackState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
                 CardFixture.fromSuitCloverWith(Denomination.JACK)));
 
@@ -66,7 +66,7 @@ public class BlackJackStateTest {
 
     @DisplayName("플레이어와 딜러 모두 블랙잭이면 1을 반환한다")
     @Test
-    public void getProfitRate2() {
+    public void whenBothParticipantsAreBlackJackThenReturnOne() {
         BlackJackState blackJackState = new BlackJackState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
                 CardFixture.fromSuitCloverWith(Denomination.JACK)));
 
