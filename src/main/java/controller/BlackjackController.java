@@ -1,20 +1,16 @@
 package controller;
 
-import static java.util.stream.Collectors.toMap;
-
-import model.result.ParticipantCard;
-import model.result.ParticipantCards;
-import model.result.ParticipantProfits;
-import model.result.ParticipantScores;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 import model.betting.Bet;
-import model.betting.Bets;
 import model.game.BlackjackGame;
 import model.game.HitChoice;
 import model.participant.Player;
 import model.participant.Players;
+import model.result.ParticipantCard;
+import model.result.ParticipantCards;
+import model.result.ParticipantProfits;
+import model.result.ParticipantScores;
 import view.InputView;
 import view.OutputView;
 
@@ -22,7 +18,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = preparePlayers();
-        Bets bets = prepareBets(players);
+        prepareBets(players);
         BlackjackGame blackjackGame = new BlackjackGame();
 
         ParticipantCards participantCards = blackjackGame.dealInitialCards(players);
@@ -34,7 +30,7 @@ public class BlackjackController {
         ParticipantScores participantScores = blackjackGame.finish(players);
         OutputView.printScores(participantScores);
 
-        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players, bets);
+        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players);
         OutputView.printProfits(participantProfits);
     }
 
@@ -45,11 +41,11 @@ public class BlackjackController {
         });
     }
 
-    private Bets prepareBets(Players players) {
-        Map<String, Bet> betMoneys = players.getPlayers()
-            .stream()
-            .collect(toMap(Player::getName, this::prepareBet));
-        return new Bets(betMoneys);
+    private void prepareBets(Players players) {
+        for (Player player : players.getPlayers()) {
+            Bet bet = prepareBet(player);
+            player.setBet(bet);
+        }
     }
 
     private Bet prepareBet(Player player) {

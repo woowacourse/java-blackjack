@@ -3,7 +3,6 @@ package model.result;
 import java.math.BigDecimal;
 import java.util.List;
 import model.betting.Bet;
-import model.betting.Bets;
 import model.game.GameResult;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -20,22 +19,21 @@ public class ParticipantProfits {
         this.playerProfits = playerProfits;
     }
 
-    public static ParticipantProfits of(Players players, Dealer dealer, Bets bets) {
-        List<ParticipantProfit> playersProfits = calculateProfits(players, dealer, bets);
+    public static ParticipantProfits of(Players players, Dealer dealer) {
+        List<ParticipantProfit> playersProfits = calculateProfits(players, dealer);
         ParticipantProfit dealerProfit = calculateDealerProfit(playersProfits, dealer);
         return new ParticipantProfits(dealerProfit, playersProfits);
     }
 
-    private static List<ParticipantProfit> calculateProfits(Players players, Dealer dealer,
-        Bets bets) {
+    private static List<ParticipantProfit> calculateProfits(Players players, Dealer dealer) {
         return players.getPlayers()
             .stream()
-            .map(player -> calculateBetProfit(player, dealer, bets))
+            .map(player -> calculateBetProfit(player, dealer))
             .toList();
     }
 
-    private static ParticipantProfit calculateBetProfit(Player player, Dealer dealer, Bets bets) {
-        Bet bet = bets.findByPlayer(player);
+    private static ParticipantProfit calculateBetProfit(Player player, Dealer dealer) {
+        Bet bet = player.getBet();
         GameResult resultStatus = dealer.judge(player);
         BigDecimal profit = resultStatus.calculateProfit(bet);
         return new ParticipantProfit(player.getName(), profit);

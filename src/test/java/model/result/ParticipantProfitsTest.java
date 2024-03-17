@@ -8,11 +8,8 @@ import static model.card.CardShape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import model.betting.Bet;
-import model.betting.Bets;
 import model.card.Card;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -27,9 +24,8 @@ class ParticipantProfitsTest {
     void createParticipantProfits() {
         Players players = preparePlayers();
         Dealer dealer = new Dealer(List.of(new Card(KING, HEART), new Card(JACK, SPADE)));
-        Bets bets = prepareBets();
 
-        ParticipantProfits participantProfits = ParticipantProfits.of(players, dealer, bets);
+        ParticipantProfits participantProfits = ParticipantProfits.of(players, dealer);
 
         ParticipantProfit jojoProfit = participantProfits.getPlayerProfits().get(0);
         ParticipantProfit dealerProfit = participantProfits.getDealerProfit();
@@ -43,13 +39,12 @@ class ParticipantProfitsTest {
     private Players preparePlayers() {
         Players players = Players.from(List.of("조조"));
         Player jojo = Player.of("조조", List.of(new Card(ACE, HEART), new Card(JACK, SPADE)));
-        players.getPlayers().set(0, jojo);
-        return players;
-    }
+        players.getPlayers()
+            .set(0, jojo);
 
-    private Bets prepareBets() {
-        Map<String, Bet> bets = new HashMap<>();
-        bets.put("조조", new Bet("10000"));
-        return new Bets(bets);
+        players.getPlayers()
+            .get(0)
+            .setBet(new Bet("10000"));
+        return players;
     }
 }

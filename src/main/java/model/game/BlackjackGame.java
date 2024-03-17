@@ -1,16 +1,15 @@
 package model.game;
 
-import model.result.ParticipantCard;
-import model.result.ParticipantCards;
-import model.result.ParticipantProfits;
-import model.result.ParticipantScores;
-import model.betting.Bets;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
+import model.result.ParticipantCard;
+import model.result.ParticipantCards;
+import model.result.ParticipantProfits;
+import model.result.ParticipantScores;
 
 public class BlackjackGame {
 
@@ -58,8 +57,8 @@ public class BlackjackGame {
         return ParticipantScores.of(dealer, players);
     }
 
-    public ParticipantProfits calculateProfit(Players players, Bets bets) {
-        return ParticipantProfits.of(players, dealer, bets);
+    public ParticipantProfits calculateProfit(Players players) {
+        return ParticipantProfits.of(players, dealer);
     }
 
     public int dealerCardSize() {

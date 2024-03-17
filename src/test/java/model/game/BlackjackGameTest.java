@@ -8,11 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import model.betting.Bet;
-import model.betting.Bets;
 import model.card.Card;
 import model.participant.Participant;
 import model.participant.Player;
@@ -95,11 +92,11 @@ class BlackjackGameTest {
     @Test
     void calculateProfit() {
         Players players = Players.from(List.of("조조"));
-        Bets bets = prepareBets();
+        prepareBets(players);
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.dealInitialCards(players);
 
-        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players, bets);
+        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players);
         BigDecimal dealerProfit = participantProfits.getPlayerProfits()
             .stream()
             .map(ParticipantProfit::getProfit)
@@ -108,9 +105,9 @@ class BlackjackGameTest {
         assertThat(dealerProfit).isEqualTo(participantProfits.getDealerProfit().getProfit());
     }
 
-    private Bets prepareBets() {
-        Map<String, Bet> bets = new HashMap<>();
-        bets.put("조조", new Bet("10000"));
-        return new Bets(bets);
+    private void prepareBets(Players players) {
+        players.getPlayers()
+            .get(0)
+            .setBet(new Bet("10000"));
     }
 }
