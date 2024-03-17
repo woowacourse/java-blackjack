@@ -24,14 +24,14 @@ class BettingRuleTest {
         @Test
         @DisplayName("플레이어가 BlackJack으로 승리한 경우, 배팅 금액의 1.5배를 준다.")
         void calculateProfitRateByBlackJack() {
-            BettingRule bettingRule = new BettingRule();
+            BettingRule bettingRule = BettingRule.getInstance();
             assertThat(bettingRule.calculateProfitRate(BLACKJACK_PLAYER.getPlayer(), WIN)).isEqualTo(BLACKJACK_RATE);
         }
 
         @Test
         @DisplayName("플레이어가 승리한 경우, 배팅 금액의 1배를 준다.")
         void calculateProfitRateByDealerNotBust() {
-            BettingRule bettingRule = new BettingRule();
+            BettingRule bettingRule = BettingRule.getInstance();
             assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), WIN)).isEqualTo(
                     NOT_BLACKJACK_BUT_WIN_RATE);
         }
@@ -40,14 +40,14 @@ class BettingRuleTest {
     @Test
     @DisplayName("플레이어가 무승부인 경우, 배팅 금액의 0배를 준다.")
     void calculateProfitRateWhenDraw() {
-        BettingRule bettingRule = new BettingRule();
+        BettingRule bettingRule = BettingRule.getInstance();
         assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), DRAW)).isEqualTo(DRAW_RATE);
     }
 
     @Test
     @DisplayName("플레이어가 지는 경우, 베팅 금액만큼을 잃는다.")
     void calculateProfitRateWhenPlayerLose() {
-        BettingRule bettingRule = new BettingRule();
+        BettingRule bettingRule = BettingRule.getInstance();
         assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), LOSE))
                 .isEqualTo(LOSE_RATE);
     }
