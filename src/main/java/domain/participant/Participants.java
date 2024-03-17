@@ -22,6 +22,9 @@ public class Participants {
     }
 
     public static Participants from(final List<PlayerBettingMoney> requests) {
+        CACHED_DEALER.clear();
+        CACHED_PLAYERS.clear();
+        
         return Stream.concat(
                 generatePlayers(requests),
                 Stream.of(CACHED_DEALER)
