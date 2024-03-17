@@ -22,7 +22,7 @@ class PlayersProfitTest {
         rawProfits.put(PlayerFixture.createJason(), new BetAmount(20000));
 
         // when
-        PlayersProfit2 profits = PlayersProfit2.createInitial(rawProfits);
+        PlayersProfit profits = PlayersProfit.createInitial(rawProfits);
 
         // then
         assertThat(profits.getProfits()).containsExactlyEntriesOf(Map.of(
@@ -38,7 +38,7 @@ class PlayersProfitTest {
         Map<Player, Profit> profits = new HashMap<>();
         profits.put(PlayerFixture.createPobi(), new Profit(10000));
         profits.put(PlayerFixture.createJason(), new Profit(20000));
-        PlayersProfit2 playersProfit = new PlayersProfit2(profits);
+        PlayersProfit playersProfit = new PlayersProfit(profits);
 
         Dealer dealer = DealerFixture.createDealer();
 
@@ -59,7 +59,7 @@ class PlayersProfitTest {
         Map<Player, Profit> profits = new HashMap<>();
         profits.put(PlayerFixture.createPobi(), new Profit(10000));
         profits.put(PlayerFixture.createJason(), new Profit(20000));
-        PlayersProfit2 playersProfit = new PlayersProfit2(profits);
+        PlayersProfit playersProfit = new PlayersProfit(profits);
 
         Dealer dealer = DealerFixture.createDealer();
 

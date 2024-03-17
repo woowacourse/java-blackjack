@@ -2,15 +2,14 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.game.PlayersResult;
-import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
+import blackjack.domain.profit.PlayersProfit;
+import blackjack.domain.profit.Profit;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
-import blackjack.view.mapper.ResultStateMapper;
 import java.util.stream.Collectors;
 
 public class MessageResolver {
@@ -18,8 +17,10 @@ public class MessageResolver {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String SEPARATOR = ", ";
     private static final String DEALER_NAME = "딜러";
+    private static final String CARD_FORMAT = "%s%s";
     private static final String HAND_FORMAT = "%s 카드: %s";
     private static final String HAND_SCORE_FORMAT = "%s - 결과: %d";
+    private static final String PROFIT_FORMAT = "%s: %.0f";
 
     public MessageResolver() {
     }
@@ -63,7 +64,7 @@ public class MessageResolver {
     private String resolveCardMessage(Card card) {
         String rankSymbol = CardRankMapper.toSymbol(card.getCardRank());
         String suitSymbol = CardSuitMapper.toSymbol(card.getCardSuit());
-        return String.format("%s%s", rankSymbol, suitSymbol);
+        return String.format(CARD_FORMAT, rankSymbol, suitSymbol);
     }
 
     public String resolveDrawToDealerDescriptionMessage() {
@@ -89,22 +90,21 @@ public class MessageResolver {
         return String.format(HAND_SCORE_FORMAT, resolveDrawToPlayerMessage(player), player.handScore().getValue());
     }
 
-    public String resolveResultDescriptionMessage() {
-        return String.join("", LINE_SEPARATOR, "## 최종 승패");
+    public String resolveProfitDescriptionMessage() {
+        return String.join("", LINE_SEPARATOR, "## 최종 수익");
     }
 
-    public String resolveDealerResultMessage(PlayersResult playersResult) {
-        return String.format("%s: %d승 %d패 %d무", DEALER_NAME, playersResult.dealerWins(),
-                playersResult.dealerLosses(), playersResult.dealerTies());
+    public String resolveDealerProfitMessage(PlayersProfit playersProfit) {
+        return String.format(PROFIT_FORMAT, DEALER_NAME, playersProfit.dealerProfit().getValue());
     }
 
-    public String resolvePlayersResultMessage(PlayersResult results) {
-        return results.getResults().entrySet().stream()
-                .map(entry -> resolvePlayerResultMessage(entry.getKey(), entry.getValue()))
+    public String resolvePlayersProfitMessage(PlayersProfit playersProfit) {
+        return playersProfit.getProfits().entrySet().stream()
+                .map(entry -> resolvePlayerProfitMessage(entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    private String resolvePlayerResultMessage(Player player, Result result) {
-        return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result));
+    private String resolvePlayerProfitMessage(Player player, Profit profit) {
+        return String.format(PROFIT_FORMAT, player.getName().value(), profit.getValue());
     }
 }
