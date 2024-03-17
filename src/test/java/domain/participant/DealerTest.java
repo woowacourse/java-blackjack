@@ -57,4 +57,18 @@ public class DealerTest {
         // Then
         assertThat(playingCards).contains(playingCard);
     }
+
+    @DisplayName("플레이어의 수익을 기반으로 딜러의 수익을 계산한다.")
+    @Test
+    void calculateRevenueTest() {
+        // Given
+        Dealer dealer = new Dealer(Hand.init());
+        List<Integer> playerRevenues = List.of(10000, 15000, -20000);
+
+        // When
+        int dealerRevenue = dealer.calculateRevenue(playerRevenues);
+
+        // Then
+        assertThat(dealerRevenue).isEqualTo(-5000);
+    }
 }

@@ -3,6 +3,8 @@ package domain.participant;
 import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
 
+import java.util.List;
+
 public class Dealer extends Participant {
     private static final int MAXIMUM_ENABLE_TOTAL_SCORE = 16;
 
@@ -19,6 +21,11 @@ public class Dealer extends Participant {
     @Override
     public boolean isDrawable() {
         return hand.isTotalScoreLessOrEqual(MAXIMUM_ENABLE_TOTAL_SCORE);
+    }
+
+    public int calculateRevenue(final List<Integer> playerRevenues) {
+        return -playerRevenues.stream()
+                .reduce(0, Integer::sum);
     }
 
     public PlayingCard getFirstPlayingCard() {
