@@ -6,7 +6,7 @@ import blackjack.model.player.Player;
 import blackjack.model.player.PlayerName;
 
 public record PlayerBettingProfitOutcome(PlayerName name, int profit) {
-    public static PlayerBettingProfitOutcome from(Player player, Betting betting, Dealer dealer) {
+    public static PlayerBettingProfitOutcome from(final Player player, final Betting betting, final Dealer dealer) {
         return new PlayerBettingProfitOutcome(player.getName(), player.calculateBettingProfit(betting, dealer));
     }
 }
