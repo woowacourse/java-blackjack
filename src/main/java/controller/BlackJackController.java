@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Answer;
-import domain.Profit;
 import domain.card.CardDeck;
 import domain.participant.BetAmount;
 import domain.participant.Dealer;
@@ -10,13 +9,13 @@ import domain.participant.Name;
 import domain.participant.Names;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerHandsDto;
-import dto.ParticipantDto;
-import dto.ParticipantsDto;
+import dto.hands.DealerHandsDto;
+import dto.hands.ParticipantHandsDto;
+import dto.hands.ParticipantsHandsDto;
+import dto.profit.ParticipantProfitDto;
+import dto.profit.ParticipantsProfitDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -38,8 +37,7 @@ public class BlackJackController {
         dealToPlayers(players, dealer);
         dealToDealer(players, dealer);
 
-        printHandsResult(players, dealer);
-        printProfits(players, dealer);
+        printGameResult(players, dealer);
     }
 
     private Players createPlayers(final Names names) {
@@ -56,16 +54,11 @@ public class BlackJackController {
 
     private void initHands(final Players players, final Dealer dealer) {
         dealer.initHands(players);
-        outputView.printInitHands(DealerHandsDto.from(dealer), ParticipantsDto.from(players));
+        outputView.printInitHands(DealerHandsDto.from(dealer), ParticipantsHandsDto.from(players));
     }
 
     private void dealToPlayers(final Players players, final Dealer dealer) {
         players.getPlayers().forEach(player -> deal(player, dealer));
-    }
-
-    private void printProfits(final Players players, final Dealer dealer) {
-        printDealerProfit(players, dealer);
-        printPlayersProfits(players, dealer);
     }
 
     private Names readNames() {
@@ -82,29 +75,18 @@ public class BlackJackController {
         }
 
         dealer.deal();
-        printDealerHandsChangedMessage(dealer.countAddedHands(), dealer.getName());
+        printDealerOneMoreCardMessage(dealer.countAddedHands(), dealer.getName());
     }
 
-    private void printHandsResult(final Players players, final Dealer dealer) {
-        outputView.printHandsResult(ParticipantsDto.from(dealer, players));
-        outputView.printGameResultMessage();
+    private void printGameResult(final Players players, final Dealer dealer) {
+        outputView.printHandsResult(ParticipantsHandsDto.of(dealer, players));
+        outputView.printProfitResult(ParticipantProfitDto.of(players, dealer),
+                ParticipantsProfitDto.of(players, dealer));
     }
 
-    private void printDealerProfit(final Players players, final Dealer dealer) {
-        final Profit profit = dealer.calculateProfitBy(players);
-        outputView.printGameResult(dealer, profit);
-    }
-
-    private void printPlayersProfits(final Players players, final Dealer dealer) {
-        final Map<Player, Profit> profits = players.calculateProfits(dealer);
-        for (Entry<Player, Profit> playerProfit : profits.entrySet()) {
-            outputView.printGameResult(playerProfit.getKey(), playerProfit.getValue());
-        }
-    }
-
-    private void printDealerHandsChangedMessage(final int turn, final String name) {
+    private void printDealerOneMoreCardMessage(final int turn, final String name) {
         for (int i = 0; i < turn; i++) {
-            outputView.printDealerHandsChangedMessage(name);
+            outputView.printDealerOneMoreCardMessage(name);
         }
     }
 
@@ -130,7 +112,7 @@ public class BlackJackController {
 
     private void printHands(final Player player, final boolean handsChanged, final Answer answer) {
         if (shouldShowHands(handsChanged, answer)) {
-            outputView.printHands(ParticipantDto.from(player));
+            outputView.printHands(ParticipantHandsDto.from(player));
         }
     }
 
