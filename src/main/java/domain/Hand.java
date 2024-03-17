@@ -41,6 +41,10 @@ public class Hand {
                 .orElse(0);
     }
 
+    public int getHandCount() {
+        return cards.size();
+    }
+
     public boolean isBust() {
         return getResultScore() > BUST_THRESHOLD;
     }

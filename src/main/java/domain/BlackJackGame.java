@@ -54,9 +54,12 @@ public class BlackJackGame {
 
     public BlackJackResult getGameResult() {
         return new BlackJackResult(
-                dealer.getTotalScore(),
+                new HandStatus(dealer.getTotalScore(), dealer.getHandCount()),
                 players.stream()
-                        .collect(Collectors.toMap(Player::getName, Gamer::getTotalScore)));
+                        .collect(Collectors.toMap(
+                                Player::getName,
+                                player -> new HandStatus(player.getTotalScore(), player.getHandCount())
+                        )));
     }
 
     public List<Player> getPlayers() {

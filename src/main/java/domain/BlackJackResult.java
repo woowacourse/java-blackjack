@@ -10,22 +10,23 @@ public class BlackJackResult {
     private final Map<String, GamerResult> playersResult;
     private final Map<GamerResult, Integer> dealerResult;
 
-    public BlackJackResult(int dealerScore, Map<String, Integer> playersScore) {
+    public BlackJackResult(HandStatus dealerHandStatus, Map<String, HandStatus> playersHandStatus) {
         dealerResult = new EnumMap<>(GamerResult.class);
-        this.playersResult = calculatePlayersResult(dealerScore, playersScore);
+        this.playersResult = calculatePlayersResult(dealerHandStatus, playersHandStatus);
     }
 
-    private Map<String, GamerResult> calculatePlayersResult(int dealerScore, Map<String, Integer> playersScore) {
+    private Map<String, GamerResult> calculatePlayersResult(HandStatus dealerHandStatus,
+                                                            Map<String, HandStatus> playersHandStatus) {
         Map<String, GamerResult> playersResult = new HashMap<>();
-        playersScore.forEach((name, playerScore) -> playersResult.put(name,
-                getJudgePlayerResult(dealerScore, playerScore)));
+        playersHandStatus.forEach((name, playerHandStatus) -> playersResult.put(name,
+                getJudgePlayerResult(dealerHandStatus, playerHandStatus)));
         return playersResult;
     }
 
-    private GamerResult getJudgePlayerResult(int dealerScore, int playerScore) {
-        GamerResult dealerJudgeResult = GamerResult.judgeDealerResult(dealerScore, playerScore);
-        addDealerResult(dealerJudgeResult);
-        return dealerJudgeResult.getOpponentGameResult();
+    private GamerResult getJudgePlayerResult(HandStatus dealerHandStatus, HandStatus playerHandStatus) {
+        GamerResult playerJudgeResult = GamerResult.judgePlayerResult(dealerHandStatus, playerHandStatus);
+        addDealerResult(playerJudgeResult.getOpponentGameResult());
+        return playerJudgeResult;
     }
 
     private void addDealerResult(GamerResult gamerResult) {
