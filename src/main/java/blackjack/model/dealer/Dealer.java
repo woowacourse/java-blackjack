@@ -1,6 +1,6 @@
 package blackjack.model.dealer;
 
-import blackjack.model.betting.PlayerBettingProfitOutcome;
+import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;

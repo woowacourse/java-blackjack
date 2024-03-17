@@ -1,16 +1,16 @@
 package blackjack.controller;
 
+import blackjack.dto.DealerFinalCardsOutcome;
+import blackjack.dto.PlayerBettingProfitOutcome;
+import blackjack.dto.PlayerCardsOutcome;
+import blackjack.dto.PlayerFinalCardsOutcome;
 import blackjack.model.betting.Betting;
 import blackjack.model.betting.BettingMoney;
-import blackjack.model.betting.PlayerBettingProfitOutcome;
 import blackjack.model.card.Card;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
-import blackjack.model.dealer.DealerFinalCardsOutcome;
 import blackjack.model.player.Player;
-import blackjack.model.player.PlayerCardsOutcome;
-import blackjack.model.player.PlayerFinalCardsOutcome;
 import blackjack.model.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

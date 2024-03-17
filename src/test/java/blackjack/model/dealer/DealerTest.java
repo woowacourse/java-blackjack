@@ -2,7 +2,7 @@ package blackjack.model.dealer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.betting.PlayerBettingProfitOutcome;
+import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;

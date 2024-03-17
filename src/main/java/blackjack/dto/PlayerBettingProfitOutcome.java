@@ -1,4 +1,4 @@
-package blackjack.model.betting;
+package blackjack.dto;
 
 public record PlayerBettingProfitOutcome(String name, int profit) {
 }

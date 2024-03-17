@@ -2,6 +2,7 @@ package blackjack.model.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.player.MatchResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

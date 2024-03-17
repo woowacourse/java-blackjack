@@ -1,7 +1,9 @@
 package blackjack.model.player;
 
+import blackjack.dto.PlayerBettingProfitOutcome;
+import blackjack.dto.PlayerCardsOutcome;
+import blackjack.dto.PlayerFinalCardsOutcome;
 import blackjack.model.betting.Betting;
-import blackjack.model.betting.PlayerBettingProfitOutcome;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.dealer.Dealer;
 import java.util.HashSet;

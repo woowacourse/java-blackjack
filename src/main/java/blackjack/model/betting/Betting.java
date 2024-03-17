@@ -1,5 +1,6 @@
 package blackjack.model.betting;
 
+import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.player.MatchResult;
 import java.util.HashMap;
 import java.util.Map;

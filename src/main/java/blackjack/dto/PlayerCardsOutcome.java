@@ -1,6 +1,7 @@
-package blackjack.model.player;
+package blackjack.dto;
 
 import blackjack.model.card.Card;
+import blackjack.model.player.Player;
 import java.util.List;
 
 public record PlayerCardsOutcome(String name, List<Card> cards) {
