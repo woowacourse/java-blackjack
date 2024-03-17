@@ -7,36 +7,36 @@ import java.util.Map;
 
 public class BettingCashier {
 
-    private final Map<Player, BlackjackMoney> moneyMap;
-    private final BlackjackMoney dealerMoney;
+    private final Map<Player, Profit> profitMap;
+    private final Profit dealerProfit;
 
-    private BettingCashier(Map<Player, BlackjackMoney> moneyMap, BlackjackMoney dealerMoney) {
-        this.moneyMap = moneyMap;
-        this.dealerMoney = dealerMoney;
+    private BettingCashier(Map<Player, Profit> profitMap, Profit dealerProfit) {
+        this.profitMap = profitMap;
+        this.dealerProfit = dealerProfit;
     }
 
     public static BettingCashier of(Betting betting, Result result) {
-        Map<Player, BlackjackMoney> moneyMap = new HashMap<>();
+        Map<Player, Profit> profitMap = new HashMap<>();
 
         betting.getBettingMap().forEach((key, value) ->
-                moneyMap.put(key, value.applyMultiple(result.getMultiple(key)))
+                profitMap.put(key, Profit.of(value, result.getPlayerState(key)))
         );
 
-        return new BettingCashier(moneyMap, calculateProfitOfDealer(moneyMap));
+        return new BettingCashier(profitMap, calculateProfitOfDealer(profitMap));
     }
 
-    private static BlackjackMoney calculateProfitOfDealer(Map<Player, BlackjackMoney> moneyMap) {
-        return moneyMap.values().stream()
-                .map(BlackjackMoney::toNegative)
-                .reduce(BlackjackMoney::add)
+    private static Profit calculateProfitOfDealer(Map<Player, Profit> profitMap) {
+        return profitMap.values().stream()
+                .map(Profit::toNegative)
+                .reduce(Profit::sum)
                 .orElseThrow(IllegalStateException::new);
     }
 
-    public BlackjackMoney findProfitOfDealer() {
-        return dealerMoney;
+    public Profit findProfitOfDealer() {
+        return dealerProfit;
     }
 
-    public BlackjackMoney findProfitOf(Player player) {
-        return moneyMap.get(player);
+    public Profit findProfitOf(Player player) {
+        return profitMap.get(player);
     }
 }
