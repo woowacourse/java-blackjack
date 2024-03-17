@@ -1,48 +1,51 @@
 package domain.game;
 
-import static domain.participant.Participants.CACHED_DEALER;
+import static domain.constants.Outcome.BLACKJACK;
+import static domain.constants.Outcome.LOSE;
+import static domain.constants.Outcome.TIE;
+import static domain.constants.Outcome.WIN;
 
 import domain.constants.Outcome;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
 public final class GameRule {
-    public static Outcome judgeWhenDealerIsBlackJack(final Player player) {
+    public static Outcome judgeWhenDealerIsBlackJack(final Player player, final Dealer dealer) {
         if (player.isBlackJack()) {
-            return Outcome.TIE;
+            return TIE;
         }
-        return Outcome.LOSE;
+        return LOSE;
     }
 
-    public static Outcome judgeWhenDealerIsBusted(final Player player) {
+    public static Outcome judgeWhenDealerIsBusted(final Player player, final Dealer dealer) {
         if (player.isBlackJack()) {
-            return Outcome.BLACKJACK;
+            return BLACKJACK;
         }
         if (player.isNotBusted()) {
-            return Outcome.WIN;
+            return WIN;
         }
-        return Outcome.LOSE;
+        return LOSE;
     }
 
 
-    public static Outcome judgeWhenDealerIsNotBustedAndNotBlackJack(final Player player) {
+    public static Outcome judgeWhenDealerIsNormal(final Player player, final Dealer dealer) {
         if (player.isBlackJack()) {
-            return Outcome.BLACKJACK;
+            return BLACKJACK;
         }
         if (player.isBusted()) {
-            return Outcome.LOSE;
+            return LOSE;
         }
-        if (player.isNotSameScoreAs(CACHED_DEALER)) {
-            return verifyHasMoreScoreThanDealer(player, CACHED_DEALER);
+        if (player.isNotSameScoreAs(dealer)) {
+            return verifyHasMoreScoreThanDealer(player, dealer);
         }
-        return verifyHasLessOrSameCardThanDealer(player, CACHED_DEALER);
+        return verifyHasLessOrSameCardThanDealer(player, dealer);
     }
 
     private static Outcome verifyHasMoreScoreThanDealer(final Player player, final Dealer dealer) {
         if (player.hasMoreScoreThan(dealer)) {
-            return Outcome.WIN;
+            return WIN;
         }
-        return Outcome.LOSE;
+        return LOSE;
     }
 
     private static Outcome verifyHasLessOrSameCardThanDealer(
@@ -50,8 +53,8 @@ public final class GameRule {
             final Dealer dealer
     ) {
         if (player.hasLessOrSameCardThan(dealer)) {
-            return Outcome.WIN;
+            return WIN;
         }
-        return Outcome.LOSE;
+        return LOSE;
     }
 }

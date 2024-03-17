@@ -1,7 +1,5 @@
 package domain.game;
 
-import static domain.participant.Participants.CACHED_DEALER;
-
 import controller.dto.request.PlayerBettingMoney;
 import controller.dto.response.InitialCardStatus;
 import controller.dto.response.ParticipantHandStatus;
@@ -73,7 +71,8 @@ public class BlackJackGame {
     private List<ParticipantProfitResponse> getParticipantProfitResponses(final List<PlayerOutcome> outcomes) {
         List<ParticipantProfitResponse> playersProfit = calculatePlayerProfit(outcomes);
         ParticipantProfitResponse dealerProfit = new ParticipantProfitResponse(
-                CACHED_DEALER.getName(), CACHED_DEALER.calculateDealerProfit(playersProfit)
+                participants.getDealer().getName(),
+                participants.getDealer().calculateDealerProfit(playersProfit)
         );
         return Stream.concat(
                 Stream.of(dealerProfit),

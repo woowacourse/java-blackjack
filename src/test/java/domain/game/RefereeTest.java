@@ -1,6 +1,5 @@
 package domain.game;
 
-import static domain.participant.Participants.CACHED_DEALER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static util.CardsSupplier.createBlackJackCards;
 import static util.CardsSupplier.createBustedCards;
@@ -19,17 +18,11 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {
-
-    @AfterEach
-    void tearDown() {
-        CACHED_DEALER.clear();
-    }
 
     @DisplayName("참가자의 점수가 21을 초과한 경우")
     @Nested

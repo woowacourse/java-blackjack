@@ -1,7 +1,5 @@
 package domain.game;
 
-import static domain.participant.Participants.CACHED_DEALER;
-
 import controller.dto.response.PlayerOutcome;
 import domain.participant.Participants;
 import java.util.List;
@@ -14,21 +12,20 @@ public class Referee {
     }
 
     public List<PlayerOutcome> judge() {
-
-        if (CACHED_DEALER.isBlackJack()) {
+        if (participants.getDealer().isBlackJack()) {
             return participants.getPlayersOutcomeIf(
                     GameRule::judgeWhenDealerIsBlackJack
             );
         }
 
-        if (CACHED_DEALER.isBusted()) {
+        if (participants.getDealer().isBusted()) {
             return participants.getPlayersOutcomeIf(
                     GameRule::judgeWhenDealerIsBusted
             );
         }
 
         return participants.getPlayersOutcomeIf(
-                GameRule::judgeWhenDealerIsNotBustedAndNotBlackJack
+                GameRule::judgeWhenDealerIsNormal
         );
     }
 }

@@ -5,16 +5,12 @@ import static java.util.stream.Collectors.toList;
 import controller.dto.request.PlayerBettingMoney;
 import controller.dto.response.PlayerOutcome;
 import domain.game.deck.PlayerOutcomeFunction;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Participants {
-    public static final Dealer CACHED_DEALER = new Dealer();
-    private static final List<Player> CACHED_PLAYERS = new ArrayList<>();
-
     private final List<Participant> participants;
 
     public Participants(final List<Participant> participants) {
@@ -22,27 +18,20 @@ public class Participants {
     }
 
     public static Participants from(final List<PlayerBettingMoney> requests) {
-        CACHED_DEALER.clear();
-        CACHED_PLAYERS.clear();
-        
         return Stream.concat(
                 generatePlayers(requests),
-                Stream.of(CACHED_DEALER)
+                Stream.of(new Dealer())
         ).collect(Collectors.collectingAndThen(toList(), Participants::new));
     }
 
     private static Stream<Player> generatePlayers(final List<PlayerBettingMoney> requests) {
         return requests.stream()
-                .map(request -> {
-                    Player player = new Player(request.name(), request.bettingAmount());
-                    CACHED_PLAYERS.add(player);
-                    return player;
-                });
+                .map(request -> new Player(request.name(), request.bettingAmount()));
     }
 
     public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
         return getPlayers().stream()
-                .map(player -> new PlayerOutcome(player, function.apply(player)))
+                .map(player -> new PlayerOutcome(player, function.apply(player, getDealer())))
                 .toList();
     }
 
@@ -52,18 +41,23 @@ public class Participants {
 
     public List<Participant> getParticipantsStartsWithDealer() {
         return Stream.concat(
-                Stream.of(CACHED_DEALER),
+                Stream.of(getDealer()),
                 getPlayers().stream()
         ).toList();
     }
 
+    public Dealer getDealer() {
+        return participants.stream()
+                .filter(Dealer.class::isInstance)
+                .map(Dealer.class::cast)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
+
     public List<Player> getPlayers() {
-        if (CACHED_PLAYERS.isEmpty()) {
-            return participants.stream()
-                    .filter(Player.class::isInstance)
-                    .map(Player.class::cast)
-                    .toList();
-        }
-        return CACHED_PLAYERS;
+        return participants.stream()
+                .filter(Player.class::isInstance)
+                .map(Player.class::cast)
+                .toList();
     }
 }
