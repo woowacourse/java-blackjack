@@ -2,8 +2,8 @@ package blackjack;
 
 import java.util.List;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.common.Money;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;

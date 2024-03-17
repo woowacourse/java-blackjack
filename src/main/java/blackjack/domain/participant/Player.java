@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.common.Money;
-
 public class Player extends Participant {
 
     private static final int MIN_PLAYER_MONEY_AMOUNT = 1;

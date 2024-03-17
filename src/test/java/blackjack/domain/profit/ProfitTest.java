@@ -9,7 +9,7 @@ import java.util.Map;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.common.Money;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;

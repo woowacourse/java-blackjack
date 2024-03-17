@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
-import blackjack.domain.common.Money;
 
 public class Participants {
 

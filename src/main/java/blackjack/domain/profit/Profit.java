@@ -2,10 +2,10 @@ package blackjack.domain.profit;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import blackjack.domain.common.Money;
 import blackjack.domain.judgement.Judgement;
 import blackjack.domain.judgement.JudgementResult;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 

@@ -1,6 +1,6 @@
 package blackjack.domain.judgement;
 
-import blackjack.domain.common.Money;
+import blackjack.domain.participant.Money;
 
 public enum JudgementResult {
 
