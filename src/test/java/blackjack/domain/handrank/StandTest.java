@@ -22,7 +22,7 @@ class StandTest {
             HankRank dealer = new Stand(21);
             HankRank player = new Blackjack();
 
-            assertThat(dealer.matchAtDealer(player)).isEqualTo(SingleMatchResult.PLAYER_BLACKJACK);
+            assertThat(dealer.competeWithPlayer(player)).isEqualTo(SingleMatchResult.PLAYER_BLACKJACK);
         }
 
         @DisplayName("플레이어가 버스트인 경우, 딜러가 승리한다.")
@@ -31,7 +31,7 @@ class StandTest {
             HankRank dealer = STAND;
             HankRank player = new Bust(22);
 
-            assertThat(dealer.matchAtDealer(player)).isEqualTo(SingleMatchResult.DEALER_WIN);
+            assertThat(dealer.competeWithPlayer(player)).isEqualTo(SingleMatchResult.DEALER_WIN);
         }
 
         @DisplayName("플레이어가 딜러보다 점수가 높을 경우, 플레이러가 승리한다.")
@@ -41,7 +41,7 @@ class StandTest {
             HankRank dealer = new Stand(dealerScore);
             HankRank player = new Stand(playerScore);
 
-            assertThat(dealer.matchAtDealer(player)).isEqualTo(SingleMatchResult.PLAYER_WIN);
+            assertThat(dealer.competeWithPlayer(player)).isEqualTo(SingleMatchResult.PLAYER_WIN);
         }
 
         @DisplayName("플레이어와 딜러의 점수가 같을 경우, 비긴다.")
@@ -51,7 +51,7 @@ class StandTest {
             HankRank dealer = new Stand(sameScore);
             HankRank player = new Stand(sameScore);
 
-            assertThat(dealer.matchAtDealer(player)).isEqualTo(SingleMatchResult.DRAW);
+            assertThat(dealer.competeWithPlayer(player)).isEqualTo(SingleMatchResult.DRAW);
         }
 
         @DisplayName("플레이어가 딜러보다 점수가 높을 경우, 플레이러가 승리한다.")
@@ -61,7 +61,7 @@ class StandTest {
             HankRank dealer = new Stand(dealerScore);
             HankRank player = new Stand(playerScore);
 
-            assertThat(dealer.matchAtDealer(player)).isEqualTo(SingleMatchResult.DEALER_WIN);
+            assertThat(dealer.competeWithPlayer(player)).isEqualTo(SingleMatchResult.DEALER_WIN);
         }
     }
 

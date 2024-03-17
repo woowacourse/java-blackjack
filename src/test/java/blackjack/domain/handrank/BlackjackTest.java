@@ -18,7 +18,7 @@ class BlackjackTest {
         HankRank dealerRank = BLACKJACK;
         HankRank playerRank = BLACKJACK;
 
-        assertThat(dealerRank.matchAtDealer(playerRank)).isEqualTo(SingleMatchResult.DRAW);
+        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.DRAW);
     }
 
     @DisplayName("딜러만 블랙잭인 경우, 딜러가 이긴다.")
@@ -28,7 +28,7 @@ class BlackjackTest {
         HankRank dealerRank = BLACKJACK;
         HankRank playerRank = hankRank;
 
-        assertThat(dealerRank.matchAtDealer(playerRank)).isEqualTo(SingleMatchResult.DEALER_WIN);
+        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.DEALER_WIN);
     }
 
     static Stream<HankRank> notBlackjack() {

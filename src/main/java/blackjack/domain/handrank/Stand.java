@@ -18,7 +18,7 @@ public final class Stand implements HankRank {
     }
 
     @Override
-    public SingleMatchResult matchAtDealer(HankRank playerHandRank) {
+    public SingleMatchResult competeWithPlayer(HankRank playerHandRank) {
         if (playerHandRank.isBlackjack()) {
             return SingleMatchResult.PLAYER_BLACKJACK;
         }

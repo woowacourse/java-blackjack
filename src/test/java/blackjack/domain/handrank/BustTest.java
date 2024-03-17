@@ -18,7 +18,7 @@ class BustTest {
         HankRank dealerRank = BUST;
         HankRank playerRank = BUST;
 
-        assertThat(dealerRank.matchAtDealer(playerRank)).isEqualTo(SingleMatchResult.DEALER_WIN);
+        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.DEALER_WIN);
     }
 
     @DisplayName("딜러만 버스트인 경우, 플레이어가 이긴다.")
@@ -28,7 +28,7 @@ class BustTest {
         HankRank dealerRank = BUST;
         HankRank playerRank = hankRank;
 
-        assertThat(dealerRank.matchAtDealer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_WIN);
+        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_WIN);
     }
 
     static Stream<HankRank> normalRank() {
@@ -41,7 +41,7 @@ class BustTest {
         HankRank dealerRank = BUST;
         HankRank playerRank = new Blackjack();
 
-        assertThat(dealerRank.matchAtDealer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_BLACKJACK);
+        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_BLACKJACK);
     }
 
     @DisplayName("해당 핸드 랭크는 블랙잭이 아니다.")

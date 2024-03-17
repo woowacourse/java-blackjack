@@ -29,7 +29,7 @@ public class Player extends Participant {
     public Profit calculateProfit(Dealer dealer) {
         HankRank dealerRank = dealer.getHandRank();
         HankRank playerRank = this.getHandRank();
-        SingleMatchResult result = dealerRank.matchAtDealer(playerRank);
+        SingleMatchResult result = dealerRank.competeWithPlayer(playerRank);
         return result.calculatePlayerProfit(betAmount);
     }
 
