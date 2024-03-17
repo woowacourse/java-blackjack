@@ -18,10 +18,6 @@ public class AmountOfBet {
         }
     }
 
-    public AmountOfBet plus(AmountOfBet other) {
-        return new AmountOfBet(value + other.value);
-    }
-
     public int getValue() {
         return value;
     }

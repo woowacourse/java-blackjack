@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
@@ -25,16 +24,5 @@ public class AmountOfBetTest {
     public void createSuccess() {
         assertThatCode(() -> new AmountOfBet(1000))
                 .doesNotThrowAnyException();
-    }
-
-    @DisplayName("배팅 금액은 더할 수 있다")
-    @Test
-    public void add() {
-        AmountOfBet amountOfBet = new AmountOfBet(1000);
-        AmountOfBet otherAmountOfBet = new AmountOfBet(2000);
-
-        AmountOfBet result = amountOfBet.plus(otherAmountOfBet);
-
-        assertThat(result).isEqualTo(new AmountOfBet(3000));
     }
 }
