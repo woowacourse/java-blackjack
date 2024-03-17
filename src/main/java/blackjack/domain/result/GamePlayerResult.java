@@ -4,18 +4,18 @@ import blackjack.domain.player.Name;
 
 public class GamePlayerResult {
     private final Name name;
-    private final ResultStatus resultStatus;
+    private final PrizeMoney prizeMoney;
 
-    public GamePlayerResult(final Name name, final ResultStatus resultStatus) {
+    public GamePlayerResult(final Name name, final PrizeMoney prizeMoney) {
         this.name = name;
-        this.resultStatus = resultStatus;
+        this.prizeMoney = prizeMoney;
     }
 
     public String getName() {
         return name.asString();
     }
 
-    public ResultStatus getResultStatus() {
-        return resultStatus;
+    public int getPrizeMoney() {
+        return this.prizeMoney.value();
     }
 }

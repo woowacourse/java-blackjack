@@ -9,12 +9,12 @@ import java.util.function.BiPredicate;
 public enum PrizeChecker {
     BLACKJACK((gamePlayer, dealer) -> gamePlayer.isBlackjack() && !dealer.isBlackjack(), 1.5),
     WIN((gamePlayer, dealer) -> !gamePlayer.isBust() && dealer.isBust() || (
-            isStand(gamePlayer, dealer) && compare(gamePlayer, dealer) > 0), 1),
+            gamePlayer.isStand() && compare(gamePlayer, dealer) > 0), 1),
     DRAW(((gamePlayer, dealer) -> (gamePlayer.isBlackjack() && dealer.isBlackjack()) || (
-            isStand(gamePlayer, dealer) && compare(gamePlayer, dealer) == 0)), 0),
+            gamePlayer.isStand() && compare(gamePlayer, dealer) == 0)), 0),
 
     LOSE((gamePlayer, dealer) -> gamePlayer.isBust() || (
-            isStand(gamePlayer, dealer) && compare(gamePlayer, dealer) < 0), -1);
+            gamePlayer.isStand() && compare(gamePlayer, dealer) < 0), -1);
     private final BiPredicate<GamePlayer, Dealer> predicate;
     private final double profitRate;
 
@@ -30,10 +30,6 @@ public enum PrizeChecker {
             }
         }
         throw new IllegalStateException("조건에 맞지 않는 계산입니다");
-    }
-
-    private static boolean isStand(final GamePlayer gamePlayer, final Dealer dealer) {
-        return gamePlayer.isStand() && dealer.isStand();
     }
 
     private static int compare(final GamePlayer gamePlayer, final Dealer dealer) {

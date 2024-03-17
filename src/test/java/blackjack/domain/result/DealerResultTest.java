@@ -27,33 +27,17 @@ class DealerResultTest {
     @Test
     @DisplayName("딜러 이름과 게임 플레이어 결과 리스트를 통해 딜러 결과를 생성한다.")
     void create_with_gamePlayerResultList() {
-        Name name = new Name("초롱");
-        ResultStatus resultStatus = ResultStatus.DRAW;
-        GamePlayerResult gamePlayerResult = new GamePlayerResult(name, resultStatus);
+        final Name name1 = new Name("초롱");
+        final PrizeMoney prizeMoney1 = new PrizeMoney(10000);
+        final GamePlayerResult gamePlayerResult1 = new GamePlayerResult(name1, prizeMoney1);
+
+        final Name name2 = new Name("조이썬");
+        final PrizeMoney prizeMoney2 = new PrizeMoney(15000);
+        final GamePlayerResult gamePlayerResult2 = new GamePlayerResult(name2, prizeMoney2);
 
         assertThatCode(() -> {
-            var sut = DealerResult.of(new Name("딜러"), List.of(gamePlayerResult));
-            assertThat(sut.getCountWithResultStatus(ResultStatus.DRAW)).isEqualTo(1);
+            final var sut = DealerResult.of(dealerName, List.of(gamePlayerResult1, gamePlayerResult2));
+            assertThat(sut.getPrizeMoney()).isEqualTo(-25000);
         }).doesNotThrowAnyException();
-    }
-
-    private static Stream<Arguments> resultStatusMaskingParam() {
-        return Arrays.stream(ResultStatus.values())
-                     .map(resultStatus ->
-                             Arguments.of(resultStatus, resultStatus.reverse())
-                     );
-    }
-
-    @ParameterizedTest(name = "플레이어 결과 {0} 은 딜러의 {1}가 된다.")
-    @MethodSource("resultStatusMaskingParam")
-    @DisplayName("게임 플레이어의 결과와 딜러의 결과는 반대이다.")
-    void reverse_of_gamePlayerResult(final ResultStatus resultStatus, final ResultStatus reverseStatus) {
-        final Name name = new Name("초롱");
-        final GamePlayerResult gamePlayerResult = new GamePlayerResult(name, resultStatus);
-        final var sut = DealerResult.of(dealerName, List.of(gamePlayerResult));
-
-        final var result = sut.getCountWithResultStatus(reverseStatus);
-
-        assertThat(result).isEqualTo(1);
     }
 }
