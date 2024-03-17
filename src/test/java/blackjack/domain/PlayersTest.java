@@ -9,9 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -46,6 +44,14 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("존재하지 않는 플레이어로 배팅을 시도하면 예외가 발생한다.")
+    @Test
+    void bettingNonExistentException() {
+        // when & then
+        assertThatThrownBy(() -> players.bettingByPlayerName("nonExistent", "5000"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("플레이어들의 승패를 토대로 수익률을 계산한다.")
     @Test
     void calculateProfits() {
@@ -54,16 +60,13 @@ public class PlayersTest {
         choco.draw(dealer);
         Player clover = players.getPlayers().get(1);
 
-        Map<Player, Betting> betting = new HashMap<>();
-        betting.put(players.getPlayers().get(0), new Betting(bettingAmount));
-        betting.put(players.getPlayers().get(1), new Betting(bettingAmount));
-
-        BettingTable bettingTable = new BettingTable(betting);
+        players.bettingByPlayerName(choco.getName(), bettingAmount);
+        players.bettingByPlayerName(clover.getName(), bettingAmount);
 
         // when & then
         assertAll(
-                () -> assertThat(players.createProfitResult(dealer, bettingTable).findByPlayer(choco)).isEqualTo(BigDecimal.valueOf(1000)),
-                () -> assertThat(players.createProfitResult(dealer, bettingTable).findByPlayer(clover)).isEqualTo(BigDecimal.valueOf(-1000))
+                () -> assertThat(players.createProfitResult(dealer).findByPlayer(choco)).isEqualTo(BigDecimal.valueOf(1000)),
+                () -> assertThat(players.createProfitResult(dealer).findByPlayer(clover)).isEqualTo(BigDecimal.valueOf(-1000))
         );
     }
 }

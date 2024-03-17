@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Betting;
-import blackjack.domain.BettingTable;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -14,9 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,14 +68,14 @@ public class DealerTest {
     void calculateProfit() {
         // given
         Players players = Players.of(List.of("choco", "clover"), dealer);
-        players.getPlayers().get(1).draw(dealer);
+        Player choco = players.getPlayers().get(0);
+        Player clover = players.getPlayers().get(1);
+        clover.draw(dealer);
 
-        Map<Player, Betting> betting = new HashMap<>();
-        betting.put(players.getPlayers().get(0), new Betting("500000"));
-        betting.put(players.getPlayers().get(1), new Betting("100000"));
+        players.bettingByPlayerName(choco.getName(), "500000");
+        players.bettingByPlayerName(clover.getName(), "100000");
 
-        BettingTable bettingTable = new BettingTable(betting);
-        ProfitResult profitResult = players.createProfitResult(dealer, bettingTable);
+        ProfitResult profitResult = players.createProfitResult(dealer);
 
         // when
         BigDecimal actual = dealer.calculateProfit(profitResult);

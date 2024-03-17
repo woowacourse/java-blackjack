@@ -1,7 +1,5 @@
 package blackjack;
 
-import blackjack.domain.Betting;
-import blackjack.domain.BettingTable;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -14,9 +12,7 @@ import blackjack.view.OutputView;
 import blackjack.view.RankView;
 import blackjack.view.SuitView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
@@ -34,24 +30,21 @@ public class BlackjackGame {
 
         List<String> names = inputView.readPlayersName();
         Players players = Players.of(names, dealer);
-        BettingTable bettingTable = betting(players);
+
+        betting(names, players);
 
         printCardDistribute(names, players, dealer);
         extraCardRequest(dealer, players);
 
-        ProfitResult profitResult = players.createProfitResult(dealer, bettingTable);
+        ProfitResult profitResult = players.createProfitResult(dealer);
         outputView.printFinalProfit(dealer.calculateProfit(profitResult), profitResult);
     }
 
-    private BettingTable betting(final Players players) {
-        Map<Player, Betting> bettingTable = new HashMap<>();
-
-        for (Player player : players.getPlayers()) {
-            String betting = inputView.readPlayerBetting(player.getName());
-            bettingTable.put(player, new Betting(betting));
+    private void betting(final List<String> names, final Players players) {
+        for (String name : names) {
+            String betting = inputView.readPlayerBetting(name);
+            players.bettingByPlayerName(name, betting);
         }
-
-        return new BettingTable(bettingTable);
     }
 
     private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {
