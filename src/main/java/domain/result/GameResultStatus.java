@@ -7,13 +7,9 @@ import static domain.BlackjackGame.BLACKJACK_SCORE;
 
 public enum GameResultStatus {
 
-    WIN("승", (standardTarget, comparisonTarget) -> standardTarget <= BLACKJACK_SCORE
-            && (comparisonTarget > BLACKJACK_SCORE || (comparisonTarget < standardTarget)), ResultProfitRatio.WIN),
-    PUSH("무", (standardTarget, comparisonTarget) -> (comparisonTarget > BLACKJACK_SCORE
-            && standardTarget > BLACKJACK_SCORE) || (comparisonTarget == standardTarget), ResultProfitRatio.PUSH),
-    LOSE("패", (standardTarget, comparisonTarget) -> comparisonTarget <= BLACKJACK_SCORE
-            && (standardTarget > BLACKJACK_SCORE || (comparisonTarget > standardTarget)), ResultProfitRatio.LOSE);
-
+    WIN("승", GameResultStatus::firstScoreGraterThanSecondScore, ResultProfitRatio.WIN),
+    PUSH("무", GameResultStatus::firstScoreEqualToSecondScore, ResultProfitRatio.PUSH),
+    LOSE("패", (standardTarget, comparisonTarget) -> firstScoreGraterThanSecondScore(comparisonTarget, standardTarget), ResultProfitRatio.LOSE);
 
     private final String value;
     private final BiFunction<Integer, Integer, Boolean> match;
@@ -30,6 +26,15 @@ public enum GameResultStatus {
                      .filter(status -> status.match.apply(standardTarget, comparisonTarget))
                      .findFirst()
                      .orElse(LOSE);
+    }
+
+    private static boolean firstScoreGraterThanSecondScore(Integer firstScore, Integer secondScore) {
+        return firstScore <= BLACKJACK_SCORE
+                && (secondScore > BLACKJACK_SCORE || (secondScore < firstScore));
+    }
+
+    private static boolean firstScoreEqualToSecondScore(Integer firstScore, Integer secondScore) {
+        return (secondScore > BLACKJACK_SCORE && firstScore > BLACKJACK_SCORE) || (secondScore == firstScore);
     }
 
     public String getValue() {
