@@ -13,8 +13,6 @@ public abstract class Participant {
         this.hands= new Hands();
     }
 
-    abstract boolean canAddCard();
-
     public void addCard(Card card) {
         hands.addCard(card);
     }
@@ -30,6 +28,8 @@ public abstract class Participant {
     public boolean isBust() {
         return hands.isBust();
     }
+
+    abstract boolean canAddCard();
 
     public List<Card> getHandsCards() {
         return hands.getHands();
