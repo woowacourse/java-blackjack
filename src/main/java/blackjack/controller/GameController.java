@@ -32,7 +32,7 @@ public class GameController {
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-        OutputView.printGameResult(new GameResult(game.makeGameResult()));
+        OutputView.printGameResult(game.makeGameResult());
     }
 
     private static Game makeGame(Deck deck) {

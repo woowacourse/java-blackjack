@@ -23,7 +23,7 @@ public class Game {
         return new Game(gameParticipants, gameBettings);
     }
 
-    public Map<Player, Profit> makeGameResult() {
+    public GameResult makeGameResult() {
         Dealer dealer = gameParticipants.getDealer();
         Players players = gameParticipants.getPlayers();
 
@@ -32,7 +32,7 @@ public class Game {
         for (Player player : players.getPlayers()) {
             gameResult.put(player, calculateProfit(dealer, player));
         }
-        return gameResult;
+        return new GameResult(gameResult);
     }
 
     private Profit calculateProfit(Dealer dealer, Player player) {
