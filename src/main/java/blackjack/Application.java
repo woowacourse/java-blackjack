@@ -3,13 +3,11 @@ package blackjack;
 import blackjack.domain.gamers.Name;
 import blackjack.domain.result.Bettings;
 import blackjack.domain.gamers.Dealer;
-import blackjack.domain.gamers.Gamers;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.Money;
 import blackjack.domain.gamers.Player;
 import blackjack.domain.gamers.Players;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.dto.DealerDto;
@@ -23,43 +21,33 @@ import java.util.Map;
 public class Application {
 
     public static void main(String[] args) {
-        final Gamers gamers = createGamers();
-        final Bettings bettings = createBettings(gamers);
-        final Judge judge = createJudge(gamers);
+        final Players players = Players.from(InputView.readPlayerNames());
+        final Dealer dealer = Dealer.from(new ShuffledDeckFactory().create());
+        final Bettings bettings = createBettings(players);
+        final Judge judge = new Judge(dealer);
 
-        drawInitialHands(gamers);
-        hitGamers(gamers);
+        drawInitialHands(players, dealer);
+        hitGamers(players, dealer);
 
-        OutputView.printFinalState(
-                createDealerDto(gamers.getDealer().getHand()), createPlayerDtos(gamers.getPlayers()));
+        OutputView.printFinalState(createDealerDto(dealer.getHand()), createPlayerDtos(players));
         OutputView.printFinalProfits(bettings.calculateDealerProfit(judge), bettings.calculatePlayerProfits(judge));
     }
 
-    private static Gamers createGamers() {
-        final Deck deck = new ShuffledDeckFactory().create();
-        final Dealer dealer = Dealer.from(deck);
-        final Players players = Players.from(InputView.readPlayerNames());
-        return new Gamers(dealer, players);
-    }
-
-    private static Bettings createBettings(final Gamers gamers) {
+    private static Bettings createBettings(final Players players) {
         final Map<Player, Money> bettings = new LinkedHashMap<>();
-        for (final Name playerName : gamers.playerNames()) {
+        for (final Name playerName : players.names()) {
             final Money betting = new Money(InputView.readBettingMoney(playerName));
-            bettings.put(gamers.findPlayerBy(playerName), betting);
+            bettings.put(players.findBy(playerName), betting);
         }
         return new Bettings(bettings);
     }
 
-    private static Judge createJudge(final Gamers gamers) {
-        return new Judge(gamers.getDealer());
-    }
+    private static void drawInitialHands(final Players players, final Dealer dealer) {
+        players.drawInitialHand(dealer);
+        dealer.drawInitialHand();
 
-    private static void drawInitialHands(final Gamers gamers) {
-        gamers.drawInitialGamersHand();
-
-        final DealerDto dealerDto = createDealerDto(gamers.openDealerFirstCard());
-        final List<PlayerDto> playerDtos = createPlayerDtos(gamers.getPlayers());
+        final DealerDto dealerDto = createDealerDto(dealer.openFirstCard());
+        final List<PlayerDto> playerDtos = createPlayerDtos(players);
         OutputView.printInitialState(dealerDto, playerDtos);
     }
 
@@ -81,29 +69,29 @@ public class Application {
         return new PlayerDto(player.getName(), player.getHand().getCards(), player.calculateScore());
     }
 
-    private static void hitGamers(final Gamers gamers) {
-        hitPlayers(gamers);
+    private static void hitGamers(final Players players, final Dealer dealer) {
+        hitPlayers(players, dealer);
         OutputView.printLineSeparator();
-        hitDealer(gamers);
+        hitDealer(dealer);
         OutputView.printLineSeparator();
     }
 
-    private static void hitPlayers(final Gamers gamers) {
-        for (final Name playerName : gamers.playerNames()) {
-            hitPlayer(gamers, playerName);
+    private static void hitPlayers(final Players players, final Dealer dealer) {
+        for (final Name playerName : players.names()) {
+            hitPlayer(players.findBy(playerName), dealer);
         }
     }
 
-    private static void hitPlayer(final Gamers gamers, final Name playerName) {
-        while (gamers.canPlayerHit(playerName) && InputView.readDoesWantHit(playerName)) {
-            gamers.hitPlayer(playerName);
-            OutputView.printCurrentState(createPlayerDto(gamers.findPlayerBy(playerName)));
+    private static void hitPlayer(final Player player, final Dealer dealer) {
+        while (player.canDraw() && InputView.readDoesWantHit(player.getName())) {
+            player.draw(dealer.drawPlayerCard());
+            OutputView.printCurrentState(createPlayerDto(player));
         }
     }
 
-    private static void hitDealer(final Gamers gamers) {
-        while (gamers.canDealerHit()) {
-            gamers.hitDealer();
+    private static void hitDealer(final Dealer dealer) {
+        while (dealer.canDraw()) {
+            dealer.draw();
             OutputView.printDealerDrawMessage();
         }
     }
