@@ -3,10 +3,10 @@ package fixture;
 import static fixture.CardFixture.카드;
 
 import domain.card.Denomination;
-import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.betting.BetAmount;
 import domain.participant.name.Name;
 import java.util.Arrays;
 import java.util.List;

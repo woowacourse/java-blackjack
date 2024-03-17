@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.betting;
 
 public class BetAmount {
     private static final int MIN_BET_AMOUNT = 1;

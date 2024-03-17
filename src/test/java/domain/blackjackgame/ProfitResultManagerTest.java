@@ -8,8 +8,8 @@ import static fixture.ParticipantFixture.스테이_딜러;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Denomination;
-import domain.participant.BetAmount;
 import domain.participant.Player;
+import domain.participant.betting.BetAmount;
 import domain.participant.name.Name;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;

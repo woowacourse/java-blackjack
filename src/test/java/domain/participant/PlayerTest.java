@@ -4,6 +4,7 @@ import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Denomination;
+import domain.participant.betting.BetAmount;
 import domain.participant.name.Name;
 import org.junit.jupiter.api.Test;
 
