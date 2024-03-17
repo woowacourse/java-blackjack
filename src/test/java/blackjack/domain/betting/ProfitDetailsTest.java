@@ -32,5 +32,4 @@ class ProfitDetailsTest {
 
         assertThat(profitDetails.getDealerProfit()).isEqualTo(new Profit(4000));
     }
-
 }

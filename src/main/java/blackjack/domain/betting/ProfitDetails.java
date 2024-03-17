@@ -8,7 +8,7 @@ import java.util.Map;
 public class ProfitDetails {
     private final Map<Name, Profit> profits;
 
-    public ProfitDetails(final Map<Name, Profit> profits) {
+    ProfitDetails(final Map<Name, Profit> profits) {
         this.profits = profits;
     }
 

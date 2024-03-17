@@ -2,7 +2,7 @@ package blackjack.domain.betting;
 
 public record Profit(int value) {
 
-    public static Profit of(final Money money, final GameResult status) {
+    static Profit of(final Money money, final GameResult status) {
         return new Profit((int) (status.getProfitRate() * money.value()));
     }
 }

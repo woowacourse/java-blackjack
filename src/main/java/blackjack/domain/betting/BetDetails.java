@@ -15,7 +15,6 @@ public class BetDetails {
         this.playersBettingMoney = playersBettingMoney;
     }
 
-    // TODO: 테스트 추가
     public ProfitDetails calculateProfit(final Dealer dealer, final List<Player> players) {
         final Map<Name, Profit> profitDetails = new LinkedHashMap<>();
 

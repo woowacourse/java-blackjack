@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MoneyTest {
+
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 100000000})
     void 돈이_정상적으로_생성된다(final int value) {

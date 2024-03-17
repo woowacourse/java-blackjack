@@ -29,5 +29,4 @@ public record Name(String value) {
 
         return Objects.equals(value, name.value);
     }
-
 }
