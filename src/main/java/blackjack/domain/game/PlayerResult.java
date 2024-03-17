@@ -17,14 +17,4 @@ public enum PlayerResult {
     public Long additionalProfit(int betting) {
         return function.apply((long) betting);
     }
-
-    public PlayerResult reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return this;
-    }
 }
