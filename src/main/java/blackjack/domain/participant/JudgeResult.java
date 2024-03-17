@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-enum JudgementResult {
+enum JudgeResult {
 
     BLACKJACK_WIN(1.5),
     WIN(1),
@@ -9,7 +9,7 @@ enum JudgementResult {
 
     private final double profitMultiplier;
 
-    JudgementResult(double profitMultiplier) {
+    JudgeResult(double profitMultiplier) {
         this.profitMultiplier = profitMultiplier;
     }
 

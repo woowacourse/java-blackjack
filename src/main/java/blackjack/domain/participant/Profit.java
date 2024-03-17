@@ -29,8 +29,8 @@ public class Profit {
         Dealer dealer = participants.getDealer();
 
         for (Player player : participants.getPlayers()) {
-            JudgementResult result = dealer.judge(player);
-            Money playerProfit = result.calculateProfit(player.getMoney());
+            JudgeResult judgeResult = dealer.judgePlayer(player);
+            Money playerProfit = judgeResult.calculateProfit(player.getMoney());
 
             playersProfit.put(player.getName(), playerProfit.getAmount());
         }

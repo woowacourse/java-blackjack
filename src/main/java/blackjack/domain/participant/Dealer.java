@@ -13,37 +13,37 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    public List<Card> getOpenCards() {
-        List<Card> allCards = getCards();
-
-        return allCards.subList(HIDDEN_CARD_SIZE, allCards.size());
-    }
-
-    public JudgementResult judge(Player player) {
+    public JudgeResult judgePlayer(Player player) {
         int playerScore = player.calculateScore();
         int dealerScore = calculateScore();
 
         if (player.isBust()) {
-            return JudgementResult.LOSE;
+            return JudgeResult.LOSE;
         }
 
         if (isBust() || playerScore > dealerScore) {
-            return JudgementResult.WIN;
+            return JudgeResult.WIN;
         }
 
         if (player.isBlackJack() && isBlackJack()) {
-            return JudgementResult.TIE;
+            return JudgeResult.TIE;
         }
 
         if (player.isBlackJack()) {
-            return JudgementResult.BLACKJACK_WIN;
+            return JudgeResult.BLACKJACK_WIN;
         }
 
         if (isBlackJack() || playerScore < dealerScore) {
-            return JudgementResult.LOSE;
+            return JudgeResult.LOSE;
         }
 
-        return JudgementResult.TIE;
+        return JudgeResult.TIE;
+    }
+
+    public List<Card> getOpenCards() {
+        List<Card> allCards = getCards();
+
+        return allCards.subList(HIDDEN_CARD_SIZE, allCards.size());
     }
 
     @Override

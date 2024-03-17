@@ -96,9 +96,9 @@ class DealerTest {
         player.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.LOSE);
+        assertThat(judgeResult).isEqualTo(JudgeResult.LOSE);
     }
 
     @DisplayName("사용자와 딜러가 둘 다 블랙잭이면, 무승부이다.")
@@ -112,9 +112,9 @@ class DealerTest {
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.TIE);
+        assertThat(judgeResult).isEqualTo(JudgeResult.TIE);
     }
 
     @DisplayName("딜러만 블랙잭인 경우, 사용자가 진다.")
@@ -129,9 +129,9 @@ class DealerTest {
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.LOSE);
+        assertThat(judgeResult).isEqualTo(JudgeResult.LOSE);
     }
 
     @DisplayName("사용자만 블랙잭인 경우, 딜러가 진다.")
@@ -146,9 +146,9 @@ class DealerTest {
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.BLACKJACK_WIN);
+        assertThat(judgeResult).isEqualTo(JudgeResult.BLACKJACK_WIN);
     }
 
     @DisplayName("딜러만 버스트되면, 사용자가 이긴다.")
@@ -162,9 +162,9 @@ class DealerTest {
         Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.WIN);
+        assertThat(judgeResult).isEqualTo(JudgeResult.WIN);
     }
 
     @DisplayName("사용자만 버스트되면, 딜러가 이긴다.")
@@ -179,9 +179,9 @@ class DealerTest {
         player.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.LOSE);
+        assertThat(judgeResult).isEqualTo(JudgeResult.LOSE);
     }
 
     @DisplayName("사용자와 딜러가 둘 다 버스트되지 않고, 딜러 점수가 더 낮으면 사용자가 이긴다.")
@@ -195,9 +195,9 @@ class DealerTest {
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.WIN);
+        assertThat(judgeResult).isEqualTo(JudgeResult.WIN);
     }
 
     @DisplayName("사용자와 딜러가 둘 다 버스트되지 않고, 딜러 점수가 더 높으면 사용자가 진다.")
@@ -211,9 +211,9 @@ class DealerTest {
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.LOSE);
+        assertThat(judgeResult).isEqualTo(JudgeResult.LOSE);
     }
 
     @DisplayName("사용자와 딜러가 둘 다 버스트되지 않고, 같은 점수라면 무승부다.")
@@ -227,8 +227,8 @@ class DealerTest {
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-        JudgementResult judgementResult = dealer.judge(player);
+        JudgeResult judgeResult = dealer.judgePlayer(player);
 
-        assertThat(judgementResult).isEqualTo(JudgementResult.TIE);
+        assertThat(judgeResult).isEqualTo(JudgeResult.TIE);
     }
 }

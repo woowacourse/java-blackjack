@@ -5,15 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class JudgementResultTest {
+class JudgeResultTest {
 
     @DisplayName("질 경우, 수익금을 계산한다.")
     @Test
     void whenLose() {
         Money money = new Money(1000);
-        JudgementResult judgementResult = JudgementResult.LOSE;
+        JudgeResult judgeResult = JudgeResult.LOSE;
 
-        Money result = judgementResult.calculateProfit(money);
+        Money result = judgeResult.calculateProfit(money);
 
         assertThat(result.getAmount()).isEqualTo(-1000);
     }
@@ -22,9 +22,9 @@ class JudgementResultTest {
     @Test
     void whenWin() {
         Money money = new Money(1000);
-        JudgementResult judgementResult = JudgementResult.WIN;
+        JudgeResult judgeResult = JudgeResult.WIN;
 
-        Money result = judgementResult.calculateProfit(money);
+        Money result = judgeResult.calculateProfit(money);
 
         assertThat(result.getAmount()).isEqualTo(1000);
     }
@@ -33,9 +33,9 @@ class JudgementResultTest {
     @Test
     void whenBlackjackWin() {
         Money money = new Money(1000);
-        JudgementResult judgementResult = JudgementResult.BLACKJACK_WIN;
+        JudgeResult judgeResult = JudgeResult.BLACKJACK_WIN;
 
-        Money result = judgementResult.calculateProfit(money);
+        Money result = judgeResult.calculateProfit(money);
 
         assertThat(result.getAmount()).isEqualTo(1500);
     }
@@ -44,9 +44,9 @@ class JudgementResultTest {
     @Test
     void whenTie() {
         Money money = new Money(1000);
-        JudgementResult judgementResult = JudgementResult.TIE;
+        JudgeResult judgeResult = JudgeResult.TIE;
 
-        Money result = judgementResult.calculateProfit(money);
+        Money result = judgeResult.calculateProfit(money);
 
         assertThat(result.getAmount()).isEqualTo(0);
     }
