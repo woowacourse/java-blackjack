@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.handrank.HankRank;
 import blackjack.domain.handrank.SingleMatchResult;
 import blackjack.domain.money.BetAmount;
 import blackjack.domain.money.Profit;
@@ -21,16 +22,14 @@ public class Player extends Participant {
         this.betAmount = Objects.requireNonNull(betAmount);
     }
 
-    Player(List<Card> cards, Name name) {
-        this(cards, name, new BetAmount(1));
-    }
-
     public static Player from(String name, int money) {
         return new Player(Collections.emptyList(), new Name(name), new BetAmount(money));
     }
 
     public Profit calculateProfit(Dealer dealer) {
-        SingleMatchResult result = dealer.getHandRank().matchAtDealer(this.getHandRank());
+        HankRank dealerRank = dealer.getHandRank();
+        HankRank playerRank = this.getHandRank();
+        SingleMatchResult result = dealerRank.matchAtDealer(playerRank);
         return result.calculatePlayerProfit(betAmount);
     }
 
