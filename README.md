@@ -21,19 +21,19 @@
 
 State -> InitialState, BlackJackState, HitState, StandState, BustState 다섯 가지 상태로 나뉘어 로직 수행
 
-InitialState -> 게임 시작시 덱이 각 플레이어에게 InitialState 상태를 갖게함.
-InitialState 상태에서 핸드가 블랙잭인경우 BlackJack, 블랙잭이 아닌 경우 Hit 상태를 반환.
+- InitialState -> 게임 시작시 덱이 각 플레이어에게 InitialState 상태를 갖게함.
+  InitialState 상태에서 핸드가 블랙잭인경우 BlackJack, 블랙잭이 아닌 경우 Hit 상태를 반환.
 
-BlackJackState -> 카드를 더 뽑을 수 없음. 턴 종료.
-딜러도 블랙잭인 경우 베팅금액 돌려받음. 딜러가 블랙잭이 아닌 경우 베팅금액 1.5배 얻음.
+- BlackJackState -> 카드를 더 뽑을 수 없음. 턴 종료.
+  딜러도 블랙잭인 경우 베팅금액 돌려받음. 딜러가 블랙잭이 아닌 경우 베팅금액 1.5배 얻음.
 
-HitState -> 카드를 더 뽑을 수 있음. 턴 계속 진행.
-y 더 뽑을 경우 -> Hit 또는 Bust | n 더 뽑지 않을 경우 -> Stand
+- HitState -> 카드를 더 뽑을 수 있음. 턴 계속 진행.
+  y 더 뽑을 경우 -> Hit 또는 Bust | n 더 뽑지 않을 경우 -> Stand
 
-StandState -> 카드를 더 뽑을 수 없음. 턴 종료.
-점수 계산하여 딜러와 승부.
+- StandState -> 카드를 더 뽑을 수 없음. 턴 종료.
+  점수 계산하여 딜러와 승부.
 
-BustState -> 카드를 더 뽑을 수 없고 패배. 턴 종료. 베팅금액 몰수.
+- BustState -> 카드를 더 뽑을 수 없고 패배. 턴 종료. 베팅금액 몰수.
 
 ### 기능 목록
 
