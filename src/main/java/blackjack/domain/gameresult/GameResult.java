@@ -13,7 +13,13 @@ public class GameResult {
     }
 
     public double getDealerProfit() {
-        return -1 * profitResult.values()
+        Profit totalProfit = Profit.from(sumOfProfit());
+        Profit dealerProfit = totalProfit.reverse();
+        return dealerProfit.getProfit();
+    }
+
+    private double sumOfProfit() {
+        return profitResult.values()
                 .stream()
                 .mapToDouble(Profit::getProfit)
                 .sum();

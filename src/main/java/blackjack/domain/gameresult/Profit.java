@@ -5,12 +5,15 @@ import java.util.Objects;
 public class Profit {
     private final double profit;
 
-    private Profit(double bat) {
-        this.profit = bat;
+    private Profit(double profit) {
+        this.profit = profit;
     }
 
     public static Profit from(double profit) {
         return new Profit(profit);
+    }
+    public Profit reverse(){
+        return new Profit(-profit);
     }
 
     public double getProfit() {
