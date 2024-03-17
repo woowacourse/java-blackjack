@@ -3,7 +3,7 @@ package blackjack;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomShuffler;
-import blackjack.domain.participant.BetDetails;
+import blackjack.domain.participant.BetRecord;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -26,13 +26,13 @@ public class BlackjackController {
 
     public void play() {
         List<Name> playerNames = repeat(inputView::readPlayerNames);
-        BetDetails betDetails = repeat(() -> inputView.readPlayersBetMoney(playerNames));
+        BetRecord betRecord = repeat(() -> inputView.readAmountOfBet(playerNames));
 
-        ProfitDetails profitDetails = playBlackjack(playerNames, betDetails);
+        ProfitDetails profitDetails = playBlackjack(playerNames, betRecord);
         outputView.printProfitDetails(profitDetails);
     }
 
-    private ProfitDetails playBlackjack(List<Name> playerNames, BetDetails betDetails) {
+    private ProfitDetails playBlackjack(List<Name> playerNames, BetRecord betRecord) {
         Deck deck = Deck.of(new CardFactory(), new RandomShuffler());
         Players players = createAndInitializePlayers(playerNames, deck);
         Dealer dealer = createAndInitializeDealer(deck);
@@ -42,7 +42,7 @@ public class BlackjackController {
         dealer = dealerTurn(dealer, deck);
         outputView.printParticipantResult(players, dealer);
 
-        return betDetails.calculateProfit(players, dealer);
+        return betRecord.calculateProfit(players, dealer);
     }
 
     private Players createAndInitializePlayers(List<Name> playerNames, Deck deck) {

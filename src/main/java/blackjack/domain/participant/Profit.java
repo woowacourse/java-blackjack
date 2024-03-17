@@ -8,8 +8,8 @@ public class Profit {
         this.value = value;
     }
 
-    public static Profit from(Money money) {
-        return new Profit(money.getValue());
+    public static Profit from(AmountOfBet amountOfBet) {
+        return new Profit(amountOfBet.getValue());
     }
 
     public static Profit from(int value) {
