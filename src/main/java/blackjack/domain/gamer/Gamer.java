@@ -6,7 +6,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Gamer {
+abstract class Gamer {
 	protected final Cards cards;
 
 	protected Gamer(final Cards cards) {
@@ -19,6 +19,10 @@ public class Gamer {
 
 	public void receiveCard(final Card card) {
 		cards.add(card);
+	}
+
+	public boolean isBust() {
+		return cards.isBurst();
 	}
 
 	public int getScore() {
