@@ -76,8 +76,13 @@ public class BlackJackController {
             ExecutingPlayer player = playerActionExecutor.getExecutingPlayer();
             PlayerAction playerAction = retryOnException(() -> askPlayerHitTry(player));
             playerActionExecutor.execute(playerAction);
-            outputView.printPlayerActionResult(player);
+            printPlayerActionResult(playerActionExecutor);
         }
+    }
+
+    private void printPlayerActionResult(final PlayerActionExecutor playerActionExecutor) {
+        ExecutingPlayer player = playerActionExecutor.getExecutingPlayer();
+        outputView.printPlayerActionResult(player);
     }
 
     private PlayerAction askPlayerHitTry(final ExecutingPlayer player) {
