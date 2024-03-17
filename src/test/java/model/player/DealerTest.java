@@ -15,24 +15,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DealerTest {
 
-    private Dealer dealer;
-
-    @BeforeEach
-    void setUp() {
-        dealer = new Dealer(new Cards(List.of(
-                Card.of(Suit.SPACE, Denomination.NINE),
-                Card.of(Suit.SPACE, Denomination.TWO))));
-    }
-
     @DisplayName("카드의 합이 16이하일 때는 참을 반환한다.")
     @Test
     void noticeTrue() {
+        Dealer dealer = new Dealer(new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.TWO))));
+
         assertTrue(dealer.isHit());
     }
 
     @DisplayName("카드의 합이 16초과일 때는 거짓을 반환한다.")
     @Test
     void noticeFalse() {
+        Dealer dealer = new Dealer(new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.TWO))));
+
         dealer.addCard(Card.of(Suit.CLOVER, Denomination.NINE));
         assertFalse(dealer.isHit());
     }
