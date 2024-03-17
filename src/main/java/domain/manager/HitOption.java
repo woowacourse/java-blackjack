@@ -1,4 +1,4 @@
-package domain;
+package domain.manager;
 
 public enum HitOption {
 

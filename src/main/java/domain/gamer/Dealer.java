@@ -1,7 +1,7 @@
 package domain.gamer;
 
-import domain.cards.Card;
-import domain.cards.Hand;
+import domain.card.Card;
+import domain.card.Hand;
 
 public class Dealer extends Player {
 
@@ -12,7 +12,7 @@ public class Dealer extends Player {
     }
 
     public boolean canHit() {
-        return hand.hasScoreUnderHitThreshold();
+        return hand.cannotDealerHit();
     }
 
     public Card openOneCard() {

@@ -1,7 +1,7 @@
-package domain.cards;
+package domain.card;
 
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
+import domain.card.cardinfo.CardNumber;
+import domain.card.cardinfo.CardShape;
 import java.util.Objects;
 
 public class Card {

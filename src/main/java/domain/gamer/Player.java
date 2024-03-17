@@ -1,13 +1,16 @@
 package domain.gamer;
 
-import domain.cards.Card;
-import domain.cards.CardPack;
-import domain.cards.Hand;
+import domain.card.Card;
+import domain.card.CardPack;
+import domain.card.Hand;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Player {
+
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final GamerName name;
     protected final Hand hand;
@@ -15,6 +18,10 @@ public class Player {
     public Player(String name, Hand hand) {
         this.name = new GamerName(name);
         this.hand = hand;
+    }
+
+    public boolean isBlackJack() {
+        return hand.hasSize(BLACKJACK_SIZE) && hand.hasScore(BLACKJACK_SCORE);
     }
 
     public void receiveCards(CardPack cardPack, int count) {
@@ -28,11 +35,11 @@ public class Player {
     }
 
     public boolean isBust() {
-        return !hand.hasScoreUnderBustThreshold();
+        return !hand.cannotBust();
     }
 
     public boolean isNotBust() {
-        return hand.hasScoreUnderBustThreshold();
+        return hand.cannotBust();
     }
 
     public int finalizeCardsScore() {
@@ -43,7 +50,7 @@ public class Player {
         return name.getValue();
     }
 
-    public List<Card> getHand() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(hand.getCards());
     }
 

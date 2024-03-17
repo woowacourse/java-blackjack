@@ -2,13 +2,12 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.cards.Card;
-import domain.cards.Hand;
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.card.cardinfo.CardNumber;
+import domain.card.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,36 +23,37 @@ public class BlackJackGameTest {
 
         Dealer dealer = game.getGamers().getDealer();
         List<Player> players = game.getGamers().getPlayers();
-        assertThat(dealer.getHand()).hasSize(2);
-        players.forEach(player -> assertThat(player.getHand()).hasSize(2));
+        assertThat(dealer.getCards()).hasSize(2);
+        players.forEach(player -> assertThat(player.getCards()).hasSize(2));
     }
 
     @DisplayName("플레이어가 카드를 더 받을 경우 플레이어의 카드 수는 1 증가한다.")
     @Test
     void increaseCardSizeWhenPlayerHit() {
-        BlackJackGame game = new BlackJackGame(List.of("dummy")); // 왜 같은 취급되지 않지? 주소는 같다고 출력되는데.
-        Hand hand = new Hand(new ArrayList<>(List.of(new Card(CardNumber.THREE, CardShape.HEART),
-                new Card(CardNumber.FOUR, CardShape.DIAMOND),
-                new Card(CardNumber.FIVE, CardShape.CLOVER))));
+        BlackJackGame game = new BlackJackGame(List.of("dummy"));
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardNumber.THREE, CardShape.HEART));
+        hand.addCard(new Card(CardNumber.FOUR, CardShape.DIAMOND));
+        hand.addCard(new Card(CardNumber.FIVE, CardShape.CLOVER));
         Player player = new Player("p1", hand);
 
-        boolean isHit = game.hitByPlayer(HitOption.HIT, player);
+        game.hitByPlayer(player);
 
-        assertThat(isHit).isTrue();
-        assertThat(player.getHand()).hasSize(3 + 1);
+        assertThat(player.getCards()).hasSize(3 + 1);
     }
 
     @DisplayName("딜러가 카드를 더 받을 경우 딜러의 카드 수는 1 증가한다.")
     @Test
     void increaseCardSizeWhenDealerHit() {
         BlackJackGame game = new BlackJackGame(List.of("dummy"));
-        Hand hand = new Hand(new ArrayList<>(List.of(new Card(CardNumber.THREE, CardShape.HEART),
-                new Card(CardNumber.FOUR, CardShape.DIAMOND),
-                new Card(CardNumber.FIVE, CardShape.CLOVER))));
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardNumber.THREE, CardShape.HEART));
+        hand.addCard(new Card(CardNumber.FOUR, CardShape.DIAMOND));
+        hand.addCard(new Card(CardNumber.FIVE, CardShape.CLOVER));
         Dealer dealer = new Dealer(hand);
 
         game.hitByDealer(dealer);
 
-        assertThat(dealer.getHand()).hasSize(3 + 1);
+        assertThat(dealer.getCards()).hasSize(3 + 1);
     }
 }

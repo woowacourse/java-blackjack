@@ -1,19 +1,17 @@
 package view;
 
-import domain.WinState;
-import domain.cards.Card;
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
+import domain.card.Card;
+import domain.card.cardinfo.CardNumber;
+import domain.card.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.Judge;
+import domain.manager.GameManager;
+import domain.manager.Profit;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import view.mapper.CardNumberMapper;
 import view.mapper.CardShapeMapper;
-import view.mapper.WinStateMapper;
 
 public class ResultView {
 
@@ -53,7 +51,7 @@ public class ResultView {
 
     private String resolvePlayerCards(Player player) {
         String playerName = player.getPlayerName();
-        List<Card> playerCards = player.getHand();
+        List<Card> playerCards = player.getCards();
         List<String> playerCardsExpression = playerCards.stream()
                 .map(this::resolveCardExpression)
                 .toList();
@@ -81,38 +79,23 @@ public class ResultView {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(LINE_SEPARATOR);
         for (Player gamer : gamers.getGamers()) {
-            stringBuilder.append(String.format("%s - 결과: %d\n", resolvePlayerCards(gamer), gamer.finalizeCardsScore()));
+            stringBuilder.append(String.format("%s - 결과: %d\n",
+                    resolvePlayerCards(gamer), gamer.finalizeCardsScore()));
         }
         System.out.println(stringBuilder);
     }
 
-    public void printFinalResult(Dealer dealer, Judge judge) {
-        System.out.println("## 최종 승패");
-        System.out.println(resolveDealerFinalResult(dealer, judge));
-        System.out.println(resolvePlayersFinalResult(judge));
+    public void printFinalProfit(Gamers gamers, GameManager gameManager) {
+        System.out.println("## 최종 수익");
+        Profit dealerProfit = gameManager.getDealerProfit();
+        System.out.println(resolveGamerProfit(gamers.getDealer(), dealerProfit));
+        for (Player player : gamers.getPlayers()) {
+            Profit playerProfit = gameManager.findProfitOfPlayer(player);
+            System.out.println(resolveGamerProfit(player, playerProfit));
+        }
     }
 
-    private String resolveDealerFinalResult(Dealer dealer, Judge judge) {
-        return String.format("%s: %s", dealer.getPlayerName(), resolveDealerWinState(judge.getDealerResult()));
-    }
-
-    private String resolveDealerWinState(Map<WinState, Integer> dealerResult) {
-        List<String> results = dealerResult.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + WinStateMapper.toExpression(entry.getKey()))
-                .toList();
-        return String.join(" ", results);
-    }
-
-    private String resolvePlayersFinalResult(Judge judge) {
-        Map<Player, WinState> playersResult = judge.getPlayersResult();
-        List<String> results = playersResult.entrySet().stream()
-                .map(playerWinState -> resolvePlayerFinalResult(playerWinState.getKey(), playerWinState.getValue()))
-                .toList();
-        return String.join(LINE_SEPARATOR, results);
-    }
-
-    private String resolvePlayerFinalResult(Player player, WinState playerWinState) {
-        return String.format("%s: %s", player.getPlayerName(), WinStateMapper.toExpression(playerWinState));
+    private String resolveGamerProfit(Player player, Profit profit) {
+        return String.format("%s: %.1f", player.getPlayerName(), profit.getValue());
     }
 }

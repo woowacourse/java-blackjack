@@ -1,10 +1,8 @@
 import domain.BlackJackGame;
-import domain.HitOption;
-import domain.cards.Card;
+import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.Judge;
 import java.util.List;
 import view.InputView;
 import view.ResultView;
@@ -17,6 +15,8 @@ public class Application {
     public static void main(String[] args) {
         BlackJackGame game = startGame();
 
+        setUpPlayers(game);
+
         setUpGame(game);
 
         progressGame(game);
@@ -27,6 +27,13 @@ public class Application {
     private static BlackJackGame startGame() {
         List<String> rawPlayersNames = inputView.readPlayersNames();
         return new BlackJackGame(rawPlayersNames);
+    }
+
+    private static void setUpPlayers(BlackJackGame game) {
+        for (Player player : game.getGamers().getPlayers()) {
+            int bettingAmount = inputView.readBettingAmount(player);
+            game.setUpProfits(player, bettingAmount);
+        }
     }
 
     private static void setUpGame(BlackJackGame game) {
@@ -49,18 +56,14 @@ public class Application {
     }
 
     private static void progressPlayerGame(BlackJackGame game, Player player) {
-        boolean doPlayerHit = true;
-        while (player.isNotBust() && doPlayerHit) {
-            HitOption hitOption = inputView.readHitOption(player);
-            doPlayerHit = game.hitByPlayer(hitOption, player);
-            printPlayerHitCard(player, doPlayerHit);
+        while (player.isNotBust() && inputView.readHitOption(player).isHit()) {
+            game.hitByPlayer(player);
+            printPlayerHitCard(player);
         }
     }
 
-    private static void printPlayerHitCard(Player player, boolean doPlayerHit) {
-        if (doPlayerHit) {
-            resultView.printPlayerCards(player);
-        }
+    private static void printPlayerHitCard(Player player) {
+        resultView.printPlayerCards(player);
     }
 
     private static void progressDealerGame(BlackJackGame game, Dealer dealer) {
@@ -71,8 +74,7 @@ public class Application {
     }
 
     private static void makeResult(BlackJackGame game) {
-        Gamers gamers = game.getGamers();
-        Judge judge = game.makeFinalResult();
-        resultView.printFinalResult(gamers.getDealer(), judge);
+        game.makeResult();
+        resultView.printFinalProfit(game.getGamers(), game.getJudge());
     }
 }

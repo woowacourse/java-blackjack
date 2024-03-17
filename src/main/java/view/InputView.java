@@ -1,7 +1,7 @@
 package view;
 
-import domain.HitOption;
 import domain.gamer.Player;
+import domain.manager.HitOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -34,6 +34,21 @@ public class InputView {
     private void validateHitOptionInput(String value) {
         if (!value.equalsIgnoreCase(HIT_OPTION_YES) && !value.equalsIgnoreCase(HIT_OPTION_NO)) {
             throw new IllegalArgumentException("[ERROR] " + HIT_OPTION_YES + " 혹은 " + HIT_OPTION_NO + " 만 입력 가능합니다.");
+        }
+    }
+
+    public int readBettingAmount(Player player) {
+        System.out.println(player.getPlayerName() + "의 배팅 금액은?");
+        String rawBettingAmount = scanner.nextLine();
+        validateBetInputType(rawBettingAmount);
+        return Integer.parseInt(rawBettingAmount);
+    }
+
+    private void validateBetInputType(String rawBettingAmount) {
+        try {
+            Integer.parseInt(rawBettingAmount);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자로 입력해주세요.");
         }
     }
 }
