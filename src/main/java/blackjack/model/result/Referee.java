@@ -1,7 +1,7 @@
 package blackjack.model.result;
 
-import blackjack.model.participant.Players;
 import blackjack.model.participant.Player;
+import blackjack.model.participant.Players;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
