@@ -13,7 +13,7 @@ public class DeckGenerator {
     private final List<Card> cards;
 
     public DeckGenerator() {
-        cards = Arrays.stream(Shape.values())
+        this.cards = Arrays.stream(Shape.values())
                 .flatMap(this::makeCardsByShape)
                 .collect(Collectors.toList());
     }

@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CardViewer {
+    private CardViewer() {
+    }
+
     private static final Map<Card, String> CARD_VIEWER = Arrays.stream(Shape.values())
             .flatMap(CardViewer::makeCardsByShape)
             .collect(Collectors.toMap(

@@ -1,14 +1,23 @@
 package domain.user;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class NameTest {
+    @Test
+    @DisplayName("이름을 입력하여 이름을 생성한다.")
+    void validNameTest() {
+        assertThatCode(() -> new Name("pond"))
+                .doesNotThrowAnyException();
+    }
+
     private static Stream<Arguments> invalidNamesAndReason() {
         return Stream.of(
                 Arguments.of("", "공백인 이름이 존재합니다.", "이름이 입력되지 않은 경우"),

@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 import view.viewer.card.CardViewer;
 
 public class HandViewer {
+    private HandViewer() {
+    }
+
     public static String show(List<Card> cards) {
         return cards.stream()
                 .map(CardViewer::show)

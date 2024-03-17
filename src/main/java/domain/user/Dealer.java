@@ -1,43 +1,36 @@
 package domain.user;
 
-import domain.Deck;
 import domain.card.Card;
-import java.util.List;
 
 public class Dealer {
-    private static final int MAX_ADDABLE = 16;
+    private static final int RECEIVABLE_THRESHOLD = 16;
     private final Hand hand;
 
-    public Dealer() {
-        this.hand = new Hand();
+    public Dealer(Hand hand) {
+        this.hand = hand;
     }
 
-    void putStartCards(Deck deck) {
-        hand.addCard(deck.getNewCard());
-        hand.addCard(deck.getNewCard());
+    public boolean isReceivable() {
+        return sumCard() <= RECEIVABLE_THRESHOLD;
     }
 
-    public void addCard(Card card) {
-        hand.addCard(card);
+    public void receive(Card card) {
+        hand.receive(card);
     }
 
-    public int sumHand() {
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isBusted() {
+        return hand.isBusted();
+    }
+
+    public int sumCard() {
         return hand.sumCard();
     }
 
-    public boolean busted() {
-        return hand.busted();
-    }
-
-    public boolean isAddable() {
-        return hand.sumCard() <= MAX_ADDABLE;
-    }
-
-    public List<Card> getVisibleCard() {
-        return List.of(hand.getFirstCard());
-    }
-
-    public List<Card> getAllCards() {
-        return hand.getCards();
+    public Hand getHand() {
+        return hand;
     }
 }

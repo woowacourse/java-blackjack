@@ -8,14 +8,15 @@ import java.util.List;
 
 public class Hand {
     private static final int BLACK_JACK_CONDITION = 21;
+    private static final int START_CARDS_COUNT = 2;
     public static final int FIRST_INDEX = 0;
-    protected final List<Card> cards;
+    private final List<Card> cards;
 
-    public Hand() {
-        this.cards = new ArrayList<>();
+    public Hand(Card... cards) {
+        this.cards = new ArrayList<>(List.of(cards));
     }
 
-    public void addCard(Card card) {
+    public void receive(Card card) {
         cards.add(card);
     }
 
@@ -38,7 +39,11 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    public boolean busted() {
+    public boolean isBlackjack() {
+        return cards.size() == START_CARDS_COUNT && sumCard() == BLACK_JACK_CONDITION;
+    }
+
+    public boolean isBusted() {
         return sumCard() > BLACK_JACK_CONDITION;
     }
 

@@ -3,6 +3,9 @@ package view.viewer.card;
 import domain.card.Number;
 
 public class NumberViewer {
+    private NumberViewer() {
+    }
+
     static String show(Number number) {
         return switch (number) {
             case ACE -> "A";
