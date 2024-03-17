@@ -41,4 +41,13 @@ public class PlayerNamesTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름은 입력할 수 없습니다: a");
     }
+
+    @Test
+    @DisplayName("오류 발생 시, 중복된 이름을 모두 출력한다.")
+    void printAllDuplicatedNamesTest() {
+        assertThatThrownBy(() -> new PlayerNames(
+                List.of(new Name("a"), new Name("a"), new Name("b"), new Name("b"))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름은 입력할 수 없습니다: a, b");
+    }
 }

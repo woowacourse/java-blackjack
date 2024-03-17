@@ -1,7 +1,10 @@
 package domain.user;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PlayerNames {
@@ -27,17 +30,18 @@ public class PlayerNames {
     }
 
     private void validateDuplicatedName(List<Name> names) {
-        List<Name> distinctNames = new ArrayList<>();
-        for (Name name : names) {
-            throwExceptionIfContains(distinctNames, name);
-            distinctNames.add(name);
-        }
+        Set<Name> distinctNames = new HashSet<>(names);
+        List<Name> duplicatedNames = new ArrayList<>(names);
+        distinctNames.forEach(duplicatedNames::remove);
+        throwExceptionIfNotEmpty(duplicatedNames);
     }
 
-    private void throwExceptionIfContains(List<Name> distinctNames, Name name) {
-        if (distinctNames.contains(name)) {
-            throw new IllegalArgumentException(
-                    "중복된 이름은 입력할 수 없습니다: %s".formatted(name.value()));
+    private void throwExceptionIfNotEmpty(List<Name> duplicatedNames) {
+        if (!duplicatedNames.isEmpty()) {
+            throw new IllegalArgumentException("중복된 이름은 입력할 수 없습니다: %s".formatted(
+                    duplicatedNames.stream()
+                            .map(Name::value)
+                            .collect(Collectors.joining(", "))));
         }
     }
 }
