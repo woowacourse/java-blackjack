@@ -13,13 +13,17 @@ import static blackjack.domain.card.Value.SIX;
 import static blackjack.domain.card.Value.TEN;
 import static blackjack.domain.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.score.Score;
 import blackjack.domain.score.GameResult;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -41,7 +45,8 @@ class ScoreTest {
                 Arguments.arguments(
                         List.of(new Card(DIAMOND, JACK), new Card(CLOVER, QUEEN), new Card(SPADE, TWO)), true),
                 Arguments.arguments(
-                        List.of(new Card(DIAMOND, QUEEN), new Card(CLOVER, SEVEN), new Card(SPADE, ACE), new Card(SPADE, ACE), new Card(SPADE, TEN)), true)
+                        List.of(new Card(DIAMOND, QUEEN), new Card(CLOVER, SEVEN), new Card(SPADE, ACE),
+                                new Card(SPADE, ACE), new Card(SPADE, TEN)), true)
         );
     }
 
@@ -103,56 +108,73 @@ class ScoreTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("twoCardsAndResult")
+    @TestFactory
     @DisplayName("다른 핸드결과와 비교할 수 있다.")
-    void competeTest(List<Card> cards, List<Card> otherCards, GameResult expected) {
-        Score score = new Score(cards);
-        Score otherScore = new Score(otherCards);
-
-        GameResult gameResult = score.compete(otherScore);
-
-        assertThat(gameResult).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> twoCardsAndResult() {
-        return Stream.of(
-                Arguments.arguments( // blackjack vs blackjack -> draw
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, ACE)),
-                        GameResult.DRAW),
-                Arguments.arguments( // blackjack vs max score -> win
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, ACE)),
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
-                        GameResult.WIN),
-                Arguments.arguments( // max score vs blackjack -> lose
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, ACE)),
-                        GameResult.LOSE),
-                Arguments.arguments( // busted vs busted -> draw
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, KING)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, QUEEN), new Card(SPADE, KING)),
-                        GameResult.DRAW),
-                Arguments.arguments( // busted vs general -> lose
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, KING)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, QUEEN)),
-                        GameResult.LOSE),
-                Arguments.arguments( // general vs busted -> win
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, QUEEN), new Card(SPADE, KING)),
-                        GameResult.WIN),
-                Arguments.arguments( // 18 vs 17 -> win
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, EIGHT)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, SEVEN)),
-                        GameResult.WIN),
-                Arguments.arguments( // 17 vs 18 -> lose
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, SEVEN)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, EIGHT)),
-                        GameResult.LOSE),
-                Arguments.arguments( // 18 vs 18 -> draw
-                        List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, EIGHT)),
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, EIGHT)),
-                        GameResult.DRAW)
+    Collection<DynamicTest> competeTest() {
+        return List.of(dynamicTest("18 vs 17", () -> {
+                    Score score = new Score(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, EIGHT)));
+                    Score otherScore = new Score(List.of(new Card(SPADE, JACK), new Card(SPADE, SEVEN)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.WIN);
+                }),
+                dynamicTest("17 vs 18", () -> {
+                    Score score = new Score(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, SEVEN)));
+                    Score otherScore = new Score(List.of(new Card(SPADE, JACK), new Card(SPADE, EIGHT)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.LOSE);
+                }),
+                dynamicTest("18 vs 18", () -> {
+                    Score score = new Score(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, EIGHT)));
+                    Score otherScore = new Score(List.of(new Card(SPADE, JACK), new Card(SPADE, EIGHT)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.DRAW);
+                })
         );
     }
+
+    @TestFactory
+    @DisplayName("블랙잭일때 다른 핸드결과와 비교할 수 있다.")
+    Collection<DynamicTest> competeWhenBlackJackTest() {
+        return List.of(dynamicTest("blackjack vs blackjack", () -> {
+                    Score score = new Score(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)));
+                    Score otherScore = new Score(List.of(new Card(SPADE, JACK), new Card(SPADE, ACE)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.DRAW);
+                }),
+                dynamicTest("blackjack vs max score", () -> {
+                    Score score = new Score(List.of(new Card(SPADE, JACK), new Card(SPADE, ACE)));
+                    Score otherScore = new Score(
+                            List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.WIN);
+                }),
+                dynamicTest("max score vs blackjack", () -> {
+                    Score score = new Score(
+                            List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)));
+                    Score otherScore = new Score(List.of(new Card(SPADE, JACK), new Card(SPADE, ACE)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.LOSE);
+                })
+        );
+    }
+
+    @TestFactory
+    @DisplayName("버스트일때 다른 핸드결과와 비교할 수 있다.")
+    Collection<DynamicTest> competeWhenBustedTest() {
+        return List.of(dynamicTest("busted vs busted", () -> {
+                    Score score = new Score(
+                            List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, KING)));
+                    Score otherScore = new Score(
+                            List.of(new Card(SPADE, JACK), new Card(SPADE, QUEEN), new Card(SPADE, KING)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.DRAW);
+                }),
+                dynamicTest("busted vs general", () -> {
+                    Score score = new Score(
+                            List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, KING)));
+                    Score otherScore = new Score(List.of(new Card(SPADE, JACK), new Card(SPADE, QUEEN)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.LOSE);
+                }),
+                dynamicTest("general vs busted", () -> {
+                    Score score = new Score(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN)));
+                    Score otherScore = new Score(
+                            List.of(new Card(SPADE, JACK), new Card(SPADE, QUEEN), new Card(SPADE, KING)));
+                    assertThat(score.compete(otherScore)).isEqualTo(GameResult.WIN);
+                })
+        );
+    }
+
 }
