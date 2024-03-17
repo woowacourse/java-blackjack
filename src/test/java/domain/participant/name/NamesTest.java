@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.name;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

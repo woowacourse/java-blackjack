@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.participant.name.Name;
 import java.util.List;
 
 public abstract class Participant {

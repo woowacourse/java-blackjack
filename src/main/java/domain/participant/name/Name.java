@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.name;
 
 import java.util.Objects;
 import java.util.regex.Pattern;

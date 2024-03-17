@@ -9,8 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Denomination;
 import domain.participant.BetAmount;
-import domain.participant.Name;
 import domain.participant.Player;
+import domain.participant.name.Name;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

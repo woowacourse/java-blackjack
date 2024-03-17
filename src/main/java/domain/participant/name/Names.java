@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.name;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;

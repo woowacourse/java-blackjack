@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.participant.name.Name;
+
 public class Player extends Participant {
     private final BetAmount betAmount;
 
