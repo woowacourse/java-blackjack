@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.betting.BettingMoney;
+import blackjack.model.player.PlayerName;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,25 +18,26 @@ public class InputView {
         this.scanner = new Scanner(System.in);
     }
 
-    public List<String> askPlayerNames() {
+    public List<PlayerName> askPlayerNames() {
         System.out.println(ASK_PLAYER_NAMES);
         String input = scanner.nextLine();
         return convertInputToPlayerNames(input);
     }
 
-    private List<String> convertInputToPlayerNames(final String input) {
+    private List<PlayerName> convertInputToPlayerNames(final String input) {
         return Arrays.stream(input.split(","))
                 .map(String::trim)
+                .map(PlayerName::new)
                 .toList();
     }
 
-    public BettingMoney askBettingMoneyToPlayer(final String playerName) {
+    public BettingMoney askBettingMoneyToPlayer(final PlayerName playerName) {
         System.out.println(formatAskBettingMoneyToPlayer(playerName));
         String input = scanner.nextLine();
         return convertInputToBettingMoney(input);
     }
 
-    private String formatAskBettingMoneyToPlayer(final String playerName) {
+    private String formatAskBettingMoneyToPlayer(final PlayerName playerName) {
         return String.format(ASK_BETTING_MONEY_TO_PLAYER, playerName);
     }
 
@@ -56,13 +58,13 @@ public class InputView {
         return new BettingMoney(amount);
     }
 
-    public Command askDrawOrStandCommandToPlayer(final String name) {
+    public Command askDrawOrStandCommandToPlayer(final PlayerName name) {
         System.out.println(formatAskDrawOrStandCommandToPlayer(name));
         String input = scanner.nextLine();
         return Command.from(input);
     }
 
-    private String formatAskDrawOrStandCommandToPlayer(final String name) {
+    private String formatAskDrawOrStandCommandToPlayer(final PlayerName name) {
         return String.format(ASK_DRAW_OR_STAND_COMMAND_TO_PLAYER, name);
     }
 }

@@ -11,6 +11,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.PlayerName;
 import blackjack.model.player.Players;
 import blackjack.view.Command;
 import blackjack.view.InputView;
@@ -41,13 +42,13 @@ public class BlackjackGame {
     }
 
     private Players createPlayers() {
-        List<String> playerNames = inputView.askPlayerNames();
+        List<PlayerName> playerNames = inputView.askPlayerNames();
         return new Players(playerNames);
     }
 
     private Betting createBetting(Players players) {
         Betting betting = new Betting();
-        for (String playerName : players.getNames()) {
+        for (PlayerName playerName : players.getNames()) {
             BettingMoney bettingMoney = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
             betting.addPlayerBettingMoney(playerName, bettingMoney);
         }
@@ -61,7 +62,7 @@ public class BlackjackGame {
     }
 
     private void showDealingCards(final Players players, final Dealer dealer) {
-        List<String> playerNames = players.getNames();
+        List<PlayerName> playerNames = players.getNames();
         List<PlayerCardsOutcome> playerCardsOutcomes = players.captureCardsOutcomes();
         Card dealerFirstCard = dealer.getFirstCard();
         outputView.printDealingCards(playerNames, playerCardsOutcomes, dealerFirstCard);

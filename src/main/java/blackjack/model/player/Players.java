@@ -11,31 +11,31 @@ import java.util.List;
 import java.util.Set;
 
 public class Players {
-    private static final String INVALID_NAMES_COUNT = "참여자 수는 1명 이상이어야 합니다.";
-    private static final String DUPLICATED_NAMES = "참여자 이름은 중복될 수 없습니다.";
+    private static final String INVALID_NAMES_COUNT = "플레이어 수는 1명 이상이어야 합니다.";
+    private static final String DUPLICATED_NAMES = "플레이어 이름은 중복될 수 없습니다.";
 
     private final List<Player> players;
 
-    public Players(final List<String> playerNames) {
+    public Players(final List<PlayerName> playerNames) {
         validate(playerNames);
         this.players = playerNames.stream()
                 .map(Player::new)
                 .toList();
     }
 
-    private void validate(final List<String> playerNames) {
+    private void validate(final List<PlayerName> playerNames) {
         validatePlayerNamesCount(playerNames);
         validateDuplicatedPlayerNames(playerNames);
     }
 
-    private void validatePlayerNamesCount(final List<String> playerNames) {
+    private void validatePlayerNamesCount(final List<PlayerName> playerNames) {
         if (playerNames.isEmpty()) {
             throw new IllegalArgumentException(INVALID_NAMES_COUNT);
         }
     }
 
-    private void validateDuplicatedPlayerNames(final List<String> playerNames) {
-        Set<String> uniquePlayerNames = new HashSet<>(playerNames);
+    private void validateDuplicatedPlayerNames(final List<PlayerName> playerNames) {
+        Set<PlayerName> uniquePlayerNames = new HashSet<>(playerNames);
         if (uniquePlayerNames.size() != playerNames.size()) {
             throw new IllegalArgumentException(DUPLICATED_NAMES);
         }
@@ -68,7 +68,7 @@ public class Players {
                 .allMatch(Player::isBlackjack);
     }
 
-    public List<String> getNames() {
+    public List<PlayerName> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .toList();

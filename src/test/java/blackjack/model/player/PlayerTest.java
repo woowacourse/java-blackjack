@@ -16,7 +16,7 @@ class PlayerTest {
     @DisplayName("플레이어 이름은 한 글자 이상이 아니면 예외가 발생한다")
     void validatePlayerNameLengthTest() {
         // when & then
-        assertThatThrownBy(() -> new Player(""))
+        assertThatThrownBy(() -> new Player(new PlayerName("")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -24,7 +24,7 @@ class PlayerTest {
     @DisplayName("카드 딜링을 하면 플레이어가 카드를 2장 받는다")
     void dealTest() {
         // when
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.HEART, Denomination.TWO)
@@ -38,7 +38,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드 합을 21에 가깝게 맞추기 위해 카드를 더 받을 수 있다")
     void drawTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.KING),
                 new Card(Suit.HEART, Denomination.KING)
@@ -55,7 +55,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드 합이 21을 넘지 않을 경우 얼마든지 카드를 계속 뽑을 수 있다")
     void canDrawTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.KING),
                 new Card(Suit.HEART, Denomination.KING)

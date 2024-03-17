@@ -16,7 +16,7 @@ public class MatchResultTest {
     @DisplayName("플레이어만 블랙잭이면, 플레이어는 블랙잭 승리 한다")
     void determineMatchResultWhenPlayerOnlyBlackjackTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.ACE),
                 new Card(Suit.HEART, Denomination.KING)
@@ -36,7 +36,7 @@ public class MatchResultTest {
     @DisplayName("딜러만 블랙잭이면, 플레이어는 패배한다")
     void determineMatchResultWhenDealerOnlyBlackjackTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.HEART, Denomination.TWO)
@@ -56,7 +56,7 @@ public class MatchResultTest {
     @DisplayName("플레이어와 딜러가 둘다 블랙잭이면, 플레이어는 푸시한다")
     void determineMatchResultWhenDealerAndPlayerBlackjackTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.ACE),
                 new Card(Suit.HEART, Denomination.KING)
@@ -76,7 +76,7 @@ public class MatchResultTest {
     @DisplayName("플레이어와 딜러 둘다 블랙잭이 아니고, 플레이어만 버스트면, 플레이어는 패배한다")
     void determineMatchResultWhenPlayerOnlyBustTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.KING),
                 new Card(Suit.HEART, Denomination.KING)
@@ -97,7 +97,7 @@ public class MatchResultTest {
     @DisplayName("플레이어와 딜러 둘다 블랙잭이 아니고, 딜러만 버스트면, 플레이어는 승리한다")
     void determineMatchResultWhenDealerOnlyBustTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.KING),
                 new Card(Suit.HEART, Denomination.KING)
@@ -118,7 +118,7 @@ public class MatchResultTest {
     @DisplayName("플레이어와 딜러 둘다 블랙잭이 아니고, 플레이어와 딜러 둘다 버스트면, 플레이어는 패배한다")
     void determineMatchResultWhenDealerAndPlayerBustTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.KING),
                 new Card(Suit.HEART, Denomination.KING)
@@ -140,7 +140,7 @@ public class MatchResultTest {
     @DisplayName("플레이어와 딜러 둘다 블랙잭이 아니고, 플레이어와 딜러 둘다 버스트가 아니면, 플레이어는 딜러보다 카드 합이 더 높아야 승리한다")
     void determineMatchResultWhenCompareScoreTest() {
         // given
-        Player player = new Player("dora");
+        Player player = new Player(new PlayerName("dora"));
         player.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.KING),
                 new Card(Suit.HEART, Denomination.FIVE)
