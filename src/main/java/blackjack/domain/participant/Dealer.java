@@ -19,6 +19,33 @@ public class Dealer extends Participant {
         return allCards.subList(HIDDEN_CARD_SIZE, allCards.size());
     }
 
+    public JudgementResult judge(Player player) {
+        int playerScore = player.calculateScore();
+        int dealerScore = calculateScore();
+
+        if (player.isBust()) {
+            return JudgementResult.LOSE;
+        }
+
+        if (isBust() || playerScore > dealerScore) {
+            return JudgementResult.WIN;
+        }
+
+        if (player.isBlackJack() && isBlackJack()) {
+            return JudgementResult.TIE;
+        }
+
+        if (player.isBlackJack()) {
+            return JudgementResult.BLACKJACK_WIN;
+        }
+
+        if (isBlackJack() || playerScore < dealerScore) {
+            return JudgementResult.LOSE;
+        }
+
+        return JudgementResult.TIE;
+    }
+
     @Override
     public boolean isPlayable() {
         int score = calculateScore();

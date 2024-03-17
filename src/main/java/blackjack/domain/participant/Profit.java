@@ -8,11 +8,9 @@ public class Profit {
     private static final int DEALER_PROFIT_MULTIPLIER = -1;
 
     private final Participants participants;
-    private final Judgement judgement;
 
     public Profit(Participants participants) {
         this.participants = participants;
-        this.judgement = new Judgement();
     }
 
     public Map<String, Double> createAllProfit() {
@@ -31,7 +29,7 @@ public class Profit {
         Dealer dealer = participants.getDealer();
 
         for (Player player : participants.getPlayers()) {
-            JudgementResult result = judgement.judgePlayer(dealer, player);
+            JudgementResult result = dealer.judge(player);
             Money playerProfit = result.calculateProfit(player.getMoney());
 
             playersProfit.put(player.getName(), playerProfit.getAmount());

@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-class Money {
+public class Money {
 
     private final double amount;
 
