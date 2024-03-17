@@ -6,11 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
+
     @DisplayName("카드가 에이스인지 확인한다.")
     @Test
     void isAce() {
         // given
-        Card card = new Card(CardNumber.ACE, CardShape.CLOVER);
+        Card card = Card.of(CardNumber.ACE, CardShape.CLOVER);
 
         // when
         boolean isAce = card.isAce();
@@ -23,7 +24,7 @@ class CardTest {
     @Test
     void isNotAce() {
         // given
-        Card card = new Card(CardNumber.EIGHT, CardShape.CLOVER);
+        Card card = Card.of(CardNumber.EIGHT, CardShape.CLOVER);
 
         // when
         boolean isAce = card.isAce();

@@ -1,110 +1,90 @@
 package blackjack.view;
 
-import blackjack.dto.CardDto;
-import blackjack.dto.DealerWinningResultDto;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.bet.BetRevenue;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hands;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.UserName;
+import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
-import blackjack.dto.PlayerCardsDto;
+import blackjack.dto.PlayerBetResultDto;
 import blackjack.dto.PlayerHandsScoreDto;
-import blackjack.dto.PlayerWinningResultDto;
-import blackjack.dto.StartCardsDto;
-import blackjack.dto.WinningResultDto;
 import blackjack.view.format.CardNumberFormat;
 import blackjack.view.format.CardShapeFormat;
-import blackjack.view.format.WinningStatusFormat;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class OutputView {
 
     private static final String DELIMITER = ", ";
 
-    public void printStartCards(final StartCardsDto startCards) {
-        final List<PlayerCardsDto> playersCards = startCards.playersCards();
-        final PlayerCardsDto dealerCards = startCards.dealerCards();
+    public static void printStartCards(Map<UserName, Hands> playersHands, Hands dealerHands) {
+        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", Dealer.DEALER_NAME,
+                String.join(DELIMITER, playersHands.keySet().stream().map(UserName::getName).toList()),
+                BlackjackGame.START_CARD_COUNT);
 
-        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealerCards.name(),
-                String.join(DELIMITER, playersCards.stream().map(PlayerCardsDto::name).toList()));
+        System.out.printf("%s: %s%n", Dealer.DEALER_NAME, convertToCardsFormat(dealerHands));
 
-        System.out.printf("%s: %s%n", dealerCards.name(),
-                convertToCardsFormat(dealerCards.cards()));
-
-        playersCards.forEach(this::printPlayerCard);
+        playersHands.forEach(OutputView::printPlayerCard);
+        System.out.printf("%n");
     }
 
-    private String convertToCardFormat(final CardDto card) {
-        return CardNumberFormat.valueOf(card.number()).getFormat() +
-                CardShapeFormat.valueOf(card.shape()).getFormat();
+    private static String convertToCardsFormat(Hands hands) {
+        return String.join(DELIMITER, hands.getCards().stream().map(OutputView::convertToCardFormat).toList());
     }
 
-    private String convertToCardsFormat(final List<CardDto> cards) {
-        return String.join(DELIMITER, cards.stream().map(this::convertToCardFormat).toList());
+    private static String convertToCardFormat(Card card) {
+        return CardNumberFormat.from(card.number()).getFormat() + CardShapeFormat.from(card.shape()).getFormat();
     }
 
-    public void printPlayerCard(final PlayerCardsDto playerCards) {
-        System.out.printf("%s카드: %s%n", playerCards.name(), convertToCardsFormat(playerCards.cards()));
+    public static void printPlayerCard(UserName name, Hands hands) {
+        System.out.printf("%s카드: %s%n", name.getName(), convertToCardsFormat(hands));
     }
 
-    public void printFinalResult(final FinalHandsScoreDto finalHandsScore, final WinningResultDto winningResult) {
-        printCardScore(finalHandsScore);
-        printWinningResult(winningResult);
+    public static void printFinalResult(FinalHandsScoreDto HandsScore, BetRevenueResultDto betRevenueResult) {
+        printCardScore(HandsScore);
+        printBetResult(betRevenueResult);
     }
 
-    private void printCardScore(final FinalHandsScoreDto finalHandsScore) {
-        printDealerCardScore(finalHandsScore.dealerHandsScore());
-        printPlayersCardScore(finalHandsScore.playersHandsScore());
+    private static void printCardScore(FinalHandsScoreDto HandsScore) {
+        printDealerCardScore(HandsScore.dealerHands());
+        printPlayersCardScore(HandsScore.playersHandsScore());
     }
 
-    private void printDealerCardScore(final PlayerHandsScoreDto dealerCardScore) {
-        System.out.printf("%n%s 카드: %s - 결과 : %d%n",
-                dealerCardScore.name(),
-                convertToCardsFormat(dealerCardScore.handsScore().cards()),
-                dealerCardScore.handsScore().score());
+    private static void printDealerCardScore(Hands dealerHands) {
+        System.out.printf("%n%s 카드: %s - 결과 : %d%n", Dealer.DEALER_NAME,
+                convertToCardsFormat(dealerHands), dealerHands.calculateScore().toInt());
     }
 
-    private void printPlayersCardScore(final List<PlayerHandsScoreDto> playersHandsScore) {
-        playersHandsScore.forEach(this::printPlayerCardScore);
+    private static void printPlayersCardScore(List<PlayerHandsScoreDto> playersHandsScore) {
+        playersHandsScore.forEach(OutputView::printPlayerCardScore);
     }
 
-    private void printPlayerCardScore(final PlayerHandsScoreDto playerHandsScore) {
-        System.out.printf("%s 카드: %s - 결과 : %d%n",
-                playerHandsScore.name(),
-                convertToCardsFormat(playerHandsScore.handsScore().cards()),
-                playerHandsScore.handsScore().score());
+    private static void printPlayerCardScore(PlayerHandsScoreDto playerHandsScore) {
+        System.out.printf("%s 카드: %s - 결과 : %d%n", playerHandsScore.getName(),
+                convertToCardsFormat(playerHandsScore.hands()), playerHandsScore.handsScore());
     }
 
-    private void printWinningResult(final WinningResultDto winningResult) {
-        System.out.printf("%n## 최종 승패%n");
-        printDealerWinningResult(winningResult.dealerWinningResults(), winningResult.dealerName());
-        printPlayersWinningResult(winningResult.playersWinningResult());
+    private static void printBetResult(BetRevenueResultDto betResult) {
+        System.out.printf("%n## 최종 수익%n");
+        printDealerBetResult(betResult.dealerRevenue());
+        printPlayersBetResult(betResult.playersBetResult());
     }
 
-    private void printDealerWinningResult(final List<DealerWinningResultDto> dealerWinningResult, final String dealerName) {
-        System.out.printf("%s: %s%n", dealerName, convertToWinningResult(dealerWinningResult));
-
+    private static void printDealerBetResult(BetRevenue dealerBetRevenue) {
+        System.out.printf("%s: %.1f%n", Dealer.DEALER_NAME, dealerBetRevenue.value());
     }
 
-    private String convertToWinningResult(final List<DealerWinningResultDto> dealerWinningResults) {
-        return dealerWinningResults.stream()
-                .map(winningResult ->
-                        winningResult.count() + WinningStatusFormat.valueOf(winningResult.winStatus()).getFormat())
-                .collect(Collectors.joining(" "));
+    private static void printPlayersBetResult(List<PlayerBetResultDto> playersWinningResult) {
+        playersWinningResult.forEach(
+                playerWinningResult -> System.out.printf("%s: %.1f%n", playerWinningResult.getName(),
+                        playerWinningResult.revenue().value()));
     }
 
-    private void printPlayersWinningResult(final List<PlayerWinningResultDto> playersWinningResult) {
-        playersWinningResult.forEach(playerWinningResult ->
-                System.out.printf("%s: %s%n",
-                        playerWinningResult.name(),
-                        WinningStatusFormat.valueOf(playerWinningResult.winnStatus()).getFormat()));
-
-    }
-
-    public void printDealerMoreCard(int count, final String dealerName) {
+    public static void printDealerMoreCard(int count) {
         while (count-- > 0) {
-            System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n", dealerName);
+            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, Dealer.NEED_CARD_SCORE_MAX.toInt());
         }
-    }
-
-    public void printError(final String message) {
-        System.out.println("[ERROR] " + message);
     }
 }

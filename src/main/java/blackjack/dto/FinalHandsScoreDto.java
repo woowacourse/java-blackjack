@@ -1,17 +1,17 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Hands;
-import blackjack.domain.dealer.Dealer;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.user.UserName;
 import java.util.List;
 import java.util.Map;
 
-public record FinalHandsScoreDto(List<PlayerHandsScoreDto> playersHandsScore, PlayerHandsScoreDto dealerHandsScore) {
-    public static FinalHandsScoreDto of(final Map<ParticipantName, Hands> playersHands, final Dealer dealer) {
-        final List<PlayerHandsScoreDto> handsScores = playersHands.entrySet().stream()
-                .map(entry -> PlayerHandsScoreDto.of(entry.getKey(), entry.getValue()))
+public record FinalHandsScoreDto(List<PlayerHandsScoreDto> playersHandsScore, Hands dealerHands) {
+
+    public static FinalHandsScoreDto of(Map<UserName, Hands> playersHands, Hands dealerHands) {
+        List<PlayerHandsScoreDto> handsScores = playersHands.entrySet().stream()
+                .map(entry -> new PlayerHandsScoreDto(entry.getKey(), entry.getValue()))
                 .toList();
 
-        return new FinalHandsScoreDto(handsScores, PlayerHandsScoreDto.of(dealer.getName(), dealer.getHands()));
+        return new FinalHandsScoreDto(handsScores, dealerHands);
     }
 }

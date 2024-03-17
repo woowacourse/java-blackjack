@@ -1,9 +1,8 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.result.Score;
+import blackjack.domain.rule.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,16 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class HandsTest {
-    @DisplayName("중복된 카드가 포함된 카드 더미를 생성할 수 없다.")
-    @Test
-    void validateDuplicate() {
-        Card card = new Card(CardNumber.ACE, CardShape.HEART);
-        List<Card> cards = List.of(card, card);
-
-        assertThatThrownBy(() -> new Hands(cards))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("중복된 카드는 존재할 수 없습니다.");
-    }
 
     @DisplayName("게임에 유리한 방향으로 ACE를 1, 11 중 선택하여 계산한다.")
     @ParameterizedTest
@@ -36,10 +25,10 @@ class HandsTest {
             CardNumber cardNumber4,
             int expected) {
         // given
-        Card card1 = new Card(cardNumber1, CardShape.DIA);
-        Card card2 = new Card(cardNumber2, CardShape.HEART);
-        Card card3 = new Card(cardNumber3, CardShape.CLOVER);
-        Card card4 = new Card(cardNumber4, CardShape.SPADE);
+        Card card1 = Card.of(cardNumber1, CardShape.DIA);
+        Card card2 = Card.of(cardNumber2, CardShape.HEART);
+        Card card3 = Card.of(cardNumber3, CardShape.CLOVER);
+        Card card4 = Card.of(cardNumber4, CardShape.SPADE);
         List<Card> cards = List.of(card1, card2, card3, card4);
         Hands hands = new Hands(cards);
 
@@ -47,7 +36,7 @@ class HandsTest {
         Score sum = hands.calculateScore();
 
         // then
-        assertThat(sum).isEqualTo(new Score(expected));
+        assertThat(sum).isEqualTo(Score.from(expected));
     }
 
 
@@ -55,33 +44,32 @@ class HandsTest {
     @Test
     void add() {
         // given
-        Card card1 = new Card(CardNumber.ACE, CardShape.HEART);
-        Card card2 = new Card(CardNumber.ACE, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.ACE, CardShape.HEART);
+        Card card2 = Card.of(CardNumber.ACE, CardShape.SPADE);
         Hands hands = new Hands(List.of(card1, card2));
 
-        Card card3 = new Card(CardNumber.ACE, CardShape.CLOVER);
+        Card card3 = Card.of(CardNumber.ACE, CardShape.CLOVER);
 
         // when
-        hands.add(card3);
+        final Hands newHands = hands.addCard(card3);
 
         // then
-        assertThat(hands.getCards()).containsExactly(card1, card2, card3);
+        assertThat(newHands.getCards()).containsExactly(card1, card2, card3);
     }
 
     @DisplayName("첫번째 카드를 반환한다.")
     @Test
     void getFirstCard() {
         // given
-        Card card1 = new Card(CardNumber.ACE, CardShape.HEART);
-        Card card2 = new Card(CardNumber.ACE, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.ACE, CardShape.HEART);
+        Card card2 = Card.of(CardNumber.ACE, CardShape.SPADE);
         Hands hands = new Hands(List.of(card1, card2));
 
         // when
-        final Hands firstCard = hands.getFirstCard();
+        final Card firstCard = hands.getFirstCard();
 
         // then
-        assertThat(firstCard.getCards())
-                .hasSize(1)
-                .containsExactly(card1);
+        assertThat(firstCard)
+                .isEqualTo(card1);
     }
 }

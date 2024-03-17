@@ -1,81 +1,67 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
-import blackjack.domain.result.BlackjackStatus;
-import blackjack.domain.result.Score;
+import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class Hands {
-    private static final int ACE_SCORE_GAP = 10;
+
+    private static final Score ACE_SCORE_GAP = CardNumber.ACE.getScore().subtract(CardNumber.ACE_BONUS_NUMBER);
 
     private final List<Card> cards;
 
-    public Hands(final List<Card> cards) {
-        validateDuplicate(cards);
+    public Hands() {
+        this.cards = new ArrayList<>();
+    }
+
+    public Hands(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    private void validateDuplicate(final List<Card> cards) {
-        if (Set.copyOf(cards).size() != cards.size()) {
-            throw new IllegalStateException("중복된 카드는 존재할 수 없습니다.");
-        }
-    }
+    public Hands addCard(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
 
-    public void add(final Card card) {
-        cards.add(card);
+        return new Hands(newCards);
     }
 
     public Score calculateScore() {
-        int sum = sum();
+        Score sum = sum();
         int aceCount = countAce();
 
-        while (isDeadScore(sum) && aceCount-- > 0) {
-            sum -= ACE_SCORE_GAP;
+        while (sum.isBust() && aceCount-- > 0) {
+            sum = sum.subtract(ACE_SCORE_GAP);
         }
 
-        return new Score(sum);
+        return sum;
     }
 
-    private int sum() {
+    private Score sum() {
         return cards.stream()
-                .mapToInt(Card::getRealNumber)
-                .sum();
+                .map(Card::getScore)
+                .reduce(Score::add)
+                .orElseThrow(() -> new IllegalStateException("카드가 없습니다."));
     }
 
     private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 
-    private boolean isDeadScore(final int sum) {
-        return BlackjackStatus.from(new Score(sum)).isDead();
+    public int size() {
+        return cards.size();
     }
 
-    public boolean isNotBlackjack() {
-        return !getStatus().isBlackjack();
-    }
-
-    public boolean isNotDead() {
-        return !getStatus().isDead();
-    }
-
-    private BlackjackStatus getStatus() {
-        return BlackjackStatus.from(calculateScore());
-    }
-
-    public Hands getFirstCard() {
-        return cards.stream()
-                .limit(1)
-                .collect(collectingAndThen(toList(), Hands::new));
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    @Override
+    public String toString() {
+        return cards.toString();
     }
 }

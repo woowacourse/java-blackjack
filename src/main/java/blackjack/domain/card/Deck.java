@@ -1,23 +1,19 @@
-package blackjack.domain.dealer;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Deck {
+
     private static final List<Card> CACHED_CARDS = cacheCards();
 
-    private final Deque<Card> cards;
+    private final List<Card> cards;
 
-    Deck(List<Card> cards) {
-        this.cards = new LinkedList<>(cards);
+    public Deck(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Deck create() {
@@ -25,7 +21,7 @@ public class Deck {
     }
 
     private static List<Card> cacheCards() {
-        final List<Card> cards = createOneDeck();
+        List<Card> cards = createOneDeck();
 
         Collections.shuffle(cards);
 
@@ -33,23 +29,15 @@ public class Deck {
     }
 
     private static List<Card> createOneDeck() {
-        final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
-
         return Arrays.stream(CardShape.values())
-                .flatMap(shape -> numbers.stream().map(number -> new Card(number, shape)))
+                .flatMap(shape -> Arrays.stream(CardNumber.values()).map(number -> Card.of(number, shape)))
                 .collect(Collectors.toList());
     }
 
     public Card pick() {
         validateEmpty();
 
-        return cards.pop();
-    }
-
-    public List<Card> pick(final int count) {
-        return Stream.generate(this::pick)
-                .limit(count)
-                .toList();
+        return cards.remove(cards.size() - 1);
     }
 
     private void validateEmpty() {

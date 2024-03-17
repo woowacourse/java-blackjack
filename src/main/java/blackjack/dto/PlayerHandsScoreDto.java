@@ -1,13 +1,15 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Hands;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.user.UserName;
 
-public record PlayerHandsScoreDto(
-        String name,
-        HandsScoreDto handsScore
-) {
-    public static PlayerHandsScoreDto of(final ParticipantName name, final Hands hands) {
-        return new PlayerHandsScoreDto(name.getName(), HandsScoreDto.from(hands));
+public record PlayerHandsScoreDto(UserName name, Hands hands) {
+
+    public int handsScore() {
+        return hands.calculateScore().toInt();
+    }
+
+    public String getName() {
+        return name.getName();
     }
 }

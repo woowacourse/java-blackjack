@@ -6,11 +6,11 @@ public enum CardRequestFormat {
 
     private final String format;
 
-    CardRequestFormat(final String format) {
+    CardRequestFormat(String format) {
         this.format = format;
     }
 
-    public static boolean from(final String input) {
+    public static boolean from(String input) {
         if (YES.getFormat().equals(input)) {
             return true;
         }

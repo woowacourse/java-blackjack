@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.rule.Score;
+
 public enum CardNumber {
     TWO(2),
     THREE(3),
@@ -15,17 +17,14 @@ public enum CardNumber {
     KING(10),
     ACE(11);
 
-    private final int number;
+    static final Score ACE_BONUS_NUMBER = Score.from(1);
+    private final Score score;
 
-    CardNumber(final int number) {
-        this.number = number;
+    CardNumber(int score) {
+        this.score = Score.from(score);
     }
 
-    public boolean isAce() {
-        return this == ACE;
-    }
-
-    public int getNumber() {
-        return number;
+    public Score getScore() {
+        return score;
     }
 }

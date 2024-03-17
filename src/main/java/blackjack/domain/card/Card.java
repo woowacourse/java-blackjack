@@ -1,46 +1,46 @@
 package blackjack.domain.card;
 
-import java.util.Objects;
+import static java.util.stream.Collectors.toMap;
 
-public class Card {
-    private final CardNumber number;
-    private final CardShape shape;
+import blackjack.domain.rule.Score;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
 
-    public Card(final CardNumber number, final CardShape shape) {
-        this.number = number;
-        this.shape = shape;
+public record Card(CardNumber number, CardShape shape) {
+
+    private static class CardCache {
+
+        static final Map<String, Card> cache;
+
+        static {
+            cache = Arrays.stream(CardShape.values())
+                    .flatMap(shape -> Arrays.stream(CardNumber.values()).map(number -> new Card(number, shape)))
+                    .collect(toMap(card -> toKey(card.number(), card.shape()), Function.identity()));
+        }
+
+        private static String toKey(CardNumber number, CardShape shape) {
+            return number.name() + shape.name();
+        }
+
+        private CardCache() {
+        }
+    }
+
+    public static Card of(CardNumber number, CardShape shape) {
+        return CardCache.cache.get(CardCache.toKey(number, shape));
     }
 
     public boolean isAce() {
-        return number.isAce();
+        return number == CardNumber.ACE;
     }
 
-    public int getRealNumber() {
-        return number.getNumber();
-    }
-
-    public String getNumberName() {
-        return number.name();
-    }
-
-    public String getShapeName() {
-        return shape.name();
+    public Score getScore() {
+        return number.getScore();
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Card card = (Card) o;
-        return number == card.number && shape == card.shape;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, shape);
+    public String toString() {
+        return number.name() + "_" + shape.name();
     }
 }
