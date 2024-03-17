@@ -35,12 +35,12 @@ public class BlackjackController {
 
     private void processGame(Players players) {
         players.getGamePlayers()
-               .forEach(gamePlayer -> processGamePlayer(blackjack, gamePlayer));
-        processDealer(blackjack, players.getDealer());
+               .forEach(this::processGamePlayer);
+        processDealer(players.getDealer());
         PlayerView.printPlayersWithScore(players);
     }
 
-    private void processGamePlayer(Blackjack blackjack, GamePlayer gamePlayer) {
+    private void processGamePlayer(GamePlayer gamePlayer) {
         while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
             Card card = blackjack.draw();
             gamePlayer.drawCard(card);
@@ -53,7 +53,7 @@ public class BlackjackController {
         return command.isHit();
     }
 
-    private void processDealer(Blackjack blackjack, Dealer dealer) {
+    private void processDealer(Dealer dealer) {
         while (dealer.isReceivable()) {
             PlayerView.printDealerDrawMessage();
             Card card = blackjack.draw();
