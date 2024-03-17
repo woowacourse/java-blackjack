@@ -34,7 +34,7 @@ public class BlackJackGame {
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(deck, dealer, players);
         OutputView.printCardsAndResult(dealer, players);
-        TotalResult totalResult = findTotalResult(dealer, players, betting);
+        TotalResult totalResult = computeTotalResult(dealer, players, betting);
         OutputView.printTotalResult(totalResult);
     }
 
@@ -104,7 +104,7 @@ public class BlackJackGame {
         return false;
     }
 
-    private TotalResult findTotalResult(final Dealer dealer, final Players players, final Betting betting) {
+    private TotalResult computeTotalResult(final Dealer dealer, final Players players, final Betting betting) {
         PlayerProfits playerProfits = new PlayerProfits();
         DealerProfit dealerProfit = new DealerProfit();
         for (Player player : players.getPlayers()) {
