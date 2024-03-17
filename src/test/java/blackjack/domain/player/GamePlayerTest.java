@@ -40,9 +40,7 @@ public class GamePlayerTest {
     @Test
     @DisplayName("딜러가 버스트 일때 플레이어가 버스트가 아니면 플레이어가 승리한다.")
     public void GamePlayer_Player_win_when_dealer_is_bust() {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
-        Dealer dealer = new Dealer(name, cards);
+        Dealer dealer = PlayerFixture.딜러_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
         dealer.drawCard(new Card(CardValue.JACK, CardSymbol.HEART));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
 
@@ -54,9 +52,7 @@ public class GamePlayerTest {
     @Test
     @DisplayName("플레이어는 버스트이면 무조건 플레이어가 패배한다.")
     public void GamePlayer_Player_lose_when_bust() {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
-        Dealer dealer = new Dealer(name, cards);
+        Dealer dealer = PlayerFixture.딜러_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.FIVE));
         sut.drawCard(new Card(CardValue.JACK, CardSymbol.CLOVER));
 
@@ -78,9 +74,7 @@ public class GamePlayerTest {
                                                                CardValue playerCard1,
                                                                CardValue playerCard2,
                                                                int profit) {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(dealerCard1, dealerCard2));
-        Dealer dealer = new Dealer(name, cards);
+        Dealer dealer = PlayerFixture.딜러_생성(List.of(dealerCard1, dealerCard2));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(playerCard1, playerCard2));
 
         var result = sut.getProfit(dealer);
@@ -91,9 +85,7 @@ public class GamePlayerTest {
     @Test
     @DisplayName("플레이어가 블랙잭이 아닌 21점이고 딜러는 블랙잭인 경우 플레이어가 패배한다.")
     public void GamePlayer_Player_lose_when_not_blackjack_dealer_blackjack() {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.ACE, CardValue.TEN));
-        Dealer dealer = new Dealer(name, cards);
+        Dealer dealer = PlayerFixture.딜러_생성(List.of(CardValue.ACE, CardValue.TEN));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.TWO, CardValue.TEN, CardValue.NINE));
 
         var result = sut.getProfit(dealer);
@@ -104,9 +96,7 @@ public class GamePlayerTest {
     @Test
     @DisplayName("플레이어와 딜러가 모두 블랙잭이면 무승부다.")
     public void GamePlayer_Player_draw_when_blackjack_both() {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.ACE, CardValue.TEN));
-        Dealer dealer = new Dealer(name, cards);
+        Dealer dealer = PlayerFixture.딜러_생성(List.of(CardValue.ACE, CardValue.TEN));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.ACE, CardValue.QUEEN));
 
         var result = sut.getProfit(dealer);
@@ -117,9 +107,7 @@ public class GamePlayerTest {
     @Test
     @DisplayName("플레이어는 블랙잭이고 딜러는 블랙잭이 아닌 21점이라면 플레이어가 승리하고 1.5배의 수익을 받는다.")
     public void GamePlayer_Player_win_when_blackjack_dealer_not_blackjack_21() {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.TWO, CardValue.TEN, CardValue.NINE));
-        Dealer dealer = new Dealer(name, cards);
+        Dealer dealer = PlayerFixture.딜러_생성(List.of(CardValue.TWO, CardValue.TEN, CardValue.NINE));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.ACE, CardValue.QUEEN));
 
         var result = sut.getProfit(dealer);

@@ -30,9 +30,7 @@ class PlayersTest {
     @DisplayName("게임 결과를 종합한다.")
     public void Dealer_Count_result() {
         GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
-        Dealer dealer = new Dealer(name, cards);
+        Dealer dealer = PlayerFixture.딜러_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
         var sut = new Players(dealer, List.of(gamePlayer));
 
         var result = sut.compareResults();
@@ -40,6 +38,6 @@ class PlayersTest {
         assertThat(result.getResult()
                 .get(gamePlayer.getName())).isEqualTo(new Profit(-10000));
         assertThat(result.getResult()
-                .get(name)).isEqualTo(new Profit(10000));
+                .get(dealer.getName())).isEqualTo(new Profit(10000));
     }
 }
