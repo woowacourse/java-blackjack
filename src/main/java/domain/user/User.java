@@ -24,6 +24,10 @@ public class User {
         return userDeck.isBust();
     }
 
+    public boolean isBlackjack() {
+        return userDeck.isBlackjack();
+    }
+
     public String getName() {
         return name.value();
     }
