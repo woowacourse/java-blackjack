@@ -111,7 +111,7 @@ public class OutputView {
     }
 
     public void printMatchResult(Profit dealerProfit, Map<Player, Profit> playersProfit) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         printDealerResult(dealerProfit);
         for (Entry<Player, Profit> profitEntry : playersProfit.entrySet()) {
             printPlayerResult(profitEntry.getKey(), profitEntry.getValue());
