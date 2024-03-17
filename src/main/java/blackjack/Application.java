@@ -8,7 +8,10 @@ import blackjack.view.OutputView;
 public class Application {
 
     public static void main(String[] args) {
-        GameManager gameManager = new GameManager(new InputView(), new OutputView(new MessageResolver()));
+        InputView inputView = new InputView();
+        OutputView outputView = new OutputView(new MessageResolver());
+
+        GameManager gameManager = new GameManager(inputView, outputView);
         gameManager.start();
     }
 }
