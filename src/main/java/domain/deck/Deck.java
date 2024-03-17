@@ -4,12 +4,9 @@ import domain.card.Card;
 import domain.card.CardFactory;
 import strategy.ShuffleStrategy;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Deck {
     private static final int DECKS_COUNT = 6;
@@ -18,11 +15,7 @@ public class Deck {
 
     public Deck(ShuffleStrategy shuffleStrategy) {
         CardFactory cardFactory = new CardFactory();
-        List<Card> cards = Stream.generate(cardFactory::createCardPack)
-                .limit(DECKS_COUNT)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        this.cards = shuffleStrategy.shuffle(cards);
+        this.cards = cardFactory.createCards(shuffleStrategy, DECKS_COUNT);
     }
 
     public Card draw() {
