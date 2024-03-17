@@ -18,7 +18,7 @@ import domain.result.Profit;
 
 public class ResultView {
 
-    private static final String PARTICIPANT_NAME_AND_CARDS = "%n%s: %s";
+    private static final String PARTICIPANT_NAME_AND_CARDS = "%s: %s%n";
 
     public void printInitialCards(final Dealer dealer, final Players players) {
         printInitialDealMessage(dealer, players);
@@ -29,7 +29,7 @@ public class ResultView {
 
     private void printInitialDealMessage(final Dealer dealer, final Players players) {
         System.out.printf(
-                "%n%s와 %s에게 %d장을 나누었습니다.%n",
+                "%s와 %s에게 %d장을 나누었습니다.%n",
                 parseName(dealer.name()),
                 parsePlayerNames(players),
                 INITIAL_CARD_COUNT
@@ -62,6 +62,10 @@ public class ResultView {
         return number.getName() + suit.getName();
     }
 
+    public void printPlayerHands(final Players players) {
+        players.forEach(this::printParticipantHand);
+    }
+
     public void printParticipantHand(final Participant participant) {
         Hand hand = participant.hand();
         System.out.printf(
@@ -69,18 +73,6 @@ public class ResultView {
                 parseName(participant.name()),
                 parseHand(hand)
         );
-    }
-
-    private String parseHand(final Hand hand) {
-        return hand.toList()
-                .stream()
-                .map(this::parseCard)
-                .reduce((card1, card2) -> card1 + ", " + card2)
-                .orElse("");
-    }
-
-    public void printPlayerHands(final Players players) {
-        players.forEach(this::printParticipantHand);
     }
 
     public void printDealerHit(final Dealer dealer) {
@@ -92,6 +84,7 @@ public class ResultView {
     }
 
     public void printCardsAndTotalOf(final Dealer dealer, final Players players) {
+        System.out.println();
         printCardAndSum(dealer);
         players.forEach(this::printCardAndSum);
         System.out.println();
@@ -100,15 +93,23 @@ public class ResultView {
     private void printCardAndSum(final Participant participant) {
         Hand hand = participant.hand();
         System.out.printf(
-                PARTICIPANT_NAME_AND_CARDS + " - 결과: %d",
+                "%s 카드: %s" + " - 결과: %d" + System.lineSeparator(),
                 parseName(participant.name()),
                 parseHand(hand),
                 participant.score()
         );
     }
 
+    private String parseHand(final Hand hand) {
+        return hand.toList()
+                .stream()
+                .map(this::parseCard)
+                .reduce((card1, card2) -> card1 + ", " + card2)
+                .orElse("");
+    }
+
     public void printResult(final BlackjackResult result) {
-        System.out.println("\n## 최종 수익");
+        System.out.println("## 최종 수익");
         printDealerResult(result.getDealerResult());
         printPlayerResults(result.getPlayerResults());
     }
