@@ -10,13 +10,14 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int STAND_LIMIT_VALUE = 17;
+    private static final String DEFAULT_NAME = "딜러";
 
     public Dealer(Name name, State state) {
         super(name, state);
     }
 
     public static Dealer createInitialStateDealer() {
-        return new Dealer(new Name("딜러"), new InitialState());
+        return new Dealer(new Name(DEFAULT_NAME), new InitialState());
     }
 
     @Override
