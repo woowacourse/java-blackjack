@@ -23,7 +23,8 @@ class DealerTest {
                 new Card(SPADE, SIX)));
         Deck deck = new Deck(new ShuffledDeckCreateStrategy());
 
-        dealer.addCard(deck.draw());
+        dealer.confirmDealerHands(deck, message -> {
+        });
 
         assertThat(dealer.getHandsCards()).hasSize(3);
     }

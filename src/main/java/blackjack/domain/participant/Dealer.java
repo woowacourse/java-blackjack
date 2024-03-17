@@ -41,7 +41,7 @@ public class Dealer {
         return hands.findHandsScore() <= DEALER_DRAW_THRESHOLD;
     }
 
-    public void addCard(Card card) {
+    private void addCard(Card card) {
         hands.addCard(card);
     }
 
