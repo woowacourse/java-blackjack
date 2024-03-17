@@ -16,6 +16,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import participant.dealer.Dealer;
+import participant.player.BetMoney;
+import participant.player.Name;
 import participant.player.Player;
 
 public class RefereeTest {
@@ -28,8 +30,8 @@ public class RefereeTest {
 
         @BeforeEach
         void setUp() {
-            player = Player.joinGame("pola", List.of(new Card(CardNumber.ACE, CardPattern.DIA_PATTERN),
-                    new Card(CardNumber.JACK, CardPattern.SPADE_PATTERN)), 10000);
+            player = new Player(List.of(new Card(CardNumber.ACE, CardPattern.DIA_PATTERN),
+                    new Card(CardNumber.JACK, CardPattern.SPADE_PATTERN)), new Name("pola"), new BetMoney(10000));
         }
 
         @DisplayName("딜러도 BlackJack인 경우 무승부로 간주한다.")
@@ -52,6 +54,9 @@ public class RefereeTest {
                     new Card(CardNumber.SEVEN, CardPattern.DIA_PATTERN)));
 
             Referee referee = new Referee();
+            System.out.println(player.isBlackJack());
+            System.out.println(player.getCardScore());
+            System.out.println(dealer.getCardScore());
             GameResult result = referee.judge(player, dealer);
 
             Assertions.assertThat(result)
@@ -66,9 +71,9 @@ public class RefereeTest {
         @DisplayName("딜러도 Bust이더라도 플레이어가 진다.")
         @Test
         void dealerAndPlayerBust() {
-            Player player = Player.joinGame("pola", List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
+            Player player = new Player(List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
                     new Card(CardNumber.TEN, CardPattern.SPADE_PATTERN),
-                    new Card(CardNumber.JACK, CardPattern.DIA_PATTERN)), 10000);
+                    new Card(CardNumber.JACK, CardPattern.DIA_PATTERN)), new Name("pola"), new BetMoney(10000));
 
             Dealer dealer = new Dealer(List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
                     new Card(CardNumber.TEN, CardPattern.SPADE_PATTERN),
@@ -91,8 +96,8 @@ public class RefereeTest {
 
         @BeforeEach
         void SetUp() {
-            player = Player.joinGame("pola", List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
-                    new Card(CardNumber.NINE, CardPattern.SPADE_PATTERN)), 10000);
+            player = new Player(List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
+                    new Card(CardNumber.NINE, CardPattern.SPADE_PATTERN)), new Name("pola"), new BetMoney(10000));
         }
 
         @DisplayName("플레이어의 점수가 딜러보다 낮다")

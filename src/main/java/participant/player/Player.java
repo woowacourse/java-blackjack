@@ -1,19 +1,44 @@
 package participant.player;
 
 import card.Card;
+import card.Cards;
 import java.util.List;
-import participant.Participant;
 
-public class Player extends Participant {
+public class Player {
 
-    private final BetMoney betMoney;
+    private final Name name;
+    private final GameElements gameElements;
 
     public Player(List<Card> cardDeck, Name name, BetMoney betMoney) {
-        super(cardDeck, name);
-        this.betMoney = betMoney;
+        this.name = name;
+        this.gameElements = new GameElements(cardDeck, betMoney);
     }
 
     public BetMoney getBetMoney() {
-        return betMoney;
+        return gameElements.getBetMoney();
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Cards getCards() {
+        return gameElements.getCards();
+    }
+
+    public boolean isBust() {
+        return gameElements.isBustCard();
+    }
+
+    public void hit(Card card) {
+        gameElements.hit(card);
+    }
+
+    public int getCardScore() {
+        return gameElements.getCardsScore();
+    }
+
+    public boolean isBlackJack() {
+        return gameElements.isBlackJackCard();
     }
 }

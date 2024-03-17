@@ -78,7 +78,7 @@ public class OutputView {
 
     public void printDealerHand(Dealer dealer) {
         System.out.println(dealer.getName().getValue() + "카드:" + dealer.getCards().getCardsFeatures() + " - 결과: "
-                + dealer.getCardScore());
+                + dealer.getCards().countMaxScore());
     }
 
     public void printPlayerHand(Players players) {

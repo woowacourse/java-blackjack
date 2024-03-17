@@ -6,6 +6,8 @@ public class Cards {
 
     private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.calculatePlusAceCardScore();
     private static final int MAX_BLACK_JACK_SCORE = 21;
+    private static final int INIT_CARD_SETTING_COUNT = 2;
+
 
     private final List<Card> cards;
 
@@ -15,6 +17,15 @@ public class Cards {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public boolean isBlackJack() {
+        return countMaxScore() == MAX_BLACK_JACK_SCORE
+                && countCard() == INIT_CARD_SETTING_COUNT;
+    }
+
+    public boolean isBust() {
+        return countMaxScore() > MAX_BLACK_JACK_SCORE;
     }
 
     public int countMaxScore() {
