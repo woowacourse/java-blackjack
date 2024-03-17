@@ -26,8 +26,7 @@ public class BlackjackController {
 
     private Players joinPlayer() {
         Names names = Names.from(InputView.inputPlayerNames());
-        BettingAmounts bettingAmounts = BettingAmounts.from(
-                InputView.inputPlayerBattingAmounts(names));
+        BettingAmounts bettingAmounts = BettingAmounts.from(InputView.inputPlayerBattingAmounts(names));
         Players players = blackjack.createPlayers(names.getNames(), bettingAmounts.getBettingAmounts());
         PlayerView.printPlayers(players);
         return players;
@@ -35,7 +34,7 @@ public class BlackjackController {
 
     private void processGame(Players players) {
         players.getGamePlayers()
-               .forEach(this::processGamePlayer);
+                .forEach(this::processGamePlayer);
         processDealer(players.getDealer());
         PlayerView.printPlayersWithScore(players);
     }
