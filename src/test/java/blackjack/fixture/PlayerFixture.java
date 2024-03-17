@@ -10,12 +10,12 @@ import java.util.List;
 public class PlayerFixture {
     public static GamePlayer 게임_플레이어_생성(List<CardValue> cardValues) {
         Name name = new Name("초롱");
-        BettingAmount battingAmount = new BettingAmount("10000");
-        return new GamePlayer(name, CardFixture.카드_목록_생성(cardValues), battingAmount);
+        BettingAmount bettingAmount = new BettingAmount("10000");
+        return new GamePlayer(name, CardFixture.카드_목록_생성(cardValues), bettingAmount);
     }
 
-    public static GamePlayer 게임_플레이어_생성(Name name, BettingAmount battingAmount) {
-        return new GamePlayer(name, CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR)), battingAmount);
+    public static GamePlayer 게임_플레이어_생성(Name name, BettingAmount bettingAmount) {
+        return new GamePlayer(name, CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR)), bettingAmount);
     }
 
     public static Dealer 딜러_생성(Name name) {

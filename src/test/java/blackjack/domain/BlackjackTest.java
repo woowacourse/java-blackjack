@@ -25,9 +25,9 @@ class BlackjackTest {
     public void Blackjack_Accept_players() {
         Blackjack blackjack = new Blackjack(CardFixture.카드_덱_생성());
         Names names = Names.from(List.of("초롱", "조이썬"));
-        BettingAmounts battingAmounts = BettingAmounts.from(List.of("10000", "20000"));
+        BettingAmounts bettingAmounts = BettingAmounts.from(List.of("10000", "20000"));
 
-        var result = blackjack.createPlayers(names.getNames(), battingAmounts.getBettingAmounts());
+        var result = blackjack.createPlayers(names.getNames(), bettingAmounts.getBettingAmounts());
 
         assertPlayer(result.getDealer(), 8);
 

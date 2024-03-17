@@ -25,7 +25,7 @@ class BettingAmountTest {
     @ParameterizedTest
     @ValueSource(strings = {"0", "-10000", "abac", "", " "})
     @DisplayName("배팅 금액에 양수가 아닌 값이 들어오는 경우 예외처리된다.")
-    void BattingAmount_Instance_only_create_with_positive_number(String value) {
+    void BettingAmount_Instance_only_create_with_positive_number(String value) {
         assertThatThrownBy(() -> {
             new BettingAmount(value);
         }).isInstanceOf(IllegalArgumentException.class);
@@ -33,29 +33,29 @@ class BettingAmountTest {
 
     @Test
     @DisplayName("승리(블랙잭X)시 배팅 금액의 1배로 수익을 생성한다.")
-    public void BattingAmount_Create_profit_once_battingAmount_when_win() {
-        BettingAmount battingAmount = new BettingAmount("10000");
-        assertThat(battingAmount.calculateProfit(ResultStatus.WIN)).isEqualTo(new Profit(10000));
+    public void BettingAmount_Create_profit_once_bettingAmount_when_win() {
+        BettingAmount bettingAmount = new BettingAmount("10000");
+        assertThat(bettingAmount.calculateProfit(ResultStatus.WIN)).isEqualTo(new Profit(10000));
     }
 
     @Test
     @DisplayName("패배시 배팅 금액의 -1배로 수익을 생성한다.")
-    public void BattingAmount_Create_profit_minus_once_battingAmount_when_lose() {
-        BettingAmount battingAmount = new BettingAmount("10000");
-        assertThat(battingAmount.calculateProfit(ResultStatus.LOSE)).isEqualTo(new Profit(-10000));
+    public void BettingAmount_Create_profit_minus_once_bettingAmount_when_lose() {
+        BettingAmount bettingAmount = new BettingAmount("10000");
+        assertThat(bettingAmount.calculateProfit(ResultStatus.LOSE)).isEqualTo(new Profit(-10000));
     }
 
     @Test
     @DisplayName("무승부시 배팅 금액의 0배로 수익을 생성한다.")
-    public void BattingAmount_Create_profit_zero_battingAmount_when_draw() {
-        BettingAmount battingAmount = new BettingAmount("10000");
-        assertThat(battingAmount.calculateProfit(ResultStatus.DRAW)).isEqualTo(new Profit(0));
+    public void BettingAmount_Create_profit_zero_bettingAmount_when_draw() {
+        BettingAmount bettingAmount = new BettingAmount("10000");
+        assertThat(bettingAmount.calculateProfit(ResultStatus.DRAW)).isEqualTo(new Profit(0));
     }
 
     @Test
     @DisplayName("블랙잭으로 승리시 배팅 금액의 1.5배로 수익을 생성한다.")
-    public void BattingAmount_Create_profit_one_and_half_profit_battingAmount_when_blackjack_win() {
-        BettingAmount battingAmount = new BettingAmount("10000");
-        assertThat(battingAmount.calculateProfit(ResultStatus.BLACKJACK)).isEqualTo(new Profit(15000));
+    public void BettingAmount_Create_profit_one_and_half_profit_bettingAmount_when_blackjack_win() {
+        BettingAmount bettingAmount = new BettingAmount("10000");
+        assertThat(bettingAmount.calculateProfit(ResultStatus.BLACKJACK)).isEqualTo(new Profit(15000));
     }
 }

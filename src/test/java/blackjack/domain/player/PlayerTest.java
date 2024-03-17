@@ -17,9 +17,9 @@ public class PlayerTest {
         Name name = new Name("초롱");
         Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
                 new Card(CardValue.ACE, CardSymbol.DIAMOND)));
-        BettingAmount battingAmount = new BettingAmount("10000");
+        BettingAmount bettingAmount = new BettingAmount("10000");
 
-        assertThatCode(() -> new GamePlayer(name, cards, battingAmount))
+        assertThatCode(() -> new GamePlayer(name, cards, bettingAmount))
                 .doesNotThrowAnyException();
     }
 

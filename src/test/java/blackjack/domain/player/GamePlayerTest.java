@@ -39,7 +39,7 @@ public class GamePlayerTest {
 
     @Test
     @DisplayName("딜러가 버스트 일때 플레이어가 버스트가 아니면 플레이어가 승리한다.")
-    public void GamePlayer_Player_win_when_dealer_is_burst() {
+    public void GamePlayer_Player_win_when_dealer_is_bust() {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
         Dealer dealer = new Dealer(name, cards);
@@ -53,7 +53,7 @@ public class GamePlayerTest {
 
     @Test
     @DisplayName("플레이어는 버스트이면 무조건 플레이어가 패배한다.")
-    public void GamePlayer_Player_lose_when_burst() {
+    public void GamePlayer_Player_lose_when_bust() {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
         Dealer dealer = new Dealer(name, cards);

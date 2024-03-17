@@ -9,16 +9,16 @@ import java.util.List;
 public class GamePlayer extends Player {
     private static final Integer RECEIVE_SIZE = 21;
 
-    private final BettingAmount battingAmount;
+    private final BettingAmount bettingAmount;
 
-    public GamePlayer(Name name, Cards cards, BettingAmount battingAmount) {
+    public GamePlayer(Name name, Cards cards, BettingAmount bettingAmount) {
         super(name, cards);
-        this.battingAmount = battingAmount;
+        this.bettingAmount = bettingAmount;
     }
 
     public Profit getProfit(Dealer dealer) {
         ResultStatus resultStatus = getResult(dealer);
-        return battingAmount.calculateProfit(resultStatus);
+        return bettingAmount.calculateProfit(resultStatus);
     }
 
     private ResultStatus getResult(Dealer dealer) {
