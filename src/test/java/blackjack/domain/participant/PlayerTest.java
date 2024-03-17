@@ -5,7 +5,6 @@ import static blackjack.fixture.PlayerFixture.playerClover;
 import static blackjack.fixture.TrumpCardFixture.threeSpadeKingCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
@@ -18,15 +17,13 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
-    private Deck deck;
     private Dealer dealer;
     private Player choco;
     private Player clover;
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(shuffleStrategy);
-        dealer = new Dealer(deck);
+        dealer = Dealer.from(shuffleStrategy);
         choco = playerChoco();
         clover = playerClover();
     }
@@ -60,5 +57,56 @@ public class PlayerTest {
         System.out.println(choco.getHandCards().get(2).getSuit());
         //then
         assertThat(choco.getHandCards()).contains(trumpCard);
+    }
+
+    @DisplayName("승리 시, 배팅 금액을 받는다.")
+    @Test
+    void win() {
+        //given & when
+        choco.win(dealer.getDealerProfit());
+
+        //then
+        assertThat(choco.getProfit()).isEqualTo("10000");
+        assertThat(dealer.getDealerProfit().toString()).isEqualTo("-10000");
+    }
+
+    @DisplayName("패배 시, 배팅 금액을 잃는다.")
+    @Test
+    void lose() {
+        //given & when
+        choco.lose(dealer.getDealerProfit());
+
+        //then
+        assertThat(choco.getProfit()).isEqualTo("-10000");
+        assertThat(dealer.getDealerProfit().toString()).isEqualTo("10000");
+    }
+
+    @DisplayName("블랙잭으로 승리 시, 승리 금액에서 배팅 금액의 1.5배를 더 받는다.")
+    @Test
+    void winBlackjack() {
+        //given
+        dealer.draw(12);
+        choco.draw(dealer.draw());
+        choco.draw(dealer.draw());
+
+        //when
+        choco.win(dealer.getDealerProfit());
+
+        //then
+        assertThat(choco.getProfit()).isEqualTo("25000");
+    }
+
+    @DisplayName("무승부 시, 배팅금액을 돌려받는다.")
+    @Test
+    void drawPlayer() {
+        //given & when
+        dealer.initialDeal();
+        IntStream.range(0, 3)
+                .forEach(i -> choco.draw(dealer.draw()));
+        IntStream.range(0, 2)
+                .forEach(i -> clover.draw(dealer.draw()));
+
+        //then
+        assertThat(choco.getProfit()).isEqualTo("0");
     }
 }

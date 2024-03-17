@@ -1,16 +1,16 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.Card;
 import blackjack.domain.participant.Player;
-import blackjack.dto.BlackjackResult;
-import blackjack.dto.DealerResult;
-import blackjack.dto.PlayerResult;
+import blackjack.dto.PlayerInfos;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players {
 
-    private static final String NAME_DUPLICATED_EXCEPTION = "플레이어의 이름은 중복될 수 없습니다.";
+    private static final int BLACKJACK_INIT_CARD_AMOUNT = 2;
 
     private final List<Player> players;
 
@@ -18,36 +18,18 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names) {
-        validate(names);
-
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
+    public static Players from(final PlayerInfos playerInfos) {
+        List<Player> players = playerInfos.infos().entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
 
         return new Players(players);
     }
 
-    private static void validate(final List<String> names) {
-        if (isDuplicated(names)) {
-            throw new IllegalArgumentException(NAME_DUPLICATED_EXCEPTION);
-        }
-    }
-
-    private static boolean isDuplicated(final List<String> names) {
-        return names.size() != Set.copyOf(names).size();
-    }
-
-    public BlackjackResult createResult(final Dealer dealer) {
-        ResultStatus resultStatus = ResultStatus.init();
-        PlayerResult playerResult = new PlayerResult();
-
-        for (Player player : players) {
-            DealerResult result = Judge.judge(resultStatus, player, dealer, playerResult);
-            resultStatus.updateResultStatus(result);
-        }
-
-        return new BlackjackResult(DealerResult.of(resultStatus), playerResult);
+    public void initialDeal(final Supplier<Card> supplier) {
+        IntStream.range(0, BLACKJACK_INIT_CARD_AMOUNT)
+                .forEach(i -> players
+                        .forEach(player -> player.draw(supplier.get())));
     }
 
     public List<String> getNames() {

@@ -22,8 +22,7 @@ public class DealerTest {
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(shuffleStrategy);
-        dealer = new Dealer(deck);
+        dealer = Dealer.from(shuffleStrategy);
     }
 
     @DisplayName("딜러는 한 장을 뽑아서 손패에 넣는다.")
@@ -41,6 +40,7 @@ public class DealerTest {
     void showFirstCard() {
         //given
         dealer.draw(2);
+
         //when & then
         assertThat(dealer.showFirstCard()).isEqualTo(trumpCardAceSpade);
     }

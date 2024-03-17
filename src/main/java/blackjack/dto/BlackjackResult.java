@@ -1,22 +1,15 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.Players;
+import blackjack.domain.participant.Dealer;
+import java.util.List;
 
-public class BlackjackResult {
+public record BlackjackResult(String dealerProfit, List<PlayerProfitResult> playerProfits) {
+    public static BlackjackResult of(Dealer dealer, Players players) {
+        List<PlayerProfitResult> playerProfits = players.getPlayers().stream()
+                .map(PlayerProfitResult::from)
+                .toList();
 
-    private final DealerResult dealerResult;
-    private final PlayerResult playerResult;
-
-    public BlackjackResult(final DealerResult dealerResult, final PlayerResult playerResult) {
-        this.dealerResult = dealerResult;
-        this.playerResult = playerResult;
-    }
-
-    public GameResult findPlayerResultByName(final String name) {
-        return playerResult.findByName(name);
-    }
-
-    public DealerResult getDealerResult() {
-        return dealerResult;
+        return new BlackjackResult(dealer.getProfit(), playerProfits);
     }
 }
