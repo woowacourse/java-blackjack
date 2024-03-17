@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.card.CardMachine;
+import domain.card.Deck;
 import domain.result.Profit;
 import domain.result.ProfitFixture;
 
@@ -16,7 +16,7 @@ class DealerResultTest {
     @CsvSource(value = {"1000, -1000", "-1000, 1000"})
     @ParameterizedTest
     void subtract(int playerProfit, int expected) {
-        Dealer dealer = new Dealer(CardMachine.newDeck());
+        Dealer dealer = new Dealer(Deck.create());
         DealerResult result = new DealerResult(dealer);
 
         result.subtract(ProfitFixture.amountOf(playerProfit));

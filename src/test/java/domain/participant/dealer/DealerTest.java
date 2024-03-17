@@ -25,7 +25,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
-import domain.card.CardMachine;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.participant.Participant;
@@ -40,7 +39,7 @@ class DealerTest {
         static Stream<Arguments> deal() {
             return Stream.of(
                     Arguments.of(cardOf(ACE), PlayerFixture.from("Zeus")),
-                    Arguments.of(cardOf(TWO), new Dealer(CardMachine.newDeck()))
+                    Arguments.of(cardOf(TWO), new Dealer(Deck.create()))
             );
         }
 

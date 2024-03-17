@@ -1,6 +1,6 @@
 package game;
 
-import domain.card.CardMachine;
+import domain.card.Deck;
 import domain.participant.attributes.Names;
 import domain.participant.dealer.Dealer;
 import domain.participant.player.Player;
@@ -22,7 +22,7 @@ public class BlackjackGame {
 
     public void play() {
         Players players = createPlayers();
-        Dealer dealer = new Dealer(CardMachine.newDeck());
+        Dealer dealer = new Dealer(Deck.create());
         initialize(dealer, players);
         askAndDealMoreCards(dealer, players);
         dealAndPrintIfHit(dealer);

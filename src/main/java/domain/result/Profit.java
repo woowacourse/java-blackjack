@@ -40,4 +40,11 @@ public class Profit implements Money {
     public int hashCode() {
         return Objects.hash(amount);
     }
+
+    @Override
+    public String toString() {
+        return "Profit{" +
+                "amount=" + amount +
+                '}';
+    }
 }

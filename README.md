@@ -26,6 +26,7 @@
 - 플레이어의 카드 합계가 21을 넘는 경우 카드를 받을 수 없다.
 - 딜러와 플레이어의 카드 합계가 같을 경우 무승부가 되어 베팅 금액을 돌려받는다. 
 - 베팅 금액은 자연수이다. 
+- 블랙잭 게임의 덱은 트럼프 카드 팩 6개 분량의 카드로 구성된다. 
 
 ## 게임 참가자
 
@@ -117,8 +118,9 @@
   - [x] Hand
 - [x] 가짜중복으로 인한 BlackjackViewParser의 View 공통 메서드 분리
 - [ ] NPE 처리
-- [ ] Deck 생성 로직 이동 CardMachine -> Deck
-  - [ ] EnumSet 대신 values() 사용 [참고](https://github.com/woowacourse/java-blackjack/pull/652#discussion_r1518824698)
+- [x] Deck 생성 로직 이동 CardMachine -> Deck
+  - [x] Stream 대신 반복문 사용 
+  - [x] EnumSet 대신 values() 사용 [참고](https://github.com/woowacourse/java-blackjack/pull/652#discussion_r1518824698)
 - [x] Name NPE 예외 처리
 - [ ] 상태 패턴 적용(Optional)
   - [ ] Dealer.hasSoftAce 필드 삭제
