@@ -69,15 +69,4 @@ public class Game {
                         LinkedHashMap::new
                 )));
     }
-
-    public Map<Result, Integer> generateDealerResult() {
-        return Collections.unmodifiableMap(users.getPlayers()
-                .stream()
-                .collect(Collectors.toMap(
-                        player -> generatePlayerResult(player).reverse(),
-                        value -> 1,
-                        (oldValue, newValue) -> oldValue + 1,
-                        LinkedHashMap::new
-                )));
-    }
 }

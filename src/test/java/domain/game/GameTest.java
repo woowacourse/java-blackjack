@@ -15,7 +15,6 @@ import java.util.Map;
 
 import static domain.game.Command.YES;
 import static domain.game.Result.LOSE;
-import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -57,11 +56,9 @@ public class GameTest {
 
         Game game = new Game(totalDeck, users);
         Map<Player, Result> playerResults = game.generatePlayerResults();
-        Map<Result, Integer> dealerResult = game.generateDealerResult();
 
         assertAll(
-                () -> assertThat(playerResults.get(player)).isEqualTo(LOSE),
-                () -> assertThat(dealerResult.get(WIN)).isEqualTo(1)
+                () -> assertThat(playerResults.get(player)).isEqualTo(LOSE)
         );
     }
 }

@@ -1,31 +1,15 @@
 package domain.game;
 
 public enum Result {
-    WIN("승", 1),
-    LOSE("패", -1),
-    DRAW("무", 0),
-    BLACKJACK("블랙잭", 1.5);
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
+    BLACKJACK(1.5);
 
-
-    private final String result;
     private final double profitRate;
 
-    Result(String result, double profitRate) {
-        this.result = result;
+    Result(double profitRate) {
         this.profitRate = profitRate;
-    }
-
-    public Result reverse() {
-        return switch (this) {
-            case BLACKJACK -> LOSE;
-            case WIN -> LOSE;
-            case LOSE -> WIN;
-            case DRAW -> DRAW;
-        };
-    }
-
-    public String getResult() {
-        return result;
     }
 
     public double getProfitRate() {
