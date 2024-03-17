@@ -6,7 +6,7 @@ public record Score(int value) {
         return this.value > other.value;
     }
 
-    public boolean isEqual(final int other) {
-        return this.value == other;
-    }
+//    public boolean isEqual(final int other) {
+//        return this.value == other;
+//    }
 }

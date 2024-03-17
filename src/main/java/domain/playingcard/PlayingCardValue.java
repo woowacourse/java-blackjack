@@ -24,6 +24,6 @@ public enum PlayingCardValue {
     }
 
     public boolean isTenValueCard() {
-        return score.isEqual(10);
+        return score.value() == 10;
     }
 }
