@@ -1,7 +1,6 @@
 package domain.participant;
 
 import controller.dto.response.ParticipantHandStatus;
-import controller.dto.response.ParticipantProfitResponse;
 import domain.constants.CardCommand;
 import domain.constants.Outcome;
 import domain.game.DecisionToContinue;
@@ -15,11 +14,7 @@ public class Player extends Participant {
         this.bettingMoney = new BettingMoney(bettingAmount);
     }
 
-    public ParticipantProfitResponse createPlayerProfitResponse(final Outcome outcome) {
-        return new ParticipantProfitResponse(name, calculatePlayerProfit(outcome));
-    }
-
-    private int calculatePlayerProfit(final Outcome outcome) {
+    public int calculatePlayerProfit(final Outcome outcome) {
         return (int) Math.ceil(bettingMoney() * outcome.earningRates());
     }
 

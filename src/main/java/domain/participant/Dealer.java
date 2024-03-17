@@ -28,14 +28,13 @@ public class Dealer extends Participant {
         return new ParticipantHandStatus(name, new Hand(cardsExceptLastOne));
     }
 
-    public ParticipantProfitResponse createDealerProfitResponse(final List<ParticipantProfitResponse> playersProfit) {
-        int dealerProfit = playersProfit.stream()
+    public int calculateDealerProfit(final List<ParticipantProfitResponse> playersProfit) {
+        return playersProfit.stream()
                 .mapToInt(response -> toDealerProfit(response.profit()))
                 .sum();
-        return new ParticipantProfitResponse(name, dealerProfit);
     }
 
-    private int toDealerProfit(final int playerProfit) {
+    public int toDealerProfit(final int playerProfit) {
         return MULTIPLIED_NUMBER_FOR_OPPOSITE_SIGN * playerProfit;
     }
 

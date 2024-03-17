@@ -71,15 +71,23 @@ public class BlackJackGame {
     }
 
     private List<ParticipantProfitResponse> getParticipantProfitResponses(final List<PlayerOutcome> outcomes) {
-        List<ParticipantProfitResponse> playersProfit = outcomes.stream()
-                .map(outcome -> outcome.player().createPlayerProfitResponse(outcome.outcome()))
-                .toList();
-        ParticipantProfitResponse dealerProfit = CACHED_DEALER.createDealerProfitResponse(playersProfit);
-
+        List<ParticipantProfitResponse> playersProfit = calculatePlayerProfit(outcomes);
+        ParticipantProfitResponse dealerProfit = new ParticipantProfitResponse(
+                CACHED_DEALER.getName(), CACHED_DEALER.calculateDealerProfit(playersProfit)
+        );
         return Stream.concat(
                 Stream.of(dealerProfit),
                 playersProfit.stream()
         ).toList();
+    }
+
+    private List<ParticipantProfitResponse> calculatePlayerProfit(final List<PlayerOutcome> outcomes) {
+        return outcomes.stream()
+                .map(outcome -> new ParticipantProfitResponse(
+                        outcome.player().getName(),
+                        outcome.player().calculatePlayerProfit(outcome.outcome())
+                ))
+                .toList();
     }
 
     public List<Participant> getParticipants() {
