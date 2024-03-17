@@ -54,7 +54,7 @@ public class BlackJackGameController {
     }
 
     private void drawEachPlayerAdditionalCard(Player player, Deck deck) {
-        while (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
+        while (player.isDrawable() && inputView.isPlayerWantToDraw(player.getName())) {
             player.drawAdditionalCard(deck);
             outputView.printPlayerCards(player);
         }

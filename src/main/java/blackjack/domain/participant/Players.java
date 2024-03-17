@@ -16,7 +16,7 @@ public class Players {
     private Players(Dealer dealer, List<BettingPlayer> bettingPlayers) {
         this.dealer = dealer;
         validateSize(bettingPlayers);
-        validateDistinct(bettingPlayers);
+        validateUniqueName(bettingPlayers);
         this.bettingPlayers = bettingPlayers;
     }
 
@@ -39,13 +39,13 @@ public class Players {
         }
     }
 
-    private void validateDistinct(List<BettingPlayer> players) {
-        if (isDuplicated(players)) {
+    private void validateUniqueName(List<BettingPlayer> players) {
+        if (isDuplicatedName(players)) {
             throw new IllegalArgumentException("중복된 이름을 사용할 수 없습니다.");
         }
     }
 
-    private boolean isDuplicated(List<BettingPlayer> players) {
+    private boolean isDuplicatedName(List<BettingPlayer> players) {
         return players.size() != players.stream().distinct().count();
     }
 

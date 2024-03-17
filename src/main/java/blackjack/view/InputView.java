@@ -30,7 +30,7 @@ public class InputView {
         }
     }
 
-    public boolean isPlayerWantDraw(Name name) {
+    public boolean isPlayerWantToDraw(Name name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name.getName(), WANT_DRAW_INPUT,
                 WANT_NOT_DRAW_INPUT);
         String input = SCANNER.nextLine();
