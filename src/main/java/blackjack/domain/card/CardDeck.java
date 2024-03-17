@@ -18,6 +18,18 @@ public class CardDeck {
         this.cards.addAll(cards);
     }
 
+    private void validateDuplicated(List<Card> cards) {
+        if (getUniqueSize(cards) != cards.size()) {
+            throw new IllegalArgumentException("중복 카드는 존재할 수 없습니다.");
+        }
+    }
+
+    private long getUniqueSize(List<Card> cards) {
+        return cards.stream()
+                .distinct()
+                .count();
+    }
+
     public static CardDeck createShuffledDeck() {
         return new CardDeck(createShuffledCards());
     }
@@ -37,18 +49,6 @@ public class CardDeck {
         return Arrays.stream(CardRank.values())
                 .map(cardRank -> new Card(cardRank, cardShape))
                 .toList();
-    }
-
-    private void validateDuplicated(List<Card> cards) {
-        if (getUniqueSize(cards) != cards.size()) {
-            throw new IllegalArgumentException("중복 카드는 존재할 수 없습니다.");
-        }
-    }
-
-    private long getUniqueSize(List<Card> cards) {
-        return cards.stream()
-                .distinct()
-                .count();
     }
 
     public Card draw() {
