@@ -14,6 +14,7 @@ import model.player.Participant;
 import model.player.Participants;
 import view.InputView;
 import view.OutputView;
+import view.dto.NameDto;
 import view.dto.ParticipantNamesDto;
 import view.dto.UserCardDto;
 import view.dto.UserProfitDto;
@@ -90,7 +91,8 @@ public class BlackJackController {
     }
 
     private void offerMoreCards(BlackJack blackJack) {
-        blackJack.decideParticipantsPlay(inputView::isOneMoreCard, outputView::printPlayerCardMessage);
+        blackJack.decideParticipantsPlay(name -> inputView.isOneMoreCard(new NameDto(name)),
+                (name, cards) -> outputView.printPlayerCardMessage(new UserCardDto(name, cards)));
         blackJack.decideDealerPlay(outputView::printDealerAddCard);
     }
 }

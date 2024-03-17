@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 import model.BettingMoney;
+import model.player.Name;
 import view.dto.NameDto;
 
 public class InputView {

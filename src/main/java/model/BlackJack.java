@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import model.card.CardSize;
 import model.card.Cards;
@@ -13,8 +13,6 @@ import model.player.Name;
 import model.player.Participant;
 import model.player.Participants;
 import model.player.User;
-import view.dto.NameDto;
-import view.dto.UserCardDto;
 
 public class BlackJack {
 
@@ -40,17 +38,17 @@ public class BlackJack {
         }
     }
 
-    public void decideParticipantsPlay(Function<NameDto, Boolean> isMoreCard, Consumer<UserCardDto> callback) {
+    public void decideParticipantsPlay(Function<Name, Boolean> isMoreCard, BiConsumer<Name, Cards> callback) {
         for (Participant participant : participants.getParticipants()) {
             decideParticipantPlay(participant, isMoreCard, callback);
         }
     }
 
     private void decideParticipantPlay(Participant participant,
-                                       Function<NameDto, Boolean> isMoreCard, Consumer<UserCardDto> callback) {
-        while (participant.isNotBust() && isMoreCard.apply(new NameDto(participant.getName()))) {
+                                       Function<Name, Boolean> isMoreCard, BiConsumer<Name, Cards> callback) {
+        while (participant.isNotBust() && isMoreCard.apply(participant.getName())) {
             offerCardToParticipant(participant, CardSize.ONE);
-            callback.accept(new UserCardDto(participant.getName(), participant.getCards()));
+            callback.accept(participant.getName(), participant.getCards());
         }
     }
 
