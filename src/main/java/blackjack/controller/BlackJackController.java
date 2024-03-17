@@ -16,10 +16,10 @@ import blackjack.view.dto.ExecutingPlayer;
 import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -47,13 +47,10 @@ public class BlackJackController {
     }
 
     private BettingBoard prepareBettingBoard(final Players players) {
-        List<Name> names = players.getNames();
-        List<BettingMoney> bettingMonies = new ArrayList<>(names.size());
-        for (Name name : players.getNames()) {
-            BettingMoney bettingMoney = retryOnException(() -> askBettingMoney(name));
-            bettingMonies.add(bettingMoney);
-        }
-        return new BettingBoard(names, bettingMonies);
+        return players.getNames().stream()
+                .map(name -> retryOnException(() -> askBettingMoney(name)))
+                .collect(Collectors.collectingAndThen(Collectors.toList(),
+                        bettingMonies -> new BettingBoard(players.getNames(), bettingMonies)));
     }
 
     private void printDealingResult(final Players players, final Dealer dealer) {
