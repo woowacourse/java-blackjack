@@ -27,15 +27,15 @@ public enum Value {
         this(score, score);
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getMinScore() {
         return minScore;
     }
 
     public int getMaxScore() {
         return maxScore;
-    }
-
-    public boolean isAce() {
-        return this == ACE;
     }
 }

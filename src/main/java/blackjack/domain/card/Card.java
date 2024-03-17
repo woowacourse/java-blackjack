@@ -12,16 +12,16 @@ public class Card {
         this.shape = Objects.requireNonNull(shape);
     }
 
+    public boolean isAce() {
+        return value.isAce();
+    }
+
     public int getMinScore() {
         return value.getMinScore();
     }
 
     public int getMaxScore() {
         return value.getMaxScore();
-    }
-
-    public boolean isAce() {
-        return value.isAce();
     }
 
     public Value getValue() {
