@@ -1,4 +1,6 @@
-package domain.participant.attributes;
+package domain.result;
+
+import domain.participant.attributes.Money;
 
 public record Profit(int amount) implements Money {
 

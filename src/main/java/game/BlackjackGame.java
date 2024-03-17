@@ -1,6 +1,6 @@
 package game;
 
-import domain.BlackjackResult;
+import domain.result.BlackjackResult;
 import domain.card.CardMachine;
 import domain.participant.attributes.Names;
 import domain.participant.dealer.Dealer;

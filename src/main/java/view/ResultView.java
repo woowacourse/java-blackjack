@@ -5,8 +5,8 @@ import static domain.participant.dealer.Dealer.INITIAL_CARD_COUNT;
 
 import java.util.EnumSet;
 
-import domain.BlackjackResult;
-import domain.BlackjackResultStatus;
+import domain.result.BlackjackResult;
+import domain.result.BlackjackResultStatus;
 import domain.card.Hand;
 import domain.participant.Participant;
 import domain.participant.dealer.Dealer;

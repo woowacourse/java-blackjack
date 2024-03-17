@@ -2,7 +2,7 @@ package domain.participant.dealer;
 
 import java.util.Map;
 
-import domain.BlackjackResultStatus;
+import domain.result.BlackjackResultStatus;
 import domain.participant.attributes.Name;
 
 public class DealerResult {

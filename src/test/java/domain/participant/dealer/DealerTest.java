@@ -3,9 +3,9 @@ package domain.participant.dealer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import static domain.BlackjackResultStatus.LOSE;
-import static domain.BlackjackResultStatus.PUSH;
-import static domain.BlackjackResultStatus.WIN;
+import static domain.result.BlackjackResultStatus.LOSE;
+import static domain.result.BlackjackResultStatus.PUSH;
+import static domain.result.BlackjackResultStatus.WIN;
 import static domain.card.CardFixture.cardOf;
 import static domain.card.CardFixture.cardsOf15;
 import static domain.card.CardFixture.cardsOf20;
@@ -30,7 +30,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.BlackjackResultStatus;
+import domain.result.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.CardMachine;
 import domain.card.Deck;

@@ -1,6 +1,6 @@
 package view;
 
-import domain.BlackjackResultStatus;
+import domain.result.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.Hand;
 import domain.card.Rank;

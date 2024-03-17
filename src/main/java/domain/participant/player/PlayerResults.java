@@ -3,7 +3,7 @@ package domain.participant.player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import domain.BlackjackResultStatus;
+import domain.result.BlackjackResultStatus;
 
 public class PlayerResults {
 

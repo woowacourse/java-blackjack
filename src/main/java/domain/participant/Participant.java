@@ -1,11 +1,11 @@
 package domain.participant;
 
-import static domain.BlackjackResultStatus.LOSE;
-import static domain.BlackjackResultStatus.PUSH;
-import static domain.BlackjackResultStatus.WIN;
+import static domain.result.BlackjackResultStatus.LOSE;
+import static domain.result.BlackjackResultStatus.PUSH;
+import static domain.result.BlackjackResultStatus.WIN;
 import static domain.card.Hand.BLACKJACK_SCORE;
 
-import domain.BlackjackResultStatus;
+import domain.result.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.Hand;
 import domain.participant.attributes.Name;
