@@ -81,10 +81,8 @@ public class BlackjackController {
     }
 
     private void dealToPlayers(Players players, BlackjackGame blackjackGame) {
-        for (int playerIndex = 0; playerIndex < players.count(); playerIndex++) {
-            Player player = players.findPlayerByIndex(playerIndex);
-            dealToPlayer(player, blackjackGame);
-        }
+        List<Player> playerList = players.getPlayers();
+        playerList.forEach(player -> dealToPlayer(player, blackjackGame));
     }
 
     private void dealToPlayer(Player player, BlackjackGame blackjackGame) {
