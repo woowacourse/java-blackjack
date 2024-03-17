@@ -28,7 +28,7 @@ public class BlackJackGame {
     private Players createPlayers() {
         List<String> names = inputView.inputPlayerNames();
         List<Player> players = names.stream()
-                .map(name -> Player.from(name, inputView.inputBetAmount(name)))
+                .map(name -> Player.of(name, inputView.inputBetAmount(name)))
                 .toList();
         return new Players(players);
     }

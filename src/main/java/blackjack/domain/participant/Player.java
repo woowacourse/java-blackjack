@@ -22,7 +22,7 @@ public class Player extends Participant {
         this.betAmount = Objects.requireNonNull(betAmount);
     }
 
-    public static Player from(String name, int money) {
+    public static Player of(String name, int money) {
         return new Player(Collections.emptyList(), new Name(name), new BetAmount(money));
     }
 

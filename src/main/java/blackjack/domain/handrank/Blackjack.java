@@ -4,9 +4,6 @@ import blackjack.domain.card.Hand;
 
 final class Blackjack extends HankRank {
 
-    Blackjack() {
-    }
-
     @Override
     public SingleMatchResult competeWithPlayer(HankRank playerHandRank) {
         if (playerHandRank.isBlackjack()) {

@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
-    private static final Player PLAYER1 = Player.from("1", 1000);
-    private static final Player PLAYER2 = Player.from("2", 2000);
-    private static final Player PLAYER3 = Player.from("3", 3000);
-    private static final Player PLAYER4 = Player.from("4", 4000);
-    private static final Player PLAYER5 = Player.from("5", 5000);
+    private static final Player PLAYER1 = Player.of("1", 1000);
+    private static final Player PLAYER2 = Player.of("2", 2000);
+    private static final Player PLAYER3 = Player.of("3", 3000);
+    private static final Player PLAYER4 = Player.of("4", 4000);
+    private static final Player PLAYER5 = Player.of("5", 5000);
 
     @DisplayName("최소 한 명 이상의 플레이어가 존재해야 한다.")
     @Test
