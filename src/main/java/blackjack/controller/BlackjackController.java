@@ -29,7 +29,7 @@ public class BlackjackController {
 
         processHitOrStand(players, deckMachine);
         drawToDealer(dealer, deckMachine);
-        printPlayersHand(dealer, players);
+        printResultHand(dealer, players);
 
         calculateGameResult(dealer, players);
         printProfit(dealer, players);
@@ -77,6 +77,13 @@ public class BlackjackController {
         }
     }
 
+    private boolean isRun(DeckMachine deckMachine, Player player, PlayerCommand command) {
+        if (command == PlayerCommand.STAND) {
+            return false;
+        }
+        return deckMachine.isPlayerCanHit(player);
+    }
+
     private void hitOrStandAndPrint(DeckMachine deckMachine, Player player, PlayerCommand command) {
         if (command == PlayerCommand.HIT) {
             deckMachine.hit(player);
@@ -87,20 +94,13 @@ public class BlackjackController {
         }
     }
 
-    private boolean isRun(DeckMachine deckMachine, Player player, PlayerCommand command) {
-        if (command == PlayerCommand.STAND) {
-            return false;
-        }
-        return deckMachine.isPlayerCanHit(player);
-    }
-
     private void drawToDealer(Dealer dealer, DeckMachine deckMachine) {
         int count = deckMachine.drawUntilOverBoundWithCount(dealer);
         IntStream.range(0, count)
                 .forEach(i -> OutputView.printDealerHitAnnounce());
     }
 
-    private void printPlayersHand(Dealer dealer, Players players) {
+    private void printResultHand(Dealer dealer, Players players) {
         OutputView.printDealerCards(dealer.cards(), dealer.score());
 
         for (Player player : players.values()) {
