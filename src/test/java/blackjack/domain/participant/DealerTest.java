@@ -7,6 +7,7 @@ import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.ProfitResult;
+import blackjack.fixture.CardFixture;
 import blackjack.strategy.shuffle.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.fixture.CardFixture.aceSpadeCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")
@@ -27,7 +27,7 @@ public class DealerTest {
 
     private Deck deck;
     private Dealer dealer;
-    private final Card cardAceSpade = aceSpadeCard();
+    private final Card cardAceSpade = CardFixture.ACE_SPADE_CARD.getCard();
 
     @BeforeEach
     void setUp() {

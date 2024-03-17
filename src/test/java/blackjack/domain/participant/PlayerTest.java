@@ -3,14 +3,13 @@ package blackjack.domain.participant;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
+import blackjack.fixture.CardFixture;
+import blackjack.fixture.PlayerFixture;
 import blackjack.strategy.shuffle.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.fixture.CardFixture.threeSpadeCard;
-import static blackjack.fixture.PlayerFixture.playerChoco;
-import static blackjack.fixture.PlayerFixture.playerClover;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -27,8 +26,8 @@ public class PlayerTest {
         Deck deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
 
-        choco = playerChoco(dealer);
-        clover = playerClover(dealer);
+        choco = PlayerFixture.CHOCO.getPlayer();
+        clover = PlayerFixture.CLOVER.getPlayer();
     }
 
     @DisplayName("사용자의 이름이 형식에 맞지 않으면 예외가 발생한다.")
@@ -68,7 +67,7 @@ public class PlayerTest {
     @Test
     void draw() {
         // given
-        Card card = threeSpadeCard();
+        Card card = CardFixture.THREE_SPADE_CARD.getCard();
 
         // when
         choco.draw(dealer);

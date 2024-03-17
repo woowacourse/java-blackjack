@@ -3,11 +3,11 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.fixture.CardFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.fixture.CardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -15,8 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("카드 손패")
 public class HandTest {
 
-    private final Card cardFourSpade = fourSpadeCard();
-    private final Card cardFiveSpade = fiveSpadeCard();
+    private final Card cardFourSpade = CardFixture.FOUR_SPADE_CARD.getCard();
+    private final Card cardFiveSpade = CardFixture.FIVE_SPADE_CARD.getCard();
+    private final Card cardAceClover = CardFixture.ACE_CLOVER_CARD.getCard();
+    private final Card cardAceDiamond = CardFixture.ACE_DIAMOND_CARD.getCard();
+    private final Card cardAceSpade = CardFixture.ACE_SPADE_CARD.getCard();
+    private final Card cardKingSpade = CardFixture.KING_SPADE_CARD.getCard();
+    private final Card cardThreeSpade = CardFixture.THREE_SPADE_CARD.getCard();
 
     private Hand hand;
 
@@ -74,11 +79,6 @@ public class HandTest {
     @Test
     void calculateScoreWithAce() {
         // given
-        Card cardAceClover = aceCloverCard();
-        Card cardAceDiamond = aceDiamondCard();
-        Card cardAceSpade = aceSpadeCard();
-        Card cardKingSpade = kingSpadeCard();
-
         Hand hand1 = new Hand();
         hand1.add(cardAceClover, cardAceDiamond);
 
@@ -105,7 +105,7 @@ public class HandTest {
     @Test
     void isBust() {
         // given
-        hand.add(threeSpadeCard(), kingSpadeCard(), cardFourSpade, fiveSpadeCard());
+        hand.add(cardThreeSpade, cardKingSpade, cardFourSpade, cardFiveSpade);
 
         // when & then
         assertThat(hand.isBust()).isTrue();
@@ -115,7 +115,7 @@ public class HandTest {
     @Test
     void isBlackjack() {
         // given
-        hand.add(kingSpadeCard(), aceCloverCard());
+        hand.add(cardKingSpade, cardAceClover);
 
         // when & then
         assertThat(hand.isBlackjack()).isTrue();

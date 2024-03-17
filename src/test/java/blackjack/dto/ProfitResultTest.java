@@ -25,8 +25,8 @@ class ProfitResultTest {
     void setUp() {
         Deck deck = new Deck(new NoShuffleStrategy());
         dealer = new Dealer(deck);
-        choco = PlayerFixture.playerChoco(dealer);
-        clover = PlayerFixture.playerClover(dealer);
+        choco = PlayerFixture.CHOCO.getPlayer();
+        clover = PlayerFixture.CLOVER.getPlayer();
     }
 
     @DisplayName("모든 사용자의 수익을 합해서 반환한다.")
