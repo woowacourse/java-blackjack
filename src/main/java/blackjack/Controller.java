@@ -2,11 +2,11 @@ package blackjack;
 
 import java.util.List;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.common.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerMoney;
 import blackjack.domain.profit.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -34,17 +34,17 @@ class Controller {
 
     private Participants createParticipants() {
         List<String> playerNames = inputView.readPlayerNames();
-        List<Money> playersMoney = playerNames.stream()
+        List<PlayerMoney> playersMoney = playerNames.stream()
                 .map(this::createPlayerMoney)
                 .toList();
 
         return new Participants(playerNames, playersMoney);
     }
 
-    private Money createPlayerMoney(String playerName) {
+    private PlayerMoney createPlayerMoney(String playerName) {
         double playerMoney = inputView.readPlayerMoney(playerName);
 
-        return new Money(playerMoney);
+        return new PlayerMoney(playerMoney);
     }
 
     private void initialDeal(Participants participants, CardDeck cardDeck) {

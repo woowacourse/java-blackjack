@@ -2,12 +2,12 @@ package blackjack.domain.profit;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import blackjack.domain.common.Money;
 import blackjack.domain.judgement.Judgement;
 import blackjack.domain.judgement.JudgementResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerMoney;
 
 public class Profit {
 
@@ -38,7 +38,7 @@ public class Profit {
 
         for (Player player : participants.getPlayers()) {
             JudgementResult result = judgement.judgePlayer(dealer, player);
-            Money playerProfit = result.calculateProfit(player.getMoney());
+            PlayerMoney playerProfit = result.calculateProfit(player.getMoney());
 
             playersProfit.put(player.getName(), playerProfit.getAmount());
         }
