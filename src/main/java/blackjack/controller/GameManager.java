@@ -26,6 +26,8 @@ public class GameManager {
 
         deal(players, dealer, cardDeck);
         draw(players, dealer, cardDeck);
+
+        playersProfit.calculate(dealer);
     }
 
     private void deal(Players players, Dealer dealer, CardDeck cardDeck) {

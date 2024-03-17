@@ -1,5 +1,7 @@
 package blackjack.domain.profit;
 
+import blackjack.domain.game.Result;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,6 +23,14 @@ public class PlayersProfit {
                 ));
 
         return new PlayersProfit(profits);
+    }
+
+    public void calculate(Dealer dealer) {
+        profits.forEach((player, betAmount) -> {
+            double multiplier = Result.determineMultiplier(player, dealer);
+            Profit profit = betAmount.multiply(multiplier);
+            profits.put(player, profit);
+        });
     }
 
     public Map<Player, Profit> getProfits() {
