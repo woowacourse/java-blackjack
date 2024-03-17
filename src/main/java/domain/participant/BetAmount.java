@@ -1,8 +1,5 @@
 package domain.participant;
 
-import domain.result.Income;
-import domain.result.Status;
-
 import java.util.Objects;
 
 public class BetAmount {
@@ -17,14 +14,8 @@ public class BetAmount {
         this.betAmount = Integer.parseInt(betAmount);
     }
 
-    public Income determineIncome(Status status) {
-        if (status == Status.WIN) {
-            return new Income(betAmount);
-        }
-        if (status == Status.LOSE) {
-            return new Income(-betAmount);
-        }
-        return new Income(0);
+    public int getBetAmount() {
+        return betAmount;
     }
 
     @Override

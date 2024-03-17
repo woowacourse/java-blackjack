@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
@@ -19,7 +20,7 @@ public class Incomes {
 
     public Income dealerIncome(Dealer dealer) {
         int sumOfPlayerIncome = players.stream()
-                .map(player -> player.determineIncome(dealer.decideStatus(player)))
+                .map(player -> determineIncome(dealer.decideStatus(player), player.getBetAmount()))
                 .mapToInt(Income::getIncome)
                 .sum();
         return new Income(-sumOfPlayerIncome);
@@ -29,10 +30,23 @@ public class Incomes {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> player.determineIncome(dealer.decideStatus(player)),
+                        player -> determineIncome(dealer.decideStatus(player), player.getBetAmount()),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));
+    }
+
+    public Income determineIncome(Status status, BetAmount betAmount) {
+        if (status == Status.WIN) {
+            return new Income(betAmount.getBetAmount());
+        }
+        if (status == Status.LOSE) {
+            return new Income(-betAmount.getBetAmount());
+        }
+        if (status == Status.WIN_BLACKJACK) {
+            return new Income((int) Math.round(1.5 * betAmount.getBetAmount()));
+        }
+        return new Income(0);
     }
 
     @Override

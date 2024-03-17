@@ -2,8 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.result.Income;
-import domain.result.Status;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,10 +17,6 @@ public class Player extends Cards {
         this.betAmount = betAmount;
     }
 
-    public Income determineIncome(Status status) {
-        return betAmount.determineIncome(status);
-    }
-
     @Override
     public boolean canDraw() {
         return bestSumOfCardScore() <= MAX_SCORE;
@@ -30,6 +24,10 @@ public class Player extends Cards {
 
     public Name getPlayerName() {
         return name;
+    }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
     }
 
     @Override
