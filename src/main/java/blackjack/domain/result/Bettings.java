@@ -4,7 +4,6 @@ import blackjack.domain.gamers.Name;
 import blackjack.domain.gamers.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Bettings {
 
@@ -19,13 +18,11 @@ public class Bettings {
     }
 
     public Map<Name, Money> calculatePlayerProfits(final Judge judge) {
-        return bettings.entrySet().stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey().getName(),
-                        entry -> calculateProfit(entry.getValue(), judge.calculatePlayerOutcome(entry.getKey())),
-                        (oldValue, newValue) -> oldValue,
-                        LinkedHashMap::new
-                ));
+        final Map<Name, Money> playerProfits = new LinkedHashMap<>();
+        bettings.forEach((player, betting) ->
+                playerProfits.put(player.getName(), calculateProfit(betting, judge.calculatePlayerOutcome(player))));
+
+        return playerProfits;
     }
 
     private Money calculateProfit(final Money betting, final PlayerOutcome playerOutcome) {
