@@ -20,7 +20,7 @@ class PlayersPotsTest {
     void calculatePlayersPots() {
         //given
         Player player = generatePlayer();
-        RoundResult roundResult = generateRoundResult(player);
+        Map<Player, HandResult> roundResult = generatePlayersResult(player);
         PlayersPots roundPlayersPots = generatePlayersPots(player);
 
         //when
@@ -36,10 +36,10 @@ class PlayersPotsTest {
         return new Player(new Name("mason"), deck);
     }
 
-    private RoundResult generateRoundResult(Player player) {
+    private Map<Player, HandResult> generatePlayersResult(Player player) {
         Map<Player, HandResult> playersResult = new LinkedHashMap<>();
         playersResult.put(player, HandResult.BLACKJACK);
-        return new RoundResult(playersResult);
+        return playersResult;
     }
 
     private PlayersPots generatePlayersPots(Player player) {

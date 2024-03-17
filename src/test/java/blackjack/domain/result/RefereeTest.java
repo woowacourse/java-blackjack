@@ -5,9 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Number;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Round;
 import blackjack.testutil.CustomDeck;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,10 +25,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.values()).containsExactly(HandResult.LOSE);
     }
 
     @DisplayName("점수 판단으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -40,10 +42,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.WIN);
+        assertThat(roundResult.values()).containsExactly(HandResult.WIN);
     }
 
     @DisplayName("점수 판단으로 비기는 게임의 최종 결과를 생성한다.")
@@ -57,10 +59,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.DRAW);
+        assertThat(roundResult.values()).containsExactly(HandResult.DRAW);
     }
 
     @DisplayName("블랙잭으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -75,10 +77,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.BLACKJACK);
+        assertThat(roundResult.values()).containsExactly(HandResult.BLACKJACK);
     }
 
     @DisplayName("블랙잭으로 딜러가 이기는 게임의 최종 결과를 생성한다.")
@@ -93,10 +95,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.values()).containsExactly(HandResult.LOSE);
     }
 
     @DisplayName("블랙잭으로 비기는 게임의 최종 결과를 생성한다.")
@@ -110,10 +112,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.DRAW);
+        assertThat(roundResult.values()).containsExactly(HandResult.DRAW);
     }
 
     @DisplayName("버스트로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -128,10 +130,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.WIN);
+        assertThat(roundResult.values()).containsExactly(HandResult.WIN);
     }
 
     @DisplayName("버스트로 딜러가 이기는 게임의 최종 결과를 생성한다.")
@@ -146,9 +148,9 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.values()).containsExactly(HandResult.LOSE);
     }
 }

@@ -9,12 +9,13 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerAction;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Round;
+import blackjack.domain.result.HandResult;
 import blackjack.domain.result.PlayersPots;
 import blackjack.domain.result.Referee;
-import blackjack.domain.result.RoundResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class BlackjackGame {
@@ -27,7 +28,7 @@ public class BlackjackGame {
         outputView.printInitialHand(round);
         participantsHitCard(round);
         outputView.printParticipantsHandWithScore(round);
-        printPlayersPotsResult(round, playersPots);
+        printParticipantsPots(round, playersPots);
     }
 
     private Round createRoundWithDeck() {
@@ -97,11 +98,11 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printPlayersPotsResult(Round round, PlayersPots playersPots) {
+    private void printParticipantsPots(Round round, PlayersPots playersPots) {
         Referee referee = Referee.getInstance();
-        RoundResult roundResult = round.generateResult(referee);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
         playersPots = playersPots.calculatePlayersPots(roundResult);
-        outputView.printRoundResult(playersPots);
+        outputView.printAllPots(playersPots);
     }
 
     private <T> T retryOnException(Supplier<T> operation) {

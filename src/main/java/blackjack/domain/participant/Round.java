@@ -4,7 +4,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.result.HandResult;
 import blackjack.domain.result.PlayersPots;
 import blackjack.domain.result.Referee;
-import blackjack.domain.result.RoundResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +26,13 @@ public class Round {
         return new PlayersPots(playersPots);
     }
 
-    public RoundResult generateResult(Referee referee) {
+    public Map<Player, HandResult> generateResult(Referee referee) {
         Map<Player, HandResult> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             HandResult playerResult = referee.getPlayerResult(player, dealer);
             playerResults.put(player, playerResult);
         }
-        return new RoundResult(playerResults);
+        return playerResults;
     }
 
     public Dealer getDealer() {

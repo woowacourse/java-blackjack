@@ -14,12 +14,11 @@ public class PlayersPots {
         this.playersPots = playersPots;
     }
 
-    public PlayersPots calculatePlayersPots(RoundResult roundResult) {
+    public PlayersPots calculatePlayersPots(Map<Player, HandResult> roundResult) {
         Map<Player, BetAmount> calculatedPot = new LinkedHashMap<>();
-        Map<Player, HandResult> playersResult = roundResult.playersResult();
-        for (Player player : playersResult.keySet()) {
+        for (Player player : roundResult.keySet()) {
             BetAmount initialBetAmount = this.playersPots.get(player);
-            HandResult handResult = playersResult.get(player);
+            HandResult handResult = roundResult.get(player);
             int calculatedBetAmount = (int) (initialBetAmount.amount() * handResult.getRatio());
             calculatedPot.put(player, new BetAmount(calculatedBetAmount));
         }

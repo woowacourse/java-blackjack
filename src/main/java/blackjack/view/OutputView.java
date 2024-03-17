@@ -55,7 +55,7 @@ public class OutputView {
                 .forEach(this::printParticipantHandWithScore);
     }
 
-    public void printRoundResult(PlayersPots playersPots) {
+    public void printAllPots(PlayersPots playersPots) {
         System.out.println(System.lineSeparator() + GAME_RESULT_PREFIX);
         printDealerResults(playersPots);
         printPlayersResult(playersPots);
