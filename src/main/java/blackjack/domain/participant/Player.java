@@ -5,8 +5,6 @@ import java.util.Objects;
 
 public class Player {
 
-    private static final int REVEAL_COUNT = 2;
-
     private final PlayerName playerName;
     private final Hand hand;
 

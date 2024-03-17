@@ -29,14 +29,6 @@ public class Hand {
         IntStream.range(0, INITIAL_APPEND_COUNT).forEach(i -> append(cardDeck.popCard()));
     }
 
-    public Hand revealHand(int count) {
-        List<Card> cards = this.cards.stream()
-                .limit(count)
-                .toList();
-
-        return new Hand(cards);
-    }
-
     public Score calculateHandScore() {
         Score score = sumCardScore();
         if (hasAce()) {
