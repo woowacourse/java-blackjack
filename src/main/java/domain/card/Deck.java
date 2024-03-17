@@ -1,31 +1,32 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class Deck {
-    private static final List<Card> DEFAULT_PACK;
+    private static final Deque<Card> DEFAULT_PACK;
     private static final int DECK_SIZE = 6;
 
-    private final List<Card> value;
+    private final Deque<Card> value;
 
     static {
-        DEFAULT_PACK = new ArrayList<>();
+        DEFAULT_PACK = new LinkedList<>();
         Arrays.stream(Rank.values())
                 .forEach(rank -> Arrays.stream(Suit.values())
                         .map(symbol -> new Card(rank, symbol))
                         .forEach(DEFAULT_PACK::add));
     }
 
-    public Deck(final List<Card> value) {
+    public Deck(final LinkedList<Card> value) {
         this.value = value;
     }
 
     public static Deck makeDecks() {
-        final List<Card> cards = new ArrayList<>();
+        final LinkedList<Card> cards = new LinkedList<>();
         IntStream.range(0, DECK_SIZE).forEach(round -> cards.addAll(DEFAULT_PACK));
         Collections.shuffle(cards);
         return new Deck(cards);
@@ -33,7 +34,7 @@ public class Deck {
 
     public Card draw() {
         validateEmptiness();
-        return value.remove(getLastIndex());
+        return value.removeLast();
     }
 
     private void validateEmptiness() {
@@ -42,15 +43,11 @@ public class Deck {
         }
     }
 
-    private int getLastIndex() {
-        return value.size() - 1;
-    }
-
     public void add(final Card card) {
         value.add(card);
     }
 
     public List<Card> getValue() {
-        return Collections.unmodifiableList(value);
+        return value.stream().toList();
     }
 }

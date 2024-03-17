@@ -26,7 +26,7 @@ public final class Dealer extends Participant {
             hit();
             actionAfterDealerHit.run();
         }
-        finish();
+        standIfRunning();
     }
 
     private void hit() {

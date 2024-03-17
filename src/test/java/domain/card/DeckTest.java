@@ -1,7 +1,7 @@
 package domain.card;
 
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +28,7 @@ class DeckTest {
     @Test
     @DisplayName("덱이 비어있을 때 카드를 뽑으면 예외가 발생한다.")
     void handsSize() {
-        final Deck deck = new Deck(List.of());
+        final Deck deck = new Deck(new LinkedList<>());
 
         Assertions.assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)

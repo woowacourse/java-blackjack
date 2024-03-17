@@ -40,7 +40,7 @@ public final class Player extends Participant {
     ) {
         final boolean decisionToStop = !decisionOfPlayer.apply(name.value());
         if (decisionToStop || getState().isFinished()) {
-            finish();
+            standIfRunning();
             return;
         }
 

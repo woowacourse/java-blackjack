@@ -37,10 +37,10 @@ public class DealerTest {
         playerWin.init(new Card(FOUR, CLUBS), new Card(FOUR, CLUBS));
         playerLose.init(new Card(TWO, CLUBS), new Card(TWO, CLUBS));
         playerTie.init(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
-        dealer.finish();
-        playerWin.finish();
-        playerLose.finish();
-        playerTie.finish();
+        dealer.standIfRunning();
+        playerWin.standIfRunning();
+        playerLose.standIfRunning();
+        playerTie.standIfRunning();
 
         Assertions.assertThat(dealer.compareHandsWith(playerWin)).isSameAs(Result.LOSE);
         Assertions.assertThat(dealer.compareHandsWith(playerLose)).isSameAs(Result.WIN);

@@ -17,6 +17,6 @@ public abstract class Running extends Started {
 
     @Override
     public Result compareWith(final State state) {
-        return null;
+        throw new IllegalCallerException("상태가 실행 중이어서 비교가 불가능합니다");
     }
 }

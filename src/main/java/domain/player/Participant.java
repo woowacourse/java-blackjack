@@ -18,7 +18,7 @@ public abstract class Participant {
         state = state.add(card);
     }
 
-    public final void finish() {
+    public final void standIfRunning() {
         if (state.isFinished()) {
             return;
         }

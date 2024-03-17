@@ -35,8 +35,8 @@ public class PlayerTest {
 
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
         dealer.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.NINE, Suit.CLUBS));
-        player.finish();
-        dealer.finish();
+        player.standIfRunning();
+        dealer.standIfRunning();
 
         assertThat(player.calculateProfit(dealer)).isEqualTo(100);
     }
@@ -49,7 +49,7 @@ public class PlayerTest {
 
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
         dealer.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.ACE, Suit.CLUBS));
-        player.finish();
+        player.standIfRunning();
 
         assertThat(player.calculateProfit(dealer)).isEqualTo(-100);
     }
@@ -62,7 +62,7 @@ public class PlayerTest {
 
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.ACE, Suit.CLUBS));
         dealer.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
-        dealer.finish();
+        dealer.standIfRunning();
 
         assertThat(player.calculateProfit(dealer)).isEqualTo(150);
     }
