@@ -13,23 +13,18 @@ public class DeckTest {
     @DisplayName("덱에서 카드를 한 장 뽑을 수 있다")
     @Test
     public void draw() {
-        BlackjackCardFactory blackjackCardFactory = new BlackjackCardFactory();
-        Deck deck = Deck.of(blackjackCardFactory, cards -> cards);
+        Deck deck = Deck.of(() -> List.of(CardFixture.fromSuitCloverWith(Denomination.ACE)), cards -> cards);
 
         Card card = deck.draw();
 
-        assertThat(card.getSuit()).isEqualTo(Suit.SPADE);
-        assertThat(card.getDenomination()).isEqualTo(Denomination.KING);
+        assertThat(card.getSuit()).isEqualTo(Suit.CLOVER);
+        assertThat(card.getDenomination()).isEqualTo(Denomination.ACE);
     }
 
     @DisplayName("덱에 카드가 없는데 한 장을 뽑을 경우 에러가 발생한다")
     @Test
     public void drawFail() {
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
-
-        for (int i = 0; i < 52; i++) {
-            deck.draw();
-        }
+        Deck deck = Deck.of(List::of, cards -> cards);
 
         assertThatCode(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
