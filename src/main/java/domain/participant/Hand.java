@@ -50,14 +50,8 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        if (playingCards.size() != 2) {
-            return false;
-        }
-
-        PlayingCard firstCard = playingCards.get(0);
-        PlayingCard secondCard = playingCards.get(1);
-        return (firstCard.isAce() && secondCard.isTenValueCard())
-                || (firstCard.isTenValueCard() && secondCard.isAce());
+        return this.playingCards.size() == 2
+                && this.countTotalScore() == BLACKJACK_CONDITION_VALUE;
     }
 
     public boolean isBust() {
