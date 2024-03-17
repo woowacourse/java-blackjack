@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Participants {
@@ -15,7 +14,7 @@ public class Participants {
     }
 
     public static Participants createWithDealer(List<Player> players) {
-        return new Participants(new ArrayList<>(players), new Dealer());
+        return new Participants(List.copyOf(players), new Dealer());
     }
 
     public boolean doesNotContain(Participant participant) {
@@ -23,7 +22,7 @@ public class Participants {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players;
     }
 
     public Dealer getDealer() {
