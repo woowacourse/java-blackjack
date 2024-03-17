@@ -59,7 +59,7 @@ public class OutputView {
     }
 
     public static void printFinalProfitAnnounce() {
-        System.out.println(RESULT_FINAL_PROFIT);
+        System.out.println(LINE_SEPARATOR + RESULT_FINAL_PROFIT);
     }
 
     public static void printDealerProfit(Long profit) {
