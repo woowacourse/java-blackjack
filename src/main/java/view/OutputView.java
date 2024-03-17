@@ -1,30 +1,38 @@
 package view;
 
-import domain.BlackJackResult;
-import domain.Card;
-import domain.Name;
-import domain.constant.GamerResult;
-import java.util.Arrays;
+import domain.card.Card;
+import domain.gamer.Gamer;
+import domain.gamer.Name;
+import domain.gamer.Players;
+import domain.money.Money;
+import domain.result.BettingResult;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DELEMITER = ", ";
-    public static void printInitialStep(List<Name> names) {
-        System.out.println("\n딜러와 %s에게 2장을 나누었습니다.".formatted(buildGamerNames(names)));
+
+    private static final String DELIMITER = ", ";
+    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#");
+
+    public static void printInitialStep(Players players, int cardCount) {
+        System.out.printf("\n딜러와 %s에게 %d장을 나누었습니다.%n", buildGamerNames(players), cardCount);
     }
-    private static String buildGamerNames(List<Name> names) {
-        return names.stream()
+
+    private static String buildGamerNames(Players players) {
+        return players.getPlayers()
+                .stream()
+                .map(Gamer::getName)
                 .map(Name::name)
-                .collect(Collectors.joining(DELEMITER));
+                .collect(Collectors.joining(DELIMITER));
     }
 
-    public static void printDealerInitialCards(List<Card> cards) {
-        System.out.println("딜러: %s".formatted(buildDealerCards(cards)));
+    public static void printGamerHiddenCards(Gamer gamer) {
+        System.out.printf("%s: %s%n", gamer.getName().name(), buildHiddenCards(gamer.getCards()));
     }
 
-    private static String buildDealerCards(List<Card> cards) {
+    private static String buildHiddenCards(List<Card> cards) {
         return buildCardString(cards.get(0));
     }
 
@@ -32,22 +40,23 @@ public class OutputView {
         return card.getCardNumber().getSymbol() + card.getCardType().getType();
     }
 
-    public static void printPlayerCards(Name name, List<Card> cards) {
-        System.out.println(buildNameCards(name.name(),cards));
-    }
     public static void printNewLine() {
         System.out.println();
+    }
+
+    public static void printGamerCards(Gamer gamer) {
+        System.out.println(buildNameCards(gamer.getName().name(), gamer.getCards()));
     }
 
     private static String buildNameCards(String name, List<Card> cards) {
         String cardString = cards.stream()
                 .map(OutputView::buildCardString)
-                .collect(Collectors.joining(DELEMITER));
+                .collect(Collectors.joining(DELIMITER));
         return "%s카드: %s".formatted(name, cardString);
     }
 
     private static String buildCardsString(List<Card> cards) {
-        return cards.stream().map(OutputView::buildCardString).collect(Collectors.joining(DELEMITER));
+        return cards.stream().map(OutputView::buildCardString).collect(Collectors.joining(DELIMITER));
     }
 
     public static void printDealerHitCount(int dealerDrawCount) {
@@ -56,33 +65,22 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerStatus(List<Card> dealerCards, int dealerScore) {
-        System.out.println("딜러 카드: %s - %s".formatted(buildCardsString(dealerCards), buildTotalScore(dealerScore)));
+    public static void printGamerStatus(Gamer gamer) {
+        System.out.printf("%-3s카드: %s%n", gamer.getName().name(),
+                buildCardsWithScore(gamer.getCards(), gamer.getTotalScore()));
     }
 
-
-    public static void printPlayerStatus(Name playerName, List<Card> cards, int playerScore) {
-        System.out.println("%s - %s".formatted(buildNameCards(playerName.name(),cards), buildTotalScore(playerScore)));
+    private static String buildCardsWithScore(List<Card> cards, int totalScore) {
+        return "%s - 결과: %d".formatted(buildCardsString(cards), totalScore);
     }
 
-    private static String buildTotalScore(int totalScore) {
-        return "결과: %d".formatted(totalScore);
-    }
+    public static void printBettingResult(BettingResult gameResult) {
+        System.out.println("\n## 최종 수익");
+        Money dealerGameResult = gameResult.getDealerResult();
+        Map<Name, Money> playersGameResult = gameResult.getPlayersResult();
 
-    public static void printGameResult(BlackJackResult gameResult) {
-        System.out.println("\n## 최종 승패");
-        Map<GamerResult, Integer> dealerGameResult = gameResult.getDealerResult();
-        Map<Name, GamerResult> playersGameResult = gameResult.getPlayersResult();
-
-        System.out.println("딜러: " + buildDealerResult(dealerGameResult));
-        playersGameResult.forEach(
-                (name, result) -> System.out.println("%s: %s".formatted(name.name(), result.getResult())));
-    }
-
-    private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {
-        return Arrays.stream(GamerResult.values())
-                .filter(dealerGameResult::containsKey)
-                .map(result -> "%d%s".formatted(dealerGameResult.get(result), result.getResult()))
-                .collect(Collectors.joining(" "));
+        System.out.printf("딜러: %s%n", MONEY_FORMAT.format(dealerGameResult.getAmount()));
+        playersGameResult.forEach((name, result) ->
+                System.out.printf("%s: %s%n", name.name(), MONEY_FORMAT.format(result.getAmount())));
     }
 }

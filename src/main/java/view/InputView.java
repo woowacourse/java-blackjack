@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class InputView {
+
     private static final String DELIMITER = ",";
-    private static final String YES = "y";
-    private static final String NO = "n";
+    private static final String COMMAND_YES = "y";
+    private static final String COMMAND_NO = "n";
+    private static final double MINIMUM_BETTING_AMOUNT = 1;
 
     public static List<String> readNames(Supplier<String> input) {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -48,8 +50,32 @@ public class InputView {
     }
 
     private static void validateAnswer(String input) {
-        if (!input.equals(YES) && !input.equals(NO)) {
+        if (!COMMAND_YES.equals(input) && !COMMAND_NO.equals(input)) {
             throw new IllegalArgumentException("y또는 n만 입력 받을 수 있습니다.");
+        }
+    }
+
+    public static double readBettingMoney(Supplier<String> input, String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        String result = input.get();
+        validateEmpty(result);
+        validateNumeric(result);
+        double amount = Double.parseDouble(result);
+        validateAmount(amount);
+        return Double.parseDouble(result);
+    }
+
+    private static void validateNumeric(String amount) {
+        try {
+            Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("금액과 관련된 연산은 숫자만 입력 가능합니다.");
+        }
+    }
+
+    private static void validateAmount(double amount) {
+        if (amount < MINIMUM_BETTING_AMOUNT) {
+            throw new IllegalArgumentException("최소 금액보다 작은 금액으로 배팅할 수 없습니다.");
         }
     }
 }

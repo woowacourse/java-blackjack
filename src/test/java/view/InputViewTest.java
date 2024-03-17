@@ -68,4 +68,34 @@ class InputViewTest {
                     .hasMessage("y또는 n만 입력 받을 수 있습니다.");
         }
     }
+
+    @Nested
+    @DisplayName("사용자에게 배팅 금액을 받는 테스트")
+    class ReadBettingMoney {
+        @DisplayName("null 혹은 빈 문자열을 받으면 예외를 발생한다.")
+        @ParameterizedTest
+        @NullAndEmptySource
+        @ValueSource(strings = {" ", "\t", "\n"})
+        void emptyInputException(String input) {
+            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> input, "test"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("입력값에 공백이나 null을 넣을 수 없습니다.");
+        }
+
+        @Test
+        @DisplayName("숫자가 아닌 값이 나타날 경우 예외가 발생한다.")
+        void validateNumeric() {
+            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> "abc", "test"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("금액과 관련된 연산은 숫자만 입력 가능합니다.");
+        }
+
+        @Test
+        @DisplayName("최소 금액보다 작은 금액일 경우 배팅할 수 없다.")
+        void validateAmount() {
+            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> "-100", "test"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("최소 금액보다 작은 금액으로 배팅할 수 없습니다.");
+        }
+    }
 }
