@@ -42,14 +42,14 @@ public class BlackJackController {
     private void playGame(Players players, Dealer dealer) {
         players.play(this::playTurn, dealer);
         while (dealer.shouldDraw()) {
-            dealer.receiveCard(dealer.dealCard());
+            dealer.receiveCard();
             outputView.printDealerAddCard();
         }
     }
 
     private void playTurn(Player player, Dealer dealer) {
         while (player.isDrawable() && inputView.inputPlayerCommand(player.getName())) {
-            player.receiveCard(dealer.dealCard());
+            player.receiveCard();
             outputView.printCardsStatus(PlayerCardStateDto.makePlayerCardState(player));
         }
     }

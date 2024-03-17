@@ -15,8 +15,9 @@ public class Gamer {
         this.cardDeck = new CardDeck();
     }
 
-    public Card dealCard() {
-        return cardDeck.pickCard();
+    public void receiveCard() {
+        Card card = cardDeck.pickCard();
+        cards.addCard(card);
     }
 
     public void receiveCard(Card card) {
@@ -24,7 +25,7 @@ public class Gamer {
     }
 
     public void initCard() {
-        cards.addCard(dealCard());
+        receiveCard();
     }
 
     public int getMaxGameScore() {

@@ -18,7 +18,7 @@ class DealerTest {
     @Test
     void receiveCardTest() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(dealer.dealCard());
+        dealer.receiveCard();
 
         Assertions.assertThat(dealer.cards.getSize()).isEqualTo(2);
     }
