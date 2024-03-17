@@ -19,6 +19,9 @@ public class Names {
     }
 
     private void validate(final List<String> names) {
+        if (names.isEmpty()) {
+            throw new IllegalArgumentException("1개 이상의 이름을 입력해야 합니다.");
+        }
         if (hasDuplicatePlayers(names)) {
             throw new IllegalArgumentException("이름은 중복될 수 없습니다");
         }
