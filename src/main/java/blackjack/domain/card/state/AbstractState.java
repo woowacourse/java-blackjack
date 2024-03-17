@@ -23,7 +23,7 @@ public abstract class AbstractState implements State {
 
     @Override
     public int calculate() {
-        return cards.calculate();
+        return this.cards.calculate();
     }
 
     @Override

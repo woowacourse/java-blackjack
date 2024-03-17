@@ -50,26 +50,26 @@ public class BlackjackController {
     }
 
     private void joinPlayer(final List<PlayerInfo> playerInfos) {
-        blackjack.acceptPlayers(playerInfos);
-        PlayerView.printPlayers(blackjack.getDealer(), blackjack.getGamePlayers());
+        this.blackjack.acceptPlayers(playerInfos);
+        PlayerView.printPlayers(this.blackjack.getDealer(), this.blackjack.getGamePlayers());
     }
 
     private void processGame() {
         processGamePlayers();
         processDealer();
-        PlayerView.printPlayersWithScore(blackjack.getDealer(), blackjack.getGamePlayers());
+        PlayerView.printPlayersWithScore(this.blackjack.getDealer(), this.blackjack.getGamePlayers());
     }
 
     private void processGamePlayers() {
-        blackjack.getGamePlayers()
-                 .forEach(this::processGamePlayer);
+        this.blackjack.getGamePlayers()
+                      .forEach(this::processGamePlayer);
     }
 
     private void processGamePlayer(final GamePlayer gamePlayer) {
         while (gamePlayer.isReceivable()) {
             final BlackjackCommand command = inputCommand(gamePlayer);
             if (command.isHit()) {
-                blackjack.participantHitCard(gamePlayer);
+                this.blackjack.participantHitCard(gamePlayer);
                 PlayerView.printGamePlayer(gamePlayer);
             }
             if (command.isStand()) {
@@ -80,15 +80,15 @@ public class BlackjackController {
     }
 
     private void checkGameResult() {
-        final Result result = blackjack.checkResult();
+        final Result result = this.blackjack.checkResult();
         ResultView.printResult(result);
     }
 
     private void processDealer() {
-        final Dealer dealer = blackjack.getDealer();
+        final Dealer dealer = this.blackjack.getDealer();
         if (dealer.isReceivable()) {
             PlayerView.printDealerDrawMessage();
-            blackjack.participantHitCard(dealer);
+            this.blackjack.participantHitCard(dealer);
             return;
         }
         PlayerView.printDealerNotDrawMessage();

@@ -30,6 +30,6 @@ public class Names {
     }
 
     public Stream<Name> stream() {
-        return value.stream();
+        return this.value.stream();
     }
 }

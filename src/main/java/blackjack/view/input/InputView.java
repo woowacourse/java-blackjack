@@ -16,8 +16,7 @@ public class InputView {
     }
 
     public static List<String> inputPlayerNames() {
-        System.out.println(
-                String.format("게임에 참여할 사람의 이름을 입력하세요.(구분자(%s) 기준으로 분리)", SPLIT_DELIMITER));
+        System.out.printf("게임에 참여할 사람의 이름을 입력하세요.(구분자(%s) 기준으로 분리)%n", SPLIT_DELIMITER);
         final String initialInput = input();
         return Arrays.stream(initialInput.split(SPLIT_DELIMITER))
                      .map(String::trim)
@@ -25,13 +24,13 @@ public class InputView {
     }
 
     public static int inputBettingMoney(final String playerName) {
-        System.out.println(String.format("%s의 배팅 금액은?", playerName));
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
         final String initialInput = input();
-        return Integer.valueOf(initialInput);
+        return Integer.parseInt(initialInput);
     }
 
     public static BlackjackCommand inputBlackjackCommand(final String playerName) {
-        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName));
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
 
         return BlackjackCommand.from(input());
     }

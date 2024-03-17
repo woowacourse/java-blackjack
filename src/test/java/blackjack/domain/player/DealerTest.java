@@ -21,7 +21,7 @@ class DealerTest {
     @DisplayName("기본 이름(딜러)을 가진 딜러를 생성 한다.")
     void create_with_default_name_and_cards() {
         assertThatCode(() -> {
-                    var sut = Dealer.createDefaultNameDealer();
+                    final var sut = Dealer.createDefaultNameDealer();
                     assertThat(sut.getNameAsString()).isEqualTo("딜러");
                 }
         ).doesNotThrowAnyException();
@@ -30,9 +30,9 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 숫자의 합이 16이하면 카드를 받아야 한다.")
     void can_receive_additional_card() {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
-        var sut = new Dealer(name, cards);
+        final Name name = new Name("딜러");
+        final Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        final var sut = new Dealer(name, cards);
 
         assertTrue(sut.isReceivable());
     }
@@ -40,9 +40,9 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 숫자의 합이 17이상이면 카드를 받아야 한다.")
     void can_not_receive_additional_card() {
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.JACK, CardValue.KING));
-        var sut = new Dealer(name, cards);
+        final Name name = new Name("딜러");
+        final Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.JACK, CardValue.KING));
+        final var sut = new Dealer(name, cards);
 
         assertFalse(sut.isReceivable());
     }

@@ -14,6 +14,10 @@ public class CardPrinter {
     private static final Map<CardValue, String> valueBoard = initializeValue();
     private static final String JOIN_SPLITTER = ", ";
 
+    private CardPrinter() {
+
+    }
+
     public static String printCards(final List<Card> cards) {
         return cards.stream()
                     .map(CardPrinter::printCard)

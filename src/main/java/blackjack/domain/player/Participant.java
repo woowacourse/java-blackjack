@@ -32,15 +32,15 @@ public abstract class Participant implements CardReceivable {
     }
 
     public List<Card> getCards() {
-        return state.getCards();
+        return this.state.getCards();
     }
 
     public int calculateScore() {
-        return state.calculate();
+        return this.state.calculate();
     }
 
     public void drawCard(final Card card) {
-        this.state = state.draw(card);
+        this.state = this.state.draw(card);
     }
 
     public boolean isBlackjack() {

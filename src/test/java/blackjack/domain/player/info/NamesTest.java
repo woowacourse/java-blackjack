@@ -12,21 +12,17 @@ class NamesTest {
     @Test
     @DisplayName("이름 목록을 포함한 일급 컬렉션을 생성 한다.")
     void create_with_StringList() {
-        List<String> values = List.of("초롱", "조이썬");
+        final List<String> values = List.of("초롱", "조이썬");
 
-        Assertions.assertThatCode(() -> {
-                      var sut = Names.from(values);
-                  })
+        Assertions.assertThatCode(() -> Names.from(values))
                   .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("중복된 이름이 포함되는 일급 컬렉션은 생성될 수 없다.")
     void not_include_duplicated_name() {
-        List<String> values = List.of("초롱", "조이썬", "초롱");
+        final List<String> values = List.of("초롱", "조이썬", "초롱");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            Names.from(values);
-        });
+        assertThrows(IllegalArgumentException.class, () -> Names.from(values));
     }
 }

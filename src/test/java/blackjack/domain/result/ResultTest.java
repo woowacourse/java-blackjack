@@ -18,8 +18,8 @@ class ResultTest {
         final List<GamePlayerResult> gamePlayerResults = List.of(new GamePlayerResult(name, new PrizeMoney(2000)));
         final DealerResult dealerResult = DealerResult.of(new Name("딜러"), gamePlayerResults);
 
-        assertThatCode(() -> {
-            new Result(gamePlayerResults, dealerResult);
-        }).doesNotThrowAnyException();
+        assertThatCode(() ->
+                new Result(gamePlayerResults, dealerResult)
+        ).doesNotThrowAnyException();
     }
 }

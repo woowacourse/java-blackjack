@@ -16,8 +16,7 @@ class GamePlayerResultTest {
         final var prize = new PrizeMoney(1000);
 
 
-        assertThatCode(() -> {
-            new GamePlayerResult(name, prize);
-        }).doesNotThrowAnyException();
+        assertThatCode(() -> new GamePlayerResult(name, prize))
+                .doesNotThrowAnyException();
     }
 }

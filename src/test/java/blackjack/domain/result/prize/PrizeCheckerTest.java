@@ -3,13 +3,10 @@ package blackjack.domain.result.prize;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.*;
 import blackjack.domain.player.info.BettingMoney;
 import blackjack.domain.player.info.PlayerInfo;
 import blackjack.domain.player.info.Name;
-import blackjack.domain.result.prize.PrizeChecker;
-import blackjack.domain.result.prize.PrizeMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -106,32 +103,27 @@ class PrizeCheckerTest {
     @Test
     @DisplayName("플레이어가 스탠드 , 딜러가 스탠드 일때 플레이어 숫자가 작으면 배팅 금액을 잃는다.")
     void dealer_score_high_case() {
-        final GamePlayer gamePlayer = 플레이어_생성(1000, List.of(CardValue.JACK, CardValue.FIVE));
+        final GamePlayer gamePlayer = 플레이어_생성(2000, List.of(CardValue.JACK, CardValue.FIVE));
         gamePlayer.stand();
         final Dealer dealer = 딜러_생성(List.of(CardValue.JACK, CardValue.JACK));
         dealer.stand();
 
         final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertPrizeMoney(prize, -1000);
+        assertPrizeMoney(prize, -2000);
     }
 
 
     private GamePlayer 플레이어_생성(final Integer bettingMoney, final List<CardValue> cardValues) {
         final PlayerInfo playerInfo = new PlayerInfo(new Name("조이썬"), new BettingMoney(bettingMoney));
         final GamePlayer gamePlayer = new GamePlayer(playerInfo);
-        cardValues.stream()
-                  .forEach(cardValue -> gamePlayer.drawCard(new Card(cardValue, CardSymbol.DIAMOND)));
+        cardValues.forEach(cardValue -> gamePlayer.drawCard(new Card(cardValue, CardSymbol.DIAMOND)));
         return gamePlayer;
     }
 
     private Dealer 딜러_생성(final List<CardValue> cardValues) {
-        final Cards cards = new Cards(cardValues.stream()
-                                                .map(cardValue -> new Card(cardValue, CardSymbol.CLOVER))
-                                                .toList());
         final Dealer dealer = Dealer.createDefaultNameDealer();
-        cardValues.stream()
-                  .forEach(cardValue -> dealer.drawCard(new Card(cardValue, CardSymbol.DIAMOND)));
+        cardValues.forEach(cardValue -> dealer.drawCard(new Card(cardValue, CardSymbol.DIAMOND)));
         return dealer;
     }
 

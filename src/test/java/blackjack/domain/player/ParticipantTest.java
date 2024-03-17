@@ -41,9 +41,9 @@ class ParticipantTest {
     @Test
     @DisplayName("플레이어는 카드들 숫자 합 중 최대값을 결정한다.")
     void determine_max_number_sum_of_cards() {
-        var sut = PlayerFixture.참가자_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        final var sut = PlayerFixture.참가자_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
 
-        var result = sut.calculateScore();
+        final var result = sut.calculateScore();
 
         assertThat(result).isEqualTo(12);
     }
@@ -51,10 +51,10 @@ class ParticipantTest {
     @Test
     @DisplayName("숫자 합이 21을 넘으면 버스트다.")
     void GamePlayer_Bust_if_exceed_21() {
-        var sut = PlayerFixture.참가자_생성(
+        final var sut = PlayerFixture.참가자_생성(
                 List.of(CardValue.EIGHT, CardValue.TEN, CardValue.SEVEN));
 
-        var result = sut.isBust();
+        final var result = sut.isBust();
 
         assertTrue(result);
     }
@@ -62,10 +62,10 @@ class ParticipantTest {
     @Test
     @DisplayName("숫자 합이 21을 넘지 않으면 버스트가 아니다.")
     void GamePlayer_Not_bust_if_under_21() {
-        var sut = PlayerFixture.참가자_생성(
+        final var sut = PlayerFixture.참가자_생성(
                 List.of(CardValue.EIGHT, CardValue.SEVEN));
 
-        var result = sut.isBust();
+        final var result = sut.isBust();
 
         assertFalse(result);
     }

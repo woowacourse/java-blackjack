@@ -34,7 +34,7 @@ public class Dealer extends Participant {
 
     @Override
     public String getNameAsString() {
-        return name.asString();
+        return this.name.asString();
     }
 
     public Name getName() {

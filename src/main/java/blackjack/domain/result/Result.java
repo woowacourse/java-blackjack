@@ -12,10 +12,10 @@ public class Result {
     }
 
     public List<GamePlayerResult> getGamePlayerResults() {
-        return gamePlayerResults;
+        return this.gamePlayerResults;
     }
 
     public DealerResult getDealerResult() {
-        return dealerResult;
+        return this.dealerResult;
     }
 }

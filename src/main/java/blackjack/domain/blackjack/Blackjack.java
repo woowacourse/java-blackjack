@@ -17,7 +17,7 @@ public class Blackjack {
     }
 
     public Blackjack() {
-        deck = Deck.createPack();
+        this.deck = Deck.createPack();
     }
 
     public void acceptPlayers(final List<PlayerInfo> playerInfos) {
@@ -51,21 +51,21 @@ public class Blackjack {
     }
 
     private void participantDrawCard(final Participant participant) {
-        participant.drawCard(deck.draw());
+        participant.drawCard(this.deck.draw());
     }
 
     public Result checkResult() {
         final List<GamePlayerResult> gamePlayerResults = checkPlayersResult();
-        final DealerResult dealerResult = DealerResult.of(players.dealer()
-                                                                 .getName(), gamePlayerResults);
+        final DealerResult dealerResult = DealerResult.of(this.players.dealer()
+                                                                      .getName(), gamePlayerResults);
         return new Result(gamePlayerResults, dealerResult);
     }
 
     private List<GamePlayerResult> checkPlayersResult() {
-        return players.gamePlayers()
-                      .stream()
-                      .map(gamePlayer -> checkPlayerResult(players.dealer(), gamePlayer))
-                      .toList();
+        return this.players.gamePlayers()
+                           .stream()
+                           .map(gamePlayer -> checkPlayerResult(this.players.dealer(), gamePlayer))
+                           .toList();
     }
 
     private GamePlayerResult checkPlayerResult(final Dealer dealer, final GamePlayer gamePlayer) {
@@ -73,10 +73,10 @@ public class Blackjack {
     }
 
     public Dealer getDealer() {
-        return players.dealer();
+        return this.players.dealer();
     }
 
     public List<GamePlayer> getGamePlayers() {
-        return Collections.unmodifiableList(players.gamePlayers());
+        return Collections.unmodifiableList(this.players.gamePlayers());
     }
 }

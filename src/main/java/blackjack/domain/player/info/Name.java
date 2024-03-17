@@ -11,7 +11,7 @@ public class Name {
     }
 
     public String asString() {
-        return value;
+        return this.value;
     }
 
     private void validateContainBlank(final String value) {

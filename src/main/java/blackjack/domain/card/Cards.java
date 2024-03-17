@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,8 +28,8 @@ public class Cards {
     }
 
     private boolean containAce() {
-        return value.stream()
-                    .anyMatch(Card::isAce);
+        return this.value.stream()
+                         .anyMatch(Card::isAce);
     }
 
     public Cards draw(final Card card) {
@@ -37,21 +38,21 @@ public class Cards {
     }
 
     private int sum() {
-        return value.stream()
+        return this.value.stream()
                     .mapToInt(Card::getCardScore)
                     .sum();
     }
 
     public Card getFirstCard() {
-        return value.get(0);
+        return this.value.get(0);
     }
 
     public List<Card> toList() {
-        return value;
+        return Collections.unmodifiableList(this.value);
     }
 
     public int size() {
-        return value.size();
+        return this.value.size();
     }
 
     @Override

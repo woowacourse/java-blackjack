@@ -10,11 +10,11 @@ import java.util.List;
 
 public class PlayerFixture {
     public static GamePlayer 게임_플레이어_생성(final List<CardValue> cardValues) {
-        Name name = new Name("초롱");
+        final Name name = new Name("초롱");
         return new GamePlayer(name, CardFixture.카드_목록_생성(cardValues));
     }
 
-    public static GamePlayer 게임_플레이어_생성(Name name) {
+    public static GamePlayer 게임_플레이어_생성(final Name name) {
         return new GamePlayer(name, CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR)));
     }
 

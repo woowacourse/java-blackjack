@@ -20,7 +20,7 @@ public class ResultView {
     }
 
     private static void printGamePlayerResult(final GamePlayerResult gamePlayerResult) {
-        System.out.println(String.format("%s: %d", gamePlayerResult.getName(), gamePlayerResult.getPrizeMoney()));
+        System.out.printf("%s: %d%n", gamePlayerResult.getName(), gamePlayerResult.getPrizeMoney());
     }
 
     private static void printDealerResult(final DealerResult dealerResult) {

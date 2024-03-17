@@ -13,7 +13,7 @@ public class GamePlayerResult {
     }
 
     public String getName() {
-        return name.asString();
+        return this.name.asString();
     }
 
     public int getPrizeMoney() {

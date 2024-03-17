@@ -17,7 +17,7 @@ class DealerResultTest {
 
     @BeforeEach
     void setUp() {
-        dealerName = new Name("딜러");
+        this.dealerName = new Name("딜러");
     }
 
     @Test
@@ -32,7 +32,7 @@ class DealerResultTest {
         final GamePlayerResult gamePlayerResult2 = new GamePlayerResult(name2, prizeMoney2);
 
         assertThatCode(() -> {
-            final var sut = DealerResult.of(dealerName, List.of(gamePlayerResult1, gamePlayerResult2));
+            final var sut = DealerResult.of(this.dealerName, List.of(gamePlayerResult1, gamePlayerResult2));
             assertThat(sut.getPrizeMoney()).isEqualTo(-25000);
         }).doesNotThrowAnyException();
     }
