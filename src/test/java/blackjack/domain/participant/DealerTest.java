@@ -12,25 +12,6 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("한 장의 지급받은 카드를 공개한다.")
-    @Test
-    void testRevealFirstCard() {
-        // given
-        Dealer dealer = new Dealer();
-        CardDeck cardDeck = new CardDeck(List.of(
-                CardFixture.createAHeart(),
-                CardFixture.create2Heart()
-        ));
-
-        dealer.deal(cardDeck);
-
-        // when
-        Card card = dealer.revealFirstCard();
-
-        // then
-        assertThat(card).isEqualTo(CardFixture.createAHeart());
-    }
-
     @DisplayName("딜러는 16 이하이면 카드를 추가로 받아야 한다.")
     @Test
     void testDraw() {
@@ -66,5 +47,24 @@ class DealerTest {
 
         // then
         assertThat(dealer.getHand().getCards()).hasSize(beforeHandSize);
+    }
+
+    @DisplayName("한 장의 지급받은 카드를 공개한다.")
+    @Test
+    void testRevealFirstCard() {
+        // given
+        Dealer dealer = new Dealer();
+        CardDeck cardDeck = new CardDeck(List.of(
+                CardFixture.createAHeart(),
+                CardFixture.create2Heart()
+        ));
+
+        dealer.deal(cardDeck);
+
+        // when
+        Card card = dealer.revealFirstCard();
+
+        // then
+        assertThat(card).isEqualTo(CardFixture.createAHeart());
     }
 }

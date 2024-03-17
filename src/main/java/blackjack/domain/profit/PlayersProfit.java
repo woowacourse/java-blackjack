@@ -14,14 +14,14 @@ public class PlayersProfit {
         this.profits = profits;
     }
 
-    public static PlayersProfit createInitial(Map<Player, BetAmount> rawProfits) {
-        Map<Player, Profit> profits = rawProfits.entrySet().stream()
+    public static PlayersProfit createInitial(Map<Player, BetAmount> playersBetAmount) {
+        Map<Player, Profit> playersProfit = playersBetAmount.entrySet().stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
                         entry -> new Profit(entry.getValue())
                 ));
 
-        return new PlayersProfit(profits);
+        return new PlayersProfit(playersProfit);
     }
 
     public void calculate(Dealer dealer) {
