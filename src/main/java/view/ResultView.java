@@ -3,7 +3,10 @@ package view;
 import static domain.participant.dealer.Dealer.DEALER_HIT_THRESHOLD;
 import static domain.participant.dealer.Dealer.INITIAL_CARD_COUNT;
 
+import domain.card.Card;
 import domain.card.Hand;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.participant.Participant;
 import domain.participant.attributes.Name;
 import domain.participant.dealer.Dealer;
@@ -13,7 +16,7 @@ import domain.participant.player.Players;
 import domain.result.BlackjackResult;
 import domain.result.Profit;
 
-public class ResultView implements BlackjackViewParser {
+public class ResultView {
 
     private static final String PARTICIPANT_NAME_AND_CARDS = "%n%s: %s";
 
@@ -33,12 +36,30 @@ public class ResultView implements BlackjackViewParser {
         );
     }
 
+    private String parseName(final Name name) {
+        return name.value();
+    }
+
+    private String parsePlayerNames(final Players players) {
+        return players.toList()
+                .stream()
+                .map(player -> parseName(player.name()))
+                .reduce((player1, player2) -> player1 + ", " + player2)
+                .orElse("");
+    }
+
     private void printDealerHand(final Dealer dealer) {
         System.out.printf(
                 PARTICIPANT_NAME_AND_CARDS,
                 parseName(dealer.name()),
                 parseCard(dealer.peek())
         );
+    }
+
+    private String parseCard(final Card card) {
+        Rank number = card.rank();
+        Suit suit = card.suit();
+        return number.getName() + suit.getName();
     }
 
     public void printParticipantHand(final Participant participant) {
@@ -48,6 +69,14 @@ public class ResultView implements BlackjackViewParser {
                 parseName(participant.name()),
                 parseHand(hand)
         );
+    }
+
+    private String parseHand(final Hand hand) {
+        return hand.toList()
+                .stream()
+                .map(this::parseCard)
+                .reduce((card1, card2) -> card1 + ", " + card2)
+                .orElse("");
     }
 
     public void printPlayerHands(final Players players) {

@@ -10,7 +10,7 @@ import domain.participant.attributes.Name;
 import domain.participant.attributes.Names;
 import domain.participant.player.Player;
 
-public class InputView implements BlackjackViewParser {
+public class InputView {
 
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
@@ -27,7 +27,8 @@ public class InputView implements BlackjackViewParser {
     }
 
     public GameCommand askMoreCard(final Player player) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", parseName(player.name()));
+        Name name = player.name();
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.value());
         return GameCommand.from(readLine());
     }
 
