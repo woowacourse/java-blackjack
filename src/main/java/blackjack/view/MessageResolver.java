@@ -1,10 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
 import blackjack.domain.profit.PlayersProfit;
 import blackjack.domain.profit.Profit;
@@ -32,8 +31,7 @@ public class MessageResolver {
 
     private String resolveNamesMessage(Players players) {
         return players.getPlayers().stream()
-                .map(Player::getName)
-                .map(PlayerName::value)
+                .map(player -> player.getName().value())
                 .collect(Collectors.joining(SEPARATOR));
     }
 
