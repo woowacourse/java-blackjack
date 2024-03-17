@@ -12,7 +12,7 @@ public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
-    public Participant(final Name name) {
+    Participant(final Name name) {
         this.name = name;
         hand = new Hand();
     }
