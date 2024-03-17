@@ -5,7 +5,6 @@ import model.participant.Participant;
 
 public class ParticipantScore {
 
-    private static final int BURST_CONDITION = 22;
     private final ParticipantCard card;
     private final int score;
 
@@ -18,15 +17,6 @@ public class ParticipantScore {
         ParticipantCard card = ParticipantCard.createWithAllCard(participant);
         int score = participant.score();
         return new ParticipantScore(card, score);
-    }
-
-
-    public boolean isNotBurst() {
-        return !isBurst();
-    }
-
-    public boolean isBurst() {
-        return score >= BURST_CONDITION;
     }
 
     public List<String> cards() {
