@@ -45,15 +45,15 @@ public class Players {
         players.forEach(player -> player.dealCards(cardGenerator));
     }
 
-    public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {
-        return players.stream()
-                .map(PlayerFinalCardsOutcome::from)
-                .toList();
-    }
-
     public List<PlayerCardsOutcome> captureCardsOutcomes() {
         return players.stream()
                 .map(PlayerCardsOutcome::from)
+                .toList();
+    }
+
+    public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {
+        return players.stream()
+                .map(PlayerFinalCardsOutcome::from)
                 .toList();
     }
 
