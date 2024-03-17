@@ -18,7 +18,7 @@ public class DividendPolicyFactory {
             return DividendPolicy.INIT_BLACKJACK;
         }
         if (participant.isBustHand()) {
-            return DividendPolicy.NORMAL_LOSE;
+            return DividendPolicy.LOSE;
         }
         return DividendPolicy.UNCERTAIN;
     }
@@ -28,21 +28,21 @@ public class DividendPolicyFactory {
             return getDividendPolicyHasNoBust(dealer, player);
         }
         if (dealer.isBustHand() && player.isBustHand()) {
-            return DividendPolicy.NORMAL_DRAW;
+            return DividendPolicy.DRAW;
         }
         if (dealer.isBustHand()) {
-            return DividendPolicy.NORMAL_WIN;
+            return DividendPolicy.WIN;
         }
         throw new IllegalStateException();
     }
 
     private static DividendPolicy getDividendPolicyHasNoBust(Participant dealer, Participant player) {
         if (dealer.getHand() > player.getHand()) {
-            return DividendPolicy.NORMAL_LOSE;
+            return DividendPolicy.LOSE;
         }
         if (dealer.getHand() == player.getHand()) {
-            return DividendPolicy.NORMAL_DRAW;
+            return DividendPolicy.DRAW;
         }
-        return DividendPolicy.NORMAL_WIN;
+        return DividendPolicy.WIN;
     }
 }

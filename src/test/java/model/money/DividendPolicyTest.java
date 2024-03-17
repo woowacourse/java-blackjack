@@ -23,7 +23,7 @@ class DividendPolicyTest {
     void apply_ShouldReturnNewInstanceOfMultiplyOf1_WhenNormalWin() {
         Money money = new Money(1000);
 
-        Money expected = DividendPolicy.NORMAL_WIN.apply(money);
+        Money expected = DividendPolicy.WIN.apply(money);
         Money actual = new Money(1000);
 
         assertThat(expected).isEqualTo(actual);
@@ -34,7 +34,7 @@ class DividendPolicyTest {
     void apply_ShouldReturnNewInstanceOfMultiplyOf0_WhenNormalDraw() {
         Money money = new Money(1000);
 
-        Money expected = DividendPolicy.NORMAL_DRAW.apply(money);
+        Money expected = DividendPolicy.DRAW.apply(money);
         Money actual = new Money(1000).createMultiplyOf(0);
 
         assertThat(expected).isEqualTo(actual);
@@ -45,7 +45,7 @@ class DividendPolicyTest {
     void apply_ShouldReturnNewInstanceOfMultiplyOfNegative1_WhenNormalLose() {
         Money money = new Money(1000);
 
-        Money expected = DividendPolicy.NORMAL_LOSE.apply(money);
+        Money expected = DividendPolicy.LOSE.apply(money);
         Money actual = new Money(1000).createMultiplyOf(-1);
 
         assertThat(expected).isEqualTo(actual);

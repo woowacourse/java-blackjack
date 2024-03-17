@@ -43,7 +43,7 @@ class DividendPolicyFactoryTest {
             player.hitCard(Card.from(Number.THREE, Emblem.DIAMOND));
 
             assertThat(DividendPolicyFactory.findPolicy(dealer, player))
-                    .isSameAs(DividendPolicy.NORMAL_LOSE);
+                    .isSameAs(DividendPolicy.LOSE);
         }
 
 
@@ -62,7 +62,7 @@ class DividendPolicyFactoryTest {
                 player.hitCard(Card.from(Number.THREE, Emblem.DIAMOND));
 
                 assertThat(DividendPolicyFactory.findPolicy(dealer, player))
-                        .isSameAs(DividendPolicy.NORMAL_WIN);
+                        .isSameAs(DividendPolicy.WIN);
             }
 
             @Test
@@ -77,7 +77,7 @@ class DividendPolicyFactoryTest {
                 player.hitCard(Card.from(Number.TWO, Emblem.DIAMOND));
 
                 assertThat(DividendPolicyFactory.findPolicy(dealer, player))
-                        .isSameAs(DividendPolicy.NORMAL_LOSE);
+                        .isSameAs(DividendPolicy.LOSE);
             }
 
             @Test
@@ -92,7 +92,7 @@ class DividendPolicyFactoryTest {
                 player.hitCard(Card.from(Number.THREE, Emblem.DIAMOND));
 
                 assertThat(DividendPolicyFactory.findPolicy(dealer, player))
-                        .isSameAs(DividendPolicy.NORMAL_DRAW);
+                        .isSameAs(DividendPolicy.DRAW);
             }
 
             @Test
@@ -108,7 +108,7 @@ class DividendPolicyFactoryTest {
                 player.hitCard(Card.from(Number.THREE, Emblem.DIAMOND));
 
                 assertThat(DividendPolicyFactory.findPolicy(dealer, player))
-                        .isSameAs(DividendPolicy.NORMAL_WIN);
+                        .isSameAs(DividendPolicy.WIN);
             }
 
             @Test
@@ -124,7 +124,7 @@ class DividendPolicyFactoryTest {
                 player.hitCard(Card.from(Number.EIGHT, Emblem.CLUB));
 
                 assertThat(DividendPolicyFactory.findPolicy(dealer, player))
-                        .isSameAs(DividendPolicy.NORMAL_DRAW);
+                        .isSameAs(DividendPolicy.DRAW);
             }
         }
 
