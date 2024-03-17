@@ -1,4 +1,4 @@
-package domain.name;
+package vo;
 
 public record Name(String value) {
 

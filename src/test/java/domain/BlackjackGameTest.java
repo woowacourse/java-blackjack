@@ -1,10 +1,10 @@
 package domain;
 
-import domain.card.Card;
+import vo.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
-import domain.name.Name;
+import vo.Name;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -75,6 +75,4 @@ class BlackjackGameTest {
         blackjackGame.prepare();
         assertThat(blackjackGame.resultsOfParticipants().getResult()).isEqualTo(expected);
     }
-
-
 }

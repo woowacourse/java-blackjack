@@ -1,4 +1,7 @@
-package domain.card;
+package vo;
+
+import domain.card.CardNumber;
+import domain.card.CardShape;
 
 import static domain.card.CardNumber.ACE;
 

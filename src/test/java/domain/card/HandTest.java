@@ -2,6 +2,7 @@ package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vo.Card;
 
 import java.util.List;
 

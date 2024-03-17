@@ -1,8 +1,8 @@
 package mapper;
 
-import domain.card.Card;
+import vo.Card;
 import domain.card.Cards;
-import domain.name.Name;
+import vo.Name;
 import domain.name.Names;
 import domain.participant.Participant;
 import domain.participant.Player;

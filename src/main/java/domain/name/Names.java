@@ -1,5 +1,7 @@
 package domain.name;
 
+import vo.Name;
+
 import java.util.HashSet;
 import java.util.List;
 

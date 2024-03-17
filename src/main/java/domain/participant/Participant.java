@@ -1,8 +1,8 @@
 package domain.participant;
 
-import domain.card.Card;
+import vo.Card;
 import domain.card.Hand;
-import domain.name.Name;
+import vo.Name;
 
 import java.util.Objects;
 

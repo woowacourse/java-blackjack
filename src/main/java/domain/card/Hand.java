@@ -1,5 +1,7 @@
 package domain.card;
 
+import vo.Card;
+
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 
 public class Hand {

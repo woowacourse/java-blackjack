@@ -1,6 +1,8 @@
-package vo;
+package domain.account;
 
 import domain.result.ResultProfitRatio;
+import vo.BettingMoney;
+import vo.Profit;
 
 public class Account {
     private final BettingMoney bettingMoney;

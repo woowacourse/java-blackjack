@@ -1,8 +1,8 @@
 package domain.participant;
 
-import domain.card.Card;
+import vo.Card;
 import domain.card.Cards;
-import domain.name.Name;
+import vo.Name;
 import vo.Profit;
 
 import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;

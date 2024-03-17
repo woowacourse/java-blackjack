@@ -1,5 +1,7 @@
 package domain.card;
 
+import vo.Card;
+
 import java.util.*;
 import java.util.stream.Stream;
 

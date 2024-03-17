@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import vo.Card;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -42,5 +43,4 @@ class CardsTest {
                 Arguments.of(new Cards(List.of(new Card(CardShape.SPADE, CardNumber.ACE))), true)
         );
     }
-
 }

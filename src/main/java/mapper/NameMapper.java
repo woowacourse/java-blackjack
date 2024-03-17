@@ -1,6 +1,6 @@
 package mapper;
 
-import domain.name.Name;
+import vo.Name;
 import domain.name.Names;
 import domain.participant.Player;
 import view.dto.participant.NameDto;
@@ -18,7 +18,6 @@ public class NameMapper {
     }
 
     public static NameDto playerToNameDto(final Player player) {
-        return new NameDto(player.name()
-                                 .value());
+        return new NameDto(player.name().value());
     }
 }

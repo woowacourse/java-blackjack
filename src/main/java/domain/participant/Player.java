@@ -1,8 +1,8 @@
 package domain.participant;
 
-import domain.name.Name;
+import vo.Name;
 import domain.result.ResultProfitRatio;
-import vo.Account;
+import domain.account.Account;
 import vo.BettingMoney;
 import vo.Profit;
 
