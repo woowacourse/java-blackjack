@@ -67,7 +67,8 @@ public class BlackjackController {
         }
     }
 
+    // TODO: 딜러를 통째로 넘겨줄 필요가 있을까?
     private void printPlayerProfits(final Dealer dealer) {
-        OutputView.printProfits(dealer.findPlayerProfits());
+        OutputView.printProfits(dealer);
     }
 }

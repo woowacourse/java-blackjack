@@ -34,11 +34,6 @@ public class Dealer extends Player {
     }
 
     /**
-     * TODO: 딜러의 수익은 어떻게 계산할지???
-     *      Dealder의 필드로 Map<Player, Integer> 를 가지도록 변경하고, 메서드로 제공?
-     */
-
-    /**
      * TODO: 반드시 Dealer에게 먼저 bet()을 한 뒤에 호출해야 함. bet()을 하지 않는다면 비어있게 됨
      */
     public Map<Player, Integer> findPlayerProfits() {
@@ -86,5 +81,19 @@ public class Dealer extends Player {
             return Status.WIN;
         }
         return Status.LOSE;
+    }
+
+    /**
+     * TODO: 딜러의 수익은 어떻게 계산할지???
+     *      Dealder의 필드로 Profit을 나타내는 Map<Player, Integer> 를 가지도록 변경하고, 메서드로 제공?
+     *      findPlayerProfits를 여러번 호출해야 하는게 마음에 안듦
+     *          Controller에서 한번, 출력할 때 딜러에서 한번
+     */
+    public int findDealerProfit() {
+        final Map<Player, Integer> playerProfits = findPlayerProfits();
+        return -playerProfits.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 }

@@ -58,9 +58,13 @@ public class OutputView {
                 CardShapeStrings.mapCardShapeToString(card.getShape());
     }
 
-    public static void printProfits(final Map<Player, Integer> playerProfits) {
+    // TODO: 개선 필요
+    public static void printProfits(final Dealer dealer) {
         printLineSeparator();
         System.out.println("## 최종 수익");
+        System.out.println(String.format("%s: %d", dealer.getName(), dealer.findDealerProfit()));
+
+        final Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
         playerProfits.forEach(
                 (player, profit) -> System.out.println(String.format("%s: %d", player.getName(), profit)));
     }
@@ -68,5 +72,4 @@ public class OutputView {
     private static void printLineSeparator() {
         System.out.println();
     }
-
 }

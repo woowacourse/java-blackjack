@@ -175,4 +175,31 @@ public class DealerTest {
         // then
         assertThat(playerProfits.get(player)).isEqualTo(0);
     }
+
+    // TODO: 테스트 흐름을 한 눈에 파악하기 어려움
+    @Test
+    void 딜러의_수익은_플레이어의_수익의_합을_negation한_것과_같다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardNumber.TEN, CardShape.CLOVER));
+
+        Player player1 = player(new Card(CardNumber.TWO, CardShape.CLOVER));
+        Player player2 = player(new Card(CardNumber.TWO, CardShape.CLOVER));
+
+        int bettingAmount = 10000;
+        dealer.bet(player1, bettingAmount);
+        dealer.bet(player2, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+
+        // when
+        int playerProfit = playerProfits.values()
+                .stream()
+                .mapToInt(Integer::valueOf)
+                .sum();
+
+        int dealerProfit = dealer.findDealerProfit();
+
+        // then
+        assertThat(dealerProfit).isEqualTo(-playerProfit);
+    }
 }
