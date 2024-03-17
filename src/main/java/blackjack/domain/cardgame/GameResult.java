@@ -3,28 +3,29 @@ package blackjack.domain.cardgame;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
-public enum WinningStatus {
+public enum GameResult {
     WIN,
     PUSH,
     LOSE,
     BLACKJACK;
 
-    public static WinningStatus doesPlayerWin(final Dealer dealer, final Player player) {
+    public static GameResult doesPlayerWin(final Dealer dealer, final Player player) {
+        // TODO: 딜러와 플레이어 모두 블랙잭인 경우를 고려하라
         if (player.isBlackjack()) {
-            return WinningStatus.BLACKJACK;
+            return GameResult.BLACKJACK;
         }
         if (!player.isAlive()) {
-            return WinningStatus.LOSE;
+            return GameResult.LOSE;
         }
         if (!dealer.isAlive()) {
-            return WinningStatus.WIN;
+            return GameResult.WIN;
         }
         if (dealer.score() == player.score()) {
-            return WinningStatus.PUSH;
+            return GameResult.PUSH;
         }
         if (dealer.score() < player.score()) {
-            return WinningStatus.WIN;
+            return GameResult.WIN;
         }
-        return WinningStatus.LOSE;
+        return GameResult.LOSE;
     }
 }

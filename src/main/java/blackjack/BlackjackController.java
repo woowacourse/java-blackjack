@@ -3,7 +3,6 @@ package blackjack;
 import blackjack.domain.betting.BetDetails;
 import blackjack.domain.betting.ProfitDetails;
 import blackjack.domain.cardgame.CardDeck;
-import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Participant;
@@ -34,7 +33,7 @@ public class BlackjackController {
         initializeHand(deck, dealer, players);
         giveMoreCards(deck, players, dealer);
         printHandsOfEachParticipant(dealer, players);
-        printCameResult(players, betting, dealer);
+        printCameResult(betting, dealer, players);
     }
 
     private List<Player> createPlayers(final List<Name> playerNames) {
@@ -91,9 +90,8 @@ public class BlackjackController {
         }
     }
 
-    private void printCameResult(final List<Player> players, final BetDetails betting, final Dealer dealer) {
-        CardGameResult result = CardGameResult.of(dealer, players);
-        ProfitDetails profits = betting.calculateProfit(result);
+    private void printCameResult(final BetDetails betting, final Dealer dealer, final List<Player> players) {
+        ProfitDetails profits = betting.calculateProfit(dealer, players);
         outputView.printPlayerProfit(profits);
     }
 }

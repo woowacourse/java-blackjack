@@ -1,10 +1,12 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.cardgame.CardGameResult;
-import blackjack.domain.cardgame.WinningStatus;
+import blackjack.domain.cardgame.GameResult;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
+import blackjack.domain.player.Player;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BetDetails {
@@ -14,25 +16,17 @@ public class BetDetails {
         this.playersBettingMoney = playersBettingMoney;
     }
 
-    public ProfitDetails calculateProfit(final CardGameResult result) {
+    public ProfitDetails calculateProfit(final Dealer dealer, final List<Player> players) {
         final Map<Name, Profit> profitDetails = new LinkedHashMap<>();
 
-        for (final var nameAndStatus : result.totalResult().entrySet()) {
-            final Name name = extractName(nameAndStatus);
-            final WinningStatus status = extractStatus(nameAndStatus);
-            final Profit profit = Profit.of(findBettingMoney(name), status);
+        for (Player player : players) {
+            final Name name = player.name();
+            final GameResult result = GameResult.doesPlayerWin(dealer, player);
+            final Profit profit = Profit.of(findBettingMoney(name), result);
             profitDetails.put(name, profit);
         }
 
         return new ProfitDetails(profitDetails);
-    }
-
-    private Name extractName(final Map.Entry<Name, WinningStatus> nameAndStatus) {
-        return nameAndStatus.getKey();
-    }
-
-    private WinningStatus extractStatus(final Map.Entry<Name, WinningStatus> nameAndStatus) {
-        return nameAndStatus.getValue();
     }
 
     private Money findBettingMoney(final Name name) {
