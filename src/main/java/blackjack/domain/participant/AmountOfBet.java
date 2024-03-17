@@ -14,7 +14,7 @@ public class AmountOfBet {
 
     private void validateMoney(int value) {
         if (value < MIN_VALUE) {
-            throw new IllegalArgumentException(String.format("배팅금액은 1,000원 이상의 양수만 가능합니다. 입력값: %d", value));
+            throw new IllegalArgumentException(String.format("베팅금액은 1,000원 이상의 양수만 가능합니다. 입력값: %d", value));
         }
     }
 

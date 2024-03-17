@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 
 public class BetRecordTest {
 
-    @DisplayName("배팅내역을 생성한다")
+    @DisplayName("베팅내역을 생성한다")
     @Test
     public void create() {
         assertThatCode(() -> new BetRecord(Map.of(new Name("이상"), new AmountOfBet(1000))))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("무승부면 배팅 금액의 0배를 수익금으로 갖는다")
+    @DisplayName("무승부면 베팅 금액의 0배를 수익금으로 갖는다")
     @Test
     public void calculateProfit() {
         Players players = Players.createInitialPlayers(List.of(new Name("이상")));

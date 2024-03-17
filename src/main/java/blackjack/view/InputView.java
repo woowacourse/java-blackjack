@@ -46,7 +46,7 @@ public class InputView {
     public BetRecord readAmountOfBet(List<Name> playerNames) {
         Map<Name, AmountOfBet> playersBetMoney = new LinkedHashMap<>();
         for (Name playerName : playerNames) {
-            System.out.println(String.format(LINE_SEPARATOR + "%s의 배팅 금액은?", playerName.getName()));
+            System.out.println(String.format(LINE_SEPARATOR + "%s의 베팅 금액은?", playerName.getName()));
             String inputBetMoney = readLine();
             Integer parsedAmountOfBet = parseToInt(inputBetMoney);
             playersBetMoney.put(playerName, new AmountOfBet(parsedAmountOfBet));
@@ -58,7 +58,7 @@ public class InputView {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(String.format("배팅 금액은 숫자만 가능합니다. 입력값: %s", input));
+            throw new IllegalArgumentException(String.format("베팅 금액은 숫자만 가능합니다. 입력값: %s", input));
         }
     }
 
@@ -72,6 +72,6 @@ public class InputView {
         if (NO.equals(input)) {
             return false;
         }
-        throw new IllegalArgumentException("배팅은 " + YES + " 또는 " + NO + "만 입력 가능합니다.");
+        throw new IllegalArgumentException("베팅은 " + YES + " 또는 " + NO + "만 입력 가능합니다.");
     }
 }
