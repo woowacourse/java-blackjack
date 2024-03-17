@@ -38,3 +38,4 @@
 - [x] entry -> 로 한 거 그냥 key, value로 바로 부르게 스트림 부분들 수정
 - [x] 카드 formatter도 도메인에 의존하게 변경
 - [x] Bettingtest 리팩토링
+- [x] TODO: 라인수 정리

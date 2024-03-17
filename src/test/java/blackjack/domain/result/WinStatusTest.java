@@ -17,14 +17,14 @@ class WinStatusTest {
             "22, false, 22,false, LOSE",               // 죽음   , 죽음   , 패
             "23, false, 22,false, LOSE",               // 죽음   , 죽음   , 패
             "22, false, 23,false, LOSE",               // 죽음   , 죽음   , 패
+            "21, true, 21,false, LOSE",              // 블랙잭 , 21    , 패
             "19, false, 20,false, WIN",              // 생존 , 생존      , 승
             "22, false, 20,false, WIN",               // 죽음 , 생존      , 승
-            "20, false, 21, true, WIN_BLACKJACK",     // 생존 , 블랙잭    , 블랙잭승
             "20, false, 21, false, WIN",             // 생존 , 21     , 승
             "22, false, 21,false, WIN",              // 죽음  , 21      , 승
-            "21, true, 21, true, DRAW",              // 블랙잭 , 블랙잭   , 무
-            "21, true, 21,false, DRAW",              // 블랙잭 , 21    , 패
+            "20, false, 21, true, WIN_BLACKJACK",     // 생존 , 블랙잭    , 블랙잭승
             "21, false, 21,true, WIN_BLACKJACK",     // 21 , 블랙잭    , 블랙잭승
+            "21, true, 21, true, DRAW",              // 블랙잭 , 블랙잭   , 무
             "21, false, 21,false, DRAW",              // 21 , 21      , 무
             "20, false, 20,false, DRAW"})           // 생존 , 생존    , 무
     void of(int dealerScore, boolean isDealerBlackjack, int playerScore, boolean isPlayerBlackjack,

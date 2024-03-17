@@ -16,6 +16,13 @@ public class ParticipantScoreStatus {
         return this.score.isBiggerThan(otherScore);
     }
 
+    public boolean isScoreEqaul(final ParticipantScoreStatus otherScoreStatus) {
+        return this.score.equals(otherScoreStatus.score);
+    }
+
+    public boolean isNotBlackjack() {
+        return !isBlackjack;
+    }
     public boolean isBlackjack() {
         return isBlackjack;
     }

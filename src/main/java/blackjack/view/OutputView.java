@@ -3,11 +3,9 @@ package blackjack.view;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.dto.BettingResultDto;
-import blackjack.dto.BettingResultDtos;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.ParticipantScoresDto;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -54,15 +52,12 @@ public class OutputView {
         }
     }
 
-    public void printFinalResult(final ParticipantScoresDto participantScoreDtos,
-                                 final BettingResultDtos bettingResultDtos) {
-        printCardScore(participantScoreDtos);
+    public void printFinalResult(final List<ParticipantScoreDto> participantScoresDtos, final List<BettingResultDto> bettingResultDtos) {
+        printCardScore(participantScoresDtos);
         printBettingResult(bettingResultDtos);
     }
 
-    private void printCardScore(final ParticipantScoresDto participantScoreDtos) {
-        List<ParticipantScoreDto> participantScores = participantScoreDtos.participantScores();
-
+    private void printCardScore(final List<ParticipantScoreDto> participantScores) {
         printDealerCardScore(getOnlyDealer(participantScores,
                 participantScore -> participantScore.participantCards().name().equals(Dealer.DEALER_NAME)));
 
@@ -89,10 +84,9 @@ public class OutputView {
                 playersCardScore.score());
     }
 
-    private void printBettingResult(final BettingResultDtos rawBettingResultDtos) {
+    private void printBettingResult(final List<BettingResultDto> bettingResultDtos) {
         System.out.println("## 최종 수익");
 
-        List<BettingResultDto> bettingResultDtos = rawBettingResultDtos.bettingResultDtos();
         printDealerBettingResult(getOnlyDealer(bettingResultDtos,
                 bettingResultDto -> bettingResultDto.name().equals(Dealer.DEALER_NAME)));
         printPlayerBettingResults(getExceptDealer(bettingResultDtos,

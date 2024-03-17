@@ -2,17 +2,20 @@ package blackjack.controller;
 
 import blackjack.domain.betting.DealerBetting;
 import blackjack.domain.betting.PlayerBettings;
+import blackjack.domain.card.Hands;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.BettingResultDtos;
+import blackjack.domain.result.Score;
+import blackjack.dto.BettingResultDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantScoresDto;
+import blackjack.dto.ParticipantScoreDto;
 import blackjack.service.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -118,13 +121,32 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame, final PlayerBettings playerBettings) {
-        final ParticipantScoresDto participantScoresDto = ParticipantScoresDto.of(blackjackGame.getHandResult(),
+        final List<ParticipantScoreDto> participantScoresDtos = convertToParticipantScoreDtos(
+                blackjackGame.getHandResult(),
                 blackjackGame.getScoreResult());
 
         final PlayerBettings bettingResults = playerBettings.applyWinStatus(blackjackGame.getWinningResult());
         final DealerBetting dealerBetting = DealerBetting.of(bettingResults, blackjackGame.getDealer());
-        final BettingResultDtos bettingResultDtos = BettingResultDtos.of(bettingResults, dealerBetting);
+        final List<BettingResultDto> bettingResultDtos = convertToBettingResultDtos(bettingResults, dealerBetting);
 
-        outputView.printFinalResult(participantScoresDto, bettingResultDtos);
+        outputView.printFinalResult(participantScoresDtos, bettingResultDtos);
+    }
+
+    private List<ParticipantScoreDto> convertToParticipantScoreDtos(final Map<ParticipantName, Hands> handResult,
+                                                                    final Map<ParticipantName, Score> scoreResult) {
+        return handResult.entrySet().stream()
+                .map(entry -> ParticipantScoreDto.of(entry.getKey(), entry.getValue(), scoreResult.get(entry.getKey())))
+                .toList();
+    }
+
+    private List<BettingResultDto> convertToBettingResultDtos(final PlayerBettings bettingResults,
+                                                              final DealerBetting dealerBetting) {
+        List<BettingResultDto> bettingResultDtos = bettingResults.getPlayerBettings().stream()
+                .map(BettingResultDto::from)
+                .collect(Collectors.toList());
+
+        bettingResultDtos.add(BettingResultDto.from(dealerBetting));
+
+        return bettingResultDtos;
     }
 }
