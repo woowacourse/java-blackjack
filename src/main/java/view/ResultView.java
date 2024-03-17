@@ -1,6 +1,6 @@
 package view;
 
-import domain.game.Result;
+import domain.Profit;
 import domain.user.Player;
 import dto.UserDto;
 
@@ -59,24 +59,16 @@ public class ResultView {
                         + " - 결과: " + userDto.sumOfCards));
     }
 
-    public static void showResult(Map<Player, Result> playerResults, Map<Result, Integer> dealerResult) {
-        System.out.println("\n## 최종 승패");
-        System.out.println("딜러: " + getDealerResultDetail(dealerResult));
-
-        playerResults.forEach(((player, result) ->
-                System.out.println(player.getName() + ": " + result.getResult())));
-    }
-
-    private static String getDealerResultDetail(Map<Result, Integer> dealerResult) {
-        return dealerResult.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + entry.getKey().getResult())
-                .collect(Collectors.joining(" "));
-    }
-
     public static void printBust(UserDto userDto) {
         printPlayerAndDeck(userDto);
         System.out.println("버스트!");
+    }
+
+    public static void showProfit(Map<Player, Profit> profitManager, Profit profitOfDealer) {
+        System.out.println("\n## 최종 수익");
+        System.out.println("딜러: " + profitOfDealer.getValue());
+        profitManager.forEach((player, profit) -> {
+            System.out.println(player.getName() + ": " + profit.getValue());
+        });
     }
 }
