@@ -9,10 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import model.card.Card;
+import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
 import model.result.ParticipantCard;
 import model.result.ParticipantCards;
+import model.result.ParticipantScore;
+import model.result.ParticipantScores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -59,6 +62,25 @@ class BlackjackGameTest {
         }
         if (!isDealerHit) {
             assertThat(blackjackGame.dealerCardSize()).isEqualTo(2);
+        }
+    }
+
+    @DisplayName("게임 종료 시 스코어 계산 후 반환")
+    @Test
+    void finishAndReturnParticipantScores() {
+        Players players = Players.from(List.of("조조", "릴리"));
+        BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.dealInitialCards(players);
+
+        List<Integer> scores = players.getPlayers()
+            .stream()
+            .map(Participant::score)
+            .toList();
+
+        ParticipantScores participantScores = blackjackGame.finish(players);
+        int i = 0;
+        for (ParticipantScore playerScore : participantScores.getPlayerScores()) {
+            assertThat(playerScore.getScore()).isEqualTo(scores.get(i++));
         }
     }
 }
