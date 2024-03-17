@@ -5,6 +5,7 @@ import domain.card.Cards;
 import domain.result.Status;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Dealer extends Cards {
 
@@ -45,6 +46,9 @@ public class Dealer extends Cards {
     }
 
     public Card getFirstCard() {
+        if (cards.isEmpty()) {
+            throw new NoSuchElementException("패에 가지고 있는 카드가 없습니다.");
+        }
         return cards.get(0);
     }
 
