@@ -10,15 +10,15 @@ public class Money {
     public Money(String inputValue) {
         try {
             BigDecimal bigDecimal = new BigDecimal(inputValue);
-            validate(bigDecimal.doubleValue());
+            validate(bigDecimal);
             this.value = bigDecimal;
         } catch (NumberFormatException ne) {
             throw new NumberFormatException("양의 실수만 입력하세요.");
         }
     }
 
-    private void validate(double value) {
-        if (value <= 0) {
+    private void validate(BigDecimal value) {
+        if (value.compareTo(new BigDecimal("0")) <= 0) {
             throw new IllegalArgumentException("양의 실수만 입력하세요.");
         }
     }
