@@ -57,8 +57,4 @@ public record Hand(List<Card> cards) {
         return cards.size() == BlackjackConstants.INITIAL_CARD_COUNT.getValue()
                 && calculateScore() == BlackjackConstants.BLACKJACK_VALUE.getValue();
     }
-
-    public Card getFirstCard() {
-        return cards.get(0);
-    }
 }
