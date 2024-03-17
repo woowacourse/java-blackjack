@@ -10,12 +10,12 @@ public class Money {
     }
 
     public static Money createBettingAmount(String moneyText) {
-        int money = parseIntWithCustomException(moneyText);
+        int money = parseInt(moneyText);
         validate(money);
         return new Money(money);
     }
 
-    private static int parseIntWithCustomException(String moneyText) {
+    private static int parseInt(String moneyText) {
         try{
             return Integer.parseInt(moneyText);
         }catch (Exception e) {
