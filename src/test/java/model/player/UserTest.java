@@ -1,6 +1,7 @@
 package model.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -12,23 +13,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class UserTest {
 
-    static Stream<Arguments> createCard() {
-        return Stream.of(Arguments.of(
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE)),
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE),
-                        new Card(CardShape.SPACE, CardNumber.ACE))));
-    }
-
     @DisplayName("초기 참가자는 카드를 2장만 받아야 한다.")
-    @ParameterizedTest
-    @MethodSource("createCard")
-    void validateCardSize(List<Card> cards) {
-        Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), cards) {
-        }).isInstanceOf(IllegalArgumentException.class);
+    @Test
+    void validateCardSize() {
+        List<Card> onlyOneCard = List.of(new Card(CardShape.SPACE, CardNumber.NINE));
+        List<Card> threeCards = List.of(
+                new Card(CardShape.SPACE, CardNumber.NINE),
+                new Card(CardShape.SPACE, CardNumber.FIVE),
+                new Card(CardShape.SPACE, CardNumber.ACE));
+
+        assertAll(
+                () -> Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), onlyOneCard) {})
+                        .isInstanceOf(IllegalArgumentException.class),
+                () -> Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), threeCards) {})
+                        .isInstanceOf(IllegalArgumentException.class));
+
     }
 
     @DisplayName("카드를 추가할 수 있다.")
