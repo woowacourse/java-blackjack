@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum BlackjackCommand {
     HIT("y"),
-    STAY("n");
+    STAND("n");
 
     private final String value;
 
@@ -17,10 +17,14 @@ public enum BlackjackCommand {
                      .filter(command -> value.equals(command.value))
                      .findFirst()
                      .orElseThrow(() -> new IllegalArgumentException(
-                             String.format("%s %s 명령어만 가능합니다.", HIT, STAY)));
+                             String.format("%s %s 명령어만 가능합니다.", HIT, STAND)));
     }
 
     public boolean isHit() {
         return this == HIT;
+    }
+
+    public boolean isStand() {
+        return this == STAND;
     }
 }
