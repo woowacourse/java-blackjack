@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -56,6 +57,15 @@ class PlayerTest {
         ));
 
         assertFalse(player.canReceiveCard());
+    }
+
+    @Test
+    @DisplayName("현재 보유하고 있는 카드가 존재하지 않으면 예외가 발생된다.")
+    void getCurrentCardExceptionTest() {
+        player = new Player("p1");
+        assertThatThrownBy(player::getCurrentCards)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("현재 보유하고 있는 카드가 존재하지 않습니다.");
     }
 
     private Player createTestPlayer(List<Card> cards) {

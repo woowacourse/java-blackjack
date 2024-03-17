@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -62,8 +63,17 @@ class DealerTest {
         List<Integer> actualCardCount = players.stream()
                 .map(player -> player.getCurrentCards().size())
                 .toList();
-        
+
         assertThat(dealer.getCurrentCards().size()).isEqualTo(2);
         assertThat(actualCardCount).containsExactly(2, 2, 2);
+    }
+
+    @Test
+    @DisplayName("현재 보유하고 있는 카드가 존재하지 않으면 예외가 발생된다.")
+    void getCurrentCardExceptionTest() {
+        dealer = new Dealer();
+        assertThatThrownBy(dealer::getCurrentCards)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("현재 보유하고 있는 카드가 존재하지 않습니다.");
     }
 }

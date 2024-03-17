@@ -83,7 +83,6 @@ public class Dealer extends BlackjackGamer {
     }
 
     public Card getFirstCard() {
-        List<Card> cards = hand.cards();
-        return cards.get(0);
+        return getCurrentCards().get(0);
     }
 }

@@ -37,6 +37,12 @@ public abstract class BlackjackGamer {
     }
 
     public List<Card> getCurrentCards() {
+        List<Card> cards = hand.cards();
+
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("현재 보유하고 있는 카드가 존재하지 않습니다.");
+        }
+
         return hand.cards();
     }
 }
