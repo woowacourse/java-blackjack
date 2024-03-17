@@ -87,17 +87,4 @@ class CardsTest {
 
         assertThat(sum2).isEqualTo(13);
     }
-
-    @Test
-    @DisplayName("카드 목록에 첫 번째 카드를 가져온다")
-    void get_first_card() {
-        final List<Card> cards = List.of(new Card(CardValue.EIGHT, CardSymbol.DIAMOND),
-                new Card(CardValue.JACK, CardSymbol.CLOVER));
-        final var sut = new Cards(cards);
-
-        final var result = sut.getFirstCard();
-
-        assertThat(result).isEqualTo(cards.get(0));
-    }
-
 }

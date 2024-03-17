@@ -39,12 +39,8 @@ public class Cards {
 
     private int sum() {
         return this.value.stream()
-                    .mapToInt(Card::getCardScore)
-                    .sum();
-    }
-
-    public Card getFirstCard() {
-        return this.value.get(0);
+                         .mapToInt(Card::getCardScore)
+                         .sum();
     }
 
     public List<Card> toList() {
