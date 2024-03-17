@@ -26,12 +26,10 @@ public class Participant extends User {
     }
 
     public int calculateRevenue(Dealer dealer) {
-        return profile.calculateRevenue(
-                findOutcome(dealer),
-                cards.findBlackJackState());
+        return profile.calculateRevenue(findOutcome(dealer), cards.findBlackJackState());
     }
 
-    public Outcome findOutcome(Dealer dealer) {
+    private Outcome findOutcome(Dealer dealer) {
         if (isNotHit()) {
             return Outcome.LOSE;
         }
