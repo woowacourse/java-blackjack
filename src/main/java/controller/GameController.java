@@ -27,13 +27,7 @@ public class GameController {
 
     private BlackjackGame initGame() {
         BlackjackGame blackjackGame = BlackjackGame.init(initPlayer());
-        PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
-        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
-                .stream()
-                .map(PlayerHandStatusDto::of)
-                .toList();
-
-        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
+        printInitGameStatus(blackjackGame);
         return blackjackGame;
     }
 
@@ -62,6 +56,16 @@ public class GameController {
             System.out.println(e.getMessage());
             return inputBettingMoney(playerName);
         }
+    }
+
+    private void printInitGameStatus(final BlackjackGame blackjackGame) {
+        PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
+        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
+                .stream()
+                .map(PlayerHandStatusDto::of)
+                .toList();
+
+        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
     }
 
     private BettingResults playGame(final BlackjackGame blackjackGame) {
