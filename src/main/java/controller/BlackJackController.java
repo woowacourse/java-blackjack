@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import participant.dealer.Dealer;
+import participant.player.BetMoney;
 import participant.player.Name;
 import participant.player.Player;
 import participant.player.Players;
@@ -39,7 +40,8 @@ public class BlackJackController {
 
     private List<Player> startBetting(List<String> names, CardDeck cardDeck) {
         return names.stream()
-                .map(name -> Player.joinGame(name, cardDeck.firstCardSettings(), inputView.inputBettingMoney(name)))
+                .map(name -> new Player(cardDeck.firstCardSettings(), new Name(name),
+                        new BetMoney(inputView.inputBettingMoney(name))))
                 .toList();
     }
 

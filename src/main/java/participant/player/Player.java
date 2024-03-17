@@ -8,13 +8,9 @@ public class Player extends Participant {
 
     private final BetMoney betMoney;
 
-    private Player(List<Card> cardDeck, Name name, int money) {
+    public Player(List<Card> cardDeck, Name name, BetMoney betMoney) {
         super(cardDeck, name);
-        this.betMoney = new BetMoney(money);
-    }
-
-    public static Player joinGame(String name, List<Card> cards, int money) {
-        return new Player(cards, new Name(name), money);
+        this.betMoney = betMoney;
     }
 
     public BetMoney getBetMoney() {
