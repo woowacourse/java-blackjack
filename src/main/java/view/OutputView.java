@@ -28,9 +28,10 @@ public class OutputView {
     }
 
     private static String createPrintNamesMessage(final List<PlayerHandStatusDto> playerHandStatuses) {
-        List<String> playerNames = playerHandStatuses.stream()
+        final List<String> playerNames = playerHandStatuses.stream()
                 .map(playerHandStatus ->
                         playerHandStatus.playerName().value()).toList();
+
         return String.join(", ", playerNames);
     }
 
@@ -44,9 +45,10 @@ public class OutputView {
     }
 
     private static String convertPlayingCardsToPrintMessage(final List<PlayingCardDto> playerCards) {
-        List<String> list = playerCards.stream()
+        final List<String> list = playerCards.stream()
                 .map(OutputView::convertPlayingCardToPrintMessage)
                 .toList();
+
         return String.join(", ", list);
     }
 

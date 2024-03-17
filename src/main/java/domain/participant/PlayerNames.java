@@ -21,7 +21,7 @@ public record PlayerNames(List<PlayerName> values) {
     }
 
     private void validateDuplicated(final List<PlayerName> playerNames) {
-        Set<PlayerName> playerNamesSet = Set.copyOf(playerNames);
+        final Set<PlayerName> playerNamesSet = Set.copyOf(playerNames);
         if (playerNamesSet.size() != playerNames.size()) {
             throw new IllegalArgumentException("플레이어 이름에 중복이 존재합니다.");
         }

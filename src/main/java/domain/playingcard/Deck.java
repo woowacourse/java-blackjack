@@ -14,6 +14,7 @@ public class Deck {
 
     public static Deck init(final List<PlayingCard> playingCards) {
         Collections.shuffle(playingCards);
+
         return new Deck(new ArrayDeque<>(playingCards));
     }
 

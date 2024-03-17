@@ -28,8 +28,8 @@ public class BlackjackGame {
     }
 
     public static BlackjackGame init(final Map<PlayerName, BettingMoney> playerNameAndBettingMoney) {
-        Deck deck = Deck.init(PlayingCards.getValue());
-        List<Participant> participants = new ArrayList<>();
+        final Deck deck = Deck.init(PlayingCards.getValue());
+        final List<Participant> participants = new ArrayList<>();
         participants.add(Dealer.init(deck));
         playerNameAndBettingMoney.forEach((playerName, bettingMoney) ->
                 participants.add(Player.of(playerName, bettingMoney, deck)));
@@ -68,7 +68,7 @@ public class BlackjackGame {
     }
 
     public void playDealer() {
-        Dealer dealer = getDealer();
+        final Dealer dealer = getDealer();
         while (dealer.isDrawable()) {
             dealer.draw(deck);
         }

@@ -31,13 +31,13 @@ public class Hand {
     }
 
     private int countTotalScore() {
-        int totalScore = playingCards.stream()
+        final int totalScore = playingCards.stream()
                 .mapToInt(playingCard -> playingCard.playingCardValue().getValue())
                 .sum();
-
         if (hasAce(playingCards) && notOverToBlackjackConditionValue(totalScore)) {
             return totalScore + ACE_ADDITIONAL_VALUE;
         }
+
         return totalScore;
     }
 

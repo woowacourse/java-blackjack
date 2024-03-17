@@ -12,7 +12,7 @@ public class Scores {
     }
 
     private static Map<Integer, Score> init() {
-        Map<Integer, Score> scores = new HashMap<>();
+        final Map<Integer, Score> scores = new HashMap<>();
         for (int score = MINIMUM_SCORE_VALUE; score <= MAXIMUM_SCORE_VALUE; score++) {
             scores.put(score, new Score(score));
         }

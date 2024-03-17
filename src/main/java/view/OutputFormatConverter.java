@@ -46,6 +46,7 @@ public final class OutputFormatConverter {
         if (gameResult == LOSE) {
             return "패";
         }
+
         return "무";
     }
 }

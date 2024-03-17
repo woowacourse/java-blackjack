@@ -20,19 +20,22 @@ import static java.util.stream.Collectors.toMap;
 public class GameController {
 
     public void run() {
-        BlackjackGame blackjackGame = initGame();
-        BettingResults bettingResults = playGame(blackjackGame);
+        final BlackjackGame blackjackGame = initGame();
+        final BettingResults bettingResults = playGame(blackjackGame);
+
         OutputView.printBettingResults(bettingResults);
     }
 
     private BlackjackGame initGame() {
-        BlackjackGame blackjackGame = BlackjackGame.init(initPlayer());
+        final BlackjackGame blackjackGame = BlackjackGame.init(initPlayer());
         printInitGameStatus(blackjackGame);
+
         return blackjackGame;
     }
 
     private Map<PlayerName, BettingMoney> initPlayer() {
-        PlayerNames playerNames = inputPlayerNames();
+        final PlayerNames playerNames = inputPlayerNames();
+
         return playerNames.values()
                 .stream()
                 .collect(toMap(playerName -> playerName, this::inputBettingMoney));
@@ -40,27 +43,31 @@ public class GameController {
 
     private PlayerNames inputPlayerNames() {
         try {
-            List<String> inputPlayerNames = InputView.inputPlayerNames();
+            final List<String> inputPlayerNames = InputView.inputPlayerNames();
+
             return PlayerNames.of(inputPlayerNames);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
+
             return inputPlayerNames();
         }
     }
 
     private BettingMoney inputBettingMoney(final PlayerName playerName) {
         try {
-            int inputBettingMoney = InputView.inputBettingMoney(playerName);
+            final int inputBettingMoney = InputView.inputBettingMoney(playerName);
+
             return new BettingMoney(inputBettingMoney);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+
             return inputBettingMoney(playerName);
         }
     }
 
     private void printInitGameStatus(final BlackjackGame blackjackGame) {
-        PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
-        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
+        final PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
+        final List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
                 .stream()
                 .map(PlayerHandStatusDto::of)
                 .toList();
@@ -84,7 +91,7 @@ public class GameController {
     }
 
     private void playPlayerTurn(final BlackjackGame blackjackGame, final Player player) {
-        boolean isDraw = blackjackGame.drawPlayerIfAccept(player, inputDrawDecision(player.getPlayerName()));
+        final boolean isDraw = blackjackGame.drawPlayerIfAccept(player, inputDrawDecision(player.getPlayerName()));
         if (isDraw) {
             OutputView.printPlayerDrawStatus(PlayerHandStatusDto.of(player));
         }
@@ -102,13 +109,14 @@ public class GameController {
             return InputView.inputDrawDecision(playerName);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
+
             return inputDrawDecision(playerName);
         }
     }
 
     private void printParticipantStatusesAfterDrawing(final BlackjackGame blackjackGame) {
-        DealerHandStatusDto dealerHandStatusDto = DealerHandStatusDto.of(blackjackGame.getDealer());
-        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
+        final DealerHandStatusDto dealerHandStatusDto = DealerHandStatusDto.of(blackjackGame.getDealer());
+        final List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
                 .stream()
                 .map(PlayerHandStatusDto::of)
                 .toList();
