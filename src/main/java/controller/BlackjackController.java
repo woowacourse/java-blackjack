@@ -4,10 +4,15 @@ import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
 import domain.card.deck.CardDeck;
 import domain.card.deck.CardDeckFactory;
+import domain.participant.BettingAmount;
 import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Names;
 import domain.participant.Participants;
 import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import ui.InputView;
 import ui.OutputView;
 
@@ -21,11 +26,21 @@ public class BlackjackController {
     }
 
     public void start() {
-        Participants participants = Participants.createPlayers(inputView.readPlayerNames());
+        Participants participants = generateParticipants();
         CardDeck cardDeck = CardDeckFactory.createCardDeck(Collections::shuffle);
         BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
         GameResult gameResult = playBlackjackGame(participants, blackjackGame);
         outputView.printGameResult(gameResult);
+    }
+
+    private Participants generateParticipants() {
+        Names names = new Names(inputView.readPlayerNames());
+        List<Player> players = new ArrayList<>();
+        for (Name name : names.getNames()) {
+            BettingAmount bettingAmount = new BettingAmount(inputView.readBettingAmount(name.getValue()));
+            players.add(new Player(name, bettingAmount));
+        }
+        return new Participants(players);
     }
 
     private GameResult playBlackjackGame(Participants participants, BlackjackGame blackjackGame) {

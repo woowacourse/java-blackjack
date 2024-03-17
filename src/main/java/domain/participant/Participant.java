@@ -9,8 +9,8 @@ public abstract class Participant {
     private final Name name;
     private final Cards cards;
 
-    public Participant(String name) {
-        this.name = new Name(name);
+    public Participant(Name name) {
+        this.name = name;
         this.cards = new Cards();
     }
 
@@ -45,15 +45,15 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    public boolean isGreaterThan(int score) {
+    public boolean isGreaterThan(int score) { // todo 삭제
         return cards.isGreaterThan(score);
     }
 
-    public boolean isLessThan(int score) {
+    public boolean isLessThan(int score) { // todo 삭제
         return cards.isLessThan(score);
     }
 
-    Cards getCards() {
+    public Cards getCards() {
         return cards;
     }
 
