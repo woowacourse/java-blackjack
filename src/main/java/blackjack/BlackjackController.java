@@ -70,7 +70,7 @@ public class BlackjackController {
     }
 
     private void givePlayerMoreCardsIfWanted(final CardDeck deck, final Player player) {
-        while (player.isAlive() && inputView.askForMoreCard(player.name())) {
+        while (!player.isBusted() && inputView.askForMoreCard(player.name())) {
             deck.giveCard(player);
             outputView.printPlayerCard(player);
         }

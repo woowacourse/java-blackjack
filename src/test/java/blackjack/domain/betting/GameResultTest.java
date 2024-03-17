@@ -6,9 +6,9 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.betting.GameResult.LOSE;
+import static blackjack.domain.betting.GameResult.PLAYER_LOSE;
 import static blackjack.domain.betting.GameResult.PUSH;
-import static blackjack.domain.betting.GameResult.WIN;
+import static blackjack.domain.betting.GameResult.PLAYER_WIN;
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
@@ -38,7 +38,7 @@ public class GameResultTest {
 
         var result = GameResult.doesPlayerWin(dealer, player);
 
-        assertThat(result).isEqualTo(LOSE);
+        assertThat(result).isEqualTo(PLAYER_LOSE);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class GameResultTest {
 
         var result = GameResult.doesPlayerWin(dealer, player);
 
-        assertThat(result).isEqualTo(WIN);
+        assertThat(result).isEqualTo(PLAYER_WIN);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class GameResultTest {
 
         var result = GameResult.doesPlayerWin(dealer, player);
 
-        assertThat(result).isEqualTo(LOSE);
+        assertThat(result).isEqualTo(PLAYER_LOSE);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class GameResultTest {
 
         var result = GameResult.doesPlayerWin(dealer, player);
 
-        assertThat(result).isEqualTo(WIN);
+        assertThat(result).isEqualTo(PLAYER_WIN);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class GameResultTest {
 
         var result = GameResult.doesPlayerWin(dealer, player);
 
-        assertThat(result).isEqualTo(WIN);
+        assertThat(result).isEqualTo(PLAYER_WIN);
     }
 
     @Test

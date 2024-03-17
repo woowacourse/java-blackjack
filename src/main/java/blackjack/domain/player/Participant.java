@@ -19,8 +19,8 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public final boolean isAlive() {
-        return hand.getScore() <= BUST_CONDITION;
+    public final boolean isBusted() {
+        return hand.getScore() > BUST_CONDITION;
     }
 
     public boolean isBlackjack() {

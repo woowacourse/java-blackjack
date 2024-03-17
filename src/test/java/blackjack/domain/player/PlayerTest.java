@@ -18,8 +18,8 @@ public class PlayerTest {
                 new Card(KING, SPADE),
                 new Card(KING, HEART));
 
-        boolean isAlive = player.isAlive();
+        boolean isBusted = player.isBusted();
 
-        assertThat(isAlive).isFalse();
+        assertThat(isBusted).isTrue();
     }
 }
