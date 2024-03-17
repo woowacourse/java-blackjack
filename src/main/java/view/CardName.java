@@ -1,10 +1,10 @@
 package view;
 
-import controller.dto.dealer.DealerHandStatus;
-import controller.dto.gamer.GamerHandStatus;
+import controller.dto.dealer.DealerHand;
+import controller.dto.gamer.GamerHand;
 import domain.Card;
-import domain.Gamers;
 import domain.Hand;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,14 +41,20 @@ public enum CardName {
                 .collect(Collectors.joining(", "));
     }
 
-    public static List<GamerHandStatus> getGamerHandStatus(final Gamers gamers) {
-        return gamers.listOf().stream()
-                .map(gamer -> new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand())))
-                .toList();
+    public static List<GamerHand> getGamerHandStatus(final List<String> names, final List<Hand> hands) {
+        List<GamerHand> gamerHands = new ArrayList<>();
+
+        for (String name : names) {
+            Hand hand = hands.get(names.indexOf(name));
+            String handStatus = getHandStatusAsString(hand);
+            GamerHand gamerHand = new GamerHand(name, handStatus);
+            gamerHands.add(gamerHand);
+        }
+        return gamerHands;
     }
 
-    public static DealerHandStatus getDealerHandStatusWithHiddenCard(final Hand hand) {
-        return new DealerHandStatus(getDealerHandAfterStartGame(hand));
+    public static DealerHand getDealerHandWithHiddenCard(final Hand hand) {
+        return new DealerHand(getDealerHandAfterStartGame(hand));
     }
 
     private static String getDealerHandAfterStartGame(final Hand hand) {

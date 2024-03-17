@@ -1,10 +1,8 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
-import controller.dto.GameResult;
-import controller.dto.PlayerResult;
+import domain.constants.ProfitRate;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
@@ -27,10 +25,10 @@ class GameRuleTest {
         GameRule rule = createGameRule(gamer, dealer);
 
         // when
-        List<Boolean> isWinner = rule.judge();
+        List<ProfitRate> isWinner = rule.judge();
 
         // then
-        assertThat(isWinner).containsExactly(true);
+        assertThat(isWinner).containsExactly(ProfitRate.WIN);
     }
 
     @DisplayName("딜러의 점수가 21을 초과한 경우")
@@ -46,11 +44,11 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", bustedCardsForPlayer);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judgeGamersIfDealerBusted();
+            List<ProfitRate> gameResult = rule.judgeGamersIfDealerBusted();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(false);
+                    .containsExactly(ProfitRate.LOSE);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 승리한다.")
@@ -63,11 +61,11 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", twoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judgeGamersIfDealerBusted();
+            List<ProfitRate> gameResult = rule.judgeGamersIfDealerBusted();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(ProfitRate.WIN);
         }
     }
 
@@ -84,11 +82,11 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", blackJackThreeCards);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<ProfitRate> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(false);
+                    .containsExactly(ProfitRate.LOSE);
         }
 
         @DisplayName("참가자가 블랙잭이 아닌 경우 딜러가 승리한다.")
@@ -101,11 +99,11 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", twoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<ProfitRate> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(false);
+                    .containsExactly(ProfitRate.LOSE);
         }
     }
 
@@ -122,11 +120,11 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", blackJackTwoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<ProfitRate> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(ProfitRate.BLACKJACK);
         }
 
         @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
@@ -139,11 +137,11 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", threeCards);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<ProfitRate> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(ProfitRate.WIN);
         }
 
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
@@ -156,29 +154,12 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", twoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judge();
+            List<ProfitRate> gameResult = rule.judge();
 
             assertThat(gameResult)
                     .hasSize(1)
-                    .containsExactly(true);
+                    .containsExactly(ProfitRate.WIN);
         }
-    }
-
-    @DisplayName("게임 결과에 대한 정보를 반환한다.")
-    @Test
-    void getGameResult() {
-        Hand twoCards = createNormalWithTwoCards();
-        Hand threeCards = createNormalWithThreeCards();
-
-        Dealer dealer = new Dealer(twoCards);
-        Gamer gamer = new Gamer("pobi", threeCards);
-        GameRule rule = createGameRule(gamer, dealer);
-
-        GameResult gameResult = rule.getResultsOfGame();
-
-        assertThat(gameResult.results())
-                .extracting(PlayerResult::name, PlayerResult::isWin)
-                .containsExactly(tuple("pobi", true));
     }
 
     private GameRule createGameRule(final Gamer gamer, final Dealer dealer) {

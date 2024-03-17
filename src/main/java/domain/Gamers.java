@@ -1,56 +1,49 @@
 package domain;
 
-import controller.dto.gamer.GamerHandScore;
-import controller.dto.gamer.GamerHandStatus;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import view.CardName;
+import java.util.Map;
 
 public class Gamers {
     private final List<Gamer> gamers;
+    private final BetAmount betAmount = new BetAmount();
 
     public Gamers(final List<Gamer> gamers) {
         this.gamers = gamers;
     }
 
     public List<Gamer> listOf() {
-        return gamers;
+        return Collections.unmodifiableList(gamers);
     }
 
-    public List<GamerHandScore> getCurrentGamerHandScore() {
-        List<GamerHandStatus> gamerHandStatuses = getGamerHandStatuses();
-        List<Integer> scores = getGamerResultScore();
-
-        List<GamerHandScore> gamerHandScores = new ArrayList<>();
-        for (int i = 0; i < gamerHandStatuses.size(); i++) {
-            gamerHandScores.add(new GamerHandScore(gamerHandStatuses.get(i), scores.get(i)));
-        }
-
-        return gamerHandScores;
-    }
-
-    private List<Integer> getGamerResultScore() {
-        List<Integer> scores = new ArrayList<>();
-        for (Gamer gamer : gamers) {
-            scores.add(gamer.calculateResultScore());
-        }
-        return scores;
-    }
-
-    public List<GamerHandStatus> getGamerHandStatuses() {
-        List<GamerHandStatus> gamerHandStatuses = new ArrayList<>();
-
-        for (Gamer gamer : gamers) {
-            gamerHandStatuses.add(
-                    new GamerHandStatus(gamer.getName(), CardName.getHandStatusAsString(gamer.getHand()))
-            );
-        }
-        return gamerHandStatuses;
-    }
-
-    public List<String> getNames() {
+    public List<String> names() {
         return gamers.stream()
                 .map(Gamer::getName)
                 .toList();
+    }
+
+    public List<Hand> hands() {
+        return gamers.stream()
+                .map(Gamer::getHand)
+                .toList();
+    }
+
+    public List<Integer> scores() {
+        return gamers.stream()
+                .map(Gamer::calculateResultScore)
+                .toList();
+    }
+
+    public void saveBettingAmounts(final Map<Gamer, Integer> bettingAmounts) {
+        betAmount.save(Collections.unmodifiableMap(bettingAmounts));
+    }
+
+    public List<Integer> betAmounts() {
+        List<Integer> betAmounts = new ArrayList<>();
+        for (Gamer gamer : gamers) {
+            betAmounts.add(betAmount.getAmount(gamer));
+        }
+        return Collections.unmodifiableList(betAmounts);
     }
 }

@@ -1,15 +1,11 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
-import controller.dto.gamer.GamerHandScore;
-import controller.dto.gamer.GamerHandStatus;
-import domain.constants.Score;
-import domain.constants.Shape;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,48 +13,62 @@ class GamersTest {
     @DisplayName("게이머들의 이름 목록을 반환온다.")
     @Test
     void getGamerNames() {
-        // given
         List<Gamer> gamerList = List.of(
                 new Gamer("pobi"),
                 new Gamer("jason")
         );
         Gamers gamers = new Gamers(gamerList);
 
-        // when
-        List<String> gamerNames = gamers.getNames();
+        List<String> gamerNames = gamers.names();
 
-        // then
         assertThat(gamerNames).containsExactly("pobi", "jason");
     }
 
-    @DisplayName("게이머들이 가지고 있는 카드와 총점 정보를 반환한다.")
+    @DisplayName("게이머들의 점수 목록을 반환한다.")
     @Test
-    void getCurrentGamerHandScore() {
-        // given
+    void getGamerScores() {
         List<Gamer> gamerList = List.of(
-                new Gamer("pobi", createNormalWithTwoCards())
+                new Gamer("pobi"),
+                new Gamer("jason")
         );
         Gamers gamers = new Gamers(gamerList);
 
-        // when
-        List<GamerHandScore> gamerHandScores = gamers.getCurrentGamerHandScore();
-        GamerHandScore pobiHandScore = gamerHandScores.get(0);
-        GamerHandStatus pobiHandStatus = pobiHandScore.gamerHandStatus();
+        List<Integer> scores = gamers.scores();
 
-        // then
-        assertAll(
-                () -> assertThat(pobiHandStatus.name()).isEqualTo("pobi"),
-                () -> assertThat(pobiHandStatus.hands()).isEqualTo("10클로버, A다이아몬드"),
-                () -> assertThat(pobiHandScore.score()).isEqualTo(21)
-        );
+        assertThat(scores).containsExactly(0, 0);
     }
 
-    private Hand createNormalWithTwoCards() {
-        Hand hand = new Hand();
-        hand.saveCards(new ArrayList<>(Arrays.asList(
-                new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.ACE, Shape.DIAMOND)
-        )));
-        return hand;
+    @DisplayName("게이머들의 베팅 금액을 저장한다.")
+    @Test
+    void saveBettingAmounts() {
+        List<Gamer> gamerList = List.of(
+                new Gamer("pobi"),
+                new Gamer("jason")
+        );
+        Gamers gamers = new Gamers(gamerList);
+        Map<Gamer, Integer> bettingAmounts = new HashMap<>();
+        bettingAmounts.put(gamerList.get(0), 10000);
+        bettingAmounts.put(gamerList.get(1), 10000);
+
+        assertThatCode(() -> gamers.saveBettingAmounts(bettingAmounts))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("게이머들의 베팅 금액 목록을 반환한다.")
+    @Test
+    void getBettingAmounts() {
+        List<Gamer> gamerList = List.of(
+                new Gamer("pobi"),
+                new Gamer("jason")
+        );
+        Gamers gamers = new Gamers(gamerList);
+        Map<Gamer, Integer> bettingAmounts = new HashMap<>();
+        bettingAmounts.put(gamerList.get(0), 10000);
+        bettingAmounts.put(gamerList.get(1), 10000);
+        gamers.saveBettingAmounts(bettingAmounts);
+
+        List<Integer> betAmounts = gamers.betAmounts();
+
+        assertThat(betAmounts).containsExactly(10000, 10000);
     }
 }

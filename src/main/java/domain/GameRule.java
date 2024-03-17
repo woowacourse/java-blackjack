@@ -1,11 +1,12 @@
 package domain;
 
-import controller.dto.GameResult;
-import controller.dto.PlayerResult;
+import domain.constants.ProfitRate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameRule {
+    private static final int TWO_CARDS_IN_HAND = 2;
+
     private final Dealer dealer;
     private final Gamers gamers;
 
@@ -14,46 +15,80 @@ public class GameRule {
         this.gamers = gamers;
     }
 
-    public List<Boolean> judge() {
+    public List<ProfitRate> judge() {
         if (dealer.isBusted()) {
             return judgeGamersIfDealerBusted();
         }
 
-        List<Boolean> gameResult = new ArrayList<>();
-        for (Player player : gamers.listOf()) {
-            checkWinner(player, gameResult);
-        }
-        return gameResult;
-    }
-
-    private void checkWinner(final Player player, final List<Boolean> gameResult) {
-        if (player.isBusted()) {
-            gameResult.add(false);
-            return;
-        }
-        if (player.hasSameScoreAs(dealer)) {
-            gameResult.add(player.hasLessCardThan(dealer));
-            return;
-        }
-        gameResult.add(player.hasMoreScoreThan(dealer));
-    }
-
-    public List<Boolean> judgeGamersIfDealerBusted() {
-        List<Boolean> gameResult = new ArrayList<>();
+        List<ProfitRate> gameResult = new ArrayList<>();
         for (Gamer gamer : gamers.listOf()) {
-            gameResult.add(!gamer.isBusted());
+            checkWinner(gamer, gameResult);
         }
+
         return gameResult;
     }
 
-    public GameResult getResultsOfGame() {
-        List<Boolean> results = judge();
-        List<String> names = gamers.getNames();
-
-        List<PlayerResult> playerResults = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            playerResults.add(new PlayerResult(names.get(i), results.get(i)));
+    public List<ProfitRate> judgeGamersIfDealerBusted() {
+        List<ProfitRate> gameResult = new ArrayList<>();
+        for (Gamer gamer : gamers.listOf()) {
+            gameResult.add(getProfitRateWhenDealerBusted(gamer));
         }
-        return new GameResult(playerResults);
+
+        return gameResult;
+    }
+
+    private ProfitRate getProfitRateWhenDealerBusted(final Gamer gamer) {
+        if (gamer.isBusted()) {
+            return ProfitRate.LOSE;
+        }
+
+        if (gamer.isBlackjack()) {
+            return getProfitRateByBlackJackCardCount(gamer);
+        }
+
+        return ProfitRate.WIN;
+    }
+
+    private ProfitRate getProfitRateByBlackJackCardCount(final Gamer gamer) {
+        if (gamer.getHandSize() == TWO_CARDS_IN_HAND) {
+            return ProfitRate.BLACKJACK;
+        }
+        return ProfitRate.WIN;
+    }
+
+    private void checkWinner(final Gamer gamer, final List<ProfitRate> gameResult) {
+        if (gamer.isBusted()) {
+            gameResult.add(ProfitRate.LOSE);
+            return;
+        }
+
+        if (gamer.hasSameScoreAs(dealer)) {
+            gameResult.add(getProfitRateByCardCount(gamer));
+            return;
+        }
+
+        if (gamer.isBlackjack()) {
+            gameResult.add(getProfitRateByBlackJackCardCount(gamer));
+            return;
+        }
+
+        if (gamer.hasMoreScoreThan(dealer)) {
+            gameResult.add(ProfitRate.WIN);
+            return;
+        }
+
+        gameResult.add(ProfitRate.LOSE);
+    }
+
+    private ProfitRate getProfitRateByCardCount(final Gamer gamer) {
+        if (gamer.hasLessCardThan(dealer)) {
+            return ProfitRate.WIN;
+        }
+
+        if (gamer.hasMoreCardThan(dealer)) {
+            return ProfitRate.LOSE;
+        }
+
+        return ProfitRate.PUSH;
     }
 }
