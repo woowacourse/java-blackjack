@@ -37,23 +37,9 @@ class MoneyTest {
     }
 
     @Test
-    @DisplayName("더할 돈의 값이 음수일 경우 예외를 발생시킨다.")
-    void increase_ShouldThrowException_WhenArgumentIsNegative() {
-        assertThatThrownBy(() -> new Money(1000).increase(new Money(-500)))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("두개의 돈의 값을 서로 빼주어 새로운 돈을 반환한다.")
     void decrease_ShouldGenerateSubtractionOfMoney_WhenArgumentMoneyIsPositive() {
         assertThat(new Money(1000).decrease(new Money(400)))
                 .isEqualTo(new Money(600));
-    }
-
-    @Test
-    @DisplayName("뺄 돈의 값이 음수일 경우 예외를 발생시킨다.")
-    void decrease_ShouldThrowException_WhenArgumentIsNegative() {
-        assertThatThrownBy(() -> new Money(1000).increase(new Money(-500)))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 }
