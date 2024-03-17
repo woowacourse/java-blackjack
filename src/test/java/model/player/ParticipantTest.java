@@ -16,22 +16,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParticipantTest {
 
-    @DisplayName("참가자의 수가 1명 미만이면 예외가 발생한다.")
-    @Test
-    void validateUnderOneParticipant() {
-        assertThatThrownBy(() -> new Participants(List.of()))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("카드의 합이 21이하일 때는 참을 반환한다.")
     @Test
-    void noticeTrue() {
+    void isHitTrue() {
         Participant participant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.TEN),
                 Card.of(Suit.SPACE, Denomination.KING))),
@@ -42,7 +34,7 @@ class ParticipantTest {
 
     @DisplayName("카드의 합이 21초과일 때는 거짓을 반환한다.")
     @Test
-    void noticeFalse() {
+    void isHitFalse() {
         Participant participant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.TEN),
                 Card.of(Suit.SPACE, Denomination.KING))),
@@ -70,15 +62,16 @@ class ParticipantTest {
     }
 
     static Stream<Arguments> createParticipant() {
-        Participant overThresholdParticipant = new Participant(new Cards(List.of(
-                Card.of(Suit.SPACE, Denomination.EIGHT),
-                Card.of(Suit.CLOVER, Denomination.NINE))),
-                new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
         Participant underThresholdParticipant = new Participant(new Cards(List.of(
-                Card.of(Suit.SPACE, Denomination.EIGHT),
-                Card.of(Suit.CLOVER, Denomination.NINE))),
+                Card.of(Suit.HEART, Denomination.TEN),
+                Card.of(Suit.CLOVER, Denomination.TEN))),
                 new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
-        overThresholdParticipant.addCard(Card.of(Suit.HEART, Denomination.NINE));
+
+        Participant overThresholdParticipant = new Participant(new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.KING),
+                Card.of(Suit.CLOVER, Denomination.KING))),
+                new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
+        overThresholdParticipant.addCard(Card.of(Suit.HEART, Denomination.TWO));
         return Stream.of(Arguments.of(
                 underThresholdParticipant,
                 overThresholdParticipant
@@ -91,8 +84,8 @@ class ParticipantTest {
     void findOutcomeLose(Participant participant) {
         Dealer dealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.SPACE, Denomination.KING),
-                        Card.of(Suit.SPACE, Denomination.JACK))));
+                        Card.of(Suit.SPACE, Denomination.TEN),
+                        Card.of(Suit.SPACE, Denomination.ACE))));
         Outcome playerOutcome = participant.findOutcome(dealer);
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.LOSE);
@@ -101,14 +94,14 @@ class ParticipantTest {
     static Stream<Arguments> createDealer() {
         Dealer underThresholdDealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.SPACE, Denomination.EIGHT),
-                        Card.of(Suit.CLOVER, Denomination.NINE))));
+                        Card.of(Suit.HEART, Denomination.TEN),
+                        Card.of(Suit.CLOVER, Denomination.TEN))));
 
         Dealer overThresholdDealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.SPACE, Denomination.EIGHT),
-                        Card.of(Suit.CLOVER, Denomination.NINE))));
-        overThresholdDealer.addCard(Card.of(Suit.HEART, Denomination.NINE));
+                        Card.of(Suit.SPACE, Denomination.KING),
+                        Card.of(Suit.CLOVER, Denomination.KING))));
+        overThresholdDealer.addCard(Card.of(Suit.HEART, Denomination.TWO));
 
         return Stream.of(Arguments.of(
                 underThresholdDealer,
@@ -121,8 +114,8 @@ class ParticipantTest {
     @MethodSource("createDealer")
     void findOutcomeWin(Dealer dealer) {
         Participant participant = new Participant(new Cards(List.of(
-                Card.of(Suit.SPACE, Denomination.KING),
-                Card.of(Suit.SPACE, Denomination.JACK))),
+                Card.of(Suit.SPACE, Denomination.TEN),
+                Card.of(Suit.SPACE, Denomination.ACE))),
                 new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
         Outcome playerOutcome = participant.findOutcome(dealer);
 
