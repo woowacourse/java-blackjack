@@ -111,3 +111,11 @@
 - [x] Cards 클래스 분리 -> Deck, Hand
   - [x] Deck
   - [x] Hand
+- [ ] 가짜중복으로 인한 BlackjackViewParser의 View 공통 메서드 분리
+- [ ] NPE 처리
+- [ ] Deck 생성 로직 이동 CardMachine -> Deck
+  - [ ] EnumSet 대신 values() 사용 [참고](https://github.com/woowacourse/java-blackjack/pull/652#discussion_r1518824698)
+- [x] Name NPE 예외 처리
+- [ ] 상태 패턴 적용(Optional)
+  - [ ] Dealer.hasSoftAce 필드 삭제
+
