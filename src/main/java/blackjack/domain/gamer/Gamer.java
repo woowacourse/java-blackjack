@@ -7,7 +7,6 @@ import blackjack.domain.money.Chip;
 import java.util.List;
 
 public class Gamer {
-
     private final Hand hand;
     private final Chip chip;
 
