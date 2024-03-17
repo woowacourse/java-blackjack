@@ -33,6 +33,15 @@ public class PlayersProfit {
         });
     }
 
+    public Profit dealerProfit() {
+        return playersProfit().multiply(-1);
+    }
+
+    private Profit playersProfit() {
+        return profits.values().stream()
+                .reduce(new Profit(0), Profit::add);
+    }
+
     public Map<Player, Profit> getProfits() {
         return Map.copyOf(profits);
     }

@@ -51,4 +51,24 @@ class PlayersProfitTest {
                 PlayerFixture.createJason(), new Profit(-20000)
         ));
     }
+
+    @DisplayName("딜러의 수익은 플레이어들이 잃은 금액에서 얻은 금액을 제한 금액이다.")
+    @Test
+    void testDealerProfit() {
+        // given
+        Map<Player, Profit> profits = new HashMap<>();
+        profits.put(PlayerFixture.createPobi(), new Profit(10000));
+        profits.put(PlayerFixture.createJason(), new Profit(20000));
+        PlayersProfit2 playersProfit = new PlayersProfit2(profits);
+
+        Dealer dealer = DealerFixture.createDealer();
+
+        playersProfit.calculate(dealer);
+
+        // when
+        Profit dealerProfit = playersProfit.dealerProfit();
+
+        // then
+        assertThat(dealerProfit).isEqualTo(new Profit(10000));
+    }
 }
