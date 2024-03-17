@@ -25,7 +25,7 @@ public enum GameResult {
     public static GameResult judge(Dealer dealer, Player player) {
         return Arrays.stream(values())
                 .filter(gameResult -> gameResult.biPredicate.test(dealer, player))
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new NoSuchElementException("[INTERNAL ERROR] 게임 결과를 판정할 수 없습니다"));
     }
 
