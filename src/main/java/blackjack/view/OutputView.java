@@ -30,7 +30,7 @@ public class OutputView {
         Map<Player, Integer> playerResults = result.getResults();
         int dealerEarning = result.calculateDealerEarning();
 
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         System.out.println(dealerEarningMessageBuilder(dealer, dealerEarning));
         System.out.print(playerResultsMessageBuilder(playerResults));
     }
