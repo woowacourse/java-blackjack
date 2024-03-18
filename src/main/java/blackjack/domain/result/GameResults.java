@@ -14,7 +14,7 @@ public class GameResults {
         this(new HashMap<>());
     }
 
-    public GameResults(Map<Gamer, GameResult> gameResults) {
+    public GameResults(final Map<Gamer, GameResult> gameResults) {
         this.gameResults = gameResults;
     }
 
@@ -26,6 +26,10 @@ public class GameResults {
         return -calculatePlayersProfit(bettings);
     }
 
+    public int calculatePlayerProfit(final Player player, final Bettings bettings) {
+        return calculateGamerProfit(player, bettings);
+    }
+
     private int calculatePlayersProfit(final Bettings bettings) {
         return gameResults.keySet().stream()
                 .filter(gamer -> gamer.getClass() == Player.class)
@@ -34,8 +38,7 @@ public class GameResults {
                 .sum();
     }
 
-    // TODO: 네이밍이 조금 이상해서 수정해야함
-    public int calculateGamerProfit(final Gamer gamer, final Bettings bettings) {
+    private int calculateGamerProfit(final Gamer gamer, final Bettings bettings) {
         return bettings.calculateProfit(gamer, gameResults.get(gamer));
     }
 }
