@@ -13,7 +13,7 @@ public class ProfitAmountTest {
         ProfitAmount first = new ProfitAmount(0);
         ProfitAmount second = new ProfitAmount(1);
 
-        assertThat(first.add(second).getValue()).isEqualTo(1);
+        assertThat(first.add(second).getAmount()).isEqualTo(1);
     }
 
     @DisplayName("수익은 가지고 있는 값에 음수를 붙여 반환할 수 있다")
@@ -21,6 +21,6 @@ public class ProfitAmountTest {
     public void inverse() {
         ProfitAmount profitAmount = new ProfitAmount(1000);
 
-        assertThat(profitAmount.inverse().getValue()).isEqualTo(-1000);
+        assertThat(profitAmount.inverse().getAmount()).isEqualTo(-1000);
     }
 }

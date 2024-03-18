@@ -32,7 +32,7 @@ public class Hand {
     private Score calculateDefaultScore() {
         return cards.stream()
                 .map(Card::getScore)
-                .reduce(Score.base(), Score::add);
+                .reduce(Score.getZero(), Score::add);
     }
 
     public Hand add(Card card) {

@@ -44,14 +44,14 @@ public class InputView {
     }
 
     public PlayerBetAmounts readBetAmount(List<Name> playerNames) {
-        Map<Name, BetAmount> playersBetMoney = new LinkedHashMap<>();
+        Map<Name, BetAmount> playersBetAmounts = new LinkedHashMap<>();
         for (Name playerName : playerNames) {
             System.out.println(String.format(LINE_SEPARATOR + "%s의 베팅 금액은?", playerName.getName()));
-            String inputBetMoney = readLine();
-            Integer parsedAmountOfBet = parseToInt(inputBetMoney);
-            playersBetMoney.put(playerName, new BetAmount(parsedAmountOfBet));
+            String inputBetAmount = readLine();
+            Integer parseBetAmount = parseToInt(inputBetAmount);
+            playersBetAmounts.put(playerName, new BetAmount(parseBetAmount));
         }
-        return new PlayerBetAmounts(playersBetMoney);
+        return new PlayerBetAmounts(playersBetAmounts);
     }
 
     private Integer parseToInt(String input) {

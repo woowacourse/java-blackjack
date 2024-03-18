@@ -14,6 +14,6 @@ public class ProfitAmountDetailsTest {
         PlayerProfitAmounts playerProfitAmounts = new PlayerProfitAmounts(
                 Map.of(new Name("이상"), new ProfitAmount(1000)));
 
-        assertThat(playerProfitAmounts.calculateDealerProfit().getValue()).isEqualTo(-1000);
+        assertThat(playerProfitAmounts.calculateDealerProfit().getAmount()).isEqualTo(-1000);
     }
 }

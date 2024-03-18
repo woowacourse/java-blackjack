@@ -37,7 +37,7 @@ public class BlackjackGameConsole {
         dealer = proceedDealerTurn(dealer, deck);
         outputView.printParticipantResult(players, dealer);
 
-        return playerBetAmounts.calculateProfit(players, dealer);
+        return PlayerProfitAmounts.calculateProfit(players, dealer, playerBetAmounts);
     }
 
     private Players initializePlayers(List<Name> playerNames, Deck deck) {
