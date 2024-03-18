@@ -21,7 +21,7 @@ public class Card {
     }
 
     public String asString() {
-        return cardNumber.getSign() + shape.getShape();
+        return cardNumber.getSign() + shape.getValue();
     }
 
     @Override

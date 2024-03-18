@@ -4,18 +4,18 @@ public enum Shape {
 
     SPADE("스페이드"), DIAMONDS("다이아몬드"), HEART("하트"), CLUB("클로버");
 
-    private final String shape;
+    private final String value;
 
-    Shape(String shape) {
-        this.shape = shape;
+    Shape(String value) {
+        this.value = value;
     }
 
-    public String getShape() {
-        return shape;
+    public String getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return "Shape{" + "shape='" + shape + '\'' + '}';
+        return "Shape{" + "shape='" + value + '\'' + '}';
     }
 }

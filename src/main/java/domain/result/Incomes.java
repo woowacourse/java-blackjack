@@ -22,7 +22,7 @@ public class Incomes {
     public Income dealerIncome(Dealer dealer) {
         int sumOfPlayerIncome = players.stream()
                 .map(player -> determineIncome(dealer.decideStatus(player), player.getBetAmount()))
-                .mapToInt(Income::getIncome)
+                .mapToInt(Income::getValue)
                 .sum();
         return new Income(-sumOfPlayerIncome);
     }
@@ -39,13 +39,13 @@ public class Incomes {
 
     public Income determineIncome(Status status, BetAmount betAmount) {
         if (status == Status.WIN) {
-            return new Income(betAmount.getBetAmount());
+            return new Income(betAmount.getValue());
         }
         if (status == Status.LOSE) {
-            return new Income(-betAmount.getBetAmount());
+            return new Income(-betAmount.getValue());
         }
         if (status == Status.WIN_BLACKJACK) {
-            return new Income((int) Math.round(1.5 * betAmount.getBetAmount()));
+            return new Income((int) Math.round(1.5 * betAmount.getValue()));
         }
         return new Income(0);
     }

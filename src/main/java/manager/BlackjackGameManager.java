@@ -92,6 +92,6 @@ public class BlackjackGameManager {
     }
 
     private void printFinalIncomes(Income dealerIncome, Map<Player, Income> playersIncomes) {
-        printIncomes(dealerIncome.getIncome(), playersIncomes);
+        printIncomes(dealerIncome.getValue(), playersIncomes);
     }
 }

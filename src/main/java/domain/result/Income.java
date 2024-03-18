@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class Income {
 
-    private final int income;
+    private final int value;
 
-    public Income(int income) {
-        this.income = income;
+    public Income(int value) {
+        this.value = value;
     }
 
-    public int getIncome() {
-        return income;
+    public int getValue() {
+        return value;
     }
 
     @Override
@@ -19,18 +19,18 @@ public class Income {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Income income1 = (Income) o;
-        return income == income1.income;
+        return value == income1.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(income);
+        return Objects.hash(value);
     }
 
     @Override
     public String toString() {
         return "Income{" +
-                "income=" + income +
+                "income=" + value +
                 '}';
     }
 }

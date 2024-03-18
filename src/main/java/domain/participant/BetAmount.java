@@ -4,18 +4,18 @@ import java.util.Objects;
 
 public class BetAmount {
 
-    private final int betAmount;
+    private final int value;
 
-    public BetAmount(int betAmount) {
-        this.betAmount = betAmount;
+    public BetAmount(int value) {
+        this.value = value;
     }
 
-    public BetAmount(String betAmount) {
-        this.betAmount = Integer.parseInt(betAmount);
+    public BetAmount(String value) {
+        this.value = Integer.parseInt(value);
     }
 
-    public int getBetAmount() {
-        return betAmount;
+    public int getValue() {
+        return value;
     }
 
     @Override
@@ -23,18 +23,18 @@ public class BetAmount {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BetAmount betAmount1 = (BetAmount) o;
-        return betAmount == betAmount1.betAmount;
+        return value == betAmount1.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(betAmount);
+        return Objects.hash(value);
     }
 
     @Override
     public String toString() {
         return "BetAmount{" +
-                "betAmount=" + betAmount +
+                "betAmount=" + value +
                 '}';
     }
 }

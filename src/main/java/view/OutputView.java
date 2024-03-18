@@ -80,6 +80,6 @@ public class OutputView {
         System.out.println();
         System.out.println("최종 수익");
         System.out.println("딜러: " + dealerIncome);
-        playersIncomes.forEach((key, value) -> System.out.println(key.getPlayerName().asString() + ": " + value.getIncome()));
+        playersIncomes.forEach((key, value) -> System.out.println(key.getPlayerName().asString() + ": " + value.getValue()));
     }
 }
