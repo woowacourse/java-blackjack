@@ -2,7 +2,7 @@ package model.card;
 
 public enum Suit {
     SPACE,
-    CLOVER,
+    ClUBS,
     HEART,
     DIAMOND,
     ;

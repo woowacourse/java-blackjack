@@ -33,7 +33,7 @@ class ParticipantTest {
                 Card.of(Suit.SPACE, Denomination.TEN),
                 Card.of(Suit.SPACE, Denomination.KING))),
                 new ParticipantProfile(new Name("배키"), new GameMoney(1000)));
-        participant.addCard(Card.of(Suit.CLOVER, Denomination.THREE));
+        participant.addCard(Card.of(Suit.ClUBS, Denomination.THREE));
 
         assertTrue(participant.isNotHit());
     }

@@ -41,7 +41,7 @@ class UserTest {
                 Card.of(Suit.SPACE, Denomination.NINE),
                 Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
-        Card card = Card.of(Suit.CLOVER, Denomination.EIGHT);
+        Card card = Card.of(Suit.ClUBS, Denomination.EIGHT);
         user.addCard(card);
         assertThat(user.cards().cards()).hasSize(3);
     }
@@ -53,8 +53,8 @@ class UserTest {
                 Card.of(Suit.SPACE, Denomination.NINE),
                 Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
-        user.addCard(Card.of(Suit.CLOVER, Denomination.EIGHT));
-        user.addCard(Card.of(Suit.CLOVER, Denomination.FIVE));
+        user.addCard(Card.of(Suit.ClUBS, Denomination.EIGHT));
+        user.addCard(Card.of(Suit.ClUBS, Denomination.FIVE));
 
         assertThat(user.cards().cards()).hasSize(4);
     }

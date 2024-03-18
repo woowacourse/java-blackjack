@@ -30,7 +30,7 @@ class DealerTest {
         Dealer dealer = new Dealer(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.NINE),
                 Card.of(Suit.SPACE, Denomination.TWO))));
-        dealer.addCard(Card.of(Suit.CLOVER, Denomination.NINE));
+        dealer.addCard(Card.of(Suit.ClUBS, Denomination.NINE));
 
         assertFalse(dealer.isHit());
     }

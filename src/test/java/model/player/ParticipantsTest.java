@@ -118,8 +118,8 @@ class ParticipantsTest {
 
         Dealer dealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.CLOVER, Denomination.JACK),
-                        Card.of(Suit.CLOVER, Denomination.KING))));
+                        Card.of(Suit.ClUBS, Denomination.JACK),
+                        Card.of(Suit.ClUBS, Denomination.KING))));
 
         Map<Name, Integer> result = participants.matchNameAndRevenues(dealer);
         Map<Name, Integer> expected = Map.of(new Name("켬미"), 1500, new Name("배키"), 1500);
@@ -141,8 +141,8 @@ class ParticipantsTest {
 
         Dealer dealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.CLOVER, Denomination.ACE),
-                        Card.of(Suit.CLOVER, Denomination.TEN))));
+                        Card.of(Suit.ClUBS, Denomination.ACE),
+                        Card.of(Suit.ClUBS, Denomination.TEN))));
 
         Map<Name, Integer> result = participants.matchNameAndRevenues(dealer);
         Map<Name, Integer> expected = Map.of(new Name("켬미"), 0, new Name("배키"), 0);
@@ -152,8 +152,8 @@ class ParticipantsTest {
     static Stream<Arguments> createDealer() {
         Dealer underThresholdDealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.CLOVER, Denomination.NINE),
-                        Card.of(Suit.CLOVER, Denomination.TEN))));
+                        Card.of(Suit.ClUBS, Denomination.NINE),
+                        Card.of(Suit.ClUBS, Denomination.TEN))));
 
         Dealer overThresholdDealer = new Dealer(
                 new Cards(List.of(
@@ -191,12 +191,12 @@ class ParticipantsTest {
     void matchNameAndRevenuesLose() {
         Participant underThresholdParticipant = new Participant(new Cards(List.of(
                 Card.of(Suit.HEART, Denomination.TEN),
-                Card.of(Suit.CLOVER, Denomination.TEN))),
+                Card.of(Suit.ClUBS, Denomination.TEN))),
                 new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
 
         Participant overThresholdParticipant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.KING),
-                Card.of(Suit.CLOVER, Denomination.KING))),
+                Card.of(Suit.ClUBS, Denomination.KING))),
                 new ParticipantProfile(new Name("배키"), new GameMoney(1000)));
         overThresholdParticipant.addCard(Card.of(Suit.HEART, Denomination.TWO));
 
@@ -204,8 +204,8 @@ class ParticipantsTest {
 
         Dealer dealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.CLOVER, Denomination.ACE),
-                        Card.of(Suit.CLOVER, Denomination.KING))));
+                        Card.of(Suit.ClUBS, Denomination.ACE),
+                        Card.of(Suit.ClUBS, Denomination.KING))));
 
         Map<Name, Integer> result = participants.matchNameAndRevenues(dealer);
         Map<Name, Integer> expected = Map.of(new Name("켬미"), -1000, new Name("배키"), -1000);
@@ -227,8 +227,8 @@ class ParticipantsTest {
 
         Dealer dealer = new Dealer(
                 new Cards(List.of(
-                        Card.of(Suit.CLOVER, Denomination.JACK),
-                        Card.of(Suit.CLOVER, Denomination.TEN))));
+                        Card.of(Suit.ClUBS, Denomination.JACK),
+                        Card.of(Suit.ClUBS, Denomination.TEN))));
 
         Map<Name, Integer> result = participants.matchNameAndRevenues(dealer);
         Map<Name, Integer> expected = Map.of(new Name("켬미"), 0, new Name("배키"), 0);

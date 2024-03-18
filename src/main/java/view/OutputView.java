@@ -105,7 +105,7 @@ public class OutputView {
         if (suit == Suit.SPACE) {
             return "스페이드";
         }
-        if (suit == Suit.CLOVER) {
+        if (suit == Suit.ClUBS) {
             return "클로버";
         }
         if (suit == Suit.HEART) {

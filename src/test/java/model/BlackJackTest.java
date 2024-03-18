@@ -60,8 +60,8 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(firstParticipant, secondParticipant));
 
         Dealer dealer = new Dealer(new Cards(List.of(
-                Card.of(Suit.CLOVER, Denomination.TEN),
-                Card.of(Suit.CLOVER, Denomination.NINE))));
+                Card.of(Suit.ClUBS, Denomination.TEN),
+                Card.of(Suit.ClUBS, Denomination.NINE))));
 
         BlackJack blackJack = new BlackJack(participants, dealer, new CardDeck(Card.createCardDeck()));
 
@@ -82,8 +82,8 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(firstParticipant, secondParticipant));
 
         Dealer dealer = new Dealer(new Cards(List.of(
-                Card.of(Suit.CLOVER, Denomination.TEN),
-                Card.of(Suit.CLOVER, Denomination.JACK))));
+                Card.of(Suit.ClUBS, Denomination.TEN),
+                Card.of(Suit.ClUBS, Denomination.JACK))));
 
         BlackJack blackJack = new BlackJack(participants, dealer, new CardDeck(Card.createCardDeck()));
 
@@ -104,8 +104,8 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(firstParticipant, secondParticipant));
 
         Dealer dealer = new Dealer(new Cards(List.of(
-                Card.of(Suit.CLOVER, Denomination.TEN),
-                Card.of(Suit.CLOVER, Denomination.JACK))));
+                Card.of(Suit.ClUBS, Denomination.TEN),
+                Card.of(Suit.ClUBS, Denomination.JACK))));
 
         BlackJack blackJack = new BlackJack(participants, dealer, new CardDeck(Card.createCardDeck()));
 
@@ -126,8 +126,8 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(firstParticipant, secondParticipant));
 
         Dealer dealer = new Dealer(new Cards(List.of(
-                Card.of(Suit.CLOVER, Denomination.TEN),
-                Card.of(Suit.CLOVER, Denomination.JACK))));
+                Card.of(Suit.ClUBS, Denomination.TEN),
+                Card.of(Suit.ClUBS, Denomination.JACK))));
 
         BlackJack blackJack = new BlackJack(participants, dealer, new CardDeck(Card.createCardDeck()));
 
