@@ -14,10 +14,6 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
-        return new Players(mapToPlayers(names));
-    }
-
     public void forEach(Consumer<? super Player> action) {
         players.forEach(action);
     }
@@ -39,12 +35,5 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    private static List<Player> mapToPlayers(final List<String> names) {
-        return names.stream()
-                .map(String::trim)
-                .map(name -> new Player(new Name(name), Hands.createEmptyHands()))
-                .toList();
     }
 }

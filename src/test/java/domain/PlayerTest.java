@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.BetAmountFixture.betAmount10_000;
 import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.bustHands;
 import static domain.HandsTestFixture.sum18Size2;
@@ -8,7 +9,6 @@ import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size2;
 
 import domain.card.CardDeck;
-import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Hands;
 import domain.participant.Name;
@@ -22,18 +22,14 @@ class PlayerTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        final Hands hands = Hands.createEmptyHands();
-        Assertions.assertThatCode(() -> new Player(new Name("pobi"), hands))
+        Assertions.assertThatCode(() -> new Player(new Name("pobi"), Hands.createEmptyHands(), betAmount10_000))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("참여자 이름이 딜러이면 예외가 발생한다.")
     void validateName() {
-        final Name name = new Name("딜러");
-        final Hands hands = Hands.createEmptyHands();
-
-        Assertions.assertThatThrownBy(() -> new Player(name, hands))
+        Assertions.assertThatThrownBy(() -> new Player(new Name("딜러"), Hands.createEmptyHands(), betAmount10_000))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 사용할 수 없는 이름입니다.");
     }
@@ -43,8 +39,7 @@ class PlayerTest {
     void winBlackJack() {
         // given
         final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
-        final BetAmount betAmount = new BetAmount(10_000);
-        final Player player = new Player(new Name("제제"), blackJack, betAmount);
+        final Player player = new Player(new Name("제제"), blackJack, betAmount10_000);
 
         // when
         final Profit profit = player.calculateProfitBy(dealer);
@@ -58,8 +53,7 @@ class PlayerTest {
     void win() {
         // given
         final Dealer dealer = new Dealer(CardDeck.generate(), sum18Size2);
-        final BetAmount betAmount = new BetAmount(10_000);
-        final Player player = new Player(new Name("제제"), sum20Size3, betAmount);
+        final Player player = new Player(new Name("제제"), sum20Size3, betAmount10_000);
 
         // when
         final Profit profit = player.calculateProfitBy(dealer);
@@ -73,8 +67,7 @@ class PlayerTest {
     void lose() {
         // given
         final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
-        final BetAmount betAmount = new BetAmount(10_000);
-        final Player player = new Player(new Name("제제"), bustHands, betAmount);
+        final Player player = new Player(new Name("제제"), bustHands, betAmount10_000);
 
         // when
         final Profit profit = player.calculateProfitBy(dealer);
@@ -87,8 +80,7 @@ class PlayerTest {
     @Test
     void tie() {
         final Dealer dealer = new Dealer(CardDeck.generate(), sum21Size2);
-        final BetAmount betAmount = new BetAmount(10_000);
-        final Player player = new Player(new Name("제제"), sum21Size2, betAmount);
+        final Player player = new Player(new Name("제제"), sum21Size2, betAmount10_000);
 
         // when
         final Profit profit = player.calculateProfitBy(dealer);

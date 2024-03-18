@@ -9,12 +9,6 @@ public class Player extends Participant {
 
     private final BetAmount betAmount;
 
-    public Player(final Name name, final Hands hands) {
-        super(name, hands);
-        validateName(name);
-        this.betAmount = new BetAmount(100);
-    }
-
     public Player(final Name name, final Hands hands, final BetAmount betAmount) {
         super(name, hands);
         validateName(name);
