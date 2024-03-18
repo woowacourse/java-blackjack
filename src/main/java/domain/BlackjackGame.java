@@ -36,7 +36,7 @@ public class BlackjackGame {
         }
     }
 
-    private void checkBlackjack(Player player) {
+    private void checkBlackjack(final Player player) {
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             player.revenue(ResultProfitRatio.BLACKJACK);
         }

@@ -9,7 +9,7 @@ public enum CardPhrase {
     private final String phrase;
     private final CardNumber cardNumber;
 
-    CardPhrase(String phrase, CardNumber cardNumber) {
+    CardPhrase(final String phrase, final CardNumber cardNumber) {
         this.phrase = phrase;
         this.cardNumber = cardNumber;
     }
