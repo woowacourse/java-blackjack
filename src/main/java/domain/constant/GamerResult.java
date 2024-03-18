@@ -53,7 +53,7 @@ public enum GamerResult {
         return GamerResult.DRAW;
     }
 
-    public double getProfitRatio() {
-        return profitRatio;
+    public double getGamerProfit(int betAmount) {
+        return profitRatio * betAmount;
     }
 }

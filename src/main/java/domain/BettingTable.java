@@ -18,7 +18,7 @@ public class BettingTable {
         totalResult.forEach((key, value) ->
                 totalProfit.put(
                         key,
-                        bettingAmounts.get(key).getAmount() * value.getProfitRatio()
+                        value.getGamerProfit(bettingAmounts.get(key).getAmount())
                 ));
         totalProfit.put(GamerIdentifier.DEALER_IDENTIFIER, getDealerProfit(totalProfit));
         return totalProfit;
