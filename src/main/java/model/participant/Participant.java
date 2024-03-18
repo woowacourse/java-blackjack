@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
-import model.card.Score;
 import model.game.action.CheckAction;
 import model.game.action.HitAction;
 
@@ -30,8 +29,7 @@ public abstract class Participant implements HitAction, CheckAction {
 
     @Override
     public boolean isBlackjack() {
-        Score score = cards.score();
-        return cardSize() == 2 && score.is21();
+        return cards.isBlackjack();
     }
 
     @Override
@@ -41,8 +39,7 @@ public abstract class Participant implements HitAction, CheckAction {
 
     @Override
     public boolean isBurst() {
-        Score score = cards.score();
-        return score.isOver21();
+        return cards.isBurst();
     }
 
     public int cardSize() {
@@ -50,7 +47,7 @@ public abstract class Participant implements HitAction, CheckAction {
     }
 
     public int score() {
-        return cards.score().getValue();
+        return cards.score();
     }
 
     public String getName() {

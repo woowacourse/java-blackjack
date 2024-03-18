@@ -1,12 +1,12 @@
 package model.card;
 
 import static model.card.CardNumber.ACE;
-import static model.card.CardNumber.FIVE;
 import static model.card.CardNumber.JACK;
+import static model.card.CardNumber.NINE;
 import static model.card.CardNumber.QUEEN;
-import static model.card.CardShape.CLOVER;
-import static model.card.CardShape.DIAMOND;
+import static model.card.CardNumber.THREE;
 import static model.card.CardShape.HEART;
+import static model.card.CardShape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -18,24 +18,69 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
 
-    @DisplayName("카드 숫자 합 계산한다")
+    @DisplayName("카드 합이 21 또는 21에 가깝게 스코어를 계산한다")
     @ParameterizedTest
-    @MethodSource("provideCardsAndExpectedTotal")
-    void testCalculateTotalCardNumbers(List<Card> cardValues, int expectedTotal) {
+    @MethodSource("provideCardsAndExpectedScore")
+    void testCalculateScore(List<Card> cardValues, int expectedScore) {
         Cards cards = new Cards(cardValues);
-        assertThat(cards.score().getValue()).isEqualTo(expectedTotal);
+        assertThat(cards.score()).isEqualTo(expectedScore);
     }
 
-    public static Stream<Arguments> provideCardsAndExpectedTotal() {
+    private static Stream<Arguments> provideCardsAndExpectedScore() {
         return Stream.of(
             Arguments.of(
-                List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART)), 16
+                List.of(new Card(ACE, SPADE), new Card(JACK, HEART)), 21
             ),
             Arguments.of(
-                List.of(new Card(ACE, DIAMOND), new Card(QUEEN, HEART)), 21
+                List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE)), 13
             ),
             Arguments.of(
-                List.of(new Card(ACE, DIAMOND), new Card(ACE, HEART), new Card(ACE, CLOVER)), 13
+                List.of(new Card(THREE, SPADE), new Card(NINE, SPADE), new Card(QUEEN, HEART)), 22
+            )
+        );
+    }
+
+    @DisplayName("블랙잭이면 isBlackjack true를 반환하고, 아니면 false를 반환한다")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpectedIsBlackjack")
+    void testIsBlackjack(List<Card> cardValues, boolean expected) {
+        Cards cards = new Cards(cardValues);
+        assertThat(cards.isBlackjack()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpectedIsBlackjack() {
+        return Stream.of(
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(JACK, HEART)), true
+            ),
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE)), false
+            ),
+            Arguments.of(
+                List.of(new Card(THREE, SPADE), new Card(NINE, SPADE), new Card(QUEEN, HEART)),
+                false
+            )
+        );
+    }
+
+    @DisplayName("21점을 넘기면 isBurst true를 반환하고, 아니면 false를 반환한다")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpectedIsBurst")
+    void testIsBurst(List<Card> cardValues, boolean expected) {
+        Cards cards = new Cards(cardValues);
+        assertThat(cards.isBurst()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpectedIsBurst() {
+        return Stream.of(
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(JACK, HEART)), false
+            ),
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE)), false
+            ),
+            Arguments.of(
+                List.of(new Card(THREE, SPADE), new Card(NINE, SPADE), new Card(QUEEN, HEART)), true
             )
         );
     }
