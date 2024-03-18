@@ -23,19 +23,19 @@ import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("블랙잭 게임")
-public class DeckMachineTest {
+public class BlackjackGameTest {
     @Test
     @DisplayName("블랙잭 게임에서 deal을 하면 딜러, 모든 플레이어에게 각각 두장의 카드를 부여한다.")
     void dealTest() {
         // given
-        DeckMachine deckMachine = new DeckMachine(Deck.make());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Dealer dealer = new Dealer(new Chip(0));
         Player player1 = new Player(new Name("lemone"), new Chip(1000));
         Player player2 = new Player(new Name("seyang"), new Chip(1000));
         Players players = new Players(List.of(player1, player2));
 
         // when
-        deckMachine.deal(dealer, players);
+        blackjackGame.deal(dealer, players);
 
         // then
         for (Player player : players.values()) {
@@ -48,7 +48,7 @@ public class DeckMachineTest {
     @DisplayName("카드 합이 버스트이면 hit 할 수 없다.")
     void playerNotHitWhenBust() {
         // given
-        DeckMachine deckMachine = new DeckMachine(Deck.make());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
@@ -57,7 +57,7 @@ public class DeckMachineTest {
                 Card.of(TEN, DIAMOND)));
 
         // then
-        assertThat(deckMachine.isPlayerCanHit(player))
+        assertThat(blackjackGame.isPlayerCanHit(player))
                 .isEqualTo(false);
     }
 
@@ -65,14 +65,14 @@ public class DeckMachineTest {
     @DisplayName("카드 합이 블랙잭이면 hit 할 수 없다.")
     void playerNotHitWhenBlackjack() {
         // given
-        DeckMachine deckMachine = new DeckMachine(Deck.make());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
         player.draw(List.of(Card.of(TEN, SPADE), Card.of(ACE, DIAMOND)));
 
         // then
-        assertThat(deckMachine.isPlayerCanHit(player))
+        assertThat(blackjackGame.isPlayerCanHit(player))
                 .isEqualTo(false);
     }
 
@@ -80,15 +80,15 @@ public class DeckMachineTest {
     @DisplayName("플레이어의 카드 합이 21이면 카드를 뽑지 않는다.")
     void playerNotHitWhenMaxScore() {
         // given
-        DeckMachine deckMachine = new DeckMachine(Deck.make());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
         player.draw(List.of(Card.of(TEN, SPADE), Card.of(ACE, DIAMOND), Card.of(TEN, DIAMOND)));
-        deckMachine.hit(player);
+        blackjackGame.hit(player);
 
         // then
-        assertThat(deckMachine.isPlayerCanHit(player))
+        assertThat(blackjackGame.isPlayerCanHit(player))
                 .isEqualTo(false);
     }
 
@@ -96,12 +96,12 @@ public class DeckMachineTest {
     @DisplayName("플레이어의 카드 합이 버스트가 아니고 블랙잭도 아니고 21도 아니면 카드를 한 장 뽑는다.")
     void playerHitWhenNoBustNoBlackjackNoMaxScore() {
         // given
-        DeckMachine deckMachine = new DeckMachine(Deck.make());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
         player.draw(List.of(Card.of(TEN, SPADE), Card.of(TEN, DIAMOND)));
-        deckMachine.hit(player);
+        blackjackGame.hit(player);
 
         // then
         assertThat(player.cards().size()).isEqualTo(3);
@@ -113,11 +113,11 @@ public class DeckMachineTest {
         // given
         Dealer dealer = new Dealer(new Chip(0));
         List<Card> cards = new ArrayList<>(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB)));
-        DeckMachine deckMachine = new DeckMachine(Deck.make());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
 
         // when
         dealer.draw(cards);
-        deckMachine.drawUntilOverBoundWithCount(dealer);
+        blackjackGame.drawUntilOverBoundWithCount(dealer);
 
         // then
         assertThat(dealer.cards().size()).isEqualTo(3);

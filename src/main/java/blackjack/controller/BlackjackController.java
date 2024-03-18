@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.DeckMachine;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultJudge;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Name;
@@ -21,14 +21,14 @@ import java.util.stream.IntStream;
 public class BlackjackController {
 
     public void run() {
-        DeckMachine deckMachine = new DeckMachine(Deck.make());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Dealer dealer = new Dealer(new Chip(0));
         Players players = createPlayers();
 
-        dealAndPrintHand(deckMachine, dealer, players);
+        dealAndPrintHand(blackjackGame, dealer, players);
 
-        processHitOrStand(players, deckMachine);
-        drawToDealer(dealer, deckMachine);
+        processHitOrStand(players, blackjackGame);
+        drawToDealer(dealer, blackjackGame);
         printResultHand(dealer, players);
 
         calculateGameResult(dealer, players);
@@ -46,8 +46,8 @@ public class BlackjackController {
         return new Players(makePlayers);
     }
 
-    private void dealAndPrintHand(DeckMachine deckMachine, Dealer dealer, Players players) {
-        deckMachine.deal(dealer, players);
+    private void dealAndPrintHand(BlackjackGame blackjackGame, Dealer dealer, Players players) {
+        blackjackGame.deal(dealer, players);
 
         OutputView.printDealAnnounce(players.names());
         OutputView.printDealerDealCard(dealer.findPublicDealCard());
@@ -57,32 +57,32 @@ public class BlackjackController {
         }
     }
 
-    private void processHitOrStand(Players players, DeckMachine deckMachine) {
+    private void processHitOrStand(Players players, BlackjackGame blackjackGame) {
         for (Player player : players.values()) {
-            askToPlayerHit(player, deckMachine);
+            askToPlayerHit(player, blackjackGame);
         }
     }
 
-    private void askToPlayerHit(Player player, DeckMachine deckMachine) {
-        boolean isRun = deckMachine.isPlayerCanHit(player);
+    private void askToPlayerHit(Player player, BlackjackGame blackjackGame) {
+        boolean isRun = blackjackGame.isPlayerCanHit(player);
         while (isRun) {
             PlayerCommand command =
                     PlayerCommand.from(InputView.readPlayerCommand(player.name()));
-            hitOrStandAndPrint(deckMachine, player, command);
-            isRun = isRun(deckMachine, player, command);
+            hitOrStandAndPrint(blackjackGame, player, command);
+            isRun = isRun(blackjackGame, player, command);
         }
     }
 
-    private boolean isRun(DeckMachine deckMachine, Player player, PlayerCommand command) {
+    private boolean isRun(BlackjackGame blackjackGame, Player player, PlayerCommand command) {
         if (command == PlayerCommand.STAND) {
             return false;
         }
-        return deckMachine.isPlayerCanHit(player);
+        return blackjackGame.isPlayerCanHit(player);
     }
 
-    private void hitOrStandAndPrint(DeckMachine deckMachine, Player player, PlayerCommand command) {
+    private void hitOrStandAndPrint(BlackjackGame blackjackGame, Player player, PlayerCommand command) {
         if (command == PlayerCommand.HIT) {
-            deckMachine.hit(player);
+            blackjackGame.hit(player);
             OutputView.printDealCards(player.name(), player.cards());
         }
         if (command == PlayerCommand.STAND && player.isOnlyDeal()) {
@@ -90,8 +90,8 @@ public class BlackjackController {
         }
     }
 
-    private void drawToDealer(Dealer dealer, DeckMachine deckMachine) {
-        int count = deckMachine.drawUntilOverBoundWithCount(dealer);
+    private void drawToDealer(Dealer dealer, BlackjackGame blackjackGame) {
+        int count = blackjackGame.drawUntilOverBoundWithCount(dealer);
         IntStream.range(0, count)
                 .forEach(i -> OutputView.printDealerHitAnnounce());
     }
