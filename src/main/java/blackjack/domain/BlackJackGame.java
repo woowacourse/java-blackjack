@@ -37,12 +37,24 @@ public class BlackJackGame {
         return dealer.isHittable();
     }
 
-    public Map<Player, PlayerGameResult> getPlayerGameResult() {
-        Map<Player, PlayerGameResult> results = new LinkedHashMap<>();
+    public Map<Participant, Integer> settleBets() {
+        int dealerSettlement = 0;
+        Map<Participant, Integer> settlement = new LinkedHashMap<>();
+
         for (Player player : players) {
-            results.put(player, PlayerGameResult.of(dealer, player));
+            int playerSettlement = calculatePlayerSettlement(player);
+            dealerSettlement -= playerSettlement;
+            settlement.put(player, playerSettlement);
         }
-        return results;
+
+        settlement.put(dealer, dealerSettlement);
+        return settlement;
+    }
+
+    private int calculatePlayerSettlement(Player player) {
+        int betAmount = player.getBetAmount();
+        float winningRate = PlayerGameResult.of(dealer, player).getWinningRate();
+        return (int) (betAmount * winningRate);
     }
 
     public List<Participant> getEveryParticipants() {

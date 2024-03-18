@@ -9,8 +9,11 @@ public class Player extends Participant {
     static final int MAX_SCORE_TO_HIT = 21;
     static final String DEALER_NAME_MESSAGE = String.format("%s라는 이름은 사용할 수 없습니다.", DEALER_NAME);
 
-    public Player(String name) {
+    private final Bet bet;
+
+    public Player(String name, int betAmount) {
         super(validateNameNotEqualToDealer(name));
+        this.bet = new Bet(betAmount);
     }
 
     private static String validateNameNotEqualToDealer(String name) {
@@ -22,6 +25,10 @@ public class Player extends Participant {
 
     public boolean isHittable() {
         return getTotalScore() < MAX_SCORE_TO_HIT;
+    }
+
+    public int getBetAmount() {
+        return bet.getAmount();
     }
 
     @Override

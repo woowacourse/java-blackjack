@@ -1,8 +1,10 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +21,8 @@ class BlackJackGameTest {
     @Test
     void create() {
         List<String> names = List.of("위브", "산초");
-        Players players = new Players(names);
+        List<Integer> bets = List.of(10, 20);
+        Players players = new Players(names, bets);
         Dealer dealer = new Dealer(NOT_SHUFFLED_CARD_DECK);
 
         assertThatCode(() -> new BlackJackGame(players, dealer))
@@ -30,15 +33,19 @@ class BlackJackGameTest {
     @Test
     void judgeResult() {
         String name = "산초";
-        Players players = new Players(List.of(name));
+        int bet = 10;
+        Players players = new Players(List.of(name), List.of(bet));
         Dealer dealer = new Dealer(NOT_SHUFFLED_CARD_DECK);
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         blackJackGame.initHand(); // 딜러는 2,3 플레이어는 4,5
 
-        Map<Player, PlayerGameResult> resultMap = blackJackGame.getPlayerGameResult();
+        Map<Participant, Integer> resultMap = blackJackGame.settleBets();
 
-        PlayerGameResult playerGameResult = resultMap.get(new Player(name));
-
-        assertThat(playerGameResult).isEqualTo(PlayerGameResult.WIN);
+        int playerSettlement = resultMap.get(new Player(name, bet));
+        int dealerSettlement = resultMap.get(dealer);
+        Assertions.assertAll(
+                () -> assertThat(playerSettlement).isEqualTo(bet),
+                () -> assertThat(dealerSettlement).isEqualTo(-1 * bet)
+        );
     }
 }

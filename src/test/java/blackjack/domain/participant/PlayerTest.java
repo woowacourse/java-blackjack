@@ -15,7 +15,7 @@ class PlayerTest {
     @DisplayName("참가자를 상속한다.")
     @Test
     void extendsTest() {
-        Player player = new Player("산초");
+        Player player = new Player("산초", 10);
 
         assertThat(player).isInstanceOf(Participant.class);
     }
@@ -23,7 +23,7 @@ class PlayerTest {
     @DisplayName("손 패 값의 합을 반환한다.")
     @Test
     void getTotalScore() {
-        Player player = new Player("산초");
+        Player player = new Player("산초", 10);
         player.initHand(List.of(SEVEN_HEART, TEN_HEART));
 
         int actual = player.getTotalScore();
@@ -35,7 +35,7 @@ class PlayerTest {
     @DisplayName("카드를 손 패로 가져온다.")
     @Test
     void hit() {
-        Player player = new Player("위브");
+        Player player = new Player("위브", 10);
         Card newCard = TWO_HEART;
 
         player.hit(newCard);
@@ -51,7 +51,7 @@ class PlayerTest {
         @Test
         @DisplayName("Bust이면 true를 반환한다.")
         void isBust_true() {
-            Player player = new Player("산초");
+            Player player = new Player("산초", 10);
             player.initHand(List.of(TEN_HEART, TEN_HEART, TWO_HEART));
 
             boolean isBurst = player.isBust();
@@ -62,7 +62,7 @@ class PlayerTest {
         @Test
         @DisplayName("Bust가 아니면 false를 반환한다.")
         void isBust_false() {
-            Player player = new Player("산초");
+            Player player = new Player("산초", 10);
             player.initHand(List.of(TEN_HEART, TEN_HEART, ACE_HEART));
 
             boolean isBurst = player.isBust();
@@ -78,7 +78,7 @@ class PlayerTest {
         @Test
         @DisplayName("더 뽑을 수 있으면 true를 반환한다.")
         void isHittable_true() {
-            Player player = new Player("산초");
+            Player player = new Player("산초", 10);
             player.initHand(List.of(TEN_HEART, TEN_HEART));
 
             boolean isHittable = player.isHittable();
@@ -89,7 +89,7 @@ class PlayerTest {
         @Test
         @DisplayName("더 이상 뽑을 수 없으면 false를 반환한다.")
         void isHittable_false() {
-            Player player = new Player("산초");
+            Player player = new Player("산초", 10);
             player.initHand(List.of(TEN_HEART, TEN_HEART, ACE_HEART));
 
             boolean isHittable = player.isHittable();

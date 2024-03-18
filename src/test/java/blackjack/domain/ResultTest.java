@@ -37,8 +37,8 @@ class ResultTest {
             Dealer dealerWithMinScore = new Dealer(cardDeck);
             dealerWithBust.initHand(bustCards);
             dealerWithMinScore.initHand(minScoreCards);
-            Player playerWithBust = new Player("버스트");
-            Player playerWithMinScore = new Player("최저 점수");
+            Player playerWithBust = new Player("버스트", 10);
+            Player playerWithMinScore = new Player("최저 점수", 10);
             playerWithBust.initHand(bustCards);
             playerWithBust.initHand(minScoreCards);
 
@@ -51,7 +51,7 @@ class ResultTest {
         void resultWhenAllBust() {
             Dealer dealerWithBust = new Dealer(cardDeck);
             dealerWithBust.initHand(bustCards);
-            Player playerWithBust = new Player("버스트");
+            Player playerWithBust = new Player("버스트", 10);
             playerWithBust.initHand(bustCards);
 
             assertThat(PlayerGameResult.of(dealerWithBust, playerWithBust)).isEqualTo(LOSE);
@@ -64,8 +64,8 @@ class ResultTest {
             Dealer dealerWithMinScore = new Dealer(cardDeck);
             dealerWithMinScore.initHand(minScoreCards);
             dealerWithMaxScore.initHand(maxScoreCards);
-            Player playerWithMaxScore = new Player("최고 점수");
-            Player playerWithMinScore = new Player("최저 점수");
+            Player playerWithMaxScore = new Player("최고 점수", 10);
+            Player playerWithMinScore = new Player("최저 점수", 10);
             playerWithMaxScore.initHand(maxScoreCards);
             playerWithMinScore.initHand(minScoreCards);
 
@@ -78,7 +78,7 @@ class ResultTest {
         void resultWhenNotBustAndTie() {
             Dealer dealerWithMaxScore = new Dealer(cardDeck);
             dealerWithMaxScore.initHand(maxScoreCards);
-            Player playerWithMaxScore = new Player("최고 점수");
+            Player playerWithMaxScore = new Player("최고 점수", 10);
             playerWithMaxScore.initHand(maxScoreCards);
 
             assertThat(PlayerGameResult.of(dealerWithMaxScore, playerWithMaxScore)).isEqualTo(PUSH);
@@ -92,8 +92,8 @@ class ResultTest {
             dealerWithMaxScore.initHand(maxScoreCards);
             dealerWithBlackJack.initHand(blackJackCards);
 
-            Player playerWithBlackJack = new Player("블랙잭");
-            Player playerWithMaxScore = new Player("최고 점수");
+            Player playerWithBlackJack = new Player("블랙잭", 10);
+            Player playerWithMaxScore = new Player("최고 점수", 10);
             playerWithBlackJack.initHand(blackJackCards);
             playerWithMaxScore.initHand(maxScoreCards);
 
@@ -106,7 +106,7 @@ class ResultTest {
         void resultWhenAllBlackJack() {
             Dealer dealerWithBlackJack = new Dealer(cardDeck);
             dealerWithBlackJack.initHand(blackJackCards);
-            Player playerWithBlackJack = new Player("블랙잭");
+            Player playerWithBlackJack = new Player("블랙잭", 10);
             playerWithBlackJack.initHand(blackJackCards);
 
             assertThat(PlayerGameResult.of(dealerWithBlackJack, playerWithBlackJack)).isEqualTo(PUSH);

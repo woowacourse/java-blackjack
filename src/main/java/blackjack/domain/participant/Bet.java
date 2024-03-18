@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Bet {
 
@@ -7,7 +7,7 @@ public class Bet {
     static final String BET_RANGE_MESSAGE = String.format("배팅 금액은 %d 보다 커야합니다.", MIN_BET);
     static final String BET_UNIT_MESSAGE = String.format("배팅 금액은 %d 단위여야 합니다.", BET_UNIT);
 
-    private final int amount;
+    private int amount;
 
     public Bet(int amount) {
         validateRange(amount);

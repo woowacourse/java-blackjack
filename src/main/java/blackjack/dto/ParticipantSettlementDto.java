@@ -1,20 +1,19 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public record ParticipantSettlementDto(Map<String, Integer> result) {
 
-    public static ParticipantSettlementDto of(String dealerName, int dalerSettlement, Map<Player, Integer> playerSettlement) {
+    public static ParticipantSettlementDto of(Map<Participant, Integer> settlement) {
         Map<String, Integer> participantSettlement = new LinkedHashMap<>();
-        participantSettlement.put(dealerName, dalerSettlement);
 
-        for (Map.Entry<Player, Integer> result : playerSettlement.entrySet()) {
+        for (Map.Entry<Participant, Integer> result : settlement.entrySet()) {
             String name = result.getKey().getName();
-            Integer settlement = result.getValue();
-            participantSettlement.put(name, settlement);
+            Integer settleAmount = result.getValue();
+            participantSettlement.put(name, settleAmount);
         }
 
         return new ParticipantSettlementDto(participantSettlement);
