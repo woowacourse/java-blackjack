@@ -24,9 +24,9 @@ class ParticipantScoresTest {
         ParticipantScores participantScores = ParticipantScores.of(dealer, players);
 
         assertAll(
-            () -> assertThat(participantScores.getDealerScore().getScore()).isEqualTo(21),
+            () -> assertThat(participantScores.getDealerScore().score()).isEqualTo(21),
             () -> participantScores.getPlayerScores()
-                .forEach(participantScore -> assertThat(participantScore.getScore()).isZero())
+                .forEach(participantScore -> assertThat(participantScore.score()).isZero())
         );
     }
 }

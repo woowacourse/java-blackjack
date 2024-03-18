@@ -5,7 +5,7 @@ import model.result.CardDto;
 import model.result.CardsDto;
 import model.result.ProfitDto;
 import model.result.ProfitsDto;
-import model.result.ParticipantScore;
+import model.result.ScoreDto;
 import model.result.ParticipantScores;
 
 public class OutputView {
@@ -52,16 +52,16 @@ public class OutputView {
     }
 
     public static void printScores(ParticipantScores participantScores) {
-        ParticipantScore dealerScore = participantScores.getDealerScore();
-        List<ParticipantScore> playerScores = participantScores.getPlayerScores();
+        ScoreDto dealerScore = participantScores.getDealerScore();
+        List<ScoreDto> playerScores = participantScores.getPlayerScores();
         printScore(dealerScore);
         playerScores.forEach(OutputView::printScore);
     }
 
-    private static void printScore(ParticipantScore participantScore) {
-        CardDto participantCard = participantScore.getCard();
+    private static void printScore(ScoreDto participantScore) {
+        CardDto participantCard = participantScore.card();
         String cards = String.join(CARDS_DELIMITER, participantCard.cards());
-        System.out.printf(SCORE_FORMAT, participantCard.name(), cards, participantScore.getScore());
+        System.out.printf(SCORE_FORMAT, participantCard.name(), cards, participantScore.score());
     }
 
     public static void printProfits(ProfitsDto participantProfits) {

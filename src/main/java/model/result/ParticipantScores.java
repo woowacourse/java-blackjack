@@ -2,36 +2,42 @@ package model.result;
 
 import java.util.List;
 import model.participant.Dealer;
+import model.participant.Participant;
 import model.participant.Players;
 
 public class ParticipantScores {
 
-    private final ParticipantScore dealerScore;
-    private final List<ParticipantScore> playerScores;
+    private final ScoreDto dealerScore;
+    private final List<ScoreDto> playerScores;
 
-    public ParticipantScores(ParticipantScore dealerScore, List<ParticipantScore> playerScores) {
+    public ParticipantScores(ScoreDto dealerScore, List<ScoreDto> playerScores) {
         this.dealerScore = dealerScore;
         this.playerScores = playerScores;
     }
 
     public static ParticipantScores of(Dealer dealer, Players players) {
-        ParticipantScore dealerScore = ParticipantScore.from(dealer);
-        List<ParticipantScore> playerScores = createPlayerScores(players);
+        ScoreDto dealerScore = createScore(dealer);
+        List<ScoreDto> playerScores = createPlayerScores(players);
         return new ParticipantScores(dealerScore, playerScores);
     }
 
-    private static List<ParticipantScore> createPlayerScores(Players players) {
+    private static List<ScoreDto> createPlayerScores(Players players) {
         return players.getPlayers()
             .stream()
-            .map(ParticipantScore::from)
+            .map(ParticipantScores::createScore)
             .toList();
     }
 
-    public ParticipantScore getDealerScore() {
+    private static ScoreDto createScore(Participant participant) {
+        CardDto card = new CardDto(participant.getName(), participant.getCardsInfo());
+        return new ScoreDto(card, participant.score());
+    }
+
+    public ScoreDto getDealerScore() {
         return dealerScore;
     }
 
-    public List<ParticipantScore> getPlayerScores() {
+    public List<ScoreDto> getPlayerScores() {
         return playerScores;
     }
 }

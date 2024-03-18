@@ -22,7 +22,7 @@ import model.participant.Player;
 import model.participant.Players;
 import model.result.CardDto;
 import model.result.CardsDto;
-import model.result.ParticipantScore;
+import model.result.ScoreDto;
 import model.result.ParticipantScores;
 import model.result.ProfitDto;
 import model.result.ProfitsDto;
@@ -99,8 +99,8 @@ class BlackjackGameTest {
 
         ParticipantScores participantScores = blackjackGame.finish(dealer, players);
         int i = 0;
-        for (ParticipantScore playerScore : participantScores.getPlayerScores()) {
-            assertThat(playerScore.getScore()).isEqualTo(scores.get(i++));
+        for (ScoreDto playerScore : participantScores.getPlayerScores()) {
+            assertThat(playerScore.score()).isEqualTo(scores.get(i++));
         }
     }
 
