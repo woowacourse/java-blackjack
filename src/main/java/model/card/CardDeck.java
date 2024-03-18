@@ -11,9 +11,6 @@ public class CardDeck {
     }
 
     public CardDeck(Set<Card> cards) {
-        if (cards.size() != 52) {
-            throw new IllegalArgumentException("카드는 총 52개여야 합니다.");
-        }
         this.cards = cards;
     }
 
