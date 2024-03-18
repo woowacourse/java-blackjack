@@ -20,9 +20,9 @@ public class GameResultsTest {
         GameResults gameResults = new GameResults();
         gameResults.add(player, GameResult.BLACKJACK);
 
-        int gamerProfit = gameResults.calculateGamerProfit(player, bettings);
+        int playerProfit = gameResults.calculatePlayerProfit(player, bettings);
         // then
-        Assertions.assertThat(gamerProfit).isEqualTo(15000);
+        Assertions.assertThat(playerProfit).isEqualTo(15000);
     }
 
     @DisplayName("게임결과가 무승부이면 수익이 0이다.")
@@ -36,10 +36,10 @@ public class GameResultsTest {
         // when
         GameResults gameResults = new GameResults();
         gameResults.add(player, GameResult.DRAW);
-        int gamerProfit = gameResults.calculateGamerProfit(player, bettings);
+        int playerProfit = gameResults.calculatePlayerProfit(player, bettings);
 
         // then
-        Assertions.assertThat(gamerProfit).isEqualTo(0);
+        Assertions.assertThat(playerProfit).isEqualTo(0);
     }
 
     @DisplayName("게임결과가 승리이면 수익이 1배이다.")
@@ -53,10 +53,10 @@ public class GameResultsTest {
         // when
         GameResults gameResults = new GameResults();
         gameResults.add(player, GameResult.WIN);
-        int gamerProfit = gameResults.calculateGamerProfit(player, bettings);
+        int playerProfit = gameResults.calculatePlayerProfit(player, bettings);
 
         // then
-        Assertions.assertThat(gamerProfit).isEqualTo(10000);
+        Assertions.assertThat(playerProfit).isEqualTo(10000);
     }
 
     @DisplayName("게임결과가 패배이면 수익이 -1배이다.")
@@ -70,10 +70,10 @@ public class GameResultsTest {
         // when
         GameResults gameResults = new GameResults();
         gameResults.add(player, GameResult.LOSE);
-        int gamerProfit = gameResults.calculateGamerProfit(player, bettings);
+        int playerProfit = gameResults.calculatePlayerProfit(player, bettings);
 
         // then
-        Assertions.assertThat(gamerProfit).isEqualTo(-10000);
+        Assertions.assertThat(playerProfit).isEqualTo(-10000);
     }
 
     @DisplayName("딜러의 수익은 '-플레이어_수익' 이다.")
