@@ -3,11 +3,11 @@ package blackjack.service;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.Score;
+import blackjack.domain.Score;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
@@ -49,15 +49,15 @@ public class BlackjackGame {
         return participants.giveDealerMoreCards(deck);
     }
 
-    public Map<ParticipantName, Hands> getPlayersHandResult() {
+    public Map<Name, Hands> getPlayersHandResult() {
         return participants.getPlayersHandResult();
     }
 
-    public Map<ParticipantName, Score> getPlayersScoreResult() {
+    public Map<Name, Score> getPlayersScoreResult() {
         return participants.getPlayersScoreResult();
     }
 
-    public Entry<ParticipantName, Hands> getDealerHandResult() {
+    public Entry<Name, Hands> getDealerHandResult() {
         return participants.getDealerHandResult();
     }
 

@@ -2,7 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.Name;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -38,13 +38,13 @@ public class InputView {
         return CardRequestFormat.from(input);
     }
 
-    public Map<String, Integer> readBettings(final List<ParticipantName> names) {
+    public Map<String, Integer> readBettings(final List<Name> names) {
         return names.stream()
-                .collect(toMap(ParticipantName::getName, this::readBetting,
+                .collect(toMap(Name::getName, this::readBetting,
                         (v1, v2) -> v1, LinkedHashMap::new));
     }
 
-    private int readBetting(final ParticipantName name) {
+    private int readBetting(final Name name) {
         System.out.printf("%s의 배팅 금액은?", name.getName());
         String input = SCANNER.nextLine();
         validateBetting(input);

@@ -2,8 +2,7 @@ package blackjack.domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.betting.PlayerBetting;
-import blackjack.domain.result.WinStatus;
+import blackjack.domain.status.WinStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

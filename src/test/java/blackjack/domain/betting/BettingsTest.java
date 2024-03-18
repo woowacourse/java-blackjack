@@ -3,8 +3,8 @@ package blackjack.domain.betting;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.dealer.Dealer;
-import blackjack.domain.participant.ParticipantName;
-import blackjack.domain.result.WinStatus;
+import blackjack.domain.Name;
+import blackjack.domain.status.WinStatus;
 import blackjack.domain.result.WinningResult;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,9 +23,9 @@ public class BettingsTest {
             "DRAW, 0, 0"})
     void applyWinStatus(WinStatus winStatus, int pobiExpected, int jasonExpected) {
         // given
-        LinkedHashMap<ParticipantName, WinStatus> rawWinningResult = new LinkedHashMap<>();
-        rawWinningResult.put(new ParticipantName("pobi"), winStatus);
-        rawWinningResult.put(new ParticipantName("jason"), winStatus);
+        LinkedHashMap<Name, WinStatus> rawWinningResult = new LinkedHashMap<>();
+        rawWinningResult.put(new Name("pobi"), winStatus);
+        rawWinningResult.put(new Name("jason"), winStatus);
 
         WinningResult winningResult = new WinningResult(rawWinningResult);
 
@@ -51,8 +51,8 @@ public class BettingsTest {
     void getDealerResult(WinStatus pobiWinStatus, WinStatus jasonWinStatus, int expeted) {
         // given
         WinningResult winningResult = new WinningResult(Map.of(
-                new ParticipantName("pobi"), pobiWinStatus,
-                new ParticipantName("jason"), jasonWinStatus));
+                new Name("pobi"), pobiWinStatus,
+                new Name("jason"), jasonWinStatus));
 
         PlayerBetting pobiBetting = PlayerBetting.create("pobi", 10000);
         PlayerBetting jasonBetting = PlayerBetting.create("jason", 20000);
@@ -63,6 +63,6 @@ public class BettingsTest {
         DealerBetting dealerResult = DealerBetting.of(bettingResults, new Dealer());
 
         // then
-        assertThat(dealerResult.getBettingMoney().getMoeney()).isEqualTo(expeted);
+        assertThat(dealerResult.getMoney()).isEqualTo(expeted);
     }
 }

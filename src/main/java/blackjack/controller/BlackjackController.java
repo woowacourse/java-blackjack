@@ -3,10 +3,10 @@ package blackjack.controller;
 import blackjack.domain.betting.DealerBetting;
 import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.card.Hands;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.Score;
+import blackjack.domain.Score;
 import blackjack.dto.BettingResultDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
@@ -94,7 +94,7 @@ public class BlackjackController {
     }
 
     private boolean needMoreCard(final Player player) {
-        ParticipantName rawName = player.getName();
+        Name rawName = player.getName();
         String name = rawName.getName();
 
         try {
@@ -133,8 +133,8 @@ public class BlackjackController {
         outputView.printBettingResult(playerBettingResultDtos, BettingResultDto.from(dealerBetting));
     }
 
-    private List<ParticipantScoreDto> convertToParticipantScoreDtos(final Map<ParticipantName, Hands> handResult,
-                                                                    final Map<ParticipantName, Score> scoreResult) {
+    private List<ParticipantScoreDto> convertToParticipantScoreDtos(final Map<Name, Hands> handResult,
+                                                                    final Map<Name, Score> scoreResult) {
         return handResult.entrySet().stream()
                 .map(entry -> ParticipantScoreDto.of(entry, scoreResult.get(entry.getKey())))
                 .toList();
