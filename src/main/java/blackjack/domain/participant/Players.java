@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.Name;
-import blackjack.domain.ParticipantScoreStatus;
+import blackjack.domain.status.ParticipantScoreStatus;
 import blackjack.domain.status.WinStatus;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;

@@ -1,7 +1,5 @@
 package blackjack.domain.status;
 
-import blackjack.domain.ParticipantScoreStatus;
-
 public enum WinStatus {
     LOSE("패", -1),
     DRAW("무", 0),

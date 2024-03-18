@@ -33,7 +33,7 @@ public class BlackjackGame {
         deck.shuffle();
     }
 
-    public void divideCard() {
+    public void handOutCards() {
         participants.addStartCards(deck);
     }
 

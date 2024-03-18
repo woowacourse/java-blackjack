@@ -61,7 +61,7 @@ public class BlackjackController {
         try {
             final BlackjackGame blackjackGame = new BlackjackGame(players);
             blackjackGame.prepareDeck();
-            blackjackGame.divideCard();
+            blackjackGame.handOutCards();
             outputView.printStartCards(blackjackGame.getStartCards());
             return blackjackGame;
         } catch (final IllegalArgumentException e) {

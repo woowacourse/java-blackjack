@@ -19,7 +19,7 @@ class BlackjackGameTest {
     void init() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
-        blackjackGame.divideCard();
+        blackjackGame.handOutCards();
 
         // when
         List<ParticipantCardsDto> participantStartCards = blackjackGame.getStartCards();
@@ -40,7 +40,7 @@ class BlackjackGameTest {
     void canAddCardToPlayers() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
-        blackjackGame.divideCard();
+        blackjackGame.handOutCards();
 
         // when
         blackjackGame.addCardToPlayer(playerKirby);
@@ -56,7 +56,7 @@ class BlackjackGameTest {
     void canNotAddCardToPlayers() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
-        blackjackGame.divideCard();
+        blackjackGame.handOutCards();
 
         // when
         for (int i = 0; i < 20; i++) {

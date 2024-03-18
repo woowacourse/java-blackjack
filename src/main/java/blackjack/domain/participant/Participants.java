@@ -5,7 +5,7 @@ import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
 import blackjack.domain.Score;
-import blackjack.domain.ParticipantScoreStatus;
+import blackjack.domain.status.ParticipantScoreStatus;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
