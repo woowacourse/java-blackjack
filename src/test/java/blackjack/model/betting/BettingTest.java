@@ -23,7 +23,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("승리한 플레이어는 배팅 금액의 1배를 추가로 받는다")
+    @DisplayName("승리한 플레이어는 베팅 금액의 1배를 추가로 받는다")
     void calculateWinningPlayerProfitTest() {
         // when
         int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.WIN);
@@ -33,7 +33,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("패배한 플레이어는 배팅 금액을 잃는다")
+    @DisplayName("패배한 플레이어는 베팅 금액을 잃는다")
     void calculateLosingPlayerProfitTest() {
         // when
         int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.LOSE);
@@ -43,7 +43,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("무승부인 플레이어는 배팅 금액을 돌려받는다")
+    @DisplayName("무승부인 플레이어는 베팅 금액을 돌려받는다")
     void calculatePushPlayerProfitTest() {
         // when
         int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.PUSH);
@@ -53,7 +53,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("블랙잭 승리한 플레이어는 배팅 금액의 1.5배를 추가로 받는다")
+    @DisplayName("블랙잭 승리한 플레이어는 베팅 금액의 1.5배를 추가로 받는다")
     void calculateBlackjackWinningPlayerProfitTest() {
         // when
         int profit = betting.calculatePlayerBettingProfit(playerName, MatchResult.BLACKJACK_WIN);
