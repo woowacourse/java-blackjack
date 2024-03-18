@@ -26,10 +26,10 @@ public class Result {
         if (isPlayerBlackjack(player, blackjack) && !blackjack.isDealer()) {
             return GameResult.BLACKJACK;
         }
-        if (calculatePlayerWin(dealer, player)) {
+        if (isPlayerWin(dealer, player)) {
             return GameResult.WIN;
         }
-        if (blackjack.isDealer() && !isPlayerBlackjack(player, blackjack) || calculatePlayerFail(dealer, player)) {
+        if (blackjack.isDealer() && !isPlayerBlackjack(player, blackjack) || isPlayerFail(dealer, player)) {
             return GameResult.FAIL;
         }
         return GameResult.DRAW;
@@ -39,11 +39,11 @@ public class Result {
         return blackjack.blackjackStatusOfPlayer(player);
     }
 
-    private boolean calculatePlayerWin(Dealer dealer, Player player) {
+    private boolean isPlayerWin(Dealer dealer, Player player) {
         return dealer.totalNumber() < player.totalNumber() && player.isNotBust() || dealer.isBust();
     }
 
-    private boolean calculatePlayerFail(Dealer dealer, Player player) {
+    private boolean isPlayerFail(Dealer dealer, Player player) {
         return dealer.totalNumber() > player.totalNumber() || player.isBust();
     }
 
