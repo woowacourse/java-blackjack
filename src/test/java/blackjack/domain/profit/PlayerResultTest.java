@@ -11,7 +11,7 @@ import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ResultTest {
+class PlayerResultTest {
 
     @DisplayName("플레이어가 버스트면 플레이어는 배팅 금액을 모두 잃게 된다.")
     @Test
@@ -24,7 +24,7 @@ class ResultTest {
         Dealer dealer = new Dealer();
 
         // when
-        double multiplier = Result.determineMultiplier(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
         assertThat(multiplier).isEqualTo(-1);
@@ -42,7 +42,7 @@ class ResultTest {
         Dealer dealer = new Dealer();
 
         // when
-        double multiplier = Result.determineMultiplier(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
         assertThat(multiplier).isEqualTo(1.5);
@@ -59,7 +59,7 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        double multiplier = Result.determineMultiplier(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
         assertThat(multiplier).isEqualTo(1);
@@ -78,7 +78,7 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        double multiplier = Result.determineMultiplier(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
         assertThat(multiplier).isEqualTo(1);
@@ -97,7 +97,7 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        double multiplier = Result.determineMultiplier(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
         assertThat(multiplier).isEqualTo(-1);
@@ -116,7 +116,7 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        double multiplier = Result.determineMultiplier(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
         assertThat(multiplier).isEqualTo(0);
@@ -134,7 +134,7 @@ class ResultTest {
         Dealer dealer = new Dealer(hand);
 
         // when
-        double multiplier = Result.determineMultiplier(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
         assertThat(multiplier).isEqualTo(0);

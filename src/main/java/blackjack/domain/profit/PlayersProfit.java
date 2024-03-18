@@ -26,7 +26,7 @@ public class PlayersProfit {
 
     public void calculate(Dealer dealer) {
         profits.forEach((player, betAmount) -> {
-            double multiplier = Result.determineMultiplier(player, dealer);
+            double multiplier = PlayerResult.determineMultiplier(player, dealer);
             Profit profit = betAmount.multiply(multiplier);
             profits.put(player, profit);
         });

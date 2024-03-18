@@ -4,7 +4,7 @@ import blackjack.domain.participant.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-public enum Result {
+public enum PlayerResult {
 
     BLACKJACK_WIN(1.5),
     WIN(1),
@@ -14,19 +14,19 @@ public enum Result {
 
     private final double multiplier;
 
-    Result(double multiplier) {
+    PlayerResult(double multiplier) {
         this.multiplier = multiplier;
     }
 
     public static double determineMultiplier(Player player, Dealer dealer) {
         if (player.isBust()) {
-            return Result.LOSE.multiplier;
+            return LOSE.multiplier;
         }
         if (player.isBlackjack() && dealer.isNotBlackjack()) {
-            return Result.BLACKJACK_WIN.multiplier;
+            return BLACKJACK_WIN.multiplier;
         }
         if (dealer.isBust()) {
-            return Result.WIN.multiplier;
+            return WIN.multiplier;
         }
         return compareScore(player, dealer);
     }
@@ -36,11 +36,11 @@ public enum Result {
         Score dealerScore = dealer.handScore();
 
         if (playerScore.isBiggerThan(dealerScore)) {
-            return Result.WIN.multiplier;
+            return WIN.multiplier;
         }
         if (playerScore.isLessThan(dealerScore)) {
-            return Result.LOSE.multiplier;
+            return LOSE.multiplier;
         }
-        return Result.TIE.multiplier;
+        return TIE.multiplier;
     }
 }
