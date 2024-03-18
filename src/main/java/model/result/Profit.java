@@ -16,12 +16,16 @@ public class Profit {
 
     public Profit(Players players, Result result, Bettings bettings) {
         this.playerProfit = new HashMap<>();
-        players.getPlayers().forEach(player -> createPlayersProfit(player, result.getResult(player), bettings));
+        players.getPlayers()
+                .forEach(player -> createPlayersProfit(player, result.getResult(player), bettings));
         this.dealerProfit = calculateDealerProfit();
     }
 
     private int calculateDealerProfit() {
-        int totalPlayerProfit = playerProfit.values().stream().mapToInt(i -> i).sum();
+        int totalPlayerProfit = playerProfit.values()
+                .stream()
+                .mapToInt(i -> i)
+                .sum();
         return -totalPlayerProfit;
     }
 

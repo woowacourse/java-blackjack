@@ -39,7 +39,10 @@ public class BlackjackGameController {
     public void run() {
         Players players = repeatUntilSuccess(inputView::requestPlayersName);
         BlackjackGame blackjackGame = new BlackjackGame(new Dealer(), players);
-        Bettings bettings = new Bettings(players.getPlayers().stream().map(this::betting).toList());
+        Bettings bettings = new Bettings(players.getPlayers()
+                .stream()
+                .map(this::betting)
+                .toList());
         gameSetting(players, blackjackGame);
         Blackjack blackjack = checkBlackjack(blackjackGame);
         turnHit(blackjackGame);
@@ -85,7 +88,8 @@ public class BlackjackGameController {
     }
 
     private void turnHitPlayers(Players players, BlackjackGame blackjackGame) {
-        players.getPlayers().forEach(player -> hitOrStay(player, blackjackGame));
+        players.getPlayers()
+                .forEach(player -> hitOrStay(player, blackjackGame));
     }
 
     private void hitOrStay(Player player, BlackjackGame blackjackGame) {
