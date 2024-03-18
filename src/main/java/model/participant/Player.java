@@ -25,10 +25,7 @@ public final class Player extends Participant {
     }
 
     public void turnOver() {
-        if (matchState == MatchState.PLAYING) {
-            matchState = MatchState.TURNOVER;
-        }
-        throw new IllegalStateException("Only Playing State Player can be turned over");
+        matchState = MatchState.TURNOVER;
     }
 
     public void updateMatchResult(MatchState dealerMatchResult, int dealerHand) {
