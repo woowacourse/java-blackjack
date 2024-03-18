@@ -28,8 +28,8 @@ public class PlayersPots {
     public BetAmount calculateDealerBetAmount() {
         return new BetAmount(
                 DEALER_POT_COEFFICIENT * playersPots.values().stream()
-                .mapToInt(BetAmount::amount)
-                .sum()
+                        .mapToInt(BetAmount::amount)
+                        .sum()
         );
     }
 
