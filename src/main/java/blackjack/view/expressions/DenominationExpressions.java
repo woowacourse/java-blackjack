@@ -1,33 +1,28 @@
 package blackjack.view.expressions;
 
 import blackjack.domain.card.Denomination;
+import java.util.Arrays;
 
 public enum DenominationExpressions {
-    ACE("A"),
-    JACK("J"),
-    QUEEN("Q"),
-    KING("K"),
+    ACE(Denomination.ACE, "A"),
+    JACK(Denomination.JACK, "J"),
+    QUEEN(Denomination.QUEEN, "Q"),
+    KING(Denomination.KING, "K"),
     ;
 
+    private final Denomination denomination;
     private final String value;
 
-    DenominationExpressions(final String value) {
+    DenominationExpressions(Denomination denomination, String value) {
+        this.denomination = denomination;
         this.value = value;
     }
 
     public static String mapCardNumberToString(final Denomination denomination) {
-        if (Denomination.ACE.equals(denomination)) {
-            return ACE.value;
-        }
-        if (Denomination.JACK.equals(denomination)) {
-            return JACK.value;
-        }
-        if (Denomination.QUEEN.equals(denomination)) {
-            return QUEEN.value;
-        }
-        if (Denomination.KING.equals(denomination)) {
-            return KING.value;
-        }
-        return Integer.toString(denomination.getValue());
+        return Arrays.stream(values())
+                .filter(denominationExpression -> denominationExpression.denomination.equals(denomination))
+                .findFirst()
+                .map(denominationExpression -> denominationExpression.value)
+                .orElse(Integer.toString(denomination.getValue()));
     }
 }
