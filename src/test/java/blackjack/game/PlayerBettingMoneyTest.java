@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.player.Player;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,11 +17,10 @@ class PlayerBettingMoneyTest {
 
     @BeforeEach
     void beforeEach() {
-        playerBettingMoney = new PlayerBettingMoney();
         player = new Player("atto");
         money = new Money(10000);
-
-        playerBettingMoney.addBetting(player, money);
+        Map<Player, Money> result = Map.of(player, money);
+        playerBettingMoney = new PlayerBettingMoney(result);
     }
 
     @Test
@@ -37,13 +37,5 @@ class PlayerBettingMoneyTest {
         assertThatThrownBy(() -> playerBettingMoney.getBettingAmountOf(notExistPlayer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 플레이어입니다.");
-    }
-
-    @Test
-    @DisplayName("이미 존재하는 플레이어의 배팅 결과를 저장하려 할 경우 예외를 발생시킨다.")
-    void alreadyExistPlayerTest() {
-        assertThatThrownBy(() -> playerBettingMoney.addBetting(player, money))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이미 존재하는 플레이어입니다.");
     }
 }

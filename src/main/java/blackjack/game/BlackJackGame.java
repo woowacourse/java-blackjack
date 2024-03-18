@@ -8,6 +8,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
@@ -41,14 +42,16 @@ public class BlackJackGame {
     }
 
     private PlayerBettingMoney decideBettingMoney(Players players) {
-        PlayerBettingMoney playerBettingMoney = new PlayerBettingMoney();
-        for (Player player : players.getPlayers()) {
-            outputView.printBettingRequestMessage(player.getName());
-            Money money = new Money(inputView.readBattingAmount());
-            playerBettingMoney.addBetting(player, money);
-            outputView.printNewLine();
-        }
-        return playerBettingMoney;
+        Map<Player, Money> result = players.getPlayers().stream()
+                .collect(Collectors.toMap(player -> player, this::inputMoney));
+        return new PlayerBettingMoney(result);
+    }
+
+    private Money inputMoney(Player player) {
+        outputView.printBettingRequestMessage(player.getName());
+        Money money = new Money(inputView.readBattingAmount());
+        outputView.printNewLine();
+        return money;
     }
 
     private void initializeGame(Deck deck, Dealer dealer, Players players) {
