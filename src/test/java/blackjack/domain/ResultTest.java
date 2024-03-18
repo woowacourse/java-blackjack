@@ -1,6 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckShuffleStrategy;
+import blackjack.domain.card.RandomCardDeckShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +22,9 @@ class ResultTest {
     private final List<Card> blackJackCards = List.of(TEN_HEART, ACE_HEART);
     private final List<Card> maxScoreCards = List.of(TEN_HEART, TEN_HEART, ACE_HEART);
     private final List<Card> minScoreCards = List.of(TWO_HEART);
+    private final CardDeckShuffleStrategy cardDeckShuffleStrategy = new RandomCardDeckShuffleStrategy();
+    private final CardDeck cardDeck = CardDeck.of(cardDeckShuffleStrategy);
+
 
     @Nested
     @DisplayName("게임의 결과를 반환한다.")
@@ -27,10 +33,14 @@ class ResultTest {
         @DisplayName("한쪽만 버스트되면 상대가 이긴다.")
         @Test
         void resultWhenOnlyOneBust() {
-            Dealer dealerWithBust = new Dealer(bustCards);
-            Dealer dealerWithMinScore = new Dealer(minScoreCards);
-            Player playerWithBust = new Player(bustCards);
-            Player playerWithMinScore = new Player(minScoreCards);
+            Dealer dealerWithBust = new Dealer(cardDeck);
+            Dealer dealerWithMinScore = new Dealer(cardDeck);
+            dealerWithBust.initHand(bustCards);
+            dealerWithMinScore.initHand(minScoreCards);
+            Player playerWithBust = new Player("버스트");
+            Player playerWithMinScore = new Player("최저 점수");
+            playerWithBust.initHand(bustCards);
+            playerWithBust.initHand(minScoreCards);
 
             assertThat(PlayerGameResult.of(dealerWithBust, playerWithMinScore)).isEqualTo(WIN);
             assertThat(PlayerGameResult.of(dealerWithMinScore, playerWithBust)).isEqualTo(LOSE);
@@ -39,8 +49,10 @@ class ResultTest {
         @DisplayName("둘 다 버스트되면 딜러가 이긴다.")
         @Test
         void resultWhenAllBust() {
-            Dealer dealerWithBust = new Dealer(bustCards);
-            Player playerWithBust = new Player(bustCards);
+            Dealer dealerWithBust = new Dealer(cardDeck);
+            dealerWithBust.initHand(bustCards);
+            Player playerWithBust = new Player("버스트");
+            playerWithBust.initHand(bustCards);
 
             assertThat(PlayerGameResult.of(dealerWithBust, playerWithBust)).isEqualTo(LOSE);
         }
@@ -48,10 +60,14 @@ class ResultTest {
         @DisplayName("둘 다 버스트되지 않으면 21에 가까운 쪽이 이긴다.")
         @Test
         void resultWhenNotBust() {
-            Dealer dealerWithMaxScore = new Dealer(maxScoreCards);
-            Dealer dealerWithMinScore = new Dealer(minScoreCards);
-            Player playerWithMaxScore = new Player(maxScoreCards);
-            Player playerWithMinScore = new Player(minScoreCards);
+            Dealer dealerWithMaxScore = new Dealer(cardDeck);
+            Dealer dealerWithMinScore = new Dealer(cardDeck);
+            dealerWithMinScore.initHand(minScoreCards);
+            dealerWithMaxScore.initHand(maxScoreCards);
+            Player playerWithMaxScore = new Player("최고 점수");
+            Player playerWithMinScore = new Player("최저 점수");
+            playerWithMaxScore.initHand(maxScoreCards);
+            playerWithMinScore.initHand(minScoreCards);
 
             assertThat(PlayerGameResult.of(dealerWithMinScore, playerWithMaxScore)).isEqualTo(WIN);
             assertThat(PlayerGameResult.of(dealerWithMaxScore, playerWithMinScore)).isEqualTo(LOSE);
@@ -60,8 +76,10 @@ class ResultTest {
         @DisplayName("둘 다 버스트되지 않으면서 점수가 같으면 비긴다.")
         @Test
         void resultWhenNotBustAndTie() {
-            Dealer dealerWithMaxScore = new Dealer(maxScoreCards);
-            Player playerWithMaxScore = new Player(maxScoreCards);
+            Dealer dealerWithMaxScore = new Dealer(cardDeck);
+            dealerWithMaxScore.initHand(maxScoreCards);
+            Player playerWithMaxScore = new Player("최고 점수");
+            playerWithMaxScore.initHand(maxScoreCards);
 
             assertThat(PlayerGameResult.of(dealerWithMaxScore, playerWithMaxScore)).isEqualTo(PUSH);
         }
@@ -69,10 +87,15 @@ class ResultTest {
         @DisplayName("한쪽만 블랙잭이면 그쪽이 이긴다.")
         @Test
         void resultWhenOnlyOneBlackJack() {
-            Dealer dealerWithBlackJack = new Dealer(blackJackCards);
-            Dealer dealerWithMaxScore = new Dealer(maxScoreCards);
-            Player playerWithBlackJack = new Player(blackJackCards);
-            Player playerWithMaxScore = new Player(maxScoreCards);
+            Dealer dealerWithMaxScore = new Dealer(cardDeck);
+            Dealer dealerWithBlackJack = new Dealer(cardDeck);
+            dealerWithMaxScore.initHand(maxScoreCards);
+            dealerWithBlackJack.initHand(blackJackCards);
+
+            Player playerWithBlackJack = new Player("블랙잭");
+            Player playerWithMaxScore = new Player("최고 점수");
+            playerWithBlackJack.initHand(blackJackCards);
+            playerWithMaxScore.initHand(maxScoreCards);
 
             assertThat(PlayerGameResult.of(dealerWithMaxScore, playerWithBlackJack)).isEqualTo(BLACKJACK_WIN);
             assertThat(PlayerGameResult.of(dealerWithBlackJack, playerWithMaxScore)).isEqualTo(LOSE);
@@ -81,8 +104,10 @@ class ResultTest {
         @DisplayName("둘 다 블랙잭이면 비긴다.")
         @Test
         void resultWhenAllBlackJack() {
-            Dealer dealerWithBlackJack = new Dealer(blackJackCards);
-            Player playerWithBlackJack = new Player(blackJackCards);
+            Dealer dealerWithBlackJack = new Dealer(cardDeck);
+            dealerWithBlackJack.initHand(blackJackCards);
+            Player playerWithBlackJack = new Player("블랙잭");
+            playerWithBlackJack.initHand(blackJackCards);
 
             assertThat(PlayerGameResult.of(dealerWithBlackJack, playerWithBlackJack)).isEqualTo(PUSH);
         }

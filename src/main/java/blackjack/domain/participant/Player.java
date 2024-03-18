@@ -1,8 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-
-import java.util.List;
 import java.util.Objects;
 
 import static blackjack.domain.participant.Dealer.DEALER_NAME;
@@ -14,11 +11,6 @@ public class Player extends Participant {
 
     public Player(String name) {
         super(validateNameNotEqualToDealer(name));
-    }
-
-    public Player(List<Card> cards) {
-        super("플레이어");
-        this.hand.add(cards);
     }
 
     private static String validateNameNotEqualToDealer(String name) {

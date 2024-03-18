@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
@@ -11,11 +10,11 @@ public class CardDeck {
         this.deck = deck;
     }
 
-    public static CardDeck of() {
+    public static CardDeck of(CardDeckShuffleStrategy cardDeckShuffleStrategy) {
         List<Card> allCards = Card.getAllCards();
-        Collections.shuffle(allCards);
+        List<Card> shuffledCards = cardDeckShuffleStrategy.shuffle(allCards);
 
-        return new CardDeck(allCards);
+        return new CardDeck(shuffledCards);
     }
 
     public Card draw() {

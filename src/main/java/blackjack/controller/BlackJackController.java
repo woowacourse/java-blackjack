@@ -5,6 +5,7 @@ import blackjack.domain.BettingPot;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.PlayerGameResult;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.RandomCardDeckShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -62,7 +63,8 @@ public class BlackJackController {
     }
 
     private BlackJackGame initBlackJackGame(Players players) {
-        CardDeck cardDeck = CardDeck.of();
+        RandomCardDeckShuffleStrategy randomCardDeckShuffleStrategy = new RandomCardDeckShuffleStrategy();
+        CardDeck cardDeck = CardDeck.of(randomCardDeckShuffleStrategy);
         Dealer dealer = new Dealer(cardDeck);
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);

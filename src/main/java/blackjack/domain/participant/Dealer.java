@@ -18,12 +18,6 @@ public class Dealer extends Participant {
         this.cardDeck = cardDeck;
     }
 
-    public Dealer(List<Card> cards) {
-        super(DEALER_NAME);
-        this.cardDeck = null;
-        this.hand.add(cards);
-    }
-
     public Card dealCard() {
         return cardDeck.draw();
     }

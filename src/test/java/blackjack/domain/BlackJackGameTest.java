@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.domain.FixtureCard.TWO_HEART;
+import static blackjack.domain.FixtureCardDeck.NOT_SHUFFLED_CARD_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -20,7 +20,7 @@ class BlackJackGameTest {
     void create() {
         List<String> names = List.of("위브", "산초");
         Players players = new Players(names);
-        Dealer dealer = new Dealer(List.of(TWO_HEART));
+        Dealer dealer = new Dealer(NOT_SHUFFLED_CARD_DECK);
 
         assertThatCode(() -> new BlackJackGame(players, dealer))
                 .doesNotThrowAnyException();
@@ -31,13 +31,14 @@ class BlackJackGameTest {
     void judgeResult() {
         String name = "산초";
         Players players = new Players(List.of(name));
-        Dealer dealer = new Dealer(List.of(TWO_HEART));
+        Dealer dealer = new Dealer(NOT_SHUFFLED_CARD_DECK);
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
+        blackJackGame.initHand(); // 딜러는 2,3 플레이어는 4,5
 
         Map<Player, PlayerGameResult> resultMap = blackJackGame.getPlayerGameResult();
 
         PlayerGameResult playerGameResult = resultMap.get(new Player(name));
 
-        assertThat(playerGameResult).isEqualTo(PlayerGameResult.LOSE);
+        assertThat(playerGameResult).isEqualTo(PlayerGameResult.WIN);
     }
 }
