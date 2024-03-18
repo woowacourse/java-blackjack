@@ -30,12 +30,7 @@ public class Profit {
     }
 
     private void createPlayersProfit(Player player, GameResult result, Bettings bettings) {
-        playerProfit.put(player.getName(), calculatePlayerProfit(result,
-                bettings.getBettings()
-                        .stream()
-                        .filter(betting -> betting.getPlayer().getName().equals(player.getName()))
-                        .findFirst()
-                        .orElseThrow()));
+        playerProfit.put(player.getName(), calculatePlayerProfit(result, bettings.findBettingByPlayer(player)));
     }
 
     private int calculatePlayerProfit(GameResult result, Betting betting) {

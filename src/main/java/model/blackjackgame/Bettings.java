@@ -1,6 +1,7 @@
 package model.blackjackgame;
 
 import java.util.List;
+import model.participants.player.Player;
 
 public class Bettings {
 
@@ -10,7 +11,10 @@ public class Bettings {
         this.bettings = bettings;
     }
 
-    public List<Betting> getBettings() {
-        return bettings;
+    public Betting findBettingByPlayer(Player player) {
+        return bettings.stream()
+                .filter(betting -> betting.getPlayer().getName().equals(player.getName()))
+                .findFirst()
+                .orElseThrow();
     }
 }
