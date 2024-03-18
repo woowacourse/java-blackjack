@@ -24,8 +24,8 @@ public class BettingsTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("배팅 금액이 1000원 미만 또는 100000000원 초과이면 예외를 발생시킨다.")
-    @ValueSource(ints = {999, 100000001})
+    @DisplayName("배팅 금액이 0원 미만 또는 100000000원 초과이면 예외를 발생시킨다.")
+    @ValueSource(ints = {-1, 100000001})
     @ParameterizedTest
     void betMoneyRangeFailTest(int money) {
         //given
@@ -35,7 +35,7 @@ public class BettingsTest {
         //when & then
         Assertions.assertThatThrownBy(() -> bettings.add(player, money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅 금액이 1000원 이상 100000000원 이하여야 합니다.");
+                .hasMessage("배팅 금액이 0원 이상 100000000원 이하여야 합니다.");
     }
 
     @DisplayName("게임 결과가 블랙잭이면 배팅 금액의 1.5배를 수익으로 받는다.")
