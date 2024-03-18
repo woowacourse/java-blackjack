@@ -23,16 +23,16 @@ public class BlackjackGame {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        Round round = createRoundWithDeck();
+        Deck deck = new RandomDeck();
+        Round round = createRound(deck);
         PlayersPots playersPots = createPlayersPots(round);
         outputView.printInitialHand(round);
-        participantsHitCard(round);
+        participantsHitCard(round, deck);
         outputView.printParticipantsHandWithScore(round);
         printParticipantsPots(round, playersPots);
     }
 
-    private Round createRoundWithDeck() {
-        Deck deck = RandomDeck.getInstance();
+    private Round createRound(Deck deck) {
         return retryOnException(() -> createRoundWithNames(deck));
     }
 
@@ -61,22 +61,22 @@ public class BlackjackGame {
                 .toList();
     }
 
-    private void participantsHitCard(Round round) {
-        playersHitCard(round.getPlayers());
-        dealerHitCard(round.getDealer());
+    private void participantsHitCard(Round round, Deck deck) {
+        playersHitCard(round.getPlayers(), deck);
+        dealerHitCard(round.getDealer(), deck);
     }
 
-    private void playersHitCard(Players players) {
+    private void playersHitCard(Players players, Deck deck) {
         while (players.hasNext()) {
-            hitIfCurrentPlayerWantCard(players);
+            hitIfCurrentPlayerWantCard(players, deck);
         }
     }
 
-    private void hitIfCurrentPlayerWantCard(Players players) {
+    private void hitIfCurrentPlayerWantCard(Players players, Deck deck) {
         Player player = players.getPlayerAtOrder();
         PlayerAction playerAction = retryOnException(() -> getPlayerAction(player));
         if (playerAction.isHit()) {
-            player.addCard(RandomDeck.getInstance());
+            player.addCard(deck);
         }
         outputView.printPlayerHand(player);
         players.increaseOrder(playerAction);
@@ -88,8 +88,7 @@ public class BlackjackGame {
         return PlayerAction.getAction(command);
     }
 
-    private void dealerHitCard(Dealer dealer) {
-        Deck deck = RandomDeck.getInstance();
+    private void dealerHitCard(Dealer dealer, Deck deck) {
         int hitCount = 0;
         while (dealer.canHit()) {
             dealer.addCard(deck);

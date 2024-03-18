@@ -14,7 +14,7 @@ class PlayersTest {
     @Test
     void invalidPlayerCount() {
         //given
-        Deck deck = RandomDeck.getInstance();
+        Deck deck = new RandomDeck();
 
         //when & then
         assertThatThrownBy(() -> new Players(new ArrayList<>(), deck))

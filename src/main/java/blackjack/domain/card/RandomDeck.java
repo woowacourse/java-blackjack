@@ -1,26 +1,27 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RandomDeck implements Deck {
-    private static final RandomDeck INSTANCE = new RandomDeck();
-    private static final Random RANDOM = new Random();
-
     private final List<Card> cards;
 
-    private RandomDeck() {
-        this.cards = Stream.of(Number.values())
+    public RandomDeck() {
+        this.cards = Stream.generate(this::createDeck)
+                .limit(8)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+        Collections.shuffle(this.cards);
+    }
+
+    private List<Card> createDeck() {
+        return Stream.of(Number.values())
                 .flatMap(number -> Stream.of(Shape.values())
                         .map(shape -> new Card(number, shape)))
                 .collect(Collectors.toList());
-    }
-
-    public static RandomDeck getInstance() {
-        return INSTANCE;
     }
 
     public List<Card> drawInitialCards() {
@@ -30,8 +31,7 @@ public class RandomDeck implements Deck {
         return initialCards;
     }
 
-    @Override
     public Card drawCard() {
-        return cards.get(RANDOM.nextInt(cards.size()));
+        return cards.remove(0);
     }
 }

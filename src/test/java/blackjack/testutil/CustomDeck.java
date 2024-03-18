@@ -28,7 +28,6 @@ public class CustomDeck implements Deck {
                 .iterator();
     }
 
-    @Override
     public Card drawCard() {
         if (!cards.hasNext()) {
             throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
@@ -36,7 +35,6 @@ public class CustomDeck implements Deck {
         return cards.next();
     }
 
-    @Override
     public List<Card> drawInitialCards() {
         if (!cards.hasNext()) {
             throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
