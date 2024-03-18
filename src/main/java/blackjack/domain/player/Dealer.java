@@ -10,16 +10,16 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    @Override
-    public boolean isDrawable() {
-        return this.hand.calculateScore() <= HIT_THRESHOLD;
-    }
-
     public Card getFirstCard() {
         try {
-            return hand.getAllCards().get(0);
+            return getCards().get(0);
         } catch (IndexOutOfBoundsException entry) {
             throw new RuntimeException("[ERROR] 딜러가 카드를 갖고 있지 않습니다.");
         }
+    }
+
+    @Override
+    public boolean isDrawable() {
+        return this.getScore() <= HIT_THRESHOLD;
     }
 }

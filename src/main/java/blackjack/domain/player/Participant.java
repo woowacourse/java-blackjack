@@ -4,37 +4,37 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    protected final Hand hand;
-    protected final Name name;
+    private final Name name;
+    private final Hand hand;
 
-    public Participant(final String name) {
-        this.hand = new Hand();
+    protected Participant(final String name) {
         this.name = new Name(name);
+        this.hand = new Hand();
     }
 
-    public void addCard(final Card card) {
+    public final void addCard(final Card card) {
         hand.add(card);
     }
 
-    public boolean isBust() {
+    public final boolean isBust() {
         return hand.isBust();
     }
 
-    public boolean isBlackjack() {
+    public final boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
     public abstract boolean isDrawable();
 
-    public int getScore() {
+    public final int getScore() {
         return hand.calculateScore();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return hand.getAllCards();
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getValue();
     }
 }
