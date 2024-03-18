@@ -1,6 +1,5 @@
 package model.participant;
 
-import java.util.Collections;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
@@ -52,7 +51,15 @@ public abstract class Participant implements HitAction, CheckAction {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
+    public String getFirstCard() {
+        return cards.getCards().get(0)
+            .toString();
+    }
+
+    public List<String> getCardsInfo() {
+        return cards.getCards()
+            .stream()
+            .map(Card::toString)
+            .toList();
     }
 }

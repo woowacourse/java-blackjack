@@ -51,8 +51,4 @@ public class Dealer extends Participant implements JudgeAction {
         }
         return isNotBurst() && player.score() < score();
     }
-
-    public Card getFirstCard() {
-        return getCards().get(0);
-    }
 }

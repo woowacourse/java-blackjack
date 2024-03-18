@@ -8,8 +8,8 @@ import model.game.HitChoice;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.ParticipantCard;
-import model.result.ParticipantCards;
+import model.result.CardDto;
+import model.result.CardsDto;
 import model.result.ProfitsDto;
 import model.result.ParticipantScores;
 import view.InputView;
@@ -23,7 +23,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
 
-        ParticipantCards participantCards = blackjackGame.dealInitialCards(dealer, players);
+        CardsDto participantCards = blackjackGame.dealInitialCards(dealer, players);
         OutputView.printInitialCards(participantCards);
 
         playersTurnAndPrintCards(players, blackjackGame);
@@ -64,7 +64,7 @@ public class BlackjackController {
 
     private void askHitAndPrintCards(Player player, BlackjackGame blackjackGame) {
         while (player.isPossibleHit() && prepareHitChoice(player).isHit()) {
-            ParticipantCard playerCard = blackjackGame.dealCardTo(player);
+            CardDto playerCard = blackjackGame.dealCardTo(player);
             OutputView.printCards(playerCard);
         }
     }

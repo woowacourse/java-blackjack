@@ -62,8 +62,7 @@ class DealerTest {
     void testGetFirstCard() {
         List<Card> cards = List.of(new Card(SIX, HEART), new Card(JACK, HEART));
         Dealer dealer = new Dealer(cards);
-        Card firstCard = dealer.getFirstCard();
-        assertThat(firstCard).hasToString("6하트");
+        assertThat(dealer.getFirstCard()).isEqualTo("6하트");
     }
 
     @DisplayName("플레이어가 블랙잭으로 이긴 경우 BLACKJACK_WIN 반환")

@@ -23,7 +23,7 @@ class ParticipantScoreTest {
         ParticipantScore playerScore = ParticipantScore.from(player);
 
         assertAll(
-            () -> assertThat(playerScore.getCard().getName()).isEqualTo("jojo"),
+            () -> assertThat(playerScore.getCard().name()).isEqualTo("jojo"),
             () -> assertThat(playerScore.cards()).hasToString("[A하트, J스페이드]"),
             () -> assertThat(playerScore.getScore()).isEqualTo(21)
         );

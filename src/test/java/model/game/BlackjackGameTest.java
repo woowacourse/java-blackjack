@@ -20,8 +20,8 @@ import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.ParticipantCard;
-import model.result.ParticipantCards;
+import model.result.CardDto;
+import model.result.CardsDto;
 import model.result.ParticipantScore;
 import model.result.ParticipantScores;
 import model.result.ProfitDto;
@@ -37,14 +37,14 @@ class BlackjackGameTest {
         Players players = Players.from(List.of("조조", "릴리"));
         Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
-        ParticipantCards participantCards = blackjackGame.dealInitialCards(dealer, players);
+        CardsDto participantCards = blackjackGame.dealInitialCards(dealer, players);
 
         assertAll(
             () -> assertThat(participantCards.playerNames()).contains("조조", "릴리"),
             () -> assertThat(participantCards.dealerName()).isEqualTo("딜러"),
-            () -> assertThat(participantCards.getDealerCard().getCards()).hasSize(1),
-            () -> participantCards.getPlayerCards()
-                .forEach(participantCard -> assertThat(participantCard.getCards()).hasSize(2))
+            () -> assertThat(participantCards.dealerCard().cards()).hasSize(1),
+            () -> participantCards.playerCards()
+                .forEach(participantCard -> assertThat(participantCard.cards()).hasSize(2))
         );
     }
 
@@ -53,10 +53,10 @@ class BlackjackGameTest {
     void dealPlayerCard() {
         Player player = new Player("jojo", List.of(new Card(JACK, HEART), new Card(TWO, CLOVER)));
         BlackjackGame blackjackGame = new BlackjackGame();
-        ParticipantCard playerCard = blackjackGame.dealCardTo(player);
+        CardDto playerCard = blackjackGame.dealCardTo(player);
         assertAll(
-            () -> assertThat(playerCard.getName()).isEqualTo("jojo"),
-            () -> assertThat(playerCard.getCards()).hasSize(3)
+            () -> assertThat(playerCard.name()).isEqualTo("jojo"),
+            () -> assertThat(playerCard.cards()).hasSize(3)
         );
     }
 

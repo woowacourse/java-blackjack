@@ -1,8 +1,8 @@
 package view;
 
 import java.util.List;
-import model.result.ParticipantCard;
-import model.result.ParticipantCards;
+import model.result.CardDto;
+import model.result.CardsDto;
 import model.result.ProfitDto;
 import model.result.ProfitsDto;
 import model.result.ParticipantScore;
@@ -24,25 +24,25 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitialCards(ParticipantCards participantCards) {
-        ParticipantCard dealerCard = participantCards.getDealerCard();
-        List<ParticipantCard> playerCards = participantCards.getPlayerCards();
+    public static void printInitialCards(CardsDto participantCards) {
+        CardDto dealerCard = participantCards.dealerCard();
+        List<CardDto> playerCards = participantCards.playerCards();
         printInitCardsIntro(participantCards);
         printCards(dealerCard);
         printAllPlayerCards(playerCards);
     }
 
-    private static void printInitCardsIntro(ParticipantCards participantCards) {
+    private static void printInitCardsIntro(CardsDto participantCards) {
         String playerNames = String.join(CARDS_DELIMITER, participantCards.playerNames());
         System.out.printf(INIT_CARDS_INTRO, participantCards.dealerName(), playerNames);
     }
 
-    public static void printCards(ParticipantCard participantCard) {
-        String cards = String.join(CARDS_DELIMITER, participantCard.getCards());
-        System.out.printf(CARDS_FORMAT, participantCard.getName(), cards);
+    public static void printCards(CardDto participantCard) {
+        String cards = String.join(CARDS_DELIMITER, participantCard.cards());
+        System.out.printf(CARDS_FORMAT, participantCard.name(), cards);
     }
 
-    private static void printAllPlayerCards(List<ParticipantCard> playerCards) {
+    private static void printAllPlayerCards(List<CardDto> playerCards) {
         playerCards.forEach(OutputView::printCards);
         System.out.println();
     }
@@ -59,9 +59,9 @@ public class OutputView {
     }
 
     private static void printScore(ParticipantScore participantScore) {
-        ParticipantCard participantCard = participantScore.getCard();
-        String cards = String.join(CARDS_DELIMITER, participantCard.getCards());
-        System.out.printf(SCORE_FORMAT, participantCard.getName(), cards, participantScore.getScore());
+        CardDto participantCard = participantScore.getCard();
+        String cards = String.join(CARDS_DELIMITER, participantCard.cards());
+        System.out.printf(SCORE_FORMAT, participantCard.name(), cards, participantScore.getScore());
     }
 
     public static void printProfits(ProfitsDto participantProfits) {

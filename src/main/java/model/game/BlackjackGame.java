@@ -9,11 +9,11 @@ import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.ParticipantCard;
-import model.result.ParticipantCards;
+import model.result.CardDto;
+import model.result.CardsDto;
+import model.result.ParticipantScores;
 import model.result.ProfitDto;
 import model.result.ProfitsDto;
-import model.result.ParticipantScores;
 
 public class BlackjackGame {
 
@@ -26,24 +26,28 @@ public class BlackjackGame {
         cardDeck = CardDeck.createShuffledDeck(DEQUE_COUNT);
     }
 
-    public ParticipantCards dealInitialCards(Dealer dealer, Players players) {
+    public CardsDto dealInitialCards(Dealer dealer, Players players) {
         dealCards(dealer);
-        players.getPlayers()
-            .forEach(this::dealCards);
-        return ParticipantCards.createWithInitialCards(dealer, players);
+        CardDto dealerCard = new CardDto(dealer.getName(), List.of(dealer.getFirstCard()));
+        List<CardDto> playerCards = players.getPlayers()
+            .stream()
+            .map(this::dealCards)
+            .toList();
+        return new CardsDto(dealerCard, playerCards);
     }
 
-    private void dealCards(Participant participant) {
+    private CardDto dealCards(Participant participant) {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             Card card = cardDeck.drawCard();
             participant.hit(card);
         }
+        return new CardDto(participant.getName(), participant.getCardsInfo());
     }
 
-    public ParticipantCard dealCardTo(Player player) {
+    public CardDto dealCardTo(Player player) {
         Card card = cardDeck.drawCard();
         player.hit(card);
-        return ParticipantCard.createWithAllCard(player);
+        return new CardDto(player.getName(), player.getCardsInfo());
     }
 
     public boolean dealCardTo(Dealer dealer) {
