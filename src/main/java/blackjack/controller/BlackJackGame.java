@@ -32,8 +32,8 @@ public class BlackJackGame {
 
     public void run() {
         CardGenerator cardGenerator = new RandomCardGenerator();
-        Players players = retryOnException(() -> preparePlayers(cardGenerator));
-        BettingBoard bettingBoard = prepareBettingBoard(players);
+        Players players = retryOnException(() -> createPlayers(cardGenerator));
+        BettingBoard bettingBoard = createBettingBoard(players);
         Dealer dealer = new Dealer(cardGenerator);
         printDealingResult(players, dealer);
 
@@ -41,12 +41,12 @@ public class BlackJackGame {
         end(players, dealer, bettingBoard);
     }
 
-    private Players preparePlayers(final CardGenerator cardGenerator) {
+    private Players createPlayers(final CardGenerator cardGenerator) {
         List<String> playerNames = inputView.askPlayerNames();
         return new Players(playerNames, cardGenerator);
     }
 
-    private BettingBoard prepareBettingBoard(final Players players) {
+    private BettingBoard createBettingBoard(final Players players) {
         return players.getNames().stream()
                 .map(name -> retryOnException(() -> askBettingMoney(name)))
                 .collect(Collectors.collectingAndThen(Collectors.toList(),
