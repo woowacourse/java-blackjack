@@ -64,12 +64,12 @@ public class Blackjack {
     private List<GamePlayerResult> checkPlayersResult() {
         return this.players.gamePlayers()
                            .stream()
-                           .map(gamePlayer -> checkPlayerResult(this.players.dealer(), gamePlayer))
+                           .map(gamePlayer -> checkPlayerResult(gamePlayer, this.players.dealer()))
                            .toList();
     }
 
-    private GamePlayerResult checkPlayerResult(final Dealer dealer, final GamePlayer gamePlayer) {
-        return new GamePlayerResult(gamePlayer.getName(), PrizeChecker.check(dealer, gamePlayer));
+    private GamePlayerResult checkPlayerResult(final GamePlayer gamePlayer, final Dealer dealer) {
+        return new GamePlayerResult(gamePlayer.getName(), PrizeChecker.check(gamePlayer, dealer));
     }
 
     public Dealer getDealer() {

@@ -22,7 +22,7 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.EIGHT, CardValue.EIGHT));
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, 1500);
     }
@@ -34,7 +34,7 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.ACE, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, 0);
     }
@@ -46,7 +46,7 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, -1000);
     }
@@ -58,7 +58,7 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, -1000);
     }
@@ -69,7 +69,7 @@ class PrizeCheckerTest {
         final GamePlayer gamePlayer = 플레이어_생성(1000, List.of(CardValue.JACK, CardValue.JACK));
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, 1000);
     }
@@ -82,7 +82,7 @@ class PrizeCheckerTest {
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK));
         dealer.stand();
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, 1000);
     }
@@ -95,7 +95,7 @@ class PrizeCheckerTest {
         final Dealer dealer = 딜러_생성(List.of(CardValue.JACK, CardValue.JACK));
         dealer.stand();
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, 0);
     }
@@ -108,7 +108,7 @@ class PrizeCheckerTest {
         final Dealer dealer = 딜러_생성(List.of(CardValue.JACK, CardValue.JACK));
         dealer.stand();
 
-        final var prize = PrizeChecker.check(dealer, gamePlayer);
+        final var prize = PrizeChecker.check(gamePlayer, dealer);
 
         assertPrizeMoney(prize, -2000);
     }

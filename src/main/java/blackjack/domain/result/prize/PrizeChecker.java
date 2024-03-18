@@ -1,20 +1,22 @@
 package blackjack.domain.result.prize;
 
+import blackjack.domain.card.state.BlackjackStatus;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
+import blackjack.domain.player.Participant;
 
 import java.util.function.BiPredicate;
 
 
 public enum PrizeChecker {
-    BLACKJACK((gamePlayer, dealer) -> gamePlayer.isBlackjack() && !dealer.isBlackjack(), 1.5),
-    WIN((gamePlayer, dealer) -> !gamePlayer.isBust() && dealer.isBust() || (
-            gamePlayer.isStand() && compare(gamePlayer, dealer) > 0), 1),
-    DRAW(((gamePlayer, dealer) -> (gamePlayer.isBlackjack() && dealer.isBlackjack()) || (
-            gamePlayer.isStand() && compare(gamePlayer, dealer) == 0)), 0),
+    BLACKJACK(PrizeChecker::isPlayerBlackjack, 1.5),
+    WIN((gamePlayer, dealer) -> isDealerBust(gamePlayer, dealer) || (
+            isStand(gamePlayer) && compare(gamePlayer, dealer) > 0), 1),
+    DRAW(((gamePlayer, dealer) -> isBothBlackjack(gamePlayer, dealer) || (
+            isStand(gamePlayer) && compare(gamePlayer, dealer) == 0)), 0),
 
-    LOSE((gamePlayer, dealer) -> gamePlayer.isBust() || (
-            gamePlayer.isStand() && compare(gamePlayer, dealer) < 0), -1);
+    LOSE((gamePlayer, dealer) -> isBust(gamePlayer) || (
+            isStand(gamePlayer) && compare(gamePlayer, dealer) < 0), -1);
     private final BiPredicate<GamePlayer, Dealer> predicate;
     private final double profitRate;
 
@@ -23,7 +25,7 @@ public enum PrizeChecker {
         this.profitRate = profitRate;
     }
 
-    public static final PrizeMoney check(final Dealer dealer, final GamePlayer gamePlayer) {
+    public static final PrizeMoney check(final GamePlayer gamePlayer, final Dealer dealer) {
         for (final var checker : PrizeChecker.values()) {
             if (checker.predicate.test(gamePlayer, dealer)) {
                 return new PrizeMoney(gamePlayer.getBettingMoney() * checker.profitRate);
@@ -31,6 +33,27 @@ public enum PrizeChecker {
         }
         throw new IllegalStateException("조건에 맞지 않는 계산입니다");
     }
+
+    private static boolean isPlayerBlackjack(final GamePlayer gamePlayer, final Dealer dealer) {
+        return gamePlayer.getStatus() == BlackjackStatus.BLACKJACK && dealer.getStatus() != BlackjackStatus.BLACKJACK;
+    }
+
+    private static boolean isDealerBust(final GamePlayer gamePlayer, final Dealer dealer) {
+        return dealer.getStatus() == BlackjackStatus.BUST && gamePlayer.getStatus() != BlackjackStatus.BUST;
+    }
+
+    private static boolean isBothBlackjack(final GamePlayer gamePlayer, final Dealer dealer) {
+        return gamePlayer.getStatus() == BlackjackStatus.BLACKJACK && dealer.getStatus() == BlackjackStatus.BLACKJACK;
+    }
+
+    private static boolean isStand(final Participant participant) {
+        return participant.getStatus() == BlackjackStatus.STAND;
+    }
+
+    private static boolean isBust(final Participant participant) {
+        return participant.getStatus() == BlackjackStatus.BUST;
+    }
+
 
     private static int compare(final GamePlayer gamePlayer, final Dealer dealer) {
         return Integer.compare(gamePlayer.calculateScore(), dealer.calculateScore());
