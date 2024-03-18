@@ -3,24 +3,15 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Deck;
 
 public class Player extends Gamer {
-    private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
+    private final PlayerName name;
 
-    private final String name;
-
-    private Player(String name, Deck deck) {
+    private Player(PlayerName name, Deck deck) {
         super(deck);
         this.name = name;
     }
 
     public static Player of(String name, Deck deck) {
-        validateBlank(name);
-        return new Player(name, deck);
-    }
-
-    private static void validateBlank(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
-        }
+        return new Player(new PlayerName(name), deck);
     }
 
     public boolean canContinue() {
@@ -28,6 +19,6 @@ public class Player extends Gamer {
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
 }
