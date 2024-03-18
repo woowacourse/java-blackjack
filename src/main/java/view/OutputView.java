@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Map.Entry;
-import model.blackjackgame.Profit;
+import model.result.Profit;
 import model.card.CardType;
 import model.participants.dealer.Dealer;
 import model.participants.player.Player;

@@ -10,8 +10,6 @@ import model.blackjackgame.Betting;
 import model.blackjackgame.Bettings;
 import model.blackjackgame.Blackjack;
 import model.blackjackgame.BlackjackGame;
-import model.blackjackgame.Profit;
-import model.blackjackgame.Result;
 import model.card.Card;
 import model.card.CardDispenser;
 import model.card.CardType;
@@ -20,6 +18,8 @@ import model.participants.dealer.Dealer;
 import model.participants.player.Player;
 import model.participants.player.Players;
 import model.participants.player.UpdatedPlayer;
+import model.result.Profit;
+import model.result.Result;
 import view.InputView;
 import view.OutputView;
 
@@ -128,9 +128,7 @@ public class BlackjackGameController {
     }
 
     private Profit gameProfit(BlackjackGame blackjackGame, Bettings bettings, Result result) {
-        Profit profit = new Profit(bettings);
-        profit.createPlayersProfit(blackjackGame.getPlayers(), bettings, result);
-        return profit;
+        return new Profit(blackjackGame.getPlayers(), result, bettings);
     }
 
     private <T> T repeatUntilSuccess(Supplier<T> supplier) {
