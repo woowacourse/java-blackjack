@@ -1,4 +1,7 @@
-import domain.*;
+import domain.blackjack.BlackjackGame;
+import domain.blackjack.UserCommand;
+import domain.card.Deck;
+import domain.participant.*;
 import dto.DealerInfo;
 import dto.GameResult;
 import dto.PlayerInfo;
