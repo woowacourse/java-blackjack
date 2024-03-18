@@ -9,7 +9,7 @@ public class Application {
         final List<Integer> betAmounts = names.stream()
                 .map(InputView::inputBettingAmount)
                 .toList();
-        final Blackjack blackjack = Blackjack.of(names, betAmounts);
+        final Blackjack blackjack = Blackjack.startWithInitialization(names, betAmounts);
 
         OutputView.printInitialStatus(blackjack.toParticipantsResponse());
 

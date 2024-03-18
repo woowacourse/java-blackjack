@@ -1,4 +1,41 @@
 package domain;
 
+import java.util.List;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 class BlackjackTest {
+    @Test
+    @DisplayName("딜러가 히트 했을 때 점수의 합이 17 이상인지 확인한다")
+    void init() {
+        final List<String> names = List.of("a", "b", "c");
+        final List<Integer> betAmounts = List.of(100, 200, 300);
+
+        final Blackjack blackjack = Blackjack.startWithInitialization(names, betAmounts);
+
+        blackjack.dealerHit(()->{});
+        final int dealerScore = blackjack.toParticipantsResponse().dealerResponse().score();
+        Assertions.assertThat(dealerScore).isGreaterThanOrEqualTo(17);
+    }
+
+    @Test
+    void of() {
+    }
+
+    @Test
+    void playersHit() {
+    }
+
+    @Test
+    void dealerHit() {
+    }
+
+    @Test
+    void toGameResult() {
+    }
+
+    @Test
+    void toParticipantsResponse() {
+    }
 }

@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -58,5 +59,9 @@ public class Players {
 
     public List<Player> getValue() {
         return Collections.unmodifiableList(value);
+    }
+
+    public void init(final Card first, final Card second) {
+        stream().forEach(player -> player.init(first, second));
     }
 }

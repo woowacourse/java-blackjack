@@ -15,17 +15,17 @@ public class Blackjack {
     private final Players players;
     private final Dealer dealer;
 
-    public Blackjack(final Players players, final Dealer dealer) {
+    private Blackjack(final Players players, final Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
 
-    public static void init(final Players players, final Dealer dealer) {
+    private static void init(final Players players, final Dealer dealer) {
         dealer.init(dealer.draw(), dealer.draw());
-        players.stream().forEach(player -> player.init(dealer.draw(), dealer.draw()));
+        players.init(dealer.draw(), dealer.draw());
     }
 
-    public static Blackjack of(final List<String> names, final List<Integer> betAmounts) {
+    public static Blackjack startWithInitialization(final List<String> names, final List<Integer> betAmounts) {
         final Dealer dealer = new Dealer();
         final Players players = Players.of(names, betAmounts);
         init(players, dealer);
