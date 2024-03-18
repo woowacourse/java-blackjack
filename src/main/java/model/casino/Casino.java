@@ -54,12 +54,12 @@ public class Casino {
         return entrant.hasAvailablePlayer();
     }
 
-    public PlayerFaceUpResult getNextPlayerFaceUpInfo() {
-        return ResultMapper.toPlayerFaceUpResult(entrant.getNextAvailablePlayer());
-    }
-
     public boolean isDealerHitAllowed() {
         return entrant.isDealerHitAllowed();
+    }
+
+    public PlayerFaceUpResult getNextPlayerFaceUpInfo() {
+        return ResultMapper.toPlayerFaceUpResult(entrant.getNextAvailablePlayer());
     }
 
     public DealerFaceUpResult getDealerFaceUpResult() {
