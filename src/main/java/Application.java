@@ -4,7 +4,7 @@ import domain.BlackJackGame;
 import domain.Name;
 import domain.Player;
 import domain.dto.GameStatus;
-import domain.dto.GamerDto;
+import domain.dto.PlayerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import util.ConsoleReader;
@@ -17,8 +17,8 @@ public class Application {
     public static void main(String[] args) {
         BlackJackGame blackJackGame = setGame();
         BettingTable bettingTable = setBettingTable(blackJackGame);
-        List<GamerDto> gamerDtos = showInitialStatus(blackJackGame);
-        playMainGame(gamerDtos, blackJackGame);
+        List<PlayerDto> playerDtos = showInitialStatus(blackJackGame);
+        playMainGame(playerDtos, blackJackGame);
         showFinalProfit(blackJackGame, bettingTable);
     }
 
@@ -45,20 +45,20 @@ public class Application {
         return new BettingAmount(InputView.readBetting(CONSOLE_READER, playerName));
     }
 
-    private static List<GamerDto> showInitialStatus(BlackJackGame blackJackGame) {
+    private static List<PlayerDto> showInitialStatus(BlackJackGame blackJackGame) {
         blackJackGame.initialDealing();
         GameStatus gameInitStatusDto = new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers());
         OutputView.printInitialStatus(gameInitStatusDto);
         return gameInitStatusDto.getGamerDtos();
     }
 
-    private static void playMainGame(List<GamerDto> gamerDtos, BlackJackGame blackJackGame) {
-        gamerDtos.forEach(gamer -> askForGamer(gamer, blackJackGame));
+    private static void playMainGame(List<PlayerDto> playerDtos, BlackJackGame blackJackGame) {
+        playerDtos.forEach(gamer -> askForGamer(gamer, blackJackGame));
         int dealerDrawCount = blackJackGame.drawDealerCard();
         OutputView.printDealerTurn(dealerDrawCount);
     }
 
-    private static void askForGamer(GamerDto gamer, BlackJackGame blackJackGame) {
+    private static void askForGamer(PlayerDto gamer, BlackJackGame blackJackGame) {
         boolean isFirstTurn = true;
         boolean isDraw = true;
         while (isGamerTurnEnded(blackJackGame, gamer, isDraw)) {
@@ -69,17 +69,17 @@ public class Application {
         }
     }
 
-    private static boolean isGamerTurnEnded(BlackJackGame blackJackGame, GamerDto gamer, boolean isDraw) {
+    private static boolean isGamerTurnEnded(BlackJackGame blackJackGame, PlayerDto gamer, boolean isDraw) {
         return (!blackJackGame.isBustFromName(gamer.getName()) && isDraw);
     }
 
-    private static void drawIfAnswerIsYes(boolean isDraw, GamerDto gamerDto, BlackJackGame blackJackGame) {
+    private static void drawIfAnswerIsYes(boolean isDraw, PlayerDto playerDto, BlackJackGame blackJackGame) {
         if (isDraw) {
-            blackJackGame.drawCardFromName(gamerDto.getName());
+            blackJackGame.drawCardFromName(playerDto.getName());
         }
     }
 
-    private static void printPlayerStatus(boolean isDraw, GamerDto gamer, boolean isFirstTurn) {
+    private static void printPlayerStatus(boolean isDraw, PlayerDto gamer, boolean isFirstTurn) {
         if (isFirstTurn || isDraw) {
             OutputView.printGamerStatus(gamer);
         }

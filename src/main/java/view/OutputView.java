@@ -3,8 +3,9 @@ package view;
 import domain.Card;
 import domain.Player;
 import domain.constant.GamerIdentifier;
+import domain.dto.DealerDto;
 import domain.dto.GameStatus;
-import domain.dto.GamerDto;
+import domain.dto.PlayerDto;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
@@ -14,27 +15,27 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
 
     public static void printInitialStatus(GameStatus gameStatus) {
-        GamerDto dealerDto = gameStatus.getDealerDto();
-        List<GamerDto> gamerDtos = gameStatus.getGamerDtos();
-        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", DEALER_NAME, buildGamerNames(gamerDtos));
+        DealerDto dealerDto = gameStatus.getDealerDto();
+        List<PlayerDto> playerDtos = gameStatus.getGamerDtos();
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", DEALER_NAME, buildGamerNames(playerDtos));
         System.out.println(buildDealerInitialStatus(dealerDto));
-        System.out.println(buildPlayersInitialStatus(gamerDtos) + "\n");
+        System.out.println(buildPlayersInitialStatus(playerDtos) + "\n");
     }
 
-    private static String buildGamerNames(List<GamerDto> gamerDtos) {
-        return gamerDtos.stream()
-                .map(GamerDto::getName)
+    private static String buildGamerNames(List<PlayerDto> playerDtos) {
+        return playerDtos.stream()
+                .map(PlayerDto::getName)
                 .collect(Collectors.joining(", "));
     }
 
-    private static String buildDealerInitialStatus(GamerDto dealerDto) {
+    private static String buildDealerInitialStatus(DealerDto dealerDto) {
         return String.join(": ",
                 DEALER_NAME,
                 dealerDto.getCards().get(0).toString());
     }
 
-    private static String buildPlayersInitialStatus(List<GamerDto> gamerDtos) {
-        return gamerDtos.stream()
+    private static String buildPlayersInitialStatus(List<PlayerDto> playerDtos) {
+        return playerDtos.stream()
                 .map(gamerDto -> buildNameCards(gamerDto.getName(), gamerDto.getCards()))
                 .collect(Collectors.joining("\n"));
     }
@@ -44,7 +45,7 @@ public class OutputView {
         return String.join("카드: ", name, cardString);
     }
 
-    public static void printGamerStatus(GamerDto gamer) {
+    public static void printGamerStatus(PlayerDto gamer) {
         System.out.println(buildNameCards(gamer.getName(), gamer.getCards()));
     }
 
@@ -54,27 +55,27 @@ public class OutputView {
     }
 
     public static void printTotalStatus(GameStatus gameStatus) {
-        GamerDto dealerDto = gameStatus.getDealerDto();
-        List<GamerDto> playersDto = gameStatus.getGamerDtos();
+        DealerDto dealerDto = gameStatus.getDealerDto();
+        List<PlayerDto> playersDto = gameStatus.getGamerDtos();
         System.out.println();
         System.out.println(buildDealerTotalStatus(dealerDto));
         playersDto.stream().map(OutputView::buildPlayerTotalStatus)
                 .forEach(System.out::println);
     }
 
-    private static String buildDealerTotalStatus(GamerDto gamer) {
+    private static String buildDealerTotalStatus(DealerDto gamer) {
         String nameCards = buildNameCards(DEALER_NAME, gamer.getCards());
         String totalScores = buildTotalScore(gamer);
         return "%s - %s".formatted(nameCards, totalScores);
     }
 
-    private static String buildPlayerTotalStatus(GamerDto gamer) {
+    private static String buildPlayerTotalStatus(PlayerDto gamer) {
         String nameCards = buildNameCards(gamer.getName(), gamer.getCards());
         String totalScores = buildTotalScore(gamer);
         return "%s - %s".formatted(nameCards, totalScores);
     }
 
-    private static String buildTotalScore(GamerDto gamer) {
+    private static String buildTotalScore(DealerDto gamer) {
         return "결과: %d".formatted(gamer.getTotalScore());
     }
 
