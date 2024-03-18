@@ -21,7 +21,7 @@ public enum PrizeChecker {
         this.profitRate = profitRate;
     }
 
-    public static final PrizeMoney check(final GamePlayer gamePlayer, final Dealer dealer) {
+    public static PrizeMoney check(final GamePlayer gamePlayer, final Dealer dealer) {
         for (final var checker : PrizeChecker.values()) {
             if (checker.predicate.test(gamePlayer, dealer)) {
                 return new PrizeMoney(gamePlayer.getBettingMoney() * checker.profitRate);
