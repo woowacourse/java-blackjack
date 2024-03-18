@@ -33,4 +33,11 @@ class ProfitTest {
 
         Assertions.assertThat(profit.tie()).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1,-1", "-1,1","0,0"})
+    @DisplayName("값이 주어졌을 때 부호를 바꾸어 반환한다")
+    void reverse(final int actual, final int expected) {
+        Assertions.assertThat(Profit.reverse(actual)).isEqualTo(expected);
+    }
 }
