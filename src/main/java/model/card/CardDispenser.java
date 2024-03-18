@@ -7,7 +7,6 @@ public class CardDispenser {
     private static final Random random = new Random();
 
     private CardDispenser() {
-        throw new IllegalStateException();
     }
 
     public static CardNumber generateCardNumber() {
