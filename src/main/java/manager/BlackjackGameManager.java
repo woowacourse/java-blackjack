@@ -11,6 +11,7 @@ import domain.result.Incomes;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static view.InputView.*;
@@ -49,7 +50,7 @@ public class BlackjackGameManager {
     private Map<Name, BetAmount> readBetAmounts(List<Name> names) {
         return names.stream()
                 .collect(Collectors.toMap(
-                        name -> name,
+                        Function.identity(),
                         name -> new BetAmount(readBetAmount(name)),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new

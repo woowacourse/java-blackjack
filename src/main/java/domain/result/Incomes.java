@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Incomes {
@@ -29,7 +30,7 @@ public class Incomes {
     public Map<Player, Income> playersIncomes(Dealer dealer) {
         return players.stream()
                 .collect(Collectors.toMap(
-                        player -> player,
+                        Function.identity(),
                         player -> determineIncome(dealer.decideStatus(player), player.getBetAmount()),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
