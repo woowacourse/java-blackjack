@@ -1,10 +1,6 @@
 package model.card;
 
-import java.util.Objects;
-
 public class Card {
-
-    private static final String ACE_NUMBER = "A";
 
     private final CardNumber number;
     private final CardShape shape;
@@ -15,7 +11,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return Objects.equals(number.getNumber(), ACE_NUMBER);
+        return number.isAce(number);
     }
 
     public CardNumber getNumber() {

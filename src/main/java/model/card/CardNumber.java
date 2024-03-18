@@ -23,6 +23,10 @@ public enum CardNumber {
         this.value = value;
     }
 
+    public boolean isAce(CardNumber number){
+        return number.equals(ACE);
+    }
+
     public String getNumber() {
         return number;
     }
