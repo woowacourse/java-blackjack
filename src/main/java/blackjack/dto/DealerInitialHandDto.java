@@ -3,12 +3,28 @@ package blackjack.dto;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 
-public record DealerInitialHandDto(String name, CardDto firstCard) {
+public class DealerInitialHandDto {
 
-	public static DealerInitialHandDto fromDealer(Dealer dealer) {
-		String dealerName = dealer.getName().value();
-		Card dealerFirstCard = dealer.getFirstCard();
+    private final String name;
+    private final CardDto firstCard;
 
-		return new DealerInitialHandDto(dealerName, CardDto.fromCard(dealerFirstCard));
-	}
+    private DealerInitialHandDto(String name, CardDto firstCard) {
+        this.name = name;
+        this.firstCard = firstCard;
+    }
+
+    public static DealerInitialHandDto fromDealer(Dealer dealer) {
+        String dealerName = dealer.getName();
+        Card dealerFirstCard = dealer.getFirstCard();
+
+        return new DealerInitialHandDto(dealerName, CardDto.fromCard(dealerFirstCard));
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public CardDto firstCard() {
+        return firstCard;
+    }
 }

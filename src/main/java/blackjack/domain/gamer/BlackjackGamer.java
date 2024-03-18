@@ -1,53 +1,48 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BlackjackGamer {
 
-	private final Name name;
-	private final Hand hand;
+    final Hand hand;
 
-	public BlackjackGamer(Name name) {
-		this.name = name;
-		this.hand = new Hand(new ArrayList<>());
-	}
+    public BlackjackGamer(List<Card> cards) {
+        this.hand = new Hand(cards);
+    }
 
-	public abstract boolean canReceiveCard();
+    public BlackjackGamer() {
+        this(new ArrayList<>());
+    }
 
-	public void initCard(Deck deck, int initialCardCount) {
-		for (int i = 0; i < initialCardCount; i++) {
-			addCard(deck.draw());
-		}
-	}
+    public abstract boolean canReceiveCard();
 
-	public void addCard(Card card) {
-		hand.add(card);
-	}
+    public abstract String getName();
 
-	public boolean isBust() {
-		return hand.checkIfBust();
-	}
+    public void addCard(Card card) {
+        hand.add(card);
+    }
 
-	public boolean isBlackJack() {
-		return hand.checkIfBlackjack();
-	}
+    public boolean isBusted() {
+        return hand.checkIfBust();
+    }
 
-	public Card getFirstCard() {
-		return hand.getFirstCard();
-	}
+    public boolean isBlackjack() {
+        return hand.checkIfBlackjack();
+    }
 
-	public int getScore() {
-		return hand.calculateScore();
-	}
+    public int getScore() {
+        return hand.calculateScore();
+    }
 
-	public Name getName() {
-		return name;
-	}
+    public List<Card> getCurrentCards() {
+        List<Card> cards = hand.cards();
 
-	public Hand getHand() {
-		return hand;
-	}
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("현재 보유하고 있는 카드가 존재하지 않습니다.");
+        }
+
+        return hand.cards();
+    }
 }

@@ -1,118 +1,119 @@
 package blackjack.controller;
 
-import java.util.List;
-
-import blackjack.domain.BlackjackConstants;
-import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.PlayerBetAmounts;
 import blackjack.dto.DealerInitialHandDto;
-import blackjack.dto.DealerResultDto;
+import blackjack.dto.GamerEarningsDto;
 import blackjack.dto.GamerHandDto;
-import blackjack.dto.PlayerResultsDto;
+import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
-	private static final String HIT_COMMAND = "y";
-	private static final String STAND_COMMAND = "n";
+    private final InputView inputView;
+    private final OutputView outputView;
 
-	private final InputView inputView;
-	private final OutputView outputView;
+    public BlackjackController() {
+        this.inputView = new InputView();
+        this.outputView = new OutputView();
+    }
 
-	public BlackjackController() {
-		this.inputView = new InputView();
-		this.outputView = new OutputView();
-	}
+    public void run() {
+        PlayerBetAmounts playerBetAmounts = createPlayersWithBetAmount();
+        List<Player> players = playerBetAmounts.getPlayers();
+        Dealer dealer = new Dealer();
 
-	public void run() {
-		Players players = getPlayers();
-		Dealer dealer = new Dealer();
-		Deck deck = new Deck();
-		deck.shuffle();
-		outputView.printEmptyLine();
+        setUpInitialHands(dealer, players);
+        distributeCardToPlayers(dealer, players);
+        distributeCardToDealer(dealer);
+        printAllGamerScores(dealer, players);
+        printAllGamerRevenues(dealer, playerBetAmounts);
+    }
 
-		setUpInitialHands(players, deck, dealer);
-		distributeCardToPlayers(players, deck);
-		distributeCardToDealer(dealer, deck);
-		printAllGamerScores(dealer, players);
-		printResult(dealer, players);
-	}
+    private PlayerBetAmounts createPlayersWithBetAmount() {
+        List<String> playerNames = inputView.receivePlayerNames();
+        outputView.printBlankLine();
 
-	private Players getPlayers() {
-		List<String> playerNames = inputView.receivePlayerNames();
+        return new PlayerBetAmounts(createPlayerBetAmounts(playerNames));
+    }
 
-		return new Players(playerNames);
-	}
+    private Map<Player, Money> createPlayerBetAmounts(List<String> playerNames) {
+        Map<Player, Money> playerBetAmountMap = new LinkedHashMap<>();
 
-	private void setUpInitialHands(Players players, Deck deck, Dealer dealer) {
-		players.initAllPlayersCard(deck, BlackjackConstants.INITIAL_CARD_COUNT.getValue());
-		dealer.initCard(deck, BlackjackConstants.INITIAL_CARD_COUNT.getValue());
-		printInitialHands(players, dealer);
-	}
+        for (String playerName : playerNames) {
+            Money betAmount = new Money(inputView.receiveBetAmount(playerName));
+            playerBetAmountMap.put(new Player(playerName), betAmount);
+        }
+        outputView.printBlankLine();
 
-	private void printInitialHands(Players players, Dealer dealer) {
-		DealerInitialHandDto dealerInitialHandDto = DealerInitialHandDto.fromDealer(dealer);
-		List<GamerHandDto> playerInitialHandDto = players.getPlayers().stream()
-			.map(GamerHandDto::fromGamer)
-			.toList();
+        return playerBetAmountMap;
+    }
 
-		outputView.printInitialHands(dealerInitialHandDto, playerInitialHandDto);
-		outputView.printEmptyLine();
-	}
+    private void setUpInitialHands(Dealer dealer, List<Player> players) {
+        dealer.setUpInitialCards(players);
+        printInitialHands(players, dealer);
+    }
 
-	private void distributeCardToPlayers(Players players, Deck deck) {
-		for (Player player : players.getPlayers()) {
-			distributeCardToPlayer(deck, player);
-		}
-	}
+    private void printInitialHands(List<Player> players, Dealer dealer) {
+        DealerInitialHandDto dealerInitialHandDto = DealerInitialHandDto.fromDealer(dealer);
+        List<GamerHandDto> playerInitialHandDto = players.stream()
+                .map(GamerHandDto::fromGamer)
+                .toList();
 
-	private void distributeCardToPlayer(Deck deck, Player player) {
-		while (canDistribute(player)) {
-			player.addCard(deck.draw());
-			outputView.printGamerNameAndHand(GamerHandDto.fromGamer(player));
-		}
-		outputView.printEmptyLine();
-	}
+        outputView.printInitialHands(dealerInitialHandDto, playerInitialHandDto);
+        outputView.printBlankLine();
+    }
 
-	private boolean canDistribute(Player player) {
-		return player.canReceiveCard() && HIT_COMMAND.equals(getCommand(player));
-	}
+    private void distributeCardToPlayers(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
+            distributeCardToPlayer(dealer, player);
+        }
+    }
 
-	private String getCommand(Player player) {
-		String command = inputView.receiveCommand(player.getName().value());
-		if (HIT_COMMAND.equals(command) || STAND_COMMAND.equals(command)) {
-			return command;
-		}
-		throw new IllegalArgumentException(HIT_COMMAND + " 또는 " + STAND_COMMAND + "만 입력 가능합니다.");
-	}
+    private void distributeCardToPlayer(Dealer dealer, Player player) {
+        while (canDistribute(player)) {
+            dealer.giveCardToPlayer(player);
+            outputView.printGamerNameAndHand(GamerHandDto.fromGamer(player));
+        }
+        outputView.printBlankLine();
+    }
 
-	private void distributeCardToDealer(Dealer dealer, Deck deck) {
-		while (dealer.canReceiveCard()) {
-			dealer.addCard(deck.draw());
-			outputView.printDealerMessage(dealer.getName().value());
-		}
-		outputView.printEmptyLine();
-	}
+    private boolean canDistribute(Player player) {
+        return player.canReceiveCard() && isPlayerCommandHit(player);
+    }
 
-	private void printAllGamerScores(Dealer dealer, Players players) {
-		outputView.printScore(GamerHandDto.fromGamer(dealer), dealer.getScore());
-		printPlayersScores(players);
-		outputView.printEmptyLine();
-	}
+    private boolean isPlayerCommandHit(Player player) {
+        Command command = inputView.receiveCommand(player.getName());
+        return command.isHit();
+    }
 
-	private void printPlayersScores(Players players) {
-		players.getPlayers().forEach(player -> outputView.printScore(
-			GamerHandDto.fromGamer(player), player.getScore()
-		));
-	}
+    private void distributeCardToDealer(Dealer dealer) {
+        while (dealer.canReceiveCard()) {
+            dealer.addCard();
+            outputView.printDealerMessage(dealer.getName());
+        }
+        outputView.printBlankLine();
+    }
 
-	private void printResult(Dealer dealer, Players players) {
-		PlayerResultsDto playerResultsDto = PlayerResultsDto.ofPlayersAndDealerScore(players, dealer);
-		DealerResultDto dealerResultDto = DealerResultDto.ofDealerAndPlayers(dealer, players);
+    private void printAllGamerScores(Dealer dealer, List<Player> players) {
+        outputView.printScore(GamerHandDto.fromGamer(dealer), dealer.getScore());
+        printPlayersScores(players);
+        outputView.printBlankLine();
+    }
 
-		outputView.printFinalResult(dealerResultDto, playerResultsDto);
-	}
+    private void printPlayersScores(List<Player> players) {
+        players.forEach(player -> outputView.printScore(
+                GamerHandDto.fromGamer(player), player.getScore()
+        ));
+    }
+
+    private void printAllGamerRevenues(Dealer dealer, PlayerBetAmounts playerBetAmounts) {
+        outputView.printRevenues(GamerEarningsDto.fromDealerAndPlayers(dealer, playerBetAmounts));
+    }
 }

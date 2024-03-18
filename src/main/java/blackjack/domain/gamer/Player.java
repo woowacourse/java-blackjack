@@ -1,38 +1,48 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.BlackjackConstants;
+import blackjack.domain.card.Card;
+import java.util.List;
+import java.util.Objects;
 
 public class Player extends BlackjackGamer {
 
-	public Player(Name name) {
-		super(name);
-	}
+    private final Name name;
 
-	@Override
-	public boolean canReceiveCard() {
-		return getScore() <= BlackjackConstants.BLACKJACK_VALUE.getValue();
-	}
+    public Player(String name) {
+        super();
+        this.name = new Name(name);
+    }
 
-	public GameResult getGameResult(Dealer dealer) {
-		if (isBust()) {
-			return GameResult.LOSE;
-		}
-		if (dealer.isBust()) {
-			return GameResult.WIN;
-		}
-		if (dealer.isBlackJack()) {
-			return GameResult.LOSE;
-		}
-		if (isBlackJack()) {
-			return GameResult.WIN;
-		}
-		return compareScore(dealer.getScore(), getScore());
-	}
+    public Player(String name, List<Card> cards) {
+        super(cards);
+        this.name = new Name(name);
+    }
 
-	private GameResult compareScore(int dealerScore, int playerScore) {
-		if (dealerScore >= playerScore) {
-			return GameResult.LOSE;
-		}
-		return GameResult.WIN;
-	}
+    @Override
+    public boolean canReceiveCard() {
+        return !isBlackjack() && getScore() <= BlackjackConstants.BLACKJACK_VALUE.getValue();
+    }
+
+    @Override
+    public String getName() {
+        return name.value();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

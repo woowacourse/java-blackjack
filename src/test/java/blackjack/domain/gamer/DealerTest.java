@@ -1,66 +1,79 @@
 package blackjack.domain.gamer;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Shape;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class DealerTest {
+    Dealer dealer;
 
-	Dealer dealer;
+    @Test
+    @DisplayName("카드의 총합이 16 이하이면 카드를 받을 수 있다.")
+    void receiveCardTest() {
+        dealer = new Dealer(List.of(
+                new Card(Shape.CLOVER, Number.KING),
+                new Card(Shape.HEART, Number.SIX)
+        ));
 
-	@BeforeEach
-	void setUP() {
-		dealer = new Dealer();
-	}
+        assertTrue(dealer.canReceiveCard());
+    }
 
-	@Test
-	@DisplayName("카드의 총합이 16 이하이면 카드를 받을 수 있다.")
-	void receiveCardTest() {
-		dealer.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
-		dealer.addCard(new Card(CardShape.HEART, CardNumber.SIX));
+    @Test
+    @DisplayName("블랙잭이면 카드를 받지 않는다.")
+    void cantReceiveCardTest_WhenBlackjack() {
+        dealer = new Dealer(List.of(
+                new Card(Shape.CLOVER, Number.KING),
+                new Card(Shape.HEART, Number.ACE)
+        ));
 
-		assertThat(dealer.canReceiveCard()).isTrue();
-	}
+        assertFalse(dealer.canReceiveCard());
+    }
 
-	@Test
-	@DisplayName("카드의 총합이 16을 초과하면 카드를 받을 수 없다.")
-	void cantReceiveCardTest() {
-		dealer.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
-		dealer.addCard(new Card(CardShape.HEART, CardNumber.SEVEN));
+    @Test
+    @DisplayName("카드의 총합이 16을 초과하면 카드를 받을 수 없다.")
+    void cantReceiveCardTest() {
+        dealer = new Dealer(List.of(
+                new Card(Shape.CLOVER, Number.KING),
+                new Card(Shape.HEART, Number.SEVEN)
+        ));
 
-		assertThat(dealer.canReceiveCard()).isFalse();
-	}
+        assertFalse(dealer.canReceiveCard());
+    }
 
-	@Nested
-	@DisplayName("딜러의 승,패 횟수를 계산한다.")
-	class DealerResultTest {
+    @Test
+    @DisplayName("모든 플레이어와, 딜러 자신에게 2장의 카드를 배분한다.")
+    void setUpInitialCardsTest() {
+        List<Player> players = List.of(
+                new Player("p1"),
+                new Player("p2"),
+                new Player("p3")
+        );
+        dealer = new Dealer();
 
-		List<GameResult> playerResults;
+        dealer.setUpInitialCards(players);
 
-		@BeforeEach
-		void setUP() {
-			playerResults = List.of(GameResult.WIN, GameResult.LOSE, GameResult.WIN, GameResult.LOSE, GameResult.WIN);
-		}
+        List<Integer> actualCardCount = players.stream()
+                .map(player -> player.getCurrentCards().size())
+                .toList();
 
-		@Test
-		@DisplayName("딜러의 승리 횟수를 올바르게 계산한다.")
-		void calculateDealerWinCountTest() {
-			assertThat(dealer.calculateWinCount(playerResults)).isEqualTo(2);
-		}
+        assertThat(dealer.getCurrentCards().size()).isEqualTo(2);
+        assertThat(actualCardCount).containsExactly(2, 2, 2);
+    }
 
-		@Test
-		@DisplayName("딜러의 패배 횟수를 올바르게 계산한다.")
-		void calculateDealerLoseCountTest() {
-			assertThat(dealer.calculateLoseCount(playerResults)).isEqualTo(3);
-		}
-	}
+    @Test
+    @DisplayName("현재 보유하고 있는 카드가 존재하지 않으면 예외가 발생된다.")
+    void getCurrentCardExceptionTest() {
+        dealer = new Dealer();
+        assertThatThrownBy(dealer::getCurrentCards)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("현재 보유하고 있는 카드가 존재하지 않습니다.");
+    }
 }

@@ -2,12 +2,28 @@ package blackjack.dto;
 
 import blackjack.domain.card.Card;
 
-public record CardDto(String cardNumber, String cardShape) {
+public class CardDto {
 
-	public static CardDto fromCard(Card card) {
-		String name = card.cardNumber().getName();
-		String shape = card.cardShape().getName();
+    private final String cardNumber;
+    private final String cardShape;
 
-		return new CardDto(name, shape);
-	}
+    private CardDto(String cardNumber, String cardShape) {
+        this.cardNumber = cardNumber;
+        this.cardShape = cardShape;
+    }
+
+    public static CardDto fromCard(Card card) {
+        String name = card.number().getName();
+        String shape = card.shape().getName();
+
+        return new CardDto(name, shape);
+    }
+
+    public String cardNumber() {
+        return cardNumber;
+    }
+
+    public String cardShape() {
+        return cardShape;
+    }
 }
