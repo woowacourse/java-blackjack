@@ -1,7 +1,11 @@
 package domain.player;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -45,5 +49,24 @@ class PlayersTest {
         assertThatThrownBy(() -> Players.of(names, betAmounts))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("이름(%d)과 배팅 금액(%d)의 정보의 길이가 일치하지 않습니다.", names.size(), betAmounts.size()));
+    }
+
+    @Test
+    @DisplayName("사용자들의 수익 총합을 계산한다")
+    void totalSum() {
+        final Player player1 = new Player(new Name("a"), new BetAmount(100));
+        final Player player2 = new Player(new Name("b"), new BetAmount(100));
+        final Dealer dealer = new Dealer();
+        player1.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
+        player2.init(new Card(Rank.ACE, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
+        dealer.init(new Card(Rank.TWO, Suit.CLUBS), new Card(Rank.TWO, Suit.CLUBS));
+        player1.standIfRunning();
+        player2.standIfRunning();
+        dealer.standIfRunning();
+        final Players players = new Players(List.of(player1, player2));
+
+        final double totalSum = players.getTotalSum(dealer);
+
+        assertThat(totalSum).isEqualTo(250);
     }
 }

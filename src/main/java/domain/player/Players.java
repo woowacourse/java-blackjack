@@ -23,6 +23,10 @@ public class Players {
                 .toList());
     }
 
+    public void init(final Card first, final Card second) {
+        stream().forEach(player -> player.init(first, second));
+    }
+
     private void validate(final List<Player> players) {
         validatePlayerNumbers(players);
         validateDuplicate(players);
@@ -67,9 +71,5 @@ public class Players {
 
     public List<Player> getValue() {
         return Collections.unmodifiableList(value);
-    }
-
-    public void init(final Card first, final Card second) {
-        stream().forEach(player -> player.init(first, second));
     }
 }
