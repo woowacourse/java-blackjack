@@ -1,13 +1,12 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.result.Status;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Dealer extends Cards {
+public class Dealer extends Participant {
 
     private static final int MIN_SCORE = 16;
 
@@ -20,29 +19,29 @@ public class Dealer extends Cards {
         return bestSumOfCardScore() <= MIN_SCORE;
     }
 
-    public Status decideStatus(Cards playerCards) {
-        if (checkPlayerLose(playerCards)) {
+    public Status decideStatus(Player player) {
+        if (checkPlayerLose(player)) {
             return Status.LOSE;
         }
-        if (checkPlayerBlackjack(playerCards)) {
+        if (checkPlayerBlackjack(player)) {
             return Status.WIN_BLACKJACK;
         }
-        if (checkPlayerWin(playerCards)) {
+        if (checkPlayerWin(player)) {
             return Status.WIN;
         }
         return Status.TIE;
     }
 
-    private boolean checkPlayerLose(Cards playerCards) {
-        return playerCards.isBurst() || this.isNotBurst() && this.isGreaterThan(playerCards);
+    private boolean checkPlayerLose(Player player) {
+        return player.isBurst() || this.isNotBurst() && this.isGreaterThan(player);
     }
 
-    private boolean checkPlayerBlackjack(Cards playerCards) {
-        return playerCards.isBlackjack() && (this.isBurst() || playerCards.isGreaterThan(this));
+    private boolean checkPlayerBlackjack(Player player) {
+        return player.isBlackjack() && (this.isBurst() || player.isGreaterThan(this));
     }
 
-    private boolean checkPlayerWin(Cards playerCards) {
-        return this.isBurst() || playerCards.isGreaterThan(this);
+    private boolean checkPlayerWin(Player player) {
+        return this.isBurst() || player.isGreaterThan(this);
     }
 
     public Card getFirstCard() {

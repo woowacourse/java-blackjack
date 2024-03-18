@@ -1,6 +1,6 @@
 package view;
 
-import domain.card.Cards;
+import domain.participant.Participant;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -47,8 +47,8 @@ public class OutputView {
         System.out.print(formatCards(cards));
     }
 
-    private static String formatCards(Cards playerCard) {
-        List<String> cards = playerCard.getCards();
+    private static String formatCards(Participant participant) {
+        List<String> cards = participant.getCards();
         return String.join(", ", cards);
     }
 
@@ -67,8 +67,8 @@ public class OutputView {
         System.out.print(formatCards(cards));
     }
 
-    private static void printSumOfCards(Cards cards) {
-        System.out.println(" - 결과: " + cards.bestSumOfCardScore());
+    private static void printSumOfCards(Participant participant) {
+        System.out.println(" - 결과: " + participant.bestSumOfCardScore());
     }
 
     public static void printDealerGivenCard() {

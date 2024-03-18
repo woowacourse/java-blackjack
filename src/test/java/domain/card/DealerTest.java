@@ -46,7 +46,7 @@ class DealerTest {
 
         dealer.receive(new Card(1, Shape.CLUB));
 
-        assertThat(dealer.cards).hasSize(3);
+        assertThat(dealer.getCards()).hasSize(3);
     }
 
     @Test

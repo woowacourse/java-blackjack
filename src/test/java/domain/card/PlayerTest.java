@@ -45,7 +45,7 @@ public class PlayerTest {
 
         player.receive(new Card(1, Shape.CLUB));
 
-        assertThat(player.cards).hasSize(3);
+        assertThat(player.getCards()).hasSize(3);
     }
 
     @Test

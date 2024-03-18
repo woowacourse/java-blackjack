@@ -1,10 +1,12 @@
-package domain.card;
+package domain.participant;
+
+import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Cards {
+public abstract class Participant {
 
     private static final int INIT_CARD_SIZE = 2;
     private static final int ACE_SCORE = 10;
@@ -13,7 +15,7 @@ public abstract class Cards {
 
     protected final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Participant(List<Card> cards) {
         validate(cards);
         this.cards = new ArrayList<>(cards);
     }
@@ -38,7 +40,7 @@ public abstract class Cards {
         return cards.size() == INIT_SIZE && bestSumOfCardScore() == MAX_SCORE;
     }
 
-    public boolean isGreaterThan(Cards other) {
+    public boolean isGreaterThan(Participant other) {
         return this.bestSumOfCardScore() > other.bestSumOfCardScore();
     }
 
@@ -78,8 +80,8 @@ public abstract class Cards {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Cards cards1 = (Cards) o;
-        return Objects.equals(cards, cards1.cards);
+        Participant participant1 = (Participant) o;
+        return Objects.equals(cards, participant1.cards);
     }
 
     @Override
