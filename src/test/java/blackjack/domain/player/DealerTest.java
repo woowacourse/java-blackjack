@@ -16,7 +16,7 @@ public class DealerTest {
         Dealer dealer = dealer(new Card(KING, HEART));
 
         // when
-        boolean moreCardNeeded = dealer.isMoreCardNeeded();
+        boolean moreCardNeeded = dealer.isDrawable();
 
         // then
         assertThat(moreCardNeeded).isTrue();

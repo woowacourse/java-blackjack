@@ -1,6 +1,7 @@
 package blackjack.domain.cardgame;
 
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ public class BlackjackGame {
         this.playerBetting = new LinkedHashMap<>();
     }
 
-    public void giveCard(final Player player) {
+    public void giveCard(final Participant player) {
         player.addCard(cardDeck.draw());
     }
 

@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     private static final String NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
 
@@ -10,7 +10,8 @@ public class Dealer extends Player {
         super(NAME);
     }
 
-    public boolean isMoreCardNeeded() {
+    @Override
+    public boolean isDrawable() {
         return this.hand.calculateScore() <= HIT_THRESHOLD;
     }
 

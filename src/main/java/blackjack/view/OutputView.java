@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.cardgame.BlackjackGame;
 import blackjack.domain.cardgame.Profit;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.view.expressions.DenominationExpressions;
 import blackjack.view.expressions.SuitExpressions;
@@ -44,14 +45,14 @@ public class OutputView {
         printLineSeparator();
     }
 
-    public static void printPlayerCardWithScore(final Player player) {
-        final String playerCardInfo = getPlayerCardInfo(player);
-        System.out.println(playerCardInfo + " - 결과: " + player.getScore());
+    public static void printPlayerCardWithScore(final Participant participant) {
+        final String playerCardInfo = getPlayerCardInfo(participant);
+        System.out.println(playerCardInfo + " - 결과: " + participant.getScore());
     }
 
-    private static String getPlayerCardInfo(final Player player) {
-        return player.getName() + "카드: " +
-                player.getCards()
+    private static String getPlayerCardInfo(final Participant participant) {
+        return participant.getName() + "카드: " +
+                participant.getCards()
                         .stream()
                         .map(OutputView::getCardInfo)
                         .collect(Collectors.joining(", "));

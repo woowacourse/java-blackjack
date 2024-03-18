@@ -45,14 +45,14 @@ public class BlackjackController {
 
     private void givePlayerMoreCardsIfWanted(final BlackjackGame blackjackGame, final Player player) {
         final String playerName = player.getName();
-        while (!player.isBust() && InputView.askForMoreCard(playerName)) {
+        while (player.isDrawable() && InputView.askForMoreCard(playerName)) {
             blackjackGame.giveCard(player);
             OutputView.printPlayerCard(player);
         }
     }
 
     private void giveDealerMoreCardsIfNeeded(final BlackjackGame blackjackGame, final Dealer dealer) {
-        while (dealer.isMoreCardNeeded()) {
+        while (dealer.isDrawable()) {
             blackjackGame.giveCard(dealer);
             OutputView.printDealerHitMessage(dealer);
         }
