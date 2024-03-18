@@ -4,9 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.money.PlayerProfits;
+import blackjack.domain.money.Profit;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -18,13 +18,6 @@ public class OutputView {
     private static final String PLAYER_NAME_DELIMITER = ", ";
     private static final String CARD_INFO_MESSAGE = "%s%s";
     private static final String PLAYER_CARD_INFO_MESSAGE = "%s카드: %s";
-    private static final String PLAYER_GAME_RESULT_MESSAGE = "%s: %s";
-    private static final Map<GameResult, String> gameResultTexts = new HashMap<>();
-
-    static {
-        gameResultTexts.put(GameResult.WIN, "승");
-        gameResultTexts.put(GameResult.LOSE, "패");
-    }
 
     public static OutputView getInstance() {
         return INSTANCE;
@@ -90,6 +83,7 @@ public class OutputView {
     public void printTotalCardHandStatus(Dealer dealer, Players players) {
         printDealerTotalCardHandStatus(dealer);
         printPlayersTotalCardHandStatus(players);
+        printLine();
     }
 
     private void printDealerTotalCardHandStatus(Dealer dealer) {
@@ -105,27 +99,19 @@ public class OutputView {
         }
     }
 
-    public void printGameResult(Map<GameResult, Long> dealerResult, Map<Player, GameResult> playerResults) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-
-        printDealerGameResult(dealerResult);
-        printPlayersGameResult(playerResults);
-    }
-
-    private void printDealerGameResult(Map<GameResult, Long> dealerResult) {
-        System.out.println(
-                String.format("딜러: %d승 %d패", dealerResult.get(GameResult.WIN), dealerResult.get(GameResult.LOSE)));
-    }
-
-    private void printPlayersGameResult(Map<Player, GameResult> playerResults) {
-        for (Map.Entry<Player, GameResult> playerToResult : playerResults.entrySet()) {
-            String playerName = playerToResult.getKey().getName();
-            String result = gameResultTexts.get(playerToResult.getValue());
-            System.out.println(String.format(PLAYER_GAME_RESULT_MESSAGE, playerName, result));
-        }
-    }
-
     private void printLine() {
         System.out.println();
+    }
+
+    public void printProfits(PlayerProfits playerProfits) {
+        Map<Player, Profit> profits = playerProfits.getProfits();
+
+        System.out.println("## 최종 수익");
+        System.out.println(String.format("딜러: %d", playerProfits.getDealerProfits()));
+        profits.forEach(this::printProfit);
+    }
+
+    private void printProfit(Player player, Profit profit) {
+        System.out.println(String.format("%s: %d", player.getName(), profit.getAmount()));
     }
 }

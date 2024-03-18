@@ -2,16 +2,16 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.money.Betting;
+import blackjack.domain.money.PlayerProfits;
+import blackjack.domain.money.Profit;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.state.HandState;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -35,6 +35,11 @@ public class BlackjackGame {
         return new Players(playerNames);
     }
 
+    public void updateBettingBoard(Map<Player, Betting> bettingBoard, Player player, long bettingAmount) {
+        Betting betting = new Betting(bettingAmount);
+        bettingBoard.put(player, betting);
+    }
+
     public void dealInitCards(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             player.receiveInitCards(deck.drawCards(INIT_CARD_COUNT));
@@ -42,39 +47,32 @@ public class BlackjackGame {
         dealer.receiveInitCards(deck.drawCards(INIT_CARD_COUNT));
     }
 
-    public boolean isHit(Player player, BooleanSupplier isHitSupplier) {
-        return !player.isBust() && isHitSupplier.getAsBoolean();
+    public boolean isHittable(Player player) {
+        return player.isState(HandState.NOT_BUST);
     }
 
     public boolean isHit(Dealer dealer) {
         return dealer.hasHitScore();
     }
 
-    public void hit(Gamer gamer) {
-        gamer.receiveCard(deck.drawCard());
+    public void hit(Dealer dealer) {
+        dealer.receiveCard(deck.drawCard());
     }
 
-    public Map<Player, GameResult> getPlayerResults(Players players, Dealer dealer) {
-        Map<Player, GameResult> playerResults = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            playerResults.put(player, compareScore(dealer, player));
-        }
-
-        return playerResults;
+    public void hit(Player player) {
+        player.receiveCard(deck.drawCard());
     }
 
-    private GameResult compareScore(Dealer dealer, Player player) {
-        return GameResult.of(dealer, player);
+    public PlayerProfits calculateProfits(Map<Player, Betting> bettingBoard, Dealer dealer) {
+        return new PlayerProfits(bettingBoard.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> calculateProfit(dealer, entry.getKey(), entry.getValue()))));
     }
 
-    public Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
-        Map<GameResult, Long> dealerResult = playerResults.values().stream()
-                .map(GameResult::reverse)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        for (GameResult gameResult : GameResult.values()) {
-            dealerResult.merge(gameResult, 0L, Long::sum);
-        }
+    private Profit calculateProfit(Dealer dealer, Player player, Betting betting) {
+        PlayerResult playerResult = PlayerResult.of(dealer, player);
 
-        return dealerResult;
+        return playerResult.calculateProfit(betting);
     }
 }
