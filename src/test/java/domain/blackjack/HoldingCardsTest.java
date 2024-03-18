@@ -1,10 +1,10 @@
 package domain.blackjack;
 
-import static domain.card.Card.ACE_HEART;
-import static domain.card.Card.JACK_HEART;
-import static domain.card.Card.KING_HEART;
-import static domain.card.Card.QUEEN_HEART;
-import static domain.card.Card.SIX_HEART;
+import static domain.card.TestCards.ACE_HEART;
+import static domain.card.TestCards.JACK_HEART;
+import static domain.card.TestCards.KING_HEART;
+import static domain.card.TestCards.QUEEN_HEART;
+import static domain.card.TestCards.SIX_HEART;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

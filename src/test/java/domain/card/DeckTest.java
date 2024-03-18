@@ -1,6 +1,7 @@
 package domain.card;
 
-import static domain.card.Card.ACE_HEART;
+
+import static domain.card.TestCards.ACE_HEART;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

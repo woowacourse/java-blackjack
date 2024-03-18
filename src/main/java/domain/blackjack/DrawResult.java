@@ -4,21 +4,21 @@ public class DrawResult {
     private final String failCause;
     private final boolean hasNextChance;
 
-    public static DrawResult success(boolean hasNextChance) {
-        return new DrawResult(null, hasNextChance);
-    }
-
-    public static DrawResult fail(Exception drawFailCause, boolean hasNextChance) {
-        return new DrawResult(drawFailCause.getMessage(), hasNextChance);
-    }
-
-    public static DrawResult fail(String failCause, boolean hasNextChance) {
-        return new DrawResult(failCause, hasNextChance);
-    }
-
     private DrawResult(String failCause, boolean hasNextChance) {
         this.failCause = failCause;
         this.hasNextChance = hasNextChance;
+    }
+
+    static DrawResult success(boolean hasNextChance) {
+        return new DrawResult(null, hasNextChance);
+    }
+
+    static DrawResult fail(Exception drawFailCause, boolean hasNextChance) {
+        return new DrawResult(drawFailCause.getMessage(), hasNextChance);
+    }
+
+    static DrawResult fail() {
+        return new DrawResult("카드를 더이상 뽑을 수 없습니다.", false);
     }
 
     public boolean hasNextChance() {

@@ -1,15 +1,17 @@
 package domain.blackjack;
 
 public enum GameResult {
-    WIN, LOSE, TIE;
+    LOSE(-1),
+    WIN(1),
+    TIE(0),
+    WIN_BLACK_JACK(1.5);
+    private final double earnMoneyRate;
 
-    public GameResult changeBase() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return TIE;
+    GameResult(double earnMoneyRate) {
+        this.earnMoneyRate = earnMoneyRate;
+    }
+
+    public double getEarnMoneyRate() {
+        return earnMoneyRate;
     }
 }

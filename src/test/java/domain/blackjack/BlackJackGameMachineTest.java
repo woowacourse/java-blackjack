@@ -4,12 +4,12 @@ import static domain.blackjack.TestHoldingCards.DEAD_CARDS;
 import static domain.blackjack.TestHoldingCards.ONLY_SEVEN_HEART;
 import static domain.blackjack.TestHoldingCards.WIN_CARDS_WITHOUT_ACE;
 import static domain.blackjack.TestHoldingCards.WIN_CARDS_WITH_ACE;
-import static domain.card.Card.ACE_HEART;
-import static domain.card.Card.EIGHT_HEART;
-import static domain.card.Card.JACK_HEART;
-import static domain.card.Card.QUEEN_HEART;
-import static domain.card.Card.TWO_HEART;
 import static domain.card.FirstCardSelectStrategy.FIRST_CARD_SELECT_STRATEGY;
+import static domain.card.TestCards.ACE_HEART;
+import static domain.card.TestCards.EIGHT_HEART;
+import static domain.card.TestCards.JACK_HEART;
+import static domain.card.TestCards.QUEEN_HEART;
+import static domain.card.TestCards.TWO_HEART;
 
 import domain.card.Card;
 import domain.card.Deck;
@@ -77,5 +77,21 @@ class BlackJackGameMachineTest {
         SummationCardPoint summationCardPoint = blackJackGameMachine.calculateSummationCardPoint();
         Assertions.assertThat(summationCardPoint)
                 .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("블랙잭인 경우 블랙잭이라 하는지 검증")
+    void isBlackJack() {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(TestHoldingCards.BLACK_JACK);
+        Assertions.assertThat(blackJackGameMachine.isBlackJack())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아닌 경우 블랙잭이 아니라 하는지 검증")
+    void isNotBlackJack() {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(WIN_CARDS_WITH_ACE);
+        Assertions.assertThat(blackJackGameMachine.isBlackJack())
+                .isFalse();
     }
 }

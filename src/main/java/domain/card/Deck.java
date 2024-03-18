@@ -1,7 +1,6 @@
 package domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,21 +13,20 @@ public class Deck {
         this.cards = new ArrayList<>(cards);
     }
 
-    public static Deck of(Card... cards) {
-        return new Deck(List.of(cards));
-    }
-
-    public static Deck fullDeck() {
-        List<Card> cards = Arrays.stream(Card.values())
-                .toList();
-        return new Deck(cards);
-    }
-
     private void validateDuplicateCard(List<Card> cards) {
         Set<Card> cardSet = new HashSet<>(cards);
         if (cardSet.size() != cards.size()) {
             throw new IllegalArgumentException("중복되는 카드가 있습니다.");
         }
+    }
+
+    public static Deck of(Card... cards) {
+        return new Deck(List.of(cards));
+    }
+
+    public static Deck fullDeck() {
+        List<Card> cards = CardPool.allCards();
+        return new Deck(cards);
     }
 
     public Card draw(CardSelectStrategy cardSelectStrategy) {
@@ -40,5 +38,9 @@ public class Deck {
         cards.remove(card);
 
         return card;
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 }

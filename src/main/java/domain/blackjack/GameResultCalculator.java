@@ -1,36 +1,47 @@
 package domain.blackjack;
 
-public class GameResultCalculator {
-    /**
-     * baseGamer의 otherGamer 에 대한 승부 결과 반환
-     *
-     * @param baseBlackJackGameMachine  기준 게이머
-     * @param otherBlackJackGameMachine 상대 게이머
-     * @return baseGamer의 otherGamer 에 대한 승부 결과
-     */
-    public static GameResult calculate(BlackJackGameMachine baseBlackJackGameMachine,
-                                       BlackJackGameMachine otherBlackJackGameMachine) {
-        if (baseBlackJackGameMachine.isBust() && otherBlackJackGameMachine.isBust()) {
-            return GameResult.TIE;
+class GameResultCalculator {
+
+    static GameResult calculate(Player player, Dealer dealer) {
+        if (player.isBlackJack() || dealer.isBlackJack()) {
+            return calculateGameResultWhenSomeOneIsBlackJack(player, dealer);
         }
-        if (baseBlackJackGameMachine.isBust()) {
-            return GameResult.LOSE;
+        if (player.isBust() || dealer.isBust()) {
+            return calculateGameResultWhenSomeOneIsBust(player, dealer);
         }
-        if (otherBlackJackGameMachine.isBust()) {
-            return GameResult.WIN;
-        }
-        return getGameResultWhenNobodyDead(baseBlackJackGameMachine, otherBlackJackGameMachine);
+        return calculateWithSummationCardPoint(player, dealer);
     }
 
-    private static GameResult getGameResultWhenNobodyDead(BlackJackGameMachine baseBlackJackGameMachine,
-                                                          BlackJackGameMachine otherBlackJackGameMachine) {
-        SummationCardPoint baseGamerSummationCardPoint = baseBlackJackGameMachine.calculateSummationCardPoint();
-        SummationCardPoint otherGamerSummationCardPoint = otherBlackJackGameMachine.calculateSummationCardPoint();
+    private static GameResult calculateGameResultWhenSomeOneIsBlackJack(Player player, Dealer dealer) {
+        if (dealer.isBlackJack() && player.isBlackJack()) {
+            return GameResult.TIE;
+        }
+        if (dealer.isBlackJack()) {
+            return GameResult.LOSE;
+        }
+        if (player.isBlackJack()) {
+            return GameResult.WIN_BLACK_JACK;
+        }
+        return null;
+    }
 
-        if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
+    private static GameResult calculateGameResultWhenSomeOneIsBust(Player player, Dealer dealer) {
+        if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        if (baseGamerSummationCardPoint.equals(otherGamerSummationCardPoint)) {
+        if (player.isBust()) {
+            return GameResult.LOSE;
+        }
+        return null;
+    }
+
+    private static GameResult calculateWithSummationCardPoint(Player player, Dealer dealer) {
+        SummationCardPoint baseSummationCardPoint = player.calculateSummationCardPoint();
+        SummationCardPoint otherSummationCardPoint = dealer.calculateSummationCardPoint();
+        if (baseSummationCardPoint.isBiggerThan(otherSummationCardPoint)) {
+            return GameResult.WIN;
+        }
+        if (baseSummationCardPoint.equals(otherSummationCardPoint)) {
             return GameResult.TIE;
         }
         return GameResult.LOSE;

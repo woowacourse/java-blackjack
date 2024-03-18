@@ -1,0 +1,8 @@
+package domain.blackjack;
+
+import domain.card.Card;
+import java.util.List;
+
+public interface CardShowStrategy {
+    List<Card> showSub(List<Card> cards);
+}

@@ -6,6 +6,7 @@ public class NameInputView {
     private static final String SEPARATOR = ",";
 
     public static List<String> getNames() {
+        Console.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = Console.getInputFromConsole();
         validateSeparator(input);
         List<String> splitInput = List.of(input.split(SEPARATOR));

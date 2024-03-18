@@ -1,25 +1,19 @@
 package view.gameresult;
 
-import dto.DealerGameResultDTO;
-import dto.PlayerGameResultDTO;
+import domain.blackjack.EarningMoney;
+import dto.GameResultDTO;
 import java.util.List;
+import view.Console;
 
 public class GameResultOutputView {
-
-    public static void print(List<PlayerGameResultDTO> playerGameResultDTOs) {
-        for (PlayerGameResultDTO playerGameResultDTO : playerGameResultDTOs) {
-            print(playerGameResultDTO);
+    public static void print(GameResultDTO gameResultDTO) {
+        List<String> playersName = gameResultDTO.getPlayersName();
+        List<EarningMoney> playersEarnMoney = gameResultDTO.getPlayersEarnMoney();
+        Console.println("## 최종 수익");
+        EarningMoney dealerEarningMoney = gameResultDTO.getDealerEarningMoney();
+        Console.printf("딜러: %d%n", dealerEarningMoney.rawEarningMoney());
+        for (int index = 0; index < playersName.size(); index++) {
+            Console.printf("%s: %d%n", playersName.get(index), playersEarnMoney.get(index).rawEarningMoney());
         }
     }
-
-    public static void print(PlayerGameResultDTO playerGameResultDTO) {
-        String gameResultOutput = PlayerGameResultOutputGenerator.generate(playerGameResultDTO);
-        System.out.println(gameResultOutput);
-    }
-
-    public static void print(DealerGameResultDTO dealerGameResultDTO) {
-        String gameResultOutput = DealerGameResultOutputGenerator.generate(dealerGameResultDTO);
-        System.out.printf("딜러: %s%n", gameResultOutput);
-    }
-
 }

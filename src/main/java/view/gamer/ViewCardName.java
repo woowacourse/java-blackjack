@@ -2,7 +2,7 @@ package view.gamer;
 
 import domain.card.CardName;
 
-public enum ViewCardName {
+enum ViewCardName {
     ACE("A"),
     TWO("2"),
     THREE("3"),
@@ -19,12 +19,12 @@ public enum ViewCardName {
 
     private final String output;
 
-    static ViewCardName of(CardName cardName) {
-        return valueOf(cardName.name());
-    }
-
     ViewCardName(String output) {
         this.output = output;
+    }
+
+    static ViewCardName of(CardName cardName) {
+        return valueOf(cardName.name());
     }
 
     String getOutput() {
