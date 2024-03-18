@@ -2,7 +2,7 @@ package blackjack.game;
 
 import blackjack.player.Dealer;
 import blackjack.player.Player;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MatchResults {
@@ -10,7 +10,7 @@ public class MatchResults {
     private final Map<Player, Integer> results;
 
     public MatchResults(Dealer dealer, Map<Player, Money> playerBettingMoney) {
-        Map<Player, Integer> results = new HashMap<>();
+        Map<Player, Integer> results = new LinkedHashMap<>();
         for (Map.Entry<Player, Money> bettingMoney : playerBettingMoney.entrySet()) {
             int prizeMoney = calculatePrizeMoney(dealer, bettingMoney.getKey(), bettingMoney.getValue());
             results.put(bettingMoney.getKey(), prizeMoney);
