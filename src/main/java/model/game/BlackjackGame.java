@@ -17,14 +17,12 @@ public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final CardDeck cardDeck;
-    private final Dealer dealer;
 
     public BlackjackGame() {
         cardDeck = CardDeck.createShuffledDeck(DEQUE_COUNT);
-        dealer = new Dealer();
     }
 
-    public ParticipantCards dealInitialCards(Players players) {
+    public ParticipantCards dealInitialCards(Dealer dealer, Players players) {
         dealCards(dealer);
         players.getPlayers()
             .forEach(this::dealCards);
@@ -38,13 +36,13 @@ public class BlackjackGame {
         }
     }
 
-    public ParticipantCard dealCard(Player player) {
+    public ParticipantCard dealCardTo(Player player) {
         Card card = cardDeck.drawCard();
         player.hit(card);
         return ParticipantCard.createWithAllCard(player);
     }
 
-    public boolean dealerHitTurn() {
+    public boolean dealCardTo(Dealer dealer) {
         if (dealer.isPossibleHit()) {
             Card card = cardDeck.drawCard();
             dealer.hit(card);
@@ -53,15 +51,11 @@ public class BlackjackGame {
         return false;
     }
 
-    public ParticipantScores finish(Players players) {
+    public ParticipantScores finish(Dealer dealer, Players players) {
         return ParticipantScores.of(dealer, players);
     }
 
-    public ParticipantProfits calculateProfit(Players players) {
+    public ParticipantProfits calculateProfit(Dealer dealer, Players players) {
         return ParticipantProfits.of(players, dealer);
-    }
-
-    public int dealerCardSize() {
-        return dealer.cardSize();
     }
 }

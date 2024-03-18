@@ -1,6 +1,9 @@
 package model.game;
 
 import static model.card.CardNumber.JACK;
+import static model.card.CardNumber.SEVEN;
+import static model.card.CardNumber.SIX;
+import static model.card.CardNumber.TEN;
 import static model.card.CardNumber.TWO;
 import static model.card.CardShape.CLOVER;
 import static model.card.CardShape.HEART;
@@ -11,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import model.betting.Bet;
 import model.card.Card;
+import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
@@ -29,8 +33,9 @@ class BlackjackGameTest {
     @Test
     void dealInitialCards() {
         Players players = Players.from(List.of("조조", "릴리"));
+        Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
-        ParticipantCards participantCards = blackjackGame.dealInitialCards(players);
+        ParticipantCards participantCards = blackjackGame.dealInitialCards(dealer, players);
 
         assertAll(
             () -> assertThat(participantCards.playerNames()).contains("조조", "릴리"),
@@ -46,42 +51,51 @@ class BlackjackGameTest {
     void dealPlayerCard() {
         Player player = Player.of("jojo", List.of(new Card(JACK, HEART), new Card(TWO, CLOVER)));
         BlackjackGame blackjackGame = new BlackjackGame();
-        ParticipantCard playerCard = blackjackGame.dealCard(player);
+        ParticipantCard playerCard = blackjackGame.dealCardTo(player);
         assertAll(
             () -> assertThat(playerCard.getName()).isEqualTo("jojo"),
             () -> assertThat(playerCard.getCards()).hasSize(3)
         );
     }
 
-    @DisplayName("최초 딜러의 카드 합이 16점 이하이면 카드 1장을 지급")
+    @DisplayName("최초 딜러의 카드 합이 16점 이하이면 카드 1장을 지급하고 true 반환")
     @Test
-    void dealerHitTurn() {
-        Players players = Players.from(List.of("조조", "릴리"));
+    void dealOneCardAndReturnTrue() {
+        Dealer dealer = new Dealer(List.of(new Card(TEN, HEART), new Card(SIX, CLOVER)));
         BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.dealInitialCards(players);
 
-        boolean isDealerHit = blackjackGame.dealerHitTurn();
-        if (isDealerHit) {
-            assertThat(blackjackGame.dealerCardSize()).isEqualTo(3);
-        }
-        if (!isDealerHit) {
-            assertThat(blackjackGame.dealerCardSize()).isEqualTo(2);
-        }
+        assertAll(
+            () -> assertThat(blackjackGame.dealCardTo(dealer)).isTrue(),
+            () -> assertThat(dealer.cardSize()).isEqualTo(3)
+        );
+    }
+
+    @DisplayName("최초 딜러의 카드 합이 16점 초과면 카드 지급 안 하고 false 반환")
+    @Test
+    void doNotDealCardAndReturnFalse() {
+        Dealer dealer = new Dealer(List.of(new Card(TEN, HEART), new Card(SEVEN, CLOVER)));
+        BlackjackGame blackjackGame = new BlackjackGame();
+
+        assertAll(
+            () -> assertThat(blackjackGame.dealCardTo(dealer)).isFalse(),
+            () -> assertThat(dealer.cardSize()).isEqualTo(2)
+        );
     }
 
     @DisplayName("게임 종료 시 스코어 계산 후 반환")
     @Test
     void finishAndReturnParticipantScores() {
         Players players = Players.from(List.of("조조", "릴리"));
+        Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.dealInitialCards(players);
+        blackjackGame.dealInitialCards(dealer, players);
 
         List<Integer> scores = players.getPlayers()
             .stream()
             .map(Participant::score)
             .toList();
 
-        ParticipantScores participantScores = blackjackGame.finish(players);
+        ParticipantScores participantScores = blackjackGame.finish(dealer, players);
         int i = 0;
         for (ParticipantScore playerScore : participantScores.getPlayerScores()) {
             assertThat(playerScore.getScore()).isEqualTo(scores.get(i++));
@@ -93,10 +107,11 @@ class BlackjackGameTest {
     void calculateProfit() {
         Players players = Players.from(List.of("조조"));
         prepareBets(players);
+        Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.dealInitialCards(players);
+        blackjackGame.dealInitialCards(dealer, players);
 
-        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players);
+        ParticipantProfits participantProfits = blackjackGame.calculateProfit(dealer, players);
         BigDecimal dealerProfit = participantProfits.getPlayerProfits()
             .stream()
             .map(ParticipantProfit::getProfit)

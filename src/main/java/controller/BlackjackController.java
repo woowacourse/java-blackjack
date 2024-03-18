@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import model.betting.Bet;
 import model.game.BlackjackGame;
 import model.game.HitChoice;
+import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
 import model.result.ParticipantCard;
@@ -19,18 +20,19 @@ public class BlackjackController {
     public void run() {
         Players players = preparePlayers();
         prepareBets(players);
+        Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
 
-        ParticipantCards participantCards = blackjackGame.dealInitialCards(players);
+        ParticipantCards participantCards = blackjackGame.dealInitialCards(dealer, players);
         OutputView.printInitialCards(participantCards);
 
         playersTurnAndPrintCards(players, blackjackGame);
-        dealerTurnAndPrintCard(blackjackGame);
+        dealerTurnAndPrintCard(dealer, blackjackGame);
 
-        ParticipantScores participantScores = blackjackGame.finish(players);
+        ParticipantScores participantScores = blackjackGame.finish(dealer, players);
         OutputView.printScores(participantScores);
 
-        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players);
+        ParticipantProfits participantProfits = blackjackGame.calculateProfit(dealer, players);
         OutputView.printProfits(participantProfits);
     }
 
@@ -62,7 +64,7 @@ public class BlackjackController {
 
     private void askHitAndPrintCards(Player player, BlackjackGame blackjackGame) {
         while (player.isPossibleHit() && prepareHitChoice(player).isHit()) {
-            ParticipantCard playerCard = blackjackGame.dealCard(player);
+            ParticipantCard playerCard = blackjackGame.dealCardTo(player);
             OutputView.printCards(playerCard);
         }
     }
@@ -74,8 +76,8 @@ public class BlackjackController {
         });
     }
 
-    private void dealerTurnAndPrintCard(BlackjackGame blackjackGame) {
-        boolean isDealerHit = blackjackGame.dealerHitTurn();
+    private void dealerTurnAndPrintCard(Dealer dealer, BlackjackGame blackjackGame) {
+        boolean isDealerHit = blackjackGame.dealCardTo(dealer);
         if (isDealerHit) {
             OutputView.printAfterDealerHit();
         }
