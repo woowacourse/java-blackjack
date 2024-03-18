@@ -1,21 +1,17 @@
 package blackjack.domain.result;
 
-import java.util.List;
+import blackjack.domain.player.Profit;
+import blackjack.domain.player.Name;
+import java.util.Map;
 
 public class Result {
-    private final List<GamePlayerResult> gamePlayerResults;
-    private final DealerResult dealerResult;
+    private final Map<Name, Profit> result;
 
-    public Result(List<GamePlayerResult> gamePlayerResults, DealerResult dealerResult) {
-        this.gamePlayerResults = gamePlayerResults;
-        this.dealerResult = dealerResult;
+    public Result(Map<Name, Profit> result) {
+        this.result = result;
     }
 
-    public List<GamePlayerResult> getGamePlayerResults() {
-        return gamePlayerResults;
-    }
-
-    public DealerResult getDealerResult() {
-        return dealerResult;
+    public Map<Name, Profit> getResult() {
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
@@ -38,5 +39,9 @@ public class Names {
 
     public Stream<Name> stream() {
         return value.stream();
+    }
+
+    public List<Name> getNames() {
+        return new ArrayList<>(value);
     }
 }

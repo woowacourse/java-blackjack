@@ -1,15 +1,20 @@
 package blackjack.domain.result;
 
-public enum ResultStatus {
-    WIN,
-    LOSE,
-    DRAW;
+import blackjack.domain.player.Profit;
 
-    public ResultStatus reverse() {
-        return switch (this) {
-            case LOSE -> WIN;
-            case DRAW -> DRAW;
-            case WIN -> LOSE;
-        };
+public enum ResultStatus {
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
+    BLACKJACK(1.5);
+
+    private double rate;
+
+    ResultStatus(double rate) {
+        this.rate = rate;
+    }
+
+    public Profit calculateProfit(int bettingAmount) {
+        return new Profit(rate * bettingAmount);
     }
 }

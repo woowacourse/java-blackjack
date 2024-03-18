@@ -1,8 +1,9 @@
+import blackjack.domain.player.BettingAmounts;
 import blackjack.domain.Blackjack;
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Names;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
+import blackjack.domain.player.Names;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
 import blackjack.view.BlackjackCommand;
@@ -20,48 +21,46 @@ public class BlackjackController {
     public void playBlackJack() {
         Players players = joinPlayer();
         processGame(players);
-        checkGameResult(players);
+        printGameResult(players);
     }
 
     private Players joinPlayer() {
         Names names = Names.from(InputView.inputPlayerNames());
-        Players players = blackjack.acceptPlayers(names);
+        BettingAmounts bettingAmounts = BettingAmounts.from(InputView.inputPlayerBattingAmounts(names));
+        Players players = blackjack.createPlayers(names.getNames(), bettingAmounts.getBettingAmounts());
         PlayerView.printPlayers(players);
         return players;
     }
 
     private void processGame(Players players) {
         players.getGamePlayers()
-               .forEach(gamePlayer -> processGamePlayer(blackjack, gamePlayer));
-        processDealer(blackjack, players.getDealer());
+                .forEach(this::processGamePlayer);
+        processDealer(players.getDealer());
         PlayerView.printPlayersWithScore(players);
     }
 
-    private void checkGameResult(Players players) {
-        Result result = blackjack.compareResults(players.getDealer(), players.getGamePlayers());
-        ResultView.printResult(result);
-    }
-
-    private void processDealer(Blackjack blackjack, Dealer dealer) {
-        if (dealer.isReceivable()) {
-            PlayerView.printDealerDrawMessage();
-            Card card = blackjack.draw();
-            dealer.drawCard(card);
-            return;
-        }
-        PlayerView.printDealerNotDrawMessage();
-    }
-
-    private void processGamePlayer(Blackjack blackjack, GamePlayer gamePlayer) {
+    private void processGamePlayer(GamePlayer gamePlayer) {
         while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
-            Card card = blackjack.draw();
-            gamePlayer.drawCard(card);
+            blackjack.drawCard(gamePlayer);
             PlayerView.printPlayerOpenCards(gamePlayer);
         }
     }
 
     private boolean isHit(GamePlayer gamePlayer) {
-        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getNameAsString());
+        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getName());
         return command.isHit();
+    }
+
+    private void processDealer(Dealer dealer) {
+        while (dealer.isReceivable()) {
+            blackjack.drawCard(dealer);
+            PlayerView.printDealerDrawMessage();
+        }
+        PlayerView.printDealerNotDrawMessage();
+    }
+
+    private void printGameResult(Players players) {
+        Result result = players.compareResults();
+        ResultView.printResult(result);
     }
 }

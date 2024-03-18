@@ -2,22 +2,24 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.player.Profit;
 import blackjack.domain.player.Name;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ResultTest {
     @Test
-    @DisplayName("게임 플레이어 결과 리스트와 딜러 결과를 통해 전체 결과를 생성한다.")
+    @DisplayName("플레이어들의 이름과 수익을 통해 전체 결과를 생성한다.")
     public void Result_Instance_create_with_gamePlayerResultList_and_dealerResult() {
+        Map<Name, Profit> result = new LinkedHashMap<>();
         Name name = new Name("초롱");
-        ResultStatus resultStatus = ResultStatus.DRAW;
-        List<GamePlayerResult> gamePlayerResults = List.of(new GamePlayerResult(name, resultStatus));
-        DealerResult dealerResult = DealerResult.of(new Name("딜러"), gamePlayerResults);
+        Profit profit = new Profit(10000);
+        result.put(name, profit);
 
         assertThatCode(() -> {
-            new Result(gamePlayerResults, dealerResult);
+            new Result(result);
         }).doesNotThrowAnyException();
     }
 }

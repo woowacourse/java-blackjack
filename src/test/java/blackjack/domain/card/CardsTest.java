@@ -2,16 +2,13 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import blackjack.fixture.CardFixture;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class CardsTest {
     @Test
@@ -24,7 +21,10 @@ public class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("cardValuesProvider")
+    @CsvSource({
+            "EIGHT, JACK, 18",
+            "FIVE, EIGHT, 13"
+    })
     @DisplayName("카드 목록의 숫자 합을 계산 한다.")
     public void Cards_Sum_of_cards_case1(CardValue cardValue1, CardValue cardValue2, int result) {
         List<CardValue> cardValues = List.of(cardValue1, cardValue2);
@@ -33,13 +33,6 @@ public class CardsTest {
         var sum = sut.sum();
 
         assertThat(sum).isEqualTo(result);
-    }
-
-    static Stream<Arguments> cardValuesProvider() {
-        return Stream.of(
-                arguments(CardValue.EIGHT, CardValue.JACK, 18),
-                arguments(CardValue.FIVE, CardValue.EIGHT, 13)
-        );
     }
 
     @Test
@@ -77,7 +70,8 @@ public class CardsTest {
     @Test
     @DisplayName("숫자 합이 21이 넘으면 플레이어는 에이스를 1로 결정한다.")
     public void GamePlayer_Determine_ace_is_1_if_exceed_21() {
-        var sut = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.TEN, CardValue.ACE, CardValue.TWO));
+        var sut = CardFixture.카드_목록_생성(
+                List.of(CardValue.EIGHT, CardValue.TEN, CardValue.ACE, CardValue.TWO));
 
         var result = sut.calculateScore();
 

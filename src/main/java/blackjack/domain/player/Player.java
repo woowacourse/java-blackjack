@@ -33,10 +33,6 @@ public abstract class Player {
         return cards.isBlackjack();
     }
 
-    public String getNameAsString() {
-        return name.asString();
-    }
-
     public Name getName() {
         return name;
     }

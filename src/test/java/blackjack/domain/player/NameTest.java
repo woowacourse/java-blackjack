@@ -1,9 +1,8 @@
-package blackjack.domain.common;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.player.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ public class NameTest {
     void Name_Instance_create_with_String() {
         assertThatCode(() -> {
             Name name = new Name("초롱");
-            Assertions.assertEquals(name.asString(), "초롱");
+            Assertions.assertEquals(name.getValue(), "초롱");
         }).doesNotThrowAnyException();
     }
 

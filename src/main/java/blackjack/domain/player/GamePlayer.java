@@ -9,11 +9,19 @@ import java.util.List;
 public class GamePlayer extends Player {
     private static final Integer RECEIVE_SIZE = 21;
 
-    public GamePlayer(Name name, Cards cards) {
+    private final BettingAmount bettingAmount;
+
+    public GamePlayer(Name name, Cards cards, BettingAmount bettingAmount) {
         super(name, cards);
+        this.bettingAmount = bettingAmount;
     }
 
-    public ResultStatus confirmResult(Dealer dealer) {
+    public Profit getProfit(Dealer dealer) {
+        ResultStatus resultStatus = getResult(dealer);
+        return bettingAmount.calculateProfit(resultStatus);
+    }
+
+    private ResultStatus getResult(Dealer dealer) {
         int playerScore = calculateScore();
         int dealerScore = dealer.calculateScore();
 
@@ -24,7 +32,7 @@ public class GamePlayer extends Player {
             return ResultStatus.WIN;
         }
         if (isBlackjack() && !dealer.isBlackjack()) {
-            return ResultStatus.WIN;
+            return ResultStatus.BLACKJACK;
         }
         if (!isBlackjack() && dealer.isBlackjack()) {
             return ResultStatus.LOSE;
@@ -47,4 +55,5 @@ public class GamePlayer extends Player {
     public boolean isReceivable() {
         return cards.sum() < RECEIVE_SIZE && !isBlackjack();
     }
+
 }
