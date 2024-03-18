@@ -8,6 +8,7 @@ import java.util.List;
 public class Hand {
 
     public static final int BLACKJACK_SCORE = 21;
+    public static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -17,6 +18,10 @@ public class Hand {
 
     public void add(final Card card) {
         cards.add(card);
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public boolean hasAce() {

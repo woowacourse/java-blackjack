@@ -27,7 +27,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return score() == BLACKJACK_SCORE;
+        return (hand.size() == 2) && (score() == BLACKJACK_SCORE);
     }
 
     public Name name() {

@@ -1,6 +1,7 @@
 package domain.participant.dealer;
 
 import static domain.card.Hand.BLACKJACK_SCORE;
+import static domain.card.Hand.INITIAL_CARD_COUNT;
 
 import java.util.List;
 
@@ -11,8 +12,6 @@ import domain.participant.attributes.Name;
 import domain.participant.player.Players;
 
 public class Dealer extends Participant {
-
-    public static final int INITIAL_CARD_COUNT = 2;
     public static final int DEALER_HIT_THRESHOLD = 16;
 
     private static final Name DEFAULT_DEALER_NAME = new Name("딜러");

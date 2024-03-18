@@ -1,7 +1,7 @@
 package view;
 
+import static domain.card.Hand.INITIAL_CARD_COUNT;
 import static domain.participant.dealer.Dealer.DEALER_HIT_THRESHOLD;
-import static domain.participant.dealer.Dealer.INITIAL_CARD_COUNT;
 
 import domain.card.Card;
 import domain.card.Hand;
