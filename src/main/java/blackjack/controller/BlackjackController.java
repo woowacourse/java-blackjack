@@ -9,21 +9,25 @@ import java.util.List;
 
 public class BlackjackController {
     public void run() {
-        final List<String> names = InputView.askPlayerNames();
-        final List<Player> players = createPlayersByNames(names);
-        final Dealer dealer = new Dealer();
-        final BlackjackGame blackjackGame = new BlackjackGame();
+        try {
+            final List<String> names = InputView.askPlayerNames();
+            final List<Player> players = createPlayersByNames(names);
+            final Dealer dealer = new Dealer();
+            final BlackjackGame blackjackGame = new BlackjackGame();
 
-        blackjackGame.initializeHand(dealer, players);
-        OutputView.printInitialHandOfEachPlayer(dealer, players);
+            blackjackGame.initializeHand(dealer, players);
+            OutputView.printInitialHandOfEachPlayer(dealer, players);
 
-        bet(dealer, players);
+            bet(dealer, players);
 
-        givePlayersMoreCardsIfWanted(blackjackGame, players);
-        giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
+            givePlayersMoreCardsIfWanted(blackjackGame, players);
+            giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
 
-        printHandStatusOfEachPlayer(dealer, players);
-        printPlayerProfits(dealer);
+            printHandStatusOfEachPlayer(dealer, players);
+            printPlayerProfits(dealer);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static List<Player> createPlayersByNames(final List<String> names) {
