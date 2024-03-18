@@ -1,6 +1,7 @@
 package blackjack.view;
 
-import blackjack.model.gamer.Player;
+import blackjack.domain.gamer.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +19,11 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = SCANNER.nextLine();
         return Arrays.asList(input.split(SEPARATOR));
+    }
+
+    public static String askPlayerForBatting(Player player) {
+        System.out.printf(NEW_LINE + "%s의 배팅 금액은? (소수점은 계산되지 않습니다.)" + NEW_LINE, player.getPlayerName());
+        return SCANNER.nextLine();
     }
 
     public static boolean askPlayerForCard(Player player) {
