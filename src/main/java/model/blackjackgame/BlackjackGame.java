@@ -1,12 +1,12 @@
 package model.blackjackgame;
 
 import java.util.List;
+import java.util.Objects;
 import model.card.Card;
 import model.card.Cards;
 import model.participants.dealer.Dealer;
 import model.participants.player.Player;
 import model.participants.player.Players;
-import model.participants.player.UpdatedPlayer;
 
 public class BlackjackGame {
 
@@ -29,7 +29,7 @@ public class BlackjackGame {
     public boolean hitForPlayer(Player player, Card card) {
         if (player.isNotBust()) {
             players = players.hit(player, card);
-            Player hittedPlayer = new UpdatedPlayer(this, player).player();
+            Player hittedPlayer = updatedPlayer(player);
             return !checkBust(hittedPlayer);
         }
         return false;
@@ -45,6 +45,15 @@ public class BlackjackGame {
             return true;
         }
         return false;
+    }
+
+    public Player updatedPlayer(Player player) {
+        return players.getPlayers()
+                .stream()
+                .filter(updatedPlayer -> Objects.equals(
+                        updatedPlayer.getName(), player.getName()))
+                .findFirst()
+                .orElse(player);
     }
 
     public Dealer getDealer() {

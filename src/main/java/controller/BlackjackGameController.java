@@ -15,7 +15,6 @@ import model.card.Cards;
 import model.participants.dealer.Dealer;
 import model.participants.player.Player;
 import model.participants.player.Players;
-import model.participants.player.UpdatedPlayer;
 import model.result.Profit;
 import model.result.Result;
 import view.InputView;
@@ -87,7 +86,7 @@ public class BlackjackGameController {
     private void hitOrStay(Player player, BlackjackGame blackjackGame) {
         Answer answer = new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         while (answer.isHit()) {
-            Player updatedPlayer = new UpdatedPlayer(blackjackGame, player).player();
+            Player updatedPlayer = blackjackGame.updatedPlayer(player);
             boolean continueHit = blackjackGame.hitForPlayer(updatedPlayer, new Card());
             answer = hitResultInfo(continueHit, player, blackjackGame);
         }
@@ -96,7 +95,7 @@ public class BlackjackGameController {
     private Answer hitResultInfo(boolean continueHit, Player player, BlackjackGame blackjackGame) {
         if (continueHit) {
             outputView.printCardsStock(player.getName(),
-                    new UpdatedPlayer(blackjackGame, player).player().captureCardType());
+                    blackjackGame.updatedPlayer(player).captureCardType());
             return new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         }
         outputView.printBustInfo(player);
