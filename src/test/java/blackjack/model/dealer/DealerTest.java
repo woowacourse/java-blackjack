@@ -42,7 +42,7 @@ class DealerTest {
         )));
 
         // then
-        int cardsTotal = dealer.calculateCardsTotalScore();
-        assertThat(cardsTotal).isGreaterThan(17);
+        int actualScore = dealer.calculateCardsScore();
+        assertThat(actualScore).isGreaterThan(17);
     }
 }

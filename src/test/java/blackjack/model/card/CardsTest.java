@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class CardsTest {
     @Test
     @DisplayName("점수 계산은 카드 숫자를 기본으로 한다")
-    void calculateCardsTotalTest() {
+    void calculateCardsScoreTest() {
         // given
         Cards cards = new Cards();
         cards.addCards(List.of(
@@ -24,7 +24,7 @@ class CardsTest {
 
     @Test
     @DisplayName("점수 계산 시 버스트가 아니면 Ace는 11점으로 계산한다")
-    void calculateCardsTotalWithAceWhenNotBustTest() {
+    void calculateCardsScoreWithAceWhenNotBustTest() {
         // given
         Cards cards = new Cards();
         cards.addCards(List.of(
@@ -33,15 +33,15 @@ class CardsTest {
         ));
 
         // when
-        int actualTotal = cards.calculateScore();
+        int actualScore = cards.calculateScore();
 
         // then
-        assertThat(actualTotal).isEqualTo(21);
+        assertThat(actualScore).isEqualTo(21);
     }
 
     @Test
     @DisplayName("점수 계산 시 버스트면 Ace는 1점으로 계산한다")
-    void calculateCardsTotalWithAceWhenBustTest() {
+    void calculateCardsScoreWithAceWhenBustTest() {
         // given
         Cards cards = new Cards();
         cards.addCards(List.of(
@@ -51,10 +51,10 @@ class CardsTest {
         ));
 
         // when
-        int actualTotal = cards.calculateScore();
+        int actualScore = cards.calculateScore();
 
         // then
-        assertThat(actualTotal).isEqualTo(21);
+        assertThat(actualScore).isEqualTo(21);
     }
 
     @Test

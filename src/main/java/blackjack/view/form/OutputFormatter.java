@@ -12,7 +12,7 @@ public class OutputFormatter {
     private static final String DEALING_RESULT_INTRO_FORM = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String CARDS_WITH_NAME_FORM = "%s 카드: %s";
     private static final String DEALER_DRAWING_CARDS_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.";
-    private static final String TOTAL_SCORE_FORM = " - 결과: %s";
+    private static final String SCORE_FORM = " - 결과: %s";
     private static final String BETTING_PROFIT_FORM = "%s: %d";
     private static final String ERROR_MESSAGE_FORM = "[ERROR] %s";
 
@@ -41,22 +41,22 @@ public class OutputFormatter {
     public static String formatDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome,
                                                 final PlayerName dealerName) {
         List<Card> dealerCards = dealerFinalCardsOutcome.cards();
-        int dealerTotalScore = dealerFinalCardsOutcome.totalScore();
-        return formatFinalCards(dealerCards, dealerName, dealerTotalScore);
+        int dealerScore = dealerFinalCardsOutcome.score();
+        return formatFinalCards(dealerCards, dealerName, dealerScore);
     }
 
     public static String formatPlayersFinalCards(final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
         return playerFinalCardsOutcomes.stream()
-                .map(outcome -> formatFinalCards(outcome.cards(), outcome.name(), outcome.totalScore()))
+                .map(outcome -> formatFinalCards(outcome.cards(), outcome.name(), outcome.score()))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private static String formatFinalCards(final List<Card> cards, final PlayerName name, final int totalScore) {
-        return formatCardsWithName(cards, name) + formatTotalScore(totalScore);
+    private static String formatFinalCards(final List<Card> cards, final PlayerName name, final int score) {
+        return formatCardsWithName(cards, name) + formatScore(score);
     }
 
-    private static String formatTotalScore(final int totalScore) {
-        return String.format(TOTAL_SCORE_FORM, totalScore);
+    private static String formatScore(final int score) {
+        return String.format(SCORE_FORM, score);
     }
 
     public static String formatDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes,

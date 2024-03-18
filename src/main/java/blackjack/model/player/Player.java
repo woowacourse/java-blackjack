@@ -31,7 +31,7 @@ public class Player {
         return cards.canAddCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
     }
 
-    public int calculateCardsTotalScore() {
+    public int calculateCardsScore() {
         return cards.calculateScore();
     }
 

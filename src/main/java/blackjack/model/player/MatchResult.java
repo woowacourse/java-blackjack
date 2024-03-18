@@ -25,19 +25,19 @@ public enum MatchResult {
         if (player.isBlackjack()) {
             return MatchResult.BLACKJACK_WIN;
         }
-        return determineByTotalScore(dealer, player);
+        return determineByScore(dealer, player);
     }
 
-    private static MatchResult determineByTotalScore(final Dealer dealer, final Player player) {
-        int playerTotal = player.calculateCardsTotalScore();
-        int dealerTotal = dealer.calculateCardsTotalScore();
+    private static MatchResult determineByScore(final Dealer dealer, final Player player) {
+        int playerScore = player.calculateCardsScore();
+        int dealerScore = dealer.calculateCardsScore();
         if (player.isBust()) {
             return MatchResult.LOSE;
         }
-        if (dealer.isBust() || (playerTotal > dealerTotal)) {
+        if (dealer.isBust() || (playerScore > dealerScore)) {
             return MatchResult.WIN;
         }
-        if (playerTotal == dealerTotal) {
+        if (playerScore == dealerScore) {
             return MatchResult.PUSH;
         }
         return MatchResult.LOSE;

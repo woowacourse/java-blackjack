@@ -27,15 +27,15 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int total = cards.stream()
+        int score = cards.stream()
                 .map(Card::denomination)
                 .mapToInt(Denomination::getScore)
                 .sum();
 
         if (hasAce()) {
-            return addAceScoreIfNotBust(total);
+            return addAceScoreIfNotBust(score);
         }
-        return total;
+        return score;
     }
 
     private boolean hasAce() {
@@ -43,11 +43,11 @@ public class Cards {
                 .anyMatch(card -> card.denomination().isAce());
     }
 
-    private int addAceScoreIfNotBust(final int total) {
-        if (total + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
-            return total + ACE_ADDITIONAL_SCORE;
+    private int addAceScoreIfNotBust(final int score) {
+        if (score + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
+            return score + ACE_ADDITIONAL_SCORE;
         }
-        return total;
+        return score;
     }
 
     public boolean isBlackjack() {
