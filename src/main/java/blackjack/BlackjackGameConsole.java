@@ -3,12 +3,12 @@ package blackjack;
 import blackjack.domain.card.BlackjackCardsFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomShuffler;
-import blackjack.domain.participant.BetRecord;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerBetAmounts;
+import blackjack.domain.participant.PlayerProfitAmounts;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.ProfitRecord;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -21,13 +21,13 @@ public class BlackjackGameConsole {
 
     public void play() {
         List<Name> playerNames = repeat(inputView::readPlayerNames);
-        BetRecord betRecord = repeat(() -> inputView.readBetAmount(playerNames));
+        PlayerBetAmounts playerBetAmounts = repeat(() -> inputView.readBetAmount(playerNames));
 
-        ProfitRecord profitRecord = playBlackjack(playerNames, betRecord);
-        outputView.printProfitDetails(profitRecord);
+        PlayerProfitAmounts playerProfitAmounts = playBlackjack(playerNames, playerBetAmounts);
+        outputView.printProfitDetails(playerProfitAmounts);
     }
 
-    private ProfitRecord playBlackjack(List<Name> playerNames, BetRecord betRecord) {
+    private PlayerProfitAmounts playBlackjack(List<Name> playerNames, PlayerBetAmounts playerBetAmounts) {
         Deck deck = Deck.of(new BlackjackCardsFactory(), new RandomShuffler());
         Players players = initializePlayers(playerNames, deck);
         Dealer dealer = initializeDealer(deck);
@@ -37,7 +37,7 @@ public class BlackjackGameConsole {
         dealer = proceedDealerTurn(dealer, deck);
         outputView.printParticipantResult(players, dealer);
 
-        return betRecord.calculateProfit(players, dealer);
+        return playerBetAmounts.calculateProfit(players, dealer);
     }
 
     private Players initializePlayers(List<Name> playerNames, Deck deck) {

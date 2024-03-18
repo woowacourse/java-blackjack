@@ -5,9 +5,9 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerProfitAmounts;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.ProfitAmount;
-import blackjack.domain.participant.ProfitRecord;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,9 +73,9 @@ public class OutputView {
                 convertParticipantHandToString(player) + RESULT_FORMAT + player.calculateHand().getValue()));
     }
 
-    public void printProfitDetails(ProfitRecord profitRecord) {
-        ProfitAmount dealerProfitAmount = profitRecord.calculateDealerProfit();
-        Map<Name, ProfitAmount> playerProfit = profitRecord.getProfitRecord();
+    public void printProfitDetails(PlayerProfitAmounts playerProfitAmounts) {
+        ProfitAmount dealerProfitAmount = playerProfitAmounts.calculateDealerProfit();
+        Map<Name, ProfitAmount> playerProfit = playerProfitAmounts.getProfitAmounts();
 
         System.out.println(LINE_SEPARATOR + "## 최종 수익");
         System.out.println(String.format("%-4s:%7d", "딜러", dealerProfitAmount.getValue()));

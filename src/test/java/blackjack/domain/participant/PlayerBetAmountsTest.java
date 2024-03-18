@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BetRecordTest {
+public class PlayerBetAmountsTest {
 
     @DisplayName("베팅내역을 생성한다")
     @Test
     public void create() {
-        assertThatCode(() -> new BetRecord(Map.of(new Name("이상"), new BetAmount(1000))))
+        assertThatCode(() -> new PlayerBetAmounts(Map.of(new Name("이상"), new BetAmount(1000))))
                 .doesNotThrowAnyException();
     }
 
@@ -24,7 +24,7 @@ public class BetRecordTest {
     public void calculateProfit() {
         Players players = Players.createInitialPlayers(List.of(new Name("이상")));
         Dealer dealer = Dealer.createInitialStateDealer();
-        BetRecord betRecord = new BetRecord(Map.of(new Name("이상"), new BetAmount(1000)));
+        PlayerBetAmounts playerBetAmounts = new PlayerBetAmounts(Map.of(new Name("이상"), new BetAmount(1000)));
 
         Deck playerDeck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         players = players.takeFirstHand(playerDeck);
@@ -36,6 +36,6 @@ public class BetRecordTest {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::updatePlayers));
         dealer = dealer.draw(dealerDeck);
 
-        betRecord.calculateProfit(players, dealer);
+        playerBetAmounts.calculateProfit(players, dealer);
     }
 }
