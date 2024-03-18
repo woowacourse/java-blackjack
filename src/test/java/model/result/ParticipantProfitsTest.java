@@ -38,7 +38,7 @@ class ParticipantProfitsTest {
 
     private Players preparePlayers() {
         Players players = Players.from(List.of("조조"));
-        Player jojo = Player.of("조조", List.of(new Card(ACE, HEART), new Card(JACK, SPADE)));
+        Player jojo = new Player("조조", List.of(new Card(ACE, HEART), new Card(JACK, SPADE)));
         players.getPlayers()
             .set(0, jojo);
 

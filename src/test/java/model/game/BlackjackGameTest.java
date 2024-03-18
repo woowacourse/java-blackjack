@@ -49,7 +49,7 @@ class BlackjackGameTest {
     @DisplayName("플레이어에게 추가 카드 지급")
     @Test
     void dealPlayerCard() {
-        Player player = Player.of("jojo", List.of(new Card(JACK, HEART), new Card(TWO, CLOVER)));
+        Player player = new Player("jojo", List.of(new Card(JACK, HEART), new Card(TWO, CLOVER)));
         BlackjackGame blackjackGame = new BlackjackGame();
         ParticipantCard playerCard = blackjackGame.dealCardTo(player);
         assertAll(

@@ -32,7 +32,7 @@ class ParticipantCardTest {
     @Test
     void createPlayerCardWhitAllCards() {
         List<Card> cards = List.of(new Card(ACE, HEART), new Card(JACK, SPADE));
-        Player player = Player.of("jojo", cards);
+        Player player = new Player("jojo", cards);
         ParticipantCard playerCard = ParticipantCard.createWithAllCard(player);
         assertAll(
             () -> assertThat(playerCard.getCards()).hasToString("[A하트, J스페이드]"),

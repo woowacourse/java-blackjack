@@ -11,20 +11,12 @@ public class Player extends Participant {
 
     private Bet bet;
 
-    private Player(Name name) {
-        this(name, new Cards(List.of()));
+    public Player(String name) {
+        this(name, List.of());
     }
 
-    private Player(Name name, Cards cards) {
-        super(name, cards);
-    }
-
-    public static Player from(String name) {
-        return new Player(Name.createPlayerName(name));
-    }
-
-    public static Player of(String name, List<Card> cards) {
-        return new Player(Name.createPlayerName(name), new Cards(cards));
+    public Player(String name, List<Card> cards) {
+        super(Name.createPlayerName(name), new Cards(cards));
     }
 
     @Override

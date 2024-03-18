@@ -19,7 +19,7 @@ class PlayerTest {
     @Test
     void testCanHit() {
         List<Card> cards = List.of(new Card(ACE, HEART), new Card(JACK, HEART));
-        Player player = Player.of("lily", cards);
+        Player player = new Player("lily", cards);
         assertThat(player.isPossibleHit()).isTrue();
     }
 
@@ -27,14 +27,14 @@ class PlayerTest {
     @Test
     void testCanNotHit() {
         List<Card> cards = List.of(new Card(TEN, HEART), new Card(JACK, HEART), new Card(TWO, HEART));
-        Player player = Player.of("lily", cards);
+        Player player = new Player("lily", cards);
         assertThat(player.isPossibleHit()).isFalse();
     }
 
     @DisplayName("카드 1장을 획득하면 플레이어의 카드가 1개가 증가한다")
     @Test
     void testHitCard() {
-        Player player = Player.from("조조");
+        Player player = new Player("조조");
         Card card = new Card(TWO, DIAMOND);
         player.hit(card);
         assertThat(player.cardSize()).isEqualTo(1);

@@ -19,7 +19,7 @@ class ParticipantScoreTest {
     @Test
     void createParticipantScore() {
         List<Card> cards = List.of(new Card(ACE, HEART), new Card(JACK, SPADE));
-        Player player = Player.of("jojo", cards);
+        Player player = new Player("jojo", cards);
         ParticipantScore playerScore = ParticipantScore.from(player);
 
         assertAll(

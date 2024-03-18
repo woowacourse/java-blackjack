@@ -18,7 +18,7 @@ public class Players {
     public static Players from(List<String> playerNames) {
         validate(playerNames);
         return playerNames.stream()
-            .map(Player::from)
+            .map(Player::new)
             .collect(collectingAndThen(toList(), Players::new));
     }
 

@@ -72,7 +72,7 @@ class DealerTest {
     void testJudgeBlackjackWin(List<Card> dealerCards) {
         Dealer dealer = new Dealer(dealerCards);
         List<Card> playerCards = List.of(new Card(ACE, HEART), new Card(JACK, SPADE));
-        Player player = Player.of("jojo", playerCards);
+        Player player = new Player("jojo", playerCards);
 
         Assertions.assertThat(dealer.judge(player)).isEqualTo(BLACKJACK_WIN);
     }
@@ -90,7 +90,7 @@ class DealerTest {
     void testJudgeWin(List<Card> dealerCards) {
         Dealer dealer = new Dealer(dealerCards);
         List<Card> playerCards = List.of(new Card(QUEEN, HEART), new Card(NINE, SPADE), new Card(TWO, SPADE));
-        Player player = Player.of("jojo", playerCards);
+        Player player = new Player("jojo", playerCards);
 
         Assertions.assertThat(dealer.judge(player)).isEqualTo(WIN);
     }
@@ -100,7 +100,7 @@ class DealerTest {
     @MethodSource("provideDealerCardsAndPlayerCardsWithLoose")
     void testJudgeLoose(List<Card> dealerCards, List<Card> playerCards) {
         Dealer dealer = new Dealer(dealerCards);
-        Player player = Player.of("jojo", playerCards);
+        Player player = new Player("jojo", playerCards);
 
         Assertions.assertThat(dealer.judge(player)).isEqualTo(LOOSE);
     }
@@ -127,7 +127,7 @@ class DealerTest {
     @MethodSource("provideDealerCardsAndPlayerCardsWithPush")
     void testJudgePush(List<Card> dealerCards, List<Card> playerCards) {
         Dealer dealer = new Dealer(dealerCards);
-        Player player = Player.of("jojo", playerCards);
+        Player player = new Player("jojo", playerCards);
 
         Assertions.assertThat(dealer.judge(player)).isEqualTo(PUSH);
     }
