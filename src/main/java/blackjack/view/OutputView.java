@@ -2,12 +2,14 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.dto.gamer.PlayerInfo;
 import blackjack.dto.gamer.PlayerInfos;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -91,6 +93,22 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             System.out.println(String.format("%s카드: %s - 결과: %d",
                     player.getName(), createCardsInfoText(player.getCards()), player.getScore()));
+        }
+    }
+
+    public void printTotalProfit(final Dealer dealer, final Players players, final Map<Gamer, Integer> gamerProfits) {
+        System.out.println(String.format("%n## 최종 수익"));
+        printDealerTotalProfit(dealer, gamerProfits);
+        printPlayersTotalProfit(players, gamerProfits);
+    }
+
+    private void printDealerTotalProfit(final Dealer dealer, final Map<Gamer, Integer> gamerProfits) {
+        System.out.println(String.format("딜러: %d", gamerProfits.get(dealer)));
+    }
+
+    private void printPlayersTotalProfit(final Players players, final Map<Gamer, Integer> gamerProfits) {
+        for (Player player : players.getPlayers()) {
+            System.out.println(String.format("%s: %d", player.getName(), gamerProfits.get(player)));
         }
     }
 
