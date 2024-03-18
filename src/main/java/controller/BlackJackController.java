@@ -1,5 +1,6 @@
 package controller;
 
+import card.Card;
 import card.CardDeck;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +38,15 @@ public class BlackJackController {
 
     private List<Player> startBetting(List<String> names, CardDeck cardDeck) {
         return names.stream()
-                .map(name -> new Player(cardDeck.firstCards(), new Name(name),
-                        new BetMoney(inputView.inputBettingMoney(name))))
+                .map(name -> makePlayer(cardDeck, name))
                 .toList();
+    }
+
+    private Player makePlayer(CardDeck cardDeck, String name) {
+        List<Card> firstCards = cardDeck.firstCards();
+        BetMoney betMoney = new BetMoney(inputView.inputBettingMoney(name));
+
+        return new Player(firstCards, new Name(name), betMoney);
     }
 
     private void runBlackJackGame(Players players, CardDeck cardDeck, Dealer dealer) {
