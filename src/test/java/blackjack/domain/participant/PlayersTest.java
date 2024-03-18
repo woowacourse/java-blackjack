@@ -35,7 +35,7 @@ public class PlayersTest {
         Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         Players initialPlayers = Players.createInitialPlayers(List.of(new Name("이상"), new Name("이건상")));
 
-        Players players = initialPlayers.initializePlayersHands(deck);
+        Players players = initialPlayers.takeFirstHand(deck);
         List<Player> initializedPlayers = players.getPlayers();
 
         Player player1 = initializedPlayers.get(0);

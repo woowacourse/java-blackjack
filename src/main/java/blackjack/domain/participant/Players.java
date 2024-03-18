@@ -44,7 +44,7 @@ public class Players {
         }
     }
 
-    public Players initializePlayersHands(Deck deck) {
+    public Players takeFirstHand(Deck deck) {
         List<Player> newPlayers = new ArrayList<>();
         for (Player player : players) {
             newPlayers.add(player.draw(deck));

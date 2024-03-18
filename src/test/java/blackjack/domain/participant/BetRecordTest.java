@@ -27,7 +27,7 @@ public class BetRecordTest {
         BetRecord betRecord = new BetRecord(Map.of(new Name("이상"), new BetAmount(1000)));
 
         Deck playerDeck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
-        players = players.initializePlayersHands(playerDeck);
+        players = players.takeFirstHand(playerDeck);
         Deck dealerDeck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         dealer = dealer.draw(dealerDeck);
 

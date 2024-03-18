@@ -42,7 +42,7 @@ public class BlackjackGameConsole {
 
     private Players initializePlayers(List<Name> playerNames, Deck deck) {
         Players players = Players.createInitialPlayers(playerNames);
-        return players.initializePlayersHands(deck);
+        return players.takeFirstHand(deck);
     }
 
     private Dealer initializeDealer(Deck deck) {
