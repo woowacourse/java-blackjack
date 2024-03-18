@@ -5,6 +5,8 @@ import blackjack.exception.InvalidPlayerCountException;
 import java.util.List;
 
 public class Players {
+    private static final int MAX_PLAYER_COUNT = 8;
+
     private final List<Player> players;
     private int order = 0;
 
@@ -16,7 +18,7 @@ public class Players {
     }
 
     private void checkPlayersEmpty(List<Name> playerNames) {
-        if (playerNames.isEmpty()) {
+        if (playerNames.isEmpty() || playerNames.size() > MAX_PLAYER_COUNT) {
             throw new InvalidPlayerCountException();
         }
     }
