@@ -1,8 +1,8 @@
 package view;
 
-import domain.participant.Participant;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.result.Income;
 

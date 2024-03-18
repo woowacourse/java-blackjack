@@ -6,6 +6,7 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.result.Income;
+import domain.result.IncomeCalculator;
 import domain.result.Incomes;
 
 import java.util.LinkedHashMap;
@@ -35,7 +36,7 @@ public class BlackjackGameManager {
 
         printResults(dealer, playerBundle);
 
-        Incomes incomes = new Incomes(playerBundle);
+        Incomes incomes = new Incomes(playerBundle, new IncomeCalculator());
 
         printFinalIncomes(incomes.dealerIncome(dealer), incomes.playersIncomes(dealer));
     }

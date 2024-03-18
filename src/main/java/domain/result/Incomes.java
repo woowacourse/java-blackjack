@@ -1,6 +1,5 @@
 package domain.result;
 
-import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
@@ -14,14 +13,16 @@ import java.util.stream.Collectors;
 public class Incomes {
 
     private final List<Player> players;
+    private final IncomeCalculator incomeCalculator;
 
-    public Incomes(List<Player> players) {
+    public Incomes(List<Player> players, IncomeCalculator incomeCalculator) {
         this.players = players;
+        this.incomeCalculator = incomeCalculator;
     }
 
     public Income dealerIncome(Dealer dealer) {
         int sumOfPlayerIncome = players.stream()
-                .map(player -> determineIncome(dealer.decideStatus(player), player.getBetAmount()))
+                .map(player -> incomeCalculator.determineIncome(dealer.decideStatus(player), player.getBetAmount()))
                 .mapToInt(Income::getValue)
                 .sum();
         return new Income(-sumOfPlayerIncome);
@@ -31,23 +32,10 @@ public class Incomes {
         return players.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> determineIncome(dealer.decideStatus(player), player.getBetAmount()),
+                        player -> incomeCalculator.determineIncome(dealer.decideStatus(player), player.getBetAmount()),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));
-    }
-
-    public Income determineIncome(Status status, BetAmount betAmount) {
-        if (status == Status.WIN) {
-            return new Income(betAmount.getValue());
-        }
-        if (status == Status.LOSE) {
-            return new Income(-betAmount.getValue());
-        }
-        if (status == Status.WIN_BLACKJACK) {
-            return new Income((int) Math.round(1.5 * betAmount.getValue()));
-        }
-        return new Income(0);
     }
 
     @Override
