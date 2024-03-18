@@ -9,25 +9,25 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MoneyManager {
-    private final Map<Player, Money> bettingManager;
+    private final Map<Player, Result> playerResults;
 
-    public MoneyManager(Map<Player, Money> bettingManager) {
-        this.bettingManager = bettingManager;
+    public MoneyManager(Map<Player, Result> playerResults) {
+        this.playerResults = playerResults;
     }
 
-    public Map<Player, Profit> calculateProfit(Map<Player, Result> playerResults) {
+    public Map<Player, Profit> calculateProfit() {
         Map<Player, Profit> profitManager = new LinkedHashMap<>();
         playerResults.forEach((player, result) -> {
-                    Money money = bettingManager.get(player);
+                    Money money = player.getMoney();
                     profitManager.put(player, money.makeProfit(result));
                 }
         );
         return Collections.unmodifiableMap(profitManager);
     }
 
-    public Profit makeDealerProfit(Map<Player, Result> playerResults) {
+    public Profit makeDealerProfit() {
         Profit profit = new Profit(new BigDecimal("0"));
-        for (Map.Entry<Player, Profit> entries : calculateProfit(playerResults).entrySet()) {
+        for (Map.Entry<Player, Profit> entries : calculateProfit().entrySet()) {
             profit = profit.sum(entries.getValue());
         }
         return profit.reverse();

@@ -4,7 +4,9 @@ import domain.card.Card;
 import domain.deck.TotalDeck;
 import domain.game.Result;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static domain.game.Result.LOSE;
@@ -15,24 +17,10 @@ public class Users {
     private static final int FIRST_PLAYER_INDEX = 1;
     private final List<User> users;
 
-    public Users(List<String> names) {
-        List<Player> players = names.stream()
-                .map((name) -> new Player(new Name(name)))
-                .collect(Collectors.toList());
-        validateDuplicatedName(players);
+    public Users(List<Player> players) {
         this.users = new ArrayList<>();
         users.add(new Dealer());
         users.addAll(players);
-    }
-
-    private void validateDuplicatedName(List<Player> players) {
-        Set<String> distinctName = new HashSet<>();
-        for (Player player : players) {
-            distinctName.add(player.getName());
-        }
-        if (players.size() != distinctName.size()) {
-            throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
-        }
     }
 
     public void setStartCards(TotalDeck totalDeck) {

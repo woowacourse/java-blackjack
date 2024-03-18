@@ -5,6 +5,8 @@ import domain.card.Number;
 import domain.card.Shape;
 import domain.deck.TotalDeck;
 import domain.deck.TotalDeckGenerator;
+import domain.money.Money;
+import domain.user.Name;
 import domain.user.Player;
 import domain.user.Users;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +25,8 @@ public class GameTest {
     @DisplayName("게임이 생성될 때 각 유저에게 카드를 두 장씩 나눠준다.")
     void gameConstructTest() {
         TotalDeck totalDeck = TotalDeckGenerator.generate();
-        Users users = new Users(List.of("a"));
+        Player player = new Player(new Name("a"), new Money("100"));
+        Users users = new Users(List.of(player));
 
         new Game(totalDeck, users);
 
@@ -34,8 +37,8 @@ public class GameTest {
     @DisplayName("입력이 y이면 현재 유저가 카드를 추가로 받는다.")
     void hitTest() {
         TotalDeck totalDeck = TotalDeckGenerator.generate();
-        Users users = new Users(List.of("a"));
-        Player player = users.getPlayers().get(0);
+        Player player = new Player(new Name("a"), new Money("100"));
+        Users users = new Users(List.of(player));
         Game game = new Game(totalDeck, users);
         game.determineState(YES, player);
 
@@ -51,8 +54,8 @@ public class GameTest {
                 new Card(Shape.CLOVER, Number.SEVEN),
                 new Card(Shape.CLOVER, Number.EIGHT)
         ));
-        Users users = new Users(List.of("a"));
-        Player player = users.getPlayers().get(0);
+        Player player = new Player(new Name("a"), new Money("100"));
+        Users users = new Users(List.of(player));
 
         Game game = new Game(totalDeck, users);
         Map<Player, Result> playerResults = game.generatePlayerResults();
