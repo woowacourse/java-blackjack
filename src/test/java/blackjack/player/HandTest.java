@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.card.Card;
 import blackjack.card.Rank;
 import blackjack.card.Shape;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -83,6 +84,21 @@ class HandTest {
         assertAll(
                 () -> assertThat(hand21.isBlackJack()).isFalse(),
                 () -> assertThat(hand20.isBlackJack()).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("손에 카드를 한 장 추가한다.")
+    void addCardTest() {
+        List<Card> cards = new ArrayList<>();
+        Hand hand = new Hand(cards);
+        Card addedCard = new Card(Shape.HEART, Rank.FIVE);
+
+        hand.addCard(addedCard);
+
+        assertAll(
+                () -> assertThat(hand.getCards().size()).isEqualTo(1),
+                () -> assertThat(hand.getCards().get(0)).isEqualTo(addedCard)
         );
     }
 }
