@@ -7,9 +7,7 @@ import domain.card.deck.CardDeckFactory;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.betting.BetAmount;
-import domain.participant.name.Name;
-import domain.participant.name.Names;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -34,17 +32,14 @@ public class BlackjackController {
     }
 
     private Participants generateParticipants() {
-        Names names = repeatUntilSuccess(() -> new Names(inputView.readPlayerNames()));
-        return names.getNames().stream()
+        List<String> playerNames = repeatUntilSuccess(inputView::readPlayerNames);
+        return playerNames.stream()
                 .map(this::generatePlayer)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Participants::new));
     }
 
-    private Player generatePlayer(Name name) {
-        String rawName = name.getValue();
-        BetAmount betAmount = repeatUntilSuccess(() ->
-                new BetAmount(inputView.readBetAmount(rawName)));
-        return new Player(name, betAmount);
+    private Player generatePlayer(String name) {
+        return repeatUntilSuccess(() -> new Player(name, inputView.readBetAmount(name)));
     }
 
     private GameResult playBlackjackGame(Participants participants, BlackjackGame blackjackGame) {

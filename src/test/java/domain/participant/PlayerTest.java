@@ -7,13 +7,11 @@ import static domain.card.Denomination.TEN;
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.participant.betting.BetAmount;
-import domain.participant.name.Name;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-    private final Name name = new Name("prin");
-    private final BetAmount betAmount = new BetAmount(1);
+    private final String name = "prin";
+    private final int betAmount = 1000;
 
     @Test
     void 점수가_bust면_끝난_상태이므로_false를_반환한다() {

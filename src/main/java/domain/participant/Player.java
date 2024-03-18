@@ -1,14 +1,13 @@
 package domain.participant;
 
 import domain.participant.betting.BetAmount;
-import domain.participant.name.Name;
 
 public class Player extends Participant {
     private final BetAmount betAmount;
 
-    public Player(Name name, BetAmount betAmount) {
+    public Player(String name, int betAmount) {
         super(name);
-        this.betAmount = betAmount;
+        this.betAmount = new BetAmount(betAmount);
     }
 
     @Override

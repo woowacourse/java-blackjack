@@ -9,15 +9,12 @@ import static domain.card.Denomination.QUEEN;
 import static domain.card.Denomination.TEN;
 import static domain.card.Denomination.THREE;
 import static fixture.CardFixture.카드;
-import static fixture.ParticipantFixture.플레이어;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.participant.betting.BetAmount;
-import domain.participant.name.Name;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,7 +41,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_bust이면_배팅한_금액을_모두_잃는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(bustDealer);
-            Player player = 플레이어("prin", 1000);
+            Player player = new Player("prin", 1000);
             player.receiveInitialCards(카드(KING), 카드(KING));
             player.receiveAdditionalCard(카드(QUEEN));
 
@@ -56,7 +53,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_blackjack이면_배팅한_금액의_150퍼센트를_수익으로_얻는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(bustDealer);
-            Player player = 플레이어("prin", 8000);
+            Player player = new Player("prin", 8000);
             player.receiveInitialCards(카드(ACE), 카드(KING));
 
             int profit = profitResultManager.calculateProfit(player);
@@ -67,7 +64,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_stay이면_배팅한_금액을_수익으로_얻는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(bustDealer);
-            Player player = 플레이어("prin", 5000);
+            Player player = new Player("prin", 5000);
             player.receiveInitialCards(카드(EIGHT), 카드(QUEEN));
 
             int profit = profitResultManager.calculateProfit(player);
@@ -81,7 +78,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_bust이면_배팅한_금액을_모두_잃는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(blackjackDealer);
-            Player player = 플레이어("prin", 1000);
+            Player player = new Player("prin", 1000);
             player.receiveInitialCards(카드(KING), 카드(KING));
             player.receiveAdditionalCard(카드(QUEEN));
 
@@ -93,7 +90,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_blackjack이면_수익이_없다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(blackjackDealer);
-            Player player = 플레이어("prin", 1000);
+            Player player = new Player("prin", 1000);
             player.receiveInitialCards(카드(ACE), 카드(KING));
 
             int profit = profitResultManager.calculateProfit(player);
@@ -104,7 +101,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_stay이면_배팅한_금액을_잃는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(blackjackDealer);
-            Player player = new Player(new Name("prin"), new BetAmount(100));
+            Player player = new Player("prin", 100);
             player.receiveInitialCards(카드(EIGHT), 카드(QUEEN));
 
             int profit = profitResultManager.calculateProfit(player);
@@ -115,7 +112,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_stay_21이면_배팅한_금액을_모두_잃는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(blackjackDealer);
-            Player player = new Player(new Name("prin"), new BetAmount(1000));
+            Player player = new Player("prin", 1000);
             player.receiveInitialCards(카드(EIGHT), 카드(THREE));
             player.receiveAdditionalCard(카드(KING));
 
@@ -131,7 +128,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_bust이면_배팅한_금액을_모두_잃는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(stayDealer);
-            Player player = 플레이어("prin", 2000);
+            Player player = new Player("prin", 2000);
             player.receiveInitialCards(카드(KING), 카드(KING));
             player.receiveAdditionalCard(카드(QUEEN));
 
@@ -143,7 +140,7 @@ class ProfitResultManagerTest {
         @Test
         void 플레이어가_blackjack이면_배팅한_금액의_150퍼센트를_수익으로_얻는다() {
             ProfitResultManager profitResultManager = new ProfitResultManager(stayDealer);
-            Player player = 플레이어("prin", 10000);
+            Player player = new Player("prin", 10000);
             player.receiveInitialCards(카드(ACE), 카드(KING));
 
             int profit = profitResultManager.calculateProfit(player);
@@ -156,7 +153,7 @@ class ProfitResultManagerTest {
         void 플레이어가_stay이면_점수에_따라_수익을_얻는다(Card first, Card second, int expected) {
             Dealer dealer = crateDealer(NINE, TEN);
             ProfitResultManager profitResultManager = new ProfitResultManager(dealer);
-            Player player = 플레이어("prin", 1000);
+            Player player = new Player("prin", 1000);
             player.receiveInitialCards(first, second);
 
             int profit = profitResultManager.calculateProfit(player);

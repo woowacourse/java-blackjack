@@ -12,7 +12,6 @@ import static domain.card.Denomination.SIX;
 import static domain.card.Denomination.TEN;
 import static domain.card.Denomination.THREE;
 import static domain.card.Denomination.TWO;
-import static fixture.ParticipantFixture.플레이어;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,7 +63,7 @@ class BlackjackGameTest {
     void 딜러는_플레이어가_얻은_수익만큼_잃는다() {
         CardDeck cardDeck = createCardDeck(JACK, KING, NINE, TEN, EIGHT, NINE);
         BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
-        Participants participants = createParticipants(플레이어("프린", 10000), 플레이어("뽀로로", 10000));
+        Participants participants = createParticipants(new Player("prin", 10000), new Player("prin", 10000));
 
         blackjackGame.initGame(participants);
 
