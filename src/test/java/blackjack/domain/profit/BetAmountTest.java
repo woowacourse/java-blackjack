@@ -19,7 +19,6 @@ class BetAmountTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-
     @DisplayName("배팅 금액은 소수가 아니다.")
     @Test
     void testCreateDecimal() {
