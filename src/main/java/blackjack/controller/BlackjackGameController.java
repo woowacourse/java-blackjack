@@ -4,19 +4,16 @@ import blackjack.domain.betting.Bettings;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffledDeckGenerator;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameResults;
+import blackjack.domain.result.GamerProfits;
 import blackjack.dto.gamer.PlayerInfo;
 import blackjack.dto.gamer.PlayerInfos;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.command.Command;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class BlackjackGameController {
     private final InputView inputView;
@@ -33,14 +30,14 @@ public class BlackjackGameController {
         Deck deck = createDeck();
 
         Bettings bettings = betPlayers(players, dealer);
+        playGame(deck, dealer, players);
+        calculateResult(players, dealer, bettings);
+    }
 
-        dealInitCards(deck, dealer, players);
-        receiveAdditionalCard(deck, dealer, players);
-
-        GameResults gameResults = judgeGameResult(players, dealer);
-        Map<Gamer, Integer> gamerProfits = calculateProfits(players, gameResults, bettings, dealer);
-
-        printGameResult(dealer, players, gamerProfits);
+    // TODO: DeckGenerator 인터페이스 인자로 받기
+    private Deck createDeck() {
+        ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
+        return deckGenerator.generate();
     }
 
     private Bettings betPlayers(Players players, Dealer dealer) {
@@ -55,9 +52,9 @@ public class BlackjackGameController {
         return bettings;
     }
 
-    private Deck createDeck() {
-        ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
-        return deckGenerator.generate();
+    private void playGame(Deck deck, Dealer dealer, Players players) {
+        dealInitCards(deck, dealer, players);
+        receiveAdditionalCard(deck, dealer, players);
     }
 
     private void dealInitCards(final Deck deck, final Dealer dealer, final Players players) {
@@ -94,6 +91,12 @@ public class BlackjackGameController {
         }
     }
 
+    private void calculateResult(Players players, Dealer dealer, Bettings bettings) {
+        GameResults gameResults = judgeGameResult(players, dealer);
+        GamerProfits gamerProfits = getGamerProfits(players, gameResults, bettings, dealer);
+        printGameResult(dealer, players, gamerProfits);
+    }
+
     private GameResults judgeGameResult(Players players, Dealer dealer) {
         GameResults gameResults = new GameResults();
         for (final Player player : players.getPlayers()) {
@@ -103,18 +106,15 @@ public class BlackjackGameController {
         return gameResults;
     }
 
-    private Map<Gamer, Integer> calculateProfits(Players players, GameResults gameResults, Bettings bettings, Dealer dealer) {
-        Map<Gamer, Integer> gamerProfits = new HashMap<>();
-        for (final Player player : players.getPlayers()) {
-            int playerProfit = gameResults.calculatePlayerProfit(player, bettings);
-            gamerProfits.put(player, playerProfit);
-        }
-        gamerProfits.put(dealer, gameResults.calculateDealerProfit(bettings));
+    private GamerProfits getGamerProfits(Players players, GameResults gameResults, Bettings bettings, Dealer dealer) {
+        GamerProfits gamerProfits = new GamerProfits();
+        gamerProfits.addPlayersProfit(players, gameResults, bettings);
+        gamerProfits.addDealerProfit(dealer, gameResults, bettings);
 
         return gamerProfits;
     }
 
-    private void printGameResult(Dealer dealer, Players players, Map<Gamer, Integer> gamerProfits) {
+    private void printGameResult(final Dealer dealer, final Players players, final GamerProfits gamerProfits) {
         outputView.printTotalCardsStatus(dealer, players);
         outputView.printTotalProfit(dealer, players, gamerProfits);
     }

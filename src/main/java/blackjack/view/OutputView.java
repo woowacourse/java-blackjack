@@ -2,14 +2,13 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.result.GamerProfits;
 import blackjack.dto.gamer.PlayerInfo;
 import blackjack.dto.gamer.PlayerInfos;
 
 import java.util.List;
-import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -78,6 +77,7 @@ public class OutputView {
         System.out.println(String.format("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.MAX_HIT_SCORE));
     }
 
+    //TODO: DTO 받도록 변경
     public void printTotalCardsStatus(final Dealer dealer, final Players players) {
         printDealerTotalCardsStatus(dealer);
         printPlayersTotalCardsStatus(players);
@@ -96,19 +96,19 @@ public class OutputView {
         }
     }
 
-    public void printTotalProfit(final Dealer dealer, final Players players, final Map<Gamer, Integer> gamerProfits) {
+    public void printTotalProfit(final Dealer dealer, final Players players, final GamerProfits gamerProfits) {
         System.out.println(String.format("%n## 최종 수익"));
         printDealerTotalProfit(dealer, gamerProfits);
         printPlayersTotalProfit(players, gamerProfits);
     }
 
-    private void printDealerTotalProfit(final Dealer dealer, final Map<Gamer, Integer> gamerProfits) {
-        System.out.println(String.format("딜러: %d", gamerProfits.get(dealer)));
+    private void printDealerTotalProfit(final Dealer dealer, final GamerProfits gamerProfits) {
+        System.out.println(String.format("딜러: %d", gamerProfits.getProfit(dealer)));
     }
 
-    private void printPlayersTotalProfit(final Players players, final Map<Gamer, Integer> gamerProfits) {
+    private void printPlayersTotalProfit(final Players players, final GamerProfits gamerProfits) {
         for (Player player : players.getPlayers()) {
-            System.out.println(String.format("%s: %d", player.getName(), gamerProfits.get(player)));
+            System.out.println(String.format("%s: %d", player.getName(), gamerProfits.getProfit(player)));
         }
     }
 
