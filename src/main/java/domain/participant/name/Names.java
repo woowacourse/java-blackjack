@@ -1,13 +1,11 @@
 package domain.participant.name;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Names {
     private static final int MIN_NAME_COUNT = 1;
@@ -44,7 +42,7 @@ public class Names {
 
     private Map<String, Long> getPlayerNameCounts(List<String> rawNames) {
         return rawNames.stream()
-                .collect(groupingBy(name -> name, counting()));
+                .collect(Collectors.groupingBy(name -> name, Collectors.counting()));
     }
 
     private Optional<String> findDuplicatedName(Map<String, Long> nameCounts) {

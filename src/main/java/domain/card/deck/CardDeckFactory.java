@@ -1,13 +1,12 @@
 package domain.card.deck;
 
-import static java.util.stream.Collectors.toList;
-
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardDeckFactory {
     private CardDeckFactory() {
@@ -17,7 +16,7 @@ public class CardDeckFactory {
         List<Card> cards = Arrays.stream(Suit.values())
                 .map(CardDeckFactory::createCards)
                 .flatMap(List::stream)
-                .collect(toList());
+                .collect(Collectors.toList());
         Collections.shuffle(cards);
         return new CardDeck(cards);
     }
@@ -25,6 +24,6 @@ public class CardDeckFactory {
     private static List<Card> createCards(Suit suit) {
         return Arrays.stream(Denomination.values())
                 .map(denomination -> new Card(denomination, suit))
-                .collect(toList());
+                .collect(Collectors.toList());
     }
 }

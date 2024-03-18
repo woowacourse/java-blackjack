@@ -1,8 +1,5 @@
 package controller;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
 import domain.card.deck.CardDeck;
@@ -15,6 +12,7 @@ import domain.participant.name.Name;
 import domain.participant.name.Names;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import ui.InputView;
 import ui.OutputView;
 
@@ -39,7 +37,7 @@ public class BlackjackController {
         Names names = repeatUntilSuccess(() -> new Names(inputView.readPlayerNames()));
         return names.getNames().stream()
                 .map(this::generatePlayer)
-                .collect(collectingAndThen(toList(), Participants::new));
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Participants::new));
     }
 
     private Player generatePlayer(Name name) {

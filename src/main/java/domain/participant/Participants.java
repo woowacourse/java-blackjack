@@ -1,10 +1,9 @@
 package domain.participant;
 
-import static java.util.stream.Collectors.toList;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
     private final Dealer dealer;
@@ -33,6 +32,6 @@ public class Participants {
     public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
-                .collect(toList());
+                .collect(Collectors.toList());
     }
 }
