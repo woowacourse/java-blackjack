@@ -22,7 +22,6 @@ public abstract class Participant implements HitAction, CheckAction {
         cards = cards.add(card);
     }
 
-    @Override
     public boolean isNotBlackjack() {
         return !isBlackjack();
     }
@@ -32,7 +31,6 @@ public abstract class Participant implements HitAction, CheckAction {
         return cards.isBlackjack();
     }
 
-    @Override
     public boolean isNotBurst() {
         return !isBurst();
     }
