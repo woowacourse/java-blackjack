@@ -15,21 +15,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class MatchResultTest {
 
-    private static final Hand handBlackJack = new Hand(List.of(
+    private static final Hand HAND_BLACKJACK = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.ACE),
             new Card(Shape.DIAMOND, Rank.TEN)
     ));
-    private static final Hand hand22 = new Hand(List.of(
+    private static final Hand HAND_22 = new Hand(List.of(
             new Card(Shape.HEART, Rank.TEN),
             new Card(Shape.CLOVER, Rank.TEN),
             new Card(Shape.DIAMOND, Rank.TWO)
     ));
-    private static final Hand hand21 = new Hand(List.of(
+    private static final Hand HAND_21 = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.JACK),
             new Card(Shape.DIAMOND, Rank.TEN),
             new Card(Shape.HEART, Rank.ACE)
     ));
-    private static final Hand hand20 = new Hand(List.of(
+    private static final Hand HAND_20 = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.JACK),
             new Card(Shape.DIAMOND, Rank.TEN)
     ));
@@ -45,8 +45,8 @@ class MatchResultTest {
 
     static Stream<Arguments> playerWinCases() {
         return Stream.of(
-                Arguments.of(hand20, hand22),
-                Arguments.of(hand21, hand20)
+                Arguments.of(HAND_20, HAND_22),
+                Arguments.of(HAND_21, HAND_20)
         );
     }
 
@@ -61,9 +61,9 @@ class MatchResultTest {
 
     static Stream<Arguments> playerBlackJackCases() {
         return Stream.of(
-                Arguments.of(handBlackJack, hand22),
-                Arguments.of(handBlackJack, hand21),
-                Arguments.of(handBlackJack, hand20)
+                Arguments.of(HAND_BLACKJACK, HAND_22),
+                Arguments.of(HAND_BLACKJACK, HAND_21),
+                Arguments.of(HAND_BLACKJACK, HAND_20)
         );
     }
 
@@ -78,10 +78,10 @@ class MatchResultTest {
 
     static Stream<Arguments> dealerWinCases() {
         return Stream.of(
-                Arguments.of(hand22, hand20),
-                Arguments.of(hand22, hand22),
-                Arguments.of(hand20, hand21),
-                Arguments.of(hand21, handBlackJack)
+                Arguments.of(HAND_22, HAND_20),
+                Arguments.of(HAND_22, HAND_22),
+                Arguments.of(HAND_20, HAND_21),
+                Arguments.of(HAND_21, HAND_BLACKJACK)
         );
     }
 
@@ -96,9 +96,9 @@ class MatchResultTest {
 
     static Stream<Arguments> tieCases() {
         return Stream.of(
-                Arguments.of(handBlackJack, handBlackJack),
-                Arguments.of(hand21, hand21),
-                Arguments.of(hand20, hand20)
+                Arguments.of(HAND_BLACKJACK, HAND_BLACKJACK),
+                Arguments.of(HAND_21, HAND_21),
+                Arguments.of(HAND_20, HAND_20)
         );
     }
 }
