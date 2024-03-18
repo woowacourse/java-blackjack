@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Hand {
     private static final int BLACKJACK_SCORE = 21;
-    private static final int ACE_ALTERNATIVE_SCORE = 10;
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
