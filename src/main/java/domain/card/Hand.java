@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Hand {
 
+    private static final int STARTING_CARDS_AMOUNT = 2;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -29,7 +31,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return totalScore().isBlackjackScore() && cards.size() == 2;
+        return totalScore().isBlackjackScore() && cards.size() == STARTING_CARDS_AMOUNT;
     }
 
     public List<Card> getCards() {
