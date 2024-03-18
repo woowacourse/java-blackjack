@@ -10,7 +10,7 @@ public enum CardRequestFormat {
         this.format = format;
     }
 
-    public static boolean from(final String input) {
+    public static boolean from(final String  input) {
         if (YES.getFormat().equals(input)) {
             return true;
         }

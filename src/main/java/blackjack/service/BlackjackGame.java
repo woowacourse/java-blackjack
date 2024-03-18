@@ -3,121 +3,85 @@ package blackjack.service;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.Name;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.Score;
+import blackjack.domain.Score;
 import blackjack.domain.result.WinningResult;
-import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantScoreDto;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
 public class BlackjackGame {
-    private final Players players;
-    private final Dealer dealer;
+    private Deck deck;
+    private final Participants participants;
 
-    public BlackjackGame(final List<String> playersName) {
-        this.players = Players.from(playersName);
-        this.dealer = new Dealer(Deck.create());
-        divideCard();
+    public BlackjackGame(final Players players) {
+        this.participants = new Participants(players, new Dealer());
+        this.deck = Deck.empty();
     }
 
-    public void divideCard() {
-        dealer.shuffleDeck();
-        dealer.addStartCard();
+    BlackjackGame(final List<String> playersName, final Deck deck) {
+        this.participants = new Participants(Players.from(playersName), new Dealer());
+        this.deck = deck;
+    }
 
-        final int playersCardCount = players.count() * 2;
-        players.divideCard(dealer.drawCards(playersCardCount));
+    public void prepareDeck() {
+        deck = Deck.create();
+        deck.shuffle();
+    }
+
+    public void handOutCards() {
+        participants.addStartCards(deck);
     }
 
     public List<ParticipantCardsDto> getStartCards() {
-        final Map<ParticipantName, Hands> playersCard = players.getPlayerHands();
-
-        List<ParticipantCardsDto> participantCardsDtos = playersCard.entrySet().stream()
-                .map(entry -> ParticipantCardsDto.of(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
-
-        participantCardsDtos.add(ParticipantCardsDto.of(dealer.getName(), dealer.getFirstCard()));
-        return participantCardsDtos;
+        return participants.getStartCards();
     }
 
-    public boolean addCardToPlayers(final String name) {
-        if (!isPlayerAliveByName(name)) {
-            return false;
-        }
-
-        players.addCardTo(name, dealer.drawCard());
-
-        return true;
+    public void addCardToPlayer(final Player player) {
+        participants.addCardToPlayer(player, deck);
     }
 
     public int giveDealerMoreCards() {
-        int count = 0;
-
-        while (dealer.needMoreCard()) {
-            dealer.addCard();
-            count++;
-        }
-
-        return count;
+        return participants.giveDealerMoreCards(deck);
     }
 
-    public Map<ParticipantName, Hands> getHandResult() {
-        final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
-
-        final Hands dealerHands = dealer.getHands();
-
-        participantsHands.put(dealer.getName(), dealerHands);
-
-        return participantsHands;
+    public Map<Name, Hands> getPlayersHandResult() {
+        return participants.getPlayersHandResult();
     }
-    public Map<ParticipantName, Score> getScoreResult() {
-        final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
 
-        final Score dealerScore = dealer.calculate();
-
-        participantsScores.put(dealer.getName(), dealerScore);
-
-        return participantsScores;
-
+    public Map<Name, Score> getPlayersScoreResult() {
+        return participants.getPlayersScoreResult();
     }
-    public List<ParticipantScoreDto> getFinalResults() {
-        final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
-        final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
 
-        final Hands dealerHands = dealer.getHands();
-        final Score dealerScore = dealer.calculate();
-
-        participantsHands.put(dealer.getName(), dealerHands);
-        participantsScores.put(dealer.getName(), dealerScore);
-
-        return participantsHands.entrySet().stream()
-                .map(entry -> ParticipantScoreDto.of(entry.getKey(), entry.getValue(), participantsScores.get(entry.getKey())))
-                .toList();
+    public Entry<Name, Hands> getDealerHandResult() {
+        return participants.getDealerHandResult();
     }
+
+    public Score getDealerScore() {
+        return participants.getDealerScore();
+    }
+
     public WinningResult getWinningResult() {
-        return WinningResult.of(players, dealer.calculate());
+        return participants.getWinningResult();
     }
 
-    public boolean isPlayerAliveByName(final String name) {
-        return players.isNotDead(name);
+    public boolean isPlayerAlive(final Player player) {
+        return participants.isPlayerAlive(player);
     }
 
     public boolean isNotDealerBlackjack() {
-        return dealer.isNotBlackjack();
+        return participants.isDealerNotBlackjack();
     }
 
-    public List<CardDto> getCardsOf(final String name) {
-        return players.getCardsOf(name).getCards().stream()
-                .map(CardDto::from)
-                .toList();
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
     }
 
-    public List<String> getPlayersName() {
-        return players.getNames().stream()
-                .map(ParticipantName::getName)
-                .toList();
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 }

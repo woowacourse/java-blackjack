@@ -2,19 +2,23 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.result.Score;
-import blackjack.domain.result.WinStatus;
+import blackjack.domain.Name;
+import blackjack.domain.status.ParticipantScoreStatus;
+import blackjack.domain.status.WinStatus;
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
+import blackjack.dto.ParticipantCardsDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
+    private Players(final List<Player> players) {
         validateDuplicate(players);
         this.players = players;
     }
@@ -34,22 +38,23 @@ public class Players {
     }
 
     public void divideCard(final List<Card> cards) {
-        for (int i = 0; i < cards.size(); i++) {
-            Player player = players.get(i / 2);
-            player.addCard(cards.get(i));
+        for (int index = 0; index < cards.size(); index++) {
+            Player player = players.get(index / 2);
+            player.addCard(cards.get(index));
         }
     }
 
-    public void addCardTo(final String name, final Card card) {
-        final Player findedPlayer = findParticipant(name);
-        findedPlayer.addCard(card);
+    public void addCardTo(final Player player, final Card card) {
+        player.addCard(card);
     }
 
-    public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
-        final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
+    public Map<Name, WinStatus> determineWinStatus(final ParticipantScoreStatus dealerScoreStatus) {
+        final Map<Name, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Player player : players) {
-            playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate()));
+            ParticipantScoreStatus playerScoreStatus = new ParticipantScoreStatus(player.isBlackjack(),
+                    player.calculate());
+            playersWinStatus.put(player.getName(), WinStatus.of(dealerScoreStatus, playerScoreStatus));
         }
 
         return playersWinStatus;
@@ -59,42 +64,43 @@ public class Players {
         return players.size();
     }
 
-    public boolean isNotDead(final String name) {
-        final Player player = findParticipant(name);
-        return player.isNotDead();
-    }
-
-    private Player findParticipant(final String name) {
+    public Player findPlayer(final Player inputPlayer) {
         return players.stream()
-                .filter(participant -> participant.isName(name))
+                .filter(player -> player.equals(inputPlayer))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
     }
 
     public Hands getCardsOf(final String name) {
-        final Player findedPlayer = findParticipant(name);
+        final Player findedPlayer = findPlayer(new Player(name));
         return findedPlayer.getHands();
     }
 
-    public Map<ParticipantName, Hands> getPlayerHands() {
+    public List<ParticipantCardsDto> getStartCards() {
         return players.stream()
-                .collect(toMap(Player::getName,
-                        Player::getHands,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+                .map(ParticipantCardsDto::from)
+                .collect(Collectors.toList());
     }
 
-    public Map<ParticipantName, Score> getPlayerScores() {
+    public Map<Name, Hands> getPlayerHands() {
         return players.stream()
-                .collect(toMap(Player::getName,
-                        Player::calculate,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+                .collect(toMap(Player::getName, Player::getHands,
+                        (v1, v2) -> v1, LinkedHashMap::new));
     }
 
-    public List<ParticipantName> getNames() {
+    public Map<Name, Score> getPlayerScores() {
+        return players.stream()
+                .collect(toMap(Player::getName, Player::calculate,
+                        (v1, v2) -> v1, LinkedHashMap::new));
+    }
+
+    public List<Name> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

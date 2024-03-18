@@ -1,30 +1,18 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.ParticipantName;
-import blackjack.domain.participant.Players;
+import blackjack.domain.Name;
+import blackjack.domain.status.WinStatus;
 import java.util.Collections;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class WinningResult {
-    private final Map<ParticipantName, WinStatus> participantsWinStatus;
+    private final Map<Name, WinStatus> participantsWinStatus;
 
-    public WinningResult(final Map<ParticipantName, WinStatus> participantsWinStatus) {
+    public WinningResult(final Map<Name, WinStatus> participantsWinStatus) {
         this.participantsWinStatus = participantsWinStatus;
     }
 
-    public static WinningResult of(final Players players, final Score dealerScore) {
-        return new WinningResult(players.determineWinStatus(dealerScore));
-    }
-
-    public Map<WinStatus, Long> summarizeDealerResult() {
-        return participantsWinStatus.values().stream()
-                .map(WinStatus::opposite)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-    }
-
-    public Map<ParticipantName, WinStatus> getParticipantsResult() {
+    public Map<Name, WinStatus> getParticipantsResult() {
         return Collections.unmodifiableMap(participantsWinStatus);
     }
 }

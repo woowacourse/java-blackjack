@@ -7,6 +7,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,10 @@ public class Deck {
                 .collect(toCollection(LinkedHashSet::new));
 
         return new Deck(cards);
+    }
+
+    public static Deck empty() {
+        return new Deck(new HashSet<>());
     }
 
     public void shuffle() {

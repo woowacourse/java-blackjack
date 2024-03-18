@@ -3,6 +3,8 @@ package blackjack.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.dealer.Deck;
+import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -10,12 +12,14 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
     private final String kirby = "kirby";
+    private final Player playerKirby = new Player("kirby");
 
     @DisplayName("모든 참가자들이 이름을 세팅하고 플레이어는 2장씩, 딜러는 공개용 카드 1장을 가졌는지 확인한다. ")
     @Test
     void init() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
+        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
+        blackjackGame.handOutCards();
 
         // when
         List<ParticipantCardsDto> participantStartCards = blackjackGame.getStartCards();
@@ -35,62 +39,33 @@ class BlackjackGameTest {
     @Test
     void canAddCardToPlayers() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
+        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
+        blackjackGame.handOutCards();
 
         // when
-        boolean addCardAvailable = blackjackGame.addCardToPlayers(kirby);
+        blackjackGame.addCardToPlayer(playerKirby);
+        boolean playerAlive = blackjackGame.isPlayerAlive(playerKirby);
 
         // then
-        assertAll(() -> assertThat(addCardAvailable).isTrue(),
-                () -> assertThat(blackjackGame.getCardsOf(kirby)).hasSize(3));
+        assertAll(() -> assertThat(playerAlive).isTrue(),
+                () -> assertThat(blackjackGame.getPlayers().get(0).getHands().getCards()).hasSize(3));
     }
 
     @DisplayName("플레이어가 카드를 더 추가하면 안되는 때에 카드를 추가할 수 없는지 확인한다.")
     @Test
     void canNotAddCardToPlayers() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
+        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
+        blackjackGame.handOutCards();
 
         // when
         for (int i = 0; i < 20; i++) {
-            blackjackGame.addCardToPlayers(kirby);
+            blackjackGame.addCardToPlayer(playerKirby);
         }
-        boolean addCardAvailable = blackjackGame.addCardToPlayers(kirby);
+        blackjackGame.addCardToPlayer(playerKirby);
+        boolean playerAlive = blackjackGame.isPlayerAlive(playerKirby);
 
         // then
-        assertThat(addCardAvailable).isFalse();
-    }
-
-    @DisplayName("해당 이름의 플레이어가 살아있는지 확인한다.")
-    @Test
-    void isPlayerAliveByName() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
-
-        // when
-        boolean isPlayerAlive = blackjackGame.isPlayerAliveByName(kirby);
-
-        // then
-        assertThat(isPlayerAlive).isTrue();
-    }
-
-    @DisplayName("해당 이름의 플레이어가 살아있지 않는지 확인한다.")
-    @Test
-    void isPlayerNotAliveByName() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
-        for (int i = 0; i < 20; i++) {
-            blackjackGame.addCardToPlayers(kirby);
-        }
-
-        // when
-        boolean isPlayerAlive = blackjackGame.isPlayerAliveByName(kirby);
-
-        // then
-        assertThat(isPlayerAlive).isFalse();
+        assertThat(playerAlive).isFalse();
     }
 }

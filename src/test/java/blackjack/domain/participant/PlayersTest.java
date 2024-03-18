@@ -16,11 +16,10 @@ class PlayersTest {
     @Test
     void validateDuplicate() {
         // given
-        Player player = new Player("kirby");
-        List<Player> players = List.of(player, player);
+        List<String> players = List.of("kirby", "kirby");
 
         // when & then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> Players.from(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름의 참여자는 참여할 수 없습니다.");
     }
@@ -29,9 +28,7 @@ class PlayersTest {
     @Test
     void divideCard() {
         // given
-        String kirby = "kirby";
-        String pobi = "pobi";
-        Players players = new Players(List.of(new Player(kirby), new Player(pobi)));
+        Players players = Players.from(List.of("kirby", "pobi"));
         Card card1 = new Card(CardNumber.ACE, CardShape.SPADE);
         Card card2 = new Card(CardNumber.TWO, CardShape.SPADE);
         Card card3 = new Card(CardNumber.THREE, CardShape.SPADE);
@@ -43,10 +40,10 @@ class PlayersTest {
 
         // then
         assertAll(
-                () -> assertThat(players.getCardsOf(kirby).getCards())
+                () -> assertThat(players.getCardsOf("kirby").getCards())
                         .hasSize(2)
                         .containsExactly(card1, card2),
-                () -> assertThat(players.getCardsOf(pobi).getCards())
+                () -> assertThat(players.getCardsOf("pobi").getCards())
                         .hasSize(2)
                         .containsExactly(card3, card4));
     }

@@ -1,9 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.dealer.Dealer;
+import static java.util.stream.Collectors.toMap;
+
+import blackjack.domain.Name;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class InputView {
@@ -15,26 +19,13 @@ public class InputView {
         final String input = SCANNER.nextLine();
 
         validateDelimiter(input);
-        final List<String> names = Arrays.asList(input.split(DELIMITER));
-        validateDealerSignal(names);
-        return names;
+        return Arrays.asList(input.split(DELIMITER));
     }
 
     private void validateDelimiter(final String input) {
         if (input.endsWith(DELIMITER)) {
             throw new IllegalArgumentException(DELIMITER + " 로 끝날 수 없습니다.");
         }
-    }
-
-    private void validateDealerSignal(final List<String> names) {
-        if (hasDealerSignal(names)) {
-            throw new IllegalArgumentException(Dealer.DEALER_NAME + " 라는 이름을 사용할 수 없습니다.");
-        }
-    }
-
-    private boolean hasDealerSignal(final List<String> names) {
-        return names.stream()
-                .anyMatch(Dealer.DEALER_NAME::equals);
     }
 
     public boolean readNeedMoreCard(final String name) {
@@ -45,5 +36,38 @@ public class InputView {
         String input = SCANNER.nextLine();
 
         return CardRequestFormat.from(input);
+    }
+
+    public Map<String, Integer> readBettings(final List<Name> names) {
+        return names.stream()
+                .collect(toMap(Name::getName, this::readBetting,
+                        (v1, v2) -> v1, LinkedHashMap::new));
+    }
+
+    private int readBetting(final Name name) {
+        System.out.printf("%s의 배팅 금액은?", name.getName());
+        String input = SCANNER.nextLine();
+        validateBetting(input);
+
+        return Integer.parseInt(input);
+    }
+
+    private void validateBetting(final String input) {
+        validateEmpty(input);
+        validateNumeric(input);
+    }
+
+    private void validateEmpty(final String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("금액에 공백을 입력할 수 없습니다.");
+        }
+    }
+
+    private void validateNumeric(final String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("정상적인 숫자를 입력해주세요");
+        }
     }
 }

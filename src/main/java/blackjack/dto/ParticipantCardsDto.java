@@ -1,22 +1,21 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hands;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.Name;
+import blackjack.domain.participant.Player;
 import java.util.List;
 
 public record ParticipantCardsDto(String name, List<CardDto> cardDtos) {
-    public static ParticipantCardsDto of(final ParticipantName name, final Hands cards) {
-        return new ParticipantCardsDto(name.getName(), convertToCardDto(cards.getCards()));
+    public static ParticipantCardsDto from(final Player player) {
+        return new ParticipantCardsDto(player.getName().getName(), convertToCardDto(player.getHands().getCards()));
+    }
+    public static ParticipantCardsDto of(final Name name, final List<Card> cards) {
+        return new ParticipantCardsDto(name.getName(), convertToCardDto(cards));
     }
 
     private static List<CardDto> convertToCardDto(final List<Card> values) {
         return values.stream()
                 .map(CardDto::from)
                 .toList();
-    }
-
-    public static ParticipantCardsDto of(final ParticipantName name, final Card card) {
-        return new ParticipantCardsDto(name.getName(), List.of(CardDto.from(card)));
     }
 }
