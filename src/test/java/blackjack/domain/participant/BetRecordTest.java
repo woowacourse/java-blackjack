@@ -15,7 +15,7 @@ public class BetRecordTest {
     @DisplayName("베팅내역을 생성한다")
     @Test
     public void create() {
-        assertThatCode(() -> new BetRecord(Map.of(new Name("이상"), new AmountOfBet(1000))))
+        assertThatCode(() -> new BetRecord(Map.of(new Name("이상"), new BetAmount(1000))))
                 .doesNotThrowAnyException();
     }
 
@@ -24,7 +24,7 @@ public class BetRecordTest {
     public void calculateProfit() {
         Players players = Players.createInitialPlayers(List.of(new Name("이상")));
         Dealer dealer = Dealer.createInitialStateDealer();
-        BetRecord betRecord = new BetRecord(Map.of(new Name("이상"), new AmountOfBet(1000)));
+        BetRecord betRecord = new BetRecord(Map.of(new Name("이상"), new BetAmount(1000)));
 
         Deck playerDeck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         players = players.initializePlayersHands(playerDeck);

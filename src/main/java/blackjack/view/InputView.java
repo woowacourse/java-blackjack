@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.participant.AmountOfBet;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.BetRecord;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -44,12 +44,12 @@ public class InputView {
     }
 
     public BetRecord readAmountOfBet(List<Name> playerNames) {
-        Map<Name, AmountOfBet> playersBetMoney = new LinkedHashMap<>();
+        Map<Name, BetAmount> playersBetMoney = new LinkedHashMap<>();
         for (Name playerName : playerNames) {
             System.out.println(String.format(LINE_SEPARATOR + "%s의 베팅 금액은?", playerName.getName()));
             String inputBetMoney = readLine();
             Integer parsedAmountOfBet = parseToInt(inputBetMoney);
-            playersBetMoney.put(playerName, new AmountOfBet(parsedAmountOfBet));
+            playersBetMoney.put(playerName, new BetAmount(parsedAmountOfBet));
         }
         return new BetRecord(playersBetMoney);
     }

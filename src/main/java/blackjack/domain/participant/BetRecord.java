@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 public class BetRecord {
-    private final Map<Name, AmountOfBet> betRecord;
+    private final Map<Name, BetAmount> betRecord;
 
-    public BetRecord(Map<Name, AmountOfBet> betRecord) {
+    public BetRecord(Map<Name, BetAmount> betRecord) {
         this.betRecord = betRecord;
     }
 
-    public ProfitDetails calculateProfit(Players players, Dealer dealer) {
+    public ProfitRecord calculateProfit(Players players, Dealer dealer) {
         List<Player> playerList = players.getPlayers();
-        Map<Name, Profit> profitDetails = new LinkedHashMap<>();
+        Map<Name, ProfitAmount> profitDetails = new LinkedHashMap<>();
         for (Player player : playerList) {
-            AmountOfBet betAmountOfBet = betRecord.get(player.getName());
+            BetAmount betBetAmount = betRecord.get(player.getName());
             double profitRate = player.calculateProfitRate(dealer.getHand());
-            profitDetails.put(player.getName(), Profit.from(betAmountOfBet).multiplication(profitRate));
+            profitDetails.put(player.getName(), ProfitAmount.from(betBetAmount).multiplication(profitRate));
         }
-        return new ProfitDetails(profitDetails);
+        return new ProfitRecord(profitDetails);
     }
 }

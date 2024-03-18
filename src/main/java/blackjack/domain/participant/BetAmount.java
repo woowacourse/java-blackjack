@@ -2,12 +2,12 @@ package blackjack.domain.participant;
 
 import java.util.Objects;
 
-public class AmountOfBet {
+public class BetAmount {
     private static final int MIN_VALUE = 1000;
 
     private final int value;
 
-    public AmountOfBet(int value) {
+    public BetAmount(int value) {
         validateMoney(value);
         this.value = value;
     }
@@ -27,10 +27,10 @@ public class AmountOfBet {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AmountOfBet amountOfBet)) {
+        if (!(o instanceof BetAmount betAmount)) {
             return false;
         }
-        return value == amountOfBet.value;
+        return value == betAmount.value;
     }
 
     @Override

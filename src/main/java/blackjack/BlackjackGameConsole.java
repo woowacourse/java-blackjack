@@ -8,7 +8,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.ProfitDetails;
+import blackjack.domain.participant.ProfitRecord;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -23,11 +23,11 @@ public class BlackjackGameConsole {
         List<Name> playerNames = repeat(inputView::readPlayerNames);
         BetRecord betRecord = repeat(() -> inputView.readAmountOfBet(playerNames));
 
-        ProfitDetails profitDetails = playBlackjack(playerNames, betRecord);
-        outputView.printProfitDetails(profitDetails);
+        ProfitRecord profitRecord = playBlackjack(playerNames, betRecord);
+        outputView.printProfitDetails(profitRecord);
     }
 
-    private ProfitDetails playBlackjack(List<Name> playerNames, BetRecord betRecord) {
+    private ProfitRecord playBlackjack(List<Name> playerNames, BetRecord betRecord) {
         Deck deck = Deck.of(new BlackjackCardsFactory(), new RandomShuffler());
         Players players = initializePlayers(playerNames, deck);
         Dealer dealer = initializeDealer(deck);
