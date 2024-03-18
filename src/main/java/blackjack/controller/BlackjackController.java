@@ -16,9 +16,9 @@ public class BlackjackController {
             final BlackjackGame blackjackGame = new BlackjackGame();
 
             blackjackGame.initializeHand(dealer, players);
-            OutputView.printInitialHandOfEachPlayer(dealer, players);
-
             readBettingAmountAndCallBet(blackjackGame, players);
+            
+            OutputView.printInitialHandOfEachPlayer(dealer, players);
 
             givePlayersMoreCardsIfWanted(blackjackGame, players);
             giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
@@ -31,7 +31,7 @@ public class BlackjackController {
     }
 
     private static List<Player> createPlayers() {
-        final List<String> names = InputView.askPlayerNames();
+        final List<String> names = InputView.readPlayerNames();
         return names.stream()
                 .map(Player::new)
                 .toList();
@@ -45,7 +45,7 @@ public class BlackjackController {
 
     private void givePlayerMoreCardsIfWanted(final BlackjackGame blackjackGame, final Player player) {
         final String playerName = player.getName();
-        while (player.isDrawable() && InputView.askForMoreCard(playerName)) {
+        while (player.isDrawable() && InputView.readHitStandCommand(playerName)) {
             blackjackGame.giveCard(player);
             OutputView.printPlayerCard(player);
         }
@@ -67,7 +67,7 @@ public class BlackjackController {
 
     private static void readBettingAmountAndCallBet(final BlackjackGame blackjackGame, final List<Player> players) {
         for (Player player : players) {
-            final int bettingAmount = InputView.askBettingAmount(player.getName());
+            final int bettingAmount = InputView.readBettingAmount(player.getName());
             blackjackGame.bet(player, new BettingAmount(bettingAmount));
         }
     }

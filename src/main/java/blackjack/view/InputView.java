@@ -8,46 +8,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static List<String> askPlayerNames() {
-        printPlayerNamesInputMessage();
-        final String rawInput = scanner.nextLine();
-
+    public static List<String> readPlayerNames() {
+        final String rawInput = printMessageAndReadLine("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         validateNotBlank(rawInput);
-
         return List.of(rawInput.split(",", -1));
     }
 
-    public static int askBettingAmount(final String name) {
-        printBettingAmountMessage(name);
-        final String rawInput = scanner.nextLine();
-
+    public static int readBettingAmount(final String name) {
+        final String rawInput = printMessageAndReadLine(String.format("%s의 베팅 금액은?", name));
         validateNotBlank(rawInput);
         validateNumeric(rawInput);
-
         return Integer.parseInt(rawInput);
     }
 
-    public static boolean askForMoreCard(final String name) {
-        printAskingForAnotherCardMessage(name);
-        final String rawInput = scanner.nextLine();
+    public static boolean readHitStandCommand(final String name) {
+        final String rawInput = printMessageAndReadLine(
+                String.format("%s는 한장의 카드를 더 받겠습니까?(예는%s, 아니오는 %s)", name, HIT.getValue(), STAND.getValue()));
         return HitStandExpressions.mapHitStandStringToBoolean(rawInput);
-    }
-
-    private static void printPlayerNamesInputMessage() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-    }
-
-    private static void printAskingForAnotherCardMessage(final String name) {
-        printLineSeparator();
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + HIT.getValue() +
-                ", 아니오는 " + STAND.getValue() + ")");
-    }
-
-    private static void printBettingAmountMessage(String name) {
-        printLineSeparator();
-        System.out.println(String.format("%s의 배팅 금액은?", name));
     }
 
     private static void validateNotBlank(final String input) {
@@ -64,7 +44,8 @@ public class InputView {
         }
     }
 
-    private static void printLineSeparator() {
-        System.out.println();
+    private static String printMessageAndReadLine(final String inputMessage) {
+        System.out.println(LINE_SEPARATOR + inputMessage);
+        return scanner.nextLine();
     }
 }
