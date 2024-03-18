@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GameResultTest {
+public class PlayerResultTest {
     @DisplayName("플레이어가 버스트라면 플레이어의 '패'이다.")
     @Test
     void playerBustTest() {
@@ -28,8 +28,8 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.CLOVER, Rank.TWO));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.LOSE);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.LOSE);
     }
 
     @DisplayName("딜러가 블랙잭이고, 플레이어가 블랙잭이 아니라면 플레이어의 '패'이다.")
@@ -47,8 +47,8 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.DIAMOND, Rank.ACE));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.LOSE);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.LOSE);
     }
 
     @DisplayName("딜러가 블랙잭이 아니고 플레이어가 블랙잭이라면 플레이어의 '블랙잭 승'이다.")
@@ -65,8 +65,8 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.CLOVER, Rank.ACE));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.BLACKJACK_WIN);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.BLACKJACK_WIN);
     }
 
     @DisplayName("딜러가 버스트이고 플레이어가 스탠드라면 플레이어의 '승'이다.")
@@ -84,8 +84,8 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.CLOVER, Rank.JACK));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.WIN);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.WIN);
     }
 
     @DisplayName("딜러와 플레이어 둘다 블랙잭이라면 '무'이다.")
@@ -102,8 +102,8 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.CLOVER, Rank.ACE));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.DRAW);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.DRAW);
     }
 
     @DisplayName("딜러와 플레이어 둘다 스탠드이고, 플레이어의 점수가 더 높으면 '승'이다.")
@@ -120,8 +120,8 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.CLOVER, Rank.KING));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.WIN);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.WIN);
     }
 
     @DisplayName("딜러와 플레이어 둘다 스탠드이고, 점수도 같다면 '무'이다.")
@@ -138,8 +138,8 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.CLOVER, Rank.KING));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.DRAW);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.DRAW);
     }
 
     @DisplayName("딜러와 플레이어 둘다 스탠드이고, 딜러의 점수가 더 높으면 '패'이다.")
@@ -156,20 +156,20 @@ public class GameResultTest {
         player.receiveCard(new Card(Suit.CLOVER, Rank.NINE));
 
         // when & then
-        assertThat(GameResult.createPlayerResult(dealer, player))
-                .isEqualTo(GameResult.LOSE);
+        assertThat(PlayerResult.of(dealer, player))
+                .isEqualTo(PlayerResult.LOSE);
     }
 
     @DisplayName("플레이어 결과가 '블랙잭 승'인 경우 베팅 금액의 1.5배를 수익으로 얻는다.")
     @Test
     void blackjackWinProfitTest() {
         // given
-        GameResult gameResult = GameResult.BLACKJACK_WIN;
+        PlayerResult playerResult = PlayerResult.BLACKJACK_WIN;
         Betting bettingAmount = new Betting(1_000L);
         Profit profitAmount = new Profit(1_500L);
 
         // when & then
-        assertThat(gameResult.calculateProfit(bettingAmount))
+        assertThat(playerResult.calculateProfit(bettingAmount))
                 .isEqualTo(profitAmount);
     }
 
@@ -177,12 +177,12 @@ public class GameResultTest {
     @Test
     void winProfitTest() {
         // given
-        GameResult gameResult = GameResult.WIN;
+        PlayerResult playerResult = PlayerResult.WIN;
         Betting bettingAmount = new Betting(1_000L);
         Profit profitAmount = new Profit(1_000L);
 
         // when & then
-        assertThat(gameResult.calculateProfit(bettingAmount))
+        assertThat(playerResult.calculateProfit(bettingAmount))
                 .isEqualTo(profitAmount);
     }
 
@@ -190,12 +190,12 @@ public class GameResultTest {
     @Test
     void loseProfitTest() {
         // given
-        GameResult gameResult = GameResult.LOSE;
+        PlayerResult playerResult = PlayerResult.LOSE;
         Betting bettingAmount = new Betting(1_000L);
         Profit profitAmount = new Profit(-1_000L);
 
         // when & then
-        assertThat(gameResult.calculateProfit(bettingAmount))
+        assertThat(playerResult.calculateProfit(bettingAmount))
                 .isEqualTo(profitAmount);
     }
 
@@ -203,12 +203,12 @@ public class GameResultTest {
     @Test
     void drawProfitTest() {
         // given
-        GameResult gameResult = GameResult.DRAW;
+        PlayerResult playerResult = PlayerResult.DRAW;
         Betting bettingAmount = new Betting(1_000L);
         Profit profitAmount = new Profit(0L);
 
         // when & then
-        assertThat(gameResult.calculateProfit(bettingAmount))
+        assertThat(playerResult.calculateProfit(bettingAmount))
                 .isEqualTo(profitAmount);
     }
 }

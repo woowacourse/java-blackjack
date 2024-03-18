@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.state.HandState;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 public class CardHand {
     private static final int ACE_BONUS_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -48,16 +51,24 @@ public class CardHand {
         return totalScore;
     }
 
+    public boolean isState(HandState state) {
+        return state.matches(this);
+    }
+
     public boolean isBust() {
         return calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK_SCORE && cards.size() == 2;
+        return calculateScore() == BLACKJACK_SCORE && cards.size() == BLACKJACK_SIZE;
     }
 
     public boolean isStand() {
         return !isBust() && !isBlackjack();
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     @Override

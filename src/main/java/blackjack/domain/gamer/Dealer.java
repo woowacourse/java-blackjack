@@ -35,14 +35,6 @@ public class Dealer {
         return player.getScore();
     }
 
-    public boolean isBust() {
-        return player.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return player.isBlackjack();
-    }
-
     public boolean hasHitScore() {
         return player.getScore() <= MAX_HIT_SCORE;
     }

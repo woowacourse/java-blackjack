@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
+import blackjack.domain.state.HandState;
 
 import java.util.List;
 
@@ -34,20 +35,8 @@ public class Player {
         return cardHand.calculateScore();
     }
 
-    public boolean isBust() {
-        return cardHand.isBust();
-    }
-
-    public boolean isNotBust() {
-        return !isBust();
-    }
-
-    public boolean isBlackjack() {
-        return cardHand.isBlackjack();
-    }
-
-    public boolean isStand() {
-        return cardHand.isStand();
+    public boolean isState(HandState handState) {
+        return cardHand.isState(handState);
     }
 
     @Override

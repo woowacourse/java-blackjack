@@ -7,7 +7,8 @@ import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Betting;
 import blackjack.domain.money.PlayerProfits;
 import blackjack.domain.money.Profit;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.state.HandState;
 
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class BlackjackGame {
     }
 
     public boolean isHittable(Player player) {
-        return player.isNotBust();
+        return player.isState(HandState.NOT_BUST);
     }
 
     public boolean isHit(Dealer dealer) {
@@ -70,8 +71,8 @@ public class BlackjackGame {
     }
 
     private Profit calculateProfit(Dealer dealer, Player player, Betting betting) {
-        GameResult gameResult = GameResult.createPlayerResult(dealer, player);
+        PlayerResult playerResult = PlayerResult.of(dealer, player);
 
-        return gameResult.calculateProfit(betting);
+        return playerResult.calculateProfit(betting);
     }
 }
