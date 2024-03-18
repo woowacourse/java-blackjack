@@ -20,10 +20,14 @@ public final class Money {
         return new Money(value);
     }
 
-    public static Money betValueOf(int value) {
+    public static Money withBetAmount(int value) {
+        validateBetAmount(value);
+        return new Money(value);
+    }
+
+    private static void validateBetAmount(int value) {
         validateRange(value);
         validateMultiple(value);
-        return new Money(value);
     }
 
     private static void validateRange(int value) {

@@ -60,7 +60,7 @@ public class BlackjackMachine {
     private void readBetAmount(Players players, BetInfo betInfo) {
         for (Player player : players.getPlayers()) {
             int rawBetMoney = inputView.readBetAmount(player.getName());
-            Money betMoney = Money.betValueOf(rawBetMoney);
+            Money betMoney = Money.withBetAmount(rawBetMoney);
             betInfo.add(player, betMoney);
         }
     }
