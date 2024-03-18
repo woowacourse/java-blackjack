@@ -24,7 +24,7 @@ public class Players {
     }
 
     public void init(final Card first, final Card second) {
-        stream().forEach(player -> player.init(first, second));
+        value.forEach(player -> player.init(first, second));
     }
 
     private void validate(final List<Player> players) {
@@ -57,6 +57,11 @@ public class Players {
 
     private boolean hasDuplicatePlayers(final List<Player> players) {
         return Set.copyOf(players).size() != players.size();
+    }
+
+    public void automaticHit(final Dealer dealer, final DecisionOfPlayer decisionOfPlayer,
+                             final ActionAfterPlayerHit actionAfterPlayerHit) {
+        value.forEach(player -> player.automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit));
     }
 
     public Stream<Player> stream() {

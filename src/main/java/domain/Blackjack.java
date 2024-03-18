@@ -33,7 +33,7 @@ public class Blackjack {
     }
 
     public void playersHit(final DecisionOfPlayer decisionOfPlayer, final ActionAfterPlayerHit actionAfterPlayerHit) {
-        players.stream().forEach(player -> player.automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit));
+        players.automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit);
     }
 
     public void dealerHit(final ActionAfterDealerHit actionAfterDealerHit) {
