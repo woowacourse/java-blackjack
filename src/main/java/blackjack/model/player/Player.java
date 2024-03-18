@@ -1,10 +1,11 @@
 package blackjack.model.player;
 
 import blackjack.model.betting.Betting;
-import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.dealer.Dealer;
+import blackjack.vo.Card;
+import blackjack.vo.PlayerName;
 import java.util.List;
 
 public class Player {

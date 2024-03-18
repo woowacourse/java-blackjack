@@ -1,7 +1,6 @@
 package blackjack.model.cardgenerator;
 
-import blackjack.model.card.Card;
-
+import blackjack.vo.Card;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;

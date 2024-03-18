@@ -1,8 +1,8 @@
 package blackjack.model.cardgenerator;
 
-import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
+import blackjack.vo.Card;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
-import blackjack.model.betting.BettingMoney;
 import blackjack.model.dealer.Dealer;
+import blackjack.vo.BettingMoney;
 
 public enum MatchResult {
     BLACKJACK_WIN(1.5),

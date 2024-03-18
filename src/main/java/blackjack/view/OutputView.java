@@ -4,8 +4,8 @@ import blackjack.dto.DealerFinalCardsOutcome;
 import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.dto.PlayerCardsOutcome;
 import blackjack.dto.PlayerFinalCardsOutcome;
-import blackjack.model.card.Card;
-import blackjack.model.player.PlayerName;
+import blackjack.vo.Card;
+import blackjack.vo.PlayerName;
 import java.util.List;
 import java.util.stream.Collectors;
 

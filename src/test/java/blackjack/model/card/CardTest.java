@@ -2,6 +2,7 @@ package blackjack.model.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.vo.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

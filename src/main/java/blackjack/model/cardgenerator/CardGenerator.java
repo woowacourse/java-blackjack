@@ -1,6 +1,6 @@
 package blackjack.model.cardgenerator;
 
-import blackjack.model.card.Card;
+import blackjack.vo.Card;
 
 @FunctionalInterface
 public interface CardGenerator {

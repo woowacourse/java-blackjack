@@ -1,8 +1,8 @@
 package blackjack.model.dealer;
 
-import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
+import blackjack.vo.Card;
 import java.util.List;
 
 public class Dealer {
