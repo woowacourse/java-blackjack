@@ -33,7 +33,7 @@ public class Money {
         return value;
     }
 
-    public double applyRate(MoneyRate rate) {
+    public double applyRate(RewardRate rate) {
         return value * rate.get();
     }
 

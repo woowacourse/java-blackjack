@@ -39,7 +39,7 @@ public class MoneyTest {
         Money money = Money.from("5000");
 
         // when & then
-        assertThat(money.applyRate(MoneyRate.BLACKJACK))
+        assertThat(money.applyRate(RewardRate.BLACKJACK))
                 .isEqualTo(7500);
     }
 }

@@ -3,7 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.money.Money;
-import blackjack.domain.money.MoneyRate;
+import blackjack.domain.money.RewardRate;
 import blackjack.domain.money.Wallet;
 
 import java.util.List;
@@ -53,12 +53,12 @@ public class Dealer extends Gamer {
     }
 
     public Map<String, Double> calculatePlayerRevenues(Players players) {
-        Map<String, MoneyRate> rateByPlayerNames = generateRateByPlayerNames(players);
+        Map<String, RewardRate> rateByPlayerNames = generateRateByPlayerNames(players);
 
         return getGeneratePlayerRevenues(rateByPlayerNames);
     }
 
-    private Map<String, MoneyRate> generateRateByPlayerNames(Players players) {
+    private Map<String, RewardRate> generateRateByPlayerNames(Players players) {
         return players.get()
                 .stream()
                 .collect(Collectors.toMap(
@@ -67,30 +67,30 @@ public class Dealer extends Gamer {
                 ));
     }
 
-    private MoneyRate judgePlayerMoneyRate(Player player) {
+    private RewardRate judgePlayerMoneyRate(Player player) {
         if (player.isBust()) {
-            return MoneyRate.LOSE;
+            return RewardRate.LOSE;
         }
         if (player.isBlackjack()) {
-            return MoneyRate.BLACKJACK;
+            return RewardRate.BLACKJACK;
         }
         if (player.getScore() > getScore() || isBust()) {
-            return MoneyRate.WIN;
+            return RewardRate.WIN;
         }
         if (getScore() == player.getScore()) {
-            return MoneyRate.DRAW;
+            return RewardRate.DRAW;
         }
-        return MoneyRate.LOSE;
+        return RewardRate.LOSE;
     }
 
-    private Map<String, Double> getGeneratePlayerRevenues(Map<String, MoneyRate> rateByPlayerNames) {
+    private Map<String, Double> getGeneratePlayerRevenues(Map<String, RewardRate> rateByPlayerNames) {
         return wallet.get()
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue()
-                                .applyRate(rateByPlayerNames.getOrDefault(entry.getKey(), MoneyRate.DRAW))
+                                .applyRate(rateByPlayerNames.getOrDefault(entry.getKey(), RewardRate.DRAW))
                 ));
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain.money;
 
-public enum MoneyRate {
+public enum RewardRate {
     WIN(1),
     LOSE(-1),
     DRAW(0),
@@ -8,7 +8,7 @@ public enum MoneyRate {
 
     private final double rate;
 
-    MoneyRate(double rate) {
+    RewardRate(double rate) {
         this.rate = rate;
     }
 
