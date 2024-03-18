@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import participant.player.BetMoney;
+import resultJudge.GameResult;
 
 class GameResultTest {
 
@@ -18,40 +19,40 @@ class GameResultTest {
     @DisplayName("플레이어가 버스트일 경우 베팅한 금액을 잃는다.")
     @Test
     void playerBustMoneyEarnPercentage() {
-        PlayerBust playerBust = new PlayerBust();
+        double moneyReturnPercent = GameResult.PLAYER_BUST.getMoneyReturnPercent();
 
-        Assertions.assertThat(playerBust.profitMoney(betMoney)).isEqualTo(-3000);
+        Assertions.assertThat(betMoney.betMoneyResult(moneyReturnPercent)).isEqualTo(-3000);
     }
 
     @DisplayName("플레이어가 블랙잭일 경우 베팅한 금액의 1.5만큼 받는다.")
     @Test
     void playerBlackJackMoneyEarnPercentage() {
-        PlayerBlackJack playerBlackJack = new PlayerBlackJack();
+        double moneyReturnPercent = GameResult.PLAYER_BLACKJACK.getMoneyReturnPercent();
 
-        Assertions.assertThat(playerBlackJack.profitMoney(new BetMoney(3000))).isEqualTo(4500);
+        Assertions.assertThat(betMoney.betMoneyResult(moneyReturnPercent)).isEqualTo(4500);
     }
 
     @DisplayName("플레이어가 무승부일 경우 수익이 존재하지 않는다.")
     @Test
     void playerPushMoneyEarnPercentage() {
-        PlayerPush playerPush = new PlayerPush();
+        double moneyReturnPercent = GameResult.PLAYER_PUSH.getMoneyReturnPercent();
 
-        Assertions.assertThat(playerPush.profitMoney(new BetMoney(3000))).isEqualTo(0);
+        Assertions.assertThat(betMoney.betMoneyResult(moneyReturnPercent)).isEqualTo(0);
     }
 
     @DisplayName("플레이어가 이길 경우 베팅한 금액만큼 받는다.")
     @Test
     void playerWinMoneyEarnPercentage() {
-        PlayerWin playerWin = new PlayerWin();
+        double moneyReturnPercent = GameResult.PLAYER_WIN.getMoneyReturnPercent();
 
-        Assertions.assertThat(playerWin.profitMoney(new BetMoney(3000))).isEqualTo(3000);
+        Assertions.assertThat(betMoney.betMoneyResult(moneyReturnPercent)).isEqualTo(3000);
     }
 
     @DisplayName("플레이어가 질 경우 베팅한 금액만큼 잃는다.")
     @Test
     void playerLoseMoneyEarnPercentage() {
-        PlayerLose playerLose = new PlayerLose();
+        double moneyReturnPercent = GameResult.PLAYER_LOSE.getMoneyReturnPercent();
 
-        Assertions.assertThat(playerLose.profitMoney(new BetMoney(3000))).isEqualTo(-3000);
+        Assertions.assertThat(betMoney.betMoneyResult(moneyReturnPercent)).isEqualTo(-3000);
     }
 }
