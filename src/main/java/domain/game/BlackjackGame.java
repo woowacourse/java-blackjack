@@ -3,12 +3,13 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-import domain.participant.PlayerNames;
+import domain.participant.PlayerName;
 import domain.playingcard.Deck;
 import domain.playingcard.PlayingCards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -26,12 +27,12 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public static BlackjackGame init(final PlayerNames playerNames) {
-        Deck deck = Deck.init(PlayingCards.getValue());
-        List<Participant> participants = new ArrayList<>();
+    public static BlackjackGame init(final Map<PlayerName, BettingMoney> playerNameAndBettingMoney) {
+        final Deck deck = Deck.init(PlayingCards.getValue());
+        final List<Participant> participants = new ArrayList<>();
         participants.add(Dealer.init(deck));
-        IntStream.range(0, playerNames.values().size())
-                .forEach(index -> participants.add(Player.of(playerNames.values().get(index), deck)));
+        playerNameAndBettingMoney.forEach((playerName, bettingMoney) ->
+                participants.add(Player.of(playerName, bettingMoney, deck)));
 
         return new BlackjackGame(unmodifiableList(participants), deck);
     }
@@ -67,7 +68,7 @@ public class BlackjackGame {
     }
 
     public void playDealer() {
-        Dealer dealer = getDealer();
+        final Dealer dealer = getDealer();
         while (dealer.isDrawable()) {
             dealer.draw(deck);
         }

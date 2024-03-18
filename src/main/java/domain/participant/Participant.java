@@ -27,7 +27,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return hand.getTotalScore().isBustValue();
+        return hand.isBust();
     }
 
     public boolean isBlackJack() {

@@ -1,43 +1,32 @@
 package domain.participant;
 
-import domain.playingcard.PlayingCard;
-
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public record Score(int value) {
-    private static final int BLACKJACK_CONDITION_VALUE = 21;
-    private static final int ACE_ADDITIONAL_VALUE = 10;
+    private static final int MINIMUM_SCORE_VALUE = 1;
+    private static final int MAXIMUM_SCORE_VALUE = 31;
+    private static final Map<Integer, Score> cached = init();
 
-    public static Score of(final List<PlayingCard> playingCards) {
-        int totalScore = playingCards.stream()
-                .mapToInt(playingCard -> playingCard.playingCardValue().getValue())
-                .sum();
-
-        if (hasAce(playingCards) && notOverToBlackjackConditionValue(totalScore)) {
-            return new Score(totalScore + ACE_ADDITIONAL_VALUE);
+    private static Map<Integer, Score> init() {
+        final Map<Integer, Score> scores = new HashMap<>();
+        for (int score = MINIMUM_SCORE_VALUE; score <= MAXIMUM_SCORE_VALUE; score++) {
+            scores.put(score, new Score(score));
         }
 
-        return new Score(totalScore);
+        return scores;
     }
 
-    private static boolean hasAce(final List<PlayingCard> playingCards) {
-        return playingCards.stream()
-                .anyMatch(PlayingCard::isAce);
-    }
+    public static Score valueOf(final int value) {
+        if (!cached.containsKey(value)) {
+            return new Score(value);
+        }
 
-    private static boolean notOverToBlackjackConditionValue(final int totalScore) {
-        return (totalScore + ACE_ADDITIONAL_VALUE) <= BLACKJACK_CONDITION_VALUE;
+        return cached.get(value);
     }
 
     public boolean isBigger(final Score other) {
         return this.value > other.value;
     }
-
-    public boolean isBustValue() {
-        return this.value > BLACKJACK_CONDITION_VALUE;
-    }
-
-    public boolean isEqualOrLess(int target) {
-        return this.value <= target;
-    }
 }
+

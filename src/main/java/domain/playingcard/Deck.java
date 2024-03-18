@@ -1,24 +1,27 @@
 package domain.playingcard;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class Deck {
+    private static final int INIT_DRAWN_COUNT = 2;
+
     private final Queue<PlayingCard> playingCards;
 
-    Deck(final Queue<PlayingCard> playingCards) {
+    public Deck(final Queue<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 
     public static Deck init(final List<PlayingCard> playingCards) {
-        Queue<PlayingCard> queue = new LinkedList<>();
-        playingCards.forEach(queue::offer);
+        Collections.shuffle(playingCards);
 
-        Collections.shuffle((List<?>) queue);
+        return new Deck(new ArrayDeque<>(playingCards));
+    }
 
-        return new Deck(queue);
+    public List<PlayingCard> initDrawn() {
+        return IntStream.range(0, INIT_DRAWN_COUNT)
+                .mapToObj(i -> drawn())
+                .toList();
     }
 
     public PlayingCard drawn() {

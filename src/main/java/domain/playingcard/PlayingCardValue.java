@@ -1,24 +1,24 @@
 package domain.playingcard;
 
+import domain.participant.Score;
+
 public enum PlayingCardValue {
-    ACE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7),
-    EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10);
+    ACE(Score.valueOf(1)), TWO(Score.valueOf(2)), THREE(Score.valueOf(3)), FOUR(Score.valueOf(4)),
+    FIVE(Score.valueOf(5)), SIX(Score.valueOf(6)), SEVEN(Score.valueOf(7)), EIGHT(Score.valueOf(8)),
+    NINE(Score.valueOf(9)),
+    TEN(Score.valueOf(10)), JACK(Score.valueOf(10)), QUEEN(Score.valueOf(10)), KING(Score.valueOf(10));
 
-    private final int value;
+    private final Score score;
 
-    PlayingCardValue(final int value) {
-        this.value = value;
+    PlayingCardValue(final Score score) {
+        this.score = score;
     }
 
     public int getValue() {
-        return value;
+        return score.value();
     }
 
     public boolean isAce() {
         return this == ACE;
-    }
-
-    public boolean isTenValueCard() {
-        return this.value == 10;
     }
 }

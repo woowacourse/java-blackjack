@@ -1,5 +1,6 @@
 package domain.playingcard;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,9 +13,9 @@ public class PlayingCards {
     }
 
     private static List<PlayingCard> init() {
-        return Arrays.stream(PlayingCardShape.values())
+        return new ArrayList<>(Arrays.stream(PlayingCardShape.values())
                 .flatMap(playingCardShape -> generateCardByShape(playingCardShape).stream())
-                .toList();
+                .toList());
     }
 
     private static List<PlayingCard> generateCardByShape(final PlayingCardShape playingCardShape) {

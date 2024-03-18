@@ -1,13 +1,12 @@
 package view;
 
-import domain.constant.GameResult;
+import domain.game.GameResult;
 import domain.playingcard.PlayingCardShape;
 import domain.playingcard.PlayingCardValue;
 
 import java.util.Map;
 
-import static domain.constant.GameResult.LOSE;
-import static domain.constant.GameResult.WIN;
+import static domain.game.GameResult.*;
 import static domain.playingcard.PlayingCardShape.*;
 import static domain.playingcard.PlayingCardValue.*;
 import static java.util.Map.entry;
@@ -41,12 +40,13 @@ public final class OutputFormatConverter {
     }
 
     public static String convertGameResultToString(final GameResult gameResult) {
-        if (gameResult == WIN) {
+        if (gameResult == WIN || gameResult == BLACKJACK_WIN) {
             return "승";
         }
         if (gameResult == LOSE) {
             return "패";
         }
+
         return "무";
     }
 }

@@ -1,7 +1,6 @@
 package view;
 
-import domain.constant.GameResult;
-import domain.game.BlackjackGameResults;
+import domain.game.BettingResults;
 import domain.participant.PlayerName;
 import dto.DealerHandStatusDto;
 import dto.PlayerHandStatusDto;
@@ -9,8 +8,8 @@ import dto.PlayingCardDto;
 
 import java.util.List;
 
-import static domain.constant.GameResult.*;
-import static view.OutputFormatConverter.*;
+import static view.OutputFormatConverter.convertPlayingCardShapeToString;
+import static view.OutputFormatConverter.convertPlayingCardValueToString;
 
 public class OutputView {
 
@@ -29,9 +28,10 @@ public class OutputView {
     }
 
     private static String createPrintNamesMessage(final List<PlayerHandStatusDto> playerHandStatuses) {
-        List<String> playerNames = playerHandStatuses.stream()
+        final List<String> playerNames = playerHandStatuses.stream()
                 .map(playerHandStatus ->
                         playerHandStatus.playerName().value()).toList();
+
         return String.join(", ", playerNames);
     }
 
@@ -45,9 +45,10 @@ public class OutputView {
     }
 
     private static String convertPlayingCardsToPrintMessage(final List<PlayingCardDto> playerCards) {
-        List<String> list = playerCards.stream()
+        final List<String> list = playerCards.stream()
                 .map(OutputView::convertPlayingCardToPrintMessage)
                 .toList();
+
         return String.join(", ", list);
     }
 
@@ -81,25 +82,11 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final BlackjackGameResults blackjackGameResults) {
-        System.out.println("## 최종 승패");
-        List<GameResult> dealerGameResults = blackjackGameResults.dealerGameResults();
-        System.out.println("딜러: "
-                + getDealerGameResultCount(dealerGameResults, WIN) + "승 "
-                + getDealerGameResultCount(dealerGameResults, LOSE) + "패 "
-                + getDealerGameResultCount(dealerGameResults, DRAW) + "무");
-        blackjackGameResults.playerGameResults()
-                .forEach((key, value) ->
-                        System.out.println(convertPlayerGameResultToPrintMessage(key, value)));
-    }
-
-    private static int getDealerGameResultCount(final List<GameResult> dealerGameResults, final GameResult findResult) {
-        return (int) dealerGameResults.stream()
-                .filter(gameResult -> gameResult == findResult)
-                .count();
-    }
-
-    private static String convertPlayerGameResultToPrintMessage(final PlayerName playerName, final GameResult gameResult) {
-        return playerName.value() + ": " + convertGameResultToString(gameResult);
+    public static void printBettingResults(final BettingResults bettingResults) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + bettingResults.dealerRevenue());
+        bettingResults.playerRevenues()
+                .forEach((playerName, revenue) ->
+                        System.out.println(playerName.value() + ": " + revenue));
     }
 }

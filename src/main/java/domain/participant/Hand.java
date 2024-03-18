@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
 
 import java.util.ArrayList;
@@ -8,14 +9,17 @@ import java.util.List;
 import static java.util.Collections.unmodifiableList;
 
 public class Hand {
+    private static final int BLACKJACK_CONDITION_VALUE = 21;
+    private static final int ACE_ADDITIONAL_VALUE = 10;
+
     private final List<PlayingCard> playingCards;
 
     public Hand(final List<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 
-    public static Hand init() {
-        return new Hand(new ArrayList<>());
+    public static Hand init(final Deck deck) {
+        return new Hand(new ArrayList<>(deck.initDrawn()));
     }
 
     public void addCard(final PlayingCard card) {
@@ -23,18 +27,40 @@ public class Hand {
     }
 
     public Score getTotalScore() {
-        return Score.of(playingCards);
+        return Score.valueOf(countTotalScore());
+    }
+
+    private int countTotalScore() {
+        final int totalScore = playingCards.stream()
+                .mapToInt(playingCard -> playingCard.playingCardValue().getValue())
+                .sum();
+        if (hasAce(playingCards) && notOverToBlackjackConditionValue(totalScore)) {
+            return totalScore + ACE_ADDITIONAL_VALUE;
+        }
+
+        return totalScore;
+    }
+
+    private boolean hasAce(final List<PlayingCard> playingCards) {
+        return playingCards.stream()
+                .anyMatch(PlayingCard::isAce);
+    }
+
+    private boolean notOverToBlackjackConditionValue(final int totalScore) {
+        return (totalScore + ACE_ADDITIONAL_VALUE) <= BLACKJACK_CONDITION_VALUE;
     }
 
     public boolean isBlackJack() {
-        if (playingCards.size() != 2) {
-            return false;
-        }
+        return this.playingCards.size() == 2
+                && this.countTotalScore() == BLACKJACK_CONDITION_VALUE;
+    }
 
-        PlayingCard firstCard = playingCards.get(0);
-        PlayingCard secondCard = playingCards.get(1);
-        return (firstCard.isAce() && secondCard.isTenValueCard())
-                || (firstCard.isTenValueCard() || secondCard.isAce());
+    public boolean isBust() {
+        return countTotalScore() > BLACKJACK_CONDITION_VALUE;
+    }
+
+    public boolean isTotalScoreLessOrEqual(final int target) {
+        return countTotalScore() <= target;
     }
 
     public List<PlayingCard> getPlayingCards() {
