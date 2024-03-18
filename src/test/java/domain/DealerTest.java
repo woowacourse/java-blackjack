@@ -1,12 +1,13 @@
 package domain;
 
+import static domain.BetAmountFixture.betAmount10_000;
+import static domain.BetAmountFixture.betAmount15_000;
+import static domain.BetAmountFixture.betAmount20_000;
 import static domain.HandsTestFixture.sum10Size2;
+import static domain.HandsTestFixture.sum17Size3One;
 import static domain.HandsTestFixture.sum18Size2;
-import static domain.HandsTestFixture.sum20Size3;
+import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum21Size2;
-import static domain.Result.LOSE;
-import static domain.Result.TIE;
-import static domain.Result.WIN;
 
 import domain.card.CardDeck;
 import domain.participant.Dealer;
@@ -15,7 +16,6 @@ import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,11 @@ class DealerTest {
     @DisplayName("참여자에게 카드 2장을 나눠준다.")
     void dealCards() {
         //given
-        final Players players = Players.from(List.of("레디", "제제"));
+        final Player player1 = new Player(new Name("레디"), Hands.createEmptyHands(), betAmount10_000);
+        final Player player2 = new Player(new Name("제제"), Hands.createEmptyHands(), betAmount10_000);
+
+        final Players players = new Players(List.of(player1, player2));
+
         final CardDeck cardDeck = CardDeck.generate();
         final Dealer dealer = Dealer.from(cardDeck);
 
@@ -41,8 +45,8 @@ class DealerTest {
     @DisplayName("참여자의 답변이 y라면 카드를 한장 추가한다.")
     void addOneCard() {
         //given
-        final Player hitPlayer = new Player(new Name("레디"), Hands.createEmptyHands());
-        final Player stayPlayer = new Player(new Name("제제"), Hands.createEmptyHands());
+        final Player hitPlayer = new Player(new Name("레디"), Hands.createEmptyHands(), betAmount10_000);
+        final Player stayPlayer = new Player(new Name("제제"), Hands.createEmptyHands(), betAmount10_000);
 
         final Players players = new Players(List.of(hitPlayer, stayPlayer));
 
@@ -87,22 +91,19 @@ class DealerTest {
         Assertions.assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17);
     }
 
-    @DisplayName("딜러의 승패무를 판단한다.")
+    @DisplayName("딜러의 수익을 계산한다.")
     @Test
-    void dealerResult() {
+    void calculateDealerProfit() {
         // given
-        final Player loser1 = new Player(new Name("레디"), sum18Size2);
-        final Player loser2 = new Player(new Name("피케이"), sum18Size2);
-        final Player winner = new Player(new Name("제제"), sum21Size2);
-        final Player tier = new Player(new Name("브라운"), sum20Size3);
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
 
-        Players players = new Players(List.of(loser1, loser2, winner, tier));
-        Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
+        final Player blackJackPlayer = new Player(new Name("제제"), sum21Size2, betAmount10_000);
+        final Player losePlayer = new Player(new Name("레디"), sum17Size3One, betAmount20_000);
+        final Player tiePlayer = new Player(new Name("피케이"), sum20Size2, betAmount15_000);
 
-        // when
-        Map<Result, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
+        final Players players = new Players(List.of(blackJackPlayer, losePlayer, tiePlayer));
 
-        // then
-        Assertions.assertThat(dealer.calculateResultBy(players)).isEqualTo(expected);
+        // when && then
+        Assertions.assertThat(dealer.calculateProfitBy(players)).isEqualTo(new Profit(5_000));
     }
 }

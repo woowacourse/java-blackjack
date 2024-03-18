@@ -1,10 +1,8 @@
 package domain.participant;
 
 import domain.Answer;
-import domain.Result;
+import domain.Profit;
 import domain.card.CardDeck;
-import java.util.EnumMap;
-import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -46,15 +44,13 @@ public class Dealer extends Participant {
         return handsSize() - INIT_HANDS_SIZE;
     }
 
-    public Map<Result, Integer> calculateResultBy(final Players players) {
-        final Map<Result, Integer> result = new EnumMap<>(Result.class);
+    public Profit calculateProfitBy(final Players players) {
+        final long result = players.calculateProfits(this).values().stream()
+                .map(profit -> profit.getValue() * (-1))
+                .mapToLong(Long::longValue)
+                .sum();
 
-        for (Result value : players.calculateResultBy(this).values()) {
-            Result reversed = value.reverse();
-            result.put(reversed, result.getOrDefault(reversed, 0) + 1);
-        }
-
-        return result;
+        return new Profit(result);
     }
 
     @Override

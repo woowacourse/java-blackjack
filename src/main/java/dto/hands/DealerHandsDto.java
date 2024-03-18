@@ -1,4 +1,4 @@
-package dto;
+package dto.hands;
 
 import domain.participant.Dealer;
 import java.util.List;

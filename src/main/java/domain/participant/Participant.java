@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.Result;
 import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
@@ -37,10 +36,6 @@ public abstract class Participant {
         return hands.size();
     }
 
-    public Result calculateResultBy(final Participant participant) {
-        return hands.calculateResultBy(participant.getHands());
-    }
-
     public List<Card> getCards() {
         return hands.getCards();
     }
@@ -61,11 +56,11 @@ public abstract class Participant {
         if (!(target instanceof Participant participant)) {
             return false;
         }
-        return Objects.equals(name, participant.name) && Objects.equals(hands, participant.hands);
+        return Objects.equals(name, participant.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hands);
+        return Objects.hash(name);
     }
 }
