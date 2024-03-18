@@ -1,6 +1,6 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -12,27 +12,107 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
-    @DisplayName("성공: 점수가 16점이면 카드를 받을 수 있다.")
-    void receive_NoException_TotalScoreSixteen() {
-        Participant dealer = new Dealer();
-        dealer.receive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.SIX, Symbol.SPADE)
+    @DisplayName("16점에서 카드받기 시도하면 카드를 받는다")
+    void tryReceive_WhenScoreIsSixteen() {
+        Dealer dealer = Dealer.withNoCards();
+        Card newCard = Card.of(Rank.QUEEN, Symbol.DIAMOND);
+        dealer.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SIX, Symbol.SPADE)
         ));
-        assertThatCode(() -> dealer.receive(new Card(Rank.QUEEN, Symbol.DIAMOND)))
-            .doesNotThrowAnyException();
+
+        dealer.tryReceive(newCard);
+
+        assertThat(dealer.getCards()).contains(newCard);
     }
 
     @Test
-    @DisplayName("실패: 점수가 17점이면 카드를 받을 수 없다.")
-    void receive_Exception_TotalScoreSeventeen() {
-        Participant dealer = new Dealer();
-        dealer.receive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.SEVEN, Symbol.HEART)
+    @DisplayName("17점에서 카드받기 시도해도 카드를 못 받는다")
+    void tryReceive_WhenScoreIsSeventeen() {
+        Dealer dealer = Dealer.withNoCards();
+        Card newCard = Card.of(Rank.QUEEN, Symbol.DIAMOND);
+        dealer.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SEVEN, Symbol.HEART)
         ));
-        assertThatCode(() -> dealer.receive(new Card(Rank.QUEEN, Symbol.DIAMOND)))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 카드를 받을 수 없는 상태입니다.");
+
+        dealer.tryReceive(newCard);
+
+        assertThat(dealer.getCards()).doesNotContain(newCard);
     }
+
+    @Test
+    @DisplayName("총점이 22점이면 버스트이다.")
+    void isBust_True() {
+        Dealer dealer = Dealer.withNoCards();
+        dealer.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.QUEEN, Symbol.CLUB),
+            Card.of(Rank.TWO, Symbol.CLUB)
+        ));
+
+        assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("총점이 21점이면 버스트가 아니다.")
+    void isBust_False() {
+        Dealer dealer = Dealer.withNoCards();
+        dealer.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.NINE, Symbol.CLUB),
+            Card.of(Rank.TWO, Symbol.CLUB)
+        ));
+
+        assertThat(dealer.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("K, 9, 2 -> 총점 21점")
+    void score() {
+        Dealer dealer = Dealer.withNoCards();
+        dealer.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.NINE, Symbol.CLUB),
+            Card.of(Rank.TWO, Symbol.CLUB)
+        ));
+
+        assertThat(dealer.score().toInt()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("첫번째 카드 받아올 수 있다.")
+    void firstCard() {
+        Dealer dealer = Dealer.withNoCards();
+        Card card1 = Card.of(Rank.KING, Symbol.CLUB);
+        Card card2 = Card.of(Rank.NINE, Symbol.CLUB);
+        dealer.tryReceive(List.of(card1, card2));
+
+        assertThat(dealer.firstCard()).isEqualTo(card1);
+    }
+
+    @Test
+    @DisplayName("16점이면 카드 받을 수 있다.")
+    void isReceivable_True() {
+        Dealer dealer = Dealer.withNoCards();
+        dealer.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SIX, Symbol.CLUB)
+        ));
+
+        assertThat(dealer.isReceivable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("17점이면 카드 받을 수 없다.")
+    void isReceivable_False() {
+        Dealer dealer = Dealer.withNoCards();
+        dealer.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SEVEN, Symbol.CLUB)
+        ));
+
+        assertThat(dealer.isReceivable()).isFalse();
+    }
+
 }

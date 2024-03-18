@@ -1,19 +1,17 @@
 package domain.card;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public final class Score {
 
     private static final Score BLACKJACK_SCORE = new Score(21);
     private static final Score ACE_SPECIAL_SCORE = new Score(10);
+
     private static final int MINIMUM_SCORE = 0;
-    private static final int MAXIMUM_SCORE = 31;
-    private static final Map<Integer, Score> CACHE = IntStream.rangeClosed(MINIMUM_SCORE, MAXIMUM_SCORE)
-        .boxed()
-        .collect(Collectors.toMap(i -> i, Score::new));
+
+    private static final Map<Integer, Score> CACHE = new HashMap<>();
 
     private final int value;
 
@@ -23,25 +21,26 @@ public final class Score {
     }
 
     public static Score valueOf(int rawScore) {
-        if (rawScore < MINIMUM_SCORE || MAXIMUM_SCORE < rawScore) {
-            return new Score(rawScore);
+        if (CACHE.containsKey(rawScore)) {
+            return CACHE.get(rawScore);
         }
+        CACHE.put(rawScore, new Score(rawScore));
         return CACHE.get(rawScore);
     }
 
-    public static Score totalScoreOf(ParticipantCards cards) {
-        Score totalScore = initialSum(cards);
-        if (cards.hasAce()) {
+    public static Score totalScoreOf(Hand hand) {
+        Score totalScore = totalScoreWithoutAceSpecialScore(hand);
+        if (hand.hasAce()) {
             totalScore = totalScore.addAceSpecialScore(totalScore);
         }
         return totalScore;
     }
 
-    private static Score initialSum(ParticipantCards cards) {
-        return cards.getCards()
+    private static Score totalScoreWithoutAceSpecialScore(Hand hand) {
+        return hand.getCards()
             .stream()
             .map(Card::score)
-            .reduce(new Score(MINIMUM_SCORE), Score::add);
+            .reduce(Score.valueOf(0), Score::add);
     }
 
     private void validate(int value) {
@@ -50,15 +49,19 @@ public final class Score {
         }
     }
 
-    private Score addAceSpecialScore(Score previousScore) {
-        if (previousScore.add(ACE_SPECIAL_SCORE).isNotBust()) {
-            return previousScore.add(ACE_SPECIAL_SCORE);
+    private Score addAceSpecialScore(Score withoutSpecialScore) {
+        if (withoutSpecialScore.add(ACE_SPECIAL_SCORE).isNotBust()) {
+            return withoutSpecialScore.add(ACE_SPECIAL_SCORE);
         }
-        return previousScore;
+        return withoutSpecialScore;
     }
 
     public Score add(Score previousScore) {
         return new Score(value + previousScore.value);
+    }
+
+    public boolean isBlackjackScore() {
+        return this.isSameAs(BLACKJACK_SCORE);
     }
 
     public boolean isBust() {
@@ -75,6 +78,10 @@ public final class Score {
 
     public boolean isLessThan(Score other) {
         return value < other.value;
+    }
+
+    public boolean isSameAs(Score other) {
+        return value == other.value;
     }
 
     public int toInt() {

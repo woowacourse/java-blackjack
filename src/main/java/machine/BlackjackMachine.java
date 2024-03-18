@@ -1,16 +1,21 @@
 package machine;
 
-import domain.game.BlackjackGame;
-import domain.game.Result;
+import domain.betting.BetInfo;
+import domain.betting.Money;
+import domain.betting.ProfitInfo;
+import domain.card.Deck;
+import domain.game.PlayerResults;
 import domain.participant.Dealer;
-import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import strategy.RandomCardGenerator;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackMachine {
+
+    private static final int STARTING_CARDS_AMOUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -21,62 +26,102 @@ public class BlackjackMachine {
     }
 
     public void run() {
-        BlackjackGame game = initializeGame();
-        distributeStartingCards(game);
-        playPlayerTurns(game);
-        playDealerTurn(game);
-        printCardsAndScores(game);
-        printResult(game);
+        Dealer dealer = Dealer.withNoCards();
+        Deck deck = Deck.generatedBy(new RandomCardGenerator());
+        BetInfo betInfo = BetInfo.createEmpty();
+        ProfitInfo profitInfo = ProfitInfo.createEmpty();
+        PlayerResults playerResults = PlayerResults.withNoEntry();
+        Players players = makePlayers();
+
+        playGame(players, betInfo, dealer, deck, playerResults, profitInfo);
+        showResult(dealer, players, profitInfo);
     }
 
-    private void distributeStartingCards(BlackjackGame game) {
-        game.distributeStartingCards();
-        outputView.printDistributionMessage(game);
-        outputView.printStartingCardsOfAllParticipants(game);
+    private void showResult(Dealer dealer, Players players, ProfitInfo profitInfo) {
+        showCardsAndScores(dealer, players);
+        showProfits(players, profitInfo);
     }
 
-    private BlackjackGame initializeGame() {
+    private void playGame(Players players, BetInfo betInfo, Dealer dealer, Deck deck, PlayerResults playerResults,
+        ProfitInfo profitInfo) {
+        readBetAmount(players, betInfo);
+        distributeStartingCards(dealer, players, deck);
+        playPlayerTurns(players, deck);
+        playDealerTurn(dealer, deck);
+        makeResults(dealer, players, playerResults);
+        distributeMoney(players, playerResults, betInfo, profitInfo);
+    }
+
+    private Players makePlayers() {
         List<String> names = inputView.readNames();
-        return new BlackjackGame(Participants.from(names), new RandomCardGenerator());
+        return Players.withNames(names);
     }
 
-    private void playPlayerTurns(BlackjackGame game) {
-        for (Player player : game.getPlayers()) {
-            playPlayerTurn(game, player);
+    private void readBetAmount(Players players, BetInfo betInfo) {
+        for (Player player : players.getPlayers()) {
+            int rawBetMoney = inputView.readBetAmount(player.getName());
+            Money betMoney = Money.withBetAmount(rawBetMoney);
+            betInfo.add(player, betMoney);
         }
     }
 
-    private void playPlayerTurn(BlackjackGame game, Player player) {
-        while (player.isReceivable() && isHitRequested(player)) {
-            game.giveOneCard(player);
-            outputView.printNameAndCardsOfParticipant(player);
+    private void distributeStartingCards(Dealer dealer, Players players, Deck deck) {
+        dealer.tryReceive(deck.drawCards(STARTING_CARDS_AMOUNT));
+        for (Player player : players.getPlayers()) {
+            player.tryReceive(deck.drawCards(STARTING_CARDS_AMOUNT));
+        }
+        outputView.printDistributionMessage(players.getPlayers());
+        outputView.printStartingCardsOfAllParticipants(dealer, players);
+    }
+
+    private void playPlayerTurns(Players players, Deck deck) {
+        for (Player player : players.getPlayers()) {
+            playPlayerTurn(player, deck);
+        }
+    }
+
+    private void playPlayerTurn(Player player, Deck deck) {
+        while (player.isNotBust() && isHitRequested(player)) {
+            player.tryReceive(deck.drawCard());
+            outputView.printNameAndCardsOfParticipant(player.getName(), player.getCards());
         }
         if (player.isBust()) {
-            outputView.printBustMessage(player);
+            outputView.printBustMessage(player.getName());
             return;
         }
-        outputView.printNameAndCardsOfParticipant(player);
+        outputView.printNameAndCardsOfParticipant(player.getName(), player.getCards());
     }
 
     private boolean isHitRequested(Player player) {
         return inputView.readHitOrStay(player) == HitStay.HIT;
     }
 
-    private void playDealerTurn(BlackjackGame game) {
-        Dealer dealer = game.getDealer();
-        if (dealer.isReceivable()) {
-            game.giveOneCard(dealer);
+    private void playDealerTurn(Dealer dealer, Deck deck) {
+        while (dealer.isReceivable()) {
+            dealer.tryReceive(deck.drawCard());
             outputView.printDealerDrawMessage();
-            playDealerTurn(game);
         }
     }
 
-    private void printCardsAndScores(BlackjackGame game) {
-        outputView.printFinalCardsAndScoresOfAllParticipants(game);
+    private void makeResults(Dealer dealer, Players players, PlayerResults playerResults) {
+        for (Player player : players.getPlayers()) {
+            playerResults.addResultOf(player, dealer);
+        }
     }
 
-    private void printResult(BlackjackGame game) {
-        Result result = Result.of(game.getPlayers(), game.getDealer());
-        outputView.printWinLoseOfAllParticipants(game, result);
+    private void distributeMoney(Players players, PlayerResults results, BetInfo betInfo, ProfitInfo profitInfo) {
+        for (Player player : players.getPlayers()) {
+            Money money = betInfo.findBetAmountBy(player);
+            Money profitMoney = money.calculateProfit(results.resultOf(player));
+            profitInfo.add(player, profitMoney);
+        }
+    }
+
+    private void showCardsAndScores(Dealer dealer, Players players) {
+        outputView.printFinalCardsAndScoresOfAllParticipants(dealer, players);
+    }
+
+    private void showProfits(Players players, ProfitInfo profitInfo) {
+        outputView.printPlayerNamesAndProfitsOfAllParticipants(players, profitInfo);
     }
 }

@@ -1,13 +1,17 @@
 package view;
 
-import domain.game.BlackjackGame;
-import domain.game.Result;
+import domain.betting.Money;
+import domain.betting.ProfitInfo;
+import domain.card.Card;
+import domain.card.Score;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
+import domain.participant.Players;
+import java.util.List;
 
 public class OutputView {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int STARTING_CARDS_AMOUNT = 2;
 
     private final MessageResolver resolver;
@@ -16,52 +20,60 @@ public class OutputView {
         this.resolver = resolver;
     }
 
-    public void printDistributionMessage(BlackjackGame game) {
+    public void printDistributionMessage(List<Player> players) {
         System.out.printf("%n딜러와 %s에게 %d장을 나누었습니다.%n",
-            resolver.playerNamesText(game.getPlayers()),
+            resolver.playerNamesText(players),
             STARTING_CARDS_AMOUNT);
     }
 
-    public void printStartingCardsOfAllParticipants(BlackjackGame game) {
-        System.out.println(resolver.dealerNameAndStartingCardsText(game.getDealer()));
-        for (Player player : game.getPlayers()) {
-            printNameAndCardsOfParticipant(player);
+    public void printStartingCardsOfAllParticipants(Dealer dealer, Players players) {
+        System.out.println(resolver.dealerNameAndStartingCardsText(dealer));
+        for (Player player : players.getPlayers()) {
+            printNameAndCardsOfParticipant(player.getName(), player.getCards());
         }
         System.out.println();
     }
 
-    public void printNameAndCardsOfParticipant(Participant participant) {
-        System.out.println(resolver.participantNameAndCardsText(participant));
+    public void printNameAndCardsOfParticipant(String name, List<Card> cards) {
+        System.out.printf("%s 카드: %s%n", name, resolver.cardsText(cards));
     }
 
-    public void printBustMessage(Participant participant) {
-        System.out.println(participant.getName() + "님은 버스트되었습니다.");
+    public void printBustMessage(String name) {
+        System.out.printf("%s님은 버스트되었습니다.%n", name);
     }
 
     public void printDealerDrawMessage() {
-        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.THRESHOLD_SCORE);
+        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.MAX_RECEIVABLE_SCORE);
     }
 
-    public void printFinalCardsAndScoresOfAllParticipants(BlackjackGame game) {
+    public void printFinalCardsAndScoresOfAllParticipants(Dealer dealer, Players players) {
         System.out.println();
-        printFinalCardsAndScoresOfParticipant(game.getDealer());
-        for (Player player : game.getPlayers()) {
-            printFinalCardsAndScoresOfParticipant(player);
+        printFinalCardsAndScoresOfParticipant(DEALER_NAME, dealer.getCards(), dealer.score());
+        for (Player player : players.getPlayers()) {
+            printFinalCardsAndScoresOfParticipant(player.getName(), player.getCards(), player.score());
         }
         System.out.println();
     }
 
-    public void printFinalCardsAndScoresOfParticipant(Participant participant) {
+    public void printFinalCardsAndScoresOfParticipant(String name, List<Card> cards, Score score) {
         System.out.printf("%s - 결과: %s%n",
-            resolver.participantNameAndCardsText(participant),
-            resolver.scoreText(participant.score()));
+            resolver.participantNameAndCardsText(name, cards),
+            resolver.scoreText(score));
     }
 
-    public void printWinLoseOfAllParticipants(BlackjackGame game, Result result) {
-        System.out.println("## 최종 승패");
-        System.out.println(resolver.dealerResultText(game.getDealer(), result));
-        for (Player player : game.getPlayers()) {
-            System.out.println(resolver.playerResultText(player, result));
+    public void printPlayerNamesAndProfitsOfAllParticipants(Players players, ProfitInfo profitInfo) {
+        System.out.println("## 최종 결과");
+        printDealerNameAndProfit(profitInfo.calculateDealerProfit());
+        for (Player player : players.getPlayers()) {
+            printPlayerNameAndProfit(player.getName(), profitInfo.findProfitBy(player));
         }
+    }
+
+    private void printDealerNameAndProfit(Money money) {
+        System.out.printf("%s: %s%n", DEALER_NAME, resolver.moneyText(money));
+    }
+
+    private void printPlayerNameAndProfit(String name, Money money) {
+        System.out.printf("%s: %s%n", name, resolver.moneyText(money));
     }
 }

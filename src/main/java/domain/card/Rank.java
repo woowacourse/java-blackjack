@@ -14,7 +14,8 @@ public enum Rank {
     FOUR(Score.valueOf(4), "4"),
     THREE(Score.valueOf(3), "3"),
     TWO(Score.valueOf(2), "2"),
-    ACE(Score.valueOf(1), "A");
+    ACE(Score.valueOf(1), "A"),
+    ;
 
     private final Score score;
     private final String description;

@@ -1,6 +1,6 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -12,29 +12,28 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     @Test
-    @DisplayName("성공: 버스트 안 된 경우 카드 받기(경계값: 21점)")
-    void receive_NoException_NotBusted() {
-        Participant player = new Player(new Name("name"));
-        player.receive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.NINE, Symbol.HEART),
-            new Card(Rank.TWO, Symbol.SPADE)
+    @DisplayName("21점에서 카드받기 시도하면 카드가 늘어난다.")
+    void tryReceive_NotBusted() {
+        Player player = Player.withName("name");
+        player.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.NINE, Symbol.HEART),
+            Card.of(Rank.TWO, Symbol.SPADE)
         ));
-        assertThatCode(() -> player.receive(new Card(Rank.QUEEN, Symbol.DIAMOND)))
-            .doesNotThrowAnyException();
+        player.tryReceive(Card.of(Rank.KING, Symbol.HEART));
+        assertThat(player.getCards()).hasSize(4);
     }
 
     @Test
-    @DisplayName("실패: 버스트 된 경우 카드 받기(경계값: 22점)")
-    void receive_Exception_Busted() {
-        Participant player = new Player(new Name("name"));
-        player.receive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.TEN, Symbol.HEART),
-            new Card(Rank.TWO, Symbol.SPADE)
+    @DisplayName("22점에서 카드받기 시도해도 카드가 안 늘어난다.")
+    void tryReceive_Busted() {
+        Player player = Player.withName("name");
+        player.tryReceive(List.of(
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.TEN, Symbol.HEART),
+            Card.of(Rank.TWO, Symbol.SPADE)
         ));
-        assertThatCode(() -> player.receive(new Card(Rank.QUEEN, Symbol.DIAMOND)))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 카드를 받을 수 없는 상태입니다.");
+        player.tryReceive(Card.of(Rank.KING, Symbol.HEART));
+        assertThat(player.getCards()).hasSize(3);
     }
 }
