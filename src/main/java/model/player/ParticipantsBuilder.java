@@ -48,10 +48,8 @@ public class ParticipantsBuilder {
         }
     }
 
-    public ParticipantsBuilder gameMoneys(List<Integer> gameMoneys) {
-        this.gameMoneys = gameMoneys.stream()
-                .map(GameMoney::new)
-                .toList();
+    public ParticipantsBuilder gameMoneys(List<GameMoney> gameMoneys) {
+        this.gameMoneys = gameMoneys;
 
         return this;
     }

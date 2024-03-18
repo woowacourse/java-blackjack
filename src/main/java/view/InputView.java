@@ -1,5 +1,6 @@
 package view;
 
+import model.GameMoney;
 import model.player.Name;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class InputView {
         return List.of(input.split(",", -1));
     }
 
-    public Integer requestParticipantMoney(Name name) {
+    public GameMoney requestParticipantMoney(Name name) {
         System.out.println(System.lineSeparator() +
                 REQUEST_PARTICIPANT_MONEY_MESSAGE.formatted(name.getName()));
 
@@ -27,7 +28,7 @@ public class InputView {
         if (!input.matches("\\d+")) {
             throw new IllegalArgumentException("참가자의 배팅 금액은 숫자로만 이뤄져야합니다.");
         }
-        return Integer.parseInt(input);
+        return new GameMoney(Integer.parseInt(input));
     }
 
     public boolean isOneMoreCard(Name name) {
