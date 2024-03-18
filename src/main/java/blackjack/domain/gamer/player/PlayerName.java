@@ -1,4 +1,4 @@
-package blackjack.domain.gamer;
+package blackjack.domain.gamer.player;
 
 public class PlayerName {
     private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";

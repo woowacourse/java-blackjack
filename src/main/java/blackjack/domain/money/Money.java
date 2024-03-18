@@ -29,13 +29,14 @@ public class Money {
         }
     }
 
+    public double applyRate(RewardRate rate) {
+        return value * rate.get();
+    }
+
     public int get() {
         return value;
     }
 
-    public double applyRate(RewardRate rate) {
-        return value * rate.get();
-    }
 
     @Override
     public boolean equals(Object o) {

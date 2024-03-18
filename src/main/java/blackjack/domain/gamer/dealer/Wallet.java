@@ -1,4 +1,6 @@
-package blackjack.domain.money;
+package blackjack.domain.gamer.dealer;
+
+import blackjack.domain.money.Money;
 
 import java.util.HashMap;
 import java.util.Map;

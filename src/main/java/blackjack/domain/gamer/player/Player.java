@@ -1,6 +1,7 @@
-package blackjack.domain.gamer;
+package blackjack.domain.gamer.player;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.Gamer;
 
 public class Player extends Gamer {
     private final PlayerName name;

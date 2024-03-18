@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.gamer.Dealer.HIT_UPPER_BOUND;
-import static blackjack.domain.gamer.Player.DEAL_CARD_COUNT;
+import static blackjack.domain.gamer.dealer.Dealer.HIT_UPPER_BOUND;
+import static blackjack.domain.gamer.player.Player.DEAL_CARD_COUNT;
 
 public class OutputView {
     static final String LINE_SEPARATOR = System.lineSeparator();

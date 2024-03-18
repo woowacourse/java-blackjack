@@ -15,9 +15,9 @@ public abstract class Gamer {
         this.hand = new Hand(deck);
     }
 
-    abstract boolean canContinue();
+    protected abstract boolean canContinue();
 
-    abstract String getName();
+    protected abstract String getName();
 
     public void deal() {
         hand.draw(DEAL_CARD_COUNT);

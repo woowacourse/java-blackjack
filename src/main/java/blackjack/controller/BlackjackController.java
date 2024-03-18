@@ -2,9 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomShuffleStrategy;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.dealer.Dealer;
+import blackjack.domain.gamer.player.Player;
+import blackjack.domain.gamer.player.Players;
 import blackjack.domain.money.Money;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

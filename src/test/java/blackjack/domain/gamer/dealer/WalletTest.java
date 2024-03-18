@@ -1,5 +1,6 @@
-package blackjack.domain.money;
+package blackjack.domain.gamer.dealer;
 
+import blackjack.domain.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,6 @@ class WalletTest {
 
         // then
         assertThat(wallet.get())
-                .isEqualTo(Map.of("seyang", Money.from("5000"), "lemone", Money.from("7000")));
+                .containsExactlyEntriesOf(Map.of("seyang", Money.from("5000"), "lemone", Money.from("7000")));
     }
 }
