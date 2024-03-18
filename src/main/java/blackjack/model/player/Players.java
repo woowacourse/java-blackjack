@@ -57,7 +57,7 @@ public class Players {
                 .toList();
     }
 
-    public List<PlayerBettingProfitOutcome> calculateBettingProfits(final Betting betting, final Dealer dealer) {
+    public List<PlayerBettingProfitOutcome> captureBettingProfitOutcomes(final Betting betting, final Dealer dealer) {
         return players.stream()
                 .map(player -> PlayerBettingProfitOutcome.from(player, betting, dealer))
                 .toList();

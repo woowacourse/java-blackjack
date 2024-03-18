@@ -112,7 +112,8 @@ public class BlackjackGame {
     }
 
     private void showBettingProfit(final Players players, final Dealer dealer, final Betting betting) {
-        List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = players.calculateBettingProfits(betting, dealer);
+        List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes
+                = players.captureBettingProfitOutcomes(betting, dealer);
         outputView.printBettingProfit(playerBettingProfitOutcomes);
     }
 
