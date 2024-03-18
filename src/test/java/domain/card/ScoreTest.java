@@ -12,13 +12,10 @@ class ScoreTest {
     @Test
     @DisplayName("성공: 인스턴스 캐싱")
     void cache() {
-        Score cachedScore = Score.valueOf(31);
-        Score notCachedScore = Score.valueOf(32);
+        Score score1 = Score.valueOf(10);
+        Score score2 = Score.valueOf(10);
 
-        Assertions.assertAll(
-            () -> assertThat(cachedScore).isSameAs(Score.valueOf(31)),
-            () -> assertThat(notCachedScore).isNotSameAs(Score.valueOf(32))
-        );
+        assertThat(score1).isSameAs(score2);
     }
 
     @Test

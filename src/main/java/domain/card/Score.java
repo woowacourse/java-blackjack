@@ -22,19 +22,11 @@ public final class Score {
     }
 
     public static Score valueOf(int rawScore) {
-        if (CACHE.isEmpty()) {
-            cache();
-        }
         if (CACHE.containsKey(rawScore)) {
             return CACHE.get(rawScore);
         }
-        return new Score(rawScore);
-    }
-
-    private static void cache() {
-        for (int i = MINIMUM_SCORE; i <= MAXIMUM_SCORE; i++) {
-            CACHE.put(i, new Score(i));
-        }
+        CACHE.put(rawScore, new Score(rawScore));
+        return CACHE.get(rawScore);
     }
 
     public static Score totalScoreOf(Hand hand) {
