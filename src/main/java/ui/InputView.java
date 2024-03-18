@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class InputView {
     private static final String DEFAULT_DELIMITER = ",";
@@ -30,6 +31,18 @@ public class InputView {
         List<String> playerNames = Arrays.stream(input.split(DEFAULT_DELIMITER, -1))
                 .map(String::trim)
                 .toList();
+        if (playerNames.size() < 1 || playerNames.size() > 6) {
+            throw new IllegalArgumentException("이름 개수는 1 ~ 6개여야 합니다.");
+        }
+        if (playerNames.stream().anyMatch(name -> 2 > name.length() || 5 < name.length())) {
+            throw new IllegalArgumentException("이름은 2 ~ 5자 이어야 합니다.");
+        }
+        if (playerNames.stream().anyMatch(name -> name.contains(" "))) {
+            throw new IllegalArgumentException("이름에 공백이 포함되어 있습니다.");
+        }
+        if (playerNames.stream().anyMatch(name -> Pattern.compile("\\P{L}").matcher(name).find())) {
+            throw new IllegalArgumentException("이름에 특수문자와 숫자는 허용하지 않습니다.");
+        }
         validateInvalidPlayerName(playerNames);
         return playerNames;
     }
