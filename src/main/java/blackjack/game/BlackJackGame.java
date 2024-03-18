@@ -7,6 +7,7 @@ import blackjack.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -112,7 +113,7 @@ public class BlackJackGame {
         MatchResults matchResults = calculateMatchResults(dealer, players, bettingResults);
         outputView.printResultStart();
         showDealerResult(matchResults);
-        showPlayersResult(players, matchResults);
+        showPlayersResult(matchResults);
     }
 
     private MatchResults calculateMatchResults(Dealer dealer, Players players, PlayerBettingMoney bettingResults) {
@@ -127,10 +128,10 @@ public class BlackJackGame {
         outputView.printDealerResult(matchResults.getDealerResult());
     }
 
-    private void showPlayersResult(Players players, MatchResults matchResults) {
-        for (Player player : players.getPlayers()) {
-            int playerResult = matchResults.getResultOf(player);
-            outputView.printPlayerResult(player.getName(), playerResult);
+    private void showPlayersResult(MatchResults matchResults) {
+        Map<Player, Integer> results = matchResults.getResults();
+        for (Map.Entry<Player, Integer> result : results.entrySet()) {
+            outputView.printPlayerResult(result.getKey().getName(), result.getValue());
         }
     }
 }

@@ -35,4 +35,8 @@ public class MatchResults {
         }
         return dealerResult;
     }
+
+    public Map<Player, Integer> getResults() {
+        return results;
+    }
 }
