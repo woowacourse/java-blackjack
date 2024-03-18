@@ -10,6 +10,8 @@ import model.participants.player.UpdatedPlayer;
 
 public class BlackjackGame {
 
+    private static final int CARDS_SETTING_COUNTS = 2;
+
     private Dealer dealer;
     private Players players;
 
@@ -20,8 +22,8 @@ public class BlackjackGame {
 
     public void distributeCardsForSetting(Cards cards) {
         List<Card> cardsElement = cards.getCards();
-        dealer = dealer.addCards(cardsElement.subList(0, 2));
-        players = players.addCards(cardsElement.subList(2, cardsElement.size()));
+        dealer = dealer.addCards(cardsElement.subList(0, CARDS_SETTING_COUNTS));
+        players = players.addCards(cardsElement.subList(CARDS_SETTING_COUNTS, cardsElement.size()));
     }
 
     public boolean hitForPlayer(Player player, Card card) {
