@@ -1,12 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
+import blackjack.domain.BetManager;
 import blackjack.domain.GameResult;
-import blackjack.domain.Participant;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
 import blackjack.domain.Result;
+import blackjack.domain.deck.Card;
+import blackjack.domain.participant.BetMoney;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,10 +17,12 @@ public class OutputView {
     private static final String REJECT_DRAW_MESSAGE = "n";
     private static final String ASK_DRAW_MESSAGE = "는/은 한장의 카드를 더 받겠습니까?(예는 "
             + ACCEPT_DRAW_MESSAGE + ", 아니오는 " + REJECT_DRAW_MESSAGE + ")";
-
     private static final String FINAL_HANDS_AND_SCORE_FORMAT = "%s - 결과: %d";
     private static final String FINAL_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
     private static final String FINAL_RESULT_MESSAGE = System.lineSeparator() + "## 최종 승패";
+    private static final String FINAL_PROFIT_RESULT_MESSAGE = System.lineSeparator() + "## 최종 수익";
+    private static final String FINAL_PROFIT_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
+
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     private OutputView() {
@@ -40,28 +43,29 @@ public class OutputView {
     public static void printParticipantsInitialHands(Dealer dealer, Players players) {
         printDealerFirstCard(dealer);
         for (Player player : players.getPlayers()) {
-            printParticipantHands(player);
+            printPlayerHands(player);
         }
         System.out.println();
     }
 
-    public static void printParticipantHands(Participant participant) {
-        System.out.println(resolveParticipantHandsMessage(participant));
+    public static void printPlayerHands(Player player) {
+        System.out.println(resolvePlayerHandsMessage(player));
     }
 
     public static void printAskDrawMessage(String playerName) {
         System.out.println(playerName + ASK_DRAW_MESSAGE);
     }
 
-    public static void printDealerDrawMessage(Dealer dealer) {
-        System.out.println(dealer.getName() + "는 "
+    public static void printDealerDrawMessage(String name) {
+        System.out.println(System.lineSeparator() + name + "는 "
                 + DEALER_DRAW_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printFinalHandsAndScoreMessage(Dealer dealer, Players players) {
-        System.out.println(resolveFinalHandsAndScoreMessage(dealer));
+        System.out.println();
+        System.out.println(resolveDealerFinalHandsAndScoreMessage(dealer));
         for (Player player : players.getPlayers()) {
-            System.out.println(resolveFinalHandsAndScoreMessage(player));
+            System.out.println(resolvePlayerFinalHandsAndScoreMessage(player));
         }
     }
 
@@ -71,10 +75,20 @@ public class OutputView {
         printPlayerGameResult(gameResult.getGameResult());
     }
 
+    public static void printProfitResult(Dealer dealer, Players players, GameResult gameResult, BetManager betManager) {
+        System.out.println(FINAL_PROFIT_RESULT_MESSAGE);
+        System.out.printf(FINAL_PROFIT_RESULT_FORMAT, dealer.getName(), gameResult.calculateDealerProfit(betManager));
+        for (Player player : players.getPlayers()) {
+            BetMoney betMoney = betManager.findPlayerBetMoney(player);
+            System.out.printf(FINAL_PROFIT_RESULT_FORMAT, player.getName(),
+                    gameResult.calculatePlayerProfit(player, betMoney));
+        }
+    }
+
     private static String resolvePlayerNamesMessage(Players players) {
         return players.getPlayers()
                 .stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .collect(Collectors.joining(","));
     }
 
@@ -84,10 +98,16 @@ public class OutputView {
                 + dealer.getFirstCardName());
     }
 
-    private static String resolveFinalHandsAndScoreMessage(Participant participant) {
+    private static String resolvePlayerFinalHandsAndScoreMessage(Player player) {
         return String.format(FINAL_HANDS_AND_SCORE_FORMAT
-                , resolveParticipantHandsMessage(participant)
-                , participant.getHandsScore());
+                , resolvePlayerHandsMessage(player)
+                , player.findHandsScore());
+    }
+
+    private static String resolveDealerFinalHandsAndScoreMessage(Dealer dealer) {
+        return String.format(FINAL_HANDS_AND_SCORE_FORMAT
+                , resolveDealerHandsMessage(dealer)
+                , dealer.findHandsScore());
     }
 
     private static void printDealerGameResult(Dealer dealer, GameResult gameResult) {
@@ -106,17 +126,23 @@ public class OutputView {
     }
 
     private static String resolveDealerResultMessage(GameResult gameResult, Result result) {
-        long cnt = gameResult.getTargetResultCount(Result.reverseResult(result));
+        long cnt = gameResult.findTargetResultCount(Result.reverseResult(result));
         if (cnt == 0) {
             return "";
         }
         return cnt + result.getResult() + " ";
     }
 
-    private static String resolveParticipantHandsMessage(Participant participant) {
-        return participant.getName()
+    private static String resolvePlayerHandsMessage(Player player) {
+        return player.getName()
                 + "카드: "
-                + resolveHandsMessage(participant.getHandsCards());
+                + resolveHandsMessage(player.getHandsCards());
+    }
+
+    private static String resolveDealerHandsMessage(Dealer dealer) {
+        return dealer.getName()
+                + "카드: "
+                + resolveHandsMessage(dealer.getHandsCards());
     }
 
     private static String resolveHandsMessage(List<Card> hands) {

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +19,8 @@ public class InputView {
                 .split(NAME_DELIMITER));
     }
 
-    public static Boolean askDraw() {
+    public static Boolean askDraw(Player player) {
+        OutputView.printAskDrawMessage(player.getName());
         String answer = scanner.nextLine()
                 .toLowerCase();
         if (ACCEPT_DRAW_MESSAGE.equals(answer)) {
@@ -29,5 +31,16 @@ public class InputView {
         }
         throw new IllegalArgumentException("대답은 " + ACCEPT_DRAW_MESSAGE + " 혹은 "
                 + REJECT_DRAW_MESSAGE + "만 가능합니다");
+    }
+
+    public static int readBetMoney(String playerName) {
+        System.out.println(System.lineSeparator() + playerName + "의 배팅 금액은?");
+        String line = scanner.nextLine();
+        try {
+            Integer.parseInt(line);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자를 입력해야합니다.");
+        }
+        return Integer.parseInt(line);
     }
 }
