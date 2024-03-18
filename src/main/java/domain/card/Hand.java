@@ -30,6 +30,14 @@ public class Hand {
             .anyMatch(card -> card.rank() == Rank.ACE);
     }
 
+    public boolean isBust() {
+        return totalScore().isBust();
+    }
+
+    public boolean isNotBust() {
+        return totalScore().isNotBust();
+    }
+
     public boolean isBlackjack() {
         return totalScore().isBlackjackScore() && cards.size() == STARTING_CARDS_AMOUNT;
     }

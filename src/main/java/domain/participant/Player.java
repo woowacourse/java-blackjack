@@ -7,8 +7,6 @@ import java.util.List;
 
 public class Player {
 
-    private static final int BLACKJACK_SCORE = 21;
-
     private final Name name;
     private final Hand hand;
 
@@ -22,23 +20,23 @@ public class Player {
     }
 
     public void tryReceive(Card card) {
-        if (score().toInt() <= BLACKJACK_SCORE) {
+        if (isNotBust()) {
             hand.add(card);
         }
     }
 
     public void tryReceive(List<Card> cards) {
-        if (score().toInt() <= BLACKJACK_SCORE) {
+        if (isNotBust()) {
             hand.add(cards);
         }
     }
 
     public boolean isBust() {
-        return score().isBust();
+        return hand.isBust();
     }
 
     public boolean isNotBust() {
-        return score().isNotBust();
+        return hand.isNotBust();
     }
 
     public boolean isBlackjack() {
