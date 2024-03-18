@@ -1,25 +1,28 @@
 package domain.card;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.*;
 
 public class Deck {
 
+    public static final int DECK_TOP = 0;
     private final List<Card> deck;
-    private final DrawStrategy strategy;
 
-    public Deck(DrawStrategy strategy) {
-        this.deck = createDeck();
-        this.strategy = strategy;
+    public Deck() {
+        this.deck = new ArrayList<>();
+        createDeck();
     }
 
-    private List<Card> createDeck() {
-        return IntStream.range(1, 14)
-                .boxed()
-                .flatMap(cardNumber -> IntStream.range(0, 4)
-                        .mapToObj(index -> new Card(cardNumber, Shape.getShapeByIndex(index))))
-                .collect(Collectors.toList());
+    private void createDeck() {
+        for (CardNumber value : CardNumber.values()) {
+            createCardByNumberAndShape(value);
+        }
+        Collections.shuffle(deck);
+    }
+
+    private void createCardByNumberAndShape(CardNumber value) {
+        for (Shape shape : Shape.values()) {
+            deck.add(new Card(value.getValue(), shape));
+        }
     }
 
     public List<Card> drawInitialHands() {
@@ -27,9 +30,31 @@ public class Deck {
     }
 
     public Card draw() {
-        int randomNumber = strategy.generateNumber(deck.size());
-        Card card = deck.get(randomNumber);
-        deck.remove(randomNumber);
+        if (deck.isEmpty()) {
+            throw new NoSuchElementException("덱에 남아있는 카드가 없습니다.");
+        }
+        Card card = deck.get(DECK_TOP);
+        deck.remove(DECK_TOP);
         return card;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Deck deck1 = (Deck) o;
+        return Objects.equals(deck, deck1.deck);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deck);
+    }
+
+    @Override
+    public String toString() {
+        return "Deck{" +
+                "deck=" + deck +
+                '}';
     }
 }

@@ -2,23 +2,20 @@ package domain.card;
 
 public enum Shape {
 
-    SPADE("스페이드"),
-    DIAMONDS("다이아몬드"),
-    HEART("하트"),
-    CLUB("클로버");
+    SPADE("스페이드"), DIAMONDS("다이아몬드"), HEART("하트"), CLUB("클로버");
 
-    private final String shape;
+    private final String value;
 
-    Shape(String shape) {
-        this.shape = shape;
+    Shape(String value) {
+        this.value = value;
     }
 
-    public static Shape getShapeByIndex(int random) {
-        Shape[] values = values();
-        return values[random];
+    public String getValue() {
+        return value;
     }
 
-    public String getShape() {
-        return shape;
+    @Override
+    public String toString() {
+        return "Shape{" + "shape='" + value + '\'' + '}';
     }
 }

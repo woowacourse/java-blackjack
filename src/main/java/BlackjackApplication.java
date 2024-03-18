@@ -1,9 +1,9 @@
-import manager.Casino;
+import manager.BlackjackGameManager;
 
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        Casino casino = new Casino();
-        casino.run();
+        BlackjackGameManager blackjackGameManager = new BlackjackGameManager();
+        blackjackGameManager.run();
     }
 }

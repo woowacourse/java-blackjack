@@ -1,86 +1,85 @@
 package view;
 
-import domain.Name;
-import domain.card.Cards;
-import domain.card.DealerCards;
-import domain.card.PlayerCards;
-import domain.score.Score;
-import domain.score.ScoreBoard;
-import domain.score.Status;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.result.Income;
 
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 
 public class OutputView {
 
-    public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public static void printInitialCards(Dealer dealer, List<Player> playerCards) {
         List<String> names = playerCards.stream()
-                .map(playerCard -> playerCard.getPlayerName().toString())
+                .map(playerCard -> playerCard.getPlayerName().asString())
                 .toList();
 
-        System.out.println();
-        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
+        printCardDivide(names);
 
-        String firstCard = dealerCards.getFirstCard();
-        System.out.print("딜러: " + firstCard);
+        printDealerFirstCard(dealer);
 
-        for (PlayerCards playerCard : playerCards) {
-            System.out.println();
-            printPlayerCards(playerCard);
-        }
+        printPlayersCards(playerCards);
         System.out.println();
     }
 
-    public void printPlayerCards(PlayerCards cards) {
+    private static void printPlayersCards(List<Player> playerCards) {
+        for (Player playerCard : playerCards) {
+            printPlayerCards(playerCard);
+            System.out.println();
+        }
+    }
+
+    private static void printDealerFirstCard(Dealer dealer) {
+        String firstCard = dealer.getFirstCard().asString();
+        System.out.println("딜러: " + firstCard);
+    }
+
+    private static void printCardDivide(List<String> names) {
+        System.out.println();
+        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
+    }
+
+    public static void printPlayerCards(Player cards) {
         Name playerName = cards.getPlayerName();
-        System.out.print(playerName + "카드: ");
+        System.out.print(playerName.asString() + "카드: ");
         System.out.print(formatCards(cards));
     }
 
-    private String formatCards(Cards playerCard) {
-        List<String> cards = playerCard.getCards();
+    private static String formatCards(Participant participant) {
+        List<String> cards = participant.getCards();
         return String.join(", ", cards);
     }
 
-    public void printResults(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public static void printResults(Dealer dealer, List<Player> playerCards) {
         System.out.println();
-        printDealerCards(dealerCards);
-        printSumOfCards(dealerCards);
-        for (PlayerCards playerCard : playerCards) {
+        printDealerCards(dealer);
+        printSumOfCards(dealer);
+        for (Player playerCard : playerCards) {
             printPlayerCards(playerCard);
             printSumOfCards(playerCard);
         }
     }
 
-    private void printDealerCards(DealerCards cards) {
+    private static void printDealerCards(Dealer cards) {
         System.out.print("딜러 카드: ");
         System.out.print(formatCards(cards));
     }
 
-    private void printSumOfCards(Cards cards) {
-        System.out.println(" - 결과: " + cards.bestSum());
+    private static void printSumOfCards(Participant participant) {
+        System.out.println(" - 결과: " + participant.bestSumOfCardScore());
     }
 
-    public void printScores(ScoreBoard scoreBoard) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
-        Score dealerScore = scoreBoard.getDealerScore();
-
-        StringJoiner stringJoiner = new StringJoiner(" ");
-        for (Status status : Status.values()) {
-            String score = dealerScore.getScore(status) + status.getStatus();
-            stringJoiner.add(score);
-        }
-        System.out.println(stringJoiner);
-
-        Map<Name, Status> playerStatus = scoreBoard.getPlayerScore();
-        playerStatus.forEach((name, status) -> System.out.println(name + ": " + status.getStatus()));
-    }
-
-    public void printDealerGivenCard() {
+    public static void printDealerGivenCard() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printIncomes(int dealerIncome, Map<Player, Income> playersIncomes) {
+        System.out.println();
+        System.out.println("최종 수익");
+        System.out.println("딜러: " + dealerIncome);
+        playersIncomes.forEach((key, value) -> System.out.println(key.getPlayerName().asString() + ": " + value.getValue()));
     }
 }
