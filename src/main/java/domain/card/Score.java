@@ -10,7 +10,6 @@ public final class Score {
     private static final Score ACE_SPECIAL_SCORE = new Score(10);
 
     private static final int MINIMUM_SCORE = 0;
-    private static final int MAXIMUM_SCORE = 31;
 
     private static final Map<Integer, Score> CACHE = new HashMap<>();
 
