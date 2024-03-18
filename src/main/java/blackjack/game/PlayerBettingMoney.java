@@ -17,4 +17,8 @@ public class PlayerBettingMoney {
         }
         return bettingMoney.get(player);
     }
+
+    public Map<Player, Money> getBettingMoney() {
+        return bettingMoney;
+    }
 }

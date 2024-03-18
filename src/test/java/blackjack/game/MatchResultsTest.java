@@ -6,9 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.card.Card;
 import blackjack.card.Rank;
 import blackjack.card.Shape;
+import blackjack.player.Dealer;
 import blackjack.player.Hand;
 import blackjack.player.Player;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,17 +22,20 @@ class MatchResultsTest {
             new Card(Shape.DIAMOND, Rank.TEN),
             new Card(Shape.HEART, Rank.TEN
             )));
+    private final Dealer dealer = new Dealer(dealerHand);
     private final Hand playerHand = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.TEN),
             new Card(Shape.DIAMOND, Rank.FIVE
             )));
     private final Player player = new Player("atto", playerHand);
-    private final MatchResults matchResults = new MatchResults(dealerHand);
     private final Money money = new Money(10000);
+    private MatchResults matchResults;
 
     @BeforeEach
     void beforeEach() {
-        matchResults.addResult(player, money);
+        Map<Player, Money> playerBettingResult = new HashMap<>();
+        playerBettingResult.put(player, money);
+        matchResults = new MatchResults(dealer, playerBettingResult);
     }
 
     @Test

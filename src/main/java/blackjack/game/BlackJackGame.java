@@ -30,7 +30,7 @@ public class BlackJackGame {
         proceedDealerTurn(deck, dealer);
 
         showCardsWithScore(dealer, players);
-        showMatchResult(dealer, players, playerBettingMoney);
+        showMatchResult(dealer, playerBettingMoney);
     }
 
     private Players createPlayers() {
@@ -112,19 +112,15 @@ public class BlackJackGame {
         outputView.printNewLine();
     }
 
-    private void showMatchResult(Dealer dealer, Players players, PlayerBettingMoney bettingResults) {
-        MatchResults matchResults = calculateMatchResults(dealer, players, bettingResults);
+    private void showMatchResult(Dealer dealer, PlayerBettingMoney bettingResults) {
+        MatchResults matchResults = calculateMatchResults(dealer, bettingResults);
         outputView.printResultStart();
         showDealerResult(matchResults);
         showPlayersResult(matchResults);
     }
 
-    private MatchResults calculateMatchResults(Dealer dealer, Players players, PlayerBettingMoney bettingResults) {
-        MatchResults matchResults = new MatchResults(dealer.getHand());
-        for (Player player : players.getPlayers()) {
-            matchResults.addResult(player, bettingResults.getBettingAmountOf(player));
-        }
-        return matchResults;
+    private MatchResults calculateMatchResults(Dealer dealer, PlayerBettingMoney bettingResults) {
+        return new MatchResults(dealer, bettingResults.getBettingMoney());
     }
 
     private void showDealerResult(MatchResults matchResults) {

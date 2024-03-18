@@ -1,24 +1,26 @@
 package blackjack.game;
 
-import blackjack.player.Hand;
+import blackjack.player.Dealer;
 import blackjack.player.Player;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MatchResults {
 
-    private final Hand dealerHand;
     private final Map<Player, Integer> results;
 
-    public MatchResults(Hand dealerHand) {
-        this.dealerHand = dealerHand;
-        this.results = new HashMap<>();
+    public MatchResults(Dealer dealer, Map<Player, Money> playerBettingMoney) {
+        Map<Player, Integer> results = new HashMap<>();
+        for (Map.Entry<Player, Money> bettingMoney : playerBettingMoney.entrySet()) {
+            int prizeMoney = calculatePrizeMoney(dealer, bettingMoney.getKey(), bettingMoney.getValue());
+            results.put(bettingMoney.getKey(), prizeMoney);
+        }
+        this.results = Map.copyOf(results);
     }
 
-    public void addResult(Player player, Money money) {
-        double rateOfPrize = MatchResult.calculateRateOfPrize(player.getHand(), dealerHand);
-        int prizeMoney = (int) (money.getMoney() * rateOfPrize);
-        results.put(player, prizeMoney);
+    private int calculatePrizeMoney(Dealer dealer, Player player, Money money) {
+        double rateOfPrize = MatchResult.calculateRateOfPrize(player.getHand(), dealer.getHand());
+        return (int) (money.getMoney() * rateOfPrize);
     }
 
     public int getResultOf(Player player) {
