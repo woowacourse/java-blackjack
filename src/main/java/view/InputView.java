@@ -33,13 +33,6 @@ public class InputView {
     public boolean isOneMoreCard(Name name) {
         System.out.println(REQUEST_ONE_MORE_CARD_MESSAGE.formatted(name.getName()));
 
-        String input = in.nextLine();
-        if (Command.YES.compareTo(input)) {
-            return true;
-        }
-        if (Command.NO.compareTo(input)) {
-            return false;
-        }
-        throw new IllegalArgumentException("y/n 만 입력할 수 있습니다.");
+        return Command.compareToString(in.nextLine());
     }
 }
