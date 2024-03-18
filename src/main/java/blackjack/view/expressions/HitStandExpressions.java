@@ -1,29 +1,30 @@
 package blackjack.view.expressions;
 
+import java.util.Arrays;
+
 public enum HitStandExpressions {
-    HIT("y"),
-    STAND("n"),
+    HIT("y", true),
+    STAND("n", false),
     ;
 
-    private final String message;
+    private final String value;
+    private final boolean isHit;
 
-    HitStandExpressions(final String message) {
-        this.message = message;
+    HitStandExpressions(String value, boolean isHit) {
+        this.value = value;
+        this.isHit = isHit;
     }
 
-    public static boolean isDrawable(final String choice) {
-        if (HIT.message.equals(choice)) {
-            return true;
-        }
-        if (STAND.message.equals(choice)) {
-            return false;
-        }
-
-        final String errorMessage = String.format("%s 또는 %s 만 입력할 수 있습니다.", HIT.message, STAND.message);
-        throw new IllegalArgumentException(errorMessage);
+    public static boolean mapHitStandStringToBoolean(final String inputMessage) {
+        return Arrays.stream(values())
+                .filter(hitStandExpression -> hitStandExpression.value.equals(inputMessage))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("[ERROR] %s 또는 %s 만 입력할 수 있습니다.", HIT.value, STAND.value)))
+                .isHit;
     }
 
-    public String getMessage() {
-        return message;
+    public String getValue() {
+        return value;
     }
 }

@@ -19,12 +19,6 @@ public class InputView {
         return List.of(rawInput.split(",", -1));
     }
 
-    public static boolean askForMoreCard(final String name) {
-        printAskingForAnotherCardMessage(name);
-        final String rawInput = scanner.nextLine();
-        return HitStandExpressions.isDrawable(rawInput);   // TODO: 네이밍 변경
-    }
-
     public static int askBettingAmount(final String name) {
         printBettingAmountMessage(name);
         final String rawInput = scanner.nextLine();
@@ -35,14 +29,20 @@ public class InputView {
         return Integer.parseInt(rawInput);
     }
 
+    public static boolean askForMoreCard(final String name) {
+        printAskingForAnotherCardMessage(name);
+        final String rawInput = scanner.nextLine();
+        return HitStandExpressions.mapHitStandStringToBoolean(rawInput);
+    }
+
     private static void printPlayerNamesInputMessage() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
     private static void printAskingForAnotherCardMessage(final String name) {
         printLineSeparator();
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + HIT.getMessage() +
-                ", 아니오는 " + STAND.getMessage() + ")");
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 " + HIT.getValue() +
+                ", 아니오는 " + STAND.getValue() + ")");
     }
 
     private static void printBettingAmountMessage(String name) {
