@@ -7,7 +7,4 @@ public enum CardSuit {
     CLUB,
     SPADE,
     ;
-
-    CardSuit() {
-    }
 }
