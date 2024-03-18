@@ -1,6 +1,7 @@
 package domain;
 
 import domain.constant.GamerResult;
+import domain.dto.HandStatus;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;

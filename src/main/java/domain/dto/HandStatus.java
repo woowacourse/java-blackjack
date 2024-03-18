@@ -1,4 +1,4 @@
-package domain;
+package domain.dto;
 
 public record HandStatus(
         int score,

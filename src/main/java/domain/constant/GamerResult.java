@@ -1,6 +1,6 @@
 package domain.constant;
 
-import domain.HandStatus;
+import domain.dto.HandStatus;
 
 public enum GamerResult {
     WIN(1),

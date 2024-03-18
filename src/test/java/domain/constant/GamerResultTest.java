@@ -5,7 +5,7 @@ import static domain.constant.GamerResult.DRAW;
 import static domain.constant.GamerResult.LOSE;
 import static domain.constant.GamerResult.WIN;
 
-import domain.HandStatus;
+import domain.dto.HandStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
