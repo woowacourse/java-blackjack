@@ -47,7 +47,7 @@ public class BlackjackGameConsole {
 
     private Dealer initializeDealer(Deck deck) {
         Dealer dealer = Dealer.createInitialStateDealer();
-        return dealer.draw(deck);
+        return dealer.takeFirstHand(deck);
     }
 
     private Players proceedPlayersTurn(Players players, Deck deck) {

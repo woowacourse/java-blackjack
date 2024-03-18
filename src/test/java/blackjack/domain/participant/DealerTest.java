@@ -118,4 +118,16 @@ public class DealerTest {
 
         assertThat(visibleCards).isEqualTo(List.of(CardFixture.fromSuitCloverWith(Denomination.SEVEN)));
     }
+
+    @DisplayName("초기 상태에서 처음 핸드를 드로우하면 핸드에 2장이 들어온다")
+    @Test
+    public void whenTakeFirstHandThenTwoCardsInHand() {
+        Dealer dealer = Dealer.createInitialStateDealer();
+        Deck deck = Deck.of(() -> List.of(CardFixture.fromSuitCloverWith(Denomination.TWO),
+                CardFixture.fromSuitCloverWith(Denomination.FIVE)), cards -> cards);
+
+        dealer = dealer.takeFirstHand(deck);
+
+        assertThat(dealer.getHand().getCards().size()).isEqualTo(2);
+    }
 }

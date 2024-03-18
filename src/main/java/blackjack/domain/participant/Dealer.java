@@ -31,6 +31,10 @@ public class Dealer extends Participant {
         return new Dealer(getName(), standHand());
     }
 
+    public Dealer takeFirstHand(Deck deck) {
+        return draw(deck);
+    }
+
     public Dealer decideHitOrStand(Deck deck) {
         if (canDraw()) {
             return draw(deck);
