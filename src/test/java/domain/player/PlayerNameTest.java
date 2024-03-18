@@ -1,6 +1,6 @@
 package domain.player;
 
-import static domain.player.Name.NAME_LENGTH_MESSAGE;
+import static domain.player.PlayerName.NAME_LENGTH_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -8,13 +8,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class NameTest {
+class PlayerNameTest {
 
     @DisplayName("참가자의 이름은 1글자 이상 5글자 이하이다.")
     @ParameterizedTest
     @ValueSource(strings = {"a", "abcde"})
     void createSuccess(String input) {
-        assertThatCode(() -> new Name(input))
+        assertThatCode(() -> new PlayerName(input))
                 .doesNotThrowAnyException();
     }
 
@@ -22,7 +22,7 @@ class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "abcdef"})
     void validateLength(String input) {
-        assertThatThrownBy(() -> new Name(input))
+        assertThatThrownBy(() -> new PlayerName(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(NAME_LENGTH_MESSAGE);
     }

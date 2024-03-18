@@ -44,4 +44,14 @@ class HandTest {
 
         assertThat(actual1).isEqualTo(1);
     }
+
+    @DisplayName("손 패의 장수를 반환한다.")
+    @Test
+    void size() {
+        List<Card> hasAceCard = List.of(ACE_HEARTS, TEN_HEARTS, TWO_HEARTS);
+        Hand hasAceHand = new Hand(hasAceCard);
+        int actual1 = hasAceHand.size();
+
+        assertThat(actual1).isEqualTo(3);
+    }
 }

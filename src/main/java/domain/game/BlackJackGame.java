@@ -1,32 +1,34 @@
 package domain.game;
 
+import domain.betting.Bets;
+import domain.betting.Money;
 import domain.player.Dealer;
-import domain.player.Name;
 import domain.player.Player;
+import domain.player.PlayerName;
 import domain.player.PlayerNames;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackJackGame {
 
     private final List<Player> players = new ArrayList<>();
     private final Dealer dealer;
 
-    public BlackJackGame(PlayerNames playerNames, Dealer dealer) {
+    public BlackJackGame(final PlayerNames playerNames, final Dealer dealer) {
         this.dealer = dealer;
 
-        List<String> names = playerNames.names();
-        for (String name : names) {
-            Name Playername = new Name(name);
-            Player player = new Player(Playername, dealer.dealHand());
+        playerNames.names().forEach(name -> {
+            Player player = new Player(name, dealer.dealHand());
             this.players.add(player);
-        }
+        });
     }
 
-    public void hitPlayer(Player targetPlayer) {
+    public void hitPlayer(final Player targetPlayer) {
         if (targetPlayer.isHittable()) {
             targetPlayer.hit(dealer.dealCard());
         }
@@ -40,19 +42,43 @@ public class BlackJackGame {
         return false;
     }
 
-    public Map<Player, Result> getGameResults() {
+    public Map<Player, Money> getProfits(final Bets bets) {
+        Map<Player, Money> playerProfits = new LinkedHashMap<>();
+        Map<Player, Result> playerResults = getGameResults();
+
+        playerResults.forEach((player, result) -> {
+                    double rate = result.getProfitRate();
+                    PlayerName playerName = player.getName();
+                    playerProfits.put(player, bets.get(playerName).multiply(rate));
+                }
+        );
+
+        return playerProfits;
+    }
+
+    private Map<Player, Result> getGameResults() {
         Map<Player, Result> results = new LinkedHashMap<>();
-        for (Player player : players) {
-            results.put(player, Result.of(dealer, player));
-        }
+
+        players.forEach(player ->
+                results.put(player, Result.of(dealer, player))
+        );
         return results;
+    }
+
+    public Entry<Player, Integer> getDealerProfit(final Bets bets) {
+        int playerProfitsSum = getProfits(bets).values().stream().
+                mapToInt(Money::getValue)
+                .sum();
+        return Map.entry(dealer, playerProfitsSum * -1);
     }
 
     public Map<Player, Score> getScores() {
         Map<Player, Score> scores = new LinkedHashMap<>();
-        for (Player player : getEveryParticipants()) {
-            scores.put(player, player.getTotalScore());
-        }
+
+        getEveryParticipants().forEach(player ->
+                scores.put(player, player.getScore())
+        );
+
         return scores;
     }
 
@@ -63,7 +89,7 @@ public class BlackJackGame {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 
 }

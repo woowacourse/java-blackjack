@@ -6,35 +6,36 @@ import domain.game.Score;
 import java.util.List;
 
 public class Player {
-
-    public static final int BLACK_JACK = 21;
-
-    private final Name name;
+    private final PlayerName playerName;
     private final Hand hand;
 
-    public Player(Name name, Hand hand) {
-        this.name = name;
+    public Player(final PlayerName playerName, final Hand hand) {
+        this.playerName = playerName;
         this.hand = hand;
     }
 
-    public Player(List<Card> cards) {
-        this.name = new Name("Test");
+    public Player(final List<Card> cards) {
+        this.playerName = new PlayerName("Test");
         this.hand = new Hand(cards);
     }
 
-    public void hit(Card card) {
+    public void hit(final Card card) {
         this.hand.add(card);
     }
 
     public boolean isBust() {
-        return getTotalScore().isBust();
+        return getScore().isBust();
     }
 
     public boolean isHittable() {
-        return getTotalScore().compareTo(BLACK_JACK) < 0;
+        return !getScore().isBlackJack() && !getScore().isBust();
     }
 
-    public Score getTotalScore() {
+    public boolean isBlackJack() {
+        return getScore().isBlackJack() && hand.isInitialSize();
+    }
+
+    public Score getScore() {
         return hand.calculateScore();
     }
 
@@ -42,8 +43,8 @@ public class Player {
         return hand;
     }
 
-    public String getName() {
-        return name.name();
+    public PlayerName getName() {
+        return playerName;
     }
 
 }

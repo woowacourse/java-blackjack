@@ -1,24 +1,39 @@
 package domain.card;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final Map<String, Card> CARD_CACHE = new HashMap<>();
+    static final Map<String, Card> CARD_POOL;
+
+    static {
+        CARD_POOL = Suit.getValues().stream()
+                .flatMap(suit -> Rank.getValues().stream()
+                        .map(rank -> new Card(rank, suit))
+                )
+                .collect(Collectors.toMap(
+                        card -> toKey(card.getRank(), card.getSuit()),
+                        Function.identity()
+                ));
+    }
 
     private final Rank rank;
     private final Suit suit;
 
-    private Card(Rank rank, Suit suit) {
+    private Card(final Rank rank, final Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    public static Card of(Rank rank, Suit suit) {
-        String cardKey = rank.name() + "-" + suit.name();
-        return CARD_CACHE.computeIfAbsent(cardKey, key -> new Card(rank, suit));
+    public static Card of(final Rank rank, final Suit suit) {
+        return CARD_POOL.get(toKey(rank, suit));
+    }
+
+    private static String toKey(final Rank rank, final Suit suit) {
+        return rank.name() + "-" + suit.name();
     }
 
     public boolean isAceCard() {
@@ -38,7 +53,7 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }

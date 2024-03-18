@@ -3,8 +3,8 @@ package domain.game;
 import static domain.FixtureCard.ACE_HEARTS;
 import static domain.FixtureCard.TEN_HEARTS;
 import static domain.FixtureCard.TWO_HEARTS;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Card;
 import domain.player.Dealer;
@@ -23,15 +23,14 @@ class ResultTest {
         List<Card> loserCards = List.of(TWO_HEARTS);
 
         assertAll(
-                () -> assertThat(Result.of(new Dealer(bustCards), new Player(bustCards))).isEqualTo(Result.DEALER_WIN),
-                () -> assertThat(Result.of(new Dealer(loserCards), new Player(bustCards))).isEqualTo(Result.DEALER_WIN),
-                () -> assertThat(Result.of(new Dealer(blackJackCards), new Player(loserCards))).isEqualTo(
-                        Result.DEALER_WIN),
-                () -> assertThat(Result.of(new Dealer(blackJackCards), new Player(blackJackCards))).isEqualTo(
-                        Result.PUSH),
-                () -> assertThat(Result.of(new Dealer(bustCards), new Player(loserCards))).isEqualTo(Result.PLAYER_WIN),
-                () -> assertThat(Result.of(new Dealer(loserCards), new Player(blackJackCards))).isEqualTo(
-                        Result.PLAYER_WIN)
+                () -> assertEquals(Result.DEALER_WIN, Result.of(new Dealer(bustCards), new Player(bustCards))),
+                () -> assertEquals(Result.DEALER_WIN, Result.of(new Dealer(loserCards), new Player(bustCards))),
+                () -> assertEquals(Result.DEALER_WIN, Result.of(new Dealer(blackJackCards), new Player(loserCards))),
+                () -> assertEquals(Result.PUSH, Result.of(new Dealer(blackJackCards), new Player(blackJackCards))),
+                () -> assertEquals(Result.PLAYER_WIN, Result.of(new Dealer(bustCards), new Player(loserCards))),
+                () -> assertEquals(Result.PLAYER_BLACK_JACK,
+                        Result.of(new Dealer(loserCards), new Player(blackJackCards))),
+                () -> assertEquals(Result.PUSH, Result.of(new Dealer(loserCards), new Player(loserCards)))
         );
     }
 }

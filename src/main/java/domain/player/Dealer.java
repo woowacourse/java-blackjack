@@ -3,23 +3,24 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.Hand;
+import domain.game.Score;
 import java.util.List;
 
 public class Dealer extends Player {
 
     static final String DEALER_NAME = "딜러";
 
-    private static final int MAX_SCORE_TO_HIT = 16;
+    private static final int HITTABLE_MAX_SCORE = 16;
 
     private final CardDeck cardDeck;
 
-    public Dealer(CardDeck cardDeck) {
-        super(new Name(DEALER_NAME), cardDeck.initHand());
+    public Dealer(final CardDeck cardDeck) {
+        super(new PlayerName(DEALER_NAME), cardDeck.initHand());
         this.cardDeck = cardDeck;
     }
 
-    public Dealer(List<Card> cards) {
-        super(new Name(DEALER_NAME), new Hand(cards));
+    public Dealer(final List<Card> cards) {
+        super(new PlayerName(DEALER_NAME), new Hand(cards));
         this.cardDeck = null;
     }
 
@@ -33,6 +34,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isHittable() {
-        return this.getTotalScore().compareTo(MAX_SCORE_TO_HIT) <= 0;
+        return this.getScore().compareTo(Score.from(HITTABLE_MAX_SCORE)) <= 0;
     }
 }

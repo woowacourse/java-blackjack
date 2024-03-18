@@ -153,15 +153,4 @@ class ScoreTest {
 
         assertThat(actual).isTrue();
     }
-
-    @DisplayName("int 원시값을 통해 대소비교를 한다.")
-    @Test
-    void CompareToByInteger() {
-        Score score1 = Score.from(20);
-        int score2 = 19;
-
-        boolean actual = score1.compareTo(score2) > 0;
-
-        assertThat(actual).isTrue();
-    }
 }
