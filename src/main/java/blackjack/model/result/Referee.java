@@ -1,25 +1,24 @@
 package blackjack.model.result;
 
-import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
-import blackjack.model.participant.Participants;
+import blackjack.model.participant.Players;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Referee {
-    private final Rule rule;
-    private final Participants participants;
+    private final ResultRule resultRule;
+    private final Players players;
 
-    public Referee(final Rule rule, final Participants participants) {
-        this.rule = rule;
-        this.participants = participants;
+    public Referee(final ResultRule resultRule, final Players players) {
+        this.resultRule = resultRule;
+        this.players = players;
     }
 
-    public Map<Name, ResultCommand> judgePlayerResult() {
-        Map<Name, ResultCommand> result = new LinkedHashMap<>();
-        for (Player player : participants.getPlayers()) {
-            result.put(player.getName(), rule.calculateResult(player));
+    public Map<Player, ResultCommand> judgePlayerResult() {
+        Map<Player, ResultCommand> result = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            result.put(player, resultRule.calculateResult(player));
         }
         return result;
     }

@@ -2,19 +2,15 @@ package blackjack.model.deck;
 
 import blackjack.model.participant.Hand;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Deck {
     private final Deque<Card> deck;
 
-    private Deck(final Deque<Card> deck) {
+    public Deck(final Deque<Card> deck) {
         this.deck = deck;
     }
 
@@ -23,30 +19,13 @@ public class Deck {
     }
 
     private static Deque<Card> makeRandomOrderDeck() {
-        List<Card> originDeck = Arrays.stream(Shape.values())
-                .flatMap(Deck::matchScore)
-                .collect(Collectors.toList());
-        return new ArrayDeque<>(shuffleDeck(originDeck));
-    }
-
-    private static Deque<Card> shuffleDeck(final List<Card> originDeck) {
-        Collections.shuffle(originDeck);
-        return new ArrayDeque<>(originDeck);
-    }
-
-    private static Stream<Card> matchScore(Shape shape) {
-        return Arrays.stream(Score.values())
-                .map(score -> new Card(shape, score));
+        List<Card> cards = Card.getCards();
+        Collections.shuffle(cards);
+        return new ArrayDeque<>(cards);
     }
 
     public Hand distributeInitialCard() {
         return new Hand(List.of(distribute(), distribute()));
-    }
-
-    public List<Hand> distributeInitialCard(final int playerCount) {
-        return IntStream.range(0, playerCount)
-                .mapToObj(i -> distributeInitialCard())
-                .toList();
     }
 
     public Card distribute() {

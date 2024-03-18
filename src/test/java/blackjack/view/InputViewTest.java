@@ -34,4 +34,12 @@ class InputViewTest {
                 .isThrownBy(() -> InputView.readHitOrNot(new Name("리브"), () -> input))
                 .withMessage("y 혹은 n만 입력할 수 있습니다.");
     }
+
+    @Test
+    @DisplayName("배팅 금액 입력 시 숫자가 아닌 입력값인 경우 예외를 던진다.")
+    void readBettingAmountByNotInteger() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> InputView.readBettingAmount(new Name("몰리"), () -> "돈"))
+                .withMessage("숫자만 입력할 수 있습니다.");
+    }
 }

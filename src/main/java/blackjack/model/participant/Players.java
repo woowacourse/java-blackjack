@@ -1,36 +1,29 @@
 package blackjack.model.participant;
 
 import blackjack.model.deck.Card;
+import blackjack.model.deck.Deck;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-public class Participants {
+public class Players {
     private static final int MINIMUM_PLAYER_SIZE = 1;
     private static final int MAXIMUM_PLAYER_SIZE = 10;
 
     private final List<Player> players;
 
-    private Participants(final List<Player> players) {
+    private Players(final List<Player> players) {
         validatePlayerSize(players);
         this.players = players;
     }
 
-    public static Participants of(final List<String> rawNames, final List<Hand> cards) {
+    public static Players of(final List<String> rawNames, final Deck deck) {
         validateNotDuplicateName(rawNames);
-        validateNamesInitialCardsSize(rawNames, cards);
-        return IntStream.range(0, rawNames.size())
-                .mapToObj(index -> new Player(new Name(rawNames.get(index)), cards.get(index)))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Participants::new));
-    }
-
-    private static void validateNamesInitialCardsSize(final List<String> rawNames, final List<Hand> cards) {
-        if (rawNames.size() != cards.size()) {
-            throw new IllegalArgumentException("플레이어 인원과 초기 카드 목록의 사이즈가 다릅니다.");
-        }
+        return rawNames.stream()
+                .map(rawName -> new Player(new Name(rawName), deck.distributeInitialCard()))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
     private static void validateNotDuplicateName(final List<String> names) {

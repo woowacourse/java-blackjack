@@ -1,15 +1,15 @@
 package blackjack.view;
 
 import blackjack.dto.NameCardsScore;
+import blackjack.dto.NameProfit;
 import blackjack.model.deck.Card;
 import blackjack.model.participant.Name;
-import blackjack.model.result.ResultCommand;
-import blackjack.view.display.result.ResultCommandDisplay;
-import blackjack.view.display.deck.ScoreDisplay;
-import blackjack.view.display.deck.ShapeDisplay;
+import blackjack.view.formatter.CardsFormatter;
+import blackjack.view.formatter.NameProfitFormat;
+import blackjack.view.formatter.NamesFormatter;
+import blackjack.view.formatter.PlayerNameFormatter;
+import blackjack.view.formatter.ScoreResultFormatter;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -22,20 +22,11 @@ public class OutputView {
     }
 
     public static void printDistributionSubject(final List<Name> names) {
-        String formattedName = names.stream()
-                .map(Name::getRawName)
-                .collect(Collectors.joining(", "));
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", formattedName);
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", NamesFormatter.format(names));
     }
 
     public static void printNameAndCards(final Name name, final List<Card> cards) {
-        System.out.println(name.getRawName() + ": " + convert(cards));
-    }
-
-    private static String convert(final List<Card> cards) {
-        return cards.stream()
-                .map(card -> ScoreDisplay.getValue(card.getScore()) + ShapeDisplay.getValue(card.getShape()))
-                .collect(Collectors.joining(", "));
+        System.out.println(PlayerNameFormatter.formatWithCardComment(name) + CardsFormatter.format(cards));
     }
 
     public static void printDealerHit() {
@@ -47,28 +38,14 @@ public class OutputView {
     }
 
     public static void printFinalCardsAndScore(final NameCardsScore nameCardsScore) {
-        System.out.println(
-                nameCardsScore.name().getRawName() + ": " + convert(nameCardsScore.cards()) + " - 결과: " + nameCardsScore.score());
+        System.out.println(PlayerNameFormatter.formatWithCardComment(nameCardsScore.name())
+                + CardsFormatter.format(nameCardsScore.cards())
+                + ScoreResultFormatter.format(nameCardsScore.score()));
     }
 
-    public static void printDealerFinalResult(final Map<ResultCommand, Integer> dealerResults) {
+    public static void printProfits(final List<NameProfit> playerProfits) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + formatFinalResult(dealerResults));
-    }
-
-    private static String formatFinalResult(final Map<ResultCommand, Integer> dealerResults) {
-        return dealerResults.entrySet().stream()
-                .map(resultIntegerEntry -> resultIntegerEntry.getValue() + ResultCommandDisplay.getValue(
-                        resultIntegerEntry.getKey()))
-                .collect(Collectors.joining(" "));
-    }
-
-    public static void printFinalResult(final Map<Name, ResultCommand> playerResults) {
-        playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name.getRawName(), result)));
-    }
-
-    private static String formatFinalResult(final String name, final ResultCommand result) {
-        return name + ": " + ResultCommandDisplay.getValue(result);
+        System.out.println("## 최종 수익");
+        playerProfits.forEach(nameProfit -> System.out.println(NameProfitFormat.format(nameProfit)));
     }
 }

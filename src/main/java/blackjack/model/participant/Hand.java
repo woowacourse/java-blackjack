@@ -8,9 +8,7 @@ import java.util.List;
 
 public class Hand {
     private static final int MIN_INITIAL_CARD_SIZE = 2;
-    private static final int BLACKJACK_SCORE = 21;
     private static final int ADDITIONAL_ACE_SCORE = 10;
-    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int SOFT_ACE_COUNT = 1;
     private static final int SOFT_MAX_SCORE_WITHOUT_ACE = 10;
 
@@ -64,10 +62,6 @@ public class Hand {
         return cards.size();
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
@@ -77,6 +71,18 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return getHandStatus().equals(HandStatus.BUST);
+    }
+
+    public boolean isBlackJack() {
+        return getHandStatus().equals(HandStatus.BLACKJACK);
+    }
+
+    public boolean isUnderMaxScore() {
+        return getHandStatus().equals(HandStatus.UNDER_MAX_SCORE);
+    }
+
+    public HandStatus getHandStatus() {
+        return HandStatus.of(calculateScore(), cards.size());
     }
 }
