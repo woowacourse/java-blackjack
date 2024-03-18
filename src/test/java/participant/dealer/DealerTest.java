@@ -13,7 +13,7 @@ class DealerTest {
     @Test
     void getExtraCardIfNotOverMinScore() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer(cardDeck.firstCardSettings());
+        Dealer dealer = new Dealer(cardDeck.firstCards());
 
         dealer.playGame(cardDeck);
 

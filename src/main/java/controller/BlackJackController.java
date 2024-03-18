@@ -23,7 +23,7 @@ public class BlackJackController {
 
     public void run() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer(cardDeck.firstCardSettings());
+        Dealer dealer = new Dealer(cardDeck.firstCards());
         Players players = readyPlayers(cardDeck);
 
         runBlackJackGame(players, cardDeck, dealer);
@@ -37,7 +37,7 @@ public class BlackJackController {
 
     private List<Player> startBetting(List<String> names, CardDeck cardDeck) {
         return names.stream()
-                .map(name -> new Player(cardDeck.firstCardSettings(), new Name(name),
+                .map(name -> new Player(cardDeck.firstCards(), new Name(name),
                         new BetMoney(inputView.inputBettingMoney(name))))
                 .toList();
     }

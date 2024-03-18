@@ -12,7 +12,7 @@ class CardDeckTest {
         CardDeck cardDeck = new CardDeck();
         Card card = cardDeck.pickCard();
 
-        Assertions.assertThat(cardDeck.firstCardSettings().contains(card)).isFalse();
+        Assertions.assertThat(cardDeck.firstCards().contains(card)).isFalse();
     }
 
     @DisplayName("카드를 처음 세팅하는 경우 두개의 카드를 세팅한다.")
@@ -20,7 +20,7 @@ class CardDeckTest {
     void isSetTwoCards() {
         CardDeck cardDeck = new CardDeck();
         int initSize = cardDeck.getDeckSize();
-        cardDeck.firstCardSettings();
+        cardDeck.firstCards();
 
         Assertions.assertThat(cardDeck.getDeckSize()).isEqualTo(initSize - 2);
     }
