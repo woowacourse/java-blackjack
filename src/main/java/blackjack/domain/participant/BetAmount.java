@@ -3,23 +3,23 @@ package blackjack.domain.participant;
 import java.util.Objects;
 
 public class BetAmount {
-    private static final int MIN_VALUE = 1000;
+    private static final int MIN_AMOUNT = 1000;
 
-    private final int value;
+    private final int amount;
 
-    public BetAmount(int value) {
-        validateMoney(value);
-        this.value = value;
+    public BetAmount(int amount) {
+        validateAmount(amount);
+        this.amount = amount;
     }
 
-    private void validateMoney(int value) {
-        if (value < MIN_VALUE) {
-            throw new IllegalArgumentException(String.format("베팅금액은 1,000원 이상의 양수만 가능합니다. 입력값: %d", value));
+    private void validateAmount(int amount) {
+        if (amount < MIN_AMOUNT) {
+            throw new IllegalArgumentException(String.format("베팅금액은 1,000원 이상의 양수만 가능합니다. 입력값: %d", amount));
         }
     }
 
-    public int getValue() {
-        return value;
+    public int getAmount() {
+        return amount;
     }
 
     @Override
@@ -30,11 +30,11 @@ public class BetAmount {
         if (!(o instanceof BetAmount betAmount)) {
             return false;
         }
-        return value == betAmount.value;
+        return amount == betAmount.amount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(amount);
     }
 }

@@ -24,7 +24,7 @@ public class Score {
         this.value = value;
     }
 
-    public static Score base() {
+    public static Score getZero() {
         return POOL.get(MIN_CACHE_SCORE);
     }
 

@@ -41,7 +41,7 @@ public class PlayersTest {
         Player player1 = initializedPlayers.get(0);
         Player player2 = initializedPlayers.get(1);
 
-        assertThat(player1.calculateHand()).isNotEqualTo(Score.base());
-        assertThat(player2.calculateHand()).isNotEqualTo(Score.base());
+        assertThat(player1.calculateHand()).isNotEqualTo(Score.getZero());
+        assertThat(player2.calculateHand()).isNotEqualTo(Score.getZero());
     }
 }
