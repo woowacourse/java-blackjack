@@ -1,23 +1,40 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.strategy.CardShuffleStrategy;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CardDeck {
-    private final List<Card> cardDeck;
+    private static final List<Card> INITIAL_CARD_DECK = Arrays.stream(Suit.values())
+            .flatMap(suit -> Arrays.stream(Denomination.values())
+                    .map(denomination -> new Card(suit, denomination)))
+            .toList();
 
-    public CardDeck(List<Card> cards) {
-        this.cardDeck = new ArrayList<>(cards);
+    private List<Card> cardDeck;
+
+    public CardDeck() {
+        this.cardDeck = initializeCardDeck();
     }
 
-    public void shuffle(CardShuffleStrategy cardShuffleStrategy) {
-        cardShuffleStrategy.shuffle(cardDeck);
+    private List<Card> initializeCardDeck() {
+        return new ArrayList<>(INITIAL_CARD_DECK);
     }
 
     public Card draw() {
-        if (cardDeck.isEmpty()) {
-            throw new IllegalArgumentException("카드덱의 카드를 모두 소진했습니다.");
-        }
         return cardDeck.remove(cardDeck.size() - 1);
+    }
+
+    public void shuffle(final CardShuffleStrategy cardShuffleStrategy) {
+        cardShuffleStrategy.shuffle(cardDeck);
+    }
+
+    public boolean isEmpty() {
+        return cardDeck.isEmpty();
+    }
+
+    public void reset() {
+        cardDeck = initializeCardDeck();
     }
 }

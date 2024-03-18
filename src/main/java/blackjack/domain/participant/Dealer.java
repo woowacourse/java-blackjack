@@ -2,35 +2,42 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardShuffleStrategy;
+import blackjack.domain.card.Score;
+import blackjack.domain.card.strategy.CardShuffleStrategy;
+import blackjack.utils.constants.GameConstants;
 
 public class Dealer extends Participant {
-    private static final String DEFAULT_NAME = "딜러";
-    private static final int DEALER_MIN_SCORE_POLICY = 17;
-
-    private final CardDeck cardDeck;
     private final CardShuffleStrategy cardShuffleStrategy;
+    private final CardDeck cardDeck;
 
-    public Dealer(CardDeck cardDeck, CardShuffleStrategy cardShuffleStrategy) {
-        super(DEFAULT_NAME);
-        this.cardDeck = cardDeck;
+    public Dealer(final CardShuffleStrategy cardShuffleStrategy) {
+        super(GameConstants.DEFAULT_NAME_OF_DEALER);
         this.cardShuffleStrategy = cardShuffleStrategy;
-    }
-
-    public Card pickCard() {
-        return cardDeck.draw();
+        this.cardDeck = new CardDeck();
     }
 
     public void shuffleCards() {
         cardDeck.shuffle(cardShuffleStrategy);
     }
 
-    public Card getFirstCardHand() {
-        return super.getCardHand().get(0);
+    public Card pickCard() {
+        if (cardDeck.isEmpty()) {
+            cardDeck.reset();
+            shuffleCards();
+        }
+        return cardDeck.draw();
     }
 
     @Override
     public boolean canReceiveCard() {
-        return calculateScore() < DEALER_MIN_SCORE_POLICY;
+        final Score score = calculateScore();
+        final Score standardScore = Score.valueOf(GameConstants.DEALER_MIN_SCORE_POLICY);
+
+        return score.isLessThan(standardScore) || score.equals(standardScore);
+    }
+
+    @Override
+    public double calculateEarningRate(final ResultStatus resultStatus) {
+        throw new UnsupportedOperationException("딜러는 수익률을 계산할 수 없습니다.");
     }
 }

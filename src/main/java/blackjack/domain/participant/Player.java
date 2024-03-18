@@ -1,14 +1,19 @@
 package blackjack.domain.participant;
 
 public class Player extends Participant {
-    private static final int BLACKJACK_SCORE = 21;
+    private final BattingAmount battingAmount;
 
-    public Player(String name) {
+    public Player(final String name, final BattingAmount battingAmount) {
         super(name);
+        this.battingAmount = battingAmount;
+    }
+
+    public BattingAmount getBattingAmount() {
+        return battingAmount;
     }
 
     @Override
     public boolean canReceiveCard() {
-        return calculateScore() <= BLACKJACK_SCORE;
+        return !isFinished();
     }
 }

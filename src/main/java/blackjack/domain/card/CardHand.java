@@ -1,36 +1,36 @@
 package blackjack.domain.card;
 
+import blackjack.utils.constants.GameConstants;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class CardHand {
-    private static final int ACE_BONUS_SCORE = 10;
-    private static final int BLACKJACK_SCORE = 21;
-
     private final List<Card> cards;
 
     public CardHand() {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(Card card) {
+    public void receiveCard(final Card card) {
         cards.add(card);
     }
 
-    public int sumAll() {
-        int sum = calculateSum();
+    public Score sumAllScore() {
+        final Score totalScore = calculateTotalScore();
 
         if (hasAce()) {
-            return addBonusScoreIfNotBust(sum);
+            return totalScore.addBonusScoreIfNotBust();
         }
-        return sum;
+        return totalScore;
     }
 
-    private int calculateSum() {
+    private Score calculateTotalScore() {
         return cards.stream()
-                .mapToInt(Card::getDenominationScore)
-                .sum();
+                .map(Card::getDenomination)
+                .map(Denomination::getScore)
+                .reduce(Score.initialScore(), Score::sum);
     }
 
     private boolean hasAce() {
@@ -38,16 +38,23 @@ public class CardHand {
                 .anyMatch(Card::isAce);
     }
 
-    private int addBonusScoreIfNotBust(int sum) {
-        int sumWithBonusScore = sum + ACE_BONUS_SCORE;
+    public boolean isBlackjack() {
+        final int cardSize = countCards();
+        final Score score = sumAllScore();
 
-        if (sumWithBonusScore <= BLACKJACK_SCORE) {
-            return sumWithBonusScore;
-        }
-        return sum;
+        return cardSize == GameConstants.INITIAL_CARD_COUNT && score.equals(Score.blackjackScore());
+    }
+
+    public boolean isBust() {
+        final Score score = sumAllScore();
+        return score.isGreaterThan(Score.blackjackScore());
+    }
+
+    public int countCards() {
+        return cards.size();
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(this.cards);
+        return Collections.unmodifiableList(cards);
     }
 }

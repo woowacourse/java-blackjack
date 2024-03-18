@@ -1,75 +1,78 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Emblem;
+import blackjack.domain.card.Score;
+import blackjack.domain.card.Suit;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.fixture.CardFixture.전체_카드;
+import static blackjack.domain.card.Denomination.*;
 import static blackjack.fixture.CardFixture.카드;
+import static blackjack.fixture.DealerFixture.딜러;
+import static blackjack.fixture.ScoreFixture.점수;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
-    @Test
-    void 카드_덱에서_카드를_뽑는다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
+    private Dealer dealer;
 
-        Card card = dealer.pickCard();
-
-        assertThat(card).isEqualTo(new Card(Denomination.KING, Emblem.DIAMOND));
+    @BeforeEach
+    void setUp() {
+        dealer = 딜러();
     }
 
     @Test
-    void 전달받은_카드를_패에_추가한다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
+    void 카드를_한_장_뽑을_수_있다() {
+        final Card card = dealer.pickCard();
 
-        dealer.add(카드());
-
-        assertThat(dealer.getCardHand()).hasSize(1);
+        assertThat(card).isEqualTo(new Card(Suit.DIAMOND, KING));
     }
 
     @Test
-    void 카드의_합을_계산한다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
+    void 기존_카드_덱의_카드를_모두_사용하였을_경우_새로운_카드_덱에서_카드를_뽑는다() {
+        for (int i = 0; i < 52; i++) {
+            dealer.pickCard();
+        }
 
-        dealer.add(카드(Denomination.KING));
-        dealer.add(카드(Denomination.SIX));
+        final Card card = dealer.pickCard();
 
-        int result = dealer.calculateScore();
-
-        assertThat(result).isEqualTo(16);
+        assertThat(card).isEqualTo(new Card(Suit.HEART, ACE));
     }
 
     @Test
-    void 점수의_합이_17보다_작으면_카드를_더_받아야_한다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
+    void 딜러는_카드를_셔플할_수_있다() {
+        dealer.shuffleCards();
+        final Card card = dealer.pickCard();
 
-        dealer.add(카드(Denomination.TEN));
-        dealer.add(카드(Denomination.SIX));
+        assertThat(card).isEqualTo(new Card(Suit.HEART, ACE));
+    }
 
-        boolean result = dealer.canReceiveCard();
+    @Test
+    void 딜러_카드의_총_점수를_계산할_수_있다() {
+        dealer.receiveCard(카드(KING));
+        dealer.receiveCard(카드(SIX));
+
+        final Score result = dealer.calculateScore();
+
+        assertThat(result).isEqualTo(점수(16));
+    }
+
+    @Test
+    void 딜러가_카드의_총_점수가_16_이하라면_카드를_더_받을_수_있다() {
+        dealer.receiveCard(카드(KING));
+        dealer.receiveCard(카드(SIX));
+
+        final boolean result = dealer.canReceiveCard();
+
         assertThat(result).isTrue();
     }
 
     @Test
-    void 점수의_합이_17이상이면_카드를_더_받을_수_없다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
+    void 딜러가_카드의_총_점수가_17_이상이라면_카드를_더_받을_수_없다() {
+        dealer.receiveCard(카드(KING));
+        dealer.receiveCard(카드(SEVEN));
 
-        dealer.add(카드(Denomination.NINE));
-        dealer.add(카드(Denomination.EIGHT));
+        final boolean result = dealer.canReceiveCard();
 
-        boolean result = dealer.canReceiveCard();
         assertThat(result).isFalse();
     }
 }

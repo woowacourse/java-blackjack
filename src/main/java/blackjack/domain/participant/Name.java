@@ -1,61 +1,37 @@
 package blackjack.domain.participant;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class Name {
-    private static final int MIN_NAME_LENGTH = 2;
-    private static final int MAX_NAME_LENGTH = 5;
-    private static final Pattern INVALID_NAME_PATTERN = Pattern.compile("\\P{L}");
+    private static final int MINIMUM_LENGTH_OF_NAME = 2;
+    private static final int MAXIMUM_LENGTH_OF_NAME = 5;
 
     private final String name;
 
-    public Name(String name) {
+    public Name(final String name) {
         validateLength(name);
-        validateContainsSpace(name);
-        validateNamePattern(name);
         this.name = name;
     }
 
-    private void validateLength(String name) {
-        int length = name.length();
+    private void validateLength(final String name) {
+        final int length = name.length();
 
-        if (length < MIN_NAME_LENGTH || MAX_NAME_LENGTH < length) {
+        if (length < MINIMUM_LENGTH_OF_NAME || length > MAXIMUM_LENGTH_OF_NAME) {
             throw new IllegalArgumentException(
-                    String.format("rejected value : %s - 이름은 %d ~ %d 글자여야 합니다", name, MIN_NAME_LENGTH, MAX_NAME_LENGTH)
-            );
-        }
-    }
-
-    private void validateContainsSpace(String name) {
-        if (name.contains(" ")) {
-            throw new IllegalArgumentException(
-                    String.format("rejected value : %s - 이름에 공백이 포함되어 있습니다.", name)
-            );
-        }
-    }
-
-    private void validateNamePattern(String name) {
-        if (INVALID_NAME_PATTERN.matcher(name).find()) {
-            throw new IllegalArgumentException(
-                    String.format("rejected value : %s - 이름에 특수문자와 숫자는 허용하지 않습니다.", name)
-            );
+                    String.format("이름의 길이가 %d보다 작거나 %d보다 클 수 없습니다.", MINIMUM_LENGTH_OF_NAME, MAXIMUM_LENGTH_OF_NAME));
         }
     }
 
     public String getValue() {
-        return this.name;
+        return name;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof Name other) {
-            return this.name.equals(other.name);
-        }
-        return false;
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Name other = (Name) o;
+        return Objects.equals(name, other.name);
     }
 
     @Override

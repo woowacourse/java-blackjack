@@ -2,66 +2,62 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class Players {
-    private static final int MIN_PLAYER_COUNT = 1;
-    private static final int MAX_PLAYER_COUNT = 6;
+    private static final int MINIMUM_PLAYER_SIZE = 1;
+    private static final int MAXIMUM_PLAYER_SIZE = 6;
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validatePlayerCount(playerNames);
-        validateDuplicatedName(playerNames);
-        this.players = generatePlayers(playerNames);
+    public Players(final List<Player> players) {
+        validatePlayers(players);
+        this.players = new ArrayList<>(players);
     }
 
-    private void validatePlayerCount(List<String> playerNames) {
-        int playerCount = playerNames.size();
+    private void validatePlayers(final List<Player> players) {
+        validateDuplicatedName(players);
+        validatePlayerSize(players);
+    }
 
-        if (playerCount < MIN_PLAYER_COUNT || MAX_PLAYER_COUNT < playerCount) {
+    private void validateDuplicatedName(final List<Player> players) {
+        if (players.size() != new HashSet<>(players).size()) {
+            throw new IllegalArgumentException("플레이어 이름 중 중복된 이름이 존재할 수 없습니다.");
+        }
+    }
+
+    private void validatePlayerSize(final List<Player> players) {
+        final int size = players.size();
+
+        if (size < MINIMUM_PLAYER_SIZE || size > MAXIMUM_PLAYER_SIZE) {
             throw new IllegalArgumentException(
-                    String.format("플레이어의 수는 %d ~ %d명이어야 합니다.", MIN_PLAYER_COUNT, MAX_PLAYER_COUNT)
-            );
+                    String.format("게임에 참여하는 플레이어는 %d ~ %d명이어야 합니다.", MINIMUM_PLAYER_SIZE, MAXIMUM_PLAYER_SIZE));
         }
     }
 
-    private void validateDuplicatedName(List<String> playerNames) {
-        if (playerNames.size() != new HashSet<>(playerNames).size()) {
-            throw new IllegalArgumentException("중복된 이름이 존재합니다.");
+    public void receiveCardFrom(final Dealer dealer) {
+        for (final Player player : players) {
+            final Card card = dealer.pickCard();
+            player.receiveCard(card);
         }
     }
 
-    private List<Player> generatePlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
-    }
+    public Map<Player, ResultStatus> compareTo(final Dealer dealer) {
+        final Map<Player, ResultStatus> result = new HashMap<>();
 
-    public void giveCardToPlayer(int playerIndex, Card card) {
-        Player player = findPlayerByIndex(playerIndex);
-        player.add(card);
-    }
-
-    public Player findPlayerByIndex(int index) {
-        if (isOutOfRange(index)) {
-            throw new IllegalArgumentException("인덱스가 범위를 벗어났습니다.");
+        for (Player player : players) {
+            result.put(player, ResultStatus.of(player, dealer));
         }
-        return this.players.get(index);
+
+        return Collections.unmodifiableMap(result);
     }
 
-    private boolean isOutOfRange(int index) {
-        return index < 0 || players.size() <= index;
-    }
-
-    public int count() {
-        return this.players.size();
-    }
-
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

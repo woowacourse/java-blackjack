@@ -1,29 +1,29 @@
 package blackjack.domain.card;
 
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.fixture.CardFixture.카드;
-import static blackjack.fixture.CardFixture.카드들;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CardDeckTest {
-    @Test
-    void 맨_위에서부터_카드를_한_장씩_드로우한다() {
-        Card targetFirst = new Card(Denomination.KING, Emblem.HEART);
-        Card targetSecond = new Card(Denomination.ACE, Emblem.CLOVER);
-        CardDeck cardDeck = new CardDeck(카드들(targetSecond, targetFirst));
+    private CardDeck cardDeck;
 
-        assertThat(cardDeck.draw()).isEqualTo(targetFirst);
-        assertThat(cardDeck.draw()).isEqualTo(targetSecond);
+    @BeforeEach
+    void setUp() {
+        cardDeck = new CardDeck();
     }
 
     @Test
-    void 카드가_없을_때_카드를_드로우하면_예외가_발생한다() {
-        CardDeck cardDeck = new CardDeck(카드들(카드()));
-        cardDeck.draw();
+    void 처음_카드_덱의_총_카드_수는_52장이다() {
+        assertThat(cardDeck).extracting("cardDeck", InstanceOfAssertFactories.list(Card.class))
+                .hasSize(52);
+    }
 
-        assertThatThrownBy(cardDeck::draw)
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+    @Test
+    void 카드를_한_장_뽑을_수_있다() {
+        final Card card = cardDeck.draw();
+
+        assertThat(card).isEqualTo(new Card(Suit.DIAMOND, Denomination.KING));
     }
 }
