@@ -1,18 +1,10 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardgame.BettingAmount;
-import blackjack.domain.cardgame.Profit;
-import blackjack.domain.cardgame.Status;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
-
-    private final Map<Player, BettingAmount> playerBetting = new LinkedHashMap<>();
 
     public Dealer() {
         super(NAME);
@@ -28,75 +20,5 @@ public class Dealer extends Player {
         } catch (IndexOutOfBoundsException entry) {
             throw new RuntimeException("[ERROR] 딜러가 카드를 갖고 있지 않습니다.");
         }
-    }
-
-    // TODO: Dealer가 너무 많은 책임을 갖지는 않는지?
-    public void bet(final Player player, final BettingAmount bettingAmount) {
-        playerBetting.put(player, bettingAmount);
-    }
-
-    /**
-     * TODO: 반드시 Dealer에게 먼저 bet()을 한 뒤에 호출해야 함. bet()을 하지 않는다면 비어있게 됨
-     */
-    public Map<Player, Profit> findPlayerProfits() {
-        return playerBetting.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
-                        entry -> findProfit(entry.getKey(), entry.getValue().getValue()),
-                        (x, y) -> x, LinkedHashMap::new
-                ));
-    }
-
-    private Profit findProfit(final Player player, final int bettingAmount) {
-        final Status status = judgePlayerStatus(player);
-
-        if (Status.WIN.equals(status)) {
-            return new Profit(bettingAmount);
-        }
-        if (Status.PUSH.equals(status)) {
-            return new Profit(0);
-        }
-        if (Status.LOSE.equals(status)) {
-            return new Profit(-bettingAmount);
-        }
-        if (Status.BLACKJACK.equals(status)) {
-            return new Profit(bettingAmount + bettingAmount / 2);
-        }
-
-        throw new IllegalStateException("[ERROR] 유효하지 않은 경우의 수 입니다.");
-    }
-
-    private Status judgePlayerStatus(final Player player) {
-        if (player.isBust()) {
-            return Status.LOSE;
-        }
-        if (this.isBust()) {
-            return Status.WIN;
-        }
-        if (this.getScore() == player.getScore()) {
-            return Status.PUSH;
-        }
-        if (player.isBlackjack()) {
-            return Status.BLACKJACK;
-        }
-        if (this.getScore() < player.getScore()) {
-            return Status.WIN;
-        }
-        return Status.LOSE;
-    }
-
-    /**
-     * TODO: 딜러의 수익은 어떻게 계산할지???
-     *      Dealder의 필드로 Profit을 나타내는 Map<Player, Integer> 를 가지도록 변경하고, 메서드로 제공?
-     *      findPlayerProfits를 여러번 호출해야 하는게 마음에 안듦
-     *          Controller에서 한번, 출력할 때 딜러에서 한번
-     */
-    public int findDealerProfit() {
-        final Map<Player, Profit> playerProfits = findPlayerProfits();
-        return -playerProfits.values()
-                .stream()
-                .mapToInt(Profit::getValue)
-                .sum();
     }
 }

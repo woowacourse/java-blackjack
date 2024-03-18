@@ -11,27 +11,27 @@ import java.util.List;
 public class BlackjackController {
     public void run() {
         try {
-            final List<String> names = InputView.askPlayerNames();
-            final List<Player> players = createPlayersByNames(names);
             final Dealer dealer = new Dealer();
+            final List<Player> players = createPlayers();
             final BlackjackGame blackjackGame = new BlackjackGame();
 
             blackjackGame.initializeHand(dealer, players);
             OutputView.printInitialHandOfEachPlayer(dealer, players);
 
-            bet(dealer, players);
+            bet(blackjackGame, players);
 
             givePlayersMoreCardsIfWanted(blackjackGame, players);
             giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
 
             printHandStatusOfEachPlayer(dealer, players);
-            printPlayerProfits(dealer);
+            printPlayerProfits(blackjackGame, dealer);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static List<Player> createPlayersByNames(final List<String> names) {
+    private static List<Player> createPlayers() {
+        final List<String> names = InputView.askPlayerNames();
         return names.stream()
                 .map(Player::new)
                 .toList();
@@ -65,15 +65,14 @@ public class BlackjackController {
         }
     }
 
-    private static void bet(final Dealer dealer, final List<Player> players) {
+    private static void bet(final BlackjackGame blackjackGame, final List<Player> players) {
         for (Player player : players) {
             final int bettingAmount = InputView.askBettingAmount(player.getName());
-            dealer.bet(player, new BettingAmount(bettingAmount));
+            blackjackGame.bet(player, new BettingAmount(bettingAmount));
         }
     }
 
-    // TODO: 딜러를 통째로 넘겨줄 필요가 있을까?
-    private void printPlayerProfits(final Dealer dealer) {
-        OutputView.printProfits(dealer);
+    private void printPlayerProfits(final BlackjackGame blackjackGame, final Dealer dealer) {
+        OutputView.printProfits(blackjackGame, dealer);
     }
 }
