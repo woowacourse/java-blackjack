@@ -64,11 +64,7 @@ public class BlackjackController {
     }
 
     private void askToPlayerHit(Player player, DeckMachine deckMachine) {
-        if (player.isBlackjack()) {
-            return;
-        }
-
-        boolean isRun = true;
+        boolean isRun = deckMachine.isPlayerCanHit(player);
         while (isRun) {
             PlayerCommand command =
                     PlayerCommand.from(InputView.readPlayerCommand(player.name()));
