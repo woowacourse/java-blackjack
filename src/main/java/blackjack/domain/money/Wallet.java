@@ -17,10 +17,4 @@ public class Wallet {
     public Map<String, Money> get() {
         return Map.copyOf(values);
     }
-
-    public int calculateSumAndNegative() {
-        return values.values().stream()
-                .mapToInt(Money::get)
-                .sum();
-    }
 }
