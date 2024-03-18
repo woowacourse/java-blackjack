@@ -2,6 +2,7 @@ package domain.result;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
+import util.IncomeCalculator;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,16 +14,14 @@ import java.util.stream.Collectors;
 public class Incomes {
 
     private final List<Player> players;
-    private final IncomeCalculator incomeCalculator;
 
-    public Incomes(List<Player> players, IncomeCalculator incomeCalculator) {
+    public Incomes(List<Player> players) {
         this.players = players;
-        this.incomeCalculator = incomeCalculator;
     }
 
     public Income dealerIncome(Dealer dealer) {
         int sumOfPlayerIncome = players.stream()
-                .map(player -> incomeCalculator.determineIncome(dealer.decideStatus(player), player.getBetAmount()))
+                .map(player -> IncomeCalculator.determineIncome(dealer.decideStatus(player), player.getBetAmount()))
                 .mapToInt(Income::getValue)
                 .sum();
         return new Income(-sumOfPlayerIncome);
@@ -32,7 +31,7 @@ public class Incomes {
         return players.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> incomeCalculator.determineIncome(dealer.decideStatus(player), player.getBetAmount()),
+                        player -> IncomeCalculator.determineIncome(dealer.decideStatus(player), player.getBetAmount()),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));

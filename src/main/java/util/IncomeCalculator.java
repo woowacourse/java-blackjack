@@ -1,10 +1,15 @@
-package domain.result;
+package util;
 
 import domain.participant.BetAmount;
+import domain.result.Income;
+import domain.result.Status;
 
 public class IncomeCalculator {
 
-    public Income determineIncome(Status status, BetAmount betAmount) {
+    private IncomeCalculator() {
+    }
+
+    public static Income determineIncome(Status status, BetAmount betAmount) {
         if (status == Status.WIN) {
             return new Income(betAmount.getValue());
         }

@@ -26,7 +26,7 @@ class IncomesTest {
         Dealer dealer = new Dealer(new ArrayList<>(
                 List.of(new Card(6, Shape.SPADE), new Card(10, Shape.SPADE))));
 
-        Incomes incomes = new Incomes(List.of(capy1, capy2), new IncomeCalculator());
+        Incomes incomes = new Incomes(List.of(capy1, capy2));
 
         assertThat(incomes.dealerIncome(dealer)).isEqualTo(new Income(3000));
     }
@@ -41,10 +41,8 @@ class IncomesTest {
         Dealer dealer = new Dealer(new ArrayList<>(
                 List.of(new Card(6, Shape.SPADE), new Card(10, Shape.SPADE))));
 
-        Incomes incomes = new Incomes(List.of(capy1, capy2), new IncomeCalculator());
+        Incomes incomes = new Incomes(List.of(capy1, capy2));
 
         assertThat(incomes.dealerIncome(dealer)).isEqualTo(new Income(-3000));
     }
-
-
 }
