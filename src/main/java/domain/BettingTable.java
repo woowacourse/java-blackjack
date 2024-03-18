@@ -1,6 +1,5 @@
 package domain;
 
-import domain.constant.GamerIdentifier;
 import domain.constant.GamerResult;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,16 +11,15 @@ public class BettingTable {
         this.bettingAmounts = new HashMap<>(bettingAmounts);
     }
 
-    public Map<String, Double> getTotalProfit(Map<String, GamerResult> totalResult) {
+    public Map<String, Double> getPlayersProfit(Map<String, GamerResult> totalResult) {
         validateSize(totalResult);
-        Map<String, Double> totalProfit = new HashMap<>();
+        Map<String, Double> playersProfit = new HashMap<>();
         totalResult.forEach((key, value) ->
-                totalProfit.put(
+                playersProfit.put(
                         key,
                         value.getGamerProfit(bettingAmounts.get(key).getAmount())
                 ));
-        totalProfit.put(GamerIdentifier.DEALER_IDENTIFIER, getDealerProfit(totalProfit));
-        return totalProfit;
+        return playersProfit;
     }
 
     private void validateSize(Map<String, GamerResult> totalResult) {
@@ -30,8 +28,8 @@ public class BettingTable {
         }
     }
 
-    private double getDealerProfit(Map<String, Double> totalProfit) {
-        return totalProfit.values().stream()
+    public double getDealerProfit(Map<String, GamerResult> totalResult) {
+        return getPlayersProfit(totalResult).values().stream()
                 .mapToDouble(Double::doubleValue).sum() * -1;
     }
 }

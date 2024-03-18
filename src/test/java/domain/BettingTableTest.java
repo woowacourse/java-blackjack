@@ -15,7 +15,7 @@ public class BettingTableTest {
         BettingTable bettingTable = new BettingTable(Map.of(
                 "test1", new BettingAmount(1000),
                 "test2", new BettingAmount(2000)));
-        Assertions.assertThatThrownBy(() -> bettingTable.getTotalProfit(Map.of("test1", GamerResult.WIN)))
+        Assertions.assertThatThrownBy(() -> bettingTable.getPlayersProfit(Map.of("test1", GamerResult.WIN)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("생성자로 입력받은 Map과 크기가 다릅니다");
     }
@@ -27,7 +27,7 @@ public class BettingTableTest {
                 "test1", new BettingAmount(1000),
                 "test2", new BettingAmount(2000),
                 "test3", new BettingAmount(3000)));
-        Assertions.assertThat(bettingTable.getTotalProfit(Map.of(
+        Assertions.assertThat(bettingTable.getPlayersProfit(Map.of(
                         "test1", GamerResult.LOSE,
                         "test2", GamerResult.WIN,
                         "test3", GamerResult.LOSE)))
@@ -46,7 +46,7 @@ public class BettingTableTest {
         @DisplayName("플레이어가 한 명인 경우")
         void onePlayerWinCase() {
             BettingTable bettingTable = new BettingTable(Map.of("test", new BettingAmount(1000)));
-            Assertions.assertThat(bettingTable.getTotalProfit(Map.of("test", GamerResult.WIN)))
+            Assertions.assertThat(bettingTable.getPlayersProfit(Map.of("test", GamerResult.WIN)))
                     .isEqualTo(Map.of(
                             GamerIdentifier.DEALER_IDENTIFIER, -1000D,
                             "test", 1000D
@@ -60,7 +60,7 @@ public class BettingTableTest {
                     "test1", new BettingAmount(1000),
                     "test2", new BettingAmount(2000),
                     "test3", new BettingAmount(3000)));
-            Assertions.assertThat(bettingTable.getTotalProfit(Map.of(
+            Assertions.assertThat(bettingTable.getPlayersProfit(Map.of(
                             "test1", GamerResult.WIN,
                             "test2", GamerResult.WIN,
                             "test3", GamerResult.WIN)))
@@ -80,7 +80,7 @@ public class BettingTableTest {
         @DisplayName("플레이어가 한 명인 경우")
         void onePlayerLoseCase() {
             BettingTable bettingTable = new BettingTable(Map.of("test", new BettingAmount(1000)));
-            Assertions.assertThat(bettingTable.getTotalProfit(Map.of("test", GamerResult.LOSE)))
+            Assertions.assertThat(bettingTable.getPlayersProfit(Map.of("test", GamerResult.LOSE)))
                     .isEqualTo(Map.of(
                             GamerIdentifier.DEALER_IDENTIFIER, 1000D,
                             "test", -1000D
@@ -94,7 +94,7 @@ public class BettingTableTest {
                     "test1", new BettingAmount(1000),
                     "test2", new BettingAmount(2000),
                     "test3", new BettingAmount(3000)));
-            Assertions.assertThat(bettingTable.getTotalProfit(Map.of(
+            Assertions.assertThat(bettingTable.getPlayersProfit(Map.of(
                             "test1", GamerResult.LOSE,
                             "test2", GamerResult.LOSE,
                             "test3", GamerResult.LOSE)))

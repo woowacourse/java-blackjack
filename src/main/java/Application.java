@@ -88,7 +88,7 @@ public class Application {
     private static void showFinalProfit(BlackJackGame blackJackGame, BettingTable bettingTable) {
         OutputView.printTotalStatus(new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers()));
         OutputView.printFinalProfit(
-                bettingTable.getTotalProfit(blackJackGame.getGameResult().getPlayersResult()),
+                bettingTable.getPlayersProfit(blackJackGame.getGameResult().getPlayersResult()),
                 blackJackGame.getPlayers()
         );
     }
