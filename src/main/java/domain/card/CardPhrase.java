@@ -5,6 +5,7 @@ public enum CardPhrase {
     JACK("J", CardNumber.JACK),
     QUEEN("Q", CardNumber.QUEEN),
     KING("K", CardNumber.KING);
+
     private final String phrase;
     private final CardNumber cardNumber;
 
