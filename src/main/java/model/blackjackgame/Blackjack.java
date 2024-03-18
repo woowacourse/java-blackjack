@@ -12,12 +12,13 @@ public class Blackjack {
     private final boolean isDealer;
     private final Map<Player, Boolean> blackjackStatusOfPlayers;
 
-    public Blackjack(Dealer dealer) {
+    public Blackjack(Dealer dealer, Players players) {
         this.isDealer = dealer.isBlackjack();
         this.blackjackStatusOfPlayers = new HashMap<>();
+        createPlayerBlackjackStatus(players);
     }
 
-    public void createPlayerBlackjackStatus(Players players) {
+    private void createPlayerBlackjackStatus(Players players) {
         for (Player player : players.getPlayers()) {
             blackjackStatusOfPlayers.put(player, player.isBlackjack());
         }

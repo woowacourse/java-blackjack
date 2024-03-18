@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 class ResultTest {
 
     private final BlackjackGame blackjackGame = prepareBlackjackGame();
-    private final Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
 
     @DisplayName("딜러와 플레이어 중 카드 합이 21 또는 21에 가까운 숫자가 승리")
     @Test
@@ -33,6 +32,7 @@ class ResultTest {
                         new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
         blackjackGame.distributeCardsForSetting(cards);
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer(), blackjackGame.getPlayers());
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
         assertEquals(GameResult.WIN,
                 result.getPlayerResult().get(blackjackGame.getPlayers().getPlayers().get(0).getName()));
@@ -46,7 +46,7 @@ class ResultTest {
                         new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
         blackjackGame.distributeCardsForSetting(cards);
-        blackjack.createPlayerBlackjackStatus(blackjackGame.getPlayers());
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer(), blackjackGame.getPlayers());
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
         assertEquals(GameResult.BLACKJACK,
                 result.getPlayerResult().get(blackjackGame.getPlayers().getPlayers().get(0).getName()));

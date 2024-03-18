@@ -44,7 +44,7 @@ public class BlackjackGameController {
                 .map(this::betting)
                 .toList());
         gameSetting(players, blackjackGame);
-        Blackjack blackjack = checkBlackjack(blackjackGame);
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer(), blackjackGame.getPlayers());
         turnHit(blackjackGame);
         Result result = gameResult(blackjackGame, blackjack);
         Profit profit = gameProfit(blackjackGame, bettings, result);
@@ -74,12 +74,6 @@ public class BlackjackGameController {
                 Collections.singletonList(captureCardType(dealer).get(0)));
         players.getPlayers()
                 .forEach(player -> outputView.printCardsStock(player.getName(), captureCardType(player)));
-    }
-
-    private Blackjack checkBlackjack(BlackjackGame blackjackGame) {
-        Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
-        blackjack.createPlayerBlackjackStatus(blackjackGame.getPlayers());
-        return blackjack;
     }
 
     private void turnHit(BlackjackGame blackjackGame) {

@@ -10,6 +10,7 @@ import java.util.List;
 import model.card.Card;
 import model.card.Cards;
 import model.participants.dealer.Dealer;
+import model.participants.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class BlackjackTest {
                 List.of(new Card(JACK, DIAMOND), new Card(ACE, CLOVER))
         );
         Dealer dealer = new Dealer(cards);
-        Blackjack blackjack = new Blackjack(dealer);
+        Blackjack blackjack = new Blackjack(dealer, Players.from(List.of("lily")));
         assertTrue(blackjack.isDealer());
     }
 }
