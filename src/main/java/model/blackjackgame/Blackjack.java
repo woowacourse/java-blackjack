@@ -2,6 +2,7 @@ package model.blackjackgame;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import model.participants.dealer.Dealer;
 import model.participants.player.Player;
 import model.participants.player.Players;
@@ -26,7 +27,12 @@ public class Blackjack {
         return isDealer;
     }
 
-    public Map<Player, Boolean> getBlackjackStatusOfPlayers() {
-        return blackjackStatusOfPlayers;
+    public Boolean blackjackStatusOfPlayer(Player player) {
+        return blackjackStatusOfPlayers.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().getName().equals(player.getName()))
+                .map(Entry::getValue)
+                .findFirst()
+                .orElse(false);
     }
 }

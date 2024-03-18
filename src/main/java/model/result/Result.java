@@ -2,7 +2,6 @@ package model.result;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import model.blackjackgame.Blackjack;
 import model.participants.dealer.Dealer;
 import model.participants.player.Player;
@@ -24,26 +23,20 @@ public class Result {
     }
 
     private GameResult calculatePlayerResult(Dealer dealer, Player player, Blackjack blackjack) {
-        if (blackjackCase(player, blackjack) && !blackjack.isDealer()) {
+        if (isPlayerBlackjack(player, blackjack) && !blackjack.isDealer()) {
             return GameResult.BLACKJACK;
         }
         if (calculatePlayerWin(dealer, player)) {
             return GameResult.WIN;
         }
-        if (blackjack.isDealer() && !blackjackCase(player, blackjack) || calculatePlayerFail(dealer, player)) {
+        if (blackjack.isDealer() && !isPlayerBlackjack(player, blackjack) || calculatePlayerFail(dealer, player)) {
             return GameResult.FAIL;
         }
         return GameResult.DRAW;
     }
 
-    private boolean blackjackCase(Player player, Blackjack blackjack) {
-        boolean playerBlackjack = false;
-        for (Entry<Player, Boolean> entrySet : blackjack.getBlackjackStatusOfPlayers().entrySet()) {
-            if (entrySet.getKey().getName().equals(player.getName())) {
-                playerBlackjack = entrySet.getValue();
-            }
-        }
-        return playerBlackjack;
+    private boolean isPlayerBlackjack(Player player, Blackjack blackjack) {
+        return blackjack.blackjackStatusOfPlayer(player);
     }
 
     private boolean calculatePlayerWin(Dealer dealer, Player player) {
