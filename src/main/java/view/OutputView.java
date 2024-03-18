@@ -15,11 +15,7 @@ public class OutputView {
 
     public void printDistributeCards(Dealer dealer, Players players) {
         System.out.print(dealer.getName() + "와 ");
-        List<String> playerNames = players.getPlayers()
-                .stream()
-                .map(Player::getName)
-                .toList();
-        System.out.print(String.join(", ", playerNames));
+        System.out.print(String.join(", ", players.playersNames()));
         System.out.println("에게 2장을 나누었습니다.");
     }
 

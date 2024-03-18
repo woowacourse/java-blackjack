@@ -20,8 +20,8 @@ public class Players {
 
     public static Players from(List<String> playerNames) {
         return playerNames.stream()
-            .map(Player::new)
-            .collect(collectingAndThen(toList(), Players::new));
+                .map(Player::new)
+                .collect(collectingAndThen(toList(), Players::new));
     }
 
     private void validateEmptyPlayers(List<Player> players) {
@@ -48,6 +48,12 @@ public class Players {
         updatedPlayers.remove(player);
         updatedPlayers.add(index, updatedPlayer);
         return new Players(updatedPlayers);
+    }
+
+    public List<String> playersNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
     }
 
     public List<Player> getPlayers() {
