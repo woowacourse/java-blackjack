@@ -63,11 +63,14 @@ public class Casino {
     }
 
     public DealerFaceUpResult getDealerFaceUpResult() {
-        return entrant.getDealerFaceUpResult();
+        return ResultMapper.toDealerFaceUpResult(entrant.getDealer());
     }
 
     public List<PlayerFaceUpResult> getPlayerFaceUpResult() {
-        return entrant.getPlayerFaceUpResults();
+        return entrant.getPlayers()
+                .stream()
+                .map(ResultMapper::toPlayerFaceUpResult)
+                .toList();
     }
 
     public void aggregateBettingResult() {

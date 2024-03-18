@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 import model.card.Card;
-import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.PlayerFaceUpResult;
-import util.ResultMapper;
 
 public class Entrant {
     private final Dealer dealer;
@@ -53,25 +50,19 @@ public class Entrant {
                 .anyMatch(Player::canHit);
     }
 
+    public void aggregateBettingResult() {
+        players.forEach(player -> player.updateMatchResult(dealer.matchState, dealer.getHand()));
+    }
+
     private Player getCurrentPlayer() {
         return Objects.requireNonNull(players.peek());
     }
 
-    public DealerFaceUpResult getDealerFaceUpResult() {
-        return ResultMapper.toDealerFaceUpResult(dealer);
-    }
-
-    public List<PlayerFaceUpResult> getPlayerFaceUpResults() {
-        return players.stream()
-                .map(ResultMapper::toPlayerFaceUpResult)
-                .toList();
-    }
-
-    public void aggregateBettingResult(){
-        players.forEach(player -> player.updateMatchResult(dealer.matchState, dealer.getHand()));
-    }
-
     public List<Player> getPlayers() {
         return List.copyOf(players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

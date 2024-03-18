@@ -38,33 +38,4 @@ class EntrantTest {
         Dealer dealer = new Dealer(card1, card2);
         return new Entrant(dealer, players);
     }
-
-    @Test
-    @DisplayName("딜러의 정보(이름, 카드 패, 핸드)를 포함하는 데이터 전송 객체를 반환한다. ")
-    void getDealerFaceUpResult_ShouldReturnDealerCardInfo_WhenCalled() {
-
-        // Then
-        DealerFaceUpResult result = entrant.getDealerFaceUpResult();
-        assertAll(() -> {
-            assertEquals(List.of("A스페이드", "2스페이드", "3스페이드"), result.getCardsAsStrings());
-            assertEquals(16, result.hand());
-        });
-    }
-
-    @Test
-    @DisplayName("딜러의 정보(이름, 카드 패, 핸드)를 포함하는 데이터 전송 객체를 반환한다. ")
-    void getPlayerFaceUpResult_ShouldReturnPlayerCardInfo_WhenCalled() {
-
-        // Then
-        List<PlayerFaceUpResult> result = entrant.getPlayerFaceUpResults();
-        assertAll(() -> {
-            assertEquals("프람", result.get(0)
-                    .getPartipantNameAsString());
-            assertEquals(List.of("A스페이드", "2스페이드", "3하트"), result.get(0)
-                    .getCardsAsStrings());
-            assertEquals(16, result.get(0)
-                    .hand());
-        });
-    }
-
 }
