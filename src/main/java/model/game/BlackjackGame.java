@@ -1,5 +1,8 @@
 package model.game;
 
+import java.math.BigDecimal;
+import java.util.List;
+import model.betting.Bet;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.Dealer;
@@ -8,7 +11,8 @@ import model.participant.Player;
 import model.participant.Players;
 import model.result.ParticipantCard;
 import model.result.ParticipantCards;
-import model.result.ParticipantProfits;
+import model.result.ProfitDto;
+import model.result.ProfitsDto;
 import model.result.ParticipantScores;
 
 public class BlackjackGame {
@@ -55,7 +59,30 @@ public class BlackjackGame {
         return ParticipantScores.of(dealer, players);
     }
 
-    public ParticipantProfits calculateProfit(Dealer dealer, Players players) {
-        return ParticipantProfits.of(players, dealer);
+    public ProfitsDto calculateProfit(Dealer dealer, Players players) {
+        List<ProfitDto> playersProfits = calculatePlayerProfits(players, dealer);
+        ProfitDto dealerProfit = calculateDealerProfit(playersProfits, dealer);
+        return new ProfitsDto(dealerProfit, playersProfits);
+    }
+
+    private List<ProfitDto> calculatePlayerProfits(Players players, Dealer dealer) {
+        return players.getPlayers()
+            .stream()
+            .map(player -> generatePlayerProfit(player, dealer))
+            .toList();
+    }
+
+    private ProfitDto generatePlayerProfit(Player player, Dealer dealer) {
+        Bet bet = player.getBet();
+        GameResult resultStatus = dealer.judge(player);
+        BigDecimal profit = resultStatus.calculateProfit(bet);
+        return new ProfitDto(player.getName(), profit);
+    }
+
+    private ProfitDto calculateDealerProfit(List<ProfitDto> playerProfits, Dealer dealer) {
+        BigDecimal profit = playerProfits.stream()
+            .map(ProfitDto::profit)
+            .reduce(BigDecimal.ZERO, BigDecimal::subtract);
+        return new ProfitDto(dealer.getName(), profit);
     }
 }

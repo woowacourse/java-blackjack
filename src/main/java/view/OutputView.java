@@ -4,7 +4,7 @@ import java.util.List;
 import model.result.ParticipantCard;
 import model.result.ParticipantCards;
 import model.result.ProfitDto;
-import model.result.ParticipantProfits;
+import model.result.ProfitsDto;
 import model.result.ParticipantScore;
 import model.result.ParticipantScores;
 
@@ -64,9 +64,9 @@ public class OutputView {
         System.out.printf(SCORE_FORMAT, participantCard.getName(), cards, participantScore.getScore());
     }
 
-    public static void printProfits(ParticipantProfits participantProfits) {
-        ProfitDto dealerProfit = participantProfits.getDealerProfit();
-        List<ProfitDto> playerProfits = participantProfits.getPlayerProfits();
+    public static void printProfits(ProfitsDto participantProfits) {
+        ProfitDto dealerProfit = participantProfits.dealerProfit();
+        List<ProfitDto> playerProfits = participantProfits.playerProfits();
         System.out.print(PROFIT_RESULT_INTRO);
         printProfit(dealerProfit);
         playerProfits.forEach(OutputView::printProfit);
