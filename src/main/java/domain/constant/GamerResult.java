@@ -18,13 +18,13 @@ public enum GamerResult {
     }
 
     public static GamerResult judgePlayerResult(HandStatus dealerHandStatus, HandStatus playerHandStatus) {
-        if (isPlayerLose(dealerHandStatus.getScore(), playerHandStatus.getScore())) {
+        if (isPlayerLose(dealerHandStatus.score(), playerHandStatus.score())) {
             return GamerResult.LOSE;
         }
         if (isBlackJack(playerHandStatus) && !isBlackJack(dealerHandStatus)) {
             return GamerResult.BLACKJACK;
         }
-        if (isPlayerWin(dealerHandStatus.getScore(), playerHandStatus.getScore())) {
+        if (isPlayerWin(dealerHandStatus.score(), playerHandStatus.score())) {
             return GamerResult.WIN;
         }
         return GamerResult.DRAW;
@@ -39,8 +39,8 @@ public enum GamerResult {
     }
 
     private static boolean isBlackJack(HandStatus handStatus) {
-        return handStatus.getScore() == BLACKJACK_SCORE
-                && handStatus.getHandCount() == INITIAL_HAND_COUNT;
+        return handStatus.score() == BLACKJACK_SCORE
+                && handStatus.handCount() == INITIAL_HAND_COUNT;
     }
 
     public GamerResult getOpponentGameResult() {
