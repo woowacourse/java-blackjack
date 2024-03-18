@@ -25,19 +25,17 @@ public class BlackJackGameBoard {
     public static void startGame() {
         Deck deck = new Deck(new ShuffledDeckCreateStrategy());
         Game game = makeGame(deck);
-        Dealer gameDealer = game.getDealer();
-        Players gamePlayers = game.getPlayers();
-        BetManager betManager = readPlayersBetMoney(gamePlayers);
+        BetManager betManager = readPlayersBetMoney(game.getPlayers());
 
-        printInitialHands(gameDealer, gamePlayers);
+        printInitialHands(game.getDealer(), game.getPlayers());
 
-        confirmParticipantsHands(gameDealer, gamePlayers, deck);
+        confirmParticipantsHands(game, deck);
 
-        OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
+        OutputView.printFinalHandsAndScoreMessage(game.getDealer(), game.getPlayers());
 
         GameResult gameResult = game.makeGameResult();
-        OutputView.printGameResult(gameDealer, gameResult);
-        OutputView.printProfitResult(gameDealer, gamePlayers, gameResult, betManager);
+        OutputView.printGameResult(game.getDealer(), gameResult);
+        OutputView.printProfitResult(game.getDealer(), game.getPlayers(), gameResult, betManager);
     }
 
     private static BetManager readPlayersBetMoney(Players players) {
@@ -73,25 +71,8 @@ public class BlackJackGameBoard {
         OutputView.printParticipantsInitialHands(dealer, players);
     }
 
-    private static void confirmParticipantsHands(Dealer dealer, Players players, Deck deck) {
-        askDrawUntilConfirmHands(players, deck);
-        confirmDealerHands(dealer, deck);
-    }
-
-    private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        dealer.confirmDealerHands(deck, OutputView::printDealerDrawMessage);
-    }
-
-    private static void askDrawUntilConfirmHands(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            askDrawToPlayer(player, deck);
-        }
-    }
-
-    private static void askDrawToPlayer(Player player, Deck deck) {
-        while (!player.isBust() && InputView.askDraw(player)) {
-            player.draw(deck);
-            OutputView.printPlayerHands(player);
-        }
+    private static void confirmParticipantsHands(Game game, Deck deck) {
+        game.confirmPlayersHands(deck, InputView::askDraw, OutputView::printPlayerHands);
+        game.confirmDealerHands(deck, OutputView::printDealerDrawMessage);
     }
 }
