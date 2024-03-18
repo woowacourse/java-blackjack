@@ -10,6 +10,7 @@
 - [x] 카드는 조커를 제외한 52장을 활용한다
 - [x] 중복되는 카드는 존재하지 않는다
 - [x] 에이스는 1 또는 11의 값을 가질 수 있다
+- [x] 에이스는 21을 넘지 않는 숫자 중에 플레이어에게 유리한 숫자로 취급한다.
 - [x] J,Q,K는 10으로 취급한다
 
 ### 참여자 이름 입력
@@ -20,6 +21,10 @@
         - [x] 이름은 영어, 숫자, 한글로만 구성된다.
         - [x] 이름의 길이는 1이상 15이하로 구성된다.
     - [x] 플레이어는 최소 1명이상 최대 8명까지 참여할 수 있다.
+
+### 배팅 금액 확정
+
+- [x] 플레이어들은 배팅금액을 결정한다
 
 ### 블랙잭 게임 실행
 
@@ -70,12 +75,50 @@
 
 - [x] 딜러를 포함한 각 플레이어의 카드패를 출력한다
 - [x] 딜러의 게임 결과를 출력한다
-- [x] 각 플레이어의 이름과 게임 결과를 출력한다
-    - ex)
-    - ```
-  최종 승패
-  딜러: 1승 2패
-  pobi: 승
-  jason: 패
-  dodo: 승
-    ```
+- [x] 각 플레이어의 이름과 수익을 출력한다
+    - [x] 승리하면 배팅한 금액만큼 수익을 얻는다
+    - [x] 처음 두 장이 블랙잭이면 1.5배를 받는다
+    - [x] 플레이어와 딜러가 동시에 블랙잭이면 베팅한 금액을 돌려받는다
+    - [x] 21을 초과할 경우 배팅 금액을 모두 잃는다
+
+
+## 1차 리뷰 개선사안
+
+- controller/GameController : Game 생성 로직에서 예외처리
+
+
+- domain : Map 생성자 인수 개선 
+  - 확장성을 고려하여 각자에게 필요한 인수만으로 리팩터링
+- gameResult/Profit : 최대/최소 수익이 아닌 수익률을 가지고 있도록 수정
+- gameResult/Profit : Batting 객체를 통한 최대/최소 수익 계산
+- gameResult : 승패 판정 책임과 결과에 따른 수익 반환 책임 분리
+  - Result(enum) : 승패 판정
+  - ResultProfit(enum) : 승패에 따른 수익 반환
+- card/Card : 해당 카드 번호를 가졌는지 메시지를 반환하는 메서드 추가
+- hands/HandsScore : BLACK_JACK 점수 객체를 반환하는 정적 팩토리 메서드 추가
+- hands/HandsScore : 자주 사용되는 스코어 인스턴스 캐싱
+- participant : 딜러 이름 관리 책임 이전 (Name > Dealer)
+- 스트림 orElseThrow를 통한 Optional 타입 값 예외처리
+- eq & hc 컨벤션 준수를 통한 코드 가독성 개선
+- 불필요한 TODO 및 주석 삭제
+
+- view: 컨벤션 준수를 통한 코드 가독성 개선
+- test/BattingTest : 성공/실패 각각의 테스트 케이스 추가
+- test/ProfitTest : 성공/실패 각각의 테스트 케이스 추가 
+
+## 2차 리뷰 개선사안
+- 상속관계 Participants 삭제
+- 베팅을 관리하는 GameBattings 객체 추가
+- 게임 결과 판단에 대한 책임을 Game으로 이전하여 Map<Player, Profit>을 GameResult에게 넘겨줌
+- 결과와 결과조건에 대한 책임 분리
+  - Result : 승패 결과만을 대변
+  - ResultJudge : 승패 판단 
+- GameResult : 딜러 수익 결과 반환 로직 추가
+- Profit : 범위 검증 과정 삭제
+- rename: Value > CardNumber 
+
+
+## 3차 리뷰 개선사안
+- 상속관계인 Participant 추상 클래스 롤백
+- Game: makeGameResult 메서드에서 GameResult를 생성
+- GameResult : getDelaerProfit 메서드를 Profit.reverse()와의 협력으로 구현

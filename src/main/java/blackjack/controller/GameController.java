@@ -1,8 +1,21 @@
 package blackjack.controller;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.game.Deck;
+import blackjack.domain.game.Game;
+import blackjack.domain.game.GameBettings;
+import blackjack.domain.game.GameParticipants;
+import blackjack.domain.gameresult.Betting;
+import blackjack.domain.gameresult.GameResult;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameController {
 
@@ -10,56 +23,70 @@ public class GameController {
     }
 
     public static void run() {
-        Deck deck = Deck.createSuffledDeck();
+        Deck deck = Deck.createShuffledDeck();
         Game game = makeGame(deck);
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
 
-        printInitialHands(gameDealer, gamePlayers);
-
+        printInitialHands(gameDealer.getFirstCard(), gamePlayers.getPlayers());
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-        OutputView.printGameResult(gameDealer, game.makeGameResult());
+        OutputView.printGameResult(game.makeGameResult());
     }
 
     private static Game makeGame(Deck deck) {
+        try {
+            Players players = makePlayers();
+            GameBettings gameBettings = makeGameBattings(players.getPlayers());
+            return Game.of(GameParticipants.of(players), gameBettings, deck);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            makeGame(deck);
+        }
+        throw new IllegalStateException("게임 객체가 생성되지 않았습니다.");
+    }
+
+    private static Players makePlayers() {
         OutputView.printAskNameMessage();
-        Players players = new Players(InputView.readNames());
-        Dealer dealer = new Dealer();
-        return Game.of(deck, dealer, players);
+        return new Players(InputView.readNames());
+    }
+
+    private static GameBettings makeGameBattings(List<Player> players) {
+        Map<Player, Betting> gameBattings = new LinkedHashMap<>();
+        for (Player player : players) {
+            gameBattings.put(player, InputView.readBatting(player.getName()));
+        }
+        return new GameBettings(gameBattings);
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
-        askDrawUntilConfirmHands(players, deck);
+        askDrawUntilConfirmPlayerHands(players, deck);
         confirmDealerHands(dealer, deck);
     }
 
-    private static void printInitialHands(Dealer dealer, Players players) {
-        OutputView.printDrawInitialHandsMessage(dealer, players);
-        OutputView.printParticipantsInitialHands(dealer, players);
+    private static void printInitialHands(Card dealerFirstCard, List<Player> players) {
+        OutputView.printDrawInitialHandsMessage(players);
+        OutputView.printParticipantsInitialHands(dealerFirstCard, players);
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        System.out.println();
-        while (dealer.draw(deck)) {
-            OutputView.printDealerDrawMessage(dealer);
+        while (dealer.canAddCard()) {
+            dealer.addCard(deck.draw());
+            OutputView.printDealerDrawMessage();
         }
-        System.out.println();
     }
 
-    private static void askDrawUntilConfirmHands(Players players, Deck deck) {
+    private static void askDrawUntilConfirmPlayerHands(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             askDrawToPlayer(player, deck);
         }
     }
 
     private static void askDrawToPlayer(Player player, Deck deck) {
-        boolean isDraw = true;
-        while (isDraw) {
-            OutputView.printAskDrawMessage(player.getName());
-            isDraw = player.draw(InputView::askDraw, deck);
-            OutputView.printParticipantHands(player);
+        while (player.canAddCard() && InputView.askDraw(player.getName())) {
+            player.addCard(deck.draw());
+            OutputView.printParticipantHands(player.getName(), player.getHandsCards());
         }
     }
 }
