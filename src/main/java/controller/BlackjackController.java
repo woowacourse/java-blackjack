@@ -2,13 +2,16 @@ package controller;
 
 import java.util.List;
 import java.util.function.Supplier;
+import model.betting.Bet;
 import model.game.BlackjackGame;
 import model.game.HitChoice;
+import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.DealerResult;
-import model.result.GameResult;
-import model.result.PlayerResults;
+import model.result.CardDto;
+import model.result.CardsDto;
+import model.result.ProfitsDto;
+import model.result.ScoresDto;
 import view.InputView;
 import view.OutputView;
 
@@ -16,22 +19,41 @@ public class BlackjackController {
 
     public void run() {
         Players players = preparePlayers();
+        prepareBets(players);
+        Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
 
-        blackjackGame.dealInitialCards(players);
-        OutputView.printInitialCards(blackjackGame, players);
+        CardsDto participantCards = blackjackGame.dealInitialCards(dealer, players);
+        OutputView.printInitialCards(participantCards);
 
         playersTurnAndPrintCards(players, blackjackGame);
-        dealerTurnAndPrintCard(blackjackGame);
+        dealerTurnAndPrintCard(dealer, blackjackGame);
 
-        GameResult gameResult = blackjackGame.finish(players);
-        printGameResult(gameResult);
+        ScoresDto participantScores = blackjackGame.finish(dealer, players);
+        OutputView.printScores(participantScores);
+
+        ProfitsDto participantProfits = blackjackGame.calculateProfit(dealer, players);
+        OutputView.printProfits(participantProfits);
     }
 
     private Players preparePlayers() {
         return retryOnException(() -> {
             List<String> playerNames = InputView.askPlayerNames();
             return Players.from(playerNames);
+        });
+    }
+
+    private void prepareBets(Players players) {
+        for (Player player : players.getPlayers()) {
+            Bet bet = prepareBet(player);
+            player.setBet(bet);
+        }
+    }
+
+    private Bet prepareBet(Player player) {
+        return retryOnException(() -> {
+            String amount = InputView.askBet(player);
+            return new Bet(amount);
         });
     }
 
@@ -42,8 +64,8 @@ public class BlackjackController {
 
     private void askHitAndPrintCards(Player player, BlackjackGame blackjackGame) {
         while (player.isPossibleHit() && prepareHitChoice(player).isHit()) {
-            blackjackGame.dealCard(player);
-            OutputView.printPlayerCards(player);
+            CardDto playerCard = blackjackGame.dealCardTo(player);
+            OutputView.printCards(playerCard);
         }
     }
 
@@ -54,17 +76,11 @@ public class BlackjackController {
         });
     }
 
-    private void dealerTurnAndPrintCard(BlackjackGame blackjackGame) {
-        boolean isDealerHit = blackjackGame.dealerHitTurn();
+    private void dealerTurnAndPrintCard(Dealer dealer, BlackjackGame blackjackGame) {
+        boolean isDealerHit = blackjackGame.dealCardTo(dealer);
         if (isDealerHit) {
             OutputView.printAfterDealerHit();
         }
-    }
-
-    private void printGameResult(GameResult gameResult) {
-        PlayerResults playerResults = PlayerResults.from(gameResult);
-        DealerResult dealerResult = DealerResult.from(playerResults);
-        OutputView.printGameResult(gameResult, dealerResult, playerResults);
     }
 
     private static <T> T retryOnException(Supplier<T> retryOperation) {

@@ -1,4 +1,4 @@
-package model.game;
+package model.game.action;
 
 import model.card.Card;
 
@@ -6,5 +6,5 @@ public interface HitAction {
 
     boolean isPossibleHit();
 
-    void hitCard(Card card);
+    void hit(Card card);
 }

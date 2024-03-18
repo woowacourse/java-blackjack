@@ -1,65 +1,107 @@
 package model.game;
 
-import java.util.stream.IntStream;
+import java.math.BigDecimal;
+import java.util.List;
+import model.betting.Bet;
 import model.card.Card;
-import model.card.CardShuffler;
+import model.card.CardDeck;
 import model.participant.Dealer;
+import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.GameResult;
+import model.result.CardDto;
+import model.result.CardsDto;
+import model.result.ScoreDto;
+import model.result.ScoresDto;
+import model.result.ProfitDto;
+import model.result.ProfitsDto;
 
 public class BlackjackGame {
 
     private static final int DEQUE_COUNT = 4;
     private static final int INITIAL_CARD_COUNT = 2;
 
-    private final CardShuffler cardShuffler;
-    private final Dealer dealer;
+    private final CardDeck cardDeck;
 
     public BlackjackGame() {
-        cardShuffler = CardShuffler.of(DEQUE_COUNT);
-        dealer = new Dealer();
+        cardDeck = CardDeck.createShuffledDeck(DEQUE_COUNT);
     }
 
-    public void dealInitialCards(Players players) {
-        dealCardsToDealer();
-        dealCardsToPlayers(players);
+    public CardsDto dealInitialCards(Dealer dealer, Players players) {
+        dealCards(dealer);
+        CardDto dealerCard = new CardDto(dealer.getName(), dealer.getFirstCard());
+        List<CardDto> playerCards = players.getPlayers()
+            .stream()
+            .map(this::dealCards)
+            .toList();
+        return new CardsDto(dealerCard, playerCards);
     }
 
-    private void dealCardsToDealer() {
-        IntStream.range(0, INITIAL_CARD_COUNT)
-            .forEach(count -> dealer.hitCard(cardShuffler.drawCard()));
+    private CardDto dealCards(Participant participant) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            Card card = cardDeck.drawCard();
+            participant.hit(card);
+        }
+        return new CardDto(participant.getName(), participant.getCardsInfo());
     }
 
-    private void dealCardsToPlayers(Players players) {
-        IntStream.range(0, players.count())
-            .forEach(order -> dealCardsToPlayer(players, order));
+    public CardDto dealCardTo(Player player) {
+        Card card = cardDeck.drawCard();
+        player.hit(card);
+        return new CardDto(player.getName(), player.getCardsInfo());
     }
 
-    private void dealCardsToPlayer(Players players, int order) {
-        IntStream.range(0, INITIAL_CARD_COUNT)
-            .forEach(count -> players.hitCard(order, cardShuffler.drawCard()));
-    }
-
-    public void dealCard(Player player) {
-        Card card = cardShuffler.drawCard();
-        player.hitCard(card);
-    }
-
-    public boolean dealerHitTurn() {
+    public boolean dealCardTo(Dealer dealer) {
         if (dealer.isPossibleHit()) {
-            Card card = cardShuffler.drawCard();
-            dealer.hitCard(card);
+            Card card = cardDeck.drawCard();
+            dealer.hit(card);
             return true;
         }
         return false;
     }
 
-    public GameResult finish(Players players) {
-        return GameResult.of(dealer, players);
+    public ScoresDto finish(Dealer dealer, Players players) {
+        ScoreDto dealerScore = createScore(dealer);
+        List<ScoreDto> playerScores = createPlayerScores(players);
+        return new ScoresDto(dealerScore, playerScores);
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    private List<ScoreDto> createPlayerScores(Players players) {
+        return players.getPlayers()
+            .stream()
+            .map(this::createScore)
+            .toList();
+    }
+
+    private ScoreDto createScore(Participant participant) {
+        CardDto card = new CardDto(participant.getName(), participant.getCardsInfo());
+        return new ScoreDto(card, participant.score());
+    }
+
+    public ProfitsDto calculateProfit(Dealer dealer, Players players) {
+        List<ProfitDto> playersProfits = calculatePlayerProfits(players, dealer);
+        ProfitDto dealerProfit = calculateDealerProfit(playersProfits, dealer);
+        return new ProfitsDto(dealerProfit, playersProfits);
+    }
+
+    private List<ProfitDto> calculatePlayerProfits(Players players, Dealer dealer) {
+        return players.getPlayers()
+            .stream()
+            .map(player -> generatePlayerProfit(player, dealer))
+            .toList();
+    }
+
+    private ProfitDto generatePlayerProfit(Player player, Dealer dealer) {
+        Bet bet = player.getBet();
+        GameResult resultStatus = dealer.judge(player);
+        BigDecimal profit = resultStatus.calculateProfit(bet);
+        return new ProfitDto(player.getName(), profit);
+    }
+
+    private ProfitDto calculateDealerProfit(List<ProfitDto> playerProfits, Dealer dealer) {
+        BigDecimal profit = playerProfits.stream()
+            .map(ProfitDto::profit)
+            .reduce(BigDecimal.ZERO, BigDecimal::subtract);
+        return new ProfitDto(dealer.getName(), profit);
     }
 }

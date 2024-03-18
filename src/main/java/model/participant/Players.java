@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.toList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.card.Card;
 
 public class Players {
 
@@ -24,26 +23,13 @@ public class Players {
     }
 
     private static void validate(List<String> playerNames) {
-        validateEmpty(playerNames);
-        validatePlayerNamesUnique(playerNames);
-    }
-
-    private static void validateEmpty(List<String> playerNames) {
         if (playerNames.isEmpty()) {
             throw new IllegalArgumentException("플레이어 수는 1명 이상이어야 합니다.");
         }
-    }
-
-    private static void validatePlayerNamesUnique(List<String> playerNames) {
         Set<String> uniqueNames = new HashSet<>(playerNames);
         if (uniqueNames.size() < playerNames.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
-    }
-
-    public void hitCard(int order, Card card) {
-        Player player = players.get(order);
-        player.hitCard(card);
     }
 
     public List<String> names() {
@@ -52,7 +38,7 @@ public class Players {
             .toList();
     }
 
-    public int count() {
+    public int size() {
         return players.size();
     }
 

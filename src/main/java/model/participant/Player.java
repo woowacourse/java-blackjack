@@ -1,37 +1,34 @@
 package model.participant;
 
 import java.util.List;
+import model.betting.Bet;
+import model.card.Card;
 import model.card.Cards;
 
 public class Player extends Participant {
 
     private static final int HIT_CONDITION = 22;
 
-    private final String name;
+    private Bet bet;
 
     public Player(String name) {
-        this(name, new Cards(List.of()));
+        this(name, List.of());
     }
 
-    public Player(String name, Cards cards) {
-        super(cards);
-        validateEmptyName(name);
-        this.name = name;
-    }
-
-    private void validateEmptyName(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("플레이어 이름은 빈 값일 수 없습니다.");
-        }
+    public Player(String name, List<Card> cards) {
+        super(Name.createPlayerName(name), new Cards(cards));
     }
 
     @Override
     public boolean isPossibleHit() {
-        int totalNumbers = cards.calculateTotalScore();
-        return totalNumbers < HIT_CONDITION;
+        return score() < HIT_CONDITION;
     }
 
-    public String getName() {
-        return name;
+    public void setBet(Bet bet) {
+        this.bet = bet;
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }
