@@ -5,7 +5,8 @@ public class ReferenceTest {
 
         private String color;
 
-        public Balloon() {}
+        public Balloon() {
+        }
 
         public Balloon(String c) {
             this.color = c;
@@ -30,12 +31,9 @@ public class ReferenceTest {
         System.out.println("After the swap method executes:");
         System.out.println("`red` color value = " + red.getColor());
         System.out.println("`blue` color value = " + blue.getColor());
-
-
     }
 
-    // Generic swap method
-    public static void swap(Object o1, Object o2){
+    public static void swap(Object o1, Object o2) {
         System.out.println(o1);
         System.out.println(o2);
         Object temp = o1;
@@ -44,5 +42,4 @@ public class ReferenceTest {
         System.out.println(o1);
         System.out.println(o2);
     }
-
 }
