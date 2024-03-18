@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.DeckMachine;
-import blackjack.domain.game.Referee;
+import blackjack.domain.game.ResultJudge;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Names;
@@ -105,10 +105,10 @@ public class BlackjackController {
     }
 
     private void calculateGameResult(Dealer dealer, Players players) {
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
         ProfitCalculator calculator = new ProfitCalculator();
 
-        players.calculateProfit(dealer, referee, calculator);
+        players.calculateProfit(dealer, resultJudge, calculator);
         calculator.dealerProfit(dealer, players);
     }
 

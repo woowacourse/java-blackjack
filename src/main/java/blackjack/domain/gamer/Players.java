@@ -2,7 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayerResult;
-import blackjack.domain.game.Referee;
+import blackjack.domain.game.ResultJudge;
 import blackjack.domain.money.ProfitCalculator;
 
 import java.util.Collections;
@@ -28,10 +28,10 @@ public class Players {
                 .sum();
     }
 
-    public void calculateProfit(Dealer dealer, Referee referee,
+    public void calculateProfit(Dealer dealer, ResultJudge resultJudge,
                                 ProfitCalculator calculator) {
         for (Player player : values) {
-            PlayerResult result = referee.judgePlayerResult(dealer, player);
+            PlayerResult result = resultJudge.judgePlayerResult(dealer, player);
             calculator.playerProfit(player, result);
         }
     }

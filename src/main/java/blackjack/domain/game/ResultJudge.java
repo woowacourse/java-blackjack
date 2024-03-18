@@ -3,7 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
-public class Referee {
+public class ResultJudge {
 
     public PlayerResult judgePlayerResult(Dealer dealer, Player player) {
         if (player.isBlackjack() && !dealer.isBlackjack()) {

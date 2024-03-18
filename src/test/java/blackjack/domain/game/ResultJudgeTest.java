@@ -27,18 +27,18 @@ import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("심판")
-public class RefereeTest {
+public class ResultJudgeTest {
     @Test
     @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이기는지 테스트한다.")
     void playerWinTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB)));
         dealer.draw(List.of(Card.of(EIGHT, SPADE), Card.of(QUEEN, CLUB)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.WIN);
     }
 
@@ -47,12 +47,12 @@ public class RefereeTest {
     void playerLoseWhenBustTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB), Card.of(THREE, CLUB)));
         dealer.draw(List.of(Card.of(EIGHT, SPADE), Card.of(QUEEN, CLUB), Card.of(TWO, SPADE)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.LOSE);
     }
 
@@ -61,12 +61,12 @@ public class RefereeTest {
     void pushTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(THREE, CLUB)));
         dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(THREE, SPADE)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.PUSH);
     }
 
@@ -75,12 +75,12 @@ public class RefereeTest {
     void pushWhenSameBlackjackTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(ACE, SPADE), Card.of(TEN, CLUB)));
         dealer.draw(List.of(Card.of(ACE, DIAMOND), Card.of(TEN, SPADE)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.PUSH);
     }
 
@@ -89,12 +89,12 @@ public class RefereeTest {
     void playerDealCardsBlackjackTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(ACE, CLUB), Card.of(JACK, CLUB)));
         dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(FIVE, CLUB)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.BLACKJACK_WIN);
     }
 
@@ -103,12 +103,12 @@ public class RefereeTest {
     void playerLoseTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(TWO, CLUB), Card.of(JACK, CLUB)));
         dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(FIVE, CLUB)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.LOSE);
     }
 
@@ -117,12 +117,12 @@ public class RefereeTest {
     void playerDealerAllBustPlayerLoseTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
         dealer.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.LOSE);
     }
 
@@ -131,12 +131,12 @@ public class RefereeTest {
     void dealerBustPlayerNonBustWinTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB)));
         dealer.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.WIN);
     }
 
@@ -145,12 +145,12 @@ public class RefereeTest {
     void dealerBlackjackAndPlayerMaximumTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
-        Referee referee = new Referee();
+        ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(NINE, CLUB), Card.of(TWO, CLUB)));
         dealer.draw(List.of(Card.of(ACE, CLUB), Card.of(JACK, CLUB)));
 
-        assertThat(referee.judgePlayerResult(dealer, player))
+        assertThat(resultJudge.judgePlayerResult(dealer, player))
                 .isEqualTo(PlayerResult.LOSE);
     }
 }
