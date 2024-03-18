@@ -1,28 +1,18 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.card.Score;
 import blackjack.model.cardgenerator.CardGenerator;
 
-import java.util.List;
+import java.util.Objects;
 
 public class Player {
-    private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
-
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
     public Player(final String name, final CardGenerator cardGenerator) {
-        validateName(name);
-        this.name = name;
+        this.name = new Name(name);
         this.cards = Cards.deal(cardGenerator);
-    }
-
-    private void validateName(final String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_NAME_LENGTH);
-        }
     }
 
     public Score calculateCardsTotalScore() {
@@ -45,11 +35,24 @@ public class Player {
         cards.addCard(cardGenerator);
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
     }
 
-    public String getName() {
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    public Cards getCards() {
+        return cards;
+    }
+
+    public Name getName() {
         return name;
     }
 }

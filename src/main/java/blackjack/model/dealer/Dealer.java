@@ -5,8 +5,6 @@ import blackjack.model.card.Cards;
 import blackjack.model.card.Score;
 import blackjack.model.cardgenerator.CardGenerator;
 
-import java.util.List;
-
 public class Dealer {
     private static final Score END_CONDITION = Score.from(17);
     private static final int NON_ACTION_COUNT = 2;
@@ -43,7 +41,7 @@ public class Dealer {
         return cards.get(0);
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 }

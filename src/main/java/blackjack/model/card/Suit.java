@@ -12,14 +12,6 @@ public enum Suit {
         this.name = name;
     }
 
-    public static int getSize() {
-        return values().length;
-    }
-
-    public static Suit findByIndex(final int index) {
-        return values()[index];
-    }
-
     public String getName() {
         return name;
     }

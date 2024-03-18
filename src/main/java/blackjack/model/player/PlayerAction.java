@@ -1,27 +1,17 @@
 package blackjack.model.player;
 
 public enum PlayerAction {
-    HIT(true),
-    STAND(false);
+    HIT,
+    STAND;
 
-    private final boolean asked;
-
-    PlayerAction(final boolean asked) {
-        this.asked = asked;
-    }
-
-    public static PlayerAction from(final boolean askContinuance) {
-        if (askContinuance) {
+    public static PlayerAction from(final boolean actionCommand) {
+        if (actionCommand) {
             return HIT;
         }
         return STAND;
     }
 
-    public boolean isAsked() {
-        return asked;
-    }
-
-    public boolean canContinue(final Player player) {
-        return player.canHit() && asked;
+    public boolean canNotContinue(final Player player) {
+        return this.equals(STAND) || !player.canHit();
     }
 }

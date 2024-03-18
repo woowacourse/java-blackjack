@@ -4,8 +4,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.unmodifiableList;
+import java.util.stream.Collectors;
 
 public class Cards {
     private static final Score MAX_CARDS_TOTAL = Score.from(21);
@@ -27,17 +26,16 @@ public class Cards {
     }
 
     public Score calculateCardsTotalScore() {
-        Score totalScore = sumAllScores();
+        Score totalScore = sumScores();
         if (hasAce() && canBeAdjusted(totalScore)) {
-            return adjustTotalForAce(totalScore);
+            return adjustScoreForAce(totalScore);
         }
         return totalScore;
     }
 
-    private Score sumAllScores() {
+    private Score sumScores() {
         return cards.stream()
-                .map(Card::getDenomination)
-                .map(Denomination::getScore)
+                .map(Card::getScore)
                 .reduce(Score.from(0), Score::plus);
     }
 
@@ -51,12 +49,12 @@ public class Cards {
                 .equalToOrLessThan(MAX_CARDS_TOTAL);
     }
 
-    private Score adjustTotalForAce(final Score totalScore) {
-        return totalScore.plus(ACE_ADJUSTMENT);
+    private Score adjustScoreForAce(final Score score) {
+        return score.plus(ACE_ADJUSTMENT);
     }
 
     public boolean isBlackJack() {
-        return calculateCardsTotalScore().equalTo(MAX_CARDS_TOTAL);
+        return cards.size() == 2 && calculateCardsTotalScore().equals(MAX_CARDS_TOTAL);
     }
 
     public boolean isBust() {
@@ -71,7 +69,10 @@ public class Cards {
         return cards.get(index);
     }
 
-    public List<Card> getCards() {
-        return unmodifiableList(cards);
+    @Override
+    public String toString() {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(", "));
     }
 }
