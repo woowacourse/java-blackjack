@@ -50,6 +50,12 @@ public class Players {
         return value.stream();
     }
 
+    public double getTotalSum(final Dealer dealer) {
+        return getValue().stream()
+                .mapToDouble(player -> player.calculateProfit(dealer))
+                .sum();
+    }
+
     public List<Player> getValue() {
         return Collections.unmodifiableList(value);
     }

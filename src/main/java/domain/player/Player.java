@@ -1,7 +1,6 @@
 package domain.player;
 
-import domain.card.Card;
-import dto.PlayerResponse;
+import dto.CardResponse;
 import java.util.Objects;
 
 public final class Player extends Participant {
@@ -40,17 +39,13 @@ public final class Player extends Participant {
         }
 
         hit(dealer);
-        actionAfterPlayerHit.accept(name.value(), getHands().stream().map(Card::toCardResponse).toList());
+        actionAfterPlayerHit.accept(name.value(), getHands().stream().map(CardResponse::of).toList());
 
         automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit);
     }
 
     private void hit(final Dealer dealer) {
         add(dealer.draw());
-    }
-
-    public PlayerResponse toPlayerResponse() {
-        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(), getScore());
     }
 
     public String getName() {

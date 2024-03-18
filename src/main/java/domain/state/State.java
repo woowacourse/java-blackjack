@@ -9,6 +9,8 @@ public interface State {
 
     State stand();
 
+    Result compareWith(State state);
+
     double earningRate();
 
     boolean isFinished();
@@ -18,6 +20,4 @@ public interface State {
     Hands getHands();
 
     int getScore();
-
-    Result compareWith(State state);
 }

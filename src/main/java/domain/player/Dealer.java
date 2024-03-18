@@ -2,7 +2,6 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Deck;
-import dto.DealerResponse;
 
 public final class Dealer extends Participant {
     private static final int HIT_UPPER_BOUND = 17;
@@ -31,9 +30,5 @@ public final class Dealer extends Participant {
 
     private void hit() {
         add(draw());
-    }
-
-    public DealerResponse toDealerResponse() {
-        return new DealerResponse(getHands().stream().map(Card::toCardResponse).toList(), getScore());
     }
 }

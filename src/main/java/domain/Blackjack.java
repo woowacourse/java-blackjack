@@ -4,14 +4,10 @@ import domain.player.ActionAfterDealerHit;
 import domain.player.ActionAfterPlayerHit;
 import domain.player.Dealer;
 import domain.player.DecisionOfPlayer;
-import domain.player.Player;
 import domain.player.Players;
 import dto.GameResult;
 import dto.ParticipantsResponse;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Blackjack {
     public static final int PERFECT_SCORE = 21;
@@ -45,18 +41,10 @@ public class Blackjack {
     }
 
     public GameResult toGameResult() {
-        final Map<String, Double> playerResult = players.getValue()
-                .stream()
-                .collect(Collectors.toMap(Player::getName, player -> player.calculateProfit(dealer), (a, b) -> a,
-                        LinkedHashMap::new));
-
-//        final double dealerProfit = -1.0 * players.getSum();
-
-        return new GameResult(dealerProfit, playerResult);
+        return GameResult.of(dealer, players);
     }
 
     public ParticipantsResponse toParticipantsResponse() {
-        return new ParticipantsResponse(dealer.toDealerResponse(),
-                players.stream().map(Player::toPlayerResponse).toList());
+        return ParticipantsResponse.of(dealer, players);
     }
 }
