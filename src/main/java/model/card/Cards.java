@@ -1,14 +1,14 @@
 package model.card;
 
+import model.BlackJackState;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
-
+public record Cards(List<Card> cards) {
+    private final static int INITIAL_CARD_SIZE = 2;
     private final static int MAXIMUM_SUM = 21;
-
-    private List<Card> cards;
 
     public Cards(List<Card> cards) {
         validateCardSize(cards);
@@ -16,16 +16,12 @@ public class Cards {
     }
 
     private void validateCardSize(List<Card> cards) {
-        if (cards.size() != 2) {
-            throw new IllegalArgumentException("참가자의 초기 카드는 2장입니다.");
+        if (cards.size() != INITIAL_CARD_SIZE) {
+            throw new IllegalArgumentException("참가자의 초기 카드는 " + INITIAL_CARD_SIZE + "장입니다.");
         }
     }
 
-    public void addCards(List<Card> card) {
-        cards.addAll(card);
-    }
-
-    public void addCard(Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
@@ -53,6 +49,14 @@ public class Cards {
         return result;
     }
 
+    public int findPlayerDifference() {
+        return Math.abs(MAXIMUM_SUM - calculateScore());
+    }
+
+    public BlackJackState findBlackJackState() {
+        return BlackJackState.createBlackJackState(calculateScore(), cards.size());
+    }
+
     public boolean isNotHit() {
         return calculateScore() > MAXIMUM_SUM;
     }
@@ -61,11 +65,8 @@ public class Cards {
         return !isNotHit();
     }
 
-    public int findPlayerDifference() {
-        return Math.abs(MAXIMUM_SUM - calculateScore());
-    }
-
-    public List<Card> getCards() {
+    @Override
+    public List<Card> cards() {
         return Collections.unmodifiableList(cards);
     }
 }

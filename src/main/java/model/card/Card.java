@@ -1,30 +1,51 @@
 package model.card;
 
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Card {
-    private final CardShape shape;
-    private final CardNumber number;
+    private static final Set<Card> cardDeck;
 
-    public Card(CardShape shape, CardNumber number) {
-        this.shape = shape;
-        this.number = number;
+    static {
+        cardDeck = Arrays.stream(Suit.values())
+                .flatMap(newSuit -> Arrays.stream(Denomination.values())
+                        .map(newDenomination -> new Card(newSuit, newDenomination)))
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    private final Suit suit;
+    private final Denomination denomination;
+
+    private Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
+    }
+
+    public static List<Card> createCardDeck() {
+        return new ArrayList<>(cardDeck);
+    }
+
+    public static Card of(Suit suit, Denomination denomination) {
+        return cardDeck.stream()
+                .filter(card -> card.suit == suit && card.denomination == denomination)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(suit.name() + denomination.name() + " 카드는 존재하지 않습니다."));
     }
 
     public int minimumNumber() {
-        return number.minimumNumber();
+        return denomination.minimumNumber();
     }
 
     public int subtractMaxMinNumber() {
-        return number.maximumNumber() - number.minimumNumber();
+        return denomination.maximumNumber() - denomination.minimumNumber();
     }
 
-    public CardShape getShape() {
-        return shape;
+    public Suit suit() {
+        return suit;
     }
 
-    public CardNumber getNumber() {
-        return number;
+    public Denomination denomination() {
+        return denomination;
     }
 
     @Override
@@ -36,11 +57,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return shape == card.shape && number == card.number;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape, number);
+        return Objects.hash(suit, denomination);
     }
 }

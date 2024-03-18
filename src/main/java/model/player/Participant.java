@@ -1,16 +1,35 @@
 package model.player;
 
-import java.util.List;
 import model.Outcome;
 import model.card.Card;
+import model.card.Cards;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Participant extends User {
+    private final ParticipantProfile profile;
 
-    public Participant(String name, List<Card> cards) {
-        super(name, cards);
+    public Participant(Cards cards, ParticipantProfile profile) {
+        super(cards);
+        this.profile = profile;
     }
 
-    public Outcome findOutcome(Dealer dealer) {
+    public void offerCard(Predicate<Name> inputForMoreCard,
+                          BiConsumer<Name, Cards> printParticipantsCard, Supplier<Card> selectCard) {
+        while (isHit() && inputForMoreCard.test(profile.name())) {
+            addCard(selectCard.get());
+            printParticipantsCard.accept(profile.name(), cards());
+        }
+    }
+
+    public int calculateRevenue(Dealer dealer) {
+        return profile.calculateRevenue(findOutcome(dealer), cards.findBlackJackState());
+    }
+
+    private Outcome findOutcome(Dealer dealer) {
         if (isNotHit()) {
             return Outcome.LOSE;
         }
@@ -18,5 +37,33 @@ public class Participant extends User {
             return Outcome.WIN;
         }
         return findPlayerOutcome(dealer.findPlayerDifference());
+    }
+
+    private Outcome findPlayerOutcome(int otherDifference) {
+        int difference = findPlayerDifference();
+        if (otherDifference > difference) {
+            return Outcome.WIN;
+        }
+        if (otherDifference < difference) {
+            return Outcome.LOSE;
+        }
+        return Outcome.DRAW;
+    }
+
+    public Name name() {
+        return profile.name();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(profile, that.profile);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(profile);
     }
 }

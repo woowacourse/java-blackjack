@@ -1,8 +1,8 @@
 package model.card;
 
-public enum CardShape {
+public enum Suit {
     SPACE,
-    CLOVER,
+    ClUBS,
     HEART,
     DIAMOND,
     ;

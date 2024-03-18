@@ -1,18 +1,18 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import model.BlackJack;
+import model.card.Card;
 import model.card.CardDeck;
 import model.card.CardSize;
-import model.player.Dealer;
-import model.player.Participant;
-import model.player.Participants;
+import model.card.Cards;
+import model.player.*;
 import view.InputView;
 import view.OutputView;
 
-public class BlackJackController {
+import java.util.List;
+import java.util.function.Supplier;
 
+public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -22,27 +22,36 @@ public class BlackJackController {
     }
 
     public void startGame() {
-        BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
+        BlackJack blackJack = createBlackJack();
 
         outputView.printPlayerNames(blackJack.findParticipantsName());
-        outputView.printPlayerCards(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
+        outputView.printPlayerCards(blackJack.findDealerCards(), blackJack.matchParticipantsNameAndCards());
 
         offerMoreCards(blackJack);
 
-        outputView.printBlackJackScore(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
-        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantsOutcome());
+        outputView.printBlackJackScore(blackJack.findDealerCards(), blackJack.matchParticipantsNameAndCards());
+        outputView.printParticipantsRevenue(blackJack.findDealerRevenue(), blackJack.matchNameAndRevenues());
     }
 
-    private BlackJack createBlackJack(List<String> names) {
-        CardDeck cardDeck = new CardDeck(CardDeck.createCards());
-        Participants participants = createParticipants(names, cardDeck);
+    private BlackJack createBlackJack() {
+        CardDeck cardDeck = new CardDeck(Card.createCardDeck());
+        Participants participants = createParticipant(() -> cardDeck.selectRandomCards(CardSize.TWO));
         Dealer dealer = new Dealer(cardDeck.selectRandomCards(CardSize.TWO));
-        return new BlackJack(participants, dealer, cardDeck);
+        return new BlackJack(new Users(participants, dealer), cardDeck);
     }
 
-    private Participants createParticipants(List<String> names, CardDeck cardDeck) {
-        return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO))).toList()));
+    private Participants createParticipant(Supplier<Cards> selectCard) {
+        List<Name> names = inputView.requestParticipantNames()
+                .stream()
+                .map(Name::new)
+                .toList();
+
+        return new ParticipantsBuilder().names(names)
+                .gameMoneys(names.stream()
+                        .map(inputView::requestParticipantMoney)
+                        .toList())
+                .cards(selectCard)
+                .build();
     }
 
     private void offerMoreCards(BlackJack blackJack) {

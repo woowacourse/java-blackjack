@@ -5,13 +5,19 @@ public enum Command {
     NO("n"),
     ;
 
-    private String command;
+    private final String command;
 
     Command(String command) {
         this.command = command;
     }
 
-    public boolean compareTo(String command) {
-        return this.command.equals(command);
+    public static boolean compareToString(String input) {
+        if (YES.command.equals(input)) {
+            return true;
+        }
+        if (NO.command.equals(input)) {
+            return false;
+        }
+        throw new IllegalArgumentException("y/n 만 입력할 수 있습니다.");
     }
 }
