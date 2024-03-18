@@ -43,7 +43,9 @@ public class BlackjackController {
     }
 
     private Player generatePlayer(Name name) {
-        BetAmount betAmount = repeatUntilSuccess(() -> new BetAmount(inputView.readBetAmount(name.getValue())));
+        String rawName = name.getValue();
+        BetAmount betAmount = repeatUntilSuccess(() ->
+                new BetAmount(inputView.readBetAmount(rawName)));
         return new Player(name, betAmount);
     }
 
@@ -80,12 +82,12 @@ public class BlackjackController {
     private <T> T repeatUntilSuccess(Supplier<T> supplier) {
         Optional<T> result;
         do {
-            result = request(supplier);
+            result = getResult(supplier);
         } while (result.isEmpty());
         return result.get();
     }
 
-    private <T> Optional<T> request(Supplier<T> supplier) {
+    private <T> Optional<T> getResult(Supplier<T> supplier) {
         try {
             return Optional.of(supplier.get());
         } catch (Exception e) {
