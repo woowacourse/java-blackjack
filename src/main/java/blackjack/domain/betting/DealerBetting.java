@@ -5,11 +5,11 @@ import blackjack.domain.Name;
 
 public class DealerBetting {
     private final Name name;
-    private final BettingMoney bettingMoney;
+    private final BettingMoney money;
 
-    private DealerBetting(final Name name, final BettingMoney bettingMoney) {
+    private DealerBetting(final Name name, final BettingMoney money) {
         this.name = name;
-        this.bettingMoney = bettingMoney;
+        this.money = money;
     }
 
     public static DealerBetting of(final PlayerBettings playerBettings, final Dealer dealer) {
@@ -20,11 +20,11 @@ public class DealerBetting {
         return new DealerBetting(dealer.getName(), new BettingMoney(-playerBettingLose));
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getName();
     }
 
-    public BettingMoney getBettingMoney() {
-        return bettingMoney;
+    public int getMoney() {
+        return money.getMoney();
     }
 }

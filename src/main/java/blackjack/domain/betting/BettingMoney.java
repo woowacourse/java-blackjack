@@ -11,7 +11,7 @@ public class BettingMoney {
         return new BettingMoney((int) (this.moeney * betMultiplier));
     }
 
-    public int getMoeney() {
+    public int getMoney() {
         return moeney;
     }
 }

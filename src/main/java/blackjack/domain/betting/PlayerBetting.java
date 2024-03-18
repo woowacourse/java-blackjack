@@ -35,11 +35,11 @@ public class PlayerBetting {
         return this.name.equals(otherName);
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getName();
     }
 
     public int getBetting() {
-        return bettingMoney.getMoeney();
+        return bettingMoney.getMoney();
     }
 }
