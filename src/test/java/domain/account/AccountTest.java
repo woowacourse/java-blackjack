@@ -1,10 +1,10 @@
 package domain.account;
 
 import domain.result.ResultProfitRatio;
+import domain.vo.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import domain.vo.BettingMoney;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

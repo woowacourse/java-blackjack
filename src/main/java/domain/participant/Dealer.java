@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.vo.Card;
 import domain.card.Cards;
+import domain.vo.Card;
 import domain.vo.Name;
 import domain.vo.Profit;
 
@@ -32,9 +32,9 @@ public class Dealer extends Participant {
 
     public Profit calculateProfit(final Players players) {
         double totalPlayersProfit = players.getPlayers()
-                                        .stream()
-                                        .map(player -> player.profit().value())
-                                        .reduce(0.0, Double::sum);
+                                           .stream()
+                                           .map(player -> player.profit().value())
+                                           .reduce(0.0, Double::sum);
         return new Profit(-totalPlayersProfit);
     }
 

@@ -1,9 +1,12 @@
 package mapper;
 
-import domain.card.*;
+import domain.card.CardNumber;
+import domain.card.CardPhrase;
+import domain.card.Cards;
+import domain.card.Hand;
+import domain.vo.Card;
 import view.dto.card.CardDto;
 import view.dto.card.CardsDto;
-import domain.vo.Card;
 
 import java.util.Arrays;
 import java.util.List;

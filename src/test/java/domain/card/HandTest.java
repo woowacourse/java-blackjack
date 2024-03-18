@@ -1,8 +1,8 @@
 package domain.card;
 
+import domain.vo.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domain.vo.Card;
 
 import java.util.List;
 

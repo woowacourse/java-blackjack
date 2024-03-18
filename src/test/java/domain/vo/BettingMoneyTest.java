@@ -1,6 +1,5 @@
 package domain.vo;
 
-import domain.vo.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

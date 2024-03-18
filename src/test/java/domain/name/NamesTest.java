@@ -1,8 +1,8 @@
 package domain.name;
 
+import domain.vo.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domain.vo.Name;
 
 import java.util.List;
 

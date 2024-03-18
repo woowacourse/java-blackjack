@@ -1,9 +1,9 @@
 package domain.participant;
 
-import domain.vo.Name;
-import domain.result.ResultProfitRatio;
 import domain.account.Account;
+import domain.result.ResultProfitRatio;
 import domain.vo.BettingMoney;
+import domain.vo.Name;
 import domain.vo.Profit;
 
 public class Player extends Participant {
@@ -25,6 +25,7 @@ public class Player extends Participant {
     public Profit profit() {
         return new Profit(account.getProfit());
     }
+
     @Override
     public boolean canReceiveMoreCard() {
         return !isBust() && !isBlackjack();
