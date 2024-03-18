@@ -15,14 +15,9 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class BlackjackController {
-    private final InputView inputView;
-    private final OutputView outputView;
-
-    public BlackjackController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-    }
+public class BlackjackGameConsole {
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
 
     public void play() {
         List<Name> playerNames = repeat(inputView::readPlayerNames);
