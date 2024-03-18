@@ -23,4 +23,12 @@ public enum PlayerAction {
     private boolean isMatch(String command) {
         return this.command.equals(command);
     }
+
+    public boolean isHit() {
+        return this == HIT;
+    }
+
+    public boolean isStand() {
+        return this == STAND;
+    }
 }

@@ -14,18 +14,26 @@ public class Referee {
     }
 
     public HandResult getPlayerResult(Player player, Dealer dealer) {
-        if (dealer.isBust()) {
-            return HandResult.WIN;
-        }
         if (player.isBust()) {
             return HandResult.LOSE;
         }
-        return getPlayerResultWithoutBust(player, dealer);
+        if (dealer.isBust()) {
+            return HandResult.WIN;
+        }
+        return getPlayerResultWithBlackjack(player, dealer);
     }
 
-    private HandResult getPlayerResultWithoutBust(Player player, Dealer dealer) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
+    private HandResult getPlayerResultWithBlackjack(Player player, Dealer dealer) {
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return HandResult.BLACKJACK;
+        }
+        if (!player.isBlackjack() && dealer.isBlackjack()) {
+            return HandResult.LOSE;
+        }
+        return getPlayerResultWithScore(player.getScore(), dealer.getScore());
+    }
+
+    private HandResult getPlayerResultWithScore(int playerScore, int dealerScore) {
         if (playerScore == dealerScore) {
             return HandResult.DRAW;
         }

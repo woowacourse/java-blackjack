@@ -3,21 +3,24 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.HandGenerator;
 import java.util.List;
 
 public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
-    public Participant(Name name, HandGenerator handGenerator) {
+    public Participant(Name name, Deck deck) {
         this.name = name;
-        this.hand = handGenerator.generate();
+        this.hand = new Hand(deck.drawInitialCards());
     }
 
     public abstract List<Card> getInitialOpenedCards();
 
     public abstract boolean canHit();
+
+    public boolean cannotHit() {
+        return !canHit();
+    }
 
     public String getName() {
         return name.getName();
@@ -37,7 +40,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return hand.calculateOptimizedScore();
+        return hand.getScore();
     }
 
     protected List<Card> getCardsByCount(int count) {
@@ -45,7 +48,7 @@ public abstract class Participant {
         return cards.subList(0, count);
     }
 
-    protected boolean isBlackjack() {
+    public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 

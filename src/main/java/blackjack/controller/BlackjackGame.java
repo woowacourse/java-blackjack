@@ -1,19 +1,21 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.RandomDeck;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerAction;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.participant.Round;
+import blackjack.domain.result.HandResult;
+import blackjack.domain.result.PlayersPots;
 import blackjack.domain.result.Referee;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class BlackjackGame {
@@ -21,22 +23,35 @@ public class BlackjackGame {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        Participants participants = createParticipantsWithDeck();
-        outputView.printInitialHand(participants);
-        participantsHitCard(participants);
-        outputView.printParticipantsHandWithScore(participants);
-        printBlackjackResult(participants);
+        Deck deck = new RandomDeck();
+        Round round = createRound(deck);
+        PlayersPots playersPots = createPlayersPots(round);
+        outputView.printInitialHand(round);
+        participantsHitCard(round, deck);
+        outputView.printParticipantsHandWithScore(round);
+        printParticipantsPots(round, playersPots);
     }
 
-    private Participants createParticipantsWithDeck() {
-        Deck deck = RandomDeck.getInstance();
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return retryOnException(() -> createParticipantsWithNames(handGenerator));
+    private Round createRound(Deck deck) {
+        return retryOnException(() -> createRoundWithNames(deck));
     }
 
-    private Participants createParticipantsWithNames(HandGenerator handGenerator) {
+    private Round createRoundWithNames(Deck deck) {
         List<Name> playersName = readPlayersName();
-        return new Participants(playersName, handGenerator);
+        return new Round(playersName, deck);
+    }
+
+    private PlayersPots createPlayersPots(Round round) {
+        Players players = round.getPlayers();
+        List<BetAmount> betAmounts = players.getPlayers().stream()
+                .map(player -> retryOnException(() -> createBetAmount(player.getName())))
+                .toList();
+        return round.generatePlayersPots(betAmounts);
+    }
+
+    private BetAmount createBetAmount(String playerName) {
+        int amount = inputView.readPlayerBetAmount(playerName);
+        return new BetAmount(amount);
     }
 
     private List<Name> readPlayersName() {
@@ -46,22 +61,22 @@ public class BlackjackGame {
                 .toList();
     }
 
-    private void participantsHitCard(Participants participants) {
-        playersHitCard(participants.getPlayers());
-        dealerHitCard(participants.getDealer());
+    private void participantsHitCard(Round round, Deck deck) {
+        playersHitCard(round.getPlayers(), deck);
+        dealerHitCard(round.getDealer(), deck);
     }
 
-    private void playersHitCard(Players players) {
+    private void playersHitCard(Players players, Deck deck) {
         while (players.hasNext()) {
-            hitIfCurrentPlayerWantCard(players);
+            hitIfCurrentPlayerWantCard(players, deck);
         }
     }
 
-    private void hitIfCurrentPlayerWantCard(Players players) {
+    private void hitIfCurrentPlayerWantCard(Players players, Deck deck) {
         Player player = players.getPlayerAtOrder();
         PlayerAction playerAction = retryOnException(() -> getPlayerAction(player));
-        if (playerAction.equals(PlayerAction.HIT)) {
-            player.addCard(RandomDeck.getInstance());
+        if (playerAction.isHit()) {
+            player.addCard(deck);
         }
         outputView.printPlayerHand(player);
         players.increaseOrder(playerAction);
@@ -73,8 +88,7 @@ public class BlackjackGame {
         return PlayerAction.getAction(command);
     }
 
-    private void dealerHitCard(Dealer dealer) {
-        Deck deck = RandomDeck.getInstance();
+    private void dealerHitCard(Dealer dealer, Deck deck) {
         int hitCount = 0;
         while (dealer.canHit()) {
             dealer.addCard(deck);
@@ -83,10 +97,11 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printBlackjackResult(Participants participants) {
+    private void printParticipantsPots(Round round, PlayersPots playersPots) {
         Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = participants.generateResult(referee);
-        outputView.printBlackjackResult(blackjackResult);
+        Map<Player, HandResult> roundResult = round.generateResult(referee);
+        playersPots = playersPots.calculatePlayersPots(roundResult);
+        outputView.printAllPots(playersPots);
     }
 
     private <T> T retryOnException(Supplier<T> operation) {

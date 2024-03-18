@@ -35,6 +35,17 @@ class HandTest {
         assertThat(hand.isBlackjack()).isEqualTo(false);
     }
 
+    @DisplayName("블랙잭의 점수를 달성했지만 블랙잭이 아닌 패의 블랙잭 여부를 판단한다.")
+    @Test
+    void isBlackJackScoreButNot() {
+        //given
+        List<Card> cards = createCards(List.of(Number.ACE, Number.TWO, Number.EIGHT));
+        Hand hand = new Hand(cards);
+
+        //when & then
+        assertThat(hand.isBlackjack()).isEqualTo(false);
+    }
+
     @DisplayName("ACE를 포함한 패의 최적의 점수를 계산한다.")
     @Test
     void getOptimizedScoreWithAce() {
@@ -44,7 +55,7 @@ class HandTest {
         int expectedScore = 16;
 
         //when
-        int actualScore = hand.calculateOptimizedScore();
+        int actualScore = hand.getScore();
 
         //then
         assertThat(actualScore).isEqualTo(expectedScore);
@@ -59,7 +70,7 @@ class HandTest {
         int expectedScore = 17;
 
         //when
-        int actualScore = hand.calculateOptimizedScore();
+        int actualScore = hand.getScore();
 
         //then
         assertThat(actualScore).isEqualTo(expectedScore);

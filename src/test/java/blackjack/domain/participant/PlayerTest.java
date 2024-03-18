@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import blackjack.testutil.CardDrawer;
@@ -15,8 +14,7 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
     private static Player createPlayer(List<Number> numbers, List<Shape> shapes, String name) {
         Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new Player(new Name(name), handGenerator);
+        return new Player(new Name(name), deck);
     }
 
     @DisplayName("플레이어는 처음에 두 장의 카드를 오픈한다.")
@@ -43,8 +41,7 @@ class PlayerTest {
         //given
         List<Number> numbers = List.of(Number.ACE, Number.JACK);
         Deck deck = new CustomDeck(numbers);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        Player player = new Player(new Name("pobi"), handGenerator);
+        Player player = new Player(new Name("pobi"), deck);
 
         //when & then
         assertThat(player.canHit()).isEqualTo(false);
@@ -56,8 +53,7 @@ class PlayerTest {
         //given
         List<Number> numbers = List.of(Number.EIGHT, Number.NINE, Number.QUEEN);
         Deck deck = new CustomDeck(numbers);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        Player player = new Player(new Name("gamza"), handGenerator);
+        Player player = new Player(new Name("gamza"), deck);
         CardDrawer.addAllCards(deck, player);
 
         //when & then
@@ -70,8 +66,7 @@ class PlayerTest {
         //given
         List<Number> numbers = List.of(Number.EIGHT, Number.NINE);
         Deck deck = new CustomDeck(numbers);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        Player player = new Player(new Name("mason"), handGenerator);
+        Player player = new Player(new Name("mason"), deck);
         CardDrawer.addAllCards(deck, player);
 
         //when & then

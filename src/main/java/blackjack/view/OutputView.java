@@ -1,13 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.BlackjackResult;
-import blackjack.domain.result.HandResult;
+import blackjack.domain.participant.Round;
+import blackjack.domain.result.PlayersPots;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,14 +20,13 @@ public class OutputView {
     private static final String DEALER_HIT_COUNT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String DEALER_NO_HIT = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
     private static final String HAND_WITH_SCORE_FORMAT = "%s - 결과: %d";
-    private static final String GAME_RESULT_PREFIX = "## 최종 승패";
-    private static final String DEALER_RESULTS_FORMAT = "딜러: %s";
-    private static final String DEALER_RESULT_FORMAT = "%d%s ";
-    private static final String PLAYER_RESULT_FORMAT = "%s: %s";
+    private static final String GAME_RESULT_PREFIX = "## 최종 수익";
+    private static final String DEALER_RESULTS_FORMAT = "딜러: %,d";
+    private static final String PLAYER_RESULT_FORMAT = "%s: %,d";
 
-    public void printInitialHand(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        Players players = participants.getPlayers();
+    public void printInitialHand(Round round) {
+        Dealer dealer = round.getDealer();
+        Players players = round.getPlayers();
         printHandOutMessage(dealer, players);
         printParticipantsHandWithScore(dealer, players);
     }
@@ -38,7 +37,7 @@ public class OutputView {
     }
 
     public void printDealerHitCount(int hitCount) {
-        printNewLine();
+        System.out.println(System.lineSeparator());
         if (hitCount == 0) {
             System.out.println(DEALER_NO_HIT);
             return;
@@ -47,20 +46,19 @@ public class OutputView {
         System.out.println(dealerHitCountMessage);
     }
 
-    public void printParticipantsHandWithScore(Participants participants) {
-        printNewLine();
-        Dealer dealer = participants.getDealer();
+    public void printParticipantsHandWithScore(Round round) {
+        System.out.println(System.lineSeparator());
+        Dealer dealer = round.getDealer();
         printParticipantHandWithScore(dealer);
-        participants.getPlayers()
+        round.getPlayers()
                 .getPlayers()
                 .forEach(this::printParticipantHandWithScore);
     }
 
-    public void printBlackjackResult(BlackjackResult blackjackResult) {
-        printNewLine();
-        System.out.println(GAME_RESULT_PREFIX);
-        printDealerResults(blackjackResult.getDealerResults());
-        printPlayersResult(blackjackResult.getPlayersResult());
+    public void printAllPots(PlayersPots playersPots) {
+        System.out.println(System.lineSeparator() + GAME_RESULT_PREFIX);
+        printDealerResults(playersPots);
+        printPlayersResult(playersPots);
     }
 
     public void printException(IllegalArgumentException e) {
@@ -70,8 +68,7 @@ public class OutputView {
     private void printHandOutMessage(Dealer dealer, Players players) {
         String playersName = formatPlayersName(players);
         String handOutMessage = String.format(HAND_OUT_MESSAGE, dealer.getName(), playersName);
-        printNewLine();
-        System.out.println(handOutMessage);
+        System.out.println(System.lineSeparator() + handOutMessage);
     }
 
     private void printParticipantsHandWithScore(Dealer dealer, Players players) {
@@ -102,21 +99,17 @@ public class OutputView {
         System.out.println(participantHandWithScore);
     }
 
-    private void printDealerResults(Map<HandResult, Integer> dealerResults) {
-        String formattedDealerResults = dealerResults.entrySet()
-                .stream()
-                .filter((dealerResult) -> dealerResult.getValue() > 0)
-                .map(this::getFormattedDealerResult)
-                .collect(Collectors.joining());
-        System.out.printf(DEALER_RESULTS_FORMAT, formattedDealerResults);
-        printNewLine();
+    private void printDealerResults(PlayersPots playersPots) {
+        BetAmount dealerPot = playersPots.calculateDealerBetAmount();
+        System.out.printf(DEALER_RESULTS_FORMAT + System.lineSeparator(), dealerPot.amount());
     }
 
-    private void printPlayersResult(Map<Player, HandResult> playersResult) {
-        for (Player player : playersResult.keySet()) {
+    private void printPlayersResult(PlayersPots playersPots) {
+        Map<Player, BetAmount> playersPot = playersPots.getPlayersPots();
+        for (Player player : playersPot.keySet()) {
             String playerName = player.getName();
-            HandResult playerResult = playersResult.get(player);
-            String formattedPlayerResult = String.format(PLAYER_RESULT_FORMAT, playerName, playerResult.getName());
+            BetAmount betAmount = playersPot.get(player);
+            String formattedPlayerResult = String.format(PLAYER_RESULT_FORMAT, playerName, betAmount.amount());
             System.out.println(formattedPlayerResult);
         }
     }
@@ -132,15 +125,5 @@ public class OutputView {
         return cards.stream()
                 .map(card -> card.getSymbol() + card.getShape())
                 .collect(Collectors.joining(DELIMITER));
-    }
-
-    private String getFormattedDealerResult(Map.Entry<HandResult, Integer> dealerResult) {
-        HandResult handResult = dealerResult.getKey();
-        int resultCount = dealerResult.getValue();
-        return String.format(DEALER_RESULT_FORMAT, resultCount, handResult.getName());
-    }
-
-    private void printNewLine() {
-        System.out.println();
     }
 }

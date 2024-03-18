@@ -1,27 +1,18 @@
 package blackjack.domain.result;
 
 public enum HandResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK(1.5),
+    WIN(1.0),
+    DRAW(0.0),
+    LOSE(-1.0);
 
-    private final String name;
+    private final Double ratio;
 
-    HandResult(String name) {
-        this.name = name;
+    HandResult(Double ratio) {
+        this.ratio = ratio;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public HandResult getOpposite() {
-        if (WIN.equals(this)) {
-            return LOSE;
-        }
-        if (LOSE.equals(this)) {
-            return WIN;
-        }
-        return DRAW;
+    public double getRatio() {
+        return this.ratio;
     }
 }
