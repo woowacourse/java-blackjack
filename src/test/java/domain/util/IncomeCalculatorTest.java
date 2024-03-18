@@ -1,6 +1,8 @@
-package domain.result;
+package domain.util;
 
 import domain.participant.BetAmount;
+import domain.result.Income;
+import domain.result.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.IncomeCalculator;
