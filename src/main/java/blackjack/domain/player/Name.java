@@ -16,7 +16,7 @@ public class Name {
             return;
         }
 
-        final String errorMessage = String.format("[ERROR] 이름의 길이는 %s 이상, %s 이하여야 합니다.",
+        final String errorMessage = String.format("[ERROR] 이름의 길이는 %d 이상, %d 이하여야 합니다.",
                 MINIMUM_LENGTH, MAXIMUM_LENGTH);
         throw new IllegalArgumentException(errorMessage);
     }
