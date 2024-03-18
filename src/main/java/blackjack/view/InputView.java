@@ -43,20 +43,16 @@ public class InputView {
     }
 
     private BettingMoney convertInputToBettingMoney(final String input) {
-        int bettingMoneyAmount = parseInputToBettingMoneyAmount(input);
-        return parseBettingMoneyAmountToBettingMoney(bettingMoneyAmount);
+        int amount = parseInputToAmount(input);
+        return new BettingMoney(amount);
     }
 
-    private int parseInputToBettingMoneyAmount(final String input) {
+    private int parseInputToAmount(final String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(INVALID_BETTING_MONEY_AMOUNT);
         }
-    }
-
-    private BettingMoney parseBettingMoneyAmountToBettingMoney(final int amount) {
-        return new BettingMoney(amount);
     }
 
     public Command askDrawOrStandCommandToPlayer(final PlayerName name) {
