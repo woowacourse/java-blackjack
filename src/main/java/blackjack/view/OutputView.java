@@ -18,10 +18,10 @@ public class OutputView {
     public static final String DEALER_EARNING_PREFIX = "딜러: ";
     public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
-    public void printDealingResult(final List<ExecutingPlayer> executingPlayers, final String dealerCards) {
+    public void printDealingResult(final List<ExecutingPlayer> executingPlayers, final String dealerCard) {
         String names = formatNames(executingPlayers);
         System.out.printf(DEALING_RESULT_INTRO, names);
-        System.out.printf(DEALER_CARDS_FORM, dealerCards);
+        System.out.printf(DEALER_CARDS_FORM, dealerCard);
         System.out.println();
         for (ExecutingPlayer player : executingPlayers) {
             System.out.println(formatPlayerCards(player));

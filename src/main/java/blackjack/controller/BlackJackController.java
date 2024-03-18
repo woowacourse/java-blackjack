@@ -55,8 +55,8 @@ public class BlackJackController {
 
     private void printDealingResult(final Players players, final Dealer dealer) {
         List<ExecutingPlayer> executingPlayers = players.captureExecutingPlayer();
-        String dealerCards = dealer.getCards().toString();
-        outputView.printDealingResult(executingPlayers, dealerCards);
+        String dealerCard = dealer.getFirstCard().toString();
+        outputView.printDealingResult(executingPlayers, dealerCard);
     }
 
     private BettingMoney askBettingMoney(final Name playerName) {
