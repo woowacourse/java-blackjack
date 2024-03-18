@@ -2,7 +2,7 @@ package blackjack.domain.participant.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
-import blackjack.utils.Constants;
+import blackjack.utils.constants.GameConstants;
 
 public final class Ready extends Running {
 
@@ -14,7 +14,7 @@ public final class Ready extends Running {
     public State draw(final Card card) {
         final CardHand cardHand = receiveCard(card);
 
-        if (cardHand.countCards() < Constants.INITIAL_CARD_COUNT) {
+        if (cardHand.countCards() < GameConstants.INITIAL_CARD_COUNT) {
             return new Ready(cardHand);
         }
         if (cardHand.isBlackjack()) {

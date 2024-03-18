@@ -2,7 +2,7 @@ package blackjack.domain.participant.state;
 
 import blackjack.domain.card.CardHand;
 import blackjack.domain.participant.ResultStatus;
-import blackjack.utils.Constants;
+import blackjack.domain.participant.state.constants.RateConstants;
 
 public final class Stay extends Finished {
 
@@ -13,11 +13,11 @@ public final class Stay extends Finished {
     @Override
     public double calculateEarningRate(final ResultStatus resultStatus) {
         if (resultStatus.isWin()) {
-            return Constants.WIN_EARNING_RATE;
+            return RateConstants.WIN_EARNING_RATE;
         }
         if (resultStatus.isDraw()) {
-            return Constants.DRAW_EARNING_RATE;
+            return RateConstants.DRAW_EARNING_RATE;
         }
-        return Constants.LOSE_EARNING_RATE;
+        return RateConstants.LOSE_EARNING_RATE;
     }
 }

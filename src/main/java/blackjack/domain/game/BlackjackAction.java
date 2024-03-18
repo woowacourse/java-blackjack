@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.utils.Constants;
+import blackjack.utils.constants.ExpressionConstants;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -8,8 +8,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum BlackjackAction {
-    HIT(Constants.EXPRESSION_OF_HIT),
-    STAY(Constants.EXPRESSION_OF_STAY);
+    HIT(ExpressionConstants.EXPRESSION_OF_HIT),
+    STAY(ExpressionConstants.EXPRESSION_OF_STAY);
 
     private static Map<String, BlackjackAction> cachedBlackjackAction = Arrays.stream(values())
             .collect(Collectors.toMap(blackjackAction -> blackjackAction.expression, Function.identity()));

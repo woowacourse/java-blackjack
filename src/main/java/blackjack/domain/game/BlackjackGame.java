@@ -5,7 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.ResultStatus;
-import blackjack.utils.Constants;
+import blackjack.utils.constants.GameConstants;
 
 import java.util.Map;
 
@@ -25,7 +25,7 @@ public class BlackjackGame {
     }
 
     private void dealInitialCards() {
-        for (int i = 0; i < Constants.INITIAL_CARD_COUNT; i++) {
+        for (int i = 0; i < GameConstants.INITIAL_CARD_COUNT; i++) {
             dealCardToDealer();
             dealCardToPlayers();
         }

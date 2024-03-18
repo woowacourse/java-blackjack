@@ -4,14 +4,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.strategy.CardShuffleStrategy;
-import blackjack.utils.Constants;
+import blackjack.utils.constants.GameConstants;
 
 public class Dealer extends Participant {
     private final CardShuffleStrategy cardShuffleStrategy;
     private final CardDeck cardDeck;
 
     public Dealer(final CardShuffleStrategy cardShuffleStrategy) {
-        super(Constants.DEFAULT_NAME_OF_DEALER);
+        super(GameConstants.DEFAULT_NAME_OF_DEALER);
         this.cardShuffleStrategy = cardShuffleStrategy;
         this.cardDeck = new CardDeck();
     }
@@ -31,7 +31,7 @@ public class Dealer extends Participant {
     @Override
     public boolean canReceiveCard() {
         final Score score = calculateScore();
-        final Score standardScore = Score.valueOf(Constants.DEALER_MIN_SCORE_POLICY);
+        final Score standardScore = Score.valueOf(GameConstants.DEALER_MIN_SCORE_POLICY);
 
         return score.isLessThan(standardScore) || score.equals(standardScore);
     }

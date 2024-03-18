@@ -5,7 +5,9 @@ import blackjack.utils.Converter;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static blackjack.utils.Constants.*;
+import static blackjack.utils.constants.ExpressionConstants.EXPRESSION_OF_HIT;
+import static blackjack.utils.constants.ExpressionConstants.EXPRESSION_OF_STAY;
+import static blackjack.utils.constants.GameConstants.DEFAULT_NAME_OF_DEALER;
 
 public class InputValidator {
     private static final List<String> INVALID_PLAYER_NAMES = List.of(

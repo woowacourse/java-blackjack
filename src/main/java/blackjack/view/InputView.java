@@ -4,8 +4,8 @@ import blackjack.view.validator.InputValidator;
 
 import java.util.Scanner;
 
-import static blackjack.utils.Constants.EXPRESSION_OF_HIT;
-import static blackjack.utils.Constants.EXPRESSION_OF_STAY;
+import static blackjack.utils.constants.ExpressionConstants.EXPRESSION_OF_HIT;
+import static blackjack.utils.constants.ExpressionConstants.EXPRESSION_OF_STAY;
 
 public class InputView {
     private static Scanner scanner = new Scanner(System.in);

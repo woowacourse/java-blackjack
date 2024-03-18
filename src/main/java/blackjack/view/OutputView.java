@@ -7,7 +7,7 @@ import blackjack.dto.ProfitResultDto;
 
 import java.util.List;
 
-import static blackjack.utils.Constants.*;
+import static blackjack.utils.constants.GameConstants.*;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();

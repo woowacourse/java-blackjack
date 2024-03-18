@@ -2,7 +2,7 @@ package blackjack.domain.participant.state;
 
 import blackjack.domain.card.CardHand;
 import blackjack.domain.participant.ResultStatus;
-import blackjack.utils.Constants;
+import blackjack.domain.participant.state.constants.RateConstants;
 
 public final class Bust extends Finished {
 
@@ -12,6 +12,6 @@ public final class Bust extends Finished {
 
     @Override
     public double calculateEarningRate(final ResultStatus resultStatus) {
-        return Constants.LOSE_EARNING_RATE;
+        return RateConstants.LOSE_EARNING_RATE;
     }
 }
