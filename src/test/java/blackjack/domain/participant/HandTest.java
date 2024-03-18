@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.FixtureCard.*;
+import static blackjack.domain.fixture.FixtureCard.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
