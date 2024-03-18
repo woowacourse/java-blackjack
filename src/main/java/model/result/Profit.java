@@ -39,7 +39,7 @@ public class Profit {
     }
 
     private int profit(GameResult result, int money) {
-        if (winOrDraw(result)) {
+        if (win(result)) {
             return money;
         }
         if (fail(result)) {
@@ -48,11 +48,11 @@ public class Profit {
         if (blackjack(result)) {
             return (int) (money * PROFIT_RATE);
         }
-        return 0;
+        return money;
     }
 
-    private boolean winOrDraw(GameResult result) {
-        return result.equals(GameResult.WIN) || result.equals(GameResult.DRAW);
+    private boolean win(GameResult result) {
+        return result.equals(GameResult.WIN);
     }
 
     private boolean fail(GameResult result) {
