@@ -11,7 +11,7 @@ import model.participant.Players;
 import model.result.CardDto;
 import model.result.CardsDto;
 import model.result.ProfitsDto;
-import model.result.ParticipantScores;
+import model.result.ScoresDto;
 import view.InputView;
 import view.OutputView;
 
@@ -29,7 +29,7 @@ public class BlackjackController {
         playersTurnAndPrintCards(players, blackjackGame);
         dealerTurnAndPrintCard(dealer, blackjackGame);
 
-        ParticipantScores participantScores = blackjackGame.finish(dealer, players);
+        ScoresDto participantScores = blackjackGame.finish(dealer, players);
         OutputView.printScores(participantScores);
 
         ProfitsDto participantProfits = blackjackGame.calculateProfit(dealer, players);

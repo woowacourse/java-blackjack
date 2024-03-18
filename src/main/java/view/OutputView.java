@@ -6,7 +6,7 @@ import model.result.CardsDto;
 import model.result.ProfitDto;
 import model.result.ProfitsDto;
 import model.result.ScoreDto;
-import model.result.ParticipantScores;
+import model.result.ScoresDto;
 
 public class OutputView {
 
@@ -51,9 +51,9 @@ public class OutputView {
         System.out.printf(DEALER_HIT, DEALER_NAME);
     }
 
-    public static void printScores(ParticipantScores participantScores) {
-        ScoreDto dealerScore = participantScores.getDealerScore();
-        List<ScoreDto> playerScores = participantScores.getPlayerScores();
+    public static void printScores(ScoresDto participantScores) {
+        ScoreDto dealerScore = participantScores.dealerScore();
+        List<ScoreDto> playerScores = participantScores.playerScores();
         printScore(dealerScore);
         playerScores.forEach(OutputView::printScore);
     }

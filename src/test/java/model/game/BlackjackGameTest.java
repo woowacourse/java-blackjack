@@ -23,7 +23,7 @@ import model.participant.Players;
 import model.result.CardDto;
 import model.result.CardsDto;
 import model.result.ScoreDto;
-import model.result.ParticipantScores;
+import model.result.ScoresDto;
 import model.result.ProfitDto;
 import model.result.ProfitsDto;
 import org.junit.jupiter.api.DisplayName;
@@ -97,9 +97,9 @@ class BlackjackGameTest {
             .map(Participant::score)
             .toList();
 
-        ParticipantScores participantScores = blackjackGame.finish(dealer, players);
+        ScoresDto participantScores = blackjackGame.finish(dealer, players);
         int i = 0;
-        for (ScoreDto playerScore : participantScores.getPlayerScores()) {
+        for (ScoreDto playerScore : participantScores.playerScores()) {
             assertThat(playerScore.score()).isEqualTo(scores.get(i++));
         }
     }

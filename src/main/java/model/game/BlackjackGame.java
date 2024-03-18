@@ -11,7 +11,8 @@ import model.participant.Player;
 import model.participant.Players;
 import model.result.CardDto;
 import model.result.CardsDto;
-import model.result.ParticipantScores;
+import model.result.ScoreDto;
+import model.result.ScoresDto;
 import model.result.ProfitDto;
 import model.result.ProfitsDto;
 
@@ -59,8 +60,22 @@ public class BlackjackGame {
         return false;
     }
 
-    public ParticipantScores finish(Dealer dealer, Players players) {
-        return ParticipantScores.of(dealer, players);
+    public ScoresDto finish(Dealer dealer, Players players) {
+        ScoreDto dealerScore = createScore(dealer);
+        List<ScoreDto> playerScores = createPlayerScores(players);
+        return new ScoresDto(dealerScore, playerScores);
+    }
+
+    private List<ScoreDto> createPlayerScores(Players players) {
+        return players.getPlayers()
+            .stream()
+            .map(this::createScore)
+            .toList();
+    }
+
+    private ScoreDto createScore(Participant participant) {
+        CardDto card = new CardDto(participant.getName(), participant.getCardsInfo());
+        return new ScoreDto(card, participant.score());
     }
 
     public ProfitsDto calculateProfit(Dealer dealer, Players players) {
