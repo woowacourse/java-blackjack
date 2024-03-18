@@ -1,15 +1,15 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardShape.HEART;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Suit.HEART;
 import static blackjack.fixture.PlayerFixture.dealer;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import blackjack.domain.cardgame.BettingAmount;
 import blackjack.domain.cardgame.Profit;
 import java.util.Map;
@@ -56,9 +56,9 @@ public class DealerTest {
         // given
         Dealer dealer = new Dealer();
         Player player = player(
-                new Card(CardNumber.JACK, CardShape.CLOVER),
-                new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                new Card(CardNumber.KING, CardShape.CLOVER));
+                new Card(Denomination.JACK, Suit.CLOVER),
+                new Card(Denomination.QUEEN, Suit.CLOVER),
+                new Card(Denomination.KING, Suit.CLOVER));
 
         // when
         BettingAmount bettingAmount = new BettingAmount(10000);
@@ -73,11 +73,11 @@ public class DealerTest {
     void 플레이어가_버스트_되지_않았고_딜러가_버스트_된_경우_플레이어는_베팅_금액의_1배를_받는다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.JACK, CardShape.CLOVER));
-        dealer.addCard(new Card(CardNumber.QUEEN, CardShape.CLOVER));
-        dealer.addCard(new Card(CardNumber.KING, CardShape.CLOVER));
+        dealer.addCard(new Card(Denomination.JACK, Suit.CLOVER));
+        dealer.addCard(new Card(Denomination.QUEEN, Suit.CLOVER));
+        dealer.addCard(new Card(Denomination.KING, Suit.CLOVER));
 
-        Player player = player(new Card(CardNumber.JACK, CardShape.CLOVER));
+        Player player = player(new Card(Denomination.JACK, Suit.CLOVER));
 
         // when
         BettingAmount bettingAmount = new BettingAmount(10000);
@@ -92,12 +92,12 @@ public class DealerTest {
     void 플레이어와_딜러_모두가_블랙잭인_경우_플레이어는_베팅한_금액을_돌려받는다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.JACK, CardShape.CLOVER));
-        dealer.addCard(new Card(CardNumber.ACE, CardShape.CLOVER));
+        dealer.addCard(new Card(Denomination.JACK, Suit.CLOVER));
+        dealer.addCard(new Card(Denomination.ACE, Suit.CLOVER));
 
         Player player = player(
-                new Card(CardNumber.JACK, CardShape.CLOVER),
-                new Card(CardNumber.ACE, CardShape.CLOVER));
+                new Card(Denomination.JACK, Suit.CLOVER),
+                new Card(Denomination.ACE, Suit.CLOVER));
 
         // when
         BettingAmount bettingAmount = new BettingAmount(10000);
@@ -112,11 +112,11 @@ public class DealerTest {
     void 플레이어가_블랙잭이고_딜러는_블랙잭이_아닌_경우_플레이어는_베팅한_금액의_150퍼센트를_받는다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.JACK, CardShape.CLOVER));
+        dealer.addCard(new Card(Denomination.JACK, Suit.CLOVER));
 
         Player player = player(
-                new Card(CardNumber.JACK, CardShape.CLOVER),
-                new Card(CardNumber.ACE, CardShape.CLOVER));
+                new Card(Denomination.JACK, Suit.CLOVER),
+                new Card(Denomination.ACE, Suit.CLOVER));
 
         // when
         BettingAmount bettingAmount = new BettingAmount(10000);
@@ -131,9 +131,9 @@ public class DealerTest {
     void 플레이어와_딜러가_모두_버스트_되지_않았고_모두_블랙잭이_아닐_때_플레이어의_숫자가_더_큰_경우_플레이어는_베팅_금액의_1배를_받는다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.NINE, CardShape.CLOVER));
+        dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 
-        Player player = player(new Card(CardNumber.TEN, CardShape.CLOVER));
+        Player player = player(new Card(Denomination.TEN, Suit.CLOVER));
 
         // when
         BettingAmount bettingAmount = new BettingAmount(10000);
@@ -148,9 +148,9 @@ public class DealerTest {
     void 플레이어와_딜러가_모두_버스트_되지_않았고_모두_블랙잭이_아닐_때_플레이어의_숫자가_더_작은_경우_플레이어는_베팅_금액을_모두_잃는다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.TEN, CardShape.CLOVER));
+        dealer.addCard(new Card(Denomination.TEN, Suit.CLOVER));
 
-        Player player = player(new Card(CardNumber.NINE, CardShape.CLOVER));
+        Player player = player(new Card(Denomination.NINE, Suit.CLOVER));
 
         // when
         BettingAmount bettingAmount = new BettingAmount(10000);
@@ -165,9 +165,9 @@ public class DealerTest {
     void 플레이어와_딜러가_모두_버스트_되지_않았고_모두_블랙잭이_아닐_때_플레이어의_숫자가_딜러와_같은_경우_플레이어는_베팅_금액을_돌려받는다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.TEN, CardShape.CLOVER));
+        dealer.addCard(new Card(Denomination.TEN, Suit.CLOVER));
 
-        Player player = player(new Card(CardNumber.TEN, CardShape.CLOVER));
+        Player player = player(new Card(Denomination.TEN, Suit.CLOVER));
 
         // when
         BettingAmount bettingAmount = new BettingAmount(10000);
@@ -183,10 +183,10 @@ public class DealerTest {
     void 딜러의_수익은_플레이어의_수익의_합을_negation한_것과_같다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.TEN, CardShape.CLOVER));
+        dealer.addCard(new Card(Denomination.TEN, Suit.CLOVER));
 
-        Player player1 = player(new Card(CardNumber.TWO, CardShape.CLOVER));
-        Player player2 = player(new Card(CardNumber.TWO, CardShape.CLOVER));
+        Player player1 = player(new Card(Denomination.TWO, Suit.CLOVER));
+        Player player2 = player(new Card(Denomination.TWO, Suit.CLOVER));
 
         BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player1, bettingAmount);

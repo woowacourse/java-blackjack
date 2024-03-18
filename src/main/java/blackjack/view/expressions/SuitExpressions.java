@@ -1,8 +1,8 @@
-package blackjack.view;
+package blackjack.view.expressions;
 
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Suit;
 
-public enum CardShapeStrings {
+public enum SuitExpressions {
     SPADE("스페이드"),
     HEART("하트"),
     DIAMOND("다이아몬드"),
@@ -10,21 +10,21 @@ public enum CardShapeStrings {
 
     private final String value;
 
-    CardShapeStrings(final String value) {
+    SuitExpressions(final String value) {
         this.value = value;
     }
 
-    public static String mapCardShapeToString(final CardShape cardShape) {
-        if (CardShape.SPADE.equals(cardShape)) {
+    public static String mapCardShapeToString(final Suit suit) {
+        if (Suit.SPADE.equals(suit)) {
             return SPADE.value;
         }
-        if (CardShape.HEART.equals(cardShape)) {
+        if (Suit.HEART.equals(suit)) {
             return HEART.value;
         }
-        if (CardShape.DIAMOND.equals(cardShape)) {
+        if (Suit.DIAMOND.equals(suit)) {
             return DIAMOND.value;
         }
-        if (CardShape.CLOVER.equals(cardShape)) {
+        if (Suit.CLOVER.equals(suit)) {
             return CLOVER.value;
         }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 카드 모양입니다.");

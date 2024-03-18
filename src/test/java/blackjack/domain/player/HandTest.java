@@ -1,10 +1,10 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.CardNumber.ACE;
-import static blackjack.domain.card.CardNumber.JACK;
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardNumber.QUEEN;
-import static blackjack.domain.card.CardShape.SPADE;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;

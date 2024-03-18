@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.cardgame.Profit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
+import blackjack.view.expressions.DenominationExpressions;
+import blackjack.view.expressions.SuitExpressions;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,8 +57,8 @@ public class OutputView {
     }
 
     private static String getCardInfo(final Card card) {
-        return CardNumberStrings.mapCardNumberToString(card.getNumber()) +
-                CardShapeStrings.mapCardShapeToString(card.getShape());
+        return DenominationExpressions.mapCardNumberToString(card.getNumber()) +
+                SuitExpressions.mapCardShapeToString(card.getShape());
     }
 
     // TODO: 개선 필요

@@ -1,23 +1,23 @@
 package blackjack.domain.card;
 
 public class Card {
-    private final CardNumber cardNumber;
-    private final CardShape cardShape;
+    private final Denomination denomination;
+    private final Suit suit;
 
-    public Card(final CardNumber cardNumber, final CardShape cardShape) {
-        this.cardNumber = cardNumber;
-        this.cardShape = cardShape;
+    public Card(final Denomination denomination, final Suit suit) {
+        this.denomination = denomination;
+        this.suit = suit;
     }
 
     public boolean isAceCard() {
-        return cardNumber == CardNumber.ACE;
+        return denomination == Denomination.ACE;
     }
 
-    public CardNumber getNumber() {
-        return cardNumber;
+    public Denomination getNumber() {
+        return denomination;
     }
 
-    public CardShape getShape() {
-        return cardShape;
+    public Suit getShape() {
+        return suit;
     }
 }

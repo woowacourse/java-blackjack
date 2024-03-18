@@ -1,16 +1,16 @@
-package blackjack.view;
+package blackjack.view.expressions;
 
-public enum PlayerChoice {
+public enum HitStandExpressions {
     HIT("y"),
     STAND("n");
 
     private final String message;
 
-    PlayerChoice(final String message) {
+    HitStandExpressions(final String message) {
         this.message = message;
     }
 
-    static boolean isDrawable(final String choice) {
+    public static boolean isDrawable(final String choice) {
         if (HIT.message.equals(choice)) {
             return true;
         }

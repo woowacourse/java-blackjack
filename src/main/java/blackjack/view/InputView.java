@@ -1,8 +1,9 @@
 package blackjack.view;
 
-import static blackjack.view.PlayerChoice.HIT;
-import static blackjack.view.PlayerChoice.STAND;
+import static blackjack.view.expressions.HitStandExpressions.HIT;
+import static blackjack.view.expressions.HitStandExpressions.STAND;
 
+import blackjack.view.expressions.HitStandExpressions;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class InputView {
     public static boolean askForMoreCard(final String name) {
         printAskingForAnotherCardMessage(name);
         final String rawInput = scanner.nextLine();
-        return PlayerChoice.isDrawable(rawInput);   // TODO: 네이밍 변경
+        return HitStandExpressions.isDrawable(rawInput);   // TODO: 네이밍 변경
     }
 
     public static int askBettingAmount(final String name) {

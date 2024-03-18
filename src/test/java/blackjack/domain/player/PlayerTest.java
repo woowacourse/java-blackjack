@@ -1,9 +1,9 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardShape.CLOVER;
-import static blackjack.domain.card.CardShape.HEART;
-import static blackjack.domain.card.CardShape.SPADE;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Suit.CLOVER;
+import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
 

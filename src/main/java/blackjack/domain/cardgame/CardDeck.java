@@ -1,8 +1,8 @@
 package blackjack.domain.cardgame;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,9 +13,9 @@ public class CardDeck {
     public CardDeck() {
         final List<Card> deck = new ArrayList<>();
 
-        for (final CardNumber cardNumber : CardNumber.values()) {
-            for (final CardShape cardShape : CardShape.values()) {
-                deck.add(new Card(cardNumber, cardShape));
+        for (final Denomination denomination : Denomination.values()) {
+            for (final Suit suit : Suit.values()) {
+                deck.add(new Card(denomination, suit));
             }
         }
 
