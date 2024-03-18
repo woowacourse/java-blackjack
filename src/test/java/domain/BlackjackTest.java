@@ -8,28 +8,32 @@ import org.junit.jupiter.api.Test;
 class BlackjackTest {
     @Test
     @DisplayName("딜러가 히트 했을 때 점수의 합이 17 이상인지 확인한다")
-    void init() {
+    void dealerHit() {
         final List<String> names = List.of("a", "b", "c");
         final List<Integer> betAmounts = List.of(100, 200, 300);
-
         final Blackjack blackjack = Blackjack.startWithInitialization(names, betAmounts);
 
-        blackjack.dealerHit(()->{});
+        blackjack.dealerHit(() -> {
+        });
+
         final int dealerScore = blackjack.toParticipantsResponse().dealerResponse().score();
         Assertions.assertThat(dealerScore).isGreaterThanOrEqualTo(17);
     }
 
     @Test
-    void of() {
-    }
-
-    @Test
+    @DisplayName("플레이어는 점수가 21미만이라면 항상 카드를 받을 수 있다")
     void playersHit() {
+        final List<String> names = List.of("a", "b", "c");
+        final List<Integer> betAmounts = List.of(100, 200, 300);
+        final Blackjack blackjack = Blackjack.startWithInitialization(names, betAmounts);
+
+        blackjack.playersHit((a) -> true, (a, b) -> {
+        });
+
+        final int score = blackjack.toParticipantsResponse().playerResponse().get(0).score();
+        Assertions.assertThat(score).isGreaterThanOrEqualTo(21);
     }
 
-    @Test
-    void dealerHit() {
-    }
 
     @Test
     void toGameResult() {
