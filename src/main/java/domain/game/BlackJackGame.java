@@ -1,21 +1,20 @@
 package domain.game;
 
-import static domain.constants.Outcome.WIN;
-
-import controller.dto.InitialCardStatus;
-import controller.dto.JudgeResult;
-import controller.dto.ParticipantHandStatus;
-import controller.dto.PlayerOutcome;
+import controller.dto.request.PlayerBettingMoney;
+import controller.dto.response.InitialCardStatus;
+import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
+import controller.dto.response.PlayerOutcome;
 import domain.game.deck.Deck;
 import domain.game.deck.DeckGenerator;
 import domain.participant.Participant;
 import domain.participant.Participants;
-import domain.participant.Player;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class BlackJackGame {
     public static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_CARD_SIZE = 2;
     private static final int INITIAL_CARD_SIZE = 2;
     private static final int CARD_PICK_SIZE = 1;
 
@@ -27,35 +26,21 @@ public class BlackJackGame {
         this.deck = deck;
     }
 
-    public static BlackJackGame from(final List<String> playerNames, final DeckGenerator deckGenerator) {
-        return new BlackJackGame(Participants.from(playerNames), deckGenerator.generate());
+    public static BlackJackGame from(final List<PlayerBettingMoney> requests,
+                                     final DeckGenerator deckGenerator) {
+        return new BlackJackGame(Participants.from(requests), deckGenerator.generate());
     }
 
     public InitialCardStatus initialize() {
-        List<ParticipantHandStatus> status = new ArrayList<>();
-        status.add(createInitialHandStatusAfterPick(participants.getDealer()));
-
-        for (Player player : participants.getPlayers()) {
-            status.add(createInitialHandStatusAfterPick(player));
-        }
-        return new InitialCardStatus(INITIAL_CARD_SIZE, status);
+        List<ParticipantHandStatus> handStatuses = participants.getParticipantsStartsWithDealer()
+                .stream()
+                .map(participant -> {
+                    participant.pickCard(deck, INITIAL_CARD_SIZE);
+                    return participant.createInitialHandStatus();
+                })
+                .toList();
+        return new InitialCardStatus(INITIAL_CARD_SIZE, handStatuses);
     }
-
-    private ParticipantHandStatus createInitialHandStatusAfterPick(final Participant participant) {
-        participant.pickCard(deck, INITIAL_CARD_SIZE);
-        return participant.createInitialHandStatus();
-    }
-
-    public List<ParticipantHandStatus> createHandStatuses() {
-        List<ParticipantHandStatus> status = new ArrayList<>();
-        status.add(participants.getDealer().createHandStatus());
-
-        for (Player player : participants.getPlayers()) {
-            status.add(player.createHandStatus());
-        }
-        return status;
-    }
-
 
     public void giveCard(
             final Participant participant,
@@ -69,17 +54,39 @@ public class BlackJackGame {
         }
     }
 
-    public JudgeResult judge() {
+    public List<ParticipantHandStatus> createHandStatuses() {
+        return participants.getParticipantsStartsWithDealer()
+                .stream()
+                .map(Participant::createHandStatus)
+                .toList();
+    }
+
+    public List<ParticipantProfitResponse> judge() {
         Referee referee = new Referee(participants);
         List<PlayerOutcome> outcomes = referee.judge();
 
-        return new JudgeResult(outcomes, countWinner(outcomes));
+        return getParticipantProfitResponses(outcomes);
     }
 
-    private int countWinner(List<PlayerOutcome> results) {
-        return (int) results.stream()
-                .filter(result -> WIN.equals(result.outcome()))
-                .count();
+    private List<ParticipantProfitResponse> getParticipantProfitResponses(final List<PlayerOutcome> outcomes) {
+        List<ParticipantProfitResponse> playersProfit = calculatePlayerProfit(outcomes);
+        ParticipantProfitResponse dealerProfit = new ParticipantProfitResponse(
+                participants.getDealer().name(),
+                participants.getDealer().calculateDealerProfit(playersProfit)
+        );
+        return Stream.concat(
+                Stream.of(dealerProfit),
+                playersProfit.stream()
+        ).toList();
+    }
+
+    private List<ParticipantProfitResponse> calculatePlayerProfit(final List<PlayerOutcome> outcomes) {
+        return outcomes.stream()
+                .map(outcome -> new ParticipantProfitResponse(
+                        outcome.player().name(),
+                        outcome.player().calculatePlayerProfit(outcome.outcome())
+                ))
+                .toList();
     }
 
     public List<Participant> getParticipants() {

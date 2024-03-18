@@ -1,14 +1,9 @@
 package view;
 
-import static domain.constants.Outcome.WIN;
-
-import controller.dto.InitialCardStatus;
-import controller.dto.JudgeResult;
-import controller.dto.ParticipantHandStatus;
-import controller.dto.PlayerOutcome;
+import controller.dto.response.InitialCardStatus;
+import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
 import domain.card.Card;
-import domain.constants.Outcome;
-import domain.participant.Dealer;
 import domain.participant.Hand;
 import java.util.List;
 
@@ -20,12 +15,8 @@ public class OutputView {
     private static final String RESULT_HAND_STATUS_MESSAGE = "%s카드: %s - 결과 : %d";
     private static final String CARD_STATUS_MESSAGE = "%s%s";
     private static final String CARD_SEPARATOR = ", ";
-    private static final String JUDGE_RESULT_MESSAGE = "%n## 최종 승패";
-    private static final String WIN_MESSAGE = "승";
-    private static final String LOSE_MESSAGE = "패";
-    private static final String JUDGE_DEALER_RESULT_FORMAT = "%n%s: %d" + WIN_MESSAGE + " %d" + LOSE_MESSAGE;
-    private static final String JUDGE_PLAYER_RESULT_FORMAT = "%n%s: %s";
-
+    private static final String PARTICIPANT_PROFIT_RESPONSE_MESSAGE = "%n## 최종 수익";
+    private static final String PARTICIPANT_PROFIT_RESULT_FORMAT = "%n%s: %d";
 
     public void printInitialHandStatus(final InitialCardStatus initialCardStatus) {
         List<String> names = generateParticipantNames(initialCardStatus);
@@ -87,27 +78,16 @@ public class OutputView {
                 .toList();
     }
 
-    public void printJudgeResult(final JudgeResult judgeResult) {
-        System.out.printf(JUDGE_RESULT_MESSAGE);
+    public void printParticipantProfitResponse(final List<ParticipantProfitResponse> responses) {
+        System.out.printf(PARTICIPANT_PROFIT_RESPONSE_MESSAGE);
 
-        int winnersCount = judgeResult.winnerCount();
-        int losersCount = judgeResult.results().size() - winnersCount;
-        System.out.printf(JUDGE_DEALER_RESULT_FORMAT, Dealer.DEALER_NAME, losersCount, winnersCount);
-
-        for (PlayerOutcome result : judgeResult.results()) {
+        for (ParticipantProfitResponse response : responses) {
             System.out.printf(
-                    JUDGE_PLAYER_RESULT_FORMAT,
-                    result.name(),
-                    findJudgeResultMessage(result.outcome())
+                    PARTICIPANT_PROFIT_RESULT_FORMAT,
+                    response.name(),
+                    response.profit()
             );
         }
         System.out.println();
-    }
-
-    private String findJudgeResultMessage(final Outcome outcome) {
-        if (WIN.equals(outcome)) {
-            return WIN_MESSAGE;
-        }
-        return LOSE_MESSAGE;
     }
 }

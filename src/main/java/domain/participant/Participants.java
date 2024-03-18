@@ -1,11 +1,14 @@
 package domain.participant;
 
-import controller.dto.PlayerOutcome;
-import domain.constants.Outcome;
-import domain.game.deck.PlayerWinningCondition;
-import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
+
+import controller.dto.request.PlayerBettingMoney;
+import controller.dto.response.PlayerOutcome;
+import domain.game.deck.PlayerOutcomeFunction;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Participants {
     private final List<Participant> participants;
@@ -14,21 +17,21 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants from(final List<String> playerNames) {
-        List<Participant> participants = new ArrayList<>();
-        for (String playerName : playerNames) {
-            participants.add(new Player(playerName));
-        }
-        participants.add(new Dealer());
-        return new Participants(participants);
+    public static Participants from(final List<PlayerBettingMoney> requests) {
+        return Stream.concat(
+                generatePlayers(requests),
+                Stream.of(new Dealer())
+        ).collect(Collectors.collectingAndThen(toList(), Participants::new));
     }
 
-    public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerWinningCondition condition) {
+    private static Stream<Player> generatePlayers(final List<PlayerBettingMoney> requests) {
+        return requests.stream()
+                .map(request -> new Player(request.name(), request.bettingAmount()));
+    }
+
+    public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
         return getPlayers().stream()
-                .map(player -> new PlayerOutcome(
-                        player.getName(),
-                        Outcome.from(condition.test(player))
-                ))
+                .map(player -> new PlayerOutcome(player, function.apply(player, getDealer())))
                 .toList();
     }
 
@@ -36,9 +39,17 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
+    public List<Participant> getParticipantsStartsWithDealer() {
+        return Stream.concat(
+                Stream.of(getDealer()),
+                getPlayers().stream()
+        ).toList();
+    }
+
     public Dealer getDealer() {
-        return (Dealer) participants.stream()
+        return participants.stream()
                 .filter(Dealer.class::isInstance)
+                .map(Dealer.class::cast)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }

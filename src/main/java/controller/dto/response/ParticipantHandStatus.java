@@ -1,4 +1,4 @@
-package controller.dto;
+package controller.dto.response;
 
 import domain.participant.Hand;
 

@@ -1,9 +1,7 @@
 package domain.game;
 
-import controller.dto.PlayerOutcome;
-import domain.participant.Participant;
+import controller.dto.response.PlayerOutcome;
 import domain.participant.Participants;
-import domain.participant.Player;
 import java.util.List;
 
 public class Referee {
@@ -14,23 +12,20 @@ public class Referee {
     }
 
     public List<PlayerOutcome> judge() {
-        if (participants.getDealer().isBusted()) {
+        if (participants.getDealer().isBlackJack()) {
             return participants.getPlayersOutcomeIf(
-                    Participant::isNotBusted
+                    GameRule::judgeWhenDealerIsBlackJack
             );
         }
-        return participants.getPlayersOutcomeIf(
-                this::isWinner
-        );
-    }
 
-    private boolean isWinner(final Player player) {
-        if (player.isBusted()) {
-            return false;
+        if (participants.getDealer().isBusted()) {
+            return participants.getPlayersOutcomeIf(
+                    GameRule::judgeWhenDealerIsBusted
+            );
         }
-        if (player.isNotSameScoreAs(participants.getDealer())) {
-            return player.hasMoreScoreThan(participants.getDealer());
-        }
-        return player.hasLessOrSameCardThan(participants.getDealer());
+
+        return participants.getPlayersOutcomeIf(
+                GameRule::judgeWhenDealerIsNormal
+        );
     }
 }

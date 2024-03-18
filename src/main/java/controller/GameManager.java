@@ -1,7 +1,8 @@
 package controller;
 
-import controller.dto.JudgeResult;
-import controller.dto.ParticipantHandStatus;
+import controller.dto.request.PlayerBettingMoney;
+import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
 import domain.constants.CardCommand;
 import domain.game.ActionAfterPick;
 import domain.game.BlackJackGame;
@@ -30,11 +31,21 @@ public class GameManager {
 
     private BlackJackGame start() {
         BlackJackGame blackJackGame = BlackJackGame.from(
-                inputView.enterPlayerNames(),
+                generatePlayerBettingMoney(),
                 new RandomDeckGenerator()
         );
         outputView.printInitialHandStatus(blackJackGame.initialize());
         return blackJackGame;
+    }
+
+    private List<PlayerBettingMoney> generatePlayerBettingMoney() {
+        List<String> playerNames = inputView.enterPlayerNames();
+        return playerNames.stream()
+                .map(playerName -> new PlayerBettingMoney(
+                        playerName,
+                        inputView.enterBettingMoney(playerName))
+                )
+                .toList();
     }
 
     private void rotate(final BlackJackGame blackJackGame) {
@@ -58,7 +69,7 @@ public class GameManager {
     private DecisionToContinue getDecisionToContinue(final Participant participant) {
         if (participant instanceof Player) {
             return () -> CardCommand.from(
-                    inputView.requestCommandWhetherGetMoreCard(participant.getName())
+                    inputView.requestCommandWhetherGetMoreCard(participant.name())
             );
         }
         return () -> CardCommand.HIT;
@@ -68,7 +79,7 @@ public class GameManager {
         List<ParticipantHandStatus> participantHandStatuses = blackJackGame.createHandStatuses();
         outputView.printResultHandStatus(participantHandStatuses);
 
-        JudgeResult judgeResult = blackJackGame.judge();
-        outputView.printJudgeResult(judgeResult);
+        List<ParticipantProfitResponse> responses = blackJackGame.judge();
+        outputView.printParticipantProfitResponse(responses);
     }
 }
