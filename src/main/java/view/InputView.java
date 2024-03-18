@@ -1,12 +1,13 @@
 package view;
 
-import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import model.participant.Player;
 
 public class InputView {
 
+    private static final Scanner SCANNER = new Scanner(System.in);
     private static final String NEWLINE = System.lineSeparator();
     private static final String SPLIT_DELIMITER = ",";
     private static final String ASK_PLAYER_NAMES = NEWLINE + "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -23,7 +24,7 @@ public class InputView {
 
     public static List<String> askPlayerNames() {
         System.out.println(ASK_PLAYER_NAMES);
-        String playerNames = Console.readLine();
+        String playerNames = SCANNER.nextLine().strip();
         return splitInputByDelimiter(playerNames);
     }
 
@@ -35,12 +36,12 @@ public class InputView {
 
     public static String askBet(Player player) {
         System.out.printf(ASK_BET_MONEY, player.getName());
-        return Console.readLine().strip();
+        return SCANNER.nextLine().strip();
     }
 
     public static String askHitChoice(Player player) {
         System.out.printf(determineHitChoicePrompt(player), player.getName());
-        return Console.readLine().strip();
+        return SCANNER.nextLine().strip();
     }
 
     private static String determineHitChoicePrompt(Player player) {
