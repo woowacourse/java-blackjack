@@ -23,6 +23,11 @@ public class Player extends Participant {
     }
 
     @Override
+    public boolean canHit() {
+        return score() < BLACKJACK_SCORE;
+    }
+
+    @Override
     public int score() {
         int softScore = hand().score(true);
         if (softScore > BLACKJACK_SCORE) {

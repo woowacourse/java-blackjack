@@ -59,6 +59,7 @@ public class Dealer extends Participant {
         return cards.get(0);
     }
 
+    @Override
     public boolean canHit() {
         return score() <= DEALER_HIT_THRESHOLD;
     }

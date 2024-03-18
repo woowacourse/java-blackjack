@@ -38,6 +38,8 @@ public abstract class Participant {
         return hand;
     }
 
+    public abstract boolean canHit();
+
     public abstract int score();
 
     @Override
