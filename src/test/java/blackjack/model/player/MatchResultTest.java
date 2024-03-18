@@ -137,7 +137,7 @@ public class MatchResultTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러 둘다 블랙잭이 아니고, 플레이어와 딜러 둘다 버스트가 아니면, 플레이어는 딜러보다 카드 합이 더 높아야 승리한다")
+    @DisplayName("플레이어와 딜러 둘다 블랙잭이 아니고, 플레이어와 딜러 둘다 버스트가 아니면, 플레이어는 딜러보다 점수가 더 높아야 승리한다")
     void determineMatchResultWhenCompareScoreTest() {
         // given
         Player player = new Player(new PlayerName("dora"));

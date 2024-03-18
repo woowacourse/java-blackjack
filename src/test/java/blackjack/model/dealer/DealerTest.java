@@ -26,7 +26,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 카드의 합이 17점 이상이 될 때까지 카드를 받는다")
+    @DisplayName("딜러는 점수가 17점 이상이 될 때까지 카드를 받는다")
     void drawTest() {
         // given
         Dealer dealer = new Dealer();

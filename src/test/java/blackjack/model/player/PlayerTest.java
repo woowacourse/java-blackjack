@@ -35,7 +35,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 카드 합을 21에 가깝게 맞추기 위해 카드를 더 받을 수 있다")
+    @DisplayName("플레이어는 점수를 21점에 가깝게 맞추기 위해 카드를 더 받을 수 있다")
     void drawTest() {
         // given
         Player player = new Player(new PlayerName("dora"));
@@ -52,7 +52,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 카드 합이 21을 넘지 않을 경우 얼마든지 카드를 계속 뽑을 수 있다")
+    @DisplayName("플레이어는 점수가 21점을 넘지 않을 경우 얼마든지 카드를 계속 뽑을 수 있다")
     void canDrawTest() {
         // given
         Player player = new Player(new PlayerName("dora"));
