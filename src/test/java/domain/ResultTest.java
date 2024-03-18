@@ -1,13 +1,16 @@
 package domain;
 
+import static domain.BetAmountFixture.betAmount10_000;
 import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.bustHands;
-import static domain.HandsTestFixture.sum10Size2;
 import static domain.HandsTestFixture.sum17Size3One;
-import static domain.HandsTestFixture.sum17Size3Two;
+import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
-import static domain.HandsTestFixture.sum21Size2;
+import static domain.ProfitFixture.loseProfit10_000;
+import static domain.ProfitFixture.profit0;
+import static domain.ProfitFixture.profit10_000;
+import static domain.ProfitFixture.profit15_000;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,35 +18,43 @@ import org.junit.jupiter.api.Test;
 
 class ResultTest {
 
-    @DisplayName("카드 합이 같고 카드 갯수가 같으면 무승부이다.")
+    @DisplayName("WIN_BLACKJACK이면 배팅 금액의 1.5배의 수익을 반환한다.")
     @Test
-    void isTie() {
-        Assertions.assertThat(sum17Size3One.calculateResultBy(sum17Size3Two)).isEqualTo(Result.TIE);
+    void isWIN_BLACKJACK() {
+        // given && when
+        final Profit result = Result.calculateProfit(blackJack, bustHands, betAmount10_000);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(profit15_000);
     }
 
-    @DisplayName("카드 합이 같은데 카드 갯수가 더 적으면 승리이다.")
+    @DisplayName("WIN이면 1배의 배팅 금액의 수익을 반환한다.")
     @Test
-    void isWinBySize() {
-        Assertions.assertThat(sum20Size2.calculateResultBy(sum20Size3)).isEqualTo(Result.WIN);
+    void isWIN() {
+        // given && when
+        final Profit result = Result.calculateProfit(sum20Size2, sum18Size2, betAmount10_000);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(profit10_000);
     }
 
+    @DisplayName("LOSE이면 배팅 금액만큼을 잃는다.")
     @Test
-    @DisplayName("카드 합이 21이하이면서 21에 가까운 카드가 승리한다.")
-    void isWin() {
-        Assertions.assertThat(sum20Size2.calculateResultBy(sum10Size2)).isEqualTo(Result.WIN);
-        Assertions.assertThat(sum20Size2.calculateResultBy(sum21Size2)).isEqualTo(Result.LOSE);
+    void isLOSE() {
+        // given && when
+        final Profit result = Result.calculateProfit(sum17Size3One, sum20Size3, betAmount10_000);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(loseProfit10_000);
     }
 
+    @DisplayName("TIE이면 수익을 0으로 만든다.")
     @Test
-    @DisplayName("카드 합이 21초과이면 패배한다.")
-    void isLoseWhenCardSumGreater21() {
-        Assertions.assertThat(bustHands.calculateResultBy(sum20Size2)).isEqualTo(Result.LOSE);
-    }
+    void isTIE() {
+        // given && when
+        final Profit result = Result.calculateProfit(sum20Size2, sum20Size2, betAmount10_000);
 
-    @Test
-    @DisplayName("blackjack이면 WIN_BLACKJACK이다.")
-    void isWinBlackJack() {
-        Assertions.assertThat(blackJack.calculateResultBy(sum20Size2)).isEqualTo(Result.WIN_BLACKJACK);
-        Assertions.assertThat(sum20Size2.calculateResultBy(blackJack)).isEqualTo(Result.LOSE);
+        // then
+        Assertions.assertThat(result).isEqualTo(profit0);
     }
 }

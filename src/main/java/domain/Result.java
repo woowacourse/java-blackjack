@@ -37,14 +37,14 @@ public enum Result {
     }
 
     private static boolean winningCondition(final Hands hands, final Hands target) {
-        return (!hands.isBust() && target.isBust())
+        return (!hands.isBust() && target.isBust() && !hands.isBlackJack())
                 || (!hands.isBust() && hands.sum() > target.sum() && !hands.isBlackJack())
                 || (!hands.isBust() && hands.sum() == target.sum() && !hands.isBlackJack()
                 && hands.size() < target.size());
     }
 
     private static boolean winningBlackJackCondition(final Hands hands, final Hands target) {
-        return hands.sum() > target.sum() && hands.isBlackJack();
+        return hands.isBlackJack() && !target.isBlackJack();
     }
 
     private static boolean tieCondition(final Hands hands, final Hands target) {

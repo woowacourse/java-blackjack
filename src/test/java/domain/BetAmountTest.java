@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.ProfitFixture.profit15_000;
+
 import domain.participant.BetAmount;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -45,6 +47,6 @@ class BetAmountTest {
         final Profit profit = betAmount.multiply();
 
         // then
-        Assertions.assertThat(profit.getProfit()).isEqualTo((int) (10_000 * 1.5));
+        Assertions.assertThat(profit).isEqualTo(profit15_000);
     }
 }

@@ -104,6 +104,6 @@ class DealerTest {
         final Players players = new Players(List.of(blackJackPlayer, losePlayer, tiePlayer));
 
         // when && then
-        Assertions.assertThat(dealer.calculateProfitBy(players).getProfit()).isEqualTo(5_000);
+        Assertions.assertThat(dealer.calculateProfitBy(players)).isEqualTo(new Profit(5_000));
     }
 }

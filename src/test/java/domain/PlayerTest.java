@@ -45,7 +45,7 @@ class PlayerTest {
         final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(profit.getProfit()).isEqualTo((int) (10_000 * 1.5));
+        Assertions.assertThat(profit).isEqualTo(new Profit((int) (10_000 * 1.5)));
     }
 
     @DisplayName("참여자가 블랙잭이 아니면서 승리하면 배팅 금액의 1배를 받는다.")
@@ -59,7 +59,7 @@ class PlayerTest {
         final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(profit.getProfit()).isEqualTo(10_000);
+        Assertions.assertThat(profit).isEqualTo(new Profit(10_000));
     }
 
     @DisplayName("참여자가 패배하면 배팅 금액을 모두 잃는다.")
@@ -73,7 +73,7 @@ class PlayerTest {
         final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(profit.getProfit()).isEqualTo((-1) * 10_000);
+        Assertions.assertThat(profit).isEqualTo(new Profit((-1) * 10_000));
     }
 
     @DisplayName("무승부이면 금액을 돌려받는다.")
@@ -86,6 +86,6 @@ class PlayerTest {
         final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(profit.getProfit()).isEqualTo(0);
+        Assertions.assertThat(profit).isEqualTo(new Profit(0));
     }
 }
