@@ -1,27 +1,20 @@
-package model.blackjackgame;
+package model.result;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.blackjackgame.Blackjack;
 import model.participants.dealer.Dealer;
 import model.participants.player.Player;
 import model.participants.player.Players;
 
 public class Result {
 
-    private static final String BLACKJACK_WORD = "블랙잭";
-    private static final String WIN_WORD = "승";
-    private static final String FAIL_WORD = "패";
-    private static final String DRAW_WORD = "무";
-
-    private final String dealerResult;
-    private final Map<String, String> playerResult;
+    private final Map<String, GameResult> playerResult;
 
     public Result(Dealer dealer, Players players, Blackjack blackjack) {
         this.playerResult = new HashMap<>();
         createPlayersResult(dealer, players, blackjack);
-        this.dealerResult = createDealerResult();
     }
 
     private void createPlayersResult(Dealer dealer, Players players, Blackjack blackjack) {
@@ -30,17 +23,17 @@ public class Result {
         }
     }
 
-    private String calculatePlayerResult(Dealer dealer, Player player, Blackjack blackjack) {
+    private GameResult calculatePlayerResult(Dealer dealer, Player player, Blackjack blackjack) {
         if (blackjackCase(player, blackjack) && !blackjack.getDealer()) {
-            return BLACKJACK_WORD;
+            return GameResult.BLACKJACK;
         }
         if (calculatePlayerWin(dealer, player)) {
-            return WIN_WORD;
+            return GameResult.WIN;
         }
         if (blackjack.getDealer() && !blackjackCase(player, blackjack) || calculatePlayerFail(dealer, player)) {
-            return FAIL_WORD;
+            return GameResult.FAIL;
         }
-        return DRAW_WORD;
+        return GameResult.DRAW;
     }
 
     private boolean blackjackCase(Player player, Blackjack blackjack) {
@@ -61,34 +54,11 @@ public class Result {
         return dealer.totalNumber() > player.totalNumber() || player.isBust();
     }
 
-    private String createDealerResult() {
-        StringBuilder result = new StringBuilder();
-        appendResult(result, countOccurrences(FAIL_WORD), WIN_WORD);
-        appendResult(result, countOccurrences(WIN_WORD), FAIL_WORD);
-        appendResult(result, countOccurrences(DRAW_WORD), DRAW_WORD);
-
-        return result.toString().trim();
-    }
-
-    private int countOccurrences(String resultType) {
-        return Collections.frequency(playerResult.values(), resultType);
-    }
-
-    private void appendResult(StringBuilder result, int count, String resultType) {
-        if (count > 0) {
-            result.append(count).append(resultType).append(" ");
-        }
-    }
-
-    public Map<String, String> getPlayerResult() {
+    public Map<String, GameResult> getPlayerResult() {
         return playerResult;
     }
 
-    public String getResult(Player player) {
+    public GameResult getResult(Player player) {
         return playerResult.get(player.getName());
-    }
-
-    public String getDealerResult() {
-        return dealerResult;
     }
 }

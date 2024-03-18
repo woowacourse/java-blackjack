@@ -3,7 +3,6 @@ package model.blackjackgame;
 import static model.card.CardNumber.ACE;
 import static model.card.CardNumber.FIVE;
 import static model.card.CardNumber.JACK;
-import static model.card.CardNumber.SEVEN;
 import static model.card.CardNumber.SIX;
 import static model.card.CardShape.CLOVER;
 import static model.card.CardShape.DIAMOND;
@@ -16,6 +15,8 @@ import model.card.Card;
 import model.card.Cards;
 import model.participants.dealer.Dealer;
 import model.participants.player.Players;
+import model.result.GameResult;
+import model.result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,20 +34,8 @@ class ResultTest {
         );
         blackjackGame.distributeCardsForSetting(cards);
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
-        assertEquals("승",
+        assertEquals(GameResult.WIN,
                 result.getPlayerResult().get(blackjackGame.getPlayers().getPlayers().get(0).getName()));
-    }
-
-    @DisplayName("딜러의 결과는 플레이어의 수만큼 존재")
-    @Test
-    void testDealerResult() {
-        Cards cards = new Cards(
-                List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(JACK, HEART),
-                        new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(SEVEN, SPADE))
-        );
-        blackjackGame.distributeCardsForSetting(cards);
-        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
-        assertEquals("1승 1패", result.getDealerResult());
     }
 
     @DisplayName("플레이어가 블랙잭인 경우")
@@ -59,7 +48,7 @@ class ResultTest {
         blackjackGame.distributeCardsForSetting(cards);
         blackjack.playerBlackjackStatus(blackjackGame.getPlayers());
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
-        assertEquals("블랙잭",
+        assertEquals(GameResult.BLACKJACK,
                 result.getPlayerResult().get(blackjackGame.getPlayers().getPlayers().get(0).getName()));
     }
 
