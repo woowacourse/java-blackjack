@@ -30,7 +30,8 @@ public class InputView {
         }
     }
 
-    public String readCommand() {
-        return scanner.nextLine();
+    public boolean readPlayerWantDrawMore() {
+        Command command = Command.from(scanner.nextLine());
+        return command.isYes();
     }
 }

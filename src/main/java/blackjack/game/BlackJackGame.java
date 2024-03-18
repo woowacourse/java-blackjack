@@ -78,22 +78,16 @@ public class BlackJackGame {
     }
 
     private void proceedPlayerTurn(Deck deck, Player player) {
-        Command command = askPlayerToDrawMore(player);
-        if (command.isNo()) {
-            return;
-        }
-        player.drawCard(deck);
-        outputView.printPlayerCards(player.getName(), player.getCards());
-
-        if (player.hasDrawableScore()) {
+        if (player.hasDrawableScore() && isPlayerWantToDrawMore(player)) {
+            player.drawCard(deck);
+            outputView.printPlayerCards(player.getName(), player.getCards());
             proceedPlayerTurn(deck, player);
         }
     }
 
-    private Command askPlayerToDrawMore(Player player) {
+    private boolean isPlayerWantToDrawMore(Player player) {
         outputView.printDrawMoreCardRequest(player.getName());
-        String input = inputView.readCommand();
-        return Command.from(input);
+        return inputView.readPlayerWantDrawMore();
     }
 
     private void proceedDealerTurn(Deck deck, Dealer dealer) {
