@@ -11,7 +11,6 @@ import model.blackjackgame.Bettings;
 import model.blackjackgame.Blackjack;
 import model.blackjackgame.BlackjackGame;
 import model.card.Card;
-import model.card.CardType;
 import model.card.Cards;
 import model.participants.dealer.Dealer;
 import model.participants.player.Player;
@@ -70,9 +69,9 @@ public class BlackjackGameController {
     private void printCardSetting(Dealer dealer, Players players) {
         outputView.printDistributeCards(dealer, players);
         outputView.printCardsStock(dealer.getName(),
-                Collections.singletonList(captureCardType(dealer).get(0)));
+                Collections.singletonList(dealer.captureCardType().get(0)));
         players.getPlayers()
-                .forEach(player -> outputView.printCardsStock(player.getName(), captureCardType(player)));
+                .forEach(player -> outputView.printCardsStock(player.getName(), player.captureCardType()));
     }
 
     private void turnHit(BlackjackGame blackjackGame) {
@@ -97,7 +96,7 @@ public class BlackjackGameController {
     private Answer hitResultInfo(boolean continueHit, Player player, BlackjackGame blackjackGame) {
         if (continueHit) {
             outputView.printCardsStock(player.getName(),
-                    captureCardType(new UpdatedPlayer(blackjackGame, player).player()));
+                    new UpdatedPlayer(blackjackGame, player).player().captureCardType());
             return new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         }
         outputView.printBustInfo(player);
@@ -115,10 +114,10 @@ public class BlackjackGameController {
     }
 
     private void printFinalCardStatus(Dealer dealer, Players players) {
-        outputView.printFinalCardStatus(dealer.getName(), captureCardType(dealer), dealer.totalNumber());
+        outputView.printFinalCardStatus(dealer.getName(), dealer.captureCardType(), dealer.totalNumber());
         players.getPlayers()
                 .forEach(player ->
-                        outputView.printFinalCardStatus(player.getName(), captureCardType(player),
+                        outputView.printFinalCardStatus(player.getName(), player.captureCardType(),
                                 player.totalNumber()));
     }
 
@@ -140,21 +139,5 @@ public class BlackjackGameController {
         } catch (IllegalArgumentException e) {
             return repeatUntilSuccess(function, input);
         }
-    }
-
-    private List<CardType> captureCardType(Dealer dealer) {
-        List<CardType> cardTypes = new ArrayList<>();
-        for (int i = 0; i < dealer.cardsSize(); i++) {
-            cardTypes.add(new CardType(dealer.getCards().getCards().get(i)));
-        }
-        return cardTypes;
-    }
-
-    private List<CardType> captureCardType(Player player) {
-        List<CardType> cardTypes = new ArrayList<>();
-        for (int i = 0; i < player.cardsSize(); i++) {
-            cardTypes.add(new CardType(player.getCards().getCards().get(i)));
-        }
-        return cardTypes;
     }
 }

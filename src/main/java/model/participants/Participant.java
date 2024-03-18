@@ -1,7 +1,9 @@
 package model.participants;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.card.Card;
+import model.card.CardType;
 import model.card.Cards;
 
 public class Participant {
@@ -32,6 +34,14 @@ public class Participant {
     public Participant addCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
         return new Participant(name, addedCards);
+    }
+
+    public List<CardType> captureCardType() {
+        List<CardType> cardTypes = new ArrayList<>();
+        for (int i = 0; i < cardsSize(); i++) {
+            cardTypes.add(new CardType(cards.getCards().get(i)));
+        }
+        return cardTypes;
     }
 
     public int cardsSize() {
