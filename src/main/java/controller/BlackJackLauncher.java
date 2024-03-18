@@ -7,12 +7,13 @@ import static view.InputView.inputPlayerHitChoice;
 
 import controller.dto.BettingInfo;
 import controller.dto.BettingInfos;
+import controller.dto.DealerFaceUpResultInfo;
+import controller.dto.PlayerFaceUpResultInfo;
 import java.util.List;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
 import model.participant.Names;
-import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.PlayerFaceUpResult;
+import util.ResultMapper;
 import view.OutputView;
 
 public class BlackJackLauncher {
@@ -37,23 +38,25 @@ public class BlackJackLauncher {
     }
 
     private void showInitialFaceUpResults(Casino casino) {
-        DealerFaceUpResult dealerFaceUpResult = casino.getDealerFaceUpResult();
-        List<PlayerFaceUpResult> playerFaceUpResults = casino.getPlayerFaceUpResult();
-        OutputView.printInitialCardSetting(dealerFaceUpResult, playerFaceUpResults);
+        DealerFaceUpResultInfo dealerFaceUpResultInfo = ResultMapper.fromDealerFaceUpResult(
+                casino.getDealerFaceUpResult());
+        List<PlayerFaceUpResultInfo> playerFaceUpResults = ResultMapper.fromPlayerFaceUpResult(
+                casino.getPlayerFaceUpResult());
+        OutputView.printInitialCardSetting(dealerFaceUpResultInfo, playerFaceUpResults);
     }
 
     private void proceedPlayersTurn(Casino casino) {
         while (casino.hasAvailablePlayer()) {
-            PlayerFaceUpResult nextPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
-            boolean playerChoice = inputRetryHelper(
-                    () -> inputPlayerHitChoice(nextPlayerFaceUpInfo.getPartipantNameAsString()));
+            PlayerFaceUpResultInfo nextPlayerFaceUpInfo = ResultMapper.fromPlayerFaceUpResult(
+                    casino.getNextPlayerFaceUpInfo());
+            boolean playerChoice = inputRetryHelper(() -> inputPlayerHitChoice(nextPlayerFaceUpInfo.name()));
             casino.distinctPlayerChoice(playerChoice);
             showPlayerChoiceResult(playerChoice, nextPlayerFaceUpInfo);
         }
     }
 
-    private void showPlayerChoiceResult(boolean playerChoice, PlayerFaceUpResult currentPlayerFaceUpInfo) {
-        if (playerChoice || currentPlayerFaceUpInfo.cards()
+    private void showPlayerChoiceResult(boolean playerChoice, PlayerFaceUpResultInfo currentPlayerFaceUpInfo) {
+        if (playerChoice || currentPlayerFaceUpInfo.cardFaces()
                 .size() == 2) {
             OutputView.printSingleFaceUp(currentPlayerFaceUpInfo);
         }
@@ -67,9 +70,11 @@ public class BlackJackLauncher {
     }
 
     private void showFinalFaceUpResults(Casino casino) {
-        List<PlayerFaceUpResult> playerFinalFaceUpResults = casino.getPlayerFaceUpResult();
-        DealerFaceUpResult dealerFinalFaceUpResult = casino.getDealerFaceUpResult();
-        OutputView.printFinalFaceUpResult(dealerFinalFaceUpResult, playerFinalFaceUpResults);
+        List<PlayerFaceUpResultInfo> playerFinalFaceUpResultInfos = ResultMapper.fromPlayerFaceUpResult(
+                casino.getPlayerFaceUpResult());
+        DealerFaceUpResultInfo dealerFinalFaceUpResultInfo = ResultMapper.fromDealerFaceUpResult(
+                casino.getDealerFaceUpResult());
+        OutputView.printFinalFaceUpResult(dealerFinalFaceUpResultInfo, playerFinalFaceUpResultInfos);
     }
 
     private void showFinalMatchResults(Casino casino) {
