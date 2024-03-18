@@ -10,7 +10,6 @@ import static domain.card.CardFixture.cardsOfBlackjack;
 import static domain.card.CardFixture.cardsOfSoft12;
 import static domain.card.CardFixture.cardsOfSoft15;
 import static domain.card.CardFixture.cardsOfSoft20;
-import static domain.card.CardFixture.cardsOfSoft22;
 import static domain.card.Rank.ACE;
 
 import java.util.List;
@@ -41,7 +40,6 @@ class HandTest {
                 Arguments.of(cardsOfSoft12(), true),
                 Arguments.of(cardsOfSoft15(), true),
                 Arguments.of(cardsOfSoft20(), true),
-                Arguments.of(cardsOfSoft22(), true),
                 Arguments.of(cardsOf15(), false),
                 Arguments.of(cardsOf20(), false),
                 Arguments.of(cardsOf22(), false)
@@ -63,7 +61,6 @@ class HandTest {
                 Arguments.of(cardsOfSoft12(), 12),
                 Arguments.of(cardsOfSoft15(), 15),
                 Arguments.of(cardsOfSoft20(), 20),
-                Arguments.of(cardsOfSoft22(), 22),
                 Arguments.of(cardsOf15(), 15),
                 Arguments.of(cardsOf20(), 20),
                 Arguments.of(cardsOf22(), 22),
@@ -77,6 +74,6 @@ class HandTest {
     void score(List<Card> cards, int expected) {
         Hand hand = new Hand();
         cards.forEach(hand::add);
-        assertThat(hand.score(true)).isEqualTo(expected);
+        assertThat(hand.score()).isEqualTo(expected);
     }
 }

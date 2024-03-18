@@ -5,7 +5,6 @@ import static domain.card.Rank.FIVE;
 import static domain.card.Rank.FOUR;
 import static domain.card.Rank.KING;
 import static domain.card.Rank.NINE;
-import static domain.card.Rank.TEN;
 import static domain.card.Rank.TWO;
 import static domain.card.Suit.SPADE;
 
@@ -26,10 +25,6 @@ public class CardFixture {
 
     public static List<Card> cardsOfBlackjack() {
         return List.of(cardOf(ACE), cardOf(KING));
-    }
-
-    public static List<Card> cardsOfSoft22() {
-        return List.of(cardOf(ACE), cardOf(ACE), cardOf(TEN));
     }
 
     public static List<Card> cardsOfSoft20() {

@@ -1,6 +1,5 @@
 package domain.participant.dealer;
 
-import static domain.card.Hand.BLACKJACK_SCORE;
 import static domain.card.Hand.INITIAL_CARD_COUNT;
 
 import java.util.List;
@@ -17,7 +16,6 @@ public class Dealer extends Participant {
     private static final Name DEFAULT_DEALER_NAME = new Name("딜러");
 
     private final Deck deck;
-    private boolean hasSoftAce;
 
     public Dealer(final Deck deck) {
         super(DEFAULT_DEALER_NAME);
@@ -29,7 +27,6 @@ public class Dealer extends Participant {
     }
 
     public void dealInitialCards(final Players players) {
-        hasSoftAce = false;
         deal(this, INITIAL_CARD_COUNT);
         players.forEach(participant -> deal(participant, INITIAL_CARD_COUNT));
     }
@@ -42,15 +39,6 @@ public class Dealer extends Participant {
 
     public void deal(final Participant participant) {
         participant.receive(deck.draw());
-        if (this == participant) {
-            setHasSoftAce();
-        }
-    }
-
-    private void setHasSoftAce() {
-        if (!hasSoftAce) {
-            hasSoftAce = hand().hasAce() && (hand().score(true) <= BLACKJACK_SCORE);
-        }
     }
 
     public Card peek() {
@@ -61,10 +49,5 @@ public class Dealer extends Participant {
     @Override
     public boolean canHit() {
         return score() <= DEALER_HIT_THRESHOLD;
-    }
-
-    @Override
-    public int score() {
-        return hand().score(hasSoftAce);
     }
 }

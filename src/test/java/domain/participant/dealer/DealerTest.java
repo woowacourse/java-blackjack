@@ -7,6 +7,7 @@ import static domain.card.CardFixture.cardOf;
 import static domain.card.Rank.ACE;
 import static domain.card.Rank.FIVE;
 import static domain.card.Rank.JACK;
+import static domain.card.Rank.KING;
 import static domain.card.Rank.NINE;
 import static domain.card.Rank.SEVEN;
 import static domain.card.Rank.SIX;
@@ -110,7 +111,7 @@ class DealerTest {
 
     static Stream<Arguments> isBust() {
         return Stream.of(
-                Arguments.of(new Deck(List.of(cardOf(ACE), cardOf(FIVE), cardOf(SIX))), 22, true),
+                Arguments.of(new Deck(List.of(cardOf(KING), cardOf(SIX), cardOf(SIX))), 22, true),
                 Arguments.of(new Deck(List.of(cardOf(FIVE), cardOf(SIX), cardOf(ACE))), 12, false)
         );
     }

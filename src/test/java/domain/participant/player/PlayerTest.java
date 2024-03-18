@@ -55,11 +55,9 @@ class PlayerTest {
     void isBlackjack() {
         Card cardAce = cardOf(ACE);
         Card cardKing = cardOf(KING);
-        Card cardQueen = cardOf(QUEEN);
         Player player = PlayerFixture.from("hotea");
         player.receive(cardAce);
         player.receive(cardKing);
-        player.receive(cardQueen);
         assertThat(player.isBlackjack()).isTrue();
     }
 

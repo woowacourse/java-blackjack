@@ -29,9 +29,10 @@ public class Hand {
                 .anyMatch(card -> card.rank() == Rank.ACE);
     }
 
-    public int score(final boolean isSoft) {
-        if (isSoft && hasAce()) {
-            return sum() + SOFT_ADDITION_SCORE;
+    public int score() {
+        int softScore = sum() + SOFT_ADDITION_SCORE;
+        if (hasAce() && softScore <= BLACKJACK_SCORE) {
+            return softScore;
         }
         return sum();
     }

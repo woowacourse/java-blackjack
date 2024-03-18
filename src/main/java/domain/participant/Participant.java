@@ -30,6 +30,10 @@ public abstract class Participant {
         return (hand.size() == 2) && (score() == BLACKJACK_SCORE);
     }
 
+    public int score() {
+        return hand.score();
+    }
+
     public Name name() {
         return name;
     }
@@ -37,10 +41,6 @@ public abstract class Participant {
     public Hand hand() {
         return hand;
     }
-
-    public abstract boolean canHit();
-
-    public abstract int score();
 
     @Override
     public boolean equals(final Object object) {
@@ -54,4 +54,6 @@ public abstract class Participant {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    public abstract boolean canHit();
 }

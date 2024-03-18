@@ -27,15 +27,6 @@ public class Player extends Participant {
         return score() < BLACKJACK_SCORE;
     }
 
-    @Override
-    public int score() {
-        int softScore = hand().score(true);
-        if (softScore > BLACKJACK_SCORE) {
-            return hand().score(false);
-        }
-        return softScore;
-    }
-
     public Profit profitAgainst(final Dealer dealer) {
         return Profit.of(bet, profitRateAgainst(dealer));
     }
