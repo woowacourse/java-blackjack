@@ -51,7 +51,7 @@ class BlackjackGameTest {
     @DisplayName("딜러의 카드 합계가 16점 이하이면 카드가 1개 증가한 딜러 객체를 반환한다")
     @Test
     void testHitFromDealer() {
-        blackjackGame.dealerHitsUnderSixteen(new Card(JACK, DIAMOND));
+        blackjackGame.hitForDealer(new Card(JACK, DIAMOND));
         assertThat(blackjackGame.getDealer().cardsSize()).isEqualTo(1);
     }
 

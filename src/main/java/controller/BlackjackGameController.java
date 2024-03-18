@@ -109,7 +109,7 @@ public class BlackjackGameController {
     }
 
     private void turnHitDealer(BlackjackGame blackjackGame) {
-        boolean dealerHit = blackjackGame.dealerHitsUnderSixteen(
+        boolean dealerHit = blackjackGame.hitForDealer(
                 new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
         outputView.printDealerHitStatus(dealerHit);
     }
