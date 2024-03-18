@@ -17,6 +17,7 @@ public class Players {
     }
 
     public static Players of(final List<String> names, final List<Integer> betAmounts) {
+        validateSameLength(names, betAmounts);
         return new Players(IntStream.range(0, names.size())
                 .mapToObj(index -> new Player(new Name(names.get(index)), new BetAmount(betAmounts.get(index))))
                 .toList());
@@ -25,6 +26,13 @@ public class Players {
     private void validate(final List<Player> players) {
         validatePlayerNumbers(players);
         validateDuplicate(players);
+    }
+
+    private static void validateSameLength(final List<String> names, final List<Integer> betAmounts) {
+        if (names.size() != betAmounts.size()) {
+            throw new IllegalArgumentException(
+                    String.format("이름(%d)과 배팅 금액(%d)의 정보의 길이가 일치하지 않습니다.", names.size(), betAmounts.size()));
+        }
     }
 
     private void validatePlayerNumbers(final List<Player> players) {

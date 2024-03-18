@@ -36,4 +36,14 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 중복될 수 없습니다");
     }
+
+    @Test
+    @DisplayName("이름과 배팅금액 정보의 길이가 다르면 예외가 발생한다")
+    void length() {
+        final List<String> names = List.of("a", "b", "c");
+        final List<Integer> betAmounts = List.of(100, 200);
+        assertThatThrownBy(() -> Players.of(names, betAmounts))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(String.format("이름(%d)과 배팅 금액(%d)의 정보의 길이가 일치하지 않습니다.", names.size(), betAmounts.size()));
+    }
 }

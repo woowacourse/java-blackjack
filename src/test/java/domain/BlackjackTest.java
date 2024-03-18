@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BlackjackTest {
+
     @Test
     @DisplayName("딜러가 히트 했을 때 점수의 합이 17 이상인지 확인한다")
     void dealerHit() {
@@ -32,14 +33,5 @@ class BlackjackTest {
 
         final int score = blackjack.toParticipantsResponse().playerResponse().get(0).score();
         Assertions.assertThat(score).isGreaterThanOrEqualTo(21);
-    }
-
-
-    @Test
-    void toGameResult() {
-    }
-
-    @Test
-    void toParticipantsResponse() {
     }
 }
