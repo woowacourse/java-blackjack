@@ -60,7 +60,7 @@ public class BlackjackController {
     private BlackjackGame readyGame(final Players players) {
         try {
             final BlackjackGame blackjackGame = new BlackjackGame(players);
-            blackjackGame.initCard();
+            blackjackGame.prepareDeck();
             blackjackGame.divideCard();
             outputView.printStartCards(blackjackGame.getStartCards());
             return blackjackGame;

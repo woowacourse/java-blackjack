@@ -28,7 +28,7 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public void initCard() {
+    public void prepareDeck() {
         deck = Deck.create();
         deck.shuffle();
     }

@@ -7,7 +7,7 @@ public class BettingMoney {
         this.moeney = money;
     }
 
-    public BettingMoney multiplyWith(final double betMultiplier) {
+    public BettingMoney multiply(final double betMultiplier) {
         return new BettingMoney((int) (this.moeney * betMultiplier));
     }
 

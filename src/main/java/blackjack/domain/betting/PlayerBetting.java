@@ -27,7 +27,7 @@ public class PlayerBetting {
     }
 
     public PlayerBetting applyWinStatus(final double betMultiplier) {
-        BettingMoney bettingMoney = this.bettingMoney.multiplyWith(betMultiplier);
+        BettingMoney bettingMoney = this.bettingMoney.multiply(betMultiplier);
         return new PlayerBetting(this.name, bettingMoney);
     }
 
