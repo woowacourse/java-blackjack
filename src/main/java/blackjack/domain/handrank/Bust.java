@@ -4,17 +4,15 @@ import blackjack.domain.card.Hand;
 
 final class Bust extends HandRank {
 
-    private final int score;
-
-    public Bust(int score) {
-        validate(score);
-        this.score = score;
+    public Bust(Hand hand) {
+        super(validate(hand));
     }
 
-    private void validate(int score) {
-        if (score <= Hand.BLACKJACK_SCORE) {
-            throw new IllegalArgumentException("버스트 점수는 블랙잭 점수보다 높아야 합니다.");
+    private static Hand validate(Hand hand) {
+        if (!hand.isBusted()) {
+            throw new IllegalArgumentException("해당 핸드는 버스트이어야 합니다.");
         }
+        return hand;
     }
 
     @Override
@@ -26,20 +24,5 @@ final class Bust extends HandRank {
             return SingleMatchResult.PLAYER_BLACKJACK;
         }
         return SingleMatchResult.PLAYER_WIN;
-    }
-
-    @Override
-    protected int getScore() {
-        return score;
-    }
-
-    @Override
-    protected boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
-    protected boolean isBust() {
-        return true;
     }
 }

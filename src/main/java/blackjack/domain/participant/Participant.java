@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.handrank.HandRankFactory;
 import blackjack.domain.handrank.HandRank;
+import blackjack.domain.handrank.HandRankFactory;
 import java.util.List;
 
 public abstract class Participant {

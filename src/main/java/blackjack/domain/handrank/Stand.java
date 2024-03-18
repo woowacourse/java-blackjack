@@ -4,17 +4,15 @@ import blackjack.domain.card.Hand;
 
 final class Stand extends HandRank {
 
-    private final int score;
-
-    public Stand(int score) {
-        validate(score);
-        this.score = score;
+    public Stand(Hand hand) {
+        super(validate(hand));
     }
 
-    private void validate(int score) {
-        if (score > Hand.BLACKJACK_SCORE) {
-            throw new IllegalArgumentException("스탠드 점수는 블랙잭 점수보다 낮거나 같아야 합니다.");
+    private static Hand validate(Hand hand) {
+        if (hand.isBlackjack() || hand.isBusted()) {
+            throw new IllegalArgumentException("스탠드는 블랙잭 또는 버스트가 아이어야 합니다.");
         }
+        return hand;
     }
 
     @Override
@@ -36,20 +34,5 @@ final class Stand extends HandRank {
             return SingleMatchResult.DRAW;
         }
         return SingleMatchResult.DEALER_WIN;
-    }
-
-    @Override
-    protected int getScore() {
-        return score;
-    }
-
-    @Override
-    protected boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
-    protected boolean isBust() {
-        return false;
     }
 }
