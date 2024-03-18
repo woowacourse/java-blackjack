@@ -29,7 +29,7 @@ public class BlackjackGame {
 
     public CardsDto dealInitialCards(Dealer dealer, Players players) {
         dealCards(dealer);
-        CardDto dealerCard = new CardDto(dealer.getName(), List.of(dealer.getFirstCard()));
+        CardDto dealerCard = new CardDto(dealer.getName(), dealer.getFirstCard());
         List<CardDto> playerCards = players.getPlayers()
             .stream()
             .map(this::dealCards)

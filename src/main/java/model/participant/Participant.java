@@ -52,7 +52,8 @@ public abstract class Participant implements HitAction, CheckAction {
     }
 
     public String getFirstCard() {
-        return cards.getCards().get(0)
+        return cards.getCards()
+            .get(0)
             .toString();
     }
 
