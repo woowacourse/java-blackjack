@@ -5,8 +5,8 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
 public class PlayerFixture {
-    public static Player player(Card... cards) {
-        Player player = new Player("player");
+    public static Player player(int bettingAmount, Card... cards) {
+        Player player = new Player("player", 10000);
         for (Card card : cards) {
             player.addCard(card);
         }

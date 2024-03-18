@@ -1,34 +1,19 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
-import java.util.List;
+public class Player extends Participant {
+    private final Money bettingAmount;
 
-public class Player {
-    protected final Hand hand;
-    private final Name name;
-
-    public Player(final String name) {
-        this.hand = new Hand();
-        this.name = new Name(name);
+    public Player(final String name, final int bettingAmount) {
+        super(name);
+        this.bettingAmount = new Money(bettingAmount);
     }
 
-    public void addCard(final Card card) {
-        hand.add(card);
+    @Override
+    public boolean isDrawable() {
+        return !isBust();
     }
 
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public int getScore() {
-        return hand.calculateScore();
-    }
-
-    public List<Card> getCards() {
-        return hand.getAllCards();
-    }
-
-    public String getName() {
-        return name.getValue();
+    public Money getBettingAmount() {
+        return bettingAmount;
     }
 }

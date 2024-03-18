@@ -1,54 +1,62 @@
 package blackjack.controller;
 
-import blackjack.domain.cardgame.CardGame;
-import blackjack.domain.cardgame.CardGameJudge;
-import blackjack.domain.cardgame.CardGameResult;
+import blackjack.domain.cardgame.CardDeck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
     public void run() {
-        final List<String> names = InputView.askPlayerNames();
-        final List<Player> players = createPlayersByNames(names);
-        final Dealer dealer = new Dealer();
-        final CardGame cardGame = new CardGame();
+        try {
+            final CardDeck cardDeck = new CardDeck();
+            final Dealer dealer = new Dealer();
+            final List<String> names = InputView.readPlayerNames();
+            final List<Player> players = readBettingAmountAndCreatePlayers(names);
+            final Participants participants = new Participants(dealer, players);
 
-        cardGame.initializeHand(dealer, players);
-        OutputView.printInitialHandOfEachPlayer(dealer, players);
+            cardDeck.initializeHand(participants);
+            OutputView.printInitialHandOfEachPlayer(dealer, players);
 
-        givePlayersMoreCardsIfWanted(cardGame, players);
-        giveDealerMoreCardsIfNeeded(cardGame, dealer);
+            givePlayersMoreCardsIfWanted(cardDeck, players);
+            giveDealerMoreCardsIfNeeded(cardDeck, dealer);
 
-        printHandStatusOfEachPlayer(dealer, players);
-        printCardGameResult(dealer, players);
-    }
-
-    private static List<Player> createPlayersByNames(final List<String> names) {
-        return names.stream()
-                .map(Player::new)
-                .toList();
-    }
-
-    private void givePlayersMoreCardsIfWanted(final CardGame cardGame, final List<Player> players) {
-        for (final Player player : players) {
-            givePlayerMoreCardsIfWanted(cardGame, player);
+            printHandStatusOfEachPlayer(dealer, players);
+            printPlayerProfits(participants);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    private void givePlayerMoreCardsIfWanted(final CardGame cardGame, final Player player) {
+    private static List<Player> readBettingAmountAndCreatePlayers(final List<String> names) {
+        final List<Player> players = new ArrayList<>();
+        for (final String name : names) {
+            final int bettingAmount = InputView.readBettingAmount(name);
+            players.add(new Player(name, bettingAmount));
+        }
+        return players;
+    }
+
+    private void givePlayersMoreCardsIfWanted(final CardDeck cardDeck, final List<Player> players) {
+        for (final Player player : players) {
+            givePlayerMoreCardsIfWanted(cardDeck, player);
+        }
+    }
+
+    private void givePlayerMoreCardsIfWanted(final CardDeck cardDeck, final Player player) {
         final String playerName = player.getName();
-        while (!player.isBust() && InputView.askForMoreCard(playerName)) {
-            cardGame.giveCard(player);
+        while (player.isDrawable() && InputView.readHitStandCommand(playerName)) {
+            cardDeck.giveCard(player);
             OutputView.printPlayerCard(player);
         }
     }
 
-    private void giveDealerMoreCardsIfNeeded(final CardGame cardGame, final Dealer dealer) {
-        while (dealer.isMoreCardNeeded()) {
-            cardGame.giveCard(dealer);
+    private void giveDealerMoreCardsIfNeeded(final CardDeck cardDeck, final Dealer dealer) {
+        while (dealer.isDrawable()) {
+            cardDeck.giveCard(dealer);
             OutputView.printDealerHitMessage(dealer);
         }
     }
@@ -60,9 +68,7 @@ public class BlackjackController {
         }
     }
 
-    private void printCardGameResult(final Dealer dealer, final List<Player> players) {
-        final CardGameJudge cardGameJudge = new CardGameJudge();
-        final CardGameResult cardGameResult = cardGameJudge.judge(dealer, players);
-        OutputView.printResult(cardGameResult);
+    private void printPlayerProfits(final Participants participants) {
+        OutputView.printProfits(participants);
     }
 }

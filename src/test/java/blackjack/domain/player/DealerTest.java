@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardShape.HEART;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Suit.HEART;
 import static blackjack.fixture.PlayerFixture.dealer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -16,7 +16,7 @@ public class DealerTest {
         Dealer dealer = dealer(new Card(KING, HEART));
 
         // when
-        boolean moreCardNeeded = dealer.isMoreCardNeeded();
+        boolean moreCardNeeded = dealer.isDrawable();
 
         // then
         assertThat(moreCardNeeded).isTrue();

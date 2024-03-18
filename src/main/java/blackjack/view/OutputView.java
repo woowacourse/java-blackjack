@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import static blackjack.domain.cardgame.WinningStatus.LOSE;
-import static blackjack.domain.cardgame.WinningStatus.WIN;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
+import blackjack.view.expressions.DenominationExpressions;
+import blackjack.view.expressions.SuitExpressions;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,43 +43,37 @@ public class OutputView {
         printLineSeparator();
     }
 
-    public static void printPlayerCardWithScore(final Player player) {
-        final String playerCardInfo = getPlayerCardInfo(player);
-        System.out.println(playerCardInfo + " - 결과: " + player.getScore());
+    public static void printPlayerCardWithScore(final Participant participant) {
+        final String playerCardInfo = getPlayerCardInfo(participant);
+        System.out.println(playerCardInfo + " - 결과: " + participant.getScore());
     }
 
-    public static void printResult(final CardGameResult cardGameResult) {
-        printResultOfDealer(cardGameResult);
-        printResultOfEachPlayer(cardGameResult);
-    }
-
-    private static void printResultOfDealer(final CardGameResult cardGameResult) {
-        printLineSeparator();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " +
-                cardGameResult.getDealerWinCount() + WIN.getValue() + " " +
-                cardGameResult.getDealerLoseCount() + LOSE.getValue());
-    }
-
-    private static void printResultOfEachPlayer(final CardGameResult cardGameResult) {
-        cardGameResult.getTotalResult()
-                .entrySet()
-                .stream()
-                .map(result -> result.getKey().getName() + ": " + result.getValue().getValue())
-                .forEach(System.out::println);
-    }
-
-    private static String getPlayerCardInfo(final Player player) {
-        return player.getName() + "카드: " +
-                player.getCards()
+    private static String getPlayerCardInfo(final Participant participant) {
+        return participant.getName() + "카드: " +
+                participant.getCards()
                         .stream()
                         .map(OutputView::getCardInfo)
                         .collect(Collectors.joining(", "));
     }
 
     private static String getCardInfo(final Card card) {
-        return CardNumberStrings.mapCardNumberToString(card.getNumber()) +
-                CardShapeStrings.mapCardShapeToString(card.getShape());
+        return DenominationExpressions.mapCardNumberToString(card.getNumber()) +
+                SuitExpressions.mapCardShapeToString(card.getShape());
+    }
+
+    public static void printProfits(final Participants participants) {
+
+        final Dealer dealer = participants.getDealer();
+        final List<Player> players = participants.getPlayers();
+
+        printLineSeparator();
+        System.out.println("## 최종 수익");
+        System.out.println(
+                String.format("%s: %d", dealer.getName(), participants.calculateDealerProfit()));
+
+        players.forEach(player ->
+                System.out.println(String.format("%s: %d", player.getName(),
+                        player.getBettingAmount().findProfit(dealer.judgePlayerStatus(player)).getValue())));
     }
 
     private static void printLineSeparator() {
