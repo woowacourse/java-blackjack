@@ -107,22 +107,22 @@ public class BlackJackGame {
     }
 
     private void showMatchResult(Dealer dealer, PlayerBettingMoney bettingResults) {
-        MatchResults matchResults = calculateMatchResults(dealer, bettingResults);
+        PlayerEarnings playerEarnings = calculateMatchResults(dealer, bettingResults);
         outputView.printResultStart();
-        showDealerResult(matchResults);
-        showPlayersResult(matchResults);
+        showDealerResult(playerEarnings);
+        showPlayersResult(playerEarnings);
     }
 
-    private MatchResults calculateMatchResults(Dealer dealer, PlayerBettingMoney bettingResults) {
-        return new MatchResults(dealer, bettingResults.getBettingMoney());
+    private PlayerEarnings calculateMatchResults(Dealer dealer, PlayerBettingMoney bettingResults) {
+        return new PlayerEarnings(dealer, bettingResults.getBettingMoney());
     }
 
-    private void showDealerResult(MatchResults matchResults) {
-        outputView.printDealerResult(matchResults.getDealerResult());
+    private void showDealerResult(PlayerEarnings playerEarnings) {
+        outputView.printDealerResult(playerEarnings.getDealerResult());
     }
 
-    private void showPlayersResult(MatchResults matchResults) {
-        Map<Player, Integer> results = matchResults.getResults();
+    private void showPlayersResult(PlayerEarnings playerEarnings) {
+        Map<Player, Integer> results = playerEarnings.getResults();
         for (Map.Entry<Player, Integer> result : results.entrySet()) {
             outputView.printPlayerResult(result.getKey().getName(), result.getValue());
         }

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class MatchResultsTest {
+class PlayerEarningsTest {
 
     private final Hand dealerHand = new Hand(List.of(
             new Card(Shape.DIAMOND, Rank.TEN),
@@ -29,25 +29,25 @@ class MatchResultsTest {
             )));
     private final Player player = new Player("atto", playerHand);
     private final Money money = new Money(10000);
-    private MatchResults matchResults;
+    private PlayerEarnings playerEarnings;
 
     @BeforeEach
     void beforeEach() {
         Map<Player, Money> playerBettingResult = new HashMap<>();
         playerBettingResult.put(player, money);
-        matchResults = new MatchResults(dealer, playerBettingResult);
+        playerEarnings = new PlayerEarnings(dealer, playerBettingResult);
     }
 
     @Test
     @DisplayName("플레이어로 배팅 결과를 올바르게 가져온다.")
     void getResultByNameTest() {
-        assertThat(matchResults.getResultOf(player)).isEqualTo(-10000);
+        assertThat(playerEarnings.getResultOf(player)).isEqualTo(-10000);
     }
 
     @Test
     @DisplayName("플레이어가 존재하지 않는 경우 예외를 발생시킨다.")
     void nameNotFoundTest() {
-        assertThatThrownBy(() -> matchResults.getResultOf(new Player("pobi")))
+        assertThatThrownBy(() -> playerEarnings.getResultOf(new Player("pobi")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 플레이어입니다.");
     }
@@ -55,6 +55,6 @@ class MatchResultsTest {
     @Test
     @DisplayName("딜러의 수익을 구한다.")
     void getDealerResultTest() {
-        assertThat(matchResults.getDealerResult()).isEqualTo(10000);
+        assertThat(playerEarnings.getDealerResult()).isEqualTo(10000);
     }
 }
