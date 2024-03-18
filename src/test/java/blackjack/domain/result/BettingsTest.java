@@ -1,13 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.gamers.Dealer;
-import blackjack.domain.gamers.Name;
-import blackjack.domain.gamers.Player;
-import blackjack.domain.result.Bettings;
-import blackjack.domain.result.Judge;
-import blackjack.domain.result.Money;
+import blackjack.domain.TestDeckFactory;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -39,13 +37,12 @@ class BettingsTest {
         }
         player.draw(dealer.drawPlayerCard());
 
-        final Judge judge = new Judge(dealer);
         final Map<Player, Money> rawBettings = new HashMap<>();
         rawBettings.put(player, new Money(10000));
         final Bettings bettings = new Bettings(rawBettings);
 
         //when
-        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(judge);
+        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(dealer);
 
         //then
         assertThat(playerProfits.get(new Name("pobi")).value()).isEqualTo(15000);
@@ -61,13 +58,12 @@ class BettingsTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Judge judge = new Judge(dealer);
         final Map<Player, Money> rawBettings = new HashMap<>();
         rawBettings.put(player, new Money(10000));
         final Bettings bettings = new Bettings(rawBettings);
 
         //when
-        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(judge);
+        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(dealer);
 
         //then
         assertThat(playerProfits.get(new Name("pobi")).value()).isEqualTo(10000);
@@ -83,13 +79,12 @@ class BettingsTest {
         dealer.draw();
         dealer.draw();
 
-        final Judge judge = new Judge(dealer);
         final Map<Player, Money> rawBettings = new HashMap<>();
         rawBettings.put(player, new Money(10000));
         final Bettings bettings = new Bettings(rawBettings);
 
         //when
-        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(judge);
+        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(dealer);
 
         //then
         assertThat(playerProfits.get(new Name("pobi")).value()).isEqualTo(-10000);
@@ -104,13 +99,12 @@ class BettingsTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Judge judge = new Judge(dealer);
         final Map<Player, Money> rawBettings = new HashMap<>();
         rawBettings.put(player, new Money(10000));
         final Bettings bettings = new Bettings(rawBettings);
 
         //when
-        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(judge);
+        final Map<Name, Money> playerProfits = bettings.calculatePlayerProfits(dealer);
 
         //then
         assertThat(playerProfits.get(new Name("pobi")).value()).isEqualTo(0);

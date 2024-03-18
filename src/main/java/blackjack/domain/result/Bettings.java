@@ -1,7 +1,8 @@
 package blackjack.domain.result;
 
-import blackjack.domain.gamers.Name;
-import blackjack.domain.gamers.Player;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,18 +14,18 @@ public class Bettings {
         this.bettings = bettings;
     }
 
-    public Map<Name, Money> calculatePlayerProfits(final Judge judge) {
+    public Map<Name, Money> calculatePlayerProfits(final Dealer dealer) {
         final Map<Name, Money> playerProfits = new LinkedHashMap<>();
         bettings.forEach((player, betting) -> {
-            final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
+            final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
             playerProfits.put(player.getName(), betting.multiply(playerOutcome.getProfitMultiplier()));
         });
 
         return playerProfits;
     }
 
-    public Money calculateDealerProfit(final Judge judge) {
-        final double playerProfitsSum = calculatePlayerProfits(judge).values()
+    public Money calculateDealerProfit(final Dealer dealer) {
+        final double playerProfitsSum = calculatePlayerProfits(dealer).values()
                 .stream()
                 .mapToDouble(Money::value)
                 .sum();

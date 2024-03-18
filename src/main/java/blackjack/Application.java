@@ -1,12 +1,11 @@
 package blackjack;
 
-import blackjack.domain.gamers.Name;
+import blackjack.domain.gamer.Name;
 import blackjack.domain.result.Bettings;
-import blackjack.domain.gamers.Dealer;
-import blackjack.domain.result.Judge;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.result.Money;
-import blackjack.domain.gamers.Player;
-import blackjack.domain.gamers.Players;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.ShuffledDeckFactory;
@@ -24,13 +23,12 @@ public class Application {
         final Players players = Players.from(InputView.readPlayerNames());
         final Dealer dealer = Dealer.from(new ShuffledDeckFactory().create());
         final Bettings bettings = createBettings(players);
-        final Judge judge = new Judge(dealer);
 
         drawInitialHands(players, dealer);
         hitGamers(players, dealer);
 
         OutputView.printFinalState(createDealerDto(dealer.getHand()), createPlayerDtos(players));
-        OutputView.printFinalProfits(bettings.calculateDealerProfit(judge), bettings.calculatePlayerProfits(judge));
+        OutputView.printFinalProfits(bettings.calculateDealerProfit(dealer), bettings.calculatePlayerProfits(dealer));
     }
 
     private static Bettings createBettings(final Players players) {
@@ -78,14 +76,14 @@ public class Application {
 
     private static void hitPlayers(final Players players, final Dealer dealer) {
         for (final Name playerName : players.names()) {
-            hitPlayer(players.findBy(playerName), dealer);
+            hitPlayer(players, playerName, dealer);
         }
     }
 
-    private static void hitPlayer(final Player player, final Dealer dealer) {
-        while (player.canDraw() && InputView.readDoesWantHit(player.getName())) {
-            player.draw(dealer.drawPlayerCard());
-            OutputView.printCurrentState(createPlayerDto(player));
+    private static void hitPlayer(final Players players, final Name playerName, final Dealer dealer) {
+        while (players.canDraw(playerName) && InputView.readDoesWantHit(playerName)) {
+            players.draw(dealer.drawPlayerCard(), playerName);
+            OutputView.printCurrentState(createPlayerDto(players.findBy(playerName)));
         }
     }
 

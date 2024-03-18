@@ -1,27 +1,21 @@
 package blackjack.domain.result;
 
-import blackjack.domain.gamers.Dealer;
-import blackjack.domain.gamers.Player;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
 
-public class Judge {
+class Judge {
 
-    private final Dealer dealer;
-
-    public Judge(final Dealer dealer) {
-        this.dealer = dealer;
-    }
-
-    public PlayerOutcome calculatePlayerOutcome(final Player player) {
+    public static PlayerOutcome calculatePlayerOutcome(final Dealer dealer, final Player player) {
         if (dealer.isBlackjack() || player.isBlackjack()) {
-            return calculateBlackjackCase(player);
+            return calculateBlackjackCase(dealer, player);
         }
         if (dealer.isBust() || player.isBust()) {
             return calculateBustCase(player);
         }
-        return calculateNormalCase(player);
+        return calculateNormalCase(dealer, player);
     }
 
-    private PlayerOutcome calculateBlackjackCase(final Player player) {
+    private static PlayerOutcome calculateBlackjackCase(final Dealer dealer, final Player player) {
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return PlayerOutcome.PUSH;
         }
@@ -31,14 +25,14 @@ public class Judge {
         return PlayerOutcome.BLACKJACK_WIN;
     }
 
-    private PlayerOutcome calculateBustCase(final Player player) {
+    private static PlayerOutcome calculateBustCase(final Player player) {
         if (player.isBust()) {
             return PlayerOutcome.LOSE;
         }
         return PlayerOutcome.NORMAL_WIN;
     }
 
-    private PlayerOutcome calculateNormalCase(final Player player) {
+    private static PlayerOutcome calculateNormalCase(final Dealer dealer, final Player player) {
         final int dealerScore = dealer.calculateScore();
         final int playerScore = player.calculateScore();
 
