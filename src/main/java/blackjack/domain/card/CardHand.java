@@ -60,15 +60,6 @@ public class CardHand {
         return !isBust() && !isBlackjack();
     }
 
-    public boolean isScoreLessOrEqual(int value) {
-        int score = calculateScore();
-        return value >= score;
-    }
-
-    public Card getFirstCard() {
-        return cards.get(0);
-    }
-
     @Override
     public String toString() {
         return "CardHand{" +

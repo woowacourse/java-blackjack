@@ -21,10 +21,6 @@ public class Profit {
         return amount == profit.amount;
     }
 
-    public Profit add(Profit other) {
-        return new Profit(amount + other.amount);
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(amount);
