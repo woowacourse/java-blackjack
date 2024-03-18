@@ -13,7 +13,8 @@ public enum Denomination {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10);
+    KING(10),
+    ;
 
     private final int value;
 

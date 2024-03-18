@@ -6,7 +6,8 @@ public enum DenominationExpressions {
     ACE("A"),
     JACK("J"),
     QUEEN("Q"),
-    KING("K");
+    KING("K"),
+    ;
 
     private final String value;
 

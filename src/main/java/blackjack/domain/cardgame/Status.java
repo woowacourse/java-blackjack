@@ -4,5 +4,6 @@ public enum Status {
     WIN,
     PUSH,
     LOSE,
-    BLACKJACK
+    BLACKJACK,
+    ;
 }

@@ -2,7 +2,8 @@ package blackjack.view.expressions;
 
 public enum HitStandExpressions {
     HIT("y"),
-    STAND("n");
+    STAND("n"),
+    ;
 
     private final String message;
 
