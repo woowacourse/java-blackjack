@@ -27,7 +27,7 @@ public class GameManager {
         deal(players, dealer, cardDeck);
         draw(players, dealer, cardDeck);
 
-        playersProfit.calculate(dealer);
+        playersProfit.calculateBasedOnDealer(dealer);
         outputView.printAllProfit(playersProfit);
     }
 

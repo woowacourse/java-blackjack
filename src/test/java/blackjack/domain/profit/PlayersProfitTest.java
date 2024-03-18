@@ -43,7 +43,7 @@ class PlayersProfitTest {
         Dealer dealer = DealerFixture.createDealer();
 
         // when
-        playersProfit.calculate(dealer);
+        playersProfit.calculateBasedOnDealer(dealer);
 
         // then
         assertThat(playersProfit.getProfits()).containsExactlyEntriesOf(Map.of(
@@ -63,7 +63,7 @@ class PlayersProfitTest {
 
         Dealer dealer = DealerFixture.createDealer();
 
-        playersProfit.calculate(dealer);
+        playersProfit.calculateBasedOnDealer(dealer);
 
         // when
         Profit dealerProfit = playersProfit.dealerProfit();

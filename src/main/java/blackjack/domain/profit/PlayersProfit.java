@@ -26,7 +26,7 @@ public class PlayersProfit {
         return new PlayersProfit(playersProfit);
     }
 
-    public void calculate(Dealer dealer) {
+    public void calculateBasedOnDealer(Dealer dealer) {
         profits.forEach((player, betAmount) -> {
             double multiplier = PlayerResult.determineMultiplier(player, dealer);
             Profit profit = betAmount.multiply(multiplier);
