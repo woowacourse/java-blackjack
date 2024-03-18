@@ -3,13 +3,13 @@ package blackjack.domain.betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.card.Rank;
-import blackjack.domain.deck.DeckGenerator;
-import blackjack.domain.deck.PlayingDeck;
-import blackjack.domain.deck.shuffle.NoShuffle;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -29,26 +29,22 @@ class GameBettingManagerTest {
         Dealer dealer = new Dealer(cards);
         Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
+
         gameBettingManager.registerPlayerBetting(player, betting);
-
-        dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        dealer.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
-        dealer.receiveCard(new Card(Pattern.HEART, Rank.TEN));
-
-        player.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
-        player.receiveCard(new Card(Pattern.HEART, Rank.TEN));
 
         //when
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+        BigDecimal dealerResult = gameBettingManager.getDealerResult();
+        BigDecimal playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+
+        int dealerCompareResult = dealerResult.compareTo(BigDecimal.valueOf(1000));
+        int playerCompareResult = playerResult.compareTo(BigDecimal.valueOf(-1000));
 
         //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(1000),
-                () -> assertThat(playerResult).isEqualTo(-1000)
+                () -> assertThat(dealerCompareResult).isEqualTo(0),
+                () -> assertThat(playerCompareResult).isEqualTo(0)
         );
     }
 
@@ -65,25 +61,24 @@ class GameBettingManagerTest {
         Dealer dealer = new Dealer(cards);
         Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
+
         gameBettingManager.registerPlayerBetting(player, betting);
 
-        dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        dealer.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.HEART, Rank.TEN));
-
-        player.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
 
         //when
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+        BigDecimal dealerResult = gameBettingManager.getDealerResult();
+        BigDecimal playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+
+        int dealerCompareResult = dealerResult.compareTo(BigDecimal.valueOf(-1000));
+        int playerCompareResult = playerResult.compareTo(BigDecimal.valueOf(1000));
 
         //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(-1000),
-                () -> assertThat(playerResult).isEqualTo(1000)
+                () -> assertThat(dealerCompareResult).isEqualTo(0),
+                () -> assertThat(playerCompareResult).isEqualTo(0)
         );
     }
 
@@ -100,25 +95,24 @@ class GameBettingManagerTest {
         Dealer dealer = new Dealer(cards);
         Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
+
         gameBettingManager.registerPlayerBetting(player, betting);
 
-        dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
-        dealer.receiveCard(new Card(Pattern.HEART, Rank.TWO));
-
-        player.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Pattern.CLOVER, Rank.ACE));
+        dealer.receiveCard(new Card(Pattern.HEART, Rank.TEN));
 
         //when
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+        BigDecimal dealerResult = gameBettingManager.getDealerResult();
+        BigDecimal playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
 
-         //then
+        int dealerCompareResult = dealerResult.compareTo(BigDecimal.valueOf(-1500));
+        int playerCompareResult = playerResult.compareTo(BigDecimal.valueOf(1500));
+
+        //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(-1500),
-                () -> assertThat(playerResult).isEqualTo(1500)
+                () -> assertThat(dealerCompareResult).isEqualTo(0),
+                () -> assertThat(playerCompareResult).isEqualTo(0)
         );
     }
 
@@ -137,22 +131,19 @@ class GameBettingManagerTest {
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
-        dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        dealer.receiveCard(new Card(Pattern.CLOVER, Rank.ACE));
-
-        player.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Pattern.CLOVER, Rank.ACE));
-
         //when
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+        BigDecimal dealerResult = gameBettingManager.getDealerResult();
+        BigDecimal playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+
+        int dealerCompareResult = dealerResult.compareTo(BigDecimal.valueOf(0));
+        int playerCompareResult = playerResult.compareTo(BigDecimal.valueOf(0));
 
         //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(0),
-                () -> assertThat(playerResult).isEqualTo(0)
+                () -> assertThat(dealerCompareResult).isEqualTo(0),
+                () -> assertThat(playerCompareResult).isEqualTo(0)
         );
     }
 
@@ -176,22 +167,19 @@ class GameBettingManagerTest {
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
-        dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
-
-        player.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Pattern.HEART, Rank.TWO));
-
         //when
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+        BigDecimal dealerResult = gameBettingManager.getDealerResult();
+        BigDecimal playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+
+        int dealerCompareResult = dealerResult.compareTo(BigDecimal.valueOf(1000));
+        int playerCompareResult = playerResult.compareTo(BigDecimal.valueOf(-1000));
 
         //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(1000),
-                () -> assertThat(playerResult).isEqualTo(-1000)
+                () -> assertThat(dealerCompareResult).isEqualTo(0),
+                () -> assertThat(playerCompareResult).isEqualTo(0)
         );
     }
 
@@ -210,22 +198,19 @@ class GameBettingManagerTest {
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
-        dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
-
-        player.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Pattern.HEART, Rank.NINE));
-
         //when
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+        BigDecimal dealerResult = gameBettingManager.getDealerResult();
+        BigDecimal playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
+
+        int dealerCompareResult = dealerResult.compareTo(BigDecimal.valueOf(0));
+        int playerCompareResult = playerResult.compareTo(BigDecimal.valueOf(0));
 
         //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(0),
-                () -> assertThat(playerResult).isEqualTo(0)
+                () -> assertThat(dealerCompareResult).isEqualTo(0),
+                () -> assertThat(playerCompareResult).isEqualTo(0)
         );
     }
 

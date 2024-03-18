@@ -4,6 +4,8 @@ import blackjack.domain.betting.Betting;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -39,8 +41,9 @@ class BettingTest {
 
         // when
         betting.calculateBettingMoney(1.5);
+        int compareResult = betting.getBettingMoney().compareTo(BigDecimal.valueOf(1500));
 
         // then
-        assertThat(betting.getBettingMoney()).isEqualTo(1500);
+        assertThat(compareResult).isEqualTo(0);
     }
 }

@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
@@ -76,7 +77,7 @@ public class OutputView {
 
     private static void printDealerResult(GameBettingManager gameBettingManager) {
         NumberFormat formatter = new DecimalFormat("0");
-        double dealerResult = gameBettingManager.getDealerResult();
+        BigDecimal dealerResult = gameBettingManager.getDealerResult();
 
         System.out.printf("딜러 : %s" + NEW_LINE, formatter.format(dealerResult));
     }
@@ -87,7 +88,7 @@ public class OutputView {
 
         for (Player player : playersResult.keySet()) {
             String playerName = player.getPlayerName();
-            Double playerBattingResult = playersResult.get(player).getBettingMoney();
+            BigDecimal playerBattingResult = playersResult.get(player).getBettingMoney();
             System.out.printf("%s : %s" + NEW_LINE, playerName, formatter.format(playerBattingResult));
         }
     }

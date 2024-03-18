@@ -3,13 +3,14 @@ package blackjack.domain.betting;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameBettingManager {
 
-    private static final Double WIN_BETTING_150 = 1.5;
-    private static final Double WIN_BETTING_100 = 1.0;
+    private static final Double WIN_BETTING_BLACKJACK = 1.5;
+    private static final Double WIN_BETTING_NORMAL = 1.0;
     private static final Double TIE_BETTING = 0.0;
     private static final Double LOSE_BETTING = -1.0;
 
@@ -27,11 +28,11 @@ public class GameBettingManager {
         playerBetting.put(player, playerBetting.get(player).calculateBettingMoney(profitRate));
     }
 
-    public double getDealerResult() {
+    public BigDecimal getDealerResult() {
         return playerBetting.values().stream()
                 .map(Betting::getBettingMoney)
-                .mapToDouble(bettingResult -> -bettingResult)
-                .sum();
+                .map(BigDecimal::negate)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public Map<Player, Betting> getPlayersResult() {
@@ -43,10 +44,10 @@ public class GameBettingManager {
             return LOSE_BETTING;
         }
         if (playerWinsWithBlackJack(dealer, player)) {
-            return WIN_BETTING_150;
+            return WIN_BETTING_BLACKJACK;
         }
         if (playerWinsWithoutBlackJack(dealer, player)) {
-            return WIN_BETTING_100;
+            return WIN_BETTING_NORMAL;
         }
         return TIE_BETTING;
     }
@@ -59,10 +60,13 @@ public class GameBettingManager {
         int dealerScore = dealer.calculateTotalScore();
         int playerScore = player.calculateTotalScore();
 
-        if (!player.isBusted() && dealer.isBusted()) {
+        if (player.isBusted()) {
+            return false;
+        }
+        if (dealer.isBusted()) {
             return true;
         }
-        return (!player.isBusted() && playerScore > dealerScore);
+        return playerScore > dealerScore;
     }
 
     private boolean playerLoses(Dealer dealer, Player player) {
@@ -72,6 +76,9 @@ public class GameBettingManager {
         if (player.isBusted()) {
             return true;
         }
-        return (!dealer.isBusted() && playerScore < dealerScore);
+        if (dealer.isBusted()) {
+            return false;
+        }
+        return playerScore < dealerScore;
     }
 }
