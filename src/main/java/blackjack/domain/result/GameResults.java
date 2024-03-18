@@ -7,6 +7,7 @@ import blackjack.domain.gamer.Player;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: 네이밍 적합하게 수정
 public class GameResults {
     private final Map<Gamer, GameResult> gameResults;
 

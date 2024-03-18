@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
+// TODO: 네이밍 적합하게 수정
 public enum GameResult {
     BLACKJACK(1.5f),
     WIN(1),
