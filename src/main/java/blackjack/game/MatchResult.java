@@ -17,23 +17,23 @@ public enum MatchResult {
     }
 
     public static double calculateRateOfPrize(Hand playerHand, Hand dealerHand) {
-        if (isPlayerBlackJackCondition(playerHand, dealerHand)) {
+        if (isPlayerBlackJack(playerHand, dealerHand)) {
             return PLAYER_BLACKJACK.rateOfPrize;
         }
-        if (isPlayerWinningCondition(playerHand, dealerHand)) {
+        if (isPlayerWinning(playerHand, dealerHand)) {
             return PLAYER_WIN.rateOfPrize;
         }
-        if (isDealerWinningCondition(playerHand, dealerHand)) {
+        if (isDealerWinning(playerHand, dealerHand)) {
             return DEALER_WIN.rateOfPrize;
         }
         return TIE.rateOfPrize;
     }
 
-    private static boolean isPlayerBlackJackCondition(Hand playerHand, Hand dealerHand) {
+    private static boolean isPlayerBlackJack(Hand playerHand, Hand dealerHand) {
         return playerHand.isBlackJack() && !dealerHand.isBlackJack();
     }
 
-    private static boolean isPlayerWinningCondition(Hand playerHand, Hand dealerHand) {
+    private static boolean isPlayerWinning(Hand playerHand, Hand dealerHand) {
         Score playerScore = playerHand.calculateScore();
         Score dealerScore = dealerHand.calculateScore();
 
@@ -43,7 +43,7 @@ public enum MatchResult {
         return dealerScore.isBust() || playerScore.isLargerThan(dealerScore);
     }
 
-    private static boolean isDealerWinningCondition(Hand playerHand, Hand dealerHand) {
+    private static boolean isDealerWinning(Hand playerHand, Hand dealerHand) {
         Score playerScore = playerHand.calculateScore();
         Score dealerScore = dealerHand.calculateScore();
 
