@@ -1,16 +1,25 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
+
 public class Dealer extends BlackjackGamer {
 
-    private static final String DEFAULT_DEALER_NAME = "딜러";
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     public Dealer() {
-        super(new Name(DEFAULT_DEALER_NAME));
+        super();
+    }
+
+    Dealer(Hand hand) {
+        super(hand);
     }
 
     @Override
     public boolean canReceiveCard() {
-        return getScore() <= DEALER_DRAW_THRESHOLD;
+        return getValue() <= DEALER_DRAW_THRESHOLD;
+    }
+
+    public Card getFirstCard() {
+        return getHand().getFirstCard();
     }
 }

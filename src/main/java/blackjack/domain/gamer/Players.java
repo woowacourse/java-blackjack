@@ -18,7 +18,7 @@ public class Players {
         validateNames(names);
 
         this.players = names.stream()
-                .map(name -> new Player(new Name(name)))
+                .map(Player::new)
                 .toList();
     }
 
@@ -47,9 +47,9 @@ public class Players {
         players.forEach(player -> player.initCard(deck));
     }
 
-    public Map<Name, GameResult> collectPlayerGameResults(int dealerScore) {
-        Map<Name, GameResult> playerGameResults = new LinkedHashMap<>();
-        players.forEach(player -> playerGameResults.put(player.getName(), player.isWin(dealerScore)));
+    public Map<Player, GameResult> collectPlayerGameResults(Dealer dealer) {
+        Map<Player, GameResult> playerGameResults = new LinkedHashMap<>();
+        players.forEach(player -> playerGameResults.put(player, player.compete(dealer)));
 
         return playerGameResults;
     }
