@@ -97,7 +97,7 @@ public class BlackjackGameController {
     private GameResults judgeGameResult(Players players, Dealer dealer) {
         GameResults gameResults = new GameResults();
         for (final Player player : players.getPlayers()) {
-            gameResults.add(player, GameResult.getGameResult(player, dealer));
+            gameResults.add(player, GameResult.ofPlayer(player, dealer));
         }
 
         return gameResults;
@@ -106,7 +106,7 @@ public class BlackjackGameController {
     private Map<Gamer, Integer> calculateProfits(Players players, GameResults gameResults, Bettings bettings, Dealer dealer) {
         Map<Gamer, Integer> gamerProfits = new HashMap<>();
         for (final Player player : players.getPlayers()) {
-            int playerProfit = gameResults.calculateGamerProfit(player, bettings);
+            int playerProfit = gameResults.calculatePlayerProfit(player, bettings);
             gamerProfits.put(player, playerProfit);
         }
         gamerProfits.put(dealer, gameResults.calculateDealerProfit(bettings));
