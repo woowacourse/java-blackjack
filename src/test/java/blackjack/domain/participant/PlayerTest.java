@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.BlackjackCardFactory;
+import blackjack.domain.card.BlackjackCardsFactory;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
@@ -28,7 +28,7 @@ class PlayerTest {
     @Test
     public void draw() {
         Player player = Player.createInitialStatePlayer(new Name("이상"));
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
 
         Player newPlayer = player.draw(deck);
 
@@ -47,7 +47,7 @@ class PlayerTest {
     @Test
     public void canDrawFalse() {
         Player player = Player.createInitialStatePlayer(new Name("이상"));
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         player = player.draw(deck); // 2장 초기화 KING, QUEEN -> 20
 
         Player newPlayer = player.draw(deck); // KING, QUEEN, JACK -> 30
@@ -59,7 +59,7 @@ class PlayerTest {
     @Test
     public void stand() {
         Player player = Player.createInitialStatePlayer(new Name("이상"));
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         player = player.draw(deck);
 
         Player newPlayer = player.stand();
@@ -71,7 +71,7 @@ class PlayerTest {
     @Test
     public void calculate() {
         Player player = Player.createInitialStatePlayer(new Name("이상"));
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         player = player.draw(deck);
 
         assertThat(player.calculateHand()).isEqualTo(Score.from(20));
@@ -81,7 +81,7 @@ class PlayerTest {
     @Test
     public void decideHitOrStandDraw() {
         Player player = Player.createInitialStatePlayer(new Name("이상"));
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
 
         Player newPlayer = player.decideHitOrStand(true, deck);
 

@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.card.BlackjackCardFactory;
+import blackjack.domain.card.BlackjackCardsFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomShuffler;
 import blackjack.domain.participant.BetRecord;
@@ -28,7 +28,7 @@ public class BlackjackGameConsole {
     }
 
     private ProfitDetails playBlackjack(List<Name> playerNames, BetRecord betRecord) {
-        Deck deck = Deck.of(new BlackjackCardFactory(), new RandomShuffler());
+        Deck deck = Deck.of(new BlackjackCardsFactory(), new RandomShuffler());
         Players players = initializePlayersWithHand(playerNames, deck);
         Dealer dealer = initializeDealerWithHand(deck);
         outputView.printPlayersInitialHand(players, dealer);

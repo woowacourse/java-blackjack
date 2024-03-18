@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.List;
 
 @FunctionalInterface
-public interface CardFactory {
+public interface CardsFactory {
 
     List<Card> generate();
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BlackjackCardFactory implements CardFactory {
+public class BlackjackCardsFactory implements CardsFactory {
 
     @Override
     public List<Card> generate() {

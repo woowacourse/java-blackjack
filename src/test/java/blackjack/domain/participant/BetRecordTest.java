@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.BlackjackCardFactory;
+import blackjack.domain.card.BlackjackCardsFactory;
 import blackjack.domain.card.Deck;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +26,9 @@ public class BetRecordTest {
         Dealer dealer = Dealer.createInitialStateDealer();
         BetRecord betRecord = new BetRecord(Map.of(new Name("이상"), new AmountOfBet(1000)));
 
-        Deck playerDeck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck playerDeck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         players = players.initializePlayersHands(playerDeck);
-        Deck dealerDeck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck dealerDeck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         dealer = dealer.draw(dealerDeck);
 
         players = players.getPlayers().stream()

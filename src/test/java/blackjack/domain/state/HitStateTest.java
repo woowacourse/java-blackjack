@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.BlackjackCardFactory;
+import blackjack.domain.card.BlackjackCardsFactory;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
@@ -19,7 +19,7 @@ public class HitStateTest {
         HitState hitState = new HitState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.THREE),
                 CardFixture.fromSuitCloverWith(Denomination.TWO)));
 
-        State newState = hitState.draw(Deck.of(new BlackjackCardFactory(), cards -> cards)); // 정렬 안한 마지막 KING 카드를 드로우
+        State newState = hitState.draw(Deck.of(new BlackjackCardsFactory(), cards -> cards)); // 정렬 안한 마지막 KING 카드를 드로우
 
         assertThat(newState).isInstanceOf(HitState.class);
     }
@@ -30,7 +30,7 @@ public class HitStateTest {
         HitState hitState = new HitState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.JACK),
                 CardFixture.fromSuitCloverWith(Denomination.TWO)));
 
-        State newState = hitState.draw(Deck.of(new BlackjackCardFactory(), cards -> cards)); // 정렬 안한 마지막 KING 카드를 드로우
+        State newState = hitState.draw(Deck.of(new BlackjackCardsFactory(), cards -> cards)); // 정렬 안한 마지막 KING 카드를 드로우
 
         assertThat(newState).isInstanceOf(BustState.class);
     }

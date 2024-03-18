@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.BlackjackCardFactory;
+import blackjack.domain.card.BlackjackCardsFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,7 @@ class InitialStateTest {
     @Test
     public void hitState() {
         InitialState initialState = new InitialState();
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
 
         State newState = initialState.draw(deck);
 
@@ -26,7 +26,7 @@ class InitialStateTest {
     @Test
     public void blackJackState() {
         InitialState initialState = new InitialState();
-        Deck deck = Deck.of(new BlackjackCardFactory(),
+        Deck deck = Deck.of(new BlackjackCardsFactory(),
                 cards -> cards.stream().filter(card -> card.isAce() || card.getDenomination().equals(Denomination.KING))
                         .toList());
 

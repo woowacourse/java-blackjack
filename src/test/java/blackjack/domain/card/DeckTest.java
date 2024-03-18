@@ -34,7 +34,7 @@ public class DeckTest {
     @DisplayName("덱에서 2장을 뽑아 핸드로 반환한다")
     @Test
     public void initializeHand() {
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
 
         Hand hand = Hand.of(deck.draw(), deck.draw());
         List<Card> cards = hand.getCards();

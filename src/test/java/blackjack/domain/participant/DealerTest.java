@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.BlackjackCardFactory;
+import blackjack.domain.card.BlackjackCardsFactory;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
@@ -30,7 +30,7 @@ public class DealerTest {
     public void draw() {
         Dealer dealer = Dealer.createInitialStateDealer();
 
-        Dealer newDealer = dealer.draw(Deck.of(new BlackjackCardFactory(), cards -> cards));
+        Dealer newDealer = dealer.draw(Deck.of(new BlackjackCardsFactory(), cards -> cards));
 
         assertThat(newDealer).isNotInstanceOf(InitialState.class);
     }
@@ -47,7 +47,7 @@ public class DealerTest {
     @Test
     public void canDrawFalse() {
         Dealer dealer = Dealer.createInitialStateDealer();
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         dealer = dealer.draw(deck); // 2장 초기화 KING, QUEEN -> 20
 
         Dealer newDealer = dealer.draw(deck); // KING, QUEEN, JACK -> 30
@@ -59,7 +59,7 @@ public class DealerTest {
     @Test
     public void stand() {
         Dealer dealer = Dealer.createInitialStateDealer();
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         dealer = dealer.draw(deck);
 
         Dealer newDealer = dealer.stand();
@@ -71,7 +71,7 @@ public class DealerTest {
     @Test
     public void calculate() {
         Dealer dealer = Dealer.createInitialStateDealer();
-        Deck deck = Deck.of(new BlackjackCardFactory(), cards -> cards);
+        Deck deck = Deck.of(new BlackjackCardsFactory(), cards -> cards);
         dealer = dealer.draw(deck);
 
         assertThat(dealer.calculateHand()).isEqualTo(Score.from(20));

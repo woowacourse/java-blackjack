@@ -10,8 +10,8 @@ public class Deck {
         this.deck = new ArrayList<>(deck);
     }
 
-    public static Deck of(CardFactory cardFactory, Shuffler shuffler) {
-        List<Card> generatedCards = cardFactory.generate();
+    public static Deck of(CardsFactory cardsFactory, Shuffler shuffler) {
+        List<Card> generatedCards = cardsFactory.generate();
         List<Card> shuffledCards = shuffler.shuffle(generatedCards);
         return new Deck(shuffledCards);
     }

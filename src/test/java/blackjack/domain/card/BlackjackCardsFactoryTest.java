@@ -6,12 +6,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackjackCardFactoryTest {
+public class BlackjackCardsFactoryTest {
 
     @DisplayName("고유한 카드 52장을 생성한다")
     @Test
     public void generate() {
-        BlackjackCardFactory blackjackCardFactory = new BlackjackCardFactory();
+        BlackjackCardsFactory blackjackCardFactory = new BlackjackCardsFactory();
 
         List<Card> generatedCards = blackjackCardFactory.generate();
 
