@@ -5,10 +5,6 @@ public record BetAmount(double value) {
     private static final int UNIT = 10;
 
     public BetAmount {
-        validate(value);
-    }
-
-    private void validate(double value) {
         validateNotNegative(value);
         validateNotDecimal(value);
         validateUnit(value);
