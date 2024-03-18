@@ -1,6 +1,6 @@
 package model.participant;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
@@ -12,7 +12,7 @@ public class Entrant {
 
     public Entrant(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
-        this.players = new LinkedList<>(players);
+        this.players = new ArrayDeque<>(players);
     }
 
     public void hitDealer(Card card) {
