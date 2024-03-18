@@ -5,11 +5,11 @@ import static view.InputView.inputBettingAmount;
 import static view.InputView.inputNames;
 import static view.InputView.inputPlayerHitChoice;
 
+import controller.dto.BettingInfo;
+import controller.dto.BettingInfos;
 import java.util.List;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
-import controller.dto.BettingInfo;
-import controller.dto.BettingInfos;
 import model.participant.Names;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
@@ -23,6 +23,7 @@ public class BlackJackLauncher {
         proceedPlayersTurn(casino);
         proceedDealerTurn(casino);
         showFinalFaceUpResults(casino);
+        casino.aggregateBettingResult();
         showFinalMatchResults(casino);
     }
 
@@ -72,6 +73,11 @@ public class BlackJackLauncher {
     }
 
     private void showFinalMatchResults(Casino casino) {
-        OutputView.printScoreResults();
+        BettingInfos playerBettingResults = casino.calculatePlayerBettingResults();
+        long dealerEarnings = casino.calculateDealerEarningResults();
+        OutputView.printDealerEarningResults(dealerEarnings);
+        playerBettingResults.getBettingInfos()
+                .forEach(bettingInfo -> OutputView.printPlayerBettingResult(bettingInfo.getNameAsString(),
+                        bettingInfo.bettingAmount()));
     }
 }

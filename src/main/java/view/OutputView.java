@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
-import model.participant.dto.PlayerMatchResult;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;
@@ -17,7 +16,8 @@ public class OutputView {
         System.out.println(toBePrint);
     }
 
-    public static void printInitialCardSetting(DealerFaceUpResult dealerResult, List<PlayerFaceUpResult> playersResult) {
+    public static void printInitialCardSetting(DealerFaceUpResult dealerResult,
+                                               List<PlayerFaceUpResult> playersResult) {
         System.out.print(System.lineSeparator());
         List<String> playerNameTexts = playersResult.stream()
                 .map(PlayerFaceUpResult::getPartipantNameAsString)
@@ -61,17 +61,17 @@ public class OutputView {
                 result.getCardsAsStrings()) + " - 결과: " + result.hand());
     }
 
-    public static void printScoreResults() {
-
-        System.out.print(System.lineSeparator());
-        printMessage("## 최종 승패");
-    }
-
-    private static String playerScoreText(PlayerMatchResult result) {
-        return result.getNameAsString() + ": ";
-    }
-
     public static void alertDealerHitMessage() {
         printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printDealerEarningResults(long dealerEarning) {
+        System.out.print(System.lineSeparator());
+        printMessage("## 최종 승패");
+        printMessage("딜러: " + dealerEarning);
+    }
+
+    public static void printPlayerBettingResult(String playerName, long playerBettingResult) {
+        printMessage(playerName + ": " + playerBettingResult);
     }
 }

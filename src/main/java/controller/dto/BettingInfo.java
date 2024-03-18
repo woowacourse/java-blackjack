@@ -7,6 +7,10 @@ public record BettingInfo(
         Long bettingAmount
 ) {
 
+    public String getNameAsString(){
+        return name.getValue();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
