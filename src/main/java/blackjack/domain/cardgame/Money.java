@@ -7,7 +7,11 @@ public class Money {
         this.value = value;
     }
 
-    public Money multiply(final double multiplier) {
+    public Money findProfit(final Status status) {
+        return multiply(status.getMultiplier());
+    }
+
+    private Money multiply(final double multiplier) {
         return new Money(value * multiplier);
     }
 

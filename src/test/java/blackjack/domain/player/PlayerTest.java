@@ -15,7 +15,7 @@ public class PlayerTest {
     @Test
     void 플레이어가_BUST_되었는지_여부를_반환한다() {
         // given
-        Player player = player(
+        Player player = player(0,
                 new Card(KING, CLOVER),
                 new Card(KING, SPADE),
                 new Card(KING, HEART));

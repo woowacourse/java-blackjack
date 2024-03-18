@@ -1,15 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardgame.BlackjackGame;
-import blackjack.domain.cardgame.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import blackjack.view.expressions.DenominationExpressions;
 import blackjack.view.expressions.SuitExpressions;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -63,15 +61,19 @@ public class OutputView {
                 SuitExpressions.mapCardShapeToString(card.getShape());
     }
 
-    // TODO: 개선 필요
-    public static void printProfits(final BlackjackGame blackjackGame, final Dealer dealer) {
+    public static void printProfits(final Participants participants) {
+
+        final Dealer dealer = participants.getDealer();
+        final List<Player> players = participants.getPlayers();
+
         printLineSeparator();
         System.out.println("## 최종 수익");
-        System.out.println(String.format("%s: %d", dealer.getName(), blackjackGame.findDealerProfit(dealer)));
+        System.out.println(
+                String.format("%s: %d", dealer.getName(), participants.calculateDealerProfit()));
 
-        final Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
-        playerProfits.forEach(
-                (player, profit) -> System.out.println(String.format("%s: %d", player.getName(), profit.getValue())));
+        players.forEach(player ->
+                System.out.println(String.format("%s: %d", player.getName(),
+                        player.getBettingAmount().findProfit(dealer.judgePlayerStatus(player)).getValue())));
     }
 
     private static void printLineSeparator() {

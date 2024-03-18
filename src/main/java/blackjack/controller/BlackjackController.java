@@ -1,40 +1,43 @@
 package blackjack.controller;
 
 import blackjack.domain.cardgame.BlackjackGame;
-import blackjack.domain.cardgame.Money;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
     public void run() {
         try {
-            final Dealer dealer = new Dealer();
-            final List<Player> players = createPlayers();
             final BlackjackGame blackjackGame = new BlackjackGame();
+            final Dealer dealer = new Dealer();
+            final List<String> names = InputView.readPlayerNames();
+            final List<Player> players = readBettingAmountAndCreatePlayers(names);
+            final Participants participants = new Participants(dealer, players);
 
             blackjackGame.initializeHand(dealer, players);
-            readBettingAmountAndCallBet(blackjackGame, players);
-
             OutputView.printInitialHandOfEachPlayer(dealer, players);
 
             givePlayersMoreCardsIfWanted(blackjackGame, players);
             giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
 
             printHandStatusOfEachPlayer(dealer, players);
-            printPlayerProfits(blackjackGame, dealer);
+            printPlayerProfits(participants);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static List<Player> createPlayers() {
-        final List<String> names = InputView.readPlayerNames();
-        return names.stream()
-                .map(Player::new)
-                .toList();
+    private static List<Player> readBettingAmountAndCreatePlayers(final List<String> names) {
+        final List<Player> players = new ArrayList<>();
+        for (final String name : names) {
+            final int bettingAmount = InputView.readBettingAmount(name);
+            players.add(new Player(name, bettingAmount));
+        }
+        return players;
     }
 
     private void givePlayersMoreCardsIfWanted(final BlackjackGame blackjackGame, final List<Player> players) {
@@ -65,14 +68,7 @@ public class BlackjackController {
         }
     }
 
-    private static void readBettingAmountAndCallBet(final BlackjackGame blackjackGame, final List<Player> players) {
-        for (Player player : players) {
-            final int bettingAmount = InputView.readBettingAmount(player.getName());
-            blackjackGame.bet(player, new Money(bettingAmount));
-        }
-    }
-
-    private void printPlayerProfits(final BlackjackGame blackjackGame, final Dealer dealer) {
-        OutputView.printProfits(blackjackGame, dealer);
+    private void printPlayerProfits(final Participants participants) {
+        OutputView.printProfits(participants);
     }
 }
