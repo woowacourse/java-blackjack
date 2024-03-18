@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain;
 
 public class ParticipantScoreStatus {
     private final boolean isBlackjack;
@@ -9,7 +9,7 @@ public class ParticipantScoreStatus {
         this.score = score;
     }
 
-    ParticipantScoreStatus(final boolean isBlackjack, final int score) {
+    public ParticipantScoreStatus(final boolean isBlackjack, final int score) {
         this(isBlackjack, new Score(score));
     }
 

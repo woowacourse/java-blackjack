@@ -1,4 +1,7 @@
-package blackjack.domain.result;
+package blackjack.domain.status;
+
+import blackjack.domain.Score;
+import blackjack.domain.ParticipantScoreStatus;
 
 public enum BlackjackStatus {
     DEAD,

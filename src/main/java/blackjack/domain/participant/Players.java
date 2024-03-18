@@ -2,9 +2,10 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.result.ParticipantScoreStatus;
-import blackjack.domain.result.Score;
-import blackjack.domain.result.WinStatus;
+import blackjack.domain.Name;
+import blackjack.domain.ParticipantScoreStatus;
+import blackjack.domain.status.WinStatus;
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.dto.ParticipantCardsDto;
@@ -47,8 +48,8 @@ public class Players {
         player.addCard(card);
     }
 
-    public Map<ParticipantName, WinStatus> determineWinStatus(final ParticipantScoreStatus dealerScoreStatus) {
-        final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
+    public Map<Name, WinStatus> determineWinStatus(final ParticipantScoreStatus dealerScoreStatus) {
+        final Map<Name, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Player player : players) {
             ParticipantScoreStatus playerScoreStatus = new ParticipantScoreStatus(player.isBlackjack(),
@@ -81,19 +82,19 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public Map<ParticipantName, Hands> getPlayerHands() {
+    public Map<Name, Hands> getPlayerHands() {
         return players.stream()
                 .collect(toMap(Player::getName, Player::getHands,
                         (v1, v2) -> v1, LinkedHashMap::new));
     }
 
-    public Map<ParticipantName, Score> getPlayerScores() {
+    public Map<Name, Score> getPlayerScores() {
         return players.stream()
                 .collect(toMap(Player::getName, Player::calculate,
                         (v1, v2) -> v1, LinkedHashMap::new));
     }
 
-    public List<ParticipantName> getNames() {
+    public List<Name> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .toList();

@@ -1,18 +1,18 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.Name;
 
 public class PlayerBetting {
-    private final ParticipantName name;
+    private final Name name;
     private final BettingMoney bettingMoney;
 
-    private PlayerBetting(final ParticipantName name, final BettingMoney bettingMoney) {
+    private PlayerBetting(final Name name, final BettingMoney bettingMoney) {
         this.name = name;
         this.bettingMoney = bettingMoney;
     }
 
     PlayerBetting(final String name, final int bettingMoney) {
-        this(new ParticipantName(name), new BettingMoney(bettingMoney));
+        this(new Name(name), new BettingMoney(bettingMoney));
     }
 
     public static PlayerBetting create(final String name, final int betting) {
@@ -31,11 +31,11 @@ public class PlayerBetting {
         return new PlayerBetting(this.name, bettingMoney);
     }
 
-    public boolean equalsName(final ParticipantName otherName) {
+    public boolean equalsName(final Name otherName) {
         return this.name.equals(otherName);
     }
 
-    public ParticipantName getName() {
+    public Name getName() {
         return name;
     }
 

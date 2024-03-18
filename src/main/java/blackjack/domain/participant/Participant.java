@@ -1,19 +1,20 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Name;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.result.BlackjackStatus;
-import blackjack.domain.result.Score;
+import blackjack.domain.status.BlackjackStatus;
+import blackjack.domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Participant {
-    protected final ParticipantName name;
+    protected final Name name;
     protected final Hands hands;
 
     protected Participant(final String name) {
-        this.name = new ParticipantName(name);
+        this.name = new Name(name);
         this.hands = new Hands(new ArrayList<>());
     }
 
@@ -56,7 +57,7 @@ public class Participant {
         return new Hands(hands.getCards());
     }
 
-    public ParticipantName getName() {
+    public Name getName() {
         return name;
     }
 

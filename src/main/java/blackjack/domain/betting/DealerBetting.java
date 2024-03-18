@@ -1,13 +1,13 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.dealer.Dealer;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.Name;
 
 public class DealerBetting {
-    private final ParticipantName name;
+    private final Name name;
     private final BettingMoney bettingMoney;
 
-    private DealerBetting(final ParticipantName name, final BettingMoney bettingMoney) {
+    private DealerBetting(final Name name, final BettingMoney bettingMoney) {
         this.name = name;
         this.bettingMoney = bettingMoney;
     }
@@ -20,7 +20,7 @@ public class DealerBetting {
         return new DealerBetting(dealer.getName(), new BettingMoney(-playerBettingLose));
     }
 
-    public ParticipantName getName() {
+    public Name getName() {
         return name;
     }
 

@@ -1,4 +1,6 @@
-package blackjack.domain.result;
+package blackjack.domain.status;
+
+import blackjack.domain.ParticipantScoreStatus;
 
 public enum WinStatus {
     LOSE("패", -1),
@@ -13,6 +15,7 @@ public enum WinStatus {
         this.name = name;
         this.betMultiplier = betMultiplier;
     }
+
 
     public static WinStatus of(final ParticipantScoreStatus dealerScoreStatus,
                                final ParticipantScoreStatus playerScoreStatus) {

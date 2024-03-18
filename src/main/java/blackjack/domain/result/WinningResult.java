@@ -1,24 +1,18 @@
 package blackjack.domain.result;
 
-import blackjack.domain.dealer.Dealer;
-import blackjack.domain.participant.ParticipantName;
-import blackjack.domain.participant.Players;
+import blackjack.domain.Name;
+import blackjack.domain.status.WinStatus;
 import java.util.Collections;
 import java.util.Map;
 
 public class WinningResult {
-    private final Map<ParticipantName, WinStatus> participantsWinStatus;
+    private final Map<Name, WinStatus> participantsWinStatus;
 
-    public WinningResult(final Map<ParticipantName, WinStatus> participantsWinStatus) {
+    public WinningResult(final Map<Name, WinStatus> participantsWinStatus) {
         this.participantsWinStatus = participantsWinStatus;
     }
 
-    public static WinningResult of(final Players players, final Dealer dealer) {
-        ParticipantScoreStatus dealerScoreStatus = new ParticipantScoreStatus(dealer.isBlackjack(), dealer.calculate());
-        return new WinningResult(players.determineWinStatus(dealerScoreStatus));
-    }
-
-    public Map<ParticipantName, WinStatus> getParticipantsResult() {
+    public Map<Name, WinStatus> getParticipantsResult() {
         return Collections.unmodifiableMap(participantsWinStatus);
     }
 }

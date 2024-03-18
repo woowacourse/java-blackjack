@@ -1,9 +1,11 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Name;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.result.Score;
+import blackjack.domain.Score;
+import blackjack.domain.ParticipantScoreStatus;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
@@ -51,15 +53,15 @@ public class Participants {
         return count;
     }
 
-    public Map<ParticipantName, Hands> getPlayersHandResult() {
+    public Map<Name, Hands> getPlayersHandResult() {
         return players.getPlayerHands();
     }
 
-    public Map<ParticipantName, Score> getPlayersScoreResult() {
+    public Map<Name, Score> getPlayersScoreResult() {
         return players.getPlayerScores();
     }
 
-    public Entry<ParticipantName, Hands> getDealerHandResult() {
+    public Entry<Name, Hands> getDealerHandResult() {
         return Map.entry(dealer.getName(), dealer.getHands());
     }
 
@@ -68,7 +70,8 @@ public class Participants {
     }
 
     public WinningResult getWinningResult() {
-        return WinningResult.of(players, dealer);
+        ParticipantScoreStatus dealerScoreStatus = new ParticipantScoreStatus(dealer.isBlackjack(), dealer.calculate());
+        return new WinningResult(players.determineWinStatus(dealerScoreStatus));
     }
 
     public boolean isPlayerAlive(final Player rawPlayer) {
