@@ -1,6 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.List;
+import blackjack.domain.card.Card;
 
 public abstract class Participant {
 
@@ -28,6 +29,10 @@ public abstract class Participant {
 
     public boolean isBlackJack() {
         return hand.isBlackJack();
+    }
+
+    public boolean isBlackJackScore() {
+        return hand.isBlackJackScore();
     }
 
     public boolean isBust() {

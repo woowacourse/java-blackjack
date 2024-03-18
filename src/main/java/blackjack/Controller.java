@@ -1,23 +1,12 @@
 package blackjack;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import blackjack.domain.Card;
-import blackjack.domain.CardRank;
-import blackjack.domain.CardShape;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -33,112 +22,71 @@ class Controller {
 
     public void run() {
         Participants participants = createParticipants();
-        Deck deck = createDeck();
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
 
-        initialDeal(participants, deck);
-        playersTurn(participants.getPlayers(), deck);
-        dealerTurn(participants.getDealer(), deck);
-        printResult(participants);
+        initialDeal(participants, cardDeck);
+        playersTurn(participants.getPlayers(), cardDeck);
+        dealerTurn(participants.getDealer(), cardDeck);
+        showCard(participants);
+        showProfit(participants);
     }
 
     private Participants createParticipants() {
         List<String> playerNames = inputView.readPlayerNames();
-
-        return new Participants(playerNames);
-    }
-
-    private Deck createDeck() {
-        List<Card> cards = createShuffledCards();
-
-        return new Deck(cards);
-    }
-
-    private List<Card> createShuffledCards() {
-        List<Card> cards = Arrays.stream(CardShape.values())
-                .map(this::createShapeCards)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-
-        Collections.shuffle(cards);
-
-        return cards;
-    }
-
-    private List<Card> createShapeCards(CardShape cardShape) {
-        return Arrays.stream(CardRank.values())
-                .map(cardRank -> new Card(cardRank, cardShape))
+        List<Money> playersMoney = playerNames.stream()
+                .map(this::createPlayerMoney)
                 .toList();
+
+        return new Participants(playerNames, playersMoney);
     }
 
-    private void initialDeal(Participants participants, Deck deck) {
+    private Money createPlayerMoney(String playerName) {
+        double playerMoney = inputView.readPlayerMoney(playerName);
+
+        return new Money(playerMoney);
+    }
+
+    private void initialDeal(Participants participants, CardDeck cardDeck) {
         for (Participant participant : participants.getParticipants()) {
-            participant.hit(deck.draw());
-            participant.hit(deck.draw());
+            participant.hit(cardDeck.draw());
+            participant.hit(cardDeck.draw());
         }
 
         outputView.printInitialDeal(participants.getDealer(), participants.getPlayers());
     }
 
-    private void playersTurn(List<Player> players, Deck deck) {
-        players.forEach(player -> playerTurn(player, deck));
+    private void playersTurn(List<Player> players, CardDeck cardDeck) {
+        players.forEach(player -> playerTurn(player, cardDeck));
     }
 
-    private void playerTurn(Player player, Deck deck) {
+    private void playerTurn(Player player, CardDeck cardDeck) {
         if (!player.isPlayable()) {
             return;
         }
 
         boolean wannaHit = inputView.readCommand(player.getName());
         if (wannaHit) {
-            player.hit(deck.draw());
-            outputView.printCards(player);
-            playerTurn(player, deck);
+            player.hit(cardDeck.draw());
+            outputView.printPlayerCards(player);
+            playerTurn(player, cardDeck);
             return;
         }
 
-        outputView.printCards(player);
+        outputView.printPlayerCards(player);
     }
 
-    private void dealerTurn(Dealer dealer, Deck deck) {
+    private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isPlayable()) {
-            dealer.hit(deck.draw());
+            dealer.hit(cardDeck.draw());
             outputView.printDealerHitMessage();
         }
     }
 
-    private void printResult(Participants participants) {
-        Map<Player, GameResult> playerGameResults = createPlayerGameResults(participants);
-        Map<GameResult, Integer> dealerGameResult = createDealerGameResult(playerGameResults);
-
+    private void showCard(Participants participants) {
         outputView.printAllCardsWithScore(participants.getParticipants());
-        outputView.printGameResult(playerGameResults, dealerGameResult);
     }
 
-    private Map<Player, GameResult> createPlayerGameResults(Participants participants) {
-        Map<Player, GameResult> playerGameResults = new LinkedHashMap<>();
-        Dealer dealer = participants.getDealer();
-
-        for (Player player : participants.getPlayers()) {
-            GameResult gameResult = dealer.judge(player);
-            playerGameResults.put(player, gameResult);
-        }
-
-        return playerGameResults;
-    }
-
-    private Map<GameResult, Integer> createDealerGameResult(Map<Player, GameResult> playerGameResults) {
-        Map<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
-
-        for (GameResult gameResult : GameResult.values()) {
-            dealerGameResults.put(gameResult, 0);
-        }
-
-        for (Entry<Player, GameResult> entry : playerGameResults.entrySet()) {
-            GameResult gameResult = entry.getValue().getOpposite();
-            int current = dealerGameResults.get(gameResult);
-            dealerGameResults.put(gameResult, current + 1);
-        }
-
-        return dealerGameResults;
+    private void showProfit(Participants participants) {
+        outputView.printProfit(participants.createAllProfit());
     }
 }

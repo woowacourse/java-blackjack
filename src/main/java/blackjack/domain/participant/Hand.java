@@ -1,12 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardRank;
 
 class Hand {
 
     private static final int BONUS_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -21,9 +24,19 @@ class Hand {
     }
 
     public boolean isBlackJack() {
+        return isBlackJackScore() && isBlackJackCardSize();
+    }
+
+    public boolean isBlackJackScore() {
         int score = calculateScore();
 
         return score == BLACKJACK_SCORE;
+    }
+
+    private boolean isBlackJackCardSize() {
+        int size = cards.size();
+
+        return size == BLACKJACK_CARD_SIZE;
     }
 
     public int calculateScore() {
@@ -39,8 +52,8 @@ class Hand {
 
     private int calculateHardHandScore() {
         return cards.stream()
-                .map(Card::getScore)
-                .reduce(0, Integer::sum);
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     private boolean hasAce() {

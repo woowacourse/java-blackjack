@@ -16,6 +16,16 @@ public class InputView {
                 .toList();
     }
 
+    public double readPlayerMoney(String playerName) {
+        String input = readLine(String.format("%s의 배팅 금액은?", playerName));
+
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("숫자만 입력하세요.");
+        }
+    }
+
     public boolean readCommand(String name) {
         String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         String input = readLine(message);

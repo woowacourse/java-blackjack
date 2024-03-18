@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -8,14 +8,14 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DeckTest {
+class CardDeckTest {
 
     @DisplayName("생성 테스트")
     @Test
     void create() {
         List<Card> cards = List.of(new Card(CardRank.THREE, CardShape.CLOVER));
 
-        assertThatCode(() -> new Deck(cards))
+        assertThatCode(() -> new CardDeck(cards))
                 .doesNotThrowAnyException();
     }
 
@@ -23,9 +23,9 @@ class DeckTest {
     @Test
     void draw() {
         Card card = new Card(CardRank.EIGHT, CardShape.CLOVER);
-        Deck deck = new Deck(List.of(card));
+        CardDeck cardDeck = new CardDeck(List.of(card));
 
-        Card result = deck.draw();
+        Card result = cardDeck.draw();
 
         assertThat(result).isEqualTo(card);
     }
@@ -36,7 +36,7 @@ class DeckTest {
         Card card = new Card(CardRank.EIGHT, CardShape.DIAMOND);
         List<Card> duplicatedCards = List.of(card, card);
 
-        assertThatThrownBy(() -> new Deck(duplicatedCards))
+        assertThatThrownBy(() -> new CardDeck(duplicatedCards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -44,10 +44,10 @@ class DeckTest {
     @Test
     void drawEmpty() {
         Card card = new Card(CardRank.EIGHT, CardShape.CLOVER);
-        Deck deck = new Deck(List.of(card));
-        deck.draw();
+        CardDeck cardDeck = new CardDeck(List.of(card));
+        cardDeck.draw();
 
-        assertThatThrownBy(() -> deck.draw())
+        assertThatThrownBy(cardDeck::draw)
                 .isInstanceOf(IllegalStateException.class);
     }
 }

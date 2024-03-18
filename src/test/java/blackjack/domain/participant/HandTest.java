@@ -1,9 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +15,7 @@ class HandTest {
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        assertThatCode(() -> new Hand())
+        assertThatCode(Hand::new)
                 .doesNotThrowAnyException();
     }
 
@@ -97,5 +100,18 @@ class HandTest {
         boolean result = hand.isBlackJack();
 
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("단순히 점수가 21인 경우에는 블랙잭이 아니다.")
+    @Test
+    void isNotBlackJack() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand.add(new Card(CardRank.QUEEN, CardShape.CLOVER));
+        hand.add(new Card(CardRank.ACE, CardShape.CLOVER));
+
+        boolean result = hand.isBlackJack();
+
+        assertThat(result).isFalse();
     }
 }

@@ -1,6 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.List;
+import blackjack.domain.card.Card;
 
 public class Dealer extends Participant {
 
@@ -12,23 +13,31 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    public GameResult judge(Player player) {
+    public JudgeResult judgePlayer(Player player) {
         int playerScore = player.calculateScore();
         int dealerScore = calculateScore();
 
         if (player.isBust()) {
-            return GameResult.LOSE;
+            return JudgeResult.LOSE;
         }
 
         if (isBust() || playerScore > dealerScore) {
-            return GameResult.WIN;
+            return JudgeResult.WIN;
         }
 
-        if (playerScore == dealerScore) {
-            return GameResult.TIE;
+        if (player.isBlackJack() && isBlackJack()) {
+            return JudgeResult.TIE;
         }
 
-        return GameResult.LOSE;
+        if (player.isBlackJack()) {
+            return JudgeResult.BLACKJACK_WIN;
+        }
+
+        if (isBlackJack() || playerScore < dealerScore) {
+            return JudgeResult.LOSE;
+        }
+
+        return JudgeResult.TIE;
     }
 
     public List<Card> getOpenCards() {
