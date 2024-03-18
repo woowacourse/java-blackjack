@@ -46,21 +46,7 @@ public class BlackjackGame {
 
     private Money findProfit(final Dealer dealer, final Player player, final Money bettingMoney) {
         final Status status = judgePlayerStatus(dealer, player);
-
-        if (Status.WIN.equals(status)) {
-            return bettingMoney.multiply(1);
-        }
-        if (Status.PUSH.equals(status)) {
-            return bettingMoney.multiply(0);
-        }
-        if (Status.LOSE.equals(status)) {
-            return bettingMoney.multiply(-1);
-        }
-        if (Status.BLACKJACK.equals(status)) {
-            return bettingMoney.multiply(1.5);
-        }
-
-        throw new IllegalStateException("[ERROR] 유효하지 않은 경우의 수 입니다.");
+        return bettingMoney.multiply(status.getMultiplier());
     }
 
     private Status judgePlayerStatus(final Dealer dealer, final Player player) {
