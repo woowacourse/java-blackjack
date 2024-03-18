@@ -33,7 +33,7 @@ public class PlayersProfit {
     }
 
     public Profit dealerProfit() {
-        return playersProfit().multiply(-1);
+        return playersProfit().reverseSign();
     }
 
     private Profit playersProfit() {

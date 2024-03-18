@@ -33,4 +33,17 @@ class ProfitTest {
         // then
         assertThat(actual).isEqualTo(new Profit(2000));
     }
+
+    @DisplayName("수익의 부호를 바꾼다.")
+    @Test
+    void reverseSign() {
+        // given
+        Profit profit = new Profit(1000);
+
+        // when
+        Profit actual = profit.reverseSign();
+
+        // then
+        assertThat(actual).isEqualTo(new Profit(-1000));
+    }
 }

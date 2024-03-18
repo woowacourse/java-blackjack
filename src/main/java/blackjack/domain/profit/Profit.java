@@ -22,6 +22,10 @@ public class Profit {
         return new Profit(this.value + other.value);
     }
 
+    public Profit reverseSign() {
+        return this.multiply(-1);
+    }
+
     public double getValue() {
         return value;
     }
