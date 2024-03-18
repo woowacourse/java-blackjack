@@ -43,7 +43,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public BetRecord readAmountOfBet(List<Name> playerNames) {
+    public BetRecord readBetAmount(List<Name> playerNames) {
         Map<Name, BetAmount> playersBetMoney = new LinkedHashMap<>();
         for (Name playerName : playerNames) {
             System.out.println(String.format(LINE_SEPARATOR + "%s의 베팅 금액은?", playerName.getName()));

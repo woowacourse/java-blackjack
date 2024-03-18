@@ -21,7 +21,7 @@ public class BlackjackGameConsole {
 
     public void play() {
         List<Name> playerNames = repeat(inputView::readPlayerNames);
-        BetRecord betRecord = repeat(() -> inputView.readAmountOfBet(playerNames));
+        BetRecord betRecord = repeat(() -> inputView.readBetAmount(playerNames));
 
         ProfitRecord profitRecord = playBlackjack(playerNames, betRecord);
         outputView.printProfitDetails(profitRecord);
