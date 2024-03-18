@@ -85,22 +85,15 @@ public class OutputView {
         return String.format(SCORE_FORM, score);
     }
 
-    public void printBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+    public void printBettingProfit(final int dealerBettingProfit,
+                                   final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
         System.out.println(BETTING_PROFIT_INTRO);
-        System.out.println(formatDealerBettingProfit(playerBettingProfitOutcomes));
+        System.out.println(formatDealerBettingProfit(dealerBettingProfit));
         System.out.println(formatPlayerBettingProfits(playerBettingProfitOutcomes));
     }
 
-    private String formatDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        int dealerBettingProfit = calculateDealerBettingProfit(playerBettingProfitOutcomes);
+    private String formatDealerBettingProfit(final int dealerBettingProfit) {
         return formatBettingProfit(DEALER_NAME, dealerBettingProfit);
-    }
-
-    private int calculateDealerBettingProfit(
-            final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        return playerBettingProfitOutcomes.stream()
-                .mapToInt(PlayerBettingProfitOutcome::profit)
-                .sum() * -1;
     }
 
     public String formatPlayerBettingProfits(

@@ -119,7 +119,15 @@ public class BlackjackGame {
         List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = players.getPlayers().stream()
                 .map(player -> PlayerBettingProfitOutcome.from(player, betting, dealer))
                 .toList();
-        outputView.printBettingProfit(playerBettingProfitOutcomes);
+        int dealerBettingProfit = calculateDealerBettingProfit(playerBettingProfitOutcomes);
+        outputView.printBettingProfit(dealerBettingProfit, playerBettingProfitOutcomes);
+    }
+
+    private int calculateDealerBettingProfit(
+            final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+        return playerBettingProfitOutcomes.stream()
+                .mapToInt(PlayerBettingProfitOutcome::profit)
+                .sum() * -1;
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {
