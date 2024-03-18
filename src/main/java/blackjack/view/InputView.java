@@ -25,7 +25,7 @@ public class InputView {
     private void validateInteger(String input) {
         try {
             Integer.parseInt(input);
-        } catch (IllegalArgumentException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 정수가 아닙니다.");
         }
     }
