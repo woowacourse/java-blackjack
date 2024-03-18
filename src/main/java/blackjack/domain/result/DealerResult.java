@@ -1,43 +1,31 @@
 package blackjack.domain.result;
 
-import blackjack.domain.player.Name;
+import blackjack.domain.player.info.Name;
+import blackjack.domain.result.prize.PrizeMoney;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class DealerResult {
     private final Name name;
-    private final Map<ResultStatus, Count> resultStatusBoard;
+    private final PrizeMoney prizeMoney;
 
-    public DealerResult(final Name name, final Map<ResultStatus, Count> resultStatusBoard) {
+    private DealerResult(final Name name, final PrizeMoney prizeMoney) {
         this.name = name;
-        this.resultStatusBoard = resultStatusBoard;
+        this.prizeMoney = prizeMoney;
     }
 
     public static DealerResult of(final Name name, final List<GamePlayerResult> gamePlayerResults) {
-        final Map<ResultStatus, Count> resultStatusBoard = new EnumMap<>(ResultStatus.class);
-
-        for (final GamePlayerResult gamePlayerResult : gamePlayerResults) {
-            increment(resultStatusBoard, gamePlayerResult.getResultStatus()
-                                                         .reverse());
-        }
-
-        return new DealerResult(name, resultStatusBoard);
-    }
-
-    private static void increment(final Map<ResultStatus, Count> resultStatusBoard,
-                                  final ResultStatus resultStatus) {
-        resultStatusBoard.put(resultStatus, resultStatusBoard.getOrDefault(resultStatus, Count.initialValue())
-                                                             .increment());
+        final int totalValue = gamePlayerResults.stream()
+                                                .mapToInt(GamePlayerResult::getPrizeMoney)
+                                                .sum();
+        return new DealerResult(name, new PrizeMoney(totalValue * -1));
     }
 
     public String getName() {
-        return name.asString();
+        return this.name.asString();
     }
 
-    public int getCountWithResultStatus(final ResultStatus resultStatus) {
-        return resultStatusBoard.getOrDefault(resultStatus, Count.initialValue())
-                                .value();
+    public int getPrizeMoney() {
+        return this.prizeMoney.value();
     }
 }

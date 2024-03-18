@@ -2,53 +2,54 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.state.BlackjackStatus;
+import blackjack.domain.card.state.Ready;
+import blackjack.domain.card.state.State;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Participant implements CardReceivable {
 
-    protected final Name name;
-    protected final Cards cards;
+    protected State state;
 
-    protected Participant(final Name name, final Cards cards) {
-        this.name = name;
-        this.cards = cards;
+    protected Participant() {
+        this.state = new Ready();
     }
 
-    public int calculateScore() {
-        return cards.calculate();
+    protected Participant(final Cards cards) {
+        this.state = initializeState(cards.toList());
     }
 
-    public void drawCard(final Card card) {
-        cards.add(card);
+    private State initializeState(final List<Card> cards) {
+        State initializeState = new Ready();
+        for (final Card card : cards) {
+            initializeState = initializeState.draw(card);
+        }
+        return initializeState;
     }
 
-    public boolean isBust() {
-        return cards.isBust();
-    }
-
-    public String getNameAsString() {
-        return name.asString();
-    }
-
-    public Name getName() {
-        return name;
+    public void stand() {
+        this.state = this.state.stand();
     }
 
     public List<Card> getCards() {
-        return cards.toList();
+        return this.state.getCards();
     }
 
-    @Override
-    public boolean equals(final Object object) {
-        if (this == object) return true;
-        if (!(object instanceof final Participant that)) return false;
-        return Objects.equals(this.name, that.name);
+    public int calculateScore() {
+        return this.state.calculate();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name);
+    public void drawCard(final Card card) {
+        this.state = this.state.draw(card);
     }
+
+
+    public BlackjackStatus getStatus() {
+        return this.state.getStatus();
+    }
+
+    public abstract String getNameAsString();
+
+
 }

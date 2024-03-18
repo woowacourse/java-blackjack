@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
+import blackjack.domain.blackjack.Deck;
 
 import java.util.ArrayDeque;
 import java.util.List;
@@ -17,15 +17,15 @@ public class CardFixture {
     }
 
     public static Deck 카드_덱_생성() {
-        ArrayDeque<Card> cards = new ArrayDeque<>();
-        Card card1 = new Card(CardValue.ACE, CardSymbol.DIAMOND);
-        Card card2 = new Card(CardValue.FOUR, CardSymbol.HEART);
+        final ArrayDeque<Card> cards = new ArrayDeque<>();
+        final Card card1 = new Card(CardValue.ACE, CardSymbol.DIAMOND);
+        final Card card2 = new Card(CardValue.FOUR, CardSymbol.HEART);
 
-        Card card3 = new Card(CardValue.ACE, CardSymbol.HEART);
-        Card card4 = new Card(CardValue.TWO, CardSymbol.DIAMOND);
+        final Card card3 = new Card(CardValue.ACE, CardSymbol.HEART);
+        final Card card4 = new Card(CardValue.TWO, CardSymbol.DIAMOND);
 
-        Card card5 = new Card(CardValue.FOUR, CardSymbol.DIAMOND);
-        Card card6 = new Card(CardValue.FOUR, CardSymbol.SPADE);
+        final Card card5 = new Card(CardValue.FOUR, CardSymbol.DIAMOND);
+        final Card card6 = new Card(CardValue.FOUR, CardSymbol.SPADE);
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);

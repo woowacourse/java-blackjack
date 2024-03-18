@@ -1,21 +1,22 @@
 package blackjack.domain.result;
 
-import blackjack.domain.player.Name;
+import blackjack.domain.player.info.Name;
+import blackjack.domain.result.prize.PrizeMoney;
 
 public class GamePlayerResult {
     private final Name name;
-    private final ResultStatus resultStatus;
+    private final PrizeMoney prizeMoney;
 
-    public GamePlayerResult(final Name name, final ResultStatus resultStatus) {
+    public GamePlayerResult(final Name name, final PrizeMoney prizeMoney) {
         this.name = name;
-        this.resultStatus = resultStatus;
+        this.prizeMoney = prizeMoney;
     }
 
     public String getName() {
-        return name.asString();
+        return this.name.asString();
     }
 
-    public ResultStatus getResultStatus() {
-        return resultStatus;
+    public int getPrizeMoney() {
+        return this.prizeMoney.value();
     }
 }

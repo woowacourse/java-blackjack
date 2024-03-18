@@ -1,11 +1,10 @@
-package blackjack.domain.player;
+package blackjack.domain.player.info;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class Names {
-    private static final Integer MAX_SIZE = 7;
 
     private final List<Name> value;
 
@@ -21,7 +20,6 @@ public class Names {
     }
 
     private static void validate(final List<String> names) {
-        validateSize(names);
         validateDuplicate(names);
     }
 
@@ -31,13 +29,7 @@ public class Names {
         }
     }
 
-    private static void validateSize(final List<String> names) {
-        if (names.size() > MAX_SIZE) {
-            throw new IllegalArgumentException(String.format("%d명 까지만 가능합니다.", MAX_SIZE));
-        }
-    }
-
     public Stream<Name> stream() {
-        return value.stream();
+        return this.value.stream();
     }
 }

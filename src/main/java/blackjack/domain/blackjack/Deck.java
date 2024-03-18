@@ -1,4 +1,8 @@
-package blackjack.domain.card;
+package blackjack.domain.blackjack;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.CardValue;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,12 +33,12 @@ public class Deck {
     }
 
     public Card draw() {
-        final var card = value.pollLast();
+        final var card = this.value.pollLast();
 
         if (card == null) {
             throw new IllegalStateException("카드가 전부 소진되었습니다.");
         }
-        
+
         return card;
     }
 }
