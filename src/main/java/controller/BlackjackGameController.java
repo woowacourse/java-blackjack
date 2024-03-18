@@ -11,7 +11,6 @@ import model.blackjackgame.Bettings;
 import model.blackjackgame.Blackjack;
 import model.blackjackgame.BlackjackGame;
 import model.card.Card;
-import model.card.CardDispenser;
 import model.card.CardType;
 import model.card.Cards;
 import model.participants.dealer.Dealer;
@@ -63,7 +62,7 @@ public class BlackjackGameController {
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
         List<Card> generatedCards = new ArrayList<>();
         for (int i = 0; i < (players.getPlayers().size() + DEALER_COUNT) * CARD_COUNT_FOR_SETTING; i++) {
-            generatedCards.add(new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
+            generatedCards.add(new Card());
         }
         blackjackGame.distributeCardsForSetting(new Cards(generatedCards));
     }
@@ -90,8 +89,7 @@ public class BlackjackGameController {
         Answer answer = new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         while (answer.isHit()) {
             Player updatedPlayer = new UpdatedPlayer(blackjackGame, player).player();
-            boolean continueHit = blackjackGame.hitForPlayer(updatedPlayer,
-                    new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
+            boolean continueHit = blackjackGame.hitForPlayer(updatedPlayer, new Card());
             answer = hitResultInfo(continueHit, player, blackjackGame);
         }
     }
@@ -107,8 +105,7 @@ public class BlackjackGameController {
     }
 
     private void turnHitDealer(BlackjackGame blackjackGame) {
-        boolean dealerHit = blackjackGame.hitForDealer(
-                new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
+        boolean dealerHit = blackjackGame.hitForDealer(new Card());
         outputView.printDealerHitStatus(dealerHit);
     }
 
