@@ -21,10 +21,13 @@ class GameBettingManagerTest {
     void calculateBattingReward_allBust() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+        List<Card> cards = List.of(
+                new Card(Pattern.SPADE, Rank.TEN),
+                new Card(Pattern.CLOVER, Rank.TEN),
+                new Card(Pattern.HEART, Rank.TEN));
 
-        Dealer dealer = new Dealer(playingDeck);
-        Player player = new Player("test");
+        Dealer dealer = new Dealer(cards);
+        Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
@@ -54,10 +57,13 @@ class GameBettingManagerTest {
     void calculateBattingReward_DealerBust() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+        List<Card> cards = List.of(
+                new Card(Pattern.SPADE, Rank.TEN),
+                new Card(Pattern.CLOVER, Rank.TEN)
+        );
 
-        Dealer dealer = new Dealer(playingDeck);
-        Player player = new Player("test");
+        Dealer dealer = new Dealer(cards);
+        Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
@@ -86,10 +92,13 @@ class GameBettingManagerTest {
     void calculateBattingReward_PlayerBlackjack() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+        List<Card> cards = List.of(
+                new Card(Pattern.SPADE, Rank.TEN),
+                new Card(Pattern.CLOVER, Rank.ACE)
+        );
 
-        Dealer dealer = new Dealer(playingDeck);
-        Player player = new Player("test");
+        Dealer dealer = new Dealer(cards);
+        Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
@@ -118,10 +127,13 @@ class GameBettingManagerTest {
     void calculateBattingReward_allBlackjack() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+        List<Card> cards = List.of(
+                new Card(Pattern.SPADE, Rank.TEN),
+                new Card(Pattern.CLOVER, Rank.ACE)
+        );
 
-        Dealer dealer = new Dealer(playingDeck);
-        Player player = new Player("test");
+        Dealer dealer = new Dealer(cards);
+        Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
@@ -149,10 +161,18 @@ class GameBettingManagerTest {
     void calculateBattingReward_neitherBusterOrBlackjack() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+        List<Card> cards = List.of(
+                new Card(Pattern.SPADE, Rank.TEN),
+                new Card(Pattern.CLOVER, Rank.NINE)
+        );
 
-        Dealer dealer = new Dealer(playingDeck);
-        Player player = new Player("test");
+        List<Card> cards2 = List.of(
+                new Card(Pattern.SPADE, Rank.TEN),
+                new Card(Pattern.CLOVER, Rank.EIGHT)
+        );
+
+        Dealer dealer = new Dealer(cards);
+        Player player = new Player("test", cards2);
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 
@@ -180,10 +200,13 @@ class GameBettingManagerTest {
     void calculateBattingReward_neitherBusterOrBlackjack_sameScore() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+        List<Card> cards = List.of(
+                new Card(Pattern.SPADE, Rank.TEN),
+                new Card(Pattern.CLOVER, Rank.NINE)
+        );
 
-        Dealer dealer = new Dealer(playingDeck);
-        Player player = new Player("test");
+        Dealer dealer = new Dealer(cards);
+        Player player = new Player("test", cards);
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
 

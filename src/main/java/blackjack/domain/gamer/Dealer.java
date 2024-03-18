@@ -3,6 +3,8 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.PlayingDeck;
 
+import java.util.List;
+
 public class Dealer extends Gamer {
 
     private static final int DEALER_HIT_MAX_SCORE = 16;
@@ -11,6 +13,11 @@ public class Dealer extends Gamer {
 
     public Dealer(PlayingDeck playingDeck) {
         this.playingDeck = playingDeck;
+    }
+
+    public Dealer(List<Card> cards) {
+        this.playingDeck = null;
+        cards.forEach(this::receiveCard);
     }
 
     public Card drawCard() {
