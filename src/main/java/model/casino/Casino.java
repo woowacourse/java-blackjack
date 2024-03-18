@@ -59,7 +59,7 @@ public class Casino {
     }
 
     public boolean isDealerHitAllowed() {
-        return entrant.canHitDealer();
+        return entrant.isDealerHitAllowed();
     }
 
     public DealerFaceUpResult getDealerFaceUpResult() {

@@ -19,7 +19,7 @@ public class Entrant {
         dealer.hitCard(card);
     }
 
-    public boolean canHitDealer() {
+    public boolean isDealerHitAllowed() {
         return dealer.canHit();
     }
 
