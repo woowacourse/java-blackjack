@@ -10,13 +10,9 @@ import java.util.function.BiPredicate;
 
 public enum PrizeChecker {
     BLACKJACK(PrizeChecker::isPlayerBlackjack, 1.5),
-    WIN((gamePlayer, dealer) -> isDealerBust(gamePlayer, dealer) || (
-            isStand(gamePlayer) && compare(gamePlayer, dealer) > 0), 1),
-    DRAW(((gamePlayer, dealer) -> isBothBlackjack(gamePlayer, dealer) || (
-            isStand(gamePlayer) && compare(gamePlayer, dealer) == 0)), 0),
-
-    LOSE((gamePlayer, dealer) -> isBust(gamePlayer) || (
-            isStand(gamePlayer) && compare(gamePlayer, dealer) < 0), -1);
+    WIN((gamePlayer, dealer) -> isDealerBust(gamePlayer, dealer) || isPlayerScoreWin(gamePlayer, dealer), 1),
+    DRAW(((gamePlayer, dealer) -> isBothBlackjack(gamePlayer, dealer) || isPlayerScoreDraw(gamePlayer, dealer)), 0),
+    LOSE((gamePlayer, dealer) -> isBust(gamePlayer) || isPlayerScoreLose(gamePlayer, dealer), -1);
     private final BiPredicate<GamePlayer, Dealer> predicate;
     private final double profitRate;
 
@@ -46,6 +42,19 @@ public enum PrizeChecker {
         return gamePlayer.getStatus() == BlackjackStatus.BLACKJACK && dealer.getStatus() == BlackjackStatus.BLACKJACK;
     }
 
+    private static boolean isPlayerScoreWin(final GamePlayer gamePlayer, final Dealer dealer) {
+        return isStand(gamePlayer) && compare(gamePlayer, dealer) > 0;
+    }
+
+    private static boolean isPlayerScoreDraw(final GamePlayer gamePlayer, final Dealer dealer) {
+        return isStand(gamePlayer) && compare(gamePlayer, dealer) == 0;
+    }
+
+    private static boolean isPlayerScoreLose(final GamePlayer gamePlayer, final Dealer dealer) {
+        return isStand(gamePlayer) && compare(gamePlayer, dealer) < 0;
+    }
+
+
     private static boolean isStand(final Participant participant) {
         return participant.getStatus() == BlackjackStatus.STAND;
     }
@@ -53,7 +62,6 @@ public enum PrizeChecker {
     private static boolean isBust(final Participant participant) {
         return participant.getStatus() == BlackjackStatus.BUST;
     }
-
 
     private static int compare(final GamePlayer gamePlayer, final Dealer dealer) {
         return Integer.compare(gamePlayer.calculateScore(), dealer.calculateScore());
