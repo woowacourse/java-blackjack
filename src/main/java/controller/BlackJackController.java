@@ -5,10 +5,7 @@ import model.card.Card;
 import model.card.CardDeck;
 import model.card.CardSize;
 import model.card.Cards;
-import model.player.Dealer;
-import model.player.Name;
-import model.player.Participants;
-import model.player.ParticipantsBuilder;
+import model.player.*;
 import view.InputView;
 import view.OutputView;
 
@@ -40,7 +37,7 @@ public class BlackJackController {
         CardDeck cardDeck = new CardDeck(Card.createCardDeck());
         Participants participants = createParticipant(() -> cardDeck.selectRandomCards(CardSize.TWO));
         Dealer dealer = new Dealer(cardDeck.selectRandomCards(CardSize.TWO));
-        return new BlackJack(participants, dealer, cardDeck);
+        return new BlackJack(new Users(participants, dealer), cardDeck);
     }
 
     private Participants createParticipant(Supplier<Cards> selectCard) {
