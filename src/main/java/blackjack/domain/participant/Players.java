@@ -1,28 +1,36 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.money.Money;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
 
     private static final int MAX_PLAYERS_SIZE = 4;
 
-    private final List<Player> players;
+    private final Dealer dealer;
+    private final List<BettingPlayer> bettingPlayers;
 
-    private Players(List<Player> players) {
-        validateSize(players);
-        validateDistinct(players);
-        this.players = players;
+    private Players(Dealer dealer, List<BettingPlayer> bettingPlayers) {
+        this.dealer = dealer;
+        validateSize(bettingPlayers);
+        validateUniqueName(bettingPlayers);
+        this.bettingPlayers = bettingPlayers;
     }
 
-    public static Players from(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::from)
-                .toList();
-        return new Players(players);
+    public static Players from(List<String> names, List<Integer> bets) {
+        List<BettingPlayer> bettingPlayers = new ArrayList<>();
+        for (int index = 0; index < names.size(); index++) {
+            String name = names.get(index);
+            Integer bet = bets.get(index);
+            bettingPlayers.add(new BettingPlayer(name, bet));
+        }
+        return new Players(new Dealer(), bettingPlayers);
     }
 
-    private void validateSize(List<Player> players) {
+    private void validateSize(List<BettingPlayer> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("최소 한 명의 플레이어가 있어야 합니다.");
         }
@@ -31,29 +39,40 @@ public class Players {
         }
     }
 
-    private void validateDistinct(List<Player> players) {
-        if (isDuplicated(players)) {
+    private void validateUniqueName(List<BettingPlayer> players) {
+        if (isDuplicatedName(players)) {
             throw new IllegalArgumentException("중복된 이름을 사용할 수 없습니다.");
         }
     }
 
-    private boolean isDuplicated(List<Player> players) {
+    private boolean isDuplicatedName(List<BettingPlayer> players) {
         return players.size() != players.stream().distinct().count();
     }
 
     public void drawStartCards(Deck deck) {
-        for (Player player : players) {
+        dealer.drawStartCards(deck);
+        for (BettingPlayer player : bettingPlayers) {
             player.drawStartCards(deck);
         }
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public Money calculateDealerPrize() {
+        return bettingPlayers.stream()
+                .map(bettingPlayer -> bettingPlayer.calculatePrize(dealer))
+                .reduce(Money.ZERO, Money::subtract);
     }
 
-    public void play(PlayerTurn playTurn, Deck deck) {
-        for (Player player : players) {
-            playTurn.play(player, deck);
-        }
+    public List<BettingPlayer> getBettingPlayers() {
+        return Collections.unmodifiableList(bettingPlayers);
+    }
+
+    public List<Player> getPlayers() {
+        return bettingPlayers.stream()
+                .map(BettingPlayer::getPlayer)
+                .toList();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

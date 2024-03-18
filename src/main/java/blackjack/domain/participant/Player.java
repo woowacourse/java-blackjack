@@ -8,19 +8,16 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private static final int START_CARD_SIZE = 2;
+
     private final Name name;
 
-    Player(List<Card> cards, Name name) {
+    public Player(List<Card> cards, Name name) {
         super(cards);
         this.name = Objects.requireNonNull(name);
     }
 
     public static Player from(String name) {
         return new Player(Collections.emptyList(), new Name(name));
-    }
-
-    public boolean isWin(Dealer dealer) {
-        return !dealer.isWin(this);
     }
 
     @Override
@@ -33,8 +30,8 @@ public class Player extends Participant {
         return START_CARD_SIZE;
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     @Override

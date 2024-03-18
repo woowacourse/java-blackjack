@@ -3,7 +3,9 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
@@ -64,9 +66,16 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printPlayerCards(String name, List<Card> cards) {
-        System.out.print(name + "카드: ");
+    private void printPlayerCards(Name name, List<Card> cards) {
+        System.out.print(name.getName() + "카드: ");
         printCards(cards);
+    }
+
+    private void printCards(List<Card> cards) {
+        String printingFormat = cards.stream()
+                .map(this::toPrintedFormat)
+                .collect(Collectors.joining(", "));
+        System.out.print(printingFormat);
     }
 
     private void printPlayersEndingStatus(Players players) {
@@ -82,42 +91,35 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printCards(List<Card> cards) {
-        String printingFormat = cards.stream()
-                .map(this::toPrintedFormat)
-                .collect(Collectors.joining(", "));
-        System.out.print(printingFormat);
+    public void printDealerDraw() {
+        System.out.println();
+        System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     private void printScore(int score) {
         System.out.print(" - 결과 : " + score);
     }
 
+    public void printPrizeTitle() {
+        System.out.println("## 최종 수익");
+    }
+
+    public void printDealerPrize(Money prize) {
+        System.out.println("딜러: " + prize.getAmount());
+    }
+
+    public void printPlayerPrize(Name name, Money prize) {
+        System.out.println(name.getName() + ": " + prize.getAmount());
+    }
+
     private String toPrintedFormat(Players players) {
         return players.getPlayers().stream()
                 .map(Player::getName)
+                .map(Name::getName)
                 .collect(Collectors.joining(", "));
     }
 
     private String toPrintedFormat(Card card) {
         return VALUE_NAME.get(card.getValue()) + SHAPE_NAME.get(card.getShape());
-    }
-
-    public void printDealerDraw() {
-        System.out.println();
-        System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public void printDealerMatchResult(int winCount, int loseCount) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러 : %d승 %d패%n", winCount, loseCount);
-    }
-
-    public void printPlayerMatchResult(String name, boolean isWin) {
-        if (isWin) {
-            System.out.println(name + ": 승");
-            return;
-        }
-        System.out.println(name + ": 패");
     }
 }

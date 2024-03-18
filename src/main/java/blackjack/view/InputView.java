@@ -1,7 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.participant.Name;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class InputView {
 
@@ -13,11 +15,24 @@ public class InputView {
     public List<String> inputPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String names = SCANNER.nextLine();
-        return List.of(names.split(NAME_DELIMITER, -1));
+        return Stream.of(names.split(NAME_DELIMITER, -1))
+                .map(String::strip)
+                .toList();
     }
 
-    public boolean isPlayerWantDraw(String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, WANT_DRAW_INPUT, WANT_NOT_DRAW_INPUT);
+    public int inputBettingAmount(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String input = SCANNER.nextLine();
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해 주세요");
+        }
+    }
+
+    public boolean isPlayerWantToDraw(Name name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name.getName(), WANT_DRAW_INPUT,
+                WANT_NOT_DRAW_INPUT);
         String input = SCANNER.nextLine();
         return isWantDraw(input);
     }

@@ -12,12 +12,24 @@ public class Card {
         this.shape = Objects.requireNonNull(shape);
     }
 
+    public boolean isAce() {
+        return value.isAce();
+    }
+
     public int getMinScore() {
         return value.getMinScore();
     }
 
     public int getMaxScore() {
         return value.getMaxScore();
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public Shape getShape() {
+        return shape;
     }
 
     @Override
@@ -35,17 +47,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(value, shape);
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public Shape getShape() {
-        return shape;
-    }
-
-    public boolean isAce() {
-        return value.isAce();
     }
 }

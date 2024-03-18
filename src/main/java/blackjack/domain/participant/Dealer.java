@@ -13,34 +13,8 @@ public class Dealer extends Participant {
         super(Collections.emptyList());
     }
 
-    Dealer(List<Card> cards) {
+    public Dealer(List<Card> cards) {
         super(cards);
-    }
-
-    public boolean isWin(Player player) {
-        if (player.isBusted() || this.isBlackjack()) {
-            return true;
-        }
-        if (this.isBusted() || player.isBlackjack()) {
-            return false;
-        }
-        return this.calculateScore() >= player.calculateScore();
-    }
-
-    private boolean isLose(Player player) {
-        return !isWin(player);
-    }
-
-    public int calculateWinCount(Players players) {
-        return (int) players.getPlayers().stream()
-                .filter(this::isWin)
-                .count();
-    }
-
-    public int calculateLoseCount(Players players) {
-        return (int) players.getPlayers().stream()
-                .filter(this::isLose)
-                .count();
     }
 
     @Override

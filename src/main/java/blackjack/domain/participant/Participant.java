@@ -16,21 +16,9 @@ public abstract class Participant {
         this.hand = new Hand(cards);
     }
 
-    public final int calculateScore() {
-        return hand.calculateScore();
-    }
+    protected abstract int getMaxDrawableScore();
 
-    public final boolean isDrawable() {
-        return calculateScore() <= getMaxDrawableScore();
-    }
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
-    public final boolean isBusted() {
-        return hand.isBusted();
-    }
+    protected abstract int getStartCardSize();
 
     public final void drawStartCards(Deck deck) {
         if (!hand.isEmpty()) {
@@ -41,11 +29,31 @@ public abstract class Participant {
         }
     }
 
-    public final void add(Card card) {
+    public void drawAdditionalCard(Deck deck) {
+        add(deck.draw());
+    }
+
+    protected final void add(Card card) {
         if (!isDrawable()) {
             throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
         }
         hand.add(card);
+    }
+
+    public final boolean isDrawable() {
+        return calculateScore() <= getMaxDrawableScore();
+    }
+
+    public final int calculateScore() {
+        return hand.calculateScore();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public final boolean isBusted() {
+        return hand.isBusted();
     }
 
     public final List<Card> getStartCards() {
@@ -55,8 +63,4 @@ public abstract class Participant {
     public final List<Card> getCards() {
         return hand.getCards();
     }
-
-    protected abstract int getMaxDrawableScore();
-
-    protected abstract int getStartCardSize();
 }
