@@ -17,8 +17,8 @@ public class BlackjackGame {
         this.playerBetting = new LinkedHashMap<>();
     }
 
-    public void giveCard(final Participant player) {
-        player.addCard(cardDeck.draw());
+    public void giveCard(final Participant participant) {
+        participant.addCard(cardDeck.draw());
     }
 
     public void initializeHand(final Dealer dealer, final List<Player> players) {
