@@ -48,7 +48,7 @@ public class BlackjackGame {
         return new Players(playerNames);
     }
 
-    private Betting createBetting(Players players) {
+    private Betting createBetting(final Players players) {
         Map<PlayerName, BettingMoney> playerBettingMoney = new HashMap<>();
         for (PlayerName playerName : players.getNames()) {
             BettingMoney bettingMoney = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
