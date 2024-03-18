@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import vo.Score;
 
 import java.util.stream.Stream;
 
@@ -16,7 +17,7 @@ class GameResultStatusTest {
     @ParameterizedTest
     @MethodSource
     void resultOf(int standardTarget, int comparisonTarget, GameResultStatus expected) {
-        assertThat(GameResultStatus.comparedTo(standardTarget, comparisonTarget)).isEqualTo(expected);
+        assertThat(GameResultStatus.comparedTo(new Score(standardTarget), new Score(comparisonTarget))).isEqualTo(expected);
     }
 
     static Stream<Arguments> resultOf() {

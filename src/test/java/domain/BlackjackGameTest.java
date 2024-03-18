@@ -51,8 +51,8 @@ class BlackjackGameTest {
         game.handOutCards(dealer, 2);
         game.handOutCards(player, 2);
         assertAll(
-                () -> assertThat(dealer.score()).isEqualTo(15),
-                () -> assertThat(player.score()).isEqualTo(14)
+                () -> assertThat(dealer.score().value()).isEqualTo(15),
+                () -> assertThat(player.score().value()).isEqualTo(14)
         );
     }
 

@@ -3,6 +3,7 @@ package domain.participant;
 import vo.Card;
 import domain.card.Hand;
 import vo.Name;
+import vo.Score;
 
 import java.util.Objects;
 
@@ -29,8 +30,8 @@ public abstract class Participant {
         return hand.peek();
     }
 
-    public int score() {
-        return hand.score();
+    public Score score() {
+        return new Score(hand.score());
     }
 
     public boolean isBust() {

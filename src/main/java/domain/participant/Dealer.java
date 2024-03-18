@@ -40,6 +40,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveMoreCard() {
-        return score() <= DEALER_HIT_THRESHOLD;
+        return score().isEqualOrLessThan(DEALER_HIT_THRESHOLD);
     }
 }

@@ -19,11 +19,11 @@ public class ParticipantMapper {
     }
 
     public static ParticipantDto participantToParticipantDto(final Participant participant) {
-        return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.handToCardsDto(participant.hand(), participant.score()));
+        return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.handToCardsDto(participant.hand(), participant.score().value()));
     }
 
     public static ParticipantDto participantAndCardToParticipantDto(final Participant participant, final Card card) {
-        return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.cardsToCardsDto(new Cards(List.of(card)), participant.score()));
+        return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.cardsToCardsDto(new Cards(List.of(card)), participant.score().value()));
     }
 
     public static List<ParticipantDto> playersToParticipantsDto(final Players players) {
