@@ -24,22 +24,22 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitialCards(CardsDto participantCards) {
-        CardDto dealerCard = participantCards.dealerCard();
-        List<CardDto> playerCards = participantCards.playerCards();
-        printInitCardsIntro(participantCards);
+    public static void printInitialCards(CardsDto cardsDto) {
+        CardDto dealerCard = cardsDto.dealerCard();
+        List<CardDto> playerCards = cardsDto.playerCards();
+        printInitCardsIntro(cardsDto);
         printCards(dealerCard);
         printAllPlayerCards(playerCards);
     }
 
-    private static void printInitCardsIntro(CardsDto participantCards) {
-        String playerNames = String.join(CARDS_DELIMITER, participantCards.playerNames());
-        System.out.printf(INIT_CARDS_INTRO, participantCards.dealerName(), playerNames);
+    private static void printInitCardsIntro(CardsDto cardsDto) {
+        String playerNames = String.join(CARDS_DELIMITER, cardsDto.playerNames());
+        System.out.printf(INIT_CARDS_INTRO, cardsDto.dealerName(), playerNames);
     }
 
-    public static void printCards(CardDto participantCard) {
-        String cards = String.join(CARDS_DELIMITER, participantCard.cards());
-        System.out.printf(CARDS_FORMAT, participantCard.name(), cards);
+    public static void printCards(CardDto cardDto) {
+        String cards = String.join(CARDS_DELIMITER, cardDto.cards());
+        System.out.printf(CARDS_FORMAT, cardDto.name(), cards);
     }
 
     private static void printAllPlayerCards(List<CardDto> playerCards) {
@@ -51,29 +51,30 @@ public class OutputView {
         System.out.printf(DEALER_HIT, DEALER_NAME);
     }
 
-    public static void printScores(ScoresDto participantScores) {
-        ScoreDto dealerScore = participantScores.dealerScore();
-        List<ScoreDto> playerScores = participantScores.playerScores();
+    public static void printScores(ScoresDto scoresDto) {
+        ScoreDto dealerScore = scoresDto.dealerScore();
+        List<ScoreDto> playerScores = scoresDto.playerScores();
         printScore(dealerScore);
         playerScores.forEach(OutputView::printScore);
     }
 
-    private static void printScore(ScoreDto participantScore) {
-        CardDto participantCard = participantScore.card();
-        String cards = String.join(CARDS_DELIMITER, participantCard.cards());
-        System.out.printf(SCORE_FORMAT, participantCard.name(), cards, participantScore.score());
+    private static void printScore(ScoreDto scoreDto) {
+        CardDto cardDto = scoreDto.card();
+        String cards = String.join(CARDS_DELIMITER, cardDto.cards());
+        System.out.printf(SCORE_FORMAT, cardDto.name(), cards, scoreDto.score());
     }
 
-    public static void printProfits(ProfitsDto participantProfits) {
-        ProfitDto dealerProfit = participantProfits.dealerProfit();
-        List<ProfitDto> playerProfits = participantProfits.playerProfits();
+    public static void printProfits(ProfitsDto profitsDto) {
+        ProfitDto dealerProfit = profitsDto.dealerProfit();
+        List<ProfitDto> playerProfits = profitsDto.playerProfits();
         System.out.print(PROFIT_RESULT_INTRO);
         printProfit(dealerProfit);
         playerProfits.forEach(OutputView::printProfit);
     }
 
     private static void printProfit(ProfitDto dealerProfit) {
-        System.out.printf(PROFIT_RESULT_FORMAT, dealerProfit.name(), dealerProfit.profit().intValue());
+        System.out.printf(PROFIT_RESULT_FORMAT, dealerProfit.name(),
+            dealerProfit.profit().intValue());
     }
 
     public static void printExceptionMessage(String message) {
