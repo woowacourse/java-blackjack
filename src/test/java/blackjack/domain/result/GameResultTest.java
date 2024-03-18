@@ -26,7 +26,7 @@ public class GameResultTest {
         dealer.receiveCard(Card.of(Suit.HEART, Rank.KING));
         dealer.receiveCard(Card.of(Suit.DIAMOND, Rank.KING));
 
-        GameResult gameResult = GameResult.getGameResult(player, dealer);
+        GameResult gameResult = GameResult.ofPlayer(player, dealer);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
@@ -46,7 +46,7 @@ public class GameResultTest {
         dealer.receiveCard(Card.of(Suit.HEART, Rank.KING));
         dealer.receiveCard(Card.of(Suit.HEART, Rank.ACE));
 
-        GameResult gameResult = GameResult.getGameResult(player, dealer);
+        GameResult gameResult = GameResult.ofPlayer(player, dealer);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.DRAW);
@@ -67,7 +67,7 @@ public class GameResultTest {
         dealer.receiveCard(Card.of(Suit.HEART, Rank.KING));
         dealer.receiveCard(Card.of(Suit.DIAMOND, Rank.KING));
 
-        GameResult gameResult = GameResult.getGameResult(player, dealer);
+        GameResult gameResult = GameResult.ofPlayer(player, dealer);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
@@ -88,7 +88,7 @@ public class GameResultTest {
         dealer.receiveCard(Card.of(Suit.CLOVER, Rank.KING));
         dealer.receiveCard(Card.of(Suit.HEART, Rank.KING));
 
-        GameResult gameResult = GameResult.getGameResult(player, dealer);
+        GameResult gameResult = GameResult.ofPlayer(player, dealer);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
@@ -108,7 +108,7 @@ public class GameResultTest {
         dealer.receiveCard(Card.of(Suit.CLOVER, Rank.KING));
         dealer.receiveCard(Card.of(Suit.HEART, Rank.SEVEN));
 
-        GameResult gameResult = GameResult.getGameResult(player, dealer);
+        GameResult gameResult = GameResult.ofPlayer(player, dealer);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
@@ -128,7 +128,7 @@ public class GameResultTest {
         dealer.receiveCard(Card.of(Suit.CLOVER, Rank.KING));
         dealer.receiveCard(Card.of(Suit.HEART, Rank.KING));
 
-        GameResult gameResult = GameResult.getGameResult(player, dealer);
+        GameResult gameResult = GameResult.ofPlayer(player, dealer);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.DRAW);
@@ -148,7 +148,7 @@ public class GameResultTest {
         dealer.receiveCard(Card.of(Suit.CLOVER, Rank.KING));
         dealer.receiveCard(Card.of(Suit.HEART, Rank.KING));
 
-        GameResult gameResult = GameResult.getGameResult(player, dealer);
+        GameResult gameResult = GameResult.ofPlayer(player, dealer);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);

@@ -15,11 +15,11 @@ public enum GameResult {
         this.profitRate = profitRate;
     }
 
-    public static GameResult getGameResult(final Player player, final Dealer dealer) {
-        if (player.isBlackjack()) {
-            if (dealer.isBlackjack()) {
-                return GameResult.DRAW;
-            }
+    public static GameResult ofPlayer(final Player player, final Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.DRAW;
+        }
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
             return GameResult.BLACKJACK;
         }
         if (dealer.isBust()) {
@@ -28,16 +28,17 @@ public enum GameResult {
         if (player.isBust()) {
             return GameResult.LOSE;
         }
-        if (player.getScore() > dealer.getScore()) {
+        return calculateResult(player.getScore(), dealer.getScore());
+    }
+
+    private static GameResult calculateResult(final int playerScore, final int dealerScore) {
+        if (playerScore > dealerScore) {
             return GameResult.WIN;
         }
-        if (player.getScore() == dealer.getScore()) {
-            return GameResult.DRAW;
-        }
-        if (player.getScore() < dealer.getScore()) {
+        if (playerScore < dealerScore) {
             return GameResult.LOSE;
         }
-        return GameResult.LOSE;
+        return GameResult.DRAW;
     }
 
     public int calculateProfit(final int bettingMoney) {
