@@ -2,9 +2,9 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Score;
 
-public class StandState extends ClosedState {
+public class StandParticipantState extends ClosedParticipantState {
 
-    StandState(Hand hand) {
+    StandParticipantState(Hand hand) {
         super(hand);
     }
 

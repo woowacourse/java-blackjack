@@ -4,16 +4,16 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.state.Hand;
-import blackjack.domain.state.State;
+import blackjack.domain.state.ParticipantState;
 import java.util.List;
 
 public abstract class Participant {
     private final Name name;
-    private final State state;
+    private final ParticipantState participantState;
 
-    public Participant(Name name, State state) {
+    public Participant(Name name, ParticipantState participantState) {
         this.name = name;
-        this.state = state;
+        this.participantState = participantState;
     }
 
     public abstract Participant draw(Deck deck);
@@ -21,42 +21,42 @@ public abstract class Participant {
     public abstract Participant stand();
 
     public final Score calculateHand() {
-        return state.calculateHand();
+        return participantState.calculateHand();
     }
 
     public boolean canDraw() {
-        return !state.isFinished();
+        return !participantState.isFinished();
     }
 
-    final State drawHand(Deck deck) {
-        return state.draw(deck);
+    final ParticipantState drawHand(Deck deck) {
+        return participantState.draw(deck);
     }
 
-    final State standHand() {
-        return state.stand();
+    final ParticipantState standHand() {
+        return participantState.stand();
     }
 
     final double calculateProfitRate(Hand other) {
-        return state.getProfitRate(other);
+        return participantState.getProfitRate(other);
     }
 
     final Hand getHand() {
-        return state.getHand();
+        return participantState.getHand();
     }
 
     public final Name getName() {
         return name;
     }
 
-    final State getState() {
-        return state;
+    final ParticipantState getState() {
+        return participantState;
     }
 
     public final boolean isFinished() {
-        return state.isFinished();
+        return participantState.isFinished();
     }
 
     public final List<Card> getCards() {
-        return state.getHand().getCards();
+        return participantState.getHand().getCards();
     }
 }

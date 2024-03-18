@@ -1,8 +1,8 @@
 package blackjack.domain.state;
 
-public class BustState extends ClosedState {
+public class BustParticipantState extends ClosedParticipantState {
 
-    BustState(Hand hand) {
+    BustParticipantState(Hand hand) {
         super(hand);
     }
 

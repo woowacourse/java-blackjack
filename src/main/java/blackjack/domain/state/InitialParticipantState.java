@@ -2,23 +2,23 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Deck;
 
-public class InitialState extends State {
+public class InitialParticipantState extends ParticipantState {
 
-    public InitialState() {
+    public InitialParticipantState() {
         super(Hand.of());
     }
 
     @Override
-    public State draw(Deck deck) {
+    public ParticipantState draw(Deck deck) {
         Hand hand = Hand.of(deck.draw(), deck.draw());
         if (hand.isBlackJack()) {
-            return new BlackJackState(hand);
+            return new BlackJackParticipantState(hand);
         }
-        return new HitState(hand);
+        return new HitParticipantState(hand);
     }
 
     @Override
-    public State stand() {
+    public ParticipantState stand() {
         throw new UnsupportedOperationException("초기 상태에서는 할 수 없습니다.");
     }
 

@@ -3,25 +3,25 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
-public class HitState extends State {
+public class HitParticipantState extends ParticipantState {
 
-    HitState(Hand hand) {
+    HitParticipantState(Hand hand) {
         super(hand);
     }
 
     @Override
-    public State draw(Deck deck) {
+    public ParticipantState draw(Deck deck) {
         Card card = deck.draw();
         Hand newHand = getHand().add(card);
         if (newHand.isBust()) {
-            return new BustState(newHand);
+            return new BustParticipantState(newHand);
         }
-        return new HitState(newHand);
+        return new HitParticipantState(newHand);
     }
 
     @Override
-    public State stand() {
-        return new StandState(getHand());
+    public ParticipantState stand() {
+        return new StandParticipantState(getHand());
     }
 
     @Override

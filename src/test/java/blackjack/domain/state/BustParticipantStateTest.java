@@ -11,13 +11,15 @@ import blackjack.domain.card.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BustStateTest {
+public class BustParticipantStateTest {
 
     @DisplayName("버스트 상태에서 드로우를 하면 에러가 발생한다")
     @Test
     public void drawFail() {
-        BustState bustState = new BustState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
-                CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
+        BustParticipantState bustState = new BustParticipantState(
+                Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING)));
 
         assertThatCode(() -> bustState.draw(Deck.of(new BlackjackCardsFactory(), cards -> cards)))
                 .isInstanceOf(UnsupportedOperationException.class)
@@ -27,8 +29,10 @@ public class BustStateTest {
     @DisplayName("버스트 상태에서 스탠드를 하면 에러가 발생한다")
     @Test
     public void standFail() {
-        BustState bustState = new BustState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
-                CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
+        BustParticipantState bustState = new BustParticipantState(
+                Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING)));
 
         assertThatCode(bustState::stand)
                 .isInstanceOf(UnsupportedOperationException.class)
@@ -38,8 +42,10 @@ public class BustStateTest {
     @DisplayName("버스트 상태에서 끝났는지 확인하면 true가 반환된다")
     @Test
     public void isFinishedTrue() {
-        BustState bustState = new BustState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
-                CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
+        BustParticipantState bustState = new BustParticipantState(
+                Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING)));
 
         assertThat(bustState.isFinished()).isTrue();
     }
@@ -47,8 +53,10 @@ public class BustStateTest {
     @DisplayName("버스트 상태에서 핸드를 계산하면 점수가 반환된다")
     @Test
     public void calculateHand() {
-        BustState bustState = new BustState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
-                CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
+        BustParticipantState bustState = new BustParticipantState(
+                Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING)));
 
         assertThat(bustState.calculateHand()).isEqualTo(Score.from(30));
     }
@@ -56,8 +64,10 @@ public class BustStateTest {
     @DisplayName("버스트 상태면 -1을 반환한다")
     @Test
     public void getProfitRate() {
-        BustState bustState = new BustState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
-                CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
+        BustParticipantState bustState = new BustParticipantState(
+                Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING),
+                        CardFixture.fromSuitCloverWith(Denomination.KING)));
 
         assertThat(bustState.getProfitRate(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
                 CardFixture.fromSuitCloverWith(Denomination.KING),

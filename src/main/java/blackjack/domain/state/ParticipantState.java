@@ -3,16 +3,16 @@ package blackjack.domain.state;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
-public abstract class State {
+public abstract class ParticipantState {
     private final Hand hand;
 
-    public State(Hand hand) {
+    public ParticipantState(Hand hand) {
         this.hand = hand;
     }
 
-    public abstract State draw(Deck deck);
+    public abstract ParticipantState draw(Deck deck);
 
-    public abstract State stand();
+    public abstract ParticipantState stand();
 
     public abstract boolean isFinished();
 

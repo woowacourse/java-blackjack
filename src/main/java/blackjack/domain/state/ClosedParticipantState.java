@@ -2,19 +2,19 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Deck;
 
-public abstract class ClosedState extends State {
+public abstract class ClosedParticipantState extends ParticipantState {
 
-    ClosedState(Hand hand) {
+    ClosedParticipantState(Hand hand) {
         super(hand);
     }
 
     @Override
-    public State draw(Deck deck) {
+    public ParticipantState draw(Deck deck) {
         throw new UnsupportedOperationException("턴이 종료되어 드로우할 수 없는 상태입니다.");
     }
 
     @Override
-    public State stand() {
+    public ParticipantState stand() {
         throw new UnsupportedOperationException("턴이 종료되어 스탠드할 수 없는 상태입니다.");
     }
 

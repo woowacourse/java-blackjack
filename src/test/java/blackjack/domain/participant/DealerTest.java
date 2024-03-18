@@ -8,9 +8,9 @@ import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Score;
-import blackjack.domain.state.HitState;
-import blackjack.domain.state.InitialState;
-import blackjack.domain.state.StandState;
+import blackjack.domain.state.HitParticipantState;
+import blackjack.domain.state.InitialParticipantState;
+import blackjack.domain.state.StandParticipantState;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class DealerTest {
     public void createInitialStateDealer() {
         Dealer dealer = Dealer.createInitialStateDealer();
 
-        assertThat(dealer.getState()).isInstanceOf(InitialState.class);
+        assertThat(dealer.getState()).isInstanceOf(InitialParticipantState.class);
     }
 
     @DisplayName("딜러는 카드를 뽑으면 새로운 상태를 가진 딜러가 반환된다")
@@ -32,7 +32,7 @@ public class DealerTest {
 
         Dealer newDealer = dealer.draw(Deck.of(new BlackjackCardsFactory(), cards -> cards));
 
-        assertThat(newDealer).isNotInstanceOf(InitialState.class);
+        assertThat(newDealer).isNotInstanceOf(InitialParticipantState.class);
     }
 
     @DisplayName("딜러의 상태가 종료되지 않았다면 true를 반환한다")
@@ -64,7 +64,7 @@ public class DealerTest {
 
         Dealer newDealer = dealer.stand();
 
-        assertThat(newDealer.getState()).isInstanceOf(StandState.class);
+        assertThat(newDealer.getState()).isInstanceOf(StandParticipantState.class);
     }
 
     @DisplayName("딜러의 스코어를 계산한다")
@@ -87,7 +87,7 @@ public class DealerTest {
 
         Dealer newDealer = dealer.decideHitOrStand(deck);
 
-        assertThat(newDealer.getState()).isInstanceOf(HitState.class);
+        assertThat(newDealer.getState()).isInstanceOf(HitParticipantState.class);
     }
 
     @DisplayName("카드를 더 받을 수 없으면 스탠드 한다")
@@ -101,7 +101,7 @@ public class DealerTest {
 
         Dealer newDealer = dealer.decideHitOrStand(deck);
 
-        assertThat(newDealer.getState()).isInstanceOf(StandState.class);
+        assertThat(newDealer.getState()).isInstanceOf(StandParticipantState.class);
     }
 
     @DisplayName("딜러가 가지고있는 카드 중 마지막 한 장만 제외하고 가져온다")

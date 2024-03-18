@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
-import blackjack.domain.state.InitialState;
-import blackjack.domain.state.State;
+import blackjack.domain.state.InitialParticipantState;
+import blackjack.domain.state.ParticipantState;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +13,12 @@ public class Dealer extends Participant {
     private static final int STAND_LIMIT_VALUE = 17;
     private static final String DEFAULT_NAME = "딜러";
 
-    public Dealer(Name name, State state) {
-        super(name, state);
+    public Dealer(Name name, ParticipantState participantState) {
+        super(name, participantState);
     }
 
     public static Dealer createInitialStateDealer() {
-        return new Dealer(new Name(DEFAULT_NAME), new InitialState());
+        return new Dealer(new Name(DEFAULT_NAME), new InitialParticipantState());
     }
 
     @Override

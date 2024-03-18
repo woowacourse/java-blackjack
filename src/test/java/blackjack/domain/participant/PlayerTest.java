@@ -7,9 +7,9 @@ import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Score;
-import blackjack.domain.state.HitState;
-import blackjack.domain.state.InitialState;
-import blackjack.domain.state.StandState;
+import blackjack.domain.state.HitParticipantState;
+import blackjack.domain.state.InitialParticipantState;
+import blackjack.domain.state.StandParticipantState;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class PlayerTest {
     public void create() {
         Player player = Player.createInitialStatePlayer(new Name("이상"));
 
-        assertThat(player.getState()).isInstanceOf(InitialState.class);
+        assertThat(player.getState()).isInstanceOf(InitialParticipantState.class);
     }
 
     @DisplayName("플레이어는 카드를 뽑으면 새로운 상태를 가진 플레이어를 반환한다")
@@ -64,7 +64,7 @@ class PlayerTest {
 
         Player newPlayer = player.stand();
 
-        assertThat(newPlayer.getState()).isInstanceOf(StandState.class);
+        assertThat(newPlayer.getState()).isInstanceOf(StandParticipantState.class);
     }
 
     @DisplayName("플레이어의 스코어를 계산한다")
@@ -85,7 +85,7 @@ class PlayerTest {
 
         Player newPlayer = player.decideHitOrStand(true, deck);
 
-        assertThat(newPlayer.getState()).isInstanceOf(HitState.class);
+        assertThat(newPlayer.getState()).isInstanceOf(HitParticipantState.class);
     }
 
     @DisplayName("카드를 더 드로우할 수 있어도, 스탠드하겠다고 입력받으면 스탠드한다")
@@ -99,6 +99,6 @@ class PlayerTest {
 
         Player newPlayer = player.decideHitOrStand(false, deck);
 
-        assertThat(newPlayer.getState()).isInstanceOf(StandState.class);
+        assertThat(newPlayer.getState()).isInstanceOf(StandParticipantState.class);
     }
 }

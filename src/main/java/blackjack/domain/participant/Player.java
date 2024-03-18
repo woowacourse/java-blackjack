@@ -1,17 +1,17 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.InitialState;
-import blackjack.domain.state.State;
+import blackjack.domain.state.InitialParticipantState;
+import blackjack.domain.state.ParticipantState;
 
 public class Player extends Participant {
 
-    public Player(Name name, State state) {
-        super(name, state);
+    public Player(Name name, ParticipantState participantState) {
+        super(name, participantState);
     }
 
     public static Player createInitialStatePlayer(Name name) {
-        return new Player(name, new InitialState());
+        return new Player(name, new InitialParticipantState());
     }
 
     @Override
