@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-// TODO: toString 전체 구현
 public class Card {
 
     // 52장의 Card를 미리 Pool에 생성
@@ -61,5 +60,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit=" + suit +
+                ", rank=" + rank +
+                '}';
     }
 }

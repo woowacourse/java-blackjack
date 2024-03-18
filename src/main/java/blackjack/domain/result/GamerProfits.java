@@ -33,4 +33,11 @@ public class GamerProfits {
     public int getProfit(final Gamer gamer) {
         return gamerProfits.get(gamer);
     }
+
+    @Override
+    public String toString() {
+        return "GamerProfits{" +
+                "gamerProfits=" + gamerProfits +
+                '}';
+    }
 }

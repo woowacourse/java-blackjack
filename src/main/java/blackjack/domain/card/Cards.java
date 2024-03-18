@@ -64,4 +64,11 @@ public class Cards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    @Override
+    public String toString() {
+        return "Cards{" +
+                "cards=" + cards +
+                '}';
+    }
 }

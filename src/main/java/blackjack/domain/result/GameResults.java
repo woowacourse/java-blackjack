@@ -41,4 +41,11 @@ public class GameResults {
     private int calculateGamerProfit(final Gamer gamer, final Bettings bettings) {
         return bettings.calculateProfit(gamer, gameResults.get(gamer));
     }
+
+    @Override
+    public String toString() {
+        return "GameResults{" +
+                "gameResults=" + gameResults +
+                '}';
+    }
 }
