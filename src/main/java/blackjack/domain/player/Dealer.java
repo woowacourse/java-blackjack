@@ -41,7 +41,8 @@ public class Dealer extends Player {
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> findBettingResult(entry.getKey(), entry.getValue())
+                        entry -> findBettingResult(entry.getKey(), entry.getValue()),
+                        (x, y) -> x, LinkedHashMap::new
                 ));
     }
 
