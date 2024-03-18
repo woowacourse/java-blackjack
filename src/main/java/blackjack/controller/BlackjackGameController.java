@@ -1,8 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.betting.Bettings;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.ShuffledDeckGenerator;
+import blackjack.domain.card.deck.Deck;
+import blackjack.domain.card.deck.DeckGenerator;
+import blackjack.domain.card.deck.ShuffledDeckGenerator;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -27,16 +28,14 @@ public class BlackjackGameController {
     public void start() {
         Players players = Players.fromNames(inputView.readPlayerNames());
         Dealer dealer = new Dealer();
-        Deck deck = createDeck();
+        Deck deck = createDeck(ShuffledDeckGenerator.getInstance());
 
         Bettings bettings = betPlayers(players, dealer);
         playGame(deck, dealer, players);
         calculateResult(players, dealer, bettings);
     }
 
-    // TODO: DeckGenerator 인터페이스 인자로 받기
-    private Deck createDeck() {
-        ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
+    private Deck createDeck(final DeckGenerator deckGenerator) {
         return deckGenerator.generate();
     }
 
