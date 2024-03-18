@@ -20,9 +20,9 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public BlackjackController() {
+        this.inputView = new InputView();
+        this.outputView = new OutputView();
     }
 
     public void runBlackjack() {
