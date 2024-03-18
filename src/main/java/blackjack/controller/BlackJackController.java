@@ -14,7 +14,7 @@ import blackjack.dto.PlayersNameDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,21 +29,21 @@ public class BlackJackController {
     }
 
     public void run() {
-        Players players = readPlayers();
+        Players players = readPlayersNameAndBet();
         BlackJackGame blackJackGame = initBlackJackGame(players);
 
         printInitialDealMessage(blackJackGame);
         printInitialHand(blackJackGame);
         repeatHitUntilStand(blackJackGame);
 
-        printGameResult(blackJackGame);
+        printFinalHandAndScore(blackJackGame);
         printSettlement(blackJackGame);
     }
 
-    private Players readPlayers() {
+    private Players readPlayersNameAndBet() {
         List<String> names = inputView.readPlayerNames();
 
-        ArrayList<Integer> bets = new ArrayList<>();
+        List<Integer> bets = new LinkedList<>();
         for (String name : names) {
             int betAmount = inputView.readBetAmount(name);
             bets.add(betAmount);
@@ -97,7 +97,7 @@ public class BlackJackController {
         }
     }
 
-    private void printGameResult(BlackJackGame blackJackGame) {
+    private void printFinalHandAndScore(BlackJackGame blackJackGame) {
         ParticipantsHandDto participantHandDtos = ParticipantsHandDto.from(blackJackGame.getEveryParticipants());
         outputView.printFinalHandAndScore(participantHandDtos);
     }

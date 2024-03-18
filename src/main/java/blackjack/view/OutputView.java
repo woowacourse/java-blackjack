@@ -66,11 +66,10 @@ public class OutputView {
 
     public void printSettlement(ParticipantSettlementDto participantSettlementDto) {
         StringBuilder stringBuilder = new StringBuilder("\n##최종 수익\n");
-        Map<String, Integer> participantSettlements = participantSettlementDto.result();
+        Map<String, Integer> settlements = participantSettlementDto.settlement();
 
-        for (Map.Entry<String, Integer> participantSettlement : participantSettlements.entrySet()) {
-            stringBuilder.append(String.format("%s: %d%n",
-                    participantSettlement.getKey(), participantSettlement.getValue()));
+        for (Map.Entry<String, Integer> settlement : settlements.entrySet()) {
+            stringBuilder.append(String.format("%s: %d%n", settlement.getKey(), settlement.getValue()));
         }
         System.out.println(stringBuilder);
     }

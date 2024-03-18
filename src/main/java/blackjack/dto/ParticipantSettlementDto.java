@@ -5,7 +5,7 @@ import blackjack.domain.participant.Participant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public record ParticipantSettlementDto(Map<String, Integer> result) {
+public record ParticipantSettlementDto(Map<String, Integer> settlement) {
 
     public static ParticipantSettlementDto of(Map<Participant, Integer> settlement) {
         Map<String, Integer> participantSettlement = new LinkedHashMap<>();
