@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.card.Card;
 import domain.deck.TotalDeck;
-import domain.game.Index;
 import domain.game.Result;
 
 import java.util.ArrayList;
@@ -19,20 +18,9 @@ public class Users {
     private final List<User> users;
 
     public Users(List<Player> players) {
-        validateDuplicatedName(players);
         this.users = new ArrayList<>();
         users.add(new Dealer());
         users.addAll(players);
-    }
-
-    private void validateDuplicatedName(List<Player> players) {
-        long count = players.stream()
-                .map(player -> player.getName().value())
-                .distinct()
-                .count();
-        if (players.size() != count) {
-            throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
-        }
     }
 
     public void setStartCards(TotalDeck totalDeck) {
@@ -40,18 +28,6 @@ public class Users {
             user.addCard(totalDeck.getNewCard());
             user.addCard(totalDeck.getNewCard());
         }
-    }
-
-    public Index makeIndex() {
-        return new Index(users.size());
-    }
-
-    public User getUserByIndex(Index index) {
-        return users.get(index.getCurrent());
-    }
-
-    public void addCardOfCurrentUser(Card newCard, Index index) {
-        users.get(index.getCurrent()).addCard(newCard);
     }
 
     public boolean isDealerCardAddCondition() {
@@ -70,10 +46,6 @@ public class Users {
             return WIN;
         }
         return Result.compare(player.sumUserDeck(), getDealer().sumUserDeck());
-    }
-
-    public boolean currentUserBusted(Index index) {
-        return users.get(index.getCurrent()).isBust();
     }
 
     public List<User> getUsers() {

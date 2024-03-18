@@ -10,7 +10,7 @@ public class UserDeck {
     private static final int ACE_CONVERT_VALUE = 10;
     private static final int ACE_CONVERT_MAX_CONDITION = 11;
     private static final int BLACK_JACK_CONDITION = 21;
-
+    private static final int INITIAL_DECK_CONDITION = 2;
     protected final List<Card> cards;
 
     public UserDeck() {
@@ -42,6 +42,10 @@ public class UserDeck {
 
     public boolean isBust() {
         return sumCard() > BLACK_JACK_CONDITION;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_DECK_CONDITION && sumCard() == BLACK_JACK_CONDITION;
     }
 
     public List<Card> getCards() {

@@ -1,4 +1,4 @@
-package domain;
+package dto;
 
 import domain.card.Card;
 import domain.user.User;
@@ -20,6 +20,10 @@ public class UserDto {
         List<String> cards = user.getUserDeck().getCards().stream()
                 .map(Card::getName)
                 .toList();
-        return new UserDto(user.getName().value(), cards, user.getUserDeck().sumCard());
+        return new UserDto(user.getName(), cards, user.getUserDeck().sumCard());
+    }
+
+    public String getFirstCard() {
+        return cards.get(0);
     }
 }

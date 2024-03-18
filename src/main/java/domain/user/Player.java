@@ -1,9 +1,16 @@
 package domain.user;
 
-import domain.deck.UserDeck;
+import domain.money.Money;
 
 public class Player extends User {
-    public Player(Name name) {
-        super(new UserDeck(), name);
+    private final Money money;
+
+    public Player(Name name, Money money) {
+        super(name);
+        this.money = money;
+    }
+
+    public Money getMoney() {
+        return money;
     }
 }

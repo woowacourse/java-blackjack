@@ -4,11 +4,10 @@ import domain.card.Card;
 import domain.deck.UserDeck;
 
 public class User {
-    protected final UserDeck userDeck;
+    protected final UserDeck userDeck = new UserDeck();
     protected final Name name;
 
-    public User(UserDeck userDeck, Name name) {
-        this.userDeck = userDeck;
+    public User(Name name) {
         this.name = name;
     }
 
@@ -24,8 +23,12 @@ public class User {
         return userDeck.isBust();
     }
 
-    public Name getName() {
-        return name;
+    public boolean isBlackjack() {
+        return userDeck.isBlackjack();
+    }
+
+    public String getName() {
+        return name.value();
     }
 
     public UserDeck getUserDeck() {

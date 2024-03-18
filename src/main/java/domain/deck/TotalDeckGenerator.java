@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TotalDeckGenerator {
-    public static List<Card> generate() {
+    public static TotalDeck generate() {
         List<Shape> shapes = Shape.giveShapes();
         List<Number> numbers = Number.giveNumbers();
         List<Card> cards = shapes.stream()
@@ -17,6 +17,6 @@ public class TotalDeckGenerator {
                         .map(number -> new Card(shape, number)))
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
-        return cards;
+        return new TotalDeck(cards);
     }
 }
