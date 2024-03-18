@@ -3,35 +3,38 @@ package domain.participant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Participants {
-    private final Dealer dealer;
-    private final List<Player> players;
+    private static final int DEALER_POSITION = 0;
+
+    private final List<Participant> participants;
 
     public Participants(List<Player> players) {
-        this.dealer = new Dealer();
-        this.players = new ArrayList<>(players);
+        this.participants = new ArrayList<>();
+        participants.add(DEALER_POSITION, new Dealer());
+        participants.addAll(players);
     }
 
     public List<Participant> getParticipants() {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
         return Collections.unmodifiableList(participants);
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return (Dealer) participants.get(DEALER_POSITION);
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(this.players);
+        List<Participant> copiedParticipants = new ArrayList<>(participants);
+        copiedParticipants.remove(DEALER_POSITION);
+
+        return copiedParticipants.stream()
+                .map(player -> (Player) player)
+                .toList();
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
+        return getPlayers().stream()
                 .map(Player::getName)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
