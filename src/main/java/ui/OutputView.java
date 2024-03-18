@@ -63,7 +63,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "## 최종 수익");
         System.out.println("딜러: " + gameResult.getDealerResult());
         gameResult.getPlayerResult()
-                .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value));
+                .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.toPlainString()));
     }
 
     public void printErrorMessage(Exception e) {

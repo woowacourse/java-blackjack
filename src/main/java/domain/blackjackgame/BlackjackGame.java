@@ -4,6 +4,7 @@ import domain.card.deck.CardDeck;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
+import java.math.BigDecimal;
 
 public class BlackjackGame {
     private final CardDeck cardDeck;
@@ -27,7 +28,7 @@ public class BlackjackGame {
 
         GameResult gameResult = new GameResult();
         for (Player player : participants.getPlayers()) {
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
             gameResult.record(player, profit);
         }
         return gameResult;

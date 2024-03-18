@@ -15,6 +15,7 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,9 +46,9 @@ class ProfitResultManagerTest {
             player.receiveInitialCards(카드(KING), 카드(KING));
             player.receiveAdditionalCard(카드(QUEEN));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(-1000);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(-1000));
         }
 
         @Test
@@ -56,9 +57,9 @@ class ProfitResultManagerTest {
             Player player = new Player("prin", 8000);
             player.receiveInitialCards(카드(ACE), 카드(KING));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(12000);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(12000.0));
         }
 
         @Test
@@ -67,9 +68,9 @@ class ProfitResultManagerTest {
             Player player = new Player("prin", 5000);
             player.receiveInitialCards(카드(EIGHT), 카드(QUEEN));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(5000);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(5000));
         }
     }
 
@@ -82,9 +83,9 @@ class ProfitResultManagerTest {
             player.receiveInitialCards(카드(KING), 카드(KING));
             player.receiveAdditionalCard(카드(QUEEN));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(-1000);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(-1000));
         }
 
         @Test
@@ -93,9 +94,9 @@ class ProfitResultManagerTest {
             Player player = new Player("prin", 1000);
             player.receiveInitialCards(카드(ACE), 카드(KING));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(0);
+            assertThat(profit).isEqualTo(BigDecimal.ZERO);
         }
 
         @Test
@@ -104,9 +105,9 @@ class ProfitResultManagerTest {
             Player player = new Player("prin", 100);
             player.receiveInitialCards(카드(EIGHT), 카드(QUEEN));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(-100);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(-100));
         }
 
         @Test
@@ -116,9 +117,9 @@ class ProfitResultManagerTest {
             player.receiveInitialCards(카드(EIGHT), 카드(THREE));
             player.receiveAdditionalCard(카드(KING));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(-1000);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(-1000));
         }
     }
 
@@ -132,9 +133,9 @@ class ProfitResultManagerTest {
             player.receiveInitialCards(카드(KING), 카드(KING));
             player.receiveAdditionalCard(카드(QUEEN));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(-2000);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(-2000));
         }
 
         @Test
@@ -143,29 +144,29 @@ class ProfitResultManagerTest {
             Player player = new Player("prin", 10000);
             player.receiveInitialCards(카드(ACE), 카드(KING));
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
-            assertThat(profit).isEqualTo(15000);
+            assertThat(profit).isEqualTo(BigDecimal.valueOf(15000.0));
         }
 
         @ParameterizedTest
         @MethodSource("provideDoubleCardAndProfit")
-        void 플레이어가_stay이면_점수에_따라_수익을_얻는다(Card first, Card second, int expected) {
+        void 플레이어가_stay이면_점수에_따라_수익을_얻는다(Card first, Card second, BigDecimal expected) {
             Dealer dealer = crateDealer(NINE, TEN);
             ProfitResultManager profitResultManager = new ProfitResultManager(dealer);
             Player player = new Player("prin", 1000);
             player.receiveInitialCards(first, second);
 
-            int profit = profitResultManager.calculateProfit(player);
+            BigDecimal profit = profitResultManager.calculateProfit(player);
 
             assertThat(profit).isEqualTo(expected);
         }
 
         private Stream<Arguments> provideDoubleCardAndProfit() {
             return Stream.of(
-                    Arguments.of(카드(TEN), 카드(KING), 1000),
-                    Arguments.of(카드(TEN), 카드(NINE), 0),
-                    Arguments.of(카드(TEN), 카드(EIGHT), -1000)
+                    Arguments.of(카드(TEN), 카드(KING), BigDecimal.valueOf(1000)),
+                    Arguments.of(카드(TEN), 카드(NINE), BigDecimal.ZERO),
+                    Arguments.of(카드(TEN), 카드(EIGHT), BigDecimal.valueOf(-1000))
             );
         }
     }

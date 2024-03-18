@@ -24,6 +24,7 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import fixture.CardFixture;
 import fixture.ParticipantFixture;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -63,12 +64,12 @@ class BlackjackGameTest {
     void 딜러는_플레이어가_얻은_수익만큼_잃는다() {
         CardDeck cardDeck = createCardDeck(JACK, KING, NINE, TEN, EIGHT, NINE);
         BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
-        Participants participants = createParticipants(new Player("prin", 10000), new Player("prin", 10000));
+        Participants participants = createParticipants(new Player("prin", 10000), new Player("roro", 10000));
 
         blackjackGame.initGame(participants);
 
         GameResult gameResult = blackjackGame.createGameResult(participants);
-        assertThat(gameResult.getDealerResult()).isEqualTo(-20000);
+        assertThat(gameResult.getDealerResult()).isEqualTo(BigDecimal.valueOf(-20000));
     }
 
     private Participants createParticipants(Player... players) {

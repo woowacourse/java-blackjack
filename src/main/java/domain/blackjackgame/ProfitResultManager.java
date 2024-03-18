@@ -2,6 +2,7 @@ package domain.blackjackgame;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
+import java.math.BigDecimal;
 
 public class ProfitResultManager {
     private final Dealer dealer;
@@ -10,7 +11,7 @@ public class ProfitResultManager {
         this.dealer = dealer;
     }
 
-    protected int calculateProfit(Player player) {
+    protected BigDecimal calculateProfit(Player player) {
         EarningRate earningRate = findEarningRate(player);
         return earningRate.calculateProfit(player.getBetAmount());
     }
@@ -45,19 +46,19 @@ public class ProfitResultManager {
     }
 
     private enum EarningRate {
-        WIN(1),
-        PUSH(0),
-        LOSE(-1),
-        BLACKJACK(1.5);
+        WIN(BigDecimal.ONE),
+        PUSH(BigDecimal.ZERO),
+        LOSE(BigDecimal.ONE.negate()),
+        BLACKJACK(new BigDecimal("1.5"));
 
-        private final double rate;
+        private final BigDecimal rate;
 
-        EarningRate(double rate) {
+        EarningRate(BigDecimal rate) {
             this.rate = rate;
         }
 
-        public int calculateProfit(int betAmount) {
-            return (int) (betAmount * rate);
+        public BigDecimal calculateProfit(int betAmount) {
+            return BigDecimal.valueOf(betAmount).multiply(rate);
         }
     }
 }

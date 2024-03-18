@@ -1,33 +1,33 @@
 package domain.blackjackgame;
 
 import domain.participant.Player;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, Integer> playerProfits;
+    private final Map<Player, BigDecimal> playerProfits;
 
     public GameResult() {
         this.playerProfits = new LinkedHashMap<>();
     }
 
-    public void record(Player player, int profit) {
+    public void record(Player player, BigDecimal profit) {
         playerProfits.put(player, profit);
     }
 
-    public int getDealerResult() {
-        int profitSum = playerProfits.values().stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+    public BigDecimal getDealerResult() {
+        BigDecimal profitSum = playerProfits.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         return reverse(profitSum);
     }
 
-    private int reverse(int value) {
-        return -value;
+    private BigDecimal reverse(BigDecimal value) {
+        return value.negate();
     }
 
-    public Map<Player, Integer> getPlayerResult() {
+    public Map<Player, BigDecimal> getPlayerResult() {
         return Collections.unmodifiableMap(this.playerProfits);
     }
 }
