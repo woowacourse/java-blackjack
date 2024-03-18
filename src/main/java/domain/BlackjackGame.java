@@ -43,11 +43,8 @@ public class BlackjackGame {
     }
 
     public GameResult resultsOfParticipants() {
-        GameResult gameResult = new GameResult();
         players.forEach(player -> player.revenue(getResultOf(player, dealer)));
-        gameResult.put(dealer, dealer.calculateProfit(players));
-        players.forEach(player -> gameResult.put(player, player.profit()));
-        return gameResult;
+        return GameResult.export(dealer, players);
     }
 
     private ResultProfitRatio getResultOf(final Participant standardTarget, final Participant comparisonTarget) {
