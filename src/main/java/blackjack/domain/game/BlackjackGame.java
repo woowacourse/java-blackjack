@@ -2,7 +2,6 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Betting;
@@ -55,8 +54,12 @@ public class BlackjackGame {
         return dealer.hasHitScore();
     }
 
-    public void hit(Gamer gamer) {
-        gamer.receiveCard(deck.drawCard());
+    public void hit(Dealer dealer) {
+        dealer.receiveCard(deck.drawCard());
+    }
+
+    public void hit(Player player) {
+        player.receiveCard(deck.drawCard());
     }
 
     public PlayerProfits calculateProfits(Map<Player, Betting> bettingBoard, Dealer dealer) {

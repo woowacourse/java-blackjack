@@ -1,38 +1,64 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
+
 import java.util.List;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardHand;
+public class Dealer {
+    public static final int INIT_CARD_COUNT = 2;
+    public static final int MAX_HIT_SCORE = 16;
+    public static final String NAME = "딜러";
 
-public class Dealer extends Gamer {
-	public static final int INIT_CARD_COUNT = 2;
-	public static final int MAX_HIT_SCORE = 16;
+    private final Player player;
 
-	private Dealer(CardHand cardHand) {
-		super(cardHand);
-	}
+    private Dealer(Player player) {
+        this.player = player;
+    }
 
-	public static Dealer newInstance() {
-		return new Dealer(CardHand.createEmpty());
-	}
+    public static Dealer newInstance() {
+        return new Dealer(Player.newInstance(NAME));
+    }
 
-	public static Dealer from(List<Card> cards) {
-		return new Dealer(CardHand.from(cards));
-	}
+    public static Dealer from(List<Card> cards) {
+        return new Dealer(Player.of(NAME, cards));
+    }
 
-	public boolean hasHitScore() {
-		return cardHand.isScoreLessOrEqual(MAX_HIT_SCORE);
-	}
+    public void receiveInitCards(List<Card> cards) {
+        player.receiveInitCards(cards);
+    }
 
-	public Card getInitCard() {
-		return cardHand.getFirstCard();
-	}
+    public void receiveCard(Card card) {
+        player.receiveCard(card);
+    }
 
-	@Override
-	public String toString() {
-		return "Dealer{" +
-				"cardHand=" + cardHand +
-				'}';
-	}
+    public int getScore() {
+        return player.getScore();
+    }
+
+    public boolean isBust() {
+        return player.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return player.isBlackjack();
+    }
+
+    public boolean hasHitScore() {
+        return player.getScore() <= MAX_HIT_SCORE;
+    }
+
+    public Card getInitCard() {
+        return player.getCardHand().get(0);
+    }
+
+    @Override
+    public String toString() {
+        return "Dealer{" +
+                "player=" + player +
+                '}';
+    }
+
+    public List<Card> getCardHand() {
+        return player.getCardHand();
+    }
 }
