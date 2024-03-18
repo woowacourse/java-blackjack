@@ -8,25 +8,25 @@ import model.participants.player.Players;
 
 public class Blackjack {
 
-    private final boolean dealer;
-    private final Map<Player, Boolean> playersStatus;
+    private final boolean isDealer;
+    private final Map<Player, Boolean> blackjackStatusOfPlayers;
 
     public Blackjack(Dealer dealer) {
-        this.dealer = dealer.isBlackjack();
-        this.playersStatus = new HashMap<>();
+        this.isDealer = dealer.isBlackjack();
+        this.blackjackStatusOfPlayers = new HashMap<>();
     }
 
-    public void playerBlackjackStatus(Players players) {
+    public void createPlayerBlackjackStatus(Players players) {
         for (Player player : players.getPlayers()) {
-            playersStatus.put(player, player.isBlackjack());
+            blackjackStatusOfPlayers.put(player, player.isBlackjack());
         }
     }
 
-    public boolean getDealer() {
-        return dealer;
+    public boolean isDealer() {
+        return isDealer;
     }
 
-    public Map<Player, Boolean> getPlayersStatus() {
-        return playersStatus;
+    public Map<Player, Boolean> getBlackjackStatusOfPlayers() {
+        return blackjackStatusOfPlayers;
     }
 }

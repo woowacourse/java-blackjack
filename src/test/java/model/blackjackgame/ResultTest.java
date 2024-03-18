@@ -46,7 +46,7 @@ class ResultTest {
                         new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
         blackjackGame.distributeCardsForSetting(cards);
-        blackjack.playerBlackjackStatus(blackjackGame.getPlayers());
+        blackjack.createPlayerBlackjackStatus(blackjackGame.getPlayers());
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
         assertEquals(GameResult.BLACKJACK,
                 result.getPlayerResult().get(blackjackGame.getPlayers().getPlayers().get(0).getName()));

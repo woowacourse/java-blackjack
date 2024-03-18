@@ -23,6 +23,6 @@ class BlackjackTest {
         );
         Dealer dealer = new Dealer(cards);
         Blackjack blackjack = new Blackjack(dealer);
-        assertTrue(blackjack.getDealer());
+        assertTrue(blackjack.isDealer());
     }
 }

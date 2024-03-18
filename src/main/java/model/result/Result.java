@@ -24,13 +24,13 @@ public class Result {
     }
 
     private GameResult calculatePlayerResult(Dealer dealer, Player player, Blackjack blackjack) {
-        if (blackjackCase(player, blackjack) && !blackjack.getDealer()) {
+        if (blackjackCase(player, blackjack) && !blackjack.isDealer()) {
             return GameResult.BLACKJACK;
         }
         if (calculatePlayerWin(dealer, player)) {
             return GameResult.WIN;
         }
-        if (blackjack.getDealer() && !blackjackCase(player, blackjack) || calculatePlayerFail(dealer, player)) {
+        if (blackjack.isDealer() && !blackjackCase(player, blackjack) || calculatePlayerFail(dealer, player)) {
             return GameResult.FAIL;
         }
         return GameResult.DRAW;
@@ -38,7 +38,7 @@ public class Result {
 
     private boolean blackjackCase(Player player, Blackjack blackjack) {
         boolean playerBlackjack = false;
-        for (Entry<Player, Boolean> entrySet : blackjack.getPlayersStatus().entrySet()) {
+        for (Entry<Player, Boolean> entrySet : blackjack.getBlackjackStatusOfPlayers().entrySet()) {
             if (entrySet.getKey().getName().equals(player.getName())) {
                 playerBlackjack = entrySet.getValue();
             }

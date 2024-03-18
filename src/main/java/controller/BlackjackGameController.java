@@ -75,7 +75,7 @@ public class BlackjackGameController {
 
     private Blackjack checkBlackjack(BlackjackGame blackjackGame) {
         Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
-        blackjack.playerBlackjackStatus(blackjackGame.getPlayers());
+        blackjack.createPlayerBlackjackStatus(blackjackGame.getPlayers());
         return blackjack;
     }
 
