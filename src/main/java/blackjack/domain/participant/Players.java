@@ -2,6 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Players {
 
@@ -9,20 +11,14 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
         validateSize(players);
         validateDistinct(players);
         this.players = players;
     }
 
-    public static Players from(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::from)
-                .toList();
-        return new Players(players);
-    }
-
     private void validateSize(List<Player> players) {
+        Objects.requireNonNull(players);
         if (players.isEmpty()) {
             throw new IllegalArgumentException("최소 한 명의 플레이어가 있어야 합니다.");
         }
@@ -38,7 +34,14 @@ public class Players {
     }
 
     private boolean isDuplicated(List<Player> players) {
-        return players.size() != players.stream().distinct().count();
+        return IntStream.range(0, players.size())
+                .anyMatch(index -> isDuplicated(players, index));
+    }
+
+    private boolean isDuplicated(List<Player> players, int index) {
+        return IntStream.range(0, players.size())
+                .filter(currentIndex -> currentIndex != index)
+                .anyMatch(currentIndex -> players.get(currentIndex).isEqualName(players.get(index)));
     }
 
     public void drawStartCards(Deck deck) {
@@ -49,11 +52,5 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public void play(PlayerTurn playTurn, Deck deck) {
-        for (Player player : players) {
-            playTurn.play(player, deck);
-        }
     }
 }

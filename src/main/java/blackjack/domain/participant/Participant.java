@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
+import blackjack.domain.handrank.HandRank;
+import blackjack.domain.handrank.HandRankFactory;
 import java.util.List;
 
 public abstract class Participant {
@@ -10,7 +12,7 @@ public abstract class Participant {
     protected static final int BLACKJACK_SCORE = 21;
     private static final int START_CARDS_SIZE = 2;
 
-    private final Hand hand;
+    private Hand hand;
 
     protected Participant(List<Card> cards) {
         this.hand = new Hand(cards);
@@ -22,14 +24,6 @@ public abstract class Participant {
 
     public final boolean isDrawable() {
         return calculateScore() <= getMaxDrawableScore();
-    }
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
-    public final boolean isBusted() {
-        return hand.isBusted();
     }
 
     public final void drawStartCards(Deck deck) {
@@ -45,7 +39,11 @@ public abstract class Participant {
         if (!isDrawable()) {
             throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
         }
-        hand.add(card);
+        hand = hand.add(card);
+    }
+
+    protected final HandRank getHandRank() {
+        return HandRankFactory.from(hand);
     }
 
     public final List<Card> getStartCards() {

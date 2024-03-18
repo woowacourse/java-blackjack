@@ -1,12 +1,14 @@
 package blackjack;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.money.Profit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -17,6 +19,7 @@ public class BlackJackGame {
         Deck deck = Deck.createShuffledDeck();
         Dealer dealer = new Dealer();
         Players players = createPlayers();
+
         drawStartCards(dealer, players, deck);
         play(players, dealer, deck);
         printResult(dealer, players);
@@ -24,7 +27,10 @@ public class BlackJackGame {
 
     private Players createPlayers() {
         List<String> names = inputView.inputPlayerNames();
-        return Players.from(names);
+        List<Player> players = names.stream()
+                .map(name -> Player.of(name, inputView.inputBetAmount(name)))
+                .toList();
+        return new Players(players);
     }
 
     private void drawStartCards(Dealer dealer, Players players, Deck deck) {
@@ -34,11 +40,10 @@ public class BlackJackGame {
     }
 
     private void play(Players players, Dealer dealer, Deck deck) {
-        players.play(this::playTurn, deck);
-        while (dealer.isDrawable()) {
-            outputView.printDealerDraw();
-            dealer.add(deck.draw());
+        for (Player player : players.getPlayers()) {
+            playTurn(player, deck);
         }
+        playTurn(dealer, deck);
     }
 
     private void playTurn(Player player, Deck deck) {
@@ -48,13 +53,18 @@ public class BlackJackGame {
         }
     }
 
+    private void playTurn(Dealer dealer, Deck deck) {
+        while (dealer.isDrawable()) {
+            outputView.printDealerDraw();
+            dealer.add(deck.draw());
+        }
+    }
+
     private void printResult(Dealer dealer, Players players) {
         outputView.printEndingStatus(dealer, players);
-        int winCount = dealer.calculateWinCount(players);
-        int loseCount = dealer.calculateLoseCount(players);
-        outputView.printDealerMatchResult(winCount, loseCount);
-        for (Player player : players.getPlayers()) {
-            outputView.printPlayerMatchResult(player.getName(), player.isWin(dealer));
-        }
+
+        Profit dealerProfit = dealer.calculateDealerProfit(players);
+        Map<Player, Profit> playersProfit = dealer.calculatePlayersProfit(players);
+        outputView.printMatchResult(dealerProfit, playersProfit);
     }
 }

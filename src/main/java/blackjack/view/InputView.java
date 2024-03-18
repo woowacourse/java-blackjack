@@ -16,6 +16,19 @@ public class InputView {
         return List.of(names.split(NAME_DELIMITER, -1));
     }
 
+    public int inputBetAmount(String name) {
+        System.out.printf("%n%s의 배팅 금액은?%n", name);
+        return inputInt();
+    }
+
+    private int inputInt() {
+        try {
+            return Integer.parseInt(SCANNER.nextLine());
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("숫자를 입력하여야 합니다.", exception);
+        }
+    }
+
     public boolean isPlayerWantDraw(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, WANT_DRAW_INPUT, WANT_NOT_DRAW_INPUT);
         String input = SCANNER.nextLine();
