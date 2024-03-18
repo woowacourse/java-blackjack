@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import model.result.ParticipantCard;
 import model.result.ParticipantCards;
-import model.result.ParticipantProfit;
+import model.result.ProfitDto;
 import model.result.ParticipantProfits;
 import model.result.ParticipantScore;
 import model.result.ParticipantScores;
@@ -65,15 +65,15 @@ public class OutputView {
     }
 
     public static void printProfits(ParticipantProfits participantProfits) {
-        ParticipantProfit dealerProfit = participantProfits.getDealerProfit();
-        List<ParticipantProfit> playerProfits = participantProfits.getPlayerProfits();
+        ProfitDto dealerProfit = participantProfits.getDealerProfit();
+        List<ProfitDto> playerProfits = participantProfits.getPlayerProfits();
         System.out.print(PROFIT_RESULT_INTRO);
         printProfit(dealerProfit);
         playerProfits.forEach(OutputView::printProfit);
     }
 
-    private static void printProfit(ParticipantProfit dealerProfit) {
-        System.out.printf(PROFIT_RESULT_FORMAT, dealerProfit.getName(), dealerProfit.getProfit().intValue());
+    private static void printProfit(ProfitDto dealerProfit) {
+        System.out.printf(PROFIT_RESULT_FORMAT, dealerProfit.name(), dealerProfit.profit().intValue());
     }
 
     public static void printExceptionMessage(String message) {

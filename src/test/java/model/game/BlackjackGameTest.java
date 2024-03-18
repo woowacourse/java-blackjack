@@ -20,7 +20,7 @@ import model.participant.Player;
 import model.participant.Players;
 import model.result.ParticipantCard;
 import model.result.ParticipantCards;
-import model.result.ParticipantProfit;
+import model.result.ProfitDto;
 import model.result.ParticipantProfits;
 import model.result.ParticipantScore;
 import model.result.ParticipantScores;
@@ -114,10 +114,10 @@ class BlackjackGameTest {
         ParticipantProfits participantProfits = blackjackGame.calculateProfit(dealer, players);
         BigDecimal dealerProfit = participantProfits.getPlayerProfits()
             .stream()
-            .map(ParticipantProfit::getProfit)
+            .map(ProfitDto::profit)
             .reduce(BigDecimal.ZERO, BigDecimal::subtract);
 
-        assertThat(dealerProfit).isEqualTo(participantProfits.getDealerProfit().getProfit());
+        assertThat(dealerProfit).isEqualTo(participantProfits.getDealerProfit().profit());
     }
 
     private void prepareBets(Players players) {

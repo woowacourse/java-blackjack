@@ -27,12 +27,12 @@ class ParticipantProfitsTest {
 
         ParticipantProfits participantProfits = ParticipantProfits.of(players, dealer);
 
-        ParticipantProfit jojoProfit = participantProfits.getPlayerProfits().get(0);
-        ParticipantProfit dealerProfit = participantProfits.getDealerProfit();
+        ProfitDto jojoProfit = participantProfits.getPlayerProfits().get(0);
+        ProfitDto dealerProfit = participantProfits.getDealerProfit();
 
         assertAll(
-            () -> assertThat(jojoProfit.getProfit().intValue()).isEqualTo(15000),
-            () -> assertThat(dealerProfit.getProfit().intValue()).isEqualTo(-15000)
+            () -> assertThat(jojoProfit.profit().intValue()).isEqualTo(15000),
+            () -> assertThat(dealerProfit.profit().intValue()).isEqualTo(-15000)
         );
     }
 
