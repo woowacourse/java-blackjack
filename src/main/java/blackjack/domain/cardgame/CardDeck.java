@@ -3,6 +3,8 @@ package blackjack.domain.cardgame;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +26,19 @@ public class CardDeck {
         this.deck = deck;
     }
 
-    public Card draw() {
+    public void giveCard(final Participant participant) {
+        participant.addCard(draw());
+    }
+
+    public void initializeHand(final Participants participants) {
+        participants.getAllParticipants()
+                .forEach(participant -> {
+                    giveCard(participant);
+                    giveCard(participant);
+                });
+    }
+
+    private Card draw() {
         if (deck.isEmpty()) {
             throw new IllegalStateException("[ERROR] 덱이 비어있어 카드를 뽑을 수 없습니다.");
         }

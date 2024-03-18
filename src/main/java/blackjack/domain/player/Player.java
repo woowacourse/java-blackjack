@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.cardgame.Money;
-
 public class Player extends Participant {
     private final Money bettingAmount;
 

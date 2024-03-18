@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.cardgame.BlackjackGame;
+import blackjack.domain.cardgame.CardDeck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
@@ -12,17 +12,17 @@ import java.util.List;
 public class BlackjackController {
     public void run() {
         try {
-            final BlackjackGame blackjackGame = new BlackjackGame();
+            final CardDeck cardDeck = new CardDeck();
             final Dealer dealer = new Dealer();
             final List<String> names = InputView.readPlayerNames();
             final List<Player> players = readBettingAmountAndCreatePlayers(names);
             final Participants participants = new Participants(dealer, players);
 
-            blackjackGame.initializeHand(dealer, players);
+            cardDeck.initializeHand(participants);
             OutputView.printInitialHandOfEachPlayer(dealer, players);
 
-            givePlayersMoreCardsIfWanted(blackjackGame, players);
-            giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
+            givePlayersMoreCardsIfWanted(cardDeck, players);
+            giveDealerMoreCardsIfNeeded(cardDeck, dealer);
 
             printHandStatusOfEachPlayer(dealer, players);
             printPlayerProfits(participants);
@@ -40,23 +40,23 @@ public class BlackjackController {
         return players;
     }
 
-    private void givePlayersMoreCardsIfWanted(final BlackjackGame blackjackGame, final List<Player> players) {
+    private void givePlayersMoreCardsIfWanted(final CardDeck cardDeck, final List<Player> players) {
         for (final Player player : players) {
-            givePlayerMoreCardsIfWanted(blackjackGame, player);
+            givePlayerMoreCardsIfWanted(cardDeck, player);
         }
     }
 
-    private void givePlayerMoreCardsIfWanted(final BlackjackGame blackjackGame, final Player player) {
+    private void givePlayerMoreCardsIfWanted(final CardDeck cardDeck, final Player player) {
         final String playerName = player.getName();
         while (player.isDrawable() && InputView.readHitStandCommand(playerName)) {
-            blackjackGame.giveCard(player);
+            cardDeck.giveCard(player);
             OutputView.printPlayerCard(player);
         }
     }
 
-    private void giveDealerMoreCardsIfNeeded(final BlackjackGame blackjackGame, final Dealer dealer) {
+    private void giveDealerMoreCardsIfNeeded(final CardDeck cardDeck, final Dealer dealer) {
         while (dealer.isDrawable()) {
-            blackjackGame.giveCard(dealer);
+            cardDeck.giveCard(dealer);
             OutputView.printDealerHitMessage(dealer);
         }
     }

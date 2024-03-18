@@ -1,4 +1,6 @@
-package blackjack.domain.cardgame;
+package blackjack.domain.player;
+
+import blackjack.domain.cardgame.Status;
 
 public class Money {
     private final double value;

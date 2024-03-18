@@ -1,52 +1,15 @@
-package blackjack.domain.cardgame;
+package blackjack.domain.player;
 
-import static blackjack.fixture.PlayerFixture.dealer;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participants;
-import blackjack.domain.player.Player;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class BlackjackGameTest {
-    @Test
-    void 카드_한_장을_플레이어에게_지급한다() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame();
-        Player mangcho = player(0);
-
-        // when
-        blackjackGame.giveCard(mangcho);
-
-        // then
-        assertThat(mangcho.getCards().size()).isEqualTo(1);
-    }
-
-    @Test
-    void 게임_시작시_딜러와_모든_플레이어에게_카드_2장을_지급한다() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame();
-        Dealer dealer = dealer();
-        Player mangcho = player(0);
-        Player ddang = player(0);
-
-        // when
-        blackjackGame.initializeHand(dealer, List.of(mangcho, ddang));
-
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(dealer.getCards().size()).isEqualTo(2);
-            softly.assertThat(mangcho.getCards().size()).isEqualTo(2);
-            softly.assertThat(ddang.getCards().size()).isEqualTo(2);
-        });
-    }
-
+public class MoneyTest {
 
     @Test
     void 플레이어가_버스트_된_경우_플레이어는_베팅_금액을_모두_잃는다() {
