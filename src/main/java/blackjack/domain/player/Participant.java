@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.state.BlackjackStatus;
 import blackjack.domain.card.state.Ready;
 import blackjack.domain.card.state.State;
 
@@ -43,18 +44,12 @@ public abstract class Participant implements CardReceivable {
         this.state = this.state.draw(card);
     }
 
-    public boolean isBlackjack() {
-        return this.state.isBlackjack();
-    }
 
-    public boolean isBust() {
-        return this.state.isBust();
+    public BlackjackStatus getStatus() {
+        return this.state.getStatus();
     }
 
     public abstract String getNameAsString();
 
 
-    public boolean isStand() {
-        return this.state.isStand();
-    }
 }

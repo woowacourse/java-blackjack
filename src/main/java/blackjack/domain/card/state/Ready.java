@@ -28,4 +28,9 @@ public class Ready extends AbstractState {
     public State stand() {
         throw new IllegalStateException("준비 상태에서 스탠드를 할 수 없습니다.");
     }
+
+    @Override
+    public BlackjackStatus getStatus() {
+        return BlackjackStatus.READY;
+    }
 }

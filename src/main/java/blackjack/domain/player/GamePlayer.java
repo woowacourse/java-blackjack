@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.state.BlackjackStatus;
 import blackjack.domain.player.info.BettingMoney;
 import blackjack.domain.player.info.PlayerInfo;
 import blackjack.domain.player.info.Name;
@@ -40,7 +41,7 @@ public class GamePlayer extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return this.state.isHit();
+        return this.state.getStatus() == BlackjackStatus.HIT;
     }
 
     @Override

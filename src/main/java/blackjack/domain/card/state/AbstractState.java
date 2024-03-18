@@ -16,7 +16,6 @@ public abstract class AbstractState implements State {
         return this.cards;
     }
 
-    @Override
     public List<Card> getCards() {
         return this.cards.toList();
     }
@@ -26,23 +25,4 @@ public abstract class AbstractState implements State {
         return this.cards.calculate();
     }
 
-    @Override
-    public boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
-    public boolean isBust() {
-        return false;
-    }
-
-    @Override
-    public boolean isHit() {
-        return false;
-    }
-
-    @Override
-    public boolean isStand() {
-        return false;
-    }
 }

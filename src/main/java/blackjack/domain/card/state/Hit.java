@@ -26,7 +26,7 @@ public class Hit extends AbstractState {
     }
 
     @Override
-    public boolean isHit() {
-        return true;
+    public BlackjackStatus getStatus() {
+        return BlackjackStatus.HIT;
     }
 }

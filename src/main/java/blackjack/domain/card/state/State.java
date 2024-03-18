@@ -9,15 +9,9 @@ public interface State {
 
     State stand();
 
-    List<Card> getCards();
-
     int calculate();
 
-    boolean isBlackjack();
+    List<Card> getCards();
 
-    boolean isBust();
-
-    boolean isHit();
-
-    boolean isStand();
+    BlackjackStatus getStatus();
 }

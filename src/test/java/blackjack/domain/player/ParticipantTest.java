@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.state.BlackjackStatus;
 import blackjack.domain.card.state.Ready;
 import blackjack.fixture.ParticipantImpl;
 import blackjack.fixture.PlayerFixture;
@@ -15,8 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParticipantTest {
 
@@ -54,9 +53,9 @@ class ParticipantTest {
         final var sut = PlayerFixture.참가자_생성(
                 List.of(CardValue.EIGHT, CardValue.TEN, CardValue.SEVEN));
 
-        final var result = sut.isBust();
+        final var result = sut.getStatus();
 
-        assertTrue(result);
+        assertThat(result).isEqualTo(BlackjackStatus.BUST);
     }
 
     @Test
@@ -65,8 +64,8 @@ class ParticipantTest {
         final var sut = PlayerFixture.참가자_생성(
                 List.of(CardValue.EIGHT, CardValue.SEVEN));
 
-        final var result = sut.isBust();
+        final var result = sut.getStatus();
 
-        assertFalse(result);
+        assertThat(result).isNotEqualTo(BlackjackStatus.BUST);
     }
 }

@@ -18,9 +18,8 @@ public class Stand extends AbstractState {
         throw new IllegalStateException("스탠드 상태에서 스탠드를 할 수 없습니다.");
     }
 
-
     @Override
-    public boolean isStand() {
-        return true;
+    public BlackjackStatus getStatus() {
+        return BlackjackStatus.STAND;
     }
 }
