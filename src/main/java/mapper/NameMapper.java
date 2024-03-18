@@ -1,8 +1,8 @@
 package mapper;
 
-import domain.vo.Name;
 import domain.name.Names;
 import domain.participant.Player;
+import domain.vo.Name;
 import view.dto.participant.NameDto;
 
 import java.util.List;
@@ -18,6 +18,6 @@ public class NameMapper {
     }
 
     public static NameDto playerToNameDto(final Player player) {
-        return new NameDto(player.name().value());
+        return new NameDto(player.name());
     }
 }

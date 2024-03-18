@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.vo.Card;
 import domain.card.Hand;
+import domain.vo.Card;
 import domain.vo.Name;
 import domain.vo.Score;
 
@@ -45,8 +45,8 @@ public abstract class Participant {
                 && hand.score() == BLACKJACK_SCORE;
     }
 
-    public Name name() {
-        return new Name(name);
+    public String name() {
+        return name.value();
     }
 
     public Hand hand() {

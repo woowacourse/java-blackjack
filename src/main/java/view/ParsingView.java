@@ -12,7 +12,7 @@ import static view.ResultView.*;
 public class ParsingView {
     public String playerNames(final List<ParticipantDto> players) {
         return players.stream()
-                      .map(participantDto -> participantDto.nameDto().name())
+                      .map(participantDto -> participantDto.name())
                       .collect(Collectors.joining(DELIMITER + SPACING));
     }
 

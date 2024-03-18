@@ -24,7 +24,7 @@ public class ResultView {
 
     private void printInitialDealMessage(final ParticipantDto dealer, final List<ParticipantDto> players) {
         System.out.printf(System.lineSeparator() + "%s와 %s에게 %d장을 나누었습니다.",
-                dealer.nameDto().name(),
+                dealer.name(),
                 PARSING.playerNames(players),
                 INITIAL_CARD_COUNT
         );
@@ -38,12 +38,12 @@ public class ResultView {
     public void printParticipantHand(final ParticipantDto participant) {
         CardsDto cards = participant.cardsDto();
         System.out.printf(System.lineSeparator() + "%s: %s" + System.lineSeparator(),
-                participant.nameDto().name(), PARSING.cards(cards));
+                participant.name(), PARSING.cards(cards));
     }
 
     public void printDealerCardMessage(final ParticipantDto dealer) {
         System.out.printf(System.lineSeparator() + "%s는 %s이하라 한장의 카드를 더 받습니다." + System.lineSeparator(),
-                dealer.nameDto().name(),
+                dealer.name(),
                 DEALER_HIT_THRESHOLD
         );
     }
@@ -57,7 +57,7 @@ public class ResultView {
     private void printCardAndSum(final ParticipantDto participantDto) {
         CardsDto cards = participantDto.cardsDto();
         System.out.printf(System.lineSeparator() + "%s" + CONNECT + "%s - 결과" + CONNECT + "%d" + System.lineSeparator(),
-                participantDto.nameDto().name(),
+                participantDto.name(),
                 PARSING.cards(cards),
                 cards.score()
         );

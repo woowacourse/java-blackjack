@@ -1,15 +1,14 @@
 package mapper;
 
-import domain.vo.Card;
 import domain.card.Cards;
-import domain.vo.Name;
 import domain.name.Names;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import view.dto.participant.NameDto;
-import view.dto.participant.ParticipantDto;
 import domain.vo.BettingMoney;
+import domain.vo.Card;
+import domain.vo.Name;
+import view.dto.participant.ParticipantDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +18,11 @@ public class ParticipantMapper {
     }
 
     public static ParticipantDto participantToParticipantDto(final Participant participant) {
-        return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.handToCardsDto(participant.hand(), participant.score().value()));
+        return new ParticipantDto(participant.name(), CardMapper.handToCardsDto(participant.hand(), participant.score().value()));
     }
 
     public static ParticipantDto participantAndCardToParticipantDto(final Participant participant, final Card card) {
-        return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.cardsToCardsDto(new Cards(List.of(card)), participant.score().value()));
+        return new ParticipantDto(participant.name(), CardMapper.cardsToCardsDto(new Cards(List.of(card)), participant.score().value()));
     }
 
     public static List<ParticipantDto> playersToParticipantsDto(final Players players) {
