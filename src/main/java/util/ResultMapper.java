@@ -1,10 +1,12 @@
 package util;
 
+import controller.dto.BettingInfo;
+import controller.dto.BettingInfos;
+import java.util.List;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
-import model.participant.dto.PlayerMatchResult;
 
 public class ResultMapper {
     private ResultMapper() {
@@ -19,8 +21,9 @@ public class ResultMapper {
         return new DealerFaceUpResult(dealer.getCards(), dealer.getHand());
     }
 
-    public static PlayerMatchResult toPlayerMatchResult(Player player, Dealer dealer) {
-        int dealerHand = dealer.getHand();
-        return new PlayerMatchResult(player.getName(), player.determineMatchResult(dealerHand));
+    public static BettingInfos toPlayerBettingResult(List<Player> players) {
+        return BettingInfos.from(players.stream()
+                .map(player -> new BettingInfo(player.getName(), player.calculateEarning()))
+                .toList());
     }
 }

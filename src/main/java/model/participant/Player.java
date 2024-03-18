@@ -1,5 +1,6 @@
 package model.participant;
 
+import static model.participant.state.MatchState.BLACK_JACK;
 import static model.participant.state.MatchState.DRAW;
 import static model.participant.state.MatchState.LOSE;
 import static model.participant.state.MatchState.WIN;
@@ -23,22 +24,26 @@ public final class Player extends Participant {
         return !cardDeck.isBust() && matchState == MatchState.PLAYING;
     }
 
-    public MatchState determineMatchResult(int dealerHand) {
-        int playerHand = cardDeck.calculateHand();
-        if (playerHand >= BUST_THRESHOLD || (dealerHand < BUST_THRESHOLD) && (playerHand < dealerHand)) {
-            return LOSE;
-        }
-        if (dealerHand == playerHand) {
-            return DRAW;
-        }
-        return WIN;
-    }
-
     public void turnOver() {
         if (matchState == MatchState.PLAYING) {
             matchState = MatchState.TURNOVER;
         }
         throw new IllegalStateException("Only Playing State Player can be turned over");
+    }
+
+    public void updateMatchResult(MatchState dealerMatchResult, int dealerHand) {
+        matchState = determineMatchResult(dealerMatchResult, dealerHand);
+    }
+
+    private MatchState determineMatchResult(MatchState dealerMatchResult, int dealerHand) {
+        int playerHand = cardDeck.calculateHand();
+        if (((dealerHand < playerHand) || BUST_THRESHOLD < dealerHand) && (playerHand < BUST_THRESHOLD)) {
+            return WIN;
+        }
+        if (dealerHand == playerHand || (dealerMatchResult == BLACK_JACK && matchState == BLACK_JACK)) {
+            return DRAW;
+        }
+        return LOSE;
     }
 
     public Name getName() {

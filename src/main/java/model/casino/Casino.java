@@ -1,17 +1,18 @@
 package model.casino;
 
+import controller.dto.BettingInfos;
 import java.util.List;
 import model.card.Card;
-import controller.dto.BettingInfos;
 import model.participant.Dealer;
 import model.participant.Entrant;
 import model.participant.Player;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
-import model.participant.dto.PlayerMatchResult;
 import util.ResultMapper;
 
 public class Casino {
+    public static final int DEALER_PROFIT_CONVERTER = -1;
+
     private final Entrant entrant;
     private final CardDispenser cardDispenser;
 
@@ -53,6 +54,10 @@ public class Casino {
         return entrant.hasAvailablePlayer();
     }
 
+    public PlayerFaceUpResult getNextPlayerFaceUpInfo() {
+        return ResultMapper.toPlayerFaceUpResult(entrant.getNextAvailablePlayer());
+    }
+
     public boolean isDealerHitAllowed() {
         return entrant.canHitDealer();
     }
@@ -65,11 +70,18 @@ public class Casino {
         return entrant.getPlayerFaceUpResults();
     }
 
-    public PlayerFaceUpResult getNextPlayerFaceUpInfo() {
-        return ResultMapper.toPlayerFaceUpResult(entrant.getNextAvailablePlayer());
+    public void aggregateBettingResult() {
+        entrant.aggregateBettingResult();
     }
 
-    public List<PlayerMatchResult> calculatePlayerMatchResults() {
-        return entrant.determineFinalPlayerMatchResults();
+    public BettingInfos calculatePlayerBettingResults() {
+        return ResultMapper.toPlayerBettingResult(entrant.getPlayers());
+    }
+
+    public long calculateDealerEarningResults() {
+        return DEALER_PROFIT_CONVERTER * entrant.getPlayers()
+                .stream()
+                .map(Player::calculateEarning)
+                .reduce(0L, Long::sum);
     }
 }

@@ -7,7 +7,6 @@ import java.util.Queue;
 import model.card.Card;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
-import model.participant.dto.PlayerMatchResult;
 import util.ResultMapper;
 
 public class Entrant {
@@ -68,9 +67,11 @@ public class Entrant {
                 .toList();
     }
 
-    public List<PlayerMatchResult> determineFinalPlayerMatchResults() {
-        return players.stream()
-                .map(player -> ResultMapper.toPlayerMatchResult(player, dealer))
-                .toList();
+    public void aggregateBettingResult(){
+        players.forEach(player -> player.updateMatchResult(dealer.matchState, dealer.getHand()));
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }

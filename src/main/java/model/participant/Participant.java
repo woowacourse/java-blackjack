@@ -30,6 +30,9 @@ public abstract class Participant {
 
     public void hitCard(Card card) {
         cardDeck.addCard(card);
+        if (cardDeck.isBust()){
+            matchState = MatchState.TURNOVER;
+        }
     }
 
     public List<Card> getCards() {
