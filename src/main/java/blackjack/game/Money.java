@@ -5,11 +5,11 @@ public class Money {
     private final int money;
 
     Money(int money) {
-        validateNatural(money);
+        validateNaturalNumber(money);
         this.money = money;
     }
 
-    private void validateNatural(int input) {
+    private void validateNaturalNumber(int input) {
         if (input <= 0) {
             throw new IllegalArgumentException("[ERROR] 금액은 양수여야 합니다.");
         }
