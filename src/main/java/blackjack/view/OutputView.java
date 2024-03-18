@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.cardgame.Profit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import java.util.List;
@@ -64,9 +65,9 @@ public class OutputView {
         System.out.println("## 최종 수익");
         System.out.println(String.format("%s: %d", dealer.getName(), dealer.findDealerProfit()));
 
-        final Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        final Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
         playerProfits.forEach(
-                (player, profit) -> System.out.println(String.format("%s: %d", player.getName(), profit)));
+                (player, profit) -> System.out.println(String.format("%s: %d", player.getName(), profit.getValue())));
     }
 
     private static void printLineSeparator() {

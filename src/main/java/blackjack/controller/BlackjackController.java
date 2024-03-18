@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.cardgame.BettingAmount;
 import blackjack.domain.cardgame.BlackjackGame;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
@@ -67,7 +68,7 @@ public class BlackjackController {
     private static void bet(final Dealer dealer, final List<Player> players) {
         for (Player player : players) {
             final int bettingAmount = InputView.askBettingAmount(player.getName());
-            dealer.bet(player, bettingAmount);
+            dealer.bet(player, new BettingAmount(bettingAmount));
         }
     }
 

@@ -10,6 +10,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.cardgame.BettingAmount;
+import blackjack.domain.cardgame.Profit;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -59,12 +61,12 @@ public class DealerTest {
                 new Card(CardNumber.KING, CardShape.CLOVER));
 
         // when
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(-bettingAmount);
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(-bettingAmount.getValue());
     }
 
     @Test
@@ -78,12 +80,12 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.JACK, CardShape.CLOVER));
 
         // when
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(bettingAmount);
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(10000);
     }
 
     @Test
@@ -98,12 +100,12 @@ public class DealerTest {
                 new Card(CardNumber.ACE, CardShape.CLOVER));
 
         // when
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(0);
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(0);
     }
 
     @Test
@@ -117,12 +119,12 @@ public class DealerTest {
                 new Card(CardNumber.ACE, CardShape.CLOVER));
 
         // when
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(15000);
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(15000);
     }
 
     @Test
@@ -134,12 +136,12 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.TEN, CardShape.CLOVER));
 
         // when
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(10000);
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(10000);
     }
 
     @Test
@@ -151,12 +153,12 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.NINE, CardShape.CLOVER));
 
         // when
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(-10000);
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(-10000);
     }
 
     @Test
@@ -168,12 +170,12 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.TEN, CardShape.CLOVER));
 
         // when
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(0);
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(0);
     }
 
     // TODO: 테스트 흐름을 한 눈에 파악하기 어려움
@@ -186,15 +188,15 @@ public class DealerTest {
         Player player1 = player(new Card(CardNumber.TWO, CardShape.CLOVER));
         Player player2 = player(new Card(CardNumber.TWO, CardShape.CLOVER));
 
-        int bettingAmount = 10000;
+        BettingAmount bettingAmount = new BettingAmount(10000);
         dealer.bet(player1, bettingAmount);
         dealer.bet(player2, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
+        Map<Player, Profit> playerProfits = dealer.findPlayerProfits();
 
         // when
         int playerProfit = playerProfits.values()
                 .stream()
-                .mapToInt(Integer::valueOf)
+                .mapToInt(Profit::getValue)
                 .sum();
 
         int dealerProfit = dealer.findDealerProfit();

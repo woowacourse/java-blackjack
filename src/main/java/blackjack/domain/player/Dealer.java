@@ -1,6 +1,8 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.cardgame.BettingAmount;
+import blackjack.domain.cardgame.Profit;
 import blackjack.domain.cardgame.Status;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,7 +12,7 @@ public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
 
-    private final Map<Player, Integer> playerBetting = new LinkedHashMap<>();
+    private final Map<Player, BettingAmount> playerBetting = new LinkedHashMap<>();
 
     public Dealer() {
         super(NAME);
@@ -29,37 +31,37 @@ public class Dealer extends Player {
     }
 
     // TODO: Dealer가 너무 많은 책임을 갖지는 않는지?
-    public void bet(final Player player, final int bettingAmount) {
+    public void bet(final Player player, final BettingAmount bettingAmount) {
         playerBetting.put(player, bettingAmount);
     }
 
     /**
      * TODO: 반드시 Dealer에게 먼저 bet()을 한 뒤에 호출해야 함. bet()을 하지 않는다면 비어있게 됨
      */
-    public Map<Player, Integer> findPlayerProfits() {
+    public Map<Player, Profit> findPlayerProfits() {
         return playerBetting.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> findBettingResult(entry.getKey(), entry.getValue()),
+                        entry -> findProfit(entry.getKey(), entry.getValue().getValue()),
                         (x, y) -> x, LinkedHashMap::new
                 ));
     }
 
-    private int findBettingResult(final Player player, final int bettingAmount) {
+    private Profit findProfit(final Player player, final int bettingAmount) {
         final Status status = judgePlayerStatus(player);
 
         if (Status.WIN.equals(status)) {
-            return bettingAmount;
+            return new Profit(bettingAmount);
         }
         if (Status.PUSH.equals(status)) {
-            return 0;
+            return new Profit(0);
         }
         if (Status.LOSE.equals(status)) {
-            return -bettingAmount;
+            return new Profit(-bettingAmount);
         }
         if (Status.BLACKJACK.equals(status)) {
-            return bettingAmount + bettingAmount / 2;
+            return new Profit(bettingAmount + bettingAmount / 2);
         }
 
         throw new IllegalStateException("[ERROR] 유효하지 않은 경우의 수 입니다.");
@@ -91,10 +93,10 @@ public class Dealer extends Player {
      *          Controller에서 한번, 출력할 때 딜러에서 한번
      */
     public int findDealerProfit() {
-        final Map<Player, Integer> playerProfits = findPlayerProfits();
+        final Map<Player, Profit> playerProfits = findPlayerProfits();
         return -playerProfits.values()
                 .stream()
-                .mapToInt(Integer::intValue)
+                .mapToInt(Profit::getValue)
                 .sum();
     }
 }

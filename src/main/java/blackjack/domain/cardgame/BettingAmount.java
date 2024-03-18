@@ -13,4 +13,8 @@ public class BettingAmount {
             throw new IllegalArgumentException("[ERROR] 0보다 큰 값만 입력할 수 있습니다.");
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }
