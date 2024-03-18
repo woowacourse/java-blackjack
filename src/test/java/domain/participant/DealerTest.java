@@ -1,13 +1,13 @@
 package domain.participant;
 
-import vo.Card;
+import domain.vo.Card;
 import domain.card.Cards;
-import vo.Name;
+import domain.vo.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import domain.account.Account;
-import vo.BettingMoney;
-import vo.Profit;
+import domain.vo.BettingMoney;
+import domain.vo.Profit;
 
 import java.util.List;
 

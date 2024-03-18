@@ -1,5 +1,6 @@
-package vo;
+package domain.vo;
 
+import domain.vo.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

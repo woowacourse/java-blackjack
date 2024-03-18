@@ -3,7 +3,7 @@ package mapper;
 import domain.card.*;
 import view.dto.card.CardDto;
 import view.dto.card.CardsDto;
-import vo.Card;
+import domain.vo.Card;
 
 import java.util.Arrays;
 import java.util.List;

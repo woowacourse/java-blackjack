@@ -1,6 +1,6 @@
 package domain.card;
 
-import vo.Card;
+import domain.vo.Card;
 
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 

@@ -1,4 +1,4 @@
-package vo;
+package domain.vo;
 
 import domain.card.CardNumber;
 import domain.card.CardShape;

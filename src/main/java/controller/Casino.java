@@ -13,7 +13,7 @@ import view.BlackJackGameCommand;
 import view.InputView;
 import view.ResultView;
 import view.dto.participant.NameDto;
-import vo.BettingMoney;
+import domain.vo.BettingMoney;
 
 import java.util.List;
 

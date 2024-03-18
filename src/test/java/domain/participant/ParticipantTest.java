@@ -1,12 +1,12 @@
 package domain.participant;
 
-import vo.Card;
+import domain.vo.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import vo.Name;
+import domain.vo.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import vo.BettingMoney;
+import domain.vo.BettingMoney;
 
 import static domain.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;

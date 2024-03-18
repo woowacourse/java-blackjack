@@ -1,4 +1,4 @@
-package vo;
+package domain.vo;
 
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 

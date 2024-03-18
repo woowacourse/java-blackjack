@@ -1,10 +1,10 @@
 package domain.participant;
 
-import vo.Name;
+import domain.vo.Name;
 import domain.result.ResultProfitRatio;
 import domain.account.Account;
-import vo.BettingMoney;
-import vo.Profit;
+import domain.vo.BettingMoney;
+import domain.vo.Profit;
 
 public class Player extends Participant {
     private final Account account;

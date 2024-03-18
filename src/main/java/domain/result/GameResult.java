@@ -1,7 +1,7 @@
 package domain.result;
 
 import domain.participant.Participant;
-import vo.Profit;
+import domain.vo.Profit;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

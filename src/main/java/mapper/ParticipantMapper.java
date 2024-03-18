@@ -1,15 +1,15 @@
 package mapper;
 
-import vo.Card;
+import domain.vo.Card;
 import domain.card.Cards;
-import vo.Name;
+import domain.vo.Name;
 import domain.name.Names;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import view.dto.participant.NameDto;
 import view.dto.participant.ParticipantDto;
-import vo.BettingMoney;
+import domain.vo.BettingMoney;
 
 import java.util.ArrayList;
 import java.util.List;

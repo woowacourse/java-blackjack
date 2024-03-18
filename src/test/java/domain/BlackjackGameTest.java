@@ -1,18 +1,18 @@
 package domain;
 
-import vo.Card;
+import domain.vo.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
-import vo.Name;
+import domain.vo.Name;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import vo.BettingMoney;
-import vo.Profit;
+import domain.vo.BettingMoney;
+import domain.vo.Profit;
 
 import java.util.LinkedHashMap;
 import java.util.List;

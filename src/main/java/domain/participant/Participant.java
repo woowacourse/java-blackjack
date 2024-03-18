@@ -1,9 +1,9 @@
 package domain.participant;
 
-import vo.Card;
+import domain.vo.Card;
 import domain.card.Hand;
-import vo.Name;
-import vo.Score;
+import domain.vo.Name;
+import domain.vo.Score;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package vo;
+package domain.vo;
 
 public record BettingMoney(int value) {
     public BettingMoney {

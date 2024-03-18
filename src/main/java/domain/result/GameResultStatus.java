@@ -1,6 +1,6 @@
 package domain.result;
 
-import vo.Score;
+import domain.vo.Score;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;

@@ -1,6 +1,6 @@
 package mapper;
 
-import vo.Name;
+import domain.vo.Name;
 import domain.name.Names;
 import domain.participant.Player;
 import view.dto.participant.NameDto;
