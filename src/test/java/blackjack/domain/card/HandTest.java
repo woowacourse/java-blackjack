@@ -55,7 +55,7 @@ class HandTest {
         int expectedScore = 16;
 
         //when
-        int actualScore = hand.calculateOptimizedScore();
+        int actualScore = hand.getScore();
 
         //then
         assertThat(actualScore).isEqualTo(expectedScore);
@@ -70,7 +70,7 @@ class HandTest {
         int expectedScore = 17;
 
         //when
-        int actualScore = hand.calculateOptimizedScore();
+        int actualScore = hand.getScore();
 
         //then
         assertThat(actualScore).isEqualTo(expectedScore);

@@ -9,9 +9,11 @@ public class Hand {
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
+    private Score score;
 
     public Hand(List<Card> cards) {
         this.cards = cards;
+        this.score = new Score(cards);
     }
 
     public List<Card> getCards() {
@@ -19,45 +21,27 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateOptimizedScore() > BLACKJACK_SCORE;
+        return this.score.getScore() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackjackScore() {
-        return calculateOptimizedScore() == BLACKJACK_SCORE;
+        return this.score.getScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {
         return isBlackjackScore() && cards.size() == INITIAL_CARD_COUNT;
     }
 
-    public int calculateOptimizedScore() {
-        int cardTotalScore = getCardTotalScore();
-        if (cardTotalScore >= BLACKJACK_SCORE) {
-            return cardTotalScore;
-        }
-        int aceCountForAlter = countAceForAlter(cardTotalScore);
-        return aceCountForAlter * ACE_ALTERNATIVE_SCORE + cardTotalScore;
-    }
-
     public boolean isTotalScoreGreaterThan(int score) {
-        return calculateOptimizedScore() > score;
+        return this.score.getScore() > score;
     }
 
     public void addCard(Card card) {
         cards.add(card);
+        this.score = new Score(cards);
     }
 
-    private int getCardTotalScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private int countAceForAlter(int cardTotalScore) {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-        int availableAceAlterCount = (BLACKJACK_SCORE - cardTotalScore) / ACE_ALTERNATIVE_SCORE;
-        return Math.min(aceCount, availableAceAlterCount);
+    public int getScore() {
+        return this.score.getScore();
     }
 }

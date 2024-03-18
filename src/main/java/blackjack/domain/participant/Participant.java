@@ -40,7 +40,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return hand.calculateOptimizedScore();
+        return hand.getScore();
     }
 
     protected List<Card> getCardsByCount(int count) {
