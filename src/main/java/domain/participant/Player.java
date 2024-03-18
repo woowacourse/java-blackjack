@@ -1,22 +1,33 @@
 package domain.participant;
 
-public class Player extends Participant {
+import domain.account.Account;
+import domain.result.ResultProfitRatio;
+import domain.vo.BettingMoney;
+import domain.vo.Name;
+import domain.vo.Profit;
 
-    public Player(final Name name) {
+public class Player extends Participant {
+    private final Account account;
+
+    public Player(final Name name, final Account account) {
         super(name);
+        this.account = account;
     }
 
+    public static Player register(final Name name, final BettingMoney bettingMoney) {
+        return new Player(name, new Account(bettingMoney));
+    }
+
+    public void revenue(final ResultProfitRatio ratio) {
+        account.applyProfit(ratio);
+    }
+
+    public Profit profit() {
+        return new Profit(account.getProfit());
+    }
+
+    @Override
     public boolean canReceiveMoreCard() {
         return !isBust() && !isBlackjack();
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
     }
 }

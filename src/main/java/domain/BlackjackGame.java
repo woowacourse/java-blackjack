@@ -1,33 +1,62 @@
 package domain;
 
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import domain.result.GameResult;
 import domain.result.GameResultStatus;
-import view.dto.result.GameResultDto;
-
-import java.util.stream.IntStream;
+import domain.result.ResultProfitRatio;
 
 public class BlackjackGame {
 
     public static final int INITIAL_CARD_COUNT = 2;
     public static final int DEALER_HIT_THRESHOLD = 16;
+    public static final int BLACKJACK_SCORE = 21;
 
-    public void ready(final Dealer dealer, final Players players) {
-        giveCards(dealer, dealer);
-        players.forEach(player -> giveCards(dealer, player));
+    private final Dealer dealer;
+    private final Players players;
+
+    public BlackjackGame(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
-    private void giveCards(final Dealer dealer, final Participant participant) {
-        IntStream.range(0, INITIAL_CARD_COUNT)
-                 .forEach(__ -> dealer.deal(participant));
-    }
-
-    public GameResultDto resultsOf(final Dealer dealer, final Players players) {
-        GameResult gameResult = new GameResult();
+    public void prepare() {
+        handOutCards(dealer, INITIAL_CARD_COUNT);
         players.forEach(player -> {
-            GameResultStatus result = dealer.resultStatusOf(player);
-            gameResult.put(player, result);
+            handOutCards(player, INITIAL_CARD_COUNT);
+            checkBlackjack(player);
         });
-        return new GameResultDto(gameResult, gameResult.ofDealer());
+    }
+
+    public void handOutCards(final Participant participant, final int count) {
+        for (int i = 0; i < count; i++) {
+            dealer.deal(participant);
+        }
+    }
+
+    private void checkBlackjack(final Player player) {
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            player.revenue(ResultProfitRatio.BLACKJACK);
+        }
+    }
+
+    public GameResult resultsOfParticipants() {
+        players.forEach(player -> player.revenue(getResultOf(player, dealer)));
+        return GameResult.export(dealer, players);
+    }
+
+    private ResultProfitRatio getResultOf(final Participant standardTarget, final Participant comparisonTarget) {
+        return GameResultStatus.comparedTo(standardTarget.score(), comparisonTarget.score())
+                               .getResultProfitRatio();
+    }
+
+    public Dealer dealer() {
+        return dealer;
+    }
+
+    public Players players() {
+        return players;
     }
 }

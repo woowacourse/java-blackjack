@@ -14,10 +14,10 @@ public enum BlackJackGameCommand {
 
     public static BlackJackGameCommand from(final String command) {
         return Arrays.stream(values())
-                .filter(value -> command.equals(value.command))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "%s또는 %s을 입력해주세요.".formatted(YES.command, NO.command)));
+                     .filter(value -> command.equals(value.command))
+                     .findFirst()
+                     .orElseThrow(() -> new IllegalArgumentException(
+                             "%s또는 %s을 입력해주세요.".formatted(YES.command, NO.command)));
     }
 
     public boolean yes() {

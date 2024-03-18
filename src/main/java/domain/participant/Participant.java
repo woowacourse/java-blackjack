@@ -1,50 +1,56 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
+import domain.vo.Card;
+import domain.vo.Name;
+import domain.vo.Score;
 
 import java.util.Objects;
+
+import static domain.BlackjackGame.BLACKJACK_SCORE;
+import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 
 public abstract class Participant {
 
     private final Name name;
-    private final Cards hand;
+    private final Hand hand;
 
-    public Participant(final Name name) {
+    Participant(final Name name) {
         this.name = name;
-        hand = new Cards();
+        hand = new Hand();
     }
+
+    public abstract boolean canReceiveMoreCard();
 
     public void receive(final Card card) {
         hand.add(card);
     }
 
-    public int cardSum() {
-        int total = hand.sum();
-        if (hasAceAsEleven(total)) {
-            return total + 10;
-        }
-        return total;
+    public Card peekCard() {
+        return hand.peek();
     }
 
-    private boolean hasAceAsEleven(final int total) {
-        return hand.hasAce() && total + 10 <= 21;
+    public Score score() {
+        return new Score(hand.score());
     }
 
     public boolean isBust() {
-        return hand.sum() > 21;
+        return hand.score() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {
-        return hand.sum() == 21;
+        return hand.getCards()
+                   .toList()
+                   .size() == INITIAL_CARD_COUNT
+                && hand.score() == BLACKJACK_SCORE;
     }
 
-    public Name name() {
-        return name;
+    public String name() {
+        return name.value();
     }
 
-    public Cards hand() {
-        return hand;
+    public Hand hand() {
+        return new Hand(hand);
     }
 
     @Override

@@ -1,36 +1,29 @@
 package domain.result;
 
-import domain.participant.Player;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Players;
+import domain.vo.Profit;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Player, GameResultStatus> result;
+    private final Map<Participant, Profit> result;
 
-    public GameResult() {
-        this.result = new LinkedHashMap<>();
+    private GameResult(final Map<Participant, Profit> result) {
+        this.result = new LinkedHashMap<>(result);
     }
 
-    public GameResult(Map<Player, GameResultStatus> result) {
-        this.result = Map.copyOf(result);
+    public static GameResult export(final Dealer dealer, final Players players) {
+        Map<Participant, Profit> result = new LinkedHashMap<>();
+        result.put(dealer, dealer.calculateProfit(players));
+        players.forEach(player -> result.put(player, player.profit()));
+        return new GameResult(result);
     }
 
-    public void put(final Player player, final GameResultStatus resultStatus) {
-        result.put(player, resultStatus);
-    }
-
-    public Map<Player, GameResultStatus> getResult() {
-        return Map.copyOf(result);
-    }
-
-    public GameResult ofDealer(){
-        Map<Player, GameResultStatus> dealerResult = new HashMap<>();
-        result.forEach((key, value) -> {
-            dealerResult.put(key, value.opposite());
-        });
-        return new GameResult(dealerResult);
+    public Map<Participant, Profit> getResult() {
+        return new LinkedHashMap<>(result);
     }
 }

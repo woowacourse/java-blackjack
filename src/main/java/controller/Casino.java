@@ -2,13 +2,20 @@ package controller;
 
 import domain.BlackjackGame;
 import domain.card.Cards;
+import domain.name.Names;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.vo.BettingMoney;
+import mapper.GameResultMapper;
+import mapper.NameMapper;
+import mapper.ParticipantMapper;
 import view.BlackJackGameCommand;
 import view.InputView;
 import view.ResultView;
-import view.dto.participant.ParticipantDto;
+import view.dto.participant.NameDto;
+
+import java.util.List;
 
 public class Casino {
 
@@ -20,23 +27,33 @@ public class Casino {
         this.resultView = resultView;
     }
 
-    public void play(final BlackjackGame game) {
+    public void open() {
+        Names names = NameMapper.namesDtoToNames(inputView.askPlayerNames());
+        List<BettingMoney> bettingMoneys = askBettingMoney(names);
         Dealer dealer = new Dealer(Cards.deck());
         dealer.shuffleCards();
-        Players players = ParticipantDto.toPlayers(inputView.askPlayerNames());
-        game.ready(dealer, players);
-        proceed(dealer, players);
-        result(game, dealer, players);
+        BlackjackGame game = new BlackjackGame(dealer, ParticipantMapper.namesAndBettingMoneyToPlayers(names, bettingMoneys));
+        game.prepare();
+        playOf(game);
+        resultOf(game);
     }
 
-    private void proceed(final Dealer dealer, final Players players) {
-        resultView.printInitialCards(
-                new ParticipantDto(dealer, dealer.peek()),
-                ParticipantDto.fromPlayers(players));
+    private List<BettingMoney> askBettingMoney(final Names names) {
+        return names.playerNames()
+                    .stream()
+                    .map(name -> new BettingMoney(inputView.askBettingMoney(new NameDto(name.value()))))
+                    .toList();
+    }
+
+    private void playOf(final BlackjackGame game) {
+        Dealer dealer = game.dealer();
+        Players players = game.players();
+        resultView.printInitialCards(ParticipantMapper.participantAndCardToParticipantDto(dealer, dealer.peekCard()),
+                ParticipantMapper.playersToParticipantsDto(players));
         players.forEach(player -> askReceiveMoreCard(dealer, player));
-        if (dealer.canHit()) {
-            resultView.printDealerCardMessage(new ParticipantDto(dealer));
-            dealer.deal(dealer);
+        while (dealer.canReceiveMoreCard()) {
+            resultView.printDealerCardMessage(ParticipantMapper.participantToParticipantDto(dealer));
+            game.handOutCards(dealer, 1);
         }
     }
 
@@ -44,19 +61,19 @@ public class Casino {
         if (!player.canReceiveMoreCard()) {
             return;
         }
-        BlackJackGameCommand command = inputView.askMoreCard(new ParticipantDto(player));
+        BlackJackGameCommand command = inputView.askMoreCard(NameMapper.playerToNameDto(player));
         if (command.yes()) {
             dealer.deal(player);
-            resultView.printParticipantHand(new ParticipantDto(player));
+            resultView.printParticipantHand(ParticipantMapper.participantToParticipantDto(player));
             askReceiveMoreCard(dealer, player);
         }
     }
 
-    private void result(final BlackjackGame game, final Dealer dealer, final Players players) {
+    private void resultOf(final BlackjackGame game) {
         resultView.printResults(
-                new ParticipantDto(dealer),
-                ParticipantDto.fromPlayers(players),
-                game.resultsOf(dealer, players)
+                ParticipantMapper.participantToParticipantDto(game.dealer()),
+                ParticipantMapper.playersToParticipantsDto(game.players()),
+                GameResultMapper.gameResultToGameResultDto(game.resultsOfParticipants())
         );
     }
 }

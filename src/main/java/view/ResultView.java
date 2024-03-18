@@ -35,10 +35,10 @@ public class ResultView {
         players.forEach(this::printParticipantHand);
     }
 
-    public void printParticipantHand(final ParticipantDto participantDto) {
-        CardsDto cards = participantDto.cards();
+    public void printParticipantHand(final ParticipantDto participant) {
+        CardsDto cards = participant.cardsDto();
         System.out.printf(System.lineSeparator() + "%s: %s" + System.lineSeparator(),
-                participantDto.name(), PARSING.cards(cards));
+                participant.name(), PARSING.cards(cards));
     }
 
     public void printDealerCardMessage(final ParticipantDto dealer) {
@@ -51,11 +51,11 @@ public class ResultView {
     public void printResults(final ParticipantDto dealer, final List<ParticipantDto> players, final GameResultDto gameResultDto) {
         printCardAndSum(dealer);
         players.forEach(this::printCardAndSum);
-        printGameResults(dealer, gameResultDto);
+        printGameResults(gameResultDto);
     }
 
     private void printCardAndSum(final ParticipantDto participantDto) {
-        CardsDto cards = participantDto.cards();
+        CardsDto cards = participantDto.cardsDto();
         System.out.printf(System.lineSeparator() + "%s" + CONNECT + "%s - 결과" + CONNECT + "%d" + System.lineSeparator(),
                 participantDto.name(),
                 PARSING.cards(cards),
@@ -63,11 +63,9 @@ public class ResultView {
         );
     }
 
-    private void printGameResults(final ParticipantDto dealer, final GameResultDto gameResultDto) {
-        Map<String, Integer> dealerResult = gameResultDto.dealerResult();
-        Map<String, String> playerResults = gameResultDto.gameResult();
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.print(dealer.name() + CONNECT + PARSING.dealerResult(dealerResult) + System.lineSeparator());
-        System.out.println(PARSING.playerResult(playerResults));
+    private void printGameResults(final GameResultDto gameResultDto) {
+        Map<String, Integer> result = gameResultDto.participantReuslt();
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.println(PARSING.playerResult(result));
     }
 }
