@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> readPlayerNames() {
@@ -45,7 +44,7 @@ public class InputView {
     }
 
     private static String printMessageAndReadLine(final String inputMessage) {
-        System.out.println(LINE_SEPARATOR + inputMessage);
+        System.out.println(String.format("%n%s", inputMessage));
         return scanner.nextLine();
     }
 }

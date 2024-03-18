@@ -59,12 +59,12 @@ public class BlackjackGameTest {
                 new Card(Denomination.KING, Suit.CLOVER));
 
         // when
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // then
-        assertThat(playerProfits.get(player).getValue()).isEqualTo(-bettingAmount.getValue());
+        assertThat(playerProfits.get(player).getValue()).isEqualTo(-money.getValue());
     }
 
     @Test
@@ -79,9 +79,9 @@ public class BlackjackGameTest {
         Player player = player(new Card(Denomination.JACK, Suit.CLOVER));
 
         // when
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // then
         assertThat(playerProfits.get(player).getValue()).isEqualTo(10000);
@@ -100,9 +100,9 @@ public class BlackjackGameTest {
                 new Card(Denomination.ACE, Suit.CLOVER));
 
         // when
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // then
         assertThat(playerProfits.get(player).getValue()).isEqualTo(0);
@@ -120,9 +120,9 @@ public class BlackjackGameTest {
                 new Card(Denomination.ACE, Suit.CLOVER));
 
         // when
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // then
         assertThat(playerProfits.get(player).getValue()).isEqualTo(15000);
@@ -138,9 +138,9 @@ public class BlackjackGameTest {
         Player player = player(new Card(Denomination.TEN, Suit.CLOVER));
 
         // when
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // then
         assertThat(playerProfits.get(player).getValue()).isEqualTo(10000);
@@ -156,9 +156,9 @@ public class BlackjackGameTest {
         Player player = player(new Card(Denomination.NINE, Suit.CLOVER));
 
         // when
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // then
         assertThat(playerProfits.get(player).getValue()).isEqualTo(-10000);
@@ -174,9 +174,9 @@ public class BlackjackGameTest {
         Player player = player(new Card(Denomination.TEN, Suit.CLOVER));
 
         // when
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // then
         assertThat(playerProfits.get(player).getValue()).isEqualTo(0);
@@ -193,15 +193,15 @@ public class BlackjackGameTest {
         Player player1 = player(new Card(Denomination.TWO, Suit.CLOVER));
         Player player2 = player(new Card(Denomination.TWO, Suit.CLOVER));
 
-        BettingAmount bettingAmount = new BettingAmount(10000);
-        blackjackGame.bet(player1, bettingAmount);
-        blackjackGame.bet(player2, bettingAmount);
-        Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        Money money = new Money(10000);
+        blackjackGame.bet(player1, money);
+        blackjackGame.bet(player2, money);
+        Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
 
         // when
         int playerProfit = playerProfits.values()
                 .stream()
-                .mapToInt(Profit::getValue)
+                .mapToInt(Money::getValue)
                 .sum();
 
         int dealerProfit = blackjackGame.findDealerProfit(dealer);

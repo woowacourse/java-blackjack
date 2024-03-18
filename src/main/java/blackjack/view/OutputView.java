@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.cardgame.BlackjackGame;
-import blackjack.domain.cardgame.Profit;
+import blackjack.domain.cardgame.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
@@ -69,7 +69,7 @@ public class OutputView {
         System.out.println("## 최종 수익");
         System.out.println(String.format("%s: %d", dealer.getName(), blackjackGame.findDealerProfit(dealer)));
 
-        final Map<Player, Profit> playerProfits = blackjackGame.findPlayerProfits(dealer);
+        final Map<Player, Money> playerProfits = blackjackGame.findPlayerProfits(dealer);
         playerProfits.forEach(
                 (player, profit) -> System.out.println(String.format("%s: %d", player.getName(), profit.getValue())));
     }

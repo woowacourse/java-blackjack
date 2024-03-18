@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private final CardDeck cardDeck;
-    private final Map<Player, BettingAmount> playerBetting;
+    private final Map<Player, Money> playerBetting;
 
     public BlackjackGame() {
         this.cardDeck = new CardDeck();
@@ -30,34 +30,34 @@ public class BlackjackGame {
         giveCard(dealer);
     }
 
-    public void bet(final Player player, final BettingAmount bettingAmount) {
-        playerBetting.put(player, bettingAmount);
+    public void bet(final Player player, final Money money) {
+        playerBetting.put(player, money);
     }
 
-    public Map<Player, Profit> findPlayerProfits(final Dealer dealer) {
+    public Map<Player, Money> findPlayerProfits(final Dealer dealer) {
         return playerBetting.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> findProfit(dealer, entry.getKey(), entry.getValue().getValue()),
+                        entry -> findProfit(dealer, entry.getKey(), entry.getValue()),
                         (x, y) -> x, LinkedHashMap::new
                 ));
     }
 
-    private Profit findProfit(final Dealer dealer, final Player player, final int bettingAmount) {
+    private Money findProfit(final Dealer dealer, final Player player, final Money bettingMoney) {
         final Status status = judgePlayerStatus(dealer, player);
 
         if (Status.WIN.equals(status)) {
-            return new Profit(bettingAmount);
+            return bettingMoney.multiply(1);
         }
         if (Status.PUSH.equals(status)) {
-            return new Profit(0);
+            return bettingMoney.multiply(0);
         }
         if (Status.LOSE.equals(status)) {
-            return new Profit(-bettingAmount);
+            return bettingMoney.multiply(-1);
         }
         if (Status.BLACKJACK.equals(status)) {
-            return new Profit(bettingAmount + bettingAmount / 2);
+            return bettingMoney.multiply(1.5);
         }
 
         throw new IllegalStateException("[ERROR] 유효하지 않은 경우의 수 입니다.");
@@ -83,10 +83,10 @@ public class BlackjackGame {
     }
 
     public int findDealerProfit(final Dealer dealer) {
-        final Map<Player, Profit> playerProfits = findPlayerProfits(dealer);
+        final Map<Player, Money> playerProfits = findPlayerProfits(dealer);
         return -playerProfits.values()
                 .stream()
-                .mapToInt(Profit::getValue)
+                .mapToInt(Money::getValue)
                 .sum();
     }
 }
