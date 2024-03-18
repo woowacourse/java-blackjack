@@ -83,18 +83,14 @@ public class Players {
 
     public Map<ParticipantName, Hands> getPlayerHands() {
         return players.stream()
-                .collect(toMap(Player::getName,
-                        Player::getHands,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+                .collect(toMap(Player::getName, Player::getHands,
+                        (v1, v2) -> v1, LinkedHashMap::new));
     }
 
     public Map<ParticipantName, Score> getPlayerScores() {
         return players.stream()
-                .collect(toMap(Player::getName,
-                        Player::calculate,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+                .collect(toMap(Player::getName, Player::calculate,
+                        (v1, v2) -> v1, LinkedHashMap::new));
     }
 
     public List<ParticipantName> getNames() {

@@ -40,10 +40,8 @@ public class InputView {
 
     public Map<String, Integer> readBettings(final List<ParticipantName> names) {
         return names.stream()
-                .collect(toMap(ParticipantName::getName,
-                        this::readBetting,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+                .collect(toMap(ParticipantName::getName, this::readBetting,
+                        (v1, v2) -> v1, LinkedHashMap::new));
     }
 
     private int readBetting(final ParticipantName name) {
