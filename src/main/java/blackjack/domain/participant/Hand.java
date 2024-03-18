@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 public class Hand {
 
     private static final int INITIAL_APPEND_COUNT = 2;
+    private static final Score INITIAL_SCORE = new Score(0);
 
     private final List<Card> cards;
 
@@ -40,7 +41,7 @@ public class Hand {
     private Score sumCardScore() {
         return cards.stream()
                 .map(Card::score)
-                .reduce(new Score(0), Score::add);
+                .reduce(INITIAL_SCORE, Score::add);
     }
 
     private boolean hasAce() {

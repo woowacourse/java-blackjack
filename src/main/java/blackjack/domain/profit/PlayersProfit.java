@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class PlayersProfit {
 
+    private static final Profit INITIAL_PROFIT = new Profit(0);
+
     private final Map<Player, Profit> profits;
 
     public PlayersProfit(Map<Player, Profit> profits) {
@@ -38,7 +40,7 @@ public class PlayersProfit {
 
     private Profit playersProfit() {
         return profits.values().stream()
-                .reduce(new Profit(0), Profit::add);
+                .reduce(INITIAL_PROFIT, Profit::add);
     }
 
     public Map<Player, Profit> getProfits() {
