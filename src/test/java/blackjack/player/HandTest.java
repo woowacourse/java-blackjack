@@ -54,13 +54,19 @@ class HandTest {
 
     @Test
     @DisplayName("블랙잭 여부를 확인한다.")
-    void isBlackJackTest() {
+    void checkBlackJackTest() {
         List<Card> cardsBlackJack = List.of(
                 new Card(Shape.CLOVER, Rank.ACE),
                 new Card(Shape.DIAMOND, Rank.TEN)
         );
         Hand handBlackJack = new Hand(cardsBlackJack);
 
+        assertThat(handBlackJack.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭 여부를 확인한다.")
+    void checkNotBlackJackTest() {
         List<Card> cards21 = List.of(
                 new Card(Shape.CLOVER, Rank.JACK),
                 new Card(Shape.DIAMOND, Rank.TEN),
@@ -75,7 +81,6 @@ class HandTest {
         Hand hand20 = new Hand(cards20);
 
         assertAll(
-                () -> assertThat(handBlackJack.isBlackJack()).isTrue(),
                 () -> assertThat(hand21.isBlackJack()).isFalse(),
                 () -> assertThat(hand20.isBlackJack()).isFalse()
         );
