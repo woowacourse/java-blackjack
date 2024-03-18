@@ -1,11 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.dto.PlayerBettingProfitOutcome;
-import blackjack.dto.PlayerCardsOutcome;
-import blackjack.dto.PlayerFinalCardsOutcome;
-import blackjack.model.betting.Betting;
 import blackjack.model.cardgenerator.CardGenerator;
-import blackjack.model.dealer.Dealer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,24 +38,6 @@ public class Players {
 
     public void dealCards(final CardGenerator cardGenerator) {
         players.forEach(player -> player.dealCards(cardGenerator));
-    }
-
-    public List<PlayerCardsOutcome> captureCardsOutcomes() {
-        return players.stream()
-                .map(PlayerCardsOutcome::from)
-                .toList();
-    }
-
-    public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {
-        return players.stream()
-                .map(PlayerFinalCardsOutcome::from)
-                .toList();
-    }
-
-    public List<PlayerBettingProfitOutcome> captureBettingProfitOutcomes(final Betting betting, final Dealer dealer) {
-        return players.stream()
-                .map(player -> PlayerBettingProfitOutcome.from(player, betting, dealer))
-                .toList();
     }
 
     public boolean isAllBlackJack() {

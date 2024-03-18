@@ -65,7 +65,9 @@ public class BlackjackGame {
 
     private void showDealingCards(final Players players, final Dealer dealer) {
         List<PlayerName> playerNames = players.getNames();
-        List<PlayerCardsOutcome> playerCardsOutcomes = players.captureCardsOutcomes();
+        List<PlayerCardsOutcome> playerCardsOutcomes = players.getPlayers().stream()
+                .map(PlayerCardsOutcome::from)
+                .toList();
         Card dealerFirstCard = dealer.getFirstCard();
         outputView.printDealingCards(playerNames, playerCardsOutcomes, dealerFirstCard);
     }
@@ -107,13 +109,16 @@ public class BlackjackGame {
 
     private void showFinalCards(final Players players, final Dealer dealer) {
         DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.from(dealer);
-        List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
+        List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.getPlayers().stream()
+                .map(PlayerFinalCardsOutcome::from)
+                .toList();
         outputView.printFinalCards(dealerFinalCardsOutcome, playerFinalCardsOutcomes);
     }
 
     private void showBettingProfit(final Players players, final Dealer dealer, final Betting betting) {
-        List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes
-                = players.captureBettingProfitOutcomes(betting, dealer);
+        List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = players.getPlayers().stream()
+                .map(player -> PlayerBettingProfitOutcome.from(player, betting, dealer))
+                .toList();
         outputView.printBettingProfit(playerBettingProfitOutcomes);
     }
 
