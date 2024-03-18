@@ -3,13 +3,14 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Score;
 
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.function.BiPredicate;
 
 public enum ResultStatus {
     WIN(Score::isGreaterThan),
     DRAW(Score::equals),
-    LOSE(Score::isLessThan);
+    LOSE(Score::isLessThan),
+
+    NOTHING((playerScore, dealerScore) -> false);
 
     private final BiPredicate<Score, Score> condition;
 
@@ -18,23 +19,25 @@ public enum ResultStatus {
     }
 
     public static ResultStatus of(final Player player, final Dealer dealer) {
-        final Optional<ResultStatus> resultStatusOpt = checkByState(player, dealer);
+        final ResultStatus resultStatus = askByState(player, dealer);
 
-        return resultStatusOpt.orElseGet(() ->
-                compareScore(player.calculateScore(), dealer.calculateScore()));
+        if (resultStatus.isNothing()) {
+            return compareScore(player.calculateScore(), dealer.calculateScore());
+        }
+        return resultStatus;
     }
 
-    private static Optional<ResultStatus> checkByState(final Player player, final Dealer dealer) {
+    private static ResultStatus askByState(final Player player, final Dealer dealer) {
         if (player.isBlackjack() && dealer.isBlackjack()) {
-            return Optional.of(DRAW);
+            return DRAW;
         }
         if (dealer.isBlackjack() || player.isBust()) {
-            return Optional.of(LOSE);
+            return LOSE;
         }
         if (dealer.isBust() || player.isBlackjack()) {
-            return Optional.of(WIN);
+            return WIN;
         }
-        return Optional.empty();
+        return NOTHING;
     }
 
     private static ResultStatus compareScore(final Score playerScore, final Score dealerScore) {
@@ -54,5 +57,9 @@ public enum ResultStatus {
 
     public boolean isDraw() {
         return this == DRAW;
+    }
+
+    private boolean isNothing() {
+        return this == NOTHING;
     }
 }
