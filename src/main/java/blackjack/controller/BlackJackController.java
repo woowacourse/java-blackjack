@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckShuffleStrategy;
 import blackjack.domain.card.RandomCardDeckShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -53,7 +54,7 @@ public class BlackJackController {
     }
 
     private BlackJackGame initBlackJackGame(Players players) {
-        RandomCardDeckShuffleStrategy randomCardDeckShuffleStrategy = new RandomCardDeckShuffleStrategy();
+        CardDeckShuffleStrategy randomCardDeckShuffleStrategy = new RandomCardDeckShuffleStrategy();
         CardDeck cardDeck = CardDeck.of(randomCardDeckShuffleStrategy);
         Dealer dealer = new Dealer(cardDeck);
 
