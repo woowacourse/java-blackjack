@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public enum Command {
     YES("y"),
@@ -18,9 +17,5 @@ public enum Command {
                 .filter(command -> command.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다."));
-    }
-
-    public boolean isYes() {
-        return Objects.equals(value, Command.YES.value);
     }
 }

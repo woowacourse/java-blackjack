@@ -32,6 +32,6 @@ public class InputView {
 
     public boolean readPlayerWantDrawMore() {
         Command command = Command.from(scanner.nextLine());
-        return command.isYes();
+        return command == Command.YES;
     }
 }
