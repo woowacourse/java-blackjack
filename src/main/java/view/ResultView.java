@@ -5,13 +5,13 @@ import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import domain.gamer.bet.GamerWallet;
-import domain.gamer.bet.GamersWallet;
+import domain.result.Money;
 import view.notations.CardNumberNotation;
 import view.notations.CardShapeNotation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -77,9 +77,8 @@ public class ResultView {
         return CardShapeNotation.findNotationByCardShape(cardShape);
     }
 
-    public void printDealerHitMessage(Dealer dealer, Card card) {
-        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.",
-                dealer.getPlayerName(), resolveCardExpression(card));
+    public void printDealerHitMessage(Dealer dealer) {
+        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getPlayerName());
     }
 
     public void printAllGamersCardsResult(Dealer dealer, List<Player> players) {
@@ -102,10 +101,13 @@ public class ResultView {
                 + LINE_SEPARATOR;
     }
 
-    public void printFinalProfit(GamersWallet gamersWallet) {
+    public void printFinalProfit(Map<Player, Money> playersResult, Dealer dealer, Money dealerProfit) {
         System.out.println("## 최종 수익");
-        List<GamerWallet> gamerWallets = gamersWallet.getGamerWallets();
-        gamerWallets.stream().map(gamerWallet -> gamerWallet.playerName() + ": " + gamerWallet.getMoney())
-                .forEach(System.out::println);
+        System.out.println(dealer.getPlayerName() + ": " + dealerProfit.getMoney());
+        for (Map.Entry<Player, Money> playerMoneyEntry : playersResult.entrySet()) {
+            Player player = playerMoneyEntry.getKey();
+            Money money = playerMoneyEntry.getValue();
+            System.out.println(player.getPlayerName() + ": " + money.getMoney());
+        }
     }
 }

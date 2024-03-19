@@ -1,26 +1,21 @@
 package domain;
 
-import domain.cards.Card;
 import domain.cards.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
 
-public class BlackJackGame {
+public class BlackJackGameRule {
 
     private static final int INIT_CARD_COUNT = 2;
 
-    private final Players players;
-    private final Dealer dealer;
     private final Deck deck;
 
-    public BlackJackGame(Players players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+    public BlackJackGameRule() {
         this.deck = Deck.createShuffledDeck();
     }
 
-    public void shareInitCards() {
+    public void shareInitCards(Players players, Dealer dealer) {
         players.getPlayers().forEach(this::hitInitCards);
         hitInitCards(dealer);
     }
@@ -31,13 +26,7 @@ public class BlackJackGame {
         }
     }
 
-    public void allowHit(Player player) {
+    public void gamerHit(Player player) {
         player.hit(deck.pickOneCard());
-    }
-
-    public Card dealerHit() {
-        Card pickedCard = deck.pickOneCard();
-        dealer.hit(pickedCard);
-        return pickedCard;
     }
 }

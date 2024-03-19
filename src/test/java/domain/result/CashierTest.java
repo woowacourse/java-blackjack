@@ -5,16 +5,11 @@ import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import domain.gamer.bet.GamerWallet;
-import domain.gamer.bet.GamersWallet;
-import domain.gamer.bet.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class CashierTest {
 
@@ -31,7 +26,7 @@ public class CashierTest {
         dealer.hit(Card.valueOf(CardNumber.FIVE, CardShape.HEART));
         List<GamerWallet> gamerWallets = List.of(new GamerWallet(player, money),
                 new GamerWallet(dealer, new Money(0)));
-        cashier = new Cashier(new GamersWallet(gamerWallets), new Judge());
+        cashier = new Cashier(new PlayersResult(gamerWallets), new Judge());
     }
 
     @DisplayName("승리하면 베팅액의 1배를 준다.")
@@ -39,8 +34,8 @@ public class CashierTest {
     void testCashierCalculateWinProfit() {
         player.hit(Card.valueOf(CardNumber.SIX, CardShape.HEART));
         cashier.calculateBetResult(List.of(player), dealer);
-        GamersWallet gamersWallet = cashier.getGamersWallet();
-        assertThat(gamersWallet.findMoneyByPlayer(player))
+        PlayersResult playersResult = cashier.getGamersWallet();
+        assertThat(playersResult.findMoneyByPlayer(player))
                 .isEqualTo(10000);
     }
 
@@ -49,8 +44,8 @@ public class CashierTest {
     void testCashierCalculateLoseProfit() {
         player.hit(Card.valueOf(CardNumber.FOUR, CardShape.HEART));
         cashier.calculateBetResult(List.of(player), dealer);
-        GamersWallet gamersWallet = cashier.getGamersWallet();
-        assertThat(gamersWallet.findMoneyByPlayer(player))
+        PlayersResult playersResult = cashier.getGamersWallet();
+        assertThat(playersResult.findMoneyByPlayer(player))
                 .isEqualTo(-10000);
     }
 
@@ -59,8 +54,8 @@ public class CashierTest {
     void testCashierCalculateDrawProfit() {
         player.hit(Card.valueOf(CardNumber.FIVE, CardShape.HEART));
         cashier.calculateBetResult(List.of(player), dealer);
-        GamersWallet gamersWallet = cashier.getGamersWallet();
-        assertThat(gamersWallet.findMoneyByPlayer(player))
+        PlayersResult playersResult = cashier.getGamersWallet();
+        assertThat(playersResult.findMoneyByPlayer(player))
                 .isEqualTo(0);
     }
 
@@ -70,8 +65,8 @@ public class CashierTest {
         player.hit(Card.valueOf(CardNumber.ACE, CardShape.HEART));
         player.hit(Card.valueOf(CardNumber.KING, CardShape.HEART));
         cashier.calculateBetResult(List.of(player), dealer);
-        GamersWallet gamersWallet = cashier.getGamersWallet();
-        assertThat(gamersWallet.findMoneyByPlayer(player))
+        PlayersResult playersResult = cashier.getGamersWallet();
+        assertThat(playersResult.findMoneyByPlayer(player))
                 .isEqualTo(15000);
     }
 
@@ -89,11 +84,11 @@ public class CashierTest {
         List<GamerWallet> gamerWallets = List.of(new GamerWallet(player1, money1),
                 new GamerWallet(player2, money2),
                 new GamerWallet(dealer, new Money(0)));
-        Cashier cashier = new Cashier(new GamersWallet(gamerWallets), new Judge());
+        Cashier cashier = new Cashier(new PlayersResult(gamerWallets), new Judge());
 
-        GamersWallet gamersWallet = cashier.getGamersWallet();
+        PlayersResult playersResult = cashier.getGamersWallet();
         cashier.calculateBetResult(List.of(player1, player2), dealer);
 
-        assertThat(gamersWallet.findMoneyByPlayer(dealer)).isEqualTo(-10000);
+        assertThat(playersResult.findMoneyByPlayer(dealer)).isEqualTo(-10000);
     }
 }

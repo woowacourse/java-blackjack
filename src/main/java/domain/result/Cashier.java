@@ -2,19 +2,17 @@ package domain.result;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import domain.gamer.bet.GamersWallet;
-import domain.gamer.bet.Money;
 
 import java.util.List;
 import java.util.Map;
 
 public class Cashier {
 
-    private final GamersWallet gamersWallet;
+    private final PlayersResult playersResult;
     private final Judge judge;
 
-    public Cashier(GamersWallet gamersWallet, Judge judge) {
-        this.gamersWallet = gamersWallet;
+    public Cashier(PlayersResult playersResult, Judge judge) {
+        this.playersResult = playersResult;
         this.judge = judge;
     }
 
@@ -22,27 +20,19 @@ public class Cashier {
         judge.decideResult(players, dealer);
         Map<Player, WinState> playersResult = judge.getPlayersResult();
         calculatePlayersProfit(playersResult);
-        calculateDealerProfit(dealer);
-    }
-
-    private int calculateProfitByWinState(WinState winState, int money) {
-        return (int) (money * winState.getProfitRate());
     }
 
     private void calculatePlayersProfit(Map<Player, WinState> playersResult) {
         for (Player player : playersResult.keySet()) {
-            int playerMoney = gamersWallet.findMoneyByPlayer(player);
-            playerMoney = calculateProfitByWinState(playersResult.get(player), playerMoney);
-            gamersWallet.applyProfitToGamer(player, new Money(playerMoney));
+            this.playersResult.applyProfitToPlayer(player, playersResult.get(player));
         }
     }
 
-    private void calculateDealerProfit(Dealer dealer) {
-        int allProfit = gamersWallet.sumAllPlayerProfit();
-        gamersWallet.applyProfitToGamer(dealer, new Money(-allProfit));
+    public Money calculateDealerProfit() {
+        return new Money(-playersResult.sumAllPlayerProfit());
     }
 
-    public GamersWallet getGamersWallet() {
-        return gamersWallet;
+    public Map<Player, Money> getPlayersResult() {
+        return playersResult.getPlayerResult();
     }
 }
