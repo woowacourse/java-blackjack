@@ -13,6 +13,7 @@ import java.util.List;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
 import model.participant.Names;
+import model.participant.dto.PlayerFaceUpResult;
 import util.ResultMapper;
 import view.OutputView;
 
@@ -47,10 +48,11 @@ public class BlackJackLauncher {
 
     private void proceedPlayersTurn(Casino casino) {
         while (casino.hasAvailablePlayer()) {
-            PlayerFaceUpResultInfo nextPlayerFaceUpInfo = ResultMapper.fromPlayerFaceUpResult(
-                    casino.getNextPlayerFaceUpInfo());
-            boolean playerChoice = inputRetryHelper(() -> inputPlayerHitChoice(nextPlayerFaceUpInfo.name()));
+            PlayerFaceUpResult nextPlayerFaceUpReuslt = casino.getNextPlayerFaceUpInfo();
+            boolean playerChoice = inputRetryHelper(
+                    () -> inputPlayerHitChoice(nextPlayerFaceUpReuslt.getPartipantNameAsString()));
             casino.distinctPlayerChoice(playerChoice);
+            PlayerFaceUpResultInfo nextPlayerFaceUpInfo = ResultMapper.fromPlayerFaceUpResult(nextPlayerFaceUpReuslt);
             showPlayerChoiceResult(playerChoice, nextPlayerFaceUpInfo);
         }
     }
