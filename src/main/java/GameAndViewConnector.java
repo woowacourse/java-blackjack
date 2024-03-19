@@ -27,13 +27,14 @@ public class GameAndViewConnector {
 
     public void gameStart() {
         Players players = new Players(generatePlayers(inputView.readPlayersNames()));
-        BlackJackGame blackJackGame = new BlackJackGame(players);
-        GamersWallet gamersWallet = generateGamersWallet(players, blackJackGame.dealer());
+        Dealer dealer = new Dealer();
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
+        GamersWallet gamersWallet = generateGamersWallet(players, dealer);
         Cashier cashier = new Cashier(gamersWallet, new Judge());
 
-        configureSetup(blackJackGame);
-        progressGame(blackJackGame);
-        makeFinalResult(blackJackGame, cashier);
+        configureSetup(blackJackGame, players, dealer);
+        progressGame(blackJackGame, players, dealer);
+        makeFinalResult(players, dealer, cashier);
     }
 
     private List<Player> generatePlayers(List<String> playersNames) {
@@ -54,39 +55,39 @@ public class GameAndViewConnector {
         return new GamersWallet(gamerWallets);
     }
 
-    private void configureSetup(BlackJackGame blackJackGame) {
+    private void configureSetup(BlackJackGame blackJackGame, Players players, Dealer dealer) {
         blackJackGame.shareInitCards();
-        resultView.printInitialCards(blackJackGame.dealer(), blackJackGame.players());
+        resultView.printInitialCards(dealer, players.getPlayers());
     }
 
-    private void progressGame(BlackJackGame blackJackGame) {
-        progressPlayersGame(blackJackGame);
-        progressDealerGame(blackJackGame);
-        resultView.printAllGamersCardsResult(blackJackGame.dealer(), blackJackGame.players());
+    private void progressGame(BlackJackGame blackJackGame, Players players, Dealer dealer) {
+        progressPlayersGame(blackJackGame, players);
+        progressDealerGame(blackJackGame, dealer);
+        resultView.printAllGamersCardsResult(dealer, players.getPlayers());
     }
 
-    private void progressPlayersGame(BlackJackGame blackJackGame) {
-        for (Player player : blackJackGame.players()) {
+    private void progressPlayersGame(BlackJackGame blackJackGame, Players players) {
+        for (Player player : players.getPlayers()) {
             progressPlayerGame(blackJackGame, player);
         }
     }
 
     private void progressPlayerGame(BlackJackGame blackJackGame, Player player) {
-        while (blackJackGame.canPlayerHit(player) && inputView.readHitOrStay(player) == HitState.HIT) {
+        while (player.canHit() && inputView.readHitOrStay(player) == HitState.HIT) {
             blackJackGame.allowHit(player);
             resultView.printPlayerCards(player);
         }
     }
 
-    private void progressDealerGame(BlackJackGame blackJackGame) {
-        while (blackJackGame.canDealerMoreHit()) {
+    private void progressDealerGame(BlackJackGame blackJackGame, Dealer dealer) {
+        while (dealer.canHit()) {
             Card hitedCard = blackJackGame.dealerHit();
-            resultView.printDealerHitMessage(blackJackGame.dealer(), hitedCard);
+            resultView.printDealerHitMessage(dealer, hitedCard);
         }
     }
 
-    private void makeFinalResult(BlackJackGame blackJackGame, Cashier cashier) {
-        cashier.calculateBetResult(blackJackGame.players(), blackJackGame.dealer());
+    private void makeFinalResult(Players players, Dealer dealer, Cashier cashier) {
+        cashier.calculateBetResult(players.getPlayers(), dealer);
         resultView.printFinalProfit(cashier.getGamersWallet());
     }
 }
