@@ -5,7 +5,7 @@ import domain.card.Hand;
 
 import java.util.List;
 
-public class Finished implements State {
+public abstract class Finished implements State {
     public static final int DEFAULT_RATE = 1;
     private final Hand hand;
 

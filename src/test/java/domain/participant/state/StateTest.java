@@ -84,12 +84,10 @@ class StateTest {
     @Test
     void readyToBlackjack() {
         // given
-        State state = new Ready(new Hand(
-                new Card(Denomination.KING, Suit.CLUBS),
-                new Card(Denomination.FOUR, Suit.CLUBS)
-        ));
+        State state = new Ready(new Hand());
         // when
-        state = state.draw(new Card(Denomination.SEVEN, Suit.CLUBS));
+        state = state.draw(new Card(Denomination.KING, Suit.CLUBS));
+        state = state.draw(new Card(Denomination.ACE, Suit.CLUBS));
         //then
         assertThat(state).isInstanceOf(Blackjack.class);
     }
