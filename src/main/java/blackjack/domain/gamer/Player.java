@@ -5,9 +5,11 @@ public class Player extends Gamer {
     private static final int HIT_THRESHOLD = 21;
 
     private final Name name;
+    private final BetAmount betAmount;
 
-    public Player(final Name name) {
-        this.name = name;
+    public Player(final String name, final long betAmount) {
+        this.name = new Name(name);
+        this.betAmount = new BetAmount(betAmount);
     }
 
     @Override
@@ -17,5 +19,9 @@ public class Player extends Gamer {
 
     public Name getName() {
         return name;
+    }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
     }
 }

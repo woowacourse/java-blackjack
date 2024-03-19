@@ -1,20 +1,18 @@
 package blackjack;
 
 import blackjack.domain.GameBoard;
-import blackjack.domain.Referee;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckShuffleFactory;
+import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.dto.DealerOutcomeDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayersOutcomeDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class Application {
 
@@ -26,18 +24,24 @@ public class Application {
         OutputView.printFinalState(DealerDto.allCardToDto(gameBoard.getDealer()),
                 PlayersDto.toDto(gameBoard.getPlayers()));
 
-        final Referee referee = new Referee(gameBoard.getDealerHand());
-        final DealerOutcomeDto dealerOutcome = DealerOutcomeDto.toDto(gameBoard.getDealerOutcome(referee));
-        final PlayersOutcomeDto playersOutcome = PlayersOutcomeDto.toDto(gameBoard.getPlayersOutcome(referee));
-        OutputView.printFinalOutcomes(dealerOutcome, playersOutcome);
+        OutputView.printTotalProfits(gameBoard.getDealerProfit(), gameBoard.getPlayersProfit());
     }
 
     private static GameBoard createGameBoard() {
-        final Deck deck = new Deck(new DeckShuffleFactory());
+        final Deck deck = new Deck(new ShuffledDeckFactory());
         final Dealer dealer = new Dealer();
-        final Players players = Players.from(InputView.readPlayerNames());
+
+        List<String> playerNames = InputView.readPlayerNames();
+        final Players players = new Players(preparePlayers(playerNames));
+
         final Gamers gamers = new Gamers(dealer, players);
         return new GameBoard(deck, gamers);
+    }
+
+    private static List<Player> preparePlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(name -> new Player(name, InputView.readPlayerBetAmount(name)))
+                .toList();
     }
 
     private static void drawInitialCard(final GameBoard gameBoard) {

@@ -1,4 +1,4 @@
-package blackjack.view.mapper;
+package blackjack.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class SuitMapperTest {
 
-    @DisplayName("SuitTranslator는 Suit의 멤버를 모두 알고 있다.")
+    @DisplayName("SuitMapper는 Suit의 멤버를 모두 알고 있다.")
     @Test
     void knowAllValuesOfSuit() {
         final List<Suit> expected = List.of(Suit.values());

@@ -1,16 +1,16 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.BetAmount;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameBoard {
 
@@ -34,37 +34,24 @@ public class GameBoard {
         return gamer.canHit();
     }
 
-    public List<Outcome> getDealerOutcome(final Referee referee) {
-        return Outcome.reverse(calculateOutcomes(referee));
+    public double getDealerProfit() {
+        return gamers.getPlayers().getPlayers().stream()
+                .mapToDouble(player -> GameResult.calculateDealerProfit(getDealer(), player))
+                .sum();
     }
 
-    private List<Outcome> calculateOutcomes(final Referee referee) {
-        final List<Outcome> outcomes = new ArrayList<>();
-        for (final Player player : gamers.getPlayers().getPlayers()) {
-            outcomes.add(calculateOutcome(referee, player.getName()));
-        }
-        return outcomes;
-    }
-
-    public Map<Player, Outcome> getPlayersOutcome(final Referee referee) {
-        Map<Player, Outcome> playerOutcomeMap = new LinkedHashMap<>();
-        for (final Player player : gamers.getPlayers().getPlayers()) {
-            playerOutcomeMap.put(player, calculateOutcome(referee, player.getName()));
-        }
-        return playerOutcomeMap;
-    }
-
-    private Outcome calculateOutcome(final Referee referee, final Name name) {
-        final Player player = gamers.getPlayers().findByName(name);
-        return referee.doesPlayerWin(player.getHand());
+    public Map<Name, BetAmount> getPlayersProfit() {
+        return gamers.getPlayers().getPlayers().stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> new BetAmount(GameResult.calculatePlayerProfit(getDealer(), player)),
+                        (p1, p2) -> p1,
+                        LinkedHashMap::new
+                ));
     }
 
     public Dealer getDealer() {
         return gamers.getDealer();
-    }
-
-    public Hand getDealerHand() {
-        return gamers.getDealer().getHand();
     }
 
     public List<Player> getPlayers() {
