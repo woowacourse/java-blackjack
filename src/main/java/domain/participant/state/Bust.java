@@ -27,6 +27,11 @@ public class Bust extends Finished {
     }
 
     @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public State stand() {
         throw new UnsupportedOperationException("버스트 된 플레이어는 스탠드 할 수 없습니다.");
     }

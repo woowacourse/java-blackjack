@@ -33,6 +33,16 @@ public class Stand extends Finished {
     }
 
     @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public State stand() {
         return this;
     }
