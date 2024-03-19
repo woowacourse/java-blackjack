@@ -13,7 +13,7 @@ public class Name {
     }
 
     private void validate(final String name) {
-        if (name.isEmpty()) {
+        if (name.isBlank()) {
             throw new IllegalArgumentException("빈 이름은 사용할 수 없습니다.");
         }
     }
