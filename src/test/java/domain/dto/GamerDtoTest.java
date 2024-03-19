@@ -14,7 +14,7 @@ class GamerDtoTest {
     @Test
     @DisplayName("Gamer를 통해 생성할 수 있다.")
     void create() {
-        Assertions.assertThatCode(() -> GamerDto.fromPlayer(new Player(new Name("test"))))
+        Assertions.assertThatCode(() -> PlayerDto.from(new Player(new Name("test"))))
                 .doesNotThrowAnyException();
 
     }
@@ -22,8 +22,8 @@ class GamerDtoTest {
     @Test
     @DisplayName("이름을 반환할 수 있다.")
     void getName() {
-        GamerDto gamerDto = GamerDto.fromPlayer(new Player(new Name("test")));
-        Assertions.assertThat(gamerDto.getName()).isEqualTo("test");
+        PlayerDto playerDto = PlayerDto.from(new Player(new Name("test")));
+        Assertions.assertThat(playerDto.getName()).isEqualTo("test");
     }
 
 
@@ -33,8 +33,8 @@ class GamerDtoTest {
         Player player = new Player(new Name("test"));
         Card card = Card.getCard(CardType.SPADE, CardNumber.ACE);
         player.takeCard(card);
-        GamerDto gamerDto = GamerDto.fromPlayer(player);
-        Assertions.assertThat(gamerDto.getCards())
+        PlayerDto playerDto = PlayerDto.from(player);
+        Assertions.assertThat(playerDto.getCards())
                 .isEqualTo(List.of(card));
     }
 
@@ -44,8 +44,8 @@ class GamerDtoTest {
         Player player = new Player(new Name("test"));
         player.takeCard(Card.getCard(CardType.SPADE, CardNumber.ACE));
         player.takeCard(Card.getCard(CardType.SPADE, CardNumber.TEN));
-        GamerDto gamerDto = GamerDto.fromPlayer(player);
-        Assertions.assertThat(gamerDto.getTotalScore())
+        PlayerDto playerDto = PlayerDto.from(player);
+        Assertions.assertThat(playerDto.getTotalScore())
                 .isEqualTo(21);
     }
 }

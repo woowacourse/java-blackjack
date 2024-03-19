@@ -1,6 +1,7 @@
 package domain;
 
 import domain.constant.GamerResult;
+import domain.dto.HandStatus;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,9 +11,9 @@ class BlackJackResultTest {
     @Test
     @DisplayName("Player들의 승리 결과를 반환한다.")
     void getPlayersResult() {
-        BlackJackResult blackJackResult = new BlackJackResult(20, Map.of(
-                "test", 10,
-                "test2", 21));
+        BlackJackResult blackJackResult = new BlackJackResult(new HandStatus(20, 3), Map.of(
+                "test", new HandStatus(10, 3),
+                "test2", new HandStatus(21, 3)));
         Map<String, GamerResult> playersResult = blackJackResult.getPlayersResult();
         Assertions.assertThat(playersResult)
                 .isEqualTo(Map.of(
@@ -23,9 +24,9 @@ class BlackJackResultTest {
     @Test
     @DisplayName("Dealer의 승리 결과를 반환한다.")
     void getDealerResult() {
-        BlackJackResult blackJackResult = new BlackJackResult(20, Map.of(
-                "test", 10,
-                "test2", 21));
+        BlackJackResult blackJackResult = new BlackJackResult(new HandStatus(20, 3), Map.of(
+                "test", new HandStatus(10, 3),
+                "test2", new HandStatus(21, 3)));
         Map<GamerResult, Integer> dealerResult = blackJackResult.getDealerResult();
         Assertions.assertThat(dealerResult)
                 .isEqualTo(Map.of(

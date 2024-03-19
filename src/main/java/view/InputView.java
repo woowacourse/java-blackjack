@@ -37,6 +37,21 @@ public class InputView {
         }
     }
 
+    public static int readBetting(Supplier<String> input, String playerName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
+        String inputBetting = input.get();
+        validateEmpty(inputBetting);
+        return getAndValidateNumber(inputBetting);
+    }
+
+    private static int getAndValidateNumber(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 양의 정수여야 합니다");
+        }
+    }
+
     public static boolean readAnswer(Supplier<String> input, String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         String result = input.get();

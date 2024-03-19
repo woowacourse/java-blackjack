@@ -21,6 +21,10 @@ public abstract class Gamer {
         return hand.getResultScore();
     }
 
+    public int getHandCount() {
+        return hand.getHandCount();
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }

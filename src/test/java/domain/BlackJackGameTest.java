@@ -1,7 +1,7 @@
 package domain;
 
+import domain.dto.DealerDto;
 import domain.dto.GameStatus;
-import domain.dto.GamerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -81,8 +81,8 @@ public class BlackJackGameTest {
         blackJackGame.initialDealing();
         blackJackGame.drawDealerCard();
         GameStatus gameStatus = new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers());
-        GamerDto gamerDto = gameStatus.getDealerDto();
-        Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);
+        DealerDto playerDto = gameStatus.getDealerDto();
+        Assertions.assertThat(playerDto.getTotalScore()).isGreaterThan(16);
     }
 
     @Test

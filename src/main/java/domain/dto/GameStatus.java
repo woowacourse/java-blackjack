@@ -6,28 +6,28 @@ import java.util.Collections;
 import java.util.List;
 
 public class GameStatus {
-    private final List<GamerDto> gamerDtos;
-    private final GamerDto dealerDto;
+    private final List<PlayerDto> playerDtos;
+    private final DealerDto dealerDto;
 
     public GameStatus(Dealer dealer, List<Player> players) {
-        this.dealerDto = GamerDto.fromDealer(dealer);
-        this.gamerDtos = players.stream()
-                .map(GamerDto::fromPlayer)
+        this.dealerDto = DealerDto.from(dealer);
+        this.playerDtos = players.stream()
+                .map(PlayerDto::from)
                 .toList();
     }
 
-    public List<GamerDto> getGamerDtos() {
-        return Collections.unmodifiableList(gamerDtos);
+    public List<PlayerDto> getGamerDtos() {
+        return Collections.unmodifiableList(playerDtos);
     }
 
-    public GamerDto getGamerDtoFromName(String name) {
-        return gamerDtos.stream()
+    public PlayerDto getGamerDtoFromName(String name) {
+        return playerDtos.stream()
                 .filter(gamerDto -> gamerDto.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
     }
 
-    public GamerDto getDealerDto() {
+    public DealerDto getDealerDto() {
         return dealerDto;
     }
 }
