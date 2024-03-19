@@ -24,7 +24,7 @@ public class Hand {
         Score totalScore = totalScore();
 
         if (hasAce()) {
-            return totalScore.addAceScoreIfNotBust();
+            return totalScore.soft();
         }
         return totalScore;
     }

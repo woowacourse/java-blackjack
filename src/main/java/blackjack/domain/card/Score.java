@@ -10,7 +10,7 @@ public class Score {
         this.value = value;
     }
 
-    public Score addAceScoreIfNotBust() {
+    public Score soft() {
         if (!new Score(this.value + ACE_ADDITIONAL_SCORE.value).isBust()) {
             return new Score(this.value + ACE_ADDITIONAL_SCORE.value);
         }
