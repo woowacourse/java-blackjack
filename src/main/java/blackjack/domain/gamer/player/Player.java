@@ -15,7 +15,7 @@ public class Player extends Gamer {
     }
 
 
-    private static void validateBlank(String name) {
+    private void validateBlank(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(NAME_EMPTY_ERROR);
         }
