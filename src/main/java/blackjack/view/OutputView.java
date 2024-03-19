@@ -17,7 +17,7 @@ public class OutputView {
     private static final String SCORE_FORM = " - 결과: %s";
     private static final String BETTING_PROFIT_INTRO = "\n## 최종 수익";
     private static final String BETTING_PROFIT_FORM = "%s: %d";
-    private static final String ERROR_MESSAGE_FORM = "[ERROR] %s";
+    private static final String ERROR_MESSAGE_FORM = "[ERROR] %s\n";
 
     public void printDealingCards(final List<PlayerName> playerNames,
                                   final List<PlayerCardsOutcome> playerCardsOutcomes,
@@ -112,10 +112,6 @@ public class OutputView {
     }
 
     public void printException(final String errorMessage) {
-        System.out.println(formatErrorMessage(errorMessage));
-    }
-
-    public String formatErrorMessage(final String errorMessage) {
-        return String.format(ERROR_MESSAGE_FORM, errorMessage);
+        System.out.printf(ERROR_MESSAGE_FORM, errorMessage);
     }
 }
