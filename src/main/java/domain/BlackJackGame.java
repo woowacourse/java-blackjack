@@ -13,8 +13,8 @@ public class BlackJackGame {
 
     private static final int INIT_CARD_COUNT = 2;
 
-    Gamers gamers;
-    Deck deck;
+    private final Gamers gamers;
+    private final Deck deck;
 
     public BlackJackGame(Players players) {
         this.gamers = new Gamers(players, new Dealer());
