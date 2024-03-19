@@ -21,4 +21,9 @@ public class Hit extends Ready {
     public State stand() {
         return new Stand(this.hand);
     }
+
+    @Override
+    public boolean isHit() {
+        return true;
+    }
 }

@@ -17,5 +17,7 @@ public interface State {
 
     boolean isBlackjack();
 
+    boolean isHit();
+
     List<Card> hand();
 }

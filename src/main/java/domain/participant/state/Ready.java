@@ -54,6 +54,11 @@ public class Ready implements State {
     }
 
     @Override
+    public boolean isHit() {
+        return false;
+    }
+
+    @Override
     public List<Card> hand() {
         return hand.cards();
     }

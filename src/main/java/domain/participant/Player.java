@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Hand;
-import domain.participant.state.Hit;
 import domain.participant.state.Ready;
 import domain.participant.state.State;
 
@@ -26,7 +25,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return state instanceof Hit;
+        return state.isHit();
     }
 
     public void stand() {
