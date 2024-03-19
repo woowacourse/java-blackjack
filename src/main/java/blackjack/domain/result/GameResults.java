@@ -7,7 +7,6 @@ import blackjack.domain.gamer.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: 네이밍 적합하게 수정
 public class GameResults {
     private final Map<Gamer, GameResult> gameResults;
 
@@ -24,19 +23,15 @@ public class GameResults {
     }
 
     public int calculateDealerProfit(final Bettings bettings) {
-        return -calculatePlayersProfit(bettings);
+        return -(gameResults.keySet().stream()
+                .filter(gamer -> gamer.getClass() == Player.class)
+                .map(gamer -> calculateGamerProfit(gamer, bettings))
+                .mapToInt(Integer::intValue)
+                .sum());
     }
 
     public int calculatePlayerProfit(final Player player, final Bettings bettings) {
         return calculateGamerProfit(player, bettings);
-    }
-
-    private int calculatePlayersProfit(final Bettings bettings) {
-        return gameResults.keySet().stream()
-                .filter(gamer -> gamer.getClass() == Player.class)
-                .map(gamer -> calculateGamerProfit(gamer, bettings))
-                .mapToInt(Integer::intValue)
-                .sum();
     }
 
     private int calculateGamerProfit(final Gamer gamer, final Bettings bettings) {
