@@ -4,15 +4,21 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Gamer;
 
 public class Player extends Gamer {
-    private final PlayerName name;
+    private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
 
-    private Player(PlayerName name, Deck deck) {
+    private final String name;
+
+    public Player(String name, Deck deck) {
         super(deck);
+        validateBlank(name);
         this.name = name;
     }
 
-    public static Player of(String name, Deck deck) {
-        return new Player(new PlayerName(name), deck);
+
+    private static void validateBlank(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
+        }
     }
 
     public boolean canContinue() {
@@ -20,6 +26,6 @@ public class Player extends Gamer {
     }
 
     public String getName() {
-        return name.get();
+        return name;
     }
 }

@@ -18,7 +18,7 @@ public class Players {
     public static Players of(List<String> names, Deck deck) {
         validateDuplicate(names);
         return new Players(names.stream()
-                .map(name -> Player.of(name, deck))
+                .map(name -> new Player(name, deck))
                 .toList());
     }
 

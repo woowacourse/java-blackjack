@@ -23,7 +23,7 @@ public class PlayerTest {
     @DisplayName("의 이름이 공백일 경우 예외가 발생한다.")
     void validateEmptyTest(String name) {
         // given & when & then
-        assertThatCode(() -> Player.of(name, new Deck(cards -> cards)))
+        assertThatCode(() -> new Player(name, new Deck(cards -> cards)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
     }
@@ -32,7 +32,7 @@ public class PlayerTest {
     @DisplayName("가 처음 받은 카드 두장을 반환한다.")
     void deal() {
         // given
-        Player player = Player.of("lemone", new Deck(cards -> cards));
+        Player player = new Player("lemone", new Deck(cards -> cards));
 
         // when
         player.deal();
@@ -45,7 +45,7 @@ public class PlayerTest {
     @DisplayName("는 카드를 뽑기로 결정했을 때 카드 한장을 반환한다.")
     void hit() {
         // given
-        Player player = Player.of("lemone", new Deck(cards -> cards));
+        Player player = new Player("lemone", new Deck(cards -> cards));
 
         // when
         player.hit();
@@ -58,7 +58,7 @@ public class PlayerTest {
     @DisplayName("는 블랙잭일 경우 더 이상 진행할 수 없다.")
     void canContinueBlackjack() {
         // given
-        Player player = Player.of("seyang", new Deck(cards ->
+        Player player = new Player("seyang", new Deck(cards ->
                 List.of(new Card(HEART, ACE), new Card(CLUB, QUEEN))));
 
         // when
