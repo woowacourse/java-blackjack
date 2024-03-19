@@ -13,7 +13,7 @@ class CardTest {
         Card card = new Card(Suit.HEART, Denomination.TWO);
 
         // then
-        assertThat(card.getSuit()).isEqualTo(Suit.HEART);
-        assertThat(card.getDenomination()).isEqualTo(Denomination.TWO);
+        assertThat(card.suit()).isEqualTo(Suit.HEART);
+        assertThat(card.denomination()).isEqualTo(Denomination.TWO);
     }
 }

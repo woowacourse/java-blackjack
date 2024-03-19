@@ -3,28 +3,29 @@ package blackjack.model.cardgenerator;
 import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
-
-import java.util.Random;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomCardGenerator implements CardGenerator {
-    private final Random random = new Random();
+    private static final List<Card> cardCache = initializeCardCache();
+
+    private static List<Card> initializeCardCache() {
+        return Arrays.stream(Suit.values())
+                .flatMap(suit -> createCardsBySuit(suit).stream())
+                .toList();
+    }
+
+    private static List<Card> createCardsBySuit(Suit suit) {
+        return Arrays.stream(Denomination.values())
+                .map(denomination -> new Card(suit, denomination))
+                .toList();
+    }
 
     @Override
     public Card pick() {
-        Suit suit = generateSuit();
-        Denomination denomination = generateDenomination();
-        return new Card(suit, denomination);
-    }
-
-    private Suit generateSuit() {
-        int bound = Suit.getSize();
-        int randomIndex = random.nextInt(bound);
-        return Suit.findByIndex(randomIndex);
-    }
-
-    private Denomination generateDenomination() {
-        int bound = Denomination.getSize();
-        int randomIndex = random.nextInt(bound);
-        return Denomination.findByIndex(randomIndex);
+        int cacheSize = cardCache.size();
+        int randomIndex = ThreadLocalRandom.current().nextInt(cacheSize);
+        return cardCache.get(randomIndex);
     }
 }

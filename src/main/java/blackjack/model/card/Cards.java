@@ -22,32 +22,32 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean canAddCardWithinScoreLimit(int maxScoreThreshold) {
+    public boolean canAddCardWithinScoreLimit(final int maxScoreThreshold) {
         return calculateScore() <= maxScoreThreshold;
     }
 
     public int calculateScore() {
-        int total = cards.stream()
-                .map(Card::getDenomination)
+        int score = cards.stream()
+                .map(Card::denomination)
                 .mapToInt(Denomination::getScore)
                 .sum();
 
         if (hasAce()) {
-            return addAceScoreIfNotBust(total);
+            return addAceScoreIfNotBust(score);
         }
-        return total;
+        return score;
     }
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getDenomination().isAce());
+                .anyMatch(card -> card.denomination().isAce());
     }
 
-    private int addAceScoreIfNotBust(int total) {
-        if (total + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
-            return total + ACE_ADDITIONAL_SCORE;
+    private int addAceScoreIfNotBust(final int score) {
+        if (score + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
+            return score + ACE_ADDITIONAL_SCORE;
         }
-        return total;
+        return score;
     }
 
     public boolean isBlackjack() {

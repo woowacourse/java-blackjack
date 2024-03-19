@@ -1,16 +1,24 @@
 package blackjack.controller;
 
+import blackjack.dto.CardOutcome;
+import blackjack.dto.DealerFinalCardsOutcome;
+import blackjack.dto.PlayerBettingProfitOutcome;
+import blackjack.dto.PlayerCardsOutcome;
+import blackjack.dto.PlayerFinalCardsOutcome;
+import blackjack.model.betting.Betting;
+import blackjack.model.betting.BettingMoney;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.PlayerName;
 import blackjack.model.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.dto.DealerFinalCardsOutcome;
-import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResultOutcome;
+import blackjack.view.form.Command;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -24,24 +32,46 @@ public class BlackjackGame {
     }
 
     public void play() {
-        Players players = retryOnException(this::preparePlayers);
+        Players players = retryOnException(this::createPlayers);
         Dealer dealer = new Dealer();
         CardGenerator cardGenerator = new RandomCardGenerator();
+        Betting betting = createBetting(players);
 
         dealCards(players, dealer, cardGenerator);
         drawCards(players, dealer, cardGenerator);
-        showResult(players, dealer);
+        showFinalCards(players, dealer);
+        showBettingProfit(players, dealer, betting);
     }
 
-    private Players preparePlayers() {
-        List<String> playerNames = inputView.askPlayerNames();
+    private Players createPlayers() {
+        List<PlayerName> playerNames = inputView.askPlayerNames();
         return new Players(playerNames);
+    }
+
+    private Betting createBetting(final Players players) {
+        Map<PlayerName, BettingMoney> playerBettingMoney = new HashMap<>();
+        for (PlayerName playerName : players.getNames()) {
+            BettingMoney bettingMoney = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName.name()));
+            playerBettingMoney.put(playerName, bettingMoney);
+        }
+        return new Betting(playerBettingMoney);
     }
 
     private void dealCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         players.dealCards(cardGenerator);
         dealer.dealCards(cardGenerator);
-        outputView.printDealingCards(players, dealer);
+        showDealingCards(players, dealer);
+    }
+
+    private void showDealingCards(final Players players, final Dealer dealer) {
+        List<String> playerNames = players.getNames().stream()
+                .map(PlayerName::name)
+                .toList();
+        List<PlayerCardsOutcome> playerCardsOutcomes = players.getPlayers().stream()
+                .map(PlayerCardsOutcome::from)
+                .toList();
+        CardOutcome dealerFirstCard = CardOutcome.from(dealer.getFirstCard());
+        outputView.printDealingCards(playerNames, playerCardsOutcomes, dealerFirstCard);
     }
 
     private void drawCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
@@ -66,34 +96,39 @@ public class BlackjackGame {
     }
 
     private boolean drawPlayerCard(final Player player, final CardGenerator cardGenerator) {
-        Command command = retryOnException(() -> inputView.askPlayerDrawOrStandCommand(player.getName()));
+        Command command = retryOnException(() -> inputView.askDrawOrStandCommandToPlayer(player.getName().name()));
         if (command.isDraw()) {
             player.drawCard(cardGenerator);
-            outputView.printPlayerDrawingCards(player);
+            outputView.printPlayerDrawingCards(PlayerCardsOutcome.from(player));
         }
         return player.canDrawCard() && command.isDraw();
     }
 
     private void drawDealerCards(final Dealer dealer, final CardGenerator cardGenerator) {
         dealer.drawCards(cardGenerator);
-        outputView.printDealerDrawingCards(dealer);
+        outputView.printDealerDrawingCards(dealer.getDrawCount());
     }
 
-    private void showResult(final Players players, final Dealer dealer) {
-        showCardsOutcome(players, dealer);
-        showMatchResult(players, dealer);
-    }
-
-    private void showCardsOutcome(final Players players, final Dealer dealer) {
+    private void showFinalCards(final Players players, final Dealer dealer) {
         DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.from(dealer);
-        List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
-        outputView.printDealerFinalCards(dealerFinalCardsOutcome);
-        outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
+        List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.getPlayers().stream()
+                .map(PlayerFinalCardsOutcome::from)
+                .toList();
+        outputView.printFinalCards(dealerFinalCardsOutcome, playerFinalCardsOutcomes);
     }
 
-    private void showMatchResult(final Players players, final Dealer dealer) {
-        List<PlayerMatchResultOutcome> playerMatchResultOutcomes = players.determineMatchResults(dealer);
-        outputView.printMatchResult(playerMatchResultOutcomes);
+    private void showBettingProfit(final Players players, final Dealer dealer, final Betting betting) {
+        List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = players.getPlayers().stream()
+                .map(player -> PlayerBettingProfitOutcome.from(player, betting, dealer))
+                .toList();
+        int dealerBettingProfit = calculateDealerBettingProfit(playerBettingProfitOutcomes);
+        outputView.printBettingProfit(dealerBettingProfit, playerBettingProfitOutcomes);
+    }
+
+    private int calculateDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+        return playerBettingProfitOutcomes.stream()
+                .mapToInt(PlayerBettingProfitOutcome::profit)
+                .sum() * -1;
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {

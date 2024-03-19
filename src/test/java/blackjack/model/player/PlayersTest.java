@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayersTest {
     @Test
-    @DisplayName("참여자 수는 1명 이상이 아니면 예외가 발생한다")
+    @DisplayName("플레이어 수는 1명 이상이 아니면 예외가 발생한다")
     void validatePlayersCountTest() {
         // when & then
         assertThatThrownBy(() -> new Players(List.of()))
@@ -25,25 +25,25 @@ class PlayersTest {
 
     @ParameterizedTest
     @MethodSource("provideDuplicatedNames")
-    @DisplayName("참여자 이름은 중복되면 예외가 발생한다")
-    void validateDuplicatedNamesTest(List<String> names) {
+    @DisplayName("플레이어 이름은 중복되면 예외가 발생한다")
+    void validateDuplicatedNamesTest(List<PlayerName> names) {
         // when & then
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    private static Stream<List<String>> provideDuplicatedNames() {
+    private static Stream<List<PlayerName>> provideDuplicatedNames() {
         return Stream.of(
-                List.of("mia", "mia", "dora"),
-                List.of("dora", "dora", "dora")
+                List.of(new PlayerName("mia"), new PlayerName("mia"), new PlayerName("dora")),
+                List.of(new PlayerName("dora"), new PlayerName("dora"), new PlayerName("dora"))
         );
     }
 
     @Test
-    @DisplayName("모든 참여자가 블랙잭이면 true를 반환한다")
+    @DisplayName("모든 플레이어가 블랙잭이면 true를 반환한다")
     void isAllBlackJackTest() {
         // given
-        Players players = new Players(List.of("mia", "dora"));
+        Players players = new Players(List.of(new PlayerName("mia"), new PlayerName("dora")));
         players.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.ACE), new Card(Suit.HEART, Denomination.JACK),
                 new Card(Suit.HEART, Denomination.ACE), new Card(Suit.HEART, Denomination.JACK)

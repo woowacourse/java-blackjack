@@ -1,116 +1,111 @@
 package blackjack.view;
 
-import blackjack.model.card.Card;
-import blackjack.model.dealer.Dealer;
-import blackjack.model.player.MatchResult;
-import blackjack.model.player.Player;
-import blackjack.model.player.Players;
-import blackjack.view.dto.DealerFinalCardsOutcome;
-import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResultOutcome;
+import blackjack.dto.CardOutcome;
+import blackjack.dto.CardsOutcome;
+import blackjack.dto.DealerFinalCardsOutcome;
+import blackjack.dto.PlayerBettingProfitOutcome;
+import blackjack.dto.PlayerCardsOutcome;
+import blackjack.dto.PlayerFinalCardsOutcome;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DEALING_RESULT_INTRO = "\n딜러와 %s에게 2장을 나누었습니다.\n";
-    private static final String PLAYER_CARDS_FORM = "%s카드: %s";
-    private static final String DEALER_DRAWING_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.";
-    private static final String DEALER_CARDS_FORM = "\n딜러카드: %s";
-    private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
-    private static final String MATCH_RESULT_INTRO = "\n## 최종 승패";
-    private static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
-    private static final String WIN_MESSAGE = "승";
-    private static final String LOSE_MESSAGE = "패";
-    private static final String PUSH_MESSAGE = "무";
-    private static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
-    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
+    private static final String DEALING_RESULT_INTRO_FORM = "\n딜러와 %s에게 2장을 나누었습니다.\n";
+    private static final String DEALER_NAME = "딜러";
+    private static final String CARDS_WITH_NAME_FORM = "%s 카드: %s";
+    private static final String DEALER_DRAWING_CARDS_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.";
+    private static final String SCORE_FORM = " - 결과: %s";
+    private static final String BETTING_PROFIT_INTRO = "\n## 최종 수익";
+    private static final String BETTING_PROFIT_FORM = "%s: %d";
+    private static final String ERROR_MESSAGE_FORM = "[ERROR] %s\n";
 
-    public void printDealingCards(final Players players, final Dealer dealer) {
-        String names = String.join(", ", players.getNames());
-        System.out.printf(DEALING_RESULT_INTRO, names);
-        System.out.printf(DEALER_CARDS_FORM, formatCard(dealer.getFirstCard()));
-        System.out.println();
-        for (Player player : players.getPlayers()) {
-            System.out.println(formatPlayerCards(player));
+    public void printDealingCards(final List<String> playerNames,
+                                  final List<PlayerCardsOutcome> playerCardsOutcomes,
+                                  final CardOutcome dealerFirstCard) {
+        System.out.println(formatDealingResultIntro(playerNames));
+        System.out.println(formatCardsWithName(new CardsOutcome(List.of(dealerFirstCard)), DEALER_NAME));
+        for (PlayerCardsOutcome playerCardsOutcome : playerCardsOutcomes) {
+            System.out.println(formatCardsWithName(playerCardsOutcome.cards(), playerCardsOutcome.name()));
         }
     }
 
-    private String formatPlayerCards(final Player player) {
-        List<Card> cards = player.getCards();
-        String joinedCards = formatCards(cards);
-        return String.format(PLAYER_CARDS_FORM, player.getName(), joinedCards);
+    private String formatDealingResultIntro(final List<String> playerNames) {
+        String names = String.join(", ", playerNames);
+        return String.format(DEALING_RESULT_INTRO_FORM, names);
     }
 
-    private String formatCards(final List<Card> cards) {
-        return cards.stream()
-                .map(this::formatCard)
+    private String formatCardsWithName(final CardsOutcome cardsOutcome, String name) {
+        String joinedCards = cardsOutcome.cards().stream()
+                .map(CardOutcome::card)
                 .collect(Collectors.joining(", "));
+        return String.format(CARDS_WITH_NAME_FORM, name, joinedCards);
     }
 
-    private String formatCard(final Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
+    public void printPlayerDrawingCards(final PlayerCardsOutcome playerCardsOutcome) {
+        System.out.println(formatCardsWithName(playerCardsOutcome.cards(), playerCardsOutcome.name()));
     }
 
-    public void printPlayerDrawingCards(final Player player) {
-        System.out.println(formatPlayerCards(player));
+    public void printDealerDrawingCards(final int drawCount) {
+        System.out.println(formatDealerDrawingCards(drawCount));
     }
 
-    public void printDealerDrawingCards(final Dealer dealer) {
-        int count = dealer.getDrawCount();
-        System.out.println(DEALER_DRAWING_FORM.repeat(count));
+    private String formatDealerDrawingCards(final int drawCount) {
+        return DEALER_DRAWING_CARDS_FORM.repeat(drawCount) + System.lineSeparator();
     }
 
-    public void printDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
-        List<Card> dealerCards = dealerFinalCardsOutcome.cards();
-        int dealerTotalScore = dealerFinalCardsOutcome.totalScore();
-        System.out.printf(DEALER_CARDS_FORM, formatCards(dealerCards));
-        System.out.printf(TOTAL_SCORE_FORM, dealerTotalScore);
+    public void printFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome,
+                                final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
+        System.out.println(formatDealerFinalCards(dealerFinalCardsOutcome));
+        System.out.println(formatPlayersFinalCards(playerFinalCardsOutcomes));
     }
 
-    public void printPlayersFinalCards(final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
-        for (PlayerFinalCardsOutcome playerOutcome : playerFinalCardsOutcomes) {
-            String playerName = playerOutcome.name();
-            List<Card> playerCards = playerOutcome.cards();
-            int playerTotalScore = playerOutcome.totalScore();
-            System.out.printf(PLAYER_CARDS_FORM, playerName, formatCards(playerCards));
-            System.out.printf(TOTAL_SCORE_FORM, playerTotalScore);
-        }
+    private String formatPlayersFinalCards(final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
+        return playerFinalCardsOutcomes.stream()
+                .map(outcome -> formatFinalCards(outcome.cards(), outcome.name(), outcome.score()))
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    public void printMatchResult(final List<PlayerMatchResultOutcome> playerMatchResultOutcomes) {
-        System.out.println(MATCH_RESULT_INTRO);
-        System.out.println(formatDealerMatchResult(playerMatchResultOutcomes));
-        for (PlayerMatchResultOutcome playerMatchResultOutcome : playerMatchResultOutcomes) {
-            System.out.println(formatPlayerMatchResult(playerMatchResultOutcome));
-        }
+    private String formatDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
+        CardsOutcome dealerCards = dealerFinalCardsOutcome.cards();
+        int dealerScore = dealerFinalCardsOutcome.score();
+        return formatFinalCards(dealerCards, DEALER_NAME, dealerScore);
     }
 
-    private String formatDealerMatchResult(final List<PlayerMatchResultOutcome> playerMatchResultOutcomes) {
-        Map<MatchResult, Long> outcomeCounts = playerMatchResultOutcomes.stream()
-                .collect(Collectors.groupingBy(PlayerMatchResultOutcome::matchResult, Collectors.counting()));
-        long winCount = outcomeCounts.getOrDefault(MatchResult.LOSE, 0L);
-        long loseCount = outcomeCounts.getOrDefault(MatchResult.WIN, 0L);
-        loseCount += outcomeCounts.getOrDefault(MatchResult.BLACKJACK_WIN, 0L);
-        long pushCount = outcomeCounts.getOrDefault(MatchResult.PUSH, 0L);
-        return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, pushCount);
+    private String formatFinalCards(final CardsOutcome cards, final String name, final int score) {
+        return formatCardsWithName(cards, name) + formatScore(score);
     }
 
-    private String formatPlayerMatchResult(final PlayerMatchResultOutcome playerMatchResultOutcome) {
-        return playerMatchResultOutcome.name() + ": " + formatMatchResult(playerMatchResultOutcome.matchResult());
+    private String formatScore(final int score) {
+        return String.format(SCORE_FORM, score);
     }
 
-    private String formatMatchResult(final MatchResult matchResult) {
-        if (matchResult == MatchResult.WIN || matchResult == MatchResult.BLACKJACK_WIN) {
-            return WIN_MESSAGE;
-        }
-        if (matchResult == MatchResult.LOSE) {
-            return LOSE_MESSAGE;
-        }
-        return PUSH_MESSAGE;
+    public void printBettingProfit(final int dealerBettingProfit,
+                                   final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+        System.out.println(BETTING_PROFIT_INTRO);
+        System.out.println(formatDealerBettingProfit(dealerBettingProfit));
+        System.out.println(formatPlayerBettingProfits(playerBettingProfitOutcomes));
+    }
+
+    private String formatDealerBettingProfit(final int dealerBettingProfit) {
+        return formatBettingProfit(DEALER_NAME, dealerBettingProfit);
+    }
+
+    public String formatPlayerBettingProfits(
+            final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+        return playerBettingProfitOutcomes.stream()
+                .map(this::formatPlayerBettingProfit)
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    private String formatPlayerBettingProfit(final PlayerBettingProfitOutcome playerBettingProfitOutcome) {
+        return formatBettingProfit(playerBettingProfitOutcome.name(), playerBettingProfitOutcome.profit());
+    }
+
+    private String formatBettingProfit(final String name, final int profit) {
+        return String.format(BETTING_PROFIT_FORM, name, profit);
     }
 
     public void printException(final String errorMessage) {
-        System.out.println(ERROR_MESSAGE_PREFIX + errorMessage);
+        System.out.printf(ERROR_MESSAGE_FORM, errorMessage);
     }
 }

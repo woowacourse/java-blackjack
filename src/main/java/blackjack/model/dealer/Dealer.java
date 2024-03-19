@@ -30,7 +30,7 @@ public class Dealer {
         return cards.canAddCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
     }
 
-    public int calculateCardsTotalScore() {
+    public int calculateCardsScore() {
         return cards.calculateScore();
     }
 

@@ -27,14 +27,6 @@ public enum Denomination {
         return this == ACE;
     }
 
-    public static int getSize() {
-        return values().length;
-    }
-
-    public static Denomination findByIndex(final int index) {
-        return values()[index];
-    }
-
     public int getScore() {
         return score;
     }
