@@ -1,17 +1,17 @@
 package blackjack.view;
 
+import blackjack.dto.CardOutcome;
+import blackjack.dto.CardsOutcome;
 import blackjack.dto.DealerFinalCardsOutcome;
 import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.dto.PlayerCardsOutcome;
 import blackjack.dto.PlayerFinalCardsOutcome;
-import blackjack.model.card.Card;
-import blackjack.model.player.PlayerName;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DEALING_RESULT_INTRO_FORM = "\n딜러와 %s에게 2장을 나누었습니다.\n";
-    private static final PlayerName DEALER_NAME = new PlayerName("딜러");
+    private static final String DEALER_NAME = "딜러";
     private static final String CARDS_WITH_NAME_FORM = "%s 카드: %s";
     private static final String DEALER_DRAWING_CARDS_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.";
     private static final String SCORE_FORM = " - 결과: %s";
@@ -19,32 +19,26 @@ public class OutputView {
     private static final String BETTING_PROFIT_FORM = "%s: %d";
     private static final String ERROR_MESSAGE_FORM = "[ERROR] %s\n";
 
-    public void printDealingCards(final List<PlayerName> playerNames,
+    public void printDealingCards(final List<String> playerNames,
                                   final List<PlayerCardsOutcome> playerCardsOutcomes,
-                                  final Card dealerFirstCard) {
+                                  final CardOutcome dealerFirstCard) {
         System.out.println(formatDealingResultIntro(playerNames));
-        System.out.println(formatCardsWithName(List.of(dealerFirstCard), DEALER_NAME));
+        System.out.println(formatCardsWithName(new CardsOutcome(List.of(dealerFirstCard)), DEALER_NAME));
         for (PlayerCardsOutcome playerCardsOutcome : playerCardsOutcomes) {
             System.out.println(formatCardsWithName(playerCardsOutcome.cards(), playerCardsOutcome.name()));
         }
     }
 
-    private String formatDealingResultIntro(final List<PlayerName> playerNames) {
-        String names = playerNames.stream()
-                .map(PlayerName::name)
-                .collect(Collectors.joining(", "));
+    private String formatDealingResultIntro(final List<String> playerNames) {
+        String names = String.join(", ", playerNames);
         return String.format(DEALING_RESULT_INTRO_FORM, names);
     }
 
-    private String formatCardsWithName(final List<Card> cards, PlayerName name) {
-        String joinedCards = cards.stream()
-                .map(this::formatCard)
+    private String formatCardsWithName(final CardsOutcome cardsOutcome, String name) {
+        String joinedCards = cardsOutcome.cards().stream()
+                .map(CardOutcome::card)
                 .collect(Collectors.joining(", "));
         return String.format(CARDS_WITH_NAME_FORM, name, joinedCards);
-    }
-
-    private String formatCard(final Card card) {
-        return card.denomination().getName() + card.suit().getName();
     }
 
     public void printPlayerDrawingCards(final PlayerCardsOutcome playerCardsOutcome) {
@@ -72,12 +66,12 @@ public class OutputView {
     }
 
     private String formatDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
-        List<Card> dealerCards = dealerFinalCardsOutcome.cards();
+        CardsOutcome dealerCards = dealerFinalCardsOutcome.cards();
         int dealerScore = dealerFinalCardsOutcome.score();
         return formatFinalCards(dealerCards, DEALER_NAME, dealerScore);
     }
 
-    private String formatFinalCards(final List<Card> cards, final PlayerName name, final int score) {
+    private String formatFinalCards(final CardsOutcome cards, final String name, final int score) {
         return formatCardsWithName(cards, name) + formatScore(score);
     }
 
@@ -107,7 +101,7 @@ public class OutputView {
         return formatBettingProfit(playerBettingProfitOutcome.name(), playerBettingProfitOutcome.profit());
     }
 
-    private String formatBettingProfit(final PlayerName name, final int profit) {
+    private String formatBettingProfit(final String name, final int profit) {
         return String.format(BETTING_PROFIT_FORM, name, profit);
     }
 

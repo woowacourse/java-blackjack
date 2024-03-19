@@ -1,12 +1,12 @@
 package blackjack.controller;
 
+import blackjack.dto.CardOutcome;
 import blackjack.dto.DealerFinalCardsOutcome;
 import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.dto.PlayerCardsOutcome;
 import blackjack.dto.PlayerFinalCardsOutcome;
 import blackjack.model.betting.Betting;
 import blackjack.model.betting.BettingMoney;
-import blackjack.model.card.Card;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
@@ -51,7 +51,7 @@ public class BlackjackGame {
     private Betting createBetting(final Players players) {
         Map<PlayerName, BettingMoney> playerBettingMoney = new HashMap<>();
         for (PlayerName playerName : players.getNames()) {
-            BettingMoney bettingMoney = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
+            BettingMoney bettingMoney = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName.name()));
             playerBettingMoney.put(playerName, bettingMoney);
         }
         return new Betting(playerBettingMoney);
@@ -64,11 +64,13 @@ public class BlackjackGame {
     }
 
     private void showDealingCards(final Players players, final Dealer dealer) {
-        List<PlayerName> playerNames = players.getNames();
+        List<String> playerNames = players.getNames().stream()
+                .map(PlayerName::name)
+                .toList();
         List<PlayerCardsOutcome> playerCardsOutcomes = players.getPlayers().stream()
                 .map(PlayerCardsOutcome::from)
                 .toList();
-        Card dealerFirstCard = dealer.getFirstCard();
+        CardOutcome dealerFirstCard = CardOutcome.from(dealer.getFirstCard());
         outputView.printDealingCards(playerNames, playerCardsOutcomes, dealerFirstCard);
     }
 
@@ -94,7 +96,7 @@ public class BlackjackGame {
     }
 
     private boolean drawPlayerCard(final Player player, final CardGenerator cardGenerator) {
-        Command command = retryOnException(() -> inputView.askDrawOrStandCommandToPlayer(player.getName()));
+        Command command = retryOnException(() -> inputView.askDrawOrStandCommandToPlayer(player.getName().name()));
         if (command.isDraw()) {
             player.drawCard(cardGenerator);
             outputView.printPlayerDrawingCards(PlayerCardsOutcome.from(player));

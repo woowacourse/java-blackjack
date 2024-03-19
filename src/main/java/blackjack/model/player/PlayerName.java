@@ -12,9 +12,4 @@ public record PlayerName(String name) {
             throw new IllegalArgumentException(INVALID_NAME_LENGTH);
         }
     }
-
-    @Override
-    public String toString() {
-        return name;
-    }
 }

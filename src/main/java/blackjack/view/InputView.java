@@ -32,7 +32,7 @@ public class InputView {
                 .toList();
     }
 
-    public BettingMoney askBettingMoneyToPlayer(final PlayerName playerName) {
+    public BettingMoney askBettingMoneyToPlayer(final String playerName) {
         System.out.printf(ASK_BETTING_MONEY_TO_PLAYER, playerName);
         String input = scanner.nextLine();
         return convertInputToBettingMoney(input);
@@ -51,7 +51,7 @@ public class InputView {
         }
     }
 
-    public Command askDrawOrStandCommandToPlayer(final PlayerName name) {
+    public Command askDrawOrStandCommandToPlayer(final String name) {
         System.out.printf(ASK_DRAW_OR_STAND_COMMAND_TO_PLAYER, name);
         String input = scanner.nextLine();
         return Command.from(input);
