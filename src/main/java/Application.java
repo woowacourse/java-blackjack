@@ -9,7 +9,8 @@ import dto.PlayerInfos;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(final String[] args) {
@@ -33,10 +34,16 @@ public class Application {
 
     private static Players createPlayers() {
         final Names names = new Names(InputView.inputNames());
-        final List<BetAmount> betAmounts = names.getNames().stream()
-                .map(name -> new BetAmount(InputView.inputBetAmount(name.getName())))
-                .toList();
-        return Players.from(names, betAmounts);
+        final Map<Name, BetAmount> mapNamesToBetAmounts = mapNamesToBetAmounts(names);
+        return Players.from(mapNamesToBetAmounts);
+    }
+
+    private static Map<Name, BetAmount> mapNamesToBetAmounts(final Names names) {
+        return names.getNames().stream()
+                .collect(Collectors.toMap(
+                        name -> name,
+                        name -> new BetAmount(InputView.inputBetAmount(name.getName()))
+                ));
     }
 
     private static void playGame(final BlackjackGame blackjack) {

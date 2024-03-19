@@ -1,7 +1,8 @@
 package domain.participant;
 
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Players {
     public static final int MAX_PLAYER_COUNT = 8;
@@ -12,14 +13,14 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final Names names, final List<BetAmount> betAmounts) {
-        return new Players(createPlayers(names, betAmounts));
+    public static Players from(final Map<Name, BetAmount> mapNamesToBetAmounts) {
+        return new Players(createPlayers(mapNamesToBetAmounts));
     }
 
-    private static List<Player> createPlayers(final Names names, final List<BetAmount> betAmounts) {
-        return IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(names.get(i), betAmounts.get(i)))
-                .toList();
+    private static List<Player> createPlayers(final Map<Name, BetAmount> mapNamesToBetAmounts) {
+        return mapNamesToBetAmounts.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 
     private void validate(final List<Player> players) {
