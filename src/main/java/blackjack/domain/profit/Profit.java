@@ -1,32 +1,33 @@
 package blackjack.domain.profit;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Profit {
 
-    private final double value;
+    private final BigDecimal value;
 
-    public Profit(double value) {
+    public Profit(BigDecimal value) {
         this.value = value;
     }
 
     public Profit(BetAmount betAmount) {
-        this(betAmount.value());
+        this(new BigDecimal(String.valueOf(betAmount.value())));
     }
 
     public Profit multiply(double value) {
-        return new Profit(this.value * value);
+        return new Profit(this.value.multiply(BigDecimal.valueOf(value)));
     }
 
     public Profit add(Profit other) {
-        return new Profit(this.value + other.value);
+        return new Profit(this.value.add(other.value));
     }
 
     public Profit reverseSign() {
         return this.multiply(-1);
     }
 
-    public double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
@@ -38,8 +39,8 @@ public class Profit {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Profit profit = (Profit) o;
-        return Double.compare(value, profit.value) == 0;
+        Profit other = (Profit) o;
+        return value.compareTo(other.value) == 0;
     }
 
     @Override

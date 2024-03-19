@@ -12,8 +12,8 @@ class BetAmountTest {
 
     @DisplayName("배팅 금액은 양수이다.")
     @ParameterizedTest
-    @ValueSource(ints = {0, -1})
-    void testCreateNegative(int value) {
+    @ValueSource(strings = {"0", "-1"})
+    void testCreateNegative(String value) {
         // when & then
         assertThatThrownBy(() -> new BetAmount(value))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -23,7 +23,7 @@ class BetAmountTest {
     @Test
     void testCreateDecimal() {
         // when & then
-        assertThatThrownBy(() -> new BetAmount(1.5))
+        assertThatThrownBy(() -> new BetAmount("1000.00000000000001"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -31,7 +31,7 @@ class BetAmountTest {
     @Test
     void testCreateNotInUnits() {
         // when & then
-        assertThatThrownBy(() -> new BetAmount(1001))
+        assertThatThrownBy(() -> new BetAmount("1001"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -39,7 +39,7 @@ class BetAmountTest {
     @Test
     void testCreate() {
         // when & then
-        assertThatCode(() -> new BetAmount(1000))
+        assertThatCode(() -> new BetAmount("1000"))
                 .doesNotThrowAnyException();
     }
 }

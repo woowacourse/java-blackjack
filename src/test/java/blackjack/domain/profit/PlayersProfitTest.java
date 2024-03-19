@@ -6,6 +6,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import fixture.DealerFixture;
 import fixture.PlayerFixture;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -18,16 +19,16 @@ class PlayersProfitTest {
     void testCreateInitial() {
         // given
         Map<Player, BetAmount> rawProfits = new HashMap<>();
-        rawProfits.put(PlayerFixture.createPobi(), new BetAmount(10000));
-        rawProfits.put(PlayerFixture.createJason(), new BetAmount(20000));
+        rawProfits.put(PlayerFixture.createPobi(), new BetAmount("10000"));
+        rawProfits.put(PlayerFixture.createJason(), new BetAmount("20000"));
 
         // when
         PlayersProfit profits = PlayersProfit.createInitial(rawProfits);
 
         // then
         assertThat(profits.getProfits()).containsExactlyEntriesOf(Map.of(
-                PlayerFixture.createPobi(), new Profit(10000),
-                PlayerFixture.createJason(), new Profit(20000)
+                PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)),
+                PlayerFixture.createJason(), new Profit(new BigDecimal(20000))
         ));
     }
 
@@ -36,8 +37,8 @@ class PlayersProfitTest {
     void testCalculatePlayersProfit() {
         // given
         Map<Player, Profit> profits = new HashMap<>();
-        profits.put(PlayerFixture.createPobi(), new Profit(10000));
-        profits.put(PlayerFixture.createJason(), new Profit(20000));
+        profits.put(PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)));
+        profits.put(PlayerFixture.createJason(), new Profit(new BigDecimal(20000)));
         PlayersProfit playersProfit = new PlayersProfit(profits);
 
         Dealer dealer = DealerFixture.createDealer();
@@ -47,8 +48,8 @@ class PlayersProfitTest {
 
         // then
         assertThat(playersProfit.getProfits()).containsExactlyEntriesOf(Map.of(
-                PlayerFixture.createPobi(), new Profit(10000),
-                PlayerFixture.createJason(), new Profit(-20000)
+                PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)),
+                PlayerFixture.createJason(), new Profit(new BigDecimal(-20000))
         ));
     }
 
@@ -57,8 +58,8 @@ class PlayersProfitTest {
     void testDealerProfit() {
         // given
         Map<Player, Profit> profits = new HashMap<>();
-        profits.put(PlayerFixture.createPobi(), new Profit(10000));
-        profits.put(PlayerFixture.createJason(), new Profit(20000));
+        profits.put(PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)));
+        profits.put(PlayerFixture.createJason(), new Profit(new BigDecimal(20000)));
         PlayersProfit playersProfit = new PlayersProfit(profits);
 
         Dealer dealer = DealerFixture.createDealer();
@@ -69,6 +70,6 @@ class PlayersProfitTest {
         Profit dealerProfit = playersProfit.dealerProfit();
 
         // then
-        assertThat(dealerProfit).isEqualTo(new Profit(10000));
+        assertThat(dealerProfit).isEqualTo(new Profit(new BigDecimal(10000)));
     }
 }

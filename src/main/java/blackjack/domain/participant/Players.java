@@ -50,7 +50,7 @@ public class Players {
         return new Players(players);
     }
 
-    public PlayersProfit bet(Function<Player, Integer> receiveBetAmount) {
+    public PlayersProfit bet(Function<Player, String> receiveBetAmount) {
         Map<Player, BetAmount> playersBetAmount = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,

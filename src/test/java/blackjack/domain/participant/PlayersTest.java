@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.profit.PlayersProfit;
 import blackjack.domain.profit.Profit;
 import fixture.PlayerFixture;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -66,24 +67,24 @@ class PlayersTest {
         Player jason = PlayerFixture.createJason();
         Players players = new Players(List.of(pobi, jason));
 
-        Function<Player, Integer> betByPlayer = player -> getBetAmount(player, pobi, jason);
+        Function<Player, String> betByPlayer = player -> getBetAmount(player, pobi, jason);
 
         // when
         PlayersProfit profits = players.bet(betByPlayer);
 
         // then
         assertThat(profits.getProfits()).containsExactlyEntriesOf(Map.of(
-                PlayerFixture.createPobi(), new Profit(10000),
-                PlayerFixture.createJason(), new Profit(20000)
+                PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)),
+                PlayerFixture.createJason(), new Profit(new BigDecimal(20000))
         ));
     }
 
-    private int getBetAmount(Player player, Player pobi, Player jason) {
+    private String getBetAmount(Player player, Player pobi, Player jason) {
         if (player.equals(pobi)) {
-            return 10000;
+            return "10000";
         }
         if (player.equals(jason)) {
-            return 20000;
+            return "20000";
         }
         throw new IllegalArgumentException();
     }

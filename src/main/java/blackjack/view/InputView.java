@@ -28,10 +28,10 @@ public class InputView {
                 .toList();
     }
 
-    public int readBetAmount(PlayerName playerName) {
+    public String readBetAmount(PlayerName playerName) {
         String message = String.format("%s의 배팅 금액은?", playerName.value());
         System.out.println(String.join("", LINE_SEPARATOR, message));
-        return Integer.parseInt(scanner.nextLine());
+        return scanner.nextLine();
     }
 
     public DrawDecision readDrawDecision(PlayerName playerName) {

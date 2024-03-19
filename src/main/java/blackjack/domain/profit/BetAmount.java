@@ -1,8 +1,14 @@
 package blackjack.domain.profit;
 
-public record BetAmount(double value) {
+import java.math.BigDecimal;
 
-    private static final int UNIT = 10;
+public record BetAmount(BigDecimal value) {
+
+    private static final BigDecimal UNIT = new BigDecimal(10);
+
+    public BetAmount(String value) {
+        this(new BigDecimal(value));
+    }
 
     public BetAmount {
         validateNotNegative(value);
@@ -10,20 +16,20 @@ public record BetAmount(double value) {
         validateUnit(value);
     }
 
-    private void validateNotNegative(double value) {
-        if (value <= 0) {
+    private void validateNotNegative(BigDecimal value) {
+        if (value.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 0 또는 음수일 수 없습니다.");
         }
     }
 
-    private void validateNotDecimal(double value) {
-        if (value % 1 != 0) {
+    private void validateNotDecimal(BigDecimal value) {
+        if (value.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 소수일 수 없습니다.");
         }
     }
 
-    private void validateUnit(double value) {
-        if (value % UNIT != 0) {
+    private void validateUnit(BigDecimal value) {
+        if (value.remainder(UNIT).compareTo(BigDecimal.ZERO) != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 10 단위여야 합니다.");
         }
     }

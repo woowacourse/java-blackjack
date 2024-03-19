@@ -2,13 +2,14 @@ package blackjack.domain.profit;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class PlayersProfit {
 
-    private static final Profit INITIAL_PROFIT = new Profit(0);
+    private static final Profit INITIAL_PROFIT = new Profit(new BigDecimal(0));
 
     private final Map<Player, Profit> profits;
 
