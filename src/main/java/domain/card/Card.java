@@ -16,7 +16,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return denomination == Denomination.ACE;
+        return denomination.isAce();
     }
 
     public Denomination denomination() {
