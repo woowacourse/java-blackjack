@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private static final int BLACKJACK_CONDITION = 21;
+    public static final int INITIAL_CARD_SIZE = 2;
+    public static final Score BLACKJACK_SCORE = new Score(21);
 
     private final List<Card> cards;
 
@@ -36,8 +37,16 @@ public class Hand {
         cards.add(card);
     }
 
+    public boolean isInitUnfinished() {
+        return size() < INITIAL_CARD_SIZE;
+    }
+
+    public boolean isBlackjack() {
+        return size() == 2 && score().equals(BLACKJACK_SCORE);
+    }
+
     public boolean isBust() {
-        return score().toInt() > BLACKJACK_CONDITION;
+        return score().toInt() > BLACKJACK_SCORE.toInt();
     }
 
     public List<Card> cards() {
