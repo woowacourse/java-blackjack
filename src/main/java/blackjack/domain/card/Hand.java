@@ -21,7 +21,8 @@ public class Hand {
     }
 
     public void draw(int count) {
-        cards.addAll(deck.draw(count));
+        final List<Card> drawCards = deck.draw(count);
+        cards.addAll(drawCards);
     }
 
     public Card getCard(int index) {
