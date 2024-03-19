@@ -123,8 +123,7 @@ public class BlackjackGame {
         outputView.printBettingProfit(dealerBettingProfit, playerBettingProfitOutcomes);
     }
 
-    private int calculateDealerBettingProfit(
-            final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+    private int calculateDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
         return playerBettingProfitOutcomes.stream()
                 .mapToInt(PlayerBettingProfitOutcome::profit)
                 .sum() * -1;
