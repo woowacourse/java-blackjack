@@ -1,8 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import java.util.ArrayList;
 
 public class Player extends Gamer {
 
@@ -14,8 +13,13 @@ public class Player extends Gamer {
     }
 
     public static Player from(final String name) {
-        final Hand hand = new Hand(new ArrayList<>());
-        return new Player(new Name(name), hand);
+        return new Player(new Name(name), new Hand());
+    }
+
+    public void drawInitialHand(final Dealer dealer) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            hand.add(dealer.drawPlayerCard());
+        }
     }
 
     public void draw(final Card card) {

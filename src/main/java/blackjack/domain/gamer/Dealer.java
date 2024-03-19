@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Dealer extends Gamer {
 
-    private static final int THRESHOLD = 16;
+    private static final int DRAW_THRESHOLD = 16;
 
     private final Deck deck;
 
@@ -18,6 +18,12 @@ public class Dealer extends Gamer {
 
     public static Dealer from(final Deck deck) {
         return new Dealer(deck, new Hand(new ArrayList<>()));
+    }
+
+    public void drawInitialHand() {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            hand.add(deck.pop());
+        }
     }
 
     public void draw() {
@@ -34,6 +40,6 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canDraw() {
-        return hand.calculateOptimalSum() <= THRESHOLD;
+        return hand.calculateOptimalSum() <= DRAW_THRESHOLD;
     }
 }

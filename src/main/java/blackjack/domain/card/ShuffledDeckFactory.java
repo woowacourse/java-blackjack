@@ -10,17 +10,17 @@ public class ShuffledDeckFactory implements DeckFactory {
     @Override
     public Deck create() {
         final Stack<Card> deck = new Stack<>();
-        for (final Number number : Number.values()) {
-            deck.addAll(createSuits(number));
+        for (final Rank rank : Rank.values()) {
+            deck.addAll(createSuits(rank));
         }
         Collections.shuffle(deck);
         return new Deck(deck);
     }
 
-    private List<Card> createSuits(final Number number) {
+    private List<Card> createSuits(final Rank rank) {
         final List<Card> suits = new ArrayList<>();
         for (final Suit suit : Suit.values()) {
-            suits.add(Card.of(number, suit));
+            suits.add(Card.of(rank, suit));
         }
         return suits;
     }

@@ -1,9 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 import blackjack.domain.card.Hand;
 
 public abstract class Gamer {
 
+    protected static final int INITIAL_CARD_COUNT = 2;
     protected static final int BLACKJACK = 21;
 
     protected final Hand hand;

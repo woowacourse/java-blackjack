@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -14,23 +15,27 @@ public class Hand {
         this.cards = cards;
     }
 
+    public Hand() {
+        this(new ArrayList<>());
+    }
+
     public void add(final Card card) {
         cards.add(card);
     }
 
     public int calculateOptimalSum() {
-        final List<Number> numbers = cards.stream()
-                .map(Card::getNumber)
+        final List<Rank> ranks = cards.stream()
+                .map(Card::getRank)
                 .toList();
 
-        if (numbers.contains(Number.ACE)) {
-            return calculateAceToOptimal(numbers);
+        if (ranks.contains(Rank.ACE)) {
+            return calculateAceToOptimal(ranks);
         }
-        return sumHardHand(numbers);
+        return sumHardHand(ranks);
     }
 
-    private int calculateAceToOptimal(final List<Number> numbers) {
-        final int hardHandScore = sumHardHand(numbers);
+    private int calculateAceToOptimal(final List<Rank> ranks) {
+        final int hardHandScore = sumHardHand(ranks);
         final int softHandScore = hardHandScore + VALUE_FOR_SOFT_HAND;
         if (softHandScore <= BLACKJACK_CANDIDATE) {
             return softHandScore;
@@ -38,9 +43,9 @@ public class Hand {
         return hardHandScore;
     }
 
-    private int sumHardHand(final List<Number> numbers) {
-        return numbers.stream()
-                .mapToInt(Number::getValue)
+    private int sumHardHand(final List<Rank> ranks) {
+        return ranks.stream()
+                .mapToInt(Rank::getValue)
                 .sum();
     }
 

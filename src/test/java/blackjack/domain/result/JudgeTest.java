@@ -1,11 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.TestDeckFactory;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class OutcomeTest {
+class JudgeTest {
 
     //@formatter:off
     /**
@@ -18,7 +21,7 @@ class OutcomeTest {
      * 카드 pop 순서는 카드 저장 순서의 역순이다.
      */
     //@formatter:on
-    @DisplayName("플레이어와 딜러가 모두 버스트된 경우 무승부이다.")
+    @DisplayName("플레이어와 딜러가 모두 버스트된 경우 플레이어의 패배이다.")
     @Test
     void pushWhenBothBust() {
         final Player player = Player.from("pobi");
@@ -30,9 +33,9 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.PUSH);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
 
     @DisplayName("플레이어만 버스트했다면 플레이어의 패배이다.")
@@ -45,12 +48,12 @@ class OutcomeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.LOSE);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
 
-    @DisplayName("딜러만 버스트했다면 딜러의 패배이다.")
+    @DisplayName("플레이어가 블랙잭이 아니고, 딜러만 버스트했다면 플레이어의 일반승리이다.")
     @Test
     void dealerLoseWhenOnlyBust() {
         final Player player = Player.from("pobi");
@@ -60,9 +63,9 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.WIN);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.NORMAL_WIN);
     }
 
     @DisplayName("플레이어와 딜러가 모두 블랙잭인 경우 무승부이다.")
@@ -78,12 +81,12 @@ class OutcomeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.PUSH);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.PUSH);
     }
 
-    @DisplayName("플레이어만 블랙잭이라면 플레이어의 승리이다.")
+    @DisplayName("플레이어만 블랙잭이라면 플레이어의 블랙잭 승리이다.")
     @Test
     void playerWinWhenOnlyBlackJack() {
         final Player player = Player.from("pobi");
@@ -95,12 +98,12 @@ class OutcomeTest {
         }
         player.draw(dealer.drawPlayerCard());
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.WIN);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.BLACKJACK_WIN);
     }
 
-    @DisplayName("딜러만 블랙잭이라면 딜러의 승리이다.")
+    @DisplayName("딜러만 블랙잭이라면 플레이어의 패배이다.")
     @Test
     void dealerWinWhenOnlyBlackJack() {
         final Player player = Player.from("pobi");
@@ -112,12 +115,12 @@ class OutcomeTest {
         }
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.LOSE);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
 
-    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수가 딜러보다 높으면 승리한다.")
+    @DisplayName("버스트나 블랙잭이 없을 때, 플레이어 점수가 딜러보다 높으면 플레이어의 일반승리이다.")
     @Test
     void playerWinWhenBiggerThanDealer() {
         final Player player = Player.from("pobi");
@@ -126,12 +129,12 @@ class OutcomeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.WIN);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.NORMAL_WIN);
     }
 
-    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수가 딜러보다 낮으면 패배한다.")
+    @DisplayName("버스트나 블랙잭이 없을 때, 플레이어 점수가 딜러보다 낮으면 플레이어의 패배이다.")
     @Test
     void playerLoseWhenLessThanDealer() {
         final Player player = Player.from("pobi");
@@ -140,12 +143,12 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.LOSE);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
 
-    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수와 딜러의 점수가 같으면 무승부이다.")
+    @DisplayName("버스트가 없을 때, 플레이어 점수와 딜러의 점수가 같으면 무승부이다.")
     @Test
     void pushWhenSame() {
         final Player player = Player.from("pobi");
@@ -155,32 +158,8 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final PlayerOutcome playerOutcome = Judge.calculatePlayerOutcome(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.PUSH);
-    }
-
-    @DisplayName("승을 패로 반전한다.")
-    @Test
-    void convertWinToLose() {
-        final Outcome convertedOutcome = Outcome.reverse(Outcome.WIN);
-
-        assertThat(convertedOutcome).isEqualTo(Outcome.LOSE);
-    }
-
-    @DisplayName("패를 승으로 반전한다.")
-    @Test
-    void convertLoseToWin() {
-        final Outcome convertedOutcome = Outcome.reverse(Outcome.LOSE);
-
-        assertThat(convertedOutcome).isEqualTo(Outcome.WIN);
-    }
-
-    @DisplayName("무는 반전해도 무다.")
-    @Test
-    void convertPushToPush() {
-        final Outcome convertedOutcome = Outcome.reverse(Outcome.PUSH);
-
-        assertThat(convertedOutcome).isEqualTo(Outcome.PUSH);
+        assertThat(playerOutcome).isEqualTo(PlayerOutcome.PUSH);
     }
 }
