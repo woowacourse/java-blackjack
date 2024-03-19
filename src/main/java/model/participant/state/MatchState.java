@@ -1,8 +1,8 @@
 package model.participant.state;
 
 public enum MatchState {
-    PLAYING(bettingAmount -> 0),
-    TURNOVER(bettingAmount -> 0),
+    PLAYING(bettingAmount -> unacceptedCalculation()),
+    TURNOVER(bettingAmount -> unacceptedCalculation()),
     WIN(bettingAmount -> bettingAmount),
     DRAW(bettingAmount -> 0),
     LOSE(bettingAmount -> -1 * bettingAmount),
@@ -12,6 +12,10 @@ public enum MatchState {
 
     MatchState(EarningCalculator earningCalculator) {
         this.earningCalculator = earningCalculator;
+    }
+
+    private static long unacceptedCalculation(){
+        throw new IllegalStateException("Calculation can not be executed before Turnover.");
     }
 
     public long calculateEarnings(long bettingAmount) {

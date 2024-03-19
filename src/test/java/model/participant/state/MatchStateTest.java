@@ -2,6 +2,7 @@ package model.participant.state;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,15 +37,15 @@ class MatchStateTest {
     }
 
     @Test
-    @DisplayName("결과가 나오지 않은 상태일 때에는 0 반환한다.")
+    @DisplayName("결과가 나오지 않은 상태일 때에 계산을 요구하면 예외를 던진다.")
     void calculateEarnings_ShouldReturn0_WhenNotAResult() {
         MatchState playingState = MatchState.PLAYING;
         MatchState turnOverState = MatchState.TURNOVER;
         int originalBetting = 100;
 
         assertAll(() -> {
-            assertEquals(0, playingState.calculateEarnings(originalBetting));
-            assertEquals(0, turnOverState.calculateEarnings(originalBetting));
+            assertThrows(IllegalStateException.class, ()->playingState.calculateEarnings(originalBetting));
+            assertThrows(IllegalStateException.class, ()->turnOverState.calculateEarnings(originalBetting));
         });
     }
 
