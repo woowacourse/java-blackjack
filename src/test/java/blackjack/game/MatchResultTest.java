@@ -38,9 +38,9 @@ class MatchResultTest {
     @MethodSource("playerWinCases")
     @DisplayName("플레이어가 배팅 금액만큼 돈을 버는 경우를 올바르게 판단한다.")
     void playerWinTest(Hand playerHand, Hand dealerHand) {
-        double result = MatchResult.calculateRateOfPrize(playerHand, dealerHand);
+        double result = MatchResult.calculatePrizeRate(playerHand, dealerHand);
 
-        assertThat(result).isEqualTo(MatchResult.PLAYER_WIN.getRateOfPrize());
+        assertThat(result).isEqualTo(MatchResult.PLAYER_WIN.getPrizeRate());
     }
 
     static Stream<Arguments> playerWinCases() {
@@ -54,9 +54,9 @@ class MatchResultTest {
     @MethodSource("playerBlackJackCases")
     @DisplayName("플레이어가 배팅 금액의 1.5배만큼 돈을 버는 경우를 올바르게 판단한다.")
     void playerBlackJackTest(Hand playerHand, Hand dealerHand) {
-        double result = MatchResult.calculateRateOfPrize(playerHand, dealerHand);
+        double result = MatchResult.calculatePrizeRate(playerHand, dealerHand);
 
-        assertThat(result).isEqualTo(MatchResult.PLAYER_BLACKJACK.getRateOfPrize());
+        assertThat(result).isEqualTo(MatchResult.PLAYER_BLACKJACK.getPrizeRate());
     }
 
     static Stream<Arguments> playerBlackJackCases() {
@@ -71,9 +71,9 @@ class MatchResultTest {
     @MethodSource("dealerWinCases")
     @DisplayName("플레이어가 배팅 금액을 잃는 경우를 올바르게 판단한다.")
     void dealerWinTest(Hand playerHand, Hand dealerHand) {
-        double result = MatchResult.calculateRateOfPrize(playerHand, dealerHand);
+        double result = MatchResult.calculatePrizeRate(playerHand, dealerHand);
 
-        assertThat(result).isEqualTo(MatchResult.DEALER_WIN.getRateOfPrize());
+        assertThat(result).isEqualTo(MatchResult.DEALER_WIN.getPrizeRate());
     }
 
     static Stream<Arguments> dealerWinCases() {
@@ -89,9 +89,9 @@ class MatchResultTest {
     @MethodSource("tieCases")
     @DisplayName("플레이어가 배팅 금액을 돌려받는 경우를 올바르게 판단한다.")
     void tieTest(Hand playerHand, Hand dealerHand) {
-        double result = MatchResult.calculateRateOfPrize(playerHand, dealerHand);
+        double result = MatchResult.calculatePrizeRate(playerHand, dealerHand);
 
-        assertThat(result).isEqualTo(MatchResult.TIE.getRateOfPrize());
+        assertThat(result).isEqualTo(MatchResult.TIE.getPrizeRate());
     }
 
     static Stream<Arguments> tieCases() {

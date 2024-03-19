@@ -10,23 +10,23 @@ public enum MatchResult {
     PLAYER_BLACKJACK(1.5),
     TIE(0);
 
-    private final double rateOfPrize;
+    private final double prizeRate;
 
-    MatchResult(double rateOfPrize) {
-        this.rateOfPrize = rateOfPrize;
+    MatchResult(double prizeRate) {
+        this.prizeRate = prizeRate;
     }
 
-    public static double calculateRateOfPrize(Hand playerHand, Hand dealerHand) {
+    public static double calculatePrizeRate(Hand playerHand, Hand dealerHand) {
         if (isPlayerBlackJack(playerHand, dealerHand)) {
-            return PLAYER_BLACKJACK.rateOfPrize;
+            return PLAYER_BLACKJACK.prizeRate;
         }
         if (isPlayerWinning(playerHand, dealerHand)) {
-            return PLAYER_WIN.rateOfPrize;
+            return PLAYER_WIN.prizeRate;
         }
         if (isDealerWinning(playerHand, dealerHand)) {
-            return DEALER_WIN.rateOfPrize;
+            return DEALER_WIN.prizeRate;
         }
-        return TIE.rateOfPrize;
+        return TIE.prizeRate;
     }
 
     private static boolean isPlayerBlackJack(Hand playerHand, Hand dealerHand) {
@@ -56,7 +56,7 @@ public enum MatchResult {
         return dealerScore.isNotBust() && dealerScore.isLargerThan(playerScore);
     }
 
-    double getRateOfPrize() {
-        return rateOfPrize;
+    double getPrizeRate() {
+        return prizeRate;
     }
 }

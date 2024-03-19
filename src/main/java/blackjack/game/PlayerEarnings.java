@@ -19,8 +19,8 @@ public class PlayerEarnings {
     }
 
     private int calculatePrizeMoney(Dealer dealer, Player player, Money money) {
-        double rateOfPrize = MatchResult.calculateRateOfPrize(player.getHand(), dealer.getHand());
-        return (int) (money.getMoney() * rateOfPrize);
+        double prizeRate = MatchResult.calculatePrizeRate(player.getHand(), dealer.getHand());
+        return (int) (money.getMoney() * prizeRate);
     }
 
     public int getResultOf(Player player) {
