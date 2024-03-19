@@ -7,6 +7,7 @@ import java.util.List;
 public class Hand {
     public static final int INITIAL_CARD_SIZE = 2;
     public static final Score BLACKJACK_SCORE = new Score(21);
+    public static final Score ZERO_SCORE = new Score(0);
 
     private final List<Card> cards;
 
@@ -19,7 +20,7 @@ public class Hand {
     }
 
     public Score score() {
-        Score score = new Score(0);
+        Score score = ZERO_SCORE;
         for (final Card card : cards) {
             score = addScore(card, score);
         }
