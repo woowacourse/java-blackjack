@@ -20,8 +20,24 @@ public abstract class Participant {
         cardDeck.addCard(card);
     }
 
-    public GameCompletionResult generateFaceUpResult() {
+    public GameCompletionResult generateGameCompletionResult() {
         return new GameCompletionResult(name, cardDeck.getCards(), cardDeck.calculateHand());
+    }
+
+    public int getHand() {
+        return cardDeck.calculateHand();
+    }
+
+    public boolean isBustHand() {
+        return cardDeck.isBust();
+    }
+
+    public boolean isInitBlackjack() {
+        return cardDeck.isBlackJack() && cardDeck.cardSize() == 2;
+    }
+
+    public boolean isSameName(Name name) {
+        return this.name.equals(name);
     }
 
 }

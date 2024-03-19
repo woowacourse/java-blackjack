@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import model.card.Card;
 import model.card.Emblem;
 import model.card.Number;
-import model.participant.Name;
-import model.participant.Participant;
-import model.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +33,17 @@ class PlayerTest {
         player.hitCard(Card.from(Number.THREE, Emblem.HEART));
 
         assertFalse(player.canHit());
+    }
+
+
+    @Test
+    @DisplayName("플레이어의 초기 2장의 카드가 블랙잭인지 판별한다.")
+    void isInitBlackjack_ShouldReturnTrue_WhenHandValueIs21DeckSizeIs2() {
+        Player player = new Player(new Name("프람"));
+        player.hitCard(Card.from(Number.ACE, Emblem.CLUB));
+        player.hitCard(Card.from(Number.TEN, Emblem.HEART));
+
+        assertTrue(player.isInitBlackjack());
     }
 
 }

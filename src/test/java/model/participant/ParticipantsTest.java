@@ -43,7 +43,7 @@ class ParticipantsTest {
     void getDealerFaceUpResult_ShouldReturnDealerCardInfo_WhenCalled() {
 
         // Then
-        GameCompletionResult result = participants.getDealerFaceUpResult();
+        GameCompletionResult result = participants.getDealerCompletionResult();
         assertAll(() -> {
             assertEquals("딜러", result.getPartipantNameAsString());
             assertEquals(List.of("A스페이드", "2스페이드", "3스페이드"), result.getCardsAsStrings());
@@ -56,7 +56,7 @@ class ParticipantsTest {
     void getPlayerFaceUpResult_ShouldReturnPlayerCardInfo_WhenCalled() {
 
         // Then
-        List<GameCompletionResult> result = participants.getPlayerFaceUpResults();
+        List<GameCompletionResult> result = participants.getPlayerCompletionResults();
         assertAll(() -> {
             assertEquals("프람", result.get(0)
                     .getPartipantNameAsString());

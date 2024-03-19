@@ -6,6 +6,7 @@ import java.util.List;
 
 public class CardDeck {
     private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_NUMBER= 21;
 
     private final List<Card> cards;
 
@@ -33,6 +34,10 @@ public class CardDeck {
         return calculateHand() > BUST_THRESHOLD;
     }
 
+    public boolean isBlackJack() {
+        return calculateHand() == BLACKJACK_NUMBER;
+    }
+
     public int calculateHand() {
         return cards.stream()
                 .map(Card::getCardActualValue)
@@ -42,5 +47,9 @@ public class CardDeck {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int cardSize() {
+        return cards.size();
     }
 }

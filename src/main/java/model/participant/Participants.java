@@ -52,13 +52,13 @@ public class Participants {
         return players;
     }
 
-    public GameCompletionResult getDealerFaceUpResult() {
-        return dealer.generateFaceUpResult();
+    public GameCompletionResult getDealerCompletionResult() {
+        return dealer.generateGameCompletionResult();
     }
 
-    public List<GameCompletionResult> getPlayerFaceUpResults() {
+    public List<GameCompletionResult> getPlayerCompletionResults() {
         return players.stream()
-                .map(Player::generateFaceUpResult)
+                .map(Player::generateGameCompletionResult)
                 .toList();
     }
 
@@ -69,10 +69,22 @@ public class Participants {
     public GameCompletionResult getNextAvailablePlayerName() {
         Player currentPlayer = players.peek();
         if (currentPlayer.canHit()) {
-            return currentPlayer.generateFaceUpResult();
+            return currentPlayer.generateGameCompletionResult();
         }
         moveToNextPlayer();
         return getNextAvailablePlayerName();
+    }
+
+    public Participant findParticipantByName(Name name) {
+        if (dealer.isSameName(name)) {
+            return dealer;
+        }
+        Queue<Player> newPlayers = new LinkedList<>(players);
+
+        return newPlayers.stream()
+                .filter(player -> player.isSameName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 참가자를 찾을 수 없습니다."));
     }
 
     public boolean hasAvailablePlayer() {
@@ -83,4 +95,5 @@ public class Participants {
     public boolean canHitDealer() {
         return dealer.canHit();
     }
+
 }

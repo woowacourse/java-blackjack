@@ -1,9 +1,8 @@
 package view;
 
 import java.util.List;
-import model.dto.DealerScoreResult;
+import model.dto.OddsResult;
 import model.dto.GameCompletionResult;
-import model.dto.PlayerScoreResult;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;
@@ -17,7 +16,8 @@ public class OutputView {
         System.out.println(toBePrint);
     }
 
-    public static void printInitialCardSetting(GameCompletionResult dealerResult, List<GameCompletionResult> playersResult) {
+    public static void printInitialCardSetting(GameCompletionResult dealerResult,
+                                               List<GameCompletionResult> playersResult) {
         System.out.print(System.lineSeparator());
         List<String> playerNameTexts = playersResult.stream()
                 .map(GameCompletionResult::getPartipantNameAsString)
@@ -31,7 +31,8 @@ public class OutputView {
     }
 
     private static void printDealerHoleCard(GameCompletionResult gameCompletionResult) {
-        print(gameCompletionResult.getPartipantNameAsString() + NAME_CARD_DELIMITER + gameCompletionResult.getCardsAsStrings()
+        print(gameCompletionResult.getPartipantNameAsString() + NAME_CARD_DELIMITER
+                + gameCompletionResult.getCardsAsStrings()
                 .get(HOLE_CARD_INDEX));
     }
 
@@ -44,7 +45,8 @@ public class OutputView {
                 result.getCardsAsStrings()));
     }
 
-    public static void printFinalFaceUpResult(GameCompletionResult dealerGameCompletionResult, List<GameCompletionResult> playerGameCompletionResults) {
+    public static void printFinalFaceUpResult(GameCompletionResult dealerGameCompletionResult,
+                                              List<GameCompletionResult> playerGameCompletionResults) {
         System.out.print(System.lineSeparator());
         printSinglePlayerFinalFaceUp(dealerGameCompletionResult);
         playerGameCompletionResults.forEach(OutputView::printSinglePlayerFinalFaceUp);
@@ -55,30 +57,19 @@ public class OutputView {
                 result.getCardsAsStrings()) + " - 결과: " + result.hand());
     }
 
-    public static void printScoreResults(DealerScoreResult dealerScoreResult,
-                                         List<PlayerScoreResult> playerScoreResults) {
-        StringBuilder dealerScoresText = generateDealerScoreTexts(dealerScoreResult);
-
-        System.out.print(System.lineSeparator());
-        print("## 최종 승패");
-        print(dealerScoresText.toString());
-        playerScoreResults.forEach(result -> print(playerScoreText(result)));
-    }
-
-    private static String playerScoreText(PlayerScoreResult result) {
-        return result.getNameAsString() + ": " + result.getVictoryAsString();
-    }
-
-    private static StringBuilder generateDealerScoreTexts(DealerScoreResult dealerScoreResult) {
-        StringBuilder dealerScoresText = new StringBuilder("딜러: ");
-        for (Victory victory : Victory.values()) {
-            dealerScoresText.append(dealerScoreResult.getVictoryScoreAsString(victory) + " ");
-        }
-        return dealerScoresText;
-    }
-
     public static void printRetryMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printFinalGameResult(OddsResult dealerResult, List<OddsResult> playerResults) {
+        System.out.printf("%n##최종수익%n");
+        printEachFinalGameResult(dealerResult);
+        playerResults.forEach(OutputView::printEachFinalGameResult);
+
+    }
+
+    private static void printEachFinalGameResult(OddsResult result) {
+        System.out.println(result.getParticipantNameAsString() + ": " + result.getParticipantMoneyAsInteger());
     }
 
 }

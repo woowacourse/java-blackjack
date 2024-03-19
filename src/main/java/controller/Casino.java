@@ -1,21 +1,26 @@
 package controller;
 
-import static java.util.Collections.*;
+import static model.money.BetTable.DEALER_NAME;
+import static model.money.BetTable.getInstance;
 import static util.InputRetryHelper.inputRetryHelper;
+import static view.InputView.inputBetAmount;
 import static view.InputView.inputChoiceCommand;
 import static view.InputView.inputNames;
 
-import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
 import model.casino.CardDispenser;
+import model.casino.DividendPolicyFactory;
 import model.casino.RandomCardShuffleMachine;
-import model.dto.DealerScoreResult;
+import model.dto.OddsResult;
 import model.dto.GameCompletionResult;
-import model.dto.PlayerScoreResult;
+import model.money.BetTable;
+import model.money.DividendPolicy;
+import model.money.Money;
+import model.participant.Name;
 import model.participant.Names;
+import model.participant.Participant;
 import view.OutputView;
-import view.Victory;
 import model.participant.Participants;
 
 public class Casino {
@@ -25,29 +30,40 @@ public class Casino {
     public Casino() {
         Names names = inputRetryHelper(() -> new Names(inputNames()));
         this.participants = new Participants(names);
-        this.cardDispenser =  new CardDispenser(new RandomCardShuffleMachine());
+        this.cardDispenser = new CardDispenser(new RandomCardShuffleMachine());
     }
 
     public void execute() {
+        insertAllBetAmount();
         hitCardTwice();
         showInitialFaceUpResults();
         proceedPlayersTurn();
         proceedDealerTurn();
         showFinalFaceUpResults();
-        DealerScoreResult dealerScoreResult = calculateDealerResult();
-        List<PlayerScoreResult> playerScoreResults = calculatePlayerResults();
-        OutputView.printScoreResults(dealerScoreResult, playerScoreResults);
+        distributeAllMoney();
+        showFinalOdds();
+    }
+
+    private void insertAllBetAmount() {
+        participants.getPlayerCompletionResults().forEach(this::insertBetAmount);
+    }
+
+    private void insertBetAmount(GameCompletionResult result) {
+        Money money = inputRetryHelper(() ->
+                Money.createBettingAmount(inputBetAmount(result.getPartipantNameAsString())));
+
+        BetTable.getInstance().add(result.name(), money);
     }
 
     private void showInitialFaceUpResults() {
-        GameCompletionResult dealerGameCompletionResult = participants.getDealerFaceUpResult();
-        List<GameCompletionResult> playerGameCompletionResults = participants.getPlayerFaceUpResults();
+        GameCompletionResult dealerGameCompletionResult = participants.getDealerCompletionResult();
+        List<GameCompletionResult> playerGameCompletionResults = participants.getPlayerCompletionResults();
         OutputView.printInitialCardSetting(dealerGameCompletionResult, playerGameCompletionResults);
     }
 
     private void proceedPlayersTurn() {
         while (participants.hasAvailablePlayer()) {
-            GameCompletionResult currentPlayerCompletionResult =  participants.getNextAvailablePlayerName();
+            GameCompletionResult currentPlayerCompletionResult = participants.getNextAvailablePlayerName();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
                     inputChoiceCommand(currentPlayerCompletionResult)));
             distinctPlayerChoice(playerChoice);
@@ -69,8 +85,8 @@ public class Casino {
     }
 
     private void showFinalFaceUpResults() {
-        List<GameCompletionResult> playerFinalGameCompletionResults = participants.getPlayerFaceUpResults();
-        GameCompletionResult dealerFinalGameCompletionResult = participants.getDealerFaceUpResult();
+        List<GameCompletionResult> playerFinalGameCompletionResults = participants.getPlayerCompletionResults();
+        GameCompletionResult dealerFinalGameCompletionResult = participants.getDealerCompletionResult();
         OutputView.printFinalFaceUpResult(dealerFinalGameCompletionResult, playerFinalGameCompletionResults);
     }
 
@@ -92,26 +108,25 @@ public class Casino {
         participants.turnOverPlayer();
     }
 
-    private List<PlayerScoreResult> calculatePlayerResults() {
-        int dealerHand = participants.getDealerFaceUpResult()
-                .hand();
-        return participants.getPlayerFaceUpResults()
+    private void distributeAllMoney() {
+        getInstance().findAllParticipantNames()
                 .stream()
-                .map(result -> new PlayerScoreResult(result.name(), Victory.of(result.hand(), dealerHand)))
-                .toList();
+                .filter(name -> !name.equals(DEALER_NAME))
+                .forEach(this::distributeMoney);
     }
 
-    private DealerScoreResult calculateDealerResult() {
-        int dealerHand = participants.getDealerFaceUpResult().hand();
-        EnumMap<Victory, Integer> dealerScoreBoard = new EnumMap<>(Victory.class);
-        List<Victory> dealerScores = participants.getPlayerFaceUpResults()
-                .stream()
-                .map(player -> Victory.of(dealerHand, player.hand()))
-                .toList();
-        dealerScoreBoard.put(Victory.WIN, frequency(dealerScores, Victory.WIN));
-        dealerScoreBoard.put(Victory.DRAW, frequency(dealerScores, Victory.DRAW));
-        dealerScoreBoard.put(Victory.LOSE, frequency(dealerScores, Victory.LOSE));
-        return new DealerScoreResult(dealerScoreBoard);
+    private void distributeMoney(Name name) {
+        Participant dealer = participants.findParticipantByName(DEALER_NAME);
+        Participant player = participants.findParticipantByName(name);
+        DividendPolicy policyInProceed = DividendPolicyFactory.findPolicy(dealer, player);
+        BetTable.getInstance().remittanceByPolicy(name, policyInProceed);
+    }
+
+    private void showFinalOdds() {
+        OddsResult dealerOddsResult = BetTable.getInstance().getDealerFinalOddsResult();
+        List<OddsResult> playerOddsResults = getInstance().getPlayerFinalOddsResults();
+
+        OutputView.printFinalGameResult(dealerOddsResult, playerOddsResults);
     }
 
 }
