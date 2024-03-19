@@ -6,7 +6,6 @@ import domain.card.Hand;
 import java.util.List;
 
 public abstract class Finished implements State {
-    public static final int DEFAULT_RATE = 1;
     private final Hand hand;
 
     public Finished(final Hand hand) {
@@ -31,7 +30,7 @@ public abstract class Finished implements State {
 
     @Override
     public double profitRate(final State state) {
-        return DEFAULT_RATE;
+        throw new UnsupportedOperationException("Stand, Blackjack, Bust 상태에서만 수익률을 계산할 수 있습니다.");
     }
 
     @Override
