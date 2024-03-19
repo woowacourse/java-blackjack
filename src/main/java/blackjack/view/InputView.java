@@ -1,8 +1,8 @@
 package blackjack.view;
 
+import blackjack.model.betting.BettingMoney;
+import blackjack.model.player.PlayerName;
 import blackjack.view.form.Command;
-import blackjack.vo.BettingMoney;
-import blackjack.vo.PlayerName;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

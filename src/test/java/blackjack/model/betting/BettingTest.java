@@ -3,8 +3,7 @@ package blackjack.model.betting;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.player.MatchResult;
-import blackjack.vo.BettingMoney;
-import blackjack.vo.PlayerName;
+import blackjack.model.player.PlayerName;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
