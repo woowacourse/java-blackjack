@@ -12,7 +12,6 @@ public abstract class Finished implements State {
         this.hand = hand;
     }
 
-
     @Override
     public State draw(final Card card) {
         throw new UnsupportedOperationException("종료상태에서는 카드를 뽑을 수 없습니다.");
