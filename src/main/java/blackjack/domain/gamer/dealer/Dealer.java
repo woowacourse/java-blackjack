@@ -16,11 +16,11 @@ public class Dealer extends Gamer {
     public static final int HIT_UPPER_BOUND = 16;
     private static final String name = "딜러";
 
-    private final Wallet wallet;
+    private final BettingPouch bettingPouch;
 
     public Dealer(Deck deck) {
         super(deck);
-        wallet = new Wallet();
+        bettingPouch = new BettingPouch();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Dealer extends Gamer {
     }
 
     public void keepPlayerMoney(String name, Money money) {
-        wallet.put(name, money);
+        bettingPouch.put(name, money);
     }
 
     public double calculateDealerRevenue(Players players) {
@@ -86,7 +86,7 @@ public class Dealer extends Gamer {
     }
 
     private Map<String, Double> getGeneratePlayerRevenues(Map<String, RewardRate> rateByPlayerNames) {
-        return wallet.get()
+        return bettingPouch.get()
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(

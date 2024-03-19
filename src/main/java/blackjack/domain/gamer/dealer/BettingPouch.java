@@ -5,10 +5,10 @@ import blackjack.domain.money.Money;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Wallet {
+public class BettingPouch {
     private final Map<String, Money> values;
 
-    public Wallet() {
+    public BettingPouch() {
         this.values = new HashMap<>();
     }
 
