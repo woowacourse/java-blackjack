@@ -12,18 +12,18 @@ public class Money {
         this.value = value;
     }
 
-    public static Money from(String money) {
+    public Money from(String money) {
         validateNumericString(money);
         return new Money(Integer.parseInt(money));
     }
 
-    private static void validateNumericString(String money) {
+    private void validateNumericString(String money) {
         if (!Pattern.compile("-?\\d+").matcher(money).matches()) {
             throw new IllegalArgumentException(NOT_NUMERIC);
         }
     }
 
-    private static void validatePositive(int money) {
+    private void validatePositive(int money) {
         if (money < 0) {
             throw new IllegalArgumentException(NON_NEGATIVE_ERROR);
         }
