@@ -12,7 +12,7 @@ import controller.dto.PlayerFaceUpResult;
 
 public class ResultMapper {
     private ResultMapper() {
-        throw new IllegalStateException("Static Util Class");
+        throw new IllegalStateException("Can NOT construct Static Util Class by Instance");
     }
 
     public static PlayerFaceUpResult toPlayerFaceUpResult(Player player) {
