@@ -8,8 +8,8 @@ public class Names {
     private final List<Name> names;
 
     public Names(final List<String> names) {
-        this.names = createNames(names);
         validate(names);
+        this.names = createNames(names);
     }
 
     private static List<Name> createNames(final List<String> names) {
