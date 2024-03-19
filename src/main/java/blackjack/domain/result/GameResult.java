@@ -17,26 +17,13 @@ public enum GameResult {
     }
 
     public static GameResult ofPlayer(final Player player, final Dealer dealer) {
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            return GameResult.DRAW;
-        }
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             return GameResult.BLACKJACK;
         }
-        if (dealer.isBust()) {
+        if (dealer.isBust() || (!player.isBust() && player.getScore() > dealer.getScore())) {
             return GameResult.WIN;
         }
-        if (player.isBust()) {
-            return GameResult.LOSE;
-        }
-        return calculateResult(player.getScore(), dealer.getScore());
-    }
-
-    private static GameResult calculateResult(final int playerScore, final int dealerScore) {
-        if (playerScore > dealerScore) {
-            return GameResult.WIN;
-        }
-        if (playerScore < dealerScore) {
+        if (player.isBust() || (!dealer.isBust() && player.getScore() < dealer.getScore())) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
