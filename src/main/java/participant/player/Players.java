@@ -1,10 +1,14 @@
 package participant.player;
 
+import card.CardDeck;
+import card.Hand;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import participant.dealer.Dealer;
 import resultJudge.GameResult;
 import resultJudge.ResultJudge;
@@ -29,6 +33,22 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public void playBlackJackGame(Predicate<Name> isHitFunction, CardDeck cardDeck,
+                                  BiConsumer<Name, Hand> printStatusFunction) {
+        for (Player player : players) {
+            play(isHitFunction, cardDeck, printStatusFunction, player);
+        }
+    }
+
+    private void play(Predicate<Name> isHitFunction, CardDeck cardDeck, BiConsumer<Name, Hand> printStatusFunction,
+                      Player player) {
+        while (!player.isBust() && isHitFunction.test(player.getName())) {
+            player.hit(cardDeck.pickCard());
+
+            printStatusFunction.accept(player.getName(), player.getCards());
+        }
     }
 
     public Map<Name, Integer> getPlayerResults(Dealer dealer) {

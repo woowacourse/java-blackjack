@@ -2,6 +2,7 @@ package controller;
 
 import card.Card;
 import card.CardDeck;
+import card.Hand;
 import java.util.List;
 import java.util.Map;
 import participant.dealer.Dealer;
@@ -52,10 +53,7 @@ public class BlackJackController {
     private void runBlackJackGame(Players players, CardDeck cardDeck, Dealer dealer) {
         outputView.printInitCardStatus(players, dealer.getFirstCard());
 
-        for (Player player : players.getPlayers()) {
-            playGame(player, cardDeck);
-        }
-
+        players.playBlackJackGame(this::isHit, cardDeck, this::showStatus);
         dealer.playGame(cardDeck);
 
         outputView.printExtraCardInfo(dealer.getCards());
@@ -63,19 +61,16 @@ public class BlackJackController {
         outputView.printPlayerHand(players);
     }
 
-    private void playGame(Player player, CardDeck cardDeck) {
-        while (isHit(player)) {
-            player.hit(cardDeck.pickCard());
-            outputView.printPlayerCardStatus(player.getName(), player.getCards());
-        }
+    private boolean isHit(Name name) {
+        return inputView.isHit(name);
+    }
+
+    private void showStatus(Name name, Hand hand) {
+        outputView.printPlayerCardStatus(name, hand);
     }
 
     private void showResult(Players players, Dealer dealer) {
         Map<Name, Integer> playerResults = players.getPlayerResults(dealer);
         outputView.printBlackJackResult(playerResults);
-    }
-
-    private boolean isHit(Player player) {
-        return !player.isBust() && inputView.isHit(player.getName());
     }
 }
