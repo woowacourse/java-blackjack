@@ -3,7 +3,6 @@ package view;
 import controller.dto.DealerFaceUpResultInfo;
 import controller.dto.PlayerFaceUpResultInfo;
 import java.util.List;
-import model.participant.dto.DealerFaceUpResult;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;

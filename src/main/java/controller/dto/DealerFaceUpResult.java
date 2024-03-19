@@ -1,4 +1,4 @@
-package model.participant.dto;
+package controller.dto;
 
 import java.util.List;
 import model.card.Card;

@@ -7,8 +7,8 @@ import controller.dto.PlayerFaceUpResultInfo;
 import java.util.List;
 import model.participant.Dealer;
 import model.participant.Player;
-import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.PlayerFaceUpResult;
+import controller.dto.DealerFaceUpResult;
+import controller.dto.PlayerFaceUpResult;
 
 public class ResultMapper {
     private ResultMapper() {

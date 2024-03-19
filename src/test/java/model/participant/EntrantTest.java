@@ -8,10 +8,6 @@ import model.card.Card;
 import model.card.Emblem;
 import model.card.Number;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.PlayerFaceUpResult;
 
 class EntrantTest {
     Entrant entrant;

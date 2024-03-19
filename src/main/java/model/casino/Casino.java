@@ -6,8 +6,8 @@ import model.card.Card;
 import model.participant.Dealer;
 import model.participant.Entrant;
 import model.participant.Player;
-import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.PlayerFaceUpResult;
+import controller.dto.DealerFaceUpResult;
+import controller.dto.PlayerFaceUpResult;
 import util.ResultMapper;
 
 public class Casino {

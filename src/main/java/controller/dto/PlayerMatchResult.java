@@ -1,4 +1,4 @@
-package model.participant.dto;
+package controller.dto;
 
 import model.participant.state.MatchState;
 import model.participant.Name;
