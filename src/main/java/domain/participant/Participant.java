@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public abstract class Participant {
     private final Name name;
-    // TODO: protected 는 왜 테스트에서 .으로 접근가능하지? 그래도 되나?
     protected State state;
 
     Participant(final Name name, final State state) {
