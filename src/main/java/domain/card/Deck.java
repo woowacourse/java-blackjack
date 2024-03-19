@@ -10,6 +10,12 @@ public class Deck {
         deck = createShuffledDeck();
     }
 
+    private Deque<Card> createShuffledDeck() {
+        final List<Card> cards = createCards();
+        Collections.shuffle(cards);
+        return new ArrayDeque<>(cards);
+    }
+
     private List<Card> createCards() {
         return Arrays.stream(Denomination.values())
                 .flatMap(denomination ->
@@ -17,13 +23,7 @@ public class Deck {
                                 .map(symbol -> new Card(denomination, symbol)))
                 .collect(Collectors.toList());
     }
-
-    private Deque<Card> createShuffledDeck() {
-        final List<Card> cards = createCards();
-        Collections.shuffle(cards);
-        return new ArrayDeque<>(cards);
-    }
-
+    
     public Card draw() {
         if (deck.isEmpty()) {
             throw new IllegalStateException("덱이 비어있습니다");
