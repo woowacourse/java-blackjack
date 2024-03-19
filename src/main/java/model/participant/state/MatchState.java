@@ -6,7 +6,7 @@ public enum MatchState {
     WIN(bettingAmount -> bettingAmount),
     DRAW(bettingAmount -> 0),
     LOSE(bettingAmount -> -1 * bettingAmount),
-    BLACK_JACK(bettingAmount -> (int) (1.5 * bettingAmount));
+    BLACK_JACK(bettingAmount -> (long) (1.5 * bettingAmount));
 
     private final EarningCalculator earningCalculator;
 
