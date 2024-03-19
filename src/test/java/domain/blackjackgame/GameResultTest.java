@@ -3,20 +3,29 @@ package domain.blackjackgame;
 import static fixture.ParticipantFixture.플레이어;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Map;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import java.math.BigDecimal;
+import org.junit.jupiter.api.Test;
 
 class GameResultTest {
-    @ParameterizedTest
-    @CsvSource(value = {"WIN:LOSE", "DRAW:DRAW", "LOSE:WIN"}, delimiter = ':')
-    void 딜러의_결과는_플레이어의_결과와_반대이다(ResultStatus playerStatus, ResultStatus dealerStatus) {
+    @Test
+    void 딜러의_수익은_플레이어의_수익과_반대이다() {
         GameResult gameResult = new GameResult();
-        gameResult.record(플레이어("프린"), playerStatus);
+        BigDecimal profit = BigDecimal.valueOf(1000);
+        gameResult.record(플레이어("프린"), profit);
 
-        Map<ResultStatus, Integer> dealerResult = gameResult.getDealerResult();
+        BigDecimal dealerResult = gameResult.getDealerResult();
 
-        assertThat(dealerResult).hasSize(1);
-        assertThat(dealerResult).containsEntry(dealerStatus, 1);
+        assertThat(dealerResult).isEqualTo(profit.negate());
+    }
+
+    @Test
+    void 플레이어의_수익의_합이_0이면_딜러의_수익도_0이다() {
+        GameResult gameResult = new GameResult();
+        gameResult.record(플레이어("프린"), BigDecimal.valueOf(1000));
+        gameResult.record(플레이어("뽀로로"), BigDecimal.valueOf(-1000));
+
+        BigDecimal dealerResult = gameResult.getDealerResult();
+
+        assertThat(dealerResult).isEqualTo(BigDecimal.ZERO);
     }
 }

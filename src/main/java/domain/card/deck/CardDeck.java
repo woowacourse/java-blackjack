@@ -1,5 +1,6 @@
-package domain.card;
+package domain.card.deck;
 
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +9,6 @@ public class CardDeck {
 
     public CardDeck(List<Card> cards) {
         this.cardDeck = new ArrayList<>(cards);
-    }
-
-    public void shuffle(CardShuffleStrategy cardShuffleStrategy) {
-        cardShuffleStrategy.shuffle(cardDeck);
     }
 
     public Card draw() {

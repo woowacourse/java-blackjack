@@ -1,5 +1,6 @@
 package ui;
 
+import domain.participant.name.NameValidator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -31,18 +32,29 @@ public class InputView {
                 .map(String::trim)
                 .toList();
         validateInvalidPlayerName(playerNames);
+        NameValidator.validateNames(playerNames);
+        for (String name : playerNames) {
+            NameValidator.validateName(name);
+        }
         return playerNames;
     }
 
     private void validateInvalidPlayerName(List<String> playerNames) {
-        if (hasInvalidPlayerName(playerNames)) {
+        if (playerNames.stream().anyMatch(INVALID_PLAYER_NAMES::contains)) {
             throw new IllegalArgumentException("딜러와 연관된 이름이 포함되어 있습니다.");
         }
     }
 
-    private boolean hasInvalidPlayerName(List<String> playerNames) {
-        return playerNames.stream()
-                .anyMatch(INVALID_PLAYER_NAMES::contains);
+    public int readBetAmount(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        String betAmount = scanner.nextLine().trim();
+        System.out.println();
+        validateInput(betAmount);
+        try {
+            return Integer.parseInt(betAmount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
+        }
     }
 
     public boolean askForMoreCard(String name) {

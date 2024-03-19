@@ -8,42 +8,63 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class ParticipantsTest {
-    @Test
-    void 플레이어가_없을_경우_예외가_발생한다() {
-        List<String> playerNames = Collections.emptyList();
+    private final int betAmount = 1;
 
-        assertThatThrownBy(() -> Participants.createPlayers(playerNames))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("플레이어의 수는 1 ~ 6명이어야 합니다.");
+    @Test
+    void 플레이어_수가_최솟값보다_작을_경우_예외가_발생한다() {
+        List<Player> players = Collections.emptyList();
+
+        assertThatThrownBy(() -> new Participants(players))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void 플레이어의_수가_최댓값을_넘을_경우_예외가_발생한다() {
-        List<String> playerNames = List.of("뽀로로", "프린", "포비", "네오", "토미", "영이", "수달");
+    void 플레이어_수가_최댓값보다_클_경우_예외가_발생한다() {
+        List<Player> players = List.of(
+                new Player("prin", betAmount),
+                new Player("roro", betAmount),
+                new Player("pobi", betAmount),
+                new Player("crong", betAmount),
+                new Player("tomi", betAmount),
+                new Player("neo", betAmount),
+                new Player("young", betAmount)
+        );
 
-        assertThatThrownBy(() -> Participants.createPlayers(playerNames))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("플레이어의 수는 1 ~ 6명이어야 합니다.");
+        assertThatThrownBy(() -> new Participants(players))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void 플레이어의_이름이_중복될_경우_예외가_발생한다() {
-        String roro = "뽀로로";
-        String prin = "프린";
-        List<String> playerNames = List.of(roro, prin, prin);
+    void 중복된_플레이어가_있을_경우_예외가_발생한다() {
+        List<Player> players = List.of(
+                new Player("prin", betAmount),
+                new Player("prin", betAmount)
+        );
 
-        assertThatThrownBy(() -> Participants.createPlayers(playerNames))
+        assertThatThrownBy(() -> new Participants(players))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("중복된 이름이 존재합니다.");
+                .hasMessageContaining("중복된 플레이어가 존재합니다");
     }
 
     @Test
-    void 플레이어들을_정상적으로_생성한다() {
-        List<String> playerNames = List.of("뽀로로", "프린", "포비", "네오", "토미", "영이");
-        Participants participants = Participants.createPlayers(playerNames);
+    void 딜러를_리턴한다() {
+        List<Player> players = List.of(
+                new Player("prin", betAmount),
+                new Player("roro", betAmount)
+        );
+        Participants participants = new Participants(players);
 
-        List<Player> players = participants.getPlayers();
+        assertThat(participants.getDealer()).isExactlyInstanceOf(Dealer.class);
+    }
 
-        assertThat(players).hasSize(6);
+    @Test
+    void 딜러를_포함하지_않은_플레이어_리스트를_리턴한다() {
+        List<Player> players = List.of(
+                new Player("prin", betAmount),
+                new Player("roro", betAmount)
+        );
+        Participants participants = new Participants(players);
+
+        assertThat(participants.getPlayers()).containsExactlyElementsOf(players);
     }
 }

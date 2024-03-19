@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Score;
+import domain.participant.name.Name;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +24,7 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
-    public Score calculateScore() {
+    public int calculateScore() {
         return cards.sumAllCards();
     }
 
@@ -46,19 +46,16 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    Cards getCards() {
-        return cards;
-    }
-
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (obj instanceof Participant other) {
-            return this.name.equals(other.name);
+        if (o == null || getClass() != o.getClass()) {
+            return false;
         }
-        return false;
+        Participant other = (Participant) o;
+        return Objects.equals(name, other.name);
     }
 
     @Override
