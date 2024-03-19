@@ -57,7 +57,7 @@ public class Dealer extends Gamer {
     public Map<String, Double> calculatePlayerRevenues(Players players) {
         Map<String, RewardRate> rateByPlayerNames = generateRateByPlayerNames(players);
 
-        return getGeneratePlayerRevenues(rateByPlayerNames);
+        return bettingPouch.getGeneratePlayerRevenues(rateByPlayerNames);
     }
 
     private Map<String, RewardRate> generateRateByPlayerNames(Players players) {
@@ -83,16 +83,5 @@ public class Dealer extends Gamer {
             return RewardRate.DRAW;
         }
         return RewardRate.LOSE;
-    }
-
-    private Map<String, Double> getGeneratePlayerRevenues(Map<String, RewardRate> rateByPlayerNames) {
-        return bettingPouch.get()
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> entry.getValue()
-                                .applyRate(rateByPlayerNames.getOrDefault(entry.getKey(), RewardRate.DRAW))
-                ));
     }
 }

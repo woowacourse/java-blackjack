@@ -1,6 +1,7 @@
 package blackjack.domain.gamer.dealer;
 
 import blackjack.domain.money.Money;
+import blackjack.domain.money.RewardRate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BettingPouchTest {
 
     @Test
-    @DisplayName("에서 플레이어의 자금을 저장한다.")
+    @DisplayName("에서 플레이어의 수익을 계산한다.")
     void put() {
         // given
         BettingPouch bettingPouch = new BettingPouch();
@@ -22,9 +23,14 @@ class BettingPouchTest {
         // when
         bettingPouch.put("seyang", money1);
         bettingPouch.put("lemone", money2);
+        var actual = bettingPouch.getGeneratePlayerRevenues(Map.of(
+                "seyang", RewardRate.DRAW,
+                "lemone", RewardRate.BLACKJACK
+        ));
 
         // then
-        assertThat(bettingPouch.get())
-                .containsExactlyEntriesOf(Map.of("seyang", Money.from("5000"), "lemone", Money.from("7000")));
+        assertThat(actual).isEqualTo(Map.of(
+                "seyang", 0.0,
+                "lemone", 10500.0));
     }
 }

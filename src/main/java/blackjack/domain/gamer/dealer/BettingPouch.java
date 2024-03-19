@@ -1,9 +1,11 @@
 package blackjack.domain.gamer.dealer;
 
 import blackjack.domain.money.Money;
+import blackjack.domain.money.RewardRate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BettingPouch {
     private final Map<String, Money> values;
@@ -16,7 +18,13 @@ public class BettingPouch {
         values.put(name, money);
     }
 
-    public Map<String, Money> get() {
-        return Map.copyOf(values);
+    public Map<String, Double> getGeneratePlayerRevenues(Map<String, RewardRate> rateByPlayerNames) {
+        return values.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue()
+                                .applyRate(rateByPlayerNames.getOrDefault(entry.getKey(), RewardRate.DRAW))
+                ));
     }
 }
