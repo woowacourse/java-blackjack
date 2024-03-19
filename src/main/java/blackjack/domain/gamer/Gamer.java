@@ -42,11 +42,4 @@ public abstract class Gamer {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
-
-    @Override
-    public String toString() {
-        return "Gamer{" +
-                "cards=" + cards +
-                '}';
-    }
 }
