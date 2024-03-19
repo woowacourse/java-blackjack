@@ -14,7 +14,6 @@ import blackjack.dto.gamer.PlayerInfo;
 import blackjack.dto.gamer.PlayerInfos;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.command.Command;
 
 public class BlackjackGameController {
     private final InputView inputView;
@@ -80,7 +79,7 @@ public class BlackjackGameController {
     }
 
     private boolean isPlayerInputHit(final Player player) {
-        return inputView.readHitOrStand(player).equals(Command.YES);
+        return inputView.readHitOrStand(player).isYes();
     }
 
     private void receiveDealerAdditionalCard(final Deck deck, final Dealer dealer) {
