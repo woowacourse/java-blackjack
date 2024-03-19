@@ -22,6 +22,7 @@ public class Card {
     public boolean isSoftAce() {
         return false;
     }
+    public void changeToHardAce(){}
 
     public int getCardActualValue() {
         return number.getValue();

@@ -15,15 +15,14 @@ public class AceCard extends Card {
 
     @Override
     public boolean isSoftAce() {
-        return thenChangeToHardAceAndReturnTrue();
+        return softAce;
     }
 
-    private boolean thenChangeToHardAceAndReturnTrue() {
+    @Override
+    public void changeToHardAce() {
         if (softAce) {
             softAce = false;
-            return true;
         }
-        return false;
     }
 
     @Override
