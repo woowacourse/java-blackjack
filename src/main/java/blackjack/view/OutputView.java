@@ -1,112 +1,89 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Result;
-import blackjack.domain.ResultStatus;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerProfitAmounts;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.ProfitAmount;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printInitialHand(Dealer dealer, List<Player> players) {
-        System.out.println();
-        print(dealOut(dealer, players));
+    private static final String SPLIT_DELIMITER = ", ";
+    private static final String RESULT_FORMAT = " - 결과: ";
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
-        print(singleCard(dealer));
-        for (Player player : players) {
-            printTotalHand(player);
-        }
+    public void printPlayersInitialHand(Players players, Dealer dealer) {
+        List<Player> resultPlayers = players.getPlayers();
+        List<Name> playerNames = getPlayerNames(resultPlayers);
+        System.out.println(String.format(LINE_SEPARATOR + "딜러와 %s에게 2장을 나누었습니다.", convertNameToString(playerNames)));
+        List<Card> visibleCards = dealer.getVisibleCards();
+        System.out.println("딜러: " + convertCardsToString(visibleCards));
+        resultPlayers.forEach(player -> System.out.println(convertParticipantHandToString(player)));
         System.out.println();
     }
 
-    public static void printTotalHand(Player player) {
-        print(totalHand(player));
-    }
-
-    private static String dealOut(Dealer dealer, List<Player> players) {
-        String playerNames = players.stream()
+    private List<Name> getPlayerNames(List<Player> resultPlayers) {
+        return resultPlayers.stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(", "));
-
-        return String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName(), playerNames);
+                .toList();
     }
 
-    private static String singleCard(Dealer dealer) {
-        List<Card> cards = dealer.getHand().getCards();
-        return String.format("%s: %s", dealer.getName(), extractCardName(cards.get(0)));
+    private String convertNameToString(List<Name> playerNames) {
+        return playerNames.stream()
+                .map(Name::getName)
+                .collect(Collectors.joining(SPLIT_DELIMITER));
     }
 
-    private static String totalHand(Player player) {
-        List<Card> cards = player.getHand().getCards();
-        String hand = cards.stream()
-                .map(OutputView::extractCardName)
-                .collect(Collectors.joining(", "));
-
-        return String.format("%s: %s", player.getName(), hand);
+    private String convertCardsToString(List<Card> visibleCards) {
+        return visibleCards.stream()
+                .map(this::convertCardToString)
+                .collect(Collectors.joining(SPLIT_DELIMITER));
     }
 
-    public static void printHandWithScore(Dealer dealer, List<Player> players) {
-        print(totalHand(dealer) + resultScore(dealer));
-        for (Player player : players) {
-            print(totalHand(player) + resultScore(player));
-        }
-        System.out.println();
+    private String convertCardToString(Card card) {
+        return OutputDenomination.convertDenominationToString(card.getDenomination()) +
+                OutputSuit.convertSuitToString(card.getSuit());
     }
 
-    private static String resultScore(Player player) {
-        int score = player.calculate();
-        return String.format(" - 결과: %d", score);
+    public String convertParticipantHandToString(Participant participant) {
+        return participant.getName().getName() + "카드: " + convertCardsToString(participant.getCards());
     }
 
-    private static void print(String message) {
-        System.out.println(message);
+    public void printParticipantHand(Participant participant) {
+        System.out.println(convertParticipantHandToString(participant));
     }
 
-    private static String extractCardName(Card card) {
-        return card.getNumber().getName() + card.getSymbol().getName();
+    public void printDealerDraw() {
+        System.out.println(LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerDraw(Dealer dealer) {
-        System.out.println(String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName()));
-        System.out.println();
+    public void printParticipantResult(Players players, Dealer dealer) {
+        List<Player> resultPlayers = players.getPlayers();
+        List<Card> cards = dealer.getCards();
+        System.out.println(
+                LINE_SEPARATOR + "딜러: " + convertCardsToString(cards) + RESULT_FORMAT + dealer.calculateHand()
+                        .getValue());
+        resultPlayers.forEach(player -> System.out.println(
+                convertParticipantHandToString(player) + RESULT_FORMAT + player.calculateHand().getValue()));
     }
 
-    public static void printDealerStand(Dealer dealer) {
-        System.out.println(String.format("%s는 17이상이라 카드를 더 받지 않습니다.", dealer.getName()));
-        System.out.println();
+    public void printProfitDetails(PlayerProfitAmounts playerProfitAmounts) {
+        ProfitAmount dealerProfitAmount = playerProfitAmounts.calculateDealerProfit();
+        Map<Name, ProfitAmount> playerProfit = playerProfitAmounts.getProfitAmounts();
+
+        System.out.println(LINE_SEPARATOR + "## 최종 수익");
+        System.out.println(String.format("%-4s:%7d", "딜러", dealerProfitAmount.getAmount()));
+        playerProfit.forEach(
+                (name, profit) -> System.out.println(String.format("%-6s:%7d", name.getName(), profit.getAmount())));
     }
 
-    public static void printResult(Result result, Dealer dealer) {
-        Map<Player, ResultStatus> results = result.getResults();
-        Map<ResultStatus, Long> resultStatusLongMap = result.calculateDealerResult();
-
-        System.out.println("## 최종 승패");
-        printDealerResult(dealer, resultStatusLongMap);
-        printPlayerResult(results);
-    }
-
-    private static void printDealerResult(Dealer dealer, Map<ResultStatus, Long> dealerResult) {
-        System.out.print(String.format("%s: ", dealer.getName()));
-        dealerResult.forEach((key, value) ->
-                System.out.print(value + key.getName() + " ")
-        );
-        System.out.println();
-    }
-
-    private static void printPlayerResult(Map<Player, ResultStatus> results) {
-        results.forEach(
-                ((player, status) -> System.out.println(String.format("%s: %s", player.getName(), status.getName()))));
-    }
-
-    public static void printError(String message) {
-        print(message);
-    }
-
-    public static void printBurst() {
-        System.out.println("버스트 되었습니다.");
-        System.out.println();
+    public void printError(String message) {
+        System.out.println("[ERROR] " + message);
     }
 }
