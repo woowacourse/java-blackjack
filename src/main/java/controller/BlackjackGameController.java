@@ -59,6 +59,7 @@ public class BlackjackGameController {
 
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
         List<Card> generatedCards = new ArrayList<>();
+        for (int i = 0; i < (players.playersSize() + DEALER_COUNT) * CARD_COUNT_FOR_SETTING; i++) {
             generatedCards.add(new Card());
         }
         blackjackGame.distributeCardsForSetting(new Cards(generatedCards));
@@ -93,8 +94,8 @@ public class BlackjackGameController {
 
     private Answer hitResultInfo(boolean continueHit, Player player, BlackjackGame blackjackGame) {
         if (continueHit) {
-            outputView.printCardsStock(player.getName(),
-                    blackjackGame.updatedPlayer(player).captureCardType());
+            Player updatedPlayer = blackjackGame.updatedPlayer(player);
+            outputView.printCardsStock(player.getName(), updatedPlayer.captureCardType());
             return new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         }
         outputView.printBustInfo(player);
