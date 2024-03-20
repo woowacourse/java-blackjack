@@ -44,8 +44,8 @@ class MatchStateTest {
         int originalBetting = 100;
 
         assertAll(() -> {
-            assertThrows(IllegalStateException.class, ()->playingState.calculateEarnings(originalBetting));
-            assertThrows(IllegalStateException.class, ()->turnOverState.calculateEarnings(originalBetting));
+            assertThrows(IllegalStateException.class, () -> playingState.calculateEarnings(originalBetting));
+            assertThrows(IllegalStateException.class, () -> turnOverState.calculateEarnings(originalBetting));
         });
     }
 

@@ -1,13 +1,13 @@
 package model.casino;
 
 import controller.dto.BettingInfos;
+import controller.dto.DealerFaceUpResult;
+import controller.dto.PlayerFaceUpResult;
 import java.util.List;
 import model.card.Card;
 import model.participant.Dealer;
 import model.participant.Entrant;
 import model.participant.Player;
-import controller.dto.DealerFaceUpResult;
-import controller.dto.PlayerFaceUpResult;
 import util.ResultMapper;
 
 public class Casino {

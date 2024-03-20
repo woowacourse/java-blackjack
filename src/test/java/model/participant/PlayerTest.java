@@ -1,17 +1,13 @@
 package model.participant;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import model.card.Card;
 import model.card.Emblem;
 import model.card.Number;
-import model.participant.state.MatchState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class PlayerTest {
 
@@ -20,7 +16,7 @@ class PlayerTest {
     void canHit_ShouldReturnTrue_WhenCardDeckIsNotBust() {
         Card card1 = Card.from(Number.TEN, Emblem.SPADE);
         Card card2 = Card.from(Number.NINE, Emblem.HEART);
-        Player player = new Player(new Name("name"),0, card1, card2);
+        Player player = new Player(new Name("name"), 0, card1, card2);
 
         player.hitCard(Card.from(Number.TWO, Emblem.HEART));
 
@@ -32,7 +28,7 @@ class PlayerTest {
     void canHit_ShouldReturnFalse_WhenCardDeckIsBust() {
         Card card1 = Card.from(Number.TEN, Emblem.SPADE);
         Card card2 = Card.from(Number.NINE, Emblem.HEART);
-        Player player = new Player(new Name("name"),0, card1, card2);
+        Player player = new Player(new Name("name"), 0, card1, card2);
 
         player.hitCard(Card.from(Number.THREE, Emblem.HEART));
 

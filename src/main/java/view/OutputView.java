@@ -47,8 +47,7 @@ public class OutputView {
     }
 
     public static void printSingleFaceUp(PlayerFaceUpResultInfo result) {
-        printMessage(result.name() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
-                result.cardFaces()));
+        printMessage(result.name() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER, result.cardFaces()));
     }
 
     private static void printParticipantFinalFaceUp(DealerFaceUpResultInfo result) {
@@ -57,8 +56,8 @@ public class OutputView {
     }
 
     private static void printParticipantFinalFaceUp(PlayerFaceUpResultInfo result) {
-        printMessage(result.name() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
-                result.cardFaces()) + " - 결과: " + result.hand());
+        printMessage(result.name() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER, result.cardFaces()) + " - 결과: "
+                + result.hand());
     }
 
     public static void alertDealerHitMessage() {

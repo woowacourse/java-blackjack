@@ -14,7 +14,7 @@ public enum MatchState {
         this.earningCalculator = earningCalculator;
     }
 
-    private static long unacceptedCalculation(){
+    private static long unacceptedCalculation() {
         throw new IllegalStateException("Calculation can not be executed before Turnover.");
     }
 

@@ -51,7 +51,7 @@ public class InputView {
         if (initialInput.matches("\\d+")) {
             return;
         }
-        throw new IllegalArgumentException("[ERROR] 숫자만 입력가능합니다.");
+        throw new IllegalArgumentException("숫자만 입력가능합니다.");
     }
 
     private static String validateContainsDealerName(String inputName) {

@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import controller.dto.BettingInfo;
 import controller.dto.BettingInfos;
+import controller.dto.DealerFaceUpResult;
+import controller.dto.PlayerFaceUpResult;
 import java.util.List;
 import model.participant.FixedCardShuffleMachine;
 import model.participant.Name;
-import controller.dto.DealerFaceUpResult;
-import controller.dto.PlayerFaceUpResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

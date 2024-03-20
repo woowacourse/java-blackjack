@@ -1,8 +1,5 @@
 package model.participant;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.List;
 import model.card.Card;
 import model.card.Emblem;

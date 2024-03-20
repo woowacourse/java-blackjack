@@ -7,7 +7,7 @@ public record BettingInfo(
         Long bettingAmount
 ) {
 
-    public String getNameAsString(){
+    public String getNameAsString() {
         return name.getValue();
     }
 

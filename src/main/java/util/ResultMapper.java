@@ -2,13 +2,13 @@ package util;
 
 import controller.dto.BettingInfo;
 import controller.dto.BettingInfos;
+import controller.dto.DealerFaceUpResult;
 import controller.dto.DealerFaceUpResultInfo;
+import controller.dto.PlayerFaceUpResult;
 import controller.dto.PlayerFaceUpResultInfo;
 import java.util.List;
 import model.participant.Dealer;
 import model.participant.Player;
-import controller.dto.DealerFaceUpResult;
-import controller.dto.PlayerFaceUpResult;
 
 public class ResultMapper {
     private ResultMapper() {
