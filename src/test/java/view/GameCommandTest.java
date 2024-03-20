@@ -14,6 +14,6 @@ class GameCommandTest {
             "N, false"
     })
     void getCardCommand(String command, boolean expectedReturn) {
-        Assertions.assertThat(GameCommand.isGetCardCommand(command)).isEqualTo(expectedReturn);
+        Assertions.assertThat(GameCommand.isHitCommand(command)).isEqualTo(expectedReturn);
     }
 }

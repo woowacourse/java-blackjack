@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Scanner;
-import player.Name;
+import participant.player.Name;
 
 public class InputView {
 
@@ -19,13 +19,19 @@ public class InputView {
         return List.of(scanner.nextLine().split(SPLIT_SYMBOL));
     }
 
-    public boolean inputPlayerCommand(Name name) {
+    public int inputBettingMoney(String name) {
+        System.out.println("\n" + name.trim() + "의 배팅 금액은?");
+
+        return Integer.parseInt(scanner.nextLine());
+    }
+
+    public boolean isHit(Name name) {
         System.out.println(
-                name.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 " + GameCommand.GET_CARD.command + ", 아니오는 "
-                        + GameCommand.REFUSE_CARD.command
+                name.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 " + GameCommand.HIT.command + ", 아니오는 "
+                        + GameCommand.STAND.command
                         + ")");
         String inputCommand = scanner.nextLine();
 
-        return GameCommand.isGetCardCommand(inputCommand);
+        return GameCommand.isHitCommand(inputCommand);
     }
 }

@@ -31,7 +31,7 @@ public class CardDeck {
         Collections.shuffle(deck);
     }
 
-    public List<Card> firstCardSettings() {
+    public List<Card> firstCards() {
         List<Card> pickedCards = new ArrayList<>();
 
         pickedCards.add(pickCard());

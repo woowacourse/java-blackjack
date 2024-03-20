@@ -1,4 +1,4 @@
-package player;
+package participant.player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class PlayersTest {
     @DisplayName("플레이어의 인원이 최소 2명보다 적을 경우 Error를 throw 한다.")
     @Test
     void isNotOverPossiblePlayerRange() {
-        List<Player> players = List.of(Player.joinGame("pola", new ArrayList<>()));
+        List<Player> players = List.of(new Player(new ArrayList<>(), new Name("pola"), new BetMoney(3000)));
 
         Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -24,15 +24,15 @@ public class PlayersTest {
     @DisplayName("플레이어의 인원이 최소 8명보다 많을 경우 Error를 throw 한다.")
     @Test
     void isOverPossiblePlayerRange() {
-        List<Player> players = List.of(Player.joinGame("pola", new ArrayList<>()),
-                Player.joinGame("ato", new ArrayList<>()),
-                Player.joinGame("hogi", new ArrayList<>()),
-                Player.joinGame("jazz", new ArrayList<>()),
-                Player.joinGame("cola", new ArrayList<>()),
-                Player.joinGame("bumble", new ArrayList<>()),
-                Player.joinGame("neo", new ArrayList<>()),
-                Player.joinGame("sola", new ArrayList<>()),
-                Player.joinGame("bri", new ArrayList<>())
+        List<Player> players = List.of(new Player(new ArrayList<>(), new Name("pola"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("ato"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("hogi"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("jazz"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("cola"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("bumble"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("neo"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("sola"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("bri"), new BetMoney(3000))
         );
 
         Assertions.assertThatThrownBy(() -> new Players(players))
@@ -43,9 +43,9 @@ public class PlayersTest {
     @DisplayName("플레이어의 이름이 중복이 되는 경우 에러를 반환한다.")
     @Test
     void isPlayersHasDuplicateName() {
-        List<Player> players = List.of(Player.joinGame("pola", new ArrayList<>()),
-                Player.joinGame("ato", new ArrayList<>()),
-                Player.joinGame("pola", new ArrayList<>())
+        List<Player> players = List.of(new Player(new ArrayList<>(), new Name("pola"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("ato"), new BetMoney(3000)),
+                new Player(new ArrayList<>(), new Name("pola"), new BetMoney(3000))
         );
 
         Assertions.assertThatThrownBy(() -> new Players(players))

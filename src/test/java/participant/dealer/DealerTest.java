@@ -1,4 +1,4 @@
-package dealer;
+package participant.dealer;
 
 import card.CardDeck;
 import org.junit.jupiter.api.Assertions;
@@ -13,9 +13,9 @@ class DealerTest {
     @Test
     void getExtraCardIfNotOverMinScore() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer(cardDeck.firstCardSettings());
+        Dealer dealer = new Dealer(cardDeck.firstCards());
 
-        dealer.getExtraCard(cardDeck);
+        dealer.playGame(cardDeck);
 
         Assertions.assertTrue(dealer.getCardScore() > MIN_DEALER_SCORE);
     }

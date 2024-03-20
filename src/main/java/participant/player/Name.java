@@ -1,4 +1,4 @@
-package player;
+package participant.player;
 
 public class Name {
 

@@ -1,12 +1,15 @@
 package controller;
 
+import card.Card;
 import card.CardDeck;
-import cardGame.BlackJackGame;
-import controller.dto.WinningResult;
+import card.Hand;
 import java.util.List;
-import player.Player;
-import player.Players;
-import player.dto.CardsStatus;
+import java.util.Map;
+import participant.dealer.Dealer;
+import participant.player.BetMoney;
+import participant.player.Name;
+import participant.player.Player;
+import participant.player.Players;
 import view.InputView;
 import view.OutputView;
 
@@ -22,40 +25,52 @@ public class BlackJackController {
 
     public void run() {
         CardDeck cardDeck = new CardDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
-        Players players = blackJackGame.initGamePlayer(inputView.inputPlayerNames());
+        Dealer dealer = new Dealer(cardDeck.firstCards());
+        Players players = readyPlayers(cardDeck);
 
-        runBlackJackGame(blackJackGame, players);
-        showResult(blackJackGame, players);
+        runBlackJackGame(players, cardDeck, dealer);
+        showResult(players, dealer);
     }
 
-    private void runBlackJackGame(BlackJackGame blackJackGame, Players players) {
-        outputView.printInitCardStatus(players, blackJackGame.getDealerFirstCard());
-
-        List<CardsStatus> playerResult = blackJackGame.playGame(this::playSingleMatch, players);
-
-        CardsStatus result = blackJackGame.playDealerTurn();
-        playerResult.add(result);
-
-        outputView.printExtraCardInfo(result);
-        outputView.printPlayStatus(playerResult);
+    private Players readyPlayers(CardDeck cardDeck) {
+        List<Player> players = startBetting(inputView.inputPlayerNames(), cardDeck);
+        return new Players(players);
     }
 
-    private void showResult(BlackJackGame blackJackGame, Players players) {
-        List<WinningResult> result = blackJackGame.getPlayersResult(players);
-        outputView.printDealerResult(blackJackGame.getDealerResult(players));
-        outputView.printPlayersResult(result);
+    private List<Player> startBetting(List<String> names, CardDeck cardDeck) {
+        return names.stream()
+                .map(name -> makePlayer(cardDeck, name))
+                .toList();
     }
 
-    private void playSingleMatch(Player player, CardDeck cardDeck) {
-        while (isCanPlayPlayer(player)) {
-            player.receiveCard(cardDeck.pickCard());
-            outputView.printPlayerCardStatus(player);
-        }
+    private Player makePlayer(CardDeck cardDeck, String name) {
+        List<Card> firstCards = cardDeck.firstCards();
+        BetMoney betMoney = new BetMoney(inputView.inputBettingMoney(name));
+
+        return new Player(firstCards, new Name(name), betMoney);
     }
 
-    private boolean isCanPlayPlayer(Player player) {
-        return !player.isBust() && inputView.inputPlayerCommand(
-                player.getName());
+    private void runBlackJackGame(Players players, CardDeck cardDeck, Dealer dealer) {
+        outputView.printInitCardStatus(players, dealer.getFirstCard());
+
+        players.playBlackJackGame(this::isHit, cardDeck, this::showStatus);
+        dealer.playGame(cardDeck);
+
+        outputView.printExtraCardInfo(dealer.getCards());
+        outputView.printDealerHand(dealer);
+        outputView.printPlayerHand(players);
+    }
+
+    private boolean isHit(Name name) {
+        return inputView.isHit(name);
+    }
+
+    private void showStatus(Name name, Hand hand) {
+        outputView.printPlayerCardStatus(name, hand);
+    }
+
+    private void showResult(Players players, Dealer dealer) {
+        Map<Name, Integer> playerResults = players.getPlayerResults(dealer);
+        outputView.printBlackJackResult(playerResults);
     }
 }
