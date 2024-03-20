@@ -1,7 +1,7 @@
 package dto;
 
-import domain.Card;
-import domain.Player;
+import domain.card.Card;
+import domain.participant.Player;
 
 import java.util.ArrayList;
 import java.util.List;
