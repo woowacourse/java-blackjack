@@ -18,15 +18,11 @@ public class Card {
         return number.isAce(number);
     }
 
+    public String cardTypeLettering() {
+        return number.getNumber() + shape.getShape();
+    }
+
     public int score() {
         return number.getValue();
-    }
-
-    public CardNumber getNumber() {
-        return number;
-    }
-
-    public CardShape getShape() {
-        return shape;
     }
 }
