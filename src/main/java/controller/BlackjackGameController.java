@@ -59,7 +59,6 @@ public class BlackjackGameController {
 
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
         List<Card> generatedCards = new ArrayList<>();
-        for (int i = 0; i < (players.getPlayers().size() + DEALER_COUNT) * CARD_COUNT_FOR_SETTING; i++) {
             generatedCards.add(new Card());
         }
         blackjackGame.distributeCardsForSetting(new Cards(generatedCards));
