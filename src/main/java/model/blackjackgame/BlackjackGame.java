@@ -26,20 +26,20 @@ public class BlackjackGame {
         players = players.addCards(cardsElement.subList(CARDS_SETTING_COUNTS, cardsElement.size()));
     }
 
-    public boolean hitForPlayer(Player player, Card card) {
+    public boolean isHitByPlayer(Player player, Card card) {
         if (player.isNotBust()) {
             players = players.hit(player, card);
             Player hittedPlayer = updatedPlayer(player);
-            return !checkBust(hittedPlayer);
+            return !isPlayerBust(hittedPlayer);
         }
         return false;
     }
 
-    private boolean checkBust(Player player) {
+    private boolean isPlayerBust(Player player) {
         return player.isBust();
     }
 
-    public boolean hitForDealer(Card card) {
+    public boolean isHitByDealer(Card card) {
         if (dealer.isPossibleAddCard()) {
             dealer = dealer.addCard(card);
             return true;

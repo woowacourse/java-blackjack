@@ -87,7 +87,7 @@ public class BlackjackGameController {
         Answer answer = new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         while (answer.isHit()) {
             Player updatedPlayer = blackjackGame.updatedPlayer(player);
-            boolean continueHit = blackjackGame.hitForPlayer(updatedPlayer, new Card());
+            boolean continueHit = blackjackGame.isHitByPlayer(updatedPlayer, new Card());
             answer = hitResultInfo(continueHit, player, blackjackGame);
         }
     }
@@ -103,7 +103,7 @@ public class BlackjackGameController {
     }
 
     private void turnHitDealer(BlackjackGame blackjackGame) {
-        boolean dealerHit = blackjackGame.hitForDealer(new Card());
+        boolean dealerHit = blackjackGame.isHitByDealer(new Card());
         outputView.printDealerHitStatus(dealerHit);
     }
 

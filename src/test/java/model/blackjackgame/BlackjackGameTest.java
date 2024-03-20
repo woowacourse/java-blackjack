@@ -43,7 +43,7 @@ class BlackjackGameTest {
     void testHitFromPlayer() {
         Players players = blackjackGame.getPlayers();
         List<Player> playersElement = players.getPlayers();
-        blackjackGame.hitForPlayer(playersElement.get(0), new Card(JACK, DIAMOND));
+        blackjackGame.isHitByPlayer(playersElement.get(0), new Card(JACK, DIAMOND));
         Players updatedPlayers = blackjackGame.getPlayers();
         assertThat(updatedPlayers.getPlayers().get(0).cardsSize()).isEqualTo(1);
     }
@@ -51,7 +51,7 @@ class BlackjackGameTest {
     @DisplayName("딜러의 카드 합계가 16점 이하이면 카드가 1개 증가한 딜러 객체를 반환한다")
     @Test
     void testHitFromDealer() {
-        blackjackGame.hitForDealer(new Card(JACK, DIAMOND));
+        blackjackGame.isHitByDealer(new Card(JACK, DIAMOND));
         assertThat(blackjackGame.getDealer().cardsSize()).isEqualTo(1);
     }
 
