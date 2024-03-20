@@ -37,7 +37,7 @@ public class InputView {
         if (initialInput.equalsIgnoreCase(NEGATIVE_USER_INPUT)) {
             return false;
         }
-        throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력 가능합니다.");
+        throw new IllegalArgumentException("y 혹은 n만 입력 가능합니다.");
     }
 
     public static long inputBettingAmount(String targetName) {
@@ -51,7 +51,7 @@ public class InputView {
         if (initialInput.matches("\\d+")) {
             return;
         }
-        throw new IllegalArgumentException("숫자만 입력가능합니다.");
+        throw new IllegalArgumentException("양의 정수만 입력가능합니다.");
     }
 
     private static String validateContainsDealerName(String inputName) {
