@@ -18,6 +18,10 @@ public class Card {
         return number.isAce(number);
     }
 
+    public int score() {
+        return number.getValue();
+    }
+
     public CardNumber getNumber() {
         return number;
     }

@@ -25,7 +25,7 @@ public class Cards {
 
     private int totalScore() {
         return cards.stream()
-                .mapToInt(card -> card.getNumber().getValue())
+                .mapToInt(Card::score)
                 .sum();
     }
 
