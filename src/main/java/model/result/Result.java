@@ -23,13 +23,13 @@ public class Result {
     }
 
     private GameResult calculatePlayerResult(Dealer dealer, Player player, Blackjack blackjack) {
-        if (isPlayerBlackjack(player, blackjack) && !blackjack.isDealer()) {
+        if (isPlayerBlackjack(player, blackjack) && !blackjack.isDealerBlackjack()) {
             return GameResult.BLACKJACK;
         }
         if (isPlayerWin(dealer, player)) {
             return GameResult.WIN;
         }
-        if (blackjack.isDealer() && !isPlayerBlackjack(player, blackjack) || isPlayerFail(dealer, player)) {
+        if (blackjack.isDealerBlackjack() && !isPlayerBlackjack(player, blackjack) || isPlayerFail(dealer, player)) {
             return GameResult.FAIL;
         }
         return GameResult.DRAW;

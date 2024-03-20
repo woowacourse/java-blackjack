@@ -9,11 +9,11 @@ import model.participants.player.Players;
 
 public class Blackjack {
 
-    private final boolean isDealer;
+    private final boolean isDealerBlackjack;
     private final Map<Player, Boolean> blackjackStatusOfPlayers;
 
     public Blackjack(Dealer dealer, Players players) {
-        this.isDealer = dealer.isBlackjack();
+        this.isDealerBlackjack = dealer.isBlackjack();
         this.blackjackStatusOfPlayers = new HashMap<>();
         createPlayerBlackjackStatus(players);
     }
@@ -24,8 +24,8 @@ public class Blackjack {
         }
     }
 
-    public boolean isDealer() {
-        return isDealer;
+    public boolean isDealerBlackjack() {
+        return isDealerBlackjack;
     }
 
     public Boolean blackjackStatusOfPlayer(Player player) {

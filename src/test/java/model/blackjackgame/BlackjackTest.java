@@ -24,6 +24,6 @@ class BlackjackTest {
         );
         Dealer dealer = new Dealer(cards);
         Blackjack blackjack = new Blackjack(dealer, Players.from(List.of("lily")));
-        assertTrue(blackjack.isDealer());
+        assertTrue(blackjack.isDealerBlackjack());
     }
 }
