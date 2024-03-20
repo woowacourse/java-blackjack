@@ -2,6 +2,7 @@ package model.participants.dealer;
 
 import java.util.List;
 import model.card.Card;
+import model.card.CardType;
 import model.card.Cards;
 import model.participants.Participant;
 
@@ -32,5 +33,9 @@ public class Dealer extends Participant {
     public Dealer addCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
         return new Dealer(addedCards);
+    }
+
+    public CardType captureFirstCardType() {
+         return captureCardType().get(0);
     }
 }

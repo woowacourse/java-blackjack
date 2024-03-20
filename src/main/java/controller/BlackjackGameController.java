@@ -68,7 +68,7 @@ public class BlackjackGameController {
     private void printCardSetting(Dealer dealer, Players players) {
         outputView.printDistributeCards(dealer, players);
         outputView.printCardsStock(dealer.getName(),
-                Collections.singletonList(dealer.captureCardType().get(0)));
+                Collections.singletonList(dealer.captureFirstCardType()));
         players.getPlayers()
                 .forEach(player -> outputView.printCardsStock(player.getName(), player.captureCardType()));
     }
