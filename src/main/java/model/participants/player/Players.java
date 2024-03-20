@@ -34,7 +34,7 @@ public class Players {
         int index = 0;
         List<Player> updatedPlayers = new ArrayList<>();
         for (Player player : players) {
-            Player updatedPlayer = player.addCards(cardsElement.subList(index, index + 2));
+            Player updatedPlayer = player.withAdditionalCards(cardsElement.subList(index, index + 2));
             updatedPlayers.add(updatedPlayer);
             index += 2;
         }
@@ -43,7 +43,7 @@ public class Players {
 
     public Players hit(Player player, Card card) {
         List<Player> updatedPlayers = new ArrayList<>(players);
-        Player updatedPlayer = player.addCard(card);
+        Player updatedPlayer = player.withAdditionalCard(card);
         int index = updatedPlayers.indexOf(player);
         updatedPlayers.remove(player);
         updatedPlayers.add(index, updatedPlayer);

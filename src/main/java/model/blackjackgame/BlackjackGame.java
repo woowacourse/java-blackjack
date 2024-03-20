@@ -22,7 +22,7 @@ public class BlackjackGame {
 
     public void distributeCardsForSetting(Cards cards) {
         List<Card> cardsElement = cards.getCards();
-        dealer = dealer.addCards(cardsElement.subList(0, CARDS_SETTING_COUNTS));
+        dealer = dealer.withAdditionalCards(cardsElement.subList(0, CARDS_SETTING_COUNTS));
         players = players.addCards(cardsElement.subList(CARDS_SETTING_COUNTS, cardsElement.size()));
     }
 
@@ -41,7 +41,7 @@ public class BlackjackGame {
 
     public boolean isHitByDealer(Card card) {
         if (dealer.isPossibleAddCard()) {
-            dealer = dealer.addCard(card);
+            dealer = dealer.withAdditionalCard(card);
             return true;
         }
         return false;

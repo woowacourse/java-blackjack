@@ -26,12 +26,12 @@ public class Participant {
         return cards.calculateTotalNumbers() > BLACKJACK_NUMBER;
     }
 
-    public Participant addCard(Card card) {
+    public Participant withAdditionalCard(Card card) {
         Cards addedCards = cards.add(card);
         return new Participant(name, addedCards);
     }
 
-    public Participant addCards(List<Card> cardsElement) {
+    public Participant withAdditionalCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
         return new Participant(name, addedCards);
     }

@@ -23,13 +23,13 @@ public class Player extends Participant {
     }
 
     @Override
-    public Player addCard(Card card) {
+    public Player withAdditionalCard(Card card) {
         Cards addedCards = cards.add(card);
         return new Player(name, addedCards);
     }
 
     @Override
-    public Player addCards(List<Card> cardsElement) {
+    public Player withAdditionalCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
         return new Player(name, addedCards);
     }

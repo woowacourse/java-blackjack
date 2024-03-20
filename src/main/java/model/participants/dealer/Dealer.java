@@ -24,13 +24,13 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Dealer addCard(Card card) {
+    public Dealer withAdditionalCard(Card card) {
         Cards addedCards = cards.add(card);
         return new Dealer(addedCards);
     }
 
     @Override
-    public Dealer addCards(List<Card> cardsElement) {
+    public Dealer withAdditionalCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
         return new Dealer(addedCards);
     }

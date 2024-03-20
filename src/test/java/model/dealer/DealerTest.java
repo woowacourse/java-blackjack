@@ -40,7 +40,7 @@ class DealerTest {
         Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         Card card = new Card(TWO, DIAMOND);
-        Dealer updatedDealer = dealer.addCard(card);
+        Dealer updatedDealer = dealer.withAdditionalCard(card);
 
         int expectedSize = cards.size() + 1;
         assertThat(updatedDealer.cardsSize()).isEqualTo(expectedSize);
