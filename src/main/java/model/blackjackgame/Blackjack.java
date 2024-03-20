@@ -31,9 +31,13 @@ public class Blackjack {
     public Boolean blackjackStatusOfPlayer(Player player) {
         return blackjackStatusOfPlayers.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().getName().equals(player.getName()))
+                .filter(entry -> isSameNamePlayer(entry.getKey(), player))
                 .map(Entry::getValue)
                 .findFirst()
                 .orElse(false);
+    }
+
+    private boolean isSameNamePlayer(Player player1, Player player2) {
+        return player1.getName().equals(player2.getName());
     }
 }
