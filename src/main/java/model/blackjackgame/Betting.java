@@ -21,6 +21,10 @@ public class Betting {
         }
     }
 
+    public boolean isSamePlayerBetting(Player checkNeededplayer) {
+        return player.getName().equals(checkNeededplayer.getName());
+    }
+
     public Player getPlayer() {
         return player;
     }

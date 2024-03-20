@@ -13,7 +13,7 @@ public class Bettings {
 
     public Betting findBettingByPlayer(Player player) {
         return bettings.stream()
-                .filter(betting -> betting.getPlayer().getName().equals(player.getName()))
+                .filter(betting -> betting.isSamePlayerBetting(player))
                 .findFirst()
                 .orElseThrow();
     }
