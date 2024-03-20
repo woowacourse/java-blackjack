@@ -9,7 +9,7 @@ import model.participants.player.Players;
 
 public class Profit {
 
-    private static final double PROFIT_RATE = 1.5;
+    private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
     private final int dealerProfit;
     private final Map<String, Integer> playerProfit;
@@ -45,7 +45,7 @@ public class Profit {
             return -money;
         }
         if (blackjack(result)) {
-            return (int) (money * PROFIT_RATE);
+            return (int) (money * BLACKJACK_PROFIT_RATE);
         }
         return money;
     }
