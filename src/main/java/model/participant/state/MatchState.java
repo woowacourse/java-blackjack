@@ -15,7 +15,7 @@ public enum MatchState {
     }
 
     private static long unacceptedCalculation() {
-        throw new IllegalStateException("Calculation can not be executed before Turnover.");
+        throw new IllegalStateException("승부가 정해지기 전에는 배팅 금액 계산이 불가능합니다.");
     }
 
     public long calculateEarnings(long bettingAmount) {

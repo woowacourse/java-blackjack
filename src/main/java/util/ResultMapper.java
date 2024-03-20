@@ -12,7 +12,7 @@ import model.participant.Player;
 
 public class ResultMapper {
     private ResultMapper() {
-        throw new AssertionError("Static Util Class: Can NOT construct Instance");
+        throw new AssertionError("정적 유틸리티 클래스는 생성자를 사용할 수 없습니다.");
     }
 
     public static PlayerFaceUpResult toPlayerFaceUpResult(Player player) {
