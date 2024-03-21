@@ -21,6 +21,10 @@ public class Hand {
         return cards.size() == INITIAL_SIZE && calculate() == BLACKJACK_SCORE;
     }
 
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
     int calculate() {
         int sum = calculateWithDefaultAceNumber();
 
@@ -32,10 +36,6 @@ public class Hand {
 
     void put(Card card) {
         cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
     }
 
     private int calculateWithDefaultAceNumber() {

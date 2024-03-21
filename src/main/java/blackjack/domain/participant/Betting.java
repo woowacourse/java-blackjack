@@ -12,7 +12,7 @@ public class Betting {
         this.betting = betting;
     }
 
-    int getBetting() {
+    public int getBetting() {
         return betting;
     }
 
