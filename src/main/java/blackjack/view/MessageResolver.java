@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Player;
-import blackjack.domain.profit.PlayersProfit;
+import blackjack.domain.profit.Players;
 import blackjack.domain.profit.Profit;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
@@ -88,11 +88,11 @@ public class MessageResolver {
         return String.join("", LINE_SEPARATOR, "## 최종 수익");
     }
 
-    public String resolveDealerProfitMessage(PlayersProfit players) {
+    public String resolveDealerProfitMessage(Players players) {
         return String.format(PROFIT_FORMAT, DEALER_NAME, players.dealerProfit().getValue());
     }
 
-    public String resolvePlayersProfitMessage(PlayersProfit players) {
+    public String resolvePlayersProfitMessage(Players players) {
         return players.getProfits().entrySet().stream()
                 .map(entry -> resolvePlayerProfitMessage(entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining(LINE_SEPARATOR));

@@ -13,17 +13,17 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class PlayersProfit {
+public class Players {
 
     private static final Profit INITIAL_PROFIT = new Profit(new BigDecimal(0));
 
     private final Map<Player, Profit> profits;
 
-    public PlayersProfit(Map<Player, Profit> profits) {
+    public Players(Map<Player, Profit> profits) {
         this.profits = profits;
     }
 
-    public static PlayersProfit create(PlayerNames playerNames, Function<PlayerName, String> receiveBetAmount) {
+    public static Players create(PlayerNames playerNames, Function<PlayerName, String> receiveBetAmount) {
         Map<Player, Profit> playerBetAmounts = playerNames.names().stream()
                 .map(name -> {
                     BetAmount betAmount = new BetAmount(receiveBetAmount.apply(name));
@@ -31,7 +31,7 @@ public class PlayersProfit {
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> existing, LinkedHashMap::new));
 
-        return new PlayersProfit(playerBetAmounts);
+        return new Players(playerBetAmounts);
     }
 
     public void deal(CardDeck cardDeck) {

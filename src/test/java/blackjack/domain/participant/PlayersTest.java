@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.profit.PlayersProfit;
+import blackjack.domain.profit.Players;
 import blackjack.domain.profit.Profit;
 import fixture.DealerFixture;
 import fixture.PlayerFixture;
@@ -13,7 +13,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayersProfitTest {
+class PlayersTest {
 
     @DisplayName("PlayersProfit을 생성한다.")
     @Test
@@ -24,10 +24,10 @@ class PlayersProfitTest {
         rawProfits.put(PlayerFixture.createJason(), new Profit(new BigDecimal(20000)));
 
         // when
-        PlayersProfit playersProfit = new PlayersProfit(rawProfits);
+        Players players = new Players(rawProfits);
 
         // then
-        assertThat(playersProfit.getProfits()).containsExactlyEntriesOf(Map.of(
+        assertThat(players.getProfits()).containsExactlyEntriesOf(Map.of(
                 PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)),
                 PlayerFixture.createJason(), new Profit(new BigDecimal(20000))
         ));
@@ -42,11 +42,11 @@ class PlayersProfitTest {
         PlayerNames playerNames = new PlayerNames(List.of(pobi, jason));
 
         // when
-        PlayersProfit playersProfit = PlayersProfit.create(playerNames,
+        Players players = Players.create(playerNames,
                 playerName -> getBetAmount(playerName, pobi, jason));
 
         // then
-        assertThat(playersProfit.getProfits()).containsExactlyEntriesOf(Map.of(
+        assertThat(players.getProfits()).containsExactlyEntriesOf(Map.of(
                 PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)),
                 PlayerFixture.createJason(), new Profit(new BigDecimal(20000))
         ));
@@ -69,15 +69,15 @@ class PlayersProfitTest {
         Map<Player, Profit> rawProfits = new LinkedHashMap<>();
         rawProfits.put(PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)));
         rawProfits.put(PlayerFixture.createJason(), new Profit(new BigDecimal(20000)));
-        PlayersProfit playersProfit = new PlayersProfit(rawProfits);
+        Players players = new Players(rawProfits);
 
         Dealer dealer = DealerFixture.createDealer();
 
         // when
-        playersProfit.calculateProfit(dealer);
+        players.calculateProfit(dealer);
 
         // then
-        assertThat(playersProfit.getProfits()).containsExactlyEntriesOf(Map.of(
+        assertThat(players.getProfits()).containsExactlyEntriesOf(Map.of(
                 PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)),
                 PlayerFixture.createJason(), new Profit(new BigDecimal(-20000))
         ));
@@ -90,14 +90,14 @@ class PlayersProfitTest {
         Map<Player, Profit> rawProfits = new LinkedHashMap<>();
         rawProfits.put(PlayerFixture.createPobi(), new Profit(new BigDecimal(10000)));
         rawProfits.put(PlayerFixture.createJason(), new Profit(new BigDecimal(20000)));
-        PlayersProfit playersProfit = new PlayersProfit(rawProfits);
+        Players players = new Players(rawProfits);
 
         Dealer dealer = DealerFixture.createDealer();
 
-        playersProfit.calculateProfit(dealer);
+        players.calculateProfit(dealer);
 
         // when
-        Profit dealerProfit = playersProfit.dealerProfit();
+        Profit dealerProfit = players.dealerProfit();
 
         // then
         assertThat(dealerProfit).isEqualTo(new Profit(new BigDecimal(10000)));

@@ -4,7 +4,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerNames;
-import blackjack.domain.profit.PlayersProfit;
+import blackjack.domain.profit.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -20,7 +20,7 @@ public class GameManager {
 
     public void start() {
         PlayerNames playerNames = PlayerNames.create(inputView.readNames());
-        PlayersProfit players = PlayersProfit.create(playerNames, inputView::readBetAmount);
+        Players players = Players.create(playerNames, inputView::readBetAmount);
         Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
@@ -31,19 +31,19 @@ public class GameManager {
         outputView.printAllProfit(players);
     }
 
-    private void deal(PlayersProfit players, Dealer dealer, CardDeck cardDeck) {
+    private void deal(Players players, Dealer dealer, CardDeck cardDeck) {
         dealer.deal(cardDeck);
         players.deal(cardDeck);
         outputView.printDealToAll(dealer, players.players());
     }
 
-    private void draw(PlayersProfit players, Dealer dealer, CardDeck cardDeck) {
+    private void draw(Players players, Dealer dealer, CardDeck cardDeck) {
         drawToPlayers(players, cardDeck);
         drawToDealer(dealer, cardDeck);
         outputView.printAllHandScore(dealer, players.players());
     }
 
-    private void drawToPlayers(PlayersProfit players, CardDeck cardDeck) {
+    private void drawToPlayers(Players players, CardDeck cardDeck) {
         players.draw(player -> drawToPlayer(player, cardDeck));
         outputView.printLineSeparator();
     }

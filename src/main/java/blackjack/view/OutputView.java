@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.profit.PlayersProfit;
+import blackjack.domain.profit.Players;
 import java.util.List;
 
 public class OutputView {
@@ -36,7 +36,7 @@ public class OutputView {
         System.out.println(messageResolver.resolvePlayersHandScoreMessage(players));
     }
 
-    public void printAllProfit(PlayersProfit players) {
+    public void printAllProfit(Players players) {
         System.out.println(messageResolver.resolveProfitDescriptionMessage());
         System.out.println(messageResolver.resolveDealerProfitMessage(players));
         System.out.println(messageResolver.resolvePlayersProfitMessage(players));
