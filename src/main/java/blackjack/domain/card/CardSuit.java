@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
-public enum CardSymbol {
+public enum CardSuit {
     SPADE,
     DIAMOND,
     HEART,
-    CLUB;
+    CLUB
 }

@@ -1,9 +1,10 @@
-package blackjack.domain.gamer;
+package blackjack.domain.gamer.player;
+
+import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.Gamer;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class Players {
     private static final String NAMES_DUPLICATE_ERROR = "플레이어 이름은 중복될 수 없습니다.";
@@ -14,9 +15,11 @@ public class Players {
         this.values = values;
     }
 
-    public static Players from(List<String> names) {
+    public static Players of(List<String> names, Deck deck) {
         validateDuplicate(names);
-        return new Players(names.stream().map(Player::new).toList());
+        return new Players(names.stream()
+                .map(name -> new Player(name, deck))
+                .toList());
     }
 
     private static void validateDuplicate(List<String> names) {
@@ -30,11 +33,11 @@ public class Players {
         return values.stream().map(Player::getName).toList();
     }
 
-    public void forEach(Consumer<? super Player> action) {
-        values.forEach(action);
+    public List<Player> get() {
+        return values;
     }
 
-    public Players filter(Predicate<? super Player> predicate) {
-        return new Players(values.stream().filter(predicate).toList());
+    public void deal() {
+        values.forEach(Gamer::deal);
     }
 }

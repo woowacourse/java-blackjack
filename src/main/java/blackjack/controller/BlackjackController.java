@@ -1,10 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.Referee;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.card.RandomShuffleStrategy;
+import blackjack.domain.gamer.dealer.Dealer;
+import blackjack.domain.gamer.player.Player;
+import blackjack.domain.gamer.player.Players;
+import blackjack.domain.money.Money;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
@@ -15,45 +16,55 @@ import java.util.function.Supplier;
 public class BlackjackController {
 
     public void run() {
-        Players players = requestPlayers();
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck();
-        Referee referee = new Referee();
+        Deck deck = createDeckWithRandomShuffle();
+        Dealer dealer = new Dealer(deck);
+        Players players = requestPlayers(deck);
 
-        processDeal(players, dealer, deck);
-        processHitOrStand(players, dealer, deck);
-        referee.calculatePlayersResults(players, dealer);
-        printResult(dealer, referee);
+        requestBetting(dealer, players);
+        processDeal(dealer, players);
+        processHitOrStand(dealer, players);
+        printResult(dealer, players);
     }
 
-    private Players requestPlayers() {
-        return requestUntilValid(() -> Players.from(InputView.readPlayersName()));
+    private Deck createDeckWithRandomShuffle() {
+        return new Deck(new RandomShuffleStrategy());
     }
 
-    private void processDeal(Players players, Dealer dealer, Deck deck) {
+    private Players requestPlayers(Deck deck) {
+        return requestUntilValid(() -> Players.of(InputView.readPlayersName(), deck));
+    }
+
+    private void requestBetting(Dealer dealer, Players players) {
+        for (Player player : players.get()) {
+            String name = player.getName();
+            Money money = requestUntilValid(() -> Money.from(InputView.readPlayerBetting(name)));
+            dealer.keepPlayerMoney(name, money);
+        }
+    }
+
+    private void processDeal(Dealer dealer, Players players) {
         OutputView.printDealAnnounce(players.getNames());
-        dealer.deal(deck);
-        players.forEach(player -> player.deal(deck));
+        dealer.deal();
+        players.deal();
 
-        OutputView.printCards(dealer.getName(), dealer.getCards());
-        players.forEach(player ->
-                OutputView.printCards(player.getName(), player.getCards()));
+        OutputView.printCard(dealer.getName(), dealer.getFirstCard());
+        players.get()
+                .forEach(player -> OutputView.printCards(player.getName(), player.getCards()));
         OutputView.printNewLine();
     }
 
-    private void processHitOrStand(Players players, Dealer dealer, Deck deck) {
-        players
-                .filter(Player::canContinue)
-                .forEach(player -> requestHitOrStand(player, deck));
+    private void processHitOrStand(Dealer dealer, Players players) {
+        players.get()
+                .forEach(this::requestHitOrStand);
         OutputView.printNewLine();
-        dealerHitUntilBound(dealer, deck);
+        dealerHitUntilBound(dealer);
 
         OutputView.printCardsWithScore(dealer.getName(), dealer.getCards(), dealer.getScore());
-        players.forEach(player ->
+        players.get().forEach(player ->
                 OutputView.printCardsWithScore(player.getName(), player.getCards(), player.getScore()));
     }
 
-    private void requestHitOrStand(Player player, Deck deck) {
+    private void requestHitOrStand(Player player) {
         PlayerCommand playerCommand;
         do {
             playerCommand = requestUntilValid(() ->
@@ -63,16 +74,8 @@ public class BlackjackController {
                 printIfPlayerOnlyDeal(player);
                 break;
             }
-            if (!hitAndPrint(player, deck)) {
-                break;
-            }
-        } while (playerCommand == PlayerCommand.HIT);
-    }
-
-    private boolean hitAndPrint(Player player, Deck deck) {
-        player.hit(deck);
-        OutputView.printCards(player.getName(), player.getCards());
-        return !(player.isBust() || player.isMaxScore());
+            hitAndPrint(player);
+        } while (player.canContinue());
     }
 
     private void printIfPlayerOnlyDeal(Player player) {
@@ -81,18 +84,23 @@ public class BlackjackController {
         }
     }
 
-    private void dealerHitUntilBound(Dealer dealer, Deck deck) {
-        while (dealer.isHitUnderBound()) {
-            dealer.hit(deck);
+    private void hitAndPrint(Player player) {
+        player.hit();
+        OutputView.printCards(player.getName(), player.getCards());
+    }
+
+    private void dealerHitUntilBound(Dealer dealer) {
+        while (dealer.canContinue()) {
+            dealer.hit();
             OutputView.printDealerHitAnnounce();
         }
     }
 
-    private void printResult(Dealer dealer, Referee referee) {
+    private void printResult(Dealer dealer, Players players) {
         OutputView.printResult(
                 dealer.getName(),
-                referee.getDealerResult(),
-                referee.getPlayersResults());
+                dealer.calculateDealerRevenue(players),
+                dealer.calculatePlayerRevenues(players));
     }
 
     private <T> T requestUntilValid(Supplier<T> supplier) {

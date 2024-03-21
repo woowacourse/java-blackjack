@@ -1,14 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameResult;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.gamer.Dealer.HIT_UPPER_BOUND;
-import static blackjack.domain.gamer.Player.DEAL_CARD_COUNT;
+import static blackjack.domain.gamer.dealer.Dealer.HIT_UPPER_BOUND;
+import static blackjack.domain.gamer.player.Player.DEAL_CARD_COUNT;
 
 public class OutputView {
     static final String LINE_SEPARATOR = System.lineSeparator();
@@ -18,16 +17,25 @@ public class OutputView {
     private static final String DEALER_HIT_FORMAT = String.format("딜러는 %d 이하라 한장의 카드를 더 받았습니다.", HIT_UPPER_BOUND);
     private static final String CARD_FORMAT = "%s 카드 : %s";
     private static final String RESULT_SCORES_FORMAT = " - 결과: %d";
-    private static final String WIN_STATUS_FORMAT = "%s: %s";
-    private static final String WIN_ANNOUNCE = "## 최종 승패";
+    private static final String REVENUE_DECIMAL_FORMAT = "%s: %.1f";
+    private static final String REVENUE_NO_DECIMAL_FORMAT = "%s: %.0f";
+    private static final String REVENUE_ANNOUNCE = "## 최종 수익";
 
     public static void printDealAnnounce(List<String> names) {
         String nameFormat = String.join(DELIMITER, names);
-        System.out.printf(LINE_SEPARATOR + DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
+        System.out.printf(DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
+    }
+
+    public static void printCard(String name, Card card) {
+        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCard(card));
     }
 
     public static void printCards(String name, List<Card> cards) {
         System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCards(cards));
+    }
+
+    private static String formatCard(Card card) {
+        return CardScoreName.convert(card.score()) + CardSuitName.convert(card.suit());
     }
 
     private static String formatCards(List<Card> cards) {
@@ -36,9 +44,6 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private static String formatCard(Card card) {
-        return CardScoreName.convert(card.score()) + CardSymbolName.convert(card.symbol());
-    }
 
     public static void printNewLine() {
         System.out.println();
@@ -52,25 +57,22 @@ public class OutputView {
         System.out.printf(CARD_FORMAT + RESULT_SCORES_FORMAT + LINE_SEPARATOR, name, formatCards(cards), totalScore);
     }
 
-    public static void printResult(String dealerName, Map<GameResult, Integer> dealerResult, Map<String, GameResult> playerResults) {
-        printWinAnnounce();
-        printDealerWinStatus(dealerName, dealerResult);
-        playerResults.forEach(OutputView::printPlayerWinStatus);
+    public static void printResult(String dealerName, double dealerRevenue, Map<String, Double> playerRevenues) {
+        printRevenueAnnounce();
+        printRevenue(dealerName, dealerRevenue);
+        playerRevenues.forEach(OutputView::printRevenue);
     }
 
-    private static void printWinAnnounce() {
-        System.out.println(LINE_SEPARATOR + WIN_ANNOUNCE);
+    private static void printRevenueAnnounce() {
+        System.out.println(LINE_SEPARATOR + REVENUE_ANNOUNCE);
     }
 
-    private static void printDealerWinStatus(String name, Map<GameResult, Integer> gameResults) {
-        String gameResultsFormat = gameResults.keySet().stream()
-                .map(key -> gameResults.get(key) + GameResultName.convert(key))
-                .collect(Collectors.joining(" "));
-        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, gameResultsFormat);
-    }
-
-    private static void printPlayerWinStatus(String name, GameResult gameResult) {
-        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, GameResultName.convert(gameResult));
+    private static void printRevenue(String name, double revenue) {
+        if (revenue == (long) revenue) {
+            System.out.printf(REVENUE_NO_DECIMAL_FORMAT + LINE_SEPARATOR, name, revenue);
+            return;
+        }
+        System.out.printf(REVENUE_DECIMAL_FORMAT + LINE_SEPARATOR, name, revenue);
     }
 
     public static void printErrorMessage(String message) {

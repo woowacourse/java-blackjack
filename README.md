@@ -2,11 +2,16 @@
 
 우테코 레벨 1 블랙잭은 게임에 참여할 사람들을 입력받아 딜러와 대결하는 프로그램 입니다.
 
+☀️ **썬, 눈에 거슬리는 모든 것들을 지적해주세요!**
+🌞 **태양을 볼 때 눈이 찌뿌려질 정도 이상으로도 좋아요. 부릅뜨고 보겠습니다.**
+🌅 **`step1` 에서도 피드백 덕분에 코드를 많이 갈아엎으며 저만의 철학을 만들 수 있었습니다.**
+🟡 **그럼 이번 `step2` 도 파이팅 입니다!!**
+
 ---
 
 ## 📝 기능 요구 사항
 
-### 플레이어
+### 😎 플레이어
 
 - [x] 플레이어는 여러명일 수 있다.
 - [x] 플레이어 이름은 공백일 수 없다.
@@ -14,14 +19,14 @@
 - [x] 플레이어 수는 최소 1명 이상이다.
 - [x] 플레이어 이름은 중복되어선 안된다.
 
-### 카드
+### 🃏 카드
 
 - [x] 숫자 계산은 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A로 구성된다.
 - [x] 문양은 스페이드, 다이아몬드, 하트, 클로버로 구성된다.
 - [x] A는 1 또는 11로 계산한다.
 - [x] J, Q, K는 각각 10으로 계산한다.
 
-### 게임
+### 🎲 게임
 
 - [x] 게임 시작 시 인원 당 받는 덱의 수는 2장이다.
 - [x] 덱은 랜덤으로 생성된다.
@@ -33,188 +38,21 @@
     - [x] 플레이어가 bust 된다.
     - [x] 플레이어가 블랙잭이 된다.
     - [x] 플레이어가 N을 입력한다.
-- 승리 조건
+- 승패 조건
     - [x] 두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이긴다.
     - [x] 플레이어는 자신의 숫자 합이 딜러의 숫자의 합보다 크면 승리한다.
-    - [x] 플레이어는 자신의 숫자 합이 21을 초과할 경우 패배한다.
-    - [x] 딜러의 합과 플레이어의 합이 같으면 무승부이다.
-    - [x] 플레이어의 첫 두개의 카드의 합이 21이면 승리한다.
+    - [x] 처음 두 장의 카드 합이 21일 경우 블랙잭이 되며 베팅 금액의 1.5 배를 딜러에게 받는다.
+    - [x] 딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.
+    - [x] 딜러와 플레이어 모두 블랙직이 아니고, 플레이어 카드 합이 높을 경우 승리해 베팅 금액을 받는다.
+    - [x] 딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.
 
-## ⚙️ 구현한 기능 목록
+### 👛 지갑
 
-예외 상황이 생기면 `[ERROR]` 로 시작하는 메세지를 출력한 후 다시 입력을 받습니다.
+- [x] 딜러가 소유하고 있으며 플레이어의 이름과 함께 돈을 담아둔다.
+- [x] 플레이어의 승패가 결졍난 후 베팅 금액을 통해 수익을 계산한다.
+- [x] 플레이어의 수익을 통해 딜러의 수익 또한 계산한다.
 
-### 1️⃣ 게임에 참여할 사람들 이름 입력 ✔️
-
-<table>
-<tr>
-    <th>동작</th>
-    <th>예외 상황</th>
-</tr>
-<tr>
-<td><ul>
-    <li>
-        질문에 해당하는 아래 메세지 출력한다. ✔️<br>
-        <code>게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)</code>
-    </li>
-</ul></td>
-<td><ul>
-    <li>
-        이름이 공백일 경우 경우 ✔️<br>
-        <code>[ERROR] 공백이 아닌 플레이어를 입력해 주세요.</code>
-    </li>
-    <li>
-        이름이 중복 될 경우 ✔️<br>
-        <code>[ERROR] 플레이어 이름은 중복될 수 없습니다.</code>
-    </li>
-</ul></td>
-</tr>
-</table>
-
-### 2️⃣ 최초 카드 받기 ✔️
-
-<table>
-<tr>
-    <th>동작</th>
-    <th>원리</th>
-</tr>
-<tr>
-<td><ul>
-    <li>
-        카드 부여 문구를 참여자 이름과 함께 아래 메세지로 출력한다. ✔️<br>
-        <code>딜러와 pobi, jason에게 2장을 나누었습니다.</code>
-    </li>
-    <li>딜러에게 카드 2장을 주고 첫 장만 출력한다. ✔️</li>
-    <li>플레이어들에게 카드 2장을 주고 모두 출력한다. ✔️</li>
-</ul></td>
-<td><ul>
-    <li>모든 카드를 한 장씩 들고 있는 카드 피커를 생성한다. ✔️</li>
-    <li>딜러에게 카드 2장을 준다. ✔️</li>
-    <li>모든 참여자에게 카드 2장을 준다. ✔️</li>
-</ul></td>
-</tr>
-</table>
-
-### 3️⃣ 플레이어 카드 선택 ✔️
-
-<table>
-<tr>
-    <th>동작</th>
-    <th>원리</th>
-</tr>
-<tr>
-<td><ul>
-    <li>
-        질문에 해당하는 아래 메세지 출력한다. ✔️<br>
-        <code>pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)</code>
-    </li>
-    <li>플레이어 입력에 따라 카드를 받거나 멈춘다. ✔️</li>
-    <li>카드 현황을 출력한다. ✔️</li>
-    <li>모든 플레이어에 대해 수행한다. ✔️</li>
-</ul></td>
-<td><ul>
-    <li>1. <code>y</code> 를 입력할 경우 ✔️</li>
-    <li>1-1. 카드를 한장 받고 출력한다. ✔️</li>
-    <li>1-2. 카드 현황을 출력한다. ✔️</li>
-    <li>1-3. 카드의 합이 21 보다 작을 경우 ✔️</li>
-    <li>1-3-1. 입력을 계속 받는다. ✔️</li>
-    <li>1-4. 카드의 합이 21 이상일 경우 ✔️</li>
-    <li>1-4-1. 더 이상 카드를 받지 않는다. ✔️</li><br>
-    <li>2. <code>n</code> 를 입력할 경우 ✔️</li>
-    <li>2-1. 카드가 2장일 경우 ✔️</li>
-    <li>2-1-1. 카드 현황을 출력한다. ✔️</li>
-    <li>2-1-1. 더 이상 카드를 받지 않는다. ✔️</li><br>
-    <li>3. 잘못된 입력을 할 경우 ✔️</li>
-    <li>
-        3-1. 아래 메세지를 출력하고 재입력 받는다. ✔️<br>
-        <code>[ERROR] 존재하지 않는 명령어 입니다.</code>
-    </li>
-</ul></td>
-</tr>
-</table>
-
-### 4️⃣ 딜러 카드 받기 ✔️
-
-<table>
-<tr>
-    <th>동작</th>
-    <th>원리</th>
-</tr>
-<tr>
-<td><ul>
-    <li>
-        딜러가 조건에 의해 카드를 받을 경우 아래 메세지 출력한다. ✔️<br>
-        <code>딜러는 16이하라 한장의 카드를 더 받았습니다.</code>
-    </li>
-    <li>조건이 만족할 경우 계속해서 카드를 받는다. ✔️</li>
-</ul></td>
-<td><ul>
-    <li>딜러 카드의 총 합이 16 이하일 경우 카드를 한장 받는다. ✔️</li>
-    <li>총 합이 16보다 클 때 까지 카드를 계속해서 받는다. ✔️</li>
-    <li>카드의 총 합에서 Ace 가 존재할 경우 21보다 작은 수 중 21에 가장 가까운 수를 출력한다. ✔️</li>
-</ul></td>
-</tr>
-</table>
-
-### 5️⃣ 모든 게이머의 카드 결과 출력 ✔️
-
-<table>
-<tr>
-    <th>동작</th>
-    <th>원리</th>
-</tr>
-<tr>
-<td><ul>
-    <li>
-        아래 메세지 포맷으로 딜러의 카드 결과 출력 ✔️<br>
-        <code>딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20</code>
-    </li>
-    <li>
-        아래 메세지 포맷으로 플레이어의 카드 결과 출력 ✔️<br>
-        <code>pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21</code></li>
-</ul></td>
-<td><ul>
-    <li>4️⃣에서의 계산처럼 21에 가장 가까운 수를 출력한다. ✔️</li>
-    <li>모든 경우의 수가 21을 초과할 경우 최소값을 출력한다. ✔️</li>
-</ul></td>
-</tr>
-</table>
-
-### 6️⃣ 최종 승패 출력 ✔️
-
-<table>
-<tr>
-    <th>동작</th>
-    <th>원리</th>
-</tr>
-<tr>
-<td><ul>
-    <li>
-        최종 승패 타이틀 메세지 출력 ✔️<br>
-        <code>## 최종 승패</code>
-    </li>
-    <li>
-        딜러 승패 메세지 출력 ✔️<br>
-        <code>딜러: 1승 1패</code>
-    </li>
-    <li>
-        플레이어 승패 메세지 출력 ✔️<br>
-        <code>pobi: 승</code>
-    </li>
-</ul></td>
-<td><ul>
-    <li>심판은 플레이어의 기준으로 승패를 결정한다. ✔️</li>
-    <li>1. 플레이어가 버스트일 경우 패배한다. ✔️</li>
-    <li>
-        2. 플레이어 점수가 딜러 점수 보다 크거나 ✔️<br>
-           플레이어가 블랙잭 이거나<br>
-           딜러가 버스트일 경우<br>
-        플레이어가 승리한다.<br>
-    </li>
-    <li>3. 딜러와 플레이어의 점수가 같으면 무승부이다. ✔️</li>
-</ul></td>
-</tr>
-</table>
+---
 
 ## 📋 프로젝트 구조
 
@@ -235,7 +73,7 @@
         <td>입력을 받아 계산하고 출력 해주는 전체 진행 담당 컨트롤러</td>
     </tr>
     <tr>
-        <td rowspan="5">
+        <td rowspan="7">
             <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
             <b> domain / card</b>
         </td>
@@ -243,36 +81,28 @@
         <td>모든 트럼프 카드가 있는 상수</td>
     </tr>
     <tr>
-        <td><b>CardPicker</b></td>
-        <td>모든 카드를 한장 씩 가지며 랜덤하게 뽑는 일급 컬렉션</td>
-    </tr>
-    <tr>
-        <td><b>Cards</b></td>
-        <td>카드를 여러 장 가지고 있는 일글 컬렉션</td>
-    </tr>
-    <tr>
         <td><b>CardScore</b></td>
         <td>카드 점수에 대한 상수</td>
     </tr>
     <tr>
-        <td><b>CardSymbol</b></td>
+        <td><b>CardSuit</b></td>
         <td>카드 문양에 대한 상수</td>
     </tr>
     <tr>
-        <td rowspan="3">
-            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
-            <b> domain / game</b>
-        </td>
-        <td><b>GameResult</b></td>
-        <td>승패에 대한 상수</td>
+        <td><b>Deck</b></td>
+        <td>모든 카드를 한장 씩 가지며 뽑아쓰는 일급 컬렉션</td>
     </tr>
     <tr>
-        <td><b>GameResults</b></td>
-        <td>플레이어들의 승패를 모두 가지는 일급컬렉션</td>
+        <td><b>Hand</b></td>
+        <td>딜러와 플레이어의 손 안에 있는 패를 의미하는 있는 일글 컬렉션</td>
     </tr>
     <tr>
-        <td><b>Referee</b></td>
-        <td>승패를 결정해주는 심판 클래스</td>
+        <td><b>RandomShuffleStrategy</b></td>
+        <td>카드 덱을 랜덤으로 섞어 줄 구현체</td>
+    </tr>
+    <tr>
+        <td><b>ShuffleStrategy</b></td>
+        <td>랜덤하게 섞는 것에 대한 전략 인터페이스</td>
     </tr>
     <tr>
         <td rowspan="4">
@@ -295,7 +125,23 @@
         <td>참여하는 모든 플레이어를 가지는 일급컬렉션</td>
     </tr>
     <tr>
-        <td rowspan="6">
+        <td rowspan="3">
+            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
+            <b> domain / money</b>
+        </td>
+        <td><b>Money</b></td>
+        <td>사용자의 베팅 금액을 저장해두는 클래스</td>
+    </tr>
+    <tr>
+        <td><b>MoneyRate</b></td>
+        <td>게임 결과에 따라 금액에 곱해지는 비율 상수</td>
+    </tr>
+    <tr>
+        <td><b>Wallet</b></td>
+        <td>딜러가 플레이어의 베팅 금액을 가지고 있을 클래스</td>
+    </tr>
+    <tr>
+        <td rowspan="5">
             <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/views.svg?sanitize=true"/>
             <b> view</b>
         </td>
@@ -305,10 +151,6 @@
     <tr>
         <td><b>CardSymbolName</b></td>
         <td>카드 문양을 출력 문구로 변환해주는 상수</td>
-    </tr>
-    <tr>
-        <td><b>GameResultName</b></td>
-        <td>승패 결과를 출력 문구로 변환해주는 상수</td>
     </tr>
     <tr>
         <td><b>InputView</b></td>
@@ -326,21 +168,127 @@
 
 ---
 
-## 🤔 고민했던 사항 `step1`
+## 🎓 `step1` 을 통해 배운 것 들
 
-### 🙋‍♂️ 추상화를 이렇게 하는게 맞는가?
+### 1. 스트림과 복사
 
-게임 참여자에 해당하는 딜러와 플레이어는 중복되는 코드가 많아 `abstract class` 로 생성하였습니다.
+`List.copyOf(...)` 를 사용하면 내부적으로 복사를 하지만 불변객체로 만들어 버리기 때문에 카드 덱으로 사용하기 어려운 점이 있었습니다.
 
-사실상 `Gamer` 라는 추상 클래스에 플레이어에 해당하는 모든 구현이 들어간 상태이고 `Player` 는 단순히 상속만 받아 사용하는 방식으로 이번 과제를 진행했습니다.
+이로 인해 가변 리스트로 바꾸는 방법으로 `new ArrayList<>(...)` 을 사용했었습니다.
 
-이후에 `Dealer` 는 `첫번째 카드를 반환` 하는 기능과 `딜러 규칙에 따라 카들르 뽑을 수 있는지` 에 해당하는 부분만 특별히 구현되었습니다.
+하지만 아래 코드를 통해 스트림의 `.collect()` 함수로 바로 가변 객체로 만들 수 있음을 알게 되었습니다.
 
-이럴 경우 `Gamer` 가 그냥 `Player`가 되며 `Dealer` 는 `Player`를 상속받아 사용하면 결국 똑같은 것 아닐까? 라는 생각을 했습니다.
+``` java
+Arrays.stream(Card.values())
+    .collect(Collectors.toList());
+```
 
-1. 현재 방식처럼 `abstract class` 를 사용하여 구현한 것
-2. `Player` 를 구현하고 이를 `extand` 받아 `Dealer` 를 구현하는 것
+### 2. 컨벤션을 위해 불필요한 컨트롤러 생성
 
-이 두가지 방법 중 첫번 째를 선택한 이번 구현이 잘 한 것인지 궁금합니다!
+기존에 `indent 1` 이라는 컨벤션을 지키기 위해 불필요한 `CommandController` 를 만들었고 `body` 가 비어있는 `while` 문, 항상 `flase` 를 리턴하는 함수 등을 작성하였습니다.
 
-그리고 2번 방식으로 하면 좋지 않은 것인지도 알고 싶습니다!
+이로 인해 무한 반복이 될 것 같은 위험 요소로 보이기도 하여서 이럴 떄는 꼭 컨벤션을 위해 이렇게 까지 할 필요 없겠다고 생각되었습니다.
+
+**Before**
+
+``` java
+while (commandController.runUntilCanHit(InputView.readPlayerCommand(player.getName()))) ;
+```
+
+**After**
+
+``` java
+private void requestHitOrStand(Player player) {
+    PlayerCommand playerCommand;
+    do {
+        playerCommand = requestUntilValid(() ->
+                PlayerCommand.from(InputView.readPlayerCommand(player.getName())));
+
+        if (playerCommand == PlayerCommand.STAND) {
+            printIfPlayerOnlyDeal(player);
+            break;
+        }
+        hitAndPrint(player);
+    } while (player.canContinue());
+}
+```
+
+### 3. `Wildcard Import` 피하기
+
+아래와 같이 3개 이상 같은 클래스나 상수를 가져올 경우 자동으로 와일드카드로 바뀌게 되었는데 `Google Style Guide` 에서도 컨벤션으로 명시되어 있으며 이에 따라 `Inteliij` 에서의 자동 변환
+기능을 중지하였습니다.
+
+- 같은 이름을 가진 다른 패키지의 클래스가 존재할 경우 충돌 우려
+- 협업시에 어떤 클래스가 실제로 `import` 되어있는지 파악하기 어려움
+
+``` java
+import static blackjack.domain.card.CardScore.*;
+import static blackjack.domain.card.CardSymbol.*;
+```
+
+### 4. `BeforeEach` `AfterEach` 피하기
+
+테스트의 독립성을 지키기 위해 이는 테스트 코드에서 `BeforeEach` `AfterEach` 사용은 왠만하면 피하는 것이 좋을 것 같다고 학습하였습니다.
+
+- 테스트 케이스가 어떤 순서로 실행되는지 동작에 대한 이해에 혼란을 겪을 수 있으므로 결국 디버깅이 어려워 질 수도 있음
+
+---
+
+## 🎯 `step2` 에 도전해 보았던 것들
+
+### 1. 랜덤 전략
+
+이젠 `racingcar` 과제에서 랜덤성에 대해 공부를 많이 하였는데 결국 인터페이스를 활용한 전략패턴으로 랜덤을 부여하는 동작을 주입하는 것으로 생각이 정리되었습니다.
+
+`step1` 에서는 `cards` 라는 객체가 있었고 테스트 코드에서는 해당 객체를 `new` 로 생성할 때 `Method Override` 를 통한 카드 주입 방법을 사용했었습니다.
+
+해당 방법으 통해 어떠한 로직도 건드리지 않고 단순 테스트 코드에만 작성을 할 수 있었는데요, 이 방법도 결국 `step2` 에서 각 플레이어 마다 다른 카드를 주는 것에 한계를 느끼게 되었습니다.
+
+``` java
+public interface ShuffleStrategy {
+    List<Card> shuffle(List<Card> cards);
+}
+
+// Production
+public Deck(ShuffleStrategy shuffleStrategy) {
+    cards = new ArrayList<>(shuffleStrategy.shuffle(Card.getAll()));
+}
+
+// Test
+Deck deck = new Deck(cards -> List.of(
+    new Card(CLUB, ACE),
+    new Card(CLUB, FIVE)
+));
+```
+
+위 방법을 통해 테스트 코드를 위해 따로 `ShuffleStrategy` 에 대한 고정된 카드 반환 역할을 하는 구현체를 만들지 않고도 생성자 호출 시점에서 람다를 넘겨 카드를 주입할 수 있다는 장점이 있었습니다!
+
+딜러, 플레이어1, 플레이어2 모두 같은 `Deck` 을 공유하며 카드를 뽑기 때문에 이렇게 `Deck` 을 만들어 카드 7장 정도를 넣어두면 순서대로 원하는 카드를 뽑도록 할 수 있어서 테스트에도 용이하였습니다.
+
+### 2. 역할 재구성
+
+`step1` 에서는 컨트롤러가 `Deck` 을 들고 `Dealer` 와 `Players` 에게 카드를 주는 식으로 구성하였습니다.
+
+메세지 관점으로 보았을 때
+
+- 플레이어는 베팅할 때 딜러에게 전달한다.
+- 플레이어는 자신의 패의 점수를 계산한다.
+- 각자의 패는 카드 덱에서 한 장을 뽑아 가져온다.
+- 딜러는 플레이어의 패를 보고 수익을 계산한다.
+
+등으로 프로젝트 구조가 많이 수정되게 되었고 제일 큰 변화로는 최종 컨트롤러에서의 시작점이 아래 코드와 같이 `Deck, Dealer, Players` 를 생성하고 `베팅 > 첫카드 > 게임진행 > 결과출력`
+과정에서
+게임에 있어서 메인 커뮤니케이션을 하는 객체들인 `Dealer` 와 `Players` 간의 협력이 잘 드러났다고 볼 수 있었습니다.
+
+``` java
+public void run() {
+    Deck deck = createDeckWithRandomShuffle();
+    Dealer dealer = new Dealer(deck);
+    Players players = requestPlayers(deck);
+
+    requestBetting(dealer, players);
+    processDeal(dealer, players);
+    processHitOrStand(dealer, players);
+    printResult(dealer, players);
+}
+```

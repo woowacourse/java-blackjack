@@ -3,19 +3,17 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("카드")
 class CardTest {
     @Test
-    @DisplayName("총 52장 이다.")
+    @DisplayName("는 에이스일 수 있다.")
     void cardNumTest() {
         // given
-        List<Card> cards = Card.getAll();
+        Card card = new Card(CardSuit.CLUB, CardScore.ACE);
 
         // when & then
-        assertThat(cards.size()).isEqualTo(52);
+        assertThat(card.isAce()).isTrue();
     }
 }
