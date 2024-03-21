@@ -23,7 +23,7 @@ class NameTest {
     void blankNameTest(String name) {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름은 공백일 수 없습니다.");
+                .hasMessage("이름은 공백일 수 없습니다.");
     }
 
     @ParameterizedTest
@@ -32,6 +32,6 @@ class NameTest {
     void longNameTest(String name) {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름은 2글자 이상 5글자 이하여야 합니다.");
+                .hasMessage("이름은 2글자 이상 5글자 이하여야 합니다.");
     }
 }

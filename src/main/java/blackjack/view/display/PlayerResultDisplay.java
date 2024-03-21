@@ -20,7 +20,7 @@ public enum PlayerResultDisplay {
         return Arrays.stream(values())
                 .filter(displayResult -> displayResult.result == result)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 결과입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 결과입니다."));
     }
 
     public String getDisplay() {

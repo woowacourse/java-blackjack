@@ -22,7 +22,7 @@ public enum CardShapeDisplay {
         return Arrays.stream(CardShapeDisplay.values())
                 .filter(displayShape -> displayShape.shape == shape)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 모양입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 모양입니다."));
     }
 
     public String getDisplay() {

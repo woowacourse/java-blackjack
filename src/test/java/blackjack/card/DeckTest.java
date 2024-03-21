@@ -32,7 +32,7 @@ class DeckTest {
         // when, then
         assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 덱이 비어있습니다.");
+                .hasMessage("덱이 비어있습니다.");
     }
 
     @Test

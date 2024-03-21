@@ -16,7 +16,22 @@ public class InputView {
         return Arrays.stream(names).toList();
     }
 
-    public String readCommand() {
-        return scanner.nextLine();
+    public int readBattingAmount() {
+        String input = scanner.nextLine();
+        validateInteger(input);
+        return Integer.parseInt(input);
+    }
+
+    private void validateInteger(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("정수가 아닙니다.");
+        }
+    }
+
+    public boolean readPlayerWantDrawMore() {
+        Command command = Command.from(scanner.nextLine());
+        return command == Command.YES;
     }
 }

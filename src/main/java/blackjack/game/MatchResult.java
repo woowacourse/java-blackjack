@@ -1,34 +1,62 @@
 package blackjack.game;
 
+import blackjack.player.Hand;
 import blackjack.player.Score;
 
 public enum MatchResult {
 
-    DEALER_WIN,
-    PLAYER_WIN,
-    TIE;
+    DEALER_WIN(-1),
+    PLAYER_WIN(1),
+    PLAYER_BLACKJACK(1.5),
+    TIE(0);
 
-    public static MatchResult chooseWinner(Score playerScore, Score dealerScore) {
-        if (isPlayerWinningCondition(playerScore, dealerScore)) {
-            return PLAYER_WIN;
-        }
-        if (isDealerWinningCondition(playerScore, dealerScore)) {
-            return DEALER_WIN;
-        }
-        return TIE;
+    private final double prizeRate;
+
+    MatchResult(double prizeRate) {
+        this.prizeRate = prizeRate;
     }
 
-    private static boolean isPlayerWinningCondition(Score playerScore, Score dealerScore) {
+    public static double calculatePrizeRate(Hand playerHand, Hand dealerHand) {
+        if (isPlayerBlackJack(playerHand, dealerHand)) {
+            return PLAYER_BLACKJACK.prizeRate;
+        }
+        if (isPlayerWinning(playerHand, dealerHand)) {
+            return PLAYER_WIN.prizeRate;
+        }
+        if (isDealerWinning(playerHand, dealerHand)) {
+            return DEALER_WIN.prizeRate;
+        }
+        return TIE.prizeRate;
+    }
+
+    private static boolean isPlayerBlackJack(Hand playerHand, Hand dealerHand) {
+        return playerHand.isBlackJack() && !dealerHand.isBlackJack();
+    }
+
+    private static boolean isPlayerWinning(Hand playerHand, Hand dealerHand) {
+        Score playerScore = playerHand.calculateScore();
+        Score dealerScore = dealerHand.calculateScore();
+
         if (playerScore.isBust()) {
             return false;
         }
         return dealerScore.isBust() || playerScore.isLargerThan(dealerScore);
     }
 
-    private static boolean isDealerWinningCondition(Score playerScore, Score dealerScore) {
+    private static boolean isDealerWinning(Hand playerHand, Hand dealerHand) {
+        Score playerScore = playerHand.calculateScore();
+        Score dealerScore = dealerHand.calculateScore();
+
         if (playerScore.isBust()) {
             return true;
         }
+        if (dealerHand.isBlackJack() && !playerHand.isBlackJack()) {
+            return true;
+        }
         return dealerScore.isNotBust() && dealerScore.isLargerThan(playerScore);
+    }
+
+    double getPrizeRate() {
+        return prizeRate;
     }
 }

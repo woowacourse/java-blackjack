@@ -9,12 +9,12 @@ public class Player {
     private final Name name;
     private final Hand hand;
 
-    Player(String name, Hand hand) {
+    public Player(String name, Hand hand) {
         this.name = new Name(name);
         this.hand = hand;
     }
 
-    Player(String name) {
+    public Player(String name) {
         this(name, new Hand());
     }
 
@@ -41,5 +41,9 @@ public class Player {
 
     public List<Card> getCards() {
         return hand.getCards();
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }

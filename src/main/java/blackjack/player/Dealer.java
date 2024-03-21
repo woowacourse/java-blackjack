@@ -11,14 +11,14 @@ public class Dealer extends Player {
         super("딜러");
     }
 
-    Dealer(Hand hand) {
+    public Dealer(Hand hand) {
         super("딜러", hand);
     }
 
     public Card getFirstCard() {
-        List<Card> cards = super.getCards();
+        List<Card> cards = getCards();
         if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 딜러가 카드를 가지고 있지 않습니다.");
+            throw new IllegalStateException("딜러가 카드를 가지고 있지 않습니다.");
         }
         return cards.get(0);
     }

@@ -33,7 +33,7 @@ public class Deck {
 
     public Card draw() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 덱이 비어있습니다.");
+            throw new IllegalStateException("덱이 비어있습니다.");
         }
         return cards.poll();
     }
