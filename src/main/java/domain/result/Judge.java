@@ -1,7 +1,7 @@
 package domain.result;
 
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import domain.player.Dealer;
+import domain.player.Player;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

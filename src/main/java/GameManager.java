@@ -1,12 +1,12 @@
-import domain.BlackJackGameRule;
+import domain.BlackJackGame;
 import domain.HitState;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.Players;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.Players;
 import domain.result.Cashier;
 import domain.result.Judge;
 import domain.result.Money;
-import domain.result.PlayersResult;
+import domain.result.PlayerMoney;
 import view.InputView;
 import view.ResultView;
 
@@ -15,12 +15,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameAndViewConnector {
+public class GameManager {
 
     private final InputView inputView;
     private final ResultView resultView;
 
-    public GameAndViewConnector(InputView inputView, ResultView resultView) {
+    public GameManager(InputView inputView, ResultView resultView) {
         this.inputView = inputView;
         this.resultView = resultView;
     }
@@ -28,12 +28,12 @@ public class GameAndViewConnector {
     public void start() {
         Players players = new Players(generatePlayers(inputView.readPlayersNames()));
         Dealer dealer = new Dealer();
-        BlackJackGameRule blackJackGameRule = new BlackJackGameRule();
-        PlayersResult playersBet = collectPlayersBet(players);
+        BlackJackGame blackJackGame = new BlackJackGame();
+        PlayerMoney playersBet = collectPlayersBet(players);
         Cashier cashier = new Cashier(playersBet, new Judge());
 
-        configureSetup(blackJackGameRule, players, dealer);
-        progressGame(blackJackGameRule, players, dealer);
+        configureSetup(blackJackGame, players, dealer);
+        progressGame(blackJackGame, players, dealer);
         makeFinalResult(players, dealer, cashier);
     }
 
@@ -45,42 +45,42 @@ public class GameAndViewConnector {
         return players;
     }
 
-    private PlayersResult collectPlayersBet(Players players) {
-        Map<Player, Money> gamerWallets = new LinkedHashMap<>();
+    private PlayerMoney collectPlayersBet(Players players) {
+        Map<Player, Money> playerMoney = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             Money money = new Money(inputView.readPlayerBet(player));
-            gamerWallets.put(player, money);
+            playerMoney.put(player, money);
         }
-        return new PlayersResult(gamerWallets);
+        return new PlayerMoney(playerMoney);
     }
 
-    private void configureSetup(BlackJackGameRule blackJackGameRule, Players players, Dealer dealer) {
-        blackJackGameRule.shareInitCards(players, dealer);
+    private void configureSetup(BlackJackGame blackJackGame, Players players, Dealer dealer) {
+        blackJackGame.shareInitCards(players, dealer);
         resultView.printInitialCards(dealer, players.getPlayers());
     }
 
-    private void progressGame(BlackJackGameRule blackJackGameRule, Players players, Dealer dealer) {
-        progressPlayersGame(blackJackGameRule, players);
-        progressDealerGame(blackJackGameRule, dealer);
+    private void progressGame(BlackJackGame blackJackGame, Players players, Dealer dealer) {
+        progressPlayersGame(blackJackGame, players);
+        progressDealerGame(blackJackGame, dealer);
         resultView.printAllGamersCardsResult(dealer, players.getPlayers());
     }
 
-    private void progressPlayersGame(BlackJackGameRule blackJackGameRule, Players players) {
+    private void progressPlayersGame(BlackJackGame blackJackGame, Players players) {
         for (Player player : players.getPlayers()) {
-            progressPlayerGame(blackJackGameRule, player);
+            progressPlayerGame(blackJackGame, player);
         }
     }
 
-    private void progressPlayerGame(BlackJackGameRule blackJackGameRule, Player player) {
+    private void progressPlayerGame(BlackJackGame blackJackGame, Player player) {
         while (player.canHit() && inputView.readHitOrStay(player) == HitState.HIT) {
-            blackJackGameRule.gamerHit(player);
+            blackJackGame.playerHit(player);
             resultView.printPlayerCards(player);
         }
     }
 
-    private void progressDealerGame(BlackJackGameRule blackJackGameRule, Dealer dealer) {
+    private void progressDealerGame(BlackJackGame blackJackGame, Dealer dealer) {
         while (dealer.canHit()) {
-            blackJackGameRule.gamerHit(dealer);
+            blackJackGame.playerHit(dealer);
             resultView.printDealerHitMessage(dealer);
         }
     }

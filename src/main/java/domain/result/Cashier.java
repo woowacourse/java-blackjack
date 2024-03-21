@@ -1,18 +1,18 @@
 package domain.result;
 
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import domain.player.Dealer;
+import domain.player.Player;
 
 import java.util.List;
 import java.util.Map;
 
 public class Cashier {
 
-    private final PlayersResult playersResult;
+    private final PlayerMoney playerMoney;
     private final Judge judge;
 
-    public Cashier(PlayersResult playersResult, Judge judge) {
-        this.playersResult = playersResult;
+    public Cashier(PlayerMoney playerMoney, Judge judge) {
+        this.playerMoney = playerMoney;
         this.judge = judge;
     }
 
@@ -24,15 +24,15 @@ public class Cashier {
 
     private void calculatePlayersProfit(Map<Player, WinState> playersResult) {
         for (Player player : playersResult.keySet()) {
-            this.playersResult.applyProfitToPlayer(player, playersResult.get(player));
+            this.playerMoney.applyProfitToPlayer(player, playersResult.get(player));
         }
     }
 
     public Money calculateDealerProfit() {
-        return new Money(-playersResult.sumAllPlayerProfit());
+        return new Money(-playerMoney.sumAllPlayerMoney());
     }
 
     public Map<Player, Money> getPlayersResult() {
-        return playersResult.getPlayerResult();
+        return playerMoney.getPlayerMoney();
     }
 }

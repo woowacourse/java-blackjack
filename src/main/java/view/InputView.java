@@ -1,7 +1,7 @@
 package view;
 
 import domain.HitState;
-import domain.gamer.Player;
+import domain.player.Player;
 
 import java.util.Arrays;
 import java.util.List;

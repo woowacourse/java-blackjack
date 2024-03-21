@@ -1,17 +1,17 @@
 package domain;
 
 import domain.cards.Deck;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.Players;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.Players;
 
-public class BlackJackGameRule {
+public class BlackJackGame {
 
     private static final int INIT_CARD_COUNT = 2;
 
     private final Deck deck;
 
-    public BlackJackGameRule() {
+    public BlackJackGame() {
         this.deck = Deck.createShuffledDeck();
     }
 
@@ -26,7 +26,7 @@ public class BlackJackGameRule {
         }
     }
 
-    public void gamerHit(Player player) {
+    public void playerHit(Player player) {
         player.hit(deck.pickOneCard());
     }
 }
