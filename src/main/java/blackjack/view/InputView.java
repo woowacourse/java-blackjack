@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.game.DrawDecision;
-import blackjack.domain.participant.PlayerName;
+import blackjack.domain.player.DrawDecision;
+import blackjack.domain.player.PlayerName;
 import blackjack.view.mapper.DrawDecisionMapper;
 import java.util.Arrays;
 import java.util.List;
@@ -22,10 +22,16 @@ public class InputView {
         return splitAndTrim(scanner.nextLine());
     }
 
-    public List<String> splitAndTrim(String input) {
+    private List<String> splitAndTrim(String input) {
         return Arrays.stream(input.split(DELIMITER))
                 .map(String::trim)
                 .toList();
+    }
+
+    public String readBetAmount(PlayerName playerName) {
+        String message = String.format("%s의 배팅 금액은?", playerName.value());
+        System.out.println(String.join("", LINE_SEPARATOR, message));
+        return scanner.nextLine();
     }
 
     public DrawDecision readDrawDecision(PlayerName playerName) {

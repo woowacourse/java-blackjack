@@ -1,19 +1,17 @@
-package blackjack.domain.game;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Hand;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerName;
+import blackjack.domain.dealer.Dealer;
+import blackjack.domain.hand.Hand;
 import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ResultTest {
+class PlayerResultTest {
 
-    @DisplayName("플레이어가 버스트면 플레이어는 패배다.")
+    @DisplayName("플레이어가 버스트면 플레이어는 배팅 금액을 모두 잃게 된다.")
     @Test
     void testPlayerBust() {
         // given
@@ -24,13 +22,13 @@ class ResultTest {
         Dealer dealer = new Dealer();
 
         // when
-        Result result = Result.determineResult(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result.LOSE);
+        assertThat(multiplier).isEqualTo(-1);
     }
 
-    @DisplayName("플레이어가 블랙잭이고 딜러는 블랙잭이 아니면 플레이어는 승리다.")
+    @DisplayName("플레이어가 블랙잭이고 딜러는 블랙잭이 아니면 플레이어는 배팅 금액의 1.5배를 딜러에게 받는다.")
     @Test
     void testOnlyPlayerBlackjack() {
         // given
@@ -42,31 +40,13 @@ class ResultTest {
         Dealer dealer = new Dealer();
 
         // when
-        Result result = Result.determineResult(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result.WIN);
+        assertThat(multiplier).isEqualTo(1.5);
     }
 
-    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 플레이어는 무승부다.")
-    @Test
-    void testAllBlackjack() {
-        // given
-        Hand hand = new Hand();
-        hand.append(CardFixture.createAHeart());
-        hand.append(CardFixture.createKHeart());
-
-        Player player = new Player(new PlayerName("pobi"), hand);
-        Dealer dealer = new Dealer(hand);
-
-        // when
-        Result result = Result.determineResult(player, dealer);
-
-        // then
-        assertThat(result).isEqualTo(Result.TIE);
-    }
-
-    @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트면 플레이어는 승리다.")
+    @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트면 플레이어는 가지고 있는 패에 상관 없이 승리해 배팅 금액을 받는다.")
     @Test
     void testDealerBust() {
         // given
@@ -77,13 +57,13 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        Result result = Result.determineResult(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result.WIN);
+        assertThat(multiplier).isEqualTo(1);
     }
 
-    @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 플레이어 핸드가 크면 플레이어는 승리다.")
+    @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 플레이어 핸드가 크면 플레이어는 배팅 금액을 얻게 된다.")
     @Test
     void testPlayerGreater() {
         // given
@@ -96,13 +76,13 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        Result result = Result.determineResult(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result.WIN);
+        assertThat(multiplier).isEqualTo(1);
     }
 
-    @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 플레이어 핸드가 작으면 플레이어는 패배다.")
+    @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 플레이어 핸드가 작으면 플레이어는 배팅 금액을 잃게 된다.")
     @Test
     void testPlayerLess() {
         // given
@@ -115,13 +95,13 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        Result result = Result.determineResult(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result.LOSE);
+        assertThat(multiplier).isEqualTo(-1);
     }
 
-    @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 둘의 핸드가 같으면 플레이어는 무승부다.")
+    @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 둘의 핸드가 같으면 플레이어는 배팅 금액을 돌려받게 된다.")
     @Test
     void testPlayerEqual() {
         // given
@@ -134,9 +114,27 @@ class ResultTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // when
-        Result result = Result.determineResult(player, dealer);
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result.TIE);
+        assertThat(multiplier).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 플레이어는 베팅한 금액을 돌려받는다.")
+    @Test
+    void testAllBlackjack() {
+        // given
+        Hand hand = new Hand();
+        hand.append(CardFixture.createAHeart());
+        hand.append(CardFixture.createKHeart());
+
+        Player player = new Player(new PlayerName("pobi"), hand);
+        Dealer dealer = new Dealer(hand);
+
+        // when
+        double multiplier = PlayerResult.determineMultiplier(player, dealer);
+
+        // then
+        assertThat(multiplier).isEqualTo(0);
     }
 }

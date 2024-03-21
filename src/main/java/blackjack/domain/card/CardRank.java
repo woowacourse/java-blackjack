@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.game.Score;
-import java.util.Arrays;
-import java.util.List;
+import blackjack.domain.hand.Score;
 
 public enum CardRank {
 
@@ -27,10 +25,6 @@ public enum CardRank {
 
     CardRank(int score) {
         this.score = score;
-    }
-
-    public static List<CardRank> allCardRanks() {
-        return Arrays.asList(values());
     }
 
     public static Score adjustAceScore(Score score) {

@@ -1,5 +1,6 @@
-package blackjack.domain.participant;
+package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,4 +16,11 @@ class PlayerNameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("플레이어 이름을 생성한다.")
+    @Test
+    void testCreatePlayerName() {
+        // when & then
+        assertThatCode(() -> new PlayerName("a"))
+                .doesNotThrowAnyException();
+    }
 }

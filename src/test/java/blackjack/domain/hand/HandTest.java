@@ -1,15 +1,14 @@
-package blackjack.domain.card;
+package blackjack.domain.hand;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.game.Score;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import fixture.CardFixture;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class HandTest {
 
@@ -38,23 +37,6 @@ class HandTest {
 
         // then
         assertThat(hand.getCards()).hasSize(2);
-    }
-
-    @DisplayName("지정한 개수만큼 지급받은 카드를 공개한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
-    void testRevealHand(int count) {
-        // given
-        Hand hand = new Hand();
-        hand.append(CardFixture.createAHeart());
-        hand.append(CardFixture.create2Heart());
-        hand.append(CardFixture.create3Heart());
-
-        // when
-        Hand revealedCards = hand.revealHand(count);
-
-        // then
-        assertThat(revealedCards.getCards()).hasSize(count);
     }
 
     @DisplayName("핸드에 Ace가 있을 때 합이 21을 초과하지 않으면 Ace는 11로 계산한다.")

@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.game.PlayersResult;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.dealer.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+import java.util.List;
 
 public class OutputView {
 
@@ -13,14 +13,14 @@ public class OutputView {
         this.messageResolver = messageResolver;
     }
 
-    public void printDealToAll(Dealer dealer, Players players) {
+    public void printDealToAll(Dealer dealer, List<Player> players) {
         System.out.println(messageResolver.resolveDealDescriptionMessage(players));
-        System.out.println(messageResolver.resolveDealToDealerMessage(dealer));
-        System.out.println(messageResolver.resolveDealToPlayersMessage(players));
+        System.out.println(messageResolver.resolveDealerHandAfterDealMessage(dealer));
+        System.out.println(messageResolver.resolvePlayersHandMessage(players));
     }
 
     public void printDrawToPlayer(Player player) {
-        System.out.println(messageResolver.resolveDrawToPlayerMessage(player));
+        System.out.println(messageResolver.resolvePlayerHandMessage(player));
     }
 
     public void printDrawToDealer() {
@@ -31,14 +31,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printAllHandScore(Dealer dealer, Players players) {
+    public void printAllHandScore(Dealer dealer, List<Player> players) {
         System.out.println(messageResolver.resolveDealerHandScoreMessage(dealer));
         System.out.println(messageResolver.resolvePlayersHandScoreMessage(players));
     }
 
-    public void printAllResult(PlayersResult playersResult) {
-        System.out.println(messageResolver.resolveResultDescriptionMessage());
-        System.out.println(messageResolver.resolveDealerResultMessage(playersResult));
-        System.out.println(messageResolver.resolvePlayersResultMessage(playersResult));
+    public void printAllProfit(Players players) {
+        System.out.println(messageResolver.resolveProfitDescriptionMessage());
+        System.out.println(messageResolver.resolveDealerProfitMessage(players));
+        System.out.println(messageResolver.resolvePlayersProfitMessage(players));
     }
 }

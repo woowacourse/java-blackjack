@@ -1,6 +1,8 @@
-package blackjack.domain.card;
+package blackjack.domain.hand;
 
-import blackjack.domain.game.Score;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardRank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -8,6 +10,7 @@ import java.util.stream.IntStream;
 public class Hand {
 
     private static final int INITIAL_APPEND_COUNT = 2;
+    private static final Score INITIAL_SCORE = new Score(0);
 
     private final List<Card> cards;
 
@@ -27,14 +30,6 @@ public class Hand {
         IntStream.range(0, INITIAL_APPEND_COUNT).forEach(i -> append(cardDeck.popCard()));
     }
 
-    public Hand revealHand(int count) {
-        List<Card> cards = this.cards.stream()
-                .limit(count)
-                .toList();
-
-        return new Hand(cards);
-    }
-
     public Score calculateHandScore() {
         Score score = sumCardScore();
         if (hasAce()) {
@@ -46,7 +41,7 @@ public class Hand {
     private Score sumCardScore() {
         return cards.stream()
                 .map(Card::score)
-                .reduce(new Score(0), Score::add);
+                .reduce(INITIAL_SCORE, Score::add);
     }
 
     private boolean hasAce() {

@@ -1,6 +1,7 @@
-package blackjack.domain.game;
+package blackjack.domain.hand;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +21,15 @@ class ScoreTest {
         // when & then
         assertThatThrownBy(() -> new Score(value))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("점수를 생성한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void testCreateScore(int value) {
+        // when & then
+        assertThatCode(() -> new Score(value))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("점수끼리 더한다.")

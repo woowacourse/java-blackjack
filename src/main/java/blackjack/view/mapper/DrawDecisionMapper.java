@@ -1,6 +1,6 @@
 package blackjack.view.mapper;
 
-import blackjack.domain.game.DrawDecision;
+import blackjack.domain.player.DrawDecision;
 import java.util.Arrays;
 
 public enum DrawDecisionMapper {

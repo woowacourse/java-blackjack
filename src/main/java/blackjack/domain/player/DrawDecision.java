@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.player;
 
 public enum DrawDecision {
 

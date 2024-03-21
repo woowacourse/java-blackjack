@@ -1,12 +1,11 @@
-package blackjack.domain.participant;
+package blackjack.domain.dealer;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Hand;
-import blackjack.domain.game.Score;
+import blackjack.domain.hand.Hand;
+import blackjack.domain.hand.Score;
 
 public class Dealer {
-
-    private static final int REVEAL_COUNT = 1;
 
     private final Hand hand;
 
@@ -20,10 +19,6 @@ public class Dealer {
 
     public void deal(CardDeck cardDeck) {
         hand.appendInitial(cardDeck);
-    }
-
-    public Hand revealHand() {
-        return hand.revealHand(REVEAL_COUNT);
     }
 
     public void draw(CardDeck cardDeck) {
@@ -40,15 +35,19 @@ public class Dealer {
         return hand.calculateHandScore();
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
     public boolean isNotBlackjack() {
         return !hand.isBlackjack();
     }
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public Card revealFirstCard() {
+        return hand.getCards().get(0);
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }

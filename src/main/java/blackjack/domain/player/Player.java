@@ -1,13 +1,11 @@
-package blackjack.domain.participant;
+package blackjack.domain.player;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Hand;
-import blackjack.domain.game.Score;
+import blackjack.domain.hand.Hand;
+import blackjack.domain.hand.Score;
 import java.util.Objects;
 
 public class Player {
-
-    private static final int REVEAL_COUNT = 2;
 
     private final PlayerName playerName;
     private final Hand hand;
@@ -23,10 +21,6 @@ public class Player {
 
     public void deal(CardDeck cardDeck) {
         hand.appendInitial(cardDeck);
-    }
-
-    public Hand revealHand() {
-        return hand.revealHand(REVEAL_COUNT);
     }
 
     public void draw(CardDeck cardDeck) {
@@ -74,10 +68,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(playerName);
-    }
-
-    @Override
-    public String toString() {
-        return playerName.value();
     }
 }

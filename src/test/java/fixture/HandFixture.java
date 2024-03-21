@@ -3,7 +3,7 @@ package fixture;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.card.Hand;
+import blackjack.domain.hand.Hand;
 
 import java.util.ArrayList;
 import java.util.List;
