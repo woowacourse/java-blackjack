@@ -30,9 +30,8 @@ public class OutputView {
         Map<Player, Integer> playerResults = result.getResults();
         int dealerEarning = result.calculateDealerEarning();
 
-        System.out.println("## 최종 수익");
-        System.out.println(dealerEarningMessageBuilder(dealer, dealerEarning));
-        System.out.print(playerResultsMessageBuilder(playerResults));
+        System.out.println(getDealerEarningMessageBuilder(dealer, dealerEarning));
+        System.out.print(getPlayerEarningMessageBuilder(playerResults));
     }
 
     public static void printPlayerBlackjack(String playerName) {
@@ -115,14 +114,15 @@ public class OutputView {
         return card.getNumber().getName() + card.getSymbol().getName();
     }
 
-    private static StringBuilder dealerEarningMessageBuilder(Dealer dealer, int dealerEarning) {
+    private static StringBuilder getDealerEarningMessageBuilder(Dealer dealer, int dealerEarning) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(String.format("%s: %d", dealer.getName(), dealerEarning));
+        builder.append("## 최종 수익")
+                .append(String.format("%s: %d", dealer.getName(), dealerEarning));
         return builder;
     }
 
-    private static StringBuilder playerResultsMessageBuilder(Map<Player, Integer> playerResults) {
+    private static StringBuilder getPlayerEarningMessageBuilder(Map<Player, Integer> playerResults) {
         StringBuilder builder = new StringBuilder();
 
         playerResults.forEach(
