@@ -4,7 +4,6 @@ import blackjack.domain.participant.Player;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,13 +39,9 @@ public class InputView {
         }
     }
 
-    public static List<Integer> readBettings(List<String> playerNames) {
-        List<Integer> bettings = new ArrayList<>();
-        for (String playerName : playerNames) {
-            System.out.printf("%n%s의 배팅 금액은?%n", playerName);
-            bettings.add(inputBetting());
-        }
-        return bettings;
+    public static int readBettings(String playerName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
+        return inputBetting();
     }
 
     private static void validateBlank(List<String> splitNames) {

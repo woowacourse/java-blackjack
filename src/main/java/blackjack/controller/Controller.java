@@ -2,11 +2,13 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -29,8 +31,13 @@ public class Controller {
 
     private Players createPlayers() {
         List<String> playerNames = InputView.readName();
-        List<Integer> bettings = InputView.readBettings(playerNames);
-        return Players.from(playerNames, bettings);
+
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Betting betting = new Betting(InputView.readBettings(playerName));
+            players.add(new Player(playerName, betting));
+        }
+        return new Players(players);
     }
 
     private void initializeHands(Dealer dealer, List<Player> players) {
