@@ -64,6 +64,6 @@ public class PlayersProfit {
     }
 
     public Map<Player, Profit> getProfits() {
-        return profits;
+        return Map.copyOf(profits);
     }
 }
