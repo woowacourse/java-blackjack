@@ -25,7 +25,7 @@ public class PlayerEarnings {
 
     public int getResultOf(Player player) {
         if (!results.containsKey(player)) {
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어입니다.");
+            throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
         }
         return results.get(player);
     }

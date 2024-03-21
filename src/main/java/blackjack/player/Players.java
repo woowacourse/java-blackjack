@@ -26,21 +26,21 @@ public class Players {
 
     private void validateNotNull(List<String> playerNames) {
         if (playerNames == null) {
-            throw new IllegalArgumentException("[ERROR] 플레이어로 null이 전달되었습니다.");
+            throw new IllegalArgumentException("플레이어로 null이 전달되었습니다.");
         }
     }
 
     private void validateSize(List<String> playerNames) {
         if (playerNames.size() < MIN_PLAYER_COUNT || playerNames.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException(
-                    "[ERROR] 플레이어의 수는 " + MIN_PLAYER_COUNT + "명 이상 " + MAX_PLAYER_COUNT + "명 이하여야 합니다."
+                    "플레이어의 수는 " + MIN_PLAYER_COUNT + "명 이상 " + MAX_PLAYER_COUNT + "명 이하여야 합니다."
             );
         }
     }
 
     private void validateUniqueNames(List<String> playerNames) {
         if (new HashSet<>(playerNames).size() != playerNames.size()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
+            throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
         }
     }
 

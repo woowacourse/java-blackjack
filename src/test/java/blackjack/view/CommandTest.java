@@ -27,6 +27,6 @@ class CommandTest {
     void commandNotFoundTest() {
         assertThatThrownBy(() -> Command.from("hi"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 존재하지 않는 명령어입니다.");
+                .hasMessage("존재하지 않는 명령어입니다.");
     }
 }

@@ -16,7 +16,7 @@ class PlayersTest {
         // when, then
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름은 중복될 수 없습니다.");
+                .hasMessage("이름은 중복될 수 없습니다.");
     }
 
     @Test
@@ -27,7 +27,7 @@ class PlayersTest {
         // when, then
         assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 플레이어의 수는 1명 이상 10명 이하여야 합니다.");
+                .hasMessage("플레이어의 수는 1명 이상 10명 이하여야 합니다.");
     }
 
     @Test
@@ -38,7 +38,7 @@ class PlayersTest {
         // when, then
         assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 플레이어의 수는 1명 이상 10명 이하여야 합니다.");
+                .hasMessage("플레이어의 수는 1명 이상 10명 이하여야 합니다.");
     }
 
     @Test
@@ -46,6 +46,6 @@ class PlayersTest {
     void nullPlayerTest() {
         assertThatThrownBy(() -> new Players(null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 플레이어로 null이 전달되었습니다.");
+                .hasMessage("플레이어로 null이 전달되었습니다.");
     }
 }

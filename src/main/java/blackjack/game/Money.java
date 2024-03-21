@@ -11,7 +11,7 @@ public class Money {
 
     private void validateNaturalNumber(int input) {
         if (input <= 0) {
-            throw new IllegalArgumentException("[ERROR] 금액은 양수여야 합니다.");
+            throw new IllegalArgumentException("금액은 양수여야 합니다.");
         }
     }
 

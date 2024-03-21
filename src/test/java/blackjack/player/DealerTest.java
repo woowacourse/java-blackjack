@@ -68,6 +68,6 @@ class DealerTest {
         // when, then
         assertThatThrownBy(dealer::getFirstCard)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 딜러가 카드를 가지고 있지 않습니다.");
+                .hasMessage("딜러가 카드를 가지고 있지 않습니다.");
     }
 }

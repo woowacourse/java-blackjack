@@ -36,6 +36,6 @@ class PlayerBettingMoneyTest {
 
         assertThatThrownBy(() -> playerBettingMoney.getBettingAmountOf(notExistPlayer))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 존재하지 않는 플레이어입니다.");
+                .hasMessage("존재하지 않는 플레이어입니다.");
     }
 }

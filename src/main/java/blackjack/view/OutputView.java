@@ -10,6 +10,7 @@ public class OutputView {
 
     private static final String NAME_SEPARATOR = ", ";
     private static final String CARD_SEPARATOR = ", ";
+    private static final String EXCEPTION_PREFIX = "[ERROR] ";
 
     public void printNamesRequest() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -77,6 +78,6 @@ public class OutputView {
     }
 
     public void printExceptionMessage(Exception e) {
-        System.out.println(e.getMessage());
+        System.out.println(EXCEPTION_PREFIX + e.getMessage());
     }
 }

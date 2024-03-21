@@ -15,7 +15,7 @@ class MoneyTest {
     void validateNaturalNumberTest(int money) {
         assertThatThrownBy(() -> new Money(money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 금액은 양수여야 합니다.");
+                .hasMessage("금액은 양수여야 합니다.");
     }
 
     @ParameterizedTest
