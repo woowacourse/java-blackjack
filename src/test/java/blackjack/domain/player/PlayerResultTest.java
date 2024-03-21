@@ -1,11 +1,9 @@
-package blackjack.domain.profit;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Hand;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerName;
+import blackjack.domain.dealer.Dealer;
+import blackjack.domain.hand.Hand;
 import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;

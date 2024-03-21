@@ -1,10 +1,7 @@
-package blackjack.domain.profit;
+package blackjack.domain.player;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerName;
-import blackjack.domain.participant.PlayerNames;
+import blackjack.domain.dealer.Dealer;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;

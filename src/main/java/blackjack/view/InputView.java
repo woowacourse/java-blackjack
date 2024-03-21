@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.participant.DrawDecision;
-import blackjack.domain.participant.PlayerName;
+import blackjack.domain.player.DrawDecision;
+import blackjack.domain.player.PlayerName;
 import blackjack.view.mapper.DrawDecisionMapper;
 import java.util.Arrays;
 import java.util.List;

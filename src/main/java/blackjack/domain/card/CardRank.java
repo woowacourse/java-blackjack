@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Score;
+import blackjack.domain.hand.Score;
 
 public enum CardRank {
 

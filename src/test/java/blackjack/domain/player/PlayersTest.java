@@ -1,9 +1,8 @@
-package blackjack.domain.participant;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.profit.Players;
-import blackjack.domain.profit.Profit;
+import blackjack.domain.dealer.Dealer;
 import fixture.DealerFixture;
 import fixture.PlayerFixture;
 import java.math.BigDecimal;

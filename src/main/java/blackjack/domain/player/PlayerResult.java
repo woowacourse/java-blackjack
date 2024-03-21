@@ -1,8 +1,7 @@
-package blackjack.domain.profit;
+package blackjack.domain.player;
 
-import blackjack.domain.participant.Score;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.hand.Score;
+import blackjack.domain.dealer.Dealer;
 
 public enum PlayerResult {
 

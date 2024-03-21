@@ -3,9 +3,9 @@ package fixture;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.participant.Hand;
-import blackjack.domain.participant.PlayerName;
-import blackjack.domain.participant.Player;
+import blackjack.domain.hand.Hand;
+import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 

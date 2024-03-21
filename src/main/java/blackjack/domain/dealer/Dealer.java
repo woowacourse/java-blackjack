@@ -1,7 +1,9 @@
-package blackjack.domain.participant;
+package blackjack.domain.dealer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.hand.Hand;
+import blackjack.domain.hand.Score;
 
 public class Dealer {
 

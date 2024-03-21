@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Hand;
-import blackjack.domain.participant.Player;
-import blackjack.domain.profit.Players;
-import blackjack.domain.profit.Profit;
+import blackjack.domain.dealer.Dealer;
+import blackjack.domain.hand.Hand;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+import blackjack.domain.player.Profit;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
 import java.util.List;
