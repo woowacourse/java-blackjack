@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.PlayerNames;
 import blackjack.domain.profit.PlayersProfit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,31 +19,31 @@ public class GameManager {
     }
 
     public void start() {
-        Players players = Players.create(inputView.readNames());
-        PlayersProfit playersProfit = players.bet(player -> inputView.readBetAmount(player.getName()));
+        PlayerNames playerNames = PlayerNames.create(inputView.readNames());
+        PlayersProfit players = PlayersProfit.create(playerNames, inputView::readBetAmount);
         Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
         deal(players, dealer, cardDeck);
         draw(players, dealer, cardDeck);
 
-        playersProfit.calculateBasedOnDealer(dealer);
-        outputView.printAllProfit(playersProfit);
+        players.calculateProfit(dealer);
+        outputView.printAllProfit(players);
     }
 
-    private void deal(Players players, Dealer dealer, CardDeck cardDeck) {
+    private void deal(PlayersProfit players, Dealer dealer, CardDeck cardDeck) {
         dealer.deal(cardDeck);
         players.deal(cardDeck);
-        outputView.printDealToAll(dealer, players);
+        outputView.printDealToAll(dealer, players.players());
     }
 
-    private void draw(Players players, Dealer dealer, CardDeck cardDeck) {
+    private void draw(PlayersProfit players, Dealer dealer, CardDeck cardDeck) {
         drawToPlayers(players, cardDeck);
         drawToDealer(dealer, cardDeck);
-        outputView.printAllHandScore(dealer, players);
+        outputView.printAllHandScore(dealer, players.players());
     }
 
-    private void drawToPlayers(Players players, CardDeck cardDeck) {
+    private void drawToPlayers(PlayersProfit players, CardDeck cardDeck) {
         players.draw(player -> drawToPlayer(player, cardDeck));
         outputView.printLineSeparator();
     }

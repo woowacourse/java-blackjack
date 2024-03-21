@@ -1,10 +1,16 @@
 package blackjack.domain.profit;
 
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
+import blackjack.domain.participant.PlayerNames;
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class PlayersProfit {
@@ -17,17 +23,26 @@ public class PlayersProfit {
         this.profits = profits;
     }
 
-    public static PlayersProfit createInitial(Map<Player, BetAmount> playersBetAmount) {
-        Map<Player, Profit> playersProfit = playersBetAmount.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        entry -> new Profit(entry.getValue())
-                ));
+    public static PlayersProfit create(PlayerNames playerNames, Function<PlayerName, String> receiveBetAmount) {
+        Map<Player, Profit> playerBetAmounts = playerNames.names().stream()
+                .map(name -> {
+                    BetAmount betAmount = new BetAmount(receiveBetAmount.apply(name));
+                    return Map.entry(new Player(name), new Profit(betAmount));
+                })
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> existing, LinkedHashMap::new));
 
-        return new PlayersProfit(playersProfit);
+        return new PlayersProfit(playerBetAmounts);
     }
 
-    public void calculateBasedOnDealer(Dealer dealer) {
+    public void deal(CardDeck cardDeck) {
+        profits.keySet().forEach(player -> player.deal(cardDeck));
+    }
+
+    public void draw(Consumer<Player> drawToPlayer) {
+        profits.keySet().forEach(drawToPlayer);
+    }
+
+    public void calculateProfit(Dealer dealer) {
         profits.forEach((player, betAmount) -> {
             double multiplier = PlayerResult.determineMultiplier(player, dealer);
             Profit profit = betAmount.multiply(multiplier);
@@ -44,7 +59,11 @@ public class PlayersProfit {
                 .reduce(INITIAL_PROFIT, Profit::add);
     }
 
+    public List<Player> players() {
+        return profits.keySet().stream().toList();
+    }
+
     public Map<Player, Profit> getProfits() {
-        return Map.copyOf(profits);
+        return profits;
     }
 }

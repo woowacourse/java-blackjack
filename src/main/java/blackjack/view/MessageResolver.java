@@ -1,14 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
 import blackjack.domain.profit.PlayersProfit;
 import blackjack.domain.profit.Profit;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MessageResolver {
@@ -24,13 +24,13 @@ public class MessageResolver {
     public MessageResolver() {
     }
 
-    public String resolveDealDescriptionMessage(Players players) {
+    public String resolveDealDescriptionMessage(List<Player> players) {
         String message = String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_NAME, resolveNamesMessage(players));
         return String.join("", LINE_SEPARATOR, message);
     }
 
-    private String resolveNamesMessage(Players players) {
-        return players.getPlayers().stream()
+    private String resolveNamesMessage(List<Player> players) {
+        return players.stream()
                 .map(player -> player.getName().value())
                 .collect(Collectors.joining(SEPARATOR));
     }
@@ -39,8 +39,8 @@ public class MessageResolver {
         return String.format(HAND_FORMAT, DEALER_NAME, resolveCardMessage(dealer.revealFirstCard()));
     }
 
-    public String resolvePlayersHandMessage(Players players) {
-        return players.getPlayers().stream()
+    public String resolvePlayersHandMessage(List<Player> players) {
+        return players.stream()
                 .map(this::resolvePlayerHandMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
@@ -74,8 +74,8 @@ public class MessageResolver {
         return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.getHand()));
     }
 
-    public String resolvePlayersHandScoreMessage(Players players) {
-        return players.getPlayers().stream()
+    public String resolvePlayersHandScoreMessage(List<Player> players) {
+        return players.stream()
                 .map(this::resolvePlayerHandScoreMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
@@ -88,12 +88,12 @@ public class MessageResolver {
         return String.join("", LINE_SEPARATOR, "## 최종 수익");
     }
 
-    public String resolveDealerProfitMessage(PlayersProfit playersProfit) {
-        return String.format(PROFIT_FORMAT, DEALER_NAME, playersProfit.dealerProfit().getValue());
+    public String resolveDealerProfitMessage(PlayersProfit players) {
+        return String.format(PROFIT_FORMAT, DEALER_NAME, players.dealerProfit().getValue());
     }
 
-    public String resolvePlayersProfitMessage(PlayersProfit playersProfit) {
-        return playersProfit.getProfits().entrySet().stream()
+    public String resolvePlayersProfitMessage(PlayersProfit players) {
+        return players.getProfits().entrySet().stream()
                 .map(entry -> resolvePlayerProfitMessage(entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }

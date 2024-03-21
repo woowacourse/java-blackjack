@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
 import blackjack.domain.profit.PlayersProfit;
+import java.util.List;
 
 public class OutputView {
 
@@ -13,7 +13,7 @@ public class OutputView {
         this.messageResolver = messageResolver;
     }
 
-    public void printDealToAll(Dealer dealer, Players players) {
+    public void printDealToAll(Dealer dealer, List<Player> players) {
         System.out.println(messageResolver.resolveDealDescriptionMessage(players));
         System.out.println(messageResolver.resolveDealerHandAfterDealMessage(dealer));
         System.out.println(messageResolver.resolvePlayersHandMessage(players));
@@ -31,14 +31,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printAllHandScore(Dealer dealer, Players players) {
+    public void printAllHandScore(Dealer dealer, List<Player> players) {
         System.out.println(messageResolver.resolveDealerHandScoreMessage(dealer));
         System.out.println(messageResolver.resolvePlayersHandScoreMessage(players));
     }
 
-    public void printAllProfit(PlayersProfit playersProfit) {
+    public void printAllProfit(PlayersProfit players) {
         System.out.println(messageResolver.resolveProfitDescriptionMessage());
-        System.out.println(messageResolver.resolveDealerProfitMessage(playersProfit));
-        System.out.println(messageResolver.resolvePlayersProfitMessage(playersProfit));
+        System.out.println(messageResolver.resolveDealerProfitMessage(players));
+        System.out.println(messageResolver.resolvePlayersProfitMessage(players));
     }
 }
