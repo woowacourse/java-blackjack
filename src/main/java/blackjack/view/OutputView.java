@@ -40,7 +40,7 @@ public class OutputView {
     }
 
     public static void printBust(String playerName) {
-        System.out.printf("%s는 버스트 입니다.", playerName);
+        System.out.printf("%s는 버스트 입니다.%n", playerName);
     }
 
     public static void printDealerDraw(Dealer dealer) {
