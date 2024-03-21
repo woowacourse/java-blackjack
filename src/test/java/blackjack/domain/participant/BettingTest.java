@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 
 class BettingTest {
 
-    @DisplayName("0 으로 배팅 박스를 생성한다")
+    @DisplayName("0 으로 베팅을 생성한다")
     @Test
     void testCreate1() {
         assertThatCode(() -> new Betting(0)).doesNotThrowAnyException();
     }
 
-    @DisplayName("음수로 배팅 박스를 생성하면 예외가 발생한다")
+    @DisplayName("음수로 베팅을 생성하면 예외가 발생한다")
     @Test
     void testCreate2() {
         assertThatCode(() -> new Betting(-1))
