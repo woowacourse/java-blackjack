@@ -16,15 +16,13 @@ public class Players {
         this.value = value;
     }
 
-    public static Players of(final List<String> names, final List<Integer> betAmounts) {
+    public static Players of(final List<String> names, final List<Integer> betAmounts, final Card first,
+                             final Card second) {
         validateSameLength(names, betAmounts);
         return new Players(IntStream.range(0, names.size())
-                .mapToObj(index -> new Player(new Name(names.get(index)), new BetAmount(betAmounts.get(index))))
+                .mapToObj(index -> new Player(new Name(names.get(index)), new BetAmount(betAmounts.get(index)), first,
+                        second))
                 .toList());
-    }
-
-    public void init(final Card first, final Card second) {
-        value.forEach(player -> player.init(first, second));
     }
 
     private void validate(final List<Player> players) {

@@ -15,9 +15,8 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 히트 이후 카드의 합이 17을 초과한다")
     void canHit() {
-        final Dealer dealer = new Dealer();
+        final Dealer dealer = new Dealer(new Card(TWO, CLUBS), new Card(TWO, CLUBS));
 
-        dealer.init(new Card(TWO, CLUBS), new Card(TWO, CLUBS));
         dealer.automaticHit(() -> {
         });
 
@@ -27,16 +26,14 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 플레이어의 핸드를 보고 승패무를 결정할 수 있다")
     void compare() {
-        final Dealer dealer = new Dealer();
-        final Player playerWin = new Player(new Name("win"), new BetAmount(100));
-        final Player playerLose = new Player(new Name("lose"), new BetAmount(100));
-        final Player playerTie = new Player(new Name("tie"), new BetAmount(100));
+        final Dealer dealer = new Dealer(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
+        final Player playerWin = new Player(new Name("win"), new BetAmount(100), new Card(FOUR, CLUBS),
+                new Card(FOUR, CLUBS));
+        final Player playerLose = new Player(new Name("lose"), new BetAmount(100), new Card(TWO, CLUBS),
+                new Card(TWO, CLUBS));
+        final Player playerTie = new Player(new Name("tie"), new BetAmount(100), new Card(THREE, CLUBS),
+                new Card(THREE, CLUBS));
 
-        dealer.init(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
-
-        playerWin.init(new Card(FOUR, CLUBS), new Card(FOUR, CLUBS));
-        playerLose.init(new Card(TWO, CLUBS), new Card(TWO, CLUBS));
-        playerTie.init(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
         dealer.standIfRunning();
         playerWin.standIfRunning();
         playerLose.standIfRunning();

@@ -1,24 +1,19 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.state.Started;
 import domain.state.State;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
 
-    private State state;
-
-    public final void init(final Card first, final Card second) {
-        state = Started.ofTwoCard(first, second);
-    }
+    protected State state;
 
     public final void add(final Card card) {
         state = state.add(card);
     }
 
-    public final void standIfRunning() {
+    final void standIfRunning() {
         if (state.isFinished()) {
             return;
         }

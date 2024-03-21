@@ -20,7 +20,8 @@ class PlayersTest {
         final List<Player> players = new ArrayList<>();
 
         for (int i = 0; i < 9; i++) {
-            players.add(new Player(new Name("teba" + i), new BetAmount(100)));
+            players.add(new Player(new Name("teba" + i), new BetAmount(100), new Card(Rank.NINE, Suit.CLUBS),
+                    new Card(Rank.NINE, Suit.CLUBS)));
         }
 
         assertThatThrownBy(() -> new Players(players))
@@ -33,8 +34,8 @@ class PlayersTest {
     void duplicateName() {
         final List<Player> players = new ArrayList<>();
 
-        players.add(new Player(new Name("teba"), new BetAmount(100)));
-        players.add(new Player(new Name("teba"), new BetAmount(100)));
+        players.add(new Player(new Name("teba"), new BetAmount(100),new Card(Rank.NINE,Suit.CLUBS),new Card(Rank.NINE,Suit.CLUBS)));
+        players.add(new Player(new Name("teba"), new BetAmount(100),new Card(Rank.NINE,Suit.CLUBS),new Card(Rank.NINE,Suit.CLUBS)));
 
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -46,7 +47,7 @@ class PlayersTest {
     void length() {
         final List<String> names = List.of("a", "b", "c");
         final List<Integer> betAmounts = List.of(100, 200);
-        assertThatThrownBy(() -> Players.of(names, betAmounts))
+        assertThatThrownBy(() -> Players.of(names, betAmounts,new Card(Rank.NINE,Suit.CLUBS),new Card(Rank.NINE,Suit.CLUBS)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("이름(%d)과 배팅 금액(%d)의 정보의 길이가 일치하지 않습니다.", names.size(), betAmounts.size()));
     }
@@ -54,12 +55,9 @@ class PlayersTest {
     @Test
     @DisplayName("사용자들의 수익 총합을 계산한다")
     void totalSum() {
-        final Player player1 = new Player(new Name("a"), new BetAmount(100));
-        final Player player2 = new Player(new Name("b"), new BetAmount(100));
-        final Dealer dealer = new Dealer();
-        player1.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
-        player2.init(new Card(Rank.ACE, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
-        dealer.init(new Card(Rank.TWO, Suit.CLUBS), new Card(Rank.TWO, Suit.CLUBS));
+        final Player player1 = new Player(new Name("a"), new BetAmount(100),new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
+        final Player player2 = new Player(new Name("b"), new BetAmount(100),new Card(Rank.ACE, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
+        final Dealer dealer = new Dealer(new Card(Rank.TWO, Suit.CLUBS), new Card(Rank.TWO, Suit.CLUBS));
         player1.standIfRunning();
         player2.standIfRunning();
         dealer.standIfRunning();

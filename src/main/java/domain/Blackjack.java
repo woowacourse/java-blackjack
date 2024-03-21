@@ -18,15 +18,9 @@ public class Blackjack {
         this.dealer = dealer;
     }
 
-    private static void init(final Players players, final Dealer dealer) {
-        dealer.init(dealer.draw(), dealer.draw());
-        players.init(dealer.draw(), dealer.draw());
-    }
-
     public static Blackjack startWithInitialization(final List<String> names, final List<Integer> betAmounts) {
         final Dealer dealer = new Dealer();
-        final Players players = Players.of(names, betAmounts);
-        init(players, dealer);
+        final Players players = Players.of(names, betAmounts, dealer.draw(), dealer.draw());
         return new Blackjack(players, dealer);
     }
 
