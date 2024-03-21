@@ -22,7 +22,8 @@ public class CardDeck {
         if (isBust()) {
             cards.stream()
                     .filter(Card::isSoftAce)
-                    .findFirst();
+                    .findFirst()
+                    .ifPresent(Card::changeToHardAce);
         }
     }
 
@@ -35,6 +36,10 @@ public class CardDeck {
                 .map(Card::getCardActualValue)
                 .reduce(Integer::sum)
                 .orElse(0);
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateHand() == HIT_THRESHOLD;
     }
 
     public List<Card> getCards() {

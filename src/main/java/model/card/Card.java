@@ -23,6 +23,9 @@ public class Card {
         return false;
     }
 
+    public void changeToHardAce() {
+    }
+
     public int getCardActualValue() {
         return number.getValue();
     }

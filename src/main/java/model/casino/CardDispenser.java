@@ -12,7 +12,7 @@ public class CardDispenser {
 
     public Card dispenseCard() {
         if (blackJackCards.isEmpty()) {
-            throw new IllegalStateException("Number of attempts exceeded");
+            throw new IllegalStateException("호출 가능한 횟수를 초과하였습니다.");
         }
         return blackJackCards.poll();
     }

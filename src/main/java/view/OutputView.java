@@ -1,12 +1,8 @@
 package view;
 
+import controller.dto.DealerFaceUpResultInfo;
+import controller.dto.PlayerFaceUpResultInfo;
 import java.util.List;
-import model.participant.Dealer;
-import service.dto.DealerFaceUpResult;
-import service.dto.DealerMatchResult;
-import service.dto.FaceUpResult;
-import service.dto.PlayerMatchResult;
-import model.casino.MatchResult;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;
@@ -20,69 +16,61 @@ public class OutputView {
         System.out.println(toBePrint);
     }
 
-    public static void printInitialCardSetting(DealerFaceUpResult dealerResult, List<FaceUpResult> playersResult) {
+    public static void printInitialCardSetting(DealerFaceUpResultInfo dealerResultInfo,
+                                               List<PlayerFaceUpResultInfo> playersResultInfo) {
         System.out.print(System.lineSeparator());
-        List<String> playerNameTexts = playersResult.stream()
-                .map(FaceUpResult::getPartipantNameAsString)
+        List<String> playerNameTexts = playersResultInfo.stream()
+                .map(PlayerFaceUpResultInfo::name)
                 .toList();
         String playerNameFormattedText = String.join(CARD_DELIMITER, playerNameTexts);
 
         printMessage("딜러와 " + playerNameFormattedText + "에게 2장을 나누었습니다.");
-        printDealerHoleCard(dealerResult);
-        printPlayersFaceUp(playersResult);
+        printDealerHoleCard(dealerResultInfo);
+        printPlayersFaceUp(playersResultInfo);
         System.out.print(System.lineSeparator());
     }
 
-    private static void printDealerHoleCard(DealerFaceUpResult faceUpResult) {
-        printMessage("딜러" + NAME_CARD_DELIMITER + faceUpResult.getCardsAsStrings()
+    private static void printDealerHoleCard(DealerFaceUpResultInfo faceUpResult) {
+        printMessage("딜러" + NAME_CARD_DELIMITER + faceUpResult.cardFaces()
                 .get(HOLE_CARD_INDEX));
     }
 
-    private static void printPlayersFaceUp(List<FaceUpResult> faceUpResults) {
-        faceUpResults.forEach(OutputView::printSingleFaceUp);
+    private static void printPlayersFaceUp(List<PlayerFaceUpResultInfo> playerFaceUpResults) {
+        playerFaceUpResults.forEach(OutputView::printSingleFaceUp);
     }
 
-    public static void printFinalFaceUpResult(DealerFaceUpResult dealerFaceUpResult, List<FaceUpResult> playerFaceUpResults) {
+    public static void printFinalFaceUpResult(DealerFaceUpResultInfo dealerFaceUpResultInfo,
+                                              List<PlayerFaceUpResultInfo> playerFaceUpResultInfos) {
         System.out.print(System.lineSeparator());
-        printSinglePlayerFinalFaceUp(dealerFaceUpResult);
-        playerFaceUpResults.forEach(OutputView::printSinglePlayerFinalFaceUp);
+        printParticipantFinalFaceUp(dealerFaceUpResultInfo);
+        playerFaceUpResultInfos.forEach(OutputView::printParticipantFinalFaceUp);
     }
 
-    public static void printSingleFaceUp(FaceUpResult result) {
-        printMessage(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
-                result.getCardsAsStrings()));
+    public static void printSingleFaceUp(PlayerFaceUpResultInfo result) {
+        printMessage(result.name() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER, result.cardFaces()));
     }
 
-    private static void printSinglePlayerFinalFaceUp(DealerFaceUpResult result) {
-        printMessage(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
-                result.getCardsAsStrings()) + " - 결과: " + result.hand());
+    private static void printParticipantFinalFaceUp(DealerFaceUpResultInfo result) {
+        printMessage("딜러 " + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER, result.cardFaces()) + " - 결과: "
+                + result.hand());
     }
 
-    private static void printSinglePlayerFinalFaceUp(FaceUpResult result) {
-        printMessage(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
-                result.getCardsAsStrings()) + " - 결과: " + result.hand());
+    private static void printParticipantFinalFaceUp(PlayerFaceUpResultInfo result) {
+        printMessage(result.name() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER, result.cardFaces()) + " - 결과: "
+                + result.hand());
     }
 
-    public static void printScoreResults(DealerMatchResult dealerMatchResult,
-                                         List<PlayerMatchResult> playerMatchResults) {
-        StringBuilder dealerScoresText = genernateDealerScoreTexts(dealerMatchResult);
+    public static void alertDealerHitMessage() {
+        printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 
+    public static void printDealerEarningResults(long dealerEarning) {
         System.out.print(System.lineSeparator());
         printMessage("## 최종 승패");
-        printMessage(dealerScoresText.toString());
-        playerMatchResults.forEach(result -> printMessage(playerScoreText(result)));
+        printMessage("딜러: " + dealerEarning);
     }
 
-    private static String playerScoreText(PlayerMatchResult result) {
-        return result.getNameAsString() + ": " + result.getVictoryAsString();
+    public static void printPlayerBettingResult(String playerName, long playerBettingResult) {
+        printMessage(playerName + ": " + playerBettingResult);
     }
-
-    private static StringBuilder genernateDealerScoreTexts(DealerMatchResult dealerMatchResult) {
-        StringBuilder dealerScoresText = new StringBuilder("딜러: ");
-        for (MatchResult matchResult : MatchResult.values()) {
-            dealerScoresText.append(dealerMatchResult.getVictoryScoreAsString(matchResult) + " ");
-        }
-        return dealerScoresText;
-    }
-
 }

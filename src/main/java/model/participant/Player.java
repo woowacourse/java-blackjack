@@ -1,49 +1,53 @@
 package model.participant;
 
-import static model.casino.MatchResult.DRAW;
-import static model.casino.MatchResult.LOSE;
-import static model.casino.MatchResult.WIN;
+import static model.participant.state.MatchState.BLACK_JACK;
+import static model.participant.state.MatchState.DRAW;
+import static model.participant.state.MatchState.LOSE;
+import static model.participant.state.MatchState.WIN;
 
-import model.casino.MatchResult;
-import service.dto.FaceUpResult;
+import model.card.Card;
+import model.participant.state.MatchState;
 
-public class Player extends Participant {
+public final class Player extends Participant {
     private final Name name;
-    private boolean isTurnOver;
+    private final long bettingAmount;
 
-    public Player(Name name) {
-        super();
+    public Player(Name name, long bettingAmount, Card firstCard, Card secondCard) {
+        super(firstCard, secondCard);
         this.name = name;
-        this.isTurnOver = false;
+        this.bettingAmount = bettingAmount;
     }
+
 
     @Override
     public boolean canHit() {
-        return !cardDeck.isBust() && !isTurnOver;
-    }
-
-    @Override
-    public MatchResult calculateMatchResult(int dealerHand) {
-        int playerHand = cardDeck.calculateHand();
-        if (playerHand >= BUST_THRESHOLD || (dealerHand < BUST_THRESHOLD) && (playerHand < dealerHand)) {
-            return LOSE;
-        }
-        if (dealerHand == playerHand) {
-            return DRAW;
-        }
-        return WIN;
+        return !cardDeck.isBust() && matchState == MatchState.PLAYING;
     }
 
     public void turnOver() {
-        isTurnOver = true;
+        matchState = MatchState.TURNOVER;
     }
 
+    public void updateMatchResult(MatchState dealerMatchResult, int dealerHand) {
+        matchState = determineMatchResult(dealerMatchResult, dealerHand);
+    }
 
-    public FaceUpResult generateFaceUpResult() {
-        return new FaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
+    private MatchState determineMatchResult(MatchState dealerMatchResult, int dealerHand) {
+        int playerHand = cardDeck.calculateHand();
+        if (((dealerHand < playerHand) || BUST_THRESHOLD < dealerHand) && (playerHand < BUST_THRESHOLD)) {
+            return WIN;
+        }
+        if (dealerHand == playerHand || (dealerMatchResult == BLACK_JACK && matchState == BLACK_JACK)) {
+            return DRAW;
+        }
+        return LOSE;
     }
 
     public Name getName() {
         return name;
+    }
+
+    public long calculateEarning() {
+        return matchState.calculateEarnings(bettingAmount);
     }
 }

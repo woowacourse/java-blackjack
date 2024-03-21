@@ -1,10 +1,10 @@
-package service.dto;
+package controller.dto;
 
 import java.util.List;
 import model.card.Card;
 import model.participant.Name;
 
-public record FaceUpResult(Name name, List<Card> cards, int hand) {
+public record PlayerFaceUpResult(Name name, List<Card> cards, int hand) {
     public String getPartipantNameAsString() {
         return name.getValue();
     }
