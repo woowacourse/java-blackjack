@@ -5,8 +5,6 @@ import domain.player.ActionAfterPlayerHit;
 import domain.player.Dealer;
 import domain.player.DecisionOfPlayer;
 import domain.player.Players;
-import dto.GameResult;
-import dto.ParticipantsResponse;
 import java.util.List;
 
 public class Blackjack {
@@ -40,11 +38,11 @@ public class Blackjack {
         dealer.automaticHit(actionAfterDealerHit);
     }
 
-    public GameResult toGameResult() {
-        return GameResult.of(dealer, players);
+    public Players getPlayers() {
+        return players;
     }
 
-    public ParticipantsResponse toParticipantsResponse() {
-        return ParticipantsResponse.of(dealer, players);
+    public Dealer getDealer() {
+        return dealer;
     }
 }

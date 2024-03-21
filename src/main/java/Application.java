@@ -1,4 +1,6 @@
 import domain.Blackjack;
+import dto.GameResult;
+import dto.ParticipantsResponse;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -11,12 +13,12 @@ public class Application {
                 .toList();
         final Blackjack blackjack = Blackjack.startWithInitialization(names, betAmounts);
 
-        OutputView.printInitialStatus(blackjack.toParticipantsResponse());
+        OutputView.printInitialStatus(ParticipantsResponse.of(blackjack));
 
         blackjack.playersHit(InputView::tryHit, OutputView::printStatusWithNewLine);
         blackjack.dealerHit(OutputView::printDealerHitMessage);
 
-        OutputView.printAfterStatus(blackjack.toParticipantsResponse());
-        OutputView.printProfit(blackjack.toGameResult());
+        OutputView.printAfterStatus(ParticipantsResponse.of(blackjack));
+        OutputView.printProfit(GameResult.of(blackjack));
     }
 }

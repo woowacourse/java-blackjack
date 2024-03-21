@@ -1,5 +1,6 @@
 package domain;
 
+import dto.ParticipantsResponse;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,7 @@ class BlackjackTest {
         blackjack.dealerHit(() -> {
         });
 
-        final int dealerScore = blackjack.toParticipantsResponse().dealerResponse().score();
+        final int dealerScore = ParticipantsResponse.of(blackjack).dealerResponse().score();
         Assertions.assertThat(dealerScore).isGreaterThanOrEqualTo(17);
     }
 
@@ -31,7 +32,7 @@ class BlackjackTest {
         blackjack.playersHit((a) -> true, (a, b) -> {
         });
 
-        final int score = blackjack.toParticipantsResponse().playerResponse().get(0).score();
+        final int score = ParticipantsResponse.of(blackjack).playerResponse().get(0).score();
         Assertions.assertThat(score).isGreaterThanOrEqualTo(21);
     }
 }

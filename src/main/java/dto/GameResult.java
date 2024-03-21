@@ -1,5 +1,6 @@
 package dto;
 
+import domain.Blackjack;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
@@ -10,7 +11,9 @@ import java.util.stream.Collectors;
 
 public record GameResult(Double dealerResult, Map<String, Double> playerResult) {
 
-    public static GameResult of(final Dealer dealer, final Players players) {
+    public static GameResult of(final Blackjack blackjack) {
+        final Dealer dealer = blackjack.getDealer();
+        final Players players = blackjack.getPlayers();
 
         final LinkedHashMap<String, Double> playersResult = players.getValue()
                 .stream()

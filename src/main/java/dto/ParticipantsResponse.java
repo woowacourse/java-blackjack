@@ -1,12 +1,11 @@
 package dto;
 
-import domain.player.Dealer;
-import domain.player.Players;
+import domain.Blackjack;
 import java.util.List;
 
 public record ParticipantsResponse(DealerResponse dealerResponse, List<PlayerResponse> playerResponse) {
-    public static ParticipantsResponse of(final Dealer dealer, final Players players) {
-        return new ParticipantsResponse(DealerResponse.of(dealer),
-                players.stream().map(PlayerResponse::of).toList());
+    public static ParticipantsResponse of(final Blackjack blackjack) {
+        return new ParticipantsResponse(DealerResponse.of(blackjack.getDealer()),
+                blackjack.getPlayers().stream().map(PlayerResponse::of).toList());
     }
 }
