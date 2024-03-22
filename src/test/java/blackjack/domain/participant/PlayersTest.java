@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -11,7 +11,10 @@ class PlayersTest {
     @DisplayName("Players를 생성한다")
     @Test
     void create() {
-        assertThatCode(() -> new Players(List.of(new Player("mark"), new Player("sang"))))
+        assertThatCode(() -> new Players(
+                List.of(
+                        new Player("mark", new Betting(1000)),
+                        new Player("pk", new Betting(1000)))))
                 .doesNotThrowAnyException();
     }
 

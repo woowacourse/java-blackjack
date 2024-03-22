@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,7 @@ class CardFactoryTest {
 
         List<Card> cards = cardFactory.createBlackJackCard();
 
-        assertThat(cards.size()).isEqualTo(52);
+        assertThat(cards).hasSize(52);
     }
 
 }

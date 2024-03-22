@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,15 +28,20 @@ public class InputView {
     }
 
     public static boolean readHitOrStand(Player player) {
-        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", player.getName(), HIT, STAND);
         try {
             String input = BUFFERED_READER.readLine();
             validateHitOrStand(input);
             return HIT.equals(input);
         } catch (IOException e) {
             OutputView.printError(e.getMessage());
-            throw new IllegalStateException("입력도중 에러가 발생했습니다.");
+            throw new IllegalStateException("입력 도중 에러가 발생했습니다.");
         }
+    }
+
+    public static int readBettings(String playerName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
+        return inputBetting();
     }
 
     private static void validateBlank(List<String> splitNames) {
@@ -53,6 +58,15 @@ public class InputView {
     private static void validateHitOrStand(String input) {
         if (!(HIT.equals(input) || STAND.equals(input))) {
             throw new IllegalArgumentException(String.format("y 또는 n만 입력 가능합니다. 입력값: %s", input));
+        }
+    }
+
+    private static int inputBetting() {
+        try {
+            return Integer.parseInt(BUFFERED_READER.readLine());
+        } catch (IOException e) {
+            OutputView.printError(e.getMessage());
+            throw new IllegalStateException("입력 도중 에러가 발생했습니다.");
         }
     }
 }

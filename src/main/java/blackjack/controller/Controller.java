@@ -1,19 +1,21 @@
 package blackjack.controller;
 
-import blackjack.domain.CardFactory;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Betting;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
 
     public void play() {
-        Dealer dealer = createDealer();
         Players players = createPlayers();
+        Dealer dealer = createDealer();
 
         initializeHands(dealer, players.getPlayers());
         playerTurn(dealer, players);
@@ -29,7 +31,13 @@ public class Controller {
 
     private Players createPlayers() {
         List<String> playerNames = InputView.readName();
-        return Players.from(playerNames);
+
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Betting betting = new Betting(InputView.readBettings(playerName));
+            players.add(new Player(playerName, betting));
+        }
+        return new Players(players);
     }
 
     private void initializeHands(Dealer dealer, List<Player> players) {
@@ -57,17 +65,20 @@ public class Controller {
 
     private void printScoreAndResult(Dealer dealer, Players players) {
         OutputView.printHandsWithScore(dealer, players.getPlayers());
-        OutputView.printResult(dealer.getPlayersResult(players), dealer);
+        OutputView.printResult(dealer.judgePlayersResult(players), dealer);
     }
 
     private void hitOrStand(Dealer dealer, Player player) {
+        if (player.isBlackjack()) {
+            OutputView.printPlayerBlackjack(player.getName());
+            return;
+        }
         while (player.canHit() && InputView.readHitOrStand(player)) {
             player.putCard(dealer.draw());
             OutputView.printTotalHand(player);
         }
-
-        if (!player.canHit()) {
-            OutputView.printBust();
+        if (player.isBust()) {
+            OutputView.printBust(player.getName());
         }
     }
 }

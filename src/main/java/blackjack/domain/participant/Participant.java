@@ -1,13 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-public class Player {
+import blackjack.domain.card.Card;
 
-    private static final int BLACKJACK_SCORE = 21;
+public abstract class Participant {
+
+    protected static final int BLACKJACK_SCORE = 21;
 
     private final String name;
     private final Hand hand;
 
-    public Player(String name) {
+    Participant(String name) {
         this.name = name;
         this.hand = new Hand();
     }
@@ -21,10 +23,6 @@ public class Player {
         return hand.calculate();
     }
 
-    public boolean canHit() {
-        return calculate() <= BLACKJACK_SCORE;
-    }
-
     public void putCard(Card card) {
         hand.put(card);
     }
@@ -36,4 +34,14 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return calculate() > BLACKJACK_SCORE;
+    }
+
+    public abstract boolean canHit();
 }
