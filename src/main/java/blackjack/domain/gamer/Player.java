@@ -34,7 +34,7 @@ public final class Player extends Gamer {
     public String toString() {
         return "Player{" +
                 "name=" + name +
-                ", cards=" + cards +
+                ", bettingMoney=" + bettingMoney +
                 '}';
     }
 }

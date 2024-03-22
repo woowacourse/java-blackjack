@@ -34,4 +34,11 @@ public enum GameResult {
     public BigDecimal profitRate() {
         return profitRate;
     }
+
+    @Override
+    public String toString() {
+        return "GameResult{" +
+                "profitRate=" + profitRate +
+                '}';
+    }
 }

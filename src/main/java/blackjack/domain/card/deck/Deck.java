@@ -52,4 +52,11 @@ public class Deck {
         }
         throw new NoSuchElementException("덱에 카드가 존재하지 않습니다.");
     }
+
+    @Override
+    public String toString() {
+        return "Deck{" +
+                "cards=" + cards +
+                '}';
+    }
 }

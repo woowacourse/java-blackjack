@@ -43,7 +43,8 @@ public class GamerProfits {
     @Override
     public String toString() {
         return "GamerProfits{" +
-                "gamerProfits=" + playerProfits +
+                "playerProfits=" + playerProfits +
+                ", dealerProfit=" + dealerProfit +
                 '}';
     }
 }

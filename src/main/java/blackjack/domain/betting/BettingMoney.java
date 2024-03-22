@@ -18,4 +18,11 @@ public class BettingMoney {
     public BigDecimal calculateProfit(final GameResult gameResult) {
         return (amount.multiply(gameResult.profitRate()));
     }
+
+    @Override
+    public String toString() {
+        return "BettingMoney{" +
+                "amount=" + amount +
+                '}';
+    }
 }
