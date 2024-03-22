@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Score;
 import blackjack.domain.game.PlayerResult;
 import blackjack.domain.money.Chip;
 
@@ -40,8 +41,8 @@ public class Gamer {
         return chip.totalProfit(playerResult);
     }
 
-    public int score() {
-        return hand.score().toInt();
+    public Score score() {
+        return hand.score();
     }
 
     public Card cardAt(int index) {

@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Score;
 import blackjack.domain.game.PlayerResult;
 import blackjack.domain.money.Chip;
 
@@ -54,7 +55,7 @@ public class Player {
         return gamer.cards();
     }
 
-    public int score() {
+    public Score score() {
         return gamer.score();
     }
 

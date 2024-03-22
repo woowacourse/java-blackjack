@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Score;
 import blackjack.domain.money.Chip;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class Dealer {
     }
 
     public boolean isScoreUnderBound() {
-        return gamer.score() <= HIT_UPPER_BOUND;
+        return !gamer.score().isBiggerThan(new Score(HIT_UPPER_BOUND));
     }
 
     public void draw(Card card) {
@@ -48,7 +49,7 @@ public class Dealer {
         return gamer.cards();
     }
 
-    public int score() {
+    public Score score() {
         return gamer.score();
     }
 

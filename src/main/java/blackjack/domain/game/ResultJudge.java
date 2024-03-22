@@ -12,7 +12,7 @@ public class ResultJudge {
         if (playerLose(dealer, player)) {
             return PlayerResult.LOSE;
         }
-        if (dealer.score() == player.score()) {
+        if (dealer.score().isSameTo(player.score())) {
             return PlayerResult.PUSH;
         }
         return PlayerResult.WIN;
@@ -20,6 +20,6 @@ public class ResultJudge {
 
     private boolean playerLose(Dealer dealer, Player player) {
         return player.isBust() || (dealer.isBlackjack() && !player.isBlackjack())
-                || (player.score() < dealer.score() && !dealer.isBust());
+                || (dealer.score().isBiggerThan(player.score()) && !dealer.isBust());
     }
 }

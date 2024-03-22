@@ -25,6 +25,14 @@ public class Score {
         return value == MAX_SCORE.value;
     }
 
+    public boolean isBiggerThan(Score another) {
+        return value > another.value;
+    }
+
+    public boolean isSameTo(Score another) {
+        return value == another.value;
+    }
+
     public int toInt() {
         return value;
     }
