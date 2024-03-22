@@ -1,12 +1,13 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.deck.Deck;
+import blackjack.domain.card.deck.ShuffledDeckCardGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,22 +15,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
-    List<Card> cards = new ArrayList<>();
+    Deque<Card> cards;
 
     @BeforeEach
     void init() {
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(Card.of(suit, rank));
-            }
-        }
+        cards = ShuffledDeckCardGenerator.getInstance().generate();
     }
 
     @DisplayName("카드가 중복되면 예외를 발생시킨다.")
     @Test
     void cardDuplicateTest() {
-        cards.remove(0);
-        Card card = cards.remove(0);
+        cards.pop();
+        Card card = cards.pop();
 
         cards.add(card);
         cards.add(card);
@@ -42,7 +39,8 @@ class DeckTest {
     @DisplayName("카드가 52장이 아니라면 예외를 발생시킨다.")
     @Test
     void cardInitSizeTest() {
-        cards.remove(0);
+        cards.pop();
+        System.out.println(cards.size());
 
         Assertions.assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)

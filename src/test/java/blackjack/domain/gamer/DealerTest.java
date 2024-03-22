@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.deck.Deck;
-import blackjack.domain.card.deck.ShuffledDeckGenerator;
+import blackjack.domain.card.deck.ShuffledDeckCardGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,9 +20,9 @@ public class DealerTest {
 
     @BeforeEach
     void init() {
-        ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
+        ShuffledDeckCardGenerator deckCardGenerator = ShuffledDeckCardGenerator.getInstance();
 
-        deck = deckGenerator.generate();
+        deck = new Deck(deckCardGenerator.generate());
     }
 
     @DisplayName("딜러는 0장의 카드를 갖고 생성 된다.")

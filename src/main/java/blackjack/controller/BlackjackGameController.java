@@ -2,8 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.betting.Bettings;
 import blackjack.domain.card.deck.Deck;
-import blackjack.domain.card.deck.DeckGenerator;
-import blackjack.domain.card.deck.ShuffledDeckGenerator;
+import blackjack.domain.card.deck.ShuffledDeckCardGenerator;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -27,7 +26,7 @@ public class BlackjackGameController {
     public void start() {
         Players players = Players.fromNames(inputView.readPlayerNames());
         Dealer dealer = new Dealer();
-        Deck deck = createDeck(ShuffledDeckGenerator.getInstance());
+        Deck deck = new Deck(ShuffledDeckCardGenerator.getInstance());
 
         Bettings bettings = betPlayers(players, dealer);
         dealInitCards(deck, dealer, players);
@@ -36,10 +35,6 @@ public class BlackjackGameController {
         GameResults gameResults = judgeGameResult(players, dealer);
         GamerProfits gamerProfits = gameResults.calculateGamerProfits(players, dealer, bettings);
         printGameResult(dealer, players, gamerProfits);
-    }
-
-    private Deck createDeck(final DeckGenerator deckGenerator) {
-        return deckGenerator.generate();
     }
 
     private Bettings betPlayers(Players players, Dealer dealer) {
@@ -71,14 +66,10 @@ public class BlackjackGameController {
     }
 
     private void receivePlayerAdditionalCard(final Deck deck, final Player player) {
-        while (!player.isBust() && isPlayerInputHit(player)) {
+        while (!player.isBust() && inputView.readHitOrStand(player).isYes()) {
             player.receiveCard(deck.drawCard());
             outputView.printCardsStatus(PlayerInfo.from(player));
         }
-    }
-
-    private boolean isPlayerInputHit(final Player player) {
-        return inputView.readHitOrStand(player).isYes();
     }
 
     private void receiveDealerAdditionalCard(final Deck deck, final Dealer dealer) {

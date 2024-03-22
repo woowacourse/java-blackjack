@@ -4,23 +4,25 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
-public class ShuffledDeckGenerator implements DeckGenerator {
-    private static final ShuffledDeckGenerator INSTANCE = new ShuffledDeckGenerator();
+public class ShuffledDeckCardGenerator implements DeckCardGenerator {
+    private static final ShuffledDeckCardGenerator INSTANCE = new ShuffledDeckCardGenerator();
 
-    private ShuffledDeckGenerator() {
+    private ShuffledDeckCardGenerator() {
     }
 
-    public static ShuffledDeckGenerator getInstance() {
+    public static ShuffledDeckCardGenerator getInstance() {
         return INSTANCE;
     }
 
     @Override
-    public Deck generate() {
-        return new Deck(createShuffledCards());
+    public Deque<Card> generate() {
+        return new ArrayDeque<>(createShuffledCards());
     }
 
     private List<Card> createShuffledCards() {

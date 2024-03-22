@@ -13,7 +13,11 @@ public class Deck {
 
     private final Deque<Card> cards;
 
-    public Deck(final List<Card> cards) {
+    public Deck(final DeckCardGenerator deckCardGenerator) {
+        this(deckCardGenerator.generate());
+    }
+
+    public Deck(final Deque<Card> cards) {
         Deque<Card> copyDeck = new ArrayDeque<>(cards);
         validate(copyDeck);
         this.cards = copyDeck;
@@ -44,12 +48,8 @@ public class Deck {
 
     public Card drawCard() {
         if (!cards.isEmpty()) {
-            return cards.poll();
+            return cards.pop();
         }
         throw new NoSuchElementException("덱에 카드가 존재하지 않습니다.");
-    }
-
-    public int size() {
-        return cards.size();
     }
 }
