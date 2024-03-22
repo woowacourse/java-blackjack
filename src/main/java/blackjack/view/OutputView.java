@@ -86,13 +86,13 @@ public class OutputView {
     private void printDealerTotalCardsStatus(final Dealer dealer) {
         printLine();
         System.out.println(String.format("딜러 카드: %s - 결과: %d",
-                createCardsInfoText(dealer.getCards()), dealer.getScore()));
+                createCardsInfoText(dealer.cardStatus()), dealer.getScore()));
     }
 
     private void printPlayersTotalCardsStatus(final Players players) {
         for (Player player : players.getPlayers()) {
             System.out.println(String.format("%s카드: %s - 결과: %d",
-                    player.getName(), createCardsInfoText(player.getCards()), player.getScore()));
+                    player.getName(), createCardsInfoText(player.cardStatus()), player.getScore()));
         }
     }
 

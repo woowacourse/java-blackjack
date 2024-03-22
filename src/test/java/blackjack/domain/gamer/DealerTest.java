@@ -32,7 +32,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         // then
-        assertThat(dealer.getCards()).hasSize(0);
+        assertThat(dealer.cardStatus()).hasSize(0);
     }
 
     @DisplayName("딜러는 초기 카드를 2장 받는다")
@@ -45,7 +45,7 @@ public class DealerTest {
         dealer.receiveInitCards(deck.drawInitCards());
 
         // then
-        assertThat(dealer.getCards()).hasSize(2);
+        assertThat(dealer.cardStatus()).hasSize(2);
     }
 
     @DisplayName("딜러는 카드 1장을 분배한다.")
@@ -58,7 +58,7 @@ public class DealerTest {
         dealer.receiveCard(deck.drawCard());
 
         // then
-        assertThat(dealer.getCards()).hasSize(1);
+        assertThat(dealer.cardStatus()).hasSize(1);
     }
 
     @DisplayName("딜러 카드 패의 총 합이 16 이하라면 Hit 한다.")

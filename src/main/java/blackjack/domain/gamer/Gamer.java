@@ -39,7 +39,7 @@ public abstract class Gamer {
         return false;
     }
 
-    public List<Card> getCards() {
+    public List<Card> cardStatus() {
         return Collections.unmodifiableList(cards.getCards());
     }
 }
