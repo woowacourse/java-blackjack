@@ -2,14 +2,13 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ResultJudge;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Names;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Chip;
-import blackjack.domain.money.ProfitCalculator;
+import blackjack.domain.money.PlayersProfit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
@@ -22,7 +21,7 @@ public class BlackjackController {
 
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Dealer dealer = new Dealer(new Chip(0));
+        Dealer dealer = new Dealer(new Chip(0L));
         Players players = createPlayers();
 
         dealAndPrintHand(blackjackGame, dealer, players);
@@ -31,15 +30,14 @@ public class BlackjackController {
         drawToDealer(dealer, blackjackGame);
         printResultHand(dealer, players);
 
-        calculateGameResult(dealer, players);
-        printProfit(dealer, players);
+        calculateGameResultPrint(dealer, players);
     }
 
     private Players createPlayers() {
         Names names = new Names(InputView.readPlayersName());
         List<Player> makePlayers = new ArrayList<>();
         for (Name name : names.names()) {
-            Chip chip = new Chip(InputView.readBettingChip(name.name()));
+            Chip chip = new Chip((long) InputView.readBettingChip(name.name()));
             makePlayers.add(new Player(name, chip));
         }
 
@@ -104,20 +102,15 @@ public class BlackjackController {
         }
     }
 
-    private void calculateGameResult(Dealer dealer, Players players) {
-        ResultJudge resultJudge = new ResultJudge();
-        ProfitCalculator calculator = new ProfitCalculator();
+    private void calculateGameResultPrint(Dealer dealer, Players players) {
+        PlayersProfit playersProfit = players.calculateProfit(dealer);
+        long dealerProfit = dealer.calculateProfit(playersProfit.allProfit());
 
-        players.calculateProfit(dealer, resultJudge, calculator);
-        calculator.dealerProfit(dealer, players);
-    }
-
-    private void printProfit(Dealer dealer, Players players) {
         OutputView.printFinalProfitAnnounce();
-        OutputView.printDealerProfit(dealer.profit());
+        OutputView.printDealerProfit(dealerProfit);
 
         for (Player player : players.values()) {
-            OutputView.printPlayerProfit(player.name(), player.profit());
+            OutputView.printPlayerProfit(player.name(), playersProfit.findProfitBy(player));
         }
     }
 }

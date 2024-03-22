@@ -16,12 +16,13 @@ import static blackjack.domain.card.Suit.CLUB;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("게이머")
 public class GamerTest {
     @Test
     @DisplayName("처음 받은 카드 두장을 반환한다.")
     void gameDealTest() {
         // given
-        Gamer gamer = new Gamer(new Hand(), new Chip(0));
+        Gamer gamer = new Gamer(new Hand(), new Chip(0L));
 
         // when
         gamer.draw(List.of(Card.of(ACE, CLUB), Card.of(NINE, CLUB)));
@@ -34,7 +35,7 @@ public class GamerTest {
     @DisplayName("카드를 뽑기로 결정했을 때 카드 한장을 반환한다.")
     void gameHitTest() {
         // given
-        Gamer gamer = new Gamer(new Hand(), new Chip(0));
+        Gamer gamer = new Gamer(new Hand(), new Chip(0L));
 
         // when
         gamer.draw(Card.of(KING, DIAMOND));
@@ -47,7 +48,7 @@ public class GamerTest {
     @DisplayName("카드 점수의 합이 21이고 카드가 2장일 경우 블랙잭이다.")
     void blackjackTest() {
         // given
-        Gamer gamer = new Gamer(new Hand(), new Chip(0));
+        Gamer gamer = new Gamer(new Hand(), new Chip(0L));
 
         // when
         gamer.draw(List.of(Card.of(TEN, DIAMOND), Card.of(ACE, CLUB)));

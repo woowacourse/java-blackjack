@@ -1,30 +1,26 @@
 package blackjack.domain.money;
 
-public class Chip {
-    private final int betting;
-    private Long profit;
+import blackjack.domain.game.PlayerResult;
 
-    public Chip(int betting) {
-        validateNaturalNumber(betting);
-        this.betting = betting;
-        this.profit = 0L;
+public class Chip {
+    private final Long money;
+
+    public Chip(Long money) {
+        validateNaturalNumber(money);
+        this.money = money;
     }
 
-    private void validateNaturalNumber(int money) {
-        if (money < 0) {
+    private void validateNaturalNumber(Long betting) {
+        if (betting < 0) {
             throw new IllegalArgumentException("0 이상의 정수를 입력해 주세요.");
         }
     }
 
-    public void addProfit(Long addition) {
-        profit += addition;
+    public Long totalProfit(PlayerResult playerResult) {
+        return playerResult.calculateProfit(money);
     }
 
-    public int betting() {
-        return betting;
-    }
-
-    public Long profit() {
-        return profit;
+    public Long value() {
+        return money;
     }
 }

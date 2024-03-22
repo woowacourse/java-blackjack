@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.game.PlayerResult;
 import blackjack.domain.money.Chip;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class Gamer {
         return hand.isMaxScore();
     }
 
-    public void addProfit(Long profit) {
-        chip.addProfit(profit);
+    public Long madeProfit(PlayerResult playerResult) {
+        return chip.totalProfit(playerResult);
     }
 
     public int score() {
@@ -51,11 +52,7 @@ public class Gamer {
         return hand.myCards();
     }
 
-    public int betting() {
-        return chip.betting();
-    }
-
     public Long profit() {
-        return chip.profit();
+        return chip.value();
     }
 }

@@ -6,7 +6,7 @@ public enum PlayerResult {
     BLACKJACK_WIN(betting -> (long) (betting * 1.5)),
     WIN(betting -> betting),
     PUSH(betting -> 0L),
-    LOSE(betting -> betting * -1);
+    LOSE(betting -> betting * -1L);
 
     private final Function<Long, Long> function;
 
@@ -14,7 +14,7 @@ public enum PlayerResult {
         this.function = function;
     }
 
-    public Long additionalProfit(int betting) {
-        return function.apply((long) betting);
+    public Long calculateProfit(Long betting) {
+        return function.apply(betting);
     }
 }

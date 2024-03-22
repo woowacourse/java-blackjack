@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.game.PlayerResult;
 import blackjack.domain.money.Chip;
 
 import java.util.List;
@@ -41,8 +42,8 @@ public class Player {
         return gamer.cards().size() == ONLY_DEAL_CARD_COUNT;
     }
 
-    public void addProfit(Long profit) {
-        gamer.addProfit(profit);
+    public Long madeProfit(PlayerResult playerResult) {
+        return gamer.madeProfit(playerResult);
     }
 
     public String name() {
@@ -57,11 +58,7 @@ public class Player {
         return gamer.score();
     }
 
-    public int bettingMoney() {
-        return gamer.betting();
-    }
-
-    public Long profit() {
+    public Long chip() {
         return gamer.profit();
     }
 }

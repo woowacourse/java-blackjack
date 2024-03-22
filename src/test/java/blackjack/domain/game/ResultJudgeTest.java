@@ -31,8 +31,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이기는지 테스트한다.")
     void playerWinTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB)));
@@ -45,8 +45,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("플레이어는 자신의 숫자 합이 21을 초과할 경우 패배한다.")
     void playerLoseWhenBustTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB), Card.of(THREE, CLUB)));
@@ -59,8 +59,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("딜러의 합과 플레이어의 합이 같으면 무승부이다.")
     void pushTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(THREE, CLUB)));
@@ -73,8 +73,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("딜러의 합과 플레이어의 합이 블랙잭으로 같으면 무승부이다.")
     void pushWhenSameBlackjackTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(ACE, SPADE), Card.of(TEN, CLUB)));
@@ -87,8 +87,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("플레이어만 블랙잭이면 블랙잭 승리한다.")
     void playerDealCardsBlackjackTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(ACE, CLUB), Card.of(JACK, CLUB)));
@@ -101,8 +101,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("플레이어의 점수가 딜러보다 낮을 경우 패배한다.")
     void playerLoseTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(TWO, CLUB), Card.of(JACK, CLUB)));
@@ -115,8 +115,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("플레이어와 딜러가 모두 bust 이면, 플레이어가 패배한다.")
     void playerDealerAllBustPlayerLoseTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
@@ -129,8 +129,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("딜러가 bust이고 플레이가 bust가 아닐 경우, 플레이어가 승리한다.")
     void dealerBustPlayerNonBustWinTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB)));
@@ -143,8 +143,8 @@ public class ResultJudgeTest {
     @Test
     @DisplayName("딜러가 블랙잭이고 플레이어가 블랙잭이 아닌 21이면 딜러가 승리한다.")
     void dealerBlackjackAndPlayerMaximumTest() {
-        Player player = new Player(new Name("lemone"), new Chip(0));
-        Dealer dealer = new Dealer(new Chip(0));
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+        Dealer dealer = new Dealer(new Chip(0L));
         ResultJudge resultJudge = new ResultJudge();
 
         player.draw(List.of(Card.of(KING, CLUB), Card.of(NINE, CLUB), Card.of(TWO, CLUB)));

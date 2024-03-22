@@ -36,8 +36,8 @@ public class Dealer {
         return gamer.isBlackjack();
     }
 
-    public void addProfit(Long profit) {
-        gamer.addProfit(profit);
+    public Long calculateProfit(Long playerProfit) {
+        return playerProfit * -1;
     }
 
     public Card findPublicDealCard() {

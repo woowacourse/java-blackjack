@@ -3,7 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayerResult;
 import blackjack.domain.game.ResultJudge;
-import blackjack.domain.money.ProfitCalculator;
+import blackjack.domain.money.PlayersProfit;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,18 +22,16 @@ public class Players {
         }
     }
 
-    public Long allProfit() {
-        return values.stream()
-                .mapToLong(Player::profit)
-                .sum();
-    }
+    public PlayersProfit calculateProfit(Dealer dealer) {
+        PlayersProfit playersProfit = new PlayersProfit();
+        ResultJudge resultJudge = new ResultJudge();
 
-    public void calculateProfit(Dealer dealer, ResultJudge resultJudge,
-                                ProfitCalculator calculator) {
         for (Player player : values) {
             PlayerResult result = resultJudge.judgePlayerResult(dealer, player);
-            calculator.playerProfit(player, result);
+            playersProfit.addPlayerChip(player, player.madeProfit(result));
         }
+
+        return playersProfit;
     }
 
     public List<String> names() {

@@ -20,7 +20,7 @@ class DealerTest {
     @DisplayName("딜러의 첫 카드를 반환한다.")
     void getFirstCardTest() {
         // given
-        Dealer dealer = new Dealer(new Chip(0));
+        Dealer dealer = new Dealer(new Chip(0L));
         Card expectedCard = Card.of(NINE, SPADE);
 
         // when
@@ -34,12 +34,25 @@ class DealerTest {
     @DisplayName("딜러의 카드의 합이 16 이하이면 true를 반환한다.")
     void dealerHitUpperBoundTest() {
         // given
-        Dealer dealer = new Dealer(new Chip(0));
+        Dealer dealer = new Dealer(new Chip(0L));
 
         // when
         dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB)));
 
         // then
         assertThat(dealer.isScoreUnderBound()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("딜러는 전체 플레이어의 추가 금액의 합 * -1 만큼 받는다.")
+    void dealerProfit() {
+        // given
+        Dealer dealer = new Dealer(new Chip(0L));
+
+        // when
+        long actual = dealer.calculateProfit(1000L + 200L);
+
+        // then
+        assertThat(actual).isEqualTo(-1200L);
     }
 }

@@ -14,7 +14,7 @@ public class NameTest {
     @DisplayName("이름이 공백일 경우 예외가 발생한다.")
     void validateEmptyTest(String name) {
         // given & when & then
-        assertThatCode(() -> new Player(new Name(name), new Chip(0)))
+        assertThatCode(() -> new Player(new Name(name), new Chip(0L)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("공백이 아닌 이름을 입력해 주세요.");
     }
