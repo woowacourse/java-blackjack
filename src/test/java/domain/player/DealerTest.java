@@ -1,4 +1,4 @@
-package domain.gamer;
+package domain.player;
 
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
@@ -14,8 +14,8 @@ public class DealerTest {
     @Test
     void checkCanDealerHit() {
         Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        dealer.hit(new Card(CardNumber.THREE, CardShape.HEART));
+        dealer.hit(Card.valueOf(CardNumber.TEN, CardShape.HEART));
+        dealer.hit(Card.valueOf(CardNumber.SIX, CardShape.HEART));
         assertThat(dealer.canHit()).isTrue();
     }
 
@@ -23,8 +23,8 @@ public class DealerTest {
     @Test
     void lowerThanCannotHitThresholdTest() {
         Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardNumber.KING, CardShape.HEART));
-        dealer.hit(new Card(CardNumber.SEVEN, CardShape.SPADE));
+        dealer.hit(Card.valueOf(CardNumber.TEN, CardShape.HEART));
+        dealer.hit(Card.valueOf(CardNumber.SEVEN, CardShape.HEART));
 
         assertThat(dealer.canHit()).isFalse();
     }

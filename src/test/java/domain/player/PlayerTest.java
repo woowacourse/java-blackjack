@@ -1,4 +1,4 @@
-package domain.gamer;
+package domain.player;
 
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
@@ -14,7 +14,7 @@ public class PlayerTest {
     @Test
     void hitOneCard() {
         Player player = new Player("name");
-        Card newCard = new Card(CardNumber.FIVE, CardShape.CLOVER);
+        Card newCard = Card.valueOf(CardNumber.FIVE, CardShape.HEART);
         player.hit(newCard);
 
         assertThat(player.getHand()).contains(newCard);
@@ -24,8 +24,8 @@ public class PlayerTest {
     @Test
     void checkUnderThreshold() {
         Player player = new Player("name");
-        player.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.THREE, CardShape.HEART));
+        player.hit(Card.valueOf(CardNumber.TWO, CardShape.HEART));
+        player.hit(Card.valueOf(CardNumber.THREE, CardShape.HEART));
         assertThat(player.canHit()).isTrue();
     }
 
@@ -33,9 +33,9 @@ public class PlayerTest {
     @Test
     void checkOverThreshold() {
         Player player = new Player("name");
-        player.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.KING, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.KING, CardShape.SPADE));
+        player.hit(Card.valueOf(CardNumber.TWO, CardShape.HEART));
+        player.hit(Card.valueOf(CardNumber.TEN, CardShape.HEART));
+        player.hit(Card.valueOf(CardNumber.TEN, CardShape.HEART));
 
         assertThat(player.canHit()).isFalse();
     }

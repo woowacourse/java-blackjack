@@ -3,11 +3,11 @@ package view;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.Players;
-import domain.judge.Judge;
-import domain.judge.WinState;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.result.Money;
+import view.notations.CardNumberNotation;
+import view.notations.CardShapeNotation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,107 +66,48 @@ public class ResultView {
     }
 
     private String resolveCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.ACE)) {
-            return "A";
+        try {
+            return CardNumberNotation.findNotationByCardNumber(cardNumber);
+        } catch (IllegalArgumentException e) {
+            return String.valueOf(cardNumber.getScore());
         }
-        if (cardNumber.equals(CardNumber.JACK)) {
-            return "J";
-        }
-        if (cardNumber.equals(CardNumber.QUEEN)) {
-            return "Q";
-        }
-        if (cardNumber.equals(CardNumber.KING)) {
-            return "K";
-        }
-        return String.valueOf(cardNumber.getScore());
     }
 
     private String resolveCardShape(CardShape cardShape) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (cardShape.equals(CardShape.HEART)) {
-            stringBuilder.append("하트");
-        }
-        if (cardShape.equals(CardShape.CLOVER)) {
-            stringBuilder.append("클로버");
-        }
-        if (cardShape.equals(CardShape.DIAMOND)) {
-            stringBuilder.append("다이아몬드");
-        }
-        if (cardShape.equals(CardShape.SPADE)) {
-            stringBuilder.append("스페이드");
-        }
-        return stringBuilder.toString();
+        return CardShapeNotation.findNotationByCardShape(cardShape);
     }
 
-    public void printDealerHitMessage(Dealer dealer, Card card) {
-        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.",
-                dealer.getPlayerName(), resolveCardExpression(card));
+    public void printDealerHitMessage(Dealer dealer) {
+        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getPlayerName());
     }
 
-    public void printAllGamersCardsResult(Dealer dealer, Players players) {
-        List<Player> gamers = new ArrayList<>(players.getPlayers());
+    public void printAllGamersCardsResult(Dealer dealer, List<Player> players) {
+        List<Player> gamers = new ArrayList<>(players);
         gamers.add(0, dealer);
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(LINE_SEPARATOR);
+        StringBuilder allGamersCardsResult = new StringBuilder();
+        allGamersCardsResult.append(LINE_SEPARATOR);
         for (Player player : gamers) {
-            stringBuilder.append(String.format("%s카드: ", player.getPlayerName()));
-            stringBuilder.append(resolvePlayerCards(player));
-            stringBuilder.append(" - 결과: ");
-            stringBuilder.append(player.finalizeCardsScore());
-            stringBuilder.append(LINE_SEPARATOR);
+            allGamersCardsResult.append(resolvePlayerCardsAndScore(player));
         }
-        System.out.println(stringBuilder);
+        System.out.println(allGamersCardsResult);
     }
 
-    public void printFinalResults(Dealer dealer, Judge judge) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패");
-        stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(resolveDealerFinalResult(dealer, judge));
-        stringBuilder.append(resolvePlayersFinalResult(judge));
-        System.out.println(stringBuilder);
+    private String resolvePlayerCardsAndScore(Player player) {
+        return String.format("%s카드: ", player.getPlayerName())
+                + resolvePlayerCards(player)
+                + " - 결과: "
+                + player.finalizeCardsScore()
+                + LINE_SEPARATOR;
     }
 
-    private String resolvePlayersFinalResult(Judge judge) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<Player, WinState> playerWinState : judge.getPlayerResult().entrySet()) {
-            stringBuilder.append(resolvePlayerFinalResult(playerWinState));
+    public void printFinalProfit(Map<Player, Money> playersResult, Dealer dealer, Money dealerProfit) {
+        System.out.println("## 최종 수익");
+        System.out.println(dealer.getPlayerName() + ": " + dealerProfit.getMoney());
+        for (Map.Entry<Player, Money> playerMoneyEntry : playersResult.entrySet()) {
+            Player player = playerMoneyEntry.getKey();
+            Money money = playerMoneyEntry.getValue();
+            System.out.println(player.getPlayerName() + ": " + money.getMoney());
         }
-        return stringBuilder.toString();
-    }
-
-    private String resolvePlayerFinalResult(Map.Entry<Player, WinState> playerWinState) {
-        Player player = playerWinState.getKey();
-        WinState winState = playerWinState.getValue();
-        String formattedPlayerResult = String.format("%s: %s", player.getPlayerName(), resolvePlayerResult(winState));
-        return formattedPlayerResult + LINE_SEPARATOR;
-    }
-
-    private String resolveDealerFinalResult(Dealer dealer, Judge judge) {
-        String formattedDealerResult = String.format("%s: %s", dealer.getPlayerName(), resolveDealerResult(judge.getDealerResult()));
-        return formattedDealerResult + LINE_SEPARATOR;
-    }
-
-    private String resolveDealerResult(Map<WinState, Integer> dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        dealerResult.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .forEach(entry -> {
-                    stringBuilder.append(entry.getValue());
-                    stringBuilder.append(resolvePlayerResult(entry.getKey()));
-                    stringBuilder.append(" ");
-                });
-        return stringBuilder.toString();
-    }
-
-    private String resolvePlayerResult(WinState winState) {
-        if (winState == WinState.WIN) {
-            return "승";
-        }
-        if (winState == WinState.LOSE) {
-            return "패";
-        }
-        return "무";
     }
 }

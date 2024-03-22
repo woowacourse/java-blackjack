@@ -1,4 +1,4 @@
-package domain.gamer;
+package domain.player;
 
 import domain.cards.Card;
 
@@ -9,16 +9,20 @@ public class Player {
 
     private static final int HIT_THRESHOLD = 21;
 
-    private final GamerName name;
+    private final PlayerName name;
     protected final Hand hand;
 
     public Player(String name) {
-        this.name = new GamerName(name);
+        this.name = new PlayerName(name);
         this.hand = new Hand();
     }
 
     public void hit(Card card) {
         hand.addCard(card);
+    }
+
+    public boolean isBlackJackScore() {
+        return hand.isBlackJack();
     }
 
     public boolean isBust() {

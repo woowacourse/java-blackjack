@@ -1,6 +1,5 @@
-package domain.gamer;
+package domain.player;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -40,7 +39,7 @@ public class Players {
 
     private void validateNotDealerName(List<Player> players) {
         boolean isNoneMatchDealerName = players.stream()
-                .map(player -> player.getPlayerName())
+                .map(Player::getPlayerName)
                 .noneMatch(playerName -> playerName.equals(DEALER_NAME));
 
         if (!isNoneMatchDealerName) {
@@ -49,6 +48,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players;
     }
 }
