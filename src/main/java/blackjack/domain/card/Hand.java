@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int MAX_LIMIT_SCORE = 21;
+    public static final int INIT_COUNT = 2;
 
     private final List<Card> myCards;
 
-    public Hand(List<Card> myCards) {
-        this.myCards = new ArrayList<>(myCards);
-    }
-
-    public Hand copy() {
-        return new Hand(myCards);
+    public Hand() {
+        this.myCards = new ArrayList<>();
     }
 
     public void add(List<Card> cards) {
@@ -24,54 +20,47 @@ public class Hand {
         myCards.add(card);
     }
 
-    public int calculateScore() {
-        int sumExceptAce = getSumExceptAce();
-        int countAce = getAceCount();
+    public Score score() {
+        Score totalScore = totalScore();
 
-        if (countAce > 0) {
-            return sumExceptAce + getAceSum(sumExceptAce, countAce);
+        if (hasAce()) {
+            return totalScore.soft();
         }
-        return sumExceptAce;
+        return totalScore;
     }
 
-    private int getSumExceptAce() {
+    private Score totalScore() {
+        return new Score(myCards.stream()
+                .mapToInt(Card::score)
+                .sum());
+    }
+
+    private boolean hasAce() {
         return myCards.stream()
-                .filter(card -> card.rank() != Rank.ACE)
-                .mapToInt(card -> card.rank().get(0))
-                .sum();
+                .anyMatch(Card::isAce);
     }
 
-    private int getAceCount() {
-        return (int) myCards.stream()
-                .filter(card -> card.rank() == Rank.ACE)
-                .count();
+    public boolean isBlackjack() {
+        return score().isMaxScore() && numberOfCards() == INIT_COUNT;
     }
 
-    private int getAceSum(int sumExceptAce, int countAce) {
-        int sumAce = Rank.ACE.get(1) + (countAce - 1) * Rank.ACE.get(0);
-        if (sumExceptAce + sumAce <= MAX_LIMIT_SCORE) {
-            return sumAce;
-        }
-        return sumAce - Rank.ACE.get(1) + Rank.ACE.get(0);
+    public boolean isBust() {
+        return score().isBust();
     }
 
-    public boolean isOverLimitScore() {
-        return calculateScore() > MAX_LIMIT_SCORE;
+    public boolean isMaxScore() {
+        return score().isMaxScore();
     }
 
-    public boolean isLimitScore() {
-        return calculateScore() == MAX_LIMIT_SCORE;
-    }
-
-    public int getNumberOfCards() {
+    public int numberOfCards() {
         return myCards.size();
     }
 
-    public List<Card> getMyCards() {
+    public List<Card> myCards() {
         return myCards;
     }
 
-    public Card getMyCardAt(int index) {
+    public Card myCardAt(int index) {
         return myCards.get(index);
     }
 }

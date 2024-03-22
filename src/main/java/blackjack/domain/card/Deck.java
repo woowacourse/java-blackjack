@@ -8,7 +8,7 @@ import java.util.List;
 public class Deck {
     private static final int PICK_CARD_INDEX = 0;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Deck(List<Card> cards) {
         this.cards = cards;
@@ -17,7 +17,7 @@ public class Deck {
     public static Deck make() {
         List<Card> cards = new ArrayList<>(Arrays.stream(Rank.values())
                 .flatMap(score -> Arrays.stream(Suit.values())
-                        .map(symbol -> new Card(score, symbol)))
+                        .map(symbol -> Card.of(score, symbol)))
                 .toList());
         Collections.shuffle(cards);
         return new Deck(cards);

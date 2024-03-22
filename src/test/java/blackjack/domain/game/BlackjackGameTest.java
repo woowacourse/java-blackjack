@@ -2,11 +2,11 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.money.Chip;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,17 +29,19 @@ public class BlackjackGameTest {
     void dealTest() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Dealer dealer = new Dealer(new Gamer(blackjackGame.makeInitialHand()));
-        Players players = Players.from(List.of("lemone", "seyang"), blackjackGame.makeInitialHand());
+        Dealer dealer = new Dealer(new Chip(0L));
+        Player player1 = new Player(new Name("lemone"), new Chip(1000L));
+        Player player2 = new Player(new Name("seyang"), new Chip(1000L));
+        Players players = new Players(List.of(player1, player2));
 
         // when
         blackjackGame.deal(dealer, players);
 
         // then
-        for (Player player : players.getPlayers()) {
-            assertThat(player.getCards().size()).isEqualTo(2);
+        for (Player player : players.values()) {
+            assertThat(player.cards().size()).isEqualTo(2);
         }
-        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(dealer.cards().size()).isEqualTo(2);
     }
 
     @Test
@@ -47,12 +49,12 @@ public class BlackjackGameTest {
     void playerNotHitWhenBust() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
 
         // when
-        player.draw(List.of(new Card(NINE, CLUB),
-                new Card(TEN, SPADE),
-                new Card(TEN, DIAMOND)));
+        player.draw(List.of(Card.of(NINE, CLUB),
+                Card.of(TEN, SPADE),
+                Card.of(TEN, DIAMOND)));
 
         // then
         assertThat(blackjackGame.isPlayerCanHit(player))
@@ -64,10 +66,10 @@ public class BlackjackGameTest {
     void playerNotHitWhenBlackjack() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
 
         // when
-        player.draw(List.of(new Card(TEN, SPADE), new Card(ACE, DIAMOND)));
+        player.draw(List.of(Card.of(TEN, SPADE), Card.of(ACE, DIAMOND)));
 
         // then
         assertThat(blackjackGame.isPlayerCanHit(player))
@@ -79,10 +81,10 @@ public class BlackjackGameTest {
     void playerNotHitWhenMaxScore() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
 
         // when
-        player.draw(List.of(new Card(TEN, SPADE), new Card(ACE, DIAMOND), new Card(TEN, DIAMOND)));
+        player.draw(List.of(Card.of(TEN, SPADE), Card.of(ACE, DIAMOND), Card.of(TEN, DIAMOND)));
         blackjackGame.hit(player);
 
         // then
@@ -95,22 +97,22 @@ public class BlackjackGameTest {
     void playerHitWhenNoBustNoBlackjackNoMaxScore() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
 
         // when
-        player.draw(List.of(new Card(TEN, SPADE), new Card(TEN, DIAMOND)));
+        player.draw(List.of(Card.of(TEN, SPADE), Card.of(TEN, DIAMOND)));
         blackjackGame.hit(player);
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(3);
+        assertThat(player.cards().size()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("딜러의 카드의 합이 16 이하이면 카드를 한장 더 뽑늗다.")
     void dealerHitTest() {
         // given
-        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
-        List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
+        Dealer dealer = new Dealer(new Chip(0L));
+        List<Card> cards = new ArrayList<>(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB)));
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
 
         // when
@@ -118,6 +120,6 @@ public class BlackjackGameTest {
         blackjackGame.drawUntilOverBoundWithCount(dealer);
 
         // then
-        assertThat(dealer.getCards().size()).isEqualTo(3);
+        assertThat(dealer.cards().size()).isEqualTo(3);
     }
 }

@@ -1,20 +1,22 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.card.Score;
+import blackjack.domain.game.PlayerResult;
+import blackjack.domain.money.Chip;
 
 import java.util.List;
 
 public class Player {
-    private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
     private static final int ONLY_DEAL_CARD_COUNT = 2;
 
+    private final Name name;
     private final Gamer gamer;
-    private final String name;
 
-    public Player(Gamer gamer, String name) {
-        validateNameIsBlank(name);
-        this.gamer = gamer;
+    public Player(Name name, Chip chip) {
         this.name = name;
+        this.gamer = new Gamer(new Hand(), chip);
     }
 
     public void draw(List<Card> cards) {
@@ -38,24 +40,26 @@ public class Player {
     }
 
     public boolean isOnlyDeal() {
-        return gamer.getCards().size() == ONLY_DEAL_CARD_COUNT;
+        return gamer.cards().size() == ONLY_DEAL_CARD_COUNT;
     }
 
-    public String getName() {
-        return name;
+    public double madeProfit(PlayerResult playerResult) {
+        return gamer.madeProfit(playerResult);
     }
 
-    public List<Card> getCards() {
-        return gamer.getCards();
+    public String name() {
+        return name.name();
     }
 
-    public int getScore() {
-        return gamer.getScore();
+    public List<Card> cards() {
+        return gamer.cards();
     }
 
-    private void validateNameIsBlank(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
-        }
+    public Score score() {
+        return gamer.score();
+    }
+
+    public Long chip() {
+        return gamer.profit();
     }
 }

@@ -1,71 +1,78 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import blackjack.domain.game.PlayerResult;
+import blackjack.domain.money.Chip;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
-
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.KING;
-import static blackjack.domain.card.Rank.NINE;
-import static blackjack.domain.card.Rank.TEN;
-import static blackjack.domain.card.Suit.CLUB;
-import static blackjack.domain.card.Suit.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayName("플레이어")
 public class PlayerTest {
-    @ParameterizedTest
-    @ValueSource(strings = {"", "   "})
-    @DisplayName("이름이 공백일 경우 예외가 발생한다.")
-    void validateEmptyTest(String name) {
-        // given & when & then
-        assertThatCode(() -> new Player(new Gamer(new Hand(List.of())), name))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
+    @Test
+    @DisplayName("플레이어를 생성한다.")
+    void createPlayer() {
+        // given & when
+        Player player = new Player(new Name("lemone"), new Chip(0L));
+
+        // then
+        assertThat(player.name()).isEqualTo("lemone");
+    }
+
+
+    @Test
+    @DisplayName("플레이어 결과가 Blackjack이면 베팅 금액의 1.5배를 받는다.")
+    void playerBlackjackProfit() {
+        // given
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
+        PlayerResult result = PlayerResult.BLACKJACK_WIN;
+
+        // when
+        double actual = player.madeProfit(result);
+
+        // then
+        assertThat(actual).isEqualTo((long) (1000 * 1.5));
     }
 
     @Test
-    @DisplayName("처음 받은 카드 두장을 반환한다.")
-    void gameDealTest() {
+    @DisplayName("플레이어 결과가 Win이면 베팅 금액 만큼 받는다.")
+    void playerWinProfit() {
         // given
-        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
+        PlayerResult result = PlayerResult.WIN;
 
         // when
-        player.draw(List.of(new Card(ACE, CLUB), new Card(NINE, CLUB)));
+        double actual = player.madeProfit(result);
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(2);
+        assertThat(actual).isEqualTo(1000L);
     }
 
     @Test
-    @DisplayName("카드를 뽑기로 결정했을 때 카드 한장을 반환한다.")
-    void gameHitTest() {
+    @DisplayName("플레이어 결과가 Lose이면 베팅 금액을 뺴앗긴다.")
+    void playerLoseProfit() {
         // given
-        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
+        PlayerResult result = PlayerResult.LOSE;
 
         // when
-        player.draw(new Card(KING, DIAMOND));
+        double actual = player.madeProfit(result);
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(1);
+        assertThat(actual).isEqualTo(-1000L);
     }
 
     @Test
-    @DisplayName("카드 점수의 합이 21이고 카드가 2장일 경우 블랙잭이다.")
-    void blackjackTest() {
+    @DisplayName("플레이어 결과가 Push이면 수익을 받지 않는다.")
+    void playerPushProfit() {
         // given
-        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+        Player player = new Player(new Name("lemone"), new Chip(1000L));
+        PlayerResult result = PlayerResult.PUSH;
 
         // when
-        player.draw(List.of(new Card(TEN, DIAMOND), new Card(ACE, CLUB)));
+        double actual = player.madeProfit(result);
 
         // then
-        assertThat(player.isBlackjack()).isEqualTo(true);
+        assertThat(actual).isEqualTo(0);
     }
 }

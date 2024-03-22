@@ -16,7 +16,7 @@ class RankNameTest {
         // given & when & then
         assertThatCode(() ->
                 Arrays.stream(Rank.values())
-                        .forEach(CardScoreName::convert)
+                        .forEach(RankName::convert)
         )
                 .doesNotThrowAnyException();
     }

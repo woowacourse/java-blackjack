@@ -1,6 +1,9 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.card.Score;
+import blackjack.domain.money.Chip;
 
 import java.util.List;
 
@@ -10,12 +13,12 @@ public class Dealer {
 
     private final Gamer gamer;
 
-    public Dealer(Gamer gamer) {
-        this.gamer = gamer;
+    public Dealer(Chip chip) {
+        this.gamer = new Gamer(new Hand(), chip);
     }
 
     public boolean isScoreUnderBound() {
-        return gamer.getScore() <= HIT_UPPER_BOUND;
+        return !gamer.score().isBiggerThan(new Score(HIT_UPPER_BOUND));
     }
 
     public void draw(Card card) {
@@ -34,15 +37,19 @@ public class Dealer {
         return gamer.isBlackjack();
     }
 
+    public Double calculateProfit(Double playerProfit) {
+        return playerProfit * -1;
+    }
+
     public Card findPublicDealCard() {
-        return gamer.getCardAt(PUBLIC_DEAL_CARD_INDEX);
+        return gamer.cardAt(PUBLIC_DEAL_CARD_INDEX);
     }
 
-    public List<Card> getCards() {
-        return gamer.getCards();
+    public List<Card> cards() {
+        return gamer.cards();
     }
 
-    public int getScore() {
-        return gamer.getScore();
+    public Score score() {
+        return gamer.score();
     }
 }

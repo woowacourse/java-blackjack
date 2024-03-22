@@ -2,16 +2,19 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Score;
+import blackjack.domain.game.PlayerResult;
+import blackjack.domain.money.Chip;
 
 import java.util.List;
 
 public class Gamer {
-    private static final int BLACKJACK_CARDS_COUNT = 2;
-
     private final Hand hand;
+    private final Chip chip;
 
-    public Gamer(Hand hand) {
+    public Gamer(Hand hand, Chip chip) {
         this.hand = hand;
+        this.chip = chip;
     }
 
     public void draw(List<Card> cards) {
@@ -23,27 +26,34 @@ public class Gamer {
     }
 
     public boolean isBlackjack() {
-        return hand.getNumberOfCards() == BLACKJACK_CARDS_COUNT
-                && hand.isLimitScore();
+        return hand.isBlackjack();
     }
 
     public boolean isBust() {
-        return hand.isOverLimitScore();
+        return hand.isBust();
     }
 
     public boolean isMaxScore() {
-        return hand.isLimitScore();
+        return hand.isMaxScore();
     }
 
-    public int getScore() {
-        return hand.calculateScore();
+    public double madeProfit(PlayerResult playerResult) {
+        return chip.totalProfit(playerResult);
     }
 
-    public Card getCardAt(int index) {
-        return hand.getMyCardAt(index);
+    public Score score() {
+        return hand.score();
     }
 
-    public List<Card> getCards() {
-        return hand.getMyCards();
+    public Card cardAt(int index) {
+        return hand.myCardAt(index);
+    }
+
+    public List<Card> cards() {
+        return hand.myCards();
+    }
+
+    public Long profit() {
+        return chip.value();
     }
 }

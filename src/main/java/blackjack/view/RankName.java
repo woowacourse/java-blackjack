@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Rank;
 
-public enum CardScoreName {
+public enum RankName {
     TWO("2"),
     THREE("3"),
     FOUR("4"),
@@ -19,7 +19,7 @@ public enum CardScoreName {
 
     private final String name;
 
-    CardScoreName(String name) {
+    RankName(String name) {
         this.name = name;
     }
 

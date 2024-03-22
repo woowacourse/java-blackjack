@@ -1,7 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import blackjack.domain.money.Chip;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +20,11 @@ class DealerTest {
     @DisplayName("딜러의 첫 카드를 반환한다.")
     void getFirstCardTest() {
         // given
-        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
-        Card expectedCard = new Card(NINE, SPADE);
+        Dealer dealer = new Dealer(new Chip(0L));
+        Card expectedCard = Card.of(NINE, SPADE);
 
         // when
-        dealer.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
+        dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB)));
 
         // then
         assertThat(dealer.findPublicDealCard()).isEqualTo(expectedCard);
@@ -34,12 +34,25 @@ class DealerTest {
     @DisplayName("딜러의 카드의 합이 16 이하이면 true를 반환한다.")
     void dealerHitUpperBoundTest() {
         // given
-        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
+        Dealer dealer = new Dealer(new Chip(0L));
 
         // when
-        dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
+        dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB)));
 
         // then
         assertThat(dealer.isScoreUnderBound()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("딜러는 전체 플레이어의 추가 금액의 합 * -1 만큼 받는다.")
+    void dealerProfit() {
+        // given
+        Dealer dealer = new Dealer(new Chip(0L));
+
+        // when
+        double actual = dealer.calculateProfit((double) 1000 + 200);
+
+        // then
+        assertThat(actual).isEqualTo(-1200L);
     }
 }

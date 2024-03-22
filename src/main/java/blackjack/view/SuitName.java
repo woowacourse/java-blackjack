@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Suit;
 
-public enum CardSymbolName {
+public enum SuitName {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),
@@ -10,7 +10,7 @@ public enum CardSymbolName {
 
     private final String name;
 
-    CardSymbolName(String name) {
+    SuitName(String name) {
         this.name = name;
     }
 

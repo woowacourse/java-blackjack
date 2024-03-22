@@ -16,7 +16,7 @@ class SuitNameTest {
         // given & when & then
         assertThatCode(() ->
                 Arrays.stream(Suit.values())
-                        .forEach(CardSymbolName::convert)
+                        .forEach(SuitName::convert)
         )
                 .doesNotThrowAnyException();
     }

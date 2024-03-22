@@ -1,51 +1,44 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.game.PlayerResult;
+import blackjack.domain.game.ResultJudge;
+import blackjack.domain.money.PlayersProfit;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Players {
-    private static final String NAMES_DUPLICATE_ERROR = "플레이어 이름은 중복될 수 없습니다.";
+    private final List<Player> values;
 
-    private final List<Player> players;
-
-    private Players(List<Player> players) {
-        this.players = players;
+    public Players(List<Player> values) {
+        this.values = values;
     }
 
-    public static Players from(List<String> names, Hand hand) {
-        validateDuplicate(names);
-        return new Players(names.stream()
-                .map(name -> new Player(new Gamer(hand.copy()), name))
-                .toList());
-    }
-
-    private static void validateDuplicate(List<String> names) {
-        int distinctCount = new HashSet<>(names).size();
-        if (names.size() != distinctCount) {
-            throw new IllegalArgumentException(NAMES_DUPLICATE_ERROR);
+    public void draw(Supplier<List<Card>> pickCard) {
+        for (Player player : values) {
+            player.draw(pickCard.get());
         }
     }
 
-    public void draw(List<Hand> playersCards) {
-        int i = 0;
-        for (Hand playerCards : playersCards) {
-            players.get(i).draw(playerCards.getMyCards());
-            i++;
+    public PlayersProfit calculateProfit(Dealer dealer) {
+        PlayersProfit playersProfit = new PlayersProfit();
+        ResultJudge resultJudge = new ResultJudge();
+
+        for (Player player : values) {
+            PlayerResult result = resultJudge.judgePlayerResult(dealer, player);
+            playersProfit.addPlayerChip(player, player.madeProfit(result));
         }
+
+        return playersProfit;
     }
 
-    public List<String> getNames() {
-        return players.stream().map(Player::getName).toList();
+    public List<String> names() {
+        return values.stream().map(Player::name).toList();
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
-    public int getPlayersCount() {
-        return players.size();
+    public List<Player> values() {
+        return Collections.unmodifiableList(values);
     }
 }
