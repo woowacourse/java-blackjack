@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.dto.gamer.GamerCardState;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +40,11 @@ public abstract class Gamer {
         return false;
     }
 
-    public List<Card> cardStatus() {
+    public GamerCardState cardStatus() {
+        return new GamerCardState(cards(), getScore());
+    }
+
+    public List<Card> cards() {
         return Collections.unmodifiableList(cards.getCards());
     }
 }

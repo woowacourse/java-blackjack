@@ -43,7 +43,7 @@ public class PlayerTest {
         player.receiveInitCards(List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.JACK)));
 
         // then
-        assertThat(player.cardStatus()).hasSize(2);
+        assertThat(player.cards()).hasSize(2);
     }
 
     @DisplayName("카드 1장을 받는다.")
@@ -56,7 +56,7 @@ public class PlayerTest {
         player.receiveCard(Card.of(Suit.HEART, Rank.ACE));
 
         // then
-        assertThat(player.cardStatus()).hasSize(1);
+        assertThat(player.cards()).hasSize(1);
     }
 
     @DisplayName("가지고 있는 패의 총 합이 21을 초과하면 Bust 된다.")

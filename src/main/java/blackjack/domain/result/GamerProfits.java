@@ -2,8 +2,8 @@ package blackjack.domain.result;
 
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
-import blackjack.dto.GamerProfitStates;
-import blackjack.dto.PlayerProfitState;
+import blackjack.dto.profit.GamerProfitState;
+import blackjack.dto.profit.GamerProfitStates;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +28,9 @@ public class GamerProfits {
     }
 
     public GamerProfitStates getGamerProfitStates() {
-        List<PlayerProfitState> profitState = new ArrayList<>();
+        List<GamerProfitState> profitState = new ArrayList<>();
         for (Map.Entry<Player, Integer> entry : playerProfits.entrySet()) {
-            profitState.add(new PlayerProfitState(entry.getKey().getName(), entry.getValue()));
+            profitState.add(new GamerProfitState(entry.getKey().getName(), entry.getValue()));
         }
 
         return new GamerProfitStates(profitState, dealerProfit);

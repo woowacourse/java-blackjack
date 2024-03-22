@@ -9,8 +9,7 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.result.GameResults;
 import blackjack.domain.result.GamerProfits;
-import blackjack.dto.gamer.PlayerInfo;
-import blackjack.dto.gamer.PlayerInfos;
+import blackjack.dto.gamer.PlayerState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -60,7 +59,7 @@ public class BlackjackGameController {
         }
         dealer.receiveInitCards(deck.drawInitCards());
 
-        outputView.printInitCardStatus(dealer.getFirstCard(), PlayerInfos.from(players));
+        outputView.printInitCardStatus(dealer.getFirstCard(), players.getInfos());
     }
 
     private void receiveAdditionalCard(final Deck deck, final Dealer dealer, final Players players) {
@@ -73,7 +72,7 @@ public class BlackjackGameController {
     private void receivePlayerAdditionalCard(final Deck deck, final Player player) {
         while (!player.isBust() && inputView.readHitOrStand(player).isYes()) {
             player.receiveCard(deck.drawCard());
-            outputView.printCardsStatus(PlayerInfo.from(player));
+            outputView.printCardsStatus(PlayerState.from(player));
         }
     }
 
@@ -88,7 +87,7 @@ public class BlackjackGameController {
         GameResults gameResults = new GameResults(players, dealer);
         GamerProfits gamerProfits = gameResults.calculateGamerProfits();
 
-        outputView.printTotalCardsStatus(dealer, players);
+        outputView.printTotalCardsStatus(dealer.cardStatus(), players.getInfos());
         outputView.printTotalProfit(gamerProfits.getGamerProfitStates());
     }
 }

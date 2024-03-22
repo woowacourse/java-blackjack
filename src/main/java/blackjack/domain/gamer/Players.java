@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.betting.BettingMoney;
+import blackjack.dto.gamer.PlayersState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +51,10 @@ public class Players {
         if (playerNames.size() != distinctSize) {
             throw new IllegalArgumentException(DUPLICATION_ERROR_MESSAGE);
         }
+    }
+
+    public PlayersState getInfos() {
+        return PlayersState.from(players);
     }
 
     public List<Player> getPlayers() {

@@ -2,12 +2,11 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
-import blackjack.dto.GamerProfitStates;
-import blackjack.dto.PlayerProfitState;
-import blackjack.dto.gamer.PlayerInfo;
-import blackjack.dto.gamer.PlayerInfos;
+import blackjack.dto.gamer.GamerCardState;
+import blackjack.dto.gamer.PlayerState;
+import blackjack.dto.gamer.PlayersState;
+import blackjack.dto.profit.GamerProfitState;
+import blackjack.dto.profit.GamerProfitStates;
 
 import java.util.List;
 import java.util.StringJoiner;
@@ -24,33 +23,33 @@ public class OutputView {
         return INSTANCE;
     }
 
-    public void printInitCardStatus(final Card dealerFirstCard, final PlayerInfos playerInfos) {
-        printDealMessage(playerInfos);
+    public void printInitCardStatus(final Card dealerFirstCard, final PlayersState playersState) {
+        printDealMessage(playersState);
 
         printDealerInitCardsStatusMessage(dealerFirstCard);
-        printPlayersInitCardsStatusMessage(playerInfos);
+        printPlayersInitCardsStatusMessage(playersState);
     }
 
-    private void printDealMessage(final PlayerInfos playerInfos) {
+    private void printDealMessage(final PlayersState playersState) {
         System.out.println(String.format("%n딜러와 %s에게 %d장을 나누었습니다.",
-                createPlayerNamesText(playerInfos), Dealer.INIT_CARD_COUNT));
+                createPlayerNamesText(playersState), Dealer.INIT_CARD_COUNT));
     }
 
     private void printDealerInitCardsStatusMessage(final Card dealerFirstCard) {
         System.out.println(String.format("딜러: %s", createCardInfoText(dealerFirstCard)));
     }
 
-    private void printPlayersInitCardsStatusMessage(final PlayerInfos playerInfos) {
-        for (PlayerInfo playerInfo : playerInfos.playerInfos()) {
-            printCardsStatus(playerInfo);
+    private void printPlayersInitCardsStatusMessage(final PlayersState playersState) {
+        for (PlayerState playerState : playersState.infos()) {
+            printCardsStatus(playerState);
         }
         printLine();
     }
 
-    private String createPlayerNamesText(final PlayerInfos playerInfos) {
+    private String createPlayerNamesText(final PlayersState playersState) {
         StringJoiner playerNameJoiner = new StringJoiner(PLAYER_NAME_DELIMITER);
-        for (PlayerInfo playerInfo : playerInfos.playerInfos()) {
-            playerNameJoiner.add(playerInfo.name());
+        for (PlayerState playerState : playersState.infos()) {
+            playerNameJoiner.add(playerState.name());
         }
 
         return playerNameJoiner.toString();
@@ -60,9 +59,9 @@ public class OutputView {
         return String.format(CARD_INFO_MESSAGE, card.getRankName(), card.getSuitName());
     }
 
-    public void printCardsStatus(final PlayerInfo playerInfo) {
+    public void printCardsStatus(final PlayerState playerState) {
         System.out.println(
-                String.format(PLAYER_CARD_INFO_MESSAGE, playerInfo.name(), createCardsInfoText(playerInfo.cards())));
+                String.format(PLAYER_CARD_INFO_MESSAGE, playerState.name(), createCardsInfoText(playerState.cardState().cards())));
     }
 
     private String createCardsInfoText(final List<Card> cards) {
@@ -79,36 +78,38 @@ public class OutputView {
     }
 
     //TODO: DTO 받도록 변경
-    public void printTotalCardsStatus(final Dealer dealer, final Players players) {
-        printDealerTotalCardsStatus(dealer);
-        printPlayersTotalCardsStatus(players);
+    public void printTotalCardsStatus(final GamerCardState dealerCardState, final PlayersState playersState) {
+        printDealerTotalCardsStatus(dealerCardState);
+        printPlayersTotalCardsStatus(playersState);
     }
 
-    private void printDealerTotalCardsStatus(final Dealer dealer) {
+    private void printDealerTotalCardsStatus(final GamerCardState dealerCardState) {
         printLine();
         System.out.println(String.format("딜러 카드: %s - 결과: %d",
-                createCardsInfoText(dealer.cardStatus()), dealer.getScore()));
+                createCardsInfoText(dealerCardState.cards()), dealerCardState.score()));
     }
 
-    private void printPlayersTotalCardsStatus(final Players players) {
-        for (Player player : players.getPlayers()) {
+    private void printPlayersTotalCardsStatus(final PlayersState playersState) {
+        for (PlayerState playerState : playersState.infos()) {
+            List<Card> cards = playerState.cardState().cards();
+            int score = playerState.cardState().score();
             System.out.println(String.format("%s카드: %s - 결과: %d",
-                    player.getName(), createCardsInfoText(player.cardStatus()), player.getScore()));
+                    playerState.name(), createCardsInfoText(cards), score));
         }
     }
 
     public void printTotalProfit(final GamerProfitStates gamerProfitStates) {
         System.out.println(String.format("%n## 최종 수익"));
         printDealerTotalProfit(gamerProfitStates.dealerProfit());
-        printPlayersTotalProfit(gamerProfitStates.playerProfitStates());
+        printPlayersTotalProfit(gamerProfitStates.gamerProfitStates());
     }
 
     private void printDealerTotalProfit(final int dealerProfit) {
         System.out.println(String.format("딜러: %d", dealerProfit));
     }
 
-    private void printPlayersTotalProfit(final List<PlayerProfitState> playerProfitStates) {
-        for (PlayerProfitState playerState : playerProfitStates) {
+    private void printPlayersTotalProfit(final List<GamerProfitState> gamerProfitStates) {
+        for (GamerProfitState playerState : gamerProfitStates) {
             System.out.println(String.format("%s: %d", playerState.name(), playerState.profit()));
         }
     }
