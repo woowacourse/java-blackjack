@@ -23,7 +23,7 @@ public final class Player extends Gamer {
     }
 
     public int calculateProfit(final GameResult gameResult) {
-        return bettingMoney.calculateProfit(gameResult);
+        return bettingMoney.calculateProfit(gameResult).intValue();
     }
 
     public String getName() {

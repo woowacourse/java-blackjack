@@ -3,15 +3,17 @@ package blackjack.domain.result;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
+import java.math.BigDecimal;
+
 public enum GameResult {
-    BLACKJACK(1.5f),
-    WIN(1),
-    DRAW(0),
-    LOSE(-1);
+    BLACKJACK(BigDecimal.valueOf(1.5)),
+    WIN(BigDecimal.ONE),
+    DRAW(BigDecimal.valueOf(0)),
+    LOSE(BigDecimal.valueOf(-1));
 
-    private final float profitRate;
+    private final BigDecimal profitRate;
 
-    GameResult(final float profitRate) {
+    GameResult(final BigDecimal profitRate) {
         this.profitRate = profitRate;
     }
 
@@ -29,7 +31,7 @@ public enum GameResult {
         return GameResult.DRAW;
     }
 
-    public double profitRate() {
+    public BigDecimal profitRate() {
         return profitRate;
     }
 }
