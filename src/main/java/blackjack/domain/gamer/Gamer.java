@@ -36,7 +36,7 @@ public class Gamer {
         return hand.isMaxScore();
     }
 
-    public Long madeProfit(PlayerResult playerResult) {
+    public double madeProfit(PlayerResult playerResult) {
         return chip.totalProfit(playerResult);
     }
 

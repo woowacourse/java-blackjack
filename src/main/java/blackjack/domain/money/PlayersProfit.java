@@ -6,23 +6,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayersProfit {
-    private final Map<Player, Long> profits;
+    private final Map<Player, Double> profits;
 
     public PlayersProfit() {
         this.profits = new HashMap<>();
     }
 
-    public void addPlayerChip(Player player, Long profit) {
+    public void addPlayerChip(Player player, Double profit) {
         profits.put(player, profit);
     }
 
-    public Long allProfit() {
+    public Double allProfit() {
         return profits.values().stream()
-                .mapToLong(Long::longValue)
+                .mapToDouble(Double::doubleValue)
                 .sum();
     }
 
-    public Long findProfitBy(Player player) {
+    public Double findProfitBy(Player player) {
         return profits.get(player);
     }
 }

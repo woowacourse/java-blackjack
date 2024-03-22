@@ -42,7 +42,7 @@ public class Player {
         return gamer.cards().size() == ONLY_DEAL_CARD_COUNT;
     }
 
-    public Long madeProfit(PlayerResult playerResult) {
+    public double madeProfit(PlayerResult playerResult) {
         return gamer.madeProfit(playerResult);
     }
 

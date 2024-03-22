@@ -11,31 +11,31 @@ public class PlayerResultTest {
     @DisplayName("블랙잭은 값의 1.5배를 반환한다.")
     void blackjackProfit() {
         // given & when & then
-        assertThat(PlayerResult.BLACKJACK_WIN.calculateProfit(100L))
-                .isEqualTo((long) (100 * 1.5));
+        assertThat(PlayerResult.BLACKJACK_WIN.operator())
+                .isEqualTo(1.5);
     }
 
     @Test
     @DisplayName("승리는 값 그대로 반환한다.")
     void winProfit() {
         // given & when & then
-        assertThat(PlayerResult.WIN.calculateProfit(100L))
-                .isEqualTo(100L);
+        assertThat(PlayerResult.WIN.operator())
+                .isEqualTo(1);
     }
 
     @Test
     @DisplayName("push는 0을 반환한다.")
     void pushProfit() {
         // given & when & then
-        assertThat(PlayerResult.PUSH.calculateProfit(100L))
-                .isEqualTo(0L);
+        assertThat(PlayerResult.PUSH.operator())
+                .isEqualTo(0);
     }
 
     @Test
     @DisplayName("lose는 값의 -1배를 반환한다.")
     void loseProfit() {
         // given & when & then
-        assertThat(PlayerResult.LOSE.calculateProfit(100L))
-                .isEqualTo(100 * -1);
+        assertThat(PlayerResult.LOSE.operator())
+                .isEqualTo(-1);
     }
 }

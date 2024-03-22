@@ -16,8 +16,8 @@ public class Chip {
         }
     }
 
-    public Long totalProfit(PlayerResult playerResult) {
-        return playerResult.calculateProfit(money);
+    public double totalProfit(PlayerResult playerResult) {
+        return money * playerResult.operator();
     }
 
     public Long value() {

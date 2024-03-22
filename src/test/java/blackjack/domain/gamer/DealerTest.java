@@ -50,7 +50,7 @@ class DealerTest {
         Dealer dealer = new Dealer(new Chip(0L));
 
         // when
-        long actual = dealer.calculateProfit(1000L + 200L);
+        double actual = dealer.calculateProfit((double) 1000 + 200);
 
         // then
         assertThat(actual).isEqualTo(-1200L);

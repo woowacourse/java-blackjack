@@ -36,7 +36,7 @@ public class Dealer {
         return gamer.isBlackjack();
     }
 
-    public Long calculateProfit(Long playerProfit) {
+    public Double calculateProfit(Double playerProfit) {
         return playerProfit * -1;
     }
 

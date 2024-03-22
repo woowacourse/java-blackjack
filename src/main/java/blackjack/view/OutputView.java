@@ -2,6 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +11,6 @@ import static blackjack.domain.gamer.Dealer.HIT_UPPER_BOUND;
 
 public class OutputView {
     static final String LINE_SEPARATOR = System.lineSeparator();
-    private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String DELIMITER = ", ";
     private static final String DEALER_NAME = "딜러";
     private static final String DEAL_ANNOUNCE_FORMAT = String.format("%s와 %%s에게 2장을 나누었습니다.", DEALER_NAME);
@@ -17,7 +18,7 @@ public class OutputView {
     private static final String CARD_FORMAT = "%s 카드 : %s";
     private static final String RESULT_SCORES_FORMAT = " - 결과: %d";
     private static final String RESULT_FINAL_PROFIT = "## 최종 수익";
-    private static final String PROFIT_FORMAT = "%s: %d";
+    private static final String PROFIT_FORMAT = "%s: %s";
 
     public static void printDealAnnounce(List<String> playersName) {
         String nameFormat = String.join(DELIMITER, playersName);
@@ -42,10 +43,6 @@ public class OutputView {
         return RankName.convert(card.rank()) + SuitName.convert(card.suit());
     }
 
-    public static void printErrorMessage(String message) {
-        System.out.println(ERROR_PREFIX + message);
-    }
-
     public static void printDealerHitAnnounce() {
         System.out.println(LINE_SEPARATOR + DEALER_HIT_FORMAT + LINE_SEPARATOR);
     }
@@ -62,11 +59,13 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + RESULT_FINAL_PROFIT);
     }
 
-    public static void printDealerProfit(Long profit) {
-        System.out.println(String.format(PROFIT_FORMAT, DEALER_NAME, profit));
+    public static void printDealerProfit(Double profit) {
+        NumberFormat formatter = new DecimalFormat("#.###");
+        System.out.printf((PROFIT_FORMAT) + "%n", DEALER_NAME, formatter.format(profit));
     }
 
-    public static void printPlayerProfit(String name, Long profit) {
-        System.out.println(String.format(PROFIT_FORMAT, name, profit));
+    public static void printPlayerProfit(String name, Double profit) {
+        NumberFormat formatter = new DecimalFormat("#.###");
+        System.out.printf((PROFIT_FORMAT) + "%n", name, formatter.format(profit));
     }
 }

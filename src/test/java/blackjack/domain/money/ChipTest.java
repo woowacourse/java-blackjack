@@ -34,9 +34,9 @@ public class ChipTest {
         Chip chip = new Chip(2000L);
 
         // when
-        long actual = chip.totalProfit(PlayerResult.BLACKJACK_WIN);
+        double actual = chip.totalProfit(PlayerResult.BLACKJACK_WIN);
 
         // then
-        assertThat(actual).isEqualTo((long) (2000L * 1.5));
+        assertThat(actual).isEqualTo(2000 * 1.5);
     }
 }

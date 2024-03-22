@@ -1,20 +1,18 @@
 package blackjack.domain.game;
 
-import java.util.function.Function;
-
 public enum PlayerResult {
-    BLACKJACK_WIN(betting -> (long) (betting * 1.5)),
-    WIN(betting -> betting),
-    PUSH(betting -> 0L),
-    LOSE(betting -> betting * -1L);
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    PUSH(0),
+    LOSE(-1);
 
-    private final Function<Long, Long> function;
+    private final double operator;
 
-    PlayerResult(Function<Long, Long> function) {
-        this.function = function;
+    PlayerResult(double operator) {
+        this.operator = operator;
     }
 
-    public Long calculateProfit(Long betting) {
-        return function.apply(betting);
+    public double operator() {
+        return operator;
     }
 }

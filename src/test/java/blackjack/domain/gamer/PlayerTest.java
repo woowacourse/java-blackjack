@@ -28,7 +28,7 @@ public class PlayerTest {
         PlayerResult result = PlayerResult.BLACKJACK_WIN;
 
         // when
-        long actual = player.madeProfit(result);
+        double actual = player.madeProfit(result);
 
         // then
         assertThat(actual).isEqualTo((long) (1000 * 1.5));
@@ -42,7 +42,7 @@ public class PlayerTest {
         PlayerResult result = PlayerResult.WIN;
 
         // when
-        long actual = player.madeProfit(result);
+        double actual = player.madeProfit(result);
 
         // then
         assertThat(actual).isEqualTo(1000L);
@@ -56,7 +56,7 @@ public class PlayerTest {
         PlayerResult result = PlayerResult.LOSE;
 
         // when
-        long actual = player.madeProfit(result);
+        double actual = player.madeProfit(result);
 
         // then
         assertThat(actual).isEqualTo(-1000L);
@@ -70,7 +70,7 @@ public class PlayerTest {
         PlayerResult result = PlayerResult.PUSH;
 
         // when
-        long actual = player.madeProfit(result);
+        double actual = player.madeProfit(result);
 
         // then
         assertThat(actual).isEqualTo(0);
