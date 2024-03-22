@@ -52,8 +52,4 @@ public class Dealer {
     public Score score() {
         return gamer.score();
     }
-
-    public Long profit() {
-        return gamer.profit();
-    }
 }
