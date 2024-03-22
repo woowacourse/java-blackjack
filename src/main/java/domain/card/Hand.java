@@ -1,7 +1,5 @@
 package domain.card;
 
-import static domain.card.Rank.SOFT_ADDITION_SCORE;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +7,8 @@ public class Hand {
 
     public static final int BLACKJACK_SCORE = 21;
     public static final int INITIAL_CARD_COUNT = 2;
+
+    private static final int SOFT_ADDITION_SCORE = 10;
 
     private final List<Card> cards;
 

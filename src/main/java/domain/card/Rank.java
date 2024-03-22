@@ -15,8 +15,6 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    public static final int SOFT_ADDITION_SCORE = 10;
-
     private final String name;
     private final int score;
 
