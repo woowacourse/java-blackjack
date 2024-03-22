@@ -1,8 +1,10 @@
 package blackjack.domain.result;
 
 import blackjack.domain.betting.Bettings;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,16 @@ public class GameResults {
 
     public void add(final Gamer gamer, final GameResult gameResult) {
         gameResults.put(gamer, gameResult);
+    }
+
+    public GamerProfits calculateGamerProfits(Players players, Dealer dealer, Bettings bettings) {
+        GamerProfits gamerProfits = new GamerProfits();
+        for (final Player player : players.getPlayers()) {
+            gamerProfits.addPlayersProfit(player, calculatePlayerProfit(player, bettings));
+        }
+        gamerProfits.addDealerProfit(dealer, calculateDealerProfit(bettings));
+
+        return gamerProfits;
     }
 
     public int calculateDealerProfit(final Bettings bettings) {

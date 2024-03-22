@@ -30,8 +30,12 @@ public class BlackjackGameController {
         Deck deck = createDeck(ShuffledDeckGenerator.getInstance());
 
         Bettings bettings = betPlayers(players, dealer);
-        playGame(deck, dealer, players);
-        calculateResult(players, dealer, bettings);
+        dealInitCards(deck, dealer, players);
+        receiveAdditionalCard(deck, dealer, players);
+
+        GameResults gameResults = judgeGameResult(players, dealer);
+        GamerProfits gamerProfits = gameResults.calculateGamerProfits(players, dealer, bettings);
+        printGameResult(dealer, players, gamerProfits);
     }
 
     private Deck createDeck(final DeckGenerator deckGenerator) {
@@ -48,11 +52,6 @@ public class BlackjackGameController {
         }
 
         return bettings;
-    }
-
-    private void playGame(Deck deck, Dealer dealer, Players players) {
-        dealInitCards(deck, dealer, players);
-        receiveAdditionalCard(deck, dealer, players);
     }
 
     private void dealInitCards(final Deck deck, final Dealer dealer, final Players players) {
@@ -89,27 +88,12 @@ public class BlackjackGameController {
         }
     }
 
-    private void calculateResult(Players players, Dealer dealer, Bettings bettings) {
-        GameResults gameResults = judgeGameResult(players, dealer);
-        GamerProfits gamerProfits = getGamerProfits(players, gameResults, bettings, dealer);
-        printGameResult(dealer, players, gamerProfits);
-    }
-
     private GameResults judgeGameResult(Players players, Dealer dealer) {
         GameResults gameResults = new GameResults();
         for (final Player player : players.getPlayers()) {
             gameResults.add(player, GameResult.ofPlayer(player, dealer));
         }
-
         return gameResults;
-    }
-
-    private GamerProfits getGamerProfits(Players players, GameResults gameResults, Bettings bettings, Dealer dealer) {
-        GamerProfits gamerProfits = new GamerProfits();
-        gamerProfits.addPlayersProfit(players, gameResults, bettings);
-        gamerProfits.addDealerProfit(dealer, gameResults, bettings);
-
-        return gamerProfits;
     }
 
     private void printGameResult(final Dealer dealer, final Players players, final GamerProfits gamerProfits) {
