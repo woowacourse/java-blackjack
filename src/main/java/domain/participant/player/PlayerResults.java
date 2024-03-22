@@ -14,7 +14,7 @@ public class PlayerResults {
     }
 
     public Players getPlayers() {
-        return new Players(results.keySet());
+        return Players.from(results.keySet());
     }
 
     public void put(final Player player, final Profit profit) {

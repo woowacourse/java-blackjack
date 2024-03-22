@@ -29,19 +29,19 @@ class BlackjackResultTest {
         return Stream.of(
                 Arguments.of(
                         new Dealer(new Deck(cardsOf(ACE, KING, ACE, NINE))),
-                        new Players(List.of(PlayerFixture.of("Pobi", 1000))),
+                        Players.from(List.of(PlayerFixture.of("Pobi", 1000))),
                         ProfitFixture.amountOf(1000),
                         ProfitFixture.amountOf(-1000)
                 ),
                 Arguments.of(
                         new Dealer(new Deck(cardsOf(ACE, NINE, ACE, KING))),
-                        new Players(List.of(PlayerFixture.of("Pobi", 1000))),
+                        Players.from(List.of(PlayerFixture.of("Pobi", 1000))),
                         ProfitFixture.amountOf(-1500),
                         ProfitFixture.amountOf(1500)
                 ),
                 Arguments.of(
                         new Dealer(new Deck(cardsOf(ACE, KING, ACE, KING))),
-                        new Players(List.of(PlayerFixture.of("Pobi", 1000))),
+                        Players.from(List.of(PlayerFixture.of("Pobi", 1000))),
                         ProfitFixture.amountOf(0),
                         ProfitFixture.amountOf(0)
                 )

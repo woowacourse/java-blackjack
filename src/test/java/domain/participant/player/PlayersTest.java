@@ -32,7 +32,7 @@ class PlayersTest {
     @MethodSource
     @ParameterizedTest
     void validateSize(List<Player> players, String message) {
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> Players.from(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(message);
     }

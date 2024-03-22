@@ -5,7 +5,8 @@ import static exception.ExceptionHandler.retry;
 import java.util.List;
 
 import domain.card.Deck;
-import domain.participant.attributes.Names;
+import domain.participant.attributes.Bet;
+import domain.participant.attributes.Name;
 import domain.participant.dealer.Dealer;
 import domain.participant.player.Player;
 import domain.participant.player.Players;
@@ -34,14 +35,11 @@ public class BlackjackGame {
     }
 
     private Players createPlayers() {
-        return retry(() -> {
-            Names names = inputView.askPlayerNames();
-            List<Player> players = names.toList()
-                    .stream()
-                    .map(name -> new Player(name, retry(() -> inputView.askPlayerBet(name))))
-                    .toList();
-            return new Players(players);
-        });
+        List<Name> names = inputView.askPlayerNames();
+        List<Bet> bets = names.stream()
+                .map(inputView::askPlayerBet)
+                .toList();
+        return Players.of(names, bets);
     }
 
     private void initialize(final Dealer dealer, final Players players) {

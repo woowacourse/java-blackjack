@@ -65,7 +65,7 @@ class DealerTest {
                     cardOf(ACE), cardOf(THREE), cardOf(FIVE), cardOf(SEVEN), cardOf(NINE), cardOf(ACE)));
             Dealer dealer = new Dealer(deck);
 
-            dealer.dealInitialCards(new Players(new LinkedHashSet<>(List.of(player1,  player2))));
+            dealer.dealInitialCards(Players.from(new LinkedHashSet<>(List.of(player1,  player2))));
 
             assertAll(
                     () -> assertThat(dealer.hand().cards()).containsExactlyElementsOf(List.of(cardOf(ACE), cardOf(THREE))),

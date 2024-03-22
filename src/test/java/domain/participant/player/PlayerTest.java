@@ -121,7 +121,7 @@ class PlayerTest {
     void profitAgainst(List<Card> cards, int playerBet, int expectedProfit) {
         Player player = new Player(new Name("Pobi"), new Bet(playerBet));
         Dealer dealer = new Dealer(new Deck(cards));
-        dealer.dealInitialCards(new Players(List.of(player)));
+        dealer.dealInitialCards(Players.from(List.of(player)));
         assertThat(player.profitAgainst(dealer)).isEqualTo(ProfitFixture.amountOf(expectedProfit));
     }
 }
