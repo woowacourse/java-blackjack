@@ -37,6 +37,10 @@ public class Hand {
         return sum();
     }
 
+    public Card peek() {
+        return cards.get(0);
+    }
+
     private int sum() {
         return cards.stream()
                 .mapToInt(Card::score)

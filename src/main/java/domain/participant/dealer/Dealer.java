@@ -2,8 +2,6 @@ package domain.participant.dealer;
 
 import static domain.card.Hand.INITIAL_CARD_COUNT;
 
-import java.util.List;
-
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Participant;
@@ -42,8 +40,7 @@ public class Dealer extends Participant {
     }
 
     public Card peek() {
-        List<Card> cards = hand().toList();
-        return cards.get(0);
+        return hand().peek();
     }
 
     @Override
