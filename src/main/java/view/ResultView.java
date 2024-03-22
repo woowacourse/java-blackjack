@@ -101,7 +101,7 @@ public class ResultView {
     }
 
     private String parseHand(final Hand hand) {
-        return hand.toList()
+        return hand.cards()
                 .stream()
                 .map(this::parseCard)
                 .reduce((card1, card2) -> card1 + ", " + card2)

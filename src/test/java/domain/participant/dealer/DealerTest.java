@@ -53,7 +53,7 @@ class DealerTest {
             dealer.deal(participant);
             Hand hand = participant.hand();
 
-            assertThat(hand.toList()).containsExactlyElementsOf(List.of(card));
+            assertThat(hand.cards()).containsExactlyElementsOf(List.of(card));
         }
 
         @DisplayName("딜러는 게임을 시작할 때 본인과 플레이어에게 카드를 나누어준다.")
@@ -68,9 +68,9 @@ class DealerTest {
             dealer.dealInitialCards(new Players(new LinkedHashSet<>(List.of(player1,  player2))));
 
             assertAll(
-                    () -> assertThat(dealer.hand().toList()).containsExactlyElementsOf(List.of(cardOf(ACE), cardOf(THREE))),
-                    () -> assertThat(player1.hand().toList()).containsExactlyElementsOf(List.of(cardOf(FIVE), cardOf(SEVEN))),
-                    () -> assertThat(player2.hand().toList()).containsExactlyElementsOf(List.of(cardOf(NINE), cardOf(ACE)))
+                    () -> assertThat(dealer.hand().cards()).containsExactlyElementsOf(List.of(cardOf(ACE), cardOf(THREE))),
+                    () -> assertThat(player1.hand().cards()).containsExactlyElementsOf(List.of(cardOf(FIVE), cardOf(SEVEN))),
+                    () -> assertThat(player2.hand().cards()).containsExactlyElementsOf(List.of(cardOf(NINE), cardOf(ACE)))
             );
         }
 

@@ -47,7 +47,7 @@ public class Hand {
                 .sum();
     }
 
-    public List<Card> toList() {
+    public List<Card> cards() {
         return List.copyOf(cards);
     }
 }

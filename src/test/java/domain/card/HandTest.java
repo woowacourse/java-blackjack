@@ -29,7 +29,7 @@ class HandTest {
         Hand hand = new Hand();
         hand.add(cardOf(ACE));
 
-        Card actual = hand.toList().get(0);
+        Card actual = hand.peek();
 
         assertThat(actual).isEqualTo(cardOf(ACE));
     }
