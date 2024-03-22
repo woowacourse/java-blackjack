@@ -1,108 +1,91 @@
 package blackjack.domain.gamer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.deck.Deck;
+import blackjack.domain.card.deck.ShuffledDeckCardGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.ShuffledDeckGenerator;
-import blackjack.domain.card.Suit;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
-	private Deck deck;
+    private Deck deck;
 
-	@BeforeEach
-	void init() {
-		ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
+    @BeforeEach
+    void init() {
+        ShuffledDeckCardGenerator deckCardGenerator = ShuffledDeckCardGenerator.getInstance();
 
-		deck = deckGenerator.generate();
-	}
+        deck = new Deck(deckCardGenerator.generate());
+    }
 
-	@DisplayName("딜러는 생성 시에 중복되지 않은 52장의 덱을 갖는다.")
-	@Test
-	void hasDeckTest() {
-		// given & when
-		Dealer dealer = Dealer.newInstance(deck);
+    @DisplayName("딜러는 0장의 카드를 갖고 생성 된다.")
+    @Test
+    void hasDeckTest() {
+        // given & when
+        Dealer dealer = new Dealer();
 
-		// then
-		assertThat(dealer.deckSize()).isEqualTo(52);
-	}
+        // then
+        assertThat(dealer.cards()).hasSize(0);
+    }
 
-	@DisplayName("딜러는 플레이어들에게 초기 카드를 배분한다.")
-	@Test
-	void dealInitCardsTest() {
-		// given
-		Dealer dealer = Dealer.newInstance(deck);
+    @DisplayName("딜러는 초기 카드를 2장 받는다")
+    @Test
+    void dealInitCardsTest() {
+        // given
+        Dealer dealer = new Dealer();
 
-		// when
-		List<Card> cards = dealer.dealInitCards();
+        // when
+        dealer.receiveInitCards(deck.drawInitCards());
 
-		// then
-		assertThat(cards).hasSize(2);
-	}
+        // then
+        assertThat(dealer.cards()).hasSize(2);
+    }
 
-	@DisplayName("딜러는 자신에게 초기 카드를 배분한다.")
-	@Test
-	void dealInitCardsSelfTest() {
-		// given
-		Dealer dealer = Dealer.newInstance(deck);
+    @DisplayName("딜러는 카드 1장을 분배한다.")
+    @Test
+    void dealCardTest() {
+        // given
+        Dealer dealer = new Dealer();
 
-		// when
-		dealer.receiveInitCards(dealer.dealInitCards());
+        // when
+        dealer.receiveCard(deck.drawCard());
 
-		// then
-		assertThat(dealer.getCards()).hasSize(2);
-	}
+        // then
+        assertThat(dealer.cards()).hasSize(1);
+    }
 
-	@DisplayName("딜러는 카드 1장을 분배한다.")
-	@Test
-	void dealCardTest() {
-		// given
-		Dealer dealer = Dealer.newInstance(deck);
+    @DisplayName("딜러 카드 패의 총 합이 16 이하라면 Hit 한다.")
+    @Test
+    void dealerHitTest() {
+        // given
+        Dealer dealer = new Dealer(
+                new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SIX))));
 
-		// when
-		Card card = dealer.dealCard();
+        // then
+        Assertions.assertAll(
+                () -> assertThat(dealer.getScore()).isLessThanOrEqualTo(16),
+                () -> assertThat(dealer.hasHitScore()).isTrue()
+        );
+    }
 
-		// then
-		assertThat(dealer)
-			.extracting("deck")
-			.extracting("cards")
-			.isNotIn(card);
-	}
+    @DisplayName("딜러 카드 패의 총 합이 16 초과라면 Stand 한다.")
+    @Test
+    void dealerStandTest() {
+        // given
+        Dealer dealer = new Dealer(
+                new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SEVEN))));
 
-	@DisplayName("딜러 카드 패의 총 합이 16 이하라면 Hit 한다.")
-	@Test
-	void dealerHitTest() {
-		// given
-		Dealer dealer = Dealer.of(deck,
-			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SIX))));
-
-		// then
-		Assertions.assertAll(
-			() -> assertThat(dealer.getScore()).isLessThanOrEqualTo(16),
-			() -> assertThat(dealer.hasHitScore()).isTrue()
-		);
-	}
-
-	@DisplayName("딜러 카드 패의 총 합이 16 초과라면 Stand 한다.")
-	@Test
-	void dealerStandTest() {
-		// given
-		Dealer dealer = Dealer.of(deck,
-			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SEVEN))));
-
-		// then
-		Assertions.assertAll(
-			() -> assertThat(dealer.getScore()).isGreaterThan(16),
-			() -> assertThat(dealer.hasHitScore()).isFalse()
-		);
-	}
+        // then
+        Assertions.assertAll(
+                () -> assertThat(dealer.getScore()).isGreaterThan(16),
+                () -> assertThat(dealer.hasHitScore()).isFalse()
+        );
+    }
 }

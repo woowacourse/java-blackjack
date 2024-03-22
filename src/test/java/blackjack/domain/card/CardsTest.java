@@ -13,7 +13,7 @@ public class CardsTest {
 	@Test
 	void sumCardTest() {
 		// given
-		Cards cards = Cards.from(
+		Cards cards = new Cards(
 			List.of(Card.of(Suit.HEART, Rank.JACK), Card.of(Suit.HEART, Rank.KING)));
 
 		// when & then
@@ -24,7 +24,7 @@ public class CardsTest {
 	@Test
 	void sumAceCardAs1Test() {
 		// given
-		Cards cards = Cards.from(
+		Cards cards = new Cards(
 			List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.KING), Card.of(Suit.HEART, Rank.JACK)));
 
 		// when & then
@@ -35,7 +35,7 @@ public class CardsTest {
 	@Test
 	void sumAceCardAs11Test() {
 		// given
-		Cards cards = Cards.from(
+		Cards cards = new Cards(
 			List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.KING)));
 
 		// when & then

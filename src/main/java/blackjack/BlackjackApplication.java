@@ -1,14 +1,14 @@
 package blackjack;
 
-import blackjack.game.BlackjackGame;
+import blackjack.controller.BlackjackGameController;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackApplication {
 	public static void main(String[] args) {
-		BlackjackGame blackjackGame = new BlackjackGame(InputView.getInstance(),
+		BlackjackGameController blackjackGameController = new BlackjackGameController(InputView.getInstance(),
 			OutputView.getInstance());
 
-		blackjackGame.start();
+		blackjackGameController.start();
 	}
 }
