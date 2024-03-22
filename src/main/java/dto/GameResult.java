@@ -1,36 +1,25 @@
 package dto;
 
+import domain.Blackjack;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.Players;
+import domain.player.Profit;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public record GameResult(Map<PlayerResult, Integer> dealerResult,
-                         Map<String, PlayerResult> playerResult) {
+public record GameResult(Double dealerResult, Map<String, Double> playerResult) {
 
-    public int dealerWin() {
-        if (dealerResult.containsKey(PlayerResult.WIN)) {
-            return dealerResult.get(PlayerResult.WIN);
-        }
-        return 0;
+    public static GameResult of(final Blackjack blackjack) {
+        final Dealer dealer = blackjack.getDealer();
+        final Players players = blackjack.getPlayers();
+
+        final LinkedHashMap<String, Double> playersResult = players.getValue()
+                .stream()
+                .collect(Collectors.toMap(Player::getName, player -> player.calculateProfit(dealer), (a, b) -> a,
+                        LinkedHashMap::new));
+        final double dealerProfitAmount = Profit.reverse(players.getTotalSum(dealer));
+        return new GameResult(dealerProfitAmount, playersResult);
     }
-
-    public int dealerLose() {
-        if (dealerResult.containsKey(PlayerResult.LOSE)) {
-            return dealerResult.get(PlayerResult.LOSE);
-        }
-        return 0;
-    }
-
-    public int dealerTie() {
-        if (dealerResult.containsKey(PlayerResult.TIE)) {
-            return dealerResult.get(PlayerResult.TIE);
-        }
-        return 0;
-    }
-
-    public PlayerResult playerResult(final String name) {
-        if(playerResult.containsKey(name)){
-            return playerResult.get(name);
-        }
-        throw new IllegalArgumentException("존재하지 않는 이름입니다.");
-    }
-
 }

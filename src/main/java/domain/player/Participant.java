@@ -1,62 +1,38 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Cards;
-import domain.card.Rank;
+import domain.state.State;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    private static final int ACE_HIGH = 11;
-    static final int PERFECT_SCORE = 21;
 
-    private final Cards hands;
+    protected State state;
 
-    public Participant() {
-        this.hands = Cards.makeEmptyDeck();
+    public final void add(final Card card) {
+        state = state.add(card);
     }
 
-    public boolean isBust() {
-        return calculateScore() > PERFECT_SCORE;
-    }
-
-    public boolean isNotBust() {
-        return !isBust();
-    }
-
-    public abstract boolean canHit();
-
-    public void hit(final Card card) {
-        hands.add(card);
-    }
-
-    public int calculateScore() {
-        int score = 0;
-        for (final Card card : hands.getValue()) {
-            score += determineScore(card, score);
+    final void standIfRunning() {
+        if (state.isFinished()) {
+            return;
         }
-        return score;
+        state = state.stand();
     }
 
-    private int determineScore(final Card card, final int score) {
-        if (card.getRank() == Rank.ACE) {
-            return determineAceScore(score);
-        }
-        return card.getRankValue();
+    State getState() {
+        return state;
     }
 
-    private int determineAceScore(final int score) {
-        if (score + ACE_HIGH <= PERFECT_SCORE) {
-            return ACE_HIGH;
-        }
-        return Rank.ACE.getValue();
+    public final int getScore() {
+        return state.getScore();
     }
 
     public String getName() {
         throw new IllegalCallerException("참여자의 이름이 정해지지 않았습니다");
     }
 
-    public List<Card> getHands() {
-        return Collections.unmodifiableList(hands.getValue());
+    public final List<Card> getHands() {
+        return Collections.unmodifiableList(state.getHands().getValue());
     }
 }

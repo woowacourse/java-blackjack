@@ -1,9 +1,10 @@
 package domain.player;
 
+import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Players {
@@ -15,10 +16,13 @@ public class Players {
         this.value = value;
     }
 
-    public static Players fromNames(final List<String> names) {
-        return new Players(names.stream()
-                .map(name -> new Player(new Name(name)))
-                .collect(Collectors.toList()));
+    public static Players of(final List<String> names, final List<Integer> betAmounts, final Card first,
+                             final Card second) {
+        validateSameLength(names, betAmounts);
+        return new Players(IntStream.range(0, names.size())
+                .mapToObj(index -> new Player(new Name(names.get(index)), new BetAmount(betAmounts.get(index)), first,
+                        second))
+                .toList());
     }
 
     private void validate(final List<Player> players) {
@@ -26,9 +30,16 @@ public class Players {
         validateDuplicate(players);
     }
 
+    private static void validateSameLength(final List<String> names, final List<Integer> betAmounts) {
+        if (names.size() != betAmounts.size()) {
+            throw new IllegalArgumentException(
+                    String.format("이름(%d)과 배팅 금액(%d)의 정보의 길이가 일치하지 않습니다.", names.size(), betAmounts.size()));
+        }
+    }
+
     private void validatePlayerNumbers(final List<Player> players) {
         if (isInvalidPlayersNumber(players)) {
-            throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
+            throw new IllegalArgumentException(String.format("플레이어의 수는 %d명을 초과할 수 없습니다.", MAX_PLAYER_NUMBER));
         }
     }
 
@@ -46,19 +57,22 @@ public class Players {
         return Set.copyOf(players).size() != players.size();
     }
 
-    public Player findPlayerByName(final String name) {
-        return this.value.stream()
-                .filter(r -> r.getName().equals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
+    public void automaticHit(final Dealer dealer, final DecisionOfPlayer decisionOfPlayer,
+                             final ActionAfterPlayerHit actionAfterPlayerHit) {
+        value.forEach(player -> player.automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit));
     }
 
     public Stream<Player> stream() {
-        return this.value.stream();
+        return value.stream();
+    }
+
+    public double getTotalSum(final Dealer dealer) {
+        return getValue().stream()
+                .mapToDouble(player -> player.calculateProfit(dealer))
+                .sum();
     }
 
     public List<Player> getValue() {
         return Collections.unmodifiableList(value);
     }
-
 }

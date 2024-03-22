@@ -1,36 +1,58 @@
 package domain.player;
 
 import domain.card.Card;
-import dto.PlayerResponse;
-import dto.PlayerResult;
+import domain.state.Started;
+import dto.CardResponse;
 import java.util.Objects;
 
-public class Player extends Participant {
-    private static final int HIT_UPPER_BOUND = 21;
-
+public final class Player extends Participant {
     private final Name name;
+    private final BetAmount betAmount;
 
-    public Player(final Name name) {
-        super();
+    public Player(final Name name, final BetAmount betAmount, final Card first, final Card second) {
         this.name = name;
+        this.betAmount = betAmount;
+        state = Started.ofTwoCard(first, second);
     }
 
-    public PlayerResult obtainResultBy(final Dealer dealer) {
-        return PlayerResult.reverse(dealer.compareHandsWith(this));
+    public double calculateProfit(final Dealer dealer) {
+        final Profit profit = new Profit(getState().earningRate(), betAmount.value());
+        if (compareHandsWith(dealer) == Result.WIN) {
+            return profit.win();
+        }
+        if (compareHandsWith(dealer) == Result.LOSE) {
+            return profit.lose();
+        }
+        return profit.tie();
     }
 
-    public PlayerResponse toPlayerResponse() {
-        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
-                calculateScore());
+    private Result compareHandsWith(final Dealer dealer) {
+        return Result.reverse(dealer.compareHandsWith(this));
     }
 
-    @Override
-    public boolean canHit() {
-        return calculateScore() < HIT_UPPER_BOUND;
+    public void automaticHit(
+            final Dealer dealer,
+            final DecisionOfPlayer decisionOfPlayer,
+            final ActionAfterPlayerHit actionAfterPlayerHit
+    ) {
+        final boolean decisionToStop = !decisionOfPlayer.apply(name.value());
+        if (decisionToStop || getState().isFinished()) {
+            standIfRunning();
+            return;
+        }
+
+        hit(dealer);
+        actionAfterPlayerHit.accept(name.value(), getHands().stream().map(CardResponse::of).toList());
+
+        automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit);
+    }
+
+    private void hit(final Dealer dealer) {
+        add(dealer.draw());
     }
 
     public String getName() {
-        return name.getValue();
+        return name.value();
     }
 
     @Override
