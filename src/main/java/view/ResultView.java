@@ -41,8 +41,7 @@ public class ResultView {
     }
 
     private String parsePlayerNames(final Players players) {
-        return players.toList()
-                .stream()
+        return players.stream()
                 .map(player -> parseName(player.name()))
                 .reduce((player1, player2) -> player1 + ", " + player2)
                 .orElse("");
@@ -123,9 +122,7 @@ public class ResultView {
 
     public void printPlayerResults(final PlayerResults result) {
         Players players = result.getPlayers();
-        String message = players
-                .toList()
-                .stream()
+        String message = players.stream()
                 .map(player -> parseName(player.name()) + ": " + result.profitOf(player).amount())
                 .reduce((result1, result2) -> result1 + "\n" + result2)
                 .orElse("");
