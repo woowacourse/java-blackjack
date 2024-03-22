@@ -15,7 +15,7 @@ public class GameResultTest {
     @Test
     void playerBlackjackTest() {
         // given
-        Player player = new Player("eden");
+        Player player = new Player("eden", 0);
         Dealer dealer = new Dealer();
 
         // when
@@ -36,7 +36,7 @@ public class GameResultTest {
     @Test
     void drawTest() {
         // given
-        Player player = new Player("eden");
+        Player player = new Player("eden", 0);
         Dealer dealer = new Dealer();
 
         // when
@@ -56,7 +56,7 @@ public class GameResultTest {
     @Test
     void playerWinWhenDealerOver21Test() {
         // given
-        Player player = new Player("eden");
+        Player player = new Player("eden", 0);
         Dealer dealer = new Dealer();
 
         // when
@@ -77,7 +77,7 @@ public class GameResultTest {
     @Test
     void playerLoseWhenBustTest() {
         // given
-        Player player = new Player("eden");
+        Player player = new Player("eden", 0);
         Dealer dealer = new Dealer();
 
         // when
@@ -98,7 +98,7 @@ public class GameResultTest {
     @Test
     void playerWinWhenScoreGreaterThenDealerTest() {
         // given
-        Player player = new Player("eden");
+        Player player = new Player("eden", 0);
         Dealer dealer = new Dealer();
 
         // when
@@ -118,7 +118,7 @@ public class GameResultTest {
     @Test
     void drawWhenPlayerAndDealerScoreSameTest() {
         // given
-        Player player = new Player("eden");
+        Player player = new Player("eden", 0);
         Dealer dealer = new Dealer();
 
         // when
@@ -138,7 +138,7 @@ public class GameResultTest {
     @Test
     void playerLoseWhenScoreLittleThenDealerTest() {
         // given
-        Player player = new Player("eden");
+        Player player = new Player("eden", 0);
         Dealer dealer = new Dealer();
 
         // when

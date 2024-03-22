@@ -1,5 +1,7 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.betting.BettingMoney;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,35 +16,38 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(final List<Player> players) {
+    public Players(final List<Name> playerNames, final List<BettingMoney> bettingMonies) {
+        List<Name> copyPlayerNames = new ArrayList<>(playerNames);
+        List<BettingMoney> copyBettingMonies = new ArrayList<>(bettingMonies);
+
+        validate(copyPlayerNames);
+
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < copyPlayerNames.size(); i++) {
+            players.add(new Player(copyPlayerNames.get(i), copyBettingMonies.get(i)));
+        }
+
         this.players = players;
     }
 
-    public static Players fromNames(final List<String> playerNames) {
-        List<String> copyPlayerNames = new ArrayList<>(playerNames);
-        validate(copyPlayerNames);
-
-        List<Player> players = copyPlayerNames.stream()
-                .map(Player::new)
-                .toList();
-        return new Players(players);
+    public Players(final List<Player> players) {
+        this.players = players;
     }
 
-    private static void validate(final List<String> playerNames) {
+    private static void validate(final List<Name> playerNames) {
         validateSize(playerNames);
         validateDuplication(playerNames);
     }
 
-    private static void validateSize(final List<String> players) {
-        if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
+    private static void validateSize(final List<Name> playerNames) {
+        if (playerNames.size() < MIN_SIZE || playerNames.size() > MAX_SIZE) {
             throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
         }
     }
 
-    private static void validateDuplication(final List<String> players) {
-        int distinctSize = new HashSet<>(players).size();
-
-        if (players.size() != distinctSize) {
+    private static void validateDuplication(final List<Name> playerNames) {
+        int distinctSize = new HashSet<>(playerNames).size();
+        if (playerNames.size() != distinctSize) {
             throw new IllegalArgumentException(DUPLICATION_ERROR_MESSAGE);
         }
     }

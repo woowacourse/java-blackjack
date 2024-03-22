@@ -13,7 +13,7 @@ public class GamerTest {
     @Test
     void blackjackTest() {
         // given
-        Gamer gamer = new Player("eden");
+        Gamer gamer = new Player("eden", 0);
         gamer.receiveCard(Card.of(Suit.CLOVER, Rank.ACE));
         gamer.receiveCard(Card.of(Suit.HEART, Rank.KING));
 
@@ -25,7 +25,7 @@ public class GamerTest {
     @Test
     void blackjackFailByCardSizeTest() {
         // given
-        Gamer gamer = new Player("eden");
+        Gamer gamer = new Player("eden", 0);
         gamer.receiveCard(Card.of(Suit.CLOVER, Rank.ACE));
         gamer.receiveCard(Card.of(Suit.CLOVER, Rank.KING));
         gamer.receiveCard(Card.of(Suit.HEART, Rank.KING));
@@ -38,7 +38,7 @@ public class GamerTest {
     @Test
     void blackjackFailByScoreTest() {
         // given
-        Gamer gamer = new Player("eden");
+        Gamer gamer = new Player("eden", 0);
         gamer.receiveCard(Card.of(Suit.CLOVER, Rank.KING));
         gamer.receiveCard(Card.of(Suit.HEART, Rank.KING));
 

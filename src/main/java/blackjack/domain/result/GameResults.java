@@ -1,8 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.betting.Bettings;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 
@@ -10,44 +8,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResults {
-    private final Map<Gamer, GameResult> gameResults;
+    private final Map<Player, GameResult> gameResults;
 
     public GameResults() {
         this(new HashMap<>());
     }
 
-    public GameResults(final Map<Gamer, GameResult> gameResults) {
+    public GameResults(final Map<Player, GameResult> gameResults) {
         this.gameResults = gameResults;
     }
 
-    public void add(final Gamer gamer, final GameResult gameResult) {
-        gameResults.put(gamer, gameResult);
-    }
-
-    public GamerProfits calculateGamerProfits(Players players, Dealer dealer, Bettings bettings) {
-        GamerProfits gamerProfits = new GamerProfits();
+    public GameResults(final Players players, final Dealer dealer) {
+        Map<Player, GameResult> gameResults = new HashMap<>();
         for (final Player player : players.getPlayers()) {
-            gamerProfits.addPlayersProfit(player, calculatePlayerProfit(player, bettings));
+            gameResults.put(player, GameResult.ofPlayer(player, dealer));
         }
-        gamerProfits.addDealerProfit(dealer, calculateDealerProfit(bettings));
 
-        return gamerProfits;
+        this.gameResults = gameResults;
     }
 
-    public int calculateDealerProfit(final Bettings bettings) {
-        return -(gameResults.keySet().stream()
-                .filter(gamer -> gamer.getClass() == Player.class)
-                .map(gamer -> calculateGamerProfit(gamer, bettings))
-                .mapToInt(Integer::intValue)
-                .sum());
-    }
+    public GamerProfits calculateGamerProfits() {
+        Map<Player, Integer> playerProfits = new HashMap<>();
+        int dealerProfit = 0;
 
-    public int calculatePlayerProfit(final Player player, final Bettings bettings) {
-        return calculateGamerProfit(player, bettings);
-    }
+        for (Map.Entry<Player, GameResult> entry : gameResults.entrySet()) {
+            int playerProfit = entry.getKey().calculateProfit(entry.getValue());
+            playerProfits.put(entry.getKey(), playerProfit);
+            dealerProfit -= playerProfit;
+        }
 
-    private int calculateGamerProfit(final Gamer gamer, final Bettings bettings) {
-        return bettings.calculateProfit(gamer, gameResults.get(gamer));
+        return new GamerProfits(playerProfits, dealerProfit);
     }
 
     @Override

@@ -4,7 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.GamerProfits;
+import blackjack.dto.GamerProfitStates;
+import blackjack.dto.PlayerProfitState;
 import blackjack.dto.gamer.PlayerInfo;
 import blackjack.dto.gamer.PlayerInfos;
 
@@ -96,19 +97,19 @@ public class OutputView {
         }
     }
 
-    public void printTotalProfit(final Dealer dealer, final Players players, final GamerProfits gamerProfits) {
+    public void printTotalProfit(final GamerProfitStates gamerProfitStates) {
         System.out.println(String.format("%n## 최종 수익"));
-        printDealerTotalProfit(dealer, gamerProfits);
-        printPlayersTotalProfit(players, gamerProfits);
+        printDealerTotalProfit(gamerProfitStates.dealerProfit());
+        printPlayersTotalProfit(gamerProfitStates.playerProfitStates());
     }
 
-    private void printDealerTotalProfit(final Dealer dealer, final GamerProfits gamerProfits) {
-        System.out.println(String.format("딜러: %d", gamerProfits.getProfit(dealer)));
+    private void printDealerTotalProfit(final int dealerProfit) {
+        System.out.println(String.format("딜러: %d", dealerProfit));
     }
 
-    private void printPlayersTotalProfit(final Players players, final GamerProfits gamerProfits) {
-        for (Player player : players.getPlayers()) {
-            System.out.println(String.format("%s: %d", player.getName(), gamerProfits.getProfit(player)));
+    private void printPlayersTotalProfit(final List<PlayerProfitState> playerProfitStates) {
+        for (PlayerProfitState playerState : playerProfitStates) {
+            System.out.println(String.format("%s: %d", playerState.name(), playerState.profit()));
         }
     }
 

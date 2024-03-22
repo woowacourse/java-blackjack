@@ -3,7 +3,6 @@ package blackjack.domain.result;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
-// TODO: 네이밍 적합하게 수정
 public enum GameResult {
     BLACKJACK(1.5f),
     WIN(1),
@@ -16,6 +15,7 @@ public enum GameResult {
         this.profitRate = profitRate;
     }
 
+    // TODO: 테스트 작성
     public static GameResult ofPlayer(final Player player, final Dealer dealer) {
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             return GameResult.BLACKJACK;
@@ -29,7 +29,7 @@ public enum GameResult {
         return GameResult.DRAW;
     }
 
-    public int calculateProfit(final int bettingMoney) {
-        return (int) (bettingMoney * this.profitRate);
+    public double profitRate() {
+        return profitRate;
     }
 }

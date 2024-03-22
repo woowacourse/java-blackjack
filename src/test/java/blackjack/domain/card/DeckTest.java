@@ -40,8 +40,6 @@ class DeckTest {
     @Test
     void cardInitSizeTest() {
         cards.pop();
-        System.out.println(cards.size());
-
         Assertions.assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("덱의 사이즈가 52장이 아닙니다.");

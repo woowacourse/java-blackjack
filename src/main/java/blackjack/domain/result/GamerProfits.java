@@ -1,40 +1,49 @@
 package blackjack.domain.result;
 
-import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.dto.GamerProfitStates;
+import blackjack.dto.PlayerProfitState;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GamerProfits {
-    private final Map<Gamer, Integer> gamerProfits;
+    private final Map<Player, Integer> playerProfits;
+    private final int dealerProfit;
 
     public GamerProfits() {
-        this(new HashMap<>());
+        this(new HashMap<>(), 0);
     }
 
-    public GamerProfits(final Map<Gamer, Integer> gamerProfits) {
-        this.gamerProfits = new HashMap<>(gamerProfits);
-    }
-
-    public void addPlayersProfit(final Player player, final int profit) {
-        gamerProfits.put(player, profit);
-
-    }
-
-    public void addDealerProfit(final Dealer dealer, final int profit) {
-        gamerProfits.put(dealer, profit);
+    public GamerProfits(final Map<Player, Integer> playerProfits, int dealerProfit) {
+        this.playerProfits = new HashMap<>(playerProfits);
+        this.dealerProfit = dealerProfit;
     }
 
     public int getProfit(final Gamer gamer) {
-        return gamerProfits.get(gamer);
+        return playerProfits.get(gamer);
+    }
+
+    public GamerProfitStates getGamerProfitStates() {
+        List<PlayerProfitState> profitState = new ArrayList<>();
+        for (Map.Entry<Player, Integer> entry : playerProfits.entrySet()) {
+            profitState.add(new PlayerProfitState(entry.getKey().getName(), entry.getValue()));
+        }
+
+        return new GamerProfitStates(profitState, dealerProfit);
+    }
+
+    public int getDealerProfit() {
+        return dealerProfit;
     }
 
     @Override
     public String toString() {
         return "GamerProfits{" +
-                "gamerProfits=" + gamerProfits +
+                "gamerProfits=" + playerProfits +
                 '}';
     }
 }
