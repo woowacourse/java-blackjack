@@ -3,11 +3,11 @@ package domain.participant.player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import domain.BlackjackResultStatus;
+import domain.result.Profit;
 
 public class PlayerResults {
 
-    private final Map<Player, BlackjackResultStatus> results;
+    private final Map<Player, Profit> results;
 
     public PlayerResults() {
         this.results = new LinkedHashMap<>();
@@ -17,11 +17,11 @@ public class PlayerResults {
         return Players.from(results.keySet());
     }
 
-    public void put(final Player player, final BlackjackResultStatus resultStatus) {
-        results.put(player, resultStatus);
+    public void put(final Player player, final Profit profit) {
+        results.put(player, profit);
     }
 
-    public BlackjackResultStatus statusOf(final Player player) {
+    public Profit profitOf(final Player player) {
         return results.get(player);
     }
 }

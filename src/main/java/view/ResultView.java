@@ -1,22 +1,24 @@
 package view;
 
+import static domain.card.Hand.INITIAL_CARD_COUNT;
 import static domain.participant.dealer.Dealer.DEALER_HIT_THRESHOLD;
-import static domain.participant.dealer.Dealer.INITIAL_CARD_COUNT;
 
-import java.util.EnumSet;
-
-import domain.BlackjackResult;
-import domain.BlackjackResultStatus;
-import domain.card.Cards;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.participant.Participant;
+import domain.participant.attributes.Name;
 import domain.participant.dealer.Dealer;
 import domain.participant.dealer.DealerResult;
 import domain.participant.player.PlayerResults;
 import domain.participant.player.Players;
+import domain.result.BlackjackResult;
+import domain.result.Profit;
 
-public class ResultView implements BlackjackViewParser {
+public class ResultView {
 
-    private static final String PARTICIPANT_NAME_AND_CARDS = "%n%s: %s";
+    private static final String PARTICIPANT_NAME_AND_CARDS = "%s: %s%n";
 
     public void printInitialCards(final Dealer dealer, final Players players) {
         printInitialDealMessage(dealer, players);
@@ -27,11 +29,22 @@ public class ResultView implements BlackjackViewParser {
 
     private void printInitialDealMessage(final Dealer dealer, final Players players) {
         System.out.printf(
-                "%n%s와 %s에게 %d장을 나누었습니다.%n",
+                "%s와 %s에게 %d장을 나누었습니다.%n",
                 parseName(dealer.name()),
                 parsePlayerNames(players),
                 INITIAL_CARD_COUNT
         );
+    }
+
+    private String parseName(final Name name) {
+        return name.value();
+    }
+
+    private String parsePlayerNames(final Players players) {
+        return players.stream()
+                .map(player -> parseName(player.name()))
+                .reduce((player1, player2) -> player1 + ", " + player2)
+                .orElse("");
     }
 
     private void printDealerHand(final Dealer dealer) {
@@ -42,17 +55,23 @@ public class ResultView implements BlackjackViewParser {
         );
     }
 
-    public void printParticipantHand(final Participant participant) {
-        Cards cards = participant.hand();
-        System.out.printf(
-                PARTICIPANT_NAME_AND_CARDS,
-                parseName(participant.name()),
-                parseCards(cards)
-        );
+    private String parseCard(final Card card) {
+        Rank number = card.rank();
+        Suit suit = card.suit();
+        return number.getName() + suit.getName();
     }
 
     public void printPlayerHands(final Players players) {
         players.forEach(this::printParticipantHand);
+    }
+
+    public void printParticipantHand(final Participant participant) {
+        Hand hand = participant.hand();
+        System.out.printf(
+                PARTICIPANT_NAME_AND_CARDS,
+                parseName(participant.name()),
+                parseHand(hand)
+        );
     }
 
     public void printDealerHit(final Dealer dealer) {
@@ -64,42 +83,47 @@ public class ResultView implements BlackjackViewParser {
     }
 
     public void printCardsAndTotalOf(final Dealer dealer, final Players players) {
+        System.out.println();
         printCardAndSum(dealer);
         players.forEach(this::printCardAndSum);
         System.out.println();
     }
 
     private void printCardAndSum(final Participant participant) {
-        Cards cards = participant.hand();
+        Hand hand = participant.hand();
         System.out.printf(
-                PARTICIPANT_NAME_AND_CARDS + " - 결과: %d",
+                "%s 카드: %s" + " - 결과: %d" + System.lineSeparator(),
                 parseName(participant.name()),
-                parseCards(cards),
+                parseHand(hand),
                 participant.score()
         );
     }
 
+    private String parseHand(final Hand hand) {
+        return hand.cards()
+                .stream()
+                .map(this::parseCard)
+                .reduce((card1, card2) -> card1 + ", " + card2)
+                .orElse("");
+    }
+
     public void printResult(final BlackjackResult result) {
-        System.out.println("\n## 최종 승패");
+        System.out.println("## 최종 수익");
         printDealerResult(result.getDealerResult());
         printPlayerResults(result.getPlayerResults());
     }
 
     public void printDealerResult(final DealerResult result) {
-        String message = parseName(result.getDealerName()) + ": " +
-                EnumSet.allOf(BlackjackResultStatus.class)
-                        .stream()
-                        .filter(result::contains)
-                        .map(status -> result.countOf(status) + status.getValue())
-                        .reduce((status1, status2) -> status1 + " " + status2)
-                        .orElse("");
+        Name name = result.getDealerName();
+        Profit profit = result.getProfit();
+        String message = parseName(name) + ": " + profit.amount();
         System.out.println(message);
     }
 
     public void printPlayerResults(final PlayerResults result) {
-        String message = result.getPlayers()
-                .stream()
-                .map(player -> parseName(player.name()) + ": " + parseResultStatus(result.statusOf(player)))
+        Players players = result.getPlayers();
+        String message = players.stream()
+                .map(player -> parseName(player.name()) + ": " + result.profitOf(player).amount())
                 .reduce((result1, result2) -> result1 + "\n" + result2)
                 .orElse("");
         System.out.println(message);

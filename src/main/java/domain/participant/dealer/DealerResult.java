@@ -1,33 +1,27 @@
 package domain.participant.dealer;
 
-import java.util.Map;
-
-import domain.BlackjackResultStatus;
-import domain.participant.Name;
+import domain.participant.attributes.Name;
+import domain.result.Profit;
 
 public class DealerResult {
 
     private final Dealer dealer;
-    private final Map<BlackjackResultStatus, Integer> counts;
+    private Profit profit;
 
-    public DealerResult(final Dealer dealer, final Map<BlackjackResultStatus, Integer> counts) {
+    public DealerResult(final Dealer dealer) {
         this.dealer = dealer;
-        this.counts = counts;
+        this.profit = Profit.defaultAmount();
     }
 
-    public boolean contains(final BlackjackResultStatus resultStatus) {
-        return counts.containsKey(resultStatus);
-    }
-
-    public void put(final BlackjackResultStatus resultStatus) {
-        counts.merge(resultStatus, 1, Integer::sum);
-    }
-
-    public int countOf(final BlackjackResultStatus resultStatus) {
-        return counts.get(resultStatus);
+    public void subtract(final Profit playerProfit) {
+        profit = profit.subtract(playerProfit);
     }
 
     public Name getDealerName() {
         return dealer.name();
+    }
+
+    public Profit getProfit() {
+        return profit;
     }
 }

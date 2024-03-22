@@ -1,11 +1,11 @@
-package domain.participant;
+package domain.participant.attributes;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.participant.Name;
+import domain.participant.attributes.Name;
 
 class NameTest {
 
