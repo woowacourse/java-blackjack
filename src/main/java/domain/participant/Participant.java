@@ -1,6 +1,7 @@
 package domain.participant;
 
 import static domain.card.Hand.BLACKJACK_SCORE;
+import static domain.card.Hand.INITIAL_CARD_COUNT;
 
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return (hand.size() == 2) && (score() == BLACKJACK_SCORE);
+        return (hand.size() == INITIAL_CARD_COUNT) && (score() == BLACKJACK_SCORE);
     }
 
     public int score() {
