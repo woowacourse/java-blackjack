@@ -1,5 +1,6 @@
 package blackjackgame.controller;
 
+import blackjackgame.model.card.RandomCardDispenser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +23,7 @@ import blackjackgame.view.OutputView;
 
 public class BlackjackGameController {
 
+    private static final RandomCardDispenser RANDOM_CARD_DISPENSER = RandomCardDispenser.getInstance();
     private static final int DEALER_COUNT = 1;
     private static final int CARD_COUNT_FOR_SETTING = 2;
 
@@ -60,7 +62,7 @@ public class BlackjackGameController {
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
         List<Card> generatedCards = new ArrayList<>();
         for (int i = 0; i < (players.playersSize() + DEALER_COUNT) * CARD_COUNT_FOR_SETTING; i++) {
-            generatedCards.add(new Card());
+            generatedCards.add(new Card(RANDOM_CARD_DISPENSER));
         }
         blackjackGame.distributeCardsForSetting(new Cards(generatedCards));
     }
@@ -87,7 +89,7 @@ public class BlackjackGameController {
         Answer answer = new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         while (answer.isHit()) {
             Player updatedPlayer = blackjackGame.updatedPlayer(player);
-            boolean continueHit = blackjackGame.isHitByPlayer(updatedPlayer, new Card());
+            boolean continueHit = blackjackGame.isHitByPlayer(updatedPlayer, new Card(RANDOM_CARD_DISPENSER));
             answer = hitResultInfo(continueHit, player, blackjackGame);
         }
     }
@@ -103,7 +105,7 @@ public class BlackjackGameController {
     }
 
     private void turnHitDealer(BlackjackGame blackjackGame) {
-        boolean dealerHit = blackjackGame.isHitByDealer(new Card());
+        boolean dealerHit = blackjackGame.isHitByDealer(new Card(RANDOM_CARD_DISPENSER));
         outputView.printDealerHitStatus(dealerHit);
     }
 

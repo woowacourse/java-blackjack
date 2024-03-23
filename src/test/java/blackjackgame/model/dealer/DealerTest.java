@@ -1,14 +1,10 @@
 package blackjackgame.model.dealer;
 
-import static blackjackgame.model.card.CardNumber.JACK;
-import static blackjackgame.model.card.CardNumber.ACE;
-import static blackjackgame.model.card.CardNumber.SEVEN;
-import static blackjackgame.model.card.CardNumber.SIX;
-import static blackjackgame.model.card.CardNumber.TWO;
-import static blackjackgame.model.card.CardShape.DIAMOND;
-import static blackjackgame.model.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjackgame.model.card.CardNumber;
+import blackjackgame.model.card.CardShape;
+import blackjackgame.model.card.StaticCardDispenser;
 import java.util.List;
 import blackjackgame.model.card.Card;
 import blackjackgame.model.card.Cards;
@@ -21,28 +17,47 @@ class DealerTest {
     @DisplayName("딜러의 카드 합계가 16점 이하면 true를 반환한다")
     @Test
     void testCanAddCard() {
-        Cards cards = new Cards(List.of(new Card(SIX, HEART), new Card(JACK, HEART)));
+        Cards cards = createDealerCanAddCardTestCards();
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isPossibleAddCard()).isTrue();
+    }
+
+    private Cards createDealerCanAddCardTestCards() {
+        StaticCardDispenser cardSixHeart = new StaticCardDispenser(CardNumber.SIX, CardShape.HEART);
+        StaticCardDispenser cardJackHeart = new StaticCardDispenser(CardNumber.JACK, CardShape.HEART);
+        return new Cards(List.of(new Card(cardSixHeart), new Card(cardJackHeart)));
     }
 
     @DisplayName("딜러의 카드 합계가 17점 이상이면 false를 반환한다")
     @Test
     void testCanNotAddCard() {
-        Cards cards = new Cards(List.of(new Card(SEVEN, HEART), new Card(JACK, HEART)));
+        Cards cards = createDealerCantAddCardTestCards();
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isPossibleAddCard()).isFalse();
+    }
+
+    private Cards createDealerCantAddCardTestCards() {
+        StaticCardDispenser cardSevenHeart = new StaticCardDispenser(CardNumber.SEVEN, CardShape.HEART);
+        StaticCardDispenser cardJackHeart = new StaticCardDispenser(CardNumber.JACK, CardShape.HEART);
+        return new Cards(List.of(new Card(cardSevenHeart), new Card(cardJackHeart)));
     }
 
     @DisplayName("카드 1장을 획득하면 카드가 1개 증가한 딜러 객체를 반환한다")
     @Test
     void shouldAddCardWhenAllowed() {
-        Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
+        StaticCardDispenser cardTwoDia = new StaticCardDispenser(CardNumber.TWO, CardShape.DIAMOND);
+        Cards cards = createDealerAddCardTestCards();
         Dealer dealer = new Dealer(cards);
-        Card card = new Card(TWO, DIAMOND);
+        Card card = new Card(cardTwoDia);
         Dealer updatedDealer = dealer.withAdditionalCard(card);
 
         int expectedSize = cards.size() + 1;
         assertThat(updatedDealer.cardsSize()).isEqualTo(expectedSize);
+    }
+
+    private Cards createDealerAddCardTestCards() {
+        StaticCardDispenser cardAceHeart = new StaticCardDispenser(CardNumber.ACE, CardShape.HEART);
+        StaticCardDispenser cardJackHeart = new StaticCardDispenser(CardNumber.JACK, CardShape.HEART);
+        return new Cards(List.of(new Card(cardAceHeart), new Card(cardJackHeart)));
     }
 }

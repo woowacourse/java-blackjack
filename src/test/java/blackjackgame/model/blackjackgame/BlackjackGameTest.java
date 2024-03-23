@@ -1,22 +1,16 @@
 package blackjackgame.model.blackjackgame;
 
-import static blackjackgame.model.card.CardNumber.FIVE;
-import static blackjackgame.model.card.CardNumber.JACK;
-import static blackjackgame.model.card.CardNumber.ACE;
-import static blackjackgame.model.card.CardNumber.SEVEN;
-import static blackjackgame.model.card.CardNumber.SIX;
-import static blackjackgame.model.card.CardShape.CLOVER;
-import static blackjackgame.model.card.CardShape.DIAMOND;
-import static blackjackgame.model.card.CardShape.HEART;
-import static blackjackgame.model.card.CardShape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import blackjackgame.model.card.Card;
+import blackjackgame.model.card.CardNumber;
+import blackjackgame.model.card.CardShape;
 import blackjackgame.model.card.Cards;
+import blackjackgame.model.card.StaticCardDispenser;
 import blackjackgame.model.participants.dealer.Dealer;
 import blackjackgame.model.participants.player.Player;
 import blackjackgame.model.participants.player.Players;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,10 +21,7 @@ class BlackjackGameTest {
     @DisplayName("게임 시작 시 딜러와 플레이어에게 카드 2장 지급")
     @Test
     void testDistributeCardsForSetting() {
-        Cards cards = new Cards(
-                List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART),
-                        new Card(SEVEN, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
-        );
+        Cards cards = createDistributeTestCards();
         blackjackGame.distributeCardsForSetting(cards);
 
         assertThat(blackjackGame.getDealer().cardsSize()).isEqualTo(2);
@@ -38,12 +29,27 @@ class BlackjackGameTest {
                 .forEach(player -> assertThat(player.cardsSize()).isEqualTo(2));
     }
 
+    private Cards createDistributeTestCards() {
+        StaticCardDispenser cardJackDia = new StaticCardDispenser(CardNumber.JACK, CardShape.DIAMOND);
+        StaticCardDispenser cardFiveClover = new StaticCardDispenser(CardNumber.FIVE, CardShape.CLOVER);
+        StaticCardDispenser cardAceHeart = new StaticCardDispenser(CardNumber.ACE, CardShape.HEART);
+        StaticCardDispenser cardSevenClover = new StaticCardDispenser(CardNumber.SEVEN, CardShape.CLOVER);
+        StaticCardDispenser cardSixDia = new StaticCardDispenser(CardNumber.SIX, CardShape.DIAMOND);
+        StaticCardDispenser cardAceSpade = new StaticCardDispenser(CardNumber.ACE, CardShape.SPADE);
+
+        return new Cards(
+                List.of(new Card(cardJackDia), new Card(cardFiveClover), new Card(cardAceHeart),
+                        new Card(cardSevenClover), new Card(cardSixDia), new Card(cardAceSpade))
+        );
+    }
+
     @DisplayName("각 플레이어에게 추가 카드를 지급한다")
     @Test
     void testHitFromPlayer() {
+        StaticCardDispenser cardJackDia = new StaticCardDispenser(CardNumber.JACK, CardShape.DIAMOND);
         Players players = blackjackGame.getPlayers();
         List<Player> playersElement = players.getPlayers();
-        blackjackGame.isHitByPlayer(playersElement.get(0), new Card(JACK, DIAMOND));
+        blackjackGame.isHitByPlayer(playersElement.get(0), new Card(cardJackDia));
         Players updatedPlayers = blackjackGame.getPlayers();
         assertThat(updatedPlayers.getPlayers().get(0).cardsSize()).isEqualTo(1);
     }
@@ -51,7 +57,8 @@ class BlackjackGameTest {
     @DisplayName("딜러의 카드 합계가 16점 이하이면 카드가 1개 증가한 딜러 객체를 반환한다")
     @Test
     void testHitFromDealer() {
-        blackjackGame.isHitByDealer(new Card(JACK, DIAMOND));
+        StaticCardDispenser cardJackDia = new StaticCardDispenser(CardNumber.JACK, CardShape.DIAMOND);
+        blackjackGame.isHitByDealer(new Card(cardJackDia));
         assertThat(blackjackGame.getDealer().cardsSize()).isEqualTo(1);
     }
 

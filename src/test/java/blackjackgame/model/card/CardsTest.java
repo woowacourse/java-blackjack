@@ -1,11 +1,5 @@
 package blackjackgame.model.card;
 
-import static blackjackgame.model.card.CardNumber.FIVE;
-import static blackjackgame.model.card.CardNumber.JACK;
-import static blackjackgame.model.card.CardNumber.ACE;
-import static blackjackgame.model.card.CardShape.CLOVER;
-import static blackjackgame.model.card.CardShape.DIAMOND;
-import static blackjackgame.model.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -17,9 +11,16 @@ class CardsTest {
     @DisplayName("카드 숫자 합을 계산한다")
     @Test
     void testCalculateTotalCardNumbers() {
-        Cards cards = new Cards(
-            List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART))
-        );
+        Cards cards = createTotalCardNumbersTestCards();
         assertThat(cards.calculateTotalNumbers()).isEqualTo(16);
+    }
+
+    private Cards createTotalCardNumbersTestCards() {
+        StaticCardDispenser cardJackDia = new StaticCardDispenser(CardNumber.JACK, CardShape.DIAMOND);
+        StaticCardDispenser cardFiveClover = new StaticCardDispenser(CardNumber.FIVE, CardShape.CLOVER);
+        StaticCardDispenser cardAceHeart = new StaticCardDispenser(CardNumber.ACE, CardShape.HEART);
+        return new Cards(
+                List.of(new Card(cardJackDia), new Card(cardFiveClover), new Card(cardAceHeart))
+        );
     }
 }
