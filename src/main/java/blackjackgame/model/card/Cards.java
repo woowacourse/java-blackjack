@@ -1,7 +1,9 @@
 package blackjackgame.model.card;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Cards {
@@ -58,13 +60,23 @@ public class Cards {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Cards cards1 = (Cards) o;
-        return Objects.equals(cards, cards1.cards);
+        Cards cardsForCompare = (Cards) o;
+        Map<Card, Integer> cardsCount = cardsForCompare.toHashMap();
+        return cardsCount.equals(this.toHashMap());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(cards);
+    }
+
+    private Map<Card, Integer> toHashMap() {
+        Map<Card, Integer> cardCount = new HashMap<>();
+        for (Card card : cards) {
+            cardCount.putIfAbsent(card, 1);
+            cardCount.computeIfPresent(card, (k, v) -> v + 1);
+        }
+        return cardCount;
     }
 
     public int size() {
