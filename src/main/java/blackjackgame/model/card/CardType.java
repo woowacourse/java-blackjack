@@ -1,7 +1,14 @@
 package blackjackgame.model.card;
 
-public record CardType(String card) {
+public class CardType {
+
+    private final String cardType;
+
     public CardType(Card card) {
-        this(card.cardTypeLettering());
+        this.cardType = card.cardTypeLettering();
+    }
+
+    public String getCardType() {
+        return cardType;
     }
 }

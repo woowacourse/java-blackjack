@@ -1,9 +1,9 @@
 package blackjackgame.view;
 
+import blackjackgame.model.card.CardType;
 import java.util.List;
 import java.util.Map.Entry;
 import blackjackgame.model.result.Profit;
-import blackjackgame.model.card.CardType;
 import blackjackgame.model.participants.dealer.Dealer;
 import blackjackgame.model.participants.player.Player;
 import blackjackgame.model.participants.player.Players;
@@ -21,7 +21,7 @@ public class OutputView {
 
     public void printCardsStock(String name, List<CardType> cards) {
         System.out.println(name + "카드: " + String.join(", ", cards.stream()
-                .map(CardType::card)
+                .map(CardType::getCardType)
                 .toList()));
     }
 
@@ -37,7 +37,7 @@ public class OutputView {
 
     public void printFinalCardStatus(String name, List<CardType> cards, int totalScore) {
         System.out.print(name + "카드: " + String.join(", ", cards.stream()
-                .map(CardType::card)
+                .map(CardType::getCardType)
                 .toList()));
         System.out.println(" - 결과: " + totalScore);
     }
