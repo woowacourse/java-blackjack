@@ -7,13 +7,9 @@ public class Card {
     private final CardNumber number;
     private final CardShape shape;
 
-    public Card() {
-        this(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape());
-    }
-
-    public Card(CardNumber number, CardShape shape) {
-        this.number = number;
-        this.shape = shape;
+    public Card(CardDispenser cardDispenser) {
+        this.number = cardDispenser.generateCardNumber();
+        this.shape = cardDispenser.generateCardShape();
     }
 
     public boolean isAce() {
