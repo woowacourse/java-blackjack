@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackGame {
+	
+	public static void lessTwentyone(Calculate calculate,Deal deal, Player player, ResultView result) {
+		if(calculate.sum()<21) {
+			deal.dealOutCard(player);
+			result.printOwnCard(player);
+			System.out.println();
+		}
+	}
 
 	public static void addCards(Calculate calculate,Deal deal, Player player, InputView input, ResultView result) {
 		String answer;
 		do {
-			answer = input.getPlayerChoice(player.getName());
-			deal.dealOutCard(player);
-			result.printOwnCard(player);
-			System.out.println();
-			
-		}while(answer.equals("y") && calculate.sum()< 21);
+			answer= input.getPlayerChoice(player.getName());
+			lessTwentyone(calculate, deal, player, result);
+		}while(answer.equals("y")&&calculate.sum()<21);
 		
 	}
 
@@ -56,7 +61,7 @@ public class BlackjackGame {
 		
 		result.printResult(dealer, players);
 		
-		/*1단계
+		/* 1단계 
 		result.finalWinOrLoss(dealer, players);
 		*/
 		
