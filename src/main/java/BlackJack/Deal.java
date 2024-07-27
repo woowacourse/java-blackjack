@@ -55,5 +55,6 @@ public class Deal {
 		return card;
 	}
 	
-	
 }
+
+

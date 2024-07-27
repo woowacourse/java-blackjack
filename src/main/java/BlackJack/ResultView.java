@@ -20,7 +20,7 @@ public class ResultView {
 		printCard(own.getCards());
 	}
 	
-	public void printFirstCard(Dealer dealer, List<Player> players) {
+	public void printPlayerCard(Dealer dealer, List<Player> players) {
 		printOwnCard(dealer);
 		for(Player player : players) {
 			printOwnCard(player);
