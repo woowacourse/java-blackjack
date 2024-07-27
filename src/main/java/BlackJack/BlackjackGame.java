@@ -15,7 +15,6 @@ public class BlackjackGame {
 			
 		}while(answer.equals("y") && calculate.sum()< 21);
 		
-		result.printCard(player.getCards());
 	}
 
 	public static void main(String[] args) {
@@ -54,7 +53,7 @@ public class BlackjackGame {
 		System.out.println();
 		result.addDealer(dealer, deal);
 		
-		
+		result.printResult(dealer, players);
 		
 	}
 

@@ -37,5 +37,19 @@ public class ResultView {
 			System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 		}
 	}
+	public void findResult(Player player) {
+		Calculate calculate;
+		System.out.print(player.getName() + "카드 : ");
+		printCard(player.getCards());
+		calculate = new Calculate(player.getCards());
+		System.out.println(" - 결과 : " + calculate.sum());
+	}
+	
+	public void printResult(Dealer dealer, List<Player> players) {
+		findResult(dealer);
+		for(Player player : players) {
+			findResult(player);
+		}
+	}
 	
 }
