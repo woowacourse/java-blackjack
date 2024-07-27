@@ -55,6 +55,8 @@ public class BlackjackGame {
 		
 		result.printResult(dealer, players);
 		
+		result.finalWinOrLoss(dealer, players);
+		
 	}
 
 }

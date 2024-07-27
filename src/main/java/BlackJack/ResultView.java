@@ -45,10 +45,56 @@ public class ResultView {
 		System.out.println(" - 결과 : " + calculate.sum());
 	}
 	
+	
 	public void printResult(Dealer dealer, List<Player> players) {
 		findResult(dealer);
 		for(Player player : players) {
 			findResult(player);
+		}
+	}
+	
+	
+	
+	public int findWin(Dealer dealer, Player player) {
+		Calculate calculate;
+		calculate = new Calculate(dealer.getCards());
+		int dealerSum = calculate.sum();
+		calculate = new Calculate(player.getCards());
+		int playerSum = calculate.sum();
+		
+		if(Math.abs(dealerSum - 21)< Math.abs(playerSum-21)) {
+			return 1;
+		}
+		
+		return 0;
+	}
+	
+	public void printWinLoss(Dealer dealer, Player player) {
+		if(findWin(dealer, player)== 0) {
+			System.out.println(player.getName() + " : 승");
+		}
+		if(findWin(dealer, player)== 1) {
+			System.out.println(player.getName() + " : 패");
+		}
+	}
+	
+	public int dealerWinLoss(Dealer dealer, List<Player> players) {
+		int total = 0;
+		for(Player player : players) {
+			total += findWin(dealer, player);
+		}
+		
+		return total;
+	}
+	
+	public void finalWinOrLoss(Dealer dealer, List<Player> players) {
+		int win = dealerWinLoss(dealer, players);
+		int loss = players.size()- dealerWinLoss(dealer, players);
+		System.out.println("## 최종 승패");
+		System.out.println(dealer.getName() + " : " + win + "승 " + loss + "패");
+		
+		for(Player player : players) {
+			printWinLoss(dealer, player);
 		}
 	}
 	
