@@ -52,10 +52,13 @@ public class BlackjackGame {
 		
 		System.out.println();
 		result.addDealer(dealer, deal);
+		System.out.println();
 		
 		result.printResult(dealer, players);
 		
+		/*1단계
 		result.finalWinOrLoss(dealer, players);
+		*/
 		
 	}
 
