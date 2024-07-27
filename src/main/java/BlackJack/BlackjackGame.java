@@ -5,11 +5,9 @@ import java.util.List;
 
 public class BlackjackGame {
 	
-	public static void lessTwentyone(Calculate calculate,Deal deal, Player player, ResultView result) {
-		if(calculate.sum()<21) {
+	public static void lessTwentyone(String answer,Calculate calculate,Deal deal, Player player, ResultView result) {
+		if(calculate.sum()<21&&answer.equals("y")) {
 			deal.dealOutCard(player);
-			result.printOwnCard(player);
-			System.out.println();
 		}
 	}
 
@@ -17,7 +15,9 @@ public class BlackjackGame {
 		String answer;
 		do {
 			answer= input.getPlayerChoice(player.getName());
-			lessTwentyone(calculate, deal, player, result);
+			lessTwentyone(answer,calculate, deal, player, result);
+			result.printOwnCard(player);
+			System.out.println();
 		}while(answer.equals("y")&&calculate.sum()<21);
 		
 	}
@@ -34,8 +34,9 @@ public class BlackjackGame {
 		}
 		  
 		List<Money> dividends = new ArrayList<>();
-		for(String name : playerNames) {
-			dividends.add(new Money(name,input.getMoney(name)));
+		for(Player player : players) {
+			int n=input.getMoney(player);
+			dividends.add(new Money(player,n));
 		}
 		  
 		Dealer dealer = new Dealer();
@@ -70,6 +71,7 @@ public class BlackjackGame {
 		result.finalWinOrLoss(dealer, players);
 		*/
 		
+		result.finalMoney(dividends, dealer);
 	}
 
 }

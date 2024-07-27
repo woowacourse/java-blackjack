@@ -17,8 +17,8 @@ public class InputView {
 	        return sc.next();
 	  }
 	  
-	  public int getMoney(String name) {
-		  System.out.println(name + "의 배팅 금액은?");
+	  public int getMoney(Player player) {
+		  System.out.println(player.getName() + "의 배팅 금액은?");
 		  return sc.nextInt();
 	  }
 }

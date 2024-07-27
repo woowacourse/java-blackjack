@@ -55,46 +55,42 @@ public class ResultView {
 	
 	
 	
-	public int findWin(Dealer dealer, Player player) {
+	public int findWin(Dealer dealer, Money money) {
 		Calculate calculate;
 		calculate = new Calculate(dealer.getCards());
 		int dealerSum = calculate.sum();
-		calculate = new Calculate(player.getCards());
+		calculate = new Calculate(money.getPlayer().getCards());
 		int playerSum = calculate.sum();
 		
+		if(dealerSum > 21) {
+			return 0;
+		}
+		
 		if(Math.abs(dealerSum - 21)< Math.abs(playerSum-21)) {
-			return 1;
+			
+			return money.getMoney();
 		}
 		
 		return 0;
 	}
 	
-	public void printWinLoss(Dealer dealer, Player player) {
-		if(findWin(dealer, player)== 0) {
-			System.out.println(player.getName() + " : 승");
-		}
-		if(findWin(dealer, player)== 1) {
-			System.out.println(player.getName() + " : 패");
-		}
-	}
 	
-	public int dealerWinLoss(Dealer dealer, List<Player> players) {
+	public int dealerWinLoss(Dealer dealer, List<Money> dividends) {
 		int total = 0;
-		for(Player player : players) {
-			total += findWin(dealer, player);
+		for(Money money : dividends) {
+			total += findWin(dealer, money);
 		}
 		
 		return total;
 	}
 	
-	public void finalWinOrLoss(Dealer dealer, List<Player> players) {
-		int win = dealerWinLoss(dealer, players);
-		int loss = players.size()- dealerWinLoss(dealer, players);
-		System.out.println("## 최종 승패");
-		System.out.println(dealer.getName() + " : " + win + "승 " + loss + "패");
-		
-		for(Player player : players) {
-			printWinLoss(dealer, player);
+
+	
+	public void finalMoney(List<Money> dividends, Dealer dealer) {
+		System.out.println("## 최종 수익");
+		System.out.println(dealer.getName() + " : " + dealerWinLoss(dealer,dividends));
+		for(Money m : dividends) {
+			System.out.println(m.getName() + " : " + m.result(dealer, this));
 		}
 	}
 	
