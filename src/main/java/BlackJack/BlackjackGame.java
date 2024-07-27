@@ -33,6 +33,11 @@ public class BlackjackGame {
 			  players.add(new Player(name));
 		}
 		  
+		List<Money> dividends = new ArrayList<>();
+		for(String name : playerNames) {
+			dividends.add(new Money(name,input.getMoney(name)));
+		}
+		  
 		Dealer dealer = new Dealer();
 		Deal deal = new Deal(players, dealer);
 		
