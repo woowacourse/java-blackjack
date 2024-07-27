@@ -5,13 +5,15 @@ import java.util.List;
 
 public class BlackjackGame {
 
-	public static void addCards(Deal deal, Player player, InputView input, ResultView result) {
-		String answer = input.getPlayerChoice(player.getName());
-		while(answer.equals("y")){
+	public static void addCards(Calculate calculate,Deal deal, Player player, InputView input, ResultView result) {
+		String answer;
+		do {
+			answer = input.getPlayerChoice(player.getName());
 			deal.dealOutCard(player);
 			result.printOwnCard(player);
-			answer = input.getPlayerChoice(player.getName());
-		}
+			
+		}while(answer.equals("y") && calculate.sum()< 21);
+		
 		result.printCard(player.getCards());
 	}
 
@@ -41,7 +43,8 @@ public class BlackjackGame {
 		result.printPlayerCard(dealer, players);
 
 		for(Player player : players) {
-			addCards(deal, player, input, result);
+			Calculate calculate = new Calculate(player.getCards());
+			addCards(calculate, deal, player, input, result);
 			
 		}
 		
