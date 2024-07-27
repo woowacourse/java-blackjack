@@ -10,10 +10,12 @@ repositories {
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation platform('org.assertj:assertj-bom:3.25.1')
-    testImplementation('org.junit.jupiter:junit-jupiter')
-    testImplementation('org.assertj:assertj-core')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation 'org.junit.platform:junit-platform-launcher:1.9.3'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 }
+
 
 java {
     toolchain {
@@ -24,3 +26,4 @@ java {
 test {
     useJUnitPlatform()
 }
+

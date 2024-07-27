@@ -24,6 +24,9 @@ public class Deal {
 		int PickRank;
 		PickRank = random.nextInt(rank.length);
 		
+		//테스트를 위한 코드
+		PickShape = 0;
+		PickRank = 0;
 		
 		StringBuilder c = new StringBuilder();
 		c.append(shape[PickShape]);
