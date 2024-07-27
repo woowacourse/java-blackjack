@@ -7,4 +7,11 @@ public class Dealer extends Player{
 		super("딜러");
 	}
 	
+	public boolean over(Calculate calculate, Deal deal) {
+		if(calculate.sum()<17) {
+			deal.dealOutCard(this);
+			return true;
+		}
+		return false;
+	}
 }
