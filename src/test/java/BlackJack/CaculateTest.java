@@ -10,11 +10,25 @@ class CaculateTest {
 	@Test
 	void changeTest() {
 		
-		Calculate calculate = new Calculate();
-		String c = "스페이스5";
+		Card card = new Card();
+		Calculate calculate = new Calculate(card);
+		String c = "스페이스K";
 		int result = calculate.change(c);
-		 assertThat(result).isEqualTo(5);
+		 assertThat(result).isEqualTo(10);
 		
+	}
+	
+	@Test
+	void sumTest() {
+		Card cards = new Card();
+		cards.addCard("스페이스K");
+		cards.addCard("하트A");
+		cards.addCard("클로버8");
+		
+		Calculate calculate = new Calculate(cards);
+		int sum = calculate.sum();
+		
+		assertThat(sum).isEqualTo(19);
 	}
 
 }
