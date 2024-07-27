@@ -4,8 +4,10 @@ public class Calculate {
 
 	private String[] shape= {"하트", "다이아몬드", "클로버", "스페이드"};
 	private String[] rank = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+	private Card cards;
 	
-	Calculate(){
+	Calculate(Card cards){
+		this.cards = cards;
 	}
 	
 	public int change(String c) {
@@ -21,5 +23,15 @@ public class Calculate {
 		}
 		
 		return 10;
+	}
+	
+	public int sum() {
+		int sum = 0;
+		for(String c : cards.getCard()) {
+			sum+=change(c);
+		}
+		
+		return sum;
+		
 	}
 }
