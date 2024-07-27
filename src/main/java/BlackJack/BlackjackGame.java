@@ -14,6 +14,11 @@ public class BlackjackGame {
 		  for(String name : playerNames) {
 			  players.add(new Player(name));
 		}
+		  
+		Dealer dealer = new Dealer();
+		Deal deal = new Deal(players, dealer);
+		
+		System.out.println(deal.PickCards(dealer));
 
 	}
 
