@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackGame {
+	
 
 	public static void main(String[] args) {
 		
@@ -18,8 +19,21 @@ public class BlackjackGame {
 		Dealer dealer = new Dealer();
 		Deal deal = new Deal(players, dealer);
 		
-		System.out.println(deal.PickCards(dealer));
+		ResultView result = new ResultView();
+		
+		result.printFirst(playerNamesInput);
+		deal.dealOutCard(dealer);
+		deal.dealOutCard(dealer);
+		for(Player player : players) {
+			deal.dealOutCard(player);
+			deal.dealOutCard(player);
+		}
+		result.printFirstCard(dealer, players);
 
+		
+		
+		
+		
 	}
 
 }
