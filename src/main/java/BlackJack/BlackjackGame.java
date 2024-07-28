@@ -5,6 +5,26 @@ import java.util.List;
 
 public class BlackjackGame {
 	
+	public static int findBlackJack(Dealer dealer, Money m) {
+		Calculate c;
+		c = new Calculate(dealer.getCards());
+		int dealerSum = c.sum();
+		
+		c = new Calculate(m.getPlayer().getCards());
+		int playerSum = c.sum();
+
+		if(dealerSum == 21 && playerSum == 21) {
+			m.setResult(m.getMoney());
+			return 0;
+		}
+		if(dealerSum != 21 && playerSum == 21) {
+			m.setResult((int)(m.getMoney()*1.5));
+			return 1;
+		}
+		return 0;
+		
+	}
+	
 	public static void lessTwentyone(String answer,Calculate calculate,Deal deal, Player player, ResultView result) {
 		if(calculate.sum()<21&&answer.equals("y")) {
 			deal.dealOutCard(player);
@@ -51,9 +71,21 @@ public class BlackjackGame {
 			deal.dealOutCard(player);
 			deal.dealOutCard(player);
 		}
+		
+		
 		result.printPlayerCard(dealer, players);
 		System.out.println();
 
+		int bj = 0;
+		for(Money m  : dividends) {
+			bj += findBlackJack(dealer, m);
+		}
+		if(bj!=0) {
+			result.printResult(dealer, players);
+			result.finalMoney(dividends, dealer);
+			return;
+		}
+		
 		for(Player player : players) {
 			Calculate calculate = new Calculate(player.getCards());
 			System.out.println();
