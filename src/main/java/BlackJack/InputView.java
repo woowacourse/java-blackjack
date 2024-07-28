@@ -1,5 +1,6 @@
 package BlackJack;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +29,21 @@ public class InputView {
 	  }
 	  
 	  public int getMoney(Player player) {
-		  System.out.println(player.getName() + "의 배팅 금액은?");
-		  return sc.nextInt();
+		  int money = 0;
+	        while (true) {
+	            System.out.println(player.getName() + "의 배팅 금액은?");
+	            try {
+	                money = sc.nextInt();
+	                if (money > 0) {
+	                    break;
+	                } else {
+	                    System.out.println("배팅 금액은 0보다 커야 합니다. 다시 입력하세요.");
+	                }
+	            } catch (InputMismatchException e) {
+	                System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+	                sc.next();
+	            }
+	        }
+	        return money;
 	  }
 }
