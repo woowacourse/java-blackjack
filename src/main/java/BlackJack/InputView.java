@@ -13,8 +13,18 @@ public class InputView {
 	  }
 	    
 	  public String getPlayerChoice(String playerName) {
-	        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-	        return sc.next();
+		  String choice;
+	        while (true) {
+	            System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+	            choice = sc.next();
+	            if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
+	                break;
+	            } 
+	            if (!choice.equalsIgnoreCase("y")  && !choice.equalsIgnoreCase("n")) {
+	                System.out.println("잘못된 입력입니다. 예는 y, 아니오는 n 중 하나를 입력하세요.");
+	            }
+	        }
+	        return choice;
 	  }
 	  
 	  public int getMoney(Player player) {
