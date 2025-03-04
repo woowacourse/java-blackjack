@@ -30,9 +30,16 @@ public class CardGroup {
         return cards.size();
     }
 
+    private int countAce(){
+        return Math.toIntExact(cards.stream()
+                .filter(card -> card.getScore() == CardScore.ACE)
+                .count());
+    }
+
     public int calculateAceScore() {
         int calculateScoreWithOutAce = calculateScoreWithOutAce();
         if(calculateScoreWithOutAce > 10) return 1;
+        if(countAce() == 2) return 2;
         return 11;
     }
 }
