@@ -42,8 +42,7 @@ public class UserTest {
     @Test
     @DisplayName("유저는 중복될 수 없다.")
     void test3() {
-
-        List<String> names = List.of("수양", "레몬", "수양", "레몬", "모모", "부부", "롸롸", "뫄뫄");
+        List<String> names = List.of("수양", "레몬", "수양", "레몬", "부부", "롸롸", "뫄뫄");
         Assertions.assertThatThrownBy(() -> new UserPick(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 중복될 수 없습니다.");

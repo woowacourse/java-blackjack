@@ -10,11 +10,11 @@ public class UserPick {
 
     public UserPick(List<String> names) {
         HashSet<String> distinctNames = new HashSet<>(names);
-        if (names.size() < 1 || names.size() > 7) {
+        if (names.isEmpty() || names.size() > 7) {
             throw new IllegalArgumentException("유저는 1명 이상 7명 이하로 등록해야 합니다.");
         }
         if (distinctNames.size() != names.size()) {
-//            throw new IllegalArgumentException("유저는 ");
+            throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
         }
     }
 }
