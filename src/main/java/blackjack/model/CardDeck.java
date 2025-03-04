@@ -7,10 +7,10 @@ import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> cardDeck;
+    private final List<Card> cards;
 
     public CardDeck() {
-        cardDeck = initializeCardDeck();
+        cards = initializeCardDeck();
     }
 
     private List<Card> initializeCardDeck() {
@@ -24,8 +24,14 @@ public class CardDeck {
         return cards;
     }
 
-    public List<Card> getCardDeck() {
-        return Collections.unmodifiableList(cardDeck);
+    public List<Card> draw(final int drawSize) {
+        Collections.shuffle(cards);
+        List<Card> result = List.copyOf(cards.subList(0, drawSize));
+        cards.removeAll(result);
+        return result;
     }
 
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
 }
