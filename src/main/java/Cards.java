@@ -15,17 +15,37 @@ public class Cards {
     }
 
     public int sum() {
-        int sum = cards.stream()
-            .filter(card -> card.getCardNumber() != CardNumber.ACE)
+        int sumWithoutAce = cards.stream()
+            .filter(card -> !card.isAce())
             .mapToInt(card -> card.getCardNumber().getNumber())
             .sum();
+        int sumOfAce = getSumOfAce(sumWithoutAce);
+        return sumWithoutAce + sumOfAce;
+    }
 
-        return sum + aceNumber(sum);
+    private int getSumOfAce(int sumWithoutAce) {
+        int sumOfAce = 0;
+        int aceCardCount = getAceCardCount();
+        if (aceCardCount >= 2) {
+            sumOfAce += aceCardCount - 1;
+        }
+        if (aceCardCount >= 1) {
+            sumOfAce += aceNumber(sumWithoutAce);
+        }
+        return sumOfAce;
     }
 
     private int aceNumber(int sum) {
-        // TODO: ACE 1 or 11 처리 필요.
-        return 1;
+        if (sum + 11 > 21) {
+            return 1;
+        }
+        return 11;
+    }
+
+    private int getAceCardCount() {
+        return (int)cards.stream()
+            .filter(Card::isAce)
+            .count();
     }
 }
 

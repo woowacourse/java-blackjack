@@ -15,4 +15,8 @@ public class Card {
     public CardNumber getCardNumber() {
         return cardNumber;
     }
+
+    public boolean isAce() {
+        return cardNumber == CardNumber.ACE;
+    }
 }

@@ -17,4 +17,8 @@ public abstract class Gamer {
     }
 
     public abstract boolean canReceiveAdditionalCards();
+
+    public int getSumOfCards() {
+        return cards.sum();
+    }
 }

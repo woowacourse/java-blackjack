@@ -106,4 +106,30 @@ class BlackjackTest {
 
         assertThat(dealer.canReceiveAdditionalCards()).isFalse();
     }
+
+    @Test
+    @DisplayName("버스트되지 않으면 Ace는 11로 계산한다")
+    void aceNotBustTest1() {
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.ACE);
+        Dealer dealer = new Dealer();
+        dealer.addCard(card1);
+        dealer.addCard(card2);
+
+        assertThat(dealer.getSumOfCards()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("버스트되면 Ace는 1로 계산한다")
+    void aceNotBustTest2() {
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.TWO);
+        Card card3 = new Card(CardType.CLOVER, CardNumber.ACE);
+        Dealer dealer = new Dealer();
+        dealer.addCard(card1);
+        dealer.addCard(card2);
+        dealer.addCard(card3);
+
+        assertThat(dealer.getSumOfCards()).isEqualTo(13);
+    }
 }
