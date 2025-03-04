@@ -1,6 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Cards {
     
@@ -27,5 +29,23 @@ public class Cards {
     private boolean isContainsAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public Cards addCards(List<Card> providedCards) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.addAll(providedCards);
+        return new Cards(newCards);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Cards cards1 = (Cards) o;
+        return totalNumberSum == cards1.totalNumberSum && Objects.equals(cards, cards1.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards, totalNumberSum);
     }
 }

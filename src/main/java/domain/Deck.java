@@ -22,9 +22,9 @@ public class Deck {
         CACHE.addAll(temp);
     }
 
-    public static List<Card> provideTwoCards() {
+    public static List<Card> provideCards(int size) {
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < size; i++) {
             cards.add(CACHE.pollFirst());
         }
         return cards;

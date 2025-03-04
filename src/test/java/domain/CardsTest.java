@@ -45,4 +45,20 @@ public class CardsTest {
 
         assertThat(cards.calculateTotalCardNumber()).isEqualTo(7);
     }
+
+    @Test
+    void 카드리스트에_카드를_추가한다() {
+        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
+        Card card2 = new Card(Symbol.CLOVER, Number.TWO);
+        Card card3 = new Card(Symbol.DIAMOND, Number.THREE);
+        List<Card> cardList = List.of(card1, card2, card3);
+        Cards cards = new Cards(cardList);
+
+        Card providedCard = new Card(Symbol.CLOVER, Number.EIGHT);
+        Cards newCards = cards.addCards(List.of(providedCard));
+
+        List<Card> newCardList = List.of(card1, card2, card3, providedCard);
+        Cards expected = new Cards(newCardList);
+        assertThat(newCards).isEqualTo(expected);
+    }
 }

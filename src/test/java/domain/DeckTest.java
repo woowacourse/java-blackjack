@@ -16,7 +16,7 @@ public class DeckTest {
 
     @Test
     void 카드_두장을_분배한다() {
-        List<Card> twoCards = Deck.provideTwoCards();
+        List<Card> twoCards = Deck.provideCards(2);
 
         assertAll(
             () -> assertThat(twoCards).hasSize(2),
