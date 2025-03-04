@@ -23,4 +23,8 @@ public class Player {
     public List<Card> getOwnedCards() {
         return ownedCards.getCards();
     }
+
+    public String getName() {
+        return name;
+    }
 }

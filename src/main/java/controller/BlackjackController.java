@@ -7,13 +7,23 @@ import domain.Players;
 import java.util.Arrays;
 import java.util.List;
 import view.InputView;
+import view.OutputView;
 
 public class BlackjackController {
 
     private final InputView inputView;
+    private final OutputView outputView;
 
-    public BlackjackController(InputView inputView) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
+    public static void main(String[] args) {
+        final InputView inputView = new InputView();
+        final OutputView outputView = new OutputView();
+        BlackjackController blackjackController = new BlackjackController(inputView, outputView);
+        blackjackController.gameStart();
     }
 
     public void gameStart() {
@@ -31,5 +41,6 @@ public class BlackjackController {
 
         dealer.receive(dealer.passCard());
         dealer.receive(dealer.passCard());
+        outputView.printInitCards(dealer, players);
     }
 }

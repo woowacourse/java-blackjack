@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -27,5 +28,9 @@ public class Players {
         for (Player player : players) {
             player.receive(dealer.passCard());
         }
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

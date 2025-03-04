@@ -21,6 +21,14 @@ public class Card {
         return number.getScore();
     }
 
+    public TrumpNumber getNumber() {
+        return number;
+    }
+
+    public TrumpShape getShape() {
+        return shape;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
