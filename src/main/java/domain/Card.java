@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -12,8 +13,12 @@ public class Card {
         this.shape = shape;
     }
 
-    public static Card of(final TrumpNumber number, final TrumpShape shape){
+    public static Card of(final TrumpNumber number, final TrumpShape shape) {
         return new Card(number, shape);
+    }
+
+    public List<Integer> getScore() {
+        return number.getScore();
     }
 
     @Override
