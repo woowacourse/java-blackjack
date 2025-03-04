@@ -1,11 +1,6 @@
-import java.util.List;
 import java.util.Objects;
 
 public class Card {
-
-    private static final List<String> numbers = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Q", "K",
-            "J");
-
     private final CardNumber number;
     private final CardShape shape;
 
