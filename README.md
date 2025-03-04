@@ -32,11 +32,11 @@
 - [x] 카드 1장 뽑기
 
 ### Participant
-- [ ] 참여자의 이름 저장
-- [ ] 참여자가 보유한 `Cards` 저장
-- [ ] `Card` 추가 가능 여부 판단
-- [ ] 참여자가 보유한 `Cards`에 `Card` 추가
-- [ ] 다른 `Participant`와 비교한 `GameStatus` 계산
+- [x] 참여자의 이름 저장
+- [x] 참여자가 보유한 `Cards` 저장
+- [x] `Card` 추가 가능 여부 판단
+- [x] 참여자가 보유한 `Cards`에 `Card` 추가
+- [x] 다른 `Participant`와 비교한 `GameStatus` 계산
 
 ### Dealer
 - [ ] 카드 추가 여부 판단
