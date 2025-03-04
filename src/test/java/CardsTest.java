@@ -20,10 +20,12 @@ public class CardsTest {
         assertThat(cards.getCards()).contains(card);
     }
 
-    @DisplayName("카드의 합을 구할 수 있다")
+    @DisplayName("숫자 카드의 합을 구할 수 있다")
     @ParameterizedTest
     @CsvSource({
             "TWO, THREE, 5",
+            "TWO, FOUR, 6",
+            "TWO, FIVE, 7",
     })
     void test2(CardNumber number1, CardNumber number2, int expected) {
         //given
