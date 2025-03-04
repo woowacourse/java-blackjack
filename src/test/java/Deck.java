@@ -11,6 +11,9 @@ public class Deck {
     }
 
     public Card pick() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 부족합니다.");
+        }
         Card card = cards.getLast();
         cards.removeLast();
         return card;
