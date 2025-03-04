@@ -13,7 +13,6 @@ public class UserTest {
     @ParameterizedTest
     @MethodSource("userTestCase")
     void test(List<String> names) {
-        // given
         Assertions.assertThatCode(() -> new UserPick(names)).doesNotThrowAnyException();
     }
 

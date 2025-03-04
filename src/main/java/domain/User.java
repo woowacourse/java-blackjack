@@ -3,6 +3,9 @@ package domain;
 import java.util.List;
 
 public class User {
-    public User(List<String> names) {
+    private final String name;
+
+    public User(String name) {
+        this.name = name;
     }
 }
