@@ -9,6 +9,10 @@ public class WinnerDecider {
     }
 
     public WinningResult decide(int score) {
+        if (dealerScore > 21) {
+            return WinningResult.WIN;
+        }
+
         if (dealerScore == score) {
             return WinningResult.DRAW;
         }
