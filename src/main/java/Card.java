@@ -7,4 +7,12 @@ public class Card {
         this.cardType = cardType;
         this.cardNumber = cardNumber;
     }
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
 }

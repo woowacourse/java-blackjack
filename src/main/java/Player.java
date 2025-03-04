@@ -5,7 +5,7 @@ import java.util.List;
 public class Player {
 
     private final String name;
-    private final List<Card> cards = new ArrayList<>();
+    private final Cards cards = new Cards();
 
     public Player(String name) {
         this.name = name;
@@ -16,6 +16,10 @@ public class Player {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
+    }
+
+    public boolean isBust() {
+        return cards.sum() > 21;
     }
 }

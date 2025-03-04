@@ -30,4 +30,30 @@ class BlackjackTest {
 
         assertThat(player.getCards()).hasSize(2);
     }
+    
+    @Test
+    @DisplayName("21이하인 경우 버스트되지 않는다")
+    void additionalCardBustTest1() {
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.QUEEN);
+        Player player = new Player("Pobi");
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("21초과인 경우 버스트된다")
+    void additionalCardBustTest2() {
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.QUEEN);
+        Card card3 = new Card(CardType.CLOVER, CardNumber.EIGHT);
+        Player player = new Player("Pobi");
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
+
+        assertThat(player.isBust()).isTrue();
+    }
 }
