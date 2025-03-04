@@ -1,4 +1,7 @@
+import java.util.List;
+
 public class Card {
+    private final List<String> specialNumbers = List.of("Q", "K", "J");
 
     private final String value;
     private final String type;
@@ -9,7 +12,7 @@ public class Card {
     }
 
     public int getNumber() {
-        if (value.equals("Q") || value.equals("K") || value.equals("J")) {
+        if (specialNumbers.contains(value)) {
             return 10;
         }
         return 2;
