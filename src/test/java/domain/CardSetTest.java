@@ -27,4 +27,13 @@ public class CardSetTest {
         //when
         Assertions.assertThat(cardSet.getCards().size()).isEqualTo(52);
     }
+
+    @Test
+    void 카드셋_정적_팩토리_메서드_확인_2() {
+        //given
+        CardSet cardSet = CardSet.generateEmptySet();
+
+        //when
+        Assertions.assertThat(cardSet.getCards().size()).isEqualTo(0);
+    }
 }
