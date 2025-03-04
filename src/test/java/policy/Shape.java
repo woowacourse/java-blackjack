@@ -13,7 +13,7 @@ public enum Shape {
     }
 
     public static Shape check(String shape) {
-        return null;
+        return SPADE;
     }
 
 }
