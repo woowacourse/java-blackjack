@@ -8,6 +8,6 @@ public class Card {
     public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
         this.suit = suit;
-        this.value = 2;
+        value = Denomination.parseInt(denomination);
     }
 }

@@ -19,4 +19,27 @@ public enum Denomination {
     Denomination(String value) {
         this.value = value;
     }
+
+    public static int parseInt(Denomination input) {
+        for (Denomination denomination : values()) {
+            Integer value1 = matchIntValue(input, denomination);
+            if (value1 != null) {
+                return value1;
+            }
+        }
+        throw new IllegalArgumentException("Invalid denomination: " + input);
+    }
+
+    private static Integer matchIntValue(Denomination input, Denomination denomination) {
+        if(denomination.equals(input)) {
+            if(Character.isDigit(input.value.charAt(0))){
+                return Integer.parseInt(input.value);
+            }
+            if(input.equals(ACE)) {
+                return 11;
+            }
+            return 10;
+        }
+        return null;
+    }
 }
