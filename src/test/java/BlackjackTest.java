@@ -226,4 +226,24 @@ class BlackjackTest {
 
         assertThat(roundResult).isEqualTo(RoundResult.TIE);
     }
+
+    @Test
+    @DisplayName("블랙잭이 없다면 무승부로 처리한다.")
+    void winnerTest5() {
+        Player player1 = new Player("Pobi");
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.TWO);
+
+        Card card3 = new Card(CardType.HEART, CardNumber.JACK);
+        Card card4 = new Card(CardType.HEART, CardNumber.TWO);
+        player1.addCard(card1);
+        player1.addCard(card2);
+        dealer.addCard(card3);
+        dealer.addCard(card4);
+
+        RoundResult roundResult = RoundResult.judgeResult(player1, dealer);
+
+        assertThat(roundResult).isEqualTo(RoundResult.TIE);
+    }
 }
