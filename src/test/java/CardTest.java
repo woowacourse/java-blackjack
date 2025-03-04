@@ -36,8 +36,6 @@ public class CardTest {
     @ParameterizedTest
     @ValueSource(strings = {"1", "11", "12", "100"})
     void 생성자_숫자_검증_테스트(String value) {
-        // given
-
         // when & then
         assertThatThrownBy(() -> {
             new Card(value, "spade");
