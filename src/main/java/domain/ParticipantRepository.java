@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ParticipantRepository {
@@ -22,5 +23,16 @@ public class ParticipantRepository {
 
     public Participant getByName(String name) {
         return repository.get(name);
+    }
+
+    public void addAll(List<Participant> participants) {
+        participants
+                .forEach(participant -> repository.put(participant.getName(), participant));
+    }
+
+    public List<Participant> getAll() {
+        return repository.keySet().stream()
+                .map(repository::get)
+                .toList();
     }
 }

@@ -11,6 +11,10 @@ public class Participant {
         this.cards = cards;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
