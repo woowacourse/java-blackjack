@@ -1,4 +1,9 @@
+package blackjack.domain.gamer;
+
 import java.util.List;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public abstract class Gamer {
 

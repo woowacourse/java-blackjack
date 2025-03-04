@@ -1,3 +1,5 @@
+package blackjack.domain.card;
+
 public class Card {
 
     private final CardType cardType;

@@ -1,3 +1,7 @@
+package blackjack.domain;
+
+import blackjack.domain.gamer.Gamer;
+
 public enum RoundResult {
     WIN,
     LOSE,
