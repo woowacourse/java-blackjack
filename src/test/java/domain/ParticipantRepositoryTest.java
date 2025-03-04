@@ -39,4 +39,18 @@ public class ParticipantRepositoryTest {
         // then
         assertThat(participantRepository.getAll()).containsAll(participants);
     }
+
+    @DisplayName("딜러 혹은 참여자 이름을 통해 참여자를 조회한다")
+    @Test
+    void test3() {
+        //given
+        ParticipantRepository participantRepository = ParticipantRepository.getInstance();
+        participantRepository.addAll(List.of(new Participant("mimi", Cards.createEmpty())));
+
+        //when
+        Participant participant = participantRepository.getByName("mimi");
+
+        //then
+        assertThat(participant).isEqualTo(new Participant("mimi", Cards.createEmpty()));
+    }
 }
