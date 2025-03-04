@@ -2,14 +2,15 @@ package domain;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.List;
 import java.util.Objects;
 
 public class CardDeque {
 
     private Deque<Card> deque;
 
-    public CardDeque(Cards cards) {
-        this.deque = new ArrayDeque<>(cards.getCards());
+    public CardDeque(List<Card> shuffledCards) {
+        this.deque = new ArrayDeque<>(shuffledCards);
     }
 
     public Card getAndRemoveFrontCard() {
