@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("플레이어 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -24,5 +25,20 @@ public class PlayerTest {
         Player expectedPlayer = new Player("드라고", new Cards(
             List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK), drawCard)));
         assertThat(newPlayer).isEqualTo(expectedPlayer);
+    }
+
+    @Test
+    void 플레이어가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
+        Player drago = new Player("드라고", new Cards(
+                List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK),
+                        new Card(Symbol.HEART, Number.KING))));
+
+        Player duei = new Player("듀이", new Cards(
+                List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK))));
+
+        assertAll(
+                () -> assertThat(drago.checkExceedTwentyOne()).isTrue(),
+                () -> assertThat(duei.checkExceedTwentyOne()).isFalse()
+        );
     }
 }

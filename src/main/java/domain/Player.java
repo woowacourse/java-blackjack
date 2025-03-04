@@ -17,6 +17,10 @@ public class Player {
         return new Player(name, cards.addCards(providedCards));
     }
 
+    public boolean checkExceedTwentyOne() {
+        return cards.checkExceedTwentyOne();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

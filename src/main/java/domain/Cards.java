@@ -37,6 +37,10 @@ public class Cards {
         return new Cards(newCards);
     }
 
+    public boolean checkExceedTwentyOne() {
+        return totalNumberSum > 21;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
