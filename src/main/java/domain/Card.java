@@ -10,7 +10,4 @@ public record Card(
         this.number = number;
         this.emblem = emblem;
     }
-
-
-
 }

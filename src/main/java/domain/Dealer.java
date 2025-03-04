@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 public record Dealer(List<Card> hand) {

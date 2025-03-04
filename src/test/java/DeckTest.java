@@ -34,7 +34,6 @@ public class DeckTest {
     @Nested
     @DisplayName("카드를 순서대로 뽑는다.")
     class pickCard {
-
         @DisplayName("카드를 올바르게 뽑아온다.")
         @Test
         public void pickCard() throws Exception {
