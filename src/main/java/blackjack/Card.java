@@ -28,6 +28,10 @@ public class Card {
         }
     }
 
+    public CardValue getCardValue() {
+        return cardValue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

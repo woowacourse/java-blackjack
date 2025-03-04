@@ -22,4 +22,8 @@ public enum CardValue {
     CardValue(int defaultValue) {
         this.defaultValue = defaultValue;
     }
+
+    public int getDefaultValue() {
+        return defaultValue;
+    }
 }
