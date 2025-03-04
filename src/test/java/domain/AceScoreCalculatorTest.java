@@ -15,4 +15,15 @@ public class AceScoreCalculatorTest {
 
         assertThat(aceScore).isEqualTo(11);
     }
+
+    @Test
+    void 에이스가_한_개인_경우2(){
+        AceScoreCalculator aceScoreCalculator = new AceScoreCalculator();
+        int sum = 15;
+        int limit = 21;
+
+        int aceScore = aceScoreCalculator.calculateAceScore(sum, 1, limit);
+
+        assertThat(aceScore).isEqualTo(1);
+    }
 }
