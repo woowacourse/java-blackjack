@@ -9,7 +9,7 @@ import blackjack.domian.Deck;
 import blackjack.domian.Player;
 import blackjack.domian.Rank;
 import blackjack.domian.Suit;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -21,9 +21,9 @@ public class DealerTest {
     void 플레이어_수가_최대_10명을_넘으면_예외가_발생한다() {
         //given
         List<Player> players = List.of(
-                new Player(Set.of()), new Player(Set.of()), new Player(Set.of()), new Player(Set.of()),
-                new Player(Set.of()), new Player(Set.of()), new Player(Set.of()), new Player(Set.of()),
-                new Player(Set.of()), new Player(Set.of()), new Player(Set.of())
+                new Player(List.of()), new Player(List.of()), new Player(List.of()), new Player(List.of()),
+                new Player(List.of()), new Player(List.of()), new Player(List.of()), new Player(List.of()),
+                new Player(List.of()), new Player(List.of()), new Player(List.of())
         );
 
         //when & then
@@ -36,7 +36,7 @@ public class DealerTest {
     void 플레이어_수가_최소_2명을_넘지_않으면_예외가_발생한다() {
         //given
         List<Player> players = List.of(
-                new Player(Set.of())
+                new Player(List.of())
         );
 
         //when & then
@@ -50,9 +50,9 @@ public class DealerTest {
         //given
 
         List<Player> players = List.of(
-                new Player(new HashSet<>()),
-                new Player(new HashSet<>()),
-                new Player(new HashSet<>())
+                new Player(new ArrayList<>()),
+                new Player(new ArrayList<>()),
+                new Player(new ArrayList<>())
         );
         Stack<Card> cards = new Stack<>();
         cards.addAll(
