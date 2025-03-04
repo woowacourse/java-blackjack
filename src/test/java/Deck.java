@@ -1,6 +1,6 @@
 public class Deck {
 
     public Card pick() {
-        return null;
+        return new Card("2", "spade");
     }
 }
