@@ -50,7 +50,7 @@ public class Player {
         List<Integer> scores = card.getRank().getScore();
         int max = Integer.MIN_VALUE;
         for (int score : scores) {
-            int sum = solve(depth + 1, totalScore + score);
+            int sum = solve2(depth + 1, totalScore + score);
             if (sum > 21) {
                 continue;
             }

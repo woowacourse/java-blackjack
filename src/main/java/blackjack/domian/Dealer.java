@@ -25,7 +25,7 @@ public class Dealer {
         this.cards = new ArrayList<>();
     }
 
-    public void pickCars() {
+    public void pickCards() {
         cards.addAll(List.of(deck.draw(), deck.draw()));
     }
 
@@ -37,5 +37,36 @@ public class Dealer {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public void pickAdditionalCard() {
+        int maxScore = calculateMaxScore();
+        while (maxScore >= 0 && maxScore <= 16) {
+            cards.add(deck.draw());
+            maxScore = calculateMaxScore();
+        }
+    }
+
+    public int calculateMaxScore() {
+        return solve2(0, 0);
+    }
+
+    private int solve2(int depth, int totalScore) {
+        if (depth == cards.size()) {
+            return totalScore;
+        }
+
+        Card card = cards.get(depth);
+        List<Integer> scores = card.getRank().getScore();
+        int max = Integer.MIN_VALUE;
+        for (int score : scores) {
+            int sum = solve2(depth + 1, totalScore + score);
+            if (sum > 21) {
+                continue;
+            }
+            max = Math.max(max, sum);
+        }
+
+        return max;
     }
 }

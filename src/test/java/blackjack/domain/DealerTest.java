@@ -11,7 +11,6 @@ import blackjack.domian.Rank;
 import blackjack.domian.Suit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,7 +64,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(List.of(new Player(List.of()), new Player(List.of())), new Deck(deck));
 
         //when
-        dealer.pickCars();
+        dealer.pickCards();
 
         //then
         Assertions.assertThat(dealer.getCards())
@@ -78,7 +77,6 @@ public class DealerTest {
     @Test
     void 딜러는_한_플레이어에게_카드_2장씩_나누어준다() {
         //given
-
         List<Player> players = List.of(
                 new Player(new ArrayList<>()),
                 new Player(new ArrayList<>()),
@@ -102,10 +100,50 @@ public class DealerTest {
 
         //then
         assertThat(players.get(0).getCards())
-                .isEqualTo(Set.of(new Card(Suit.CLUB, Rank.FOUR), new Card(Suit.CLUB, Rank.FIVE)));
+                .isEqualTo(List.of(
+                        new Card(Suit.CLUB, Rank.FIVE),
+                        new Card(Suit.CLUB, Rank.FOUR)));
         assertThat(players.get(1).getCards())
-                .isEqualTo(Set.of(new Card(Suit.CLUB, Rank.TWO), new Card(Suit.CLUB, Rank.THREE)));
+                .isEqualTo(List.of(
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.TWO)));
         assertThat(players.get(2).getCards())
-                .isEqualTo(Set.of(new Card(Suit.CLUB, Rank.ACE), new Card(Suit.CLUB, Rank.ONE)));
+                .isEqualTo(List.of(
+                        new Card(Suit.CLUB, Rank.ONE),
+                        new Card(Suit.CLUB, Rank.ACE)));
+    }
+
+    @Test
+    void 딜러의_카드쌍의_합이_16이하인_경우_16초과가_될_때_까지_카드를_추가로_뽑는다() {
+        //given
+        List<Player> players = List.of(
+                new Player(new ArrayList<>()),
+                new Player(new ArrayList<>()),
+                new Player(new ArrayList<>())
+        );
+        Stack<Card> cards = new Stack<>();
+        cards.addAll(
+                List.of(
+                        new Card(Suit.CLUB, Rank.ACE),
+                        new Card(Suit.CLUB, Rank.ONE),
+                        new Card(Suit.CLUB, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.FOUR),
+                        new Card(Suit.CLUB, Rank.FIVE))
+        );
+        Deck deck = new Deck(cards);
+        Dealer dealer = new Dealer(players, deck);
+
+        //when
+        dealer.pickAdditionalCard();
+
+        //then
+        Assertions.assertThat(dealer.getCards())
+                .isEqualTo(List.of(
+                        new Card(Suit.CLUB, Rank.FIVE),
+                        new Card(Suit.CLUB, Rank.FOUR),
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.TEN)
+                ));
     }
 }
