@@ -11,15 +11,16 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BlackjackTest {
+
 //    @DisplayName("각 플레이어 마다 기본 카드 2장을 발급한다")
 //    @Test
 //    void give_two_cards() {
-//        blackjack.domain.Player player = new blackjack.domain.Player();
+//        Player player = new Player();
 //        Assertions.assertThat(player.getCards().size()).isEqualTo(2);
 //    }
 
-    @DisplayName("카드는 숫자와 모양을 가진다.")
     @Test
+    @DisplayName("카드는 숫자와 모양을 가진다.")
     void card() {
         Card card = new Card(CardNumber.EIGHT, CardShape.CLOVER);
         assertAll(
@@ -39,5 +40,13 @@ public class BlackjackTest {
 
         // then
         assertThat(cards.size()).isEqualTo(52);
+    }
+
+    @Test
+    @DisplayName("카드팩의 맨 뒤에서 카드를 한장 뽑는다")
+    void shuffle_and_deal_test() {
+        CardPack cardPack = new CardPack(new SortShuffle());
+        Card card = cardPack.getDeal();
+        assertThat(card).isInstanceOf(new Card(CardNumber.KING, CardShape.CLOVER));
     }
 }
