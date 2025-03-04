@@ -26,6 +26,6 @@ public class CardGroup {
     }
 
     public int countCards() {
-        return 1;
+        return cards.size();
     }
 }
