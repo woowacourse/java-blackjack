@@ -21,4 +21,8 @@ public abstract class Gamer {
     public int getSumOfCards() {
         return cards.sum();
     }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
 }

@@ -35,6 +35,12 @@ public class Cards {
         return sumOfAce;
     }
 
+    private int getAceCardCount() {
+        return (int)cards.stream()
+            .filter(Card::isAce)
+            .count();
+    }
+
     private int aceNumber(int sum) {
         if (sum + 11 > 21) {
             return 1;
@@ -42,10 +48,11 @@ public class Cards {
         return 11;
     }
 
-    private int getAceCardCount() {
-        return (int)cards.stream()
-            .filter(Card::isAce)
-            .count();
+    public boolean isBlackjack() {
+        if (cards.size() != 2) {
+            return false;
+        }
+        return sum() == 21;
     }
 }
 

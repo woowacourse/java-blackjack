@@ -142,4 +142,25 @@ class BlackjackTest {
         Stack<Card> cards = deck.getAll();
         assertThat(cards.stream().distinct().count()).isEqualTo(cards.size());
     }
+
+    @Test
+    @DisplayName("상대방만 버스트했다면 카드 숫자 합에 상관없이 승리한다")
+    void winnerTest() {
+        Player player1 = new Player("Pobi");
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.TWO);
+        Card card3 = new Card(CardType.CLOVER, CardNumber.KING);
+        Card card4 = new Card(CardType.CLOVER, CardNumber.QUEEN);
+        Card card5 = new Card(CardType.CLOVER, CardNumber.NINE);
+        player1.addCard(card1);
+        player1.addCard(card2);
+        dealer.addCard(card3);
+        dealer.addCard(card4);
+        dealer.addCard(card5);
+
+        RoundResult roundResult = RoundResult.judgeResult(player1, dealer);
+
+        assertThat(roundResult).isEqualTo(RoundResult.WIN);
+    }
 }
