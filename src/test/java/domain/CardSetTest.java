@@ -18,4 +18,13 @@ public class CardSetTest {
         //then
         Assertions.assertThat(cardSet).isInstanceOf(CardSet.class);
     }
+
+    @Test
+    void 카드셋_정적_팩토리_메서드_확인() {
+        //given
+        CardSet cardSet = CardSet.generateFullSet();
+
+        //when
+        Assertions.assertThat(cardSet.getCardSet().size()).isEqualTo(52);
+    }
 }
