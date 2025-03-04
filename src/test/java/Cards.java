@@ -22,7 +22,22 @@ public class Cards {
     }
 
     public int sum() {
-        return cards.stream().mapToInt(this::getCardNumber).sum();
+        final int sum = cards.stream().mapToInt(this::getCardNumber).sum();
+        boolean isContainAce = false;
+        for (Card card : cards) {
+            if (card.getNumber() == CardNumber.A) {
+                isContainAce = true;
+            }
+        }
+        if (sum > 21 && isContainAce) {
+            int result = cards.stream()
+                    .filter(card -> card.getNumber() != CardNumber.A)
+                    .mapToInt(this::getCardNumber)
+                    .sum();
+            result += CardNumber.A.getNumbers().get(1);
+            return result;
+        }
+        return sum;
     }
 
     public List<Card> getCards() {
