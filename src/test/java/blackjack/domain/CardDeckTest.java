@@ -12,8 +12,8 @@ class CardDeckTest {
     @Test
     void testCards() {
         CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card("스페이드", "2"));
-        cardDeck.add(new Card("스페이드", "8"));
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.TWO));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
         Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
 
@@ -24,8 +24,8 @@ class CardDeckTest {
     @Test
     void testCards_ace() {
         CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card("스페이드", "A"));
-        cardDeck.add(new Card("스페이드", "8"));
+        cardDeck.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
 
         Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
 

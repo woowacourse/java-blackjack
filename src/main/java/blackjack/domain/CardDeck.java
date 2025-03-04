@@ -16,8 +16,9 @@ public class CardDeck {
         List<Integer> sums = new ArrayList<>(List.of(0, 0));
 
         for (Card card : cards) {
-            List<Integer> score = card.checkScore();
+            Set<Integer> scoreSet = card.checkScore();
 
+            List<Integer> score = new ArrayList<>(scoreSet);
             if (score.size() == 1) {
                 //첫번째 경우, 반환되는 카드의 스코어가 1개뿐인 경우
                 sums.set(0, sums.get(0) + score.get(0)); //suma.get(0) 누적합
