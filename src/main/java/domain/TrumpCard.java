@@ -4,9 +4,9 @@ public class TrumpCard {
     private final CardShape cardShape;
     private final CardNumber cardNumber;
 
-    public TrumpCard(NumberGenerator numberGenerator) {
-        this.cardShape = CardShape.pickCardShape(numberGenerator.pickRangeOfNumber(1, 4));
-        this.cardNumber = CardNumber.pick(numberGenerator.pickRangeOfNumber(1, 13));
+    public TrumpCard(int cardShapeIndex, int cardNumberIndex) {
+        this.cardShape = CardShape.pickCardShape(cardShapeIndex);
+        this.cardNumber = CardNumber.pick(cardShapeIndex);
     }
 
     public CardShape getCardShape() {
