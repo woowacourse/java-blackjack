@@ -18,7 +18,7 @@ class CardTest {
         }
 
         @Test
-        void 에이스의_점수를_계산한다() {
+        void 에이스의_점수를_계산한다1() {
             //given
             final int limit = 21;
             final int score = 20;
@@ -29,6 +29,20 @@ class CardTest {
 
             //then
             assertThat(aceScore).isEqualTo(1);
+        }
+
+        @Test
+        void 에이스의_점수를_계산한다2() {
+            //given
+            final int limit = 21;
+            final int score = 10;
+
+            //when
+            final Card card = new Card(CardScore.ACE, CardType.CLOVER);
+            final int aceScore = card.calculateAceScore(score, limit);
+
+            //then
+            assertThat(aceScore).isEqualTo(11);
         }
     }
 }
