@@ -1,5 +1,6 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Card;
@@ -48,6 +49,16 @@ public class CardsTest {
         Cards otherCards = createCardsOfRanks(otherRanks);
         // then & when
         assertEquals(GameStatus.valueOf(gameStatusName), otherCards.determineGameStatus(cards));
+    }
+
+    @Test
+    @DisplayName("Card 1장 뽑기 기능 테스트")
+    void pickCardTest() {
+        // given
+        Cards cards = createCardsOfRanks(List.of(Rank.ACE));
+        Card card = cards.pickCard();
+        // when & then
+        assertThat(card).isNotNull();
     }
 
     private static Cards createCardsOfRanks(List<Rank> ranks) {

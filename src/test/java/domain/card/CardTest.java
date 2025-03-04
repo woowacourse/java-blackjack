@@ -16,6 +16,6 @@ public class CardTest {
         // given
         Card card = new Card(Rank.valueOf(rankName), Suit.CLOVER);
         // when & then
-        assertEquals(rankScore, card.calculateScore());
+        assertEquals(rankScore, card.rank().getValue());
     }
 }

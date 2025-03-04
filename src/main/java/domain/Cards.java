@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -18,7 +19,7 @@ public class Cards {
 
     public int calculateScore() {
         return cards.stream()
-                .map(Card::calculateScore)
+                .map(card -> card.rank().getValue())
                 .reduce(0, Integer::sum);
     }
 
@@ -29,6 +30,14 @@ public class Cards {
             return evaluateStatusByScore(cardsScore, otherCardsScore);
         }
         return evaluateStatusByGameOver(cardsScore, otherCardsScore);
+    }
+
+    public Card pickCard() {
+        return cards.removeFirst();
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 
     private GameStatus evaluateStatusByScore(int cardsScore, int otherCardsScore) {
