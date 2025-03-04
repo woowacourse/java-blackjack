@@ -1,3 +1,4 @@
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,5 +15,15 @@ public class CardTest {
         assertThatThrownBy(() -> {
             new Card(value, "spade");
         }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("숫자 리스트에 포함되는 값으로 카드를 생성한다")
+    @ParameterizedTest
+    @ValueSource(strings = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Q", "K", "J"})
+    void 카드_생성_테스트(String value) {
+        // when & then
+        assertThatCode(() -> {
+            new Card(value, "spade");
+        }).doesNotThrowAnyException();
     }
 }
