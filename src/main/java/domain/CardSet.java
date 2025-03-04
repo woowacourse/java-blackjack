@@ -6,8 +6,12 @@ import java.util.List;
 public class CardSet {
     private final List<Card> cards;
 
-    public CardSet(final List<Card> cards) {
+    private CardSet(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+    }
+
+    public static CardSet generateEmptySet() {
+        return new CardSet(new ArrayList<>());
     }
 
     public static CardSet generateFullSet() {
