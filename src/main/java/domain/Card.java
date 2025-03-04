@@ -16,4 +16,8 @@ public class Card {
     public CardType getType() {
         return type;
     }
+
+    public int calculateAceScore(final int score, final int limit) {
+        return 10;
+    }
 }
