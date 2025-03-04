@@ -26,4 +26,14 @@ class DealerTest {
         assertThat(dealer.getCards().hasSize(2)).isTrue();
     }
 
+    @Test
+    void 자신이_가진_카드의_합을_반환한다() {
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer(cardDeck);
+
+        dealer.drawSelf(3);
+        int expected = dealer.getCards().sumAll();
+
+        assertThat(dealer.calculateSumOfCards()).isEqualTo(expected);
+    }
 }

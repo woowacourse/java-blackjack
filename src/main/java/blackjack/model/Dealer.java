@@ -21,6 +21,10 @@ public class Dealer {
         cards.merge(drawCards);
     }
 
+    public int calculateSumOfCards() {
+        return cards.sumAll();
+    }
+
     public Cards getCards() {
         return cards;
     }
