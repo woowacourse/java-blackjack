@@ -3,11 +3,15 @@ package blackjack.controller;
 import blackjack.domain.CardDeck;
 import blackjack.domain.CardGenerator;
 import blackjack.domain.Dealer;
+import blackjack.domain.GameFinalResult;
+import blackjack.domain.GameResult;
+import blackjack.domain.GameRule;
 import blackjack.domain.Player;
 import blackjack.view.InputVIew;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
     private InputVIew inputView;
@@ -59,6 +63,17 @@ public class BlackjackController {
             outputView.displayExtraDealerCardStatus();
         }
 
-        //
+        // 딜러와 각 플레이어들의 카드 결과 보여주기
+        outputView.displayFinalCardStatus(dealer, players);
+
+        // 딜러와 플레이어들의 승패 결과 보여주기
+        GameFinalResult gameFinalResult = new GameFinalResult(new GameRule());
+        Map<GameResult, Integer> dealerResult = gameFinalResult.getDealerFinalResult(dealer, players);
+        outputView.displayDealerResult(dealerResult);
+        for (Player player : players) {
+            GameResult playerResult = gameFinalResult.getGameResultFromPlayer(player, dealer);
+            outputView.displayPlayerResult(player, playerResult);
+        }
+
     }
 }
