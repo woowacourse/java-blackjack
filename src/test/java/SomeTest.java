@@ -16,15 +16,21 @@ public class SomeTest {
     }
 
     @Test
-    @DisplayName("카드는 취급값을 갖는다.")
+    @DisplayName("카드는 고유의 숫자값을 갖는다.")
     public void test2() {
         assertThat(new Card(Denomination.TWO, Suit.CLUB)).extracting("value").isEqualTo(2);
     }
 
     @Test
-    @DisplayName("카드는 취급값을 갖는다.")
+    @DisplayName("카드는 고유의 숫자값을 갖는다. - 2")
     public void test3() {
         assertThat(new Card(Denomination.THREE, Suit.CLUB)).extracting("value").isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("카드는 고유의 숫자값을 갖는다. - 3")
+    public void test4() {
+        assertThat(new Card(Denomination.JACK, Suit.CLUB)).extracting("value").isEqualTo(10);
     }
 
 }
