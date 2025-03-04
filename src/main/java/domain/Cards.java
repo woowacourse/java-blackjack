@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards {
     private static final int BURST_LIMIT = 21;
-    public static int ans = 0;
+
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
