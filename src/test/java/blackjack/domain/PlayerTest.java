@@ -46,8 +46,8 @@ class PlayerTest {
         Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
         Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
 
-        player.addCards(card1);
-        player.addCards(card2);
+        player.addCard(card1);
+        player.addCard(card2);
 
         assertThat(player.calculateSum()).isEqualTo(18);
     }

@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hands {
@@ -16,7 +17,7 @@ public class Hands {
         cards.add(card);
     }
 
-    public int calculateSum(){
+    public int calculateSum() {
         int total = 0;
         for (Card card : cards) {
             total += card.getValue();
@@ -26,5 +27,9 @@ public class Hands {
 
     public boolean isSumBelow(final int criteria) {
         return calculateSum() <= criteria;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
