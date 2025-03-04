@@ -1,19 +1,15 @@
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import constant.CardNumber;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
 import constant.Emblem;
 import domain.Card;
 import domain.Dealer;
 import domain.Deck;
+import java.util.ArrayDeque;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 public class DealerTest {
     @Nested

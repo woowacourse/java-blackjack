@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 public class DeckTest {
 
-
     @Nested
     @DisplayName("덱 생성")
     class CreateDeck {
