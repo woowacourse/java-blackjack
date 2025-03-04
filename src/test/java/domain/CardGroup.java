@@ -17,6 +17,7 @@ public class CardGroup {
 
     public int calculateScoreWithOutAce() {
         return cards.stream()
+                .filter(card -> card.getScore() != CardScore.ACE)
                 .mapToInt(card -> card.getScore().cardScore)
                 .sum();
     }
