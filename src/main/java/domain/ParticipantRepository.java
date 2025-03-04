@@ -21,11 +21,11 @@ public class ParticipantRepository {
         return INSTANCE;
     }
 
-    public Participant getByName(String name) {
+    public Participant getByName(String name) { // TODO : 존재하지 않을 경우 예외처리
         return repository.get(name);
     }
 
-    public void addAll(List<Participant> participants) {
+    public void addAll(List<Participant> participants) { // TODO : 중복 될 경우 예외처리
         participants.forEach(
                 participant -> repository.put(participant.getName(), participant)
         );
