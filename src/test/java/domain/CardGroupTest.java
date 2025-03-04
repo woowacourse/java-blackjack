@@ -23,6 +23,16 @@ public class CardGroupTest {
         }
 
         @Test
+        void 카드를_한_장_넣는다(){
+            final Card card = new Card(CardScore.ACE, CardType.HEART);
+
+            final CardGroup cardGroup = new CardGroup();
+            cardGroup.addCard(card);
+
+            assertThat(cardGroup.countCards()).isEqualTo(1);
+        }
+
+        @Test
         void 카드_점수를_계산한다1() {
             //given
             final List<Card> cards = List.of(new Card(CardScore.TWO, CardType.DIAMOND), new Card(CardScore.THREE, CardType.HEART));
