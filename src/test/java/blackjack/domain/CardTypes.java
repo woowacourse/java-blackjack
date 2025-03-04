@@ -1,4 +1,4 @@
-package domain;
+package blackjack.domain;
 
 import blackjack.domian.Card;
 import blackjack.domian.Rank;

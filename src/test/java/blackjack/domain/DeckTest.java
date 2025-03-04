@@ -1,4 +1,4 @@
-package domain;
+package blackjack.domain;
 
 import blackjack.domian.Deck;
 import org.assertj.core.api.Assertions;
