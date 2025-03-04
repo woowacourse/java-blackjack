@@ -1,5 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Stack;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +32,7 @@ class BlackjackTest {
 
         assertThat(player.getCards()).hasSize(2);
     }
-    
+
     @Test
     @DisplayName("21이하인 경우 버스트되지 않는다")
     void additionalCardBustTest1() {
@@ -131,5 +133,13 @@ class BlackjackTest {
         dealer.addCard(card3);
 
         assertThat(dealer.getSumOfCards()).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("뽑히는 카드는 중복되지 않는다")
+    void randomCardsNotDuplicatedTest() {
+        Deck deck = new Deck(new RandomCardStrategy());
+        Stack<Card> cards = deck.getAll();
+        assertThat(cards.stream().distinct().count()).isEqualTo(cards.size());
     }
 }
