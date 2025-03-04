@@ -6,19 +6,12 @@ public class Card {
     private static final List<String> numbers = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Q", "K",
             "J");
 
-    private final String value;
-    private final String type;
+    private final CardNumber number;
+    private final CardShape shape;
 
-    public Card(String value, String type) {
-        validate(value);
-        this.value = value;
-        this.type = type;
-    }
-
-    private void validate(String value) {
-        if (!numbers.contains(value)) {
-            throw new IllegalArgumentException("카드 숫자는 2 ~ 10 사이 숫자만 가능합니다.");
-        }
+    public Card(CardNumber number, CardShape shape) {
+        this.number = number;
+        this.shape = shape;
     }
 
     @Override
@@ -30,11 +23,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return Objects.equals(value, card.value) && Objects.equals(type, card.type);
+        return Objects.equals(number, card.number) && Objects.equals(shape, card.shape);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, type);
+        return Objects.hash(number, shape);
     }
 }
