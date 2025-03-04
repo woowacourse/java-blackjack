@@ -12,6 +12,9 @@ public class WinnerDecider {
         if (dealerScore == score) {
             return WinningResult.DRAW;
         }
+        if (dealerScore > score) {
+            return WinningResult.LOSE;
+        }
         return null;
     }
 }

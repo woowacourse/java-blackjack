@@ -19,4 +19,17 @@ public class WinnerDeciderTest {
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.DRAW);
     }
+
+    @Test
+    void 딜러보다_점수가_낮다면_패배이다() {
+        //given
+        int dealerScore = 19;
+        WinnerDecider winnerDecider = new WinnerDecider(dealerScore);
+
+        //when
+        WinningResult result = winnerDecider.decide(18);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
+    }
 }
