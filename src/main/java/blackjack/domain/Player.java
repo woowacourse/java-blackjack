@@ -30,7 +30,7 @@ public class Player {
         return Collections.max(possibleSum);
     }
 
-    private boolean isBust() {
+    public boolean isBust() {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
         int totalScore = Collections.max(possibleSum);
         return totalScore > 21;
