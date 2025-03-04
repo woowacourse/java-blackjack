@@ -1,10 +1,13 @@
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
+import domain.BlackjackDeckGenerator;
+import domain.CardValue;
 import domain.Deck;
-import except.BlackJackException;
-import org.junit.jupiter.api.Assertions;
+import domain.Suit;
+import domain.TrumpCard;
+import domain.strategy.TestDrawStrategy;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -13,18 +16,11 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 
     @Test
-    void 숫자_트럼프_카드를_덱에서_뽑을_수_있다(){
-        Deck deck = new Deck();
-        String number = deck.drawCard();
-        assertThatCode(() -> Integer.parseInt(number))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    void 문자_트럼프_카드를_덱에서_뽑을_수_있다(){
-        Deck deck = new Deck();
-        String suit = deck.drawCard();
-        assertThatThrownBy(() -> Integer.parseInt(suit))
-                .isInstanceOf(BlackJackException.class);
+    void 트럼프_카드를_덱에서_뽑을_수_있다() {
+        List<TrumpCard> trumpCards = new ArrayList<>(List.of(new TrumpCard(Suit.CLOVER, CardValue.EIGHT),
+                new TrumpCard(Suit.DIAMOND, CardValue.EIGHT)));
+        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        assertThat(deck.drawCard())
+                .isEqualTo(trumpCards.get(0));
     }
 }
