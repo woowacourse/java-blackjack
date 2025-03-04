@@ -19,6 +19,10 @@ public class GivenCards {
         givenCards.add(randomCard);
     }
 
+    public boolean contains(Card card) {
+        return givenCards.contains(card);
+    }
+
     private void validate() {
 
     }

@@ -36,4 +36,6 @@ public class CardGiverTest {
         //then
         assertThat(cards.cards()).containsExactly(expectedCard1, expectedCard2);
     }
+
+
 }
