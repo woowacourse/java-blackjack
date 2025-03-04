@@ -12,7 +12,7 @@ public class PlayersTest {
 
     @Nested
     @DisplayName("플레이어 여러명 생성 테스트")
-    class CreatePlayers {
+    class CreatePlayersTest {
 
         @Test
         @DisplayName("2명 이상의 플레이어를 입력 받을 수 있다.")

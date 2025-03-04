@@ -14,7 +14,7 @@ public class PlayerTest {
 
     @Nested
     @DisplayName("플레이어 생성 테스트")
-    class CreatePlayer {
+    class CreatePlayerTest {
 
         @Test
         @DisplayName("한 명의 플레이어를 이름으로 생성할 수 있다.")

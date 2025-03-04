@@ -11,7 +11,7 @@ public class CardTest {
 
     @Nested
     @DisplayName("카드 생성 테스트")
-    class GenerateCards {
+    class GenerateCardsTest {
 
         @Test
         @DisplayName("카드가 52장이 만들어진다.")
