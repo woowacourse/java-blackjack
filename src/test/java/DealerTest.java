@@ -1,5 +1,6 @@
 import static org.assertj.core.api.Assertions.*;
 
+import constant.CardNumber;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class DealerTest {
         @DisplayName("Dealer는 카드를 뽑는다.")
         void test_pickCard() {
             //given
-            Card card = new Card(1, Emblem.CLUB);
+            Card card = new Card(CardNumber.TWO, Emblem.CLUB);
             final var d = new ArrayDeque<>(List.of(card));
             final var deck = new Deck(d);
             var dealer = new Dealer();

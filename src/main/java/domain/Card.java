@@ -1,13 +1,10 @@
 package domain;
 
+import constant.CardNumber;
 import constant.Emblem;
 
 public record Card(
-        int number,
+        CardNumber number,
         Emblem emblem
 ) {
-    public Card(final int number, final Emblem emblem) {
-        this.number = number;
-        this.emblem = emblem;
-    }
 }
