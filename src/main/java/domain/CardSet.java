@@ -1,13 +1,15 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class CardSet {
     private final List<Card> cards;
 
     private CardSet(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = cards;
     }
 
     public static CardSet generateEmptySet() {
@@ -18,6 +20,10 @@ public class CardSet {
         //52장 만들기
         List<Card> initializedCardSet = initializeCardSet();
         return new CardSet(initializedCardSet);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(this.cards);
     }
 
     private static List<Card> initializeCardSet() {
@@ -51,5 +57,19 @@ public class CardSet {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CardSet cardSet = (CardSet) o;
+        return Objects.equals(cards, cardSet.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cards);
     }
 }
