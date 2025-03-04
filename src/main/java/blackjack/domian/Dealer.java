@@ -59,14 +59,18 @@ public class Dealer {
         Card card = cards.get(depth);
         List<Integer> scores = card.getRank().getScore();
         int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
         for (int score : scores) {
             int sum = solve2(depth + 1, totalScore + score);
             if (sum > 21) {
+                min = Math.min(min, sum);
                 continue;
             }
             max = Math.max(max, sum);
         }
-
+        if (max == Integer.MIN_VALUE) {
+            return min;
+        }
         return max;
     }
 }
