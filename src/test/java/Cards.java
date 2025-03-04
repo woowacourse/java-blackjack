@@ -22,22 +22,36 @@ public class Cards {
     }
 
     public int sum() {
-        final int sum = cards.stream().mapToInt(this::getCardNumber).sum();
-        boolean isContainAce = false;
-        for (Card card : cards) {
-            if (card.getNumber() == CardNumber.A) {
-                isContainAce = true;
+        int notASum = cards.stream()
+                .filter(card -> card.getNumber() != CardNumber.A)
+                .mapToInt(card -> card.getNumber().getNumbers().getFirst())
+                .sum();
+
+        List<List<Integer>> choices = cards.stream()
+                .filter(card -> card.getNumber() == CardNumber.A)
+                .map(card -> card.getNumber().getNumbers()).toList();
+
+        if (notASum + choices.size() > 21) {
+            return notASum + choices.size();
+        }
+
+        int aSum = dfs(choices, 0, notASum);
+
+        return aSum;
+    }
+
+    private int dfs(List<List<Integer>> choicesList, int index, int sum) {
+        if (index == choicesList.size()) {
+            return sum;
+        }
+        int max = 0;
+        for (int choice : choicesList.get(index)) {
+            int result = Math.max(dfs(choicesList, index + 1, sum + choice), max);
+            if (result <= 21) {
+                max = result;
             }
         }
-        if (sum > 21 && isContainAce) {
-            int result = cards.stream()
-                    .filter(card -> card.getNumber() != CardNumber.A)
-                    .mapToInt(this::getCardNumber)
-                    .sum();
-            result += CardNumber.A.getNumbers().get(1);
-            return result;
-        }
-        return sum;
+        return max;
     }
 
     public List<Card> getCards() {
