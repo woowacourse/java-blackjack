@@ -13,7 +13,7 @@ public class Deck {
 
     private void validateDuplicateCard(final Queue<Card> deck) {
         if (deck.stream().distinct().count() != deck.size()) {
-            throw new IllegalArgumentException("덱에는 중복된 카드가 들어올 수 없습니다.!");
+            throw new IllegalArgumentException("덱에는 중복된 카드가 들어올 수 없습니다!");
         }
     }
 

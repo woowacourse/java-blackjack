@@ -1,6 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import constant.Emblem;
 import domain.Card;
 import domain.Deck;
 import java.util.ArrayDeque;
@@ -20,7 +21,7 @@ public class DeckTest {
         @Test
         public void validateDuplicate() throws Exception {
             // given
-            final Card club = new Card(1, "club");
+            final Card club = new Card(1, Emblem.CLUB);
             final var q = new ArrayDeque<>(List.of(club, club));
 
             // when & then
@@ -38,9 +39,9 @@ public class DeckTest {
         @Test
         public void pickCard() throws Exception {
             // given
-            final var d = new ArrayDeque<>(List.of(new Card(1, "club")));
+            final var d = new ArrayDeque<>(List.of(new Card(1, Emblem.CLUB)));
             final var deck = new Deck(d);
-            final var expected = new Card(1, "club");
+            final var expected = new Card(1, Emblem.CLUB);
 
             // when
             final var actual = deck.pickCard();
