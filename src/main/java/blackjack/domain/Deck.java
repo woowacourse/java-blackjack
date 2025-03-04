@@ -1,8 +1,6 @@
 package blackjack.domain;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public class Deck implements CardHandInitializer {
     
@@ -13,14 +11,17 @@ public class Deck implements CardHandInitializer {
     }
     
     private Deque<Card> initCards() {
-        final Deque<Card> cards = new ArrayDeque<>();
+        final List<Card> cards = new ArrayList<>();
         
         for (int number = 1; number <= 13; number++) {
             for (CardShape shape : CardShape.values()) {
-                cards.offer(new Card(number, shape));
+                cards.add(new Card(number, shape));
             }
         }
-        return cards;
+        
+        Collections.shuffle(cards);
+        
+        return new ArrayDeque<>(cards);
     }
     
     public Card draw() {
