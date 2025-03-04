@@ -1,10 +1,10 @@
-package balckjack;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import balckjack.card.Card;
-import balckjack.card.CardShape;
-import balckjack.card.CardValue;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
