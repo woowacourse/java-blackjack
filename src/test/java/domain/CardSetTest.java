@@ -22,4 +22,17 @@ public class CardSetTest {
         //when
         Assertions.assertThat(cardSet.getCards().size()).isEqualTo(0);
     }
+
+    @Test
+    void 카드_뽑기() {
+        //given
+        CardSet cardSet = CardSet.generateFullSet();
+
+        //when
+        Card card = cardSet.draw();
+
+        //then
+        Assertions.assertThat(cardSet.getCards().size()).isEqualTo(51);
+        Assertions.assertThat(card).isInstanceOf(Card.class);
+    }
 }
