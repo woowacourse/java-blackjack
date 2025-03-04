@@ -13,9 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
+    Stack<Card> deck;
+
+    @BeforeEach
+    public void setUp() {
+        deck = new Stack<>();
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                deck.add(new Card(suit, rank));
+            }
+        }
+
+    }
 
     @Test
     void 플레이어_수가_최대_10명을_넘으면_예외가_발생한다() {
@@ -43,6 +57,22 @@ public class DealerTest {
         assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 수는 최소 2명입니다.");
+    }
+
+    @Test
+    void 딜러는_본인의_카드_2장을_스스로_뽑는다() {
+        //given
+        Dealer dealer = new Dealer(List.of(new Player(List.of()), new Player(List.of())), new Deck(deck));
+
+        //when
+        dealer.pickCars();
+
+        //then
+        Assertions.assertThat(dealer.getCards())
+                .isEqualTo(List.of(
+                        new Card(Suit.CLUB, Rank.ACE),
+                        new Card(Suit.CLUB, Rank.KING)
+                ));
     }
 
     @Test

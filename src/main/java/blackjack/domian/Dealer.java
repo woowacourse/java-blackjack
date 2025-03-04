@@ -1,5 +1,7 @@
 package blackjack.domian;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Dealer {
@@ -9,6 +11,7 @@ public class Dealer {
 
     private final List<Player> players;
     private final Deck deck;
+    private final List<Card> cards;
 
     public Dealer(List<Player> players, Deck deck) {
         if (players.size() > PLAYER_MAX_SIZE) {
@@ -19,11 +22,20 @@ public class Dealer {
         }
         this.players = players;
         this.deck = deck;
+        this.cards = new ArrayList<>();
+    }
+
+    public void pickCars() {
+        cards.addAll(List.of(deck.draw(), deck.draw()));
     }
 
     public void handOutCard() {
         for (Player player : players) {
             player.send(deck.draw(), deck.draw());
         }
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
