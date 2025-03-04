@@ -13,7 +13,7 @@ public class CardSetTest {
         List<Card> cards = new ArrayList<>();
 
         //when
-        CardSet cardSet = new CardTest(cards);
+        CardSet cardSet = new CardSet(cards);
 
         //then
         Assertions.assertThat(cardSet).isInstanceOf(CardSet.class);
