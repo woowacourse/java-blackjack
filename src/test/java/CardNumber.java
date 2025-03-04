@@ -1,7 +1,7 @@
 import java.util.List;
 
 public enum CardNumber {
-    A(List.of(1, 11)),
+    A(List.of(11, 1)),
     TWO(List.of(2)),
     THREE(List.of(3)),
     FOUR(List.of(4)),

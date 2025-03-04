@@ -58,4 +58,25 @@ public class CardsTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @DisplayName("A를 1로 판단할 수 있다.")
+    @ParameterizedTest
+    @CsvSource({
+            "A, JACK, TEN, 21",
+            "A, QUEEN, FIVE, 16",
+            "A, SIX, FIVE, 12"
+    })
+    void 문자_카드_합_구하기(CardNumber number1, CardNumber number2, CardNumber number3, int expected) {
+        //given
+        Card card1 = new Card(number1, CardShape.CLOVER);
+        Card card2 = new Card(number2, CardShape.CLOVER);
+        Card card3 = new Card(number3, CardShape.CLOVER);
+        Cards cards = Cards.of(List.of(card1, card2, card3));
+
+        //when
+        int actual = cards.sum();
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
