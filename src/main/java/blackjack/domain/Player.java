@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,8 +11,11 @@ public class Player {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 8;
     
+    private final String name;
+    
     public Player(final String name) {
         validateName(name);
+        this.name = name;
     }
     
     private void validateName(String name) {
@@ -22,8 +26,13 @@ public class Player {
         }
     }
     
-    public static void createPlayers(final List<String> playerNames) {
+    public static List<Player> createPlayers(final List<String> playerNames) {
         validatePlayers(playerNames);
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            players.add(new Player(playerName));
+        }
+        return players;
     }
     
     private static void validatePlayers(final List<String> playerNames) {
@@ -40,5 +49,9 @@ public class Player {
     
     private static boolean hasDuplicatedName(final List<String> playerNames) {
         return new HashSet<>(playerNames).size() != playerNames.size();
+    }
+    
+    public String getName() {
+        return name;
     }
 }
