@@ -22,15 +22,15 @@ public class Cards {
     }
 
     public int sum() {
-        return cards.stream()
-                .mapToInt(card -> {
-                    CardNumber number = card.getNumber();
-                    return number.getNumbers().getFirst();
-                })
-                .sum();
+        return cards.stream().mapToInt(this::getCardNumber).sum();
     }
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    private int getCardNumber(Card card) {
+        CardNumber number = card.getNumber();
+        return number.getNumbers().getFirst();
     }
 }
