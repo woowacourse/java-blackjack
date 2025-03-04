@@ -1,8 +1,9 @@
 import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.Card;
 import domain.Denomination;
 import domain.Suit;
 
-import javax.smartcardio.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,5 +14,5 @@ public class SomeTest {
     public void test1() {
         assertThat(new Card(Denomination.ACE, Suit.CLUB)).isInstanceOf(Card.class);
     }
-    
+
 }
