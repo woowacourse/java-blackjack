@@ -1,17 +1,18 @@
-import static domain.Denomination.*;
-import static domain.Suit.*;
+package domain;
+
+import static domain.Denomination.ACE;
+import static domain.Denomination.JACK;
+import static domain.Denomination.THREE;
+import static domain.Denomination.TWO;
+import static domain.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.Ace;
-import domain.Card;
-import domain.Denomination;
-import domain.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class SomeTest {
+public class CardTest {
 
     @Nested
     @DisplayName("카드 생성 테스트")
@@ -47,30 +48,30 @@ public class SomeTest {
         }
     }
 
+    @Nested
+    @DisplayName("ACE 테스트")
+    class AceTest {
+        @Test
+        @DisplayName("ACE는 ACE임을 알릴 수 있다")
+        public void test1() {
+            Card clubAce = new Card(ACE, CLUB);
+            Card clubTwo = new Card(TWO, CLUB);
 
-    @Test
-    @DisplayName("ACE는 ACE임을 알릴 수 있다")
-    public void test1() {
-        Card clubAce = new Card(ACE, CLUB);
-        Card clubTwo = new Card(TWO, CLUB);
+            assertAll(() -> assertThat(clubAce.isAce()).isTrue(),
+                    () -> assertThat(clubTwo.isAce()).isFalse());
+        }
 
-        assertAll(() -> assertThat(clubAce.isAce()).isTrue(),
-                () -> assertThat(clubTwo.isAce()).isFalse());
+        @Test
+        @DisplayName("ACE는 고유의 숫자값을 1로 바꿀 수 있다.")
+        public void test2() {
+            // given
+            Ace clubAce = new Ace(ACE, CLUB);
+
+            // when
+            clubAce.setValueToOne();
+
+            // then
+            assertThat(clubAce.getValue()).isEqualTo(1);
+        }
     }
-
-
-
-    @Test
-    @DisplayName("ACE는 고유의 숫자값을 1로 바꿀 수 있다.")
-    public void test2() {
-        // given
-        Ace clubAce = new Ace(ACE, CLUB);
-
-        // when
-        clubAce.setValueToOne();
-
-        // then
-        assertThat(clubAce.getValue()).isEqualTo(1);
-    }
-
 }
