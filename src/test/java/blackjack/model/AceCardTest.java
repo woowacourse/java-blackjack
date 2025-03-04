@@ -17,4 +17,15 @@ public class AceCardTest {
         // then
         assertThat(cardShape).isEqualTo(CardShape.CLOVER);
     }
+
+    @Test
+    void 에이스_카드_점수를_반환한다() {
+        // given
+        AceCard card = new AceCard(CardShape.CLOVER);
+
+        // when
+        int cardPoint = card.getPoint();
+        // then
+        assertThat(cardPoint).isEqualTo(1);
+    }
 }
