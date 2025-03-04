@@ -57,4 +57,15 @@ public class DealerTest {
             () -> assertThat(notExceedDealer.checkExceedTwentyOne()).isFalse()
         );
     }
+
+    @Test
+    void 딜러가_가진_카드리스트의_총합을_반환한다() {
+        Dealer dealer = new Dealer(new Cards(
+                List.of(
+                        new Card(Symbol.DIAMOND, Number.EIGHT),
+                        new Card(Symbol.DIAMOND, Number.JACK),
+                        new Card(Symbol.HEART, Number.FOUR))));
+
+        assertThat(dealer.getTotalNumberSum()).isEqualTo(22);
+    }
 }

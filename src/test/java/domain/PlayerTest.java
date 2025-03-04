@@ -41,4 +41,14 @@ public class PlayerTest {
                 () -> assertThat(duei.checkExceedTwentyOne()).isFalse()
         );
     }
+
+    @Test
+    void 플레이어의_이름과_카드리스트의_총합을_반환한다() {
+        Player player = new Player("드라고", new Cards(
+                List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
+                        new Card(Symbol.DIAMOND, Number.JACK),
+                        new Card(Symbol.HEART, Number.FOUR))));
+
+        assertThat(player.getTotalNumberSum()).isEqualTo(22);
+    }
 }

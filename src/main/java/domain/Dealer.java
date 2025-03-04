@@ -23,6 +23,10 @@ public class Dealer {
         return cards.checkExceedTwentyOne();
     }
 
+    public int getTotalNumberSum() {
+        return cards.calculateTotalCardNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

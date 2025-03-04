@@ -21,6 +21,14 @@ public class Player {
         return cards.checkExceedTwentyOne();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getTotalNumberSum() {
+        return cards.calculateTotalCardNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
