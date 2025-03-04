@@ -14,9 +14,12 @@ public class GivenCards {
         return new GivenCards(new ArrayList<>());
     }
 
-    public void add(Card randomCard) {
-        validate();
+    public boolean addUnique(Card randomCard) {
+        if (contains(randomCard)) {
+            return false;
+        }
         givenCards.add(randomCard);
+        return true;
     }
 
     public boolean contains(Card card) {

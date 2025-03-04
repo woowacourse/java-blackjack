@@ -9,9 +9,10 @@ import org.junit.jupiter.api.Test;
 public class CardGiverTest {
 
     static class TestRandomGenerator implements RandomGenerator<Card> {
-        Card expectedCard1 = new Card(CardNumberType.SIX, CardType.CLOVER);
+        Card expectedCard1 = new Card(CardNumberType.FIVE, CardType.SPACE);
         Card expectedCard2 = new Card(CardNumberType.FIVE, CardType.SPACE);
-        List<Card> testCards = List.of(expectedCard1, expectedCard2);
+        Card expectedCard3 = new Card(CardNumberType.SIX, CardType.CLOVER);
+        List<Card> testCards = List.of(expectedCard1, expectedCard2, expectedCard3);
         int index = 0;
 
         @Override
@@ -27,8 +28,8 @@ public class CardGiverTest {
         RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
         CardGiver cardGiver = new CardGiver(randomGenerator, GivenCards.createEmpty());
 
-        Card expectedCard1 = new Card(CardNumberType.SIX, CardType.CLOVER);
-        Card expectedCard2 = new Card(CardNumberType.FIVE, CardType.SPACE);
+        Card expectedCard1 = new Card(CardNumberType.FIVE, CardType.SPACE);
+        Card expectedCard2 = new Card(CardNumberType.SIX, CardType.CLOVER);
 
         //when
         Cards cards = cardGiver.giveDefault();
@@ -36,6 +37,4 @@ public class CardGiverTest {
         //then
         assertThat(cards.cards()).containsExactly(expectedCard1, expectedCard2);
     }
-
-
 }

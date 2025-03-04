@@ -17,13 +17,14 @@ public class CardGiver {
 
     public Cards giveDefault() {
         List<Card> cards = new ArrayList<>();
-        IntStream.range(0, DEFAULT_CARD_GIVE_COUNT)
-                .forEach(index -> {
-                    Card randomCard = randomGenerator.generate();
-                    givenCards.add(randomCard);
-                    cards.add(randomCard);
-                }
-        );
+        while (cards.size() < DEFAULT_CARD_GIVE_COUNT) {
+            Card randomCard = randomGenerator.generate();
+            boolean isUnique = givenCards.addUnique(randomCard);
+            // TODO : depth 2->1 줄이기
+            if(isUnique) {
+                cards.add(randomCard);
+            }
+        }
         return new Cards(cards);
     }
 }
