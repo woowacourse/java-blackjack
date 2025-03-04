@@ -17,7 +17,7 @@ class CardDeckTest {
 
         // given
         // when
-        final List<String> cards = CardDeck.getCards();
+        final List<Card> cards = CardDeck.getCards();
 
         // then
         Assertions.assertThat(cards.size()).isEqualTo(52);

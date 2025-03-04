@@ -13,8 +13,8 @@ class CardTest {
     void newCard() {
 
         // given
-        final String suit = "하트";
-        final String rank = "3";
+        final SuitType suit = SuitType.HEARTS;
+        final RankType rank = RankType.FIVE;
 
         // when
         final Card card = new Card(suit, rank);
