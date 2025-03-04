@@ -9,11 +9,12 @@ import org.junit.jupiter.api.Test;
 public class CardGroupTest {
 
     @Nested
-    class CardGroupConstructor{
+    class CardGroupConstructor {
         @Test
         void 카드_그룹을_생성한다() {
             //given
-            final List<Card> cards = List.of(new Card(CardScore.ACE, CardType.DIAMOND), new Card(CardScore.EIGHT, CardType.HEART));
+            final List<Card> cards = List.of(new Card(CardScore.ACE, CardType.DIAMOND),
+                    new Card(CardScore.EIGHT, CardType.HEART));
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
@@ -23,7 +24,7 @@ public class CardGroupTest {
         }
 
         @Test
-        void 카드를_한_장_넣는다(){
+        void 카드를_한_장_넣는다() {
             final Card card = new Card(CardScore.ACE, CardType.HEART);
 
             final CardGroup cardGroup = new CardGroup();
@@ -33,7 +34,7 @@ public class CardGroupTest {
         }
 
         @Test
-        void 카드를_두_장_넣는다(){
+        void 카드를_두_장_넣는다() {
             final Card card = new Card(CardScore.ACE, CardType.HEART);
             final Card card2 = new Card(CardScore.ACE, CardType.HEART);
 
@@ -47,7 +48,8 @@ public class CardGroupTest {
         @Test
         void 카드_점수를_계산한다1() {
             //given
-            final List<Card> cards = List.of(new Card(CardScore.TWO, CardType.DIAMOND), new Card(CardScore.THREE, CardType.HEART));
+            final List<Card> cards = List.of(new Card(CardScore.TWO, CardType.DIAMOND),
+                    new Card(CardScore.THREE, CardType.HEART));
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
@@ -60,7 +62,8 @@ public class CardGroupTest {
         @Test
         void 카드_점수를_계산한다2() {
             //given
-            final List<Card> cards = List.of(new Card(CardScore.THREE, CardType.DIAMOND), new Card(CardScore.FOUR, CardType.HEART));
+            final List<Card> cards = List.of(new Card(CardScore.THREE, CardType.DIAMOND),
+                    new Card(CardScore.FOUR, CardType.HEART));
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
@@ -68,6 +71,19 @@ public class CardGroupTest {
 
             //then
             assertThat(score).isEqualTo(7);
+        }
+
+        @Test
+        void 카드에_에이스가_포함되어_있을때_점수를_계산한다() {
+            //given
+            final List<Card> cards = List.of(new Card(CardScore.JACK, CardType.DIAMOND), new Card(CardScore.ACE, CardType.HEART));
+
+            //when
+            final CardGroup cardGroup = new CardGroup(cards);
+            final int score = cardGroup.calculateScore();
+
+            //then
+            assertThat(score).isEqualTo(21);
         }
     }
 }
