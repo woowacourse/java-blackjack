@@ -30,6 +30,6 @@ public class CardGroup {
     }
 
     public int calculateAceScore() {
-        return 0;
+        return 11;
     }
 }
