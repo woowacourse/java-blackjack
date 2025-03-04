@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class CardTypeTest {
+class CardSuitTest {
 
     @DisplayName("카드 값이 다르다면 에러를 반환한다.")
     @Test
@@ -15,7 +15,7 @@ class CardTypeTest {
         // given
 
         // when & then
-        assertThatThrownBy(() -> CardType.ACE.validate(8))
+        assertThatThrownBy(() -> CardSuit.ACE.validate(8))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_CARD_VALUE.getMessage());
     }
@@ -25,7 +25,7 @@ class CardTypeTest {
     @ValueSource(ints = {1, 11})
     void test1(int value) {
         // given
-        CardType ace = CardType.ACE;
+        CardSuit ace = CardSuit.ACE;
 
         // when && then
         assertThatCode(() -> ace.validate(value))

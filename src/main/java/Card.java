@@ -1,10 +1,10 @@
 import java.util.Objects;
 
 public class Card {
-    private final CardType cardType;
+    private final CardSuit cardType;
     private final int value;
 
-    public Card(CardType cardType, int value) {
+    public Card(CardSuit cardType, int value) {
         this.cardType = cardType;
         this.value = value;
     }

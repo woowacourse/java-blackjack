@@ -11,7 +11,7 @@ class DeckTest {
     @Test
     void test6() {
         // given
-        List<Card> cards = List.of(new Card(CardType.ACE, 1));
+        List<Card> cards = List.of(new Card(CardSuit.ACE, 1));
 
         // when & then
 
@@ -21,7 +21,7 @@ class DeckTest {
     @Test
     void test1() {
         // given
-        List<Card> cards = List.of(new Card(CardType.ACE, 1));
+        List<Card> cards = List.of(new Card(CardSuit.ACE, 1));
 
         // when & then
         assertThatThrownBy(() -> new Deck(cards))

@@ -9,7 +9,7 @@ class CardTest {
     @Test
     void test1() {
         // given & when
-        Card card = new Card(CardType.ACE, 1);
+        Card card = new Card(CardSuit.ACE, 1);
 
         // then
         assertThat(card.getValue()).isEqualTo(1);
@@ -19,8 +19,8 @@ class CardTest {
     @Test
     void test2() {
         // given
-        Card card = new Card(CardType.ACE, 1);
-        Card comparedCard = new Card(CardType.ACE, 1);
+        Card card = new Card(CardSuit.ACE, 1);
+        Card comparedCard = new Card(CardSuit.ACE, 1);
 
         // when
         boolean actual = card.equals(comparedCard);
