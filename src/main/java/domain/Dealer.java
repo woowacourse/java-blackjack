@@ -2,8 +2,8 @@ package domain;
 
 public class Dealer extends Participant  {
 
-    protected Dealer(String name) {
-        super(name);
+    protected Dealer() {
+        super("딜러");
     }
 
     @Override
