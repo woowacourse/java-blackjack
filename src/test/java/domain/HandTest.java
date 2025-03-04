@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class HandTest {
 
@@ -49,5 +50,19 @@ class HandTest {
 
         // then
         assertThat(hand.getSumOfRank()).isEqualTo(6);
+    }
+
+    @DisplayName("버스트이면 true, 아니면 false를 반환한다.")
+    @Test
+    @CsvSource(value = {
+            "1, false", "21, false", "22, true"
+    })
+    void 버스트이면_true_아니면_false를_반환한다(final int sumOfRank, final boolean isBusted) {
+
+        // given
+        final Player player = new Player(new Nickname("hihi"), new Hand(new ArrayList<>()));
+
+        // when & then
+        assertThat(player.isBusted(sumOfRank)).isEqualTo(isBusted);
     }
 }
