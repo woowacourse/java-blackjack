@@ -16,29 +16,26 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class PlayerTest {
+public class DealerTest {
 
     @Test
-    void 카드의_합이_21_이하면_버스트가_아니다() {
+    void 카드의_합이_16_초과면_뽑을수_없다() {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
-                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J)));
+                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.NINE)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
         Dealer dealer = new Dealer(new DrawPolicy());
         dealer.addDraw(deck.drawCard());
         dealer.addDraw(deck.drawCard());
-        assertThat(dealer.isBurst()).isFalse();
+        assertThat(dealer.isDrawable()).isFalse();
     }
 
     @Test
-    void 카드의_합이_21_초과면_버스트다() {
+    void 카드의_합이_16_이하면_뽑을수_있다() {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.DIAMOND, CardValue.K)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
         Dealer dealer = new Dealer(new DrawPolicy());
-        dealer.addDraw(deck.drawCard());
-        dealer.addDraw(deck.drawCard());
-        dealer.addDraw(deck.drawCard());
-        assertThat(dealer.isBurst()).isTrue();
+        assertThat(dealer.isDrawable()).isTrue();
     }
 }
