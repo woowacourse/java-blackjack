@@ -24,4 +24,7 @@ public class Hands {
         return total;
     }
 
+    public boolean isSumBelow(final int criteria) {
+        return calculateSum() <= criteria;
+    }
 }
