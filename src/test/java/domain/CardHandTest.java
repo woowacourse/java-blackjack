@@ -1,8 +1,10 @@
 package domain;
 
 import static domain.Rank.ACE;
+import static domain.Rank.JACK;
 import static domain.Rank.KING;
 import static domain.Rank.NINE;
+import static domain.Rank.QUEEN;
 import static domain.Rank.SEVEN;
 import static domain.Rank.THREE;
 import static domain.Rank.TWO;
@@ -68,6 +70,36 @@ class CardHandTest {
         int score = cardHand.calculateScore();
         // then
         assertThat(score).isEqualTo(expectedScore);
+    }
+
+    @Test
+    @DisplayName("총점이 21점이 넘어가는지 판단할 수 있다.")
+    void testIsBust() {
+        // given
+        CardHand cardHand = new CardHand(
+                Set.of(CardFixture.of(TWO, CLOVER), CardFixture.of(JACK, SPADE), CardFixture.of(QUEEN, SPADE)));
+        // when & then
+        assertThat(cardHand.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드가 블랙잭인지 판단한다")
+    void testIsBlackJack() {
+        // given
+        CardHand cardHand = new CardHand(
+                Set.of(CardFixture.of(ACE, CLOVER), CardFixture.of(JACK, SPADE)));
+        // when & then
+        assertThat(cardHand.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드가 3장인 경우 블랙잭이 아니다.")
+    void testIsNotBlackJack() {
+        // given
+        CardHand cardHand = new CardHand(
+                Set.of(CardFixture.of(ACE, CLOVER), CardFixture.of(JACK, SPADE), CardFixture.of(QUEEN, SPADE)));
+        // when & then
+        assertThat(cardHand.isBlackJack()).isFalse();
     }
 
     private static Stream<Arguments> cardArguments() {

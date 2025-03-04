@@ -5,7 +5,11 @@ import java.util.Objects;
 import java.util.Set;
 
 public class CardHand {
-    private final int MAX_SCORE = 21;
+    private static final int MIN_ACE_SCORE = 1;
+    private static final int MAX_ACE_SCORE = 11;
+    private static final int INITIAL_CARD_COUNT = 2;
+    private static final int DEALER_HIT_THRESHOLD = 16;
+    private static final int MAX_SCORE = 21;
 
     private final Set<Card> cards;
 
@@ -26,9 +30,11 @@ public class CardHand {
         return calculateScoreWithAce();
     }
 
+    public boolean isBust() {
+        return calculateScore() > 21;
+    }
+
     private int calculateScoreWithAce() {
-        int MIN_ACE_SCORE = 1;
-        int MAX_ACE_SCORE = 11;
         int minimumSum = cards.stream()
                 .mapToInt(Card::score)
                 .sum();
@@ -37,6 +43,14 @@ public class CardHand {
             return minimumSum - MIN_ACE_SCORE + MAX_ACE_SCORE;
         }
         return minimumSum;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == INITIAL_CARD_COUNT && calculateScore() == MAX_SCORE;
+    }
+
+    public boolean isDealerHit() {
+        return cards.size() == INITIAL_CARD_COUNT && calculateScore() <= DEALER_HIT_THRESHOLD;
     }
 
     @Override
