@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +12,9 @@ class DeckGeneratorTest {
 
         // given
         DeckGenerator deckGenerator = new DeckGenerator();
-        List<Card> cards = deckGenerator.generate();
 
         // when & then
-        Assertions.assertThatCode(() -> new Deck(cards))
+        Assertions.assertThatCode(deckGenerator::generate)
                 .doesNotThrowAnyException();
 
     }
