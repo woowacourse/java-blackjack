@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.Objects;
+
 public class Participant {
     private final String name;
     private final ReceivedCards receivedCards;
@@ -19,11 +21,25 @@ public class Participant {
         }
     }
 
-    public void putCard(NormalCard normalCard) {
-        receivedCards.receive(normalCard);
+    public void putCard(Card card) {
+        receivedCards.receive(card);
     }
 
     public ReceivedCards getReceivedCards() {
         return receivedCards;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 }
