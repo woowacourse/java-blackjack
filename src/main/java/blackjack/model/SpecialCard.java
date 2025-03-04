@@ -1,19 +1,14 @@
 package blackjack.model;
 
-public class SpecialCard {
+public class SpecialCard extends Card {
     private final char character;
-    private final CardShape shape;
 
     public SpecialCard(char character, CardShape shape) {
+        super(shape);
         this.character = character;
-        this.shape = shape;
     }
 
     public char getCharacter() {
         return character;
-    }
-
-    public CardShape getShape() {
-        return shape;
     }
 }
