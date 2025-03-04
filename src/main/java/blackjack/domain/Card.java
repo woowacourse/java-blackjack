@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.EnumSet;
+import java.util.List;
 
 import static blackjack.domain.CardShape.*;
 
@@ -34,6 +35,13 @@ public class Card {
     
     public int getNumber() {
         return number;
+    }
+    
+    public List<Integer> getBlackjackNumber() {
+        if (number == 1) {
+            return List.of(1, 11);
+        }
+        return List.of(Math.min(number, 10));
     }
     
     public CardShape getShape() {
