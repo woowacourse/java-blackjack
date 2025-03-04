@@ -80,4 +80,22 @@ public class CardsTest {
                 () -> assertThat(exceedCards.checkExceedTwentyOne()).isTrue()
         );
     }
+
+    @Test
+    void 카드리스트의_합계가_16초과이면_true_아니면_false를_반환한다() {
+        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
+        Card card2 = new Card(Symbol.CLOVER, Number.EIGHT);
+        Card card3 = new Card(Symbol.DIAMOND, Number.SIX);
+        Card card4 = new Card(Symbol.DIAMOND, Number.ACE);
+        List<Card> cardList = List.of(card1, card2, card3);
+        Cards notExceedCards = new Cards(cardList);
+
+        List<Card> otherCardList = List.of(card1, card2, card3, card4);
+        Cards exceedCards = new Cards(otherCardList);
+
+        assertAll(
+            () -> assertThat(notExceedCards.checkExceedSixteen()).isFalse(),
+            () -> assertThat(exceedCards.checkExceedSixteen()).isTrue()
+        );
+    }
 }
