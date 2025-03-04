@@ -14,4 +14,8 @@ public class Dealer {
     public boolean checkScoreUnderSixteen() {
         return participantHand.calculateScoreSum() <= 16;
     }
+
+    public ParticipantHand getParticipantHand() {
+        return participantHand;
+    }
 }

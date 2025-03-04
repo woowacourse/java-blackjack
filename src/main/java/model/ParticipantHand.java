@@ -15,6 +15,7 @@ public class ParticipantHand {
     }
 
     public int calculateScoreSum() {
+        //TODO : ace에 대한 상황을 덜 고려함
         return cards.stream()
                 .mapToInt(card -> card.getCardRankValue())
                 .sum();
