@@ -21,7 +21,7 @@ public class CardsTest {
         final int expected = 19;
 
         // when
-        int sum = cards.calculateCandidates();
+        int sum = cards.calculateOptimalSum();
 
         // then
         assertThat(sum).isEqualTo(expected);

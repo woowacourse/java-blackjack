@@ -17,7 +17,7 @@ public class Cards {
         return cards.size();
     }
 
-    public int calculateCandidates() {
+    public int calculateOptimalSum() {
         List<Integer> candidates = new ArrayList<>();
         calculateCandidates(0, 0, cards, candidates);
         return Collections.max(candidates);
