@@ -9,4 +9,8 @@ public class Card {
         this.rank = rank;
         this.shape = shape;
     }
+
+    public int getScore() {
+        return rank.getScore();
+    }
 }
