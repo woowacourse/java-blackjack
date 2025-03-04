@@ -15,4 +15,11 @@ public class SomeTest {
         assertThat(new Card(Denomination.ACE, Suit.CLUB)).isInstanceOf(Card.class);
     }
 
+    @Test
+    @DisplayName("카드는 취급값을 갖는다.")
+    public void test2() {
+        assertThat(new Card(Denomination.TWO, Suit.CLUB)).extracting("value").isEqualTo(2);
+    }
+
+
 }
