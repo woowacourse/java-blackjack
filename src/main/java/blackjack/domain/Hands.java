@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hands {
-
     private final List<Card> cards;
 
     public Hands() {
@@ -18,11 +17,24 @@ public class Hands {
     }
 
     public int calculateSum() {
-        int total = 0;
-        for (Card card : cards) {
-            total += card.getValue();
+        int sum = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+        long aceCount = cards.stream()
+                .filter(Card::isAce)
+                .count();
+        return considerAce(sum, (int) aceCount);
+    }
+
+    private int considerAce(int sum, int aceCount) {
+        if (sum <= 21) {
+            return sum;
         }
-        return total;
+        while (aceCount > 0 && sum > 21) {
+            sum -= 10;
+            aceCount--;
+        }
+        return sum;
     }
 
     public boolean isSumBelow(final int criteria) {

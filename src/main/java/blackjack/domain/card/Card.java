@@ -12,4 +12,8 @@ public class Card {
     public int getValue() {
         return value.getValue();
     }
+
+    public boolean isAce() {
+        return value == CardValue.ACE;
+    }
 }
