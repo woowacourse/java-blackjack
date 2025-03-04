@@ -51,4 +51,17 @@ public class CardSetTest {
                 () -> Assertions.assertThat(card).isInstanceOf(Card.class)
         );
     }
+
+    @Test
+    void 카드_넣기() {
+        //given
+        CardSet cardSet = CardSet.generateEmptySet();
+        Card card = new Card(1, CardType.CLOVER);
+
+        //when
+        cardSet.addCard(card);
+
+        //then
+        Assertions.assertThat(cardSet.getCards().size()).isEqualTo(1);
+    }
 }
