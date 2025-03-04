@@ -12,9 +12,9 @@ class DealerTest {
         Dealer dealer = new Dealer();
         Card twoSpade = new Card(Rank.TWO, Shape.SPADE);
         Card threeHeart = new Card(Rank.THREE, Shape.HEART);
-        dealer.setUpCards(twoSpade, threeHeart);
+        dealer.setUpCardDeck(twoSpade, threeHeart);
         //when
-        var card = dealer.getUpCard();
+        var card = dealer.getOpenCard();
         //then
         assertThat(card).isEqualTo(twoSpade);
     }

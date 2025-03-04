@@ -1,8 +1,36 @@
 package domain;
 
-public class Dealer extends Participants {
+import java.util.List;
 
-    public Card getUpCard() {
-        return cards.getFirst();
+public class Dealer implements Participant {
+
+    private final CardDeck cardDeck;
+
+    public Dealer() {
+        this.cardDeck = new CardDeck();
+    }
+
+    public Card getOpenCard() {
+        return cardDeck.getCards().getFirst();
+    }
+
+    @Override
+    public void setUpCardDeck(Card first, Card second) {
+        cardDeck.setUpCards(first, second);
+    }
+
+    @Override
+    public void takeMoreCard(Card card) {
+        cardDeck.takeMore(card);
+    }
+
+    @Override
+    public int calculateScore() {
+        return cardDeck.calculateScore();
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return cardDeck.getCards();
     }
 }

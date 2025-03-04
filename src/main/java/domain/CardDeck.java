@@ -3,21 +3,21 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Participants {
+public class CardDeck {
 
-    protected final List<Card> cards = new ArrayList<>();
+    private final List<Card> deck = new ArrayList<>();
 
     public void setUpCards(Card card1, Card card2) {
-        cards.add(card1);
-        cards.add(card2);
+        deck.add(card1);
+        deck.add(card2);
     }
 
     public void takeMore(Card card) {
-        cards.add(card);
+        deck.add(card);
     }
 
     public int calculateScore() {
-        int number = cards.stream()
+        int number = deck.stream()
             .mapToInt(Card::getNumber)
             .sum();
 
@@ -28,11 +28,11 @@ public abstract class Participants {
     }
 
     private boolean hasAce() {
-        return cards.stream()
+        return deck.stream()
             .anyMatch(card -> card.getRank() == Rank.ACE);
     }
 
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(deck);
     }
 }
