@@ -1,16 +1,24 @@
 package domain;
 
-import java.util.random.RandomGenerator;
-
 public enum CardShape {
-    DIA(),
-
+    DIA(1),
+    HEART(2),
+    SPADE(3),
+    CLOVER(4),
     ;
 
-    CardShape() {
+    private final int index;
+
+    CardShape(int index) {
+        this.index = index;
     }
 
-    public static CardShape randomPick(NumberGenerator numberGenerator) {
-        return null;
+    public static CardShape pickCardShape(int index) {
+        for (CardShape value : values()) {
+            if (value.index == index) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("카드 모양 범위 내에서 선택해주세요 (1~4)");
     }
 }

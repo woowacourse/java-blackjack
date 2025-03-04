@@ -5,12 +5,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardShapeTest {
-    @DisplayName("네 개의 문양 중 하나의 문양을 랜덤으로 뽑는다.")
+    @DisplayName("네 개의 문양 중 하나의 문양을 뽑는다.")
     @Test
     void test() {
-        NumberGenerator numberGenerator = new TestNumberGenerator();
-        CardShape cardShape = CardShape.randomPick(numberGenerator);
+        // given
+        int diaIndex = 1;
 
+        // when
+        CardShape cardShape = CardShape.pickCardShape(diaIndex);
+
+        // then
         Assertions.assertThat(cardShape).isEqualTo(CardShape.DIA);
     }
 }
