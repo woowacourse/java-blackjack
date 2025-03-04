@@ -20,4 +20,8 @@ public enum CardNumber {
     CardNumber(final int score) {
         this.score = score;
     }
+
+    public int sum(final int score) {
+        return this.score + score;
+    }
 }

@@ -3,6 +3,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import constant.CardNumber;
 import constant.Emblem;
 import domain.Card;
+import domain.CardHand;
 import domain.Dealer;
 import domain.Deck;
 import java.util.ArrayDeque;
@@ -28,7 +29,7 @@ public class DealerTest {
             dealer.pickUpCard(deck);
 
             //then
-            assertThat(dealer.hand()).contains(card);
+            assertThat(dealer.hand().hand()).contains(card);
         }
     }
 
@@ -55,7 +56,8 @@ public class DealerTest {
             // given
             final Card card1 = new Card(CardNumber.TEN, Emblem.CLUB);
             final Card card2 = new Card(CardNumber.SEVEN, Emblem.HEART);
-            final var dealer = new Dealer(List.of(card1, card2));
+            final CardHand cardHand = new CardHand(List.of(card1, card2));
+            final var dealer = new Dealer(cardHand);
 
             // when
             final var actual = dealer.isPickCard();
