@@ -12,7 +12,7 @@ public class CardPolicy {
     @DisplayName("카드의 모양이 맞지 않는다면 예외가 발생한다.")
     void shapeTest(){
         //given
-        String shape = "스페이드";
+        String shape = "스페이드드";
         String number = "1";
 
         //when-then
