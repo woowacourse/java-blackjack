@@ -9,6 +9,9 @@ public class Card {
     }
 
     public int getNumber() {
+        if (value.equals("Q") || value.equals("K") || value.equals("J")) {
+            return 10;
+        }
         return 2;
     }
 }
