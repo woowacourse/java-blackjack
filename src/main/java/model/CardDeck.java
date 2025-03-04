@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class CardDeck {
@@ -18,6 +19,7 @@ public final class CardDeck {
                 deck.add(new Card(suit, rank));
             }
         }
+        Collections.shuffle(deck);
         return deck;
     }
 
@@ -26,5 +28,14 @@ public final class CardDeck {
 
     public static List<Card> getCards() {
         return cards;
+    }
+
+    public static List<Card> pickCard(int amount) {
+        final List<Card> findCards = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            final Card card = cards.removeFirst();
+            findCards.add(card);
+        }
+        return findCards;
     }
 }
