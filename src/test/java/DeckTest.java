@@ -1,5 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,5 +17,21 @@ public class DeckTest {
 
         // then
         assertThat(card).isInstanceOf(Card.class);
+    }
+
+    @DisplayName("덱은 항상 다른 카드를 반환한다.")
+    @Test
+    void 덱은_항상_다른_카드_반환() {
+        // given
+        Deck deck = new Deck();
+        List<Card> outputCards = new ArrayList<>();
+
+        // when
+        for (int i = 0; i < 52; ++i) {
+            outputCards.add(deck.pick());
+        }
+        
+        // then
+        assertThat(outputCards).doesNotHaveDuplicates();
     }
 }
