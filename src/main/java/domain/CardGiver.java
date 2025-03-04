@@ -2,7 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class CardGiver {
     private static final int DEFAULT_CARD_GIVE_COUNT = 2;

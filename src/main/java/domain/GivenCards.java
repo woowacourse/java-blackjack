@@ -15,18 +15,10 @@ public class GivenCards {
     }
 
     public boolean addUnique(Card randomCard) {
-        if (contains(randomCard)) {
+        if (givenCards.contains(randomCard)) {
             return false;
         }
         givenCards.add(randomCard);
         return true;
-    }
-
-    public boolean contains(Card card) {
-        return givenCards.contains(card);
-    }
-
-    private void validate() {
-
     }
 }
