@@ -1,6 +1,7 @@
 package domain;
 
 import org.assertj.core.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.Test;
 
 public class CardSetTest {
@@ -32,7 +33,9 @@ public class CardSetTest {
         Card card = cardSet.draw();
 
         //then
-        Assertions.assertThat(cardSet.getCards().size()).isEqualTo(51);
-        Assertions.assertThat(card).isInstanceOf(Card.class);
+        assertAll(
+                () -> Assertions.assertThat(cardSet.getCards().size()).isEqualTo(51),
+                () -> Assertions.assertThat(card).isInstanceOf(Card.class)
+        );
     }
 }

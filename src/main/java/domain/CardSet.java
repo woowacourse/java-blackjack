@@ -45,6 +45,10 @@ public class CardSet {
         }
     }
 
+    public Card draw() {
+        return cards.removeFirst();
+    }
+
     public List<Card> getCards() {
         return cards;
     }
