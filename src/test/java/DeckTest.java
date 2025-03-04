@@ -1,4 +1,5 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,21 @@ public class DeckTest {
         for (int i = 0; i < 52; ++i) {
             outputCards.add(deck.pick());
         }
-        
+
         // then
         assertThat(outputCards).doesNotHaveDuplicates();
+    }
+
+    @DisplayName("덱은 52장의 카드를 갖고 있다.")
+    @Test
+    void 덱은_52장() {
+        // given
+        Deck deck = new Deck();
+        for (int i = 0; i < 52; ++i) {
+            deck.pick();
+        }
+
+        // when & then
+        assertThatThrownBy(deck::pick).isInstanceOf(IllegalStateException.class);
     }
 }
