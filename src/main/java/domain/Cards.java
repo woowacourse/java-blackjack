@@ -10,6 +10,6 @@ public class Cards {
     }
 
     public int size() {
-        return  cards.size();
+        return cards.size();
     }
 }

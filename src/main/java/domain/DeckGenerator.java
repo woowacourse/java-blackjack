@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeckGenerator {
     public Deck generateDeck() {
@@ -10,7 +11,7 @@ public class DeckGenerator {
                 .flatMap(cardShape ->
                         Arrays.stream(CardNumber.values())
                             .map(cardNumber -> new Card(cardShape, cardNumber)))
-                .toList();
-        return new Deck(new Cards(cards));
+                .collect(Collectors.toList());
+        return new Deck(cards);
     }
 }
