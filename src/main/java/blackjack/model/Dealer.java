@@ -25,6 +25,14 @@ public class Dealer {
         return cards.sumAll();
     }
 
+    public boolean drawMoreCard(final Rule rule) {
+        if (rule.shouldDealerDraw(this)) {
+            rule.drawDealerCards(this);
+            return true;
+        }
+        return false;
+    }
+
     public Cards getCards() {
         return cards;
     }
