@@ -16,4 +16,14 @@ class DealerTest {
         assertThat(cards.getValues()).hasSize(2);
     }
 
+    @Test
+    void 자신의_카드를_N_개_뽑는다() {
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer(cardDeck);
+
+        dealer.drawSelf(2);
+
+        assertThat(dealer.getCards().hasSize(2)).isTrue();
+    }
+
 }
