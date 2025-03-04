@@ -1,7 +1,7 @@
 package model;
 
 public enum CardRank {
-    ACE("A", -1),
+    ACE("A", 0), //TODO : 개선
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),

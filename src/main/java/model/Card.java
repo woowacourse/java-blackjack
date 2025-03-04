@@ -13,4 +13,7 @@ public class Card {
         return cardRank.getValue();
     }
 
+    public CardRank getCardRank() {
+        return cardRank;
+    }
 }

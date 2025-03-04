@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ParticipantHand {
     private final List<Card> cards;
@@ -28,6 +29,12 @@ public class ParticipantHand {
     }
 
     public boolean checkBurst() {
-        return calculateScoreSum() > 21;
+        int score = calculateScoreSum();
+        for (Card card : cards) {
+            if (card.getCardRank() == CardRank.ACE) {
+                score+=1;
+            }
+        }
+        return score > 21;
     }
 }

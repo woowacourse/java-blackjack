@@ -38,10 +38,37 @@ class ParticipantHandTest {
         Assertions.assertTrue(burst);
     }
 
-//    @Test
-//    @DisplayName("ACE 카드를 받았을 경우에 burst인지 확인한다.")
-//    void ACE카드를_받은_경우_burst_계산(){
-//
-//    }
+    @Test
+    @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 이하일때 burst인지 확인한다.")
+    void 받은카드가_ace포함일때_burst_계산() {
+        //given
+        ParticipantHand participantHand = new ParticipantHand();
+        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
+        participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
+
+        //when
+        boolean burst = participantHand.checkBurst();
+
+        //then
+        Assertions.assertFalse(burst);
+    }
+
+    @Test
+    @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 초과일때 burst인지 확인한다.")
+    void 받은카드가_ace포함일때_계산_합_21_초과일때_burst_계산() {
+        //given
+        ParticipantHand participantHand = new ParticipantHand();
+        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
+        participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
+
+        //when
+        boolean burst = participantHand.checkBurst();
+
+        //then
+        Assertions.assertTrue(burst);
+    }
 
 }
