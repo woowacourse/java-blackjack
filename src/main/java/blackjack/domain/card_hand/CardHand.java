@@ -1,22 +1,21 @@
-package blackjack.domain;
+package blackjack.domain.card_hand;
 
-import com.sun.source.tree.NewArrayTree;
+import blackjack.domain.Card;
+import blackjack.domain.CardHandInitializer;
+import blackjack.domain.WinningStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardHand {
+public abstract class CardHand {
     
-    public static final int BURST_THRESHOLD = 21;
-    private final List<Card> cards = new ArrayList<>();
+    private static final int BURST_THRESHOLD = 21;
+    
+    protected final List<Card> cards = new ArrayList<>();
     
     public CardHand(final CardHandInitializer initializer) {
         cards.addAll(initializer.init());
-    }
-    
-    public void addCard(final Card card) {
-        cards.add(card);
     }
     
     public List<Card> getCards() {
