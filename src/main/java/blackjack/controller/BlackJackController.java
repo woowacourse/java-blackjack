@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Players;
+import blackjack.domain.Participants;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -20,7 +20,7 @@ public class BlackJackController {
         try {
             String input = inputView.readNames();
             List<String> names = InputParser.parseStringToList(input);
-            Players players = Players.createPlayersByNames(names);
+            Participants participants = Participants.createParticipantsByNames(names);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
         }

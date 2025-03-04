@@ -16,6 +16,6 @@ public record Card(Suit suit, Denomination denomination) {
     }
 
     public static List<Card> values() {
-        return CACHE;
+        return new ArrayList<>(CACHE);
     }
 }
