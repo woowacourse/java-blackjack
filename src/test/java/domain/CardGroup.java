@@ -31,6 +31,8 @@ public class CardGroup {
     }
 
     public int calculateAceScore() {
+        int calculateScoreWithOutAce = calculateScoreWithOutAce();
+        if(calculateScoreWithOutAce > 10) return 1;
         return 11;
     }
 }
