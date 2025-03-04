@@ -32,6 +32,14 @@ public class Card {
         return card;
     }
 
+    public int score() {
+        return rank.getValue();
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
