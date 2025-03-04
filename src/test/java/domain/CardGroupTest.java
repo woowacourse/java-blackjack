@@ -76,14 +76,15 @@ public class CardGroupTest {
         @Test
         void 카드에_에이스가_포함되어_있을때_점수를_계산한다() {
             //given
-            final List<Card> cards = List.of(new Card(CardScore.JACK, CardType.DIAMOND), new Card(CardScore.ACE, CardType.HEART));
+            final List<Card> cards = List.of(new Card(CardScore.JACK, CardType.DIAMOND),
+                    new Card(CardScore.ACE, CardType.HEART));
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScoreWithOutAce();
+            final int score = cardGroup.calculateAceScore();
 
             //then
-            assertThat(score).isEqualTo(21);
+            assertThat(score).isEqualTo(11);
         }
     }
 }

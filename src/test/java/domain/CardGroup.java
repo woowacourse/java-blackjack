@@ -28,4 +28,8 @@ public class CardGroup {
     public int countCards() {
         return cards.size();
     }
+
+    public int calculateAceScore() {
+        return 0;
+    }
 }
