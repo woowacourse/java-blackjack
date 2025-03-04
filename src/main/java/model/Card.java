@@ -8,4 +8,9 @@ public class Card {
         this.cardRank = cardRank;
         this.cardSuit = cardSuit;
     }
+
+    public int getCardRankValue() {
+        return cardRank.getValue();
+    }
+
 }

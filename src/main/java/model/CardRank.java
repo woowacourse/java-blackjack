@@ -22,4 +22,8 @@ public enum CardRank {
         this.cardName = cardName;
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
