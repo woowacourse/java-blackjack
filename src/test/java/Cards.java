@@ -13,8 +13,16 @@ public class Cards {
         return new Cards(new ArrayList<>());
     }
 
+    public static Cards of(List<Card> cards) {
+        return new Cards(cards);
+    }
+
     public void add(Card card) {
         this.cards.add(card);
+    }
+
+    public int sum() {
+        return 0;
     }
 
     public List<Card> getCards() {
