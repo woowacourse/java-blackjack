@@ -26,14 +26,35 @@ public class CardsTest {
             "TWO, THREE, 5",
             "TWO, FOUR, 6",
             "TWO, FIVE, 7",
+            "TEN, NINE, 19"
     })
-    void test2(CardNumber number1, CardNumber number2, int expected) {
+    void 숫자_카드_합_구하기(CardNumber number1, CardNumber number2, int expected) {
         //given
         Card card1 = new Card(number1, CardShape.CLOVER);
         Card card2 = new Card(number2, CardShape.CLOVER);
         Cards cards = Cards.of(List.of(card1, card2));
         //when
         int actual = cards.sum();
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("A를 제외한 문자 카드의 합을 구할 수 있다")
+    @ParameterizedTest
+    @CsvSource({
+            "KING, THREE, 13",
+            "JACK, TEN, 20",
+            "QUEEN, KING, 20"
+    })
+    void 문자_카드_합_구하기(CardNumber number1, CardNumber number2, int expected) {
+        //given
+        Card card1 = new Card(number1, CardShape.CLOVER);
+        Card card2 = new Card(number2, CardShape.CLOVER);
+        Cards cards = Cards.of(List.of(card1, card2));
+
+        //when
+        int actual = cards.sum();
+
         //then
         assertThat(actual).isEqualTo(expected);
     }
