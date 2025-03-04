@@ -1,4 +1,5 @@
 package domain;
 
-public class CardType {
+public enum CardType {
+    SPACE
 }
