@@ -8,4 +8,8 @@ public class Card {
         this.shape = shape;
         this.value = value;
     }
+
+    public int getValue() {
+        return value.getValue();
+    }
 }
