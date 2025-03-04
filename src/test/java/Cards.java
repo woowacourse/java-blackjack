@@ -14,7 +14,7 @@ public class Cards {
     }
 
     public void add(Card card) {
-        return;
+        this.cards.add(card);
     }
 
     public List<Card> getCards() {
