@@ -14,7 +14,5 @@ public class PlayerTest {
 
         //when & then
         Assertions.assertThat(player).isInstanceOf(Player.class);
-
     }
-
 }

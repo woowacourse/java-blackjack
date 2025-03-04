@@ -6,5 +6,4 @@ public class Player {
     public Player(final String nickname) {
         this.nickname = nickname;
     }
-
 }
