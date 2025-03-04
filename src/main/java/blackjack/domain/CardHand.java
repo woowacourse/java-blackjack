@@ -69,4 +69,66 @@ public class CardHand {
             newList.add(currentSum + number);
         }
     }
+    
+    public WinningStatus isWin(final CardHand other) {
+        if (checkBurstCase(other)) {
+            return getBurstResult(other);
+        }
+        
+        if (getSum() == other.getSum()) {
+            return getDrawResult(other);
+        }
+        
+        return getSum() > other.getSum() ? WinningStatus.승리 : WinningStatus.패배;
+    }
+    
+    private boolean checkBurstCase(final CardHand other) {
+        return isBurst() || other.isBurst();
+    }
+    
+    private WinningStatus getBurstResult(final CardHand other) {
+        if (isAllBurst(other)) {
+            return WinningStatus.무승부;
+        }
+        
+        if (isMyCardOnlyBurst(other)) {
+            return WinningStatus.패배;
+        }
+        
+        return WinningStatus.승리;
+    }
+    
+    private WinningStatus getDrawResult(final CardHand other) {
+        if (getSum() == 21) {
+            return judgeDouble21(other);
+        }
+        return WinningStatus.무승부;
+    }
+    
+    private WinningStatus judgeDouble21(final CardHand other) {
+        if (isBlackjack() != other.isBlackjack()) {
+            if (isBlackjack()) {
+                return WinningStatus.승리;
+            }
+            return WinningStatus.패배;
+        }
+        return WinningStatus.무승부;
+    }
+    
+    private boolean isMyCardOnlyBurst(final CardHand other) {
+        return isBurst() && !other.isBurst();
+    }
+    
+    private boolean isAllBurst(final CardHand other) {
+        return isBurst() && other.isBurst();
+    }
+    
+    private boolean isBurst() {
+        return getSum() > BURST_THRESHOLD;
+    }
+    
+    private boolean isBlackjack() {
+        return cards.size() == 2 && getSum() == 21;
+    }
+
 }

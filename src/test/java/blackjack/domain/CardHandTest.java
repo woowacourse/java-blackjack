@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static blackjack.domain.CardShape.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,8 +42,8 @@ public class CardHandTest {
         assertThat(result).extracting(
                 "number", "shape"
         ).containsExactlyInAnyOrder(
-                tuple(1, 다이아몬드),
-                tuple(2, 하트)
+                Tuple.tuple(1, 다이아몬드),
+                Tuple.tuple(2, 하트)
         );
     }
     
@@ -167,5 +170,89 @@ public class CardHandTest {
                 Arguments.of(List.of(new Card(9, 다이아몬드), new Card(10, 다이아몬드)), 21),
                 Arguments.of(List.of(), 12)
                 );
+    }
+    
+    @Test
+    void 손패_두_개가_주어졌을_때_두_손패_모두_버스트가_아니라면_21에_근접한_손패가_이긴다() {
+        final CardHand winner = new CardHand();
+        winner.addCard(new Card(10, 다이아몬드));
+        winner.addCard(new Card(1, 하트));
+        
+        final CardHand looser = new CardHand();
+        looser.addCard(new Card(9, 다이아몬드));
+        looser.addCard(new Card(1, 하트));
+        
+        assertThat(winner.isWin(looser)).isEqualTo(WinningStatus.승리);
+    }
+    
+    @Test
+    void 손패_두_개가_주어졌을_때_한_손패가_버스트라면_버스트가_아닌_손패가_이긴다() {
+        final CardHand winner = new CardHand();
+        winner.addCard(new Card(10, 다이아몬드));
+        winner.addCard(new Card(10, 하트));
+        winner.addCard(new Card(10, 클로버));
+        
+        final CardHand looser = new CardHand();
+        looser.addCard(new Card(9, 다이아몬드));
+        looser.addCard(new Card(1, 하트));
+        
+        assertThat(winner.isWin(looser)).isEqualTo(WinningStatus.패배);
+    }
+    
+    @Test
+    void 손패_두_개가_주어졌을_때_두_손패가_버스트라면_무승부이다() {
+        final CardHand winner = new CardHand();
+        winner.addCard(new Card(10, 다이아몬드));
+        winner.addCard(new Card(10, 하트));
+        winner.addCard(new Card(10, 클로버));
+        
+        final CardHand looser = new CardHand();
+        looser.addCard(new Card(9, 다이아몬드));
+        looser.addCard(new Card(8, 하트));
+        looser.addCard(new Card(7, 하트));
+        
+        assertThat(winner.isWin(looser)).isEqualTo(WinningStatus.무승부);
+    }
+    
+    @Test
+    void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_한쪽만_블랙잭이라면_블랙잭이_이긴다() {
+        final CardHand winner = new CardHand();
+        winner.addCard(new Card(10, 다이아몬드));
+        winner.addCard(new Card(1, 다이아몬드));
+        
+        final CardHand looser = new CardHand();
+        looser.addCard(new Card(9, 다이아몬드));
+        looser.addCard(new Card(9, 하트));
+        looser.addCard(new Card(3, 하트));
+        
+        assertThat(winner.isWin(looser)).isEqualTo(WinningStatus.승리);
+    }
+    
+    @Test
+    void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_둘다_블랙잭이라면_무승부이다() {
+        final CardHand winner = new CardHand();
+        winner.addCard(new Card(10, 다이아몬드));
+        winner.addCard(new Card(1, 다이아몬드));
+        
+        final CardHand looser = new CardHand();
+        looser.addCard(new Card(10, 하트));
+        looser.addCard(new Card(1, 하트));
+        
+        assertThat(winner.isWin(looser)).isEqualTo(WinningStatus.무승부);
+    }
+    
+    @Test
+    void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_둘다_블랙잭이_아니라면_무승부이다() {
+        final CardHand winner = new CardHand();
+        winner.addCard(new Card(5, 다이아몬드));
+        winner.addCard(new Card(5, 다이아몬드));
+        winner.addCard(new Card(1, 다이아몬드));
+        
+        final CardHand looser = new CardHand();
+        looser.addCard(new Card(5, 하트));
+        looser.addCard(new Card(5, 하트));
+        looser.addCard(new Card(1, 하트));
+        
+        assertThat(winner.isWin(looser)).isEqualTo(WinningStatus.무승부);
     }
 }
