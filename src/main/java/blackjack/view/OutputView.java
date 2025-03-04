@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import java.util.List;
@@ -24,12 +25,18 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public void displayUpdatedPlayerCardStatus() {
+    public void displayUpdatedPlayerCardStatus(Player player) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(player.getName().trim() + "카드: ");
+        String playerCards = String.join(", ", player.getCardDeck().stream().map(Card::toString).toList());
+        sb.append(playerCards);
+        sb.append("\n");
+        System.out.println(sb);
 //        pobi카드: 2하트, 8스페이드, A클로버
     }
 
     public void displayExtraDealerCardStatus() {
-//        딜러는 16이하라 한장의 카드를 더 받았습니다.
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void displayFinalCardStatus() {

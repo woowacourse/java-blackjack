@@ -21,6 +21,7 @@ public class BlackjackController {
     }
 
     public void run() {
+        // 게임 시작 및 카드 배분
         String[] playerNames = inputView.readPlayerName();
         List<Player> players = new ArrayList<>();
 
@@ -40,5 +41,24 @@ public class BlackjackController {
 
         outputView.displayDistributedCardStatus(dealer, players);
 
+        // 추가 카드 뽑기
+        for (Player player : players) {
+            while (player.canTakeExtraCard()) {
+                String answer = inputView.readOneMoreCard(player.getName());
+                // 플레이어가 거절할 때까지 계속 기회를 준다
+                if (answer.equals("n")) {
+                    break;
+                }
+                player.addCard();
+                outputView.displayUpdatedPlayerCardStatus(player);
+            }
+        }
+
+        // 딜러 카드 뽑기 여부 (뽑은 경우만 출력)
+        while (dealer.hasTakenExtraCard()) {
+            outputView.displayExtraDealerCardStatus();
+        }
+
+        //
     }
 }
