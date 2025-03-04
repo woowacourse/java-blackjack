@@ -166,7 +166,7 @@ class BlackjackTest {
     }
 
     @Test
-    @DisplayName("양쪽 다 버스트하지 않았다면 카드 숫자 합을 비교하여 더 높은 쪽이 승리한다.")
+    @DisplayName("양쪽 다 버스트하지 않았다면 카드 숫자 합을 비교하여 더 높은 쪽이 승리한다")
     void winnerTest2() {
         Player player1 = new Player("Pobi");
         Dealer dealer = new Dealer();
@@ -186,7 +186,7 @@ class BlackjackTest {
     }
 
     @Test
-    @DisplayName("블랙잭(Ace + J or Q or K)은 21을 이긴다.")
+    @DisplayName("동점일 경우 블랙잭(Ace + J or Q or K)은 21을 이긴다")
     void winnerTest3() {
         Player player1 = new Player("Pobi");
         Dealer dealer = new Dealer();
@@ -205,5 +205,25 @@ class BlackjackTest {
         RoundResult roundResult = RoundResult.judgeResult(player1, dealer);
 
         assertThat(roundResult).isEqualTo(RoundResult.WIN);
+    }
+
+    @Test
+    @DisplayName("둘 다 블랙잭이면 무승부로 처리한다")
+    void winnerTest4() {
+        Player player1 = new Player("Pobi");
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.ACE);
+
+        Card card3 = new Card(CardType.HEART, CardNumber.JACK);
+        Card card4 = new Card(CardType.HEART, CardNumber.ACE);
+        player1.addCard(card1);
+        player1.addCard(card2);
+        dealer.addCard(card3);
+        dealer.addCard(card4);
+
+        RoundResult roundResult = RoundResult.judgeResult(player1, dealer);
+
+        assertThat(roundResult).isEqualTo(RoundResult.TIE);
     }
 }
