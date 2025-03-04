@@ -2,6 +2,7 @@ package blackjack.domain.card_hand;
 
 import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
+import blackjack.domain.Player;
 import blackjack.domain.WinningStatus;
 
 import java.util.ArrayList;
