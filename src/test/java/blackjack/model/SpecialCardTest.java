@@ -17,4 +17,15 @@ public class SpecialCardTest {
         // then
         assertThat(cardShape).isEqualTo(CardShape.CLOVER);
     }
+
+    @Test
+    void 스페셜_카드_점수를_반환한다() {
+        // given
+        SpecialCard card = new SpecialCard('J', CardShape.CLOVER);
+
+        // when
+        int cardPoint = card.getPoint();
+        // then
+        assertThat(cardPoint).isEqualTo(10);
+    }
 }

@@ -17,4 +17,15 @@ public class NormalCardTest {
         // then
         assertThat(cardShape).isEqualTo(CardShape.CLOVER);
     }
+
+    @Test
+    void 일반_카드_점수를_반환한다() {
+        // given
+        NormalCard card = new NormalCard(2, CardShape.CLOVER);
+
+        // when
+        int cardPoint = card.getPoint();
+        // then
+        assertThat(cardPoint).isEqualTo(2);
+    }
 }
