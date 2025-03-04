@@ -27,9 +27,24 @@ public class ScoreJudgementTest {
         ScoreJudgement judgement = new ScoreJudgement();
 
         // when
-        int result = judgement.judge(total1, total2);
+        int result = judgement.judgeWinner(total1, total2);
 
         // then
-        Assertions.assertThat(result).isEqualTo(total1);
+        Assertions.assertThat(result).isEqualTo(-1);
+    }
+
+    @DisplayName("숫자 합이 둘이 같으면 무승부")
+    @Test
+    void test3() {
+        // given
+        int total1 = 10;
+        int total2 = 10;
+        ScoreJudgement judgement = new ScoreJudgement();
+
+        // when
+        int result = judgement.judgeWinner(total1, total2);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(0);
     }
 }
