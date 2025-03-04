@@ -2,15 +2,10 @@ package domain;
 
 import java.util.Objects;
 
-public class Card {
-
-    private int number;
-    private CardType cardType;
-
-    public Card(int number, CardType cardType) {
-        this.number = number;
-        this.cardType = cardType;
-    }
+public record Card(
+        CardNumberType cardNumberType,
+        CardType cardType
+) {
 
     @Override
     public boolean equals(Object object) {
@@ -18,11 +13,11 @@ public class Card {
             return false;
         }
         Card card = (Card) object;
-        return number == card.number && cardType == card.cardType;
+        return cardNumberType == card.cardNumberType && cardType == card.cardType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, cardType);
+        return Objects.hash(cardNumberType, cardType);
     }
 }
