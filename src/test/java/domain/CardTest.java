@@ -12,10 +12,10 @@ class CardTest {
     @CsvSource(value = {
             "SPADE,ACE,1", "SPADE,THREE,3", "SPADE,JACK,10"
     })
-    void 주어진_카드의_점수를_반환한다(Shape shape, Rank rank, int expected) {
+    void 주어진_카드의_점수를_반환한다(final Shape shape, final Rank rank, final int expected) {
 
         // given
-        Card card = new Card(rank, shape);
+        final Card card = new Card(rank, shape);
 
         // when & then
         Assertions.assertThat(card.getScore()).isEqualTo(expected);
