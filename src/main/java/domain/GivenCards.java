@@ -6,8 +6,12 @@ import java.util.List;
 public class GivenCards {
     private final List<Card> givenCards;
 
-    public GivenCards() {
-        this.givenCards = new ArrayList<>();
+    private GivenCards(List<Card> givenCards) {
+        this.givenCards = givenCards;
+    }
+
+    public static GivenCards createEmpty() {
+        return new GivenCards(new ArrayList<>());
     }
 
     public void add(Card randomCard) {

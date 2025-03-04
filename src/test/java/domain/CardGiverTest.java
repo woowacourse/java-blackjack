@@ -25,7 +25,7 @@ public class CardGiverTest {
     void test1() {
         // given
         RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
-        CardGiver cardGiver = new CardGiver(randomGenerator, new GivenCards());
+        CardGiver cardGiver = new CardGiver(randomGenerator, GivenCards.createEmpty());
 
         Card expectedCard1 = new Card(CardNumberType.SIX, CardType.CLOVER);
         Card expectedCard2 = new Card(CardNumberType.FIVE, CardType.SPACE);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class CardGiver {
+    private static final int DEFAULT_CARD_GIVE_COUNT = 2;
 
     private final RandomGenerator<Card> randomGenerator;
     private final GivenCards givenCards;
@@ -16,8 +17,8 @@ public class CardGiver {
 
     public Cards giveDefault() {
         List<Card> cards = new ArrayList<>();
-        IntStream.range(0, 2).forEach(
-                index -> {
+        IntStream.range(0, DEFAULT_CARD_GIVE_COUNT)
+                .forEach(index -> {
                     Card randomCard = randomGenerator.generate();
                     givenCards.add(randomCard);
                     cards.add(randomCard);
