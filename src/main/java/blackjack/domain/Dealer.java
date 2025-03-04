@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 public class Dealer {
@@ -41,4 +42,9 @@ public class Dealer {
 
         return totalScore > 21;
     }
+
+    public List<Card> getCardDeck() {
+        return cardDeck.getCards();
+    }
+
 }

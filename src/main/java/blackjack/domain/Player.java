@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 public class Player {
@@ -39,5 +40,13 @@ public class Player {
     public void addCard() {
         Card card = cardGenerator.generate();
         cardDeck.add(card);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCardDeck() {
+        return cardDeck.getCards();
     }
 }

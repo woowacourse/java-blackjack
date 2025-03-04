@@ -1,11 +1,27 @@
 package blackjack.view;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.Player;
+import java.util.List;
+
 public class OutputView {
-    public void displayDistributedCardStatus() {
-//        딜러와 pobi, jason에게 2장을 나누었습니다.
-//        딜러카드: 3다이아몬드
-//        pobi카드: 2하트, 8스페이드
-//        jason카드: 7클로버, K스페이드
+    public void displayDistributedCardStatus(Dealer dealer, List<Player> players) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("딜러와 ");
+        String playerNames = String.join(", ", players.stream().map(player -> player.getName().trim()).toList());
+        sb.append(playerNames);
+        sb.append("에게 2장을 나누었습니다.\n\n");
+
+        sb.append("딜러카드: " + dealer.getCardDeck().get(0).toString() + "\n");
+
+        for (Player player : players) {
+
+            sb.append(player.getName().trim() + "카드: ");
+            sb.append(player.getCardDeck().get(0).toString() + ", ");
+            sb.append(player.getCardDeck().get(1).toString() + "\n");
+        }
+
+        System.out.println(sb);
     }
 
     public void displayUpdatedPlayerCardStatus() {

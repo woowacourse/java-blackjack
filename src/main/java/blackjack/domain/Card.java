@@ -15,4 +15,9 @@ public class Card {
     public Set<Integer> checkScore() {
         return rank.getScore();
     }
+
+    @Override
+    public String toString() {
+        return rank.getName() + suit.getName();
+    }
 }
