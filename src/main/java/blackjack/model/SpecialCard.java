@@ -1,13 +1,19 @@
 package blackjack.model;
 
 public class SpecialCard {
-    private final String character;
+    private final char character;
+    private final CardShape shape;
 
-    public SpecialCard(String character) {
+    public SpecialCard(char character, CardShape shape) {
         this.character = character;
+        this.shape = shape;
     }
 
-    public String getCharacter() {
+    public char getCharacter() {
         return character;
+    }
+
+    public CardShape getShape() {
+        return shape;
     }
 }

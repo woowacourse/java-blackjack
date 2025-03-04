@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 public class SpecialCardTest {
 
     @Test
-    void 스페셜_카드는_문자가_있다() {
+    void 스페셜_카드는_문양을_가지고_있다() {
         // given
-        SpecialCard card = new SpecialCard("J");
+        SpecialCard card = new SpecialCard('J', CardShape.CLOVER);
 
         // when
-        String character = card.getCharacter();
+        CardShape cardShape = card.getShape();
 
         // then
-        assertThat(character).isEqualTo("J");
+        assertThat(cardShape).isEqualTo(CardShape.CLOVER);
     }
 }

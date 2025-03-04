@@ -7,11 +7,14 @@ import org.junit.jupiter.api.Test;
 public class AceCardTest {
 
     @Test
-    void 에이스_카드를_만든다() {
+    void 에이스_카드는_문양을_가지고_있다() {
         // given
-        AceCard card = new AceCard();
+        AceCard card = new AceCard(CardShape.CLOVER);
+
+        // when
+        CardShape cardShape = card.getShape();
 
         // then
-        assertThat(card).isNotNull();
+        assertThat(cardShape).isEqualTo(CardShape.CLOVER);
     }
 }

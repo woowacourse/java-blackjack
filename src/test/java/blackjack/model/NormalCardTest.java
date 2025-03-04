@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 public class NormalCardTest {
 
     @Test
-    void 일반_카드는_숫자가_있다() {
+    void 일반_카드는_문양을_가지고_있다() {
         // given
-        NormalCard card = new NormalCard(2);
+        NormalCard card = new NormalCard(2, CardShape.CLOVER);
 
         // when
-        int number = card.getNumber();
+        CardShape cardShape = card.getShape();
 
         // then
-        assertThat(number).isEqualTo(2);
+        assertThat(cardShape).isEqualTo(CardShape.CLOVER);
     }
 }
