@@ -9,12 +9,12 @@ public class CardNumberTest {
     void test(){
 
         // given
-        int oneIndex = 1;
+        int oneIndex = 13;
 
         // when
         CardNumber cardNumber = CardNumber.pick(oneIndex);
 
         // then
-        Assertions.assertThat(cardNumber).isEqualTo(CardNumber.Q);
+        Assertions.assertThat(cardNumber).isEqualTo(CardNumber.K);
     }
 }

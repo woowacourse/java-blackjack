@@ -23,8 +23,13 @@ public enum CardNumber {
         this.value = value;
     }
 
-    public static CardNumber pick(int oneIndex) {
-        return null;
-    }
 
+    public static CardNumber pick(int index) {
+        for (CardNumber value : values()) {
+            if (value.index == index) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
 }
