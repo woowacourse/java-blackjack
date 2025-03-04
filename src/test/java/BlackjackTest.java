@@ -18,4 +18,16 @@ class BlackjackTest {
         assertThat(CardNumber.QUEEN.getNumber()).isEqualTo(10);
         assertThat(CardNumber.KING.getNumber()).isEqualTo(10);
     }
+
+    @Test
+    @DisplayName("플레이어는 카드 두 장을 지급 받는다")
+    void playerGetCardsTest() {
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.THREE);
+        Player player = new Player("Pobi");
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.getCards()).hasSize(2);
+    }
 }
