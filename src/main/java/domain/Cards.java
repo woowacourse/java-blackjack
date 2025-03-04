@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,6 +9,10 @@ public class Cards {
 
     public Cards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public static Cards createEmpty() {
+        return new Cards(new ArrayList<>());
     }
 
     public List<Card> getCards() {
