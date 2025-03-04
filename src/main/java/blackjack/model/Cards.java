@@ -10,9 +10,10 @@ public class Cards {
         this.values = values;
     }
 
-    public int sumAll(){
+    public int sumAll() {
         return values.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
     }
+
 }

@@ -12,7 +12,7 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public int getCardNumber(){
+    public int getCardNumber() {
         return cardNumber.getNumber();
     }
 
