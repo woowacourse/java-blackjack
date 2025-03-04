@@ -6,26 +6,34 @@ import blackjack.domain.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BlackjackTest {
 
-//    @DisplayName("각 플레이어 마다 기본 카드 2장을 발급한다")
-//    @Test
-//    void give_two_cards() {
-//        Player player = new Player();
-//        Assertions.assertThat(player.getCards().size()).isEqualTo(2);
-//    }
+    @DisplayName("각 플레이어 마다 기본 카드 2장을 발급한다")
+    @Test
+    void give_two_cards() {
+        // given
+        Player player = new Player(new CardPack(new SortShuffle()));
+
+        // when
+        int result = player.getCards().size();
+
+        // then
+        assertThat(result).isEqualTo(2);
+    }
 
     @Test
     @DisplayName("카드는 숫자와 모양을 가진다.")
     void card() {
+        // given
         Card card = new Card(CardNumber.EIGHT, CardShape.CLOVER);
+
+        // when & than
         assertAll(
                 () -> assertThat(card.getNumber()).isEqualTo(8),
                 () -> assertThat(card.getShape()).isEqualTo(CardShape.CLOVER)
@@ -53,7 +61,7 @@ public class BlackjackTest {
         assertThat(card).isEqualTo(new Card(CardNumber.KING, CardShape.CLOVER));
     }
 
-    private class SortShuffle implements BlackjackShuffle {
+    private static class SortShuffle implements BlackjackShuffle {
 
         @Override
         public void shuffle(List<Card> cards) {
