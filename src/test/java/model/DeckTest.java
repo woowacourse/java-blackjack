@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,10 +35,10 @@ public class DeckTest {
         cards.add(deck.pick());
         cards.add(deck.pick());
 
-        PlayerHand playerHand = new PlayerHand(cards);
+        ParticipantHand participantHand = new ParticipantHand(cards);
 
         //when
-        int result = playerHand.calculateScoreSum();
+        int result = participantHand.calculateScoreSum();
         int expect = 9;
 
         //then
@@ -58,10 +57,10 @@ public class DeckTest {
         cards.add(deck.pick());
         cards.add(deck.pick());
 
-        PlayerHand playerHand = new PlayerHand(cards);
+        ParticipantHand participantHand = new ParticipantHand(cards);
 
         //when
-        int result = playerHand.calculateScoreSum();
+        int result = participantHand.calculateScoreSum();
         int expect = 16;
 
         //then

@@ -1,9 +1,12 @@
 package model;
 
-public class Dealer {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Player {
     private final ParticipantHand participantHand;
 
-    public Dealer() {
+    public Player() {
         this.participantHand = new ParticipantHand();
     }
 
@@ -11,7 +14,7 @@ public class Dealer {
         participantHand.add(card);
     }
 
-    public boolean checkScoreUnderSixteen() {
-        return participantHand.calculateScoreSum() <= 16;
+    public List<Card> getHandCards() {
+        return participantHand.getCards();
     }
 }

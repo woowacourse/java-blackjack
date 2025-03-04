@@ -3,13 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerHand {
+public class ParticipantHand {
     private final List<Card> cards;
 
-    public PlayerHand(){
+    public ParticipantHand(){
         this.cards = new ArrayList<>();
     }
-    public PlayerHand(List<Card> cards) {
+    public ParticipantHand(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -21,5 +21,13 @@ public class PlayerHand {
 
     public void add(Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public boolean checkBurst() {
+        return calculateScoreSum() > 21;
     }
 }
