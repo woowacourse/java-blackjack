@@ -8,7 +8,7 @@ public class Card {
         this.type = type;
     }
 
-    public int getNumber(){
-        return 0;
+    public int getNumber() {
+        return 2;
     }
 }
