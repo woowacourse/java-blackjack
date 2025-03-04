@@ -17,4 +17,12 @@ public class ReceivedCards {
     public int size() {
         return cards.size();
     }
+
+    public int calculateTotalPoint() {
+        return cards.stream().mapToInt(Card::getPoint).sum();
+    }
+
+    public boolean isBust() {
+        return calculateTotalPoint() > 21;
+    }
 }
