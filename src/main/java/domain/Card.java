@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.Denomination.ACE;
+
 public class Card {
     private Denomination denomination;
     private Suit suit;
@@ -9,5 +11,9 @@ public class Card {
         this.denomination = denomination;
         this.suit = suit;
         value = Denomination.parseInt(denomination);
+    }
+
+    public boolean isAce() {
+        return denomination.equals(ACE);
     }
 }
