@@ -21,5 +21,10 @@ public class SomeTest {
         assertThat(new Card(Denomination.TWO, Suit.CLUB)).extracting("value").isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("카드는 취급값을 갖는다.")
+    public void test3() {
+        assertThat(new Card(Denomination.THREE, Suit.CLUB)).extracting("value").isEqualTo(3);
+    }
 
 }
