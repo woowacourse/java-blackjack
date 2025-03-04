@@ -25,6 +25,6 @@ public class CardSetTest {
         CardSet cardSet = CardSet.generateFullSet();
 
         //when
-        Assertions.assertThat(cardSet.getCardSet().size()).isEqualTo(52);
+        Assertions.assertThat(cardSet.getCards().size()).isEqualTo(52);
     }
 }
