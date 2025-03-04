@@ -31,4 +31,17 @@ class CardDeckTest {
         // then
         assertThat(cards1).isNotEqualTo(cards2);
     }
+
+    @Test
+    void 가장_위에_있는_카드를_반환한다() {
+        // given
+        CardDeck deck = CardDeck.of();
+        Card last = deck.getCards().getLast();
+
+        // when
+        Card card = deck.popCard();
+        
+        // then
+        assertThat(card).isEqualTo(last);
+    }
 }

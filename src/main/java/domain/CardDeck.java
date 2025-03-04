@@ -28,4 +28,8 @@ public class CardDeck {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public Card popCard() {
+        return cards.pop();
+    }
 }
