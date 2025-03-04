@@ -22,4 +22,10 @@ public class Players {
             throw new IllegalArgumentException("참여 가능한 플레이어는 최대 5명 입니다.");
         }
     }
+
+    public void receiveCardFrom(Dealer dealer) {
+        for (Player player : players) {
+            player.receive(dealer.passCard());
+        }
+    }
 }

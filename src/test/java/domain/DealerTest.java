@@ -20,14 +20,25 @@ class DealerTest {
     @Test
     void 플레이어_한_명에게_카드_한_장을_준다() {
         // given
-        Player player = Player.of("pobi");
         CardDeck cardDeck = CardDeck.of();
         Dealer dealer = Dealer.of(cardDeck);
 
+        // when & then
+        assertThatCode(() -> dealer.passCard())
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 카드를_한_장_받는다() {
+        // given
+        CardDeck cardDeck = CardDeck.of();
+        Dealer dealer = Dealer.of(cardDeck);
+        Card card = dealer.passCard();
+
         // when
-        dealer.passCard(player);
+        dealer.receive(card);
 
         // then
-        assertThat(player.getOwnedCards()).hasSize(1);
+        assertThat(dealer.getOwnedCards()).hasSize(1);
     }
 }

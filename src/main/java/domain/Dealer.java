@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Dealer {
 
     private final CardDeck cardDeck;
@@ -14,8 +16,15 @@ public class Dealer {
         return new Dealer(cardDeck);
     }
 
-    public void passCard(Player player) {
-        Card card = cardDeck.popCard();
-        player.receive(card);
+    public Card passCard() {
+        return cardDeck.popCard();
+    }
+
+    public void receive(Card card) {
+        ownedCards.add(card);
+    }
+
+    public List<Card> getOwnedCards() {
+        return ownedCards.getCards();
     }
 }
