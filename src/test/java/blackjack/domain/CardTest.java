@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.*;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -112,5 +114,53 @@ public class CardTest {
                 () -> assertThat(card.getNumber()).isEqualTo(1),
                 () -> assertThat(card.getShape()).isEqualTo(CardShape.다이아몬드)
         );
+    }
+    
+    @Test
+    void 모든_종류의_카드를_받을_수_있다() {
+        // given
+        List<Card> trumpCards = Card.createTrumpCards();
+        
+        // expected
+        assertThat(trumpCards.size()).isEqualTo(52);
+    }
+    
+    @Test
+    void 트럼프_카드에_중복이_없어야_한다() {
+        // given
+        List<Card> trumpCards = Card.createTrumpCards();
+        
+        final Map<Integer, Integer> numberCount = getNumberMap();
+        EnumMap<CardShape, Integer> shapeCount = getShapeMap();
+        
+        for (int i = 0; i < 52; i++) {
+            final Card card = trumpCards.get(i);
+            numberCount.put(card.getNumber(), numberCount.get(card.getNumber()) + 1);
+            shapeCount.put(card.getShape(), shapeCount.get(card.getShape()) + 1);
+        }
+        
+        // expected
+        for (int i = 1; i <= 13; i++) {
+            org.assertj.core.api.Assertions.assertThat(numberCount.get(i)).isEqualTo(4);
+        }
+        for (CardShape shape : CardShape.values()) {
+            org.assertj.core.api.Assertions.assertThat(shapeCount.get(shape)).isEqualTo(13);
+        }
+    }
+    
+    private static Map<Integer, Integer> getNumberMap() {
+        final Map<Integer, Integer> numberCount = new HashMap<>();
+        for (int i = 1; i <= 13; i++) {
+            numberCount.put(i, 0);
+        }
+        return numberCount;
+    }
+    
+    private static EnumMap<CardShape, Integer> getShapeMap() {
+        EnumMap<CardShape, Integer> shapeCount = new EnumMap<>(CardShape.class);
+        for (CardShape shape : CardShape.values()) {
+            shapeCount.put(shape, 0);
+        }
+        return shapeCount;
     }
 }

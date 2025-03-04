@@ -31,7 +31,8 @@ public class PlayerTest {
     void 플레이어의_이름이_2에서_8글자가_아니면_예외를_발생시킨다(String name) {
         // expected
         assertThatThrownBy(() -> new Player(name))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 2자 이상, 8자 이하여야 합니다.");
     }
     
     @Test
@@ -41,15 +42,17 @@ public class PlayerTest {
         
         // expected
         assertThatThrownBy(() -> {Player.createPlayers(playerNames);})
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어 이름은 중복될 수 없습니다.");
     }
     
     @ParameterizedTest
     @MethodSource("providePlayers")
-    void 중복된_플레이어가_존재하는_경우_예외를_발생시킨다(List<String> playerNames) {
+    void 플레이어_인원수는_1명부터_6명까지_입니다(List<String> playerNames) {
         // expected
-        assertThatThrownBy(() -> {Player.createPlayers(playerNames);})
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.createPlayers(playerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어 인원수는 1명부터 6명까지 입니다.");
     }
     
     private static Stream<Arguments> providePlayers() {

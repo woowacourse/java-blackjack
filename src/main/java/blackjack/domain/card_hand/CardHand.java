@@ -11,6 +11,8 @@ import java.util.List;
 public abstract class CardHand {
     
     private static final int BURST_THRESHOLD = 21;
+    private static final int BLACK_JACK_SUM = 21;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
     
     protected final List<Card> cards = new ArrayList<>();
     
@@ -102,7 +104,7 @@ public abstract class CardHand {
     }
     
     private WinningStatus getDrawResult(final CardHand other) {
-        if (getSum() == 21) {
+        if (getSum() == BLACK_JACK_SUM) {
             return judgeDouble21(other);
         }
         return WinningStatus.무승부;
@@ -131,7 +133,7 @@ public abstract class CardHand {
     }
     
     private boolean isBlackjack() {
-        return cards.size() == 2 && getSum() == 21;
+        return cards.size() == BLACK_JACK_CARD_COUNT && getSum() == BLACK_JACK_SUM;
     }
 
 }

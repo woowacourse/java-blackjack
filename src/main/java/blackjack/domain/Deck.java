@@ -11,16 +11,8 @@ public class Deck implements CardHandInitializer {
     }
     
     private Deque<Card> initCards() {
-        final List<Card> cards = new ArrayList<>();
-        
-        for (int number = 1; number <= 13; number++) {
-            for (CardShape shape : CardShape.values()) {
-                cards.add(new Card(number, shape));
-            }
-        }
-        
+        final List<Card> cards = Card.createTrumpCards();
         Collections.shuffle(cards);
-        
         return new ArrayDeque<>(cards);
     }
     
