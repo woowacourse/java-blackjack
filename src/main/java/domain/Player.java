@@ -1,17 +1,15 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Player {
 
     private final String name;
-    private final List<Card> cards;
+    private final Cards ownedCards;
 
     private Player(final String name) {
         this.name = name;
-        cards = new ArrayList<>();
+        this.ownedCards = Cards.of();
     }
 
     public static Player of(final String name) {
@@ -19,10 +17,10 @@ public class Player {
     }
 
     public void receive(final Card card) {
-        cards.add(card);
+        ownedCards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> getOwnedCards() {
+        return ownedCards.getCards();
     }
 }

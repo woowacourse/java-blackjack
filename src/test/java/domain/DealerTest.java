@@ -28,6 +28,6 @@ class DealerTest {
         dealer.passCard(player);
 
         // then
-        assertThat(player.getCards()).hasSize(1);
+        assertThat(player.getOwnedCards()).hasSize(1);
     }
 }

@@ -1,16 +1,13 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Dealer {
 
     private final CardDeck cardDeck;
-    private final List<Card> cards;
+    private final Cards ownedCards; // 변수명 추천
 
     private Dealer(CardDeck cardDeck) {
         this.cardDeck = cardDeck;
-        cards = new ArrayList<>();
+        this.ownedCards = Cards.of();
     }
 
     public static Dealer of(CardDeck cardDeck) {
