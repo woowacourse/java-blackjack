@@ -16,4 +16,8 @@ public class Cards {
                 .sum();
     }
 
+    public List<Card> getValues() {
+        return values;
+    }
+
 }
