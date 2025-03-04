@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,6 @@ public class DealerTest {
         Dealer dealer = new Dealer(nickname);
 
         //when & then
-        Assertions.assertThat(dealer).isInstaceOf(Dealer.class);
+        Assertions.assertThat(dealer).isInstanceOf(Dealer.class);
     }
 }
