@@ -59,12 +59,15 @@ public class CardsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("A를 1로 판단할 수 있다.")
+    @DisplayName("21에 가장 가까운 합을 구한다")
     @ParameterizedTest
     @CsvSource({
             "A, JACK, TEN, 21",
             "A, QUEEN, FIVE, 16",
-            "A, SIX, FIVE, 12"
+            "A, SIX, FIVE, 12",
+            "A, A, TWO, 14",
+            "QUEEN, JACK, A, 21",
+            "A, A, A, 13",
     })
     void 문자_카드_합_구하기(CardNumber number1, CardNumber number2, CardNumber number3, int expected) {
         //given
