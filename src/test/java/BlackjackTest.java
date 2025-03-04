@@ -56,4 +56,30 @@ class BlackjackTest {
 
         assertThat(player.isBust()).isTrue();
     }
+
+    @Test
+    @DisplayName("버스트되었을 경우 카드를 추가로 지급받을 수 없다")
+    void additionalCardFalseTest() {
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.QUEEN);
+        Card card3 = new Card(CardType.CLOVER, CardNumber.EIGHT);
+        Player player = new Player("Pobi");
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
+
+        assertThat(player.canReceiveAdditionalCards()).isFalse();
+    }
+
+    @Test
+    @DisplayName("버스트되지 않았을 경우 카드를 추가로 지급받을 수 있다")
+    void additionalCardFalseTest2() {
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.QUEEN);
+        Player player = new Player("Pobi");
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.canReceiveAdditionalCards()).isTrue();
+    }
 }

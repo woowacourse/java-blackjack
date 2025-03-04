@@ -22,4 +22,8 @@ public class Player {
     public boolean isBust() {
         return cards.sum() > 21;
     }
+
+    public boolean canReceiveAdditionalCards() {
+        return !isBust();
+    }
 }
