@@ -1,14 +1,8 @@
 package blackjack.model;
 
-public class AceCard {
-
-    private final CardShape shape;
+public class AceCard extends Card {
 
     public AceCard(CardShape shape) {
-        this.shape = shape;
-    }
-
-    public CardShape getShape() {
-        return shape;
+        super(shape);
     }
 }
