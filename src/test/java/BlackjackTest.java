@@ -184,4 +184,26 @@ class BlackjackTest {
 
         assertThat(roundResult).isEqualTo(RoundResult.LOSE);
     }
+
+    @Test
+    @DisplayName("블랙잭(Ace + J or Q or K)은 21을 이긴다.")
+    void winnerTest3() {
+        Player player1 = new Player("Pobi");
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
+        Card card2 = new Card(CardType.CLOVER, CardNumber.ACE);
+
+        Card card3 = new Card(CardType.CLOVER, CardNumber.QUEEN);
+        Card card4 = new Card(CardType.CLOVER, CardNumber.NINE);
+        Card card5 = new Card(CardType.CLOVER, CardNumber.TWO);
+        player1.addCard(card1);
+        player1.addCard(card2);
+        dealer.addCard(card3);
+        dealer.addCard(card4);
+        dealer.addCard(card5);
+
+        RoundResult roundResult = RoundResult.judgeResult(player1, dealer);
+
+        assertThat(roundResult).isEqualTo(RoundResult.WIN);
+    }
 }
