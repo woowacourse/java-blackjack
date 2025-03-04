@@ -1,4 +1,6 @@
-import common.ErrorMessage;
+package blackjack;
+
+import blackjack.common.ErrorMessage;
 import java.util.HashSet;
 import java.util.List;
 

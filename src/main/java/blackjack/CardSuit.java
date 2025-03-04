@@ -1,3 +1,5 @@
+package blackjack;
+
 public enum CardSuit {
     HEART("하트"),
     DIAMOND("다이아몬드"),

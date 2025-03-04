@@ -1,3 +1,5 @@
+package blackjack;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -8,18 +10,20 @@ class CardTest {
     @DisplayName("객체 값 검증 테스트")
     @Test
     void test1() {
-        // given & when
+        // given
         Card card = new Card(CardSuit.HEART, CardRank.EIGHT);
 
-        // then
+        // when & then
         assertThat(card.getValue()).contains(8);
     }
 
     @DisplayName("ACE의 경우에는 1과 11의 값을 가질 수 있다.")
     @Test
     void test3() {
+        // given
         Card ace = new Card(CardSuit.CLUB, CardRank.ACE);
 
+        // when & then
         assertThat(ace.getValue()).containsExactlyInAnyOrder(1, 11);
     }
 

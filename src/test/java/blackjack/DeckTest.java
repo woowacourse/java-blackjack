@@ -1,7 +1,7 @@
+package blackjack;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import common.ErrorMessage;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ class DeckTest {
         // given
 
         // when & then
-//        assertThatThrownBy(() -> new Deck(cards))
+//        assertThatThrownBy(() -> new blackjack.Deck(cards))
 //                .isInstanceOf(IllegalArgumentException.class)
 //                .hasMessage(ErrorMessage.INVALID_DECK_SIZE.getMessage());
     }
