@@ -59,6 +59,10 @@ public class CardSet {
         return cards;
     }
 
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
