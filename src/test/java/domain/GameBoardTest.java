@@ -15,7 +15,6 @@ public class GameBoardTest {
         Player player2 = new Player("히스타");
         CardSet gameCardSet = CardSet.generateFullSet();
 
-
         //when
         GameBoard gameBoard = new GameBoard(gameCardSet, List.of(player1, player2));
 
