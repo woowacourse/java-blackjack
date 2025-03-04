@@ -7,4 +7,8 @@ public class DrawPolicy {
     public boolean isDrawable(int numberSum) {
         return numberSum <= BURST_STANDARD;
     }
+
+    public boolean isBurst(int numberSum) {
+        return numberSum > BURST_STANDARD;
+    }
 }

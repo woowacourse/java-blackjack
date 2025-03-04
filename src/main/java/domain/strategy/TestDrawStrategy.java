@@ -2,31 +2,30 @@ package domain.strategy;
 
 import domain.TrumpCard;
 import except.BlackJackException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class TestDrawStrategy implements DrawStrategy {
 
     private final String INVALID_DRAW_STATE = "덱이 비어있어 뽑을 수 없습니다.";
-    private final List<TrumpCard> testTrumpCards;
+    private final Deque<TrumpCard> testTrumpCards;
 
-    public TestDrawStrategy(List<TrumpCard> testTrumpCards){
-        this.testTrumpCards = new ArrayList<>(testTrumpCards);
+    public TestDrawStrategy(Deque<TrumpCard> testTrumpCards) {
+        this.testTrumpCards = new LinkedList<>(testTrumpCards);
     }
 
     @Override
-    public TrumpCard draw(List<TrumpCard> trumpCards){
+    public TrumpCard draw(Deque<TrumpCard> trumpCards) {
         validateDraw(testTrumpCards);
         validateDraw(trumpCards);
-        TrumpCard testRemoveTrumpCard = testTrumpCards.get(0);
-        testTrumpCards.remove(0);
+        TrumpCard testRemoveTrumpCard = testTrumpCards.removeFirst();
         trumpCards.remove(testRemoveTrumpCard);
         return testRemoveTrumpCard;
     }
 
     @Override
-    public void validateDraw(List<TrumpCard> trumpCards){
-        if(trumpCards.isEmpty()){
+    public void validateDraw(Deque<TrumpCard> trumpCards) {
+        if (trumpCards.isEmpty()) {
             throw new BlackJackException(INVALID_DRAW_STATE);
         }
     }
