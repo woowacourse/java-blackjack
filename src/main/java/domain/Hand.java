@@ -13,4 +13,10 @@ public class Hand {
     public void add(final Card card) {
         cards.add(card);
     }
+
+    public int getSumOfRank() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
 }
