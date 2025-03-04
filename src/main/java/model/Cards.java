@@ -42,7 +42,7 @@ public class Cards {
                 .findAny()
                 .orElseThrow();
 
-        final String shape = aceElevenCard.getShape();
+        final Shape shape = aceElevenCard.getShape();
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, shape));

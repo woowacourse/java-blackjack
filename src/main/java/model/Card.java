@@ -3,9 +3,9 @@ package model;
 public class Card {
 
     private final CardNumber number;
-    private final String shape;
+    private final Shape shape;
 
-    public Card(final CardNumber number, final String shape) {
+    public Card(final CardNumber number, final Shape shape) {
         this.number = number;
         this.shape = shape;
     }
@@ -22,7 +22,7 @@ public class Card {
         return this.number == number;
     }
 
-    public String getShape() {
+    public Shape getShape() {
         return shape;
     }
 }
