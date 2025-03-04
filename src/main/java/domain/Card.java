@@ -18,6 +18,6 @@ public class Card {
     }
 
     public int calculateAceScore(final int score, final int limit) {
-        return 10;
+        return 1;
     }
 }
