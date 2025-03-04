@@ -9,4 +9,12 @@ public class Card {
         this.symbol = symbol;
         this.number = number;
     }
+
+    public Number getNumber() {
+        return number;
+    }
+
+    public boolean isAce() {
+        return number.equals(Number.ACE);
+    }
 }

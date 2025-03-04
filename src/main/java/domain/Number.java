@@ -18,13 +18,18 @@ public enum Number {
     QUEEN(10),
     KING(10);
 
-    private final int number;
+    private final int numericValue;
 
-    Number(int number) {
-        this.number = number;
+    Number(int numericValue) {
+        this.numericValue = numericValue;
+    }
+
+    public int getNumericValue() {
+        return numericValue;
     }
 
     public static List<Number> getAllNumbers() {
-        return Arrays.stream(values()).toList();
+        return Arrays.stream(values())
+                .toList();
     }
 }
