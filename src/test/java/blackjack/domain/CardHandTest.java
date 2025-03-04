@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import org.assertj.core.api.Assertions;
+import blackjack.testutil.CardHandInitializerDummy;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,17 +11,24 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static blackjack.domain.CardShape.*;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CardHandTest {
     
     @Test
+    void 카드를_2개_받고_시작한다() {
+        // given
+        final CardHand cardHand = new CardHand(new Deck());
+        
+        // expected
+        assertThat(cardHand.getCards().size()).isEqualTo(2);
+    }
+    
+    @Test
     void 카드_손패에_카드를_추가할_수_있다() {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         final Card newCard = new Card(1, 다이아몬드);
         
         // expected
@@ -31,7 +38,7 @@ public class CardHandTest {
     @Test
     void 카드_손패에_있는_카드들을_확인할_수_있다() {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         cardHand.addCard(new Card(1, 다이아몬드));
         cardHand.addCard(new Card(2, 하트));
         
@@ -50,7 +57,7 @@ public class CardHandTest {
     @Test
     void 카드_손패에_있는_카드들의_숫자의_합을_계산할_수_있다() {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         cardHand.addCard(new Card(1, 다이아몬드));
         cardHand.addCard(new Card(2, 하트));
         
@@ -64,7 +71,7 @@ public class CardHandTest {
     @Test
     void JQK를_10으로_계산하여_숫자의_합을_반환한다() {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         cardHand.addCard(new Card(11, 다이아몬드));
         cardHand.addCard(new Card(12, 하트));
         cardHand.addCard(new Card(13, 하트));
@@ -79,7 +86,7 @@ public class CardHandTest {
     @Test
     void 손패에_존재하는_카드의_숫자의_합을_계산할_수_있다() {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         cardHand.addCard(new Card(1, 다이아몬드));
         cardHand.addCard(new Card(7, 하트));
         cardHand.addCard(new Card(10, 하트));
@@ -95,7 +102,7 @@ public class CardHandTest {
     @MethodSource("provideCardsAndSumWithBurst")
     void A를_11로_계산하여_버스트_되는_경우_A는_1로_계산된다(List<Card> cards, int expected) {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         for (Card card : cards) {
             cardHand.addCard(card);
         }
@@ -122,7 +129,7 @@ public class CardHandTest {
     @MethodSource("provideCardsAndSumWithoutBurst")
     void A를_11로_계산하여_버스트_되지_않는_경우_A는_11로_계산된다(List<Card> cards, int expected) {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         for (Card card : cards) {
             cardHand.addCard(card);
         }
@@ -149,7 +156,7 @@ public class CardHandTest {
     @MethodSource("provideCardsWithAceAndSum")
     void A가_여러_개_주어진_경우_버스트가_되지_않는_선에서_최대_합을_구한다(List<Card> cards, int expected) {
         // given
-        final CardHand cardHand = new CardHand();
+        final CardHand cardHand = new CardHand(new CardHandInitializerDummy());
         for (Card card : cards) {
             cardHand.addCard(card);
         }
@@ -174,11 +181,11 @@ public class CardHandTest {
     
     @Test
     void 손패_두_개가_주어졌을_때_두_손패_모두_버스트가_아니라면_21에_근접한_손패가_이긴다() {
-        final CardHand winner = new CardHand();
+        final CardHand winner = new CardHand(new CardHandInitializerDummy());
         winner.addCard(new Card(10, 다이아몬드));
         winner.addCard(new Card(1, 하트));
         
-        final CardHand looser = new CardHand();
+        final CardHand looser = new CardHand(new CardHandInitializerDummy());
         looser.addCard(new Card(9, 다이아몬드));
         looser.addCard(new Card(1, 하트));
         
@@ -187,12 +194,12 @@ public class CardHandTest {
     
     @Test
     void 손패_두_개가_주어졌을_때_한_손패가_버스트라면_버스트가_아닌_손패가_이긴다() {
-        final CardHand winner = new CardHand();
+        final CardHand winner = new CardHand(new CardHandInitializerDummy());
         winner.addCard(new Card(10, 다이아몬드));
         winner.addCard(new Card(10, 하트));
         winner.addCard(new Card(10, 클로버));
         
-        final CardHand looser = new CardHand();
+        final CardHand looser = new CardHand(new CardHandInitializerDummy());
         looser.addCard(new Card(9, 다이아몬드));
         looser.addCard(new Card(1, 하트));
         
@@ -201,12 +208,12 @@ public class CardHandTest {
     
     @Test
     void 손패_두_개가_주어졌을_때_두_손패가_버스트라면_무승부이다() {
-        final CardHand winner = new CardHand();
+        final CardHand winner = new CardHand(new CardHandInitializerDummy());
         winner.addCard(new Card(10, 다이아몬드));
         winner.addCard(new Card(10, 하트));
         winner.addCard(new Card(10, 클로버));
         
-        final CardHand looser = new CardHand();
+        final CardHand looser = new CardHand(new CardHandInitializerDummy());
         looser.addCard(new Card(9, 다이아몬드));
         looser.addCard(new Card(8, 하트));
         looser.addCard(new Card(7, 하트));
@@ -216,11 +223,11 @@ public class CardHandTest {
     
     @Test
     void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_한쪽만_블랙잭이라면_블랙잭이_이긴다() {
-        final CardHand winner = new CardHand();
+        final CardHand winner = new CardHand(new CardHandInitializerDummy());
         winner.addCard(new Card(10, 다이아몬드));
         winner.addCard(new Card(1, 다이아몬드));
         
-        final CardHand looser = new CardHand();
+        final CardHand looser = new CardHand(new CardHandInitializerDummy());
         looser.addCard(new Card(9, 다이아몬드));
         looser.addCard(new Card(9, 하트));
         looser.addCard(new Card(3, 하트));
@@ -230,11 +237,11 @@ public class CardHandTest {
     
     @Test
     void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_둘다_블랙잭이라면_무승부이다() {
-        final CardHand winner = new CardHand();
+        final CardHand winner = new CardHand(new CardHandInitializerDummy());
         winner.addCard(new Card(10, 다이아몬드));
         winner.addCard(new Card(1, 다이아몬드));
         
-        final CardHand looser = new CardHand();
+        final CardHand looser = new CardHand(new CardHandInitializerDummy());
         looser.addCard(new Card(10, 하트));
         looser.addCard(new Card(1, 하트));
         
@@ -243,12 +250,12 @@ public class CardHandTest {
     
     @Test
     void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_둘다_블랙잭이_아니라면_무승부이다() {
-        final CardHand winner = new CardHand();
+        final CardHand winner = new CardHand(new CardHandInitializerDummy());
         winner.addCard(new Card(5, 다이아몬드));
         winner.addCard(new Card(5, 다이아몬드));
         winner.addCard(new Card(1, 다이아몬드));
         
-        final CardHand looser = new CardHand();
+        final CardHand looser = new CardHand(new CardHandInitializerDummy());
         looser.addCard(new Card(5, 하트));
         looser.addCard(new Card(5, 하트));
         looser.addCard(new Card(1, 하트));

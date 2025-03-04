@@ -11,8 +11,12 @@ public class CardHand {
     public static final int BURST_THRESHOLD = 21;
     private final List<Card> cards = new ArrayList<>();
     
-    public void addCard(final Card newCard) {
-        cards.add(newCard);
+    public CardHand(final CardHandInitializer initializer) {
+        cards.addAll(initializer.init());
+    }
+    
+    public void addCard(final Card card) {
+        cards.add(card);
     }
     
     public List<Card> getCards() {

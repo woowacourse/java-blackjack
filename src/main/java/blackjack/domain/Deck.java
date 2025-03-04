@@ -2,8 +2,9 @@ package blackjack.domain;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.List;
 
-public class Deck {
+public class Deck implements CardHandInitializer {
     
     private final Deque<Card> cards;
     
@@ -27,5 +28,10 @@ public class Deck {
             throw new IllegalStateException("카드는 총 52장입니다.");
         }
         return cards.poll();
+    }
+    
+    @Override
+    public List<Card> init() {
+        return List.of(draw(), draw());
     }
 }
