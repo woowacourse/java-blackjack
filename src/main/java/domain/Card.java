@@ -11,8 +11,12 @@ public class Card {
         this.shape = shape;
     }
 
-    int getNumber() {
+    public int getNumber() {
         return rank.number();
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
