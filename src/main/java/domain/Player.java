@@ -1,43 +1,25 @@
 package domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
-public class Player {
+public class Player extends Participants {
 
     private final String name;
-    private final Set<Card> cards = new HashSet<>();
 
     public Player(String name) {
+        validateNotBlank(name);
+        name = name.trim();
+        validateLength(name);
         this.name = name;
     }
 
-    public void setUpCard(Card card1, Card card2) {
-        cards.add(card1);
-        cards.add(card2);
-    }
-
-    public void takeMore(Card card) {
-        cards.add(card);
-    }
-
-    public int calculateScore() {
-        int number = cards.stream()
-            .mapToInt(Card::getNumber)
-            .sum();
-
-        if (hasAce() && number + 10 <= 21) {
-            return number + 10;
+    private static void validateLength(String name) {
+        if (name.length() > 10) {
+            throw new IllegalArgumentException("플레이어의 이름은 10자를 넘을 수 없습니다.");
         }
-        return number;
     }
 
-    private boolean hasAce() {
-        return cards.stream()
-            .anyMatch(card -> card.getRank() == Rank.ACE);
-    }
-
-    public Set<Card> getCards() {
-        return cards;
+    private static void validateNotBlank(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("플레이어의 이름은 비어있을 수 없습니다.");
+        }
     }
 }
