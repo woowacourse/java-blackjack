@@ -15,6 +15,6 @@ public class Card {
         if (specialNumbers.contains(value)) {
             return 10;
         }
-        return 2;
+        return Integer.parseInt(value);
     }
 }
