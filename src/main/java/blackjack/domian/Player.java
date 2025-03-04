@@ -37,6 +37,27 @@ public class Player {
         return min;
     }
 
+    public int calculateMaxScore() {
+        return solve2(0, 0);
+    }
+
+    private int solve2(int depth, int totalScore) {
+        if (depth == cards.size()) {
+            return totalScore;
+        }
+
+        Card card = cards.get(depth);
+        List<Integer> scores = card.getRank().getScore();
+        int max = Integer.MIN_VALUE;
+        for (int score : scores) {
+            int sum = solve(depth + 1, totalScore + score);
+            if (sum > 21) {
+                continue;
+            }
+            max = Math.max(max, sum);
+        }
+        return max;
+    }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
