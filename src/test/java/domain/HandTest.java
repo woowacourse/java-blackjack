@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    List<Card> cards;
-    Card card1;
-    Card card2;
-    Hand hand;
+    private List<Card> cards;
+    private Card card1;
+    private Card card2;
+    private Hand hand;
 
     @BeforeEach
     void setUp() {
