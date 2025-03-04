@@ -1,5 +1,5 @@
-import common.CardType;
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ class CardTest {
         Card card = new Card(CardType.ACE, 1);
 
         // then
-        Assertions.assertThat(card.getValue()).isEqualTo(1);
+        assertThat(card.getValue()).isEqualTo(1);
     }
 
     @DisplayName("값과 타입으로 동일한 객체인지 확인한다")
@@ -26,6 +26,6 @@ class CardTest {
         boolean actual = card.equals(comparedCard);
 
         // then
-        Assertions.assertThat(actual).isTrue();
+        assertThat(actual).isTrue();
     }
 }

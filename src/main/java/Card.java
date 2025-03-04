@@ -1,4 +1,3 @@
-import common.CardType;
 import java.util.Objects;
 
 public class Card {
@@ -26,5 +25,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardType, value);
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardType=" + cardType +
+                ", value=" + value +
+                '}';
     }
 }

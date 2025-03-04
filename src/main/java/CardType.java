@@ -1,5 +1,4 @@
-package common;
-
+import common.ErrorMessage;
 import java.util.function.Predicate;
 
 public enum CardType {
@@ -25,4 +24,7 @@ public enum CardType {
         }
     }
 
+    public boolean isValidate(int value) {
+        return this.valueCondition.test(value);
+    }
 }
