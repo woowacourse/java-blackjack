@@ -1,18 +1,21 @@
 package blackjack.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 public class CardDeck {
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
-    public CardDeck(Set<Card> cards) {
+    public CardDeck(List<Card> cards) {
         this.cards = cards;
     }
 
     public static CardDeck createCardDeck() {
-        Set<Card> cards = new HashSet(Card.values());
-        return new CardDeck(cards);
+        return new CardDeck(Card.values());
     }
 
+    public Card pickRandomCard() {
+        Collections.shuffle(cards);
+        return cards.removeFirst();
+    }
 }
