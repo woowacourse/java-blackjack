@@ -37,9 +37,6 @@ public class ParticipantRepositoryTest {
         participantRepository.addAll(participants);
 
         // then
-        assertThat(participantRepository.getAll()).contains(
-                new Participant("mimi", Cards.createEmpty()),
-                new Participant("wade", Cards.createEmpty())
-        );
+        assertThat(participantRepository.getAll()).containsAll(participants);
     }
 }

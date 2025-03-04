@@ -26,8 +26,9 @@ public class ParticipantRepository {
     }
 
     public void addAll(List<Participant> participants) {
-        participants
-                .forEach(participant -> repository.put(participant.getName(), participant));
+        participants.forEach(
+                participant -> repository.put(participant.getName(), participant)
+        );
     }
 
     public List<Participant> getAll() {
