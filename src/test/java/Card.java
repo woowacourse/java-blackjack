@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class Card {
 
@@ -18,5 +19,22 @@ public class Card {
         if (!numbers.contains(value)) {
             throw new IllegalArgumentException("카드 숫자는 2 ~ 10 사이 숫자만 가능합니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return Objects.equals(value, card.value) && Objects.equals(type, card.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, type);
     }
 }
