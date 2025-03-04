@@ -31,4 +31,12 @@ public class Card {
             throw new IllegalArgumentException("문양은 하트, 다이아몬드, 스페이드, 클로버 중 하나여야 합니다.");
         }
     }
+    
+    public int getNumber() {
+        return number;
+    }
+    
+    public CardShape getShape() {
+        return shape;
+    }
 }

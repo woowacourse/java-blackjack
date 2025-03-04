@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CardTest {
     
@@ -17,7 +18,7 @@ public class CardTest {
         CardShape shape = CardShape.다이아몬드;
         
         // expected
-        Assertions.assertDoesNotThrow(() -> new Card(number, shape));
+        assertDoesNotThrow(() -> new Card(number, shape));
     }
     
     
@@ -52,5 +53,21 @@ public class CardTest {
         
         // expected
         assertThat(new Card(number, shape)).isNotEqualTo(new Card(number, shape));
+    }
+    
+    @Test
+    void 카드를_생성하면_모양과_숫자를_알_수_있다() {
+        // given
+        int number = 1;
+        CardShape shape = CardShape.다이아몬드;
+        
+        // when
+        final Card card = new Card(number, shape);
+        
+        // expected
+        assertAll(
+                () -> assertThat(card.getNumber()).isEqualTo(1),
+                () -> assertThat(card.getShape()).isEqualTo(CardShape.다이아몬드)
+        );
     }
 }
