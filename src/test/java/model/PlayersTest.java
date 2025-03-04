@@ -14,8 +14,8 @@ public class PlayersTest {
   void newPlayers() {
     // given
     List<Player> actual = List.of(
-        new Player("pobi"),
-        new Player("hippo")
+        new Player(new Nickname("pobi")),
+        new Player(new Nickname("hippo"))
     );
     // when
     Players players = new Players(actual);
