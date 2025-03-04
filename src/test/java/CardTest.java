@@ -5,22 +5,30 @@ import org.junit.jupiter.api.Test;
 
 class CardTest {
 
-    @DisplayName("객체 생성 테스트")
+    @DisplayName("객체 값 검증 테스트")
     @Test
     void test1() {
         // given & when
-        Card card = new Card(CardSuit.ACE, 1);
+        Card card = new Card(CardSuit.HEART, CardRank.EIGHT);
 
         // then
-        assertThat(card.getValue()).isEqualTo(1);
+        assertThat(card.getValue()).contains(8);
+    }
+
+    @DisplayName("ACE의 경우에는 1과 11의 값을 가질 수 있다.")
+    @Test
+    void test3() {
+        Card ace = new Card(CardSuit.CLUB, CardRank.ACE);
+
+        assertThat(ace.getValue()).containsExactlyInAnyOrder(1, 11);
     }
 
     @DisplayName("값과 타입으로 동일한 객체인지 확인한다")
     @Test
     void test2() {
         // given
-        Card card = new Card(CardSuit.ACE, 1);
-        Card comparedCard = new Card(CardSuit.ACE, 1);
+        Card card = new Card(CardSuit.HEART, CardRank.TWO);
+        Card comparedCard = new Card(CardSuit.HEART, CardRank.TWO);
 
         // when
         boolean actual = card.equals(comparedCard);

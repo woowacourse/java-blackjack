@@ -1,16 +1,16 @@
 import java.util.Objects;
 
 public class Card {
-    private final CardSuit cardType;
-    private final int value;
+    private final CardSuit cardSuit;
+    private final CardRank cardRank;
 
-    public Card(CardSuit cardType, int value) {
-        this.cardType = cardType;
-        this.value = value;
+    public Card(CardSuit cardSuit, CardRank cardRank) {
+        this.cardSuit = cardSuit;
+        this.cardRank = cardRank;
     }
 
-    public int getValue() {
-        return value;
+    public int[] getValue() {
+        return cardRank.getValues();
     }
 
     @Override
@@ -19,19 +19,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return value == card.value && cardType == card.cardType;
+        return cardSuit == card.cardSuit && cardRank == card.cardRank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardType, value);
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "cardType=" + cardType +
-                ", value=" + value +
-                '}';
+        return Objects.hash(cardSuit, cardRank);
     }
 }

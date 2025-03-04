@@ -1,21 +1,12 @@
 public enum CardSuit {
+    HEART("하트"),
+    DIAMOND("다이아몬드"),
+    CLUB("클로버"),
+    SPADE("스페이드");
 
-    HEART(CardType.NUMBER),
-    SPADE(CardType.NUMBER),
-    DIAMOND(CardType.NUMBER),
-    CLOVER(CardType.NUMBER),
-    KING(CardType.FACE),
-    QUEEN(CardType.FACE),
-    JACK(CardType.FACE);
+    private final String description;
 
-    private final CardType cardType;
-
-    CardSuit(CardType cardType) {
-        this.cardType = cardType;
-    }
-
-    class Card {
-        private CardValue cardValue;
-        private CardSuit cardSuit;
+    CardSuit(String description) {
+        this.description = description;
     }
 }

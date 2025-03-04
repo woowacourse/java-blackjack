@@ -4,7 +4,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DeckGeneratorTest {
+class DeckGeneratorTest {
     @Test
     @DisplayName("덱을 만들 때 카드의 개수는 52개이다")
     void test1() {

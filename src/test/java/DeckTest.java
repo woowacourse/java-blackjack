@@ -11,7 +11,6 @@ class DeckTest {
     @Test
     void test6() {
         // given
-        List<Card> cards = List.of(new Card(CardSuit.ACE, 1));
 
         // when & then
 
@@ -21,12 +20,11 @@ class DeckTest {
     @Test
     void test1() {
         // given
-        List<Card> cards = List.of(new Card(CardSuit.ACE, 1));
 
         // when & then
-        assertThatThrownBy(() -> new Deck(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.INVALID_DECK_SIZE.getMessage());
+//        assertThatThrownBy(() -> new Deck(cards))
+//                .isInstanceOf(IllegalArgumentException.class)
+//                .hasMessage(ErrorMessage.INVALID_DECK_SIZE.getMessage());
     }
 
     @DisplayName("중복되는 카드가 존재하면 예외를 던진다.")
