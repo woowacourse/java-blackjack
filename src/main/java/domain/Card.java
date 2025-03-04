@@ -5,7 +5,7 @@ import static domain.Denomination.ACE;
 public class Card {
     private Denomination denomination;
     private Suit suit;
-    private int value;
+    protected int value;
 
     public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
@@ -16,4 +16,9 @@ public class Card {
     public boolean isAce() {
         return denomination.equals(ACE);
     }
+
+    public int getValue() {
+        return value;
+    }
+
 }
