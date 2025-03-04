@@ -34,4 +34,7 @@ public class CardDeck {
         return new HashSet<>(sums);
     }
 
+    public int getDeckSize() {
+        return cards.size();
+    }
 }
