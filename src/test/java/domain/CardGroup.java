@@ -15,9 +15,9 @@ public class CardGroup {
         this.cards = cards;
     }
 
-    public int calculateScore() {
+    public int calculateScoreWithOutAce() {
         return cards.stream()
-                .mapToInt(card -> card.getNumber().cardScore)
+                .mapToInt(card -> card.getScore().cardScore)
                 .sum();
     }
 

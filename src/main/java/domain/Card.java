@@ -1,16 +1,16 @@
 package domain;
 
 public class Card {
-    CardScore number;
+    CardScore score;
     CardType type;
 
     Card(CardScore number, domain. CardType type) {
-        this.number = number;
+        this.score = number;
         this.type = type;
     }
 
-    public CardScore getNumber() {
-        return number;
+    public CardScore getScore() {
+        return score;
     }
 
     public CardType getType() {
