@@ -9,6 +9,10 @@ public class Card {
         this.shape = shape;
     }
 
+    public CardNumber getNumber() {
+        return number;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

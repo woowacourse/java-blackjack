@@ -22,7 +22,12 @@ public class Cards {
     }
 
     public int sum() {
-        return 5;
+        return cards.stream()
+                .mapToInt(card -> {
+                    CardNumber number = card.getNumber();
+                    return number.getNumbers().getFirst();
+                })
+                .sum();
     }
 
     public List<Card> getCards() {
