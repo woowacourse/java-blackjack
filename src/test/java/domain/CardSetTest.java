@@ -25,6 +25,19 @@ public class CardSetTest {
     }
 
     @Test
+    void 카드_섞기() {
+        //given
+        CardSet originCardSet = CardSet.generateFullSet();
+        CardSet shuffledCardSet = CardSet.generateFullSet();
+
+        //when
+        shuffledCardSet.shuffle();
+
+        //then
+        Assertions.assertThat(originCardSet).isNotEqualTo(shuffledCardSet);
+    }
+
+    @Test
     void 카드_뽑기() {
         //given
         CardSet cardSet = CardSet.generateFullSet();
