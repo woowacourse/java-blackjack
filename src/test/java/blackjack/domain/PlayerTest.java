@@ -3,6 +3,9 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,5 +37,18 @@ class PlayerTest {
     void validateNameHasBlank() {
         assertThatThrownBy(() -> new Player("라 젤"))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("패에 카드를 추가한다")
+    @Test
+    void aa() {
+        Player player = new Player("라젤");
+        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
+        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
+
+        player.addCards(card1);
+        player.addCards(card2);
+
+        assertThat(player.calculateSum()).isEqualTo(18);
     }
 }

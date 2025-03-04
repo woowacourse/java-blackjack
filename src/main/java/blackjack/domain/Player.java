@@ -1,9 +1,12 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+
 public class Player {
     private final String name;
+    private final Hands hands = new Hands();
 
-    public Player(String name) {
+    public Player(final String name) {
         validateName(name);
         this.name = name;
     }
@@ -22,5 +25,11 @@ public class Player {
         return name;
     }
 
+    public void addCards(final Card card) {
+        hands.addNewCard(card);
+    }
 
+    public int calculateSum() {
+        return hands.calculateSum();
+    }
 }
