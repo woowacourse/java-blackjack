@@ -17,7 +17,7 @@ import domain.Deck;
 public class DealerTest {
     @Nested
     @DisplayName("")
-    class pickCard{
+    class pickCard {
         @Test
         @DisplayName("Dealer는 카드를 뽑는다.")
         void test_pickCard() {
@@ -25,10 +25,11 @@ public class DealerTest {
             Card card = new Card(1, Emblem.CLUB);
             final var d = new ArrayDeque<>(List.of(card));
             final var deck = new Deck(d);
-
             var dealer = new Dealer();
+
             //when
             dealer.pickUpCard(deck);
+
             //then
             assertThat(dealer.hand()).contains(card);
         }
