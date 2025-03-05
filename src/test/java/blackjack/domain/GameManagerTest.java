@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameManagerTest {
 
@@ -35,7 +34,7 @@ class GameManagerTest {
 
         // then
         nicknames.forEach(nickname ->
-                assertThat( cardManager.findCardsByNickname(nickname)).isEmpty());
+                assertThat(cardManager.findCardsByNickname(nickname).getSize()).isZero());
     }
 
     @Test
@@ -50,13 +49,12 @@ class GameManagerTest {
 
         //then
         assertAll(
-                () -> assertThat(cardManager.findCardsByNickname(new Nickname("강산")))
-                        .hasSize(CardManager.INITIAL_CARD_COUNT),
-                () -> assertThat(cardManager.findCardsByNickname(new Nickname("랜디")))
-                        .hasSize(CardManager.INITIAL_CARD_COUNT),
-                () -> assertThat(cardManager.findCardsByNickname(Nickname.createDealer()))
-                        .hasSize(CardManager.INITIAL_CARD_COUNT)
-
+                () -> assertThat(cardManager.findCardsByNickname(new Nickname("강산")).getSize())
+                        .isEqualTo(CardManager.INITIAL_CARD_COUNT),
+                () -> assertThat(cardManager.findCardsByNickname(new Nickname("랜디")).getSize())
+                        .isEqualTo(CardManager.INITIAL_CARD_COUNT),
+                () -> assertThat(cardManager.findCardsByNickname(Nickname.createDealer()).getSize())
+                        .isEqualTo(CardManager.INITIAL_CARD_COUNT)
         );
     }
 }

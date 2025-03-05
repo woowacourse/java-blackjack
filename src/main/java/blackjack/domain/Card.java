@@ -9,4 +9,13 @@ public final class Card {
         this.shape = shape;
         this.value = value;
     }
+
+    public String getShape() {
+        return shape.getDescription();
+    }
+
+    public int getPoint() {
+        return value.getPoint();
+    }
+
 }

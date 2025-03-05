@@ -1,13 +1,14 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardManagerTest {
 
@@ -41,10 +42,30 @@ class CardManagerTest {
         cardManager.distributeCards();
         //then
         assertAll(
-                () -> assertThat(cardManager.findCardsByNickname(new Nickname("쿠키")))
-                        .hasSize(CardManager.INITIAL_CARD_COUNT),
-                () -> assertThat(cardManager.findCardsByNickname(new Nickname("빙봉")))
-                        .hasSize(CardManager.INITIAL_CARD_COUNT)
+                () -> assertThat(cardManager.findCardsByNickname(new Nickname("쿠키")).getSize())
+                        .isEqualTo(CardManager.INITIAL_CARD_COUNT),
+                () -> assertThat(cardManager.findCardsByNickname(new Nickname("빙봉")).getSize())
+                        .isEqualTo(CardManager.INITIAL_CARD_COUNT)
         );
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드 포인트의 합을 구할 수 있다.")
+    void canCalculateSumByNickname() {
+        //given
+        Nickname nickname = new Nickname("쿠키");
+        cardManager.initialize(List.of(nickname));
+
+        cardManager.addCardByNickname(nickname);
+        cardManager.addCardByNickname(nickname);
+
+        Cards cards = cardManager.findCardsByNickname(nickname);
+        int expectedValue = cards.calculateSum();
+
+        // when
+        int actualValue = cardManager.calculateSumByNickname(nickname);
+
+        // then
+        assertThat(actualValue).isEqualTo(expectedValue);
     }
 }
