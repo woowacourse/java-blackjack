@@ -5,7 +5,9 @@ import domain.Dealer;
 import domain.Deck;
 import domain.DeckGenerator;
 import domain.Participant;
-import domain.Participants;
+import domain.Player;
+import domain.Players;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,20 +17,28 @@ public class BlackjackController {
 
     public void run() {
         String names = InputView.inputParticipantName();
-        Participants participants = createParticipants(names);
+        List<Participant> participants = createParticipants(names);
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
-        Blackjack blackjack = new Blackjack(dealer, participants, deck);
+        Players players = createPlayers(dealer, participants);
+        Blackjack blackjack = new Blackjack(players, deck);
         blackjack.initialCardsDistribution();
 
     }
 
-    private Participants createParticipants(String names) {
+    private List<Participant> createParticipants(String names) {
         List<String> parsed = Arrays.stream(names.split(",", -1))
                 .toList();
 
-        return new Participants(parsed.stream()
+        return parsed.stream()
                 .map(Participant::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+    }
+
+    private Players createPlayers(Dealer dealer, List<Participant> participants) {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(participants);
+        return new Players(players);
     }
 }

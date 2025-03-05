@@ -1,19 +1,21 @@
 package domain;
 
+import java.util.List;
+
 public class Blackjack {
-    private final Dealer dealer;
-    private final Participants participants;
+    private final Players players;
     private final Deck deck;
 
-    public Blackjack(Dealer dealer, Participants participants, Deck deck) {
-        this.dealer = dealer;
-        this.participants = participants;
+    public Blackjack(Players players, Deck deck) {
+        this.players = players;
         this.deck = deck;
     }
 
     public void initialCardsDistribution() {
-        dealer.receiveCards(deck.drawCards(2));
-        int participantsSize = participants.size();
-        participants.distributeTwoCards(deck.drawCards(participantsSize * 2));
+
+    }
+
+    public void openDistributedCards() {
+
     }
 }

@@ -9,18 +9,18 @@ public class BlackjackTest {
     @Test
     void 블랙잭_객체를_생성한다() {
         // given
-        Participants participants = new Participants(List.of(
+        Players players = new Players(List.of(
+                new Dealer(),
                 new Participant("시소"),
                 new Participant("헤일러"),
                 new Participant("부기"),
                 new Participant("사나")
         ));
-        Dealer dealer = new Dealer();
 
         Deck deck = DeckGenerator.generateDeck();
 
         // when & then
-        Assertions.assertThatCode(() -> new Blackjack(dealer, participants, deck))
+        Assertions.assertThatCode(() -> new Blackjack(players, deck))
                 .doesNotThrowAnyException();
     }
 }
