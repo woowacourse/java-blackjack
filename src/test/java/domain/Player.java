@@ -28,6 +28,14 @@ public class Player {
     }
 
     public GameResult calculateGameResult(final int compareScore) {
-        return null;
+        if (isGreaterThan(compareScore)) {
+            return GameResult.WIN;
+        }
+
+        if (isLessThan(compareScore)) {
+            return GameResult.LOSE;
+        }
+
+        return GameResult.DRAW;
     }
 }
