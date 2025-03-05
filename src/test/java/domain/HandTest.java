@@ -4,6 +4,7 @@ import static domain.Denomination.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
@@ -30,16 +31,33 @@ public class HandTest {
 
         assertThat(hand.getTotal()).isEqualTo(15);
     }
+    @Nested
+    @DisplayName("ACE 탐지 테스트")
+    class AceDetectTest{
+        @Test
+        @DisplayName("Hand 는 현재 카드 패에서 고유 숫자 값이 11인 ACE 가 있는지 판별할 수 있다")
+        void test3() {
+            Hand hand = new Hand();
 
-    @Test
-    @DisplayName("Hand 는 현재 카드 패에서 ACE 를 판별할 수 있다")
-    void test3() {
-        Hand hand = new Hand();
+            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+            hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
+            hand.addCard(new Ace(Suit.CLUB));
 
-        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-        hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
-        hand.addCard(new Ace(Suit.CLUB));
+            assertThat(hand.containsOriginalAce()).isTrue();
+        }
 
-        assertThat(hand.containsAce()).isTrue();
+        @Test
+        @DisplayName("Hand 는 현재 카드 패에서 고유 숫자 값이 11인 ACE 가 있는지 판별할 수 있다 - 2")
+        void test4() {
+            Hand hand = new Hand();
+
+            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+            hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
+
+            assertThat(hand.containsOriginalAce()).isFalse();
+        }
     }
+
+
+
 }
