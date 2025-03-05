@@ -14,7 +14,14 @@ public class Player {
     }
 
     public void draw(Cards totalCards) {
+        validateBurst();
         cards.add(totalCards.extractCard());
+    }
+
+    private void validateBurst() {
+        if (cards.isBurst()) {
+            throw new IllegalStateException("[ERROR] 버스트되면 초과하면 카드를 뽑을 수 없습니다.");
+        }
     }
 
     public int getScore() {

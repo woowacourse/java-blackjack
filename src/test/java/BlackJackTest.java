@@ -1,5 +1,6 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -82,6 +83,49 @@ class BlackJackTest {
         int score = player.getScore();
         //then
         assertThat(score).isEqualTo(19);
+    }
+
+    @DisplayName("플레이어는 버스트되면 카드를 더 뽑을 수 없다.")
+    @Test
+    void burstIsNotDraw() {
+        //given
+        Player player = new Player("ad");
+        Cards totalCards = new Cards();
+        totalCards.add(new Card(Symbol.HEART, Number.KING));
+        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, Number.TWO));
+
+        player.draw(totalCards);
+        player.draw(totalCards);
+        player.draw(totalCards);
+
+        //when //then
+        assertThatThrownBy(() -> player.draw(totalCards))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageStartingWith("[ERROR]");
+    }
+
+    @DisplayName("플레이어는 버스트 되지 않으면 카드를 더 뽑을 수 있다.")
+    @Test
+    void notBurstDraw() {
+        //given
+        Player player = new Player("ad");
+        Cards totalCards = new Cards();
+
+        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+
+        player.draw(totalCards);
+        player.draw(totalCards);
+        player.draw(totalCards);
+        player.draw(totalCards);
+
+        //when //then
+        assertThatCode(() -> player.draw(totalCards))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("점수가 21점을 초과하면 버스트된다.")
