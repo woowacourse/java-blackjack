@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackManager;
-import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
@@ -47,6 +46,11 @@ public class BlackJackController {
                     blackJackManager.addExtraCard(player);
                     outputView.printParticipant(participant);
                 }
+            }
+
+            // 딜러 추가 배부
+            if (blackJackManager.addExtraCardToDealer()) {
+                outputView.printAddExtraCardToDealer();
             }
 
         } catch (IllegalArgumentException e) {

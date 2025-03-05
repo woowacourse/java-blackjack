@@ -21,7 +21,8 @@ public class OutputView {
 
     public void printParticipant(Participant participant) {
         if (participant instanceof Dealer dealer) {
-            String cardResult = dealer.openFirstCard().denomination().getText() + dealer.openFirstCard().suit().getText();
+            String cardResult =
+                    dealer.openFirstCard().denomination().getText() + dealer.openFirstCard().suit().getText();
             System.out.printf("딜러카드: %s%n", cardResult);
         }
         if (participant instanceof Player player) {
@@ -31,5 +32,10 @@ public class OutputView {
                     .collect(Collectors.joining(", "));
             System.out.printf("%s카드: %s%n", player.getName(), cardResult);
         }
+    }
+
+    public void printAddExtraCardToDealer() {
+        System.out.println();
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
     }
 }
