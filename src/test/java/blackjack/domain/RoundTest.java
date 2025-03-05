@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.card.CardValue;
+import blackjack.domain.card.CardType;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,8 @@ class RoundTest {
     @Test
     void distributeCardsTest() {
         // given
-        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
-        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
         CardDeck cardDeck = new CardDeck(List.of(card1, card2));
         Round round = new Round(cardDeck);
         Player player = new Player("라젤");

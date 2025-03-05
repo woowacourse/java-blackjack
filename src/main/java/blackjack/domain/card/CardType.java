@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum CardValue {
+public enum CardType {
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -16,7 +16,7 @@ public enum CardValue {
     ACE(11);
 
     private final int value;
-    CardValue(int value) {
+    CardType(int value) {
         this.value = value;
     }
 

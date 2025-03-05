@@ -31,23 +31,23 @@ class HandsTest {
 
     static Stream<Arguments> returnCardsAndSum() {
         return Stream.of(
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.TEN), new Card(CardShape.HEART, CardValue.EIGHT)), 18),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.ACE), new Card(CardShape.HEART, CardValue.EIGHT)), 19),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.ACE), new Card(CardShape.HEART, CardValue.TEN)), 21),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.ACE), new Card(CardShape.HEART, CardValue.ACE)), 12),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.TWO), new Card(CardShape.HEART, CardValue.THREE), new Card(CardShape.HEART, CardValue.ACE)), 16),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.FIVE), new Card(CardShape.HEART, CardValue.SIX), new Card(CardShape.HEART, CardValue.ACE)), 12),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.FIVE), new Card(CardShape.HEART, CardValue.ACE), new Card(CardShape.HEART, CardValue.ACE)), 17),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.FIVE), new Card(CardShape.HEART, CardValue.ACE), new Card(CardShape.HEART, CardValue.ACE)), 17),
-                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardValue.ACE), new Card(CardShape.HEART, CardValue.ACE), new Card(CardShape.HEART, CardValue.ACE)), 13));
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.TEN), new Card(CardShape.HEART, CardType.EIGHT)), 18),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.ACE), new Card(CardShape.HEART, CardType.EIGHT)), 19),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.ACE), new Card(CardShape.HEART, CardType.TEN)), 21),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.ACE), new Card(CardShape.HEART, CardType.ACE)), 12),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.TWO), new Card(CardShape.HEART, CardType.THREE), new Card(CardShape.HEART, CardType.ACE)), 16),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.FIVE), new Card(CardShape.HEART, CardType.SIX), new Card(CardShape.HEART, CardType.ACE)), 12),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.FIVE), new Card(CardShape.HEART, CardType.ACE), new Card(CardShape.HEART, CardType.ACE)), 17),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.FIVE), new Card(CardShape.HEART, CardType.ACE), new Card(CardShape.HEART, CardType.ACE)), 17),
+                Arguments.arguments(List.of(new Card(CardShape.CLOVER, CardType.ACE), new Card(CardShape.HEART, CardType.ACE), new Card(CardShape.HEART, CardType.ACE)), 13));
     }
 
     @DisplayName("카드의 합이 특정 값 이하이면 True를 반환한다")
     @Test
     void isSumBelowTest1() {
         // given
-        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
-        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
 
         Hands hands = new Hands();
 
@@ -65,9 +65,9 @@ class HandsTest {
     @Test
     void isSumBelowTest2() {
         // given
-        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
-        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
-        Card card3 = new Card(CardShape.HEART, CardValue.KING);
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card3 = new Card(CardShape.HEART, CardType.KING);
 
         Hands hands = new Hands();
 

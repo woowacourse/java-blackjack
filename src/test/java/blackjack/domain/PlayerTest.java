@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.card.CardValue;
+import blackjack.domain.card.CardType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -43,8 +43,8 @@ class PlayerTest {
     @Test
     void addCardTest() {
         Player player = new Player("라젤");
-        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
-        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
 
         player.addCard(card1);
         player.addCard(card2);
@@ -56,8 +56,8 @@ class PlayerTest {
     @Test
     void isBustTest1() {
         Player player = new Player("라젤");
-        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
-        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
 
         player.addCard(card1);
         player.addCard(card2);
@@ -69,9 +69,9 @@ class PlayerTest {
     @Test
     void isBustTest2() {
         Player player = new Player("라젤");
-        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
-        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
-        Card card3 = new Card(CardShape.HEART, CardValue.EIGHT);
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card3 = new Card(CardShape.HEART, CardType.EIGHT);
 
         player.addCard(card1);
         player.addCard(card2);
