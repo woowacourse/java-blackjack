@@ -139,22 +139,13 @@ jason: 패
 
 ## GAME RESULT TYPE
 
-- [ ] 승, 무, 패를 가진다.
-
-## GAME Result
-
-Players Result
-DEALER RESULT
-
-(DELAER, PLAYER)
+- [x] 승, 무, 패를 가진다.
 
 ## PLAYERS RESULT
 
-- [ ] 각 플레이어들의 승패 현황을 알 수 있다.
-- [ ] 각 플레이어들의 게임 결과를 저장할 수 있다.
+- [x] 각 플레이어들의 승패 현황을 알 수 있다.
+- [x] 각 플레이어들의 게임 결과를 저장할 수 있다.
 
 ## DEALER RESULT
 
-Map<ResultType, Integer> = enumMap
-
-- [ ] 딜러의 총 승, 무, 패의 카운트를 알 수 있다.
+- [x] 딜러의 총 승, 무, 패의 카운트를 알 수 있다.
