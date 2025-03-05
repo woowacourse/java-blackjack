@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface GameAction {
 
-    List<Card> getInitialCards();
+    List<Card> getCards();
 }

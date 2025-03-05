@@ -37,12 +37,12 @@ public class ResultView {
     private void printCards(final Participants participants) {
         final Dealer dealer = participants.getDealer();
         final String dealerMessage = String.format(CARD_FORMAT, dealer.getNickname(),
-                getCardMessage(dealer.getInitialCards()));
+                getCardMessage(dealer.getCards()));
         System.out.println(dealerMessage);
         final List<Player> players = participants.getPlayers();
         players.stream()
                 .map(player -> String.format(CARD_FORMAT, player.getNickname(),
-                        getCardMessage(player.getInitialCards())))
+                        getCardMessage(player.getCards())))
                 .forEach(System.out::println);
     }
 

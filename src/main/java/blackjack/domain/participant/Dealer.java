@@ -19,7 +19,7 @@ public class Dealer implements GameAction {
     }
 
     @Override
-    public List<Card> getInitialCards() {
+    public List<Card> getCards() {
         return List.of(cards.getFirst());
     }
 
