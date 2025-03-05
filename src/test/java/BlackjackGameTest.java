@@ -89,4 +89,19 @@ public class BlackjackGameTest {
                 .collect(Collectors.toList())
         ).containsExactlyInAnyOrderElementsOf(expectedPlayersCardSum);
     }
+
+    @Test
+    void 딜러_블랙잭_현재_현황_확인() {
+        Deque<TrumpCard> trumpCards = new LinkedList<>(
+                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
+                        new TrumpCard(Suit.CLOVER, CardValue.TWO), new TrumpCard(Suit.CLOVER, CardValue.THREE)));
+        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        Dealer dealer = new Dealer();
+        List<String> names = List.of("포비");
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        int expectedDealerCardSum = 5;
+        BlackjackResult blackjackResult = blackjackGame.currentDealerBlackjackResult();
+        assertThat(blackjackResult.cardSum())
+                .isEqualTo(expectedDealerCardSum);
+    }
 }
