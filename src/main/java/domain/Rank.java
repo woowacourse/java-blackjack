@@ -16,18 +16,18 @@ public enum Rank {
     KING("K", 10);
 
     private final String title;
-    private final int score;
+    private final int value;
 
-    Rank(String title, int score) {
+    Rank(String title, int value) {
         this.title = title;
-        this.score = score;
+        this.value = value;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public int getScore() {
-        return score;
+    public int getValue() {
+        return value;
     }
 }

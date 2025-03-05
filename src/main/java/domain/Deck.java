@@ -15,7 +15,7 @@ public class Deck {
     private void validate(List<TrumpCard> cards) {
         validateNotNull(cards);
         validateSize(cards);
-        validateDuplicate(cards);
+        validateNotDuplicate(cards);
     }
 
     private void validateNotNull(List<TrumpCard> cards) {
@@ -30,7 +30,7 @@ public class Deck {
         }
     }
 
-    private void validateDuplicate(List<TrumpCard> cards) {
+    private void validateNotDuplicate(List<TrumpCard> cards) {
         if (cards.stream().distinct().count() != cards.size()) {
             throw new IllegalArgumentException("덱에 중복된 카드가 있습니다.");
         }

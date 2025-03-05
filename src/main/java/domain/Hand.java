@@ -14,7 +14,7 @@ public class Hand {
 
     private void validate(List<TrumpCard> cards) {
         validateNotNull(cards);
-        validateDuplicate(cards);
+        validateNotDuplicate(cards);
     }
 
     private void validateNotNull(List<TrumpCard> cards) {
@@ -23,13 +23,24 @@ public class Hand {
         }
     }
 
-    private void validateDuplicate(List<TrumpCard> cards) {
+    private void validateNotDuplicate(List<TrumpCard> cards) {
         if (cards.stream().distinct().count() != cards.size()) {
             throw new IllegalArgumentException("손패에 중복된 카드가 있습니다.");
         }
     }
 
     public void addCard(TrumpCard card) {
+        validateNotDuplicate(card);
         cards.add(card);
+    }
+
+    private void validateNotDuplicate(TrumpCard card) {
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException("이미 손패에 있는 카드입니다.");
+        }
+    }
+
+    public Score calculateScore() {
+        return Score.from(cards);
     }
 }

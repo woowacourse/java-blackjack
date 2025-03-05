@@ -51,7 +51,7 @@ public enum Score {
 
     private static int calculateTotalScore(List<TrumpCard> cards) {
         int aceCount = (int) cards.stream().filter(c -> c.getRank() == Rank.ACE).count();
-        int totalScore = cards.stream().mapToInt(c -> c.getRank().getScore()).sum();
+        int totalScore = cards.stream().mapToInt(c -> c.getRank().getValue()).sum();
 
         return calculateAceBonus(totalScore, aceCount);
     }
