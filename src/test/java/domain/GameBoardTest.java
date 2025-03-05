@@ -124,7 +124,7 @@ public class GameBoardTest {
         gameBoard.drawCardTo(targetParticipant);
 
         //when
-        int actual = gameBoard.getTotalScoreOf(targetParticipant);
+        int actual = gameBoard.getScoreOf(targetParticipant);
 
         //then
         Assertions.assertThat(actual).isEqualTo(2);
@@ -132,13 +132,13 @@ public class GameBoardTest {
 
     @ParameterizedTest
     @CsvSource(value = {"SIX, TEN, true", "SEVEN, TEN, false"})
-    void 참가자_점수_스테이_확인(CardNumber cardNumber1, CardNumber cardNumber2, boolean expectedResult) {
+    void 딜러_점수_스테이_확인(CardNumber cardNumber1, CardNumber cardNumber2, boolean expectedResult) {
         //given
-        Participant targetParticipant = Player.from("우가");
+        Participant targetParticipant = Dealer.generate();
         List<Participant> participants = List.of(
                 targetParticipant,
                 Player.from("히스타"),
-                Dealer.generate()
+                Player.from("우가")
         );
         Card card1 = new Card(cardNumber1, CardSymbol.CLOVER);
         Card card2 = new Card(cardNumber2, CardSymbol.HEART);
@@ -149,6 +149,38 @@ public class GameBoardTest {
         cards.add(card1);
         cards.add(card2);
 
+        gameBoard.drawCardTo(targetParticipant);
+        gameBoard.drawCardTo(targetParticipant);
+
+        //when
+        boolean actual = gameBoard.ableToDraw(targetParticipant);
+
+        //then
+        Assertions.assertThat(actual).isEqualTo(expectedResult);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"TWO, EIGHT, TEN, true", "FOUR, SEVEN, TEN, false"})
+    void 참가자_점수_스테이_확인(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, boolean expectedResult) {
+        //given
+        Participant targetParticipant = Player.from("우가");
+        List<Participant> participants = List.of(
+                targetParticipant,
+                Player.from("히스타"),
+                Dealer.generate()
+        );
+        Card card1 = new Card(cardNumber1, CardSymbol.CLOVER);
+        Card card2 = new Card(cardNumber2, CardSymbol.HEART);
+        Card card3 = new Card(cardNumber3, CardSymbol.DIAMOND);
+        GameBoard gameBoard = new GameBoard(participants);
+        CardDeck cardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = cardDeck.getCards();
+        cards.clear();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+
+        gameBoard.drawCardTo(targetParticipant);
         gameBoard.drawCardTo(targetParticipant);
         gameBoard.drawCardTo(targetParticipant);
 

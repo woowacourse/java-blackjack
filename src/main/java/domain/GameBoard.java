@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +56,12 @@ public class GameBoard {
         return gameCardDeck;
     }
 
-    public int getTotalScoreOf(Participant participant) {
+    public boolean ableToDraw(Participant participant) {
+        int score = getScoreOf(participant);
+        return participant.ableToDraw(score);
+    }
+
+    public int getScoreOf(Participant participant) {
         CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
         List<Card> ownedCards = ownedCardDeck.getCards();
 
