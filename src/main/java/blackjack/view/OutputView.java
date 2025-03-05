@@ -35,6 +35,14 @@ public class OutputView {
         writer.write(message);
     }
     
+    public void is21Warning() {
+        writer.write("카드 총합이 21이기 때문에 더 받을 수 없습니다.");
+    }
+    
+    public void burstWarning() {
+        writer.write("버스트이기 때문에 더 받을 수 없습니다.");
+    }
+    
     public void outputDealerAddedCards(int addedCardsSize) {
         if (addedCardsSize != 0) {
             String message = "딜러는 16이하라 %d장의 카드를 더 받았습니다.".formatted(addedCardsSize);
@@ -66,15 +74,31 @@ public class OutputView {
     
     private String parseCard(Card card) {
         if (card.getShape() == CardShape.다이아몬드) {
-            return card.getNumber() + "다이아몬드";
+            return parseCardNumber(card) + "다이아몬드";
         }
         if (card.getShape() == CardShape.하트) {
-            return card.getNumber() + "하트";
+            return parseCardNumber(card) + "하트";
         }
         if (card.getShape() == CardShape.스페이드) {
-            return card.getNumber() + "스페이드";
+            return parseCardNumber(card) + "스페이드";
         }
-        return card.getNumber() + "클로버";
+        return parseCardNumber(card) + "클로버";
+    }
+    
+    private String parseCardNumber(Card card) {
+        if (card.getNumber() == 1) {
+            return "A";
+        }
+        if (card.getNumber() == 11) {
+            return "J";
+        }
+        if (card.getNumber() == 12) {
+            return "Q";
+        }
+        if (card.getNumber() == 13) {
+            return "K";
+        }
+        return String.valueOf(card.getNumber());
     }
     
     private static String parseSum(int sum) {

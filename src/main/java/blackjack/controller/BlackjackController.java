@@ -1,13 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
-import blackjack.domain.card_hand.CardHand;
 import blackjack.domain.card_hand.DealerCardHand;
 import blackjack.domain.card_hand.PlayerCardHand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -33,19 +31,30 @@ public class BlackjackController {
         final DealerCardHand dealerCardHand = new DealerCardHand(deck);
         
         outputView.outputDealing(playerNames);
-        outputView.outputDealerCards(dealerCardHand.getCards()); // TODO : 1장만 보여주도록 처리 필요
+        outputView.outputDealerCards(dealerCardHand.getInitialCards()); // TODO : 1장만 보여주도록 처리 필요
         for (PlayerCardHand playerCardHand : playerCardHands) {
-            outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getCards());
+            outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getInitialCards());
         }
         
         for (PlayerCardHand playerCardHand : playerCardHands) {
             boolean addingCardDecision;
             do {
+                if (playerCardHand.is21()) {
+                    outputView.is21Warning();
+                    break;
+                }
+                
+                if (playerCardHand.isBurst()) {
+                    outputView.burstWarning();
+                    break;
+                }
+                
+                outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getCards());
+                
                 addingCardDecision = inputView.getAddingCardDecision(playerCardHand.getPlayerName());
                 if (addingCardDecision) {
                     playerCardHand.addCard(deck.draw());
                 }
-                outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getCards());
             } while (addingCardDecision);
         }
         
