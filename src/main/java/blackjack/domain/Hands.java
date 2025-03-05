@@ -27,7 +27,7 @@ public class Hands {
     }
 
     public boolean isSumBelow(final int criteria) {
-        return calculateSum() <= criteria; // 이하
+        return calculateSum() <= criteria;
     }
 
     public List<Card> getCards() {
