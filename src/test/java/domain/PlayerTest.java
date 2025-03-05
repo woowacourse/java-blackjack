@@ -105,4 +105,38 @@ public class PlayerTest {
                 )
         );
     }
+
+    @DisplayName("플레이어가 소유한 카드에 따라서 burst 여부를 판단한다.")
+    @ParameterizedTest
+    @MethodSource("createBurstCase")
+    void test1(List<Card> inputCard, boolean expected) {
+        //given
+        Cards cards = Cards.of(inputCard);
+        Player dealer = Player.of(cards);
+        //when
+        final boolean actual = dealer.isBurst();
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream createBurstCase() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.TEN, CardShape.CLOVER),
+                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                                new Card(CardNumber.TWO, CardShape.CLOVER)
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                                new Card(CardNumber.TWO, CardShape.CLOVER)
+                        ),
+                        false
+                )
+        );
+    }
 }
