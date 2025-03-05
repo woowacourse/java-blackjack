@@ -1,9 +1,5 @@
 package domain;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
-
 import java.util.List;
 
 public class Dealer extends Gamer {
@@ -13,20 +9,6 @@ public class Dealer extends Gamer {
     public Dealer(Deck deck) {
         super();
         this.deck = deck;
-    }
-
-    public GameResult decideGameResult(Player player) {
-        int dealerScore = this.calculateScore();
-        int playerScore = player.calculateScore();
-
-        if (dealerScore == playerScore) {
-            return DRAW;
-        }
-
-        if (dealerScore > playerScore || playerScore > 21) {
-            return WIN;
-        }
-        return LOSE;
     }
 
     public boolean canGetMoreCard() {

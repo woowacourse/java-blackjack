@@ -1,5 +1,9 @@
 package domain;
 
+import static domain.GameResult.DRAW;
+import static domain.GameResult.LOSE;
+import static domain.GameResult.WIN;
+
 public class Player extends Gamer {
     private final String username;
 
@@ -18,4 +22,17 @@ public class Player extends Gamer {
         return this.canGetMoreCard(BUST_THRESHOLD);
     }
 
+    public GameResult decideGameResult(Dealer dealer) {
+        int playerScore = this.calculateScore();
+        int dealerScore = dealer.calculateScore();
+
+        if (dealerScore == playerScore) {
+            return DRAW;
+        }
+
+        if (dealerScore > playerScore || playerScore > 21) {
+            return LOSE;
+        }
+        return WIN;
+    }
 }

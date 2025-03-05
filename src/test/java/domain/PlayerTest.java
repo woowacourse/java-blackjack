@@ -1,7 +1,11 @@
 package domain;
 
+import static domain.GameResult.DRAW;
+import static domain.GameResult.LOSE;
+import static domain.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +24,7 @@ class PlayerTest {
         Player player = new Player("코기");
 
         //when
-        player.addCard(card);
+        player.addCard(List.of(card));
 
         //then
         Assertions.assertTrue(player.getCards().contains(card));
@@ -32,7 +36,7 @@ class PlayerTest {
     void calculateCardScoreTest(List<Card> cards, int expected) {
         //given
         Player player = new Player("코기");
-        cards.forEach(player::addCard);
+        player.addCard(cards);
         //when
         final int cardScore = player.calculateScore();
 
@@ -56,7 +60,7 @@ class PlayerTest {
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
         Player player = new Player("코기");
-        cards.forEach(player::addCard);
+        player.addCard(cards);
         int playStandard = 21;
         // when
         boolean canGetMoreCard = player.canGetMoreCard(playStandard);
@@ -71,6 +75,30 @@ class PlayerTest {
                 Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), true),
                 Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_THREE), false),
                 Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE, Card.HEART_ACE), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("승무패를 계산하는지 확인합니다.")
+    void decideGameResultTest(List<Card> cards, GameResult expected) {
+        //given
+        Player player = new Player("ㅎㅎ");
+        player.addCard(cards);
+        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN));
+
+        //when & then
+        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+    }
+
+    public static Stream<Arguments> decideGameResultTest() {
+        return Stream.of(
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_THREE), LOSE),
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), WIN),
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), LOSE),
+                Arguments.of(List.of(Card.HEART_SEVEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW),
+                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE, Card.HEART_ACE), LOSE)
         );
     }
 }
