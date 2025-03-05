@@ -46,7 +46,7 @@ class HandTest {
     void 카드를_손에_추가한다() {
 
         // given
-        final Hand hand = new Hand(new ArrayList<>());
+        final Hand hand = new Hand();
 
         // when & then
         assertThatCode(() -> {
@@ -60,14 +60,14 @@ class HandTest {
     void 손에_있는_카드의_합을_가져온다() {
 
         // given
-        final Hand hand = new Hand(new ArrayList<>());
+        final Hand hand = new Hand();
 
         // when
         hand.add(card1);
         hand.add(card2);
 
         // then
-        assertThat(hand.getSumOfRank()).isEqualTo(6);
+        assertThat(hand.getSumOfRank()).isEqualTo(3);
     }
 
     @DisplayName("버스트이면 true, 아니면 false를 반환한다.")
@@ -75,32 +75,26 @@ class HandTest {
     void 버스트이면_true_아니면_false를_반환한다() {
 
         // given
-        final Hand hand1 = new Hand(new ArrayList<>());
+        final Hand hand1 = new Hand();
 
         hand1.add(card1);
 
-        final Player player1 = new Player(new Nickname("hi"), hand1);
-
-        final Hand hand2 = new Hand(new ArrayList<>());
+        final Hand hand2 = new Hand();
         hand2.add(card1);
         hand2.add(card3);
         hand2.add(card8);
         hand2.add(card9);
 
-        final Player player2 = new Player(new Nickname("hihi"), hand2);
-
-        final Hand hand3 = new Hand(new ArrayList<>());
+        final Hand hand3 = new Hand();
         hand3.add(card10);
         hand3.add(card9);
         hand3.add(card8);
 
-        final Player player3 = new Player(new Nickname("hihih"), hand3);
-
         // when & then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(player1.isBust()).isFalse();
-            softly.assertThat(player2.isBust()).isFalse();
-            softly.assertThat(player3.isBust()).isTrue();
+            softly.assertThat(hand1.isBust()).isFalse();
+            softly.assertThat(hand2.isBust()).isFalse();
+            softly.assertThat(hand3.isBust()).isTrue();
         });
     }
 }

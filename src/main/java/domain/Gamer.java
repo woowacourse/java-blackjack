@@ -7,10 +7,9 @@ public abstract class Gamer {
     private final Nickname nickname;
     private final Hand hand;
 
-    public Gamer(final Nickname nickname, final Hand hand) {
+    public Gamer(final Nickname nickname) {
         this.nickname = nickname;
-        this.hand = hand;
-
+        this.hand = new Hand();
     }
 
     public int calculateSumOfRank() {
