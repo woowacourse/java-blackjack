@@ -17,6 +17,6 @@ public class BlackjackController {
         List<String> playerNames = InputView.readPlayerNames();
         this.gameManager = new GameManager(playerNames, new Deck());
 
-
+//        Map<Participant, Cards> initialCards = gameManager.findInitialCards();
     }
 }
