@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class Gamer {
+public abstract class Gamer implements Cloneable {
     private final Set<Card> cards;
 
     protected Gamer() {
@@ -33,8 +33,8 @@ public abstract class Gamer {
         return otherScore;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void addCard(List<Card> addedCards) {
+        cards.addAll(addedCards);
     }
 
     public List<Card> getCards() {
@@ -44,5 +44,15 @@ public abstract class Gamer {
     public boolean canGetMoreCard(int standard) {
         int score = calculateScore();
         return score <= standard;
+    }
+
+    @Override
+    public Gamer clone() {
+        try {
+            Gamer clone = (Gamer) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

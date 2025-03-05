@@ -1,6 +1,8 @@
 package domain;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -11,9 +13,9 @@ public class Players {
                 .toList();
     }
 
-    public void giveCard(String username, Card card) {
+    public void giveCard(String username, List<Card> cards) {
         Player selectedPlayer = selectPlayer(username);
-        selectedPlayer.addCard(card);
+        selectedPlayer.addCard(cards);
     }
 
     private Player selectPlayer(String username) {
@@ -32,4 +34,22 @@ public class Players {
         Player player = selectPlayer(username);
         return player.canGetMoreCard();
     }
+
+    public List<String> getUsernames() {
+        return players.stream()
+                .map(Player::getUsername)
+                .toList();
+    }
+
+    public Map<String, Gamer> getPlayersInfo() {
+        return players.stream()
+                .collect(Collectors.toMap(Player::getUsername, Gamer::clone));
+    }
+
+//    public GameStatistics calculateGameStatistics(Dealer dealer) {
+//        Map<String, GameResult> playersResult = new HashMap<>();
+//        for (Player player : players) {
+//            GameResult gameResult =
+//        }
+//    }
 }

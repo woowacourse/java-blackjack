@@ -1,6 +1,10 @@
 package domain;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +23,7 @@ class PlayersTest {
         String username = "a";
         Card card = Card.HEART_JACK;
         // when
-        players.giveCard(username, card);
+        players.giveCard(username, List.of(card));
         // then
         List<Card> cards = players.getPlayerCard(username);
         Assertions.assertThat(cards).contains(card);
@@ -32,7 +36,7 @@ class PlayersTest {
         //given
         List<String> usernames = List.of("김", "이", "박");
         Players players = new Players(usernames);
-        cards.forEach(card -> players.giveCard("김", card));
+        players.giveCard("김", cards);
 
         //when & then
         Assertions.assertThat(players.canGetMoreCard("김")).isEqualTo(expected);
@@ -45,5 +49,18 @@ class PlayersTest {
                 Arguments.of(List.of(Card.HEART_TEN, Card.HEART_QUEEN, Card.CLOVER_THREE), false),
                 Arguments.of(List.of(Card.HEART_TEN, Card.DIA_JACK, Card.CLOVER_TWO), false)
         );
+    }
+
+    @Test
+    @DisplayName("플레이어가 모두 존재하는지 확인합니다.")
+    void getPlayerInfoTest() {
+        // given
+        List<String> usernames = List.of("김", "이", "박");
+        Players players = new Players(usernames);
+        // when
+        Map<String, Gamer> playerInfo = players.getPlayersInfo();
+
+        // then
+        assertTrue(playerInfo.keySet().containsAll(Set.of("김", "이", "박")));
     }
 }
