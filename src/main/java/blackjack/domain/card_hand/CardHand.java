@@ -21,6 +21,8 @@ public abstract class CardHand {
         cards.addAll(initializer.init());
     }
     
+    public abstract List<Card> getInitialCards();
+    
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

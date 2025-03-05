@@ -67,4 +67,16 @@ public class DealerCardHandTest {
                 )
         );
     }
+    
+    @Test
+    void 딜러는_처음에_한_장만_공개해야_한다() {
+        // given
+        DealerCardHand dealerCardHand = new DealerCardHand(new CardHandInitializerStub(List.of(
+                HEART_3,
+                HEART_5
+        )));
+        
+        // expected
+        Assertions.assertThat(dealerCardHand.getInitialCards()).containsExactly(HEART_3);
+    }
 }

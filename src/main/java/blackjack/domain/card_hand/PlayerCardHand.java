@@ -4,6 +4,8 @@ import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
 import blackjack.domain.Player;
 
+import java.util.List;
+
 public class PlayerCardHand extends CardHand {
     
     private final Player player;
@@ -11,6 +13,11 @@ public class PlayerCardHand extends CardHand {
     public PlayerCardHand(final Player player, final CardHandInitializer initializer) {
         super(initializer);
         this.player = player;
+    }
+    
+    @Override
+    public List<Card> getInitialCards() {
+        return List.of(cards.getFirst(), cards.get(1));
     }
     
     public void addCard(final Card card) {

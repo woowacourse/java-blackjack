@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card_hand.DealerCardHand;
 import blackjack.domain.card_hand.PlayerCardHand;
 import blackjack.testutil.CardHandInitializerDummy;
 import blackjack.testutil.CardHandInitializerStub;
@@ -18,7 +19,7 @@ import static blackjack.testutil.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CardHandTest {
+public class PlayerCardHandTest {
     
     private static final Player DEFAULT_PLAYER = new Player("dompoo");
     
@@ -307,5 +308,17 @@ public class CardHandTest {
         
         // then
         assertThat(result).isTrue();
+    }
+    
+    @Test
+    void 플레이어는_처음에_두_장_공개해야_한다() {
+        // given
+        PlayerCardHand playerCardHand = new PlayerCardHand(DEFAULT_PLAYER, new CardHandInitializerStub(List.of(
+                HEART_3,
+                HEART_5
+        )));
+        
+        // expected
+        Assertions.assertThat(playerCardHand.getInitialCards()).containsExactly(HEART_3, HEART_5);
     }
 }

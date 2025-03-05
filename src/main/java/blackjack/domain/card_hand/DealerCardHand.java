@@ -1,7 +1,10 @@
 package blackjack.domain.card_hand;
 
+import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
 import blackjack.domain.Deck;
+
+import java.util.List;
 
 public class DealerCardHand extends CardHand {
     
@@ -9,6 +12,11 @@ public class DealerCardHand extends CardHand {
     
     public DealerCardHand(final CardHandInitializer initializer) {
         super(initializer);
+    }
+    
+    @Override
+    public List<Card> getInitialCards() {
+        return List.of(cards.getFirst());
     }
     
     public void startAdding(final Deck deck) {
