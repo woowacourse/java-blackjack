@@ -6,18 +6,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Hand {
+public class Hand implements CardHolder{
     private final List<Card> cards;
 
-    public Hand(Card card1, Card card2) {
-        this.cards = new ArrayList<>(List.of(card1, card2));
+    private Hand(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static Hand of(Card card1, Card card2) {
+        List<Card> cards = new ArrayList<>(List.of(card1, card2));
+        return new Hand(cards);
     }
 
     public List<Card> getAllCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public void addCard(Card newCard) {
+    public void takeCard(Card newCard) {
         cards.add(newCard);
     }
 

@@ -16,7 +16,7 @@ class HandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         // when & then
-        assertThatCode(() -> new Hand(card1, card2))
+        assertThatCode(() -> Hand.of(card1, card2))
                 .doesNotThrowAnyException();
     }
 
@@ -26,12 +26,12 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand(card1, card2);
+        Hand hand = Hand.of(card1, card2);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
 
         // when
-        hand.addCard(newCard);
+        hand.takeCard(newCard);
 
         // then
         assertThat(hand.getAllCards()).containsExactly(card1, card2, newCard);
@@ -43,7 +43,7 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.ACE);
-        Hand hand = new Hand(card1, card2);
+        Hand hand = Hand.of(card1, card2);
 
         // when
         List<Integer> totalValues = hand.getPossibleSums();
@@ -58,7 +58,7 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand(card1, card2);
+        Hand hand = Hand.of(card1, card2);
 
         // when
         List<Card> cards = hand.getAllCards();
