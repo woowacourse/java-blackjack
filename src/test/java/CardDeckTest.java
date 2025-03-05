@@ -22,7 +22,7 @@ public class CardDeckTest {
         Card actual = cardDeck.drawCard();
 
         //then
-        Card expected = new Card(Pattern.DIAMOND, CardNumber.ACE);
+        Card expected = new Card(Pattern.SPADE, CardNumber.KING);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -36,8 +36,8 @@ public class CardDeckTest {
 
         //then
         List<Card> expected = List.of(
-                new Card(Pattern.DIAMOND, CardNumber.ACE),
-                new Card(Pattern.DIAMOND, CardNumber.TWO));
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.QUEEN));
         assertThat(actual).containsExactlyElementsOf(expected);
     }
 }

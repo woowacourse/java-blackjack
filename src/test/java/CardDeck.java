@@ -1,14 +1,12 @@
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 public class CardDeck {
 
-    private final Deque<Card> deck;
+    private final List<Card> deck;
 
     public CardDeck() {
-        this.deck = new ArrayDeque<>(createCards());
+        this.deck = createCards();
     }
 
     private List<Card> createCards() {
@@ -21,12 +19,12 @@ public class CardDeck {
         return cards;
     }
 
-    public Deque<Card> getDeck() {
+    public List<Card> getDeck() {
         return deck;
     }
 
     public Card drawCard() {
-        return deck.pop();
+        return deck.removeLast();
     }
 
     public List<Card> drawCardWhenStart() {

@@ -11,7 +11,7 @@ public class Card {
     }
 
     @Override
-    public boolean equals(final Object object) {
+    public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
