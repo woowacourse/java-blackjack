@@ -1,49 +1,33 @@
 package blackjack.domain;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
-public class Dealer {
-    private final CardDeck cardDeck;
-    private final CardDump cardDump;
+public class Dealer extends Participant {
 
     public Dealer(CardDeck cardDeck, CardDump cardDump) {
-        this.cardDeck = cardDeck;
-        this.cardDump = cardDump;
+        super(cardDeck, cardDump);
     }
 
     public boolean hasTakenExtraCard() {
-        if (mustTakeExtraCard()) {
-            takeExtraCard();
+        if (canTakeExtraCard()) {
+            addCard();
             return true;
         }
         return false;
     }
 
-    private boolean mustTakeExtraCard() {
+    @Override
+    boolean canTakeExtraCard() {
         Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
         int max = Collections.max(possibleScore);
 
         return max <= 16;
     }
 
-    private void takeExtraCard() {
-        cardDeck.add(cardDump.drawCard());
-    }
-
+    @Override
     public int calculateTotalCardScore() {
         Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
         return Collections.max(possibleScore);
-    }
-
-    public boolean isBust() {
-        int totalScore = calculateTotalCardScore();
-
-        return totalScore > 21;
-    }
-
-    public List<Card> getCardDeck() {
-        return cardDeck.getCards();
     }
 }
