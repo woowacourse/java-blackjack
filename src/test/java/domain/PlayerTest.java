@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,5 +43,39 @@ class PlayerTest {
 
         // then
         assertThat(player.calculateSumOfRank()).isEqualTo(previousResult + card.getScore());
+    }
+
+    @DisplayName("플레이어가 버스트면 true를 반환한다.")
+    @Test
+    void 플레이어가_버스트면_true를_반환한다() {
+
+        // given
+        Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
+        Card card3 = new Card(Rank.JACK, Shape.CLOVER);
+        final Hand hand = new Hand(List.of(card1, card2, card3));
+        final Player player = new Player(new Nickname("hihi"), hand);
+
+        // when
+        boolean actual = player.isBust();
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("플레이어가 버스트면 false를 반환한다.")
+    @Test
+    void 플레이어가_버스트면_false를_반환한다() {
+
+        // given
+        Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        final Hand hand = new Hand(List.of(card1));
+        final Player player = new Player(new Nickname("hihi"), hand);
+
+        // when
+        boolean actual = player.isBust();
+
+        // then
+        assertThat(actual).isFalse();
     }
 }
