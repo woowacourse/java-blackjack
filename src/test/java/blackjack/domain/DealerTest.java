@@ -8,6 +8,7 @@ import blackjack.domian.Dealer;
 import blackjack.domian.Deck;
 import blackjack.domian.Player;
 import blackjack.domian.Rank;
+import blackjack.domian.ScoreCalculator;
 import blackjack.domian.Suit;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
-    Stack<Card> deck;
+    private Stack<Card> deck;
+    private ScoreCalculator scoreCalculator;
 
     @BeforeEach
     public void setUp() {
@@ -27,20 +29,23 @@ public class DealerTest {
                 deck.add(new Card(suit, rank));
             }
         }
-
+        scoreCalculator = new ScoreCalculator();
     }
 
     @Test
     void 플레이어_수가_최대_10명을_넘으면_예외가_발생한다() {
         //given
         List<Player> players = List.of(
-                new Player(List.of()), new Player(List.of()), new Player(List.of()), new Player(List.of()),
-                new Player(List.of()), new Player(List.of()), new Player(List.of()), new Player(List.of()),
-                new Player(List.of()), new Player(List.of()), new Player(List.of())
+                new Player(List.of(), scoreCalculator), new Player(List.of(), scoreCalculator),
+                new Player(List.of(), scoreCalculator), new Player(List.of(), scoreCalculator),
+                new Player(List.of(), scoreCalculator), new Player(List.of(), scoreCalculator),
+                new Player(List.of(), scoreCalculator), new Player(List.of(), scoreCalculator),
+                new Player(List.of(), scoreCalculator), new Player(List.of(), scoreCalculator),
+                new Player(List.of(), scoreCalculator)
         );
 
         //when & then
-        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>(), new FixCardsShuffler())))
+        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>(), new FixCardsShuffler()), scoreCalculator))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 수는 최대 10명입니다.");
     }
@@ -49,11 +54,11 @@ public class DealerTest {
     void 플레이어_수가_최소_2명을_넘지_않으면_예외가_발생한다() {
         //given
         List<Player> players = List.of(
-                new Player(List.of())
+                new Player(List.of(), scoreCalculator)
         );
 
         //when & then
-        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>(), new FixCardsShuffler())))
+        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>(), new FixCardsShuffler()), scoreCalculator))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 수는 최소 2명입니다.");
     }
@@ -61,8 +66,9 @@ public class DealerTest {
     @Test
     void 딜러는_본인의_카드_2장을_스스로_뽑는다() {
         //given
-        Dealer dealer = new Dealer(List.of(new Player(List.of()), new Player(List.of())),
-                new Deck(deck, new FixCardsShuffler()));
+        Dealer dealer = new Dealer(
+                List.of(new Player(List.of(), scoreCalculator), new Player(List.of(), scoreCalculator)),
+                new Deck(deck, new FixCardsShuffler()), scoreCalculator);
 
         //when
         dealer.pickCards();
@@ -79,9 +85,9 @@ public class DealerTest {
     void 딜러는_한_플레이어에게_카드_2장씩_나누어준다() {
         //given
         List<Player> players = List.of(
-                new Player(new ArrayList<>()),
-                new Player(new ArrayList<>()),
-                new Player(new ArrayList<>())
+                new Player(new ArrayList<>(), scoreCalculator),
+                new Player(new ArrayList<>(), scoreCalculator),
+                new Player(new ArrayList<>(), scoreCalculator)
         );
         Stack<Card> cards = new Stack<>();
         cards.addAll(
@@ -94,7 +100,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FIVE))
         );
         Deck deck = new Deck(cards, new FixCardsShuffler());
-        Dealer dealer = new Dealer(players, deck);
+        Dealer dealer = new Dealer(players, deck, scoreCalculator);
 
         //when
         dealer.handOutCard();
@@ -118,9 +124,9 @@ public class DealerTest {
     void 딜러의_카드쌍의_합이_16이하인_경우_16초과가_될_때_까지_카드를_추가로_뽑는다() {
         //given
         List<Player> players = List.of(
-                new Player(new ArrayList<>()),
-                new Player(new ArrayList<>()),
-                new Player(new ArrayList<>())
+                new Player(new ArrayList<>(), scoreCalculator),
+                new Player(new ArrayList<>(), scoreCalculator),
+                new Player(new ArrayList<>(), scoreCalculator)
         );
         Stack<Card> cards = new Stack<>();
         cards.addAll(
@@ -133,7 +139,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FIVE))
         );
         Deck deck = new Deck(cards, new FixCardsShuffler());
-        Dealer dealer = new Dealer(players, deck);
+        Dealer dealer = new Dealer(players, deck, scoreCalculator);
 
         //when
         dealer.pickAdditionalCard();

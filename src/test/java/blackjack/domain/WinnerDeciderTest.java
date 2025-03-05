@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domian.Card;
 import blackjack.domian.Rank;
+import blackjack.domian.ScoreCalculator;
 import blackjack.domian.Suit;
 import blackjack.domian.WinnerDecider;
 import blackjack.domian.WinningResult;
@@ -26,7 +27,7 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards);
+        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
 
         //when
         WinningResult result = winnerDecider.decide(playerCards);
@@ -48,7 +49,7 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards);
+        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
 
         //when
         WinningResult result = winnerDecider.decide(playerCards);
@@ -70,7 +71,7 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards);
+        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
 
         //when
         WinningResult result = winnerDecider.decide(playerCards);
@@ -93,7 +94,7 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards);
+        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
 
         //when
         WinningResult result = winnerDecider.decide(playerCards);
@@ -116,7 +117,7 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.ONE)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards);
+        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
 
         //when
         WinningResult result = winnerDecider.decide(playerCards);
@@ -138,7 +139,7 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards);
+        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
 
         //when
         WinningResult result = winnerDecider.decide(playerCards);

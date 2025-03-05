@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domian.Card;
 import blackjack.domian.Player;
 import blackjack.domian.Rank;
+import blackjack.domian.ScoreCalculator;
 import blackjack.domian.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
+
+    private ScoreCalculator scoreCalculator = new ScoreCalculator();
 
     @Test
     void 카드_합이_21이_넘는_경우_카드를_더_받지_못한다() {
@@ -26,7 +29,7 @@ class PlayerTest {
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.TWO)
-        )));
+        )), scoreCalculator);
 
         Card card = new Card(Suit.HEART, Rank.TWO);
 
@@ -45,7 +48,7 @@ class PlayerTest {
                         Arrays.asList(
                                 new Card(Suit.DIAMOND, Rank.ACE),
                                 new Card(Suit.DIAMOND, Rank.TWO)
-                        )));
+                        )), scoreCalculator);
 
         Card card = new Card(Suit.HEART, Rank.THREE);
 
@@ -69,7 +72,7 @@ class PlayerTest {
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.ACE)
-        )));
+        )), scoreCalculator);
 
         //when
         int maxScore = player.calculateMaxScore();
@@ -77,4 +80,5 @@ class PlayerTest {
         //then
         assertThat(maxScore).isEqualTo(20);
     }
+
 }

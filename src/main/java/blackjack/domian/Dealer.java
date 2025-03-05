@@ -12,8 +12,9 @@ public class Dealer {
     private final List<Player> players;
     private final Deck deck;
     private final List<Card> cards;
+    private final ScoreCalculator scoreCalculator;
 
-    public Dealer(List<Player> players, Deck deck) {
+    public Dealer(List<Player> players, Deck deck, ScoreCalculator scoreCalculator) {
         if (players.size() > PLAYER_MAX_SIZE) {
             throw new IllegalArgumentException("플레이어 수는 최대 " + PLAYER_MAX_SIZE + "명입니다.");
         }
@@ -23,6 +24,7 @@ public class Dealer {
         this.players = players;
         this.deck = deck;
         this.cards = new ArrayList<>();
+        this.scoreCalculator = scoreCalculator;
     }
 
     public void pickCards() {
@@ -40,37 +42,10 @@ public class Dealer {
     }
 
     public void pickAdditionalCard() {
-        int maxScore = calculateMaxScore();
+        int maxScore = scoreCalculator.calculateMaxScore(cards);
         while (maxScore >= 0 && maxScore <= 16) {
             cards.add(deck.draw());
-            maxScore = calculateMaxScore();
+            maxScore = scoreCalculator.calculateMaxScore(cards);
         }
-    }
-
-    public int calculateMaxScore() {
-        return solve2(0, 0);
-    }
-
-    private int solve2(int depth, int totalScore) {
-        if (depth == cards.size()) {
-            return totalScore;
-        }
-
-        Card card = cards.get(depth);
-        List<Integer> scores = card.getRank().getScore();
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        for (int score : scores) {
-            int sum = solve2(depth + 1, totalScore + score);
-            if (sum > 21) {
-                min = Math.min(min, sum);
-                continue;
-            }
-            max = Math.max(max, sum);
-        }
-        if (max == Integer.MIN_VALUE) {
-            return min;
-        }
-        return max;
     }
 }
