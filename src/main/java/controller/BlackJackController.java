@@ -12,6 +12,7 @@ public class BlackJackController {
     public void run() {
         Game game = startGame();
         outputView.displayInitialDeal(game);
+        inputView.readHitOrStay(game);
     }
 
     public Game startGame() {
