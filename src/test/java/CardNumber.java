@@ -15,13 +15,13 @@ public enum CardNumber {
     QUEEN(List.of(10)),
     JACK(List.of(10));
 
-    private final List<Integer> numbers;
+    private final List<Integer> coordinates;
 
-    CardNumber(List<Integer> numbers) {
-        this.numbers = numbers;
+    CardNumber(List<Integer> coordinates) {
+        this.coordinates = coordinates;
     }
 
-    public List<Integer> getNumbers() {
-        return numbers;
+    public List<Integer> getCoordinates() {
+        return coordinates;
     }
 }

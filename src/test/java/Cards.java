@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cards {
 
@@ -21,45 +23,24 @@ public class Cards {
         this.cards.add(card);
     }
 
-    public int sum() {
-        int notASum = cards.stream()
-                .filter(card -> card.getNumber() != CardNumber.A)
-                .mapToInt(card -> card.getNumber().getNumbers().getFirst())
-                .sum();
-
-        List<List<Integer>> choices = cards.stream()
-                .filter(card -> card.getNumber() == CardNumber.A)
-                .map(card -> card.getNumber().getNumbers()).toList();
-
-        if (notASum + choices.size() > 21) {
-            return notASum + choices.size();
-        }
-
-        int aSum = dfs(choices, 0, notASum);
-
-        return aSum;
+    public Set<Integer> getCoordinateSums() {
+        return getCoordinateSumsByDfs(0, 0, new HashSet<>());
     }
 
-    private int dfs(List<List<Integer>> choicesList, int index, int sum) {
-        if (index == choicesList.size()) {
-            return sum;
+    private Set<Integer> getCoordinateSumsByDfs(int index, int sum, Set<Integer> result) {
+        if (index == cards.size()) {
+            result.add(sum);
+            return result;
         }
-        int max = 0;
-        for (int choice : choicesList.get(index)) {
-            int result = Math.max(dfs(choicesList, index + 1, sum + choice), max);
-            if (result <= 21) {
-                max = result;
-            }
+
+        Card card = cards.get(index);
+        for (int coordinateNumber : card.getCoordinateNumbers()) {
+            result = getCoordinateSumsByDfs(index + 1, sum + coordinateNumber, result);
         }
-        return max;
+        return result;
     }
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    private int getCardNumber(Card card) {
-        CardNumber number = card.getNumber();
-        return number.getNumbers().getFirst();
     }
 }

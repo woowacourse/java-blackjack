@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -9,8 +10,8 @@ public class Card {
         this.shape = shape;
     }
 
-    public CardNumber getNumber() {
-        return number;
+    public List<Integer> getCoordinateNumbers() {
+        return number.getCoordinates();
     }
 
     @Override
