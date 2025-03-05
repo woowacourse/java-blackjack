@@ -64,4 +64,17 @@ public class CardsTest {
         assertThat(cards.isUnderDrawLimit()).isFalse();
 
     }
+
+    @DisplayName("카드의 합을 구한다")
+    @Test
+    void test5() {
+        //given
+        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
+                new Card(CardNumberType.JACK, CardType.DIAMOND));
+        Cards cards = new Cards(testCards);
+        //when
+        int sum = cards.calculateSum();
+        //then
+        assertThat(sum).isEqualTo(16);
+    }
 }
