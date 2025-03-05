@@ -38,8 +38,7 @@ public class ParticipantRepository {
     }
 
     public List<Participant> getAllPlayer() {
-        return repository.keySet().stream()
-                .map(repository::get)
+        return getAll().stream()
                 .filter(Participant::isPlayer)
                 .toList();
     }
