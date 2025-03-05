@@ -3,28 +3,19 @@ package domain;
 import java.util.List;
 import java.util.Objects;
 
-public class Dealer {
-
-    private final Cards cards;
+public class Dealer extends Participant{
 
     public Dealer(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     public boolean checkExceedSixteen() {
         return cards.checkExceedSixteen();
     }
 
-    public Dealer drawCard(List<Card> providedCards) {
+    @Override
+    public Participant createParticipant(List<Card> providedCards) {
         return new Dealer(cards.addCards(providedCards));
-    }
-
-    public boolean checkExceedTwentyOne() {
-        return cards.checkExceedTwentyOne();
-    }
-
-    public int getTotalNumberSum() {
-        return cards.calculateTotalCardNumber();
     }
 
     @Override

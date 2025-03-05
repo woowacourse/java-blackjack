@@ -3,30 +3,22 @@ package domain;
 import java.util.List;
 import java.util.Objects;
 
-public class Player {
+public class Player extends Participant{
 
     private final Name name;
-    private final Cards cards;
 
     public Player(Name name, Cards cards) {
+        super(cards);
         this.name = name;
-        this.cards = cards;
-    }
-
-    public Player drawCard(List<Card> providedCards) {
-        return new Player(name, cards.addCards(providedCards));
-    }
-
-    public boolean checkExceedTwentyOne() {
-        return cards.checkExceedTwentyOne();
     }
 
     public String getName() {
         return name.getName();
     }
 
-    public int getTotalNumberSum() {
-        return cards.calculateTotalCardNumber();
+    @Override
+    public Participant createParticipant(List<Card> providedCards) {
+        return new Player(name, cards.addCards(providedCards));
     }
 
     @Override

@@ -17,6 +17,4 @@ public class GameManager {
         this.players = new Players(playerList);
         this.dealer = new Dealer(new Cards(provider.provideCards(2)));
     }
-
-
 }
