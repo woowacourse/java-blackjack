@@ -29,7 +29,7 @@ public class BlackJackController {
             blackJackManager.initCardsToParticipants();
             outputView.printStartGame(blackJackManager.getPlayerNames());
             for (Participant participant : blackJackManager.getParticipants()) {
-                outputView.printParticipant(participant);
+                outputView.printCardResult(participant);
             }
 
             // 카드 추가 배부 여부 입력
@@ -44,7 +44,7 @@ public class BlackJackController {
                         break;
                     }
                     blackJackManager.addExtraCard(player);
-                    outputView.printParticipant(participant);
+                    outputView.printCardResult(participant);
                 }
             }
 
@@ -53,7 +53,12 @@ public class BlackJackController {
                 outputView.printAddExtraCardToDealer();
             }
 
-        } catch (IllegalArgumentException e) {
+            // 최종 카드 결과 출력
+            for (Participant participant : blackJackManager.getParticipants()) {
+                outputView.printFinalCardResult(participant);
+            }
+
+            } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
         }
     }

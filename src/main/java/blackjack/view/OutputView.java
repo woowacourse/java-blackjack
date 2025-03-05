@@ -19,7 +19,7 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", playerNames));
     }
 
-    public void printParticipant(Participant participant) {
+    public void printCardResult(Participant participant) {
         if (participant instanceof Dealer dealer) {
             String cardResult =
                     dealer.openFirstCard().denomination().getText() + dealer.openFirstCard().suit().getText();
@@ -37,5 +37,19 @@ public class OutputView {
     public void printAddExtraCardToDealer() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
+    }
+
+    public void printFinalCardResult(Participant participant) {
+        String cardResult = participant.getCards()
+                .stream()
+                .map(card -> card.denomination().getText() + card.suit().getText())
+                .collect(Collectors.joining(", "));
+        if (participant instanceof Dealer dealer) {
+            System.out.println();
+            System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.calculateDenominations());
+        }
+        if (participant instanceof Player player) {
+            System.out.printf("%s카드: %s - 결과 %d%n", player.getName(), cardResult, player.calculateDenominations());
+        }
     }
 }
