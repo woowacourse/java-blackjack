@@ -84,6 +84,37 @@ class BlackJackTest {
         assertThat(score).isEqualTo(19);
     }
 
+    @DisplayName("점수가 21점을 초과하면 버스트된다.")
+    @Test
+    void burst2() {
+        //given
+        Cards totalCards = new Cards();
+        totalCards.add(new Card(Symbol.HEART, Number.KING));
+        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, Number.TWO));
+
+        //when
+        boolean actual = totalCards.isBurst();
+
+        //then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("점수가 21점을 초과하지않으면 버스트되지 않는다.")
+    @Test
+    void notBurst() {
+        //given
+        Cards totalCards = new Cards();
+        totalCards.add(new Card(Symbol.HEART, Number.KING));
+        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+
+        //when
+        boolean actual = totalCards.isBurst();
+
+        //then
+        assertThat(actual).isFalse();
+    }
+
     @DisplayName("카드는 문양과 숫자를 가진다.")
     @Test
     void card() {

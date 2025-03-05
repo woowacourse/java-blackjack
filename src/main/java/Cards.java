@@ -16,6 +16,10 @@ public class Cards {
                 .sum();
     }
 
+    public boolean isBurst() {
+        return calculateTotalPoint() > 21;
+    }
+
     public Card extractCard() {
         return cards.removeLast();
     }
