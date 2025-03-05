@@ -40,7 +40,7 @@ public class DealerTest {
         );
 
         //when & then
-        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>())))
+        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>(), new FixCardsShuffler())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 수는 최대 10명입니다.");
     }
@@ -53,7 +53,7 @@ public class DealerTest {
         );
 
         //when & then
-        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>())))
+        assertThatThrownBy(() -> new Dealer(players, new Deck(new Stack<>(), new FixCardsShuffler())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 수는 최소 2명입니다.");
     }
@@ -61,7 +61,8 @@ public class DealerTest {
     @Test
     void 딜러는_본인의_카드_2장을_스스로_뽑는다() {
         //given
-        Dealer dealer = new Dealer(List.of(new Player(List.of()), new Player(List.of())), new Deck(deck));
+        Dealer dealer = new Dealer(List.of(new Player(List.of()), new Player(List.of())),
+                new Deck(deck, new FixCardsShuffler()));
 
         //when
         dealer.pickCards();
@@ -92,7 +93,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FOUR),
                         new Card(Suit.CLUB, Rank.FIVE))
         );
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck(cards, new FixCardsShuffler());
         Dealer dealer = new Dealer(players, deck);
 
         //when
@@ -131,7 +132,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FOUR),
                         new Card(Suit.CLUB, Rank.FIVE))
         );
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck(cards, new FixCardsShuffler());
         Dealer dealer = new Dealer(players, deck);
 
         //when
