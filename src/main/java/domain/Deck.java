@@ -20,7 +20,6 @@ public class Deck {
 
     public List<Card> drawCards(int count) {
         List<Card> cards = new ArrayList<>();
-
         for (int i = 0; i < count; i++) {
             cards.add(drawCard());
         }

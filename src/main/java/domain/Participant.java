@@ -1,11 +1,8 @@
 package domain;
 
-public class Participant {
-    private final String name;
+public class Participant extends Player {
 
     public Participant(String name) {
-        this.name = name;
+        super(name);
     }
-
-
 }

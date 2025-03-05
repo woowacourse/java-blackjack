@@ -1,9 +1,8 @@
 package domain;
 
-public class Dealer {
-    private final String name;
+public class Dealer extends Player {
 
     public Dealer() {
-        name = "딜러";
+        super("딜러");
     }
 }

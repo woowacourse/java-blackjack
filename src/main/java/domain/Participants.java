@@ -17,4 +17,18 @@ public class Participants {
             throw new IllegalArgumentException("참여자 수는 최소 1인 이상 최대 5인 이하여야 합니다.");
         }
     }
+
+    public void distributeTwoCards(List<Card> cards) {
+        if (cards.size() != 2 * size()) {
+            throw new IllegalArgumentException(size() + ": 카드가 부족해서 2장씩 나눠줄 수 없습니다.");
+        }
+
+        for (Participant participant : participants) {
+            participant.receiveCards(List.of(cards.removeLast(), cards.removeLast()));
+        }
+    }
+
+    public int size() {
+        return participants.size();
+    }
 }
