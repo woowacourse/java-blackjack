@@ -9,20 +9,20 @@ public class Deck {
 
     public Deck() {
         initializeDeck();
+        Collections.shuffle(deck);
     }
 
     public Card getCard() {
-        if(deck.isEmpty()) {
+        if (deck.isEmpty()) {
             throw new IllegalStateException();
         }
-        Collections.shuffle(deck);
         return deck.removeLast();
     }
 
     private void initializeDeck() {
         for (CardShape shape : CardShape.values()) {
             for (CardNumber number : CardNumber.values()) {
-                if(number.equals(CardNumber.ACE_ONE)) {
+                if (number.equals(CardNumber.ACE_ONE)) {
                     continue;
                 }
                 deck.add(new Card(number, shape));
