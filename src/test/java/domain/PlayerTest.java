@@ -2,15 +2,20 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
     @DisplayName("카드를 추가할 수 있다.")
     @Test
     void 카드_추가_가능() {
         // given
-        Player player = new Player();
+        Player player = Player.init();
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
         player.addCard(card);
 
@@ -19,5 +24,47 @@ public class PlayerTest {
 
         // then
         assertThat(cards.getCards()).contains(card);
+    }
+
+    @DisplayName("21 이하일 때, 최적의 결과를 선택할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("createCardsCase")
+    void 최적_결과_선택_21_이하(List<Card> inputCards, int expected) {
+        // given
+        Cards cards = Cards.of(inputCards);
+        Player player = Player.of(cards);
+
+        // when
+        final int result = player.getResult();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    private static Stream createCardsCase() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.KING, CardShape.CLOVER)
+                        ),
+                        21
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.KING, CardShape.CLOVER),
+                                new Card(CardNumber.FIVE, CardShape.CLOVER)
+                        ),
+                        16
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.A, CardShape.DIAMOND)
+                        ),
+                        12
+                )
+        );
     }
 }
