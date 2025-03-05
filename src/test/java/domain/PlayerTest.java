@@ -43,29 +43,29 @@ public class PlayerTest {
 
     private static Stream<Arguments> cardsArguments() {
         return Stream.of(
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.KING),
-                                new Card(Shape.HEART, Rank.QUEEN),
-                                new Card(Shape.HEART, Rank.ONE)),
-                        21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
-                                new Card(Shape.HEART, Rank.QUEEN)),
-                        21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
-                                new Card(Shape.HEART, Rank.QUEEN),
-                                new Card(Shape.HEART, Rank.ONE)),
-                        12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
-                                new Card(Shape.SPADE, Rank.A)),
-                        12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
-                                new Card(Shape.SPADE, Rank.EIGHT),
-                                new Card(Shape.SPADE, Rank.A)),
-                        20),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
-                                new Card(Shape.SPADE, Rank.A),
-                                new Card(Shape.CLUB, Rank.A),
-                                new Card(Shape.SPADE, Rank.TEN)),
-                        13)
+            Arguments.arguments(List.of(new Card(Shape.HEART, Rank.KING),
+                    new Card(Shape.HEART, Rank.QUEEN),
+                    new Card(Shape.HEART, Rank.ONE)),
+                21),
+            Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
+                    new Card(Shape.HEART, Rank.QUEEN)),
+                21),
+            Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
+                    new Card(Shape.HEART, Rank.QUEEN),
+                    new Card(Shape.HEART, Rank.ONE)),
+                12),
+            Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
+                    new Card(Shape.SPADE, Rank.A)),
+                12),
+            Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
+                    new Card(Shape.SPADE, Rank.EIGHT),
+                    new Card(Shape.SPADE, Rank.A)),
+                20),
+            Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A),
+                    new Card(Shape.SPADE, Rank.A),
+                    new Card(Shape.CLUB, Rank.A),
+                    new Card(Shape.SPADE, Rank.TEN)),
+                13)
         );
     }
 
@@ -84,5 +84,45 @@ public class PlayerTest {
 
         // then
         assertThat(totalValue).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("플레이어의 현재 카드의 합이 21을 초과하면, true를 반환한다")
+    void should_return_true_when_players_total_value_over_21() {
+        //given
+        int standardValue = 21;
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+            new Card(Shape.HEART, Rank.QUEEN),
+            new Card(Shape.HEART, Rank.TWO));
+        Participant player = new Player("a");
+        for (Card card : cards) {
+            player.addCard(card);
+        }
+
+        //when
+        boolean isOver = player.isOverThan(standardValue);
+
+        //then
+        assertThat(isOver).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 현재 카드의 합이 21 이하면, false를 반환한다")
+    void should_return_true_when_players_total_value_less_than_or_equal_21() {
+        //given
+        int standardValue = 21;
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+            new Card(Shape.HEART, Rank.QUEEN),
+            new Card(Shape.HEART, Rank.ONE));
+        Participant player = new Player("a");
+        for (Card card : cards) {
+            player.addCard(card);
+        }
+
+        //when
+        boolean isOver = player.isOverThan(standardValue);
+
+        //then
+        assertThat(isOver).isFalse();
     }
 }

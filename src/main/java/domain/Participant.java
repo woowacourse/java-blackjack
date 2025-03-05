@@ -30,13 +30,13 @@ public abstract class Participant {
 
     public int getTotalValue() {
         final long constTotalValue = cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getValue)
-                .sum();
+            .filter(card -> !card.isAce())
+            .mapToInt(Card::getValue)
+            .sum();
 
         final long aceCount = cards.stream()
-                .filter(Card::isAce)
-                .count();
+            .filter(Card::isAce)
+            .count();
 
         long totalValue = constTotalValue;
         for (int i = 0; i <= aceCount; ++i) {
@@ -46,6 +46,10 @@ public abstract class Participant {
             }
         }
         return (int) totalValue;
+    }
+
+    public boolean isOverThan(int standardValue) {
+        return getTotalValue() > standardValue;
     }
 
     @Override
