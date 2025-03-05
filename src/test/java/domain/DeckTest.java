@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
@@ -39,5 +40,17 @@ class DeckTest {
             softly.assertThat(drownCard1).isEqualTo(card1);
             softly.assertThat(drownCard2).isEqualTo(card2);
         });
+    }
+
+    @DisplayName("카드가 부족하면 예외가 발생한다.")
+    @Test
+    void 카드가_부족하면_예외가_발생한다() {
+
+        // given
+        final Deck deck = new Deck(List.of());
+
+        // when & then
+        assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
