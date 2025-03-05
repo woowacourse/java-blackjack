@@ -21,4 +21,17 @@ public class Player {
     public ParticipantHand getParticipantHand() {
         return participantHand;
     }
+
+    public GameResult decideWinning(Dealer dealer) {
+        int dealerScore = dealer.getParticipantHand().calculateFinalScore();
+        int playerScore = participantHand.calculateFinalScore();
+
+        if (dealerScore > playerScore){
+            return GameResult.LOSE;
+        }
+        if (dealerScore < playerScore){
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
 }
