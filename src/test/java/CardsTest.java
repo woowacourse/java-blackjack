@@ -26,4 +26,37 @@ public class CardsTest {
         // then
         assertThat(sum).isEqualTo(expected);
     }
+
+    @Test
+    void _카드_합이_항상_21을_초과할_경우_TRUE를_반환한다() {
+        // given
+        Cards cards = new Cards(List.of(
+                new Card(CardShape.SPADE, CardNumber.JACK),
+                new Card(CardShape.SPADE, CardNumber.QUEEN),
+                new Card(CardShape.SPADE, CardNumber.TWO),
+                new Card(CardShape.SPADE, CardNumber.ACE)
+        ));
+
+        // when
+        final boolean isBurst = cards.isBurst();
+
+        // then
+        assertThat(isBurst).isTrue();
+    }
+
+    @Test
+    void _카드_합을_21_이하로_만들_수_있는_경우_FALSE를_반환한다() {
+        // given
+        Cards cards = new Cards(List.of(
+                new Card(CardShape.SPADE, CardNumber.QUEEN),
+                new Card(CardShape.SPADE, CardNumber.TWO),
+                new Card(CardShape.SPADE, CardNumber.ACE)
+        ));
+
+        // when
+        final boolean isBurst = cards.isBurst();
+
+        // then
+        assertThat(isBurst).isFalse();
+    }
 }
