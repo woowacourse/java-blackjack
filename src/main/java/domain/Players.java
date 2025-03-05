@@ -18,13 +18,9 @@ public class Players {
         }
     }
 
-    public void distributeTwoCards(List<Card> cards) {
-        if (cards.size() != 2 * size()) {
-            throw new IllegalArgumentException(size() + ": 카드가 부족해서 2장씩 나눠줄 수 없습니다.");
-        }
-
+    public void distributeTwoCards(Deck deck) {
         for (Player player : players) {
-            player.receiveCards(List.of(cards.removeLast(), cards.removeLast()));
+            player.receiveInitialCards(deck);
         }
     }
 

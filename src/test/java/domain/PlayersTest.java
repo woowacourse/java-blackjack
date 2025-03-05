@@ -22,26 +22,4 @@ class PlayersTest {
         Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @Test
-    void 플레이어에게_카드를_2장씩_나누어_줄_수_없으면_예외가_발생한다() {
-        // given
-        Players players = new Players(
-                List.of(
-                        new Dealer(),
-                        new Participant("시소"),
-                        new Participant("헤일러"),
-                        new Participant("부기"),
-                        new Participant("사나")
-                )
-        );
-        Deck deck = DeckGenerator.generateDeck();
-        int count = 12;
-
-        // when & then
-        Assertions.assertThatThrownBy(() -> players.distributeTwoCards(deck.drawCards(count)))
-                .isInstanceOf(IllegalArgumentException.class);
-
-
-    }
 }
