@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class Cards {
@@ -46,5 +47,16 @@ public class Cards {
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, cardShape));
+    }
+
+    public void addCard(final Card card) {
+        if (isBurst()) {
+            throw new IllegalArgumentException();
+        }
+        cards.add(card);
+    }
+
+    public Set<Card> getCards() {
+        return Collections.unmodifiableSet(cards);
     }
 }
