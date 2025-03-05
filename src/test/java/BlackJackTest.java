@@ -27,7 +27,7 @@ class BlackJackTest {
     void card() {
         //given
         final var symbol = Symbol.SPADE;
-        final var number = 1;
+        final var number = Number.ACE;
 
         //when //then
         assertThatCode(() -> new Card(symbol, number))
@@ -44,5 +44,18 @@ class BlackJackTest {
 
         //then
         assertThat(values).hasSize(4);
+    }
+
+    @DisplayName("카드의 숫자는 1부터 k까지 13개다.")
+    @Test
+    void cardNumber() {
+        //given
+
+        //when
+        Number[] values = Number.values();
+
+        //then
+        assertThat(values).hasSize(13);
+
     }
 }
