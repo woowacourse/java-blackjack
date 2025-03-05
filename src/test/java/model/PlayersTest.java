@@ -19,7 +19,7 @@ public class PlayersTest {
                 Player.from("hippo")
         );
         // when
-        Players players = new Players(actual);
+        Players players = Players.from(List.of("pobi","hippo"));
         // then
         assertAll(
                 () -> Assertions.assertThat(players.getPlayers().size()).isEqualTo(2),

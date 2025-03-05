@@ -14,9 +14,9 @@ public class GameManagerTest {
   @DisplayName("카드 덱으로부터 원하는 카드 장 수를 입력 받아 플레이어에게 분배")
   void divideCard(int amount) {
     //given
-    Players players = new Players(List.of(
-        Player.from("pobi"),
-        Player.from("hippo")
+    Players players = Players.from(List.of(
+        "pobi",
+        "hippo"
     ));
     GameManager manager = new GameManager(Dealer.of(),players);
     //when
@@ -30,13 +30,13 @@ public class GameManagerTest {
   @Test
   @DisplayName("모든 참가자에게 2장씩 카드를 배부했는 지")
   void divideAllParticipant() {
-    // given]
-    List<Player> allPlayer = List.of(
-            Player.from("pobi"),
-            Player.from("hippo"),
-            Player.from("kali")
+    // given
+    List<String> allPlayer = List.of(
+            "pobi",
+            "hippo",
+            "kali"
     );
-    Players players = new Players(allPlayer);
+    Players players = Players.from(allPlayer);
     Dealer dealer = Dealer.of();
 
     GameManager gameManager = new GameManager(dealer, players);

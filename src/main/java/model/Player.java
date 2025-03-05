@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player extends Participant {
 
@@ -31,5 +32,17 @@ public class Player extends Participant {
     @Override
     public int sum() {
         return super.sum();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(nickname, player.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(nickname);
     }
 }
