@@ -2,6 +2,9 @@ package domain;
 
 import static domain.CardType.Type.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum CardType {
 
     DIAMOND_ACE(DIAMOND, 1),
@@ -66,6 +69,10 @@ public enum CardType {
     CardType(final Type type, final int score) {
         this.type = type;
         this.score = score;
+    }
+
+    public static List<CardType> getCardTypes() {
+        return Arrays.stream(CardType.values()).toList();
     }
 
     public Type getType() {
