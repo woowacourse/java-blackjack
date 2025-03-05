@@ -2,14 +2,12 @@ package blackjack.model;
 
 import java.util.Objects;
 
-public class Participant {
+public class Participant extends Player {
     private final String name;
-    private final ReceivedCards receivedCards;
 
     public Participant(String name) {
         validate(name);
         this.name = name;
-        this.receivedCards = new ReceivedCards();
     }
 
     private void validate(String name) {
@@ -19,14 +17,6 @@ public class Participant {
         if (name.length() < 2 || name.length() > 5) {
             throw new IllegalArgumentException("참여자 이름은 2~5글자 입니다.");
         }
-    }
-
-    public void putCard(Card card) {
-        receivedCards.receive(card);
-    }
-
-    public ReceivedCards getReceivedCards() {
-        return receivedCards;
     }
 
     @Override
