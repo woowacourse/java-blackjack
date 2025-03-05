@@ -1,10 +1,15 @@
 package domain;
 
+import static util.ExceptionConstants.ERROR_HEADER;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+    private static final int VALID_MAX_SUM_LIMIT = 21;
+    private static final String MAX_SUM_EXCEED_ERROR = "카드의 합이 21을 초과하였습니다.";
+
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -20,6 +25,12 @@ public class Cards {
     }
 
     public void checkMaxSum() {
-        throw new IllegalArgumentException("[ERROR]");
+        int sum = cards.stream()
+                .map(Card::cardNumberType)
+                .mapToInt(CardNumberType::getValue)
+                .sum();
+        if(sum > VALID_MAX_SUM_LIMIT) {
+            throw new IllegalArgumentException(ERROR_HEADER + MAX_SUM_EXCEED_ERROR);
+        }
     }
 }
