@@ -22,7 +22,7 @@ public class DealerTest {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.NINE)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
-        Dealer dealer = new Dealer("루키");
+        Dealer dealer = new Dealer();
         dealer.addDraw(deck.drawCard());
         dealer.addDraw(deck.drawCard());
         assertThat(dealer.isDrawable()).isFalse();
@@ -34,7 +34,7 @@ public class DealerTest {
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.DIAMOND, CardValue.K)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
-        Dealer dealer = new Dealer("루키");
+        Dealer dealer = new Dealer();
         assertThat(dealer.isDrawable()).isTrue();
     }
 }

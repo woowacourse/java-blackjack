@@ -10,7 +10,6 @@ public abstract class BlackjackPlayer {
     private static final int BURST_STANDARD = 21;
     private static final int ACE_DIFF = 10;
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
-
     private final List<TrumpCard> trumpCards;
     private final String name;
 
@@ -61,5 +60,13 @@ public abstract class BlackjackPlayer {
     public boolean isDrawable() {
         int sum = calculateCardSum();
         return !isBurst(sum);
+    }
+
+    public List<TrumpCard> trumpCards() {
+        return trumpCards;
+    }
+
+    public String name() {
+        return name;
     }
 }

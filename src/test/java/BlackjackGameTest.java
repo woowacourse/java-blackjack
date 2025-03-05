@@ -1,7 +1,18 @@
+import static org.assertj.core.api.Assertions.assertThatIterable;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.BlackjackDeckGenerator;
 import domain.BlackjackGame;
+import domain.CardValue;
+import domain.Dealer;
+import domain.Deck;
+import domain.Suit;
+import domain.TrumpCard;
+import domain.strategy.BlackjackDrawStrategy;
+import domain.strategy.TestDrawStrategy;
 import except.BlackJackException;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,20 +25,34 @@ public class BlackjackGameTest {
     @Test
     void 플레이어_수는_딜러_포함_2명_이상이여야_한다() {
         List<String> names = List.of("");
-        assertThatThrownBy(() -> new BlackjackGame(names))
+        Dealer dealer = new Dealer();
+        assertThatThrownBy(() -> new BlackjackGame(names,
+                new Deck(new BlackjackDeckGenerator(), new BlackjackDrawStrategy()), new Dealer()))
                 .isInstanceOf(BlackJackException.class);
     }
 
     @Test
     void 플레이어_수는_8명_초과하면_예외가_발생한다() {
         List<String> names = List.of("포비", "포비2", "포비3", "포비4", "포비5", "포비6", "포비7", "포비8", "포비9");
-        assertThatThrownBy(() -> new BlackjackGame(names))
+        Dealer dealer = new Dealer();
+        assertThatThrownBy(() -> new BlackjackGame(names,
+                new Deck(new BlackjackDeckGenerator(), new BlackjackDrawStrategy()), dealer))
                 .isInstanceOf(BlackJackException.class);
     }
 
     @Test
     void 게임을_시작하면_플레이어는_두_장의_카드를_지급_받는다() {
+        Deque<TrumpCard> trumpCards = new LinkedList<>(
+                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
+                        new TrumpCard(Suit.DIAMOND, CardValue.K), new TrumpCard(Suit.SPADE, CardValue.EIGHT),
+                        new TrumpCard(Suit.HEART, CardValue.EIGHT), new TrumpCard(Suit.HEART, CardValue.J),
+                        new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.EIGHT)));
+        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        Dealer dealer = new Dealer();
         List<String> names = List.of("포비", "포비2");
-        BlackjackGame blackjackGame = new BlackjackGame(names);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        List<TrumpCard> expectedCards = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
+                new TrumpCard(Suit.DIAMOND, CardValue.J));
+        assertThatIterable(blackjackGame.playerCards("포비")).containsAnyElementsOf(expectedCards);
     }
 }
