@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.Denomination.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,7 @@ public class HandTest {
     void test1() {
         Hand hand = new Hand();
 
-        Card card = new Card(Denomination.ACE, Suit.CLUB);
+        Card card = new Card(ACE, Suit.CLUB);
         hand.addCard(card);
 
         assertThat(hand.getCards().size()).isEqualTo(1);

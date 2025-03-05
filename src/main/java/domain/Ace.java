@@ -2,8 +2,8 @@ package domain;
 
 public class Ace extends Card {
 
-    public Ace(Denomination denomination, Suit suit) {
-        super(denomination, suit);
+    public Ace(Suit suit) {
+        super(Denomination.ACE, suit);
     }
 
     public void setValueToOne() {
