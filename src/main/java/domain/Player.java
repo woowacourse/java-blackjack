@@ -1,7 +1,7 @@
 package domain;
 
 public record Player(
-        CardHand cardHand
+    CardHand hand
 ) {
 
     public Player() {
@@ -10,10 +10,14 @@ public record Player(
 
     public void pickCard(final Deck deck) {
         final Card card = deck.pickCard();
-        cardHand.add(card);
+        hand.add(card);
     }
 
     public boolean isPickCard() {
-        return false;
+        return calculateAllScore() <= 21;
+    }
+
+    public int calculateAllScore() {
+        return hand.calculateAllScore();
     }
 }

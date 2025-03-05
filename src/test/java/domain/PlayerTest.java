@@ -1,18 +1,20 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
-import constant.CardNumber;
-import constant.Emblem;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import constant.CardNumber;
+import constant.Emblem;
 
 public class PlayerTest {
 
@@ -32,7 +34,7 @@ public class PlayerTest {
             player.pickCard(deck);
 
             // then
-            assertThat(player.cardHand().hand()).isNotEmpty();
+            assertThat(player.hand().hand()).isNotEmpty();
         }
 
     }
@@ -53,17 +55,17 @@ public class PlayerTest {
             final boolean actual = p.isPickCard();
 
             // then
-            assertThat(actual).isTrue();
+            assertThat(actual).isEqualTo(expected);
         }
 
         private static Stream<Arguments> providePlayerHand() {
             return Stream.of(
-                    Arguments.of(
-                            List.of(new Card(CardNumber.TEN, Emblem.CLUB), new Card(CardNumber.TEN, Emblem.DIAMOND),
-                                    new Card(CardNumber.ACE, Emblem.CLUB)), true),
-                    Arguments.of(
-                            List.of(new Card(CardNumber.ACE, Emblem.DIAMOND),
-                                    new Card(CardNumber.ACE, Emblem.CLUB)), false)
+                Arguments.of(
+                    List.of(new Card(CardNumber.TEN, Emblem.CLUB), new Card(CardNumber.TEN, Emblem.DIAMOND),
+                        new Card(CardNumber.ACE, Emblem.CLUB)), true),
+                Arguments.of(
+                    List.of(new Card(CardNumber.TEN, Emblem.DIAMOND),
+                        new Card(CardNumber.TEN, Emblem.CLUB), new Card(CardNumber.TWO, Emblem.CLUB)), false)
             );
         }
 
