@@ -31,9 +31,7 @@ public class BlackjackController {
     }
 
     private void handOutCards(Dealer dealer, Players players) {
-        dealer.shuffleDeck(new RandomCardsShuffler());
-        dealer.pickCards();
-        dealer.handOutCard();
+        dealer.prepareBlackjack(new RandomCardsShuffler());
         OutputView.printPlayerCards(dealer.getCards(), players.getPlayers());
     }
 }

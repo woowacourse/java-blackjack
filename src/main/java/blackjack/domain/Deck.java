@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -26,6 +27,7 @@ public class Deck {
             shuffledCard.add(cards.pop());
         }
         cardsShuffler.shuffle(shuffledCard);
+        Collections.reverse(shuffledCard);
         cards.addAll(shuffledCard);
     }
 }

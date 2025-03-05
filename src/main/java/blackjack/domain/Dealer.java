@@ -18,16 +18,22 @@ public class Dealer {
         this.scoreCalculator = scoreCalculator;
     }
 
-    public void shuffleDeck(CardsShuffler cardsShuffler) {
+    public void prepareBlackjack(CardsShuffler cardsShuffler) {
+        shuffleDeck(cardsShuffler);
+        pickCards();
+        handOutCard();
+    }
+
+    private void shuffleDeck(CardsShuffler cardsShuffler) {
         deck.shuffleCards(cardsShuffler);
     }
 
-    public void pickCards() {
+    private void pickCards() {
         cards.addAll(List.of(deck.draw(), deck.draw()));
     }
 
 
-    public void handOutCard() {
+    private void handOutCard() {
         players.sendAll((player) -> player.send(deck.draw(), deck.draw()));
     }
 
