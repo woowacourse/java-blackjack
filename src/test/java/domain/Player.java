@@ -16,6 +16,6 @@ public class Player {
     }
 
     public boolean isGreaterThan(int compareScore) {
-        return true;
+        return this.cardGroup.calculateScore(LIMIT) > compareScore;
     }
 }
