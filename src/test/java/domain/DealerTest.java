@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.Card;
@@ -18,9 +19,20 @@ public class DealerTest {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
         Dealer dealer = new Dealer(cardDeck);
-        //when - then
-
+        //when-then
         assertThat(dealer.hitCard()).isInstanceOf(Card.class);
+
+    }
+
+    @Test
+    @DisplayName("카드 추가 테스트")
+    void addCardsTest() {
+        // given
+        CardDeckFactory cardDeckFactory = new CardDeckFactory();
+        CardDeck cardDeck = cardDeckFactory.create();
+        Dealer dealer = new Dealer(cardDeck);
+        // when-then
+        assertDoesNotThrow(dealer::hitCards);
 
     }
 }

@@ -16,5 +16,9 @@ public class Dealer {
     public Card hitCard() {
         return standard.hitCard();
     }
+
+    public void hitCards() {
+        hand.addCard(hitCard());
+    }
 }
 
