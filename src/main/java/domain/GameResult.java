@@ -6,7 +6,6 @@ public enum GameResult {
     LOSE,
     DRAW;
 
-
     GameResult() {
     }
 
@@ -15,11 +14,11 @@ public enum GameResult {
             return WIN;
         }
 
-        if (score < compareScore) {
+        if (score < compareScore || score > Player.LIMIT) {
             return LOSE;
         }
 
         return DRAW;
-
     }
+
 }
