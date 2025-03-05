@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Participant;
 import java.util.List;
@@ -21,5 +22,20 @@ public class GameBoard {
                 .collect(Collectors.toMap(
                         Function.identity(),
                         participant -> CardDeck.generateEmptySet()));
+    }
+
+    public void drawTwoCards() {
+        for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
+            CardDeck cardDeck = entry.getValue();
+
+            Card firstCard = gameCardDeck.draw();
+            Card secondCard = gameCardDeck.draw();
+            cardDeck.addCard(firstCard);
+            cardDeck.addCard(secondCard);
+        }
+    }
+
+    public Map<Participant, CardDeck> getCardDeckOfParticipant() {
+        return cardDeckOfParticipant;
     }
 }
