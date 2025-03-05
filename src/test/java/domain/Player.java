@@ -26,4 +26,8 @@ public class Player {
     public boolean isLessThan(final int compareScore) {
         return this.cardGroup.calculateScore(LIMIT) < compareScore;
     }
+
+    public GameResult calculateGameResult(final int compareScore) {
+        return null;
+    }
 }
