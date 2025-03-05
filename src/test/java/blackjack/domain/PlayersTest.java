@@ -1,44 +1,63 @@
 package blackjack.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayersTest {
 
-    @DisplayName("각 플레이어 마다 기본 카드 2장을 발급한다")
+    @DisplayName("각 참가자 마다 기본 카드 2장을 발급한다")
     @Test
     void give_two_cards() {
         // given
-        List<String> nickname = List.of("두리");
+        Players players = new Players(List.of(new Player("두리")));
+        CardPack cardPack = new CardPack(new SortShuffle());
 
         // when
-        int result = new Players(nickname)
-                .getPlayers()
-                .getFirst()
-                .getCards()
-                .size();
+        players.initPlayers(cardPack);
+        List<Card> result = players.getGamblers().getFirst().getCards();
 
         // then
-        assertThat(result).isEqualTo(2);
+        assertThat(result.size()).isEqualTo(2);
     }
 
     @Test
-    @DisplayName("플레이어의 목록으로 객체를 생성한다")
+    @DisplayName("참가자의 목록으로 객체를 생성한다")
     void make_players() {
         //given
-        List<String> playerNames = List.of("두리", "비타");
+        Player player1 = new Player("두리");
+        Player player2 = new Player("비타");
+        Players players = new Players(List.of(
+                player1,
+                player2
+        ));
 
-        //when
-        Players players = new Players(playerNames);
-        List<String> excepted = players.getPlayers().stream()
-                .map(Player::getName)
-                .toList();
 
-        //then
-        assertThat(playerNames).isEqualTo(excepted);
+        //when & then
+        assertThat(players.getGamblers()).contains(player1, player2);
+    }
+
+    @Test
+    @DisplayName("딜러에게 카드 2장을 발급한다")
+    void deal_card_to_dealer() {
+        Players players = new Players(List.of(new Player("비타")));
+        Player dealer = players.getDealer();
+        players.initPlayers(new CardPack(new SortShuffle()));
+        Assertions.assertThat(dealer.getCards().size()).isEqualTo(2);
+    }
+
+    private static class SortShuffle implements BlackjackShuffle {
+
+        @Override
+        public void shuffle(List<Card> cards) {
+            cards.sort(Comparator
+                    .comparing(Card::getNumber)
+                    .thenComparing(Card::getShape));
+        }
     }
 }
