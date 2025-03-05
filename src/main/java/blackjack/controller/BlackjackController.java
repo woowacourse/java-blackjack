@@ -28,5 +28,7 @@ public class BlackjackController {
             blackjackService.drawCardForDealer();
             OutputView.printDealerDrawNotice();
         }
+
+        OutputView.printRoundResult(blackjackService.getRoundResults());
     }
 }

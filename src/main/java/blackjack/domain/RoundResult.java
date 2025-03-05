@@ -8,8 +8,6 @@ public enum RoundResult {
     TIE,
     ;
 
-
-
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         if (gamer.isBust() && otherGamer.isBust()) {
             return TIE;

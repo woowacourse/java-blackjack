@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.CurrentPlayerResponseDto;
+import blackjack.dto.RoundResultsResponseDto;
 import blackjack.dto.StartingCardsResponseDto;
 
 public class OutputView {
@@ -22,7 +23,7 @@ public class OutputView {
         String dealerCardName = dealerCard.number() + dealerCard.type();
         System.out.println(String.format("%s카드 : %s", dealerName, dealerCardName));
 
-        for (StartingCardsResponseDto.InnerGamer player : responseDto.players()) {
+        for (var player : responseDto.players()) {
             String playerName = player.name();
             String playerCardNames = player.cards().stream()
                 .map(card -> card.number() + card.type())
@@ -45,5 +46,22 @@ public class OutputView {
 
     public static void printDealerDrawNotice() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printRoundResult(RoundResultsResponseDto responseDto) {
+        System.out.println(String.format("%s카드 : %s - 결과: %d",
+                responseDto.dealer().name(),
+                responseDto.dealer().cards().stream()
+                    .map(card -> card.number() + card.type())
+                    .collect(Collectors.joining(", ")),
+            responseDto.dealer().sumOfCards()));
+
+        for (var player : responseDto.players()) {
+            String playerName = player.name();
+            String playerCardNames = player.cards().stream()
+                .map(card -> card.number() + card.type())
+                .collect(Collectors.joining(", "));
+            System.out.println(String.format("%s카드 : %s - 결과: %d", playerName, playerCardNames, player.sumOfCards()));
+        }
     }
 }
