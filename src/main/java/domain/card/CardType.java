@@ -1,9 +1,6 @@
 package domain.card;
 
 public enum CardType {
-    JACK("잭"),
-    KING("킹"),
-    QUEEN("퀸"),
     SPADE("스페이드"),
     CLOVER("클로버"),
     HEART("하트"),

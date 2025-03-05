@@ -3,25 +3,10 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final int number;
-    private final CardType type;
+    private final CardNumber cardNumber;
 
-    public Card(final int number, final CardType type) {
-        this.number = number;
-        this.type = type;
+    public Card(final CardNumber cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Card card = (Card) o;
-        return number == card.number && type == card.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, type);
-    }
 }

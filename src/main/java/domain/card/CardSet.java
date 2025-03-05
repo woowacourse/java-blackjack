@@ -28,28 +28,28 @@ public class CardSet {
 
     private static List<Card> initializeCardSet() {
         List<Card> initCard = new ArrayList<>();
-        addShapes(initCard);
+        //addShapes(initCard);
         addRoles(initCard);
         return initCard;
     }
 
     private static void addRoles(List<Card> initCard) {
-        List<CardType> roles = List.of(CardType.JACK, CardType.KING, CardType.QUEEN);
-        for (CardType role : roles) {
+        List<CardNumber> numbers = List.of(CardNumber.JACK, CardNumber.KING, CardNumber.QUEEN);
+        for (CardNumber number : numbers) {
             for (int i = 1; i <= 4; i++) {
-                initCard.add(new Card(10, role));
+                initCard.add(new Card(number));
             }
         }
     }
 
-    private static void addShapes(List<Card> initCard) {
-        List<CardType> shapes = List.of(CardType.CLOVER, CardType.HEART, CardType.SPADE, CardType.DIAMOND);
-        for (CardType shape : shapes) {
-            for (int number = 1; number <= 10; number++) {
-                initCard.add(new Card(number, shape));
-            }
-        }
-    }
+//    private static void addShapes(List<Card> initCard) {
+//        List<CardType> shapes = List.of(CardType.CLOVER, CardType.HEART, CardType.SPADE, CardType.DIAMOND);
+//        for (CardType shape : shapes) {
+//            for (int number = 1; number <= 10; number++) {
+//                initCard.add(new Card(number, shape));
+//            }
+//        }
+//    }
 
     public Card draw() {
         return cards.removeFirst();
