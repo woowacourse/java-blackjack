@@ -17,4 +17,16 @@ class PlayerTest {
 
         assertThat(player.getCards().getValues()).hasSize(3);
     }
+
+    @Test
+    void 자신이_가진_카드의_합을_반환한다() {
+        Player player = new Player();
+        player.receiveCards(new Cards(
+                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
+        ));
+        int expected = player.getCards().sumAll();
+
+        assertThat(player.calculateSumOfCards()).isEqualTo(expected);
+    }
+
 }
