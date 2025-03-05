@@ -12,6 +12,10 @@ public class CardDeck {
         this.cards = cards;
     }
 
+    public CardDeck(final CardDeck cardDeck) {
+        this.cards = new ArrayList<>(cardDeck.cards);
+    }
+
     public static CardDeck generateEmptySet() {
         return new CardDeck(new ArrayList<>());
     }

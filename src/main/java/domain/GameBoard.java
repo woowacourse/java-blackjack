@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Participant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -41,8 +42,13 @@ public class GameBoard {
         ownedCardDeck.addCard(drawedCard);
     }
 
+    public CardDeck getCardDeckOf(Participant participant) {
+        CardDeck cardDeck = cardDeckOfParticipant.get(participant);
+        return new CardDeck(cardDeck);
+    }
+
     public Map<Participant, CardDeck> getCardDeckOfParticipant() {
-        return cardDeckOfParticipant;
+        return Collections.unmodifiableMap(cardDeckOfParticipant);
     }
 
     public CardDeck getPlayingCard() {
