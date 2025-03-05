@@ -29,6 +29,10 @@ public class Hand {
         }
     }
 
+    public static Hand of(TrumpCard firstCard, TrumpCard secondCard) {
+        return new Hand(List.of(firstCard, secondCard));
+    }
+
     public void addCard(TrumpCard card) {
         validateNotDuplicate(card);
         cards.add(card);
