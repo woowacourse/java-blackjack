@@ -17,14 +17,14 @@ public final class Nickname {
         return new Nickname(DEALER_NICKNAME);
     }
 
-    public String getValue() {
-        return value;
-    }
-
     private void validateBlank(String nickname) {
         if (nickname == null || nickname.isBlank()) {
             throw new IllegalArgumentException("닉네임은 공백을 허용하지 않습니다.");
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override

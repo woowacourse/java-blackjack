@@ -9,6 +9,7 @@ import java.util.Set;
 public class CardManager {
 
     public static final int INITIAL_CARD_COUNT = 2;
+
     private final CardDeck cardDeck;
     private final Map<Nickname, List<Card>> nicknameToCards = new HashMap<>();
 
@@ -22,7 +23,7 @@ public class CardManager {
         );
     }
 
-    public void distributeCard() {
+    public void distributeCards() {
         Set<Nickname> nicknames = nicknameToCards.keySet();
         nicknames.forEach(nickname ->
                 nicknameToCards.get(nickname)

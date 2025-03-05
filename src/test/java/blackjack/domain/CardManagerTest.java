@@ -35,17 +35,15 @@ class CardManagerTest {
     @DisplayName("카드를 지정된 초기 개수만큼 모두에게 분배할 수 있다.")
     void canDistributeCards() {
         //given
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"), Nickname.createDealer());
+        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         cardManager.initialize(nicknames);
         //when
-        cardManager.distributeCard();
+        cardManager.distributeCards();
         //then
         assertAll(
                 () -> assertThat(cardManager.findCardsByNickname(new Nickname("쿠키")))
                         .hasSize(CardManager.INITIAL_CARD_COUNT),
                 () -> assertThat(cardManager.findCardsByNickname(new Nickname("빙봉")))
-                        .hasSize(CardManager.INITIAL_CARD_COUNT),
-                () -> assertThat(cardManager.findCardsByNickname(Nickname.createDealer()))
                         .hasSize(CardManager.INITIAL_CARD_COUNT)
         );
     }
