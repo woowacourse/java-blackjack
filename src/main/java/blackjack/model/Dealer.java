@@ -1,23 +1,8 @@
 package blackjack.model;
 
-public class Dealer {
-
-    private final Cards cards;
+public class Dealer extends Player {
 
     public Dealer() {
-        this.cards = Cards.empty();
+        super();
     }
-
-    public void receiveCards(final Cards cards) {
-        this.cards.merge(cards);
-    }
-
-    public int calculateSumOfCards() {
-        return cards.sumAll();
-    }
-
-    public Cards getCards() {
-        return cards;
-    }
-
 }
