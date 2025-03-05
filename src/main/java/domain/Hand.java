@@ -20,4 +20,8 @@ public class Hand {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int getTotal() {
+        return cards.stream().mapToInt(Card::getValue).sum();
+    }
 }
