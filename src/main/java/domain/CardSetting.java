@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,11 +9,9 @@ public class CardSetting {
     private static final List<TrumpCard> CARD_DECK = new ArrayList<>();
 
     public static void initCache() {
-        for (CardShape cardShape : CardShape.values()) {
-            for (CardNumber cardNumber : CardNumber.values()) {
-                CARD_DECK.add(new TrumpCard(cardShape, cardNumber));
-            }
-        }
+        Arrays.stream(CardShape.values())
+                .forEach(cardShape -> Arrays.stream(cardShape.values())
+                        .forEach(cardNumber -> CARD_DECK.add(new TrumpCard(cardShape, cardNumber))));
         Collections.shuffle(CARD_DECK);
     }
 
@@ -35,9 +34,5 @@ public class CardSetting {
 
     public static List<TrumpCard> getCardDeck() {
         return CARD_DECK;
-    }
-
-    public int size() {
-        return 0;
     }
 }
