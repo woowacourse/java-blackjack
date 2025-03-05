@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class SomeTest {
+public class PlayerTest {
 
     @Test
     @DisplayName("Player 는 핸드의 총합값을 반환할 수 있다")
