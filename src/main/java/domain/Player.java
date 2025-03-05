@@ -4,6 +4,7 @@ import java.util.Set;
 
 public class Player {
 
+    public static final int SUM_LIMIT = 21;
     private final Cards cards;
 
     private Player(Cards cards) {
@@ -29,9 +30,9 @@ public class Player {
     public int getResult() {
         Set<Integer> coordinates = cards.getCoordinateSums();
         return coordinates.stream()
-                .filter(coordinate -> coordinate <= 21)
+                .filter(coordinate -> coordinate <= SUM_LIMIT)
                 .mapToInt(i -> i)
                 .max()
-                .orElseThrow(() -> new IllegalStateException(""));
+                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
     }
 }
