@@ -66,4 +66,19 @@ public class PlayerTest {
 
         assertThat(player.isBust()).isTrue();
     }
+
+    @Test
+    void 플레이어의_점수가_특정_점수보다_작은지_확인한다() {
+        //given
+        final String name = "윌슨";
+        final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
+        final CardGroup cardGroup = new CardGroup(cards);
+
+        //when
+        final Player player = new Player(name, cardGroup);
+        final boolean result = player.isLessThan(7);
+
+        //then
+        assertThat(result).isTrue();
+    }
 }
