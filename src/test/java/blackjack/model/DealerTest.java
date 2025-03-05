@@ -1,20 +1,24 @@
 package blackjack.model;
 
 import static blackjack.model.CardCreator.createCard;
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
     @Test
     void 카드_뭉치에서_N_개의_카드를_뽑아_반환한다() {
+
         CardDeck cardDeck = new CardDeck(
                 new Cards(
-                        List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX))
+                        List.of(
+                                createCard(CardNumber.NINE),
+                                createCard(CardNumber.SIX),
+                                createCard(CardNumber.TEN),
+                                createCard(CardNumber.FIVE)
+                        )
                 )
         );
         Dealer dealer = new Dealer(cardDeck);

@@ -12,11 +12,7 @@ public class CardDeck {
     }
 
     public List<Card> draw(final int drawSize) {
-        List<Card> values = cards.getValues();
-        Collections.shuffle(values);
-        List<Card> result = List.copyOf(values.subList(0, drawSize));
-        values.removeAll(result);
-        return result;
+        return cards.pick(drawSize);
     }
 
     public List<Card> getCards() {

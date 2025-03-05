@@ -2,11 +2,13 @@ package blackjack.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public final class CardInitializer {
 
-    private CardInitializer() {}
+    private CardInitializer() {
+    }
 
     public static Cards createCardDeck() {
         return new Cards(initializeCardDeck());
@@ -20,6 +22,7 @@ public final class CardInitializer {
                                 cardNumber -> cards.add(new Card(cardType, cardNumber))
                         )
                 );
+        Collections.shuffle(cards);
         return cards;
     }
 
