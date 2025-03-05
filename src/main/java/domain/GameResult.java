@@ -1,5 +1,7 @@
 package domain;
 
+import domain.gamer.Player;
+
 public enum GameResult {
 
     WIN,

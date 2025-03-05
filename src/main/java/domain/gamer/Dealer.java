@@ -1,4 +1,6 @@
-package domain;
+package domain.gamer;
+
+import domain.card.CardGroup;
 
 public class Dealer extends Gamer{
     public Dealer(CardGroup cardGroup) {

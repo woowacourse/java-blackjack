@@ -1,4 +1,8 @@
-package domain;
+package domain.gamer;
+
+import domain.GameResult;
+import domain.card.Card;
+import domain.card.CardGroup;
 
 public abstract class Gamer {
     public static final int LIMIT = 21;

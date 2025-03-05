@@ -1,4 +1,6 @@
-package domain;
+package domain.gamer;
+
+import domain.card.CardGroup;
 
 public class Player extends Gamer{
     private final String name;

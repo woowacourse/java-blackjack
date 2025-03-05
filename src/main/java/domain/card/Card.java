@@ -1,10 +1,10 @@
-package domain;
+package domain.card;
 
 public class Card {
 
-    CardType type;
+    private final CardType type;
 
-    Card(CardType type) {
+    public Card(CardType type) {
         this.type = type;
     }
 

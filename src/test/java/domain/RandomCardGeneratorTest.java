@@ -2,6 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardGenerator;
+import domain.card.CardType;
+import domain.card.RandomCardGenerator;
 import org.junit.jupiter.api.Test;
 
 public class RandomCardGeneratorTest {
@@ -27,7 +31,7 @@ public class RandomCardGeneratorTest {
         assertThat(card.getType()).isEqualTo(CardType.DIAMOND_ACE);
     }
 
-    static class FakeCardGenerator implements CardGenerator{
+    static class FakeCardGenerator implements CardGenerator {
         @Override
         public Card generate() {
             return new Card(CardType.DIAMOND_ACE);
