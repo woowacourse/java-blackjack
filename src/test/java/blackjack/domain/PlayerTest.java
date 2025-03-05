@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -75,6 +76,22 @@ class PlayerTest {
 
         //then
         assertThat(maxScore).isEqualTo(20);
+    }
+
+    @Test
+    void 플레이어의_카드에_A가_포함되어_있을_때_최솟값으로_점수를_계산할_수_있다() {
+        //given
+        Player player = new Player("pobi", new ArrayList<>(List.of(
+                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.KING)
+        )), scoreCalculator);
+
+        //when
+        boolean isCanSend = player.canSend();
+
+        //then
+        Assertions.assertThat(isCanSend).isTrue();
+
     }
 
 }

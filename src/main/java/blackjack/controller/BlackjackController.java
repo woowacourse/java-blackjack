@@ -19,6 +19,7 @@ public class BlackjackController {
         handOutCards(dealer, players);
         addtionalCard(dealer, players);
         dealerAdditionalCard(dealer);
+        printBlackjackResult(dealer, players);
     }
 
     private Players createPlayers() {
@@ -61,4 +62,9 @@ public class BlackjackController {
         OutputView.printDealerAdditionalCard(additionalCardsNumber);
     }
 
+
+    private void printBlackjackResult(Dealer dealer, Players players) {
+        OutputView.printDealerResult(dealer);
+        OutputView.printPlayerResult(players.getPlayers());
+    }
 }

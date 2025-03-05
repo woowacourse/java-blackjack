@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,10 +35,8 @@ public class Player {
         return name;
     }
 
-    public boolean canSend(Card card) {
-        ArrayList<Card> copyCards = new ArrayList<>(cards);
-        copyCards.add(card);
-        int minScore = scoreCalculator.calculateMaxScore(copyCards);
+    public boolean canSend() {
+        int minScore = scoreCalculator.calculateMinScore(cards);
         return minScore < 21;
     }
 }

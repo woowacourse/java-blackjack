@@ -32,13 +32,16 @@ public class Dealer {
         cards.addAll(List.of(deck.draw(), deck.draw()));
     }
 
-
     private void handOutCard() {
         players.sendAll((player) -> player.send(deck.draw(), deck.draw()));
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int calculateMaxScore() {
+        return scoreCalculator.calculateMaxScore(cards);
     }
 
     public int pickAdditionalCard() {
@@ -56,7 +59,7 @@ public class Dealer {
         if (!players.contains(player)) {
             throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
         }
-        if (!player.canSend(deck.peek())) {
+        if (!player.canSend()) {
             throw new IllegalArgumentException("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
         }
         player.send(deck.draw());

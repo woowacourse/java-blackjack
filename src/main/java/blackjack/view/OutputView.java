@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
@@ -25,11 +26,49 @@ public class OutputView {
 
     public static void printPlayerCards(Player player) {
         System.out.print(player.getName() + "카드: ");
-        String cards = player.getCards().stream()
+        String cards = toKoreanCards(player.getCards());
+        System.out.println(cards);
+    }
+
+    public static void printDealerAdditionalCard(int additionalCardsNumber) {
+        while (additionalCardsNumber-- > 0) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+    }
+
+    public static void printDealerResult(Dealer dealer) {
+        String cards = toKoreanCards(dealer.getCards());
+        System.out.println("딜러카드: " + cards + " - 결과: " + dealer.calculateMaxScore());
+    }
+
+    public static void printPlayerResult(List<Player> players) {
+        for (Player player : players) {
+            String cards = toKoreanCards(player.getCards());
+            System.out.println(player.getName() + "카드: " + cards + " - 결과: " + player.calculateMaxScore());
+        }
+    }
+
+    private static String toKoreanCards(List<Card> dealer) {
+        return dealer.stream()
                 .map(card -> toKoreaRank(card.getRank()) +
                         toKoreaSuit(card.getSuit()))
                 .collect(Collectors.joining(", "));
-        System.out.println(cards);
+    }
+
+    private static String toKoreaSuit(Suit suit) {
+        if (suit == Suit.SPADE) {
+            return "스페이드";
+        }
+        if (suit == Suit.CLUB) {
+            return "클로버";
+        }
+        if (suit == Suit.HEART) {
+            return "하트";
+        }
+        if (suit == Suit.DIAMOND) {
+            return "다이아몬드";
+        }
+        throw new IllegalArgumentException("Invalid suit: " + suit);
     }
 
     private static String toKoreaRank(Rank rank) {
@@ -76,27 +115,5 @@ public class OutputView {
             return "K";
         }
         throw new IllegalArgumentException("Invalid rank: " + rank);
-    }
-
-    private static String toKoreaSuit(Suit suit) {
-        if (suit == Suit.SPADE) {
-            return "스페이드";
-        }
-        if (suit == Suit.CLUB) {
-            return "클로버";
-        }
-        if (suit == Suit.HEART) {
-            return "하트";
-        }
-        if (suit == Suit.DIAMOND) {
-            return "다이아몬드";
-        }
-        throw new IllegalArgumentException("Invalid suit: " + suit);
-    }
-
-    public static void printDealerAdditionalCard(int additionalCardsNumber) {
-        while (additionalCardsNumber-- > 0) {
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        }
     }
 }
