@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// TODO : 딜러와 참여자의 로직을 분리
 public class Cards {
     private static final int VALID_MAX_SUM_LIMIT = 21;
     private static final int VALID_DRAW_LIMIT = 16;
@@ -37,7 +38,10 @@ public class Cards {
     }
 
     public boolean isUnderDrawLimit() { // TODO : ACE를 무조건 1로 보는 문제
-        return calculateSumWithLowAce() <= VALID_DRAW_LIMIT;
+        int sum = cards.stream()
+                .mapToInt(card -> card.cardNumberType().getDefaultNumber())
+                .sum();
+        return sum <= VALID_DRAW_LIMIT;
     }
 
     public int calculateSumResult() {
