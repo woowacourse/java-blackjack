@@ -12,6 +12,8 @@ public class CardDeck {
         cards.add(card);
     }
 
+    // TODO start: 카드 덱 - 가능한 점수 합산, 덱 사이즈, 카드 목록 제공
+
     public Set<Integer> calculatePossibleSum() {
         List<Integer> sums = new ArrayList<>(List.of(0, 0));
 

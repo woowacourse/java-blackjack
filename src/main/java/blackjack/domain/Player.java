@@ -7,14 +7,13 @@ import java.util.Set;
 public class Player {
     private final String name;
     private final CardDeck cardDeck;
-    private final CardGenerator cardGenerator;
+    private final CardDump cardDump;
 
-    public Player(String name, CardDeck cardDeck, CardGenerator cardGenerator) {
+    public Player(String name, CardDeck cardDeck, CardDump cardDump) {
         this.name = name;
         this.cardDeck = cardDeck;
-        this.cardGenerator = cardGenerator;
+        this.cardDump = cardDump;
     }
-
 
     public boolean canTakeExtraCard() {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
@@ -38,7 +37,7 @@ public class Player {
     }
 
     public void addCard() {
-        Card card = cardGenerator.generate();
+        Card card = cardDump.drawCard();
         cardDeck.add(card);
     }
 

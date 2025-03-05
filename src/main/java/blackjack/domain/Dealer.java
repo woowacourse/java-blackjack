@@ -6,11 +6,11 @@ import java.util.Set;
 
 public class Dealer {
     private final CardDeck cardDeck;
-    private final CardGenerator cardGenerator;
+    private final CardDump cardDump;
 
-    public Dealer(CardDeck cardDeck, CardGenerator cardGenerator) {
+    public Dealer(CardDeck cardDeck, CardDump cardDump) {
         this.cardDeck = cardDeck;
-        this.cardGenerator = cardGenerator;
+        this.cardDump = cardDump;
     }
 
     public boolean hasTakenExtraCard() {
@@ -29,7 +29,7 @@ public class Dealer {
     }
 
     private void takeExtraCard() {
-        cardDeck.add(cardGenerator.generate());
+        cardDeck.add(cardDump.drawCard());
     }
 
     public int calculateTotalCardScore() {
@@ -46,5 +46,4 @@ public class Dealer {
     public List<Card> getCardDeck() {
         return cardDeck.getCards();
     }
-
 }

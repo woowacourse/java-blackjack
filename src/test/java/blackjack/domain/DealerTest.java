@@ -12,11 +12,11 @@ class DealerTest {
     void testDealerGenerate() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Dealer dealer = new Dealer(cardDeck, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
         boolean takenExtraCard = dealer.hasTakenExtraCard();
@@ -29,11 +29,11 @@ class DealerTest {
     void testDealerGenerate2() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.JACK));
 
-        Dealer dealer = new Dealer(cardDeck, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
         boolean takenExtraCard = dealer.hasTakenExtraCard();
@@ -46,11 +46,11 @@ class DealerTest {
     void testDealerTotalCardSum() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Dealer dealer = new Dealer(cardDeck, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
         int totalScore = dealer.calculateTotalCardScore();
@@ -61,11 +61,11 @@ class DealerTest {
     @Test
     void testBust_False() {
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Dealer dealer = new Dealer(cardDeck, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck, cardDump);
 
         boolean bust = dealer.isBust();
 
@@ -76,12 +76,12 @@ class DealerTest {
     @Test
     void testBust_True() {
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.FIVE));
 
-        Dealer dealer = new Dealer(cardDeck, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck, cardDump);
 
         boolean bust = dealer.isBust();
 

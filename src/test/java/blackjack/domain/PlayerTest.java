@@ -12,11 +12,11 @@ class PlayerTest {
     void testPlayerCanDrawCard() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("user1", cardDeck, cardGenerator);
+        Player player = new Player("user1", cardDeck, cardDump);
 
         // when
         boolean canTakeExtraCard = player.canTakeExtraCard();
@@ -30,12 +30,12 @@ class PlayerTest {
     void testPlayerCanDrawCard_false() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Player player = new Player("user1", cardDeck, cardGenerator);
+        Player player = new Player("user1", cardDeck, cardDump);
 
         // when
         boolean canTakeExtraCard = player.canTakeExtraCard();
@@ -49,11 +49,11 @@ class PlayerTest {
     void testPlayerTotalCardScore() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT)); //17
 
-        Player player = new Player("user1", cardDeck, cardGenerator);
+        Player player = new Player("user1", cardDeck, cardDump);
 
         // when
         int totalScore = player.calculateTotalCardScore();
@@ -65,11 +65,11 @@ class PlayerTest {
     void testPlayerTotalCardScore_hasAce_noBust() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE)); //11 -> 20
 
-        Player player = new Player("user1", cardDeck, cardGenerator);
+        Player player = new Player("user1", cardDeck, cardDump);
 
         // when
         int totalScore = player.calculateTotalCardScore();
@@ -81,12 +81,12 @@ class PlayerTest {
     void testPlayerTotalCardScore_hasAce_Bust() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE)); //1선택 -> 17
 
-        Player player = new Player("user1", cardDeck, cardGenerator);
+        Player player = new Player("user1", cardDeck, cardDump);
 
         // when
         int totalScore = player.calculateTotalCardScore();
@@ -98,8 +98,8 @@ class PlayerTest {
     void testPlayerAddCard() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
-        Player player = new Player("user1", cardDeck, cardGenerator);
+        CardDump cardDump = new CardDump();
+        Player player = new Player("user1", cardDeck, cardDump);
 
         // when
         player.addCard();

@@ -12,16 +12,16 @@ public class GameRuleTest {
     void testWinnerEvaluation_dealerWin() {
         //given
         CardDeck cardDeck1 = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardDeck1, cardGenerator);
+        Player player = new Player("player1", cardDeck1, cardDump);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
-        Dealer dealer = new Dealer(cardDeck2, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
         GameRule gameRule = new GameRule();
@@ -36,17 +36,17 @@ public class GameRuleTest {
     void testWinnerEvaluation_dealerLose() {
         //given
         CardDeck cardDeck1 = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.FIVE));
 
-        Player player = new Player("player1", cardDeck1, cardGenerator);
+        Player player = new Player("player1", cardDeck1, cardDump);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
-        Dealer dealer = new Dealer(cardDeck2, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
         GameRule gameRule = new GameRule();
@@ -61,17 +61,17 @@ public class GameRuleTest {
     void testWinnerEvaluation_draw() {
         //given
         CardDeck cardDeck1 = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardDeck1, cardGenerator);
+        Player player = new Player("player1", cardDeck1, cardDump);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Dealer dealer = new Dealer(cardDeck2, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
         GameRule gameRule = new GameRule();
@@ -86,18 +86,18 @@ public class GameRuleTest {
     void testWinnerEvaluation_playerBusted() {
         //given
         CardDeck cardDeck1 = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.JACK));
 
-        Player player = new Player("player1", cardDeck1, cardGenerator);
+        Player player = new Player("player1", cardDeck1, cardDump);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Dealer dealer = new Dealer(cardDeck2, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
         GameRule gameRule = new GameRule();
@@ -112,18 +112,18 @@ public class GameRuleTest {
     void testWinnerEvaluation_dealerBusted() {
         //given
         CardDeck cardDeck1 = new CardDeck();
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardDeck1, cardGenerator);
+        Player player = new Player("player1", cardDeck1, cardDump);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.JACK));
 
-        Dealer dealer = new Dealer(cardDeck2, cardGenerator);
+        Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
         GameRule gameRule = new GameRule();

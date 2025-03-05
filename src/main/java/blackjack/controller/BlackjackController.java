@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.CardDeck;
-import blackjack.domain.CardGenerator;
+import blackjack.domain.CardDump;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameFinalResult;
 import blackjack.domain.GameResult;
@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackController {
-    private InputVIew inputView;
-    private OutputView outputView;
-    private final CardGenerator cardGenerator;
+    private final InputVIew inputView;
+    private final OutputView outputView;
+    private final CardDump cardDump;
 
     public BlackjackController() {
         this.inputView = new InputVIew();
         this.outputView = new OutputView();
-        this.cardGenerator = new CardGenerator();
+        this.cardDump = new CardDump();
     }
 
     public void run() {
@@ -31,17 +31,17 @@ public class BlackjackController {
 
         for (String playerName : playerNames) {
             CardDeck cardDeck = new CardDeck();
-            cardDeck.add(cardGenerator.generate());
-            cardDeck.add(cardGenerator.generate());
+            cardDeck.add(cardDump.drawCard());
+            cardDeck.add(cardDump.drawCard());
 
-            Player player = new Player(playerName, cardDeck, cardGenerator);
+            Player player = new Player(playerName, cardDeck, cardDump);
             players.add(player);
         }
 
         CardDeck cardDeck = new CardDeck();
-        cardDeck.add(cardGenerator.generate());
-        cardDeck.add(cardGenerator.generate());
-        Dealer dealer = new Dealer(cardDeck, cardGenerator);
+        cardDeck.add(cardDump.drawCard());
+        cardDeck.add(cardDump.drawCard());
+        Dealer dealer = new Dealer(cardDeck, cardDump);
 
         outputView.displayDistributedCardStatus(dealer, players);
 
