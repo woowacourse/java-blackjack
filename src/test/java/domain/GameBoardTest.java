@@ -81,4 +81,22 @@ public class GameBoardTest {
         CardDeck ownedCardDeck = gameBoard.getCardDeckOfParticipant().get(targetParticipant);
         Assertions.assertThat(ownedCardDeck.getCards().size()).isEqualTo(1);
     }
+
+    @Test
+    void 한명의_카드덱을_가져온다() {
+        //given
+        Participant targetParticipant = Player.from("우가");
+        List<Participant> participants = List.of(
+                targetParticipant,
+                Player.from("히스타"),
+                Dealer.generate()
+        );
+        GameBoard gameBoard = new GameBoard(participants);
+        gameBoard.drawCardTo(targetParticipant);
+        //when
+        CardDeck cardDeck = gameBoard.getCardDeckOf(targetParticipant);
+
+        //then
+        Assertions.assertThat(cardDeck.getCards().size()).isEqualTo(1);
+    }
 }
