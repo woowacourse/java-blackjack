@@ -53,7 +53,7 @@ public class CardGroupTest {
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScoreWithOutAce();
+            final int score = cardGroup.calculateScore(21);
 
             //then
             assertThat(score).isEqualTo(5);
@@ -67,7 +67,7 @@ public class CardGroupTest {
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScoreWithOutAce();
+            final int score = cardGroup.calculateScore(21);
 
             //then
             assertThat(score).isEqualTo(7);
@@ -82,7 +82,7 @@ public class CardGroupTest {
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScoreWithAce(21);
+            final int score = cardGroup.calculateScore(21);
 
             //then
             assertThat(score).isEqualTo(21);
@@ -98,7 +98,7 @@ public class CardGroupTest {
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScoreWithAce(21);
+            final int score = cardGroup.calculateScore(21);
 
             //then
             assertThat(score).isEqualTo(21);
@@ -114,7 +114,7 @@ public class CardGroupTest {
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScoreWithAce(21);
+            final int score = cardGroup.calculateScore(21);
 
             //then
             assertThat(score).isEqualTo(12);
