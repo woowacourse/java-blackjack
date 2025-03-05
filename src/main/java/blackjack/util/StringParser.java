@@ -10,7 +10,7 @@ public class StringParser {
 
     public static List<String> parseComma(String input) {
         try {
-            return Arrays.asList(input.split(COMMA));
+            return Arrays.asList(input.replace(" ", "").split(COMMA));
         } catch (PatternSyntaxException exception) {
             throw new IllegalArgumentException("[ERROR] 입력 형식이 잘못되었습니다.");
         }

@@ -12,7 +12,7 @@ public class StringParserTest {
     @Test
     void test() {
         // given
-        final String input = "엠제이,밍트";
+        final String input = "엠제이, 밍트";
         final List<String> expected = List.of("엠제이", "밍트");
 
         // when & then
