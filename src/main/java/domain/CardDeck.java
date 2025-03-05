@@ -18,4 +18,18 @@ public class CardDeck {
     public int cardsSize() {
         return cards.size();
     }
+
+    public List<TrumpCard> getFirstCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("");
+        }
+        return List.of(cards.getFirst());
+    }
+
+    public List<TrumpCard> getAllCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("");
+        }
+        return new ArrayList<>(cards);
+    }
 }

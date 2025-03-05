@@ -10,6 +10,6 @@ public class Player extends User {
 
     @Override
     public List<TrumpCard> openCard() {
-        return null;
+        return this.cardDeck.getAllCard();
     }
 }
