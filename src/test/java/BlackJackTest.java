@@ -46,6 +46,24 @@ class BlackJackTest {
         assertThat(player1).isNotEqualTo(player2).isEqualTo(player3);
     }
 
+    @DisplayName("플레이어는 카드를 뽑을 수 있다.")
+    @Test
+    void draw() {
+        //given
+        Cards totalCards = new Cards();
+        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+
+        Player player = new Player("ad");
+
+        //when
+        player.draw(totalCards);
+        Cards expected = new Cards();
+        expected.add(new Card(Symbol.HEART, Number.FIVE));
+
+        //then
+        assertThat(player.getCards()).isEqualTo(expected);
+    }
+
     @DisplayName("카드는 문양과 숫자를 가진다.")
     @Test
     void card() {
@@ -139,7 +157,7 @@ class BlackJackTest {
 
     @DisplayName("카드뭉치의 카드를 드로우 할 수 있다.")
     @Test
-    void draw() {
+    void extractCard() {
         //given
         Cards cards = new Cards();
         Card card = new Card(Symbol.COLVER, Number.FIVE);
@@ -147,10 +165,9 @@ class BlackJackTest {
         cards.add(card);
 
         //when
-        Card actual = cards.draw();
+        Card actual = cards.extractCard();
 
         //then
         assertThat(actual).isEqualTo(card);
     }
-
 }

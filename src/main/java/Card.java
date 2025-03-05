@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Card {
 
     private final Symbol symbol;
@@ -10,5 +12,19 @@ public class Card {
 
     public Number getNumber() {
         return number;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return symbol == card.symbol && getNumber() == card.getNumber();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbol, getNumber());
     }
 }
