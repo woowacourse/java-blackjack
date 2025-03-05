@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Gamer {
 
     private final Nickname nickname;
@@ -11,15 +13,19 @@ public abstract class Gamer {
 
     }
 
-    public void receiveCard(final Card card) {
-        hand.add(card);
-    }
-
     public int calculateSumOfRank() {
         return hand.getSumOfRank();
     }
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public void receiveInitialCards(List<Card> cards) {
+        cards.forEach(hand::add);
+    }
+
+    public void hit(Card card) {
+        hand.add(card);
     }
 }

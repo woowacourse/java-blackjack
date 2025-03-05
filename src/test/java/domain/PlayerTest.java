@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ class PlayerTest {
 
         // when
         int previousResult = player.calculateSumOfRank();
-        player.receiveCard(card);
+        player.hit(card);
 
         // then
         assertThat(player.calculateSumOfRank()).isEqualTo(previousResult + card.getScore());
@@ -77,5 +78,30 @@ class PlayerTest {
 
         // then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("플레이어는 초기 카드 두 장을 받는다.")
+    @Test
+    void 플레이어는_초기_카드_두_장을_받는다() {
+
+        // given
+        Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
+
+        // when & then
+        assertThatCode(() -> player.receiveInitialCards(List.of(card1, card2)))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("플레이어는 카드 한 장을 받는다.")
+    @Test
+    void 플레이어는_카드_한_장을_받는다() {
+
+        // given
+        Card card1 = new Card(Rank.KING, Shape.CLOVER);
+
+        // when & then
+        assertThatCode(() -> player.hit(card1))
+                .doesNotThrowAnyException();
     }
 }
