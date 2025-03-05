@@ -1,21 +1,17 @@
 package domain;
 
-public record Dealer(CardHand hand) {
+public class Dealer extends Participant {
 
     public Dealer() {
-        this(new CardHand());
+        super();
     }
 
-    public void pickUpCard(Deck deck) {
-        final Card card = deck.pickCard();
-        hand.add(card);
+    public Dealer(final CardHand hand) {
+        super(hand);
     }
 
     public boolean isPickCard() {
         return calculateAllScore() <= 16;
     }
-    
-    public int calculateAllScore() {
-        return hand.calculateAllScore();
-    }
+
 }

@@ -1,23 +1,16 @@
 package domain;
 
-public record Player(
-    CardHand hand
-) {
-
+public class Player extends Participant {
     public Player() {
-        this(new CardHand());
+        super();
     }
 
-    public void pickCard(final Deck deck) {
-        final Card card = deck.pickCard();
-        hand.add(card);
+    public Player(final CardHand hand) {
+        super(hand);
     }
 
+    @Override
     public boolean isPickCard() {
         return calculateAllScore() <= 21;
-    }
-
-    public int calculateAllScore() {
-        return hand.calculateAllScore();
     }
 }

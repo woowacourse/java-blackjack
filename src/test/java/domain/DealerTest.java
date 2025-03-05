@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayDeque;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -13,25 +12,6 @@ import constant.CardNumber;
 import constant.Emblem;
 
 public class DealerTest {
-    @Nested
-    @DisplayName("딜러는 카드를 뽑는다.")
-    class pickCard {
-        @Test
-        @DisplayName("Dealer는 카드를 뽑는다.")
-        void test_pickCard() {
-            //given
-            Card card = new Card(CardNumber.TWO, Emblem.CLUB);
-            final var d = new ArrayDeque<>(List.of(card));
-            final var deck = new Deck(d);
-            var dealer = new Dealer();
-
-            //when
-            dealer.pickUpCard(deck);
-
-            //then
-            assertThat(dealer.hand().hand()).contains(card);
-        }
-    }
 
     @Nested
     @DisplayName("딜러가 카드를 받아야 하는지 여부를 반환한다.")
