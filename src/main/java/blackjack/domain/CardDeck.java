@@ -14,7 +14,7 @@ public class CardDeck {
         this.index = 0;
     }
 
-    private List<Card> shuffle(List<Card> cards) {
+    private List<Card> shuffle(final List<Card> cards) {
         List<Card> shuffledCards = new ArrayList<>(cards);
         Collections.shuffle(shuffledCards);
         return shuffledCards;

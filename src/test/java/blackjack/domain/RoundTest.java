@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
+import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -19,11 +20,11 @@ class RoundTest {
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
         CardDeck cardDeck = new CardDeck(List.of(card1, card2));
         Round round = new Round(cardDeck);
-        Player player = new Player("라젤");
+        Player player = new Player(new Name("라젤"));
         round.register(player);
 
         // when
-        round.distributeCards("라젤", 2);
+        round.distributeCards(new Name("라젤"), 2);
 
         // then
         assertThat(player.calculateSum()).isEqualTo(18);
