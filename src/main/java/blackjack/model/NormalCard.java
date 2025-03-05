@@ -12,4 +12,8 @@ public class NormalCard extends Card {
         return number;
     }
 
+    @Override
+    public int getPoint() {
+        return number;
+    }
 }

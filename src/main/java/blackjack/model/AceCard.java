@@ -7,4 +7,8 @@ public class AceCard extends Card {
     }
 
 
+    @Override
+    public int getPoint() {
+        return 1;
+    }
 }

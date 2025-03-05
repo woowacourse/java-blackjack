@@ -19,10 +19,31 @@ public class ReceivedCards {
     }
 
     public int calculateTotalPoint() {
+        int point = calculateTotalDefaultPoint();
+        int aceCount = aceCount();
+        for (int i = 0; i < aceCount; i++) {
+            if (!isBust(point + 10)) {
+                point += 10;
+            }
+        }
+        return point;
+    }
+
+    private int calculateTotalDefaultPoint() {
         return cards.stream().mapToInt(Card::getPoint).sum();
     }
 
-    public boolean isBust() {
-        return calculateTotalPoint() > 21;
+    private int aceCount() {
+        return Math.toIntExact(cards.stream()
+                .filter(card -> card instanceof AceCard)
+                .count());
+    }
+
+    public boolean isBust(int point) {
+        return point > 21;
+    }
+
+    public Card get(int index) {
+        return cards.get(0);
     }
 }
