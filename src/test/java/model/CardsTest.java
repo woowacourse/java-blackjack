@@ -13,9 +13,9 @@ class CardsTest {
     @Test
     void test1() {
         Cards cards = new Cards(Set.of(
-                new Card(CardNumber.THREE, Shape.DIAMOND),
-                new Card(CardNumber.NINE, Shape.CLOVER),
-                new Card(CardNumber.EIGHT, Shape.DIAMOND)
+                new Card(CardNumber.THREE, CardShape.DIAMOND),
+                new Card(CardNumber.NINE, CardShape.CLOVER),
+                new Card(CardNumber.EIGHT, CardShape.DIAMOND)
         ));
         assertThat(cards.calculateSum()).isEqualTo(20);
     }
@@ -24,8 +24,8 @@ class CardsTest {
     @Test
     void test2() {
         Cards cards = new Cards(Set.of(
-                new Card(CardNumber.ACE_ELEVEN, Shape.DIAMOND),
-                new Card(CardNumber.NINE, Shape.CLOVER)
+                new Card(CardNumber.ACE_ELEVEN, CardShape.DIAMOND),
+                new Card(CardNumber.NINE, CardShape.CLOVER)
         ));
 
         assertThat(cards.calculateSum()).isEqualTo(20);
@@ -35,9 +35,9 @@ class CardsTest {
     @Test
     void test3() {
         Cards cards = new Cards(new HashSet<>(Set.of(
-                new Card(CardNumber.ACE_ELEVEN, Shape.DIAMOND),
-                new Card(CardNumber.NINE, Shape.CLOVER),
-                new Card(CardNumber.NINE, Shape.SPADE)
+                new Card(CardNumber.ACE_ELEVEN, CardShape.DIAMOND),
+                new Card(CardNumber.NINE, CardShape.CLOVER),
+                new Card(CardNumber.NINE, CardShape.SPADE)
         )));
 
         assertThat(cards.calculateSum()).isEqualTo(19);
@@ -47,10 +47,10 @@ class CardsTest {
     @Test
     void test4() {
         Cards cards = new Cards(new HashSet<>(Set.of(
-                new Card(CardNumber.ACE_ELEVEN, Shape.DIAMOND),
-                new Card(CardNumber.ACE_ELEVEN, Shape.SPADE),
-                new Card(CardNumber.KING, Shape.CLOVER),
-                new Card(CardNumber.QUEEN, Shape.SPADE)
+                new Card(CardNumber.ACE_ELEVEN, CardShape.DIAMOND),
+                new Card(CardNumber.ACE_ELEVEN, CardShape.SPADE),
+                new Card(CardNumber.KING, CardShape.CLOVER),
+                new Card(CardNumber.QUEEN, CardShape.SPADE)
         )));
 
         assertThat(cards.calculateSum()).isEqualTo(22);

@@ -42,9 +42,9 @@ public class Cards {
                 .findAny()
                 .orElseThrow();
 
-        final Shape shape = aceElevenCard.getShape();
+        final CardShape cardShape = aceElevenCard.getShape();
 
         cards.remove(aceElevenCard);
-        cards.add(new Card(CardNumber.ACE_ONE, shape));
+        cards.add(new Card(CardNumber.ACE_ONE, cardShape));
     }
 }

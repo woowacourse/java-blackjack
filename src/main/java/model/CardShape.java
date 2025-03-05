@@ -1,6 +1,6 @@
 package model;
 
-public enum Shape {
+public enum CardShape {
     SPADE,
     HEART,
     DIAMOND,

@@ -10,7 +10,7 @@ class CardTest {
     @DisplayName("같은 숫자 카드인지 확인한다")
     @Test
     void sameCardTest() {
-        Card card = new Card(CardNumber.TWO, Shape.SPADE);
+        Card card = new Card(CardNumber.TWO, CardShape.SPADE);
         assertThat(card.isSameNumber(CardNumber.TWO)).isTrue();
     }
 }
