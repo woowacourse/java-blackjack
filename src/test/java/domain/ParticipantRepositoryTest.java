@@ -73,4 +73,21 @@ public class ParticipantRepositoryTest {
                 expectedParticipants
         );
     }
+
+    @DisplayName("딜러와 모든 참여자의 정보를 조회한다")
+    @Test
+    void test5() {
+        //given
+        List<Participant> testParticipants = List.of(
+                new Participant("테스트딜러", Cards.createEmpty(), Role.DEALER),
+                new Participant("mimi", Cards.createEmpty(), Role.PLAYER),
+                new Participant("wade", Cards.createEmpty(), Role.PLAYER));
+        participantRepository.addAll(testParticipants);
+
+        //when
+        List<Participant> allParticipants = participantRepository.getAll();
+
+        //then
+        assertThat(allParticipants).containsExactlyInAnyOrderElementsOf(testParticipants);
+    }
 }
