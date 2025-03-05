@@ -4,7 +4,7 @@ public class NormalCard extends Card {
     private final int number;
 
     public NormalCard(int number, CardShape shape) {
-        super(shape, number);
+        super(shape);
         this.number = number;
     }
 
