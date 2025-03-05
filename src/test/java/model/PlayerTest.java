@@ -12,7 +12,7 @@ class PlayerTest {
     @Test
     void 플레이어_카드한장을_받는다() {
         //given
-        Player player = new Player();
+        Player player = new Player("pobi");
         Card card = new Card(CardRank.EIGHT, CardSuit.HEART);
 
         //when

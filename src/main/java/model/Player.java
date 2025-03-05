@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+    private final String name;
     private final ParticipantHand participantHand;
 
-    public Player() {
+    public Player(String name) {
+        this.name = name;
         this.participantHand = new ParticipantHand();
     }
 

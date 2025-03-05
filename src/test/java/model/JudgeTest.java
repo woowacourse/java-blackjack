@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 class JudgeTest {
 
+    private static String name = "pobi";
+
     @Test
     @DisplayName("플레이어가 승리할 경우 승리를 반환한다")
     void 플레이어가_승리할_경우_테스트(){
@@ -17,7 +19,7 @@ class JudgeTest {
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
         dealer.receiveCard(new Card(CardRank.THREE, CardSuit.DIAMOND));
 
-        Player player = new Player();
+        Player player = new Player(name);
         player.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
         player.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
@@ -33,7 +35,7 @@ class JudgeTest {
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
         dealer.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
-        Player player = new Player();
+        Player player = new Player(name);
         player.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
         player.receiveCard(new Card(CardRank.THREE, CardSuit.DIAMOND));
 
@@ -49,7 +51,7 @@ class JudgeTest {
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
         dealer.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
-        Player player = new Player();
+        Player player = new Player(name);
         player.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
         player.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
