@@ -3,9 +3,11 @@ package blackjack.model;
 public abstract class Player {
 
     protected final Cards cards;
+    protected final Role role;
 
-    protected Player() {
+    protected Player(final Role role) {
         this.cards = Cards.empty();
+        this.role = role;
     }
 
     public int calculateSumOfCards() {
