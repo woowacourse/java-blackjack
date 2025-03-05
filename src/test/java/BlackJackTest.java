@@ -64,6 +64,26 @@ class BlackJackTest {
         assertThat(player.getCards()).isEqualTo(expected);
     }
 
+    @DisplayName("플레이어의 총 점수를 구할 수 있다")
+    @Test
+    void calculatePlayerScore() {
+        //given
+        Player player = new Player("ad");
+        Cards totalCards = new Cards();
+        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, Number.FOUR));
+        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+
+        player.draw(totalCards);
+        player.draw(totalCards);
+        player.draw(totalCards);
+
+        //when
+        int score = player.getScore();
+        //then
+        assertThat(score).isEqualTo(19);
+    }
+
     @DisplayName("카드는 문양과 숫자를 가진다.")
     @Test
     void card() {

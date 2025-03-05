@@ -17,6 +17,10 @@ public class Player {
         cards.add(totalCards.extractCard());
     }
 
+    public int getScore() {
+        return cards.calculateTotalPoint();
+    }
+
     public Cards getCards() {
         return cards;
     }
