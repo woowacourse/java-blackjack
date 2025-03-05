@@ -29,10 +29,29 @@ public class Player {
 
     public int getResult() {
         Set<Integer> coordinates = cards.getCoordinateSums();
+        if (isBurst()) {
+            return getMinSum(coordinates);
+        }
+        return getMaxSum(coordinates);
+    }
+
+    private boolean isBurst() {
+        Set<Integer> coordinates = cards.getCoordinateSums();
+        return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
+    }
+
+    private int getMaxSum(Set<Integer> coordinates) {
         return coordinates.stream()
                 .filter(coordinate -> coordinate <= SUM_LIMIT)
                 .mapToInt(i -> i)
                 .max()
+                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
+    }
+
+    private int getMinSum(Set<Integer> coordinates) {
+        return coordinates.stream()
+                .mapToInt(i -> i)
+                .min()
                 .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
     }
 }

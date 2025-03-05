@@ -92,7 +92,7 @@ public class PlayerTest {
                                 new Card(CardNumber.KING, CardShape.CLOVER),
                                 new Card(CardNumber.KING, CardShape.CLOVER)
                         ),
-                        21
+                        22
                 ),
                 Arguments.of(
                         List.of(
@@ -101,7 +101,7 @@ public class PlayerTest {
                                 new Card(CardNumber.FIVE, CardShape.CLOVER),
                                 new Card(CardNumber.KING, CardShape.CLOVER)
                         ),
-                        16
+                        26
                 )
         );
     }
