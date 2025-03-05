@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public abstract class Participant {
+public abstract class Participant<T extends Participant<T>> {
 
     protected Cards cards;
 
@@ -10,7 +10,7 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    public Participant drawCard(List<Card> providedCards) {
+    public T drawCard(List<Card> providedCards) {
         return createParticipant(providedCards);
     }
 
@@ -22,5 +22,5 @@ public abstract class Participant {
         return cards.calculateTotalCardNumber();
     }
 
-    protected abstract Participant createParticipant(List<Card> cards);
+    protected abstract T createParticipant(List<Card> cards);
 }
