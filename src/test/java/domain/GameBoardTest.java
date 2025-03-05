@@ -1,13 +1,9 @@
 package domain;
 
-import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.CardNumber;
-import domain.card.CardSymbol;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -21,10 +17,9 @@ public class GameBoardTest {
         //given
         Player player1 = new Player("우가");
         Player player2 = new Player("히스타");
-        CardDeck gameCardDeck = CardDeck.generateFullSet();
 
         //when
-        GameBoard gameBoard = new GameBoard(gameCardDeck, List.of(player1, player2));
+        GameBoard gameBoard = new GameBoard(List.of(player1, player2));
 
         //then
         Assertions.assertThat(gameBoard).isInstanceOf(GameBoard.class);
@@ -38,8 +33,7 @@ public class GameBoardTest {
                 new Player("히스타"),
                 new Dealer("딜러")
         );
-        CardDeck cardDeck = CardDeck.generateFullSet();
-        GameBoard gameBoard = new GameBoard(cardDeck, participants);
+        GameBoard gameBoard = new GameBoard(participants);
 
         //when
         gameBoard.drawTwoCards();
@@ -61,13 +55,12 @@ public class GameBoardTest {
                 new Player("히스타"),
                 new Dealer("딜러")
         );
-        CardDeck cardDeck = CardDeck.generateFullSet();
-        GameBoard gameBoard = new GameBoard(cardDeck, participants);
+        GameBoard gameBoard = new GameBoard(participants);
 
         //when
         gameBoard.drawTwoCards();
 
-        Assertions.assertThat(cardDeck.getCards().size()).isEqualTo(46);
+        Assertions.assertThat(gameBoard.getPlayingCard().getCards().size()).isEqualTo(46);
     }
 
     @Test
@@ -79,8 +72,7 @@ public class GameBoardTest {
                 new Player("히스타"),
                 new Dealer("딜러")
         );
-        CardDeck cardDeck = CardDeck.generateFullSet();
-        GameBoard gameBoard = new GameBoard(cardDeck, participants);
+        GameBoard gameBoard = new GameBoard(participants);
 
         //when
         gameBoard.drawCardTo(targetParticipant);

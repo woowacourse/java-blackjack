@@ -12,8 +12,8 @@ public class GameBoard {
     private final Map<Participant, CardDeck> cardDeckOfParticipant;
     private final CardDeck gameCardDeck;
 
-    public GameBoard(final CardDeck gameCardDeck, final List<Participant> participants) {
-        this.gameCardDeck = gameCardDeck;
+    public GameBoard(final List<Participant> participants) {
+        this.gameCardDeck = CardDeck.generateFullSet();
         this.cardDeckOfParticipant = initializeCardDeckOfParticipant(participants);
     }
 
@@ -43,5 +43,9 @@ public class GameBoard {
 
     public Map<Participant, CardDeck> getCardDeckOfParticipant() {
         return cardDeckOfParticipant;
+    }
+
+    public CardDeck getPlayingCard() {
+        return gameCardDeck;
     }
 }
