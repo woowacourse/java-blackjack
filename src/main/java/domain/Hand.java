@@ -28,4 +28,8 @@ public class Hand {
             throw new IllegalArgumentException("손패에 중복된 카드가 있습니다.");
         }
     }
+
+    public void addCard(TrumpCard card) {
+        cards.add(card);
+    }
 }
