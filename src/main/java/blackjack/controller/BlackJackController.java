@@ -49,7 +49,7 @@ public class BlackJackController {
             }
 
             // 딜러 추가 배부
-            if (blackJackManager.addExtraCardToDealer()) {
+            while (blackJackManager.addExtraCardToDealer()) {
                 outputView.printAddExtraCardToDealer();
             }
 
@@ -58,6 +58,14 @@ public class BlackJackController {
                 outputView.printFinalCardResult(participant);
             }
 
+            outputView.printResultTitle();
+            for (Participant participant : blackJackManager.getParticipants()) {
+                if (participant instanceof Dealer) {
+                    outputView.printDealerResult(blackJackManager.calculateStatisticsForDealer());
+                    continue;
+                }
+                outputView.printPlayerResult((Player) participant, blackJackManager.findDealer());
+            }
             } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
         }

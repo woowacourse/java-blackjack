@@ -50,7 +50,7 @@ public class BlackJackManager {
         return false;
     }
 
-    private Dealer findDealer() {
+    public Dealer findDealer() {
         return participants.stream()
                 .filter(participant -> participant instanceof Dealer)
                 .map(participant -> (Dealer) participant)

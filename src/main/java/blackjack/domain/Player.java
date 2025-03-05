@@ -21,6 +21,9 @@ public class Player extends Participant {
         if (BlackJackState.BUST.equals(dealerState) && BlackJackState.BUST.equals(playerState)) {
             return GameResult.LOSE;
         }
+        if (BlackJackState.BUST.equals(dealerState)) {
+            return GameResult.WIN;
+        }
         if (BlackJackState.BLACKJACK.equals(playerState)) {
             return GameResult.WIN;
         }

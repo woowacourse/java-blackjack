@@ -1,9 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -51,5 +54,24 @@ public class OutputView {
         if (participant instanceof Player player) {
             System.out.printf("%s카드: %s - 결과 %d%n", player.getName(), cardResult, player.calculateDenominations());
         }
+    }
+
+    public void printResultTitle() {
+        System.out.println();
+        System.out.println("## 최종 승패");
+    }
+
+    public void printDealerResult(Map<GameResult, Integer> gameResultIntegerMap) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Entry<GameResult, Integer> gameResult : gameResultIntegerMap.entrySet()) {
+            sb.append(gameResult.getValue()).append(gameResult.getKey().getText());
+        }
+
+        System.out.printf("딜러: %s%n", sb.toString());
+    }
+
+    public void printPlayerResult(Player player, Dealer dealer) {
+        System.out.printf("%s: %s%n", player.getName(), player.matchGame(dealer).getText());
     }
 }
