@@ -25,4 +25,12 @@ public enum RankType {
         this.displayName = displayName;
         this.score = score;
     }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public List<Integer> getScore() {
+        return score;
+    }
 }

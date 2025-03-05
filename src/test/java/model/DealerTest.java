@@ -36,4 +36,27 @@ class DealerTest {
         // then
         Assertions.assertThat(dealer.getHands().size()).isEqualTo(amount);
     }
+
+    @Test
+    @DisplayName("딜러의 핸즈에 있는 카드 랭크의 합을 잘 구하는 지")
+    void sum() {
+        // given
+        // 총 합이 9
+        List<Card> divideCards = List.of(
+                new Card(SuitType.HEARTS, RankType.FIVE),
+                new Card(SuitType.CLUBS, RankType.FOUR)
+        );
+        int expected = divideCards.stream()
+                .mapToInt(card -> card.getRank().getScore().getFirst())
+                .sum();
+
+        Dealer dealer = new Dealer();
+        dealer.addCards(divideCards);
+
+        // when
+        int sum = dealer.sum();
+
+        // then
+        Assertions.assertThat(sum).isEqualTo(expected);
+    }
 }

@@ -21,6 +21,19 @@ public class Player {
         hands.addAll(findCards);
     }
 
+    public int sum() {
+        return hands.stream()
+                .mapToInt(card -> findScore(card.getRank().getScore()))
+                .sum();
+    }
+
+    private int findScore(List<Integer> score) {
+        if (score.size() == 1) {
+            return score.getFirst();
+        }
+        return score.getFirst();
+    }
+
     public List<Card> getHands() {
         return hands;
     }

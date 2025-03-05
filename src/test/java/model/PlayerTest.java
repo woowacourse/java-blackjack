@@ -34,4 +34,6 @@ public class PlayerTest {
     // then
     Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
   }
+
+
 }
