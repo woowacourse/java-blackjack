@@ -1,11 +1,12 @@
 package domain;
 
-import constant.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.CardNumber;
+
 public record CardHand(
-        List<Card> hand
+    List<Card> hand
 ) {
 
     public CardHand() {
@@ -30,8 +31,8 @@ public record CardHand(
     }
 
     private int calculateAceCount() {
-        return (int) hand.stream()
-                .filter(card -> card.isMatchNumber(CardNumber.ACE))
-                .count();
+        return (int)hand.stream()
+            .filter(card -> card.isMatchNumber(CardNumber.ACE))
+            .count();
     }
 }

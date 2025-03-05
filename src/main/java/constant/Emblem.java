@@ -1,5 +1,5 @@
 package constant;
 
-public enum Emblem{
-    HEART,SPADE,CLUB, DIAMOND
+public enum Emblem {
+    HEART, SPADE, CLUB, DIAMOND
 }

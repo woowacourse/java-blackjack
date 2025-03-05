@@ -14,7 +14,7 @@ public enum CardNumber {
     JACK(10),
     QUEEN(10),
     KING(10);
-
+    
     private final int score;
 
     CardNumber(final int score) {

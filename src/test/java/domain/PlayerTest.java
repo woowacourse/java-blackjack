@@ -50,7 +50,7 @@ public class PlayerTest {
             // given
             final CardHand cardHand = new CardHand(cards);
             final Player p = new Player(cardHand);
-
+            
             // when
             final boolean actual = p.isPickCard();
 

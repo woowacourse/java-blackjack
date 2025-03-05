@@ -1,12 +1,13 @@
 package domain;
 
-import constant.CardNumber;
-import constant.Emblem;
 import java.util.Objects;
 
+import constant.CardNumber;
+import constant.Emblem;
+
 public record Card(
-        CardNumber number,
-        Emblem emblem
+    CardNumber number,
+    Emblem emblem
 ) {
 
     public boolean isMatchNumber(final CardNumber cardNumber) {

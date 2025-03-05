@@ -14,7 +14,7 @@ public record Dealer(CardHand hand) {
     public boolean isPickCard() {
         return calculateAllScore() <= 16;
     }
-
+    
     public int calculateAllScore() {
         return hand.calculateAllScore();
     }

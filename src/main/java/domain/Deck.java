@@ -16,7 +16,7 @@ public class Deck {
             throw new IllegalArgumentException("덱에는 중복된 카드가 들어올 수 없습니다!");
         }
     }
-
+ 
     public Card pickCard() {
         return deck.poll();
     }

@@ -1,15 +1,16 @@
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+package domain;
 
-import constant.CardNumber;
-import constant.Emblem;
-import domain.Card;
-import domain.Deck;
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.ArrayDeque;
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import constant.CardNumber;
+import constant.Emblem;
 
 public class DeckTest {
 
@@ -26,7 +27,7 @@ public class DeckTest {
 
             // when & then
             assertThatThrownBy(() -> new Deck(q))
-                    .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
         }
 
     }

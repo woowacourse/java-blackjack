@@ -1,16 +1,16 @@
-import static org.assertj.core.api.Assertions.assertThat;
+package domain;
 
-import constant.CardNumber;
-import constant.Emblem;
-import domain.Card;
-import domain.CardHand;
-import domain.Dealer;
-import domain.Deck;
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.ArrayDeque;
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import constant.CardNumber;
+import constant.Emblem;
 
 public class DealerTest {
     @Nested
