@@ -38,4 +38,31 @@ public class CardsTest {
         //then
         assertThat(cards.getCards()).contains(testCard);
     }
+
+    @DisplayName("카드의 합계가 16 이하이면 True를 반환한다")
+    @Test
+    void test3() {
+        //given
+        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
+                new Card(CardNumberType.JACK, CardType.DIAMOND));
+        Cards cards = new Cards(testCards);
+
+        //when & then
+        assertThat(cards.isSumSixteenOrLess()).isTrue();
+
+    }
+
+    @DisplayName("카드의 합계가 16 초과이면 False를 반환한다")
+    @Test
+    void test3() {
+        //given
+        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
+                new Card(CardNumberType.ACE, CardType.DIAMOND),
+                new Card(CardNumberType.JACK, CardType.DIAMOND));
+        Cards cards = new Cards(testCards);
+
+        //when & then
+        assertThat(cards.isSumSixteenOrLess()).isFalse();
+
+    }
 }
