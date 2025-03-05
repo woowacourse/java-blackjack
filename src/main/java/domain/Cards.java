@@ -1,18 +1,24 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Cards {
     private static final int BURST_LIMIT = 21;
 
     private final List<Card> cards;
 
+    public Cards() {
+        this.cards = new ArrayList<>();
+    }
+
     public Cards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public void addAll(List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
     public int size() {
