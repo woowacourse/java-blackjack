@@ -34,4 +34,41 @@ public class PlayerTest {
                     .hasMessage("이름은 알파벳 소문자만 입력 가능합니다.");
         }
     }
+
+    @Nested
+    @DisplayName("플레이어의 추가 배부 테스트")
+    class DistributionTest {
+
+        @Test
+        @DisplayName("보유 카드가 21 미만이면 추가 배부가 가능하다")
+        void canDistributeCard_Under21() {
+            Player player = new Player("sana");
+
+            Card card1 = new Card(Suit.HEART, Denomination.TWO);
+            Card card2 = new Card(Suit.SPADE, Denomination.TEN);
+            Card card3 = new Card(Suit.CLUB, Denomination.ACE);
+
+            player.addCard(card1);
+            player.addCard(card2);
+            player.addCard(card3);
+
+            assertThat(player.isPossibleToAdd()).isTrue();
+        }
+
+        @Test
+        @DisplayName("보유 카드가 21 이상이면 추가 배부가 불가능하다")
+        void canDistributeCard_Over21() {
+            Player player = new Player("sana");
+
+            Card card1 = new Card(Suit.HEART, Denomination.TWO);
+            Card card2 = new Card(Suit.SPADE, Denomination.TEN);
+            Card card3 = new Card(Suit.CLUB, Denomination.JACK);
+
+            player.addCard(card1);
+            player.addCard(card2);
+            player.addCard(card3);
+
+            assertThat(player.isPossibleToAdd()).isFalse();
+        }
+    }
 }
