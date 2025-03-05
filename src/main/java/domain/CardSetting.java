@@ -7,13 +7,19 @@ import java.util.List;
 public class CardSetting {
     private static final List<TrumpCard> CARD_DECK = new ArrayList<>();
 
-    static {
+    public static void initCache() {
         for (CardShape cardShape : CardShape.values()) {
             for (CardNumber cardNumber : CardNumber.values()) {
                 CARD_DECK.add(new TrumpCard(cardShape, cardNumber));
             }
         }
         Collections.shuffle(CARD_DECK);
+    }
+
+    public static void bin() {
+        while (!CARD_DECK.isEmpty()) {
+            CARD_DECK.removeFirst();
+        }
     }
 
     public static TrumpCard drawCard() {

@@ -1,13 +1,21 @@
 package domain.user;
 
+import domain.CardSetting;
 import domain.TrumpCard;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class UserTest {
+    @BeforeEach
+    public void setUp() {
+        CardSetting.bin();
+        CardSetting.initCache();
+    }
+
     @Nested
     @DisplayName("카드 공개")
     public class OpenCard {
