@@ -10,7 +10,7 @@ public class Cards {
     private static final int VALID_MAX_SUM_LIMIT = 21;
     private static final int VALID_DRAW_LIMIT = 16;
     private static final String MAX_SUM_EXCEED_ERROR = "카드의 합이 21을 초과하였습니다.";
-    private static final int ACE_CONVERSION_THRESHOLD = 11;
+    private static final int ACE_CONVERSION_THRESHOLD = 10;
 
     private final List<Card> cards;
 
@@ -36,7 +36,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isUnderDrawLimit() {
+    public boolean isUnderDrawLimit() { // TODO : ACE를 무조건 1로 보는 문제
         return calculateSumAll() <= VALID_DRAW_LIMIT;
     }
 

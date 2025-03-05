@@ -77,11 +77,26 @@ public class CardsTest {
         assertThat(sum).isEqualTo(16);
     }
 
-    @DisplayName("만약 ACE가 포함된 경우, 나머지 카드의 합이 11 이하이면 ACE를 10으로 간주한다")
+    @DisplayName("만약 ACE가 포함된 경우, 나머지 카드의 합이 11 이상이면 ACE를 1로 간주한다")
+    @Test
+    void test10() {
+        //given
+        List<Card> testCards = List.of(new Card(CardNumberType.FIVE, CardType.CLOVER),
+                new Card(CardNumberType.SIX, CardType.DIAMOND),
+                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        );
+        Cards cards = new Cards(testCards);
+        //when
+        int sum = cards.calculateSumResult();
+        //then
+        assertThat(sum).isEqualTo(12);
+    }
+
+    @DisplayName("만약 ACE가 포함된 경우, 나머지 카드의 합이 10 이하이면 ACE를 11으로 간주한다")
     @Test
     void test6() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
+        List<Card> testCards = List.of(new Card(CardNumberType.FIVE, CardType.CLOVER),
                 new Card(CardNumberType.FIVE, CardType.DIAMOND),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
                 );
@@ -104,6 +119,6 @@ public class CardsTest {
         //when
         int sum = cards.calculateSumResult();
         //then
-        assertThat(sum).isEqualTo(21);
+        assertThat(sum).isEqualTo(13);
     }
 }
