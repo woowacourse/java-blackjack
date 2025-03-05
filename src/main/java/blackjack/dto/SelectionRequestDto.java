@@ -12,8 +12,7 @@ public record SelectionRequestDto(
         if (input.equalsIgnoreCase("N")) {
             return new SelectionRequestDto(false);
         }
-        // TODO 예외 메시지 묶어서 관리
-        // TODO 예외처리 해야함
+        // TODO 예외 메시지에서 상수 분리
         throw new IllegalArgumentException("[ERROR] Y 또는 N을 입력해야 합니다.");
     }
 }
