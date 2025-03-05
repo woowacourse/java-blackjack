@@ -12,6 +12,8 @@ public class Cards {
     private static final int VALID_DRAW_LIMIT = 16;
     private static final String MAX_SUM_EXCEED_ERROR = "카드의 합이 21을 초과하였습니다.";
     private static final int ACE_CONVERSION_THRESHOLD = 10;
+    private static final int DOUBLE_ACE_COUNT = 2;
+    private static final int SINGLE_ACE_COUNT = 1;
 
     private final List<Card> cards;
 
@@ -37,22 +39,22 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isUnderDrawLimit() { // TODO : ACE를 무조건 1로 보는 문제
-        if (cards.stream().filter(card -> card.cardNumberType().isAce()).count() == 2) {
+    public boolean isUnderDrawLimit() {
+        if (isAceCountEqualTo(DOUBLE_ACE_COUNT)) {
             return true;
         }
-        if (isAceOnlyOne()) {
-            int sumWithoutAce = calculateSumWithoutAce();
+        int sumWithoutAce = calculateSumWithoutAce();
+        if (isAceCountEqualTo(SINGLE_ACE_COUNT)) {
             return (sumWithoutAce + CardNumberType.getAceHighNumber()) <= VALID_DRAW_LIMIT;
         }
-        return calculateSumWithoutAce() <= VALID_DRAW_LIMIT;
+        return sumWithoutAce <= VALID_DRAW_LIMIT;
     }
 
-    private boolean isAceOnlyOne() {
+    private boolean isAceCountEqualTo(int targetCount) {
         int aceCount = (int)cards.stream()
                 .filter(card -> card.cardNumberType().isAce())
                 .count();
-        return aceCount == 1;
+        return aceCount == targetCount;
     }
 
     public int calculateSumResult() {
