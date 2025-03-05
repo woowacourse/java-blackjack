@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import java.util.Set;
 
 public class Players {
     private final List<Player> players;
@@ -23,7 +22,7 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
     }
 
-    public Set<Card> getPlayerCard(String username) {
+    public List<Card> getPlayerCard(String username) {
         Player selectedPlayer = selectPlayer(username);
 
         return selectedPlayer.getCards();

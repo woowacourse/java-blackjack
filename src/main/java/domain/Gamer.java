@@ -1,7 +1,8 @@
 package domain;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class Gamer {
@@ -36,8 +37,8 @@ public abstract class Gamer {
         cards.add(card);
     }
 
-    public Set<Card> getCards() {
-        return Collections.unmodifiableSet(cards);
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 
     public boolean canGetMoreCard(int standard) {

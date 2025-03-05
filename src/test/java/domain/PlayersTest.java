@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +21,7 @@ class PlayersTest {
         // when
         players.giveCard(username, card);
         // then
-        Set<Card> cards = players.getPlayerCard(username);
+        List<Card> cards = players.getPlayerCard(username);
         Assertions.assertThat(cards).contains(card);
     }
 
