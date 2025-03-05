@@ -4,8 +4,8 @@ public class Dealer extends BlackjackPlayer {
 
     private static final int DEALER_STOP_HIT_STANDARD = 17;
 
-    public Dealer() {
-        super();
+    public Dealer(String name) {
+        super(name);
     }
 
     @Override

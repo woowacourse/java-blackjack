@@ -22,7 +22,7 @@ public class PlayerTest {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
-        Player player = new Player();
+        Player player = new Player("루키");
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
         assertThat(player.isDrawable()).isTrue();
@@ -34,7 +34,7 @@ public class PlayerTest {
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.DIAMOND, CardValue.K)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
-        Player player = new Player();
+        Player player = new Player("루키");
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
@@ -49,7 +49,7 @@ public class PlayerTest {
 
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
 
-        Player player = new Player();
+        Player player = new Player("루키");
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
@@ -64,7 +64,7 @@ public class PlayerTest {
 
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
 
-        Player player = new Player();
+        Player player = new Player("루키");
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
 
