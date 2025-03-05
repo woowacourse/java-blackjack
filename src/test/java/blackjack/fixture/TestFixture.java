@@ -40,7 +40,7 @@ public class TestFixture {
         return new Players(List.of(new Player("엠제이", new ArrayList<>()), new Player("밍트", new ArrayList<>())));
     }
 
-    public static Players providePlayersWithCards(final List<Card> cards1, final List<Card> cards2) {
-        return new Players(List.of(new Player("엠제이", cards1), new Player("밍트", cards2)));
+    public static List<Player> providePlayersWithCards(final List<Card> cards1, final List<Card> cards2) {
+        return List.of(new Player("엠제이", cards1), new Player("밍트", cards2));
     }
 }
