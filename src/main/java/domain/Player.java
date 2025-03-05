@@ -1,6 +1,6 @@
 package domain;
 
-public class Player extends GameParticipant {
+public class Player extends Participant {
 
     private Player(Cards cards) {
         super(cards);

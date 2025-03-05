@@ -2,12 +2,12 @@ package domain;
 
 import java.util.Set;
 
-public abstract class GameParticipant {
+public abstract class Participant {
 
     private static final int SUM_LIMIT = 21;
     protected final Cards cards;
 
-    public GameParticipant(Cards cards) {
+    public Participant(Cards cards) {
         this.cards = cards;
     }
 

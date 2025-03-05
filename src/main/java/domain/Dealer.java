@@ -1,6 +1,6 @@
 package domain;
 
-public class Dealer extends GameParticipant {
+public class Dealer extends Participant {
 
     public static final int DRAW_BOUNDARY = 16;
 
