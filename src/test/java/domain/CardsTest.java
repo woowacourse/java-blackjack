@@ -135,4 +135,21 @@ public class CardsTest {
         //then
         assertThat(sum).isEqualTo(13);
     }
+
+    @DisplayName("딜러의 카드 묶음이 ACE를 포함하지 않을 경우 단순 합으로 계산한다")
+    @Test
+    void test9() {
+        //given
+        List<Card> testCards = List.of(
+                new Card(CardNumberType.QUEEN, CardType.HEART),
+                new Card(CardNumberType.SIX, CardType.DIAMOND)
+        );
+        Cards cards = new Cards(testCards);
+
+        //when
+        boolean isUnderDrawLimit = cards.isUnderDrawLimit();
+
+        //then
+        assertThat(isUnderDrawLimit).isTrue();
+    }
 }
