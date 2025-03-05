@@ -27,4 +27,12 @@ public class Deck {
             throw new IllegalArgumentException("덱에 중복된 카드가 있습니다.");
         }
     }
+
+    public TrumpCard draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("덱에 카드가 없습니다.");
+        }
+
+        return cards.removeLast();
+    }
 }
