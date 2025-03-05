@@ -28,7 +28,26 @@ public class CardsTest {
     }
 
     @Test
-    void _카드_합이_항상_21을_초과할_경우_TRUE를_반환한다() {
+    void 카드_합이_항상_21을_초과할_경우_가장_작은_카드_합을_반환한다() {
+        // given
+        Cards cards = new Cards(List.of(
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.THREE),
+                new Card(CardShape.SPADE, CardNumber.QUEEN),
+                new Card(CardShape.SPADE, CardNumber.JACK)
+        ));
+        final int expected = 25;
+
+        // when
+        int sum = cards.calculateOptimalSum();
+
+        // then
+        assertThat(sum).isEqualTo(expected);
+    }
+
+    @Test
+    void 카드_합이_항상_21을_초과할_경우_TRUE를_반환한다() {
         // given
         Cards cards = new Cards(List.of(
                 new Card(CardShape.SPADE, CardNumber.JACK),
@@ -45,7 +64,7 @@ public class CardsTest {
     }
 
     @Test
-    void _카드_합을_21_이하로_만들_수_있는_경우_FALSE를_반환한다() {
+    void 카드_합을_21_이하로_만들_수_있는_경우_FALSE를_반환한다() {
         // given
         Cards cards = new Cards(List.of(
                 new Card(CardShape.SPADE, CardNumber.QUEEN),
