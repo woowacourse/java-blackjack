@@ -8,9 +8,10 @@ import blackjack.dto.FinalResultResponseDto;
 import blackjack.dto.RoundResultsResponseDto;
 import blackjack.dto.StartingCardsResponseDto;
 
+// LAST TODO 메시지 상수화
 public class OutputView {
 
-    // TODO: toString, functional interface
+    // TODO: toString, functional interface, printf
     public static void printStartingCards(StartingCardsResponseDto responseDto) {
         String dealerName = responseDto.dealer().name();
         String playerNames = responseDto.players().stream()
@@ -49,6 +50,7 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
+    // TODO 중복되는 코드 전부 개선하기
     public static void printRoundResult(RoundResultsResponseDto responseDto) {
         System.out.println(String.format("%s카드 : %s - 결과: %d",
             responseDto.dealer().name(),

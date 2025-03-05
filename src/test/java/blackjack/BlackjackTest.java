@@ -16,6 +16,7 @@ import blackjack.domain.deck.RandomCardStrategy;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
+// REAL LAST TODO 테스트 리팩토링(클래스 분리, 단위테스트, ParameterizedTest, 픽스쳐)
 class BlackjackTest {
 
     @Test

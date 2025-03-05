@@ -25,6 +25,7 @@ public abstract class Gamer {
         return cards.count();
     }
 
+    // TODO: 상수화
     public boolean isBust() {
         return cards.sum() > 21;
     }
@@ -51,6 +52,7 @@ public abstract class Gamer {
         }
     }
 
+    // TODO stream 적용
     public Map<RoundResult, Integer> getFinalResult(List<Gamer> otherGamers) {
         Map<RoundResult, Integer> result = new HashMap<>();
         for (var otherGamer : otherGamers) {

@@ -37,6 +37,7 @@ public record StartingCardsResponseDto(
                     .toList());
         }
 
+        // TODO 지우게 될 것
         private static String getNameOf(Gamer gamer) {
             if (gamer instanceof Player player) {
                 return player.getName();

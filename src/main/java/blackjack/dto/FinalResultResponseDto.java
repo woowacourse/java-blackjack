@@ -13,6 +13,7 @@ public record FinalResultResponseDto(
     List<InnerGamer> gamers
 ) {
 
+    // LATER TODO 리팩토링
     public static FinalResultResponseDto of(Dealer dealer, List<Player> players) {
         InnerGamer convertedDealer = InnerGamer.from(dealer, new ArrayList<>(players));
         List<InnerGamer> convertedPlayers = players.stream()

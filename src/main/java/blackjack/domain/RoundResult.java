@@ -14,6 +14,7 @@ public enum RoundResult {
         this.displayName = displayName;
     }
 
+    // TODO 메서드 분리하든가 리팩토링좀..;;
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         if (gamer.isBust() && otherGamer.isBust()) {
             return TIE;

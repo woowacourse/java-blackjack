@@ -12,6 +12,7 @@ public class Cards {
         cards.add(card);
     }
 
+    // TODO: 가변리스트로 바꿀지 고민하기
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -25,6 +26,7 @@ public class Cards {
         return sumWithoutAce + sumOfAce;
     }
 
+    // LAST TODO : 리팩토링 고민해보기
     private int getSumOfAce(int sumWithoutAce) {
         int sumOfAce = 0;
         int aceCardCount = getAceCardCount();
@@ -43,6 +45,7 @@ public class Cards {
             .count();
     }
 
+    // TODO: 상수화
     private int aceNumber(int sum) {
         if (sum + 11 > 21) {
             return 1;
@@ -50,6 +53,7 @@ public class Cards {
         return 11;
     }
 
+    // TODO: 상수화
     public boolean isBlackjack() {
         if (cards.size() != 2) {
             return false;

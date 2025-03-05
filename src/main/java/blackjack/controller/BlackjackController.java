@@ -8,6 +8,7 @@ public class BlackjackController {
 
     private final BlackjackService blackjackService = new BlackjackService();
 
+    // TODO: 메서드 분리
     public void run() {
         blackjackService.setPlayer(InputView.readNames());
         OutputView.printStartingCards(blackjackService.drawStartingCards());

@@ -11,6 +11,7 @@ import blackjack.domain.card.CardType;
 
 public class RandomCardStrategy {
 
+    // TODO: flatMap 내부를 메서드 분리 시도해보기
     public Stack<Card> generateDeck() {
         Stack<Card> cards = Arrays.stream(CardNumber.values())
             .flatMap(cardNumber ->

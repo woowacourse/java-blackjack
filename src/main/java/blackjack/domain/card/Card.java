@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+// TODO: record화
 public class Card {
 
     private final CardType cardType;
