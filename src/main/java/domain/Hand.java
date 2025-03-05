@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Hand {
 
+    private static final int ORIGINAL_ACE_VALUE = 11;
     private final List<Card> cards;
 
     public Hand() {
@@ -26,5 +27,9 @@ public class Hand {
 
     public int getTotal() {
         return cards.stream().mapToInt(Card::getValue).sum();
+    }
+
+    public boolean containsOriginalAce() {
+        return cards.stream().anyMatch(card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE);
     }
 }
