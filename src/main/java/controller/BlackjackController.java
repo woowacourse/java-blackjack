@@ -42,6 +42,31 @@ public class BlackjackController {
 
         GameManager gameManager = GameManager.of(CardDeck.of(), participants);
         gameManager.distributeCards();
+        // TODO: 초기화 된 카드 결과 출력
+
+        List<String> playersNames = gameManager.getPlayersName();
+
+        for (String name : playersNames) {
+            processPlayerDecision(name, gameManager);
+        }
+        while (true) {
+            boolean received = gameManager.passCardToDealer();
+            if (!received) {
+                break;
+            }
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
 //        outputView.printInitCards(participants);
+    }
+
+    private void processPlayerDecision(String name, GameManager gameManager) {
+        while (true) {
+            String answer = inputView.askReceive(name);
+            if (answer.equals("n") || gameManager.getScoreOf(name) > 21) {
+                break;
+            }
+            gameManager.passCardToPlayer(name);
+        }
+        // TODO: 총 카드 결과 출력
     }
 }

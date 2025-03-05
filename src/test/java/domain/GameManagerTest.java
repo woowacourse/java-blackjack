@@ -80,7 +80,7 @@ class GameManagerTest {
         GameManager gameManager = GameManager.of(cardDeck, participants);
 
         // when
-        gameManager.passCardTo("pobi1");
+        gameManager.passCardToPlayer("pobi1");
 
         // then
         assertThat(target.getOwnedCards()).hasSize(1);
@@ -107,5 +107,51 @@ class GameManagerTest {
 
         // then
         assertThat(score).isEqualTo(9);
+    }
+
+    @Test
+    void 딜러의_카드_합이_16_이하면_카드를_한_장_받고_true를_반환한다() {
+        // given
+        CardDeck cardDeck = CardDeck.of();
+        Dealer dealer = Dealer.of();
+        dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        dealer.receive(Card.of(TrumpNumber.FIVE, TrumpShape.CLUB));
+        Participants participants = Participants.of(
+                dealer, List.of(
+                        Player.of("pobi1"),
+                        Player.of("pobi2"),
+                        Player.of("pobi3")
+                )
+        );
+        GameManager gameManager = GameManager.of(cardDeck, participants);
+
+        // when
+        boolean result = gameManager.passCardToDealer();
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void 딜러의_카드_합이_16_초과면_카드를_받지_않고_false를_반환한다() {
+        // given
+        CardDeck cardDeck = CardDeck.of();
+        Dealer dealer = Dealer.of();
+        dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        dealer.receive(Card.of(TrumpNumber.SIX, TrumpShape.CLUB));
+        Participants participants = Participants.of(
+                dealer, List.of(
+                        Player.of("pobi1"),
+                        Player.of("pobi2"),
+                        Player.of("pobi3")
+                )
+        );
+        GameManager gameManager = GameManager.of(cardDeck, participants);
+
+        // when
+        boolean result = gameManager.passCardToDealer();
+
+        // then
+        assertThat(result).isFalse();
     }
 }

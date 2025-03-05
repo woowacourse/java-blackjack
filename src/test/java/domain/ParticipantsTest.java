@@ -89,4 +89,22 @@ class ParticipantsTest {
         // then
         assertThat(player.getName()).isEqualTo("pobi1");
     }
+
+    @Test
+    void 딜러를_반환한다() {
+        // given
+        Participants participants = Participants.of(
+                Dealer.of(), List.of(
+                        Player.of("pobi1"),
+                        Player.of("pobi2"),
+                        Player.of("pobi3")
+                )
+        );
+
+        // when
+        Participant dealer = participants.getDealer();
+
+        // then
+        assertThat(dealer).isInstanceOf(Dealer.class);
+    }
 }

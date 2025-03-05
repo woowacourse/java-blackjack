@@ -6,6 +6,7 @@ import java.util.List;
 public class GameManager {
 
     private static final int INITIAL_CARDS = 2;
+    public static final int DEALER_MIN_SCORE = 16;
 
     private final CardDeck cardDeck;
     private final Participants participants;
@@ -25,7 +26,7 @@ public class GameManager {
         }
     }
 
-    public void passCardTo(String name) {
+    public void passCardToPlayer(String name) {
         Player player = participants.findByName(name);
         player.receive(cardDeck.popCard());
     }
@@ -37,5 +38,14 @@ public class GameManager {
 
     public List<String> getPlayersName() {
         return Collections.unmodifiableList(participants.getPlayersName());
+    }
+
+    public boolean passCardToDealer() {
+        Participant dealer = participants.getDealer();
+        if (dealer.getScore() > DEALER_MIN_SCORE) {
+            return false;
+        }
+        dealer.receive(cardDeck.popCard());
+        return true;
     }
 }

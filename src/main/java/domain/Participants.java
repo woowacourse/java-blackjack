@@ -49,4 +49,12 @@ public class Participants {
                 .map(Player::getName)
                 .toList();
     }
+
+
+    public Participant getDealer() {
+        return participants.stream()
+                .filter(participant -> participant instanceof Dealer)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("예기치 못한 에러가 발생했습니다."));
+    }
 }
