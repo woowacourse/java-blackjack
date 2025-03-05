@@ -153,7 +153,7 @@ public class CardsTest {
         assertThat(isUnderDrawLimit).isTrue();
     }
 
-    @DisplayName("카드 묶음이 ACE를 한 장 포함할 경우 최댓값을 합으로 간주한다")
+    @DisplayName("딜러의 카드 묶음이 ACE를 한 장 포함할 경우 최댓값을 합으로 간주한다")
     @Test
     void test11() {
         //given
@@ -168,5 +168,22 @@ public class CardsTest {
 
         //then
         assertThat(isUnderDrawLimit).isFalse();
+    }
+
+    @DisplayName("딜러의 카드 묶음이 ACE를 두 장 가질 경우 추가 카드 한장을 받는다")
+    @Test
+    void test12() {
+        //given
+        List<Card> testCards = List.of(
+                new Card(CardNumberType.ACE, CardType.HEART),
+                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        );
+        Cards cards = new Cards(testCards);
+
+        //when
+        boolean isUnderDrawLimit = cards.isUnderDrawLimit();
+
+        //then
+        assertThat(isUnderDrawLimit).isTrue();
     }
 }
