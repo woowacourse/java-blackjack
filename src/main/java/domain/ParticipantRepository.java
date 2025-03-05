@@ -11,7 +11,7 @@ public class ParticipantRepository {
     private final Map<String, Participant> repository = new HashMap<>();
 
     {
-        repository.put("딜러", new Participant("딜러", Cards.createEmpty()));
+        repository.put("딜러", new Participant("딜러", Cards.createEmpty(), Role.DEALER));
     }
 
     private ParticipantRepository() {
@@ -38,6 +38,9 @@ public class ParticipantRepository {
     }
 
     public List<Participant> getAllPlayer() {
-        return null;
+        return repository.keySet().stream()
+                .map(repository::get)
+                .filter(Participant::isPlayer)
+                .toList();
     }
 }

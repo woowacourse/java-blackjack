@@ -5,14 +5,20 @@ import java.util.Objects;
 public class Participant {
     private final String name;
     private final Cards cards;
+    private final Role role;
 
-    public Participant(String name, Cards cards) {
+    public Participant(String name, Cards cards, Role role) {
         this.name = name;
         this.cards = cards;
+        this.role = role;
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isPlayer() {
+        return role.isPlayer();
     }
 
     @Override

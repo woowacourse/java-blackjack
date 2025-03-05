@@ -14,7 +14,7 @@ public class ParticipantRepositoryTest {
     @Test
     void test1() {
         // given
-        Participant expectedParticipant = new Participant("딜러", null);
+        Participant expectedParticipant = new Participant("딜러", null, Role.DEALER);
 
         // when
         Participant participant = participantRepository.getByName("딜러");
@@ -28,8 +28,8 @@ public class ParticipantRepositoryTest {
     void test2() {
         //given
         List<Participant> participants = List.of(
-                new Participant("mimi", Cards.createEmpty()),
-                new Participant("wade", Cards.createEmpty())
+                new Participant("mimi", Cards.createEmpty(), Role.PLAYER),
+                new Participant("wade", Cards.createEmpty(), Role.PLAYER)
         );
 
         // when
@@ -43,13 +43,13 @@ public class ParticipantRepositoryTest {
     @Test
     void test3() {
         //given
-        participantRepository.addAll(List.of(new Participant("mimi", Cards.createEmpty())));
+        participantRepository.addAll(List.of(new Participant("mimi", Cards.createEmpty(), Role.PLAYER)));
 
         //when
         Participant participant = participantRepository.getByName("mimi");
 
         //then
-        assertThat(participant).isEqualTo(new Participant("mimi", Cards.createEmpty()));
+        assertThat(participant).isEqualTo(new Participant("mimi", Cards.createEmpty(), Role.PLAYER));
     }
 
     @DisplayName("딜러를 제외한 모든 참여자를 조회한다")
