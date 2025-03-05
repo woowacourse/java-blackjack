@@ -5,6 +5,9 @@ import static domain.GameResult.LOSE;
 import static domain.GameResult.WIN;
 
 public class Dealer extends Gamer {
+
+    private static final int BUST_THRESHOLD = 16;
+
     public Dealer() {
         super();
     }
@@ -21,5 +24,9 @@ public class Dealer extends Gamer {
             return WIN;
         }
         return LOSE;
+    }
+
+    public boolean canGetMoreCard() {
+        return this.canGetMoreCard(BUST_THRESHOLD);
     }
 }
