@@ -1,10 +1,10 @@
 package blackjack.model;
 
-public class Player {
+public class User {
 
     private final Cards cards;
 
-    public Player() {
+    public User() {
         this.cards = Cards.empty();
     }
 

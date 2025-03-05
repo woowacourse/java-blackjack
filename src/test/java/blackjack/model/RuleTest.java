@@ -72,9 +72,9 @@ class RuleTest {
     @ParameterizedTest
     @MethodSource("플레이어가_카드를_뽑아야_하는지_반환한다_테스트_케이스")
     void 플레이어가_카드를_뽑아야_하는지_반환한다(final Cards cards, final boolean expected) {
-        Player player = new Player();
-        player.receiveCards(cards);
+        User user = new User();
+        user.receiveCards(cards);
 
-        assertThat(rule.canPlayerDrewMoreCard(player)).isEqualTo(expected);
+        assertThat(rule.canPlayerDrewMoreCard(user)).isEqualTo(expected);
     }
 }
