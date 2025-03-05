@@ -18,6 +18,10 @@ public record Participant(
         return role.isPlayer();
     }
 
+    public int calculateCardsSum() {
+        return cards.calculateSumResult();
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
