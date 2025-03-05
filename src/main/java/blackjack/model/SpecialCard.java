@@ -14,4 +14,8 @@ public class SpecialCard extends Card {
         return character;
     }
 
+    @Override
+    public int getPoint() {
+        return SPECIAL_CARD_POINT;
+    }
 }

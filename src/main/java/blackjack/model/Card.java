@@ -14,7 +14,5 @@ public abstract class Card {
         return shape;
     }
 
-    public int getPoint() {
-        return point;
-    }
+    public abstract int getPoint();
 }
