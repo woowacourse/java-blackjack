@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardPack {
@@ -18,6 +19,14 @@ public class CardPack {
                 cards.add(card);
             }
         }
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public Card poll() {
+        return cards.removeFirst();
     }
 
     public List<Card> getCards() {
