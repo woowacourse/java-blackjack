@@ -18,4 +18,8 @@ public class Cards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public void checkMaxSum() {
+        throw new IllegalArgumentException("[ERROR]");
+    }
 }
