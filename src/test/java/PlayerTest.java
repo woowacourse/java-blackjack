@@ -2,8 +2,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.BlackjackDeckGenerator;
 import domain.CardValue;
-import domain.Dealer;
 import domain.Deck;
+import domain.Player;
 import domain.Suit;
 import domain.TrumpCard;
 import domain.strategy.TestDrawStrategy;
@@ -18,14 +18,14 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     @Test
-    void 카드의_합이_21_이하면_버스트가_아니다() {
+    void 카드의_합이_21_이하면_뽑을_수_있다() {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
-        Dealer dealer = new Dealer();
-        dealer.addDraw(deck.drawCard());
-        dealer.addDraw(deck.drawCard());
-        assertThat(dealer.isBurst()).isFalse();
+        Player player = new Player();
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
+        assertThat(player.isDrawable()).isTrue();
     }
 
     @Test
@@ -34,10 +34,40 @@ public class PlayerTest {
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.DIAMOND, CardValue.K)));
         Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
-        Dealer dealer = new Dealer();
-        dealer.addDraw(deck.drawCard());
-        dealer.addDraw(deck.drawCard());
-        dealer.addDraw(deck.drawCard());
-        assertThat(dealer.isBurst()).isTrue();
+        Player player = new Player();
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
+        assertThat(player.isDrawable()).isFalse();
+    }
+
+    @Test
+    void 에이스가_포함된_경우에_에이스를_최적의_값으로_계산한다() {
+        LinkedList<TrumpCard> trumpCards = new LinkedList<>(
+                List.of(new TrumpCard(Suit.CLOVER, CardValue.A), new TrumpCard(Suit.SPADE, CardValue.TEN),
+                        new TrumpCard(Suit.DIAMOND, CardValue.TEN)));
+
+        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+
+        Player player = new Player();
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
+
+        assertThat(player.calculateCardSum()).isEqualTo(21);
+    }
+
+    @Test
+    void 버스트가_되지_않으면_에이스는_11로_처리한다() {
+        LinkedList<TrumpCard> trumpCards = new LinkedList<>(
+                List.of(new TrumpCard(Suit.CLOVER, CardValue.A), new TrumpCard(Suit.DIAMOND, CardValue.TEN)));
+
+        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+
+        Player player = new Player();
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
+
+        assertThat(player.calculateCardSum()).isEqualTo(21);
     }
 }

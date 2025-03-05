@@ -9,7 +9,7 @@ public enum CardValue {
     Q("Q", 10),
     J("J", 10),
     K("K", 10),
-    A("A", 1),
+    A("A", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -42,6 +42,6 @@ public enum CardValue {
     }
 
     public boolean isAce() {
-        return this == A;
+        return this.rank.equals(A.rank);
     }
 }
