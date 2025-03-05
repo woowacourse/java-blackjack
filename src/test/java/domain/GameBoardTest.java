@@ -1,6 +1,9 @@
 package domain;
 
+import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.CardNumber;
+import domain.card.CardSymbol;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -65,5 +68,25 @@ public class GameBoardTest {
         gameBoard.drawTwoCards();
 
         Assertions.assertThat(cardDeck.getCards().size()).isEqualTo(46);
+    }
+
+    @Test
+    void 카드를_참가자에게_1장_준다() {
+        //given
+        Participant targetParticipant = new Player("우가");
+        List<Participant> participants = List.of(
+                targetParticipant,
+                new Player("히스타"),
+                new Dealer("딜러")
+        );
+        CardDeck cardDeck = CardDeck.generateFullSet();
+        GameBoard gameBoard = new GameBoard(cardDeck, participants);
+
+        //when
+        gameBoard.drawCardTo(targetParticipant);
+
+        //then
+        CardDeck ownedCardDeck = gameBoard.getCardDeckOfParticipant().get(targetParticipant);
+        Assertions.assertThat(ownedCardDeck.getCards().size()).isEqualTo(1);
     }
 }
