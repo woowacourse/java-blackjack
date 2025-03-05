@@ -3,11 +3,9 @@ package domain;
 public abstract class Gamer {
     public static final int LIMIT = 21;
 
-    private final String name;
-    private final CardGroup cardGroup;
+    protected final CardGroup cardGroup;
 
-    protected Gamer(String name, CardGroup cardGroup) {
-        this.name = name;
+    protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
     }
 
