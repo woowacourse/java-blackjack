@@ -34,6 +34,10 @@ public class Hand {
         originalAce.setValueToOne();
     }
 
+    public boolean isBurst() {
+        return getTotal() > 21;
+    }
+
     private Predicate<Card> originalAcePredicate() {
         return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
     }
