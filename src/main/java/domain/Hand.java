@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Hand {
 
@@ -17,19 +18,27 @@ public class Hand {
         cards.add(card);
     }
 
-    public boolean containsAce() {
-        return cards.stream().anyMatch(Card::isAce);
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public int getTotal() {
-        return cards.stream().mapToInt(Card::getValue).sum();
+    public boolean containsOriginalAce() {
+        return cards.stream().anyMatch(originalAcePredicate());
     }
 
-    public boolean containsOriginalAce() {
-        return cards.stream().anyMatch(card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE);
+    public void setOriginalAceValueToOne() {
+        Ace originalAce = (Ace) cards.stream()
+                .filter(originalAcePredicate())
+                .findFirst()
+                .orElseThrow();
+        originalAce.setValueToOne();
+    }
+
+    private Predicate<Card> originalAcePredicate() {
+        return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
+    }
+
+    public int getTotal() {
+        return cards.stream().mapToInt(Card::getValue).sum();
     }
 }
