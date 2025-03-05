@@ -1,8 +1,10 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Players {
 
@@ -23,6 +25,30 @@ public class Players {
         return players.size() != players.stream()
                 .distinct()
                 .count();
+    }
+
+    public void receiveCards(final List<Card> cards, final int count) {
+        for (int i = 0; i < players.size(); i++) {
+            final Player player = players.get(i);
+            player.receiveCards(cards.subList(i * count, (i + 1) * count));
+        }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Players players1)) {
+            return false;
+        }
+        return Objects.equals(players, players1.players);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(players);
+    }
+
+    public int getSize() {
+        return players.size();
     }
 
     public List<Player> getPlayers() {
