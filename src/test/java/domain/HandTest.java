@@ -29,4 +29,16 @@ public class HandTest {
 
         assertThat(hand.getTotal()).isEqualTo(15);
     }
+
+    @Test
+    @DisplayName("Hand 는 현재 카드 패에서 ACE 를 판별할 수 있다")
+    void test3() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+        hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
+        hand.addCard(new Ace(Suit.CLUB));
+
+        assertThat(hand.containsAce()).isTrue();
+    }
 }
