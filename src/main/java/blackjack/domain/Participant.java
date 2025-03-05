@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,8 +13,8 @@ public abstract class Participant {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void addCards(Card... cards) {
+        this.cards.addAll(Arrays.asList(cards));
     }
 
     public List<Card> getCards() {

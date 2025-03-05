@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Participants {
@@ -22,5 +23,9 @@ public class Participants {
 
     public int size() {
         return participants.size();
+    }
+
+    public List<Participant> getParticipants() {
+        return Collections.unmodifiableList(participants);
     }
 }

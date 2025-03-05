@@ -48,9 +48,7 @@ public class PlayerTest {
             Card card2 = new Card(Suit.SPADE, Denomination.TEN);
             Card card3 = new Card(Suit.CLUB, Denomination.ACE);
 
-            player.addCard(card1);
-            player.addCard(card2);
-            player.addCard(card3);
+            player.addCards(card1, card2, card3);
 
             assertThat(player.isPossibleToAdd()).isTrue();
         }
@@ -64,9 +62,7 @@ public class PlayerTest {
             Card card2 = new Card(Suit.SPADE, Denomination.TEN);
             Card card3 = new Card(Suit.CLUB, Denomination.JACK);
 
-            player.addCard(card1);
-            player.addCard(card2);
-            player.addCard(card3);
+            player.addCards(card1, card2, card3);
 
             assertThat(player.isPossibleToAdd()).isFalse();
         }

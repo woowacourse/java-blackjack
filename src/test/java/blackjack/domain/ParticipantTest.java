@@ -34,8 +34,8 @@ public class ParticipantTest {
             Card card1 = new Card(Suit.HEART, Denomination.ACE);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
 
-            participant.addCard(card1);
-            participant.addCard(card2);
+            participant.addCards(card1, card2);
+
             List<Card> cards = participant.getCards();
 
             assertAll(() -> {
@@ -57,8 +57,8 @@ public class ParticipantTest {
             Card card1 = new Card(Suit.HEART, Denomination.TWO);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
 
-            participant.addCard(card1);
-            participant.addCard(card2);
+            participant.addCards(card1, card2);
+
             int sum = participant.calculateDenominations();
 
             assertThat(sum).isEqualTo(12);
@@ -70,8 +70,8 @@ public class ParticipantTest {
             Card card1 = new Card(Suit.HEART, Denomination.ACE);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
 
-            participant.addCard(card1);
-            participant.addCard(card2);
+            participant.addCards(card1, card2);
+
             int sum = participant.calculateDenominations();
 
             assertThat(sum).isEqualTo(21);
@@ -84,9 +84,8 @@ public class ParticipantTest {
             Card card2 = new Card(Suit.SPADE, Denomination.TEN);
             Card card3 = new Card(Suit.CLUB, Denomination.ACE);
 
-            participant.addCard(card1);
-            participant.addCard(card2);
-            participant.addCard(card3);
+            participant.addCards(card1, card2, card3);
+
             int sum = participant.calculateDenominations();
 
             assertThat(sum).isEqualTo(13);
