@@ -18,6 +18,10 @@ public class Dealer {
         this.scoreCalculator = scoreCalculator;
     }
 
+    public void shuffleDeck(CardsShuffler cardsShuffler) {
+        deck.shuffleCards(cardsShuffler);
+    }
+
     public void pickCards() {
         cards.addAll(List.of(deck.draw(), deck.draw()));
     }

@@ -5,10 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class Player {
+    private final String name;
     private final List<Card> cards;
     private final ScoreCalculator scoreCalculator;
 
-    public Player(List<Card> cards, ScoreCalculator scoreCalculator) {
+    public Player(String name, List<Card> cards, ScoreCalculator scoreCalculator) {
+        this.name = name.trim();
         this.cards = cards;
         this.scoreCalculator = scoreCalculator;
     }
@@ -27,5 +29,9 @@ public class Player {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public String getName() {
+        return name;
     }
 }

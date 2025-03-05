@@ -16,10 +16,10 @@ public class DeckTest {
                 new Card(Suit.CLUB, Rank.ONE),
                 new Card(Suit.CLUB, Rank.TEN)
         ));
-        Deck deck = new Deck(cards, new FixCardsShuffler());
+        Deck deck = new Deck(cards);
 
         //when
-        deck.shuffleCards();
+        deck.shuffleCards(new FixCardsShuffler());
 
         //then
         Assertions.assertThat(deck.getCards()).isEqualTo(cards);

@@ -28,9 +28,10 @@ public class DealerTest {
         //given
         Dealer dealer = new Dealer(
                 new Players(
-                        List.of(new Player(List.of(), scoreCalculator), new Player(List.of(), scoreCalculator))
+                        List.of(new Player("pobi", List.of(), scoreCalculator),
+                                new Player("surf", List.of(), scoreCalculator))
                 ),
-                new Deck(deck, new FixCardsShuffler()), scoreCalculator);
+                new Deck(deck), scoreCalculator);
 
         //when
         dealer.pickCards();
@@ -48,9 +49,9 @@ public class DealerTest {
         //given
         Players players = new Players(
                 List.of(
-                        new Player(new ArrayList<>(), scoreCalculator),
-                        new Player(new ArrayList<>(), scoreCalculator),
-                        new Player(new ArrayList<>(), scoreCalculator)
+                        new Player("pobi", new ArrayList<>(), scoreCalculator),
+                        new Player("surf", new ArrayList<>(), scoreCalculator),
+                        new Player("fora", new ArrayList<>(), scoreCalculator)
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -63,7 +64,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FOUR),
                         new Card(Suit.CLUB, Rank.FIVE))
         );
-        Deck deck = new Deck(cards, new FixCardsShuffler());
+        Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck, scoreCalculator);
 
         //when
@@ -89,9 +90,9 @@ public class DealerTest {
         //given
         Players players = new Players(
                 List.of(
-                        new Player(new ArrayList<>(), scoreCalculator),
-                        new Player(new ArrayList<>(), scoreCalculator),
-                        new Player(new ArrayList<>(), scoreCalculator)
+                        new Player("pobi", new ArrayList<>(), scoreCalculator),
+                        new Player("surf", new ArrayList<>(), scoreCalculator),
+                        new Player("fora", new ArrayList<>(), scoreCalculator)
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -104,7 +105,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FOUR),
                         new Card(Suit.CLUB, Rank.FIVE))
         );
-        Deck deck = new Deck(cards, new FixCardsShuffler());
+        Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck, scoreCalculator);
 
         //when
