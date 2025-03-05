@@ -23,5 +23,10 @@ public class BlackjackController {
             }
             blackjackService.nextPlayer();
         }
+
+        while (blackjackService.dealerCanReceiveAdditionalCards()) {
+            blackjackService.drawCardForDealer();
+            OutputView.printDealerDrawNotice();
+        }
     }
 }

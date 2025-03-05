@@ -58,4 +58,12 @@ public class BlackjackService {
     public boolean currentPlayerCanReceiveAdditionalCards() {
         return players.get(playerCursor).canReceiveAdditionalCards();
     }
+
+    public boolean dealerCanReceiveAdditionalCards() {
+        return dealer.canReceiveAdditionalCards();
+    }
+
+    public void drawCardForDealer() {
+        dealer.drawCard(deck);
+    }
 }

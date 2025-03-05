@@ -42,4 +42,8 @@ public class OutputView {
     public static void printBustNotice(String name) {
         System.out.printf("%s는 버스트되었습니다.%n", name);
     }
+
+    public static void printDealerDrawNotice() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 }
