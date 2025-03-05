@@ -18,4 +18,8 @@ public class Dealer {
             throw new IllegalStateException("딜러는 손패를 가져야합니다.");
         }
     }
+
+    public void receiveCard(TrumpCard card) {
+        hand.addCard(card);
+    }
 }
