@@ -12,4 +12,16 @@ public class Dealer {
     public List<Integer> getPossibleSums() {
         return cardHolder.getPossibleSums();
     }
+
+    public void takeCard(Card newCard) {
+        cardHolder.takeCard(newCard);
+    }
+
+    public List<Card> getAllCards() {
+        return cardHolder.getAllCards();
+    }
+
+    public Card revealFirstCard() {
+        return cardHolder.getAllCards().getFirst();
+    }
 }
