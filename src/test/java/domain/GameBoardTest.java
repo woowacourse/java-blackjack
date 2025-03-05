@@ -1,6 +1,9 @@
 package domain;
 
+import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.CardNumber;
+import domain.card.CardSymbol;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -98,5 +101,30 @@ public class GameBoardTest {
 
         //then
         Assertions.assertThat(cardDeck.getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 한명의_총_점수를_계산한다() {
+        //given
+        Participant targetParticipant = Player.from("우가");
+        List<Participant> participants = List.of(
+                targetParticipant,
+                Player.from("히스타"),
+                Dealer.generate()
+        );
+        Card card = new Card(CardNumber.TWO, CardSymbol.CLOVER);
+        GameBoard gameBoard = new GameBoard(participants);
+        CardDeck cardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = cardDeck.getCards();
+        cards.clear();
+        cards.add(card);
+
+        gameBoard.drawCardTo(targetParticipant);
+
+        //when
+        int actual = gameBoard.getTotalScoreOf(targetParticipant);
+
+        //then
+        Assertions.assertThat(actual).isEqualTo(2);
     }
 }
