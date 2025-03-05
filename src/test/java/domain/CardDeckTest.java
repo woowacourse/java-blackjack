@@ -13,8 +13,8 @@ class CardDeckTest {
     private final CardDeck cardDeck = new CardDeck();
     private final Card jClover = new Card(Rank.JACK, Shape.CLOVER);
     private final Card fiveHeart = new Card(Rank.FIVE, Shape.HEART);
-    private final Card aceHeart = new Card(Rank.ACE, Shape.HEART);
-    private final Card aceClover = new Card(Rank.ACE, Shape.CLOVER);
+    private final Card aceHeart = new Card(Rank.ACE_LOW, Shape.HEART);
+    private final Card aceClover = new Card(Rank.ACE_LOW, Shape.CLOVER);
     private final Card twoDiamond = new Card(Rank.TWO, Shape.DIAMOND);
 
     @Test

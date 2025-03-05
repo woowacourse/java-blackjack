@@ -17,19 +17,26 @@ public class CardDeck {
     }
 
     public int calculateScore() {
-        int number = deck.stream()
+        int sum = deck.stream()
             .mapToInt(Card::getNumber)
             .sum();
 
-        if (hasAce() && number + 10 <= 21) {
-            return number + 10;
+        if (hasAce()) {
+            return calculateOptimalScore(sum);
         }
-        return number;
+        return sum;
     }
 
     private boolean hasAce() {
         return deck.stream()
-            .anyMatch(card -> card.getRank() == Rank.ACE);
+            .anyMatch(card -> card.getRank() == Rank.ACE_LOW);
+    }
+
+    private int calculateOptimalScore(int sum){
+        if (sum + Rank.ACE_LOW_HIGH_GAP <= 21) {
+            return sum + Rank.ACE_LOW_HIGH_GAP;
+        }
+        return sum;
     }
 
     public List<Card> getCards() {

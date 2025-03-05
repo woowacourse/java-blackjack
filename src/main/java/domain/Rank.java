@@ -1,7 +1,8 @@
 package domain;
 
 public enum Rank {
-    ACE(1),
+    ACE_LOW(1),
+    ACE_HIGH(11),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -15,6 +16,8 @@ public enum Rank {
     QUEEN(10),
     KING(10),
     ;
+
+    public static final int ACE_LOW_HIGH_GAP = ACE_HIGH.number() - ACE_LOW.number();
 
     private final int number;
 
