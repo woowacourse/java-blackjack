@@ -43,4 +43,14 @@ public class TestFixture {
     public static List<Player> providePlayersWithCards(final List<Card> cards1, final List<Card> cards2) {
         return List.of(new Player("엠제이", cards1), new Player("밍트", cards2));
     }
+
+    public static List<Card> provideOver21Cards() {
+        return List.of(new Card(Shape.SPADE, Denomination.K),
+                new Card(Shape.SPADE, Denomination.Q), new Card(Shape.SPADE, Denomination.J));
+    }
+
+    public static List<Card> provideUnder21Cards() {
+        return List.of(new Card(Shape.SPADE, Denomination.TWO),
+                new Card(Shape.SPADE, Denomination.THREE));
+    }
 }
