@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domian.Card;
-import blackjack.domian.Rank;
-import blackjack.domian.ScoreCalculator;
-import blackjack.domian.Suit;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

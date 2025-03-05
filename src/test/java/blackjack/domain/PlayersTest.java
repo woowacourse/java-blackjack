@@ -1,4 +1,4 @@
-package blackjack.domian;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

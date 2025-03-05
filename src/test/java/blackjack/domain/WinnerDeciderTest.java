@@ -2,12 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domian.Card;
-import blackjack.domian.Rank;
-import blackjack.domian.ScoreCalculator;
-import blackjack.domian.Suit;
-import blackjack.domian.WinnerDecider;
-import blackjack.domian.WinningResult;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

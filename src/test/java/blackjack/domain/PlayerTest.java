@@ -3,11 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domian.Card;
-import blackjack.domian.Player;
-import blackjack.domian.Rank;
-import blackjack.domian.ScoreCalculator;
-import blackjack.domian.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
