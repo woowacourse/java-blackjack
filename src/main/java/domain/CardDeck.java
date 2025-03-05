@@ -32,4 +32,10 @@ public class CardDeck {
         }
         return new ArrayList<>(cards);
     }
+
+
+    public boolean checkOverScore() {
+        return cards.stream()
+                .mapToInt(TrumpCard::getCardNumber).sum() > 21;
+    }
 }

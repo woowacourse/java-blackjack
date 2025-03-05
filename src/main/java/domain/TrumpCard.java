@@ -15,8 +15,8 @@ public class TrumpCard {
         return cardShape;
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public int getCardNumber() {
+        return cardNumber.getValue();
     }
 
     @Override

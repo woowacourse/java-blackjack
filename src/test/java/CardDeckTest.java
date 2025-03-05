@@ -58,9 +58,9 @@ public class CardDeckTest {
 
         cardDeck.addTrumpCard(trumpCard1);
         cardDeck.addTrumpCard(trumpCard2);
-        cardDeck.addTrumpCard(trumpCard1);
+        cardDeck.addTrumpCard(trumpCard3);
 
-        boolean isOver = cardDeck.sumAllCardValue();
+        boolean isOver = cardDeck.checkOverScore();
         Assertions.assertThat(isOver).isTrue();
     }
 

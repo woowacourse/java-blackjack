@@ -23,6 +23,9 @@ public enum CardNumber {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
 
     public static CardNumber pick(int index) {
         for (CardNumber value : values()) {

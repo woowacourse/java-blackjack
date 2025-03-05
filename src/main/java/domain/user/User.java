@@ -28,4 +28,6 @@ public abstract class User {
     }
 
     public abstract List<TrumpCard> openCard();
+
+
 }
