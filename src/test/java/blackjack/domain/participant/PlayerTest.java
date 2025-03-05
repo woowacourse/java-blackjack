@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.TestFixture.provideTwoCards;
+import static blackjack.fixture.TestFixture.provideCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -35,7 +35,7 @@ public class PlayerTest {
     @Test
     void receiveCards() {
         // given
-        List<Card> cards = provideTwoCards();
+        List<Card> cards = provideCards(2);
 
         // when
         player.receiveCards(cards);
