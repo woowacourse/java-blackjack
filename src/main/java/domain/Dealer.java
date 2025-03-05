@@ -12,11 +12,7 @@ public record Dealer(CardHand hand) {
     }
 
     public boolean isPickCard() {
-        final int score = calculateAllScore();
-        if (score <= 16) {
-            return true;
-        }
-        return false;
+        return calculateAllScore() <= 16;
     }
 
     public int calculateAllScore() {
