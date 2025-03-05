@@ -3,6 +3,7 @@ package domain.user;
 import domain.CardDeck;
 import domain.CardSetting;
 import domain.TrumpCard;
+import java.util.List;
 
 public abstract class User {
     protected final String name;
@@ -25,4 +26,6 @@ public abstract class User {
     public int getSize() {
         return cardDeck.cardsSize();
     }
+
+    public abstract List<TrumpCard> openCard();
 }
