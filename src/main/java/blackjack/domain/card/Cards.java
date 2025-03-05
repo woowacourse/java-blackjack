@@ -6,13 +6,17 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int MAX_SUM_OF_CARDS = 21;
+    private static final int LARGE_ACE_NUMBER = 11;
+    private static final int SMALL_ACE_NUMBER = 1;
+    private static final int CARD_COUNT_OF_BLACKJACK = 2;
+
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         cards.add(card);
     }
 
-    // TODO: 가변리스트로 바꿀지 고민하기
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -30,10 +34,10 @@ public class Cards {
     private int getSumOfAce(int sumWithoutAce) {
         int sumOfAce = 0;
         int aceCardCount = getAceCardCount();
-        if (aceCardCount >= 2) {
-            sumOfAce += aceCardCount - 1;
+        if (aceCardCount >= CARD_COUNT_OF_BLACKJACK) {
+            sumOfAce += aceCardCount - SMALL_ACE_NUMBER;
         }
-        if (aceCardCount >= 1) {
+        if (aceCardCount >= SMALL_ACE_NUMBER) {
             sumOfAce += aceNumber(sumWithoutAce);
         }
         return sumOfAce;
@@ -45,20 +49,18 @@ public class Cards {
             .count();
     }
 
-    // TODO: 상수화
     private int aceNumber(int sum) {
-        if (sum + 11 > 21) {
-            return 1;
+        if (sum + LARGE_ACE_NUMBER > MAX_SUM_OF_CARDS) {
+            return SMALL_ACE_NUMBER;
         }
-        return 11;
+        return LARGE_ACE_NUMBER;
     }
 
-    // TODO: 상수화
     public boolean isBlackjack() {
-        if (cards.size() != 2) {
+        if (cards.size() != CARD_COUNT_OF_BLACKJACK) {
             return false;
         }
-        return sum() == 21;
+        return sum() == MAX_SUM_OF_CARDS;
     }
 
     public int count() {
