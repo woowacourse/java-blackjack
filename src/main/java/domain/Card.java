@@ -16,6 +16,10 @@ public class Card {
         return rank.getScore();
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (o == null || getClass() != o.getClass()) {

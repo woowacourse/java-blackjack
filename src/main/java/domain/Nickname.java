@@ -16,4 +16,8 @@ public class Nickname {
         }
         throw new IllegalArgumentException("이름은 영어로만 작성이 가능하며 2~5글자여야합니다.");
     }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }

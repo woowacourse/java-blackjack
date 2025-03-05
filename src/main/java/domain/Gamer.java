@@ -27,4 +27,13 @@ public abstract class Gamer {
     public void hit(Card card) {
         hand.add(card);
     }
+
+    public String getDisplayName() {
+        return nickname.getDisplayName();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
 }
+

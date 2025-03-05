@@ -25,4 +25,7 @@ public class Hand {
         return getSumOfRank() > 21;
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
 }
