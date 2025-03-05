@@ -37,4 +37,12 @@ public class Cards {
     public void add(Card card) {
         cards.add(card);
     }
+
+    public boolean isUnderDrawLimit() {
+        int sum = cards.stream()
+                .map(Card::cardNumberType)
+                .mapToInt(CardNumberType::getValue)
+                .sum();
+        return sum <= 16;
+    }
 }
