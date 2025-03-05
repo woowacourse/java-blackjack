@@ -28,4 +28,9 @@ public class Players {
 
         return selectedPlayer.getCards();
     }
+
+    public boolean canGetMoreCard(String username) {
+        Player player = selectPlayer(username);
+        return player.canGetMoreCard();
+    }
 }
