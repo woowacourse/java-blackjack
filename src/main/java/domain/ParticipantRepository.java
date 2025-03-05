@@ -42,4 +42,9 @@ public class ParticipantRepository {
                 .filter(Participant::isPlayer)
                 .toList();
     }
+
+    public void initialize() {
+        repository.clear();
+        repository.put("딜러", new Participant("딜러", Cards.createEmpty(), Role.DEALER));
+    }
 }

@@ -3,12 +3,19 @@ package domain;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ParticipantRepositoryTest {
 
     private ParticipantRepository participantRepository = ParticipantRepository.getInstance();
+
+    @BeforeEach
+    void setUp() {
+        participantRepository.initialize();
+    }
+
 
     @DisplayName("딜러의 객체를 기본적으로 가지고 있다")
     @Test
@@ -79,7 +86,11 @@ public class ParticipantRepositoryTest {
     void test5() {
         //given
         List<Participant> testParticipants = List.of(
-                new Participant("테스트딜러", Cards.createEmpty(), Role.DEALER),
+                new Participant("mimi", Cards.createEmpty(), Role.PLAYER),
+                new Participant("wade", Cards.createEmpty(), Role.PLAYER));
+
+        List<Participant> expectedParticipants = List.of(
+                new Participant("딜러", Cards.createEmpty(), Role.DEALER),
                 new Participant("mimi", Cards.createEmpty(), Role.PLAYER),
                 new Participant("wade", Cards.createEmpty(), Role.PLAYER));
         participantRepository.addAll(testParticipants);
@@ -88,6 +99,6 @@ public class ParticipantRepositoryTest {
         List<Participant> allParticipants = participantRepository.getAll();
 
         //then
-        assertThat(allParticipants).containsExactlyInAnyOrderElementsOf(testParticipants);
+        assertThat(allParticipants).containsExactlyInAnyOrderElementsOf(expectedParticipants);
     }
 }
