@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RandomCardGenerator {
+public class RandomCardGenerator implements CardGenerator {
 
+    @Override
     public Card generate() {
         List<CardType> cardTypes = new ArrayList<>(CardType.getCardTypes());
         Collections.shuffle(cardTypes);
