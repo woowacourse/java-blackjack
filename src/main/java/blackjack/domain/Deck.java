@@ -7,11 +7,9 @@ import java.util.Stack;
 public class Deck {
 
     private final Stack<Card> cards;
-    private final CardsShuffler cardsShuffler;
 
-    public Deck(Stack<Card> cards, CardsShuffler cardsShuffler) {
+    public Deck(Stack<Card> cards) {
         this.cards = cards;
-        this.cardsShuffler = cardsShuffler;
     }
 
     public Stack<Card> getCards() {
@@ -22,12 +20,12 @@ public class Deck {
         return cards.pop();
     }
 
-    public void shuffleCards() {
-        List<Card> shuffled = new ArrayList<>();
+    public void shuffleCards(CardsShuffler cardsShuffler) {
+        List<Card> shuffledCard = new ArrayList<>();
         while (!cards.isEmpty()) {
-            shuffled.add(cards.pop());
+            shuffledCard.add(cards.pop());
         }
-        cardsShuffler.shuffle(cards);
-        cards.addAll(shuffled);
+        cardsShuffler.shuffle(shuffledCard);
+        cards.addAll(shuffledCard);
     }
 }
