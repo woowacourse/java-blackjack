@@ -8,6 +8,10 @@ public class CardDeck {
         this.cards = cards;
     }
 
+    public Card hitCard() {
+        return cards.removeFirst();
+    }
+
     public int getCardsSize() {
         return cards.size();
     }
