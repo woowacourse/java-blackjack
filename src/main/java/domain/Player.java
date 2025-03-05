@@ -1,6 +1,9 @@
 package domain;
 
+import java.util.Set;
+
 public class Player {
+
     private final Cards cards;
 
     private Player(Cards cards) {
@@ -24,6 +27,11 @@ public class Player {
     }
 
     public int getResult() {
-        return 0;
+        Set<Integer> coordinates = cards.getCoordinateSums();
+        return coordinates.stream()
+                .filter(coordinate -> coordinate <= 21)
+                .mapToInt(i -> i)
+                .max()
+                .orElseThrow(() -> new IllegalStateException(""));
     }
 }
