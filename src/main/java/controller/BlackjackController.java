@@ -25,9 +25,17 @@ public class BlackjackController {
     }
 
     private void receiveAdditionalCard(Player player,GameManager gameManager) {
-        while (Intent.from(InputView.readIntent(player.getNickname())).equals(Intent.Y)) {
+        while (satisfiedCondition(player)) {
             gameManager.divideCardByParticipant(player,1);
             OutputView.printDivision(player);
         };
+    }
+
+    private boolean satisfiedCondition(Player player) {
+        return player.isNotBust() && agreeIntent(player);
+    }
+
+    private boolean agreeIntent(Player player) {
+        return Intent.from(InputView.readIntent(player.getNickname())).equals(Intent.Y);
     }
 }

@@ -34,6 +34,10 @@ public class Player extends Participant {
         return super.sum();
     }
 
+    public boolean isNotBust() {
+        return sum() <= 21;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
