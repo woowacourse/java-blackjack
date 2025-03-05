@@ -2,6 +2,7 @@ package domain;
 
 import except.BlackJackException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,18 +37,6 @@ public class BlackjackGame {
         blackjackParticipants.giveToDealer(deck.drawCard());
     }
 
-    public List<TrumpCard> playerCards(String name) {
-        return blackjackParticipants.playerCards(name);
-    }
-
-    public TrumpCard dealerCardFirst() {
-        return dealerCards().get(0);
-    }
-
-    public List<TrumpCard> dealerCards() {
-        return blackjackParticipants.dealerCards();
-    }
-
     public List<BlackjackResult> currentPlayerBlackjackResult() {
         List<BlackjackResult> blackjackResults = new ArrayList<>();
         for (String name : blackjackParticipants.getPlayerNames()) {
@@ -55,7 +44,7 @@ public class BlackjackGame {
             int sum = blackjackParticipants.calculateCardSum(name);
             blackjackResults.add(new BlackjackResult(name, trumpCards, sum));
         }
-        return blackjackResults;
+        return Collections.unmodifiableList(blackjackResults);
     }
 
     public BlackjackResult currentDealerBlackjackResult() {
@@ -63,5 +52,17 @@ public class BlackjackGame {
         int sum = blackjackParticipants.calculateDealerSum();
         String name = blackjackParticipants.dealerName();
         return new BlackjackResult(name, trumpCards, sum);
+    }
+
+    public List<TrumpCard> playerCards(String name) {
+        return Collections.unmodifiableList(blackjackParticipants.playerCards(name));
+    }
+
+    public TrumpCard dealerCardFirst() {
+        return dealerCards().get(0);
+    }
+
+    public List<TrumpCard> dealerCards() {
+        return Collections.unmodifiableList(blackjackParticipants.dealerCards());
     }
 }

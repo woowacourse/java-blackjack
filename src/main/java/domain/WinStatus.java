@@ -9,7 +9,6 @@ public enum WinStatus {
 
     WinStatus(String status) {
         this.status = status;
-        ;
     }
 
     public String getStatus() {
