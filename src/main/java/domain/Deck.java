@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
@@ -8,12 +9,19 @@ public class Deck {
 
     public Deck(List<TrumpCard> cards) {
         validate(cards);
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     private void validate(List<TrumpCard> cards) {
+        validateNotNull(cards);
         validateSize(cards);
         validateDuplicate(cards);
+    }
+
+    private void validateNotNull(List<TrumpCard> cards) {
+        if (cards == null) {
+            throw new IllegalArgumentException("덱은 카드를 가지고 있어야합니다.");
+        }
     }
 
     private void validateSize(List<TrumpCard> cards) {
