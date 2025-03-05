@@ -10,6 +10,8 @@ import java.util.StringJoiner;
 
 public class OutputView {
     
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+    
     private final Writer writer;
     
     public OutputView(final Writer writer) {
@@ -21,7 +23,7 @@ public class OutputView {
         for (String name : names) {
             sj.add(name);
         }
-        final String message = "딜러와 %s에게 2장을 나누었습니다.".formatted(sj.toString());
+        final String message = LINE_SEPARATOR + "딜러와 %s에게 2장을 나누었습니다.".formatted(sj.toString());
         writer.write(message);
     }
     
@@ -35,6 +37,12 @@ public class OutputView {
         writer.write(message);
     }
     
+    public void outputStartAdding(String name) {
+        final String message =
+                LINE_SEPARATOR + "이제 %s가 카드를 더 받는 순서입니다.".formatted(name);
+        writer.write(message);
+    }
+    
     public void is21Warning() {
         writer.write("카드 총합이 21이기 때문에 더 받을 수 없습니다.");
     }
@@ -45,23 +53,28 @@ public class OutputView {
     
     public void outputDealerAddedCards(int addedCardsSize) {
         if (addedCardsSize != 0) {
-            String message = "딜러는 16이하라 %d장의 카드를 더 받았습니다.".formatted(addedCardsSize);
+            String message = LINE_SEPARATOR + "딜러는 16이하라 %d장의 카드를 더 받았습니다.".formatted(addedCardsSize) + LINE_SEPARATOR;
             writer.write(message);
         }
     }
     
     public void outputDealerResult(List<Card> cards, int sum) {
-        String message = parseNameAndCards("딜러", cards) + parseSum(sum);
+        String message = parseNameAndCards("딜러", cards) + parseFinalSum(sum);
         writer.write(message);
     }
     
     public void outputPlayerResult(String name, List<Card> cards, int sum) {
-        String message = parseNameAndCards(name, cards) + parseSum(sum);
+        String message = parseNameAndCards(name, cards) + parseFinalSum(sum);
         writer.write(message);
     }
     
     private String parseNameAndCards(String name, List<Card> cards) {
         return "%s카드: %s".formatted(name, parseCards(cards));
+    }
+    
+    public void outputCardsAndSum(List<Card> cards, int sum) {
+        final String message = parseCards(cards) + parseSum(sum);
+        writer.write(message);
     }
     
     private String parseCards(List<Card> cards) {
@@ -101,12 +114,16 @@ public class OutputView {
         return String.valueOf(card.getNumber());
     }
     
+    private static String parseFinalSum(int sum) {
+        return " - 결과: %d".formatted(sum);
+    }
+    
     private static String parseSum(int sum) {
-        return "- 결과: %d".formatted(sum);
+        return " - 합계: %d".formatted(sum);
     }
 
     public void outputFinalWinOrLossHeader() {
-        writer.write("## 최종 승패");
+        writer.write(LINE_SEPARATOR + "<최종 승패>");
     }
     
     public void outputDealerFinalWinOrLoss(int dealerWinningCount,

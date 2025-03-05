@@ -31,12 +31,13 @@ public class BlackjackController {
         final DealerCardHand dealerCardHand = new DealerCardHand(deck);
         
         outputView.outputDealing(playerNames);
-        outputView.outputDealerCards(dealerCardHand.getInitialCards()); // TODO : 1장만 보여주도록 처리 필요
+        outputView.outputDealerCards(dealerCardHand.getInitialCards());
         for (PlayerCardHand playerCardHand : playerCardHands) {
             outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getInitialCards());
         }
         
         for (PlayerCardHand playerCardHand : playerCardHands) {
+            outputView.outputStartAdding(playerCardHand.getPlayerName());
             boolean addingCardDecision;
             do {
                 if (playerCardHand.is21()) {
@@ -49,11 +50,11 @@ public class BlackjackController {
                     break;
                 }
                 
-                outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getCards());
                 
                 addingCardDecision = inputView.getAddingCardDecision(playerCardHand.getPlayerName());
                 if (addingCardDecision) {
                     playerCardHand.addCard(deck.draw());
+                    outputView.outputCardsAndSum(playerCardHand.getCards(), playerCardHand.getSum());
                 }
             } while (addingCardDecision);
         }
