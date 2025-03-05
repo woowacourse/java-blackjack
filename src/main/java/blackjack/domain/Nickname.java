@@ -4,11 +4,17 @@ import java.util.Objects;
 
 public final class Nickname {
 
+    private static final String DEALER_NICKNAME = "딜러";
+
     private final String value;
 
     public Nickname(String value) {
         validateBlank(value);
         this.value = value;
+    }
+
+    public static Nickname createDealer() {
+        return new Nickname(DEALER_NICKNAME);
     }
 
     public String getValue() {
