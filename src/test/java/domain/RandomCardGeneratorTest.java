@@ -30,7 +30,7 @@ public class RandomCardGeneratorTest {
     static class FakeCardGenerator implements CardGenerator{
         @Override
         public Card generate() {
-            return null;
+            return new Card(CardType.DIAMOND_ACE);
         }
     }
 }
