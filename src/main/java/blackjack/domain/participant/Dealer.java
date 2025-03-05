@@ -19,7 +19,7 @@ public class Dealer implements GameAction {
     }
 
     @Override
-    public List<Card> showInitialCards() {
+    public List<Card> getInitialCards() {
         return List.of(cards.getFirst());
     }
 
@@ -34,5 +34,9 @@ public class Dealer implements GameAction {
     @Override
     public int hashCode() {
         return Objects.hashCode(cards);
+    }
+
+    public String getNickname() {
+        return NICKNAME;
     }
 }

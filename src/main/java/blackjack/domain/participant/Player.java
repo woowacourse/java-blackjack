@@ -19,7 +19,7 @@ public class Player implements GameAction {
     }
 
     @Override
-    public List<Card> showInitialCards() {
+    public List<Card> getInitialCards() {
         return cards;
     }
 

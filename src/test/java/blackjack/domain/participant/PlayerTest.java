@@ -52,11 +52,11 @@ public class PlayerTest {
         // given
         final List<Card> cards = provideCards(2);
         player.receiveCards(cards);
-        final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.ACE),
+        final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.A),
                 new Card(Shape.SPADE, Denomination.TWO));
 
         // when
-        final List<Card> playerCards = player.showInitialCards();
+        final List<Card> playerCards = player.getInitialCards();
 
         // then
         assertThat(playerCards).isEqualTo(expected);
