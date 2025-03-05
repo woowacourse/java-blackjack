@@ -38,6 +38,9 @@ public class Cards {
     }
 
     public boolean isUnderDrawLimit() { // TODO : ACE를 무조건 1로 보는 문제
+        if (cards.stream().filter(card -> card.cardNumberType().isAce()).count() == 2) {
+            return true;
+        }
         if (isAceOnlyOne()) {
             int sumWithoutAce = calculateSumWithoutAce();
             return (sumWithoutAce + CardNumberType.getAceHighNumber()) <= VALID_DRAW_LIMIT;
