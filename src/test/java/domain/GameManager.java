@@ -1,7 +1,9 @@
 package domain;
 
+import domain.card.CardGroup;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
@@ -15,6 +17,7 @@ public class GameManager {
     }
 
     public static GameManager creat() {
-        return null;
+        final CardGroup cardGroup = new CardGroup(new ArrayList<>());
+        return new GameManager(new Dealer(cardGroup), new ArrayList<>());
     }
 }
