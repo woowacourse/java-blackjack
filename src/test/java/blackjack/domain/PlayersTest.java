@@ -13,10 +13,14 @@ class PlayersTest {
     @Test
     void give_two_cards() {
         // given
-        Player player = new Player("두리");
+        List<String> nickname = List.of("두리");
 
         // when
-        int result = player.getCards().size();
+        int result = new Players(nickname)
+                .getPlayers()
+                .getFirst()
+                .getCards()
+                .size();
 
         // then
         assertThat(result).isEqualTo(2);
@@ -27,12 +31,14 @@ class PlayersTest {
     void make_players() {
         //given
         List<String> playerNames = List.of("두리", "비타");
-        List<Player> playerExpected = List.of(new Player("두리"), new Player("비타"));
 
         //when
         Players players = new Players(playerNames);
+        List<String> excepted = players.getPlayers().stream()
+                .map(Player::getName)
+                .toList();
 
         //then
-        assertThat(players.getPlayers()).isEqualTo(playerExpected);
+        assertThat(playerNames).isEqualTo(excepted);
     }
 }
