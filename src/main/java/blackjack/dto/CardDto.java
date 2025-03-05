@@ -9,7 +9,7 @@ public record CardDto(
 
     public static CardDto from(Card card) {
         return new CardDto(
-            card.getCardType().getDisplayName(),
-            card.getCardNumber().getDisplayName());
+            card.type().getDisplayName(),
+            card.number().getDisplayName());
     }
 }

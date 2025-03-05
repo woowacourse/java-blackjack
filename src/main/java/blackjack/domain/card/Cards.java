@@ -20,7 +20,7 @@ public class Cards {
     public int sum() {
         int sumWithoutAce = cards.stream()
             .filter(card -> !card.isAce())
-            .mapToInt(card -> card.getCardNumber().getNumber())
+            .mapToInt(card -> card.number().getNumber())
             .sum();
         int sumOfAce = getSumOfAce(sumWithoutAce);
         return sumWithoutAce + sumOfAce;
