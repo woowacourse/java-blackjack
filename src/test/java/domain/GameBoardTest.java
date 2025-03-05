@@ -15,8 +15,8 @@ public class GameBoardTest {
     @Test
     void 게임판_테스트() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
+        Player player1 = Player.from("우가");
+        Player player2 = Player.from("히스타");
 
         //when
         GameBoard gameBoard = new GameBoard(List.of(player1, player2));
@@ -29,9 +29,9 @@ public class GameBoardTest {
     void 카드를_모두에게_2장씩_나눠준다() {
         //given
         List<Participant> participants = List.of(
-                new Player("우가"),
-                new Player("히스타"),
-                new Dealer("딜러")
+                Player.from("우가"),
+                Player.from("히스타"),
+                Player.from("딜러")
         );
         GameBoard gameBoard = new GameBoard(participants);
 
@@ -51,9 +51,9 @@ public class GameBoardTest {
     void 카드덱_2장_빠지기() {
         //given
         List<Participant> participants = List.of(
-                new Player("우가"),
-                new Player("히스타"),
-                new Dealer("딜러")
+                Player.from("우가"),
+                Player.from("히스타"),
+                Player.from("딜러")
         );
         GameBoard gameBoard = new GameBoard(participants);
 
@@ -66,10 +66,10 @@ public class GameBoardTest {
     @Test
     void 카드를_참가자에게_1장_준다() {
         //given
-        Participant targetParticipant = new Player("우가");
+        Participant targetParticipant = Player.from("우가");
         List<Participant> participants = List.of(
                 targetParticipant,
-                new Player("히스타"),
+                Player.from("히스타"),
                 new Dealer("딜러")
         );
         GameBoard gameBoard = new GameBoard(participants);
