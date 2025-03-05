@@ -23,22 +23,11 @@ public class Hands {
         long aceCount = cards.stream()
                 .filter(Card::isAce)
                 .count();
-        return considerAce(sum, (int) aceCount);
-    }
-
-    private int considerAce(int sum, int aceCount) {
-        if (sum <= 21) {
-            return sum;
-        }
-        while (aceCount > 0 && sum > 21) {
-            sum -= 10;
-            aceCount--;
-        }
-        return sum;
+        return Rule.adjustSumByAce(sum, (int) aceCount);
     }
 
     public boolean isSumBelow(final int criteria) {
-        return calculateSum() <= criteria;
+        return calculateSum() <= criteria; // 이하
     }
 
     public List<Card> getCards() {

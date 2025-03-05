@@ -1,0 +1,104 @@
+@startuml
+left to right direction
+package controller {
+  class Controller {
+    +start: void
+  }
+}
+
+package domain {
+  class Hands {
+    - cards : List<cards>
+    + calculateSum(): int
+    + addNewCard() : void
+    + isSumBelow() : boolean
+    + getCards() : List<Card>
+  }
+
+  class Player {
+    - name: String
+    - hands: Hands
+    + addCard() : void
+    + getName() : String
+    + calculateSum() : int
+    + isNameEquals() : boolean
+    + getCards() : List<Card>
+  }
+
+  class Dealer {
+    - hands: Hands
+  }
+
+  class Round {
+    - cardDeck : CardDeck
+    - players: List<Player>
+    - dealer: Dealer
+    + register(): void
+    + distributeCards() : void
+  }
+
+  class CardDeck {
+    - cards : List<Card>
+    + getCard() : Card
+  }
+
+  package card {
+    class Card {
+      - shape : Shape
+      - value : value
+      + getValue() : int
+      + isAce() : boolean
+    }
+
+    Enum CardShape {
+          - DIAMOND : "다이아몬드"
+          - HEART : "하트"
+          - CLOVER : "클로버"
+          - SPADE : "스페이드"
+    }
+
+    Enum CardValue {
+          - TWO : 2, "2"
+          - THREE : 3, "3"
+          - FOUR : 4, "4"
+          - FIVE : 5, "5"
+          - SIX : 6, "6"
+          - SEVEN : 7, "7"
+          - EIGHT : 8, "8"
+          - NINE : 9, "9"
+          - TEN : 10, "10"
+          - KING : 10 "K"
+          - QUEEN : 10, "Q"
+          - JACK : 10, "J"
+          - ACE : 11, "A"
+          + getValue() : int
+    }
+  }
+}
+
+package view {
+  class InputView {
+    +getUserInput(): String
+  }
+
+  class OutputView {
+    +displayResult(): void
+  }
+}
+
+
+Round <--> Player
+Round <--> Dealer
+Dealer <--> Hands
+Player <--> Hands
+
+CardValue --> Card
+CardShape --> Card
+Card <--> CardDeck
+Card <--> Hands
+CardDeck --> Round
+
+Controller <--> Round
+Controller <--> InputView
+Controller <--> OutputView
+@enduml
