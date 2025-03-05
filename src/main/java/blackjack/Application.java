@@ -1,20 +1,20 @@
 package blackjack;
 
 import blackjack.domain.CardDeck;
+import blackjack.domain.Round;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
 import blackjack.view.InputView;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
 
 public class Application {
-
     public static void main(String[] args) {
-        List<Name> playerNames = getPlayerNames();
         CardDeck cardDeck = createCardDeck();
+        List<Name> playerNames = getPlayerNames();
+        Round round = new Round(cardDeck, playerNames);
     }
 
     private static List<Name> getPlayerNames() {
