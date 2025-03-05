@@ -6,4 +6,8 @@ import java.util.List;
 public interface GameAction {
 
     List<Card> getCards();
+
+    boolean canGetMoreCard();
+
+    String getNickname();
 }

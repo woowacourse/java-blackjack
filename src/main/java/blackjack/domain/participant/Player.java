@@ -20,6 +20,7 @@ public class Player implements GameAction {
         cards.addAll(givenCards);
     }
 
+    @Override
     public boolean canGetMoreCard() {
         int sum = cards.stream()
                 .mapToInt(Card::getCardMinNumber)
@@ -40,6 +41,7 @@ public class Player implements GameAction {
         return Objects.hash(nickname, cards);
     }
 
+    @Override
     public String getNickname() {
         return nickname;
     }

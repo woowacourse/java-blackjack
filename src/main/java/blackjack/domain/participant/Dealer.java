@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Dealer implements GameAction {
 
     private static final String NICKNAME = "딜러";
+    private static final int DEALER_THRESHOLD = 16;
 
     private final List<Card> cards;
 
@@ -16,6 +17,14 @@ public class Dealer implements GameAction {
 
     public void receiveCards(final List<Card> givenCards) {
         cards.addAll(givenCards);
+    }
+
+    @Override
+    public boolean canGetMoreCard() {
+        int sum = cards.stream()
+                .mapToInt(Card::getCardMinNumber)
+                .sum();
+        return sum <= DEALER_THRESHOLD;
     }
 
     @Override
@@ -36,6 +45,7 @@ public class Dealer implements GameAction {
         return Objects.hashCode(cards);
     }
 
+    @Override
     public String getNickname() {
         return NICKNAME;
     }
