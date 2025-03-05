@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.CurrentPlayerResponseDto;
+import blackjack.dto.FinalResultResponseDto;
 import blackjack.dto.RoundResultsResponseDto;
 import blackjack.dto.StartingCardsResponseDto;
 
@@ -50,10 +51,10 @@ public class OutputView {
 
     public static void printRoundResult(RoundResultsResponseDto responseDto) {
         System.out.println(String.format("%s카드 : %s - 결과: %d",
-                responseDto.dealer().name(),
-                responseDto.dealer().cards().stream()
-                    .map(card -> card.number() + card.type())
-                    .collect(Collectors.joining(", ")),
+            responseDto.dealer().name(),
+            responseDto.dealer().cards().stream()
+                .map(card -> card.number() + card.type())
+                .collect(Collectors.joining(", ")),
             responseDto.dealer().sumOfCards()));
 
         for (var player : responseDto.players()) {
@@ -62,6 +63,19 @@ public class OutputView {
                 .map(card -> card.number() + card.type())
                 .collect(Collectors.joining(", "));
             System.out.println(String.format("%s카드 : %s - 결과: %d", playerName, playerCardNames, player.sumOfCards()));
+        }
+    }
+
+    public static void printFinalResult(FinalResultResponseDto responseDto) {
+        System.out.println("## 최종 승패");
+        for (var gamer : responseDto.gamers()) {
+            System.out.println(String.format("%s: %s",
+                gamer.name(),
+                gamer.result().entrySet().stream()
+                    .filter(result -> result.getValue() > 0)
+                    .map(result -> result.getValue() + result.getKey().getDisplayName())
+                    .collect(Collectors.joining(" "))
+            ));
         }
     }
 }

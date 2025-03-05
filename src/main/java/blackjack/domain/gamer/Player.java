@@ -8,6 +8,7 @@ public class Player extends Gamer {
         this.name = name;
     }
 
+    @Override
     public boolean canReceiveAdditionalCards() {
         return !isBust();
     }

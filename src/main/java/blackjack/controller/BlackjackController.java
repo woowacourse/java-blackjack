@@ -30,5 +30,7 @@ public class BlackjackController {
         }
 
         OutputView.printRoundResult(blackjackService.getRoundResults());
+
+        OutputView.printFinalResult(blackjackService.getFinalResult());
     }
 }

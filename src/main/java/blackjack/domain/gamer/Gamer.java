@@ -1,7 +1,10 @@
 package blackjack.domain.gamer;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import blackjack.domain.RoundResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.deck.Deck;
@@ -41,6 +44,15 @@ public abstract class Gamer {
 
     public void drawCard(Deck deck) {
         cards.add(deck.draw());
+    }
+
+    public Map<RoundResult, Integer> getFinalResult(List<Gamer> otherGamers) {
+        Map<RoundResult, Integer> result = new HashMap<>();
+        for (var otherGamer : otherGamers) {
+            RoundResult thisResult = RoundResult.judgeResult(this, otherGamer);
+            result.put(thisResult, result.getOrDefault(thisResult, 0) + 1);
+        }
+        return result;
     }
 
     public abstract boolean canReceiveAdditionalCards();

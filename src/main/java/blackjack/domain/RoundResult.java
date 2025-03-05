@@ -3,10 +3,16 @@ package blackjack.domain;
 import blackjack.domain.gamer.Gamer;
 
 public enum RoundResult {
-    WIN,
-    LOSE,
-    TIE,
+    WIN("승"),
+    LOSE("패"),
+    TIE("무"),
     ;
+
+    private final String displayName;
+
+    RoundResult(String displayName) {
+        this.displayName = displayName;
+    }
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         if (gamer.isBust() && otherGamer.isBust()) {
@@ -39,5 +45,9 @@ public enum RoundResult {
             return LOSE;
         }
         return TIE;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }
