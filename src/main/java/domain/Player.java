@@ -9,6 +9,7 @@ public record Player(
     }
 
     public void pickCard(final Deck deck) {
-
+        final Card card = deck.pickCard();
+        cardHand.add(card);
     }
 }
