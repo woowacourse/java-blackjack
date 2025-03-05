@@ -16,8 +16,7 @@ class ParticipantsTest {
                 new Participant("수양"),
                 new Participant("포스티")
         );
-        Assertions.assertThatThrownBy(() ->
-                new Participants(crews)
-        ).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> new Participants(crews))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
