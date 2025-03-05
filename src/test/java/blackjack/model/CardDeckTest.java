@@ -1,30 +1,26 @@
 package blackjack.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static blackjack.model.CardCreator.createCard;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
 
-    private static final int TOTAL_CARD_SIZE = 52;
-
-    @Test
-    void 카드_덱을_초기화한다() {
-        CardDeck cardDeck = new CardDeck();
-
-        assertThat(cardDeck.getCards())
-                .hasSize(TOTAL_CARD_SIZE);
-    }
-
     @Test
     void 랜덤으로_N_개의_카드를_반환한다() {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = new CardDeck(new Cards(
+                List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
+                        createCard(CardNumber.FIVE))
+        ));
         int drawSize = 4;
 
         assertSoftly(softAssertions -> {
             softAssertions.assertThat(cardDeck.draw(drawSize)).hasSize(drawSize);
-            softAssertions.assertThat(cardDeck.getCards()).hasSize(TOTAL_CARD_SIZE - drawSize);
+            softAssertions.assertThat(cardDeck.getCards()).hasSize(0);
         });
     }
+
 }
