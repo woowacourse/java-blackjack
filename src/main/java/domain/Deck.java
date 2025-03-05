@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class Deck {
+public class Deck implements CardProvider {
 
-    private static final Deque<Card> CACHE = new ArrayDeque<>();
+    private final Deque<Card> deck = new ArrayDeque<>();
 
-    static {
+    public Deck() {
         List<Card> temp = new ArrayList<>();
         for (Symbol symbol : Symbol.getAllSymbols()) {
             for (Number number : Number.getAllNumbers()) {
@@ -19,13 +19,13 @@ public class Deck {
         }
 
         Collections.shuffle(temp);
-        CACHE.addAll(temp);
+        deck.addAll(temp);
     }
 
-    public static List<Card> provideCards(int size) {
+    public List<Card> provideCards(int size) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            cards.add(CACHE.pollFirst());
+            cards.add(deck.pollFirst());
         }
         return cards;
     }
