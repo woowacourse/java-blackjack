@@ -20,4 +20,8 @@ public class Player {
             throw new IllegalStateException("플레이어는 이름과 손패를 가져야합니다.");
         }
     }
+
+    public void receiveCard(TrumpCard card) {
+        hand.addCard(card);
+    }
 }
