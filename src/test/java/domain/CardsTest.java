@@ -77,4 +77,19 @@ public class CardsTest {
         //then
         assertThat(sum).isEqualTo(16);
     }
+
+    @DisplayName("만약 ACE가 포함된 경우, 나머지 카드의 합이 11 이하이면 ACE를 10으로 간주한다")
+    @Test
+    void test6() {
+        //given
+        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
+                new Card(CardNumberType.FIVE, CardType.DIAMOND),
+                new Card(CardNumberType.ACE, CardType.DIAMOND)
+                );
+        Cards cards = new Cards(testCards);
+        //when
+        int sum = cards.calculateSum();
+        //then
+        assertThat(sum).isEqualTo(21);
+    }
 }
