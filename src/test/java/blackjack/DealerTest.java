@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("딜러 테스트")
 class DealerTest {
@@ -101,5 +103,51 @@ class DealerTest {
         // then
         assertThat(total)
                 .isEqualTo(12);
+    }
+
+    @DisplayName("패가 2장만 있고, 합이 21이면 블랙잭이다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, ACE, true",
+            "TEN, TEN, false",
+    })
+    void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
+        // given
+        Card spadeTen = new Card(Suit.SPADES, value1);
+        Card spadeAce = new Card(Suit.SPADES, value2);
+        Dealer dealer = new Dealer(new Deck(new LinkedList<>()));
+        dealer.receiveHand(spadeTen);
+        dealer.receiveHand(spadeAce);
+
+        // when
+        boolean isBlackjack = dealer.isBlackjack();
+
+        // then
+        assertThat(isBlackjack)
+                .isSameAs(expected);
+    }
+
+    @DisplayName("21이 초과하면 버스트이다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, TEN, TEN, true",
+            "TWO, TWO, ACE, false",
+    })
+    void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
+        // given
+        Card card1 = new Card(Suit.SPADES, value1);
+        Card card2 = new Card(Suit.SPADES, value2);
+        Card card3 = new Card(Suit.SPADES, value3);
+        Dealer dealer = new Dealer(new Deck(new LinkedList<>()));
+        dealer.receiveHand(card1);
+        dealer.receiveHand(card2);
+        dealer.receiveHand(card3);
+
+        // when
+        boolean isBust = dealer.isBust();
+
+        // then
+        assertThat(isBust)
+                .isSameAs(expected);
     }
 }

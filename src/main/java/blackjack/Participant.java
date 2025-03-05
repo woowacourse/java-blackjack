@@ -33,6 +33,17 @@ public abstract class Participant {
                 .anyMatch(card -> card.getCardValue() == CardValue.ACE);
     }
 
+    public boolean isBlackjack() {
+        if (hand.size() == 2 && getTotal() == 21) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBust() {
+        return 21 < getTotal();
+    }
+
     public List<Card> getHand() {
         return Collections.unmodifiableList(hand);
     }

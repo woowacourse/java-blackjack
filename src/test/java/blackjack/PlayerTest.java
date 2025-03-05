@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("플레이어 테스트")
 class PlayerTest {
@@ -87,5 +89,51 @@ class PlayerTest {
         // then
         assertThat(player.getTotal())
                 .isEqualTo(12);
+    }
+
+    @DisplayName("패가 2장만 있고, 합이 21이면 블랙잭이다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, ACE, true",
+            "TEN, TEN, false",
+    })
+    void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
+        // given
+        Card spadeTen = new Card(Suit.SPADES, value1);
+        Card spadeAce = new Card(Suit.SPADES, value2);
+        Player player = new Player("pobi");
+        player.receiveHand(spadeTen);
+        player.receiveHand(spadeAce);
+
+        // when
+        boolean isBlackjack = player.isBlackjack();
+
+        // then
+        assertThat(isBlackjack)
+                .isSameAs(expected);
+    }
+
+    @DisplayName("21이 초과하면 버스트이다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, TEN, TEN, true",
+            "TWO, TWO, ACE, false",
+    })
+    void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
+        // given
+        Card card1 = new Card(Suit.SPADES, value1);
+        Card card2 = new Card(Suit.SPADES, value2);
+        Card card3 = new Card(Suit.SPADES, value3);
+        Player player = new Player("pobi");
+        player.receiveHand(card1);
+        player.receiveHand(card2);
+        player.receiveHand(card3);
+
+        // when
+        boolean isBust = player.isBust();
+
+        // then
+        assertThat(isBust)
+                .isSameAs(expected);
     }
 }
