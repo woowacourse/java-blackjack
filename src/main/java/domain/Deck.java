@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -11,13 +12,24 @@ public class Deck {
         deck = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Denomination denomination : Denomination.values()) {
-                Card card = new Card(denomination, suit);
-                deck.add(card);
+                createDeckCards(suit, denomination);
             }
         }
     }
 
-    public int size() {
-        return deck.size();
+    private void createDeckCards(Suit suit, Denomination denomination) {
+        if (denomination.equals(Denomination.ACE)){
+            deck.add(new Ace(denomination, suit));
+            return;
+        }
+        deck.add(new Card(denomination, suit));
+    }
+
+    public void shuffle() {
+        Collections.shuffle(deck);
+    }
+
+    public List<Card> getDeck() {
+        return Collections.unmodifiableList(deck);
     }
 }

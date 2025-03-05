@@ -32,6 +32,4 @@ public class DeckTest {
         deck.shuffle();
         assertThat(deck.getDeck().equals(deckCards)).isFalse();
     }
-
-
 }
