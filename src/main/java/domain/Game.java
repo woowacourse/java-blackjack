@@ -1,7 +1,5 @@
 package domain;
 
-import static java.util.stream.Collectors.toMap;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,20 +16,18 @@ public class Game {
         validateDuplicateName(playerNames);
         playerNames.forEach(this::registerPlayer);
     }
-
-    public List<String> getPlayerNames() {
-        return players.keySet().stream()
-                .map(Player::getName)
-                .toList();
-    }
-
+    
     public List<Card> getDealerCards() {
         return dealer.getCards();
     }
 
-    public Map<String, List<Card>> getPlayerNameAndCards() {
-        return players.keySet().stream()
-                .collect(toMap(Player::getName, Player::getCards));
+    public void hit(Player player) {
+        Card card = dealer.pickCard();
+        player.hit(card);
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players.keySet());
     }
 
     private void registerPlayer(String playerName) {

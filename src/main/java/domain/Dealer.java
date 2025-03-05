@@ -60,4 +60,8 @@ public class Dealer {
     public List<Card> getCards() {
         return cardHand.getCards();
     }
+
+    public Card pickCard() {
+        return deck.random(new RandomNumberGenerator());
+    }
 }
