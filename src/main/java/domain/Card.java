@@ -19,6 +19,10 @@ public class Card {
         return rank == Rank.ACE;
     }
 
+    public String getNotation() {
+        return rank.getName() + suit.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

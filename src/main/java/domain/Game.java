@@ -1,5 +1,7 @@
 package domain;
 
+import static java.util.stream.Collectors.toMap;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,20 +10,33 @@ import java.util.Set;
 public class Game {
     private static final int MAX_PLAYER_COUNT = 5;
     private final Map<Player, GameResult> players = new HashMap<>();
-    private final Deck deck;
+    private final Dealer dealer;
 
     public Game(List<String> playerNames) {
-        deck = new Deck();
+        dealer = new Dealer();
         validatePlayerCount(playerNames);
         validateDuplicateName(playerNames);
         playerNames.forEach(this::registerPlayer);
     }
 
+    public List<String> getPlayerNames() {
+        return players.keySet().stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public List<Card> getDealerCards() {
+        return dealer.getCards();
+    }
+
+    public Map<String, List<Card>> getPlayerNameAndCards() {
+        return players.keySet().stream()
+                .collect(toMap(Player::getName, Player::getCards));
+    }
+
     private void registerPlayer(String playerName) {
-        Card firstCard = deck.random(new RandomNumberGenerator());
-        Card secondCard = deck.random(new RandomNumberGenerator());
-        CardHand cardHand = new CardHand(Set.of(firstCard, secondCard));
-        Player player = new Player(playerName, cardHand);
+        CardHand initialDeal = dealer.getInitialDeal();
+        Player player = new Player(playerName, initialDeal);
         players.put(player, GameResult.NONE);
     }
 

@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,6 +52,10 @@ public class CardHand {
 
     public boolean isDealerHit() {
         return cards.size() == INITIAL_CARD_COUNT && calculateScore() <= DEALER_HIT_THRESHOLD;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     @Override

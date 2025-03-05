@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Player {
     private final String name;
     private final CardHand cardHand;
@@ -19,5 +21,13 @@ public class Player {
 
     public boolean isBlackJack() {
         return cardHand.isBlackJack();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return cardHand.getCards();
     }
 }
