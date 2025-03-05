@@ -23,4 +23,16 @@ public class GameRule {
         }
         return GameResult.DRAW;
     }
+
+    public GameResult evaluatePlayerWin(Player player, Dealer dealer) {
+        GameResult gameResult = evaluateDealerWin(player, dealer);
+
+        if (gameResult == GameResult.WIN) {
+            return GameResult.LOSE;
+        }
+        if (gameResult == GameResult.LOSE) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
 }

@@ -21,6 +21,6 @@ public class GameFinalResult {
     }
 
     public GameResult getGameResultFromPlayer(Player player, Dealer dealer) {
-        return gameRule.evaluateDealerWin(player, dealer);
+        return gameRule.evaluatePlayerWin(player, dealer);
     }
 }

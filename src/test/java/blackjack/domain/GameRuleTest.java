@@ -76,9 +76,11 @@ public class GameRuleTest {
         //when
         GameRule gameRule = new GameRule();
         GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
+        GameResult playerResult = gameRule.evaluatePlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.DRAW);
+        assertThat(playerResult).isEqualTo(GameResult.DRAW);
     }
 
     @DisplayName("플레이어가 버스트인 경우, 딜러가 이긴다.")
@@ -102,9 +104,12 @@ public class GameRuleTest {
         //when
         GameRule gameRule = new GameRule();
         GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
+        GameResult playerResult = gameRule.evaluatePlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.WIN);
+        assertThat(playerResult).isEqualTo(GameResult.LOSE);
+
     }
 
     @DisplayName("딜러가 버스트인 경우, 딜러가 진다.")
@@ -128,8 +133,10 @@ public class GameRuleTest {
         //when
         GameRule gameRule = new GameRule();
         GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
+        GameResult playerResult = gameRule.evaluatePlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.LOSE);
+        assertThat(playerResult).isEqualTo(GameResult.WIN);
     }
 }
