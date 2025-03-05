@@ -1,9 +1,9 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,9 +31,13 @@ class DeckTest {
         final Deck deck = new Deck(List.of(card1, card2));
 
         // when
-        Card card = deck.drawCard();
+        final Card drownCard1 = deck.drawCard();
+        final Card drownCard2 = deck.drawCard();
 
         // then
-        assertThat(card).isEqualTo(card1);
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(drownCard1).isEqualTo(card1);
+            softly.assertThat(drownCard2).isEqualTo(card2);
+        });
     }
 }
