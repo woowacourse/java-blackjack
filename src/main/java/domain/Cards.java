@@ -27,7 +27,7 @@ public class Cards {
     }
 
     public void checkMaxSum() {
-        if(calculateSumAll() > VALID_MAX_SUM_LIMIT) {
+        if(calculateSumWithLowAce() > VALID_MAX_SUM_LIMIT) {
             throw new IllegalArgumentException(ERROR_HEADER + MAX_SUM_EXCEED_ERROR);
         }
     }
@@ -37,20 +37,20 @@ public class Cards {
     }
 
     public boolean isUnderDrawLimit() { // TODO : ACE를 무조건 1로 보는 문제
-        return calculateSumAll() <= VALID_DRAW_LIMIT;
+        return calculateSumWithLowAce() <= VALID_DRAW_LIMIT;
     }
 
     public int calculateSumResult() {
         if(hasNotAce()) {
-            return calculateSumAll();
+            return calculateSumWithoutAce();
         }
         int cardsSumWithoutAce = calculateSumWithoutAce();
         int aceCount = calculateAceCount();
 
-        return calculateTotalSumWithAces(aceCount, cardsSumWithoutAce);
+        return calculateSumWithAces(aceCount, cardsSumWithoutAce);
     }
 
-    private int calculateTotalSumWithAces(int aceCount, int cardsWithoutAceSum) {
+    private int calculateSumWithAces(int aceCount, int cardsWithoutAceSum) {
         int result = cardsWithoutAceSum;
         for (int i = 0; i < aceCount; i++) {
             if(result <= ACE_CONVERSION_THRESHOLD) {
@@ -75,7 +75,7 @@ public class Cards {
                 .sum();
     }
 
-    private int calculateSumAll() {
+    private int calculateSumWithLowAce() {
         return cards.stream()
                 .map(Card::cardNumberType)
                 .mapToInt(CardNumberType::getDefaultNumber)
