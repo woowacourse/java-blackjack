@@ -18,9 +18,21 @@ public enum Denomination {
     Q(List.of(10)),
     J(List.of(10));
 
+    private static final List<Denomination> SPECIAL_DENOMINATION = List.of(Denomination.A, Denomination.K,
+            Denomination.Q, Denomination.J);
+
     private final List<Integer> numbers;
 
     Denomination(final List<Integer> numbers) {
         this.numbers = numbers;
+    }
+
+    public String getName() {
+        final boolean isSpecialDenomination = SPECIAL_DENOMINATION.stream()
+                .anyMatch(denomination -> denomination == this);
+        if (isSpecialDenomination) {
+            return this.name();
+        }
+        return String.valueOf(numbers.getFirst());
     }
 }

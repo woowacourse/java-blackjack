@@ -24,4 +24,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(shape, denomination);
     }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public String getDenominationName() {
+        return denomination.getName();
+    }
 }
