@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DeckGenerator {
-    public Deck generateDeck() {
+    public static Deck generateDeck() {
         List<Card> cards = Arrays.stream(CardShape.values())
                 .flatMap(cardShape ->
                         Arrays.stream(CardNumber.values())

@@ -16,8 +16,8 @@ public class BlackjackTest {
                 new Participant("사나")
         ));
         Dealer dealer = new Dealer();
-        DeckGenerator generator = new DeckGenerator();
-        Deck deck = generator.generateDeck();
+
+        Deck deck = DeckGenerator.generateDeck();
 
         // when & then
         Assertions.assertThatCode(() -> new Blackjack(dealer, participants, deck))
