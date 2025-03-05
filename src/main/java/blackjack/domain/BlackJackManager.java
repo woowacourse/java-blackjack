@@ -26,17 +26,34 @@ public class BlackJackManager {
         return new BlackJackManager(cardDeck, participants);
     }
 
-    public void addExtraCard(Participant participant) {
-        Card card = cardDeck.pickRandomCard();
-        participant.addCards(card);
-    }
-
     public void initCardsToParticipants() {
         for (Participant participant : participants) {
             Card card1 = cardDeck.pickRandomCard();
             Card card2 = cardDeck.pickRandomCard();
             participant.addCards(card1, card2);
         }
+    }
+
+    public void addExtraCard(Participant participant) {
+        Card card = cardDeck.pickRandomCard();
+        participant.addCards(card);
+    }
+
+    public boolean addExtraCardToDealer() {
+        Dealer dealer = findDealer();
+        if (dealer.isPossibleToAdd()) {
+            addExtraCard(dealer);
+            return true;
+        }
+        return false;
+    }
+
+    private Dealer findDealer() {
+        return participants.stream()
+                .filter(participant -> participant instanceof Dealer)
+                .map(participant -> (Dealer) participant)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
     }
 
     public List<String> getPlayerNames() {

@@ -47,8 +47,8 @@ class BlackJackManagerTest {
         }
 
         @Test
-        @DisplayName("카드 한 장을 추가로 배부할 수 있다.")
-        void distributeExtraCard() {
+        @DisplayName("카드 한 장을 플레이어에게 추가로 배부할 수 있다.")
+        void distributeExtraCardToPlayer() {
             List<String> names = List.of("sana");
             BlackJackManager manager = BlackJackManager.createByPlayerNames(names);
             manager.initCardsToParticipants(); // 2장 배부
@@ -57,6 +57,38 @@ class BlackJackManagerTest {
             manager.addExtraCard(player); // 총 3장 카드 보유
 
             assertThat(player.getCards()).hasSize(3);
+        }
+
+        @Test
+        @DisplayName("카드 한 장을 딜러의 숫자가 16이하이면 추가로 배부할 수 있다.")
+        void distributeExtraCardToDealer() {
+            Dealer dealer = new Dealer();
+            Card card1 = new Card(Suit.HEART, Denomination.SIX);
+            Card card2 = new Card(Suit.SPADE, Denomination.KING);
+
+            dealer.addCards(card1, card2);
+
+            CardDeck cardDeck = CardDeck.createCardDeck();
+            List<Participant> participants = List.of(dealer);
+            BlackJackManager manager = new BlackJackManager(cardDeck, participants);
+
+            assertThat(manager.addExtraCardToDealer()).isTrue();
+        }
+
+        @Test
+        @DisplayName("카드 한 장을 딜러의 숫자가 16초과이면 추가로 배부할 수 없다.")
+        void notDistributeExtraCardToDealer() {
+            Dealer dealer = new Dealer();
+            Card card1 = new Card(Suit.HEART, Denomination.SEVEN);
+            Card card2 = new Card(Suit.SPADE, Denomination.KING);
+
+            dealer.addCards(card1, card2);
+
+            CardDeck cardDeck = CardDeck.createCardDeck();
+            List<Participant> participants = List.of(dealer);
+            BlackJackManager manager = new BlackJackManager(cardDeck, participants);
+
+            assertThat(manager.addExtraCardToDealer()).isFalse();
         }
     }
 }
