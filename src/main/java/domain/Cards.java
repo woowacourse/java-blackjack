@@ -34,7 +34,7 @@ public class Cards {
         }
     }
 
-    public void add(Card testCard) {
-
+    public void add(Card card) {
+        cards.add(card);
     }
 }
