@@ -39,7 +39,7 @@ public class Cards {
         return calculateSum() <= VALID_DRAW_LIMIT;
     }
 
-    private int calculateSum() {
+    public int calculateSum() {
         return cards.stream()
                 .map(Card::cardNumberType)
                 .mapToInt(CardNumberType::getValue)
