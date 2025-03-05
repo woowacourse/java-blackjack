@@ -19,4 +19,16 @@ public class CardDeckTest {
         Assertions.assertThat(card).isInstanceOf(TrumpCard.class);
     }
 
+    @DisplayName("카드 배부 시 52장의 카드 덱에서 카드를 뽑아서 배부한다.")
+    @Test
+    void test2() {
+        // given
+        int originCardDeckSize = CardDeck.getCardDeck().size();
+        // when
+        CardDeck.drawCard();
+        int afterDrawDeckSize = CardDeck.getCardDeck().size();
+        // then
+        Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
+    }
+
 }

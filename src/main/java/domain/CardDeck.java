@@ -17,7 +17,15 @@ public class CardDeck {
         Collections.shuffle(CARD_DECK);
     }
 
+    public static void drawCard() {
+
+    }
+
     public static TrumpCard getCard(int index) {
         return CARD_DECK.get(index);
+    }
+
+    public static List<TrumpCard> getCardDeck() {
+        return CARD_DECK;
     }
 }
