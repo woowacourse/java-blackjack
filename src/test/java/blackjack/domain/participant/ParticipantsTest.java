@@ -54,7 +54,7 @@ class ParticipantsTest {
 
     @DisplayName("플레이어가 카드를 더 얻을 수 있으면 true를 반환한다.")
     @Test
-    void canGetMoreCard() {
+    void canPlayerGetMoreCard() {
         // given
         final List<Card> firstCards = provideUnder21Cards();
         final List<Card> secondCards = provideOver21Cards();
