@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -65,17 +66,28 @@ public class GameBoard {
         CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
         List<Card> ownedCards = ownedCardDeck.getCards();
 
-        int totalScore = 0;
+        List<Card> cards = new ArrayList<>();
+        List<Card> aceCards = new ArrayList<>();
+
         for (Card card : ownedCards) {
             if (card.isAceCard()) {
-                if (totalScore + 11 <= 21) {
-                    totalScore += 11;
-                    continue;
-                }
-                totalScore += card.getNumber();
+                aceCards.add(card);
+                continue;
+            }
+            cards.add(card);
+        }
+
+        int totalScore = cards.stream()
+                            .mapToInt(Card::getNumber)
+                            .sum();
+
+        for (Card aceCard : aceCards) {
+            if (totalScore + 11 <= 21) {
+                totalScore += 11;
+                continue;
             }
 
-            totalScore += card.getNumber();
+            totalScore += aceCard.getNumber();
         }
 
         return totalScore;
