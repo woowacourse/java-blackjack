@@ -4,7 +4,6 @@ import domain.CardDeck;
 import domain.Dealer;
 import domain.Game;
 import domain.GameResult;
-import domain.GameStatus;
 import domain.Participant;
 import domain.Player;
 import domain.card.Card;
@@ -12,6 +11,7 @@ import domain.dto.GameResultDto;
 import domain.dto.ParticipantCardsDto;
 import java.util.ArrayList;
 import java.util.List;
+import util.ExceptionHandler;
 import view.InputView;
 import view.OutputView;
 
@@ -28,14 +28,16 @@ public class GameController {
     public void run() {
         registerGamePlayers();
         distributeGameInitialCards();
-        distributeGameExtraCards();
+        distributeParticipantExtraCards();
         determineFinalParticipantCards();
         determineGameResult();
     }
 
     private void registerGamePlayers() {
-        List<String> names = InputView.readPlayerNames();
-        game.registerPlayers(names);
+        ExceptionHandler.repeatUntilSuccess(() ->{
+            List<String> names = InputView.readPlayerNames();
+            game.registerPlayers(names);
+        });
     }
 
     private void distributeGameInitialCards() {
@@ -44,21 +46,24 @@ public class GameController {
         displayDistributedGameInitialCards();
     }
 
-    private void distributeGameExtraCards() {
+    private void distributeParticipantExtraCards() {
         List<Player> players = game.getPlayers();
         for (Player player : players) {
-            while (player.ableToAddCard()) {
-                boolean addCard = InputView.readAddPlayerCard(player.getName());
-                if (!addCard) {
-                    break;
-                }
-                Card card = cardDeck.pickCard();
-                player.addCard(card);
-            }
-            ParticipantCardsDto participantCardsDto = createParticipantCardsDto(player);
-            OutputView.printParticipantCards(participantCardsDto);
+            distributePlayerExtraCards(player);
         }
+        distributeDealerExtraCard();
+    }
 
+    private void distributePlayerExtraCards(Player player) {
+        while (player.ableToAddCard() && InputView.readAddPlayerCard(player.getName())) {
+            Card card = cardDeck.pickCard();
+            player.addCard(card);
+        }
+        ParticipantCardsDto participantCardsDto = createParticipantCardsDto(player);
+        OutputView.printParticipantCards(participantCardsDto);
+    }
+
+    private void distributeDealerExtraCard() {
         Dealer dealer = game.getDealer();
         boolean dealerExtraCard = dealer.ableToAddCard();
         if (dealerExtraCard) {
@@ -82,7 +87,6 @@ public class GameController {
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
         GameResult dealerGameResult = game.determineGameResult(dealer.getName());
-
         GameResultDto dealerGameResultDto = createGameResultDto(dealer, dealerGameResult);
         List<GameResultDto> playerGameResultDtos = new ArrayList<>();
         for (Player player : players) {
@@ -95,15 +99,11 @@ public class GameController {
     private void displayDistributedGameInitialCards() {
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
-
         List<ParticipantCardsDto> playerCardsDtos = new ArrayList<>();
         for (Player player : players) {
             playerCardsDtos.add(createParticipantCardsDto(player));
         }
-
-        ParticipantCardsDto dealerCardsDto = new ParticipantCardsDto(dealer.getName(), dealer.getInitialCard(),
-                dealer.getCardsScore());
-
+        ParticipantCardsDto dealerCardsDto = new ParticipantCardsDto(dealer.getName(), dealer.getInitialCard(), dealer.getCardsScore());
         OutputView.printParticipantInitialCards(dealerCardsDto, playerCardsDtos);
     }
 

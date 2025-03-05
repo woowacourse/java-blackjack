@@ -18,6 +18,10 @@ public class OutputView {
     private static final String GAME_RESULT_HEADER = "## 최종 승패";
     private static final String DEALER_GAME_RESULT_FORMAT = "%d%s";
 
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
+    }
+
     public static void printParticipantInitialCards(ParticipantCardsDto dealerCardsDto, List<ParticipantCardsDto> playerCardsDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(System.lineSeparator()).append(formatParticipantInitialCardsHeader(dealerCardsDto, playerCardsDtos)).append(System.lineSeparator());
