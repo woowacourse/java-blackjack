@@ -32,7 +32,7 @@ public class Game {
     }
 
     private void validateDuplicateName(List<String> playerNames) {
-        if (playerNames.size() != Set.of(playerNames).size()) {
+        if (playerNames.size() != Set.copyOf(playerNames).size()) {
             throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
         }
     }
