@@ -13,6 +13,11 @@ public class InputView {
         return parse(sc.nextLine());
     }
 
+    public static String readIntent(String nickname) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n",nickname);
+        return sc.nextLine();
+    }
+
     private static List<String> parse(String input) {
         String[] split = input.split(",", -1);
         return Arrays.asList(split);

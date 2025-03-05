@@ -2,25 +2,35 @@ package view;
 
 import model.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printHands(Dealer dealer, Players values) {
+
+    private static final String CARD_FORMAT = "%s카드: %s";
+
+    public static void printDivisionStart(Dealer dealer, Players values) {
         String dealerNickname = dealer.getNickname();
         List<String> playerNicknames = values.getNicknames();
         printDivideCommentByNickname(dealerNickname, playerNicknames);
         String dealerCard = dealer.getHands().getFirst().getCard();
-        System.out.println(String.format("%s카드: %s", dealerNickname, dealerCard));
+        printHand(dealerNickname, dealerCard);
+
         List<Player> players = values.getPlayers();
         for (Player player : players) {
-            String playerNickname = player.getNickname();
-            List<String> playerCards = player.getHands().stream().map(Card::getCard).toList();
-            String hands = String.join(", ", playerCards);
-            System.out.println(String.format("%s카드: %s", playerNickname, hands));
+            printDivision(player);
         }
         System.out.println();
+    }
+
+    public static void printDivision(Player player) {
+        String playerNickname = player.getNickname();
+        List<String> playerCards = player.getHands().stream().map(Card::getCard).toList();
+        String hands = String.join(", ", playerCards);
+        printHand(playerNickname, hands);
+    }
+
+    private static void printHand(String nickname, String joinedCards) {
+        System.out.println(String.format(CARD_FORMAT, nickname, joinedCards));
     }
 
     private static void printDivideCommentByNickname(String nickname, List<String> nicknames) {
