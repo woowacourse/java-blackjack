@@ -1,9 +1,20 @@
 package config;
 
+import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.Number;
+import domain.card.Shape;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardDeckFactory {
     public CardDeck create() {
-        return null;
+        List<Card> cards = new ArrayList<>();
+        for (Shape shape : Shape.values()) {
+            for (Number number : Number.values()) {
+                cards.add(new Card(shape, number));
+            }
+        }
+        return new CardDeck(cards);
     }
 }

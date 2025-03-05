@@ -14,6 +14,4 @@ public class CardDeckFactoryTest {
 
         assertThat(cardDeckFactory.create()).isInstanceOf(CardDeck.class);
     }
-
-
 }
