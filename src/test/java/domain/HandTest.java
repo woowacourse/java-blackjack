@@ -71,6 +71,15 @@ public class HandTest {
         }
     }
 
+    @Test
+    @DisplayName("Hand 의 총합이 21이 넘으면 버스트이다.")
+    void test6() {
+        Hand hand = new Hand();
 
+        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+        hand.addCard(new Ace(Suit.CLUB));
+
+        assertThat(hand.isBurst()).isFalse();
+    }
 
 }
