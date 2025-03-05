@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +14,7 @@ public class PlayersTest {
     @Test
     void createPlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이"), new Player("밍트"));
+        List<Player> players = List.of(new Player("엠제이", new ArrayList<>()), new Player("밍트", new ArrayList<>()));
 
         // when & then
         Assertions.assertThatCode(() -> new Players(players))
@@ -22,7 +25,7 @@ public class PlayersTest {
     @Test
     void createDuplicatePlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이"), new Player("엠제이"));
+        List<Player> players = List.of(new Player("엠제이", new ArrayList<>()), new Player("엠제이", new ArrayList<>()));
 
         // when & then
         Assertions.assertThatThrownBy(() -> new Players(players))

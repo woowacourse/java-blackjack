@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -8,7 +10,7 @@ public class Players {
 
     public Players(List<Player> players) {
         validate(players);
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     private void validate(List<Player> players) {
@@ -21,5 +23,9 @@ public class Players {
         return players.size() != players.stream()
                 .distinct()
                 .count();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }
