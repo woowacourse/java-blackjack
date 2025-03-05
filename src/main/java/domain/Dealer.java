@@ -2,6 +2,8 @@ package domain;
 
 public class Dealer extends GameParticipant {
 
+    public static final int DRAW_BOUNDARY = 16;
+
     private Dealer(Cards cards) {
         super(cards);
     }
@@ -15,6 +17,6 @@ public class Dealer extends GameParticipant {
     }
 
     public boolean hasToDraw() {
-        return this.getResult() <= 16;
+        return this.getResult() <= DRAW_BOUNDARY;
     }
 }
