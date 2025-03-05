@@ -1,5 +1,8 @@
 package domain;
 
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.User;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

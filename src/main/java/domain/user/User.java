@@ -1,4 +1,8 @@
-package domain;
+package domain.user;
+
+import domain.CardDeck;
+import domain.CardSetting;
+import domain.TrumpCard;
 
 public abstract class User {
     protected final String name;

@@ -1,13 +1,11 @@
 import static org.assertj.core.api.Assertions.*;
 
-import domain.CardDeck;
-import domain.Dealer;
+import domain.user.Dealer;
 import domain.GameManger;
-import domain.Player;
-import domain.User;
+import domain.user.Player;
+import domain.user.User;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
