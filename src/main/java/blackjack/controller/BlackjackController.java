@@ -35,17 +35,6 @@ public class BlackjackController {
         processFinalWinOrLoss(dealerCardHand, playerCardHands);
     }
     
-    private void processInitialCardOpening(final DealerCardHand dealerCardHand, final List<PlayerCardHand> playerCardHands) {
-        final List<String> playerNames = playerCardHands.stream()
-                .map(PlayerCardHand::getPlayerName)
-                .toList();
-        outputView.outputDealing(playerNames);
-        outputView.outputDealerCards(dealerCardHand.getInitialCards());
-        for (PlayerCardHand playerCardHand : playerCardHands) {
-            outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getInitialCards());
-        }
-    }
-    
     private List<PlayerCardHand> createPlayerCardHands(final Deck deck) {
         final List<String> playerNames = inputView.getPlayerNames();
         final List<Player> players = Player.createPlayers(playerNames);
@@ -54,8 +43,19 @@ public class BlackjackController {
                 .toList();
     }
     
+    private void processInitialCardOpening(final DealerCardHand dealerCardHand, final List<PlayerCardHand> playerCardHands) {
+        final List<String> playerNames = playerCardHands.stream()
+                .map(PlayerCardHand::getPlayerName)
+                .toList();
+        outputView.outputInitialCardOpeningMessage(playerNames);
+        outputView.outputDealerCards(dealerCardHand.getInitialCards());
+        for (PlayerCardHand playerCardHand : playerCardHands) {
+            outputView.outputPlayerCards(playerCardHand.getPlayerName(), playerCardHand.getInitialCards());
+        }
+    }
+    
     private void processPlayerAddingCards(final PlayerCardHand playerCardHand, final Deck deck) {
-        outputView.outputStartAdding(playerCardHand.getPlayerName());
+        outputView.outputAddingMessage(playerCardHand.getPlayerName());
         boolean addingCardDecision;
         do {
             if (playerCardHand.is21()) {
@@ -82,14 +82,14 @@ public class BlackjackController {
     }
     
     private void processCardOpening(final DealerCardHand dealerCardHand, final List<PlayerCardHand> playerCardHands) {
-        outputView.outputDealerResult(dealerCardHand.getCards(), dealerCardHand.getSum());
+        outputView.outputDealerCardsAndResult(dealerCardHand.getCards(), dealerCardHand.getSum());
         for (PlayerCardHand playerCardHand : playerCardHands) {
-            outputView.outputPlayerResult(playerCardHand.getPlayerName(), playerCardHand.getCards(), playerCardHand.getSum());
+            outputView.outputPlayerCardsAndResult(playerCardHand.getPlayerName(), playerCardHand.getCards(), playerCardHand.getSum());
         }
     }
     
     private void processFinalWinOrLoss(final DealerCardHand dealerCardHand, final List<PlayerCardHand> playerCardHands) {
-        outputView.outputFinalWinOrLossHeader();
+        outputView.outputFinalWinOrLossMessage();
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerCardHand, playerCardHands);
         outputView.outputDealerFinalWinOrLoss(
                 blackjackJudge.getDealerWinningCount(),
