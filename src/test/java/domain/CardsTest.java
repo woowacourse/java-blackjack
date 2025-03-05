@@ -97,5 +97,4 @@ public class CardsTest {
                 Arguments.of(CardNumber.A, CardNumber.A, CardNumber.A, Set.of(3, 13, 23, 33))
         );
     }
-
 }
