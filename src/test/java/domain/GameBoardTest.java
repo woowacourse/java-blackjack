@@ -31,7 +31,7 @@ public class GameBoardTest {
         List<Participant> participants = List.of(
                 Player.from("우가"),
                 Player.from("히스타"),
-                Player.from("딜러")
+                Dealer.generate()
         );
         GameBoard gameBoard = new GameBoard(participants);
 
@@ -53,7 +53,7 @@ public class GameBoardTest {
         List<Participant> participants = List.of(
                 Player.from("우가"),
                 Player.from("히스타"),
-                Player.from("딜러")
+                Dealer.generate()
         );
         GameBoard gameBoard = new GameBoard(participants);
 
@@ -70,7 +70,7 @@ public class GameBoardTest {
         List<Participant> participants = List.of(
                 targetParticipant,
                 Player.from("히스타"),
-                new Dealer("딜러")
+                Dealer.generate()
         );
         GameBoard gameBoard = new GameBoard(participants);
 
