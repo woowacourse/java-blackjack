@@ -13,7 +13,7 @@ public abstract class Participant {
 
     abstract boolean canTakeExtraCard();
 
-    abstract int calculateTotalCardScore();
+    public abstract int calculateTotalCardScore();
 
     public boolean isBust() {
         return calculateTotalCardScore() > 21;
@@ -26,4 +26,6 @@ public abstract class Participant {
     public List<Card> getCardDeck() {
         return cardDeck.getCards();
     }
+
+    public abstract String getName();
 }

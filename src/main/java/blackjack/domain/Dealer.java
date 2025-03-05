@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Set;
 
 public class Dealer extends Participant {
+    private final static String DEALER_NAME = "딜러";
 
     public Dealer(CardDeck cardDeck, CardDump cardDump) {
         super(cardDeck, cardDump);
@@ -29,5 +30,10 @@ public class Dealer extends Participant {
     public int calculateTotalCardScore() {
         Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
         return Collections.max(possibleScore);
+    }
+
+    @Override
+    public String getName() {
+        return DEALER_NAME;
     }
 }

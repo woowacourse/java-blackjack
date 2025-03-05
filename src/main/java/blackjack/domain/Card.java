@@ -16,8 +16,17 @@ public class Card {
         return rank.getScore();
     }
 
-    @Override
-    public String toString() {
-        return rank.getName() + suit.getName();
+    public CardRank getRank() {
+        return rank;
     }
+
+    public CardSuit getSuit() {
+        return suit;
+    }
+
+//    @Override
+//    public String toString() {
+//        return rank.getName() + suit.getName();
+//    }
+
 }

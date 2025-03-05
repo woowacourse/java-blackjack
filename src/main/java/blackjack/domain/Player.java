@@ -28,6 +28,7 @@ public class Player extends Participant {
                 .orElse(Collections.min(possibleSum));
     }
 
+    @Override
     public String getName() {
         return name;
     }

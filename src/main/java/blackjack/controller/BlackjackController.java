@@ -7,6 +7,8 @@ import blackjack.domain.GameFinalResult;
 import blackjack.domain.GameResult;
 import blackjack.domain.GameRule;
 import blackjack.domain.Player;
+import blackjack.dto.DistributedCardDto;
+import blackjack.dto.FinalResultDto;
 import blackjack.view.InputVIew;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -27,11 +29,13 @@ public class BlackjackController {
     public void run() {
         List<Player> players = distributeCardToPlayers();
         Dealer dealer = distrubuteCardToDealer();
-        outputView.displayDistributedCardStatus(dealer, players);
+        outputView.displayDistributedCardStatus(DistributedCardDto.from(dealer), players.stream().map(
+                DistributedCardDto::from).toList());
 
         hitExtraCardForPlayers(players);
         hitExtraCardForDealer(dealer);
-        outputView.displayFinalCardStatus(dealer, players);
+        outputView.displayFinalCardStatus(FinalResultDto.from(dealer), players.stream().map(
+                FinalResultDto::from).toList());
 
         getGameResultAndDisplay(dealer, players);
     }
@@ -67,7 +71,7 @@ public class BlackjackController {
                     break;
                 }
                 player.addCard();
-                outputView.displayUpdatedPlayerCardStatus(player);
+                outputView.displayCardInfo(DistributedCardDto.from(player));
             }
         }
     }
