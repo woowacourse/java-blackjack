@@ -38,12 +38,17 @@ public abstract class Gamer {
     }
 
     public void initialize(Deck deck) {
-        drawCard(deck);
-        drawCard(deck);
+        drawCard(deck, 2);
     }
 
     public void drawCard(Deck deck) {
-        cards.add(deck.draw());
+        drawCard(deck, 1);
+    }
+
+    public void drawCard(Deck deck, int count) {
+        for (int i = 0; i < count; i++) {
+            cards.add(deck.draw());
+        }
     }
 
     public Map<RoundResult, Integer> getFinalResult(List<Gamer> otherGamers) {
