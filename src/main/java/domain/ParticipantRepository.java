@@ -11,7 +11,8 @@ public class ParticipantRepository {
     private final Map<String, Participant> repository = new HashMap<>();
 
     {
-        repository.put("딜러", new Participant("딜러", Cards.createEmpty(), Role.DEALER));
+        Participant dealer = Participant.createDealer();
+        repository.put(dealer.name(), dealer);
     }
 
     private ParticipantRepository() {
@@ -27,7 +28,7 @@ public class ParticipantRepository {
 
     public void addAll(List<Participant> participants) { // TODO : 중복 될 경우 예외처리
         participants.forEach(
-                participant -> repository.put(participant.getName(), participant)
+                participant -> repository.put(participant.name(), participant)
         );
     }
 
@@ -45,6 +46,7 @@ public class ParticipantRepository {
 
     public void initialize() {
         repository.clear();
-        repository.put("딜러", new Participant("딜러", Cards.createEmpty(), Role.DEALER));
+        Participant dealer = Participant.createDealer();
+        repository.put(dealer.name(), dealer);
     }
 }

@@ -1,20 +1,17 @@
 package domain;
 
+import static domain.Role.*;
+
 import java.util.Objects;
 
-public class Participant {
-    private final String name;
-    private final Cards cards;
-    private final Role role;
+public record Participant(
+        String name,
+        Cards cards,
+        Role role
+) {
 
-    public Participant(String name, Cards cards, Role role) {
-        this.name = name;
-        this.cards = cards;
-        this.role = role;
-    }
-
-    public String getName() {
-        return name;
+    public static Participant createDealer() {
+        return new Participant("딜러", Cards.createEmpty(), DEALER);
     }
 
     public boolean isPlayer() {
