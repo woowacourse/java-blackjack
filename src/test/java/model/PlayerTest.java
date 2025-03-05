@@ -25,7 +25,7 @@ public class PlayerTest {
 
     // given
     final int amount = 2;
-    final List<Card> cards = CardDeck.pickCard(2);
+    final List<Card> cards = new CardDeck().pickCard(2);
 
     // when
     Player player = new Player(new Nickname("pobi"));

@@ -6,11 +6,11 @@ import java.util.List;
 
 public final class CardDeck {
 
-    private static final List<Card> cards;
+    private final List<Card> cards;
 
-    static {
-        cards = initCards();
-    }
+//    static {
+//        cards = initCards();
+//    }
 
     private static List<Card> initCards() {
         ArrayList<Card> deck = new ArrayList<>();
@@ -23,14 +23,15 @@ public final class CardDeck {
         return deck;
     }
 
-    private CardDeck() {
+    public CardDeck() {
+        cards = initCards();
     }
 
-    public static List<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 
-    public static List<Card> pickCard(int amount) {
+    public List<Card> pickCard(int amount) {
         final List<Card> findCards = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             final Card card = cards.removeFirst();
