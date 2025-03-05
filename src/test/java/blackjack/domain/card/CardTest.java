@@ -11,7 +11,7 @@ class CardTest {
     void test() {
         // given
         final Shape shape = Shape.DIAMOND;
-        final Denomination denomination = Denomination.ACE;
+        final Denomination denomination = Denomination.A;
 
         // when & then
         Assertions.assertThatCode(() -> new Card(shape, denomination))

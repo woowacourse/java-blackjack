@@ -4,7 +4,7 @@ import java.util.List;
 
 public enum Denomination {
 
-    ACE(List.of(1, 11)),
+    A(List.of(1, 11)),
     TWO(List.of(2)),
     THREE(List.of(3)),
     FOUR(List.of(4)),
@@ -14,9 +14,9 @@ public enum Denomination {
     EIGHT(List.of(8)),
     NINE(List.of(9)),
     TEN(List.of(10)),
-    KING(List.of(10)),
-    QUEEN(List.of(10)),
-    JACK(List.of(10));
+    K(List.of(10)),
+    Q(List.of(10)),
+    J(List.of(10));
 
     private final List<Integer> numbers;
 
