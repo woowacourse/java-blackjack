@@ -54,4 +54,24 @@ public class GameBoard {
     public CardDeck getPlayingCard() {
         return gameCardDeck;
     }
+
+    public int getTotalScoreOf(Participant participant) {
+        CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
+        List<Card> ownedCards = ownedCardDeck.getCards();
+
+        int totalScore = 0;
+        for (Card card : ownedCards) {
+            if (card.isAceCard()) {
+                if (totalScore + 11 <= 21) {
+                    totalScore += 11;
+                    continue;
+                }
+                totalScore += card.getNumber();
+            }
+
+            totalScore += card.getNumber();
+        }
+
+        return totalScore;
+    }
 }

@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.Objects;
-
 public class Card {
     private final CardNumber cardNumber;
     private final CardSymbol cardSymbol;
@@ -11,4 +9,11 @@ public class Card {
         this.cardSymbol = cardSymbol;
     }
 
+    public int getNumber() {
+        return cardNumber.getNumber();
+    }
+
+    public boolean isAceCard() {
+        return cardNumber == CardNumber.ACE;
+    }
 }

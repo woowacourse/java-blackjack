@@ -16,12 +16,14 @@ public enum CardNumber {
     QUEEN("QUEEN", 10);
 
     private final String name;
-    private final int value;
+    private final int number;
 
-    CardNumber(final String name, final int value) {
+    CardNumber(final String name, final int number) {
         this.name = name;
-        this.value = value;
+        this.number = number;
     }
 
-
+    public int getNumber() {
+        return number;
+    }
 }
