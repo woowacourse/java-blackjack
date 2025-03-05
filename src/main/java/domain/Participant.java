@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     private final String name;
     private final List<Card> cards;
@@ -22,9 +22,7 @@ public class Participant {
         return name;
     }
 
-    public List<Card> getShownCard() {
-        return Collections.unmodifiableList(cards);
-    }
+    public abstract List<Card> getShownCard();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
