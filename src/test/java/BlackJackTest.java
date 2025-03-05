@@ -1,6 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,19 @@ class BlackJackTest {
     public static Stream<Arguments> provideJQK() {
         return Stream.of(
                 Arguments.of(Number.JACK, Number.QUEEN, Number.KING)
+        );
+    }
+
+    public static Stream<Arguments> provideEachCardsAndExpected() {
+        return Stream.of(
+                Arguments.of(List.of(
+                                new Card(Symbol.COLVER, Number.JACK),
+                                new Card(Symbol.HEART, Number.FIVE)),
+                        15),
+                Arguments.of(List.of(
+                                new Card(Symbol.COLVER, Number.SEVEN),
+                                new Card(Symbol.HEART, Number.TEN)),
+                        17)
         );
     }
 
@@ -91,4 +105,52 @@ class BlackJackTest {
         //then
         assertThat(number.getPoint()).isEqualTo(10);
     }
+
+
+    @DisplayName("카드 뭉치에 카드를 추가할 수 있다")
+    @Test
+    void addCard() {
+        //given
+        Cards cards = new Cards();
+        Card card = new Card(Symbol.COLVER, Number.FIVE);
+        //when
+
+        //then
+        assertThatCode(() -> cards.add(card))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("카드뭉치의 카드들의 점수의 합을 계산할 수 있다")
+    @ParameterizedTest
+    @MethodSource("provideEachCardsAndExpected")
+    void calculateTotalPoint(List<Card> cardList, int expected) {
+        //given
+        Cards cards = new Cards();
+        for (Card card : cardList) {
+            cards.add(card);
+        }
+
+        //when
+        int actual = cards.calculateTotalPoint();
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("카드뭉치의 카드를 드로우 할 수 있다.")
+    @Test
+    void draw() {
+        //given
+        Cards cards = new Cards();
+        Card card = new Card(Symbol.COLVER, Number.FIVE);
+
+        cards.add(card);
+
+        //when
+        Card actual = cards.draw();
+
+        //then
+        assertThat(actual).isEqualTo(card);
+    }
+
 }

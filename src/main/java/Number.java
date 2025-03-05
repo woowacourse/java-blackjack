@@ -1,4 +1,5 @@
 public enum Number {
+
     ACE(1),
     TWO(2),
     THREE(3),
@@ -12,7 +13,6 @@ public enum Number {
     JACK(10),
     QUEEN(10),
     KING(10);
-
 
     private final Integer point;
 

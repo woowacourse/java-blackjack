@@ -7,4 +7,8 @@ public class Card {
         this.symbol = symbol;
         this.number = number;
     }
+
+    public Number getNumber() {
+        return number;
+    }
 }
