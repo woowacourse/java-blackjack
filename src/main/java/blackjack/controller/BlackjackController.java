@@ -38,13 +38,14 @@ public class BlackjackController {
     }
 
     private void spreadExtraCards(final BlackjackGame blackjackGame) {
-        for (int i = 0; i < blackjackGame.getPlayerSize(); i++) {
-            while (blackjackGame.canSpread(i)) {
-                final Player player = blackjackGame.getPlayer(i);
+        for (int index = 0; index < blackjackGame.getPlayerSize(); index++) {
+            final Player player = blackjackGame.getPlayer(index);
+            while (blackjackGame.canSpread(index)) {
                 if (!isMoreCard(player)) {
                     break;
                 }
-                blackjackGame.spreadOneCard(i);
+                blackjackGame.spreadOneCard(index);
+                resultView.printTotalCards(player);
             }
         }
     }
@@ -52,8 +53,7 @@ public class BlackjackController {
     private Participants makeParticipants() {
         final Dealer dealer = new Dealer(new ArrayList<>());
         final Players players = makePlayers();
-        final Participants participants = new Participants(dealer, players);
-        return participants;
+        return new Participants(dealer, players);
     }
 
     private boolean isMoreCard(final Player player) {

@@ -27,7 +27,11 @@ public class ResultView {
         printCards(participants);
     }
 
-    private static void printNames(final Participants participants) {
+    public void printTotalCards(final Player player) {
+        System.out.println(makePlayerMessage(player));
+    }
+
+    private void printNames(final Participants participants) {
         final String joinedNames = participants.getPlayers().stream()
                 .map(Player::getNickname)
                 .collect(Collectors.joining(COMMA));
@@ -41,9 +45,13 @@ public class ResultView {
         System.out.println(dealerMessage);
         final List<Player> players = participants.getPlayers();
         players.stream()
-                .map(player -> String.format(CARD_FORMAT, player.getNickname(),
-                        getCardMessage(player.getCards())))
+                .map(this::makePlayerMessage)
                 .forEach(System.out::println);
+    }
+
+    private String makePlayerMessage(final Player player) {
+        return String.format(CARD_FORMAT, player.getNickname(),
+                getCardMessage(player.getCards()));
     }
 
     private String getCardMessage(final List<Card> cards) {
