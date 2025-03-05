@@ -38,6 +38,11 @@ public class Cards {
     }
 
     public boolean isUnderDrawLimit() { // TODO : ACE를 무조건 1로 보는 문제
+        if (cards.stream().filter(card -> card.cardNumberType().isAce()).count() == 1) {
+            int sumWithoutAce = calculateSumWithoutAce();
+
+            return (sumWithoutAce + 11) <= VALID_DRAW_LIMIT;
+        }
         int sum = cards.stream()
                 .mapToInt(card -> card.cardNumberType().getDefaultNumber())
                 .sum();

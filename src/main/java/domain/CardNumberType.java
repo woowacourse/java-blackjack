@@ -46,4 +46,8 @@ public enum CardNumberType {
         }
         return CardNumberType.values()[randomIndex];
     }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
 }
