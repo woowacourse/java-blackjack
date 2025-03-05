@@ -6,6 +6,6 @@ public class Dealer extends Gamer{
     }
 
     public boolean isLessThen(int score){
-        return false;
+        return this.cardGroup.calculateScore(Gamer.LIMIT) <= score;
     }
 }
