@@ -18,4 +18,8 @@ public class Judge {
             throw new IllegalStateException("심판은 덱을 가지고 있어야합니다.");
         }
     }
+
+    public TrumpCard drawCard() {
+        return deck.draw();
+    }
 }
