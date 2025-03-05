@@ -14,4 +14,12 @@ public class Player {
     public List<Integer> getPossibleSums() {
         return cardHolder.getPossibleSums();
     }
+
+    public List<Card> getAllCards() {
+        return cardHolder.getAllCards();
+    }
+
+    public void takeCard(Card newCard) {
+        cardHolder.takeCard(newCard);
+    }
 }
