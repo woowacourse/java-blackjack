@@ -32,7 +32,7 @@ class CardDeckTest {
         assertThat(possibleSums).isEqualTo(Set.of(9, 19));
     }
 
-    @DisplayName("에이스가 여러개인 경우에도 정상적으로 계산한다..")
+    @DisplayName("에이스가 여러개인 경우에도 정상적으로 계산한다.")
     @Test
     void testCards_multipleAce() {
         CardDeck cardDeck = new CardDeck();

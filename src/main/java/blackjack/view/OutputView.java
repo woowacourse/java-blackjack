@@ -16,7 +16,6 @@ public class OutputView {
         sb.append("에게 2장을 나누었습니다.\n\n");
 
         sb.append("딜러카드: " + dealer.getCardDeck().get(0).toString() + "\n");
-
         for (Player player : players) {
 
             sb.append(player.getName().trim() + "카드: ");
@@ -33,8 +32,8 @@ public class OutputView {
         String playerCards = String.join(", ", player.getCardDeck().stream().map(Card::toString).toList());
         sb.append(playerCards);
         sb.append("\n");
+
         System.out.println(sb);
-//        pobi카드: 2하트, 8스페이드, A클로버
     }
 
     public void displayExtraDealerCardStatus() {

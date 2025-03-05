@@ -16,7 +16,6 @@ public class CardDump {
         Collections.shuffle(cardDump);
     }
 
-    // 52장
     private List<Card> initializeCardDump() {
         List<Card> cards = new ArrayList<>();
         for (CardSuit suit : CardSuit.values()) {

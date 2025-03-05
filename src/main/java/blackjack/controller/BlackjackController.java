@@ -25,7 +25,18 @@ public class BlackjackController {
     }
 
     public void run() {
-        // 게임 시작 및 카드 배분
+        List<Player> players = distributeCardToPlayers();
+        Dealer dealer = distrubuteCardToDealer();
+        outputView.displayDistributedCardStatus(dealer, players);
+
+        hitExtraCardForPlayers(players);
+        hitExtraCardForDealer(dealer);
+        outputView.displayFinalCardStatus(dealer, players);
+
+        getGameResultAndDisplay(dealer, players);
+    }
+
+    private List<Player> distributeCardToPlayers() {
         String[] playerNames = inputView.readPlayerName();
         List<Player> players = new ArrayList<>();
 
@@ -37,19 +48,20 @@ public class BlackjackController {
             Player player = new Player(playerName, cardDeck, cardDump);
             players.add(player);
         }
+        return players;
+    }
 
+    private Dealer distrubuteCardToDealer() {
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(cardDump.drawCard());
         cardDeck.add(cardDump.drawCard());
-        Dealer dealer = new Dealer(cardDeck, cardDump);
+        return new Dealer(cardDeck, cardDump);
+    }
 
-        outputView.displayDistributedCardStatus(dealer, players);
-
-        // 추가 카드 뽑기
+    private void hitExtraCardForPlayers(List<Player> players) {
         for (Player player : players) {
             while (player.canTakeExtraCard()) {
                 String answer = inputView.readOneMoreCard(player.getName());
-                // 플레이어가 거절할 때까지 계속 기회를 준다
                 if (answer.equals("n")) {
                     break;
                 }
@@ -57,16 +69,15 @@ public class BlackjackController {
                 outputView.displayUpdatedPlayerCardStatus(player);
             }
         }
+    }
 
-        // 딜러 카드 뽑기 여부 (뽑은 경우만 출력)
+    private void hitExtraCardForDealer(Dealer dealer) {
         while (dealer.hasTakenExtraCard()) {
             outputView.displayExtraDealerCardStatus();
         }
+    }
 
-        // 딜러와 각 플레이어들의 카드 결과 보여주기
-        outputView.displayFinalCardStatus(dealer, players);
-
-        // 딜러와 플레이어들의 승패 결과 보여주기
+    private void getGameResultAndDisplay(Dealer dealer, List<Player> players) {
         GameFinalResult gameFinalResult = new GameFinalResult(new GameRule());
         Map<GameResult, Integer> dealerResult = gameFinalResult.getDealerFinalResult(dealer, players);
         outputView.displayDealerResult(dealerResult);
@@ -74,6 +85,5 @@ public class BlackjackController {
             GameResult playerResult = gameFinalResult.getGameResultFromPlayer(player, dealer);
             outputView.displayPlayerResult(player, playerResult);
         }
-
     }
 }

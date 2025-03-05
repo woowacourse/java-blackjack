@@ -6,7 +6,6 @@ public class GameRule {
         int playerScore = player.calculateTotalCardScore();
         int dealerScore = dealer.calculateTotalCardScore();
 
-        //딜러 혹은 플레이어가 21이 넘어가면 결과가 나와야 됨
         if (player.isBust()) {
             return GameResult.WIN;
         }
@@ -14,7 +13,6 @@ public class GameRule {
             return GameResult.LOSE;
         }
 
-        //21에 가까운 숫자를 가진 딜러가 이김
         if (dealerScore > playerScore) {
             return GameResult.WIN;
         }
