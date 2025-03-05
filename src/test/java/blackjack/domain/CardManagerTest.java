@@ -10,23 +10,31 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.random.CardGenerator;
 import blackjack.domain.random.CardRandomGenerator;
 import blackjack.fixture.TestFixture.TestCardGeneratorGenerator;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardManagerTest {
 
-    @DisplayName("카드를 1장씩 분배한다.")
+    private CardManager cardManager;
+
+    @BeforeEach
+    void setUp() {
+        cardManager = new CardManager(new CardRandomGenerator());
+    }
+
+    @DisplayName("카드를 여러장 분배한다.")
     @Test
-    void spreadOneCard() {
+    void spreadCards() {
         // given
-        final CardGenerator cardGenerator = new CardRandomGenerator();
-        final CardManager cardManager = new CardManager(cardGenerator);
+        final int count = 2;
 
         // when
-        final Card card = cardManager.spreadOneCard();
+        final List<Card> cards = cardManager.spreadCards(count);
 
         // then
-        assertThat(card).isNotNull();
+        assertThat(cards).hasSize(count);
     }
 
     @DisplayName("사용한 카드를 뽑았을 경우 다시 뽑는다.")
@@ -37,8 +45,8 @@ class CardManagerTest {
         final CardManager cardManager = new CardManager(cardGenerator);
 
         // when
-        final Card firstCard = cardManager.spreadOneCard();
-        final Card secondCard = cardManager.spreadOneCard();
+        final Card firstCard = cardManager.spreadCards(1).getFirst();
+        final Card secondCard = cardManager.spreadCards(1).getFirst();
 
         // then
         assertAll(
