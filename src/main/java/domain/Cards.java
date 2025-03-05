@@ -38,15 +38,18 @@ public class Cards {
     }
 
     public boolean isUnderDrawLimit() { // TODO : ACE를 무조건 1로 보는 문제
-        if (cards.stream().filter(card -> card.cardNumberType().isAce()).count() == 1) {
+        if (isAceOnlyOne()) {
             int sumWithoutAce = calculateSumWithoutAce();
-
-            return (sumWithoutAce + 11) <= VALID_DRAW_LIMIT;
+            return (sumWithoutAce + CardNumberType.getAceHighNumber()) <= VALID_DRAW_LIMIT;
         }
-        int sum = cards.stream()
-                .mapToInt(card -> card.cardNumberType().getDefaultNumber())
-                .sum();
-        return sum <= VALID_DRAW_LIMIT;
+        return calculateSumWithoutAce() <= VALID_DRAW_LIMIT;
+    }
+
+    private boolean isAceOnlyOne() {
+        int aceCount = (int)cards.stream()
+                .filter(card -> card.cardNumberType().isAce())
+                .count();
+        return aceCount == 1;
     }
 
     public int calculateSumResult() {
