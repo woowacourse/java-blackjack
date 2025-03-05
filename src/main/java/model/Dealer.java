@@ -3,38 +3,38 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
 
     private final String nickname;
     private final List<Card> hands;
 
-    public Dealer() {
-        this.nickname = "딜러";
+    private Dealer(String nickname) {
+        super(nickname);
+        this.nickname = nickname;
         this.hands = new ArrayList<>();
     }
 
-    public void addCards(final List<Card> findCards) {
-        hands.addAll(findCards);
+    public static Dealer of() {
+        return new Dealer("딜러");
     }
 
+    @Override
     public String getNickname() {
         return nickname;
     }
 
+    @Override
+    public void addCards(List<Card> findCards) {
+        super.addCards(findCards);
+    }
+
+    @Override
     public List<Card> getHands() {
-        return hands;
+        return super.getHands();
     }
 
+    @Override
     public int sum() {
-        return hands.stream()
-                .mapToInt(card -> findScore(card.getRank().getScore()))
-                .sum();
-    }
-
-    private int findScore(List<Integer> score) {
-        if (score.size() == 1) {
-            return score.getFirst();
-        }
-        return score.getFirst();
+        return super.sum();
     }
 }

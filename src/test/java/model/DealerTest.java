@@ -12,7 +12,7 @@ class DealerTest {
     void newDealer() {
 
         // given
-        final Dealer dealer = new Dealer();
+        final Participant dealer = Dealer.of();
         String expected = "딜러";
 
         // when
@@ -30,7 +30,7 @@ class DealerTest {
         final List<Card> cards = new CardDeck().pickCard(2);
 
         // when
-        Dealer dealer = new Dealer();
+        Participant dealer = Dealer.of();
         dealer.addCards(cards);
 
         // then
@@ -50,7 +50,7 @@ class DealerTest {
                 .mapToInt(card -> card.getRank().getScore().getFirst())
                 .sum();
 
-        Dealer dealer = new Dealer();
+        Participant dealer = Dealer.of();
         dealer.addCards(divideCards);
 
         // when

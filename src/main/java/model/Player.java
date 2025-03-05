@@ -3,38 +3,33 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class Player extends Participant {
 
     private final Nickname nickname;
     private final List<Card> hands;
 
-    public Player(Nickname nickname) {
-        this.nickname = nickname;
+    private Player(String nickname) {
+        super(nickname);
+        this.nickname = new Nickname(nickname);
         this.hands = new ArrayList<>();
     }
 
-    public Nickname getNickname() {
-        return nickname;
+    public static Player from(String nickname) {
+        return new Player(nickname);
     }
 
-    public void addCards(final List<Card> findCards) {
-        hands.addAll(findCards);
+    @Override
+    public void addCards(List<Card> findCards) {
+        super.addCards(findCards);
     }
 
-    public int sum() {
-        return hands.stream()
-                .mapToInt(card -> findScore(card.getRank().getScore()))
-                .sum();
-    }
-
-    private int findScore(List<Integer> score) {
-        if (score.size() == 1) {
-            return score.getFirst();
-        }
-        return score.getFirst();
-    }
-
+    @Override
     public List<Card> getHands() {
-        return hands;
+        return super.getHands();
+    }
+
+    @Override
+    public int sum() {
+        return super.sum();
     }
 }

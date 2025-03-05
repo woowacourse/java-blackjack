@@ -12,9 +12,9 @@ public class PlayerTest {
   @DisplayName("플레이어가 생성 확인")
   void newPlayer() {
     //given
-    Nickname expected = new Nickname("pobi");
+    String expected = "pobi";
     //when
-    Player player = new Player(new Nickname("pobi"));
+    Player player = Player.from("pobi");
     //then
     Assertions.assertThat(player.getNickname()).isEqualTo(expected);
   }
@@ -28,7 +28,7 @@ public class PlayerTest {
     final List<Card> cards = new CardDeck().pickCard(2);
 
     // when
-    Player player = new Player(new Nickname("pobi"));
+    Player player = Player.from("pobi");
     player.addCards(cards);
 
     // then

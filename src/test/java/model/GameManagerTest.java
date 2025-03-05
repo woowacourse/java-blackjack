@@ -15,14 +15,14 @@ public class GameManagerTest {
   void divideCard(int amount) {
     //given
     Players players = new Players(List.of(
-        new Player(new Nickname("pobi")),
-        new Player(new Nickname("hippo"))
+        Player.from("pobi"),
+        Player.from("hippo")
     ));
-    GameManager manager = new GameManager(new Dealer(),players);
+    GameManager manager = new GameManager(Dealer.of(),players);
     //when
-    manager.divideCard(amount);
     //then
     for (Player player : players.getPlayers()) {
+      manager.divideCardByPlayer(player, amount);
       Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
     }
   }

@@ -15,8 +15,8 @@ public class PlayersTest {
     void newPlayers() {
         // given
         List<Player> actual = List.of(
-                new Player(new Nickname("pobi")),
-                new Player(new Nickname("hippo"))
+                Player.from("pobi"),
+                Player.from("hippo")
         );
         // when
         Players players = new Players(actual);
@@ -40,8 +40,8 @@ public class PlayersTest {
                 .mapToInt(card -> card.getRank().getScore().getFirst())
                 .sum();
 
-        Nickname nickname = new Nickname("pobi");
-        Player player = new Player(nickname);
+        String nickname = "pobi";
+        Player player = Player.from(nickname);
         player.addCards(divideCards);
 
         // when
