@@ -21,6 +21,16 @@ public class Participants {
         players.receiveCards(cards.subList(size, cards.size()), size);
     }
 
+    public boolean canGetMoreCard(final int index) {
+        final Player player = players.getPlayer(index);
+        return player.canGetMoreCard();
+    }
+
+    public void spreadOneCard(final int index, final Card card) {
+        final Player player = players.getPlayer(index);
+        player.receiveCards(List.of(card));
+    }
+
     public int getParticipantSize() {
         return DEALER_COUNT + players.getSize();
     }

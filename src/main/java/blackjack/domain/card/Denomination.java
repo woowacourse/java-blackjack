@@ -35,4 +35,8 @@ public enum Denomination {
         }
         return String.valueOf(numbers.getFirst());
     }
+
+    public int getMinNumber() {
+        return numbers.getFirst();
+    }
 }

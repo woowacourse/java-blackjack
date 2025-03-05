@@ -47,6 +47,10 @@ public class Players {
         return Objects.hashCode(players);
     }
 
+    public Player getPlayer(final int index) {
+        return players.get(index);
+    }
+
     public int getSize() {
         return players.size();
     }

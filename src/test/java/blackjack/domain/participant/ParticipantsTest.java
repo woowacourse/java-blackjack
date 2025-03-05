@@ -1,8 +1,10 @@
 package blackjack.domain.participant;
 
 import static blackjack.fixture.TestFixture.provideCards;
+import static blackjack.fixture.TestFixture.provideOver21Cards;
 import static blackjack.fixture.TestFixture.provideParticipants;
 import static blackjack.fixture.TestFixture.providePlayersWithCards;
+import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -50,4 +52,18 @@ class ParticipantsTest {
         assertThat(participants.getParticipantSize()).isEqualTo(3);
     }
 
+    @DisplayName("플레이어가 카드를 더 얻을 수 있으면 true를 반환한다.")
+    @Test
+    void canGetMoreCard() {
+        // given
+        final List<Card> firstCards = provideUnder21Cards();
+        final List<Card> secondCards = provideOver21Cards();
+        final List<Player> players = providePlayersWithCards(firstCards, secondCards);
+
+        // when & then
+        assertAll(
+                () -> assertThat(players.getFirst().canGetMoreCard()).isTrue(),
+                () -> assertThat(players.getLast().canGetMoreCard()).isFalse()
+        );
+    }
 }
