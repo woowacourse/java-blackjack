@@ -9,6 +9,11 @@ public class Player {
 		this.name = "";
 	}
 
+	public Player(String name) {
+		this.participant = new Participant();
+		this.name = name;
+	}
+
 	public Player(final Participant participant) {
 		this.participant = participant;
 		this.name = "";
@@ -33,5 +38,9 @@ public class Player {
 
 	public void duel(final Participant other) {
 		participant.duel(other);
+	}
+
+	public String getName() {
+		return name;
 	}
 }
