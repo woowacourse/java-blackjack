@@ -3,12 +3,14 @@ package blackjack.view;
 import blackjack.testutil.ReaderStub;
 import blackjack.testutil.WriterStub;
 import blackjack.view.writer.SystemWriter;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class InputViewTest {
     
@@ -22,10 +24,10 @@ class InputViewTest {
         final List<String> playerNames = inputView.getPlayerNames();
         
         // then
-        assertThat(playerNames)
-                .containsExactly("pobi", "jason");
-        assertThat(writerStub.getOutputs())
-                .containsExactly("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        assertAll(
+                () -> assertThat(playerNames).containsExactly("pobi", "jason"),
+                () -> assertThat(writerStub.getOutputs()).containsExactly("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+        );
     }
     
     @Test
@@ -38,9 +40,10 @@ class InputViewTest {
         final boolean decision = inputView.getAddingCardDecision("pobi");
         
         // then
-        assertThat(decision).isTrue();
-        assertThat(writerStub.getOutputs())
-                .containsExactly("pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        assertAll(
+                () -> assertThat(decision).isTrue(),
+                () -> assertThat(writerStub.getOutputs()).containsExactly("pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        );
     }
     
     @Test
@@ -53,9 +56,10 @@ class InputViewTest {
         final boolean decision = inputView.getAddingCardDecision("pobi");
         
         // then
-        assertThat(decision).isFalse();
-        assertThat(writerStub.getOutputs())
-                .containsExactly("pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        assertAll(
+                () -> assertThat(decision).isFalse(),
+                () -> assertThat(writerStub.getOutputs()).containsExactly("pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        );
     }
     
     @Test
