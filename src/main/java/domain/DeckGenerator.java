@@ -3,6 +3,8 @@ package domain;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class DeckGenerator {
 
@@ -10,10 +12,10 @@ public class DeckGenerator {
         return Arrays.stream(Shape.values())
                 .flatMap((shape) -> Arrays.stream(Rank.values())
                         .map(rank -> new Card(rank, shape)))
-                .toList();
+                .collect(Collectors.toList());
     }
 
-    public void shuffle(List<Card> cards) {
-        Collections.shuffle(cards);
+    public void shuffle(final List<Card> cards, final Random random) {
+        Collections.shuffle(cards, random);
     }
 }

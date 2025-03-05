@@ -26,13 +26,12 @@ class DeckGeneratorTest {
 
         // given
         final DeckGenerator deckGenerator = new DeckGenerator();
-        Deck deck = new Deck(deckGenerator.generate());
-        List<Card> previousCards = List.copyOf(deck.getCards());
+        final List<Card> cards = deckGenerator.generate();
+        final List<Card> previousCards = List.copyOf(cards);
         final Random random = new Random(123);
-
         // when
-        deck.shuffle(random);
-        List<Card> cards = deck.getCards();
+
+        deckGenerator.shuffle(cards, random);
 
         // then
         Assertions.assertThat(previousCards).isNotEqualTo(cards);
