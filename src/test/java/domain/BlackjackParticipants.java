@@ -4,14 +4,13 @@ import except.BlackJackException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackjackPlayers {
+public class BlackjackParticipants {
 
     private final List<Player> players;
     private final Dealer dealer;
     private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
 
-
-    public BlackjackPlayers(List<Player> players, Dealer dealer) {
+    public BlackjackParticipants(List<Player> players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
@@ -45,5 +44,18 @@ public class BlackjackPlayers {
 
     public List<TrumpCard> dealerCards() {
         return dealer.trumpCards();
+    }
+
+    public int calculateCardSum(String name) {
+        Player player = findPlayer(name);
+        return player.calculateCardSum();
+    }
+
+    public int calculateDealerSum() {
+        return dealer.calculateCardSum();
+    }
+
+    public String dealerName() {
+        return dealer.name();
     }
 }

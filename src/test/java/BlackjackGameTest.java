@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.BlackjackDeckGenerator;
 import domain.BlackjackGame;
+import domain.BlackjackResult;
 import domain.CardValue;
 import domain.Dealer;
 import domain.Deck;
@@ -15,6 +16,7 @@ import except.BlackJackException;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -54,7 +56,7 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
         List<TrumpCard> expectedCards = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
                 new TrumpCard(Suit.DIAMOND, CardValue.J));
-        assertThatIterable(blackjackGame.playerCards("포비")).containsAnyElementsOf(expectedCards);
+        assertThatIterable(blackjackGame.playerCards("포비")).containsExactlyInAnyOrderElementsOf(expectedCards);
     }
 
     @Test
@@ -68,5 +70,23 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
         TrumpCard expectedCards = new TrumpCard(Suit.HEART, CardValue.K);
         assertThat(blackjackGame.dealerCardFirst()).isEqualTo(expectedCards);
+    }
+
+    @Test
+    void 플레이어_블랙잭_결과() {
+        Deque<TrumpCard> trumpCards = new LinkedList<>(
+                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
+                        new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.NINE),
+                        new TrumpCard(Suit.CLOVER, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.J)));
+        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        Dealer dealer = new Dealer();
+        List<String> names = List.of("포비", "루키");
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        List<Integer> expectedPlayersCardSum = List.of(18, 19);
+        assertThatIterable(blackjackGame.currentPlayerBlackjackResult()
+                .stream()
+                .map(BlackjackResult::cardSum)
+                .collect(Collectors.toList())
+        ).containsExactlyInAnyOrderElementsOf(expectedPlayersCardSum);
     }
 }
