@@ -32,4 +32,14 @@ public class DeckTest {
         deck.shuffle();
         assertThat(deck.getDeck().equals(deckCards)).isFalse();
     }
+
+    @Test
+    @DisplayName("Deck 은 맨 위에서 카드 한장을 뽑을 수 있다.")
+    void test4() {
+        Deck deck = new Deck();
+
+        Card card = deck.draw();
+        assertThat(card.getSuit()).isEqualTo(Suit.CLUB);
+        assertThat(card.getDenomination()).isEqualTo(Denomination.ACE);
+    }
 }
