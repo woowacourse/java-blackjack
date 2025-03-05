@@ -40,6 +40,10 @@ public class CardManager {
         return cards.calculateSum();
     }
 
+    public boolean isOverLimitSumByNickname(Nickname nickname) {
+        return calculateSumByNickname(nickname) > LIMIT_POINT;
+    }
+
     public void addCardByNickname(Nickname nickname) {
         List<Card> drawnCard = cardDeck.drawCard(1);
         findCardsByNickname(nickname).add(drawnCard);
