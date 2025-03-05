@@ -64,4 +64,8 @@ public enum TrumpCard {
         this.suit = suit;
         this.rank = rank;
     }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

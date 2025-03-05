@@ -2,7 +2,7 @@ package domain;
 
 public class Judge {
 
-    private Deck deck;
+    private final Deck deck;
 
     public Judge(Deck deck) {
         validate(deck);
