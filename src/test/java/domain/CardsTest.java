@@ -15,14 +15,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class CardsTest {
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"JACK,ACE:21", "ACE,ACE,JACK:12", "ACE,ACE,ACE,ACE:14"}, delimiterString = ":")
     @DisplayName("카드 묶음의 점수 계산 기능 테스트")
-    void calculateCardsScoreTest() {
+    void calculateCardsScoreTest(String rankNames, int cardsScore) {
         // given
-        List<Rank> ranks = List.of(Rank.JACK, Rank.ACE);
+        List<Rank> ranks = createRanks(rankNames);
         Cards cards = createCardsOfRanks(ranks);
         // when & then
-        assertEquals(11, cards.calculateScore());
+        assertEquals(cardsScore, cards.calculateScore());
     }
 
     @ParameterizedTest

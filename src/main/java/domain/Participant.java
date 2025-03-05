@@ -19,12 +19,12 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
-    public GameStatus determineGameStatus(Participant participant) {
-        return cards.determineGameStatus(participant.cards);
-    }
-
     public boolean isParticipant(String name) {
         return this.name.equals(name);
+    }
+
+    public GameStatus determineGameStatus(Participant participant) {
+        return cards.determineGameStatus(participant.cards);
     }
 
     public String getName() {

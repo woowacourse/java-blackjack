@@ -18,9 +18,14 @@ public class Cards {
     }
 
     public int calculateScore() {
-        return cards.stream()
+        int score = cards.stream()
                 .map(card -> card.rank().getValue())
                 .reduce(0, Integer::sum);
+        int aceCount = calculateAceCount();
+        while (aceCount-- > 0 && !isGameOver(score + 10)) {
+            score += 10;
+        }
+        return score;
     }
 
     public GameStatus determineGameStatus(Cards otherCards) {
@@ -42,6 +47,12 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int calculateAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     private GameStatus evaluateStatusByScore(int cardsScore, int otherCardsScore) {
