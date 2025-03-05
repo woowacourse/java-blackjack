@@ -28,4 +28,11 @@ public class CardDeck {
     public Card drawCard() {
         return deck.pop();
     }
+
+    public List<Card> drawCardWhenStart() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(drawCard());
+        cards.add(drawCard());
+        return cards;
+    }
 }
