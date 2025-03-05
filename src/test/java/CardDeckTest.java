@@ -1,10 +1,14 @@
-import domain.TrumpCard;
+import domain.CardDeck;
+import domain.CardNumber;
 import domain.CardSetting;
+import domain.CardShape;
+import domain.TrumpCard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {
+
     @DisplayName("실행 시점에 서로 다른 카드 52장을 초기화한다.")
     @Test
     void test() {
@@ -42,4 +46,22 @@ public class CardDeckTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드가 다 떨어졌습니다");
     }
+
+    @DisplayName("카드의 합이 21 초과 시 패배한다")
+    @Test
+    void test4() {
+        //given
+        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardNumber.K);
+        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardNumber.J);
+        TrumpCard trumpCard3 = new TrumpCard(CardShape.CLOVER, CardNumber.FIVE);
+        CardDeck cardDeck = new CardDeck();
+
+        cardDeck.addTrumpCard(trumpCard1);
+        cardDeck.addTrumpCard(trumpCard2);
+        cardDeck.addTrumpCard(trumpCard1);
+
+        boolean isOver = cardDeck.sumAllCardValue();
+        Assertions.assertThat(isOver).isTrue();
+    }
+
 }
