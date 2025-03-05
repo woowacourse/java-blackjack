@@ -1,14 +1,22 @@
 package domain;
 
 public class Player {
+	private final String name;
 	private final Participant participant;
 
 	public Player() {
 		this.participant = new Participant();
+		this.name = "";
 	}
 
-	public Player(final CardHand hand) {
+	public Player(final Participant participant) {
+		this.participant = participant;
+		this.name = "";
+	}
+
+	public Player(final CardHand hand, final String name) {
 		this.participant = new Participant(hand);
+		this.name = name;
 	}
 
 	public boolean isPickCard() {
