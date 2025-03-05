@@ -26,4 +26,8 @@ public class CardGiver {
         }
         return new Cards(cards);
     }
+
+    public Card giveOne() {
+        return new Card(CardNumberType.SIX, CardType.CLOVER);
+    }
 }
