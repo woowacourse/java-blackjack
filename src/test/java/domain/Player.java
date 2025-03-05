@@ -20,6 +20,6 @@ public class Player {
     }
 
     public boolean isBust() {
-        return false;
+        return this.cardGroup.calculateScore(LIMIT) > LIMIT;
     }
 }
