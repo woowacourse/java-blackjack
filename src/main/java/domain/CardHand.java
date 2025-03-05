@@ -3,8 +3,6 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.CardNumber;
-
 public record CardHand(
     List<Card> hand
 ) {

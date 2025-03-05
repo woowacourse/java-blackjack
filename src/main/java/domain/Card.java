@@ -2,9 +2,6 @@ package domain;
 
 import java.util.Objects;
 
-import constant.CardNumber;
-import constant.Emblem;
-
 public record Card(
     CardNumber number,
     Emblem emblem

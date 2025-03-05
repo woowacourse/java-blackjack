@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
-import constant.CardNumber;
-import constant.Emblem;
-
 public class Deck {
     private final Queue<Card> deck;
 

@@ -1,4 +1,4 @@
-package constant;
+package domain;
 
 public enum CardNumber {
     ACE(11),
@@ -14,7 +14,7 @@ public enum CardNumber {
     JACK(10),
     QUEEN(10),
     KING(10);
-    
+
     private final int score;
 
     CardNumber(final int score) {
@@ -24,4 +24,5 @@ public enum CardNumber {
     public int sum(final int score) {
         return this.score + score;
     }
+
 }
