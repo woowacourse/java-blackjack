@@ -1,6 +1,6 @@
 package domain;
 
-import domain.card.CardSet;
+import domain.card.CardDeck;
 import domain.participant.Player;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -13,10 +13,10 @@ public class GameBoardTest {
         //given
         Player player1 = new Player("우가");
         Player player2 = new Player("히스타");
-        CardSet gameCardSet = CardSet.generateFullSet();
+        CardDeck gameCardDeck = CardDeck.generateFullSet();
 
         //when
-        GameBoard gameBoard = new GameBoard(gameCardSet, List.of(player1, player2));
+        GameBoard gameBoard = new GameBoard(gameCardDeck, List.of(player1, player2));
 
         //then
         Assertions.assertThat(gameBoard).isInstanceOf(GameBoard.class);

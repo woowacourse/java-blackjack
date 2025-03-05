@@ -1,6 +1,6 @@
 package domain;
 
-import domain.card.CardSet;
+import domain.card.CardDeck;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -8,18 +8,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GameBoard {
-    private final Map<Player, CardSet> cardSetOfPlayer;
-    private final CardSet gameCardSet;
+    private final Map<Player, CardDeck> cardSetOfPlayer;
+    private final CardDeck gameCardDeck;
 
-    public GameBoard(final CardSet gameCardSet, final List<Player> players) {
-        this.gameCardSet = gameCardSet;
+    public GameBoard(final CardDeck gameCardDeck, final List<Player> players) {
+        this.gameCardDeck = gameCardDeck;
         this.cardSetOfPlayer = initializeCardSetOfPlayer(players);
     }
 
-    private Map<Player, CardSet> initializeCardSetOfPlayer(final List<Player> players) {
+    private Map<Player, CardDeck> initializeCardSetOfPlayer(final List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> CardSet.generateEmptySet()));
+                        player -> CardDeck.generateEmptySet()));
     }
 }
