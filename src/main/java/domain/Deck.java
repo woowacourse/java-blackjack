@@ -10,11 +10,17 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck(final List<Card> cards) {
+
         this.cards = new ArrayList<>(cards);
+
     }
 
     public void shuffle(final Random random) {
         Collections.shuffle(cards, random);
+    }
+
+    public Card drawCard() {
+        return cards.getFirst();
     }
 
     public List<Card> getCards() {
