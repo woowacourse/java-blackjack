@@ -1,10 +1,10 @@
 package blackjack.domain.card_hand;
 
+import java.util.List;
+
 import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
 import blackjack.domain.Player;
-
-import java.util.List;
 
 public class PlayerCardHand extends CardHand {
     

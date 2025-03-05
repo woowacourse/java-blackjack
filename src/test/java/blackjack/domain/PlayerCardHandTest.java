@@ -1,6 +1,14 @@
 package blackjack.domain;
 
-import blackjack.domain.card_hand.DealerCardHand;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static blackjack.domain.CardShape.다이아몬드;
+import static blackjack.domain.CardShape.하트;
+import static blackjack.testutil.TestConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import blackjack.domain.card_hand.PlayerCardHand;
 import blackjack.testutil.CardHandInitializerDummy;
 import blackjack.testutil.CardHandInitializerStub;
@@ -10,14 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static blackjack.domain.CardShape.*;
-import static blackjack.testutil.TestConstants.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerCardHandTest {
     

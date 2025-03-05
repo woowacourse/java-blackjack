@@ -1,9 +1,9 @@
 package blackjack.testutil;
 
+import java.util.List;
+
 import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
-
-import java.util.List;
 
 public class CardHandInitializerDummy implements CardHandInitializer {
     

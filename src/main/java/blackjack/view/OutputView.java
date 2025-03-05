@@ -1,12 +1,12 @@
 package blackjack.view;
 
+import java.util.List;
+import java.util.StringJoiner;
+
 import blackjack.domain.Card;
 import blackjack.domain.CardShape;
 import blackjack.domain.WinningStatus;
 import blackjack.view.writer.Writer;
-
-import java.util.List;
-import java.util.StringJoiner;
 
 public class OutputView {
     

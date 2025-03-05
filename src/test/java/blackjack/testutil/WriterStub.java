@@ -1,9 +1,9 @@
 package blackjack.testutil;
 
-import blackjack.view.writer.Writer;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import blackjack.view.writer.Writer;
 
 public class WriterStub implements Writer {
     

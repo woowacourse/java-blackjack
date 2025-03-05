@@ -1,11 +1,11 @@
 package blackjack.testutil;
 
-import blackjack.domain.Card;
-import blackjack.domain.Deck;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
+
+import blackjack.domain.Card;
+import blackjack.domain.Deck;
 
 public class DeckStub extends Deck {
     

@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-import blackjack.domain.card_hand.DealerCardHand;
-import blackjack.domain.card_hand.PlayerCardHand;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import blackjack.domain.card_hand.DealerCardHand;
+import blackjack.domain.card_hand.PlayerCardHand;
 
 public class BlackjackJudge {
     
