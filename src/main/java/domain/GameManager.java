@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.Collections;
+import java.util.List;
+
 public class GameManager {
 
     private static final int INITIAL_CARDS = 2;
@@ -20,5 +23,19 @@ public class GameManager {
         for (int count = 0; count < INITIAL_CARDS; count++) {
             participants.receiveCards(cardDeck);
         }
+    }
+
+    public void passCardTo(String name) {
+        Player player = participants.findByName(name);
+        player.receive(cardDeck.popCard());
+    }
+
+    public int getScoreOf(String name) {
+        Player player = participants.findByName(name);
+        return player.getScore();
+    }
+
+    public List<String> getPlayersName() {
+        return Collections.unmodifiableList(participants.getPlayersName());
     }
 }

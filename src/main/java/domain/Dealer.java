@@ -19,6 +19,11 @@ public class Dealer implements Participant {
         ownedCards.add(card);
     }
 
+    @Override
+    public int getScore() {
+        return ownedCards.calculateScore();
+    }
+
     public List<Card> getOwnedCards() {
         return ownedCards.getCards();
     }

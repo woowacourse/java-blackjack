@@ -71,4 +71,22 @@ class ParticipantsTest {
         // then
         assertThat(cardDeck.getCards()).hasSize(48);
     }
+
+    @Test
+    void 이름으로_플레이어를_반환한다() {
+        // given
+        Participants participants = Participants.of(
+                Dealer.of(), List.of(
+                        Player.of("pobi1"),
+                        Player.of("pobi2"),
+                        Player.of("pobi3")
+                )
+        );
+
+        // when
+        Player player = participants.findByName("pobi1");
+
+        // then
+        assertThat(player.getName()).isEqualTo("pobi1");
+    }
 }
