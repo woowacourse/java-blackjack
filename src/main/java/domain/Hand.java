@@ -19,4 +19,9 @@ public class Hand {
                 .mapToInt(Card::getScore)
                 .sum();
     }
+
+    public boolean isBust() {
+        return getSumOfRank() > 21;
+    }
+
 }
