@@ -24,6 +24,20 @@ public class CardsTest {
                 .hasMessageContaining("[ERROR]");
     }
 
+    @DisplayName("추가 배분 시 카드의 합을 구할 때, ACE는 모두 1로 계산하며 예외가 발생하지 않는다")
+    @Test
+    void test8() {
+        //given
+        List<Card> testCards = List.of(new Card(CardNumberType.ACE, CardType.CLOVER),
+                new Card(CardNumberType.ACE, CardType.DIAMOND),
+                new Card(CardNumberType.ACE, CardType.HEART),
+                new Card(CardNumberType.EIGHT, CardType.HEART));
+        Cards cards = new Cards(testCards);
+
+        //when
+        assertThatCode(() -> cards.checkMaxSum()).doesNotThrowAnyException();
+    }
+
     @DisplayName("새로 배분된 카드를 저장한다")
     @Test
     void test2() {
