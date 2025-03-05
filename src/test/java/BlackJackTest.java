@@ -1,4 +1,5 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,5 +20,29 @@ class BlackJackTest {
 
         //then
         assertThat(player1).isNotEqualTo(player2).isEqualTo(player3);
+    }
+
+    @DisplayName("카드는 문양과 숫자를 가진다.")
+    @Test
+    void card() {
+        //given
+        final var symbol = Symbol.SPADE;
+        final var number = 1;
+
+        //when //then
+        assertThatCode(() -> new Card(symbol, number))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("카드의 문양은 4가지다.")
+    @Test
+    void cardSymbol() {
+        //given
+
+        //when
+        Symbol[] values = Symbol.values();
+
+        //then
+        assertThat(values).hasSize(4);
     }
 }
