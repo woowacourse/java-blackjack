@@ -15,4 +15,11 @@ public class CardDeck {
     public int getCardsSize() {
         return cards.size();
     }
+
+    public void addCard(Card card) {
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
