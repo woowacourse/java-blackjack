@@ -12,4 +12,8 @@ public record Player(
         final Card card = deck.pickCard();
         cardHand.add(card);
     }
+
+    public boolean isPickCard() {
+        return false;
+    }
 }
