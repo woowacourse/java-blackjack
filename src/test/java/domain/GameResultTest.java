@@ -45,6 +45,6 @@ class GameResultTest {
                         GameResult.LOSE),
                 Arguments.arguments(Set.of(CardFixture.of(TEN, CLOVER), CardFixture.of(KING, CLOVER)),
                         Set.of(CardFixture.of(JACK, CLOVER), CardFixture.of(KING, DIAMOND)),
-                        GameResult.DRAW));
+                        GameResult.PUSH));
     }
 }

@@ -46,7 +46,7 @@ public class CardHand {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == INITIAL_CARD_COUNT && calculateScore() == MAX_SCORE;
+        return calculateScore() == MAX_SCORE;
     }
 
     public boolean isDealerHit() {

@@ -3,7 +3,7 @@ package domain;
 public enum GameResult {
     WIN("승"),
     LOSE("패"),
-    DRAW("무");
+    PUSH("무");
 
     private final String name;
 
@@ -21,6 +21,6 @@ public enum GameResult {
         if (dealerScore < playerScore) {
             return LOSE;
         }
-        return DRAW;
+        return PUSH;
     }
 }
