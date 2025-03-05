@@ -2,6 +2,7 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -65,5 +66,13 @@ class HandTest {
 
         // then
         assertThat(cards).containsExactly(card1, card2);
+    }
+
+    @DisplayName("Hand 생성 시에 card 가 null 이 존재하면 예외를 던진다.")
+    @Test
+    void test6() {
+        // give & when & then
+        assertThatThrownBy(() -> Hand.of(null, null))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
