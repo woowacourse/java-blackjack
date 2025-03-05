@@ -8,4 +8,8 @@ public class Player {
         this.name = name;
         this.cardGroup = cardGroup;
     }
+
+    public boolean receiveCard(final Card card) {
+        return false;
+    }
 }
