@@ -20,6 +20,14 @@ public class Card {
         return rank;
     }
 
+    public int getValue() {
+        return rank.getValue();
+    }
+
+    public boolean isAce() {
+        return rank == Rank.A;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

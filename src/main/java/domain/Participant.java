@@ -28,6 +28,26 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
+    public int getTotalValue() {
+        final long constTotalValue = cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getValue)
+                .sum();
+
+        final long aceCount = cards.stream()
+                .filter(Card::isAce)
+                .count();
+
+        long totalValue = constTotalValue;
+        for (int i = 0; i <= aceCount; ++i) {
+            totalValue = constTotalValue + (i * 1) + ((aceCount - i) * 11);
+            if (totalValue <= 21) {
+                return (int) totalValue;
+            }
+        }
+        return (int) totalValue;
+    }
+
     @Override
     public String toString() {
         return "Participant{" +
