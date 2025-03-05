@@ -33,4 +33,8 @@ public class Cards {
             throw new IllegalArgumentException(ERROR_HEADER + MAX_SUM_EXCEED_ERROR);
         }
     }
+
+    public void add(Card testCard) {
+
+    }
 }

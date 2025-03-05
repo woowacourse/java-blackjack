@@ -1,5 +1,7 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +19,23 @@ public class CardsTest {
         Cards cards = new Cards(testCards);
 
         //when & then
-        Assertions.assertThatThrownBy(
+        assertThatThrownBy(
                 () -> cards.checkMaxSum()
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR]");
+    }
+
+    @DisplayName("새로 배분된 카드를 저장한다")
+    @Test
+    void test2() {
+        //given
+        Cards cards = Cards.createEmpty();
+        Card testCard = new Card(CardNumberType.SIX, CardType.CLOVER);
+
+        //when
+        cards.add(testCard);
+
+        //then
+        assertThat(cards.getCards()).contains(testCard);
     }
 }
