@@ -116,4 +116,8 @@ public class OutputView {
         }
         throw new IllegalArgumentException("Invalid rank: " + rank);
     }
+
+    public static void printCannotAdditionalCard() {
+        System.out.println("더 이상 카드를 받을 수 없습니다.");
+    }
 }

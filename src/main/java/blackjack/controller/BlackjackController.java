@@ -47,6 +47,7 @@ public class BlackjackController {
                     try {
                         dealer.sendCardToPlayer(player);
                     } catch (IllegalArgumentException e) {
+                        OutputView.printCannotAdditionalCard();
                         break;
                     }
                 }
