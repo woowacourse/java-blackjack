@@ -17,8 +17,11 @@ public class CardDeck {
         Collections.shuffle(CARD_DECK);
     }
 
-    public static void drawCard() {
-
+    public static TrumpCard drawCard() {
+        if (CARD_DECK.isEmpty()) {
+            throw new IllegalArgumentException("카드가 다 떨어졌습니다");
+        }
+        return CARD_DECK.remove(0);
     }
 
     public static TrumpCard getCard(int index) {
