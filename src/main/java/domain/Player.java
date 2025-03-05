@@ -7,7 +7,7 @@ public class Player extends Participant {
     }
 
     @Override
-    boolean ableToAddCard() {
+    public boolean ableToAddCard() {
         int cardsScore = cards.calculateScore();
         return cardsScore <= 21;
     }

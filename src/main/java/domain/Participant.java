@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -12,7 +13,7 @@ public abstract class Participant {
         this.cards = new Cards();
     }
 
-    abstract boolean ableToAddCard();
+    public abstract boolean ableToAddCard();
 
     public void addCard(Card card) {
         cards.addCard(card);
@@ -24,5 +25,17 @@ public abstract class Participant {
 
     public boolean isParticipant(String name) {
         return this.name.equals(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+
+    public int getCardsScore() {
+        return cards.calculateScore();
     }
 }

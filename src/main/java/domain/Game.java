@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -24,15 +25,14 @@ public class Game {
         }
     }
 
+    public int countParticipants() {
+        return players.size() + 1;
+    }
+
     public void distributeInitialCards(List<List<Card>> cardsStack) {
         for (List<Card> cards : cardsStack) {
             distributeInitialCard(cards);
         }
-    }
-
-    public void distributeCardTo(String name, Card card) {
-        Participant participant = findParticipantBy(name);
-        participant.addCard(card);
     }
 
     public GameResult determineGameResult(String name) {
@@ -41,6 +41,14 @@ public class Game {
             return determineDealerGameResult((Dealer) participant);
         }
         return determinePlayerGameResult((Player) participant);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     private boolean isDealer(String name) {

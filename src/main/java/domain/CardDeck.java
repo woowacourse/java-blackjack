@@ -3,7 +3,9 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CardDeck {
 
@@ -20,6 +22,23 @@ public class CardDeck {
                         .map(suit -> new Card(rank, suit)))
                 .forEach(cards::addCard);
         cards.shuffle();
+        return cards;
+    }
+
+    public List<List<Card>> pickInitialCardsStack(int stackSize) {
+        List<List<Card>> cardsStack = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            List<Card> cards = pickInitialCards(stackSize);
+            cardsStack.add(cards);
+        }
+        return cardsStack;
+    }
+
+    private List<Card> pickInitialCards(int stackSize) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < stackSize; i++) {
+            cards.add(pickCard());
+        }
         return cards;
     }
 

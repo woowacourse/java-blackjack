@@ -40,6 +40,10 @@ public class Cards {
         Collections.shuffle(cards);
     }
 
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
     private GameStatus evaluateStatusByScore(int cardsScore, int otherCardsScore) {
         if (cardsScore > otherCardsScore) {
             return GameStatus.WIN;

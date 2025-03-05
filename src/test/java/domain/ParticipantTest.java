@@ -42,7 +42,7 @@ public class ParticipantTest {
     private static Participant createParticipantCardsOfRanks(List<Rank> ranks) {
         Participant participant = new Participant("행성") {
             @Override
-            boolean ableToAddCard() {
+            public boolean ableToAddCard() {
                 return false;
             }
         };

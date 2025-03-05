@@ -21,4 +21,8 @@ public class GameResult {
     public int getStatusCount(GameStatus status) {
         return gameResult.get(status);
     }
+
+    public Map<GameStatus, Integer> getGameResult() {
+        return gameResult;
+    }
 }
