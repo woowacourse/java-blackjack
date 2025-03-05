@@ -18,13 +18,13 @@ public class Deck {
 
     private void validateSize(List<TrumpCard> cards) {
         if (cards.size() != 52) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("덱의 크기는 52여야 합니다.");
         }
     }
 
     private void validateDuplicate(List<TrumpCard> cards) {
         if (cards.stream().distinct().count() != cards.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("덱에 중복된 카드가 있습니다.");
         }
     }
 }
