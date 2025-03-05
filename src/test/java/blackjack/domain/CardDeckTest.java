@@ -31,4 +31,31 @@ class CardDeckTest {
 
         assertThat(possibleSums).isEqualTo(Set.of(9, 19));
     }
+
+    @DisplayName("에이스가 여러개인 경우에도 정상적으로 계산한다..")
+    @Test
+    void testCards_multipleAce() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
+
+        Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
+
+        assertThat(possibleSums).isEqualTo(Set.of(10, 20, 30));
+    }
+
+    @DisplayName("에이스가 4개인 경우에도 정상적으로 계산한다..")
+    @Test
+    void testCards_multipleAce4() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
+
+        Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
+
+        assertThat(possibleSums).isEqualTo(Set.of(4, 14, 24, 34, 44));
+    }
 }
