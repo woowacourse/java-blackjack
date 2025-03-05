@@ -1,4 +1,9 @@
 import java.util.List;
+import model.Card;
+import model.CardNumber;
+import model.CardType;
+import model.Cards;
+import model.ScoreCalculator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
