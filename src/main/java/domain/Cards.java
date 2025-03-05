@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Cards {
     private static final int VALID_MAX_SUM_LIMIT = 21;
+    private static final int VALID_DRAW_LIMIT = 16;
     private static final String MAX_SUM_EXCEED_ERROR = "카드의 합이 21을 초과하였습니다.";
 
     private final List<Card> cards;
@@ -25,11 +26,7 @@ public class Cards {
     }
 
     public void checkMaxSum() {
-        int sum = cards.stream()
-                .map(Card::cardNumberType)
-                .mapToInt(CardNumberType::getValue)
-                .sum();
-        if(sum > VALID_MAX_SUM_LIMIT) {
+        if(calculateSum() > VALID_MAX_SUM_LIMIT) {
             throw new IllegalArgumentException(ERROR_HEADER + MAX_SUM_EXCEED_ERROR);
         }
     }
@@ -39,10 +36,13 @@ public class Cards {
     }
 
     public boolean isUnderDrawLimit() {
-        int sum = cards.stream()
+        return calculateSum() <= VALID_DRAW_LIMIT;
+    }
+
+    private int calculateSum() {
+        return cards.stream()
                 .map(Card::cardNumberType)
                 .mapToInt(CardNumberType::getValue)
                 .sum();
-        return sum <= 16;
     }
 }
