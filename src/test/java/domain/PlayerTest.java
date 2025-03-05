@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
 
@@ -52,5 +50,20 @@ public class PlayerTest {
         final Player player = new Player(name, cardGroup);
 
         assertThat(player.isGreaterThan(5)).isTrue();
+    }
+
+    @Test
+    void 플레이어의_점수가_21을_넘으면_Bust한다(){
+        final String name = "윌슨";
+        final List<Card> cards = List.of(
+                new Card(CardType.DIAMOND_J),
+                new Card(CardType.CLOVER_J),
+                new Card(CardType.DIAMOND_2)
+        );
+        final CardGroup cardGroup = new CardGroup(cards);
+
+        final Player player = new Player(name, cardGroup);
+
+        assertThat(player.isBust()).isTrue();
     }
 }

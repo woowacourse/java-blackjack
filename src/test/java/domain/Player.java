@@ -18,4 +18,8 @@ public class Player {
     public boolean isGreaterThan(int compareScore) {
         return this.cardGroup.calculateScore(LIMIT) > compareScore;
     }
+
+    public boolean isBust() {
+        return false;
+    }
 }
