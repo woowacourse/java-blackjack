@@ -12,6 +12,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isPossibleToAdd() {
-        return false;
+        return super.calculateDenominations() <= 16;
     }
 }
