@@ -9,31 +9,18 @@ class DealerTest {
 
     @Test
     void 딜러_생성_성공() {
-        // given
-        CardDeck cardDeck = CardDeck.of();
+        // given nothing
 
         // when & then
-        assertThatCode(() -> Dealer.of(cardDeck))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    void 플레이어_한_명에게_카드_한_장을_준다() {
-        // given
-        CardDeck cardDeck = CardDeck.of();
-        Dealer dealer = Dealer.of(cardDeck);
-
-        // when & then
-        assertThatCode(() -> dealer.passCard())
+        assertThatCode(() -> Dealer.of())
                 .doesNotThrowAnyException();
     }
 
     @Test
     void 카드를_한_장_받는다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
-        Dealer dealer = Dealer.of(cardDeck);
-        Card card = dealer.passCard();
+        Dealer dealer = Dealer.of();
+        Card card = Card.of(TrumpNumber.NINE, TrumpShape.CLUB);
 
         // when
         dealer.receive(card);

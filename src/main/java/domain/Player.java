@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public class Player {
+public class Player implements Participant {
 
     private final String name;
     private final Cards ownedCards;
@@ -16,6 +16,7 @@ public class Player {
         return new Player(name);
     }
 
+    @Override
     public void receive(final Card card) {
         ownedCards.add(card);
     }

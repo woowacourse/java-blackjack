@@ -2,8 +2,10 @@ package controller;
 
 import domain.CardDeck;
 import domain.Dealer;
+import domain.GameManager;
+import domain.Participant;
+import domain.Participants;
 import domain.Player;
-import domain.Players;
 import java.util.Arrays;
 import java.util.List;
 import view.InputView;
@@ -27,20 +29,19 @@ public class BlackjackController {
     }
 
     public void gameStart() {
-        Dealer dealer = Dealer.of(CardDeck.of());
+        Participant dealer = Dealer.of();
 
         String rawNames = inputView.getPlayerNames();
-        List<Player> participants = Arrays.stream(rawNames.split(","))
+        List<Participant> players = Arrays.stream(rawNames.split(","))
                 .map(String::trim)
                 .map(Player::of)
+                .map(player -> (Participant) player)
                 .toList();
-        Players players = Players.of(participants);
 
-        players.receiveCardFrom(dealer);
-        players.receiveCardFrom(dealer);
+        Participants participants = Participants.of(dealer, players);
 
-        dealer.receive(dealer.passCard());
-        dealer.receive(dealer.passCard());
-        outputView.printInitCards(dealer, players);
+        GameManager gameManager = GameManager.of(CardDeck.of(), participants);
+        gameManager.distributeCards();
+//        outputView.printInitCards(participants);
     }
 }

@@ -2,24 +2,19 @@ package domain;
 
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements Participant {
 
-    private final CardDeck cardDeck;
     private final Cards ownedCards; // 변수명 추천
 
-    private Dealer(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
+    private Dealer() {
         this.ownedCards = Cards.of();
     }
 
-    public static Dealer of(CardDeck cardDeck) {
-        return new Dealer(cardDeck);
+    public static Dealer of() {
+        return new Dealer();
     }
 
-    public Card passCard() {
-        return cardDeck.popCard();
-    }
-
+    @Override
     public void receive(Card card) {
         ownedCards.add(card);
     }
