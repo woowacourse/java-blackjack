@@ -29,6 +29,10 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    public Card draw() {
+        return deck.removeFirst();
+    }
+
     public List<Card> getDeck() {
         return Collections.unmodifiableList(deck);
     }

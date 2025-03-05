@@ -17,6 +17,14 @@ public class Card {
         return denomination.equals(ACE);
     }
 
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
     public int getValue() {
         return value;
     }
