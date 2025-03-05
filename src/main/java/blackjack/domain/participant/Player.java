@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class Player implements GameAction {
 
+    public static final int BLACKJACK_NUMBER = 21;
+
     private final String nickname;
     private final List<Card> cards;
 
@@ -18,9 +20,11 @@ public class Player implements GameAction {
         cards.addAll(givenCards);
     }
 
-    @Override
-    public List<Card> getInitialCards() {
-        return cards;
+    public boolean canGetMoreCard() {
+        int sum = cards.stream()
+                .mapToInt(Card::getCardMinNumber)
+                .sum();
+        return sum < BLACKJACK_NUMBER;
     }
 
     @Override
@@ -40,4 +44,8 @@ public class Player implements GameAction {
         return nickname;
     }
 
+    @Override
+    public List<Card> getCards() {
+        return cards;
+    }
 }
