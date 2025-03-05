@@ -1,6 +1,6 @@
 package domain.participant;
 
-public class Dealer {
+public class Dealer implements Participant {
     private final String nickname;
 
     public Dealer(final String nickname) {
