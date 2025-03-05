@@ -34,18 +34,26 @@ public class BlackjackController {
         resultView.printSpreadCard(participants);
 
         // 플레이어마다 카드 나눠주기
-        spreadExtraCards(blackjackGame);
+        spreadPlayersExtraCards(blackjackGame);
+        spreadDealerExtraCards(blackjackGame);
     }
 
-    private void spreadExtraCards(final BlackjackGame blackjackGame) {
+    private void spreadDealerExtraCards(final BlackjackGame blackjackGame) {
+        while (blackjackGame.canDealerMoreCard()) {
+            blackjackGame.spreadOneCardToDealer();
+            resultView.printDealerExtraCard();
+        }
+    }
+
+    private void spreadPlayersExtraCards(final BlackjackGame blackjackGame) {
         for (int index = 0; index < blackjackGame.getPlayerSize(); index++) {
             final Player player = blackjackGame.getPlayer(index);
-            while (blackjackGame.canSpread(index)) {
+            while (blackjackGame.canPlayerMoreCard(index)) {
                 if (!isMoreCard(player)) {
                     break;
                 }
-                blackjackGame.spreadOneCard(index);
-                resultView.printTotalCards(player);
+                blackjackGame.spreadOneCardToPlayer(index);
+                resultView.printParticipantTotalCards(player);
             }
         }
     }
