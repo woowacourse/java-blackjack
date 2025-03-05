@@ -1,9 +1,11 @@
 package blackjack.model;
 
 import static blackjack.model.CardCreator.createCard;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import java.util.stream.Stream;
-import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -66,7 +68,7 @@ class RuleTest {
         Dealer dealer = new Dealer();
         dealer.receiveCards(cards);
 
-        assertThat(rule.shouldDealerDraw(dealer)).isEqualTo(expected);
+        assertThat(rule.canPlayerDrawMoreCard(dealer)).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -75,6 +77,7 @@ class RuleTest {
         User user = new User();
         user.receiveCards(cards);
 
-        assertThat(rule.canPlayerDrewMoreCard(user)).isEqualTo(expected);
+        assertThat(rule.canPlayerDrawMoreCard(user)).isEqualTo(expected);
     }
+
 }

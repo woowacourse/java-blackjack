@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.List;
+
 public class BlackJackGame {
 
     private final CardDeck cardDeck;
@@ -10,16 +12,19 @@ public class BlackJackGame {
         this.rule = rule;
     }
 
-    public boolean drawDealerCards(final Dealer dealer) {
-        if (rule.shouldDealerDraw(dealer)) {
-            dealer.receiveCards(draw(1));
+    public void dealInitialCards(final List<Player> players) {
+        players.forEach(player -> {
+            drawCard(player);
+            drawCard(player);
+        });
+    }
+
+    public boolean drawCard(final Player player) {
+        if (rule.canPlayerDrawMoreCard(player)) {
+            player.receiveCards(cardDeck.draw(1));
             return true;
         }
         return false;
-    }
-
-    private Cards draw(final int drawSize) {
-        return new Cards(cardDeck.draw(drawSize));
     }
 
 }

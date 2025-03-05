@@ -18,6 +18,10 @@ public abstract class Player {
         this.cards.merge(cards);
     }
 
+    public boolean hasRole(final Role role) {
+        return this.role == role;
+    }
+
     public Cards getCards() {
         return cards;
     }

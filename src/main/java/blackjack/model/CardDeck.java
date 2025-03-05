@@ -11,8 +11,8 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    public List<Card> draw(final int drawSize) {
-        return cards.pick(drawSize);
+    public Cards draw(final int drawSize) {
+        return new Cards(cards.pick(drawSize));
     }
 
     public List<Card> getCards() {

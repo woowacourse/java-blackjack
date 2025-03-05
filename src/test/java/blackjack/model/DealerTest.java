@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class DealerTest {
 
@@ -29,6 +31,16 @@ class DealerTest {
         ));
 
         assertThat(dealer.getCards().getValues()).hasSize(3);
+    }
+
+    @CsvSource(value = {
+            "DEALER,true", "USER,false"
+    })
+    @ParameterizedTest
+    void 자신의_역할과_같은_역할인지_확인한다(Role role, boolean expected) {
+        Dealer dealer = new Dealer();
+
+        assertThat(dealer.hasRole(role)).isEqualTo(expected);
     }
 
 }
