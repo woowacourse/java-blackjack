@@ -41,12 +41,15 @@ public class Dealer {
         return Collections.unmodifiableList(cards);
     }
 
-    public void pickAdditionalCard() {
+    public int pickAdditionalCard() {
         int maxScore = scoreCalculator.calculateMaxScore(cards);
+        int additionalCardsNumber = 0;
         while (maxScore <= 16) {
+            additionalCardsNumber++;
             cards.add(deck.draw());
             maxScore = scoreCalculator.calculateMaxScore(cards);
         }
+        return additionalCardsNumber;
     }
 
     public void sendCardToPlayer(Player player) {

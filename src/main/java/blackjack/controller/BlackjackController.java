@@ -18,6 +18,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck(), new ScoreCalculator());
         handOutCards(dealer, players);
         addtionalCard(dealer, players);
+        dealerAdditionalCard(dealer);
     }
 
     private Players createPlayers() {
@@ -53,4 +54,11 @@ public class BlackjackController {
             while (answer.equals("y"));
         }));
     }
+
+
+    private void dealerAdditionalCard(Dealer dealer) {
+        int additionalCardsNumber = dealer.pickAdditionalCard();
+        OutputView.printDealerAdditionalCard(additionalCardsNumber);
+    }
+
 }
