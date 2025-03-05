@@ -10,7 +10,7 @@ public class Nickname {
     }
 
     private void validateNaming(final String displayName) {
-        String regex = "^[a-zA-Z]{2,5}$";
+        String regex = "^[a-zA-Z가-힣]{2,5}$";
         if (displayName.matches(regex)) {
             return;
         }
