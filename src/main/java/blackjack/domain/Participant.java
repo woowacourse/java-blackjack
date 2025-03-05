@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private final List<Card> cards;
+    protected final List<Card> cards;
 
     public Participant() {
         this.cards = new ArrayList<>();
@@ -15,10 +15,6 @@ public abstract class Participant {
 
     public void addCards(Card... cards) {
         this.cards.addAll(Arrays.asList(cards));
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
     }
 
     public int calculateDenominations() {
@@ -32,6 +28,10 @@ public abstract class Participant {
         }
 
         return sum;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     // TODO : abstract 메서드 위치 컨벤션

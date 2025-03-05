@@ -6,6 +6,10 @@ public class Dealer extends Participant {
         super();
     }
 
+    public Card openFirstCard() {
+        return super.cards.getFirst();
+    }
+
     @Override
     public boolean isPossibleToAdd() {
         return false;
