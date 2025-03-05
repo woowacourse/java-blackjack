@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.GameAction;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.List;
@@ -21,14 +22,19 @@ public class ResultView {
     private static final String NAME_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String COMMA = ", ";
     private static final String CARD_FORMAT = "%s카드: %s";
+    private static final String TITLE_DEALER_EXTRA_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public void printSpreadCard(final Participants participants) {
         printNames(participants);
         printCards(participants);
     }
 
-    public void printTotalCards(final Player player) {
-        System.out.println(makePlayerMessage(player));
+    public void printParticipantTotalCards(final GameAction participants) {
+        System.out.println(makeParticipantsMessage(participants));
+    }
+
+    public void printDealerExtraCard() {
+        System.out.println(LINE + TITLE_DEALER_EXTRA_CARD);
     }
 
     private void printNames(final Participants participants) {
@@ -45,13 +51,13 @@ public class ResultView {
         System.out.println(dealerMessage);
         final List<Player> players = participants.getPlayers();
         players.stream()
-                .map(this::makePlayerMessage)
+                .map(this::makeParticipantsMessage)
                 .forEach(System.out::println);
     }
 
-    private String makePlayerMessage(final Player player) {
-        return String.format(CARD_FORMAT, player.getNickname(),
-                getCardMessage(player.getCards()));
+    private String makeParticipantsMessage(final GameAction participants) {
+        return String.format(CARD_FORMAT, participants.getNickname(),
+                getCardMessage(participants.getCards()));
     }
 
     private String getCardMessage(final List<Card> cards) {
