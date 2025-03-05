@@ -36,10 +36,17 @@ public class CardGroup {
                 .count());
     }
 
-    public int calculateAceScore() {
+    public int calculateScoreWithAce(int limit) {
         int calculateScoreWithOutAce = calculateScoreWithOutAce();
-        if(calculateScoreWithOutAce > 10) return 1;
-        if(countAce() == 2) return 2;
-        return 11;
+        int aceCount = countAce();
+
+        int sum = calculateScoreWithOutAce + aceCount;
+        while(aceCount-- > 0){
+            int temp = sum + 10;
+            if(temp > limit) break;
+            sum = temp;
+        }
+
+        return sum;
     }
 }
