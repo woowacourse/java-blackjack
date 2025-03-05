@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public enum Suit {
     HEART("하트"),
     SPADE("스페이드"),

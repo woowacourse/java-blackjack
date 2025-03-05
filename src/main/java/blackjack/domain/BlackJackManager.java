@@ -26,6 +26,11 @@ public class BlackJackManager {
         return new BlackJackManager(cardDeck, participants);
     }
 
+    public void addExtraCard(Participant participant) {
+        Card card = cardDeck.pickRandomCard();
+        participant.addCards(card);
+    }
+
     public void initCardsToParticipants() {
         for (Participant participant : participants) {
             Card card1 = cardDeck.pickRandomCard();

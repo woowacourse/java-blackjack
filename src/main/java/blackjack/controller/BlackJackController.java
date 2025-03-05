@@ -1,7 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackManager;
+import blackjack.domain.Card;
+import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
+import blackjack.domain.Player;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -29,6 +32,23 @@ public class BlackJackController {
             for (Participant participant : blackJackManager.getParticipants()) {
                 outputView.printParticipant(participant);
             }
+
+            // 카드 추가 배부 여부 입력
+            for (Participant participant : blackJackManager.getParticipants()) {
+                if (participant instanceof Dealer) {
+                    continue;
+                }
+                while (participant.isPossibleToAdd()) {
+                    Player player = (Player)participant;
+                    String yesOrNo = inputView.readGetOneMore(player.getName());
+                    if(yesOrNo.equals("n")) {
+                        break;
+                    }
+                    blackJackManager.addExtraCard(player);
+                    outputView.printParticipant(participant);
+                }
+            }
+
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
         }

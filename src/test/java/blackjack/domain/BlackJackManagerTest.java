@@ -1,13 +1,14 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @Nested
 class BlackJackManagerTest {
@@ -43,6 +44,19 @@ class BlackJackManagerTest {
 
             assertThatCode(manager::initCardsToParticipants)
                     .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("카드 한 장을 추가로 배부할 수 있다.")
+        void distributeExtraCard() {
+            List<String> names = List.of("sana");
+            BlackJackManager manager = BlackJackManager.createByPlayerNames(names);
+            manager.initCardsToParticipants(); // 2장 배부
+
+            Player player = (Player) manager.getParticipants().getLast();
+            manager.addExtraCard(player); // 총 3장 카드 보유
+
+            assertThat(player.getCards()).hasSize(3);
         }
     }
 }
