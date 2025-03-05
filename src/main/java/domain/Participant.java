@@ -52,6 +52,8 @@ public abstract class Participant {
         return getTotalValue() > standardValue;
     }
 
+    public abstract boolean canPick();
+
     @Override
     public String toString() {
         return "Participant{" +

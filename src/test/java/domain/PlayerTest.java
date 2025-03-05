@@ -125,4 +125,43 @@ public class PlayerTest {
         //then
         assertThat(isOver).isFalse();
     }
+
+    /***
+     * 플레이어 21 이하면 다시 입력받기 -> boolean true/ false
+     * 딜러 16이하면 다시 뽑기
+     */
+    @Test
+    @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 21 이하일 경우, true를 반환한다")
+    void should_return_true_when_can_pick() {
+        //given
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+            new Card(Shape.HEART, Rank.QUEEN),
+            new Card(Shape.HEART, Rank.ONE));
+        Participant player = new Player("a");
+        for (Card card : cards) {
+            player.addCard(card);
+        }
+
+        boolean canPick = player.canPick();
+        assertThat(canPick).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 22 이상 경우, false를 반환한다")
+    void should_return_false_when_cannot_pick() {
+        //given
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+            new Card(Shape.HEART, Rank.QUEEN),
+            new Card(Shape.HEART, Rank.TWO));
+        Participant player = new Player("a");
+        for (Card card : cards) {
+            player.addCard(card);
+        }
+
+        //when
+        boolean canPick = player.canPick();
+
+        //then
+        assertThat(canPick).isFalse();
+    }
 }
