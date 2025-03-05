@@ -12,6 +12,8 @@ import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class GameBoardTest {
 
@@ -126,5 +128,34 @@ public class GameBoardTest {
 
         //then
         Assertions.assertThat(actual).isEqualTo(2);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"SIX, TEN, true", "SEVEN, TEN, false"})
+    void 참가자_점수_스테이_확인(CardNumber cardNumber1, CardNumber cardNumber2, boolean expectedResult) {
+        //given
+        Participant targetParticipant = Player.from("우가");
+        List<Participant> participants = List.of(
+                targetParticipant,
+                Player.from("히스타"),
+                Dealer.generate()
+        );
+        Card card1 = new Card(cardNumber1, CardSymbol.CLOVER);
+        Card card2 = new Card(cardNumber2, CardSymbol.HEART);
+        GameBoard gameBoard = new GameBoard(participants);
+        CardDeck cardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = cardDeck.getCards();
+        cards.clear();
+        cards.add(card1);
+        cards.add(card2);
+
+        gameBoard.drawCardTo(targetParticipant);
+        gameBoard.drawCardTo(targetParticipant);
+
+        //when
+        boolean actual = gameBoard.ableToDraw(targetParticipant);
+
+        //then
+        Assertions.assertThat(actual).isEqualTo(expectedResult);
     }
 }
