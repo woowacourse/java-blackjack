@@ -2,7 +2,9 @@ package domain;
 
 public class RandomCardGenerator {
 
+
     public Card generate() {
-        return null;
+
+        return new Card(CardType.CLOVER_4);
     }
 }
