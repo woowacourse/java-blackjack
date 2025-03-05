@@ -67,4 +67,42 @@ public class PlayerTest {
                 )
         );
     }
+
+    @DisplayName("21 초과할 때, 21에 가장 가까운 값을 선택할 수 있다")
+    @ParameterizedTest
+    @MethodSource("createBurstCardsCase")
+    void 가장_가까운_값_선택(List<Card> inputCards, int expected) {
+        //given
+        Cards cards = Cards.of(inputCards);
+        Player player = Player.of(cards);
+
+        //when
+        int actual = player.getResult();
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream createBurstCardsCase() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.KING, CardShape.CLOVER),
+                                new Card(CardNumber.KING, CardShape.CLOVER)
+                        ),
+                        21
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.KING, CardShape.CLOVER),
+                                new Card(CardNumber.FIVE, CardShape.CLOVER),
+                                new Card(CardNumber.KING, CardShape.CLOVER)
+                        ),
+                        16
+                )
+        );
+    }
 }
