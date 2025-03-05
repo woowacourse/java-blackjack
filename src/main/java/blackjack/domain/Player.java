@@ -24,10 +24,10 @@ public class Player {
 
     public int calculateTotalCardScore() {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
-        if (isBust()) {
-            return Collections.min(possibleSum);
-        }
-        return Collections.max(possibleSum);
+        return possibleSum.stream()
+                .filter(sum -> sum <= 21)
+                .max(Integer::compareTo)
+                .orElse(Collections.min(possibleSum));
     }
 
     public boolean isBust() {

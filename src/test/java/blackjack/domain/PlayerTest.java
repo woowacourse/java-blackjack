@@ -93,6 +93,23 @@ class PlayerTest {
         assertThat(totalScore).isEqualTo(17);
     }
 
+    @DisplayName("플레이어의 카드 덱에 에이스가 여러 개인 있는 경우 알맞은 합을 반환")
+    @Test
+    void testPlayerTotalCardScore_hasMultipleAce() {
+        // given
+        CardDeck cardDeck = new CardDeck();
+        CardDump cardDump = new CardDump();
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
+
+        Player player = new Player("user1", cardDeck, cardDump);
+
+        // when
+        int totalScore = player.calculateTotalCardScore();
+        assertThat(totalScore).isEqualTo(21);
+    }
+
     @DisplayName("플레이어는 자신의 카드 덱에 카드를 추가할 수 있다")
     @Test
     void testPlayerAddCard() {

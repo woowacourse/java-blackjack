@@ -87,4 +87,19 @@ class DealerTest {
 
         assertThat(bust).isTrue();
     }
+
+    @DisplayName("딜러가 여러 에이스를 소유한 경우 버스트 발생 확인")
+    @Test
+    void testMultipleAce_Bust_True() {
+        CardDeck cardDeck = new CardDeck();
+        CardDump cardDump = new CardDump();
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
+
+        Dealer dealer = new Dealer(cardDeck, cardDump);
+
+        boolean bust = dealer.isBust();
+
+        assertThat(bust).isTrue();
+    }
 }
