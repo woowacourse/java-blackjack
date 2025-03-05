@@ -7,17 +7,17 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardDequeTest {
+public class CardDeckTest {
 
     @Test
     @DisplayName("덱에서 카드 한 장을 가져올 수 있어야 한다.")
-    void should_create_cardDeque() {
+    void should_create_cardDeck() {
         // given
         Card heartOne = new Card(Shape.HEART, Rank.ONE);
-        CardDeque cardDeque = new CardDeque(List.of(heartOne));
+        CardDeck cardDeck = new CardDeck(List.of(heartOne));
 
         // when
-        Card result = cardDeque.getAndRemoveFrontCard();
+        Card result = cardDeck.getAndRemoveFrontCard();
 
         // when
         assertThat(result).isEqualTo(heartOne);
@@ -25,16 +25,16 @@ public class CardDequeTest {
 
     @Test
     @DisplayName("덱에서 카드를 가져올 때, 기존 카드의 크기가 한 장 줄어들어야 한다.")
-    void when_get_card_from_deque_then_cards_size_1_minus() {
+    void when_get_card_from_deck_then_cards_size_1_minus() {
         // given
         Card heartOne = new Card(Shape.HEART, Rank.ONE);
-        CardDeque cardDeque = new CardDeque(List.of(heartOne));
+        CardDeck cardDeck = new CardDeck(List.of(heartOne));
 
         // when
-        cardDeque.getAndRemoveFrontCard();
+        cardDeck.getAndRemoveFrontCard();
 
         // then
-        Deque<Card> deque = cardDeque.getDeque();
-        assertThat(deque.size()).isEqualTo(0);
+        Deque<Card> deck = cardDeck.getDeck();
+        assertThat(deck.size()).isEqualTo(0);
     }
 }

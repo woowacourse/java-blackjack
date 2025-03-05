@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class BlackJackManager {
     private final List<Player> players;
-    private final CardDeque cardDeque;
+    private final CardDeck cardDeck;
 
-    public BlackJackManager(List<Player> players, CardDeque cardDeque) {
+    public BlackJackManager(List<Player> players, CardDeck cardDeck) {
         this.players = players;
-        this.cardDeque = cardDeque;
+        this.cardDeck = cardDeck;
     }
 
     public List<Player> getPlayers() {
@@ -19,8 +19,8 @@ public class BlackJackManager {
     // 게임이 시작되면 모든 플레이어에게 카드를 2장씩 나눠준다.
     public void start() {
         for (Player player : players) {
-            player.addCard(cardDeque.getAndRemoveFrontCard());
-            player.addCard(cardDeque.getAndRemoveFrontCard());
+            player.addCard(cardDeck.getAndRemoveFrontCard());
+            player.addCard(cardDeck.getAndRemoveFrontCard());
         }
     }
 

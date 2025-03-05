@@ -13,8 +13,8 @@ public class BlackJackManagerTest {
         // given
         List<Player> players = List.of(new Player("a"), new Player("b"));
         CardBundle cardBundle = new CardBundle();
-        CardDeque cardDeque = new CardDeque(cardBundle.getAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(players, cardDeque);
+        CardDeck cardDeck = new CardDeck(cardBundle.getAllCards());
+        BlackJackManager blackJackManager = new BlackJackManager(players, cardDeck);
 
         // when
         blackJackManager.start();
