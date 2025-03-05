@@ -3,7 +3,8 @@ package domain;
 public enum GameResult {
     WIN("승"),
     LOSE("패"),
-    PUSH("무");
+    PUSH("무"),
+    NONE("없음");
 
     private final String name;
 
