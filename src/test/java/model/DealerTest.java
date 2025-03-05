@@ -6,6 +6,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import view.InputView;
 
 class DealerTest {
     @DisplayName("카드의 합이 16이하이면 true를 반환한다.")
@@ -29,4 +30,5 @@ class DealerTest {
 
         assertFalse(dealer.checkScoreUnderSixteen());
     }
+
 }
