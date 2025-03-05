@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class Player {
 
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
-    public Player(String name, Cards cards) {
+    public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -22,7 +22,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public int getTotalNumberSum() {

@@ -16,12 +16,12 @@ public class PlayersTest {
 
     @Test
     void 플레이어별_이름과_카드리스트의_총합을_반환한다() {
-        Player drago = new Player("드라고", new Cards(
+        Player drago = new Player(new Name("드라고"), new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
                         new Card(Symbol.DIAMOND, Number.JACK),
                         new Card(Symbol.HEART, Number.FOUR))));
 
-        Player duei = new Player("듀이", new Cards(
+        Player duei = new Player(new Name("듀이"), new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
                         new Card(Symbol.DIAMOND, Number.JACK),
                         new Card(Symbol.HEART, Number.TWO))));

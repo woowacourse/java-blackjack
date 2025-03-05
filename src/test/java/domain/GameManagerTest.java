@@ -16,7 +16,7 @@ public class GameManagerTest {
 
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하면_플레이어는_패배한다() {
-        Player player = new Player("드라고", new Cards(
+        Player player = new Player(new Name("드라고"), new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.KING),
                         new Card(Symbol.CLOVER, Number.JACK),
                         new Card(Symbol.HEART, Number.TWO))));
@@ -35,7 +35,7 @@ public class GameManagerTest {
 
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하지않고_딜러숫자의합이_21을_초과하면_플레이어는_승리한다() {
-        Player player = new Player("드라고", new Cards(
+        Player player = new Player(new Name("드라고"), new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.KING),
                         new Card(Symbol.CLOVER, Number.EIGHT),
                         new Card(Symbol.HEART, Number.TWO))));
@@ -54,7 +54,7 @@ public class GameManagerTest {
 
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않는경우_21에가까운_플레이어가_승리한다() {
-        Player player = new Player("드라고", new Cards(
+        Player player = new Player(new Name("드라고"), new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.KING),
                         new Card(Symbol.CLOVER, Number.EIGHT),
                         new Card(Symbol.HEART, Number.TWO))));
@@ -73,7 +73,7 @@ public class GameManagerTest {
 
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않고_동일하면_무승부이다() {
-        Player player = new Player("드라고", new Cards(
+        Player player = new Player(new Name("드라고"), new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.KING),
                         new Card(Symbol.CLOVER, Number.EIGHT),
                         new Card(Symbol.HEART, Number.TWO))));
