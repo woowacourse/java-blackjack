@@ -1,12 +1,14 @@
 package domain;
 
+import java.util.Objects;
+
 public class TrumpCard {
     private final CardShape cardShape;
     private final CardNumber cardNumber;
 
-    public TrumpCard(int cardShapeIndex, int cardNumberIndex) {
-        this.cardShape = CardShape.pickCardShape(cardShapeIndex);
-        this.cardNumber = CardNumber.pick(cardShapeIndex);
+    public TrumpCard(CardShape cardShape, CardNumber cardNumber) {
+        this.cardShape = cardShape;
+        this.cardNumber = cardNumber;
     }
 
     public CardShape getCardShape() {
@@ -15,5 +17,19 @@ public class TrumpCard {
 
     public CardNumber getCardNumber() {
         return cardNumber;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        TrumpCard trumpCard = (TrumpCard) object;
+        return cardShape == trumpCard.cardShape && cardNumber == trumpCard.cardNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardShape, cardNumber);
     }
 }
