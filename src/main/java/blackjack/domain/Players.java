@@ -1,21 +1,15 @@
 package blackjack.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
 
-    private final CardPack cardPack;
     private final Player dealer;
     private final List<Player> gamblers;
 
-    public Players(List<String> playerNames) {
-        cardPack = new CardPack(new RandomBlackjackShuffle());
+    public Players(List<Player> gamblers) {
         dealer = new Dealer();
-        dealer.pushDealCard(cardPack, 2);
-        gamblers = playerNames.stream()
-                .map(this::initPlayer)
-                .collect(Collectors.toList());
+        this.gamblers = gamblers;
     }
 
     public Player getDealer() {
@@ -26,10 +20,10 @@ public class Players {
         return gamblers;
     }
 
-    private Player initPlayer(String nickname) {
-        Player player = new Gambler(nickname);
-        player.pushDealCard(cardPack, 2);
 
-        return player;
+    public void initPlayers(CardPack cardPack) {
+        dealer.pushDealCard(cardPack, 2);
+        gamblers.forEach(gambler ->
+                gambler.pushDealCard(cardPack, 2));
     }
 }
