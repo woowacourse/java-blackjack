@@ -12,4 +12,8 @@ public class Player {
     public boolean receiveCard(final Card card) {
         return cardGroup.addCard(card);
     }
+
+    public boolean isGreaterThan(int compareScore) {
+        return false;
+    }
 }
