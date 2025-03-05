@@ -3,7 +3,7 @@ package domain;
 import java.util.List;
 import java.util.Objects;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant<Dealer>{
 
     public Dealer(Cards cards) {
         super(cards);
@@ -14,7 +14,7 @@ public class Dealer extends Participant{
     }
 
     @Override
-    public Participant createParticipant(List<Card> providedCards) {
+    public Dealer createParticipant(List<Card> providedCards) {
         return new Dealer(cards.addCards(providedCards));
     }
 
