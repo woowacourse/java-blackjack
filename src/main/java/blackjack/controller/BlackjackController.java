@@ -62,7 +62,8 @@ public class BlackjackController {
         for (Player player : players) {
             while (player.canTakeExtraCard()) {
                 String answer = inputView.readOneMoreCard(player.getName());
-                if (answer.equals("n")) {
+                HitOption option = HitOption.from(answer);
+                if (option.isNo()) {
                     break;
                 }
                 player.addCard();
