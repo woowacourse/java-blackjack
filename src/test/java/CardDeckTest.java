@@ -1,6 +1,5 @@
 import domain.TrumpCard;
 import domain.CardDeck;
-import javax.smartcardio.Card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,4 +30,16 @@ public class CardDeckTest {
         Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
     }
 
+    @DisplayName("카드가 다 떨어지면 예외를 발생한다")
+    @Test
+    void test3() {
+        // given
+        for (int i = 0; i < 52; i++) {
+            CardDeck.drawCard();
+        }
+        // when & then
+        Assertions.assertThatThrownBy(() -> CardDeck.drawCard())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드가 다 떨어졌습니다");
+    }
 }
