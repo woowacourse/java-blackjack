@@ -14,6 +14,14 @@ public class Cards {
         this.values = new LinkedList<>(values);
     }
 
+    private Cards() {
+        this.values = new LinkedList<>();
+    }
+
+    public static Cards empty() {
+        return new Cards();
+    }
+
     public int sumAll() {
         return values.stream()
                 .mapToInt(Card::getCardNumber)
@@ -46,4 +54,5 @@ public class Cards {
             throw new IllegalArgumentException("남은 카드가 부족합니다.");
         }
     }
+
 }

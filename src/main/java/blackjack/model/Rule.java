@@ -6,7 +6,4 @@ public class Rule {
         return dealer.getCards().sumAll() < 17;
     }
 
-    public void drawDealerCards(final Dealer dealer) {
-        dealer.drawSelf(1);
-    }
 }
