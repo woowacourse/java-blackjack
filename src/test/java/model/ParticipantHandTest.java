@@ -71,4 +71,31 @@ class ParticipantHandTest {
         Assertions.assertTrue(burst);
     }
 
+    @Test
+    @DisplayName("ACE를 뺸 나머지의 합이 10 이하일경우 true")
+    void ACE를_제외한_나머지의_합이_10_이하이다(){
+        ParticipantHand participantHand = new ParticipantHand();
+        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        participantHand.add(new Card(CardRank.EIGHT, CardSuit.HEART));
+        participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
+
+        boolean result = participantHand.checkScoreExceptAceBelowTen();
+
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("ACE를 뺸 나머지의 합이 11 이샹일경우 false")
+    void ACE를_제외한_나머지의_합이_11_이상이다(){
+        ParticipantHand participantHand = new ParticipantHand();
+        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        participantHand.add(new Card(CardRank.NINE, CardSuit.HEART));
+        participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
+
+        boolean result = participantHand.checkScoreExceptAceBelowTen();
+
+        assertFalse(result);
+    }
+
+
 }

@@ -38,4 +38,11 @@ public class ParticipantHand {
         }
         return score > 21;
     }
+
+    public boolean checkScoreExceptAceBelowTen() {
+        return cards.stream()
+                .filter(card -> card.getCardRank() != CardRank.ACE)
+                .mapToInt(Card::getCardRankValue)
+                .sum() <= 10;
+    }
 }
