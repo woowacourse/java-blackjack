@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Player;
 import java.util.List;
@@ -8,10 +9,12 @@ import java.util.List;
 public class Round {
     private final CardDeck cardDeck;
     private final List<Player> players;
+    private final Dealer dealer;
 
     public Round(final CardDeck cardDeck, final List<Name> playerNames) {
         this.cardDeck = cardDeck;
         this.players = registerPlayers(playerNames);
+        this.dealer = new Dealer();
     }
 
     private List<Player> registerPlayers(final List<Name> playerNames) {
