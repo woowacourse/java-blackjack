@@ -17,4 +17,12 @@ public class GameManager {
         this.players = new Players(playerList);
         this.dealer = new Dealer(new Cards(provider.provideCards(2)));
     }
+
+    public Dealer findInitialCardsOfDealer() {
+        return dealer;
+    }
+
+    public Player findCardsOfPlayer(String name) {
+        return players.findPlayer(name);
+    }
 }

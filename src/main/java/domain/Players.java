@@ -16,4 +16,11 @@ public class Players {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, Player::getTotalNumberSum));
     }
+
+    public Player findPlayer(String name) {
+        return players.stream()
+            .filter(player -> player.getName().equals(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어의 이름입니다."));
+    }
 }
