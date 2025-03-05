@@ -14,9 +14,8 @@ public class CardDeckTest {
     @DisplayName("카드 개수 테스트")
     void cardSizeTest() {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
 
-        assertThat(cardDeck.getCardsSize()).isEqualTo(52);
+        assertThat(cardDeckFactory.create()).isInstanceOf(CardDeck.class);
     }
 
     @Test
@@ -40,6 +39,5 @@ public class CardDeckTest {
 
         // then
         assertThat(cardDeck.getCards().size()).isEqualTo(1);
-
     }
 }

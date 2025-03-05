@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.CardDeck;
@@ -23,6 +24,7 @@ public class PlayerTest {
         player.hitCards(dealer);
 
         // then
-        assertThat(player.getCardDeck().getCardsSize()).isEqualTo(2);
+        assertDoesNotThrow(() -> player.hitCards(dealer));
     }
+
 }

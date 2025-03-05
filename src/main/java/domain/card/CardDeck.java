@@ -12,10 +12,6 @@ public class CardDeck {
         return cards.removeFirst();
     }
 
-    public int getCardsSize() {
-        return cards.size();
-    }
-
     public void addCard(Card card) {
         cards.add(card);
     }
