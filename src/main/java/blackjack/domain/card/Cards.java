@@ -56,5 +56,9 @@ public class Cards {
         }
         return sum() == 21;
     }
+
+    public int count() {
+        return cards.size();
+    }
 }
 

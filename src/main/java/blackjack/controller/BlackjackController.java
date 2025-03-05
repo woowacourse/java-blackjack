@@ -1,7 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.view.InputView;
 import blackjack.service.BlackjackService;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackController {
 
@@ -9,5 +10,6 @@ public class BlackjackController {
 
     public void run() {
         blackjackService.setPlayer(InputView.readNames());
+        OutputView.printStartingCards(blackjackService.drawStartingCards());
     }
 }

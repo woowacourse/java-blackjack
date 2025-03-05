@@ -15,4 +15,8 @@ public class Deck {
     public Stack<Card> getAll() {
         return cards;
     }
+
+    public Card draw() {
+        return cards.pop();
+    }
 }

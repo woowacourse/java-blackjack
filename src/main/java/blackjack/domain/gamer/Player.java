@@ -11,4 +11,8 @@ public class Player extends Gamer {
     public boolean canReceiveAdditionalCards() {
         return !isBust();
     }
+
+    public String getName() {
+        return name;
+    }
 }

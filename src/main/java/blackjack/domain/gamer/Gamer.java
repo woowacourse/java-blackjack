@@ -4,6 +4,7 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.deck.Deck;
 
 public abstract class Gamer {
 
@@ -17,11 +18,13 @@ public abstract class Gamer {
         return cards.getCards();
     }
 
+    public int getCardCount() {
+        return cards.count();
+    }
+
     public boolean isBust() {
         return cards.sum() > 21;
     }
-
-    public abstract boolean canReceiveAdditionalCards();
 
     public int getSumOfCards() {
         return cards.sum();
@@ -30,4 +33,11 @@ public abstract class Gamer {
     public boolean isBlackjack() {
         return cards.isBlackjack();
     }
+
+    public void initialize(Deck deck) {
+        cards.add(deck.draw());
+        cards.add(deck.draw());
+    }
+
+    public abstract boolean canReceiveAdditionalCards();
 }
