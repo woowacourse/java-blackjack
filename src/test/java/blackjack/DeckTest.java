@@ -3,8 +3,8 @@ package blackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +15,9 @@ class DeckTest {
     @Test
     void drawTest() {
         // given
-        Queue<Card> cards = new LinkedList<>();
+        List<Card> cards = new ArrayList<>();
         cards.add(new Card(Suit.SPADES, CardValue.ACE));
-        Deck deck = new Deck(cards);
+        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         int expected = deck.size() - 1;
 
         // when
@@ -32,12 +32,29 @@ class DeckTest {
     @Test
     void shouldThrowException_WhenRunOutOfCard() {
         // given
-        Queue<Card> cards = new LinkedList<>();
-        Deck deck = new Deck(cards);
+        List<Card> cards = new ArrayList<>();
+        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
 
         // when, then
         assertThatCode(deck::draw)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("더이상 뽑을 카드가 없습니다.");
+    }
+
+    @DisplayName("섞는 방법에 따라 카드를 섞어서 덱을 만든다.")
+    @Test
+    void createShuffleDeckTest() {
+        // given
+        List<Card> cards = Card.createDeck();
+
+        // when
+        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
+
+        // then
+        for (Card card : cards) {
+            Card drawedCard = deck.draw();
+            assertThat(card)
+                    .isEqualTo(drawedCard);
+        }
     }
 }
