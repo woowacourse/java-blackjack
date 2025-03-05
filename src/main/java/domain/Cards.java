@@ -1,13 +1,15 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 public class Cards {
     private static final int BURST_LIMIT = 21;
 
     private final List<Card> cards;
+    private final Map<Card, Boolean> isOpened = new HashMap<>();
 
     public Cards() {
         this.cards = new ArrayList<>();
@@ -19,6 +21,7 @@ public class Cards {
 
     public void addAll(List<Card> cards) {
         this.cards.addAll(cards);
+        cards.forEach(card -> isOpened.put(card, false));
     }
 
     public int size() {
@@ -29,13 +32,13 @@ public class Cards {
         List<Integer> candidates = new ArrayList<>();
         calculateCandidates(0, 0, cards, candidates);
 
-        Optional<Integer> maxUnder21 = candidates.stream()
+        return candidates.stream()
                 .filter(sum -> sum <= BURST_LIMIT)
-                .max(Integer::compareTo);
-        return maxUnder21.orElseGet(() -> candidates.stream()
-                .filter(sum -> sum > BURST_LIMIT)
-                .min(Integer::compareTo)
-                .orElseThrow(() -> new IllegalStateException("논리적으로 도달할 수 없는 예외입니다.")));
+                .max(Integer::compareTo)
+                .orElseGet(() -> candidates.stream()
+                        .filter(sum -> sum > BURST_LIMIT)
+                        .min(Integer::compareTo)
+                        .orElseThrow(() -> new IllegalStateException("논리적으로 도달할 수 없는 예외입니다.")));
     }
 
     public boolean isBurst() {
