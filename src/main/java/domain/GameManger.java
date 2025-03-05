@@ -17,4 +17,11 @@ public class GameManger {
             throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
         }
     }
+
+    public void firstHandOutCard() {
+    }
+
+    public CardDeck findCardDeckByUsername(String name) {
+        return null;
+    }
 }

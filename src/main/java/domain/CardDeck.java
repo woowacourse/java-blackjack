@@ -1,6 +1,5 @@
 package domain;
 
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,7 @@ public class CardDeck {
         if (CARD_DECK.isEmpty()) {
             throw new IllegalArgumentException("카드가 다 떨어졌습니다");
         }
-        return CARD_DECK.remove(0);
+        return CARD_DECK.removeFirst();
     }
 
     public static TrumpCard getCard(int index) {
@@ -30,5 +29,9 @@ public class CardDeck {
 
     public static List<TrumpCard> getCardDeck() {
         return CARD_DECK;
+    }
+
+    public int size() {
+        return 0;
     }
 }

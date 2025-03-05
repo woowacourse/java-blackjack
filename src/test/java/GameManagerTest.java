@@ -1,3 +1,4 @@
+import domain.CardDeck;
 import domain.GameManger;
 import java.util.List;
 import java.util.stream.Stream;
@@ -48,10 +49,17 @@ public class GameManagerTest {
                 .hasMessage("유저는 중복될 수 없습니다.");
     }
 
-    @DisplayName("모양과 숫자가 모두 중복되는 카드를 받으면 다시 생성한다")
+    @DisplayName("게임 시작 시 모든 유저와 딜러는 카드를 두 장씩 배부받는다.")
     @Test
     void test4() {
+        // given
+        GameManger gameManger = new GameManger(List.of("수양", "레몬"));
 
+        // when
+        gameManger.firstHandOutCard();
+
+        // then
+        CardDeck cardDeckUser1 = gameManger.findCardDeckByUsername("수양");
+        Assertions.assertThat(cardDeckUser1.size()).isEqualTo(2);
     }
-
 }
