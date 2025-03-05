@@ -18,4 +18,19 @@ public class RandomCardGeneratorTest {
         assertThat(card).isInstanceOf(Card.class);
 
     }
+
+    @Test
+    void 다이아_에이스를_생성한다(){
+        FakeCardGenerator fakeCardGenerator = new FakeCardGenerator();
+        final Card card = fakeCardGenerator.generate();
+
+        assertThat(card.getType()).isEqualTo(CardType.DIAMOND_ACE);
+    }
+
+    static class FakeCardGenerator implements CardGenerator{
+        @Override
+        public Card generate() {
+            return null;
+        }
+    }
 }
