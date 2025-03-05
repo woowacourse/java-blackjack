@@ -25,6 +25,10 @@ public class Player {
                 .collect(Collectors.joining(", "));
     }
 
+    public boolean isHandBurst() {
+        return hand.isBurst();
+    }
+
     public String getName() {
         return name;
     }

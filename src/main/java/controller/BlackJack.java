@@ -45,13 +45,36 @@ public class BlackJack {
         stringBuilder.append(String.format("%s카드: ", dealer.getName()));
         stringBuilder.append(dealer.openOneCard());
         for (Player player : players) {
-            stringBuilder.append(player.getName())
-                    .append("카드: ")
-                    .append(player.openAllCards())
-                    .append("\n");
+            printHand(player, stringBuilder);
         }
 
         System.out.println(stringBuilder);
+
+        stringBuilder = new StringBuilder();
+        for (Player player : players) {
+            while(true) {
+                System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+                String ynInput = sc.nextLine();
+                if (ynInput.equals("y")) {
+                    player.addCard(deck.draw());
+                    printHand(player, stringBuilder);
+                    System.out.println(stringBuilder);
+                    if(player.isHandBurst()) {
+                        System.out.println("Burst!! You Die!!");
+                       break;
+                    }
+                    continue;
+                }
+                break;
+            }
+        }
+    }
+
+    private static void printHand(Player player, StringBuilder stringBuilder) {
+        stringBuilder.append(player.getName())
+                .append("카드: ")
+                .append(player.openAllCards())
+                .append("\n");
     }
 
     private void drawTwoCardFromDeck(Player player, Deck deck) {
