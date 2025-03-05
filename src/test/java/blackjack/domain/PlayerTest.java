@@ -14,22 +14,12 @@ class PlayerTest {
     @Test
     void give_two_cards() {
         // given
-        Player player = new Player(new CardPack(new SortShuffle()));
+        Player player = new Player("두리");
 
         // when
         int result = player.getCards().size();
 
         // then
         assertThat(result).isEqualTo(2);
-    }
-
-    private static class SortShuffle implements BlackjackShuffle {
-
-        @Override
-        public void shuffle(List<Card> cards) {
-            cards.sort(Comparator
-                    .comparing(Card::getNumber)
-                    .thenComparing(Card::getShape));
-        }
     }
 }
