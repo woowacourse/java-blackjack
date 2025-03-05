@@ -32,7 +32,7 @@ public class HandTest {
         assertThat(hand.getTotal()).isEqualTo(15);
     }
     @Nested
-    @DisplayName("ACE 탐지 테스트")
+    @DisplayName("ACE 고유 숫자값 테스트")
     class AceDetectTest{
         @Test
         @DisplayName("Hand 는 현재 카드 패에서 고유 숫자 값이 11인 ACE 가 있는지 판별할 수 있다")
@@ -53,6 +53,19 @@ public class HandTest {
 
             hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
             hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
+
+            assertThat(hand.containsOriginalAce()).isFalse();
+        }
+
+        @Test
+        @DisplayName("Original ACE(11) 가 존재하는 경우 하나의 Original ACE value 를 1로 변경할 수 있다.")
+        void test5() {
+            Hand hand = new Hand();
+
+            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+            hand.addCard(new Ace(Suit.CLUB));
+
+            hand.setOriginalAceValueToOne();
 
             assertThat(hand.containsOriginalAce()).isFalse();
         }
