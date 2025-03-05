@@ -23,4 +23,8 @@ public class Player extends Participant {
         }
         throw new IllegalArgumentException("이름은 알파벳 소문자만 입력 가능합니다.");
     }
+
+    public String getName() {
+        return name;
+    }
 }

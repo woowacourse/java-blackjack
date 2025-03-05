@@ -1,8 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackManager;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Participants;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -22,12 +20,11 @@ public class BlackJackController {
         try {
             String input = inputView.readNames();
             List<String> names = InputParser.parseStringToList(input);
-            Participants participants = Participants.createParticipantsByNames(names);
-            CardDeck cardDeck = CardDeck.createCardDeck();
+            BlackJackManager blackJackManager = BlackJackManager.createByPlayerNames(names);
 
-            BlackJackManager blackJackManager = new BlackJackManager(cardDeck, participants);
+            // 카드 2장 배부
             blackJackManager.initCardsToParticipants();
-
+            outputView.printStartGame(blackJackManager.getPlayerNames());
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
         }
