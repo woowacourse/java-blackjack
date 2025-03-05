@@ -30,4 +30,8 @@ public class Deck {
         Collections.reverse(shuffledCard);
         cards.addAll(shuffledCard);
     }
+
+    public Card peek() {
+        return cards.peek();
+    }
 }

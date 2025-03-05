@@ -42,7 +42,11 @@ public class BlackjackController {
             do {
                 answer = InputView.inputAdditionalCard(player);
                 if (answer.equals("y")) {
-                    dealer.sendCardToPlayer(player);
+                    try {
+                        dealer.sendCardToPlayer(player);
+                    } catch (IllegalArgumentException e) {
+                        break;
+                    }
                 }
                 OutputView.printPlayerCards(player);
             }

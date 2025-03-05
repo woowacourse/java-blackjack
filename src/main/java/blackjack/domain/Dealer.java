@@ -53,6 +53,9 @@ public class Dealer {
         if (!players.contains(player)) {
             throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
         }
+        if (!player.canSend(deck.peek())) {
+            throw new IllegalArgumentException("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
+        }
         player.send(deck.draw());
     }
 }
