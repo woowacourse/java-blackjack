@@ -17,4 +17,16 @@ public class HandTest {
 
         assertThat(hand.getCards().size()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("Hand 는 현재 카드패의 고유 숫자값의 총합을 계산할 수 있다.")
+    void test2() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));    // 2
+        hand.addCard(new Card(Denomination.THREE, Suit.CLUB));  // 3
+        hand.addCard(new Card(Denomination.JACK, Suit.CLUB));   // 10
+
+        assertThat(hand.getTotal()).isEqualTo(15);
+    }
 }
