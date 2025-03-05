@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackManager;
+import blackjack.domain.Participant;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -25,6 +26,9 @@ public class BlackJackController {
             // 카드 2장 배부
             blackJackManager.initCardsToParticipants();
             outputView.printStartGame(blackJackManager.getPlayerNames());
+            for (Participant participant : blackJackManager.getParticipants()) {
+                outputView.printParticipant(participant);
+            }
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
         }

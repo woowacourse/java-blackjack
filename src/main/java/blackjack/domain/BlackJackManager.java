@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BlackJackManager {
@@ -17,11 +18,11 @@ public class BlackJackManager {
         CardDeck cardDeck = CardDeck.createCardDeck();
 
         List<Participant> participants = new ArrayList<>();
+        participants.add(new Dealer());
         for (String name : names) {
             Player player = new Player(name);
             participants.add(player);
         }
-        participants.add(new Dealer());
         return new BlackJackManager(cardDeck, participants);
     }
 
@@ -39,5 +40,9 @@ public class BlackJackManager {
                 .map(participant -> (Player) participant)
                 .map(Player::getName)
                 .toList();
+    }
+
+    public List<Participant> getParticipants() {
+        return Collections.unmodifiableList(participants);
     }
 }

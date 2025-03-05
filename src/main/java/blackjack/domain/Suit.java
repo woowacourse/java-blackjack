@@ -8,9 +8,13 @@ public enum Suit {
     CLUB("클로버"),
     DIAMOND("다이아몬드");
 
-    private final String name;
+    private final String text;
 
-    Suit(String name) {
-        this.name = name;
+    Suit(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
     }
 }
