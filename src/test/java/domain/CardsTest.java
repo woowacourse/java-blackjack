@@ -152,4 +152,21 @@ public class CardsTest {
         //then
         assertThat(isUnderDrawLimit).isTrue();
     }
+
+    @DisplayName("카드 묶음이 ACE를 한 장 포함할 경우 최댓값을 합으로 간주한다")
+    @Test
+    void test11() {
+        //given
+        List<Card> testCards = List.of(
+                new Card(CardNumberType.QUEEN, CardType.HEART),
+                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        );
+        Cards cards = new Cards(testCards);
+
+        //when
+        boolean isUnderDrawLimit = cards.isUnderDrawLimit();
+
+        //then
+        assertThat(isUnderDrawLimit).isFalse();
+    }
 }
