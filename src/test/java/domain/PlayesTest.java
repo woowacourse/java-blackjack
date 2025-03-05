@@ -33,8 +33,8 @@ public class PlayesTest {
         List<Player> playerList = players.getPlayers();
 
         assertSoftly(softly -> {
-            softly.assertThat(playerList.getFirst().getCardDeck().getCardsSize()).isEqualTo(1);
-            softly.assertThat(playerList.get(1).getCardDeck().getCardsSize()).isEqualTo(1);
+            softly.assertThat(playerList.getFirst().getCardDeck().getCardsSize()).isEqualTo(2);
+            softly.assertThat(playerList.get(1).getCardDeck().getCardsSize()).isEqualTo(2);
         });
 
     }
