@@ -1,11 +1,17 @@
 package domain;
 
 public class Player {
+    private final Cards cards;
+
+    public Player() {
+        cards = Cards.empty();
+    }
+
     public void addCard(Card card) {
-        return;
+        cards.add(card);
     }
 
     public Cards getCards() {
-        return null;
+        return cards;
     }
 }
