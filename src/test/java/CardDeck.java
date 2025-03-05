@@ -24,4 +24,8 @@ public class CardDeck {
     public Deque<Card> getDeck() {
         return deck;
     }
+
+    public Card drawCard() {
+        return deck.pop();
+    }
 }

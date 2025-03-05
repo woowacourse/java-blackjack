@@ -10,4 +10,16 @@ public class CardDeckTest {
         Assertions.assertThat(cardDeck.getDeck()).hasSize(52);
     }
 
+    @Test
+    void 카드를_1장_드로우한다() {
+        //given
+        CardDeck cardDeck = new CardDeck();
+
+        //when
+        Card actual = cardDeck.drawCard();
+
+        //then
+        Card expected = new Card(Pattern.DIAMOND, CardNumber.ACE);
+        Assertions.assertThat(actual).isEqualTo(expected);
+    }
 }
