@@ -27,7 +27,7 @@ public abstract class GameParticipant {
         return getMaxSum(coordinates);
     }
 
-    private boolean isBurst() {
+    public boolean isBurst() {
         Set<Integer> coordinates = cards.getCoordinateSums();
         return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
     }
