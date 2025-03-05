@@ -1,10 +1,15 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class RandomCardGenerator {
 
-
     public Card generate() {
-
-        return new Card(CardType.CLOVER_4);
+        List<CardType> cardTypes = new ArrayList<>(CardType.getCardTypes());
+        Collections.shuffle(cardTypes);
+        final CardType cardType = cardTypes.removeFirst();
+        return new Card(cardType);
     }
 }
