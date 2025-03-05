@@ -22,9 +22,33 @@ public class GameManagerTest {
     //when
     //then
     for (Player player : players.getPlayers()) {
-      manager.divideCardByPlayer(player, amount);
+      manager.divideCardByParticipant(player, amount);
       Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
     }
   }
 
+  @Test
+  @DisplayName("모든 참가자에게 2장씩 카드를 배부했는 지")
+  void divideAllParticipant() {
+    // given]
+    List<Player> allPlayer = List.of(
+            Player.from("pobi"),
+            Player.from("hippo"),
+            Player.from("kali")
+    );
+    Players players = new Players(allPlayer);
+    Dealer dealer = Dealer.of();
+
+    GameManager gameManager = new GameManager(dealer, players);
+
+    // when
+    int amount = 2;
+    gameManager.divideAllParticipant(amount);
+
+    // then
+    for (Player player : players.getPlayers()) {
+      Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
+    }
+    Assertions.assertThat(dealer.getHands().size()).isEqualTo(amount);
+  }
 }
