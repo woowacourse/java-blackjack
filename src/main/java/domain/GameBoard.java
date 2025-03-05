@@ -35,6 +35,12 @@ public class GameBoard {
         }
     }
 
+    public void drawCardTo(Participant participant) {
+        Card drawedCard = gameCardDeck.draw();
+        CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
+        ownedCardDeck.addCard(drawedCard);
+    }
+
     public Map<Participant, CardDeck> getCardDeckOfParticipant() {
         return cardDeckOfParticipant;
     }
