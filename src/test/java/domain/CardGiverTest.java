@@ -37,4 +37,18 @@ public class CardGiverTest {
         //then
         assertThat(cards.getCards()).containsExactly(expectedCard1, expectedCard2);
     }
+
+    @DisplayName("카드를 랜덤으로 1장 생성하여 배분한다")
+    @Test
+    void test4() {
+        //given
+        RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
+        GivenCards testGivenCards = GivenCards.createEmpty();
+        testGivenCards.addUnique(new Card(CardNumberType.FIVE, CardType.SPACE));
+        CardGiver cardGiver = new CardGiver(randomGenerator, testGivenCards);
+        //when
+        Card card = cardGiver.giveOne();
+        //then
+        assertThat(card).isEqualTo(new Card(CardNumberType.SIX, CardType.CLOVER));
+    }
 }

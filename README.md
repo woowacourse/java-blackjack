@@ -1,6 +1,23 @@
 # java-blackjack
 블랙잭 미션 저장소
 
+# 의문점
+1. 테스트 코드 작성시, 테스트하고 싶은 메소드가 아닌 다른 메소드에 의존해도 괜찮은지?
+```angular2html
+@DisplayName("카드를 랜덤으로 1장 생성하여 배분한다")
+    @Test
+    void test4() {
+        //given
+        RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
+        GivenCards testGivenCards = GivenCards.createEmpty();
+        testGivenCards.addUnique(new Card(CardNumberType.FIVE, CardType.SPACE)); // 이 부분
+        CardGiver cardGiver = new CardGiver(randomGenerator, testGivenCards);
+        //when
+
+        //then
+    }
+```
+
 # 학습 목표
 - 도메인은 TDD로 구현하기
 - 최대한 가독성이 좋은 코드를 작성하기(클린 코드)
@@ -46,14 +63,15 @@
 - [ ] 참여자에게 카드 추가 배분 여부를 입력받는다
 
 y일 경우
-#### 카드 검증 객체
+#### 카드 묶음 객체
 - [X] 기존 카드의 합이 21이 넘는다면 예외를 발생시킨다
 
 #### 컨트롤러 객체
-- [ ] 예외가 발생할 경우, 다음 참여자로 넘어간다
+- [ ] 기존 카드의 합이 21이 넘지 않는지 검증한다
+  - [ ] 예외가 발생할 경우, 다음 참여자로 넘어간다
 
 #### 카드 랜덤 생성 객체, 카드 배분 객체
-- [ ] 기존 카드의 합이 21이 넘지 않는다면 카드를 랜덤으로 1장 생성하여 배분한다
+- [ ] 카드를 랜덤으로 1장 생성하여 배분한다
     - [ ] 랜덤으로 생성한 카드가 나눠준 카드와 중복되는지 검증한다
 
 #### 카드 묶음 객체
