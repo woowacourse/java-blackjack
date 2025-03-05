@@ -7,7 +7,17 @@ import java.util.List;
 public class Application {
 
     public static void main(String[] args) {
-        List<Name> playerNames = InputView.inputPlayerName();
+        List<Name> playerNames = getPlayerNames();
 
+
+    }
+
+    private static List<Name> getPlayerNames() {
+        try {
+            return InputView.inputPlayerName();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getPlayerNames();
+        }
     }
 }
