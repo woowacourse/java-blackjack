@@ -38,4 +38,12 @@ public class BlackjackGame {
     public List<TrumpCard> playerCards(String name) {
         return blackjackPlayers.playerCards(name);
     }
+
+    public TrumpCard dealerCardFirst() {
+        return dealerCards().get(0);
+    }
+
+    public List<TrumpCard> dealerCards() {
+        return blackjackPlayers.dealerCards();
+    }
 }

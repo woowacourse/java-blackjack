@@ -38,8 +38,12 @@ public class BlackjackPlayers {
         dealer.addDraw(trumpCard);
     }
 
-    public List<TrumpCard> playerCardsString name) {
+    public List<TrumpCard> playerCards(String name) {
         Player player = findPlayer(name);
         return player.trumpCards();
+    }
+
+    public List<TrumpCard> dealerCards() {
+        return dealer.trumpCards();
     }
 }

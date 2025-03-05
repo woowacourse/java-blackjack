@@ -1,3 +1,4 @@
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIterable;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -54,5 +55,18 @@ public class BlackjackGameTest {
         List<TrumpCard> expectedCards = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
                 new TrumpCard(Suit.DIAMOND, CardValue.J));
         assertThatIterable(blackjackGame.playerCards("포비")).containsAnyElementsOf(expectedCards);
+    }
+
+    @Test
+    void 게임을_시작하면_딜러는_두_장을_받고_한장을_오픈한다() {
+        Deque<TrumpCard> trumpCards = new LinkedList<>(
+                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
+                        new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.EIGHT)));
+        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        Dealer dealer = new Dealer();
+        List<String> names = List.of("포비");
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        TrumpCard expectedCards = new TrumpCard(Suit.HEART, CardValue.K);
+        assertThat(blackjackGame.dealerCardFirst()).isEqualTo(expectedCards);
     }
 }
