@@ -8,6 +8,7 @@ public abstract class Gamer {
     public Gamer(final Nickname nickname, final Hand hand) {
         this.nickname = nickname;
         this.hand = hand;
+
     }
 
     public void receiveCard(final Card card) {
@@ -16,5 +17,9 @@ public abstract class Gamer {
 
     public int calculateSumOfRank() {
         return hand.getSumOfRank();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
     }
 }
