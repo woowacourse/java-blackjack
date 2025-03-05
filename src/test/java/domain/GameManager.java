@@ -13,10 +13,15 @@ public class GameManager {
     private final Dealer dealer;
     private final List<Player> players;
 
+
     public GameManager(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
+
+    public void receiveCardToDealer(){
+        throw new IllegalArgumentException("");
+    };
 
     public static GameManager creat(final CardGenerator cardGenerator, final List<String> playerNames) {
         final Dealer dealer = new Dealer(new CardGroup(generateCards(cardGenerator)));

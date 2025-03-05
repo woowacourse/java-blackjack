@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.RandomCardGenerator;
 import java.util.List;
@@ -16,5 +17,15 @@ public class GameManagerTest {
         final GameManager gameManager = GameManager.creat(new RandomCardGenerator(), playerNames);
         //then
         assertThat(gameManager).isInstanceOf(GameManager.class);
+    }
+
+    @Test
+    void 딜러_점수가_16이하면_카드를_계속_뽑는다(){
+        //given
+        final List<String> playerNames = List.of("윌슨", "가이온");
+        //when
+        final GameManager gameManager = GameManager.creat(new RandomCardGenerator(), playerNames);
+        //then
+        assertThatCode(gameManager::receiveCardToDealer).doesNotThrowAnyException();
     }
 }
