@@ -12,7 +12,7 @@ public class CardGroup {
     }
 
     public CardGroup(final List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     private int calculateScoreWithOutAce() {
@@ -34,8 +34,10 @@ public class CardGroup {
         return sum;
     }
 
-    public void addCard(final Card card) {
+    public boolean addCard(final Card card) {
+        final int size = cards.size();
         cards.add(card);
+        return size + 1 == cards.size();
     }
 
     public int countCards() {
@@ -51,4 +53,5 @@ public class CardGroup {
     public int calculateScore(int limit) {
         return calculateScoreWithAce(calculateScoreWithOutAce(),limit);
     }
+
 }

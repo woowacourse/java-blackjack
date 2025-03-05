@@ -10,6 +10,6 @@ public class Player {
     }
 
     public boolean receiveCard(final Card card) {
-        return true;
+        return cardGroup.addCard(card);
     }
 }
