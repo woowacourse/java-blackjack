@@ -33,6 +33,9 @@ public class CardDeck {
         return new ArrayList<>(cards);
     }
 
+    public void hasAce() {
+
+    }
 
     public boolean checkOverScore() {
         return cards.stream()
