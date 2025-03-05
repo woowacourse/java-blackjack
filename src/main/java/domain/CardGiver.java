@@ -28,6 +28,12 @@ public class CardGiver {
     }
 
     public Card giveOne() {
-        return new Card(CardNumberType.SIX, CardType.CLOVER);
+        boolean isGiven = false;
+        Card randomCard = null;
+        while (!isGiven) {
+            randomCard = randomGenerator.generate();
+            isGiven = givenCards.addUnique(randomCard);
+        }
+        return randomCard;
     }
 }
