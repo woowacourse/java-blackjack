@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card_hand.PlayerCardHand;
 import blackjack.testutil.CardHandInitializerDummy;
+import blackjack.testutil.CardHandInitializerStub;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
@@ -275,5 +276,36 @@ public class CardHandTest {
         looser.addCard(HEART_1);
         
         assertThat(winner.isWin(looser)).isEqualTo(WinningStatus.무승부);
+    }
+    
+    @Test
+    void 내_손패가_버스트인지_알_수_있다() {
+        // given
+        final PlayerCardHand player = new PlayerCardHand(DEFAULT_PLAYER, new CardHandInitializerStub(List.of(
+                HEART_10,
+                DIAMOND_10,
+                HEART_2
+        )));
+        
+        // when
+        final boolean result = player.isBurst();
+        
+        // then
+        assertThat(result).isTrue();
+    }
+    
+    @Test
+    void 내_손패가_21인지_알_수_있다() {
+        // given
+        final PlayerCardHand player = new PlayerCardHand(DEFAULT_PLAYER, new CardHandInitializerStub(List.of(
+                HEART_10,
+                DIAMOND_1
+        )));
+        
+        // when
+        final boolean result = player.is21();
+        
+        // then
+        assertThat(result).isTrue();
     }
 }

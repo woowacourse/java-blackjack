@@ -105,7 +105,7 @@ public abstract class CardHand {
     }
     
     private WinningStatus getDrawResult(final CardHand other) {
-        if (getSum() == BLACK_JACK_SUM) {
+        if (is21()) {
             return judgeDouble21(other);
         }
         return WinningStatus.무승부;
@@ -129,12 +129,15 @@ public abstract class CardHand {
         return isBurst() && other.isBurst();
     }
     
-    private boolean isBurst() {
+    public boolean isBurst() {
         return getSum() > BURST_THRESHOLD;
     }
     
     private boolean isBlackjack() {
-        return cards.size() == BLACK_JACK_CARD_COUNT && getSum() == BLACK_JACK_SUM;
+        return cards.size() == BLACK_JACK_CARD_COUNT && is21();
     }
-
+    
+    public boolean is21() {
+        return getSum() == BLACK_JACK_SUM;
+    }
 }
