@@ -5,24 +5,40 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class HandTest {
 
     private List<Card> cards;
     private Card card1;
     private Card card2;
+    private Card card3;
+    private Card card4;
+    private Card card5;
+    private Card card6;
+    private Card card7;
+    private Card card8;
+    private Card card9;
+    private Card card10;
+
     private Hand hand;
 
     @BeforeEach
     void setUp() {
         cards = new ArrayList<>();
         card1 = new Card(Rank.ACE, Shape.CLOVER);
-        card2 = new Card(Rank.FIVE, Shape.CLOVER);
-        hand = new Hand(cards);
+        card2 = new Card(Rank.TWO, Shape.CLOVER);
+        card3 = new Card(Rank.THREE, Shape.CLOVER);
+        card4 = new Card(Rank.FOUR, Shape.CLOVER);
+        card5 = new Card(Rank.FIVE, Shape.CLOVER);
+        card6 = new Card(Rank.SIX, Shape.CLOVER);
+        card7 = new Card(Rank.SEVEN, Shape.CLOVER);
+        card8 = new Card(Rank.EIGHT, Shape.CLOVER);
+        card9 = new Card(Rank.NINE, Shape.CLOVER);
+        card10 = new Card(Rank.JACK, Shape.CLOVER);
     }
 
     @DisplayName("카드를 손에 추가한다.")
@@ -30,6 +46,7 @@ class HandTest {
     void 카드를_손에_추가한다() {
 
         // given
+        final Hand hand = new Hand(new ArrayList<>());
 
         // when & then
         assertThatCode(() -> {
@@ -43,6 +60,7 @@ class HandTest {
     void 손에_있는_카드의_합을_가져온다() {
 
         // given
+        final Hand hand = new Hand(new ArrayList<>());
 
         // when
         hand.add(card1);
@@ -54,15 +72,35 @@ class HandTest {
 
     @DisplayName("버스트이면 true, 아니면 false를 반환한다.")
     @Test
-    @CsvSource(value = {
-            "1, false", "21, false", "22, true"
-    })
-    void 버스트이면_true_아니면_false를_반환한다(final int sumOfRank, final boolean isBusted) {
+    void 버스트이면_true_아니면_false를_반환한다() {
 
         // given
-        final Player player = new Player(new Nickname("hihi"), new Hand(new ArrayList<>()));
+        final Hand hand1 = new Hand(new ArrayList<>());
+
+        hand1.add(card1);
+
+        final Player player1 = new Player(new Nickname("hi"), hand1);
+
+        final Hand hand2 = new Hand(new ArrayList<>());
+        hand2.add(card1);
+        hand2.add(card3);
+        hand2.add(card8);
+        hand2.add(card9);
+
+        final Player player2 = new Player(new Nickname("hihi"), hand2);
+
+        final Hand hand3 = new Hand(new ArrayList<>());
+        hand3.add(card10);
+        hand3.add(card9);
+        hand3.add(card8);
+
+        final Player player3 = new Player(new Nickname("hihih"), hand3);
 
         // when & then
-        assertThat(player.isBusted(sumOfRank)).isEqualTo(isBusted);
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(player1.isBust()).isFalse();
+            softly.assertThat(player2.isBust()).isFalse();
+            softly.assertThat(player3.isBust()).isTrue();
+        });
     }
 }
