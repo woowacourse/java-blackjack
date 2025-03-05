@@ -1,8 +1,10 @@
 package domain;
 
+import java.util.stream.Collectors;
+
 public class Player {
     private String name;
-    private Hand hand;
+    protected Hand hand;
 
     public Player(String name) {
         this.name = name;
@@ -15,5 +17,15 @@ public class Player {
 
     public int getHandTotal() {
         return hand.getTotal();
+    }
+
+    public String openAllCards() {
+        return hand.getCards().stream()
+                .map(card -> card.getDenomination().getValue() + card.getSuit().getShape())
+                .collect(Collectors.joining(", "));
+    }
+
+    public String getName() {
+        return name;
     }
 }

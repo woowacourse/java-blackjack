@@ -7,4 +7,13 @@ public class Dealer extends Player{
     public Dealer() {
         super(DEALER_NAME);
     }
+
+    public String openOneCard() {
+        StringBuilder sb = new StringBuilder();
+        Card firstCard =  hand.getCards().getFirst();
+        sb.append(firstCard.getDenomination().getValue())
+                .append(firstCard.getSuit().getShape())
+                .append("\n");
+        return sb.toString();
+    }
 }

@@ -11,4 +11,8 @@ public enum Suit {
     Suit(String shape) {
         this.shape = shape;
     }
+
+    public String getShape() {
+        return shape;
+    }
 }

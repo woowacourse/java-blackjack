@@ -43,4 +43,8 @@ public enum Denomination {
         }
         return null;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
