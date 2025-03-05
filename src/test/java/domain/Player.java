@@ -15,27 +15,12 @@ public class Player {
         return cardGroup.addCard(card);
     }
 
-    public boolean isGreaterThan(int compareScore) {
-        return this.cardGroup.calculateScore(LIMIT) > compareScore;
-    }
-
     public boolean isBust() {
         return this.cardGroup.calculateScore(LIMIT) > LIMIT;
     }
 
-    public boolean isLessThan(final int compareScore) {
-        return this.cardGroup.calculateScore(LIMIT) < compareScore;
-    }
-
     public GameResult calculateGameResult(final int compareScore) {
-        if (isGreaterThan(compareScore)) {
-            return GameResult.WIN;
-        }
-
-        if (isLessThan(compareScore)) {
-            return GameResult.LOSE;
-        }
-
-        return GameResult.DRAW;
+        return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
     }
+
 }

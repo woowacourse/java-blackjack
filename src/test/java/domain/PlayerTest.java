@@ -42,16 +42,17 @@ public class PlayerTest {
 
     }
 
-    @Test
-    void 플레이어의_점수를_딜러와_비교한다(){
-        final String name = "윌슨";
-        final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
-        final CardGroup cardGroup = new CardGroup(cards);
-
-        final Player player = new Player(name, cardGroup);
-
-        assertThat(player.isGreaterThan(5)).isTrue();
-    }
+//    @Disabled
+//    @Test
+//    void 플레이어의_점수를_딜러와_비교한다(){
+//        final String name = "윌슨";
+//        final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
+//        final CardGroup cardGroup = new CardGroup(cards);
+//
+//        final Player player = new Player(name, cardGroup);
+//
+//        assertThat(player.isGreaterThan(5)).isTrue();
+//    }
 
     @Test
     void 플레이어의_점수가_21을_넘으면_Bust한다(){
@@ -68,20 +69,21 @@ public class PlayerTest {
         assertThat(player.isBust()).isTrue();
     }
 
-    @Test
-    void 플레이어의_점수가_특정_점수보다_작은지_확인한다() {
-        //given
-        final String name = "윌슨";
-        final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
-        final CardGroup cardGroup = new CardGroup(cards);
-
-        //when
-        final Player player = new Player(name, cardGroup);
-        final boolean result = player.isLessThan(7);
-
-        //then
-        assertThat(result).isTrue();
-    }
+//    @Disabled
+//    @Test
+//    void 플레이어의_점수가_특정_점수보다_작은지_확인한다() {
+//        //given
+//        final String name = "윌슨";
+//        final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
+//        final CardGroup cardGroup = new CardGroup(cards);
+//
+//        //when
+//        final Player player = new Player(name, cardGroup);
+//        final boolean result = player.isLessThan(7);
+//
+//        //then
+//        assertThat(result).isTrue();
+//    }
 
     @Test
     void 플레이어의_게임_결과를_판단_한다() {
