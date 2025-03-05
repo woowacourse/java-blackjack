@@ -3,6 +3,7 @@ package blackjack.view;
 import java.util.stream.Collectors;
 
 import blackjack.dto.CardDto;
+import blackjack.dto.CurrentPlayerResponseDto;
 import blackjack.dto.StartingCardsResponseDto;
 
 public class OutputView {
@@ -28,5 +29,17 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
             System.out.println(String.format("%s카드 : %s", playerName, playerCardNames));
         }
+    }
+
+    public static void printAdditionalCard(CurrentPlayerResponseDto responseDto) {
+        System.out.println(String.format("%s카드 : %s",
+            responseDto.name(),
+            responseDto.cards().stream()
+                .map(card -> card.number() + card.type())
+                .collect(Collectors.joining(", "))));
+    }
+
+    public static void printBustNotice(String name) {
+        System.out.printf("%s는 버스트되었습니다.%n", name);
     }
 }

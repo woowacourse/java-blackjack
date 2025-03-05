@@ -11,5 +11,17 @@ public class BlackjackController {
     public void run() {
         blackjackService.setPlayer(InputView.readNames());
         OutputView.printStartingCards(blackjackService.drawStartingCards());
+
+        while (blackjackService.hasNextPlayer()) {
+            while (InputView.readAdditionalCardSelection(blackjackService.getCurrentPlayerName()).selection()) {
+                blackjackService.drawCardForCurrentPlayer();
+                OutputView.printAdditionalCard(blackjackService.getNowPlayerCards());
+                if (!blackjackService.currentPlayerCanReceiveAdditionalCards()) {
+                    OutputView.printBustNotice(blackjackService.getCurrentPlayerName());
+                    break;
+                }
+            }
+            blackjackService.nextPlayer();
+        }
     }
 }

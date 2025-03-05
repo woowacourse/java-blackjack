@@ -35,7 +35,11 @@ public abstract class Gamer {
     }
 
     public void initialize(Deck deck) {
-        cards.add(deck.draw());
+        drawCard(deck);
+        drawCard(deck);
+    }
+
+    public void drawCard(Deck deck) {
         cards.add(deck.draw());
     }
 
