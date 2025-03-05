@@ -150,7 +150,7 @@ class BlackjackTest {
     @Test
     @DisplayName("뽑히는 카드는 중복되지 않는다")
     void randomCardsNotDuplicatedTest() {
-        Deck deck = new Deck(new RandomCardStrategy());
+        Deck deck = Deck.generateFrom(new RandomCardStrategy());
         Stack<Card> cards = deck.getAll();
         assertThat(cards.stream().distinct().count()).isEqualTo(cards.size());
     }

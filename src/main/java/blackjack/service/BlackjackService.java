@@ -15,7 +15,7 @@ import blackjack.dto.StartingCardsResponseDto;
 
 public class BlackjackService {
 
-    private final Deck deck = new Deck(new RandomCardStrategy());
+    private final Deck deck = Deck.generateFrom(new RandomCardStrategy());
     private final Dealer dealer = new Dealer();
     private final List<Player> players = new ArrayList<>();
     // TODO: 반복자 리팩토링
