@@ -29,7 +29,7 @@ public abstract class CardHand {
     
     public int getSum() {
         final List<List<Integer>> availableNumbers = cards.stream()
-                .map(Card::getBlackjackNumber)
+                .map(Card::getBlackjackValue)
                 .toList();
         
         List<Integer> availableSum = createAvailableSum(availableNumbers);

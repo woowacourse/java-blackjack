@@ -99,19 +99,7 @@ public class OutputView {
     }
     
     private String parseCardNumber(Card card) {
-        if (card.getNumber() == 1) {
-            return "A";
-        }
-        if (card.getNumber() == 11) {
-            return "J";
-        }
-        if (card.getNumber() == 12) {
-            return "Q";
-        }
-        if (card.getNumber() == 13) {
-            return "K";
-        }
-        return String.valueOf(card.getNumber());
+        return card.getNumber().name().replace("NUMBER_", "");
     }
     
     private static String parseFinalSum(int sum) {

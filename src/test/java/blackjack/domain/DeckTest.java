@@ -38,8 +38,8 @@ public class DeckTest {
     void 덱에서_뽑은_카드들_중에는_중복된_카드가_없어야_한다() {
         //given
         final Deck deck = new Deck();
-        final Map<Integer, Integer> numberCount = getNumberMap();
-        EnumMap<CardShape, Integer> shapeCount = getShapeMap();
+        final EnumMap<CardNumber, Integer> numberCount = getNumberMap();
+        final EnumMap<CardShape, Integer> shapeCount = getShapeMap();
         
         for (int i = 0; i < 52; i++) {
             final Card card = deck.draw();
@@ -48,18 +48,18 @@ public class DeckTest {
         }
         
         // expected
-        for (int i = 1; i <= 13; i++) {
-            Assertions.assertThat(numberCount.get(i)).isEqualTo(4);
+        for (CardNumber number : CardNumber.values()) {
+            Assertions.assertThat(numberCount.get(number)).isEqualTo(4);
         }
         for (CardShape shape : CardShape.values()) {
             Assertions.assertThat(shapeCount.get(shape)).isEqualTo(13);
         }
     }
     
-    private static Map<Integer, Integer> getNumberMap() {
-        final Map<Integer, Integer> numberCount = new HashMap<>();
-        for (int i = 1; i <= 13; i++) {
-            numberCount.put(i, 0);
+    private static EnumMap<CardNumber, Integer> getNumberMap() {
+        final EnumMap<CardNumber, Integer> numberCount = new EnumMap<>(CardNumber.class);
+        for (CardNumber cardNumber : CardNumber.values()) {
+            numberCount.put(cardNumber, 0);
         }
         return numberCount;
     }

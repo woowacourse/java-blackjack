@@ -47,7 +47,7 @@ public class CardTest {
         final Card card = new Card(number, shape);
         
         // expected
-        assertThat(card.getBlackjackNumber())
+        assertThat(card.getBlackjackValue())
                 .containsExactlyInAnyOrder(7);
     }
     
@@ -61,7 +61,7 @@ public class CardTest {
         final Card card = new Card(number, shape);
         
         // expected
-        assertThat(card.getBlackjackNumber())
+        assertThat(card.getBlackjackValue())
                 .containsExactlyInAnyOrder(10);
     }
     
@@ -75,7 +75,7 @@ public class CardTest {
         final Card card = new Card(number, shape);
         
         // expected
-        assertThat(card.getBlackjackNumber())
+        assertThat(card.getBlackjackValue())
                 .containsExactlyInAnyOrder(1, 11);
     }
     
@@ -111,7 +111,7 @@ public class CardTest {
         
         // then
         assertAll(
-                () -> assertThat(card.getNumber()).isEqualTo(1),
+                () -> assertThat(card.getNumber()).isEqualTo(CardNumber.NUMBER_A),
                 () -> assertThat(card.getShape()).isEqualTo(CardShape.다이아몬드)
         );
     }
@@ -130,8 +130,8 @@ public class CardTest {
         // given
         List<Card> trumpCards = Card.createTrumpCards();
         
-        final Map<Integer, Integer> numberCount = getNumberMap();
-        EnumMap<CardShape, Integer> shapeCount = getShapeMap();
+        final EnumMap<CardNumber, Integer> numberCount = getNumberMap();
+        final EnumMap<CardShape, Integer> shapeCount = getShapeMap();
         
         for (int i = 0; i < 52; i++) {
             final Card card = trumpCards.get(i);
@@ -140,18 +140,18 @@ public class CardTest {
         }
         
         // expected
-        for (int i = 1; i <= 13; i++) {
-            org.assertj.core.api.Assertions.assertThat(numberCount.get(i)).isEqualTo(4);
+        for (CardNumber cardNumber : CardNumber.values()) {
+            org.assertj.core.api.Assertions.assertThat(numberCount.get(cardNumber)).isEqualTo(4);
         }
         for (CardShape shape : CardShape.values()) {
             org.assertj.core.api.Assertions.assertThat(shapeCount.get(shape)).isEqualTo(13);
         }
     }
     
-    private static Map<Integer, Integer> getNumberMap() {
-        final Map<Integer, Integer> numberCount = new HashMap<>();
-        for (int i = 1; i <= 13; i++) {
-            numberCount.put(i, 0);
+    private static EnumMap<CardNumber, Integer> getNumberMap() {
+        final EnumMap<CardNumber, Integer> numberCount = new EnumMap<>(CardNumber.class);
+        for (CardNumber cardNumber : CardNumber.values()) {
+            numberCount.put(cardNumber, 0);
         }
         return numberCount;
     }

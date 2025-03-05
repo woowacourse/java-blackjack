@@ -65,8 +65,8 @@ public class PlayerCardHandTest {
         assertThat(result).extracting(
                 "number", "shape"
         ).containsExactlyInAnyOrder(
-                Tuple.tuple(1, 다이아몬드),
-                Tuple.tuple(2, 하트)
+                Tuple.tuple(CardNumber.NUMBER_A, 다이아몬드),
+                Tuple.tuple(CardNumber.NUMBER_2, 하트)
         );
     }
     
