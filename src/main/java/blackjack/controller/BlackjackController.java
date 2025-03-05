@@ -17,6 +17,7 @@ public class BlackjackController {
         Players players = createPlayers();
         Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck(), new ScoreCalculator());
         handOutCards(dealer, players);
+        addtionalCard(dealer, players);
     }
 
     private Players createPlayers() {
@@ -32,6 +33,20 @@ public class BlackjackController {
 
     private void handOutCards(Dealer dealer, Players players) {
         dealer.prepareBlackjack(new RandomCardsShuffler());
-        OutputView.printPlayerCards(dealer.getCards(), players.getPlayers());
+        OutputView.printDealerAndPlayerCards(dealer.getCards(), players.getPlayers());
+    }
+
+    private void addtionalCard(Dealer dealer, Players players) {
+        players.sendAll((player -> {
+            String answer;
+            do {
+                answer = InputView.inputAdditionalCard(player);
+                if (answer.equals("y")) {
+                    dealer.sendCardToPlayer(player);
+                }
+                OutputView.printPlayerCards(player);
+            }
+            while (answer.equals("y"));
+        }));
     }
 }

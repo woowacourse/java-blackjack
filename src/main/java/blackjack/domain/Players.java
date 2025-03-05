@@ -33,4 +33,8 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public boolean contains(Player player) {
+        return players.contains(player);
+    }
 }

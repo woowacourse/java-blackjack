@@ -9,13 +9,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printPlayerCards(List<Card> dealerCards, List<Player> players) {
-        /**
-         * 딜러와 pobi, jason에게 2장을 나누었습니다.
-         * 딜러카드: 3다이아몬드
-         * pobi카드: 2하트, 8스페이드
-         * jason카드: 7클로버, K스페이드
-         */
+    public static void printDealerAndPlayerCards(List<Card> dealerCards, List<Player> players) {
         String names = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(","));
@@ -24,15 +18,18 @@ public class OutputView {
                 toKoreaRank(dealerCards.get(0).getRank()) +
                 toKoreaSuit(dealerCards.get(0).getSuit())
         );
-
         for (Player player : players) {
-            System.out.print(player.getName() + "카드: ");
-            String cards = player.getCards().stream()
-                    .map(card -> toKoreaRank(card.getRank()) +
-                            toKoreaSuit(card.getSuit()))
-                    .collect(Collectors.joining(", "));
-            System.out.println(cards);
+            printPlayerCards(player);
         }
+    }
+
+    public static void printPlayerCards(Player player) {
+        System.out.print(player.getName() + "카드: ");
+        String cards = player.getCards().stream()
+                .map(card -> toKoreaRank(card.getRank()) +
+                        toKoreaSuit(card.getSuit()))
+                .collect(Collectors.joining(", "));
+        System.out.println(cards);
     }
 
     private static String toKoreaRank(Rank rank) {

@@ -48,4 +48,11 @@ public class Dealer {
             maxScore = scoreCalculator.calculateMaxScore(cards);
         }
     }
+
+    public void sendCardToPlayer(Player player) {
+        if (!players.contains(player)) {
+            throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
+        }
+        player.send(deck.draw());
+    }
 }
