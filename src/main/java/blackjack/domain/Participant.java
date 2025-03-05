@@ -30,6 +30,10 @@ public abstract class Participant {
         return sum;
     }
 
+    public boolean hasTwoCards() {
+        return cards.size() == 2;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

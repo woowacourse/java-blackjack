@@ -45,6 +45,29 @@ public class ParticipantTest {
                 assertThat(cards.getLast().denomination()).isEqualTo(Denomination.KING);
             });
         }
+
+        @Test
+        @DisplayName("초기 배부 후, 카드 갯수는 2장이다.")
+        void hasTwoCards() {
+            Card card1 = new Card(Suit.HEART, Denomination.ACE);
+            Card card2 = new Card(Suit.SPADE, Denomination.KING);
+
+            participant.addCards(card1, card2);
+
+            assertThat(participant.hasTwoCards()).isTrue();
+        }
+
+        @Test
+        @DisplayName("카드 갯수가 2장이 아니다.")
+        void hasNotTwoCards() {
+            Card card1 = new Card(Suit.HEART, Denomination.TWO);
+            Card card2 = new Card(Suit.SPADE, Denomination.KING);
+            Card card3 = new Card(Suit.SPADE, Denomination.THREE);
+
+            participant.addCards(card1, card2, card3);
+
+            assertThat(participant.hasTwoCards()).isFalse();
+        }
     }
 
     @Nested
