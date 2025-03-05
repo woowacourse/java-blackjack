@@ -14,22 +14,26 @@ public class Player implements GameAction {
         this.cards = cards;
     }
 
+    public void receiveCards(final List<Card> givenCards) {
+        cards.addAll(givenCards);
+    }
+
     @Override
     public List<Card> showInitialCards() {
         return cards;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Player player)) {
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Player player)) {
             return false;
         }
-        return Objects.equals(nickname, player.nickname);
+        return Objects.equals(nickname, player.nickname) && Objects.equals(cards, player.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(nickname);
+        return Objects.hash(nickname, cards);
     }
 
     public String getNickname() {
