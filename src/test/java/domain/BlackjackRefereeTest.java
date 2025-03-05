@@ -3,7 +3,7 @@ package domain;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
-import org.assertj.core.api.SoftAssertions;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +43,7 @@ public class BlackjackRefereeTest {
         assertSoftly(softly -> {
             softly.assertThat(gameResult.get(winner)).isEqualTo(GameResultStatus.WIN);
             softly.assertThat(gameResult.get(drawer)).isEqualTo(GameResultStatus.DRAW);
-            softly.assertThat(gameResult.get(loser)).isEqualTo(GameResultStatus.LOSER);
+            softly.assertThat(gameResult.get(loser)).isEqualTo(GameResultStatus.LOSE);
         });
     }
 }
