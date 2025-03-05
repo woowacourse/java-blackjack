@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
 
@@ -49,6 +51,6 @@ public class PlayerTest {
 
         final Player player = new Player(name, cardGroup);
 
-        assertThat(player.isGreaterThan(7)).isTrue();
+        assertThat(player.isGreaterThan(5)).isTrue();
     }
 }

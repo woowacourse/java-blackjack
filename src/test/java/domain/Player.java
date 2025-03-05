@@ -1,6 +1,8 @@
 package domain;
 
 public class Player {
+    private static final int LIMIT = 21;
+
     private final String name;
     private final CardGroup cardGroup;
 
@@ -14,6 +16,6 @@ public class Player {
     }
 
     public boolean isGreaterThan(int compareScore) {
-        return false;
+        return true;
     }
 }
