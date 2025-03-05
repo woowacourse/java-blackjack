@@ -13,4 +13,8 @@ public class Dealer extends GameParticipant {
     public static Dealer of(Cards cards) {
         return new Dealer(cards);
     }
+
+    public boolean hasToDraw() {
+        return this.getResult() <= 16;
+    }
 }
