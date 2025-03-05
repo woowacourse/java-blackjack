@@ -36,4 +36,8 @@ public class ParticipantRepository {
                 .map(repository::get)
                 .toList();
     }
+
+    public List<Participant> getAllPlayer() {
+        return null;
+    }
 }

@@ -51,4 +51,26 @@ public class ParticipantRepositoryTest {
         //then
         assertThat(participant).isEqualTo(new Participant("mimi", Cards.createEmpty()));
     }
+
+    @DisplayName("딜러를 제외한 모든 참여자를 조회한다")
+    @Test
+    void test4() {
+        //given
+        List<Participant> testParticipants = List.of(
+                new Participant("테스트딜러", Cards.createEmpty(), Role.DEALER),
+                new Participant("mimi", Cards.createEmpty(), Role.PLAYER),
+                new Participant("wade", Cards.createEmpty(), Role.PLAYER));
+        List<Participant> expectedParticipants = List.of(
+                new Participant("mimi", Cards.createEmpty(), Role.PLAYER),
+                new Participant("wade", Cards.createEmpty(), Role.PLAYER));
+        participantRepository.addAll(testParticipants);
+
+        //when
+        List<Participant> participants = participantRepository.getAllPlayer();
+
+        //then
+        assertThat(participants).containsExactlyInAnyOrderElementsOf(
+                expectedParticipants
+        );
+    }
 }
