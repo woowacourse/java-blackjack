@@ -22,7 +22,7 @@ public class ReceivedCards {
         int point = calculateTotalDefaultPoint();
         int aceCount = aceCount();
         for (int i = 0; i < aceCount; i++) {
-            if (!isBust(point + 10)) {
+            if (point + 10 <= 21) {
                 point += 10;
             }
         }
@@ -39,8 +39,8 @@ public class ReceivedCards {
                 .count());
     }
 
-    public boolean isBust(int point) {
-        return point > 21;
+    public boolean isBust() {
+        return calculateTotalPoint() > 21;
     }
 
     public Card get(int index) {
