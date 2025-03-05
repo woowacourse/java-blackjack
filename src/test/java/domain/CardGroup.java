@@ -17,8 +17,8 @@ public class CardGroup {
 
     private int calculateScoreWithOutAce() {
         return cards.stream()
-                .filter(card -> card.getScore() != CardScore.ACE)
-                .mapToInt(card -> card.getScore().cardScore)
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
@@ -44,7 +44,7 @@ public class CardGroup {
 
     private int countAce(){
         return Math.toIntExact(cards.stream()
-                .filter(card -> card.getScore() == CardScore.ACE)
+                .filter(Card::isAce)
                 .count());
     }
 

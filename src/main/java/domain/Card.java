@@ -1,20 +1,23 @@
 package domain;
 
 public class Card {
-    CardScore score;
+
     CardType type;
 
-    Card(CardScore number, domain. CardType type) {
-        this.score = number;
+    Card(CardType type) {
         this.type = type;
     }
 
-    public CardScore getScore() {
-        return score;
+    public int getScore() {
+        return type.getScore();
     }
 
     public CardType getType() {
         return type;
+    }
+
+    public boolean isAce() {
+        return type.getScore() == 1;
     }
 
     public int calculateAceScore(final int score, final int limit) {

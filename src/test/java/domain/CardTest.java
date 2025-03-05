@@ -10,11 +10,10 @@ class CardTest {
     class cardConstructor{
         @Test
         void 카드를_생성한다(){
-            Card card = new Card(CardScore.ACE, CardType.CLOVER);
+            Card card = new Card(CardType.CLOVER_ACE);
 
             assertThat(card).isInstanceOf(Card.class);
-            assertThat(card.getType()).isEqualTo(CardType.CLOVER);
-            assertThat(card.getScore()).isEqualTo(CardScore.ACE);
+            assertThat(card.getType()).isEqualTo(CardType.CLOVER_ACE);
         }
 
         @Test
@@ -24,7 +23,7 @@ class CardTest {
             final int score = 20;
 
             //when
-            final Card card = new Card(CardScore.ACE, CardType.CLOVER);
+            final Card card = new Card(CardType.CLOVER_ACE);
             final int aceScore = card.calculateAceScore(score, limit);
 
             //then
@@ -38,7 +37,7 @@ class CardTest {
             final int score = 10;
 
             //when
-            final Card card = new Card(CardScore.ACE, CardType.CLOVER);
+            final Card card = new Card(CardType.CLOVER_ACE);
             final int aceScore = card.calculateAceScore(score, limit);
 
             //then
