@@ -10,6 +10,7 @@ public class Cards {
     private static final int VALID_MAX_SUM_LIMIT = 21;
     private static final int VALID_DRAW_LIMIT = 16;
     private static final String MAX_SUM_EXCEED_ERROR = "카드의 합이 21을 초과하였습니다.";
+    private static final int ACE_CONVERSION_THRESHOLD = 11;
 
     private final List<Card> cards;
 
@@ -26,7 +27,7 @@ public class Cards {
     }
 
     public void checkMaxSum() {
-        if(calculateSum() > VALID_MAX_SUM_LIMIT) {
+        if(calculateSumAll() > VALID_MAX_SUM_LIMIT) {
             throw new IllegalArgumentException(ERROR_HEADER + MAX_SUM_EXCEED_ERROR);
         }
     }
@@ -36,13 +37,53 @@ public class Cards {
     }
 
     public boolean isUnderDrawLimit() {
-        return calculateSum() <= VALID_DRAW_LIMIT;
+        return calculateSumAll() <= VALID_DRAW_LIMIT;
     }
 
-    public int calculateSum() {
+    public int calculateSumResult() {
+        if(hasNotAce()) {
+            return calculateSumAll();
+        }
+        int cardsSumWithoutAce = calculateSumWithoutAce();
+        int aceCount = calculateAceCount();
+
+        return calculateTotalSumWithAces(aceCount, cardsSumWithoutAce);
+    }
+
+    private int calculateTotalSumWithAces(int aceCount, int cardsWithoutAceSum) {
+        int result = cardsWithoutAceSum;
+        for (int i = 0; i < aceCount; i++) {
+            if(result <= ACE_CONVERSION_THRESHOLD) {
+                result += CardNumberType.getAceHighNumber();
+                continue;
+            }
+            result += CardNumberType.getAceLowNumber();
+        }
+        return result;
+    }
+
+    private int calculateAceCount() {
+        return (int) cards.stream()
+                .filter(card -> card.cardNumberType() == CardNumberType.ACE)
+                .count();
+    }
+
+    private int calculateSumWithoutAce() {
+        return cards.stream()
+                .filter(card -> card.cardNumberType() != CardNumberType.ACE)
+                .mapToInt(card -> card.cardNumberType().getDefaultNumber())
+                .sum();
+    }
+
+    private int calculateSumAll() {
         return cards.stream()
                 .map(Card::cardNumberType)
-                .mapToInt(CardNumberType::getValue)
+                .mapToInt(CardNumberType::getDefaultNumber)
                 .sum();
+    }
+
+    private boolean hasNotAce() {
+        return cards.stream()
+                .noneMatch(card -> card.cardNumberType() == CardNumberType.ACE);
     }
 }

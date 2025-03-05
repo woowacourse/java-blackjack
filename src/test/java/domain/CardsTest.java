@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -73,7 +72,7 @@ public class CardsTest {
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Cards cards = new Cards(testCards);
         //when
-        int sum = cards.calculateSum();
+        int sum = cards.calculateSumResult();
         //then
         assertThat(sum).isEqualTo(16);
     }
@@ -88,7 +87,22 @@ public class CardsTest {
                 );
         Cards cards = new Cards(testCards);
         //when
-        int sum = cards.calculateSum();
+        int sum = cards.calculateSumResult();
+        //then
+        assertThat(sum).isEqualTo(21);
+    }
+
+    @DisplayName("ACE가 여러 개인 경우, 각 ACE를 최적의 값으로 포함하여 총합을 계산한다")
+    @Test
+    void test7() {
+        //given
+        List<Card> testCards = List.of(new Card(CardNumberType.ACE, CardType.CLOVER),
+                new Card(CardNumberType.ACE, CardType.HEART),
+                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        );
+        Cards cards = new Cards(testCards);
+        //when
+        int sum = cards.calculateSumResult();
         //then
         assertThat(sum).isEqualTo(21);
     }
