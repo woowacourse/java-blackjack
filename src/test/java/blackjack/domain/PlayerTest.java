@@ -41,7 +41,7 @@ class PlayerTest {
 
     @DisplayName("패에 카드를 추가한다")
     @Test
-    void aa() {
+    void addCardTest() {
         Player player = new Player("라젤");
         Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
         Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
@@ -50,5 +50,33 @@ class PlayerTest {
         player.addCard(card2);
 
         assertThat(player.calculateSum()).isEqualTo(18);
+    }
+
+    @DisplayName("카드의 합이 21이하인 경우 버스트가 아니다")
+    @Test
+    void isBustTest1() {
+        Player player = new Player("라젤");
+        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
+        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
+
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.isBust()).isFalse();
+    }
+
+    @DisplayName("카드의 합이 21 초과인 경우 버스트다")
+    @Test
+    void isBustTest2() {
+        Player player = new Player("라젤");
+        Card card1 = new Card(CardShape.CLOVER, CardValue.TEN);
+        Card card2 = new Card(CardShape.HEART, CardValue.EIGHT);
+        Card card3 = new Card(CardShape.HEART, CardValue.EIGHT);
+
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
+
+        assertThat(player.isBust()).isTrue();
     }
 }

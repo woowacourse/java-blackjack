@@ -17,4 +17,8 @@ public abstract class Gambler {
     public List<Card> getCards() {
         return hands.getCards();
     }
+
+    public boolean isBust() {
+        return !hands.isSumBelow(21);
+    }
 }
