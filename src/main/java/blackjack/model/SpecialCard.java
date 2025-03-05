@@ -6,7 +6,7 @@ public class SpecialCard extends Card {
 
 
     public SpecialCard(char character, CardShape shape) {
-        super(shape, SPECIAL_CARD_POINT);
+        super(shape);
         this.character = character;
     }
 

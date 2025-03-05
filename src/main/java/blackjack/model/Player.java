@@ -13,4 +13,12 @@ public abstract class Player {
     public ReceivedCards getReceivedCards() {
         return receivedCards;
     }
+
+    public boolean isBust() {
+        return receivedCards.isBust();
+    }
+
+    public int calculatePoint() {
+        return receivedCards.calculateTotalPoint();
+    }
 }
