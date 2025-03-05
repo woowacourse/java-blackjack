@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,5 +44,21 @@ public class PlayerTest {
 
         // then
         assertThat(player).isEqualTo(new Player("엠제이", cards));
+    }
+
+    @DisplayName("딜러는 카드 2개 중 1개만 보여준다.")
+    @Test
+    void showDealerCards() {
+        // given
+        final List<Card> cards = provideCards(2);
+        player.receiveCards(cards);
+        final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.ACE),
+                new Card(Shape.SPADE, Denomination.TWO));
+
+        // when
+        final List<Card> playerCards = player.showInitialCards();
+
+        // then
+        assertThat(playerCards).isEqualTo(expected);
     }
 }

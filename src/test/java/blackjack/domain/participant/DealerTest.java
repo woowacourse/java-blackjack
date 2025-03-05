@@ -4,6 +4,8 @@ import static blackjack.fixture.TestFixture.provideCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +25,7 @@ class DealerTest {
     @Test
     void receiveCards() {
         // given
-        List<Card> cards = provideCards(2);
+        final List<Card> cards = provideCards(2);
 
         // when
         dealer.receiveCards(cards);
@@ -32,4 +34,17 @@ class DealerTest {
         assertThat(dealer).isEqualTo(new Dealer(cards));
     }
 
+    @DisplayName("딜러는 카드 2개 중 1개만 보여준다.")
+    @Test
+    void showDealerCards() {
+        // given
+        final List<Card> cards = provideCards(2);
+        dealer.receiveCards(cards);
+
+        // when
+        final List<Card> dealerCards = dealer.showInitialCards();
+
+        // then
+        assertThat(dealerCards).isEqualTo(List.of(new Card(Shape.SPADE, Denomination.ACE)));
+    }
 }
