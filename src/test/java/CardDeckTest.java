@@ -1,5 +1,5 @@
 import domain.TrumpCard;
-import domain.CardDeck;
+import domain.CardSetting;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ public class CardDeckTest {
         int index = 0;
 
         // when
-        TrumpCard card = CardDeck.getCard(index);
+        TrumpCard card = CardSetting.getCard(index);
 
         // then
         Assertions.assertThat(card).isInstanceOf(TrumpCard.class);
@@ -22,10 +22,10 @@ public class CardDeckTest {
     @Test
     void test2() {
         // given
-        int originCardDeckSize = CardDeck.getCardDeck().size();
+        int originCardDeckSize = CardSetting.getCardDeck().size();
         // when
-        CardDeck.drawCard();
-        int afterDrawDeckSize = CardDeck.getCardDeck().size();
+        CardSetting.drawCard();
+        int afterDrawDeckSize = CardSetting.getCardDeck().size();
         // then
         Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
     }
@@ -35,10 +35,10 @@ public class CardDeckTest {
     void test3() {
         // given
         for (int i = 0; i < 52; i++) {
-            CardDeck.drawCard();
+            CardSetting.drawCard();
         }
         // when & then
-        Assertions.assertThatThrownBy(() -> CardDeck.drawCard())
+        Assertions.assertThatThrownBy(() -> CardSetting.drawCard())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드가 다 떨어졌습니다");
     }
