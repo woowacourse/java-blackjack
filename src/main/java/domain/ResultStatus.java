@@ -52,4 +52,12 @@ public enum ResultStatus {
         }
         return result;
     }
+
+    public static Map<ResultStatus, Integer> initMap() {
+        Map<ResultStatus, Integer> counts = new HashMap<>();
+        for (ResultStatus value : values()) {
+            counts.put(value, 0);
+        }
+        return counts;
+    }
 }

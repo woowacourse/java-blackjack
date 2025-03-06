@@ -6,9 +6,11 @@ import domain.Dealer;
 import domain.Number;
 import domain.Participant;
 import domain.Player;
+import domain.ResultStatus;
 import domain.Symbol;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -75,5 +77,25 @@ public class OutputView {
                     convertCardsToMessage(player.getCards()),
                     player.getTotalNumberSum());
         }
+    }
+
+    public static void printGameResult(Map<String, ResultStatus> result) {
+        Map<ResultStatus, Integer> counts = countStatusResult(result);
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %d승 %d패 %d무%n",
+            counts.get(ResultStatus.LOSE), counts.get(ResultStatus.WIN), counts.get(ResultStatus.PUSH));
+        for (String name : result.keySet()) {
+            System.out.printf("%s: %d승 %d패 %d무%n",
+                name, counts.get(ResultStatus.WIN), counts.get(ResultStatus.LOSE), counts.get(ResultStatus.PUSH));
+        }
+    }
+
+    private static Map<ResultStatus, Integer> countStatusResult(Map<String, ResultStatus> result) {
+        Map<ResultStatus, Integer> counts = ResultStatus.initMap();
+        for (String playerName : result.keySet()) {
+            ResultStatus resultStatus = result.get(playerName);
+            counts.put(resultStatus, counts.get(resultStatus) + 1);
+        }
+        return counts;
     }
 }

@@ -4,10 +4,12 @@ import domain.Dealer;
 import domain.Deck;
 import domain.GameManager;
 import domain.Player;
+import domain.ResultStatus;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -18,6 +20,7 @@ public class BlackjackController {
         drawPlayersCards();
         drawDealerCards();
         printParticipantsCards();
+        printGameResult();
     }
 
     private void readyGame() {
@@ -61,5 +64,10 @@ public class BlackjackController {
         Dealer dealer = gameManager.findDealer();
         List<Player> allPlayers = gameManager.findAllPlayers();
         OutputView.printFinalParticipant(dealer, allPlayers);
+    }
+
+    private void printGameResult() {
+        Map<String, ResultStatus> result = gameManager.findGameResult();
+        OutputView.printGameResult(result);
     }
 }

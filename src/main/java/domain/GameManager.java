@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Map;
 
 public class GameManager {
 
@@ -41,4 +42,7 @@ public class GameManager {
         return dealer;
     }
 
+    public Map<String, ResultStatus> findGameResult() {
+        return ResultStatus.judgeGameResult(players, dealer);
+    }
 }
