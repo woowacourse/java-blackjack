@@ -30,4 +30,12 @@ public class OutputView {
     public void printPlayerHand(Player player) {
         System.out.printf("%s: %s%n", player.getName(), getHand(player));
     }
+
+    public void printDealerHit(boolean isDealerHit) {
+        if (isDealerHit) {
+            System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Game.DEALER_HIT_THRESHOLD);
+            return;
+        }
+        System.out.println();
+    }
 }

@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 public class Game {
 
-    private static final int DEALER_HIT_THRESHOLD = 16;
+    public static final int DEALER_HIT_THRESHOLD = 16;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -58,10 +58,12 @@ public class Game {
         return playerHitDecision.test(player.getName());
     }
 
-    public void dealerHit() {
+    public boolean dealerHit() {
         if (dealer.getTotal() <= DEALER_HIT_THRESHOLD) {
             dealCard(dealer);
+            return true;
         }
+        return false;
     }
 
     public Card getDealerVisibleCard() {
