@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.CardDeck;
+import blackjack.domain.CardShuffler;
 import blackjack.domain.Round;
 import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
@@ -17,7 +18,6 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         List<Name> playerNames = getPlayerNames();
-
         Round round = new Round(cardDeck, playerNames);
         round.distributeInitialCards();
         OutputView.printInitialDistributionPrompt(playerNames);
@@ -79,6 +79,6 @@ public class Application {
                 .flatMap(shape -> Arrays.stream(CardType.values())
                         .map(type -> new Card(shape, type)))
                 .collect(Collectors.toList());
-        return new CardDeck(cards);
+        return new CardDeck(cards, new CardShuffler());
     }
 }
