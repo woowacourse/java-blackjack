@@ -4,11 +4,6 @@ public class Player {
     private final String name;
     private final Participant participant;
 
-    public Player() {
-        this.participant = new Participant();
-        this.name = "";
-    }
-
     public Player(String name) {
         this.participant = new Participant();
         this.name = name;

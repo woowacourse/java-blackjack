@@ -8,7 +8,6 @@ public record Card(
     CardNumber number,
     Emblem emblem
 ) {
-
     public boolean isMatchNumber(final CardNumber cardNumber) {
         return Objects.equals(number, cardNumber);
     }

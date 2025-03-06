@@ -16,7 +16,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 

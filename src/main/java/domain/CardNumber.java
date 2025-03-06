@@ -24,5 +24,4 @@ public enum CardNumber {
     public int sum(final int score) {
         return this.score + score;
     }
-
 }

@@ -19,10 +19,6 @@ public class Dealer {
         participant.pickCard(deck);
     }
 
-    public int calculateAllScore() {
-        return participant.calculateAllScore();
-    }
-
     public void duel(final Player player) {
         player.duel(participant);
     }
