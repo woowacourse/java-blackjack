@@ -22,7 +22,7 @@ public class Cards {
             return sum;
         }
         int aceCount = countAce(cards);
-        while (!isUnderThreshold(sum) && aceCount-- >= 0) {
+        while (!isUnderThreshold(sum) && aceCount-- > 0) {
             sum -= ACE_SUBTRACT;
         }
         return sum;
