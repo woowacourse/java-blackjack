@@ -11,6 +11,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayersTest {
 
+    @Test
+    @DisplayName("플레이어 목록을 추가한다")
+    void 플레이어_목록을_추가한다() {
+        Players players = new Players();
+
+        players.addGamblers(List.of(new Player("두리"), new Player("비타")));
+
+        assertThat(players.getGamblers().size()).isEqualTo(2);
+    }
+
     @DisplayName("각 참가자 마다 기본 카드 2장을 발급한다")
     @Test
     void give_two_cards() {
