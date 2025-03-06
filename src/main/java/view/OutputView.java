@@ -1,5 +1,6 @@
 package view;
 
+import domain.Score;
 import domain.TrumpCard;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,33 @@ public class OutputView {
                 .collect(Collectors.joining(",")));
     }
 
+    public void printDealerHitInfo(int dealerHitCount) {
+        for (int i = 0; i < dealerHitCount; i++) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+    }
+
+    public void printCardsResult(Map<String, List<TrumpCard>> playerCards, List<TrumpCard> dealerCards) {
+        System.out.print("딜러카드: ");
+        System.out.print(dealerCards.stream()
+                .map(this::getCardInfo)
+                .collect(Collectors.joining(",")));
+        System.out.printf(" - 결과: %s\n", getScore(dealerCards));
+
+        playerCards.forEach((name, cards) -> {
+            System.out.printf("%s카드: ", name);
+            System.out.print(cards.stream()
+                    .map(this::getCardInfo)
+                    .collect(Collectors.joining(",")));
+            System.out.printf(" - 결과: %s\n", getScore(cards));
+        });
+    }
+
     private String getCardInfo(TrumpCard card) {
         return card.getRank().getTitle() + card.getSuit().getTitle();
     }
 
-    public void printDealerHitInfo(int dealerHitCount) {
-        for (int i = 0; i < dealerHitCount; i++) {
-            System.out.println("딜러는 카드를 한 장 더 받았습니다.");
-        }
+    private String getScore(List<TrumpCard> dealerCards) {
+        return Score.from(dealerCards).getTitle();
     }
 }

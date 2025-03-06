@@ -22,23 +22,29 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<Player> players = createPlayers();
-        Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
-        TrumpCard dealerFirstCard = blackJackGame.getDealer().retrieveFirstCard();
-        outputView.printInitialCards(playerCards, dealerFirstCard);
+        List<Player> players = executeInitializeCards();
 
         players.forEach(this::executePlayerHit);
         executeDealerHit();
+
+        Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
+        List<TrumpCard> dealerCards = blackJackGame.getDealer().getHand().getCards();
+        outputView.printCardsResult(playerCards, dealerCards);
+    }
+
+    private List<Player> executeInitializeCards() {
+        List<Player> players = createPlayers();
+        Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
+        TrumpCard dealerFirstCard = blackJackGame.getDealer().retrieveFirstCard();
+
+        outputView.printInitialCards(playerCards, dealerFirstCard);
+
+        return players;
     }
 
     private List<Player> createPlayers() {
         List<String> playerNames = inputView.readPlayerNames();
         return blackJackGame.createPlayers(playerNames);
-    }
-
-    private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
-        return players.stream()
-                .collect(Collectors.toMap(Player::getName, player -> player.getHand().getCards()));
     }
 
     private void executePlayerHit(Player player) {
@@ -53,5 +59,10 @@ public class BlackJackController {
     private void executeDealerHit() {
         int dealerHitCount = blackJackGame.processDealerHit();
         outputView.printDealerHitInfo(dealerHitCount);
+    }
+
+    private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
+        return players.stream()
+                .collect(Collectors.toMap(Player::getName, player -> player.getHand().getCards()));
     }
 }
