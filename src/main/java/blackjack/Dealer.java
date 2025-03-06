@@ -14,4 +14,11 @@ public class Dealer extends Participant {
     public Card drawCard() {
         return deck.draw();
     }
+
+    public Card getVisibleCard() {
+        if (hand.isEmpty()) {
+            throw new IllegalStateException("딜러가 가진 패가 없습니다.");
+        }
+        return hand.getFirst();
+    }
 }

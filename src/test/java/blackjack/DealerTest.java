@@ -1,6 +1,7 @@
 package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,5 +152,36 @@ class DealerTest {
         // then
         assertThat(isBust)
                 .isSameAs(expected);
+    }
+
+    @DisplayName("보여줄 때 첫 번째 카드 한장을 반환한다.")
+    @Test
+    void getVisibleCardTest() {
+        // give
+        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
+        Dealer dealer = new Dealer(deck);
+        Card firstCard = dealer.drawCard();
+        dealer.receiveHand(firstCard);
+        dealer.receiveHand(dealer.drawCard());
+
+        // when
+        Card visibleCard = dealer.getVisibleCard();
+
+        // then
+        assertThat(visibleCard)
+                .isEqualTo(firstCard);
+    }
+
+    @DisplayName("보여줄 때 가진 패가 없는 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenNoHandGetVisibleCardTest() {
+        // given
+        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
+        Dealer dealer = new Dealer(deck);
+
+        // when, then
+        assertThatCode(() -> dealer.getVisibleCard())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("딜러가 가진 패가 없습니다.");
     }
 }

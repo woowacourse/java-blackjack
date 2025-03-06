@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private final List<Card> hand;
+    protected final List<Card> hand;
 
     protected Participant(List<Card> hand) {
         this.hand = new ArrayList<>(hand);
