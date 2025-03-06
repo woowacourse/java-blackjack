@@ -10,7 +10,7 @@ public class GameManager {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public GameManager(final Dealer dealer, final List<Player> players) {
+    private GameManager(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -27,7 +27,15 @@ public class GameManager {
     }
 
     private static void validateDuplicatePlayer(final List<Player> players) {
-        throw new UnsupportedOperationException("Unsupported validateDuplicatePlayer");
+        if (isDuplicate(players)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static boolean isDuplicate(final List<Player> players) {
+        return players.stream()
+                .distinct()
+                .count() != players.size();
     }
 
 
