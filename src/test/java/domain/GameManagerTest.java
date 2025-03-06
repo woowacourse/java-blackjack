@@ -3,7 +3,9 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import dto.ResultDto;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class GameManagerTest {
@@ -153,5 +155,32 @@ class GameManagerTest {
 
         // then
         assertThat(result).isFalse();
+    }
+
+    @Test
+    void 게임_결과를_계산한다() {
+        // given
+        CardDeck cardDeck = CardDeck.of();
+        Dealer dealer = Dealer.of();
+        dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        dealer.receive(Card.of(TrumpNumber.SIX, TrumpShape.CLUB));
+        Player player = Player.of("pobi1");
+        player.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        player.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
+        Participants participants = Participants.of(
+                dealer, List.of(player)
+        );
+        GameManager gameManager = GameManager.of(cardDeck, participants);
+
+        // when
+        ResultDto resultDto = gameManager.calculateResult();
+
+        // then
+        Assertions.assertAll(
+                () -> assertThat(resultDto.dealerResult().get(BlackjackResult.LOSE)).isEqualTo(1),
+                () -> assertThat(resultDto.dealerResult().get(BlackjackResult.WIN)).isEqualTo(0),
+                () -> assertThat(resultDto.dealerResult().get(BlackjackResult.DRAW)).isEqualTo(0),
+                () -> assertThat(resultDto.playerResults().get(player)).isEqualTo(BlackjackResult.WIN)
+        );
     }
 }

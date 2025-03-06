@@ -1,6 +1,9 @@
 package domain;
 
+import dto.ResultDto;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameManager {
@@ -47,5 +50,24 @@ public class GameManager {
         }
         dealer.receive(cardDeck.popCard());
         return true;
+    }
+
+    public ResultDto calculateResult() {
+        Participant dealer = participants.getDealer();
+        List<Participant> players = participants.getPlayers();
+
+        EnumMap<BlackjackResult, Integer> dealerResults = new EnumMap<>(BlackjackResult.class);
+        for (BlackjackResult result : BlackjackResult.values()) {
+            dealerResults.put(result, 0);
+        }
+        HashMap<Participant, BlackjackResult> playerResults = new HashMap<>();
+
+        for (Participant player : players) {
+            BlackjackResult dealerResult = BlackjackResult.getDealerResult(dealer, player);
+            BlackjackResult playerResult = BlackjackResult.getOpposite(dealerResult);
+            playerResults.put(player, playerResult);
+            dealerResults.put(dealerResult, dealerResults.getOrDefault(dealerResult, 0) + 1);
+        }
+        return new ResultDto(dealerResults, playerResults);
     }
 }

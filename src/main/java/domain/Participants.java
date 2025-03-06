@@ -50,6 +50,11 @@ public class Participants {
                 .toList();
     }
 
+    public List<Participant> getPlayers() {
+        return participants.stream()
+                .filter(participant -> participant instanceof Player)
+                .toList();
+    }
 
     public Participant getDealer() {
         return participants.stream()
