@@ -16,4 +16,16 @@ public class InputView {
                 .map(Name::new)
                 .toList();
     }
+
+    public static boolean inputPlayerHit(Name name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
+        String answer = scanner.nextLine();
+        if (answer.equals("y")) {
+            return true;
+        }
+        if (answer.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("응답이 올바르지 않습니다.");
+    }
 }

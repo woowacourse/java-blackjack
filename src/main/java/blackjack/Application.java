@@ -25,6 +25,21 @@ public class Application {
         for (Name playerName : playerNames) {
             OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
         }
+        for (Name playerName : playerNames) {
+            if (isHit(playerName)) {
+                round.distributeCards(playerName, 1);
+            }
+        }
+
+    }
+
+    private static boolean isHit(Name playerName) {
+        try {
+            return InputView.inputPlayerHit(playerName);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return isHit(playerName);
+        }
     }
 
     private static List<Name> getPlayerNames() {
