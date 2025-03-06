@@ -15,7 +15,8 @@ public class AnswerCommandTest {
         final AnswerCommand byAnswer = AnswerCommand.findByAnswer(command);
 
         //then
-        assertThat(byAnswer).isNotNull();
+        assertThat(byAnswer).isNotNull()
+                .isEqualTo(AnswerCommand.YES);
 
     }
 }
