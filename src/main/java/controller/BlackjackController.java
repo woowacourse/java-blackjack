@@ -6,6 +6,7 @@ import domain.TrumpCard;
 import domain.user.Dealer;
 import domain.user.User;
 import java.util.List;
+import java.util.Map;
 import view.CardConverter;
 import view.InputView;
 import view.OutputView;
@@ -42,15 +43,29 @@ public class BlackjackController {
             dealer.drawCard();
             outputView.displayDealerAddCard();
         }
-//        if (dealer.isImpossibleDraw()) {
-//            dealer.burst();
-//        }
 
         // 결과 출력
         createGameResult(gameManger, playerNames);
 
         // 승패 계산
+        Map<User, Integer> gameResult = gameManger.createGameResult();
+        calculateDealerResult(gameResult);
 
+        outputView.displayGameResult(gameResult);
+    }
+
+    private void calculateDealerResult(Map<User, Integer> gameResult) {
+        int loseCount = getResultStateCount(gameResult, 1);
+        int winCount = getResultStateCount(gameResult, 2);
+        int mooCount = getResultStateCount(gameResult, 3);
+
+        outputView.displayDealerGameResult(winCount, loseCount, mooCount);
+    }
+
+    private int getResultStateCount(Map<User, Integer> gameResult, int status) {
+        return (int) gameResult.entrySet().stream()
+                .filter(entry -> entry.getValue() == status)
+                .count();
     }
 
     private void addCardAllPlayer(GameManger gameManger, String playerName) {

@@ -55,6 +55,9 @@ public class GameManger {
     }
 
     public int compare(User player) {
+        if (player.isBurst()) {
+            return LOSE;
+        }
         if (dealer.getCardDeck().calculateScore() < player.getCardDeck().calculateScore()) {
             return WIN;
         }
