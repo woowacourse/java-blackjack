@@ -101,7 +101,10 @@
 
 ---
 
-## 🛠 Util
+## ⚠️Exception
 
 ### ExceptionHandler
 - [X] 잘못된 값 입력시 예외 메시지 출력 및 재입력
+
+### ErrorException
+- [x] 잘못된 입력에 대한 예외 메시지를 오류 메시지로 생성
