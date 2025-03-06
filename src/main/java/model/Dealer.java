@@ -2,6 +2,8 @@ package model;
 
 
 public class Dealer extends Participant{
+    private static final int DEALER_HIT_THRESHOLD = 16;
+
     public Dealer() {
         super();
     }
@@ -11,7 +13,7 @@ public class Dealer extends Participant{
     }
 
     public boolean checkScoreUnderSixteen() {
-        return getParticipantHand().checkScoreBelow(16);
+        return getParticipantHand().checkScoreBelow(DEALER_HIT_THRESHOLD);
     }
 }
 

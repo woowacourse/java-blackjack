@@ -10,6 +10,7 @@ import model.ParticipantWinningResult;
 import model.Players;
 
 public class OutputView {
+    private static final String JOIN_DELIMITER = ", ";
 
     public static void printInitialDealResult(Dealer dealer, Players players){
         printCardDivision(players);
@@ -20,7 +21,7 @@ public class OutputView {
             List<String> playerCards = player.getHandCards().stream()
                     .map(Card::getCardName)
                     .toList();
-            System.out.println(player.getName() + "카드: " + String.join(", ", playerCards));
+            System.out.println(player.getName() + "카드: " + String.join(JOIN_DELIMITER, playerCards));
         }
     }
 
@@ -28,7 +29,7 @@ public class OutputView {
         List<String> playerNames = players.getPlayers().stream()
                 .map(Player::getName)
                 .toList();
-        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", String.join(", ", playerNames));
+        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", String.join(JOIN_DELIMITER, playerNames));
     }
 
     public static void printHitOrStand(Player player) {
@@ -37,7 +38,7 @@ public class OutputView {
 
     public static void printHitResult(Player player){
         List<String> cardsName = player.getHandCards().stream().map(Card::getCardName).toList();
-        System.out.println(player.getName() + "카드: " + String.join(", ", cardsName));
+        System.out.println(player.getName() + "카드: " + String.join(JOIN_DELIMITER, cardsName));
     }
 
     public static void printDealerDealResult(){
@@ -46,12 +47,12 @@ public class OutputView {
 
     public static void printFinalScore(Dealer dealer, Players players) {
         List<String> dealerCardNames = dealer.getHandCards().stream().map(Card::getCardName).toList();
-        System.out.print("딜러카드: " + String.join(", ", dealerCardNames));
+        System.out.print("딜러카드: " + String.join(JOIN_DELIMITER, dealerCardNames));
         System.out.println(" - 결과: " + dealer.calculateFinalScore());
 
         for (Player player : players.getPlayers()) {
             List<String> playerCardNames = player.getHandCards().stream().map(Card::getCardName).toList();
-            System.out.print(player.getName() + "카드: " + String.join(", ", playerCardNames));
+            System.out.print(player.getName() + "카드: " + String.join(JOIN_DELIMITER, playerCardNames));
             System.out.println(" - 결과: " + player.calculateFinalScore());
         }
     }

@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +7,8 @@ import java.util.regex.Pattern;
 import model.Player;
 
 public class InputView {
+    private static final String YES = "y";
+    private static final String NO = "n";
     private static Scanner SCANNER = new Scanner(System.in);
 
     public static List<String> readPlayerNames(){
@@ -31,14 +32,14 @@ public class InputView {
         OutputView.printHitOrStand(player);
         String hit = SCANNER.nextLine();
         validateHit(hit);
-        if (hit.equals("y")) {
+        if (hit.equals(YES)) {
             return true;
         }
         return false;
     }
 
     private static void validateHit(String hit) {
-        if (!(hit.equals("y") || hit.equals("n"))) {
+        if (!(hit.equals(YES) || hit.equals(NO))) {
             throw new IllegalArgumentException("[ERROR] y 또는 n을 입력해주세요. 입력값 : " + hit);
         }
     }

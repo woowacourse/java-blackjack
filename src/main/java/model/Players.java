@@ -16,7 +16,7 @@ public class Players {
         validateDuplication(names);
         return new Players(
                 names.stream()
-                        .map(name -> new Player(name))
+                        .map(Player::new)
                         .toList()
         );
     }

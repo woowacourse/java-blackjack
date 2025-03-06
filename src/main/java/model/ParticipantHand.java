@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipantHand {
+    private static final int BURST_SCORE_LIMIT = 21;
     private final List<Card> cards;
 
     public ParticipantHand(){
@@ -15,7 +16,7 @@ public class ParticipantHand {
     }
 
     public boolean checkBurst() {
-        return calculateScoreWithAceAsOne() > 21;
+        return calculateScoreWithAceAsOne() > BURST_SCORE_LIMIT;
     }
 
     public boolean checkScoreBelow(int upperBound) {
@@ -55,7 +56,7 @@ public class ParticipantHand {
             return false;
         }
         int maxScoreOfAce = countOfAce + 10;
-        int scoreExceptAceUpperBound = 21 - maxScoreOfAce;
+        int scoreExceptAceUpperBound = BURST_SCORE_LIMIT - maxScoreOfAce;
         //TODO : 개선생각해보기
         return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
     }

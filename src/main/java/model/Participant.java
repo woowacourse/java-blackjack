@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 public class Participant {
+    private static final int INITIAL_DEAL_CARD_COUNT = 2;
     private final ParticipantHand participantHand;
 
     public Participant() {
@@ -14,7 +15,7 @@ public class Participant {
     }
 
     public void dealInitialCards(Deck deck) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
             receiveCard(deck.pick());
         }
     }

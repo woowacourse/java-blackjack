@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParticipantWinningResult {
-    private final Map<Player, GameResult> result;//모든 player에 대해서 각자 이겼는지, 졌는지
+    private final Map<Player, GameResult> result;
 
     public static ParticipantWinningResult of(Players players, Dealer dealer) {
         /**
