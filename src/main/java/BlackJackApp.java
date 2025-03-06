@@ -5,8 +5,8 @@ import view.OutputView;
 
 public class BlackJackApp {
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
+        final InputView inputView = new InputView();
+        final OutputView outputView = new OutputView();
         BlackJackController blackJackController = new BlackJackController(inputView, outputView);
         blackJackController.run();
     }
