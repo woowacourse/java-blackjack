@@ -15,13 +15,26 @@ public class BlackjackController {
 
     public void run() {
         readyGame();
+        drawPlayersCards();
+    }
 
+    private void drawPlayersCards() {
         List<Player> allPlayers = gameManager.findAllPlayers();
         for (Player player : allPlayers) {
-            while (!player.checkExceedTwentyOne() && InputView.askForOneMoreCard(player)) {
-                Player drawnCardPlayer = gameManager.drawCard(player);
-                OutputView.printPlayerCard(drawnCardPlayer);
-            }
+            boolean answer;
+            boolean isFirstTurn = true;
+            do {
+                answer = InputView.askForOneMoreCard(player);
+                if (answer) {
+                    player = gameManager.drawCard(player);
+                }
+
+                if (isFirstTurn) {
+                    OutputView.printPlayerCard(player);
+                }
+
+                isFirstTurn = false;
+            } while (!player.checkExceedTwentyOne() && answer);
         }
     }
 
