@@ -5,7 +5,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.BlackjackResult;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +57,7 @@ public class OutputView {
         int dealerDrawCount = 0;
 
         List<String> playersName = players.getPlayersName();
-        Map<String, BlackjackResult> playerResults = new HashMap<>();
+        Map<String, BlackjackResult> playerResults = new LinkedHashMap<>();
 
         for (String name : playersName) {
             Player player = players.findByName(name);

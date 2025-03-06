@@ -64,9 +64,10 @@ public class BlackjackController {
     }
 
     private void processPlayerDecision(String name, GameManager gameManager) {
-        while (true) {
+        while (gameManager.getScoreOf(name) < 21) {
             String answer = inputView.askReceive(name);
-            if (answer.equals("n") || gameManager.getScoreOf(name) > 21) {
+            if (answer.equals("n")) {
+                outputView.printCardsByName(gameManager.getPlayerByName(name));
                 break;
             }
             gameManager.passCardToPlayer(name);
