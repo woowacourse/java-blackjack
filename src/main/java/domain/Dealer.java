@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Dealer extends Participant<Dealer>{
 
     public Dealer(Cards cards) {
-        super(cards);
+        super(new Name("딜러"), cards);
     }
 
     public boolean checkExceedSixteen() {

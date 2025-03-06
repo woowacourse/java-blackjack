@@ -4,9 +4,11 @@ import java.util.List;
 
 public abstract class Participant<T extends Participant<T>> {
 
+    protected Name name;
     protected Cards cards;
 
-    public Participant(Cards cards) {
+    public Participant(Name name, Cards cards) {
+        this.name = name;
         this.cards = cards;
     }
 

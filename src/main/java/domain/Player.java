@@ -5,11 +5,8 @@ import java.util.Objects;
 
 public class Player extends Participant<Player>{
 
-    private final Name name;
-
     public Player(Name name, Cards cards) {
-        super(cards);
-        this.name = name;
+        super(name, cards);
     }
 
     public String getName() {

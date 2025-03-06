@@ -42,7 +42,7 @@ public class GameManagerTest {
         GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
         Cards cardsOfDealer = new Cards(List.of(new Card(Symbol.SPADE, Number.KING), new Card(Symbol.CLOVER, Number.ACE)));
 
-        Dealer result = gameManager.findInitialCardsOfDealer();
+        Dealer result = gameManager.findDealer();
 
         Dealer expected = new Dealer(cardsOfDealer);
         assertThat(result).isEqualTo(expected);
@@ -53,7 +53,7 @@ public class GameManagerTest {
         GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
         Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));
 
-        Player result = gameManager.findCardsOfPlayer("drago");
+        Player result = gameManager.findPlayer("drago");
 
         Player expected = new Player(new Name("drago"), cardsOfDrago);
         assertThat(result).isEqualTo(expected);

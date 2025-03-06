@@ -18,11 +18,11 @@ public class GameManager {
         this.dealer = new Dealer(new Cards(provider.provideCards(2)));
     }
 
-    public Dealer findInitialCardsOfDealer() {
+    public Dealer findDealer() {
         return dealer;
     }
 
-    public Player findCardsOfPlayer(String name) {
+    public Player findPlayer(String name) {
         return players.findPlayer(name);
     }
 }
