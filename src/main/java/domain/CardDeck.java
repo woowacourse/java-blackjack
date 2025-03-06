@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class CardDeck {
 
-    private static final int DRAW_COUNT_WHEN_START = 2;
+    public static final int DRAW_COUNT_WHEN_START = 2;
 
     private final List<Card> deck;
 

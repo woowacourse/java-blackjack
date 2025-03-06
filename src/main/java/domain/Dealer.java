@@ -23,6 +23,10 @@ public class Dealer {
         return hand;
     }
 
+    public List<Card> getInitCard() {
+        return List.of(hand.getCards().getFirst());
+    }
+
     public Hand getHand() {
         return hand;
     }

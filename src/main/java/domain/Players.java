@@ -35,6 +35,10 @@ public class Players {
         }
     }
 
+    public void drawCardWhenStart(CardDeck cardDeck) {
+        players.forEach(player -> player.drawCardWhenStart(cardDeck));
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

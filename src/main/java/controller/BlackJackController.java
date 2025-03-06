@@ -1,5 +1,7 @@
 package controller;
 
+import domain.CardDeck;
+import domain.CardShuffler;
 import domain.Dealer;
 import domain.Players;
 import java.util.List;
@@ -19,9 +21,14 @@ public class BlackJackController {
     public void run() {
         List<String> playerNames = inputView.readPlayerNames();
         Players players = new Players(playerNames);
-
         Dealer dealer = new Dealer();
 
-        
+        CardShuffler cardShuffler = new CardShuffler();
+        CardDeck cardDeck = CardDeck.createCards(cardShuffler);
+
+        players.drawCardWhenStart(cardDeck);
+        dealer.drawCardWhenStart(cardDeck);
+
+        outputView.printInitialGame(dealer, players.getPlayers());
     }
 }

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public enum CardNumber {
 
     ACE(11),
@@ -21,6 +23,10 @@ public enum CardNumber {
 
     CardNumber(int number) {
         this.number = number;
+    }
+
+    public static List<CardNumber> getHonorCard() {
+        return List.of(ACE, JACK, QUEEN, KING);
     }
 
     public int getNumber() {

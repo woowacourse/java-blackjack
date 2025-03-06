@@ -16,6 +16,10 @@ public class Card {
         return cardNumber;
     }
 
+    public Pattern getPattern() {
+        return pattern;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
