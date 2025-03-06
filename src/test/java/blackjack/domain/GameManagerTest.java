@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameManagerTest {
 
@@ -48,5 +49,21 @@ class GameManagerTest {
         boolean result = gameManager.isPlayerBust(player);
 
         assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러의 카드가 히트면 카드를 한장 추가한다")
+    void 딜러의_카드가_히트면_카드를_한장_추가한다() {
+        // given
+        GameManager gameManager = new GameManager(blackjackShuffle);
+
+        // when
+        boolean result = gameManager.isDealerHitThenDealAddCard();
+
+        // then
+        assertAll(
+                () -> assertThat(result).isTrue(),
+                () -> assertThat(gameManager.getPlayers().getDealer().getCards().size()).isEqualTo(3)
+        );
     }
 }
