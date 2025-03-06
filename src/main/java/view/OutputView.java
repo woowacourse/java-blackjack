@@ -6,6 +6,7 @@ import model.Card;
 import model.Dealer;
 import model.GameResult;
 import model.Player;
+import model.PlayerWinningResult;
 import model.Players;
 
 public class OutputView {
@@ -55,7 +56,7 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(Map<GameResult, Integer> dealerWinning) {
+    public static void printDealerFinalResult(Map<GameResult, Integer> dealerWinning) {
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + getGameResultMessage(dealerWinning));
     }
@@ -72,5 +73,13 @@ public class OutputView {
 
     public static void printPlayerFinalResult(Player player, GameResult playerResult) {
         System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
+    }
+
+    public static void printPlayerFinalResultV2(PlayerWinningResult playerWinningResult) {
+        Map<Player, GameResult> playerResults = playerWinningResult.getResult();
+        for (Player player : playerResults.keySet()) {
+            GameResult playerResult = playerWinningResult.getResult().get(player);
+            System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
+        }
     }
 }
