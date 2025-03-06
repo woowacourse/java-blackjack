@@ -24,7 +24,7 @@ class PlayerTest {
         Cards cards = new Cards(initialCards);
 
         // when // then
-        assertDoesNotThrow(() -> new Player(cards));
+        assertDoesNotThrow(() -> new Player(new Nickname("pobi"),cards));
     }
 
     @Test
@@ -37,7 +37,7 @@ class PlayerTest {
         Cards cards = new Cards(initialCards);
 
         // when // then
-        assertThatThrownBy(() -> new Player(cards))
+        assertThatThrownBy(() -> new Player(new Nickname("pobi"),cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
     }
@@ -56,7 +56,7 @@ class PlayerTest {
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
         Card card = new Card(number3, TrumpEmblem.SPADE);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(cards);
+        Player player = new Player(new Nickname("pobi"),cards);
 
         // when
         boolean isOverBustStandard = player.addOneCard(card);
@@ -77,7 +77,7 @@ class PlayerTest {
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
         Cards cards = new Cards(initialCards);
-        Player player = new Player(cards);
+        Player player = new Player(new Nickname("pobi"),cards);
         player.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
@@ -105,7 +105,7 @@ class PlayerTest {
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
         Cards cards = new Cards(initialCards);
-        Player player = new Player(cards);
+        Player player = new Player(new Nickname("pobi"),cards);
         player.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when

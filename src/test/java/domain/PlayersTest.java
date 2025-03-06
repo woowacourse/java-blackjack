@@ -26,9 +26,9 @@ class PlayersTest {
                 List.of(new Card(TrumpNumber.KING, TrumpEmblem.HEART),
                         new Card(TrumpNumber.EIGHT, TrumpEmblem.SPADE)
                 ));
-        Player player1 = new Player(cards); // 21 승
-        Player player2 = new Player(cards2); // 16 패
-        Player player3 = new Player(cards3); // 18 무
+        Player player1 = new Player(new Nickname("pobi"),cards); // 21 승
+        Player player2 = new Player(new Nickname("pobi"),cards2); // 16 패
+        Player player3 = new Player(new Nickname("pobi"),cards3); // 18 무
         Players players = new Players(List.of(player1, player2, player3));
 
         // when

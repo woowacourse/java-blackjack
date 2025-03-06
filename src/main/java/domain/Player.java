@@ -1,15 +1,18 @@
 package domain;
 
 import domain.constant.WinDrawLose;
+import java.util.List;
 
 public class Player {
 
     public static final int BUST_STANDARD = 21;
 
-    private final Cards cards;
+    private final Nickname nickname;
+    private Cards cards;
 
-    public Player(Cards cards) {
+    public Player(Nickname nickname, Cards cards) {
         validateInitialCardsSize(cards);
+        this.nickname = nickname;
         this.cards = cards;
     }
 
@@ -45,4 +48,11 @@ public class Player {
         }
     }
 
+    public List<Card> openCards() {
+        return cards.getCards();
+    }
+
+    public String getNickname() {
+        return nickname.getValue();
+    }
 }
