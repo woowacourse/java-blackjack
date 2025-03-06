@@ -30,4 +30,12 @@ public class Players {
         gamblers.forEach(gambler ->
                 gambler.pushDealCard(cardPack, 2));
     }
+
+    public void dealAddCard(CardPack cardPack, Player player) {
+        Player gambler = gamblers.stream()
+                .filter(current -> current.equals(player))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        gambler.pushDealCard(cardPack, 1);
+    }
 }

@@ -12,14 +12,16 @@ public class GameManager {
         players = new Players();
     }
 
-    public void addGamblers(List<String> gamblerNames) {
-        List<Player> gamblers = gamblerNames.stream()
-                .map(Player::new)
-                .toList();
-        players.addGamblers(gamblers);
+    public void addGamblers(List<Player> gamblerNames) {
+        players.addGamblers(gamblerNames);
+        players.initPlayers(cardPack);
     }
 
     public Players getPlayers() {
         return players;
+    }
+
+    public void dealAddCard(Player player) {
+        players.dealAddCard(cardPack, player);
     }
 }
