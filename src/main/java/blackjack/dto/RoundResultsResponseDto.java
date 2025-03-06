@@ -27,21 +27,12 @@ public record RoundResultsResponseDto(
     ) {
 
         private static InnerGamer from(Gamer gamer) {
-            String name;
-            name = getNameOf(gamer);
             return new InnerGamer(
-                name,
+                gamer.getName(),
                 gamer.getCards().stream()
                     .map(CardDto::from)
                     .toList(),
                 gamer.getSumOfCards());
-        }
-
-        private static String getNameOf(Gamer gamer) {
-            if (gamer instanceof Player player) {
-                return player.getName();
-            }
-            return "딜러";
         }
     }
 }

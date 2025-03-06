@@ -31,14 +31,7 @@ public record FinalResultResponseDto(
         ) {
 
         public static InnerGamer from(Gamer gamer, List<Gamer> otherGamers) {
-            return new InnerGamer(getNameOf(gamer), gamer.getFinalResult(otherGamers));
-        }
-
-        private static String getNameOf(Gamer gamer) {
-            if (gamer instanceof Player player) {
-                return player.getName();
-            }
-            return "딜러";
+            return new InnerGamer(gamer.getName(), gamer.getFinalResult(otherGamers));
         }
     }
 }

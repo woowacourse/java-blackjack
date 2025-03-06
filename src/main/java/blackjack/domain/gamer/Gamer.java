@@ -11,7 +11,12 @@ import blackjack.domain.deck.Deck;
 
 public abstract class Gamer {
 
+    private final String name;
     protected final Cards cards = new Cards();
+
+    protected Gamer(String name) {
+        this.name = name;
+    }
 
     public void addCard(Card card) {
         cards.add(card);
@@ -61,4 +66,8 @@ public abstract class Gamer {
     }
 
     public abstract boolean canReceiveAdditionalCards();
+
+    public String getName() {
+        return name;
+    }
 }
