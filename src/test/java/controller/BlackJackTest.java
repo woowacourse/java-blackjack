@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Ace;
 import domain.Card;
+import domain.Dealer;
 import domain.Denomination;
 import domain.Player;
 import domain.Suit;
@@ -91,5 +92,18 @@ class BlackJackTest {
             // then
             assertThat(blackjack.resolveBust(moru)).isFalse();
         }
+    }
+
+    @Test
+    @DisplayName("딜러의 핸드 총합이 16 이하면 카드를 추가로 받는다.")
+    void test6() {
+        Dealer dealer = new Dealer();
+
+        dealer.addCard(new Card(Denomination.TWO, Suit.CLUB));
+        dealer.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
+
+        blackjack.processDealer(dealer);
+
+        assertThat(dealer.getCardCount()).isGreaterThan(2);
     }
 }
