@@ -16,10 +16,6 @@ public class Deck {
         return new Deck(strategy.generateDeck());
     }
 
-    public Stack<Card> getAll() {
-        return cards;
-    }
-
     public Card draw() {
         return cards.pop();
     }

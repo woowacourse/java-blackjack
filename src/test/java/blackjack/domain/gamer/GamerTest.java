@@ -27,8 +27,14 @@ class GamerTest {
     })
     @DisplayName("21이하인 경우 버스트되지 않는다")
     void isBustTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
+        // given
         gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
-        assertThat(gamer.isBust()).isEqualTo(expected);
+
+        // when
+        boolean actual = gamer.isBust();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -40,10 +46,16 @@ class GamerTest {
     @DisplayName("21초과인 경우 버스트된다")
     void isBustTest2(CardNumber cardNumber1, CardNumber cardNumber2,
         CardNumber cardNumber3, boolean expected) {
+        // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
         gamer.initialize(deck);
         gamer.drawCard(deck);
-        assertThat(gamer.isBust()).isEqualTo(expected);
+
+        // when
+        boolean actual = gamer.isBust();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -54,8 +66,14 @@ class GamerTest {
     })
     @DisplayName("버스트되지 않으면 Ace는 11로 계산한다")
     void getSumOfCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
+        // given
         gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
-        assertThat(gamer.getSumOfCards()).isEqualTo(expected);
+
+        // when
+        int sumOfCards = gamer.getSumOfCards();
+
+        // then
+        assertThat(sumOfCards).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -66,11 +84,16 @@ class GamerTest {
     })
     @DisplayName("버스트될 것 같으면 Ace는 1로 계산한다")
     void getSumOfCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, int expected) {
+        // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
         gamer.initialize(deck);
         gamer.drawCard(deck);
 
-        assertThat(gamer.getSumOfCards()).isEqualTo(expected);
+        // when
+        int sumOfCards = gamer.getSumOfCards();
+
+        // then
+        assertThat(sumOfCards).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -81,13 +104,20 @@ class GamerTest {
     })
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
+        // given
         gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
-        assertThat(gamer .isBlackjack()).isEqualTo(expected);
+
+        // when
+        boolean actual = gamer.isBlackjack();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("최종 승패를 계산한다")
     void getFinalResultTest() {
+        // given
         Gamer dealer = new Dealer();
         Player a = new Player("aa");
         Player b = new Player("bb");
@@ -99,7 +129,11 @@ class GamerTest {
         c.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE));
 
         List<Gamer> players = List.of(a, b, c);
+
+        // when
         Map<RoundResult, Integer> finalResult = dealer.getFinalResult(players);
+
+        // then
         assertThat(finalResult.getOrDefault(RoundResult.WIN, 0)).isEqualTo(2);
         assertThat(finalResult.getOrDefault(RoundResult.LOSE, 0)).isEqualTo(1);
         assertThat(finalResult.getOrDefault(RoundResult.TIE, 0)).isEqualTo(0);

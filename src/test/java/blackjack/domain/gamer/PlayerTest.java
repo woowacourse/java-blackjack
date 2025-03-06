@@ -19,7 +19,13 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어는 카드 두 장을 지급 받는다")
     void playerGetCardsTest() {
-        player.initialize(Deck.generateFrom(new RandomCardStrategy()));
+        // given
+        Deck deck = Deck.generateFrom(new RandomCardStrategy());
+
+        // when
+        player.initialize(deck);
+
+        // then
         assertThat(player.getCards()).hasSize(2);
     }
 
@@ -32,11 +38,16 @@ class PlayerTest {
     @DisplayName("버스트되었을 경우 카드를 추가로 지급받을 수 없다")
     void canReceiveAdditionalCards1(CardNumber cardNumber1, CardNumber cardNumber2,
         CardNumber cardNumber3, boolean expected) {
+        // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
         player.initialize(deck);
         player.drawCard(deck);
 
-        assertThat(player.canReceiveAdditionalCards()).isEqualTo(expected);
+        // when
+        boolean actual = player.canReceiveAdditionalCards();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -47,7 +58,13 @@ class PlayerTest {
     })
     @DisplayName("버스트되지 않았을 경우 카드를 추가로 지급받을 수 있다")
     void canReceiveAdditionalCards2(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
+        // given
         player.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
-        assertThat(player.canReceiveAdditionalCards()).isEqualTo(expected);
+
+        // when
+        boolean actual = player.canReceiveAdditionalCards();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

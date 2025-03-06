@@ -18,8 +18,10 @@ class CardsTest {
     })
     @DisplayName("카드 숫자 합을 계산한다")
     void sumTest(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
+        // when
         Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2);
 
+        // then
         assertThat(cards.sum()).isEqualTo(expected);
     }
 
@@ -31,8 +33,10 @@ class CardsTest {
     })
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
+        // when
         Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2);
 
+        // then
         assertThat(cards.isBlackjack()).isEqualTo(expected);
     }
 
@@ -44,8 +48,10 @@ class CardsTest {
     })
     @DisplayName("버스트 여부를 확인한다")
     void isBustTest(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, boolean expected) {
+        // when
         Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2, cardNumber3);
 
+        // then
         assertThat(cards.isBust()).isEqualTo(expected);
     }
 }
