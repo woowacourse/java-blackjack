@@ -63,7 +63,9 @@ public class BlackjackController {
 
     private List<Player> inputPlayers() {
         final List<String> playerNames = inputView.readPlayerNames();
-        return playerNames.stream().map(Player::new).collect(Collectors.toList());
+        return playerNames.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
     private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
@@ -77,7 +79,9 @@ public class BlackjackController {
     }
 
     private void outputHandOut(final List<Player> players, final Dealer dealer) {
-        final List<String> names = players.stream().map(Player::getName).collect(Collectors.toList());
+        final List<String> names = players.stream()
+            .map(Player::getName)
+            .collect(Collectors.toList());
         outputView.printHandOutIntroduce(names);
 
         final Participant dealerParticipant = dealer.getParticipant();

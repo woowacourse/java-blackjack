@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 
@@ -26,7 +27,8 @@ public class Deck {
     }
 
     private void validateDuplicateCard(final Queue<Card> deck) {
-        if (deck.stream().distinct().count() != deck.size()) {
+        HashSet<Card> notDuplicateCards = new HashSet<>(deck);
+        if (deck.size() != notDuplicateCards.size()) {
             throw new IllegalArgumentException("덱에는 중복된 카드가 들어올 수 없습니다!");
         }
     }
