@@ -41,7 +41,7 @@ public class GameManager {
     }
 
 
-    public boolean isHitting(Player player) {
-        return false;
+    public boolean isAbleToHit(Player player) {
+        return !player.isBust();
     }
 }

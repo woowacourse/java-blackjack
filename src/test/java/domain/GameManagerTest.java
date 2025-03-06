@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.CardGroup;
-import domain.card.CardType;
 import domain.card.RandomCardGenerator;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class GameManagerTest {
         final Player player = new Player("윌슨",cardGroup);
         final GameManager gameManager = GameManager.create(new RandomCardGenerator(), playerNames);
 
-        boolean isHitting = gameManager.isHitting(player);
+        boolean isHitting = gameManager.isAbleToHit(player);
 
         assertThat(isHitting).isTrue();
     }

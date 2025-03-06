@@ -17,9 +17,9 @@ public abstract class Gamer {
         return cardGroup.addCard(card);
     }
 
-//    public boolean isBust() {
-//        return this.cardGroup.calculateScore(LIMIT) > LIMIT;
-//    }
+    public boolean isBust() {
+        return this.cardGroup.calculateScore(LIMIT) > LIMIT;
+    }
 
     public GameResult calculateGameResult(final int compareScore) {
         return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
