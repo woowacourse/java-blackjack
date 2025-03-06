@@ -30,10 +30,14 @@ public class GameManager {
         return players.findPlayer(name);
     }
 
-    public Player drawCard(Player player) {
-        Player newPlayer = player.drawCard(provider.provideCards(1));
-        players = players.editPlayer(player, newPlayer);
-        return newPlayer;
+    public Participant<?> drawCard(Participant<?> participant) {
+        if (participant instanceof Player player) {
+            Player newPlayer = player.drawCard(provider.provideCards(1));
+            players = players.editPlayer(player, newPlayer);
+            return newPlayer;
+        }
+        dealer = (Dealer) participant;
+        return dealer.drawCard(provider.provideCards(1));
     }
 
 }

@@ -19,6 +19,10 @@ public class OutputView {
         printAllPlayerCards(allPlayers);
     }
 
+    public static void printDealerDrawMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
     private static void printAllPlayerCards(List<Player> allPlayers) {
         for (Player player : allPlayers) {
             System.out.printf("%s카드: %s%n", player.getName(), convertCardsToMessage(player.getCards()));

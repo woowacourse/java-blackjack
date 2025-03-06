@@ -16,6 +16,16 @@ public class BlackjackController {
     public void run() {
         readyGame();
         drawPlayersCards();
+        drawDealerCards();
+    }
+
+    private void readyGame() {
+        List<String> playerNames = InputView.readPlayerNames();
+        this.gameManager = new GameManager(playerNames, new Deck());
+
+        Dealer dealer = gameManager.findDealer();
+        List<Player> allPlayers = gameManager.findAllPlayers();
+        OutputView.printInitialParticipant(dealer, allPlayers);
     }
 
     private void drawPlayersCards() {
@@ -26,7 +36,7 @@ public class BlackjackController {
             do {
                 answer = InputView.askForOneMoreCard(player);
                 if (answer) {
-                    player = gameManager.drawCard(player);
+                    player = (Player) gameManager.drawCard(player);
                 }
 
                 if (isFirstTurn) {
@@ -38,12 +48,12 @@ public class BlackjackController {
         }
     }
 
-    private void readyGame() {
-        List<String> playerNames = InputView.readPlayerNames();
-        this.gameManager = new GameManager(playerNames, new Deck());
-
+    private void drawDealerCards() {
         Dealer dealer = gameManager.findDealer();
-        List<Player> allPlayers = gameManager.findAllPlayers();
-        OutputView.printInitialParticipant(dealer, allPlayers);
+        while (!dealer.checkExceedSixteen()) {
+            dealer = (Dealer) gameManager.drawCard(dealer);
+            OutputView.printDealerDrawMessage();
+        }
+        System.out.println(dealer.getCards());
     }
 }
