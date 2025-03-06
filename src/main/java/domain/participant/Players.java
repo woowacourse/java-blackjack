@@ -5,7 +5,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 public class Players {
-    private static final int BLACKJACK_NUMBER = 21;
+
     private final List<Player> players;
 
     public static Players from(List<String> names){
@@ -24,18 +24,16 @@ public class Players {
         players.forEach(player -> player.hitCards(dealer));
     }
 
-    public void draw(BooleanSupplier answer, Consumer<Player> playerDeck, Dealer dealer){
+    public void draw(BooleanSupplier answer, Consumer<Player> playerDeck, Dealer dealer) {
         for (Player player : players) {
             while (answer.getAsBoolean()) {
-                player.hitCard(dealer);
+                player.addCard(dealer);
                 playerDeck.accept(player);
-                if(player.sum() > BLACKJACK_NUMBER)break;
+                    if(player.isBust()) {
+                        break;
+                    }
             }
         }
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 
     private static void validatePlayerNumbers(List<String> names) {

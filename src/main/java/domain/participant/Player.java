@@ -1,12 +1,13 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.CardDeck;
 import java.util.ArrayList;
 
 public class Player {
-    String name;
-    CardDeck cardDeck;
+    private static final int BLACKJACK_NUMBER = 21;
+
+    private final String name;
+    private final CardDeck cardDeck;
 
     public Player(String name) {
         this.cardDeck = new CardDeck(new ArrayList<>());
@@ -19,7 +20,7 @@ public class Player {
         }
     }
 
-    public void hitCard(Dealer dealer) {
+    public void addCard(Dealer dealer) {
         cardDeck.addCard(dealer.hitCard());
     }
 
@@ -29,5 +30,9 @@ public class Player {
 
     public CardDeck getCardDeck() {
         return cardDeck;
+    }
+
+    public boolean isBust() {
+        return sum() > BLACKJACK_NUMBER;
     }
 }
