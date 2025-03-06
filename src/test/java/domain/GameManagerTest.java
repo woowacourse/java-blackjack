@@ -50,17 +50,6 @@ public class GameManagerTest {
     }
 
     @Test
-    void 플레이어_카드_정보를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
-        Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));
-
-        Player result = gameManager.findPlayer("drago");
-
-        Player expected = new Player(new Name("drago"), cardsOfDrago);
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
     void 플레이어가_카드를뽑으면_새로운플레이어를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago"), new TestCardProvider());
         Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));

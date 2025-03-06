@@ -34,19 +34,6 @@ public class PlayersTest {
     }
 
     @Test
-    void 이름으로_플레이어를_찾는다() {
-        String drago = "drago";
-
-        Cards cards = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.FOUR)));
-        Players players = new Players(List.of(new Player(new Name(drago), cards)));
-
-        Player player = players.findPlayer(drago);
-
-        Player expected = new Player(new Name(drago), cards);
-        assertThat(player).isEqualTo(expected);
-    }
-
-    @Test
     void 플레이어를_새로운_플레이어로_교체한다() {
         Cards cards = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.FOUR)));
         Player player = new Player(new Name("drago"), cards);

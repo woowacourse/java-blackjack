@@ -30,10 +30,6 @@ public class GameManager {
         return players.findAllPlayers();
     }
 
-    public Player findPlayer(String name) {
-        return players.findPlayer(name);
-    }
-
     public Participant<?> drawCard(Participant<?> participant) {
         if (participant instanceof Player player) {
             Player newPlayer = player.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));

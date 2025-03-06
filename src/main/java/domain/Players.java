@@ -24,13 +24,6 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public Player findPlayer(String name) {
-        return players.stream()
-            .filter(player -> player.getName().equals(name))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어의 이름입니다."));
-    }
-
     public Players editPlayer(Player player, Player newPlayer) {
         List<Player> newPlayers = new ArrayList<>(players);
         int index = newPlayers.indexOf(player);
