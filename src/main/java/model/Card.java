@@ -16,4 +16,8 @@ public class Card {
     public CardRank getCardRank() {
         return cardRank;
     }
+
+    public String getCardName() {
+        return cardRank.getName() + cardSuit.getShapeMeaning();
+    }
 }

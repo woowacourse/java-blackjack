@@ -15,12 +15,16 @@ public enum CardRank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private String cardName;
+    private String name;
     private int value;
 
     CardRank(String cardName, int value) {
-        this.cardName = cardName;
+        this.name = cardName;
         this.value = value;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getValue() {

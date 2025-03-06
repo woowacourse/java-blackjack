@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -24,6 +23,12 @@ public class Player {
         return participantHand;
     }
 
+    public void dealInitialCards(Deck deck) {
+        for (int i = 0; i < 2; i++) {
+            receiveCard(deck.pick());
+        }
+    }
+
     public GameResult decideWinning(Dealer dealer) {
         int dealerScore = dealer.getParticipantHand().calculateFinalScore();
         int playerScore = participantHand.calculateFinalScore();
@@ -35,5 +40,9 @@ public class Player {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,4 +28,13 @@ public class Players {
         }
     }
 
+    public void startDeal(Deck deck) {
+        for (Player player : players) {
+            player.dealInitialCards(deck);
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import model.Player;
 
 public class InputView {
     private static Scanner SCANNER = new Scanner(System.in);
@@ -26,7 +27,8 @@ public class InputView {
         }
     }
 
-    public static boolean readHit() {
+    public static boolean readHit(Player player) {
+        OutputView.printHitOrStand(player);
         String hit = SCANNER.nextLine();
         validateHit(hit);
         if (hit.equals("y")) {

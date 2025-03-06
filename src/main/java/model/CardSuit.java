@@ -11,4 +11,8 @@ public enum CardSuit {
     CardSuit(String shapeMeaning) {
         this.shapeMeaning = shapeMeaning;
     }
+
+    public String getShapeMeaning() {
+        return shapeMeaning;
+    }
 }

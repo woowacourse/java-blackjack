@@ -24,6 +24,10 @@ public class ParticipantHand {
         cards.add(card);
     }
 
+    public Card getFirstHand(){
+        return cards.getFirst();
+    }
+
     public List<Card> getCards() {
         return cards;
     }

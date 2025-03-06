@@ -31,6 +31,4 @@ public class Deck {
         deck.remove(card);
         return card;
     }
-
-
 }
