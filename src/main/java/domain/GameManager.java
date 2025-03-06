@@ -41,8 +41,8 @@ public class GameManager {
         return players.stream().map(Player::new).toList();
     }
 
-    public void giveCardToPlayer(final Player player) {
-        player.receiveCard();
+    public void giveCardToGamer(final Gamer gamer) {
+        gamer.receiveCard();
     }
 
     public GameResult calculateResult(final int index) {
