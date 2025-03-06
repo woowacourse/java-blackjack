@@ -9,4 +9,9 @@ public class Player extends Gamer{
         super(cardGroup);
         this.name = name;
     }
+
+    public Player(Player player){
+        super(player.cardGroup);
+        this.name = player.name;
+    }
 }
