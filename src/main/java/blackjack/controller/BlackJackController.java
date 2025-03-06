@@ -45,6 +45,7 @@ public class BlackJackController {
 
     private void inputMoreCard(Participant participant) {
         String command = inputView.inputCallOrStay(participant.getName());
+        validateCommand(command);
         if (command.equals("y")) {
             participant.putCard(deck.drawCard());
             outputView.printPlayerCardStatus(participant.getName(), participant);
@@ -53,6 +54,12 @@ public class BlackJackController {
                 return;
             }
             inputMoreCard(participant);
+        }
+    }
+
+    private void validateCommand(String command) {
+        if (!(command.equals("y") || command.equals("n"))) {
+            throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
         }
     }
 
