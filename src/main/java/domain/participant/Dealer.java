@@ -20,5 +20,8 @@ public class Dealer {
     public void addCards() {
         hand.addCard(hitCard());
     }
+    public int sum() {
+        return hand.sum();
+    }
 }
 
