@@ -50,4 +50,30 @@ class ParticipantTest {
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.WIN);
     }
+
+    @DisplayName("참가자가 burst인 경우에는 패배로 판단한다.")
+    @Test
+    void burst_패배_판단() {
+        //given
+        List<Card> cardList = List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.A, CardShape.CLOVER),
+                new Card(CardNumber.QUEEN, CardShape.DIAMOND)
+        );
+        Cards cards = Cards.of(cardList);
+        Participant burstLoser = new Participant(cards);
+
+        List<Card> cardList2 = List.of(
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Cards cards2 = Cards.of(cardList2);
+        Participant winner = new Participant(cards2);
+
+        //when
+        GameResult result = burstLoser.calculateGameResult(winner);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
+    }
 }
