@@ -1,5 +1,7 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,6 +21,17 @@ class CardTest {
 
         // when & then
         Assertions.assertThat(card.getScore()).isEqualTo(expected);
+    }
 
+    @DisplayName("카드가 에이스면 true 아니면 false를 반환한다")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "ACE, SPADE, true", "THREE, SPADE, false", "JACK, SPADE, false"
+    })
+    void 카드가_예이스면_true_아니면_false를_반환한다(Rank rank, Shape shape, boolean expected) {
+
+        // given
+        // when & then
+        assertThat(new Card(rank, shape).isAce()).isEqualTo(expected);
     }
 }
