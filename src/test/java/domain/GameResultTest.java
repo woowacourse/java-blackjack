@@ -27,7 +27,8 @@ class GameResultTest {
         // given
         CardHand dealerCardHand = new CardHand(dealerCards);
         CardHand playerCardHand = new CardHand(playerCards);
-        Dealer dealer = new Dealer(dealerCardHand);
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer(deck, dealerCardHand);
         Player player = new Player("pobi", playerCardHand);
         // when
         GameResult gameResult = GameResult.calculateDealerGameResult(dealer, player);

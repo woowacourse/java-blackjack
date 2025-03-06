@@ -2,11 +2,9 @@ package domain;
 
 import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Set;
 
-public class Dealer {
-    private final CardHand cardHand; // TODO 공통 로직으로 이동
+public class Dealer extends GameParticipant {
     private final EnumMap<GameResult, Integer> gameResult = new EnumMap<>(GameResult.class);
     private final Deck deck;
 
@@ -15,14 +13,9 @@ public class Dealer {
                 .forEach(result -> gameResult.put(result, 0));
     }
 
-    public Dealer() {
-        deck = new Deck();
-        cardHand = getInitialDeal();
-    }
-
-    public Dealer(CardHand cardHand) { // TODO 리팩터링
-        this.cardHand = cardHand;
-        this.deck = new Deck();
+    public Dealer(Deck deck, CardHand cardHand) {
+        super("딜러", cardHand);
+        this.deck = deck;
     }
 
     public CardHand getInitialDeal() {
@@ -31,18 +24,6 @@ public class Dealer {
         Card secondCard = deck.random(new RandomNumberGenerator());
         cardHand = new CardHand(Set.of(firstCard, secondCard));
         return cardHand;
-    }
-
-    public int calculateScore() {
-        return cardHand.calculateScore();
-    }
-
-    public boolean isBust() {
-        return cardHand.isBust();
-    }
-
-    public boolean isBlackJack() {
-        return cardHand.isBlackJack();
     }
 
     public boolean doesDealerNeedCard() {
@@ -57,15 +38,7 @@ public class Dealer {
         return gameResult.get(result);
     }
 
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
-
     public Card pickCard() {
         return deck.random(new RandomNumberGenerator());
-    }
-
-    public void hit(Card newCard) {
-        cardHand.add(newCard);
     }
 }

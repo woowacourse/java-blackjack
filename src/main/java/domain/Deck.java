@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Deck {
     private final List<Card> deck = new ArrayList<>();
@@ -22,5 +23,13 @@ public class Deck {
         Card card = deck.get(index);
         deck.remove(index);
         return card;
+    }
+
+    public CardHand getInitialDeal() {
+        final CardHand cardHand;
+        Card firstCard = random(new RandomNumberGenerator());
+        Card secondCard = random(new RandomNumberGenerator());
+        cardHand = new CardHand(Set.of(firstCard, secondCard));
+        return cardHand;
     }
 }

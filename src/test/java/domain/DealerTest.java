@@ -18,13 +18,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
+    private final Deck deck = new Deck();
+
     @Test
     @DisplayName("자기 점수를 계산한다.")
     void testCalculateScore() {
         // given
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TWO, HEART), CardFixture.of(THREE, DIAMOND), CardFixture.of(FOUR, CLOVER)));
-        Dealer dealer = new Dealer(cardHand);
+        Dealer dealer = new Dealer(deck, cardHand);
         // when
         int score = dealer.calculateScore();
         // then
@@ -37,7 +39,7 @@ class DealerTest {
         // given
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(NINE, DIAMOND), CardFixture.of(TWO, CLOVER)));
-        Dealer dealer = new Dealer(cardHand);
+        Dealer dealer = new Dealer(deck, cardHand);
         // when & then
         assertThat(dealer.isBust()).isFalse();
     }
@@ -48,7 +50,7 @@ class DealerTest {
         // given
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND)));
-        Dealer dealer = new Dealer(cardHand);
+        Dealer dealer = new Dealer(deck, cardHand);
         // when & then
         assertThat(dealer.isBlackJack()).isTrue();
     }
@@ -59,7 +61,7 @@ class DealerTest {
         // given
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(SIX, DIAMOND)));
-        Dealer dealer = new Dealer(cardHand);
+        Dealer dealer = new Dealer(deck, cardHand);
         // when & then
         assertThat(dealer.doesDealerNeedCard()).isTrue();
     }
@@ -69,7 +71,7 @@ class DealerTest {
     void testRecordGameResult() {
         // given
         CardHand cardHand = new CardHand(Set.of(CardFixture.of(TEN, HEART)));
-        Dealer dealer = new Dealer(cardHand);
+        Dealer dealer = new Dealer(deck, cardHand);
         // when
         dealer.recordGameResult(GameResult.WIN);
         // then

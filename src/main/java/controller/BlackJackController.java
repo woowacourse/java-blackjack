@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Deck;
 import domain.Game;
 import domain.Player;
 import java.util.List;
@@ -11,6 +12,7 @@ import view.OutputView;
 public class BlackJackController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
+    private final Deck deck = new Deck();
 
     public void run() {
         Game game = retryUntilSuccess(this::startGame);
@@ -23,7 +25,7 @@ public class BlackJackController {
 
     public Game startGame() {
         List<String> playerNames = inputView.readPlayerNames();
-        return new Game(playerNames);
+        return new Game(playerNames, deck);
     }
 
     private void giveAdditionalCards(Game game) {
@@ -59,7 +61,7 @@ public class BlackJackController {
             if (answer == Answer.YES) {
                 game.hit(player);
             }
-            outputView.displayPlayerAndCards(player);
+            outputView.displayParticipantAndCards(player);
             outputView.displayEmptyLine();
         } while (answer == Answer.YES);
     }

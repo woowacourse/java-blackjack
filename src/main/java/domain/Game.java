@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,8 @@ public class Game {
     private final Map<Player, GameResult> players = new LinkedHashMap<>();
     private final Dealer dealer;
 
-    public Game(List<String> playerNames) {
-        dealer = new Dealer();
+    public Game(List<String> playerNames, Deck deck) {
+        dealer = new Dealer(deck, deck.getInitialDeal());
         validatePlayerCount(playerNames);
         validateDuplicateName(playerNames);
         playerNames.forEach(this::registerPlayer);
@@ -28,6 +29,18 @@ public class Game {
 
     public List<Player> getPlayers() {
         return List.copyOf(players.keySet());
+    }
+
+    public List<GameParticipant> getParticipants() {
+        List<GameParticipant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players.keySet());
+        return participants;
+    }
+
+
+    public Dealer getDealer() {
+        return dealer;
     }
 
     public int getDealerScore() {
