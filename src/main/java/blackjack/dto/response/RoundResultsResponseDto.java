@@ -4,7 +4,7 @@ import java.util.List;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import blackjack.dto.CardDto;
 
 public record RoundResultsResponseDto(
@@ -12,10 +12,10 @@ public record RoundResultsResponseDto(
     List<InnerGamer> players
 ) {
 
-    public static RoundResultsResponseDto of(Dealer dealer, List<Player> players) {
+    public static RoundResultsResponseDto of(Dealer dealer, Players players) {
         return new RoundResultsResponseDto(
             InnerGamer.from(dealer),
-            players.stream()
+            players.getPlayers().stream()
                 .map(InnerGamer::from)
                 .toList()
         );
