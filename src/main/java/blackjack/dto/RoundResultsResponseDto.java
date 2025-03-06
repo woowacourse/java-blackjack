@@ -20,6 +20,7 @@ public record RoundResultsResponseDto(
         );
     }
 
+    // TODO: name, cards -> GamerDto로 분리할지 고민해보기
     public record InnerGamer(
         String name,
         List<CardDto> cards,

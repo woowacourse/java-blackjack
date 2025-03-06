@@ -8,6 +8,7 @@ import blackjack.domain.RoundResult;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.util.ListMerger;
 
 public record FinalResultResponseDto(
     List<InnerGamer> gamers
@@ -19,10 +20,7 @@ public record FinalResultResponseDto(
         List<InnerGamer> convertedPlayers = players.stream()
             .map(player -> InnerGamer.from(player, List.of(dealer)))
             .toList();
-        List<InnerGamer> result = new ArrayList<>();
-        result.add(convertedDealer);
-        result.addAll(convertedPlayers);
-        return new FinalResultResponseDto(result);
+        return new FinalResultResponseDto(ListMerger.combine(convertedDealer, convertedPlayers));
     }
 
     public record InnerGamer(

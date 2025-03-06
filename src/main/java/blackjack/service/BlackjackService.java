@@ -7,8 +7,8 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.dto.CurrentPlayerResponseDto;
 import blackjack.dto.FinalResultResponseDto;
+import blackjack.dto.GamerDto;
 import blackjack.dto.NamesRequestDto;
 import blackjack.dto.RoundResultsResponseDto;
 import blackjack.dto.StartingCardsResponseDto;
@@ -49,8 +49,8 @@ public class BlackjackService {
         currentPlayer.drawCard(deck);
     }
 
-    public CurrentPlayerResponseDto getNowPlayerCards() {
-        return CurrentPlayerResponseDto.from(players.get(playerCursor));
+    public GamerDto getNowPlayerCards() {
+        return GamerDto.from(players.get(playerCursor));
     }
 
     public boolean hasNextPlayer() {

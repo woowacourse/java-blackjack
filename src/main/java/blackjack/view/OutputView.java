@@ -3,8 +3,8 @@ package blackjack.view;
 import java.util.stream.Collectors;
 
 import blackjack.dto.CardDto;
-import blackjack.dto.CurrentPlayerResponseDto;
 import blackjack.dto.FinalResultResponseDto;
+import blackjack.dto.GamerDto;
 import blackjack.dto.RoundResultsResponseDto;
 import blackjack.dto.StartingCardsResponseDto;
 
@@ -15,7 +15,7 @@ public class OutputView {
     public static void printStartingCards(StartingCardsResponseDto responseDto) {
         String dealerName = responseDto.dealer().name();
         String playerNames = responseDto.players().stream()
-            .map(StartingCardsResponseDto.InnerGamer::name)
+            .map(GamerDto::name)
             .collect(Collectors.joining(", "));
         int cardCount = responseDto.startingCardsSize();
 
@@ -34,7 +34,7 @@ public class OutputView {
         }
     }
 
-    public static void printAdditionalCard(CurrentPlayerResponseDto responseDto) {
+    public static void printAdditionalCard(GamerDto responseDto) {
         System.out.println(String.format("%s카드 : %s",
             responseDto.name(),
             responseDto.cards().stream()
