@@ -3,6 +3,7 @@ package controller;
 import domain.Game;
 import domain.Player;
 import java.util.List;
+import java.util.function.Supplier;
 import view.Answer;
 import view.InputView;
 import view.OutputView;
@@ -12,9 +13,9 @@ public class BlackJackController {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        Game game = startGame();
+        Game game = retryUntilSuccess(this::startGame);
         outputView.displayInitialDeal(game);
-        giveAdditionalCards(game);
+        retryUntilSuccess(() -> giveAdditionalCards(game));
         giveAdditionalCardsForDealer(game);
         displayScores(game);
         displayGameResult(game);
@@ -61,5 +62,23 @@ public class BlackJackController {
             outputView.displayPlayerAndCards(player);
             outputView.displayEmptyLine();
         } while (answer == Answer.YES);
+    }
+
+    private void retryUntilSuccess(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (IllegalArgumentException e) {
+            System.out.printf("%s%n", e.getMessage());
+            retryUntilSuccess(runnable);
+        }
+    }
+
+    private Game retryUntilSuccess(Supplier<Game> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            System.out.printf("%s%n", e.getMessage());
+            return retryUntilSuccess(supplier);
+        }
     }
 }
