@@ -16,4 +16,11 @@ class GamerGeneratorTest {
 
         assertThat(playerList).hasSize(2);
     }
+
+    @Test
+    void 딜러_생성_테스트(){
+        Dealer dealer = GamerGenerator.generateDealer(new RandomCardGenerator());
+
+        assertThat(dealer).isInstanceOf(Dealer.class);
+    }
 }
