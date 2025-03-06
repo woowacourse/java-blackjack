@@ -2,8 +2,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Card;
 import domain.Cards;
-import domain.TrumpEmblem;
-import domain.TrumpNumber;
+import domain.constant.TrumpEmblem;
+import domain.constant.TrumpNumber;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class CardTest {
         Cards cards = new Cards(emptyCards);
 
         // when
-        int sum = cards.calculateTotalSum();
+        int sum = cards.sumCardNumbers();
 
         // then
         assertThat(sum).isEqualTo(20);
