@@ -29,7 +29,7 @@ public class BlackjackController {
 		final Dealer dealer = new Dealer();
 		final Deck deck = Deck.createShuffledDeck();
 		handOutCards(players, dealer, deck);
-
+		playerPickCard(players, deck);
 	}
 
 	private List<Player> inputPlayers() {
@@ -87,6 +87,26 @@ public class BlackjackController {
 		return dealerParticipant.getHand().hand().stream()
 			.map(this::getConvertedCardText)
 			.toList();
+	}
+
+	private void playerPickCard(final List<Player> players, final Deck deck) {
+		for (final Player p : players) {
+			boolean isDone = false;
+
+			while (!isDone) {
+				isDone = true;
+
+				if (p.isPickCard()) {
+					final String name = p.getName();
+					if (inputView.readPlayerAnswer(name)) {
+						isDone = false;
+						p.pickCard(deck);
+						outputView.printPlayerCards(name, getConvertedPlayerCardText(p.getParticipant()));
+					}
+				}
+			}
+
+		}
 
 	}
 }
