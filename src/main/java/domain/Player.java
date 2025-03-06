@@ -6,6 +6,7 @@ import java.util.List;
 public class Player {
 
     public static final int BUST_STANDARD = 21;
+    public static final int INITIAL_CARD_COUNT = 2;
 
     private final Nickname nickname;
     private Cards cards;
@@ -43,7 +44,7 @@ public class Player {
     }
 
     private void validateInitialCardsSize(Cards cards) {
-        if (cards.getSize() != 2) {
+        if (cards.getSize() != INITIAL_CARD_COUNT) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
         }
     }

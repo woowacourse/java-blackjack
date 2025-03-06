@@ -2,6 +2,8 @@ package domain;
 
 public class Nickname {
 
+    public static final int NAME_LENGTH_LIMIT = 10;
+
     private final String nickname;
 
     public Nickname(String nickname) {
