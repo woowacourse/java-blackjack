@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
-import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.BlackjackDeck;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -39,7 +39,7 @@ public class BlackjackJudgeTest {
     @Test
     void 블랙잭심판은_딜러의_손패와_플레이들의_손패들로_생성된다() {
         // given
-        final Deck deck = new Deck();
+        final BlackjackDeck deck = new BlackjackDeck();
         final Player dompoo = new Player("dompoo");
         final Player may = new Player("may");
         List<PlayerBlackjackCardHand> playerHands = List.of(new PlayerBlackjackCardHand(dompoo, deck), new PlayerBlackjackCardHand(may, deck));

@@ -3,21 +3,21 @@ package blackjack.domain.card_hand;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.deck.CardHandInitializer;
+import blackjack.domain.deck.BlackjackCardHandInitializer;
 import blackjack.domain.Player;
 
-public final class PlayerBlackjackCardHand implements BlackjackWinDeterminer {
+public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     
     private final BlackjackCardHand cardHand;
     private final Player player;
     
-    public PlayerBlackjackCardHand(final Player player, final CardHandInitializer initializer) {
+    public PlayerBlackjackCardHand(final Player player, final BlackjackCardHandInitializer initializer) {
         validateNotNull(player, initializer);
         this.cardHand = new BlackjackCardHand(initializer);
         this.player = player;
     }
     
-    private void validateNotNull(final Player player, final CardHandInitializer initializer) {
+    private void validateNotNull(final Player player, final BlackjackCardHandInitializer initializer) {
         if (player == null) {
             throw new IllegalArgumentException("플레이어는 null이 될 수 없습니다.");
         }

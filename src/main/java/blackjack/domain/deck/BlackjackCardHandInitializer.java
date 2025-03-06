@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 @FunctionalInterface
-public interface CardHandInitializer {
+public interface BlackjackCardHandInitializer {
     
-    List<Card> init();
+    List<Card> handoutInitialCards();
 }

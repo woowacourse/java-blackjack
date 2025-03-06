@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
-import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.BlackjackDeck;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 손패를_가진_플레이어의_이름을_확인할_수_있다() {
         // given
-        final PlayerBlackjackCardHand PlayerBlackjackCardHand = new PlayerBlackjackCardHand(new Player("may"), new Deck());
+        final PlayerBlackjackCardHand PlayerBlackjackCardHand = new PlayerBlackjackCardHand(new Player("may"), new BlackjackDeck());
 
         // expected
         Assertions.assertThat(PlayerBlackjackCardHand.getPlayerName()).isEqualTo("may");
@@ -51,7 +51,7 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 카드를_2개_받고_시작한다() {
         // given
-        final PlayerBlackjackCardHand PlayerBlackjackCardHand = new PlayerBlackjackCardHand(DEFAULT_PLAYER, new Deck());
+        final PlayerBlackjackCardHand PlayerBlackjackCardHand = new PlayerBlackjackCardHand(DEFAULT_PLAYER, new BlackjackDeck());
 
         // expected
         assertThat(PlayerBlackjackCardHand.getCards().size()).isEqualTo(2);

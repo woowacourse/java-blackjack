@@ -20,7 +20,7 @@ class WinningStatusTest {
         looser.addCard(HEART_9);
         looser.addCard(HEART_1);
         
-        assertThat(WinningStatus.getWinningStatus(winner, looser)).isEqualTo(WinningStatus.승리);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.승리);
     }
     
     @Test
@@ -34,7 +34,7 @@ class WinningStatusTest {
         looser.addCard(DIAMOND_9);
         looser.addCard(HEART_1);
         
-        assertThat(WinningStatus.getWinningStatus(winner, looser)).isEqualTo(WinningStatus.패배);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.패배);
     }
     
     @Test
@@ -49,7 +49,7 @@ class WinningStatusTest {
         looser.addCard(HEART_8);
         looser.addCard(HEART_7);
         
-        assertThat(WinningStatus.getWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
     }
     
     @Test
@@ -63,7 +63,7 @@ class WinningStatusTest {
         looser.addCard(HEART_9);
         looser.addCard(HEART_3);
         
-        assertThat(WinningStatus.getWinningStatus(winner, looser)).isEqualTo(WinningStatus.승리);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.승리);
     }
     
     @Test
@@ -76,7 +76,7 @@ class WinningStatusTest {
         looser.addCard(HEART_10);
         looser.addCard(HEART_1);
         
-        assertThat(WinningStatus.getWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
     }
     
     @Test
@@ -91,7 +91,7 @@ class WinningStatusTest {
         looser.addCard(HEART_5);
         looser.addCard(HEART_1);
         
-        assertThat(WinningStatus.getWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
     }
     
 }

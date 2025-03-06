@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card_hand.BlackjackWinDeterminer;
+import blackjack.domain.card_hand.BlackjackWinDeterminable;
 
 public enum WinningStatus {
     승리,
@@ -10,9 +10,9 @@ public enum WinningStatus {
     
     private static final int BURST_THRESHOLD = 21;
     
-    public static WinningStatus getWinningStatus(
-            final BlackjackWinDeterminer myHand,
-            final BlackjackWinDeterminer opponentHand
+    public static WinningStatus determineWinningStatus(
+            final BlackjackWinDeterminable myHand,
+            final BlackjackWinDeterminable opponentHand
     ) {
         if (isBurst(myHand) || isBurst(opponentHand)) {
             if (isBurst(myHand) && isBurst(opponentHand)) {
@@ -40,11 +40,11 @@ public enum WinningStatus {
         return WinningStatus.패배;
     }
     
-    private static boolean isBurst(final BlackjackWinDeterminer cardHand) {
+    private static boolean isBurst(final BlackjackWinDeterminable cardHand) {
         return cardHand.getBlackjackSum() > BURST_THRESHOLD;
     }
     
-    private static boolean isBlackjack(final BlackjackWinDeterminer cardHand) {
+    private static boolean isBlackjack(final BlackjackWinDeterminable cardHand) {
         return cardHand.getBlackjackSum() == 21 && cardHand.getSize() == 2;
     }
 }

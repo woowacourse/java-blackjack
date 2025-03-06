@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
-import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.BlackjackDeck;
 import blackjack.test_util.CardDrawerStub;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,7 +33,7 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(List::of);
 
         // when
-        DealerBlackjackCardHand.startAdding(new Deck());
+        DealerBlackjackCardHand.startAdding(new BlackjackDeck());
 
         // then
         assertThat(DealerBlackjackCardHand.getCards().size()).isGreaterThanOrEqualTo(1);

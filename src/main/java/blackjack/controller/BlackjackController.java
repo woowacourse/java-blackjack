@@ -3,7 +3,7 @@ package blackjack.controller;
 import java.util.List;
 
 import blackjack.domain.BlackjackJudge;
-import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.BlackjackDeck;
 import blackjack.domain.Player;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
@@ -22,7 +22,7 @@ public class BlackjackController implements Controller {
     
     @Override
     public void run() {
-        final Deck deck = new Deck();
+        final BlackjackDeck deck = new BlackjackDeck();
         final List<PlayerBlackjackCardHand> playerBlackjackCardHands = createPlayerCardHands(deck);
         final DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(deck);
         processInitialCardOpening(dealerBlackjackCardHand, playerBlackjackCardHands);
@@ -36,7 +36,7 @@ public class BlackjackController implements Controller {
         processFinalWinOrLoss(dealerBlackjackCardHand, playerBlackjackCardHands);
     }
     
-    private List<PlayerBlackjackCardHand> createPlayerCardHands(final Deck deck) {
+    private List<PlayerBlackjackCardHand> createPlayerCardHands(final BlackjackDeck deck) {
         final List<String> playerNames = inputView.getPlayerNames();
         final List<Player> players = Player.createPlayers(playerNames);
         return players.stream()
@@ -55,7 +55,7 @@ public class BlackjackController implements Controller {
         }
     }
     
-    private void processPlayerAddingCards(final PlayerBlackjackCardHand playerBlackjackCardHand, final Deck deck) {
+    private void processPlayerAddingCards(final PlayerBlackjackCardHand playerBlackjackCardHand, final BlackjackDeck deck) {
         outputView.outputAddingMessage(playerBlackjackCardHand.getPlayerName());
         boolean addingCardDecision;
         do {
@@ -75,7 +75,7 @@ public class BlackjackController implements Controller {
         } while (addingCardDecision);
     }
     
-    private void processDealerAddingCards(final DealerBlackjackCardHand dealerBlackjackCardHand, final Deck deck) {
+    private void processDealerAddingCards(final DealerBlackjackCardHand dealerBlackjackCardHand, final BlackjackDeck deck) {
         final int beforeCount = dealerBlackjackCardHand.getCards().size();
         dealerBlackjackCardHand.startAdding(deck);
         final int afterCount = dealerBlackjackCardHand.getCards().size();

@@ -8,16 +8,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.BlackjackDeck;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class DeckTest {
+public class BlackjackDeckTest {
     
     @Test
     void 덱에서_카드를_한장씩_뽑을_수_있다() {
         // given
-        final Deck deck = new Deck();
+        final BlackjackDeck deck = new BlackjackDeck();
         
         // expected
         assertThat(deck.draw()).isExactlyInstanceOf(Card.class);
@@ -26,7 +26,7 @@ public class DeckTest {
     @Test
     void 덱에서_52장_초과의_카드를_뽑으면_예외가_발생한다() {
         // given
-        final Deck deck = new Deck();
+        final BlackjackDeck deck = new BlackjackDeck();
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
@@ -39,7 +39,7 @@ public class DeckTest {
     @Test
     void 덱에서_뽑은_카드들_중에는_중복된_카드가_없어야_한다() {
         // given
-        final Deck deck = new Deck();
+        final BlackjackDeck deck = new BlackjackDeck();
         final EnumMap<CardNumber, Integer> numberCount = getNumberMap();
         final EnumMap<CardShape, Integer> shapeCount = getShapeMap();
         

@@ -41,7 +41,7 @@ public final class BlackjackJudge {
     private int getCountOf(final WinningStatus status) {
         int count = 0;
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
-            if (WinningStatus.getWinningStatus(dealerBlackjackCardHand, playerBlackjackCardHand) == status) {
+            if (WinningStatus.determineWinningStatus(dealerBlackjackCardHand, playerBlackjackCardHand) == status) {
                 count++;
             }
         }
@@ -53,6 +53,6 @@ public final class BlackjackJudge {
             throw new IllegalArgumentException("존재하지 않는 플레이어 손패입니다.");
         }
         
-        return WinningStatus.getWinningStatus(playerBlackjackCardHand, dealerBlackjackCardHand);
+        return WinningStatus.determineWinningStatus(playerBlackjackCardHand, dealerBlackjackCardHand);
     }
 }

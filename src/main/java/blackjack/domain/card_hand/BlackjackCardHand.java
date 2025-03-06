@@ -1,7 +1,7 @@
 package blackjack.domain.card_hand;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.deck.CardHandInitializer;
+import blackjack.domain.deck.BlackjackCardHandInitializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,9 @@ public final class BlackjackCardHand {
     
     private final CardHand cardHand;
     
-    public BlackjackCardHand(final CardHandInitializer initializer) {
+    public BlackjackCardHand(final BlackjackCardHandInitializer initializer) {
         this.cardHand = new CardHand();
-        this.cardHand.addCards(initializer.init());
+        this.cardHand.addCards(initializer.handoutInitialCards());
     }
     
     public int getBlackjackSum() {
