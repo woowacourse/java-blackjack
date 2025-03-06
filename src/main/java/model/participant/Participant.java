@@ -1,0 +1,42 @@
+package model.participant;
+
+import java.util.List;
+import model.card.Card;
+import model.card.Cards;
+
+public abstract class Participant {
+
+    private final String nickname;
+    private final Cards cards;
+
+    public Participant(String nickname) {
+        this.nickname = nickname;
+        this.cards = new Cards();
+    }
+
+    public void receiveCard(Card card) {
+        cards.add(card);
+    }
+
+    public boolean isBust() {
+        return cards.calculateNearestTotal() > 21;
+    }
+
+    public int score() {
+        return cards.calculateNearestTotal();
+    }
+
+    public abstract boolean canReceiveCard();
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public Card getCard(int index) {
+        return cards.get(index);
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+}
