@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 public class Player extends Gamer {
-    private int bestSum;
 
     public Player(final Nickname nickname) {
         super(nickname);
@@ -46,8 +45,8 @@ public class Player extends Gamer {
         if (card.isAce()) {
             calculateAllSums(cards, index + 1, currentSum + 1, resultSet);
             calculateAllSums(cards, index + 1, currentSum + 11, resultSet);
-        } else {
-            calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);
+            return;
         }
+        calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);
     }
 }
