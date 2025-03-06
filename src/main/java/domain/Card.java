@@ -98,4 +98,8 @@ public enum Card {
     public CardShape getCardShape() {
         return cardShape;
     }
+
+    public String getCardName() {
+        return cardRank.getName() + cardRank.getValue();
+    }
 }

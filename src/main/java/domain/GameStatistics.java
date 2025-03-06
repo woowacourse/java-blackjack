@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class GameStatistics {
@@ -25,5 +26,9 @@ public class GameStatistics {
         return (int) results.values().stream()
                 .filter(result -> result == GameResult.DRAW)
                 .count();
+    }
+
+    public Map<String, GameResult> getResults() {
+        return Collections.unmodifiableMap(results);
     }
 }

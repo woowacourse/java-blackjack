@@ -3,7 +3,7 @@ package domain;
 import java.util.List;
 
 public class Dealer extends Gamer {
-    private static final int BUST_THRESHOLD = 16;
+    public static final int BUST_THRESHOLD = 16;
     private final Deck deck;
 
     public Dealer(Deck deck) {
