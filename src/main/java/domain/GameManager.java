@@ -44,4 +44,8 @@ public class GameManager {
     public void giveCardToPlayer(final Player player) {
         player.receiveCard();
     }
+
+    public GameResult calculateResult(final int index) {
+        return null;
+    }
 }

@@ -3,15 +3,13 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import domain.card.Card;
 import domain.card.CardGroup;
-import domain.card.CardType;
 import domain.card.RandomCardGenerator;
+import domain.fake.FaceCardGenerator;
+import domain.fake.TwoScoreCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import java.util.List;
-import java.util.Random;
-
 import org.junit.jupiter.api.Test;
 
 public class GameManagerTest {
@@ -81,12 +79,27 @@ public class GameManagerTest {
 
     @Test
     void 플레이어가_버스트_하지_않고_딜러보다_점수가_높아야_승리(){
-//        final List<String> playerNames = List.of("윌슨", "가이온");
-//        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-//
-//        final GameManager gameManager = GameManager.create(randomCardGenerator, playerNames);
-//
-//
+        //given
+        CardGroup cardGroup = new CardGroup();
+
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup,new FaceCardGenerator()),
+                new Player("가이온",cardGroup,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup,new TwoScoreCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        gameManager.receiveCardToDealer();
+        gameManager.giveCardToPlayer(players.getFirst());
+        gameManager.giveCardToPlayer(players.getFirst());
+        gameManager.giveCardToPlayer(players.get(1));
+        gameManager.giveCardToPlayer(players.get(1));
+        final GameResult gameResult1 = gameManager.calculateResult(0);
+        final GameResult gameResult2 = gameManager.calculateResult(1);
+
+        //then
+        assertThat(gameResult1).isEqualTo(GameResult.WIN);
+        assertThat(gameResult2).isEqualTo(GameResult.WIN);
 
     }
 
@@ -104,4 +117,5 @@ public class GameManagerTest {
     void 딜러와_플레이어가_서로_버스트한_경우_무승부(){
 
     }
+
 }
