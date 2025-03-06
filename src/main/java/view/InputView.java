@@ -4,7 +4,7 @@ import exception.ErrorException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 
 public class InputView {
 
@@ -36,13 +36,13 @@ public class InputView {
 
     private static void validatePlayerNamesSize(List<String> playerNames) {
         if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 최소 1명 이상의 플레이어 이름을 입력해야 합니다.");
+            throw new ErrorException("최소 1명 이상의 플레이어 이름을 입력해야 합니다.");
         }
     }
 
     private static void validateYesOrNo(String response) {
         if (!response.equals("y") && !response.equals("n")) {
-            throw new IllegalArgumentException("[ERROR] y 또는 n만 입력해주세요.");
+            throw new ErrorException("y 또는 n만 입력해주세요.");
         }
     }
 }

@@ -1,5 +1,6 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Card;
@@ -11,6 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ParticipantTest {
 
@@ -38,6 +40,20 @@ public class ParticipantTest {
         Participant otherParticipant = createParticipantCardsOfRanks(otherRanks);
         // then & when
         assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    @DisplayName("이름이 공백인 참여자 예외 테스트")
+    void blankParticipantNameTest(String name) {
+        // given & when & then
+        assertThatThrownBy(() -> new Participant(name) {
+            @Override
+            public boolean ableToAddCard() {
+                return false;
+            }
+        }).isInstanceOf(ErrorException.class)
+                .hasMessageContaining("[ERROR]");
     }
 
     private static Participant createParticipantCardsOfRanks(List<Rank> ranks) {

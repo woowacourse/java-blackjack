@@ -20,7 +20,7 @@ public class Game {
     }
 
     public void registerPlayers(List<String> names) {
-        validate(names);
+        validateDistinct(names);
         for (String name : names) {
             players.add(new Player(name));
         }
@@ -70,7 +70,7 @@ public class Game {
         return players.stream()
                 .filter(p -> p.isParticipant(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 참여자입니다."));
+                .orElseThrow(() -> new ErrorException("존재하지 않는 참여자입니다."));
     }
 
     private GameResult determineDealerGameResult(Dealer dealer) {
@@ -89,27 +89,10 @@ public class Game {
         return playerGameResult;
     }
 
-    private void validate(List<String> names) {
-        validateDistinct(names);
-        validateBlanks(names);
-    }
-
     private void validateDistinct(List<String> names) {
         Set<String> distinctNames = new HashSet<>(names);
         if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 참여자 이름은 중복될 수 없습니다.");
-        }
-    }
-
-    private void validateBlanks(List<String> names) {
-        for (String name : names) {
-            validateBlank(name);
-        }
-    }
-
-    private void validateBlank(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 참여자 이름은 공백일 수 없습니다.");
+            throw new ErrorException("참여자 이름은 중복될 수 없습니다.");
         }
     }
 }

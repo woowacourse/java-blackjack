@@ -1,5 +1,6 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -56,6 +57,17 @@ public class GameTest {
                 () -> assertEquals(tie, gameResult.getStatusCount(GameStatus.TIE)),
                 () -> assertEquals(lose, gameResult.getStatusCount(GameStatus.LOSE))
         );
+    }
+
+    @Test
+    @DisplayName("이름이 중복되는 참여자 예외 테스트")
+    void duplicateParticipantNamesTest() {
+        // given
+        String name = "pobi,jason,pobi";
+        // when & then
+        assertThatThrownBy(() -> game.determineGameResult(name))
+                .isInstanceOf(ErrorException.class)
+                .hasMessageContaining("[ERROR]");
     }
 
     private static List<Card> createCardsOfRanks(List<Rank> ranks) {
