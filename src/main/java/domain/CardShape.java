@@ -16,7 +16,7 @@ public enum CardShape {
     }
 
     public static CardShape pickCardShape(int index) {
-        Arrays.stream(values())
+        return Arrays.stream(values())
                 .filter((value) -> value.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("카드 모양 범위 내에서 선택해주세요 (1~4)"));
