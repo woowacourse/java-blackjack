@@ -26,9 +26,18 @@ public class Player {
     }
 
     public int calculateCardNumber() {
-        return cards.stream()
+        int sum = cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
+        if (hasAce() && sum + 10 <= 21) {
+            sum += 10;
+        }
+        return sum;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getNumber() == 1);
     }
 
     public String getName() {
