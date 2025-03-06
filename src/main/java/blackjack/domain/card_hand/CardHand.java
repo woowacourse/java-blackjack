@@ -6,7 +6,7 @@ import java.util.List;
 
 import blackjack.domain.Card;
 
-public class CardHand {
+public final class CardHand {
     
     private final List<Card> cards = new ArrayList<>();
     
@@ -14,11 +14,11 @@ public class CardHand {
         return Collections.unmodifiableList(cards);
     }
     
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
     
-    public void addCards(List<Card> cards) {
+    public void addCards(final List<Card> cards) {
         this.cards.addAll(cards);
     }
 }

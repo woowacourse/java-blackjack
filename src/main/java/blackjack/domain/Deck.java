@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class Deck implements CardHandInitializer {
+public final class Deck implements CardHandInitializer {
     
     private final Deque<Card> cards;
     

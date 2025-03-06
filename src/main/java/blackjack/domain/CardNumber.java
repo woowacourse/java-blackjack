@@ -27,7 +27,7 @@ public enum CardNumber {
         this.blackjackValue = blackjackValue;
     }
     
-    public static CardNumber from(int number) {
+    public static CardNumber from(final int number) {
         return Arrays.stream(CardNumber.values())
                 .filter(cardNumber -> cardNumber.value == number)
                 .findFirst()

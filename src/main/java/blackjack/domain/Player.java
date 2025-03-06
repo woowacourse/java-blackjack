@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class Player {
+public final class Player {
     
     private static final int PLAYER_MIN_SIZE = 1;
     private static final int PLAYER_MAX_SIZE = 6;
@@ -18,7 +18,7 @@ public class Player {
         this.name = name;
     }
     
-    private void validateName(String name) {
+    private void validateName(final String name) {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("플레이어의 이름은 %d자 이상, %d자 이하여야 합니다.".formatted(
                     MIN_NAME_LENGTH, MAX_NAME_LENGTH

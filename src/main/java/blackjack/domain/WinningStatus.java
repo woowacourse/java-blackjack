@@ -34,7 +34,10 @@ public enum WinningStatus {
             return WinningStatus.무승부;
         }
         
-        return myHand.getBlackjackSum() > opponentHand.getBlackjackSum() ? WinningStatus.승리 : WinningStatus.패배;
+        if (myHand.getBlackjackSum() > opponentHand.getBlackjackSum()) {
+            return WinningStatus.승리;
+        }
+        return WinningStatus.패배;
     }
     
     private static boolean isBurst(final BlackjackWinDeterminer cardHand) {

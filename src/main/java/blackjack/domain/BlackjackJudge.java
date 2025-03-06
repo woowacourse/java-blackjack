@@ -6,7 +6,7 @@ import java.util.List;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 
-public class BlackjackJudge {
+public final class BlackjackJudge {
     
     private final DealerBlackjackCardHand dealerBlackjackCardHand;
     private final List<PlayerBlackjackCardHand> playerBlackjackCardHands;

@@ -6,7 +6,7 @@ import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
 import blackjack.domain.Player;
 
-public class PlayerBlackjackCardHand implements BlackjackWinDeterminer {
+public final class PlayerBlackjackCardHand implements BlackjackWinDeterminer {
     
     private final BlackjackCardHand cardHand;
     private final Player player;

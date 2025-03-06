@@ -6,7 +6,7 @@ import blackjack.domain.CardHandInitializer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackjackCardHand {
+public final class BlackjackCardHand {
     
     private static final int BURST_THRESHOLD = 21;
     

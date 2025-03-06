@@ -6,7 +6,7 @@ import java.util.List;
 
 import static blackjack.domain.CardShape.*;
 
-public class Card {
+public final class Card {
     
     private static final EnumSet<CardShape> SHAPES = EnumSet.of(하트, 다이아몬드, 스페이드, 클로버);
     
@@ -35,7 +35,7 @@ public class Card {
         return cards;
     }
     
-    private void validateShape(CardShape shape) {
+    private void validateShape(final CardShape shape) {
         if (!SHAPES.contains(shape)) {
             throw new IllegalArgumentException("문양은 하트, 다이아몬드, 스페이드, 클로버 중 하나여야 합니다.");
         }

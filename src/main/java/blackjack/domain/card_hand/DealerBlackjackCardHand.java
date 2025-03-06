@@ -6,7 +6,7 @@ import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
 import blackjack.domain.Deck;
 
-public class DealerBlackjackCardHand implements BlackjackWinDeterminer {
+public final class DealerBlackjackCardHand implements BlackjackWinDeterminer {
     
     private static final int DEALER_DRAW_THRESHOLD = 16;
     
