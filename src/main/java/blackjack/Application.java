@@ -50,6 +50,8 @@ public class Application {
             int score = round.getScoreByPlayer(playerName);
             OutputView.printGamblerResult(playerName.getName(), cards, score);
         }
+
+
     }
 
     private static boolean isHit(Name playerName) {
