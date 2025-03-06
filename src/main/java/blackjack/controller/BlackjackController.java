@@ -63,8 +63,8 @@ public class BlackjackController implements Controller {
                 outputView.is21Warning();
                 break;
             }
-            if (playerBlackjackCardHand.isBurst()) {
-                outputView.burstWarning();
+            if (playerBlackjackCardHand.isBust()) {
+                outputView.bustWarning();
                 break;
             }
             addingCardDecision = inputView.getAddingCardDecision(playerBlackjackCardHand.getPlayerName());

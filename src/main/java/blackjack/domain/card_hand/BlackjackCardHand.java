@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class BlackjackCardHand {
     
-    private static final int BURST_THRESHOLD = 21;
+    private static final int BUST_THRESHOLD = 21;
     
     private final CardHand cardHand;
     
@@ -25,7 +25,7 @@ public final class BlackjackCardHand {
         List<Integer> availableSum = createAvailableSum(availableNumbers);
         int minAvailableSum = calculateMinAvailableSum(availableSum);
         
-        if (minAvailableSum > BURST_THRESHOLD) {
+        if (minAvailableSum > BUST_THRESHOLD) {
             return minAvailableSum;
         }
         return calculateClosestToBlackJack(availableSum);
@@ -49,7 +49,7 @@ public final class BlackjackCardHand {
     
     private Integer calculateClosestToBlackJack(final List<Integer> availableSum) {
         return availableSum.stream()
-                .filter(number -> number <= BURST_THRESHOLD)
+                .filter(number -> number <= BUST_THRESHOLD)
                 .max(Integer::compareTo)
                 .orElseThrow();
     }

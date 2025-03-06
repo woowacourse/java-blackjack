@@ -8,17 +8,17 @@ public enum WinningStatus {
     패배,
     ;
     
-    private static final int BURST_THRESHOLD = 21;
+    private static final int BUST_THRESHOLD = 21;
     
     public static WinningStatus determineWinningStatus(
             final BlackjackWinDeterminable myHand,
             final BlackjackWinDeterminable opponentHand
     ) {
-        if (isBurst(myHand) || isBurst(opponentHand)) {
-            if (isBurst(myHand) && isBurst(opponentHand)) {
+        if (isBust(myHand) || isBust(opponentHand)) {
+            if (isBust(myHand) && isBust(opponentHand)) {
                 return WinningStatus.무승부;
             }
-            if (isBurst(myHand)) {
+            if (isBust(myHand)) {
                 return WinningStatus.패배;
             }
             return WinningStatus.승리;
@@ -40,8 +40,8 @@ public enum WinningStatus {
         return WinningStatus.패배;
     }
     
-    private static boolean isBurst(final BlackjackWinDeterminable cardHand) {
-        return cardHand.getBlackjackSum() > BURST_THRESHOLD;
+    private static boolean isBust(final BlackjackWinDeterminable cardHand) {
+        return cardHand.getBlackjackSum() > BUST_THRESHOLD;
     }
     
     private static boolean isBlackjack(final BlackjackWinDeterminable cardHand) {

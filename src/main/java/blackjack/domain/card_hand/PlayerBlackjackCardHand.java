@@ -56,7 +56,7 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
         return getBlackjackSum() == 21;
     }
     
-    public boolean isBurst() {
+    public boolean isBust() {
         return getBlackjackSum() > 21;
     }
 }

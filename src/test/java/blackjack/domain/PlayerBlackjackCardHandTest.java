@@ -131,7 +131,7 @@ public class PlayerBlackjackCardHandTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideCardsAndSumWithBurst")
+    @MethodSource("provideCardsAndSumWithBust")
     void A를_11로_계산하여_버스트_되는_경우_A는_1로_계산된다(List<Card> cards, int expected) {
         // given
         final PlayerBlackjackCardHand PlayerBlackjackCardHand = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
@@ -147,7 +147,7 @@ public class PlayerBlackjackCardHandTest {
         assertThat(sum).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideCardsAndSumWithBurst() {
+    private static Stream<Arguments> provideCardsAndSumWithBust() {
         return Stream.of(
                 Arguments.of(List.of(HEART_10, HEART_5), 16),
                 Arguments.of(List.of(HEART_10, HEART_4), 15),
@@ -158,7 +158,7 @@ public class PlayerBlackjackCardHandTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideCardsAndSumWithoutBurst")
+    @MethodSource("provideCardsAndSumWithoutBust")
     void A를_11로_계산하여_버스트_되지_않는_경우_A는_11로_계산된다(List<Card> cards, int expected) {
         // given
         final PlayerBlackjackCardHand PlayerBlackjackCardHand = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
@@ -174,7 +174,7 @@ public class PlayerBlackjackCardHandTest {
         assertThat(sum).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideCardsAndSumWithoutBurst() {
+    private static Stream<Arguments> provideCardsAndSumWithoutBust() {
         return Stream.of(
                 Arguments.of(List.of(HEART_10), 21),
                 Arguments.of(List.of(HEART_9), 20),
@@ -221,7 +221,7 @@ public class PlayerBlackjackCardHandTest {
         ));
 
         // when
-        final boolean result = player.isBurst();
+        final boolean result = player.isBust();
 
         // then
         assertThat(result).isTrue();
