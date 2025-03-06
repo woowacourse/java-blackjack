@@ -63,7 +63,7 @@ public class BlackJackController {
             // 카드를 추가로 받을 수 있다면
             // 카드를 받을지 여부를 입력받는다
             boolean isPrinted = false;
-            while (!participant.isOverThan(21)) {
+            while (participant.canPick()) {
                 String playerWantMoreCard = inputView.inputPlayerWantMoreCard(participant);
                 if (playerWantMoreCard.equalsIgnoreCase("n")) {
                     break;
@@ -78,6 +78,19 @@ public class BlackJackController {
             if (!isPrinted) {
                 outputView.printParticipantHand(participant);
             }
+        }
+
+        for (Participant participant : participants) {
+            if (participant instanceof Dealer) {
+                // 카드를 추가로 받을 수 있다면
+                // 카드를 받을지 여부를 입력받는다
+                while (participant.canPick()) {
+                    // 카드를 추가로 받고 출력한다.
+                    participant.addCard(cardDeck.getAndRemoveFrontCard());
+                    outputView.printDealerPickMessage();
+                }
+            }
+
         }
     }
 

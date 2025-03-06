@@ -46,6 +46,9 @@ public class OutputView {
         );
     }
 
+    public void printDealerPickMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 
     private String formatCardRank(Rank rank) {
         if (rank == Rank.A) {
@@ -81,12 +84,12 @@ public class OutputView {
 
     public void printParticipantHand(Participant participant) {
         System.out.print(SPREAD_NAME_RESULT.formatted(
-                participant.getName()));
+            participant.getName()));
 
         List<Card> shownCard = participant.getShownCard();
         String cardMessage = shownCard.stream()
-                .map(this::formatCard)
-                .collect(Collectors.joining(", "));
+            .map(this::formatCard)
+            .collect(Collectors.joining(", "));
         System.out.println(cardMessage);
     }
 }
