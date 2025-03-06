@@ -29,6 +29,7 @@ public abstract class Gamer {
     }
 
     public GameResult calculateGameResult(final int compareScore) {
+        if(isBust()) return GameResult.LOSE;
         return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
     }
 

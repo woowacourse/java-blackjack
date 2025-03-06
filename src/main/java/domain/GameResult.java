@@ -12,15 +12,12 @@ public enum GameResult {
     }
 
     public static GameResult findByScores(int score, int compareScore) {
-        if (score < compareScore || score > Player.LIMIT) {
-            return LOSE;
-        }
-
         if (score > compareScore) {
             return WIN;
         }
-
+        if (score < compareScore) {
+            return LOSE;
+        }
         return DRAW;
     }
-
 }
