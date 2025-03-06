@@ -14,11 +14,11 @@ public class Player {
     }
 
     public void prepareGame(Cards totalCard) {
-        draw(totalCard);
-        draw(totalCard);
+        hit(totalCard);
+        hit(totalCard);
     }
 
-    public void draw(Cards totalCards) {
+    public void hit(Cards totalCards) {
         validateBurst();
         cards.add(totalCards.extractCard());
     }

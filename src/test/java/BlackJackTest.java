@@ -49,7 +49,7 @@ class BlackJackTest {
 
     @DisplayName("플레이어는 카드를 뽑을 수 있다.")
     @Test
-    void draw() {
+    void hit() {
         //given
         Cards totalCards = new Cards();
         totalCards.add(new Card(Symbol.HEART, Number.FIVE));
@@ -57,7 +57,7 @@ class BlackJackTest {
         Player player = new Player("ad");
 
         //when
-        player.draw(totalCards);
+        player.hit(totalCards);
         Cards expected = new Cards();
         expected.add(new Card(Symbol.HEART, Number.FIVE));
 
@@ -75,9 +75,9 @@ class BlackJackTest {
         totalCards.add(new Card(Symbol.HEART, Number.FOUR));
         totalCards.add(new Card(Symbol.HEART, Number.JACK));
 
-        player.draw(totalCards);
-        player.draw(totalCards);
-        player.draw(totalCards);
+        player.hit(totalCards);
+        player.hit(totalCards);
+        player.hit(totalCards);
 
         //when
         int score = player.getScore();
@@ -87,7 +87,7 @@ class BlackJackTest {
 
     @DisplayName("플레이어는 버스트되면 카드를 더 뽑을 수 없다.")
     @Test
-    void burstIsNotDraw() {
+    void burstIsNotHit() {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();
@@ -95,19 +95,19 @@ class BlackJackTest {
         totalCards.add(new Card(Symbol.HEART, Number.JACK));
         totalCards.add(new Card(Symbol.HEART, Number.TWO));
 
-        player.draw(totalCards);
-        player.draw(totalCards);
-        player.draw(totalCards);
+        player.hit(totalCards);
+        player.hit(totalCards);
+        player.hit(totalCards);
 
         //when //then
-        assertThatThrownBy(() -> player.draw(totalCards))
+        assertThatThrownBy(() -> player.hit(totalCards))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageStartingWith("[ERROR]");
     }
 
     @DisplayName("플레이어는 버스트 되지 않으면 카드를 더 뽑을 수 있다.")
     @Test
-    void notBurstDraw() {
+    void notBurstHit() {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();
@@ -118,13 +118,13 @@ class BlackJackTest {
         totalCards.add(new Card(Symbol.HEART, Number.FIVE));
         totalCards.add(new Card(Symbol.HEART, Number.FIVE));
 
-        player.draw(totalCards);
-        player.draw(totalCards);
-        player.draw(totalCards);
-        player.draw(totalCards);
+        player.hit(totalCards);
+        player.hit(totalCards);
+        player.hit(totalCards);
+        player.hit(totalCards);
 
         //when //then
-        assertThatCode(() -> player.draw(totalCards))
+        assertThatCode(() -> player.hit(totalCards))
                 .doesNotThrowAnyException();
     }
 
@@ -348,7 +348,7 @@ class BlackJackTest {
 
     @DisplayName("딜러는 처음 받은 2장의 카드의 합이 16 이하라면 카드를 뽑는다")
     @Test
-    void canDraw() {
+    void canHit() {
         //given
         Cards cards = new Cards();
         Card card1 = new Card(Symbol.COLVER, Number.ACE);
@@ -365,7 +365,7 @@ class BlackJackTest {
         int initialPoint = dealer.getCards().calculateTotalPoint();
 
         //when
-        dealer.draw(cards);
+        dealer.hit(cards);
         int actual = dealer.getCards().calculateTotalPoint();
 
         //then
@@ -374,7 +374,7 @@ class BlackJackTest {
 
     @DisplayName("딜러는 처음 받은 2장의 카드의 합이 17 이상이라면 카드를 뽑지 않는다")
     @Test
-    void cannotDraw() {
+    void cannotHit() {
         //given
         Cards cards = new Cards();
         Card card1 = new Card(Symbol.COLVER, Number.JACK);
@@ -391,7 +391,7 @@ class BlackJackTest {
         int initialPoint = dealer.getCards().calculateTotalPoint();
 
         //when
-        dealer.draw(cards);
+        dealer.hit(cards);
         int actual = dealer.getCards().calculateTotalPoint();
 
         //then
