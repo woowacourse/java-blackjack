@@ -25,9 +25,23 @@ public class Cards {
     }
 
     public int calculateSum() {
-        return cards.stream()
+        long aceCount = cards.stream()
+                .filter(card -> card.getValue().equals(CardValue.ACE))
+                .count();
+
+        int sumWithoutAce = cards.stream()
+                .filter(card -> !card.getValue().equals(CardValue.ACE))
                 .mapToInt(Card::getPoint)
                 .sum();
+
+        for (int i = 0; i < aceCount; i++) {
+            if(GameRule.isBurst(sumWithoutAce + GameRule.SOFT_ACE.getValue())) {
+                sumWithoutAce += CardValue.ACE.getPoint();
+            }
+            sumWithoutAce += GameRule.SOFT_ACE.getValue();
+        }
+
+        return sumWithoutAce;
     }
 
     public int getSize() {

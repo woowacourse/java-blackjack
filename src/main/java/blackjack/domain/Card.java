@@ -14,8 +14,11 @@ public final class Card {
         return shape.getDescription();
     }
 
+    public CardValue getValue() {
+        return value;
+    }
+
     public int getPoint() {
         return value.getPoint();
     }
-
 }

@@ -26,13 +26,12 @@ public class CardDeck {
         return new CardDeck(cards);
     }
 
-
     public int getSize() {
         return cards.size();
     }
 
     public List<Card> drawCard(int count) {
-        // TODO 카두 부족 해결하기 (예외, 규칙으로 사람 수 제한)
+        // TODO 카드 부족 해결하기 (예외, 규칙으로 사람 수 제한)
         List<Card> drawnCards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             drawnCards.add(cards.poll());
