@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class GameRule {
 
-    public GameResult evaluateDealerWin(Player player, Dealer dealer) {
+    public GameResult evaluateDealerWin(final Player player, final Dealer dealer) {
         int playerScore = player.calculateTotalCardScore();
         int dealerScore = dealer.calculateTotalCardScore();
 
@@ -22,7 +22,7 @@ public class GameRule {
         return GameResult.DRAW;
     }
 
-    public GameResult evaluatePlayerWin(Player player, Dealer dealer) {
+    public GameResult evaluatePlayerWin(final Player player, final Dealer dealer) {
         GameResult gameResult = evaluateDealerWin(player, dealer);
 
         if (gameResult == GameResult.WIN) {

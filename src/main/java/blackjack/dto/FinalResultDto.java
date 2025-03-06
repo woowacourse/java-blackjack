@@ -9,7 +9,7 @@ public record FinalResultDto(
         int score,
         boolean isBust) {
 
-    public static FinalResultDto from(Participant participant) {
+    public static FinalResultDto from(final Participant participant) {
         String name = participant.getName().trim();
         List<String> cardInfos = participant.getCardDeck().stream()
                 .map(card -> card.getRank().getName() + card.getSuit().getName())

@@ -79,13 +79,13 @@ public class BlackjackController {
         return new Dealer(cardDeck, cardDump);
     }
 
-    private void hitExtraCardForPlayers(List<Player> players) {
+    private void hitExtraCardForPlayers(final List<Player> players) {
         for (Player player : players) {
             checkPlayerHit(player);
         }
     }
 
-    private void checkPlayerHit(Player player) {
+    private void checkPlayerHit(final Player player) {
         process(() -> {
             while (true) {
                 if (!player.canTakeExtraCard()) {
@@ -114,13 +114,13 @@ public class BlackjackController {
         }
     }
 
-    private void hitExtraCardForDealer(Dealer dealer) {
+    private void hitExtraCardForDealer(final Dealer dealer) {
         while (dealer.hasTakenExtraCard()) {
             outputView.displayExtraDealerCardStatus();
         }
     }
 
-    private void getGameResultAndDisplay(Dealer dealer, List<Player> players) {
+    private void getGameResultAndDisplay(final Dealer dealer, final List<Player> players) {
         Map<GameResult, Integer> dealerResult = getDealerFinalResult(dealer, players);
         outputView.displayDealerResult(dealerResult);
         for (Player player : players) {
@@ -129,7 +129,7 @@ public class BlackjackController {
         }
     }
 
-    private Map<GameResult, Integer> getDealerFinalResult(Dealer dealer, List<Player> players) {
+    private Map<GameResult, Integer> getDealerFinalResult(final Dealer dealer, final List<Player> players) {
         Map<GameResult, Integer> gameFinalResult = new HashMap<>();
         for (Player player : players) {
             GameResult result = gameRule.evaluateDealerWin(player, dealer);
@@ -138,7 +138,7 @@ public class BlackjackController {
         return gameFinalResult;
     }
 
-    private GameResult getGameResultFromPlayer(Player player, Dealer dealer) {
+    private GameResult getGameResultFromPlayer(final Player player, final Dealer dealer) {
         return gameRule.evaluatePlayerWin(player, dealer);
     }
 }

@@ -14,13 +14,13 @@ public class InputVIew {
         return playerNames.split(DELIMITER);
     }
 
-    private void validateNullOrBlank(String input) {
+    private void validateNullOrBlank(final String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalStateException("입력 값이 null이거나 비어있습니다.");
         }
     }
 
-    public String readOneMoreCard(String playerName) {
+    public String readOneMoreCard(final String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName.trim());
         return scanner.nextLine();
     }
