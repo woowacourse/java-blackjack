@@ -43,14 +43,14 @@ public class Player {
         return WinDrawLose.LOSE;
     }
 
+    public List<Card> openCards() {
+        return cards.getCards();
+    }
+
     private void validateInitialCardsSize(Cards cards) {
         if (cards.getSize() != INITIAL_CARD_COUNT) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
         }
-    }
-
-    public List<Card> openCards() {
-        return cards.getCards();
     }
 
     public String getNickname() {

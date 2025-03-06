@@ -16,8 +16,8 @@ public class Players {
     public Map<Player, WinDrawLose> deriveResults(int dealerScore) {
         return players.stream()
                 .collect(Collectors.toMap(
-                        player -> player,
-                        player -> player.compareTo(dealerScore)
+                player -> player,
+                player -> player.compareTo(dealerScore)
                 ));
     }
 

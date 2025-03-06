@@ -25,10 +25,6 @@ public class Deck {
         return new Deck(new Cards(cards));
     }
 
-    private static void shuffle(List<Card> deck) {
-        Collections.shuffle(deck);
-    }
-
     public Cards drawInitialCards() {
         List<Card> cards = new ArrayList<>();
         cards.add(deck.drawOneCard());
@@ -38,6 +34,10 @@ public class Deck {
 
     public Card drawOneCard() {
         return deck.drawOneCard();
+    }
+
+    private static void shuffle(List<Card> deck) {
+        Collections.shuffle(deck);
     }
 
     public int getSize() {
