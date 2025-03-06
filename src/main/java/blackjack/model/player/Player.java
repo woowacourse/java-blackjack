@@ -1,9 +1,10 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Cards;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import blackjack.model.card.Cards;
 
 public abstract class Player {
 
@@ -35,6 +36,10 @@ public abstract class Player {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
