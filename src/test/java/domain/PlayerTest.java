@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.MatchResult.LOSE;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
@@ -91,5 +92,19 @@ public class PlayerTest {
 
         //when-then
         assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testInputView::printPlayerDeck, dealer));
+    }
+
+    @Test
+    @DisplayName("승패 결정 테스트")
+    void calculateWinner() {
+        //given
+        Player player = new Player("pobi");
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
+        Dealer dealer = new Dealer(cardDeck);
+        player.addCard(dealer);
+        dealer.addCards();
+
+        //when-then
+        assertThat(player.calculateWinner(dealer.sum())).isEqualTo(LOSE);
     }
 }
