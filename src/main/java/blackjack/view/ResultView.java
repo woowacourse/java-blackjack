@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
+import blackjack.domain.participant.Actionable;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameAction;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.List;
@@ -29,7 +29,7 @@ public class ResultView {
         printCards(participants);
     }
 
-    public void printParticipantTotalCards(final GameAction participants) {
+    public void printParticipantTotalCards(final Actionable participants) {
         System.out.println(makeParticipantsMessage(participants));
     }
 
@@ -47,7 +47,7 @@ public class ResultView {
     private void printCards(final Participants participants) {
         final Dealer dealer = participants.getDealer();
         final String dealerMessage = String.format(CARD_FORMAT, dealer.getNickname(),
-                getCardMessage(dealer.getCards()));
+                getCardMessage(dealer.showCards()));
         System.out.println(dealerMessage);
         final List<Player> players = participants.getPlayers();
         players.stream()
@@ -55,9 +55,9 @@ public class ResultView {
                 .forEach(System.out::println);
     }
 
-    private String makeParticipantsMessage(final GameAction participants) {
+    private String makeParticipantsMessage(final Actionable participants) {
         return String.format(CARD_FORMAT, participants.getNickname(),
-                getCardMessage(participants.getCards()));
+                getCardMessage(participants.showCards()));
     }
 
     private String getCardMessage(final List<Card> cards) {

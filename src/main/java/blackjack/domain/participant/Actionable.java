@@ -3,9 +3,9 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import java.util.List;
 
-public interface GameAction {
+public interface Actionable {
 
-    List<Card> getCards();
+    List<Card> showCards();
 
     boolean canGetMoreCard();
 
