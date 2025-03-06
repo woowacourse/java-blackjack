@@ -25,4 +25,14 @@ public class PlayersTest {
         AssertionsForClassTypes.assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 같은_이름의_플레이어가_여러_명_있으면_예외를_던진다() {
+        //given
+        List<String> playerNames = List.of("aa", "aa");
+
+        //when & then
+        AssertionsForClassTypes.assertThatThrownBy(() -> new Players(playerNames))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
