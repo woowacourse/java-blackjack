@@ -23,10 +23,10 @@ public final class BlackjackCardHand {
                 .toList();
         
         List<Integer> availableSum = createAvailableSum(availableNumbers);
-        int minNumber = calculateMinAvailableSum(availableSum);
+        int minAvailableSum = calculateMinAvailableSum(availableSum);
         
-        if (minNumber > BURST_THRESHOLD) {
-            return minNumber;
+        if (minAvailableSum > BURST_THRESHOLD) {
+            return minAvailableSum;
         }
         return calculateClosestToBlackJack(availableSum);
     }
