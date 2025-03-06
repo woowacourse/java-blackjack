@@ -9,6 +9,7 @@ import domain.GameManger;
 import domain.user.Player;
 import domain.user.User;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -155,11 +156,24 @@ public class GameManagerTest {
         );
     }
 
-    @DisplayName("딜러가 버스트되면 ")
+    @DisplayName("딜러가 버스트되면 이미 버스트된 유저 빼고 모두 승리한다")
     @Test
     void test9() {
+        // given
+        GameManger gameManger = new GameManger(List.of("유저"));
+        User user = gameManger.findUserByUsername("유저");
+        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
 
+        gameManger.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
+        gameManger.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        gameManger.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+
+        // when
+        Map<User, Integer> gameResult = gameManger.createGameResult();
+
+        // then
+        Assertions.assertThat(gameResult.get(user)).isEqualTo(GameManger.LOSE);
     }
-
-
 }
