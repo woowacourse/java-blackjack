@@ -12,7 +12,6 @@ import view.OutputView;
 public class BlackJackController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
-    private final Deck deck = new Deck();
 
     public void run() {
         Game game = retryUntilSuccess(this::startGame);
@@ -25,7 +24,7 @@ public class BlackJackController {
 
     public Game startGame() {
         List<String> playerNames = inputView.readPlayerNames();
-        return new Game(playerNames, deck);
+        return new Game(playerNames, new Deck());
     }
 
     private void giveAdditionalCards(Game game) {
@@ -52,18 +51,19 @@ public class BlackJackController {
     }
 
     private void hitOrStay(Game game, Player player) {
-        Answer answer;
-        do {
-            if (player.isBlackJack() || player.isBust()) {
-                return;
-            }
+        Answer answer = Answer.YES;
+        while (!player.isBlackJack() && !player.isBust() && answer == Answer.YES) {
             answer = inputView.readHitOrStay(player);
-            if (answer == Answer.YES) {
-                game.playerHit(player);
-            }
+            playerHitByAnswer(game, player, answer);
             outputView.displayParticipantAndCards(player);
             outputView.displayEmptyLine();
-        } while (answer == Answer.YES);
+        }
+    }
+
+    private void playerHitByAnswer(Game game, Player player, Answer answer) {
+        if (answer == Answer.YES) {
+            game.playerHit(player);
+        }
     }
 
     private void retryUntilSuccess(Runnable runnable) {
