@@ -117,7 +117,6 @@ public class BlackjackController {
         });
     }
 
-
     private void openPlayerCards(BlackjackGame blackjackGame) {
         List<BlackjackResult> blackjackResults = blackjackGame.currentPlayerBlackjackResult();
         for (BlackjackResult blackjackResult : blackjackResults) {
