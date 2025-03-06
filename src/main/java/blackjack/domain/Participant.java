@@ -7,6 +7,9 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BLACKJACK_VALUE = 21;
+    private static final int BLACKJACK_CARDS_SIZE = 2;
+
     protected final List<Card> cards;
 
     public Participant() {
@@ -17,6 +20,15 @@ public abstract class Participant {
         this.cards.addAll(Arrays.asList(cards));
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARDS_SIZE
+                && calculateDenominations() == BLACKJACK_VALUE;
+    }
+
+    public boolean isBust() {
+        return calculateDenominations() > BLACKJACK_VALUE;
+    }
+
     public int calculateDenominations() {
         int sum = cards.stream()
                 .map(Card::denomination)
@@ -24,14 +36,10 @@ public abstract class Participant {
                 .map(List::getFirst)
                 .reduce(0, Integer::sum);
         if(hasACE()) {
-            sum = Denomination.changeAceValue(sum);
+            sum = Denomination.changeAceValue(sum, BLACKJACK_VALUE);
         }
 
         return sum;
-    }
-
-    public boolean hasTwoCards() {
-        return cards.size() == 2;
     }
 
     public List<Card> getCards() {

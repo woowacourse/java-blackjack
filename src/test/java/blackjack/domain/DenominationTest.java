@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Nested
 class DenominationTest {
@@ -18,14 +17,14 @@ class DenominationTest {
         @DisplayName("합에 따라서 에이스를 1로 계산한다.")
         void notChangeAceValue() {
             int sum = 17;
-            assertThat(Denomination.changeAceValue(sum)).isEqualTo(17);
+            assertThat(Denomination.changeAceValue(sum, 21)).isEqualTo(17);
         }
 
         @Test
         @DisplayName("합에 따라서 에이스를 11로 계산한다.")
         void changeAceValue() {
             int sum = 11;
-            assertThat(Denomination.changeAceValue(sum)).isEqualTo(21);
+            assertThat(Denomination.changeAceValue(sum, 21)).isEqualTo(21);
         }
     }
 }

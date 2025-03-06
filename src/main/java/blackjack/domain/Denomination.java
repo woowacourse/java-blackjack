@@ -25,15 +25,15 @@ public enum Denomination {
         this.values = values;
     }
 
-    public static int changeAceValue(int sum) {
+    public static int changeAceValue(int sum, int blackjackValue) {
         Integer minAceValue = ACE.values.getFirst();
         Integer maxAceValue = ACE.values.getLast();
 
         int changedAceValue = sum + maxAceValue - minAceValue;
-        if (changedAceValue <= 21) {
-            return sum;
+        if (changedAceValue <= blackjackValue) {
+            return changedAceValue;
         }
-        return changedAceValue;
+        return sum;
     }
 
     public String getText() {

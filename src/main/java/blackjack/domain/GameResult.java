@@ -12,16 +12,13 @@ public enum GameResult {
     }
 
     public static GameResult playerResultFrom(Dealer dealer, Player player) {
-        BlackjackState dealerState = BlackjackState.of(dealer);
-        BlackjackState playerState = BlackjackState.of(player);
-
-        if (playerState == BlackjackState.BUST) {
+        if (player.isBust()) {
             return LOSE;
         }
-        if (dealerState == BlackjackState.BLACKJACK && playerState == BlackjackState.BLACKJACK) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
             return DRAW;
         }
-        if (dealerState == BlackjackState.BUST || playerState == BlackjackState.BLACKJACK) {
+        if (player.isBlackjack() || dealer.isBust()) {
             return WIN;
         }
         return getGameResultFromOthers(dealer, player);
@@ -32,12 +29,22 @@ public enum GameResult {
         int playerSum = player.calculateDenominations();
 
         if (dealerSum < playerSum) {
-            return GameResult.WIN;
+            return WIN;
         }
         if (dealerSum == playerSum) {
             return DRAW;
         }
-        return GameResult.LOSE;
+        return LOSE;
+    }
+
+    public GameResult changeStatusOpposite() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
     }
 
     public String getText() {

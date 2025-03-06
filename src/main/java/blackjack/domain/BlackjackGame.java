@@ -8,8 +8,6 @@ import java.util.Map;
 
 public class BlackjackGame {
 
-    private static final int BLACKJACK_VALUE = 21;
-    
     private final CardDeck cardDeck;
     private final List<Participant> participants;
 
@@ -32,7 +30,6 @@ public class BlackjackGame {
 
     public void initCardsToParticipants() {
         for (Participant participant : participants) {
-            // TODO : 생각해보기 - Deck에게 몇 장 받을지를 보내서 그 수 만큼 받아온다.
             Card card1 = cardDeck.pickRandomCard();
             Card card2 = cardDeck.pickRandomCard();
             participant.addCards(card1, card2);
@@ -40,7 +37,6 @@ public class BlackjackGame {
     }
 
     public void addExtraCard(Participant participant) {
-        // TODO : 생각해보기 - Deck에게 몇 장 받을지를 보내서 그 수 만큼 받아온다.
         Card card = cardDeck.pickRandomCard();
         participant.addCards(card);
     }
@@ -69,16 +65,6 @@ public class BlackjackGame {
                 .toList();
     }
 
-    public List<Participant> getParticipants() {
-        return Collections.unmodifiableList(participants);
-    }
-
-    public List<String> getPlayerNames() {
-        return findPlayers().stream()
-                .map(Player::getName)
-                .toList();
-    }
-
     public Map<Player, GameResult> calculateStatisticsForPlayer() {
         Map<Player, GameResult> playerResult = new HashMap<>();
         Dealer dealer = findDealer();
@@ -95,17 +81,20 @@ public class BlackjackGame {
         Dealer dealer = findDealer();
 
         for (Player player : findPlayers()) {
-            GameResult gameResult = GameResult.playerResultFrom(dealer, player);
-            if (gameResult == GameResult.WIN) {
-                result.put(GameResult.LOSE, result.getOrDefault(GameResult.LOSE, 0) + 1);
-            }
-            if (gameResult == GameResult.LOSE) {
-                result.put(GameResult.WIN, result.getOrDefault(GameResult.WIN, 0) + 1);
-            }
-            if (gameResult == GameResult.DRAW) {
-                result.put(GameResult.DRAW, result.getOrDefault(GameResult.DRAW, 0) + 1);
-            }
+            GameResult playerResult = GameResult.playerResultFrom(dealer, player);
+            GameResult dealerResult = playerResult.changeStatusOpposite();
+            result.put(dealerResult, result.getOrDefault(dealerResult, 0) + 1);
         }
         return result;
+    }
+
+    public List<String> getPlayerNames() {
+        return findPlayers().stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public List<Participant> getParticipants() {
+        return Collections.unmodifiableList(participants);
     }
 }
