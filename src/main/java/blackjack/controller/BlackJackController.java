@@ -31,7 +31,8 @@ public class BlackJackController {
         drewDealerCard(dealer);
         outputView.outputDealerCardFinish();
 
-
+        outputView.outputFinalCardStatus(dealer, participants);
+        outputView.outputFinalResult(dealer, participants);
     }
 
     private void drewDealerCard(Dealer dealer) {
