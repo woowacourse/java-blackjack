@@ -1,25 +1,22 @@
 package domain.participant;
 
 import domain.card.CardDeck;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Participants {
+public class Players {
 
     private static final int MAX_PLAYERS = 5;
     private static final int MIN_PLAYERS = 1;
 
-    private final List<Participant> participants;
+    private final List<Participant> players;
 
-    private Participants(List<Participant> participants) {
-        this.participants = participants;
+    private Players(List<Participant> players) {
+        this.players = players;
     }
 
-    public static Participants of(Participant dealer, List<Participant> players) {
+    public static Players of(List<Participant> players) {
         validatePlayersNumber(players);
-        List<Participant> participants = new ArrayList<>(players);
-        participants.add(dealer);
-        return new Participants(participants);
+        return new Players(players);
     }
 
     private static void validatePlayersNumber(List<Participant> players) {
@@ -29,13 +26,13 @@ public class Participants {
     }
 
     public void receiveCards(CardDeck cardDeck) {
-        for (Participant participant : participants) {
+        for (Participant participant : players) {
             participant.receive(cardDeck.popCard());
         }
     }
 
     public Player findByName(String name) {
-        return participants.stream()
+        return players.stream()
                 .filter(participant -> participant instanceof Player)
                 .map(player -> (Player) player)
                 .filter(player -> player.getName().equals(name))
@@ -44,23 +41,10 @@ public class Participants {
     }
 
     public List<String> getPlayersName() {
-        return participants.stream()
+        return players.stream()
                 .filter(participant -> participant instanceof Player)
                 .map(player -> (Player) player)
                 .map(Player::getName)
                 .toList();
-    }
-
-    public List<Participant> getPlayers() {
-        return participants.stream()
-                .filter(participant -> participant instanceof Player)
-                .toList();
-    }
-
-    public Participant getDealer() {
-        return participants.stream()
-                .filter(participant -> participant instanceof Dealer)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("예기치 못한 에러가 발생했습니다."));
     }
 }

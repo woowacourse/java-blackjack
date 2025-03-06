@@ -8,8 +8,8 @@ import domain.card.CardDeck;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
 import domain.participant.Dealer;
-import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +19,9 @@ class GameManagerTest {
     void 게임_메니저를_생성한다() {
         // given
         CardDeck cardDeck = CardDeck.of();
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
+        Dealer dealer = Dealer.of();
+        Players players = Players.of(
+                List.of(
                         Player.of("pobi1"),
                         Player.of("pobi2"),
                         Player.of("pobi3")
@@ -28,7 +29,7 @@ class GameManagerTest {
         );
 
         // when & then
-        assertThatCode(() -> GameManager.of(cardDeck, participants))
+        assertThatCode(() -> GameManager.of(cardDeck, dealer, players))
                 .doesNotThrowAnyException();
     }
 
@@ -36,14 +37,15 @@ class GameManagerTest {
     void 게임을_시작하고_카드를_두_장씩_배부한다() {
         // given
         CardDeck cardDeck = CardDeck.of();
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
+        Dealer dealer = Dealer.of();
+        Players players = Players.of(
+                List.of(
                         Player.of("pobi1"),
                         Player.of("pobi2"),
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, participants);
+        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
 
         // when
         gameManager.distributeCards();
@@ -56,14 +58,15 @@ class GameManagerTest {
     void 참가자들의_이름_목록을_가져온다() {
         // given
         CardDeck cardDeck = CardDeck.of();
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
+        Dealer dealer = Dealer.of();
+        Players players = Players.of(
+                List.of(
                         Player.of("pobi1"),
                         Player.of("pobi2"),
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, participants);
+        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
 
         // when
         List<String> names = gameManager.getPlayersName();
@@ -77,14 +80,15 @@ class GameManagerTest {
         // given
         CardDeck cardDeck = CardDeck.of();
         Player target = Player.of("pobi1");
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
+        Dealer dealer = Dealer.of();
+        Players players = Players.of(
+                List.of(
                         target,
                         Player.of("pobi2"),
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, participants);
+        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
 
         // when
         gameManager.passCardToPlayer("pobi1");
@@ -100,14 +104,15 @@ class GameManagerTest {
         Player target = Player.of("pobi1");
         target.receive(Card.of(TrumpNumber.NINE, TrumpShape.CLUB));
 
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
+        Dealer dealer = Dealer.of();
+        Players players = Players.of(
+                List.of(
                         target,
                         Player.of("pobi2"),
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, participants);
+        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
 
         // when
         int score = gameManager.getScoreOf("pobi1");
@@ -123,14 +128,14 @@ class GameManagerTest {
         Dealer dealer = Dealer.of();
         dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         dealer.receive(Card.of(TrumpNumber.FIVE, TrumpShape.CLUB));
-        Participants participants = Participants.of(
-                dealer, List.of(
+        Players players = Players.of(
+                List.of(
                         Player.of("pobi1"),
                         Player.of("pobi2"),
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, participants);
+        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
 
         // when
         boolean result = gameManager.passCardToDealer();
@@ -146,14 +151,14 @@ class GameManagerTest {
         Dealer dealer = Dealer.of();
         dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         dealer.receive(Card.of(TrumpNumber.SIX, TrumpShape.CLUB));
-        Participants participants = Participants.of(
-                dealer, List.of(
+        Players players = Players.of(
+                List.of(
                         Player.of("pobi1"),
                         Player.of("pobi2"),
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, participants);
+        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
 
         // when
         boolean result = gameManager.passCardToDealer();

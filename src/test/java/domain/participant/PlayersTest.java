@@ -8,12 +8,11 @@ import domain.card.CardDeck;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class ParticipantsTest {
+class PlayersTest {
 
     @Test
     void 게임_참가자들을_관리하는_모델을_생성한다() {
         // given
-        Participant dealer = Dealer.of();
         List<Participant> players = List.of(Player.of("pobi1"),
                 Player.of("pobi2"),
                 Player.of("pobi3"),
@@ -21,18 +20,17 @@ class ParticipantsTest {
                 Player.of("pobi5"));
 
         // when & then
-        assertThatCode(() -> Participants.of(dealer, players))
+        assertThatCode(() -> Players.of(players))
                 .doesNotThrowAnyException();
     }
 
     @Test
     void 게임_참가자_최소_인원_미만_시_예외가_발생한다() {
         // given
-        Participant dealer = Dealer.of();
         List<Participant> players = List.of();
 
         // when & then
-        assertThatThrownBy(() -> Participants.of(dealer, players))
+        assertThatThrownBy(() -> Players.of(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참여 가능한 플레이어는 최소 1명, 최대 5명 입니다.");
     }
@@ -40,7 +38,6 @@ class ParticipantsTest {
     @Test
     void 게임_참가자_최대_인원_초과_시_예외가_발생한다() {
         // given
-        Participant dealer = Dealer.of();
         List<Participant> players = List.of(Player.of("pobi1"),
                 Player.of("pobi2"),
                 Player.of("pobi3"),
@@ -49,7 +46,7 @@ class ParticipantsTest {
                 Player.of("pobi6"));
 
         // when & then
-        assertThatThrownBy(() -> Participants.of(dealer, players))
+        assertThatThrownBy(() -> Players.of(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참여 가능한 플레이어는 최소 1명, 최대 5명 입니다.");
     }
@@ -58,8 +55,8 @@ class ParticipantsTest {
     void 참여자들에게_카드를_한_장씩_나눠준다() {
         // given
         CardDeck cardDeck = CardDeck.of();
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
+        Players players = Players.of(
+                List.of(
                         Player.of("pobi1"),
                         Player.of("pobi2"),
                         Player.of("pobi3")
@@ -67,17 +64,17 @@ class ParticipantsTest {
         );
 
         // when
-        participants.receiveCards(cardDeck);
+        players.receiveCards(cardDeck);
 
         // then
-        assertThat(cardDeck.getCards()).hasSize(48);
+        assertThat(cardDeck.getCards()).hasSize(49);
     }
 
     @Test
     void 이름으로_플레이어를_반환한다() {
         // given
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
+        Players players = Players.of(
+                List.of(
                         Player.of("pobi1"),
                         Player.of("pobi2"),
                         Player.of("pobi3")
@@ -85,27 +82,9 @@ class ParticipantsTest {
         );
 
         // when
-        Player player = participants.findByName("pobi1");
+        Player player = players.findByName("pobi1");
 
         // then
         assertThat(player.getName()).isEqualTo("pobi1");
-    }
-
-    @Test
-    void 딜러를_반환한다() {
-        // given
-        Participants participants = Participants.of(
-                Dealer.of(), List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
-                )
-        );
-
-        // when
-        Participant dealer = participants.getDealer();
-
-        // then
-        assertThat(dealer).isInstanceOf(Dealer.class);
     }
 }

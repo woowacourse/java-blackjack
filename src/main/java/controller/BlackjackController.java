@@ -4,8 +4,8 @@ import domain.GameManager;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.Arrays;
 import java.util.List;
 import view.InputView;
@@ -22,8 +22,9 @@ public class BlackjackController {
     }
 
     public void gameStart() {
-        Participants participants = initParticipants();
-        GameManager gameManager = GameManager.of(CardDeck.of(), participants);
+        Dealer dealer = Dealer.of();
+        Players players = initParticipants();
+        GameManager gameManager = GameManager.of(CardDeck.of(), dealer, players);
 
         gameManager.distributeCards();
         // TODO: 초기화 된 카드 결과 출력
@@ -33,15 +34,14 @@ public class BlackjackController {
         // TODO: 승패 결과 출력
     }
 
-    private Participants initParticipants() {
-        Participant dealer = Dealer.of();
+    private Players initParticipants() {
         String rawNames = inputView.getPlayerNames();
         List<Participant> players = Arrays.stream(rawNames.split(","))
                 .map(String::trim)
                 .map(Player::of)
                 .map(player -> (Participant) player)
                 .toList();
-        return Participants.of(dealer, players);
+        return Players.of(players);
     }
 
     private void drawToPlayers(GameManager gameManager) {

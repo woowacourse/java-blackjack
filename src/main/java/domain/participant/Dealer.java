@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Dealer implements Participant {
 
-    private final Cards ownedCards; // 변수명 추천
+    private final Cards ownedCards;
 
     private Dealer() {
         this.ownedCards = Cards.of();
