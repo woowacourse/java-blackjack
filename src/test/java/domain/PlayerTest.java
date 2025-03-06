@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.constant.TrumpEmblem;
+import domain.constant.TrumpNumber;
+import domain.constant.WinDrawLose;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -18,9 +22,10 @@ class PlayerTest {
         List<Card> initialCards = new ArrayList<>();
         initialCards.add(new Card(TrumpNumber.ACE, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
+        Cards cards = new Cards(initialCards);
 
         // when // then
-        assertDoesNotThrow(() -> new Player(initialCards));
+        assertDoesNotThrow(() -> new Player(cards));
     }
 
     @Test
@@ -30,9 +35,10 @@ class PlayerTest {
         initialCards.add(new Card(TrumpNumber.ACE, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
         initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
+        Cards cards = new Cards(initialCards);
 
         // when // then
-        assertThatThrownBy(() -> new Player(initialCards))
+        assertThatThrownBy(() -> new Player(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
     }
@@ -50,7 +56,8 @@ class PlayerTest {
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
         Card card = new Card(number3, TrumpEmblem.SPADE);
-        Player player = new Player(initialCards);
+        Cards cards = new Cards(initialCards);
+        Player player = new Player(cards);
 
         // when
         boolean isOverBustStandard = player.addOneCard(card);
@@ -70,7 +77,8 @@ class PlayerTest {
         List<Card> initialCards = new ArrayList<>();
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
-        Player player = new Player(initialCards);
+        Cards cards = new Cards(initialCards);
+        Player player = new Player(cards);
         player.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
@@ -97,7 +105,8 @@ class PlayerTest {
         List<Card> initialCards = new ArrayList<>();
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
-        Player player = new Player(initialCards);
+        Cards cards = new Cards(initialCards);
+        Player player = new Player(cards);
         player.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when

@@ -2,6 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.constant.TrumpEmblem;
+import domain.constant.TrumpNumber;
+import domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -22,8 +25,9 @@ class DealerTest {
         List<Card> initialCards = new ArrayList<>();
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        Cards cards = new Cards(initialCards);
         Card card = new Card(number3, TrumpEmblem.SPADE);
-        Dealer dealer = new Dealer(initialCards);
+        Dealer dealer = new Dealer(cards);
 
         // when
         boolean isOverBustStandard = dealer.addOneCard(card);
@@ -43,7 +47,8 @@ class DealerTest {
         List<Card> initialCards = new ArrayList<>();
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
-        Dealer dealer = new Dealer(initialCards);
+        Cards cards = new Cards(initialCards);
+        Dealer dealer = new Dealer(cards);
         dealer.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
@@ -65,7 +70,8 @@ class DealerTest {
         List<Card> initialCards = new ArrayList<>();
         initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(number2, TrumpEmblem.HEART));
-        Dealer dealer = new Dealer(initialCards);
+        Cards cards = new Cards(initialCards);
+        Dealer dealer = new Dealer(cards);
 
         // when
         boolean sumUnderSixteen = dealer.isSumUnderSixteen();
@@ -80,7 +86,8 @@ class DealerTest {
         List<Card> initialCards = new ArrayList<>();
         initialCards.add(new Card(TrumpNumber.ACE, TrumpEmblem.DIAMOND));
         initialCards.add(new Card(TrumpNumber.KING, TrumpEmblem.HEART));
-        Dealer dealer = new Dealer(initialCards);
+        Cards cards = new Cards(initialCards);
+        Dealer dealer = new Dealer(cards);
 
         // when
         Card card = dealer.openOneCard();
