@@ -56,13 +56,13 @@ class UserTest {
     @Test
     void test3() {
         // given
-        User user = new User("test");
+        User user = new Player("test");
         user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.K));
         user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.J));
         user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.Q));
 
         // when
-        user.
+//        user.
 
         // then
 

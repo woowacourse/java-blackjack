@@ -38,7 +38,7 @@ public class CardDeck {
 
     public boolean hasAce() {
         return cards.stream()
-                .anyMatch((card) -> card.getCardNumber() == CardNumber.ACE.getValue());
+                .anyMatch((card) -> card.getCardNumberValue() == CardNumber.ACE.getValue());
     }
 
     public boolean isImpossibleDraw(int maxScore) {
@@ -53,7 +53,7 @@ public class CardDeck {
 
     public int calculateScore() {
         int sum = cards.stream()
-                .mapToInt(TrumpCard::getCardNumber)
+                .mapToInt(TrumpCard::getCardNumberValue)
                 .sum();
         if (hasAce() && sum <= ACE_MAX) {
             sum += (ACE_MAX - ACE_MIN);

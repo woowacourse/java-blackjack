@@ -16,7 +16,7 @@ public class GameManger {
         for (String name : names) {
             users.add(new Player(name));
         }
-        this.dealer = new Dealer("dealer");
+        this.dealer = new Dealer("딜러");
     }
 
     private void validate(List<String> names) {

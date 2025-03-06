@@ -15,7 +15,11 @@ public class TrumpCard {
         return cardShape;
     }
 
-    public int getCardNumber() {
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
+    public int getCardNumberValue() {
         return cardNumber.getValue();
     }
 

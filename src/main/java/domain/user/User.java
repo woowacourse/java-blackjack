@@ -25,9 +25,10 @@ public abstract class User {
         return this.name.equals(name);
     }
 
-    public UserStatus checkUserStatus() {
-
+    public String getName() {
+        return this.name;
     }
+
     public int getSize() {
         return cardDeck.cardsSize();
     }
@@ -37,6 +38,4 @@ public abstract class User {
     public CardDeck getCardDeck() {
         return this.cardDeck;
     }
-
-
 }

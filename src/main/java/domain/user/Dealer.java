@@ -20,4 +20,8 @@ public class Dealer extends User {
     public List<TrumpCard> openCard() {
         return this.cardDeck.getFirstCard();
     }
+
+    public List<TrumpCard> openAllCard() {
+        return this.cardDeck.getAllCard();
+    }
 }
