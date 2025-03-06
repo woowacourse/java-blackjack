@@ -38,7 +38,7 @@ public class Player implements Comparable<Player> {
 
     public int calculateCardNumber() {
         int sum = cards.stream()
-                .mapToInt(Card::getNumber)
+                .mapToInt(Card::getValue)
                 .sum();
         if (canCalculateAceWithEleven(sum)) {
             sum += 10;

@@ -19,7 +19,7 @@ class CardTest {
 
         // when & than
         assertAll(
-                () -> assertThat(card.getNumber()).isEqualTo(8),
+                () -> assertThat(card.getValue()).isEqualTo(8),
                 () -> assertThat(card.getShape()).isEqualTo(CardShape.CLOVER)
         );
     }

@@ -96,7 +96,7 @@ class PlayersTest {
         @Override
         public void shuffle(List<Card> cards) {
             cards.sort(Comparator
-                    .comparing(Card::getNumber)
+                    .comparing(Card::getValue)
                     .thenComparing(Card::getShape));
         }
     }
