@@ -8,23 +8,25 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    public void displayDistributedCardStatus(final DistributedCardDto dealerDto,
-                                             final List<DistributedCardDto> playerDtos) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%s와 ", dealerDto.name()));
-        String playerNames = String.join(", ", playerDtos.stream().map(player -> player.name().trim()).toList());
-        sb.append(playerNames);
-        sb.append("에게 2장을 나누었습니다.\n");
-        System.out.println(sb);
+    public void displayCardDistribution(final DistributedCardDto dealerDto, final List<DistributedCardDto> playerDtos) {
 
-        displayCardInfo(dealerDto);
-        for (DistributedCardDto dto : playerDtos) {
-            displayCardInfo(dto);
-        }
+        displayDistributionNotice(dealerDto, playerDtos);
+        displayFirstCardOfDealer(dealerDto);
+        playerDtos.forEach(this::displayCardInfo);
         System.out.println();
     }
 
-    public void displayFirstCardOfDealer(final DistributedCardDto dealerDto) {
+    private void displayDistributionNotice(DistributedCardDto dealerDto, List<DistributedCardDto> playerDtos) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(System.lineSeparator());
+        sb.append(String.format("%s와 ", dealerDto.name()));
+        String playerNames = String.join(", ", playerDtos.stream().map(player -> player.name().trim()).toList());
+        sb.append(playerNames);
+        sb.append("에게 2장을 나누었습니다.");
+        System.out.println(sb);
+    }
+
+    private void displayFirstCardOfDealer(final DistributedCardDto dealerDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(dealerDto.name() + "카드: ");
         sb.append(dealerDto.cardInfos().getFirst());
