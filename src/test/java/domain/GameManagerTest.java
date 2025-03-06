@@ -107,7 +107,32 @@ public class GameManagerTest {
 
     @Test
     void 플레이어가_버스트_하는_경우_무조건_패배(){
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
 
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("가이온",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new TwoScoreCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        gameManager.receiveCardToDealer();
+        gameManager.giveCardToPlayer(players.getFirst());
+        gameManager.giveCardToPlayer(players.getFirst());
+        gameManager.giveCardToPlayer(players.getFirst());
+
+        gameManager.giveCardToPlayer(players.get(1));
+        gameManager.giveCardToPlayer(players.get(1));
+        gameManager.giveCardToPlayer(players.get(1));
+        final GameResult gameResult1 = gameManager.calculateResult(0);
+        final GameResult gameResult2 = gameManager.calculateResult(1);
+
+        //then
+        assertThat(gameResult1).isEqualTo(GameResult.LOSE);
+        assertThat(gameResult2).isEqualTo(GameResult.LOSE);
     }
 
     @Test
