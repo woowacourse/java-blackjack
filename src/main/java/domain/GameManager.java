@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,11 +17,14 @@ public class GameManager {
         this.cardPack = new CardPack();
     }
 
+    public void shuffle() {
+        cardPack.shuffle();
+    }
+
     public void distributeSetUpCards() {
         dealer.setUpCardDeck(cardPack.poll(), cardPack.poll());
         players.forEach(player -> player.setUpCardDeck(cardPack.poll(), cardPack.poll()));
     }
-
 
     public GameResult evaluateFinalScore() {
         int dealerScore = dealer.calculateScore();

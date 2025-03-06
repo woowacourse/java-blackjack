@@ -46,4 +46,8 @@ public class Player implements Participant {
     public List<Card> getCards() {
         return cardDeck.getCards();
     }
+
+    public String getName() {
+        return name;
+    }
 }

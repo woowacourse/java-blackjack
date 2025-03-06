@@ -19,6 +19,10 @@ public class Card {
         return rank;
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (!(o instanceof Card card)) {
