@@ -29,15 +29,10 @@ public class Player {
         int sum = cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
-        if (hasAce() && sum + 10 <= 21) {
+        if (canCalculateAceWithEleven(sum)) {
             sum += 10;
         }
         return sum;
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getNumber() == 1);
     }
 
     public String getName() {
@@ -46,6 +41,15 @@ public class Player {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    private boolean canCalculateAceWithEleven(int sum) {
+        return hasAce() && sum + 10 <= 21;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     @Override

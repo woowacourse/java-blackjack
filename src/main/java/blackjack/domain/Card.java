@@ -31,4 +31,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(number, shape);
     }
+
+    public boolean isAce() {
+        return number.equals(CardNumber.ACE);
+    }
 }
