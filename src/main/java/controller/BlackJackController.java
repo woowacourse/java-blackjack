@@ -32,6 +32,9 @@ public class BlackJackController {
         // 게임 참여자 객체 생성
         String userNames = inputView.inputUserNames();
         String[] splitNames = userNames.split(",");
+        if (splitNames.length > 9) {
+            throw new IllegalArgumentException("게임의 최대 참여자는 9명을 넘을 수 없습니다.");
+        }
         for (String splitName : splitNames) {
             String trimName = splitName.trim();
             Participant participant = new Player(trimName);
