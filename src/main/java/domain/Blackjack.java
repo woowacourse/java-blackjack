@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Blackjack {
     private final Players players;
     private final Deck deck;
@@ -13,9 +11,5 @@ public class Blackjack {
 
     public void distributeInitialCards() {
         players.distributeInitialCards(deck);
-    }
-
-    public List<Cards> openCards() {
-
     }
 }
