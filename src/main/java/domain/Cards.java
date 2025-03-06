@@ -55,4 +55,8 @@ public class Cards {
     public List<Card> getCards() {
         return cards;
     }
+
+    public List<Card> getCards(int count) {
+        return cards.subList(0, count);
+    }
 }

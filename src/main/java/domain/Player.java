@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Player {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
@@ -16,6 +18,8 @@ public abstract class Player {
     public void receiveInitialCards(Deck deck) {
         getCards().addAll(deck.drawCards(2));
     }
+
+    public abstract List<Card> openInitialCards();
 
     private void validateName(String name) {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {

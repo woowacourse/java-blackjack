@@ -1,10 +1,11 @@
 package domain.dto;
 
-import domain.Cards;
+import domain.Card;
+import java.util.List;
 
 public record PlayerResponse(
         String name,
-        Cards cards
+        List<Card> cards
 ) {
 
 }

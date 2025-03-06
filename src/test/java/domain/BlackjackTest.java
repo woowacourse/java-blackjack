@@ -1,7 +1,10 @@
 package domain;
 
+import domain.dto.OpenCardsResponse;
+import domain.dto.PlayerResponse;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 public class BlackjackTest {
@@ -22,5 +25,35 @@ public class BlackjackTest {
         // when & then
         Assertions.assertThatCode(() -> new Blackjack(players, deck))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 플레이들이_초기에_공개한_카드를_반환한다() {
+        // given
+        Players players = new Players(List.of(
+                new Dealer(),
+                new Participant("시소"),
+                new Participant("헤일러"),
+                new Participant("부기"),
+                new Participant("사나")
+        ));
+
+        Deck deck = DeckGenerator.generateDeck();
+        Blackjack blackjack = new Blackjack(players, deck);
+        blackjack.distributeInitialCards();
+
+        // when
+        OpenCardsResponse response = blackjack.openInitialCards();
+
+        // then
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(response.dealer().cards().size())
+                    .isEqualTo(1);
+
+            for (PlayerResponse playerResponse : response.participants()) {
+                softly.assertThat(playerResponse.cards().size())
+                        .isEqualTo(2);
+            }
+        });
     }
 }

@@ -17,20 +17,20 @@ public class Blackjack {
         players.distributeInitialCards(deck);
     }
 
-    public OpenCardsResponse openPlayersCards() {
+    public OpenCardsResponse openInitialCards() {
         return new OpenCardsResponse(
-                getPlayerResponse(getDealer()),
-                getPlayerResponses(getParticipants())
+                openDealerCards(getDealer()),
+                openParticipantsCards(getParticipants())
         );
     }
 
-    private PlayerResponse getPlayerResponse(Player player) {
-        return new PlayerResponse(player.getName(), player.getCards());
+    private PlayerResponse openDealerCards(Player player) {
+        return new PlayerResponse(player.getName(), player.openInitialCards());
     }
 
-    private List<PlayerResponse> getPlayerResponses(List<Player> players) {
+    private List<PlayerResponse> openParticipantsCards(List<Player> players) {
         return players.stream()
-                .map(participant -> new PlayerResponse(participant.getName(), participant.getCards()))
+                .map(participant -> new PlayerResponse(participant.getName(), participant.openInitialCards()))
                 .toList();
     }
 

@@ -14,4 +14,12 @@ public class Card {
     public List<Integer> getScores() {
         return cardNumber.getScores();
     }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
+    public CardShape getCardShape() {
+        return cardShape;
+    }
 }

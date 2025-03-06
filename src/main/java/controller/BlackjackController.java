@@ -27,8 +27,8 @@ public class BlackjackController {
         blackjack.distributeInitialCards();
 
         // 초기 카드 오픈
-        OpenCardsResponse openCardsResponse = blackjack.openPlayersCards();
-        OutputView.printAnnounceInitialCardsDistribution(openCardsResponse);
+        OpenCardsResponse openCardsResponse = blackjack.openInitialCards();
+        OutputView.printInitialCardsDistribution(openCardsResponse);
 
     }
 
