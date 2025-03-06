@@ -16,32 +16,18 @@ public abstract class Gamer implements Cloneable {
         boolean containAce = cards.stream()
                 .anyMatch(card -> card.getCardRank() == CardRank.ACE);
 
-        int cardScore = cards.stream()
+        int lowAceTotal = cards.stream()
                 .mapToInt(card -> card.getCardRank().getValue())
                 .sum();
 
-        if (!containAce || cardScore > 21) {
-            return cardScore;
-        }
-
-        int otherScore = cardScore - CardRank.ACE.getValue() + CardRank.SPECIAL_ACE.getValue();
-
-        if (otherScore > 21) {
-            return cardScore;
-        }
-
-        return otherScore;
+        return calculateAceValue(containAce, lowAceTotal);
     }
 
     public void addCard(List<Card> addedCards) {
         cards.addAll(addedCards);
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
-    }
-
-    public boolean canGetMoreCard(int standard) {
+    public boolean isDrawable(int standard) {
         int score = calculateScore();
         return score <= standard;
     }
@@ -54,5 +40,21 @@ public abstract class Gamer implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
+    }
+
+
+    private int calculateAceValue(boolean containAce, int lowAceTotal) {
+        if (!containAce || lowAceTotal > 21) {
+            return lowAceTotal;
+        }
+        int highAceTotal = lowAceTotal - CardRank.ACE.getValue() + CardRank.SPECIAL_ACE.getValue();
+        if (highAceTotal > 21) {
+            return lowAceTotal;
+        }
+        return highAceTotal;
     }
 }
