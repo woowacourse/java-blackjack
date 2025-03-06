@@ -29,14 +29,14 @@ public abstract class Participant {
                 .count();
     }
 
-    public boolean isNotBust() {
+    public boolean isNotEnoughScoreCondition() {
 
         while (aceCount > 0 && score.getValue() > 21) {
             this.score = score.minus(10);
             aceCount--;
         }
 
-        return score.getValue() <= 21;
+        return score.getValue() < 21;
     }
 
     private int findScore(List<Integer> score) {

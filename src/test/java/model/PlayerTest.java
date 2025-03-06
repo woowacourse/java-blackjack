@@ -41,32 +41,29 @@ public class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("createNotBustCards")
-    @DisplayName("버스트 동작이 잘 작동하는지 : true")
-    void bustSuccess(List<Card> cards) {
+    @DisplayName("게임 진행 점수 조건이 충분한 지 : true")
+    void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
         Participant player = Player.from("pobi");
         player.addCards(cards);
         //when
         //then
-        Assertions.assertThat(player.isNotBust()).isTrue();
+        Assertions.assertThat(player.isNotEnoughScoreCondition()).isTrue();
     }
 
     @Test
-    @DisplayName("버스트 동작이 잘 작동하는지 : false")
-    void bustFailure() {
+    @DisplayName("게임 진행 점수 조건이 충분한 지 : false")
+    void isNotEnoughScoreConditionFalse() {
         //given
         List<Card> cards = List.of(
                 new Card(SuitType.CLUBS, RankType.ACE),
-                new Card(SuitType.HEARTS, RankType.ACE),
-                new Card(SuitType.SPADES, RankType.KING),
-                new Card(SuitType.SPADES, RankType.JACK),
-                new Card(SuitType.SPADES, RankType.EIGHT)
+                new Card(SuitType.HEARTS, RankType.KING)
         );
         Participant player = Player.from("pobi");
         player.addCards(cards);
         //when
         //then
-        Assertions.assertThat(player.isNotBust()).isFalse();
+        Assertions.assertThat(player.isNotEnoughScoreCondition()).isFalse();
     }
 
     private static Stream<Arguments> createNotBustCards() {
@@ -80,7 +77,7 @@ public class PlayerTest {
                 ),
                 Arguments.arguments(
                         List.of(
-                                new Card(SuitType.SPADES, RankType.NINE),
+                                new Card(SuitType.SPADES, RankType.TEN),
                                 new Card(SuitType.CLUBS, RankType.ACE),
                                 new Card(SuitType.HEARTS, RankType.ACE)
                         )
