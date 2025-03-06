@@ -25,7 +25,7 @@ public class OutputView {
             String participantName = entry.getKey();
             List<String> cardNames = entry.getValue();
 
-            System.out.printf("%s카드: %s%n",
+            System.out.printf("%s 카드: %s%n",
                 participantName,
                 String.join(", ", cardNames)
             );
