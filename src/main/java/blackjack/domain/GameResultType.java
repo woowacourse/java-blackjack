@@ -20,4 +20,16 @@ public enum GameResultType {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 비교 값입니다."));
     }
+
+    public GameResultType getOppositeType() {
+        if (this.equals(WIN)) {
+            return LOSE;
+        }
+
+        if (this.equals(LOSE)) {
+            return WIN;
+        }
+
+        return TIE;
+    }
 }

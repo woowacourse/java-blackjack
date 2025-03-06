@@ -1,10 +1,12 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.DealerResult;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.PlayersResult;
 import blackjack.manager.BlackJackInitManager;
 import blackjack.manager.BlackjackProcessManager;
 import blackjack.manager.CardsGenerator;
@@ -29,7 +31,8 @@ public class BlackjackController {
         Players players = blackJackInitManager.savePlayers(List.of(), Hand::new);
         Dealer dealer = blackJackInitManager.saveDealer(Hand::new);
 
-        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck);
+        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, PlayersResult.create(),
+                DealerResult.create());
 
         // 딜러 카드 분배
         for (Player player : players.getPlayers()) {
@@ -57,29 +60,7 @@ public class BlackjackController {
             blackjackProcessManager.giveCard(dealer.getCardHolder());
         }
 
-        boolean isBustedForDealer = gameRuleEvaluator.isBustedFor(dealer);
-
-        // 비교하는 작업이 시작됨
-        for (Player player : players.getPlayers()) {
-            boolean isBustedForPlayer = gameRuleEvaluator.isBustedFor(player);
-
-            // 딜러가 bust 됐다면
-            if (isBustedForDealer) {
-                if (isBustedForPlayer) {
-                    // 무로 처리한다.
-                }
-
-                // 플레이어 승리
-            }
-
-            // 딜러가 bust 안됐다면
-            if (isBustedForPlayer) {
-                // 딜러 승리
-            }
-
-            // 값 비교
-
-        }
+        blackjackProcessManager.calculateGameResult(players, dealer, gameRuleEvaluator);
 
         // 사람 이름 입력을 받는다
 
