@@ -5,6 +5,7 @@ import domain.card.CardGenerator;
 import domain.card.CardGroup;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,8 @@ public class GameManager {
     }
 
 
-    public boolean isAbleToHit(Player player) {
-        return !player.isBust();
+    public boolean isAbleToHit(final Gamer gamer) {
+        return !gamer.isBust();
     }
 
     public List<Player> getPlayers() {
