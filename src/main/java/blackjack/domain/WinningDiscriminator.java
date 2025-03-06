@@ -1,9 +1,13 @@
 package blackjack.domain;
 
+import static blackjack.view.WinningType.DEFEAT;
+import static blackjack.view.WinningType.DRAW;
+import static blackjack.view.WinningType.WIN;
+import static blackjack.view.WinningType.createWinningResult;
 import static java.util.function.Function.identity;
 
 import blackjack.domain.gambler.Name;
-import java.util.HashMap;
+import blackjack.view.WinningType;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,51 +20,51 @@ public class WinningDiscriminator {
         this.playerScores = playerScores;
     }
 
-    public Map<String, Integer> judgeDealerResult() {
-        Map<String, Integer> winningResult = new HashMap<>(Map.of("승", 0, "패", 0, "무", 0));
+    public Map<WinningType, Integer> judgeDealerResult() {
+        Map<WinningType, Integer> winningResult = createWinningResult();
 
         for (Integer playerScore : playerScores.values()) {
             if (playerScore > 21) {
-                winningResult.put("승", winningResult.get("승") + 1);
+                winningResult.put(WIN, winningResult.get(WIN) + 1);
                 continue;
             }
 
             if (dealerScore > 21) {
-                winningResult.put("패", winningResult.get("패") + 1);
+                winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
                 continue;
             }
 
             if (playerScore > dealerScore) {
-                winningResult.put("패", winningResult.get("패") + 1);
+                winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
                 continue;
             }
 
             if (playerScore < dealerScore) {
-                winningResult.put("승", winningResult.get("승") + 1);
+                winningResult.put(WIN, winningResult.get(WIN) + 1);
                 continue;
             }
-            winningResult.put("무", winningResult.get("무") + 1);
+            winningResult.put(DRAW, winningResult.get(DRAW) + 1);
         }
 
         return winningResult;
     }
 
-    public Map<Name, String> judgePlayersResult() {
+    public Map<Name, WinningType> judgePlayersResult() {
         return playerScores.keySet().stream()
                 .collect(Collectors.toMap(identity(), this::judgePlayerResult));
     }
 
-    private String judgePlayerResult(Name name) {
+    private WinningType judgePlayerResult(Name name) {
         int playerScore = playerScores.get(name);
         if (playerScore > 21) {
-            return "패";
+            return DEFEAT;
         }
         if (playerScore > dealerScore) {
-            return "승";
+            return WIN;
         }
         if (playerScore < dealerScore) {
-            return "패";
+            return DEFEAT;
         }
-        return "무";
+        return DRAW;
     }
 }

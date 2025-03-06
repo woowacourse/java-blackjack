@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
+import blackjack.view.WinningType;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -76,11 +77,11 @@ class RoundTest {
         // when
 
         WinningDiscriminator result = round.getWinningDiscriminator();
-        Map<String, Integer> dealerWinning = result.judgeDealerResult();
+        Map<WinningType, Integer> dealerWinning = result.judgeDealerResult();
 
         // then
-        assertThat(dealerWinning.get("승")).isEqualTo(1);
-        assertThat(dealerWinning.get("무")).isEqualTo(0);
-        assertThat(dealerWinning.get("패")).isEqualTo(0);
+        assertThat(dealerWinning.get(WinningType.WIN)).isEqualTo(1);
+        assertThat(dealerWinning.get(WinningType.DRAW)).isEqualTo(0);
+        assertThat(dealerWinning.get(WinningType.DEFEAT)).isEqualTo(0);
     }
 }

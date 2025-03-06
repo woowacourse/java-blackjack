@@ -1,5 +1,9 @@
 package blackjack.view;
 
+import static blackjack.view.WinningType.DEFEAT;
+import static blackjack.view.WinningType.DRAW;
+import static blackjack.view.WinningType.WIN;
+
 import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Name;
@@ -34,12 +38,16 @@ public class OutputView {
 
     public static void printWinning(WinningDiscriminator winningDiscriminator) {
         System.out.println("##최종 승패");
-        Map<String, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
-        System.out.printf("딜러: %d승 %d무 %d패\n", dealerWinning.get("승"), dealerWinning.get("무"), dealerWinning.get("패"));
+        Map<WinningType, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
 
-        Map<Name, String> playerWinning = winningDiscriminator.judgePlayersResult();
-        for (Entry<Name, String> entry : playerWinning.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());
+        Integer winCount = dealerWinning.get(WIN);
+        Integer drawCount = dealerWinning.get(DRAW);
+        Integer defeatCount = dealerWinning.get(DEFEAT);
+        System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, defeatCount);
+
+        Map<Name, WinningType> playerWinning = winningDiscriminator.judgePlayersResult();
+        for (Entry<Name, WinningType> entry : playerWinning.entrySet()) {
+            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getDisplayName());
         }
     }
 
