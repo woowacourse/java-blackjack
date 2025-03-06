@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Set;
 
-public abstract class Participant {
+public class Participant {
 
     private static final int SUM_LIMIT = 21;
     protected final Cards cards;
@@ -30,6 +30,10 @@ public abstract class Participant {
     public boolean isBurst() {
         Set<Integer> coordinates = cards.getCoordinateSums();
         return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
+    }
+
+    public GameResult calculateGameResult(Participant otherParticipant) {
+        return null;
     }
 
     private int getMaxSum(Set<Integer> coordinates) {
