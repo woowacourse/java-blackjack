@@ -12,7 +12,7 @@ public class InputView {
     }
 
     public Response getUserResponse(String username) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", username);
+        System.out.printf("\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", username);
         return Response.findAnswer(readLine());
     }
 

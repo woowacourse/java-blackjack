@@ -100,6 +100,6 @@ public enum Card {
     }
 
     public String getCardName() {
-        return cardRank.getName() + cardRank.getValue();
+        return cardRank.getName() + cardShape.getName();
     }
 }
