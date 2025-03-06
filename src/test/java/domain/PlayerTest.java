@@ -7,6 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerTest {
 
@@ -104,5 +106,28 @@ class PlayerTest {
         // when & then
         assertThatCode(() -> player.hit(card1))
                 .doesNotThrowAnyException();
+    }
+
+    @DisplayName("플레이어의 카드 중 최고 값을 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "TWO,EIGHT,ACE,21", "ACE,ACE,ACE,13",
+            "KING,JACK,ACE,21", "THREE,FOUR,FIVE,12"
+    })
+    void 플레이어의_카드_중_최고_값을_반환한다(Rank rank1, Rank rank2, Rank rank3, int expected) {
+
+        // given
+        Card card1 = new Card(rank1, Shape.CLOVER);
+        Card card2 = new Card(rank2, Shape.CLOVER);
+        Card card3 = new Card(rank3, Shape.CLOVER);
+
+        player.receiveInitialCards(List.of(card1, card2));
+        player.hit(card3);
+
+        // when
+        int sumOfRank = player.calculateSumOfRank();
+
+        // then
+        assertThat(sumOfRank).isEqualTo(expected);
     }
 }
