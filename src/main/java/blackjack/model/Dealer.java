@@ -2,7 +2,7 @@ package blackjack.model;
 
 public class Dealer extends Player {
 
-    public Dealer() {
-        super(Role.DEALER);
+    public Dealer(final String name) {
+        super(name, Role.DEALER);
     }
 }

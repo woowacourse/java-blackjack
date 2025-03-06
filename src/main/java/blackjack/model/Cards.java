@@ -3,6 +3,7 @@ package blackjack.model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.IntStream;
 
@@ -26,7 +27,6 @@ public class Cards {
         List<Integer> result = new ArrayList<>();
         dfs(result, 0, 0);
 
-        System.out.println("result = " + result);
         return result;
     }
 
@@ -66,6 +66,22 @@ public class Cards {
         if (values.size() < size) {
             throw new IllegalArgumentException("남은 카드가 부족합니다.");
         }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Cards cards)) {
+            return false;
+        }
+        return Objects.equals(getValues(), cards.getValues());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getValues());
     }
 
 }
