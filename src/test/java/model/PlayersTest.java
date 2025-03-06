@@ -45,7 +45,7 @@ public class PlayersTest {
         player.addCards(divideCards);
 
         // when
-        int sum = player.sum();
+        int sum = player.getSum();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);

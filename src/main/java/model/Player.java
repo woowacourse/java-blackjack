@@ -8,11 +8,15 @@ public class Player extends Participant {
 
     private final Nickname nickname;
     private final List<Card> hands;
+    private int sum;
+    private int aceCount;
 
     private Player(String nickname) {
         super(nickname);
         this.nickname = new Nickname(nickname);
         this.hands = new ArrayList<>();
+        this.sum = 0;
+        this.aceCount = 0;
     }
 
     public static Player from(String nickname) {
@@ -30,12 +34,13 @@ public class Player extends Participant {
     }
 
     @Override
-    public int sum() {
-        return super.sum();
+    public int getSum() {
+        return super.getSum();
     }
 
+    @Override
     public boolean isNotBust() {
-        return sum() <= 21;
+        return super.isNotBust();
     }
 
     @Override

@@ -54,7 +54,7 @@ class DealerTest {
         dealer.addCards(divideCards);
 
         // when
-        int sum = dealer.sum();
+        int sum = dealer.getSum();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);

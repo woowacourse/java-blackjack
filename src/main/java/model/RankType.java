@@ -16,7 +16,7 @@ public enum RankType {
     KING("K",10),
     JACK("J",10),
     QUEEN("Q",10),
-    ACE("A",List.of(1,11));
+    ACE("A",List.of(11, 1));
 
     private final String displayName;
     private final List<Integer> score;
