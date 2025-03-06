@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,12 +44,22 @@ public class Players {
 
     public Map<String, Gamer> getPlayersInfo() {
         return players.stream()
-                .collect(Collectors.toMap(Player::getUsername, Gamer::clone));
+                .collect(Collectors.toMap(
+                        Player::getUsername,
+                        Gamer::clone,
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
     }
 
     public GameStatistics calculateGameStatistics(Dealer dealer) {
         Map<String, GameResult> gameResults = players.stream()
-                .collect(Collectors.toMap(Player::getUsername, player -> player.decideGameResult(dealer)));
+                .collect(Collectors.toMap(
+                        Player::getUsername,
+                        player -> player.decideGameResult(dealer),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
 
         return new GameStatistics(gameResults);
     }
