@@ -1,6 +1,10 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Player extends Gamer {
     private int bestSum;
@@ -11,32 +15,39 @@ public class Player extends Gamer {
 
     @Override
     public int calculateSumOfRank() {
-        final List<Card> cards = this.hand.getCards();
-        bestSum = 0;
-        dfs(cards, 0, 0);
-        return bestSum;
+
+        if (hand.hasAce()) {
+            final List<Card> cards = this.hand.getCards();
+            List<Integer> sumOfRanks = calculateAllSums(cards);
+
+            return sumOfRanks.stream()
+                    .filter(sum -> sum <= 21)
+                    .max(Integer::compareTo)
+                    .orElseGet(() -> sumOfRanks.stream().min(Integer::compareTo).orElse(0));
+        }
+
+        return hand.getSumOfRank();
     }
 
-    private void dfs(List<Card> cards, int index, int currentSum) {
-        if (currentSum > 21) {
+    private List<Integer> calculateAllSums(List<Card> cards) {
+        Set<Integer> resultSet = new HashSet<>();
+        calculateAllSums(cards, 0, 0, resultSet);
+        List<Integer> resultList = new ArrayList<>(resultSet);
+        Collections.sort(resultList);
+        return resultList;
+    }
+
+    private void calculateAllSums(List<Card> cards, int index, int currentSum, Set<Integer> resultSet) {
+        if (index == cards.size()) {
+            resultSet.add(currentSum);
             return;
         }
-        if (currentSum > bestSum) {
-            bestSum = currentSum;
-        }
-        if (index >= cards.size()) {
-            return;
-        }
-
-        dfs(cards, index + 1, currentSum);
-
         Card card = cards.get(index);
         if (card.isAce()) {
-            dfs(cards, index + 1, currentSum + 1);
-            dfs(cards, index + 1, currentSum + 11);
-
+            calculateAllSums(cards, index + 1, currentSum + 1, resultSet);
+            calculateAllSums(cards, index + 1, currentSum + 11, resultSet);
         } else {
-            dfs(cards, index + 1, currentSum + card.getScore());
+            calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);
         }
     }
 }

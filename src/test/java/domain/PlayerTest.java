@@ -112,7 +112,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {
             "TWO,EIGHT,ACE,21", "ACE,ACE,ACE,13",
-            "KING,JACK,ACE,21", "THREE,FOUR,FIVE,12"
+            "KING,JACK,ACE,21", "THREE,FOUR,FIVE,12",
     })
     void 플레이어의_카드_중_최고_값을_반환한다(Rank rank1, Rank rank2, Rank rank3, int expected) {
 
@@ -129,5 +129,26 @@ class PlayerTest {
 
         // then
         assertThat(sumOfRank).isEqualTo(expected);
+    }
+
+    @DisplayName("플레이어의 카드 중 최고 값을 반환한다2")
+    @Test
+    void 플레이어의_카드_중_최고_값을_반환한다2() {
+
+        // given
+        Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        Card card2 = new Card(Rank.KING, Shape.CLOVER);
+        Card card3 = new Card(Rank.KING, Shape.CLOVER);
+        Card card4 = new Card(Rank.ACE, Shape.CLOVER);
+
+        player.receiveInitialCards(List.of(card1, card2));
+        player.hit(card3);
+        player.hit(card4);
+
+        // when
+        int sumOfRank = player.calculateSumOfRank();
+
+        // then
+        assertThat(sumOfRank).isEqualTo(31);
     }
 }
