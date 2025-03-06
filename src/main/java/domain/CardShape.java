@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Arrays;
+
 public enum CardShape {
     DIA(1),
     HEART(2),
@@ -14,11 +16,9 @@ public enum CardShape {
     }
 
     public static CardShape pickCardShape(int index) {
-        for (CardShape value : values()) {
-            if (value.index == index) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException("카드 모양 범위 내에서 선택해주세요 (1~4)");
+        Arrays.stream(values())
+                .filter((value) -> value.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("카드 모양 범위 내에서 선택해주세요 (1~4)"));
     }
 }

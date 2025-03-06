@@ -27,12 +27,6 @@ public class OutputView {
     }
 
     public void displayGameResult(Map<User, Integer> gameResult) {
-        /*
-        ## 최종 승패
-        딜러: 1승 1패
-        pobi: 승
-        jason: 패
-         */
         gameResult.forEach((key, value) -> displayUserGameResult(
                 key.getName(),
                 convertGameResult(value)));

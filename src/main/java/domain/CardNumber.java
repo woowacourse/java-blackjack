@@ -1,6 +1,7 @@
 package domain;
 
 public enum CardNumber {
+    // todo: view에서 displayName 빼서 처리하기
     ACE(1, 1, "A"),
     TWO(2, 2, "2"),
     THREE(3, 3, "3"),

@@ -21,6 +21,8 @@ public class BlackjackController {
     }
 
     public void run() {
+        // todo: parse, validate
+        // todo: 참여자 이름은 dealer나 딜러일 수 없다
         // 참여자 입력
         List<String> playerNames = inputView.inputUsers();
         GameManger gameManger = new GameManger(playerNames);
