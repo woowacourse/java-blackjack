@@ -6,6 +6,7 @@ import java.util.Objects;
 public abstract class Player {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
+    private static final int ADD_CARD_THRESHOLD = 16;
 
     private final String name;
     private final Cards cards;
@@ -52,5 +53,13 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    public boolean addCardIfLowScore(Deck deck) {
+        if (cards.calculateOptimalSum() <= ADD_CARD_THRESHOLD) {
+            addCard(deck);
+            return true;
+        }
+        return false;
     }
 }

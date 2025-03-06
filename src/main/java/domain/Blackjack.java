@@ -43,6 +43,10 @@ public class Blackjack {
         );
     }
 
+    public boolean addCardToDealerIfLowScore() {
+        return getDealer().addCardIfLowScore(deck);
+    }
+
     public PlayerResponse getPlayerByName(String name) {
         Player player = players.getPlayerByName(name);
         return new PlayerResponse(

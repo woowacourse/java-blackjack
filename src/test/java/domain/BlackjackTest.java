@@ -2,6 +2,7 @@ package domain;
 
 import domain.dto.OpenCardsResponse;
 import domain.dto.PlayerResponse;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -78,5 +79,40 @@ public class BlackjackTest {
                 .isEqualTo(drawnCount + 1);
 
 
+    }
+
+    @Test
+    void 딜러의_카드_합이_16이하면_카드를_한장_추가한다() {
+        // given
+        Players players = new Players(List.of(
+                new Dealer(),
+                new Participant("시소"),
+                new Participant("헤일러"),
+                new Participant("부기"),
+                new Participant("사나")
+        ));
+
+        Deck deck = new Deck(new ArrayList<>(List.of(
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardShape.SPADE, CardNumber.EIGHT),
+
+                new Card(CardShape.SPADE, CardNumber.EIGHT)
+        )));
+        Blackjack blackjack = new Blackjack(players, deck);
+        blackjack.distributeInitialCards();
+
+        // when
+        boolean actual = blackjack.addCardToDealerIfLowScore();
+
+        // then
+        Assertions.assertThat(actual).isTrue();
     }
 }
