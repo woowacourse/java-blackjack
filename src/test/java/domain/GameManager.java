@@ -7,7 +7,6 @@ import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GameManager {
