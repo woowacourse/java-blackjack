@@ -31,6 +31,7 @@ public class BlackjackController {
         handOutCards(players, dealer, deck);
         playerPickCard(players, deck);
         dealerPickCard(dealer, deck);
+        outputHandResult(dealer.getParticipant());
     }
 
     private List<Player> inputPlayers() {
@@ -57,36 +58,36 @@ public class BlackjackController {
         outputView.printHandOutIntroduce(names);
 
         final Participant dealerParticipant = dealer.getParticipant();
-        outputView.printDealerHandOutResult(getConvertedDealerCardText(dealerParticipant));
+        outputView.printDealerHandOutResult(convertedDealerCardText(dealerParticipant));
 
         final List<Map.Entry<String, List<String>>> convertedPlayers = players.stream()
-            .map(this::getConvertPlayerToEntry)
+            .map(this::convertPlayerToEntry)
             .collect(Collectors.toList());
         outputView.printPlayersCard(convertedPlayers);
     }
 
-    private Map.Entry<String, List<String>> getConvertPlayerToEntry(final Player player) {
+    private Map.Entry<String, List<String>> convertPlayerToEntry(final Player player) {
         return new AbstractMap.SimpleEntry<>(
             player.getName(),
-            getConvertedPlayerCardText(player.getParticipant())
+            convertParticipantCardText(player.getParticipant())
         );
     }
 
-    private String getConvertedDealerCardText(final Participant dealerParticipant) {
+    private String convertedDealerCardText(final Participant dealerParticipant) {
         final CardHand dealerHand = dealerParticipant.getHand();
         final Card dealerFirstCard = dealerHand.hand().getFirst();
-        return getConvertedCardText(dealerFirstCard);
+        return convertedCardText(dealerFirstCard);
     }
 
-    private String getConvertedCardText(final Card dealerFirstCard) {
+    private String convertedCardText(final Card dealerFirstCard) {
         final String cardNumberText = CardNumberToTextConverter.convert(dealerFirstCard.number());
         final String cardEmblemText = dealerFirstCard.emblem().getName();
         return cardNumberText + cardEmblemText;
     }
 
-    private List<String> getConvertedPlayerCardText(final Participant dealerParticipant) {
+    private List<String> convertParticipantCardText(final Participant dealerParticipant) {
         return dealerParticipant.getHand().hand().stream()
-            .map(this::getConvertedCardText)
+            .map(this::convertedCardText)
             .toList();
     }
 
@@ -101,13 +102,11 @@ public class BlackjackController {
                     if (inputView.readPlayerAnswer(name)) {
                         isDone = false;
                         p.pickCard(deck);
-                        outputView.printPlayerCards(name, getConvertedPlayerCardText(p.getParticipant()));
+                        outputView.printPlayerCards(name, convertParticipantCardText(p.getParticipant()));
                     }
                 }
             }
-
         }
-
     }
 
     private void dealerPickCard(final Dealer dealer, final Deck deck) {
@@ -115,5 +114,11 @@ public class BlackjackController {
             dealer.pickCard(deck);
             outputView.printDealerPickCard();
         }
+    }
+
+    private void outputHandResult(final Participant participant) {
+        final List<String> convertedCards = convertParticipantCardText(participant);
+        final int score = participant.calculateAllScore();
+        outputView.printDealerHandResult(convertedCards, score);
     }
 }

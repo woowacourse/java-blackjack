@@ -2,14 +2,13 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
     private static final String PLAYER_NAME_DELIMITER = ", ";
 
     public void printHandOutIntroduce(final List<String> playerNames) {
-        final String names = playerNames.stream().collect(Collectors.joining(PLAYER_NAME_DELIMITER));
+        final String names = String.join(PLAYER_NAME_DELIMITER, playerNames);
         System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), names);
     }
 
@@ -22,11 +21,16 @@ public class OutputView {
     }
 
     public void printPlayerCards(final String name, final List<String> card) {
-        final String cards = card.stream().collect(Collectors.joining(PLAYER_NAME_DELIMITER));
+        final String cards = String.join(PLAYER_NAME_DELIMITER, card);
         System.out.printf("%s카드: %s" + System.lineSeparator(), name, cards);
     }
 
     public void printDealerPickCard() {
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
+
+    public void printDealerHandResult(final List<String> card, final int score) {
+        final String cards = String.join(PLAYER_NAME_DELIMITER, card);
+        System.out.printf("딜러카드: %s - 결과: %d" + System.lineSeparator(), cards, score);
     }
 }
