@@ -13,7 +13,7 @@ public class Deck {
 
     public Deck(List<Card> cards) {
         validate(cards);
-        this.cards = new ArrayList<>(cards);
+        this.cards = new ArrayList<>(shuffled(cards));
     }
 
     private void validate(List<Card> cards) {
@@ -30,8 +30,11 @@ public class Deck {
 
     }
 
-    public void shuffle() {
+    private List<Card> shuffled(List<Card> cards) {
+        ArrayList<Card> copiedCards = new ArrayList<>(cards);
+        Collections.shuffle(copiedCards);
 
+        return copiedCards;
     }
 
     public List<Card> getCards() {

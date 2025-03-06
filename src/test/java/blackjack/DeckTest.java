@@ -67,9 +67,6 @@ class DeckTest {
         List<Card> cards = cardsGenerator.generate();
         Deck deck = new Deck(cards);
 
-        // when
-        deck.shuffle();
-
         // then
         assertThat(deck.getCards())
                 .containsExactlyInAnyOrderElementsOf(cards);
