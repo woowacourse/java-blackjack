@@ -34,7 +34,6 @@ public class BlackjackController {
 
         // 모든 플레이어에게 추가 카드 배분, 단 21이상인 경우 선택지 없음
         playerNames.forEach(playerName ->
-
                 addCardAllPlayer(gameManger, playerName));
 
         // 딜러 추가 카드 배분, 단 16이상인 경우 선택지 없음
@@ -42,6 +41,9 @@ public class BlackjackController {
         while (!dealer.isImpossibleDraw()) {
             dealer.drawCard();
             outputView.displayDealerAddCard();
+        }
+        if (dealer.isImpossibleDraw()) {
+            dealer.burst();
         }
 
         // 결과 출력

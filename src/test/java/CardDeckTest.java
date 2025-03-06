@@ -107,4 +107,44 @@ public class CardDeckTest {
                         new TrumpCard(CardShape.CLOVER, CardNumber.Q)), false)
         );
     }
+
+    @DisplayName("카드의 총합을 계산한다.")
+    @ParameterizedTest
+    @MethodSource("cardDeck")
+    void test6(List<TrumpCard> cards, int expectedSum) {
+        // given
+        CardDeck cardDeck = new CardDeck();
+        for (TrumpCard card : cards) {
+            cardDeck.addTrumpCard(card);
+        }
+
+        // when
+        int realSum = cardDeck.calculateScore();
+
+        // then
+        Assertions.assertThat(realSum).isEqualTo(expectedSum);
+    }
+
+    private static Stream<Arguments> cardDeck() {
+        return Stream.of(
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
+                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), 13),
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.DIA, CardNumber.K),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.J),
+                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), 21),
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.HEART, CardNumber.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), 21),
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.DIA, CardNumber.J),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), 20),
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.SPADE, CardNumber.K),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.J),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), 30)
+        );
+    }
 }
