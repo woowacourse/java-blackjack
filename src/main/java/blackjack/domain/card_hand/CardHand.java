@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 
 public final class CardHand {
     

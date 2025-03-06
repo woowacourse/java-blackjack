@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 
 import static blackjack.testutil.TestConstants.*;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.deck.Deck;
 import blackjack.testutil.CardDrawerStub;

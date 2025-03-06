@@ -2,10 +2,9 @@ package blackjack.domain.card_hand;
 
 import java.util.List;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.deck.CardDrawer;
 import blackjack.domain.deck.CardHandInitializer;
-import blackjack.domain.deck.Deck;
 
 public final class DealerBlackjackCardHand implements BlackjackWinDeterminer {
     

@@ -5,6 +5,9 @@ import java.util.EnumMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import blackjack.domain.deck.Deck;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

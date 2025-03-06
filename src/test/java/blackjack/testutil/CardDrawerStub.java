@@ -1,6 +1,6 @@
 package blackjack.testutil;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.deck.CardDrawer;
 
 import java.util.ArrayDeque;

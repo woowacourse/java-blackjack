@@ -3,12 +3,14 @@ package blackjack.domain;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static blackjack.domain.CardShape.다이아몬드;
-import static blackjack.domain.CardShape.하트;
+import static blackjack.domain.card.CardShape.다이아몬드;
+import static blackjack.domain.card.CardShape.하트;
 import static blackjack.testutil.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.domain.deck.Deck;
 import org.assertj.core.api.Assertions;

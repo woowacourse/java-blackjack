@@ -3,7 +3,7 @@ package blackjack.view;
 import java.util.List;
 import java.util.StringJoiner;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.WinningStatus;
 import blackjack.view.writer.Writer;
 

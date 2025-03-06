@@ -1,6 +1,6 @@
 package blackjack.domain.card_hand;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.deck.CardHandInitializer;
 
 import java.util.ArrayList;
