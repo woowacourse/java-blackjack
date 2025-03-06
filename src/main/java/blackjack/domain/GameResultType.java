@@ -4,14 +4,16 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum GameResultType {
-    WIN((value, comparedValue) -> value > comparedValue),
-    TIE(Integer::equals),
-    LOSE((value, comparedValue) -> value < comparedValue);
+    WIN((value, comparedValue) -> value > comparedValue, "승"),
+    TIE(Integer::equals, "무"),
+    LOSE((value, comparedValue) -> value < comparedValue, "패");
 
     private final BiPredicate<Integer, Integer> condition;
+    private final String description;
 
-    GameResultType(BiPredicate<Integer, Integer> condition) {
+    GameResultType(BiPredicate<Integer, Integer> condition, String description) {
         this.condition = condition;
+        this.description = description;
     }
 
     public static GameResultType find(int value, int comparedValue) {
@@ -31,5 +33,9 @@ public enum GameResultType {
         }
 
         return TIE;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

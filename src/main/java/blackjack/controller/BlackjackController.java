@@ -35,8 +35,11 @@ public class BlackjackController {
         Players players = blackJackInitManager.savePlayers(names, Hand::new);
         Dealer dealer = blackJackInitManager.saveDealer(Hand::new);
 
-        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, PlayersResult.create(),
-                DealerResult.create());
+        PlayersResult playersResult = PlayersResult.create();
+        DealerResult dealerResult = DealerResult.create();
+
+        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, playersResult,
+                dealerResult);
 
         // 딜러 카드 분배
         for (Player player : players.getPlayers()) {
@@ -56,7 +59,7 @@ public class BlackjackController {
                 }
                 blackjackProcessManager.giveCard(player.getCardHolder());
 
-                if (gameRuleEvaluator.isBustedFor(player)){
+                if (gameRuleEvaluator.isBustedFor(player)) {
                     OutputView.printBustedPlayer(player);
                 }
             }
@@ -68,6 +71,8 @@ public class BlackjackController {
         }
 
         blackjackProcessManager.calculateGameResult(players, dealer, gameRuleEvaluator);
-        OutputView.printResult(players, dealer);
+        OutputView.printCardResult(players, dealer);
+
+        OutputView.printGameResult(dealerResult, playersResult);
     }
 }

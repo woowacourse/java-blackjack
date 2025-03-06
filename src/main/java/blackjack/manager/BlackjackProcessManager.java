@@ -48,10 +48,12 @@ public class BlackjackProcessManager {
                 }
 
                 saveResultWithPlayerResult(player, GameResultType.WIN);
+                continue;
             }
 
             if (isBustedForPlayer) {
                 saveResultWithPlayerResult(player, GameResultType.LOSE);
+                continue;
             }
 
             GameResultType resultOfPlayer = decideResultOfPlayer(player, dealer);
