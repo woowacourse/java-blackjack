@@ -6,6 +6,10 @@ public class Dealer extends Participant{
         super();
     }
 
+    public Card getFirstHand(){
+        return getParticipantHand().getCards().getFirst();
+    }
+
     public boolean checkScoreUnderSixteen() {
         return getParticipantHand().checkScoreBelow(16);
     }

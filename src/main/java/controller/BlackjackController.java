@@ -7,7 +7,7 @@ import model.Deck;
 import model.GameResult;
 import model.Judge;
 import model.Player;
-import model.PlayerWinningResult;
+import model.ParticipantWinningResult;
 import model.Players;
 import view.InputView;
 import view.OutputView;
@@ -29,7 +29,7 @@ public class BlackjackController {
             while ((flag == InputView.readHit(player))) {
                 player.receiveCard(deck.pick());
                 OutputView.printHitResult(player);
-                if (player.getParticipantHand().checkBurst()) {
+                if (player.isBurst()) {
                     break;
                 }; //TODO : 수정은 나중에
             }
@@ -46,11 +46,11 @@ public class BlackjackController {
     }
 
     private static void printWinningResultV2(Players players, Dealer dealer) {
-        PlayerWinningResult playerWinningResult = PlayerWinningResult.of(players, dealer);
-        Map<GameResult, Integer> dealerWinningResult = playerWinningResult.decideDealerWinning();
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
 
         OutputView.printDealerFinalResult(dealerWinningResult);
-        OutputView.printPlayerFinalResultV2(playerWinningResult);
+        OutputView.printPlayerFinalResultV2(participantWinningResult);
     }
 
     private static void printWinningResultV1(Players players, Dealer dealer) {

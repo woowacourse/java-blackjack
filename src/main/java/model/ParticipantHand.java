@@ -30,10 +30,6 @@ public class ParticipantHand {
         return calculateScoreWithAceAsOne();
     }
 
-    public Card getFirstHand(){
-        return cards.getFirst();
-    }
-
     private int calculateScoreWithAceAsOne() {
         return cards.stream()
                 .mapToInt(Card::getCardRankValue)

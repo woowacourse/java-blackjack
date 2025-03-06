@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerWinningResultTest {
+class ParticipantWinningResultTest {
 
     @Test
     @DisplayName("딜러가 버스트되고 플레이어의 경우 버스트가 아닌 경우 플레이어가 승리한다")
@@ -19,8 +19,8 @@ class PlayerWinningResultTest {
         dealer.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         player.receiveCard(new Card(CardRank.FIVE, CardSuit.DIAMOND));
-        PlayerWinningResult playerWinningResult = PlayerWinningResult.of(players, dealer);
-        GameResult result = playerWinningResult.getResult().get(player);
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        GameResult result = participantWinningResult.getResult().get(player);
         GameResult expect =GameResult.WIN;
         assertEquals(expect, result);
     }

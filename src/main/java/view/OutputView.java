@@ -6,14 +6,14 @@ import model.Card;
 import model.Dealer;
 import model.GameResult;
 import model.Player;
-import model.PlayerWinningResult;
+import model.ParticipantWinningResult;
 import model.Players;
 
 public class OutputView {
 
     public static void printInitialDealResult(Dealer dealer, Players players){
         printCardDivision(players);
-        Card firstDealerCard = dealer.getParticipantHand().getFirstHand();
+        Card firstDealerCard = dealer.getFirstHand();
         System.out.println("딜러카드: " + firstDealerCard.getCardName());
 
         for (Player player : players.getPlayers()) {
@@ -47,12 +47,12 @@ public class OutputView {
     public static void printFinalScore(Dealer dealer, Players players) {
         List<String> dealerCardNames = dealer.getHandCards().stream().map(Card::getCardName).toList();
         System.out.print("딜러카드: " + String.join(", ", dealerCardNames));
-        System.out.println(" - 결과: " + dealer.getParticipantHand().calculateFinalScore());
+        System.out.println(" - 결과: " + dealer.calculateFinalScore());
 
         for (Player player : players.getPlayers()) {
             List<String> playerCardNames = player.getHandCards().stream().map(Card::getCardName).toList();
             System.out.print(player.getName() + "카드: " + String.join(", ", playerCardNames));
-            System.out.println(" - 결과: " + player.getParticipantHand().calculateFinalScore());
+            System.out.println(" - 결과: " + player.calculateFinalScore());
         }
     }
 
@@ -77,10 +77,10 @@ public class OutputView {
         }
     }
 
-    public static void printPlayerFinalResultV2(PlayerWinningResult playerWinningResult) {
-        Map<Player, GameResult> playerResults = playerWinningResult.getResult();
+    public static void printPlayerFinalResultV2(ParticipantWinningResult participantWinningResult) {
+        Map<Player, GameResult> playerResults = participantWinningResult.getResult();
         for (Player player : playerResults.keySet()) {
-            GameResult playerResult = playerWinningResult.getResult().get(player);
+            GameResult playerResult = participantWinningResult.getResult().get(player);
             System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
         }
     }

@@ -19,6 +19,14 @@ public class Participant {
         }
     }
 
+    public boolean isBurst() {
+        return participantHand.checkBurst();
+    }
+
+    public int calculateFinalScore() {
+        return participantHand.calculateFinalScore();
+    }
+
     public List<Card> getHandCards() {
         return participantHand.getCards();
     }
