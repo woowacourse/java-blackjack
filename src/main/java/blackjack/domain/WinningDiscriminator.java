@@ -1,8 +1,11 @@
 package blackjack.domain;
 
+import static java.util.function.Function.identity;
+
 import blackjack.domain.gambler.Name;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WinningDiscriminator {
     private final int dealerScore;
@@ -42,7 +45,12 @@ public class WinningDiscriminator {
         return winningResult;
     }
 
-    public String judgePlayerResult(Name name) {
+    public Map<Name, String> judgePlayersResult() {
+        return playerScores.keySet().stream()
+                .collect(Collectors.toMap(identity(), this::judgePlayerResult));
+    }
+
+    private String judgePlayerResult(Name name) {
         int playerScore = playerScores.get(name);
         if (playerScore > 21) {
             return "패";

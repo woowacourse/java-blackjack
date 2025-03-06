@@ -1,10 +1,13 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Player;
 import java.util.List;
+import java.util.Map;
 
 public class Round {
     private final CardDeck cardDeck;
@@ -53,6 +56,13 @@ public class Round {
             player.addCard(cardDeck.getCard());
             player.addCard(cardDeck.getCard());
         }
+    }
+
+    public WinningDiscriminator getWinningDiscriminator() {
+        int dealerScore = dealer.calculateScore();
+        Map<Name, Integer> playerScores = players.stream()
+                .collect(toMap(Player::getName, Player::calculateScore));
+        return new WinningDiscriminator(dealerScore, playerScores);
     }
 
     public List<Card> getCardsByPlayer(Name name) {

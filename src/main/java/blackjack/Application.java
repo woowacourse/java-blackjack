@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.CardDeck;
 import blackjack.domain.Round;
+import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
@@ -51,7 +52,8 @@ public class Application {
             OutputView.printGamblerResult(playerName.getName(), cards, score);
         }
 
-
+        WinningDiscriminator discriminator = round.getWinningDiscriminator();
+        OutputView.printWinning(discriminator);
     }
 
     private static boolean isHit(Name playerName) {

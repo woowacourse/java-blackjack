@@ -1,8 +1,11 @@
 package blackjack.view;
 
+import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Name;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -27,6 +30,17 @@ public class OutputView {
     public static void printGamblerResult(final String name, final List<Card> cards, final int score) {
         String ownCards = joinToStringByDelimiter(cards, ", ");
         System.out.printf("%s카드: %s - 결과: %d\n", name, ownCards, score);
+    }
+
+    public static void printWinning(WinningDiscriminator winningDiscriminator) {
+        System.out.println("##최종 승패");
+        Map<String, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
+        System.out.printf("딜러: %d승 %d무 %d패\n", dealerWinning.get("승"), dealerWinning.get("무"), dealerWinning.get("패"));
+
+        Map<Name, String> playerWinning = winningDiscriminator.judgePlayersResult();
+        for (Entry<Name, String> entry : playerWinning.entrySet()) {
+            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());
+        }
     }
 
     private static <T> String joinToStringByDelimiter(final List<T> components, final String delimiter) {
