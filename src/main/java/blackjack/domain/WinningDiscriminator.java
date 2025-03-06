@@ -41,4 +41,18 @@ public class WinningDiscriminator {
 
         return winningResult;
     }
+
+    public String judgePlayerResult(Name name) {
+        int playerScore = playerScores.get(name);
+        if (playerScore > 21) {
+            return "패";
+        }
+        if (playerScore > dealerScore) {
+            return "승";
+        }
+        if (playerScore < dealerScore) {
+            return "패";
+        }
+        return "무";
+    }
 }
