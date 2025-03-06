@@ -5,38 +5,39 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public enum Score {
-    BLACKJACK("블랙잭", (total, cardCount) -> total == 21 && cardCount == 2),
-    BUST("버스트", (total, cardCount) -> total > 21),
+    BLACKJACK("블랙잭", (total, cardCount) -> total == 21 && cardCount == 2, 1),
+    BUST("버스트", (total, cardCount) -> total > 21, 22),
 
-    ONE("1", (total, cardCount) -> total == 1),
-    TWO("2", (total, cardCount) -> total == 2),
-    THREE("3", (total, cardCount) -> total == 3),
-    FOUR("4", (total, cardCount) -> total == 4),
-    FIVE("5", (total, cardCount) -> total == 5),
-    SIX("6", (total, cardCount) -> total == 6),
-    SEVEN("7", (total, cardCount) -> total == 7),
-    EIGHT("8", (total, cardCount) -> total == 8),
-    NINE("9", (total, cardCount) -> total == 9),
-    TEN("10", (total, cardCount) -> total == 10),
-    ELEVEN("11", (total, cardCount) -> total == 11),
-    TWELVE("12", (total, cardCount) -> total == 12),
-    THIRTEEN("13", (total, cardCount) -> total == 13),
-    FOURTEEN("14", (total, cardCount) -> total == 14),
-    FIFTEEN("15", (total, cardCount) -> total == 15),
-    SIXTEEN("16", (total, cardCount) -> total == 16),
-    SEVENTEEN("17", (total, cardCount) -> total == 17),
-    EIGHTEEN("18", (total, cardCount) -> total == 18),
-    NINETEEN("19", (total, cardCount) -> total == 19),
-    TWENTY("20", (total, cardCount) -> total == 20),
-    TWENTY_ONE("21", (total, cardCount) -> total == 21);
+    TWENTY_ONE("21", (total, cardCount) -> total == 21, 2),
+    TWENTY("20", (total, cardCount) -> total == 20, 3),
+    NINETEEN("19", (total, cardCount) -> total == 19, 4),
+    EIGHTEEN("18", (total, cardCount) -> total == 18, 5),
+    SEVENTEEN("17", (total, cardCount) -> total == 17, 6),
+    SIXTEEN("16", (total, cardCount) -> total == 16, 7),
+    FIFTEEN("15", (total, cardCount) -> total == 15, 8),
+    FOURTEEN("14", (total, cardCount) -> total == 14, 9),
+    THIRTEEN("13", (total, cardCount) -> total == 13, 10),
+    TWELVE("12", (total, cardCount) -> total == 12, 11),
+    ELEVEN("11", (total, cardCount) -> total == 11, 12),
+    TEN("10", (total, cardCount) -> total == 10, 13),
+    NINE("9", (total, cardCount) -> total == 9, 14),
+    EIGHT("8", (total, cardCount) -> total == 8, 15),
+    SEVEN("7", (total, cardCount) -> total == 7, 16),
+    SIX("6", (total, cardCount) -> total == 6, 17),
+    FIVE("5", (total, cardCount) -> total == 5, 18),
+    FOUR("4", (total, cardCount) -> total == 4, 19),
+    THREE("3", (total, cardCount) -> total == 3, 20),
+    TWO("2", (total, cardCount) -> total == 2, 21),
+    ONE("1", (total, cardCount) -> total == 1, 22);
 
     private final String title;
     private final BiFunction<Integer, Integer, Boolean> condition;
+    private final int rank;
 
-
-    Score(String title, BiFunction<Integer, Integer, Boolean> condition) {
+    Score(String title, BiFunction<Integer, Integer, Boolean> condition, int rank) {
         this.title = title;
         this.condition = condition;
+        this.rank = rank;
     }
 
     public static Score from(List<TrumpCard> cards) {
@@ -60,7 +61,14 @@ public enum Score {
         while (aceCount-- > 0 && totalScore + 10 <= 21) {
             totalScore += 10;
         }
-
         return totalScore;
+    }
+
+    public boolean isHigherThan(Score o) {
+        return this.rank < o.rank;
+    }
+
+    public boolean isLowerThan(Score o) {
+        return this.rank > o.rank;
     }
 }

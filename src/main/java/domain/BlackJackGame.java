@@ -91,4 +91,9 @@ public class BlackJackGame {
 
         return hitCount;
     }
+
+    public Result finish(List<Player> players) {
+        return Result(dealer, players);
+    }
+
 }
