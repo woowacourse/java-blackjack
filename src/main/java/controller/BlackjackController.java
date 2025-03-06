@@ -42,9 +42,9 @@ public class BlackjackController {
             dealer.drawCard();
             outputView.displayDealerAddCard();
         }
-        if (dealer.isImpossibleDraw()) {
-            dealer.burst();
-        }
+//        if (dealer.isImpossibleDraw()) {
+//            dealer.burst();
+//        }
 
         // 결과 출력
         createGameResult(gameManger, playerNames);
@@ -63,7 +63,6 @@ public class BlackjackController {
             player.drawCard();
             displayOpenCard(playerName, player);
         }
-        player.burst();
     }
 
     private void displayOpenCard(String playerName, User player) {

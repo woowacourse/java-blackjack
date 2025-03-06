@@ -1,8 +1,6 @@
 package domain.user;
 
-import domain.CardNumber;
 import domain.CardSetting;
-import domain.CardShape;
 import domain.TrumpCard;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -52,19 +50,16 @@ class UserTest {
         }
     }
 
-    @DisplayName("카드를 뽑았을 때 21을 넘기면 죽는다")
+    @DisplayName("카드를 뽑았을 때 21을 넘기면 버스트된다")
     @Test
     void test3() {
         // given
         User user = new Player("test");
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.K));
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.J));
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.Q));
+        for (int i = 0; i < 12; i++) {
+            user.drawCard();
+        }
 
-        // when
-//        user.
-
-        // then
-
+        // when && then
+        Assertions.assertThat(user.isBurst()).isEqualTo(true);
     }
 }

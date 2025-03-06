@@ -19,6 +19,9 @@ public abstract class User {
     public void drawCard() {
         TrumpCard trumpCard = CardSetting.drawCard();
         cardDeck.addTrumpCard(trumpCard);
+        if (cardDeck.checkOverScore()) {
+            userInformation.burst();
+        }
     }
 
     public boolean has(String name) {
@@ -37,10 +40,6 @@ public abstract class User {
 
     public CardDeck getCardDeck() {
         return this.cardDeck;
-    }
-
-    public void burst() {
-        this.userInformation.burst();
     }
 
     public boolean isBurst() {
