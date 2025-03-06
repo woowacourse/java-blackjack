@@ -11,12 +11,20 @@ public class InputView {
 
     public String inputUserNames() {
         System.out.println(INPUT_USER_NAME_MESSAGE);
-        return scanner.nextLine();
+        String userInput = scanner.nextLine();
+        validateIsNotBlank(userInput);
+        return userInput;
     }
 
     public String inputPlayerWantMoreCard(Participant participant) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n"
             , participant.getName());
         return scanner.nextLine();
+    }
+
+    private void validateIsNotBlank(String userInput) {
+        if (userInput.isBlank()) {
+            throw new IllegalArgumentException("공백이 입력되었습니다.");
+        }
     }
 }
