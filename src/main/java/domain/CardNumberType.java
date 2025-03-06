@@ -38,8 +38,8 @@ public enum CardNumberType {
         return CardNumberType.getAceLowNumber();
     }
 
-    public int getDefaultNumber() {
-        return cardNumbers.getFirst();
+    public static int getAceHighNumber() {
+        return ACE.cardNumbers.getLast();
     }
 
     public static CardNumberType findByRandom(int randomIndex) {
@@ -47,16 +47,12 @@ public enum CardNumberType {
         return CardNumberType.values()[randomIndex];
     }
 
-    public boolean isAce() {
-        return this == ACE;
+    public int getDefaultNumber() {
+        return cardNumbers.getFirst();
     }
 
-    public static int getAceHighNumber() {
-        return ACE.cardNumbers.getLast();
-    }
-
-    public boolean isNotAce() {
-        return this != ACE;
+    public boolean isEqualTo(CardNumberType targetCardNumberType) {
+        return this == targetCardNumberType;
     }
 
     private static void validateIndex(int index) {

@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.CardNumberType.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +33,7 @@ public class Cards {
 
     public boolean isAceCountEqualTo(int targetCount) {
         int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
+                .filter(card -> card.isEqualCardNumberType(ACE))
                 .count();
         return aceCount == targetCount;
     }
@@ -56,7 +58,7 @@ public class Cards {
 
     public int calculateSumWithoutAce() {
         return cards.stream()
-                .filter(Card::isNotAce)
+                .filter(card -> !card.isEqualCardNumberType(ACE))
                 .mapToInt(Card::getDefaultNumber)
                 .sum();
     }
@@ -64,7 +66,7 @@ public class Cards {
     private int calculateSumWithAces(int aceCount, int cardsWithoutAceSum) {
         int result = cardsWithoutAceSum;
         for (int count = 0; count < aceCount; count++) {
-            result += CardNumberType.getAceNumber(result);
+            result += getAceNumber(result);
         }
         return result;
     }
@@ -78,12 +80,12 @@ public class Cards {
 
     private int calculateAceCount() {
         return (int) cards.stream()
-                .filter(Card::isAce)
+                .filter(card -> card.isEqualCardNumberType(ACE))
                 .count();
     }
 
     private boolean hasNotAce() {
         return cards.stream()
-                .noneMatch(Card::isAce);
+                .noneMatch(card -> card.isEqualCardNumberType(ACE));
     }
 }
