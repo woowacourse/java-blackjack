@@ -50,6 +50,10 @@ public class Player implements Comparable<Player> {
         return name;
     }
 
+    public List<Card> getOpenedCards() {
+        return getCards();
+    }
+
     public List<Card> getCards() {
         return cards;
     }
