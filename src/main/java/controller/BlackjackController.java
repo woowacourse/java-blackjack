@@ -7,6 +7,7 @@ import domain.DeckGenerator;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
+import domain.dto.CardSumResponse;
 import domain.dto.OpenCardsResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +52,10 @@ public class BlackjackController {
         if (isAdded) {
             OutputView.printAddCardToDealer();
         }
+
+        // 카드 합 결과
+        CardSumResponse response = blackjack.getCardSumResult();
+        OutputView.printPlayerCardsAndSum(response);
     }
 
     private Blackjack createBlackjack() {

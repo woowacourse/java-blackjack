@@ -1,5 +1,6 @@
 package domain;
 
+import domain.dto.CardSumResponse;
 import domain.dto.OpenCardsResponse;
 import domain.dto.PlayerResponse;
 import java.util.List;
@@ -70,5 +71,18 @@ public class Blackjack {
                 .stream()
                 .map(player -> (Participant) player)
                 .toList();
+    }
+
+    public CardSumResponse getCardSumResult() {
+        return new CardSumResponse(getNameAndCardsResponse(), players.getSumResult());
+    }
+
+    private OpenCardsResponse getNameAndCardsResponse() {
+        return new OpenCardsResponse(
+                new PlayerResponse(getDealer().getName(), getDealer().getCards().getCards()),
+                getParticipants().stream()
+                        .map(participant -> new PlayerResponse(participant.getName(), participant.getCards().getCards()))
+                        .toList()
+        );
     }
 }

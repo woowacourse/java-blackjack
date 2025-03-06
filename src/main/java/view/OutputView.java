@@ -1,5 +1,6 @@
 package view;
 
+import domain.dto.CardSumResponse;
 import domain.dto.OpenCardsResponse;
 import domain.dto.PlayerResponse;
 import java.util.List;
@@ -29,6 +30,26 @@ public class OutputView {
                         .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
                                 card.getCardShape().getTitle()))
                         .toList()));
+    }
+
+    public static void printPlayerCardsAndSum(CardSumResponse cardSumResponse) {
+        System.out.printf("%s카드: %s - 결과: %d%n",
+                cardSumResponse.openCardsResponse().dealer().name(),
+                String.join(", ", cardSumResponse.openCardsResponse().dealer().cards().stream()
+                        .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
+                                card.getCardShape().getTitle()))
+                        .toList()),
+                cardSumResponse.sum().get(cardSumResponse.openCardsResponse().dealer().name()));
+
+        cardSumResponse.openCardsResponse().participants().forEach(player -> {
+            System.out.printf("%s카드: %s - 결과: %d%n",
+                    player.name(),
+                    String.join(", ", player.cards().stream()
+                            .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
+                                    card.getCardShape().getTitle()))
+                            .toList()),
+                    cardSumResponse.sum().get(player.name()));
+        });
     }
 
     public static void printAddCardToDealer() {

@@ -1,6 +1,8 @@
 package domain;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Players {
@@ -51,5 +53,13 @@ public class Players {
         return players.stream()
                 .filter(player -> player instanceof Participant)
                 .toList();
+    }
+
+    public Map<String, Integer> getSumResult() {
+        Map<String, Integer> sumResult = new HashMap<>();
+        for (Player player : players) {
+            sumResult.put(player.getName(), player.getCards().calculateOptimalSum());
+        }
+        return sumResult;
     }
 }
