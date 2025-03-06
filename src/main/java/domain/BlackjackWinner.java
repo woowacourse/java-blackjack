@@ -7,10 +7,10 @@ import java.util.Map;
 
 public class BlackjackWinner {
 
-    private final DealerWinStatus dealerWinStatus;
-
-    private final Map<String, WinStatus> playerWinStatuses;
     private final int BUST_STANDARD = 21;
+    
+    private final DealerWinStatus dealerWinStatus;
+    private final Map<String, WinStatus> playerWinStatuses;
 
     public BlackjackWinner(BlackjackResult blackjackDealerResult, List<BlackjackResult> blackjackPlayerResults) {
         this.dealerWinStatus = calculateDealerWinStatus(blackjackDealerResult, blackjackPlayerResults);

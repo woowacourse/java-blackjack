@@ -10,6 +10,7 @@ public abstract class BlackjackParticipant {
     private static final int BURST_STANDARD = 21;
     private static final int ACE_DIFF = 10;
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
+
     private final List<TrumpCard> trumpCards = new ArrayList<>();
     private final String name;
 
@@ -63,10 +64,6 @@ public abstract class BlackjackParticipant {
 
     public List<TrumpCard> trumpCards() {
         return trumpCards;
-    }
-
-    public boolean isDealer() {
-        return false;
     }
 
     public String name() {

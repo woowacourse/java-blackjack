@@ -8,6 +8,7 @@ import java.util.LinkedList;
 public class TestDrawStrategy implements DrawStrategy {
 
     private final String INVALID_DRAW_STATE = "덱이 비어있어 뽑을 수 없습니다.";
+    
     private final Deque<TrumpCard> testTrumpCards;
 
     public TestDrawStrategy(Deque<TrumpCard> testTrumpCards) {

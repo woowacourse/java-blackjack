@@ -6,9 +6,10 @@ import java.util.stream.Collectors;
 
 public class BlackjackParticipants {
 
+    private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
+    
     private final List<Player> players;
     private final Dealer dealer;
-    private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
 
     public BlackjackParticipants(List<Player> players, Dealer dealer) {
         this.players = players;

@@ -31,10 +31,10 @@ public class BlackjackController {
     public void startBlackjack() {
         BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
         List<String> names = handleInput(this::handleNames);
-        BlackjackGame blackjackGame = startBlackjack(names);
+        startBlackjack(names);
     }
 
-    private BlackjackGame startBlackjack(List<String> names) {
+    private void startBlackjack(List<String> names) {
         BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, new Dealer());
         outputView.printInitiateDraw(names);
@@ -43,8 +43,6 @@ public class BlackjackController {
         askPlayerDraw(blackjackGame);
         dealerHit(blackjackGame);
         blackjackGameResult(blackjackGame);
-
-        return blackjackGame;
     }
 
     private void blackjackGameResult(BlackjackGame blackjackGame) {
@@ -56,6 +54,11 @@ public class BlackjackController {
             openPlayerResultCards(result);
         }
 
+        blackjackWinnerResult(blackjackGame, dealerResult, playerResults);
+    }
+
+    private void blackjackWinnerResult(BlackjackGame blackjackGame, BlackjackResult dealerResult,
+                                       List<BlackjackResult> playerResults) {
         BlackjackWinner blackjackWinner = new BlackjackWinner(dealerResult, playerResults);
         DealerWinStatus dealerWinStatus = blackjackWinner.getDealerWinStatus();
         Map<String, WinStatus> playerWinStatuses = blackjackWinner.getPlayerWinStatuses();
@@ -95,12 +98,16 @@ public class BlackjackController {
             return;
         }
         blackjackGame.drawCard(name);
-        List<TrumpCard> trumpCards = blackjackGame.playerCards(name);
-        openPlayerCard(trumpCards, name);
+        openPlayerCards(name, blackjackGame);
         if (blackjackGame.isBust(name)) {
             return;
         }
         handleAskDraw(name, blackjackGame);
+    }
+
+    private void openPlayerCards(String name, BlackjackGame blackjackGame) {
+        List<TrumpCard> trumpCards = blackjackGame.playerCards(name);
+        openPlayerCard(trumpCards, name);
     }
 
     private boolean handleAskDraw(String name) {
