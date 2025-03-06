@@ -29,22 +29,28 @@ public class Game {
         participant.receiveHand(card);
     }
 
-    public void askHitForAllPlayer(Predicate<String> playerHitDecision) {
+    public void askHitForAllPlayer(Predicate<String> playerHitDecision, PlayerAction playerAction) {
         for (Player player : players) {
-            askHit(playerHitDecision, player);
+            askHit(player, playerHitDecision, playerAction);
         }
     }
 
-    private void askHit(Predicate<String> playerHitDecision, Player player) {
+    private void askHit(Player player, Predicate<String> playerHitDecision, PlayerAction playerAction) {
         if (player.isBlackjack()) {
             return;
         }
-        playTurn(player, playerHitDecision);
+        playTurn(player, playerHitDecision, playerAction);
     }
 
-    private void playTurn(Player player, Predicate<String> playerHitDecision) {
+    private void playTurn(Player player, Predicate<String> playerHitDecision, PlayerAction playerAction) {
+        boolean isFirstTurn = true;
         while (!player.isBust() && shouldPlayerHit(player, playerHitDecision)) {
             dealCard(player);
+            playerAction.accept(player);
+            isFirstTurn = false;
+        }
+        if (isFirstTurn) {
+            playerAction.accept(player);
         }
     }
 

@@ -56,13 +56,33 @@ class GameTest {
 
         Queue<Boolean> playerAnswers = new LinkedList<>(List.of(true, false));
         Predicate<String> predicate = answer -> playerAnswers.poll();
+        PlayerAction testEmptyAction = player -> {};
 
         //when
-        game.askHitForAllPlayer(predicate);
+        game.askHitForAllPlayer(predicate, testEmptyAction);
 
         // then
         assertThat(players)
                 .allSatisfy(player -> assertThat(player.getHand()).hasSize(3));
+    }
+
+    @DisplayName("딜러가 패 한장을 공개한다.")
+    @Test
+    void getDealerVisibleCardTest() {
+        // given
+        Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
+        Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
+        Deck deck = Deck.createShuffledDeck(List.of(spadeFive, spadeTen), new FixedCardShuffler());
+        Dealer dealer = new Dealer(deck);
+        Game game = new Game(dealer, List.of());
+        game.dealInitialCards();
+
+        //when
+        Card dealerVisibleCard = game.getDealerVisibleCard();
+
+        // then
+        assertThat(dealerVisibleCard)
+                .isEqualTo(spadeFive);
     }
 
     @DisplayName("처음 받은 패가 블랙잭인 경우, 히트 여부를 묻지 않는다.")
@@ -83,9 +103,10 @@ class GameTest {
 
         Queue<Boolean> playerAnswers = new LinkedList<>(List.of(true));
         Predicate<String> predicate = answer -> playerAnswers.poll();
+        PlayerAction testEmptyAction = player -> {};
 
         //when
-        game.askHitForAllPlayer(predicate);
+        game.askHitForAllPlayer(predicate, testEmptyAction);
 
         // then
         assertThat(playerAnswers)
@@ -111,9 +132,10 @@ class GameTest {
 
         Queue<Boolean> playerAnswers = new LinkedList<>(List.of(true, true, false));
         Predicate<String> predicate = answer -> playerAnswers.poll();
+        PlayerAction testEmptyAction = player -> {};
 
         //when
-        game.askHitForAllPlayer(predicate);
+        game.askHitForAllPlayer(predicate, testEmptyAction);
 
         // then
         assertThat(playerAnswers)

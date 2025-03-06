@@ -13,6 +13,21 @@ public class InputView {
                 .toList();
     }
 
+    public boolean readHitOrNot(String playerName) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
+        return parseYesOrNo(trim(scanner.nextLine()));
+    }
+
+    private boolean parseYesOrNo(String input) {
+        if (input.equals("y")) {
+            return true;
+        }
+        if (input.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("y 또는 n을 입력해주세요.");
+    }
+
     private String trim(String input) {
         return input.replaceAll(" ", "");
     }

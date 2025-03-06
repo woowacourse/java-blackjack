@@ -17,6 +17,7 @@ public class BlackjackController {
         Game game = initializeGame(players);
         game.dealInitialCards();
         outputView.printInitialCards(game.getDealerVisibleCard(), game.getPlayers());
+        game.askHitForAllPlayer(inputView::readHitOrNot, outputView::printPlayerHand);
     }
 
     private List<Player> getPlayers() {
