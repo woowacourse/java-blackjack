@@ -42,6 +42,10 @@ public class Hand {
         return cards.stream().mapToInt(Card::getValue).sum();
     }
 
+    public int getSize() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

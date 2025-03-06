@@ -29,7 +29,8 @@ public class BlackJack {
 
         playersTurn();
 
-        
+        processDealer(dealer);
+
     }
 
     private void playersTurn() {
@@ -52,6 +53,27 @@ public class BlackJack {
                 return;
             }
         }
+    }
+
+    public void processDealer(Dealer dealer) {
+
+        while (true) {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (dealer.isBelowThreshold()) {
+                drawOneMoreCard(dealer, stringBuilder);
+            }
+            if (!dealer.isBelowThreshold()) {
+                return;
+            }
+        }
+    }
+
+    public boolean resolveBust(Player player) {
+        if (player.isHandBust() && player.containsOriginalAce()) {
+            player.setOriginalAceValueToOne();
+            resolveBust(player);
+        }
+        return !player.isHandBust();
     }
 
     private void drawOneMoreCard(Player player, StringBuilder stringBuilder) {

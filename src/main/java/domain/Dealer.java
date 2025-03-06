@@ -18,7 +18,11 @@ public class Dealer extends Player{
     }
 
 
-    public boolean aboveThreshold() {
-        return getHandTotal() > 16;
+    public boolean isBelowThreshold() {
+        return getHandTotal() <= 16;
+    }
+
+    public int getCardCount() {
+        return hand.getSize();
     }
 }
