@@ -1,10 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.Victory;
+import blackjack.domain.WinningResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.Victory;
-import blackjack.domain.WinningResult;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import java.util.List;
@@ -34,9 +34,7 @@ public class OutputView {
     }
 
     public static void printDealerAdditionalCard(int additionalCardsNumber) {
-        while (additionalCardsNumber-- > 0) {
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        }
+        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", additionalCardsNumber);
     }
 
     public static void printDealerResult(Dealer dealer) {

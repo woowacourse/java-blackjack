@@ -47,15 +47,10 @@ public class Dealer {
         return cards.calculateMaxScore();
     }
 
-    public int pickAdditionalCard() {
-        int maxScore = cards.calculateMaxScore();
-        int additionalCardsNumber = 0;
-        while (maxScore <= 16) {
-            additionalCardsNumber++;
+    public void pickAdditionalCard() {
+        while (calculateMaxScore() <= 16) {
             cards.take(deck.draw());
-            maxScore = cards.calculateMaxScore();
         }
-        return additionalCardsNumber;
     }
 
     public void sendCardToPlayer(Player player) {
