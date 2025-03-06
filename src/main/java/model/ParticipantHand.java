@@ -22,17 +22,6 @@ public class ParticipantHand {
         return calculateScoreWithAceAsOne() <= upperBound;
     }
 
-    public boolean isAceElevenPossible() {
-        int countOfAce = calculateAceCount();
-        if (countOfAce == 0){
-            return false;
-        }
-        int maxScoreOfAce = countOfAce + 10;
-        int scoreExceptAceUpperBound = 21 - maxScoreOfAce;
-        //TODO : 개선생각해보기
-        return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
-    }
-
     public int calculateFinalScore() {
         if (isAceElevenPossible()){
             //TODO : 코드의 의미가 읽히지 않음. 상수화 말고도 개선 방법이 있을까?
@@ -62,6 +51,17 @@ public class ParticipantHand {
         return (int) cards.stream()
                 .filter(card -> card.getCardRank() == CardRank.ACE)
                 .count();
+    }
+
+    private boolean isAceElevenPossible() {
+        int countOfAce = calculateAceCount();
+        if (countOfAce == 0){
+            return false;
+        }
+        int maxScoreOfAce = countOfAce + 10;
+        int scoreExceptAceUpperBound = 21 - maxScoreOfAce;
+        //TODO : 개선생각해보기
+        return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
     }
 
     public List<Card> getCards() {
