@@ -39,4 +39,8 @@ public enum Denomination {
     public int getMinNumber() {
         return numbers.getFirst();
     }
+
+    public int getMaxNumber() {
+        return numbers.getLast();
+    }
 }

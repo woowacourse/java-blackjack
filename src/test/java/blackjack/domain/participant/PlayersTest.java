@@ -1,12 +1,12 @@
 package blackjack.domain.participant;
 
 import static blackjack.fixture.TestFixture.provideCards;
+import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.providePlayers;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.Card;
-import java.util.ArrayList;
+import blackjack.domain.card.Cards;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ public class PlayersTest {
     @Test
     void createPlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이", new ArrayList<>()), new Player("밍트", new ArrayList<>()));
+        List<Player> players = List.of(new Player("엠제이", provideEmptyCards()), new Player("밍트", provideEmptyCards()));
 
         // when & then
         Assertions.assertThatCode(() -> new Players(players))
@@ -37,7 +37,7 @@ public class PlayersTest {
     @Test
     void createDuplicatePlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이", new ArrayList<>()), new Player("엠제이", new ArrayList<>()));
+        List<Player> players = List.of(new Player("엠제이", provideEmptyCards()), new Player("엠제이", provideEmptyCards()));
 
         // when & then
         Assertions.assertThatThrownBy(() -> new Players(players))
@@ -49,7 +49,7 @@ public class PlayersTest {
     @Test
     void receiveCards() {
         // given
-        final List<Card> cards = provideCards(4);
+        final Cards cards = provideCards(4);
         final int count = 2;
 
         // when
@@ -57,8 +57,9 @@ public class PlayersTest {
 
         // then
         assertAll(
-                () -> assertThat(players.getPlayers().getFirst()).isEqualTo(new Player("엠제이", cards.subList(0, 2))),
-                () -> assertThat(players.getPlayers().get(1)).isEqualTo(new Player("밍트", cards.subList(2, 4)))
+                () -> assertThat(players.getPlayers().getFirst()).isEqualTo(
+                        new Player("엠제이", cards.getPartialCards(0, 2))),
+                () -> assertThat(players.getPlayers().get(1)).isEqualTo(new Player("밍트", cards.getPartialCards(2, 4)))
         );
     }
 }

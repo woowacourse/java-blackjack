@@ -1,31 +1,34 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 import java.util.Objects;
 
-public class Player implements GameAction {
+public class Player implements Actionable {
 
     public static final int BLACKJACK_NUMBER = 21;
 
     private final String nickname;
-    private final List<Card> cards;
+    private final Cards cards;
 
-    public Player(final String nickname, final List<Card> cards) {
+    public Player(final String nickname, final Cards cards) {
         this.nickname = nickname;
         this.cards = cards;
     }
 
-    public void receiveCards(final List<Card> givenCards) {
+    public void receiveCards(final Cards givenCards) {
         cards.addAll(givenCards);
     }
 
     @Override
     public boolean canGetMoreCard() {
-        int sum = cards.stream()
-                .mapToInt(Card::getCardMinNumber)
-                .sum();
+        int sum = cards.calculateMinSum();
         return sum < BLACKJACK_NUMBER;
+    }
+
+    public int calculateMaxSum() {
+        return cards.calculateResult();
     }
 
     @Override
@@ -47,7 +50,7 @@ public class Player implements GameAction {
     }
 
     @Override
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> showCards() {
+        return cards.getCards();
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,10 +27,10 @@ public class Players {
                 .count();
     }
 
-    public void receiveCards(final List<Card> cards, final int count) {
+    public void receiveCards(final Cards cards, final int count) {
         for (int i = 0; i < players.size(); i++) {
             final Player player = players.get(i);
-            player.receiveCards(cards.subList(i * count, (i + 1) * count));
+            player.receiveCards(cards.getPartialCards(i * count, (i + 1) * count));
         }
     }
 

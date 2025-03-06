@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 
+import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideOver21Cards;
 import static blackjack.fixture.TestFixture.provideParticipants;
@@ -10,14 +11,12 @@ import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardManager;
+import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
 import blackjack.domain.random.CardRandomGenerator;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +44,7 @@ class BlackjackGameTest {
     void canPlayerMoreCardToPlayer() {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
-                new Participants(new Dealer(new ArrayList<>()),
+                new Participants(new Dealer(provideEmptyCards()),
                         new Players(providePlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
 
         // when & then
@@ -66,17 +65,17 @@ class BlackjackGameTest {
         blackjackGame.spreadOneCardToPlayer(0);
 
         // then
-        assertThat(blackjackGame.getPlayer(0).getCards()).hasSize(1);
+        assertThat(blackjackGame.getPlayer(0).showCards()).hasSize(1);
     }
 
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다.")
     @ParameterizedTest
     @MethodSource
-    void canDealerMoreCard(final List<Card> cards, final boolean expected) {
+    void canDealerMoreCard(final Cards cards, final boolean expected) {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
                 new Participants(new Dealer(cards),
-                        new Players(providePlayersWithCards(new ArrayList<>(), new ArrayList<>()))));
+                        new Players(providePlayersWithCards(provideEmptyCards(), provideEmptyCards()))));
 
         // when & then
         assertThat(blackjackGame.canDealerMoreCard()).isEqualTo(expected);
@@ -92,11 +91,11 @@ class BlackjackGameTest {
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     @ParameterizedTest
     @MethodSource
-    void canPlayerMoreCard(final List<Card> cards, final boolean expected) {
+    void canPlayerMoreCard(final Cards cards, final boolean expected) {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
-                new Participants(new Dealer(cards),
-                        new Players(providePlayersWithCards(cards, new ArrayList<>()))));
+                new Participants(new Dealer(provideEmptyCards()),
+                        new Players(providePlayersWithCards(cards, provideEmptyCards()))));
 
         // when & then
         assertThat(blackjackGame.canPlayerMoreCard(0)).isEqualTo(expected);
@@ -107,5 +106,23 @@ class BlackjackGameTest {
                 Arguments.of(provideUnder21Cards(), true),
                 Arguments.of(provideOver21Cards(), false)
         );
+    }
+
+    @DisplayName("GameAction 구현체가 가진 카드의 합을 계산한다.")
+    @Test
+    void sumCardDenomination() {
+        // given
+        final Dealer dealer = new Dealer(provideUnder16Cards());
+        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+                new Participants(dealer,
+                        new Players(providePlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
+
+        // when & then
+        assertAll(
+                () -> assertThat(blackjackGame.sumDealerCardDenomination(dealer)).isEqualTo(6),
+                () -> assertThat(blackjackGame.sumPlayerCardDenomination(blackjackGame.getPlayer(0))).isEqualTo(5),
+                () -> assertThat(blackjackGame.sumPlayerCardDenomination(blackjackGame.getPlayer(1))).isEqualTo(20)
+        );
+
     }
 }

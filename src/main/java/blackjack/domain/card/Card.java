@@ -12,6 +12,10 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public boolean isAce() {
+        return this.denomination == Denomination.A;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (!(o instanceof final Card card)) {
@@ -35,5 +39,9 @@ public class Card {
 
     public int getCardMinNumber() {
         return denomination.getMinNumber();
+    }
+
+    public int getCardMaxNumber() {
+        return denomination.getMaxNumber();
     }
 }

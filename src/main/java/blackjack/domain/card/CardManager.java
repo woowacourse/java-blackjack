@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import blackjack.domain.random.CardGenerator;
 import blackjack.domain.random.CardRandomGenerator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -25,10 +24,10 @@ public class CardManager {
         return cardsUsageStatus;
     }
 
-    public List<Card> spreadCards(final int count) {
-        return IntStream.range(0, count)
+    public Cards spreadCards(final int count) {
+        return new Cards(IntStream.range(0, count)
                 .mapToObj(o -> spreadOneCard())
-                .toList();
+                .toList());
     }
 
     private Card spreadOneCard() {

@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 
 public class Participants {
@@ -15,10 +16,10 @@ public class Participants {
         this.players = players;
     }
 
-    public void spreadAllTwoCards(final List<Card> cards) {
+    public void spreadAllTwoCards(final Cards cards) {
         final int size = 2;
-        dealer.receiveCards(cards.subList(0, size));
-        players.receiveCards(cards.subList(size, cards.size()), size);
+        dealer.receiveCards(cards.getPartialCards(0, size));
+        players.receiveCards(cards.getPartialCards(size, cards.getSize()), size);
     }
 
     public boolean canPlayerGetMoreCard(final int index) {
@@ -28,11 +29,11 @@ public class Participants {
 
     public void spreadOneCardToPlayer(final int index, final Card card) {
         final Player player = players.getPlayer(index);
-        player.receiveCards(List.of(card));
+        player.receiveCards(new Cards(List.of(card)));
     }
 
     public void spreadOneCardToDealer(final Card card) {
-        dealer.receiveCards(List.of(card));
+        dealer.receiveCards(new Cards(List.of(card)));
     }
 
     public boolean canDealerGetMoreCard() {

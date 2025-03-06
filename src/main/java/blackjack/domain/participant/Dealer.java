@@ -1,35 +1,38 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 import java.util.Objects;
 
-public class Dealer implements GameAction {
+public class Dealer implements Actionable {
 
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;
 
-    private final List<Card> cards;
+    private final Cards cards;
 
-    public Dealer(final List<Card> cards) {
+    public Dealer(final Cards cards) {
         this.cards = cards;
     }
 
-    public void receiveCards(final List<Card> givenCards) {
+    public void receiveCards(final Cards givenCards) {
         cards.addAll(givenCards);
     }
 
     @Override
     public boolean canGetMoreCard() {
-        int sum = cards.stream()
-                .mapToInt(Card::getCardMinNumber)
-                .sum();
+        int sum = cards.calculateMinSum();
         return sum <= DEALER_THRESHOLD;
     }
 
     @Override
-    public List<Card> getCards() {
-        return List.of(cards.getFirst());
+    public List<Card> showCards() {
+        return List.of(cards.getFirstCard());
+    }
+
+    public int calculateMaxSum() {
+        return cards.calculateResult();
     }
 
     @Override

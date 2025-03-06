@@ -8,7 +8,7 @@ import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,11 +27,11 @@ class ParticipantsTest {
     @Test
     void test() {
         // given
-        List<Card> cards = provideCards(6);
-        final List<Card> totalCards = provideCards(6);
-        final List<Card> dealerCards = totalCards.subList(0, 2);
-        final List<Card> playerCard1 = totalCards.subList(2, 4);
-        final List<Card> playerCard2 = totalCards.subList(4, 6);
+        Cards cards = provideCards(6);
+        final Cards totalCards = provideCards(6);
+        final Cards dealerCards = totalCards.getPartialCards(0, 2);
+        final Cards playerCard1 = totalCards.getPartialCards(2, 4);
+        final Cards playerCard2 = totalCards.getPartialCards(4, 6);
 
         // when
         participants.spreadAllTwoCards(cards);
@@ -56,8 +56,8 @@ class ParticipantsTest {
     @Test
     void canPlayerGetMoreCard() {
         // given
-        final List<Card> firstCards = provideUnder21Cards();
-        final List<Card> secondCards = provideOver21Cards();
+        final Cards firstCards = provideUnder21Cards();
+        final Cards secondCards = provideOver21Cards();
         final List<Player> players = providePlayersWithCards(firstCards, secondCards);
 
         // when & then
