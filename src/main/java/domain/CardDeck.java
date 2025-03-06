@@ -5,7 +5,6 @@ import domain.card.Rank;
 import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
@@ -22,7 +21,7 @@ public class CardDeck {
                 .flatMap(rank -> Arrays.stream(Suit.values())
                         .map(suit -> new Card(rank, suit)))
                 .forEach(cards::addCard);
-        shuffle();
+        cards.shuffle();
         return cards;
     }
 
@@ -36,7 +35,7 @@ public class CardDeck {
     }
 
     public Card pickCard() {
-        return cards.getCards().removeFirst();
+        return cards.pickCard();
     }
 
     private List<Card> pickInitialCards(int stackSize) {
@@ -45,9 +44,5 @@ public class CardDeck {
             cards.add(pickCard());
         }
         return cards;
-    }
-
-    private void shuffle() {
-        Collections.shuffle(cards.getCards());
     }
 }

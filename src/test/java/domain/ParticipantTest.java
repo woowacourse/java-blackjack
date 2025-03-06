@@ -47,22 +47,13 @@ public class ParticipantTest {
     @DisplayName("이름이 공백인 참여자 예외 테스트")
     void blankParticipantNameTest(String name) {
         // given & when & then
-        assertThatThrownBy(() -> new Participant(name) {
-            @Override
-            public boolean ableToAddCard() {
-                return false;
-            }
-        }).isInstanceOf(ErrorException.class)
+        assertThatThrownBy(() -> createParticipant(name))
+                .isInstanceOf(ErrorException.class)
                 .hasMessageContaining("[ERROR]");
     }
 
     private static Participant createParticipantCardsOfRanks(List<Rank> ranks) {
-        Participant participant = new Participant("행성") {
-            @Override
-            public boolean ableToAddCard() {
-                return false;
-            }
-        };
+        Participant participant = createParticipant("행성");
         ranks.stream()
                 .map(rank -> new Card(rank, Suit.DIAMOND))
                 .forEach(participant::addCard);
@@ -73,5 +64,19 @@ public class ParticipantTest {
         return Arrays.stream(rankNames.split(","))
                 .map(Rank::valueOf)
                 .toList();
+    }
+
+    private static Participant createParticipant(String name) {
+        return new Participant(name) {
+            @Override
+            public List<Card> getInitialCards() {
+                return List.of();
+            }
+
+            @Override
+            public boolean ableToAddCard() {
+                return false;
+            }
+        };
     }
 }

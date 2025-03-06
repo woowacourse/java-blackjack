@@ -15,6 +15,8 @@ public abstract class Participant {
         this.cards = new Cards();
     }
 
+    public abstract List<Card> getInitialCards();
+
     public abstract boolean ableToAddCard();
 
     public void addCard(Card card) {

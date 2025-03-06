@@ -101,10 +101,14 @@ public class GameController {
         List<Player> players = game.getPlayers();
         List<ParticipantCardsDto> playerCardsDtos = new ArrayList<>();
         for (Player player : players) {
-            playerCardsDtos.add(createParticipantCardsDto(player));
+            playerCardsDtos.add(createParticipantInitialCardsDto(player));
         }
-        ParticipantCardsDto dealerCardsDto = new ParticipantCardsDto(dealer.getName(), dealer.getInitialCard(), dealer.getCardsScore());
+        ParticipantCardsDto dealerCardsDto = createParticipantInitialCardsDto(dealer);
         OutputView.printParticipantInitialCards(dealerCardsDto, playerCardsDtos);
+    }
+
+    private ParticipantCardsDto createParticipantInitialCardsDto(Participant participant) {
+        return new ParticipantCardsDto(participant.getName(), participant.getInitialCards(), participant.getCardsScore());
     }
 
     private ParticipantCardsDto createParticipantCardsDto(Participant participant) {

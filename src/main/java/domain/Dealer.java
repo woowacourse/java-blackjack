@@ -2,7 +2,6 @@ package domain;
 
 import domain.card.Card;
 import java.util.List;
-import java.util.ArrayList;
 
 public class Dealer extends Participant  {
 
@@ -10,7 +9,8 @@ public class Dealer extends Participant  {
         super("딜러");
     }
 
-    public List<Card> getInitialCard() {
+    @Override
+    public List<Card> getInitialCards() {
         List<Card> cards = super.getCards();
         return cards.subList(0, 1);
     }

@@ -52,6 +52,16 @@ public class CardsTest {
         assertEquals(GameStatus.valueOf(gameStatusName), otherCards.determineGameStatus(cards));
     }
 
+    @Test
+    @DisplayName("Card 1장 뽑기 기능 테스트")
+    void pickCardTest() {
+        // given
+        Cards cards = createCardsOfRanks(List.of(Rank.ACE));
+        Card card = cards.pickCard();
+        // when & then
+        assertThat(card).isNotNull();
+    }
+
     private static Cards createCardsOfRanks(List<Rank> ranks) {
         Cards cardsOfRanks = new Cards();
         ranks.stream()

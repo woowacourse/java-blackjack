@@ -37,13 +37,19 @@ public class Cards {
         return evaluateStatusByGameOver(cardsScore, otherCardsScore);
     }
 
-
     public int calculateAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
     }
 
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public Card pickCard() {
+        return cards.removeFirst();
+    }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
