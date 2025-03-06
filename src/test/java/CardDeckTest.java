@@ -94,9 +94,17 @@ public class CardDeckTest {
 
     private static Stream<Arguments> hasAce() {
         return Stream.of(
-                Arguments.arguments(List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.ACE), false),
-                Arguments.arguments(List.of(CardNumber.K, CardNumber.J, CardNumber.ACE), false),
-                Arguments.arguments(List.of(CardNumber.ACE, CardNumber.Q), false)
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
+                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), false),
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.DIA, CardNumber.K),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.J),
+                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), false),
+                Arguments.arguments(List.of(
+                        new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), false)
         );
     }
 }

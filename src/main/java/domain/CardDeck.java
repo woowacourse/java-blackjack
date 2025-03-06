@@ -33,12 +33,18 @@ public class CardDeck {
         return new ArrayList<>(cards);
     }
 
-    public void hasAce() {
-
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch((card) -> card.getCardNumber() == CardNumber.ACE.getValue());
     }
 
     public boolean checkOverScore() {
-        return cards.stream()
-                .mapToInt(TrumpCard::getCardNumber).sum() > 21;
+        int sum = cards.stream()
+                .mapToInt(TrumpCard::getCardNumber)
+                .sum();
+        if (hasAce() && sum <= 11) {
+            sum += 10;
+        }
+        return sum > 21;
     }
 }
