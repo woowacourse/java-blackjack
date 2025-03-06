@@ -33,6 +33,10 @@ public class Cards {
         return sum;
     }
 
+    public Card drawOneCard() {
+        return cards.removeLast();
+    }
+
     private int processAce(int sum) {
         if (sum > BUST_STANDARD) {
             sum -= 10;
