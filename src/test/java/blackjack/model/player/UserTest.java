@@ -5,16 +5,23 @@ import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class UserTest {
 
+    private User user;
+
+    @BeforeEach
+    void setUp() {
+        user = new User("pobi");
+    }
+
     @Test
     void 카드를_받으면_자신의_카드에_추가한다() {
-        User user = new User("pobi");
-
         user.receiveCards(new Cards(
                 List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
         ));
@@ -24,7 +31,6 @@ class UserTest {
 
     @Test
     void 자신이_가진_카드의_합을_반환한다() {
-        User user = new User("pobi");
         user.receiveCards(new Cards(
                 List.of(createCard(CardNumber.ACE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
         ));
@@ -38,9 +44,16 @@ class UserTest {
     })
     @ParameterizedTest
     void 자신의_역할과_같은_역할인지_확인한다(Role role, boolean expected) {
-        User user = new User("pobi");
-
         assertThat(user.hasRole(role)).isEqualTo(expected);
+    }
+
+    @Test
+    void 자신의_최저_포인트를_계산한다() {
+        user.receiveCards(new Cards(
+                List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
+        ));
+
+        assertThat(user.getMinimumPoint()).isEqualTo(21);
     }
 
 }

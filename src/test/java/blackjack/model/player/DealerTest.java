@@ -4,6 +4,8 @@ import static blackjack.model.card.CardCreator.createCard;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,6 +43,17 @@ class DealerTest {
         Dealer dealer = new Dealer("딜러");
 
         assertThat(dealer.hasRole(role)).isEqualTo(expected);
+    }
+
+    @Test
+    void 자신의_최저_포인트를_계산한다() {
+        Dealer dealer = new Dealer("딜러");
+
+        dealer.receiveCards(new Cards(
+                        List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
+        ));
+
+        assertThat(dealer.getMinimumPoint()).isEqualTo(16);
     }
 
 }
