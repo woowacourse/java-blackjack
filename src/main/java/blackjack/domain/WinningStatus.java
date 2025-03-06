@@ -14,46 +14,27 @@ public enum WinningStatus {
             final BlackjackCardHand myHand,
             final BlackjackCardHand opponentHand
     ) {
-        if (checkBurstCase(myHand, opponentHand)) {
-            return getBurstResult(myHand, opponentHand);
+        if (isBurst(myHand) || isBurst(opponentHand)) {
+            if (isBurst(myHand) && isBurst(opponentHand)) {
+                return WinningStatus.무승부;
+            }
+            if (isBurst(myHand)) {
+                return WinningStatus.패배;
+            }
+            return WinningStatus.승리;
         }
         
         if (myHand.getSum() == opponentHand.getSum()) {
-            if (myHand.getSum() == 21) {
-                if (isBlackjack(myHand) != isBlackjack(opponentHand)) {
-                    if (isBlackjack(myHand)) {
-                        return WinningStatus.승리;
-                    }
-                    return WinningStatus.패배;
-                }
-                return WinningStatus.무승부;
+            if (isBlackjack(myHand) && !isBlackjack(opponentHand)) {
+                return WinningStatus.승리;
+            }
+            if (!isBlackjack(myHand) && isBlackjack(opponentHand)) {
+                return WinningStatus.패배;
             }
             return WinningStatus.무승부;
         }
         
         return myHand.getSum() > opponentHand.getSum() ? WinningStatus.승리 : WinningStatus.패배;
-    }
-    
-    private static boolean checkBurstCase(
-            final BlackjackCardHand dealerCardHand,
-            final BlackjackCardHand playerCardHand
-    ) {
-        return isBurst(dealerCardHand) || isBurst(playerCardHand);
-    }
-    
-    private static WinningStatus getBurstResult(
-            final BlackjackCardHand dealerCardHand,
-            final BlackjackCardHand playerCardHand
-    ) {
-        if (isBurst(dealerCardHand) && isBurst(playerCardHand)) {
-            return WinningStatus.무승부;
-        }
-        
-        if (isBurst(dealerCardHand)) {
-            return WinningStatus.패배;
-        }
-        
-        return WinningStatus.승리;
     }
     
     private static boolean isBurst(final BlackjackCardHand cardHand) {
