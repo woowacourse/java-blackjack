@@ -17,4 +17,9 @@ public class Cards {
     public List<Card> getCards() {
         return cards;
     }
+
+    public void drawCard(CardDeck cardDeck) {
+        Card drawnCard = cardDeck.drawCard();
+        cards.add(drawnCard);
+    }
 }

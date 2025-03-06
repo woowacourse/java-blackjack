@@ -16,4 +16,17 @@ public class CardsTest {
         //then
         assertThat(cards.getCards()).hasSize(2);
     }
+
+    @Test
+    void 카드_덱에서_카드_한_장을_받아온다() {
+        //given
+        CardDeck cardDeck = CardDeck.createCards();
+        Cards cards = new Cards();
+
+        //when
+        cards.drawCard(cardDeck);
+
+        //then
+        assertThat(cards.getCards()).hasSize(1);
+    }
 }
