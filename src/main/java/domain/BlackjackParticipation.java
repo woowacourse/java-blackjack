@@ -4,22 +4,21 @@ import except.BlackJackException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlackjackPlayer {
+public abstract class BlackjackParticipation {
 
     private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21장 이상 받을 수 없습니다";
     private static final int BURST_STANDARD = 21;
     private static final int ACE_DIFF = 10;
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
-    private final List<TrumpCard> trumpCards;
+    private final List<TrumpCard> trumpCards = new ArrayList<>();
     private final String name;
 
-    public BlackjackPlayer(String name) {
-        validateNickname(name);
+    public BlackjackParticipation(String name) {
         this.name = name;
-        trumpCards = new ArrayList<>();
+        validateNickname();
     }
 
-    private void validateNickname(String name) {
+    private void validateNickname() {
         if (name == null || name.isBlank()) {
             throw new BlackJackException(INVALID_NAME);
         }
@@ -64,6 +63,10 @@ public abstract class BlackjackPlayer {
 
     public List<TrumpCard> trumpCards() {
         return trumpCards;
+    }
+
+    public boolean isDealer() {
+        return false;
     }
 
     public String name() {

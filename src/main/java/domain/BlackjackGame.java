@@ -13,9 +13,9 @@ public class BlackjackGame {
     private final String INVALID_BLACKJACK_PLAYER_SIZE = "블랙잭은 1-7명만 이용하실 수 있습니다";
 
     private final BlackjackParticipants blackjackParticipants;
-    private final Deck deck;
+    private final BlackjackDeck deck;
 
-    public BlackjackGame(List<String> names, Deck deck, Dealer dealer) {
+    public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
         int playerSize = names.size();
         if (playerSize < MIN_PEOPLE_WITHOUT_DEALER || playerSize > MAX_PEOPLE_WITHOUT_DEALER) {
             throw new BlackJackException(INVALID_BLACKJACK_PLAYER_SIZE);
@@ -25,16 +25,20 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
         this.deck = deck;
         this.blackjackParticipants = new BlackjackParticipants(players, dealer);
-        gameStart();
+        initiateGame();
     }
 
-    private void gameStart() {
+    private void initiateGame() {
         for (String name : blackjackParticipants.getPlayerNames()) {
-            blackjackParticipants.giveToPlayer(name, deck.drawCard());
-            blackjackParticipants.giveToPlayer(name, deck.drawCard());
+            drawCard(name);
+            drawCard(name);
         }
-        blackjackParticipants.giveToDealer(deck.drawCard());
-        blackjackParticipants.giveToDealer(deck.drawCard());
+        drawDealerCard();
+        drawDealerCard();
+    }
+
+    private void drawDealerCard() {
+        blackjackParticipants.addDealerDraw(deck.drawCard());
     }
 
     public List<BlackjackResult> currentPlayerBlackjackResult() {
@@ -64,5 +68,31 @@ public class BlackjackGame {
 
     public List<TrumpCard> dealerCards() {
         return Collections.unmodifiableList(blackjackParticipants.dealerCards());
+    }
+
+    public String dealerName() {
+        return blackjackParticipants.dealerName();
+    }
+
+    public List<String> playerNames() {
+        return blackjackParticipants.getPlayerNames();
+    }
+
+    public void drawCard(String name) {
+        blackjackParticipants.addCard(name, deck.drawCard());
+    }
+
+    public boolean isBust(String name) {
+        return blackjackParticipants.isBust(name);
+    }
+
+    public void dealerHit() {
+        if (blackjackParticipants.dealerDrawable()) {
+            blackjackParticipants.addDealerDraw(deck.drawCard());
+        }
+    }
+
+    public boolean dealerDrawable() {
+        return blackjackParticipants.dealerDrawable();
     }
 }

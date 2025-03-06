@@ -2,16 +2,15 @@ package domain;
 
 import domain.strategy.DrawStrategy;
 import java.util.Deque;
-import java.util.LinkedList;
 
-public class Deck {
+public class BlackjackDeck {
 
-    private final Deque<TrumpCard> deck;
     private final DrawStrategy drawStrategy;
+    private final Deque<TrumpCard> deck;
 
-    public Deck(BlackjackDeckGenerator deckFactory, DrawStrategy drawStrategy) {
+    public BlackjackDeck(Deque<TrumpCard> deck, DrawStrategy drawStrategy) {
+        this.deck = deck;
         this.drawStrategy = drawStrategy;
-        this.deck = new LinkedList<>(deckFactory.generateDeck());
     }
 
     public TrumpCard drawCard() {

@@ -8,4 +8,12 @@ public record TrumpCard(Suit suit, CardValue cardValue) {
     public boolean isAce() {
         return cardValue.isAce();
     }
+
+    public String getRank() {
+        return cardValue.getRank();
+    }
+
+    public String getSuit() {
+        return suit.suit();
+    }
 }

@@ -15,7 +15,7 @@ public class BlackjackParticipants {
         this.dealer = dealer;
     }
 
-    public void giveToPlayer(String name, TrumpCard trumpCard) {
+    public void addCard(String name, TrumpCard trumpCard) {
         Player findPlayer = findPlayer(name);
         findPlayer.addDraw(trumpCard);
     }
@@ -31,10 +31,6 @@ public class BlackjackParticipants {
         return players.stream()
                 .map(Player::name)
                 .collect(Collectors.toList());
-    }
-
-    public void giveToDealer(TrumpCard trumpCard) {
-        dealer.addDraw(trumpCard);
     }
 
     public List<TrumpCard> playerCards(String name) {
@@ -57,5 +53,18 @@ public class BlackjackParticipants {
 
     public String dealerName() {
         return dealer.name();
+    }
+
+    public boolean isBust(String name) {
+        Player player = findPlayer(name);
+        return !player.isDrawable();
+    }
+
+    public void addDealerDraw(TrumpCard trumpCard) {
+        dealer.addDraw(trumpCard);
+    }
+
+    public boolean dealerDrawable() {
+        return dealer.isDrawable();
     }
 }

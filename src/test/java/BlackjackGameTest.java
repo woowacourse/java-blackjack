@@ -2,12 +2,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIterable;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.BlackjackDeck;
 import domain.BlackjackDeckGenerator;
 import domain.BlackjackGame;
 import domain.BlackjackResult;
 import domain.CardValue;
 import domain.Dealer;
-import domain.Deck;
 import domain.Suit;
 import domain.TrumpCard;
 import domain.strategy.BlackjackDrawStrategy;
@@ -29,8 +29,9 @@ public class BlackjackGameTest {
     void 플레이어_수는_딜러_포함_2명_이상이여야_한다() {
         List<String> names = List.of("");
         Dealer dealer = new Dealer();
+        BlackjackDeck blackjackDeck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
         assertThatThrownBy(() -> new BlackjackGame(names,
-                new Deck(new BlackjackDeckGenerator(), new BlackjackDrawStrategy()), new Dealer()))
+                blackjackDeck, new Dealer()))
                 .isInstanceOf(BlackJackException.class);
     }
 
@@ -38,8 +39,8 @@ public class BlackjackGameTest {
     void 플레이어_수는_8명_초과하면_예외가_발생한다() {
         List<String> names = List.of("포비", "포비2", "포비3", "포비4", "포비5", "포비6", "포비7", "포비8", "포비9");
         Dealer dealer = new Dealer();
-        assertThatThrownBy(() -> new BlackjackGame(names,
-                new Deck(new BlackjackDeckGenerator(), new BlackjackDrawStrategy()), dealer))
+        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
+        assertThatThrownBy(() -> new BlackjackGame(names, deck, dealer))
                 .isInstanceOf(BlackJackException.class);
     }
 
@@ -50,7 +51,8 @@ public class BlackjackGameTest {
                         new TrumpCard(Suit.DIAMOND, CardValue.K), new TrumpCard(Suit.SPADE, CardValue.EIGHT),
                         new TrumpCard(Suit.HEART, CardValue.EIGHT), new TrumpCard(Suit.HEART, CardValue.J),
                         new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.EIGHT)));
-        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
+
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비", "포비2");
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
@@ -64,7 +66,7 @@ public class BlackjackGameTest {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.EIGHT)));
-        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비");
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
@@ -78,7 +80,8 @@ public class BlackjackGameTest {
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.NINE),
                         new TrumpCard(Suit.CLOVER, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.J)));
-        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
+
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비", "루키");
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
@@ -95,7 +98,8 @@ public class BlackjackGameTest {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.CLOVER, CardValue.TWO), new TrumpCard(Suit.CLOVER, CardValue.THREE)));
-        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
+        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
+
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비");
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
