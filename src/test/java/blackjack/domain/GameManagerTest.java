@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.dto.DrawnCardResult;
-import blackjack.dto.PlayerWinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -129,10 +128,10 @@ class GameManagerTest {
         gameManager.distributeCards();
 
         //when
-        List<PlayerWinningResult> playerWinningResults = gameManager.calculateGameResult();
+        PlayerWinningStatistics statistics = gameManager.calculateGameResult();
 
         //then
-        assertThat(playerWinningResults.size()).isEqualTo(2);
+        assertThat(statistics.getPlayerWinningResults().size()).isEqualTo(2);
     }
 
 }

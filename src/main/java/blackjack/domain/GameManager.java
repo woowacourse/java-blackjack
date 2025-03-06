@@ -20,6 +20,10 @@ public class GameManager {
         cardManager.initialize(nicknames);
     }
 
+    public List<Card> findCardsByPlayer(Player player) {
+        return cardManager.findCardsByNickname(player.getNickname()).getCards();
+    }
+
     public void distributeCards() {
         cardManager.distributeCards();
     }
@@ -60,22 +64,32 @@ public class GameManager {
         return drawnCardResults;
     }
 
-    public List<PlayerWinningResult> calculateGameResult() {
+    public PlayerWinningStatistics calculateGameResult() {
         Player dealer = players.getDealer();
         int dealerPoint = cardManager.calculateSumByNickname(dealer.getNickname());
 
         List<Player> allPlayers = players.getPlayers();
-        return allPlayers.stream()
+        return new PlayerWinningStatistics(allPlayers.stream()
                 .map(player -> calculatePlayerWinningResult(player, dealerPoint))
-                .toList();
+                .toList());
     }
 
     private PlayerWinningResult calculatePlayerWinningResult(Player player, int dealerPoint) {
-        if (cardManager.calculateSumByNickname(player.getNickname()) > dealerPoint) {
+
+        int playerPoint = cardManager.calculateSumByNickname(player.getNickname());
+        if (playerPoint > 21) {
+            playerPoint = 0;
+        }
+
+        if (dealerPoint > 21) {
+            dealerPoint = 0;
+        }
+
+        if (playerPoint > dealerPoint) {
             return new PlayerWinningResult(player.getNickname(), GameResultType.WIN);
         }
 
-        if (cardManager.calculateSumByNickname(player.getNickname()) < dealerPoint) {
+        if (playerPoint < dealerPoint) {
             return new PlayerWinningResult(player.getNickname(), GameResultType.LOSE);
         }
 
