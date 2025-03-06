@@ -76,4 +76,29 @@ class ParticipantTest {
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
     }
+
+    @DisplayName("참가자가 burst가 아니고, 숫자가 더 작은 경우에는 패배로 판단한다.")
+    @Test
+    void 패배_판단() {
+        //given
+        List<Card> cardList = List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        );
+        Cards cards = Cards.of(cardList);
+        Participant loser = new Participant(cards);
+
+        List<Card> cardList2 = List.of(
+                new Card(CardNumber.THREE, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Cards cards2 = Cards.of(cardList2);
+        Participant winner = new Participant(cards2);
+
+        //when
+        GameResult result = loser.calculateGameResult(winner);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
+    }
 }
