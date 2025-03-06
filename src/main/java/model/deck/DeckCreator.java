@@ -1,8 +1,11 @@
-package model;
+package model.deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import model.card.Card;
+import model.card.CardNumber;
+import model.card.CardType;
 
 public class DeckCreator implements DeckCreateStrategy {
 

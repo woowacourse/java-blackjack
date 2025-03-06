@@ -1,6 +1,7 @@
-package model;
+package model.deck;
 
 import java.util.ArrayDeque;
+import model.card.Card;
 
 public class Deck implements DeckStrategy {
 
