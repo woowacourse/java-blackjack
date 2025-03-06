@@ -2,9 +2,10 @@ package blackjack.domain.gamer;
 
 public class Dealer extends Gamer {
 
-    // TODO: 상수화
+    private static final int MIN_SUM_OF_CARDS = 16;
+
     @Override
     public boolean canReceiveAdditionalCards() {
-        return cards.sum() <= 16;
+        return cards.sum() <= MIN_SUM_OF_CARDS;
     }
 }

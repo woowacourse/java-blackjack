@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int MAX_SUM_OF_CARDS = 21;
+    public static final int MAX_SUM_OF_CARDS = 21;
     private static final int LARGE_ACE_NUMBER = 11;
     private static final int SMALL_ACE_NUMBER = 1;
     private static final int CARD_COUNT_OF_BLACKJACK = 2;

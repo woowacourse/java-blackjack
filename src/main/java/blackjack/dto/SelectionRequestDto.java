@@ -4,15 +4,16 @@ public record SelectionRequestDto(
     boolean selection
 ) {
 
-    // TODO 상수화
+    private static final String POSITIVE = "Y";
+    private static final String NEGATIVE = "N";
+
     public static SelectionRequestDto from(String input) {
-        if (input.equalsIgnoreCase("Y")) {
+        if (input.equalsIgnoreCase(POSITIVE)) {
             return new SelectionRequestDto(true);
         }
-        if (input.equalsIgnoreCase("N")) {
+        if (input.equalsIgnoreCase(NEGATIVE)) {
             return new SelectionRequestDto(false);
         }
-        // TODO 예외 메시지에서 상수 분리
-        throw new IllegalArgumentException("[ERROR] Y 또는 N을 입력해야 합니다.");
+        throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s을 입력해야 합니다.", POSITIVE, NEGATIVE));
     }
 }
