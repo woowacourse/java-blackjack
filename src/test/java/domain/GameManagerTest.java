@@ -196,4 +196,25 @@ public class GameManagerTest {
         assertThat(gameResult1).isEqualTo(GameResult.DRAW);
         assertThat(gameResult2).isEqualTo(GameResult.DRAW);
     }
+
+    @Test
+    void 플레이어가_총_몇명인지_계산한다() {
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
+
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("가이온",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        final int size = gameManager.calculatePlayerSize();
+
+        //then
+        assertThat(size).isEqualTo(2);
+
+    }
 }

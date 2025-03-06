@@ -40,4 +40,9 @@ public class GameManager {
         if(dealer.isBust() && player.isBust()) return GameResult.DRAW;
         return player.calculateGameResult(dealer.calculateScore());
     }
+
+
+    public int calculatePlayerSize() {
+        return 0;
+    }
 }
