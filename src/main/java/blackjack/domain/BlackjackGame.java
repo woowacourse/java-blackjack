@@ -5,6 +5,9 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BlackjackGame {
 
@@ -42,6 +45,16 @@ public class BlackjackGame {
 
     public int sumCardDenomination(final Gamer gamer) {
         return gamer.calculateMaxSum();
+    }
+
+    public Map<String, ResultStatus> calculateWinningResult() {
+        final int dealerSum = participants.getDealer().calculateMaxSum();
+        final Map<String, ResultStatus> result = new HashMap<>();
+        for (Player player : participants.getPlayers()) {
+            final int playerSum = player.calculateMaxSum();
+            result.put(player.getNickname(), ResultStatus.calculateResultStatus(playerSum, dealerSum));
+        }
+        return Collections.unmodifiableMap(result);
     }
 
     public Player getPlayer(final int index) {

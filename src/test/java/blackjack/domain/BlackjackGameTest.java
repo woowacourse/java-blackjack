@@ -11,12 +11,17 @@ import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
 import blackjack.domain.random.CardRandomGenerator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -108,7 +113,7 @@ class BlackjackGameTest {
         );
     }
 
-    @DisplayName("GameAction 구현체가 가진 카드의 합을 계산한다.")
+    @DisplayName("카드의 합을 계산한다.")
     @Test
     void sumCardDenomination() {
         // given
@@ -123,6 +128,29 @@ class BlackjackGameTest {
                 () -> assertThat(blackjackGame.sumCardDenomination(blackjackGame.getPlayer(0))).isEqualTo(5),
                 () -> assertThat(blackjackGame.sumCardDenomination(blackjackGame.getPlayer(1))).isEqualTo(30)
         );
+    }
 
+    @DisplayName("딜러에 대한 플레이어의 승,패 결과를 계산한다")
+    @Test
+    void calculateWinningResult() {
+        // given
+        final Cards dealerCards = new Cards(List.of(new Card(Shape.SPADE, Denomination.J),
+                new Card(Shape.SPADE, Denomination.EIGHT)));
+
+        final Dealer dealer = new Dealer(dealerCards);
+        final Cards player1Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.NINE),
+                new Card(Shape.SPADE, Denomination.TEN)));
+        final Cards player2Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.TWO),
+                new Card(Shape.SPADE, Denomination.J)));
+        final Cards player3Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
+                new Card(Shape.SPADE, Denomination.K)));
+        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+                new Participants(dealer,
+                        new Players(providePlayersWithCards(player1Cards, player2Cards, player3Cards))));
+
+        // when & then
+        final String mj = "엠제이";
+        assertThat(blackjackGame.calculateWinningResult()).isEqualTo(
+                Map.of(mj + 0, ResultStatus.WIN, mj + 1, ResultStatus.LOSE, mj + 2, ResultStatus.DRAW));
     }
 }
