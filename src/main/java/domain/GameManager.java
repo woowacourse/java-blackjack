@@ -47,6 +47,7 @@ public class GameManager {
 
     public GameResult calculateResult(final int index) {
         final Player player = players.get(index);
+        if(dealer.isBust() && player.isBust()) return GameResult.DRAW;
         return player.calculateGameResult(dealer.calculateScore());
     }
 }
