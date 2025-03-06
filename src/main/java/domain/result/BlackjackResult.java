@@ -15,14 +15,14 @@ public enum BlackjackResult {
         this.value = value;
     }
 
-    public static BlackjackResult getDealerResult(Participant dealer, Participant player) {
+    public static BlackjackResult getPlayerResult(Participant dealer, Participant player) {
         int dealerScore = dealer.getScore();
         int playerScore = player.getScore();
 
-        if (dealerScore > playerScore) {
+        if (playerScore > dealerScore) {
             return WIN;
         }
-        if (dealerScore == playerScore) {
+        if (playerScore == dealerScore) {
             return DRAW;
         }
         return LOSE;

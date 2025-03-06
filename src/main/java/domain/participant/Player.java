@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.result.BlackjackResult;
 import java.util.List;
 
 public class Player implements Participant {
@@ -34,5 +35,9 @@ public class Player implements Participant {
 
     public String getName() {
         return name;
+    }
+
+    public BlackjackResult getBlackjackResult(Dealer dealer) {
+        return BlackjackResult.getPlayerResult(dealer, this);
     }
 }

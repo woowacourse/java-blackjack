@@ -6,7 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import domain.card.Card;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
+import domain.result.BlackjackResult;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
 
@@ -47,5 +52,40 @@ public class PlayerTest {
 
         // then
         assertThat(score).isEqualTo(11);
+    }
+
+    @MethodSource("createPlayerAndResult")
+    @ParameterizedTest
+    void 플레이어가_딜러와의_게임_결과를_반환한다(Player player, BlackjackResult result) {
+        // given
+        final Dealer dealer = Dealer.of();
+        dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        dealer.receive(Card.of(TrumpNumber.SIX, TrumpShape.CLUB));
+
+        // when
+        BlackjackResult blackjackResult = player.getBlackjackResult(dealer);
+
+        // then
+        assertThat(blackjackResult).isEqualTo(result);
+    }
+
+    private static Stream<Arguments> createPlayerAndResult() {
+        final Player loser = Player.of("pobi");
+        loser.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        loser.receive(Card.of(TrumpNumber.FIVE, TrumpShape.CLUB));
+
+        final Player drawer = Player.of("pobi");
+        drawer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        drawer.receive(Card.of(TrumpNumber.SIX, TrumpShape.CLUB));
+
+        final Player winner = Player.of("pobi");
+        winner.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        winner.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
+
+        return Stream.of(
+                Arguments.of(loser, BlackjackResult.LOSE),
+                Arguments.of(drawer, BlackjackResult.DRAW),
+                Arguments.of(winner, BlackjackResult.WIN)
+        );
     }
 }

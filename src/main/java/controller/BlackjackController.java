@@ -6,7 +6,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import dto.ResultDto;
 import java.util.Arrays;
 import java.util.List;
 import view.InputView;
@@ -31,8 +30,6 @@ public class BlackjackController {
 
         drawToPlayers(gameManager);
         drawToDealer(gameManager);
-
-        ResultDto resultDto = gameManager.calculateResult();
         // TODO: 승패 결과 출력
     }
 

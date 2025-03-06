@@ -23,10 +23,10 @@ class BlackjackResultTest {
         player.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
 
         // when
-        BlackjackResult result = BlackjackResult.getDealerResult(dealer, player);
+        BlackjackResult result = BlackjackResult.getPlayerResult(dealer, player);
 
         // then
-        assertThat(result).isEqualTo(BlackjackResult.LOSE);
+        assertThat(result).isEqualTo(BlackjackResult.WIN);
     }
 
     @Test
