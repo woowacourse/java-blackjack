@@ -49,7 +49,8 @@ public class BlackjackController {
 	private void outputDuelResult(final Dealer dealer, final List<Player> players) {
 		outputView.printBlackjackDuelResultIntroduce();
 		final DuelHistory dealerHistory = dealer.getParticipant().getDuelHistory();
-		outputView.printBlackjackDealerDuelResult(dealerHistory.getWinCount(), dealerHistory.getLoseCount());
+		outputView.printBlackjackDealerDuelResult(dealerHistory.getWinCount() + dealerHistory.getDrawCount(),
+			dealerHistory.getLoseCount());
 		players.forEach(this::outputPlayersDuelResult);
 
 	}
