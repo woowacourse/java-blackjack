@@ -73,6 +73,20 @@ class PlayersTest {
         assertThat(result).isTrue();
     }
 
+    @Test
+    @DisplayName("딜러의 카드가 16이하인 경우 TRUE를 반환한다")
+    void 딜러의_카드가_16이하인_경우_TRUE를_반환한다() {
+        // given
+        Players players = new Players();
+
+        // when
+        boolean result = players.isDealerHit();
+
+        // then
+        assertThat(result)
+                .isTrue();
+    }
+
     private static class SortShuffle implements BlackjackShuffle {
 
         @Override
