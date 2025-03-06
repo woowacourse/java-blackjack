@@ -3,11 +3,12 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import domain.card.Card;
 import domain.card.CardGroup;
+import domain.card.CardType;
 import domain.card.RandomCardGenerator;
-import java.util.List;
-
 import domain.gamer.Player;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class GameManagerTest {
@@ -43,5 +44,22 @@ public class GameManagerTest {
         boolean isHitting = gameManager.isAbleToHit(player);
 
         assertThat(isHitting).isTrue();
+    }
+
+    @Test
+    void 플레이어에게_카드를_추가한다() {
+        //given
+        final List<String> playerNames = List.of("윌슨", "가이온");
+        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
+        CardGroup cardGroup = new CardGroup(List.of(randomCardGenerator.generate()));
+        final Player player = new Player("윌슨",cardGroup);
+
+        //when
+        final GameManager gameManager = GameManager.create(randomCardGenerator, playerNames);
+
+        //then
+        assertThatCode(() -> gameManager.giveCardToPlayer(player)).doesNotThrowAnyException();
+
+
     }
 }

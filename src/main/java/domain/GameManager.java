@@ -49,4 +49,8 @@ public class GameManager {
     public List<Player> getPlayers() {
         return players.stream().map(Player::new).toList();
     }
+
+    public void giveCardToPlayer(final Player player) {
+        throw new UnsupportedOperationException("Unsupported giveCardToPlayer");
+    }
 }
