@@ -52,6 +52,7 @@ public class BlackJackManager {
         }
         BlackJackManager that = (BlackJackManager) o;
         return Objects.equals(participants, that.participants) && Objects.equals(
+            cardDeck, that.cardDeck);
     }
 
     @Override
