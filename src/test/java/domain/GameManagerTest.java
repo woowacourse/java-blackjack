@@ -60,6 +60,5 @@ public class GameManagerTest {
         //then
         assertThatCode(() -> gameManager.giveCardToPlayer(player)).doesNotThrowAnyException();
 
-
     }
 }

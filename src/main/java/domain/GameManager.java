@@ -51,6 +51,7 @@ public class GameManager {
     }
 
     public void giveCardToPlayer(final Player player) {
-        throw new UnsupportedOperationException("Unsupported giveCardToPlayer");
+        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
+        player.receiveCard(randomCardGenerator.generate());
     }
 }
