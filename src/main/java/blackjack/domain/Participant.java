@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Participant {
+    private static final int TARGET_SCORE = 21;
+
     protected final CardDeck cardDeck;
     protected final CardDump cardDump;
 
@@ -16,7 +18,7 @@ public abstract class Participant {
     public abstract int calculateTotalCardScore();
 
     public boolean isBust() {
-        return calculateTotalCardScore() > 21;
+        return calculateTotalCardScore() > TARGET_SCORE;
     }
 
     public void addCard() {

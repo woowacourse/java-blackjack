@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDump {
-    List<Card> cardDump;
+    private static final String EMPTY_CARD_DUMP = "[ERROR] 카드 덤프가 비어 있습니다!";
+
+    private final List<Card> cardDump;
 
     public CardDump() {
         cardDump = initializeCardDump();
@@ -28,7 +30,7 @@ public class CardDump {
 
     public Card drawCard() {
         if (cardDump.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 카드 덤프가 비어 있습니다!");
+            throw new IllegalStateException(EMPTY_CARD_DUMP);
         }
         return cardDump.removeFirst();
     }

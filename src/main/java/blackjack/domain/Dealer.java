@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class Dealer extends Participant {
     private final static String DEALER_NAME = "딜러";
+    private final static int DEALER_HIT_THRESHOLD = 16;
 
     public Dealer(CardDeck cardDeck, CardDump cardDump) {
         super(cardDeck, cardDump);
@@ -20,10 +21,8 @@ public class Dealer extends Participant {
 
     @Override
     boolean canTakeExtraCard() {
-        Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
-        int max = Collections.max(possibleScore);
-
-        return max <= 16;
+        int score = calculateTotalCardScore();
+        return score <= DEALER_HIT_THRESHOLD;
     }
 
     @Override
