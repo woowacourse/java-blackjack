@@ -28,4 +28,12 @@ public class GameManager {
     public boolean isPlayerBust(final Player player) {
         return players.isPlayerBust(player);
     }
+
+    public boolean isDealerHitThenDealAddCard() {
+        if (players.isDealerHit()) {
+            players.dealAddCardForDealer(cardPack);
+            return true;
+        }
+        return false;
+    }
 }
