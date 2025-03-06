@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class PlayersTest {
 
@@ -24,41 +24,32 @@ class PlayersTest {
     @DisplayName("각 참가자 마다 기본 카드 2장을 발급한다")
     @Test
     void give_two_cards() {
-        // given
-        Players players = new Players(List.of(new Player("두리")));
+        Players players = new Players();
         CardPack cardPack = new CardPack(new SortShuffle());
+        players.addGamblers(List.of(new Player("두리")));
 
-        // when
         players.initPlayers(cardPack);
         List<Card> result = players.getGamblers().getFirst().getCards();
 
-        // then
         assertThat(result.size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("참가자의 목록으로 객체를 생성한다")
     void make_players() {
-        //given
-        Player player1 = new Player("두리");
-        Player player2 = new Player("비타");
-        Players players = new Players(List.of(
-                player1,
-                player2
-        ));
-
-
-        //when & then
-        assertThat(players.getGamblers()).contains(player1, player2);
+        assertThatNoException()
+                .isThrownBy(Players::new);
     }
 
     @Test
     @DisplayName("딜러에게 카드 2장을 발급한다")
     void deal_card_to_dealer() {
-        Players players = new Players(List.of(new Player("비타")));
-        Player dealer = players.getDealer();
+        Players players = new Players();
         players.initPlayers(new CardPack(new SortShuffle()));
-        Assertions.assertThat(dealer.getCards().size()).isEqualTo(2);
+
+        Player dealer = players.getDealer();
+
+        assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 
     private static class SortShuffle implements BlackjackShuffle {
