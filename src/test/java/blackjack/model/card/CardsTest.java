@@ -1,7 +1,11 @@
 package blackjack.model.card;
 
-import java.util.List;
+import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -43,6 +47,22 @@ class CardsTest {
         cards.merge(otherCards);
 
         assertThat(cards.hasSize(2)).isTrue();
+    }
+
+    @Test
+    void 카드를_N_개_뽑는다() {
+        Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
+
+        assertThat(cards.pick(2)).hasSize(2);
+        assertThat(cards.getValues()).isEmpty();
+    }
+
+    @Test
+    void 존재하는_카드_개수보다_더_많은_카드를_뽑을_수_없다() {
+        Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> cards.pick(3));
     }
 
 }
