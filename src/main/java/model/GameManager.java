@@ -5,6 +5,8 @@ import java.util.List;
 
 public class GameManager {
 
+    private static final int INITIAL_DEAL_COUNT = 2;
+
     private final Dealer dealer;
     private final Players players;
     private final CardDeck deck = new CardDeck();
@@ -14,12 +16,16 @@ public class GameManager {
         this.players = players;
     }
 
-    public void divideAllParticipant(int amount) {
+    public void shuffle() {
+        deck.shuffle();
+    }
+
+    public void divideAllParticipant() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getPlayers());
         for (Participant participant : participants) {
-            divideCardByParticipant(participant, amount);
+            divideCardByParticipant(participant, INITIAL_DEAL_COUNT);
         }
     }
 

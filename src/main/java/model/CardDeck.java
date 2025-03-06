@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class CardDeck {
 
-    private final List<Card> deck;
+    private static final List<Card> deck = initDeck();
 
     private static List<Card> initDeck() {
         ArrayList<Card> deck = new ArrayList<>();
@@ -15,12 +15,15 @@ public final class CardDeck {
                 deck.add(new Card(suit, rank));
             }
         }
-        Collections.shuffle(deck);
         return deck;
     }
 
+    public void shuffle() {
+        Collections.shuffle(deck);
+    }
+
     public CardDeck() {
-        deck = initDeck();
+        // deck = initDeck();
     }
 
     public List<Card> getDeck() {
