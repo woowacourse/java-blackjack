@@ -33,6 +33,9 @@ public class Participant {
     }
 
     public GameResult calculateGameResult(Participant otherParticipant) {
+        if (getResult() > otherParticipant.getResult()) {
+            return GameResult.WIN;
+        }
         return GameResult.DRAW;
     }
 
