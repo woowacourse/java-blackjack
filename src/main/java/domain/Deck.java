@@ -19,5 +19,6 @@ public class Deck {
     }
 
     public void giveCardTo(Player player) {
+        player.addCard(pick());
     }
 }
