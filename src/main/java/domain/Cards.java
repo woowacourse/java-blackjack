@@ -1,9 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Cards {
     private static final int BURST_LIMIT = 21;
@@ -52,5 +50,9 @@ public class Cards {
         for (int score : cards.get(cardIndex).getScores()) {
             calculateCandidates(cardIndex + 1, sum + score, cards, candidates);
         }
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

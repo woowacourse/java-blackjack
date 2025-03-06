@@ -39,10 +39,9 @@ public class Players {
                 .orElseThrow(() -> new IllegalStateException("딜러는 항상 1명이 존재해야 합니다."));
     }
 
-    public List<Participant> getParticipants() {
-        return  players.stream()
+    public List<Player> getParticipants() {
+        return players.stream()
                 .filter(player -> player instanceof Participant)
-                .map(participant -> (Participant)participant)
                 .toList();
     }
 }

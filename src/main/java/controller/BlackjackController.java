@@ -7,6 +7,7 @@ import domain.DeckGenerator;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
+import domain.dto.OpenCardsResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +24,10 @@ public class BlackjackController {
         Players players = createPlayers(dealer, participants);
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();
+
+        // 초기 카드 오픈
+        OpenCardsResponse openCardsResponse = blackjack.openPlayersCards();
+
 
     }
 

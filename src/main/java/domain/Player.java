@@ -26,4 +26,8 @@ public abstract class Player {
     public Cards getCards() {
         return cards;
     }
+
+    public String getName() {
+        return name;
+    }
 }
