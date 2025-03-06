@@ -1,7 +1,9 @@
 package domain;
 
 import static domain.card.Number.ACE;
+import static domain.card.Number.JACK;
 import static domain.card.Number.TWO;
+import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,8 +14,12 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class DealerTest {
     @Test
@@ -66,16 +72,23 @@ public class DealerTest {
         assertThat(dealer.isUnderThreshold()).isTrue();
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("드로우 테스트")
-    void drawTest() {
+    @MethodSource("provideCardDeckForDrawTest")
+    void drawTest(CardDeck cardDeck) {
         //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO)));
         Dealer dealer = new Dealer(cardDeck);
         dealer.addCards();
         dealer.addCards();
 
         //when-then
         assertDoesNotThrow(dealer::draw);
+    }
+
+    private static Stream<Arguments> provideCardDeckForDrawTest() {
+        return Stream.of(Arguments.of(
+                new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))),
+                new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK)))
+        ));
     }
 }
