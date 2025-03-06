@@ -5,6 +5,6 @@ import java.util.Map;
 public interface Participant {
     boolean ableToDraw(final int score);
     boolean areYouPlayer();
-    String getName();
+    String getNickname();
     Map<BattleResult, Integer> getBattleResult();
 }

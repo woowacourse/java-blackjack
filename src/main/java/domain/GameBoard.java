@@ -5,6 +5,7 @@ import domain.card.CardDeck;
 import domain.participant.BattleResult;
 import domain.participant.Participant;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,7 +25,10 @@ public class GameBoard {
         return participants.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        participant -> CardDeck.generateEmptySet()));
+                        participant -> CardDeck.generateEmptySet(),
+                        (existing, replacement) -> replacement,
+                        LinkedHashMap::new));
+
     }
 
     public void drawTwoCards() {
@@ -62,6 +66,10 @@ public class GameBoard {
         return participant.ableToDraw(score);
     }
 
+    public void shufflePlayingCard() {
+        gameCardDeck.shuffle();
+    }
+
     public int getScoreOf(Participant participant) {
         CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
         List<Card> ownedCards = ownedCardDeck.getCards();
@@ -90,7 +98,6 @@ public class GameBoard {
 
         Participant dealer = cardDeckOfDealer.getKey();
         int dealerScore = getScoreOf(dealer);
-        Map<BattleResult, Integer> battleResultOfDealer = dealer.getBattleResult();
 
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
             Participant participant = entry.getKey();
@@ -99,21 +106,44 @@ public class GameBoard {
             }
 
             int score = getScoreOf(participant);
-            if (dealerScore > score) {
-                Map<BattleResult, Integer> battleResult = participant.getBattleResult();
-                battleResult.merge(BattleResult.LOSE, 1, Integer::sum);
-                battleResultOfDealer.merge(BattleResult.WIN, 1, Integer::sum);
+            if (score > 21) {
+                if (dealerScore > 21) {
+                    updateBattleResultDraw(dealer, participant);
+                    continue;
+                }
+                updateBattleResult(dealer, participant);
                 continue;
             }
-            if (dealerScore < score) {
-                Map<BattleResult, Integer> battleResult = participant.getBattleResult();
-                battleResult.merge(BattleResult.WIN, 1, Integer::sum);
-                battleResultOfDealer.merge(BattleResult.LOSE, 1, Integer::sum);
+
+            if (score > dealerScore) {
+                updateBattleResult(participant, dealer);
                 continue;
             }
-            Map<BattleResult, Integer> battleResult = participant.getBattleResult();
-            battleResult.merge(BattleResult.DRAW, 1, Integer::sum);
-            battleResultOfDealer.merge(BattleResult.DRAW, 1, Integer::sum);
+
+            if (score < dealerScore) {
+                if (dealerScore > 21) {
+                   updateBattleResult(participant, dealer);
+                   continue;
+                }
+                updateBattleResult(dealer, participant);
+            }
+
+            // 드로우
+            updateBattleResultDraw(dealer, participant);
         }
+    }
+
+    private void updateBattleResultDraw(Participant dealer, Participant player) {
+        Map<BattleResult, Integer> dealerResult = dealer.getBattleResult();
+        Map<BattleResult, Integer> playerResult = player.getBattleResult();
+        dealerResult.merge(BattleResult.DRAW, 1, Integer::sum);
+        playerResult.merge(BattleResult.DRAW, 1, Integer::sum);
+    }
+
+    private void updateBattleResult(Participant winner, Participant loser) {
+        Map<BattleResult, Integer> winnerResult = winner.getBattleResult();
+        Map<BattleResult, Integer> loserResult = loser.getBattleResult();
+        winnerResult.merge(BattleResult.WIN, 1, Integer::sum);
+        loserResult.merge(BattleResult.LOSE, 1, Integer::sum);
     }
 }

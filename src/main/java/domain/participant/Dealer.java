@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dealer implements Participant {
-    private static final int STAY_THRESHOLD = 17;
+    public static final int STAY_THRESHOLD = 16;
 
     private final String nickname;
     private final Map<BattleResult, Integer> battleResult;
@@ -14,7 +14,7 @@ public class Dealer implements Participant {
         this.battleResult = new HashMap<>();
     }
 
-    public String getName() {
+    public String getNickname() {
         return nickname;
     }
 
@@ -24,7 +24,7 @@ public class Dealer implements Participant {
 
     @Override
     public boolean ableToDraw(final int score) {
-        return score < STAY_THRESHOLD;
+        return score <= STAY_THRESHOLD;
     }
 
     @Override
