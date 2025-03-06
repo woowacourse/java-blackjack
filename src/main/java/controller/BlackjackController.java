@@ -28,10 +28,14 @@ public class BlackjackController {
         final List<Player> players = inputPlayers();
         final Dealer dealer = new Dealer();
         final Deck deck = Deck.createShuffledDeck();
+
         handOutCards(players, dealer, deck);
+
         playerPickCard(players, deck);
         dealerPickCard(dealer, deck);
-        outputHandResult(dealer.getParticipant());
+
+        outputDealerHandResult(dealer.getParticipant());
+        outputPlayersHandResult(players);
     }
 
     private List<Player> inputPlayers() {
@@ -116,9 +120,22 @@ public class BlackjackController {
         }
     }
 
-    private void outputHandResult(final Participant participant) {
+    private void outputDealerHandResult(final Participant participant) {
         final List<String> convertedCards = convertParticipantCardText(participant);
         final int score = participant.calculateAllScore();
         outputView.printDealerHandResult(convertedCards, score);
     }
+
+    private void outputPlayersHandResult(List<Player> players) {
+        for (Player player : players) {
+            outputPlayerHandResult(player.getName(), player.getParticipant());
+        }
+    }
+
+    private void outputPlayerHandResult(final String name, final Participant participant) {
+        final List<String> convertedCards = convertParticipantCardText(participant);
+        final int score = participant.calculateAllScore();
+        outputView.printPlayerHandResult(name, convertedCards, score);
+    }
+
 }
