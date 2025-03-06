@@ -13,7 +13,8 @@ public class BlackjackCardHand {
     private final CardHand cardHand;
     
     public BlackjackCardHand(final CardHandInitializer initializer) {
-        this.cardHand = new CardHand(initializer);
+        this.cardHand = new CardHand();
+        this.cardHand.addCards(initializer.init());
     }
     
     public int getBlackjackSum() {
