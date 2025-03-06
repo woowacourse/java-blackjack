@@ -7,8 +7,8 @@ public class GameManager {
     private final CardPack cardPack;
     private final Players players;
 
-    public GameManager() {
-        cardPack = new CardPack(new RandomBlackjackShuffle());
+    public GameManager(final BlackjackShuffle blackjackShuffle) {
+        cardPack = new CardPack(blackjackShuffle);
         players = new Players();
     }
 
