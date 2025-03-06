@@ -47,6 +47,6 @@ public class GameManager {
     }
 
     public Player findPlayerByIndex(final int index) {
-        return null;
+        return players.get(index);
     }
 }
