@@ -183,7 +183,7 @@ class BlackJackTest {
         assertThat(values).hasSize(4);
     }
 
-    @DisplayName("카드의 숫자는 1부터 k까지 13개다.")
+    @DisplayName("카드의 숫자는 1부터 k까지 14개다.")
     @Test
     void cardNumber() {
         //given
@@ -192,7 +192,7 @@ class BlackJackTest {
         Number[] values = Number.values();
 
         //then
-        assertThat(values).hasSize(13);
+        assertThat(values).hasSize(14);
     }
 
     @DisplayName("카드의 숫자는 1부터 10까지의 점수를 가진다.")
@@ -264,5 +264,63 @@ class BlackJackTest {
 
         //then
         assertThat(actual).isEqualTo(card);
+    }
+
+    @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
+    @Test
+    void considerAceHas11() {
+        //given
+        Cards cards = new Cards();
+        Card card1 = new Card(Symbol.COLVER, Number.ACE);
+        Card card2 = new Card(Symbol.COLVER, Number.KING);
+
+        cards.add(card1);
+        cards.add(card2);
+
+        //when
+        int actual = cards.calculateTotalPoint();
+
+        //then
+        assertThat(actual).isEqualTo(21);
+    }
+
+    @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
+    @Test
+    void considerAceHas112() {
+        //given
+        Cards cards = new Cards();
+        Card card1 = new Card(Symbol.COLVER, Number.ACE);
+        Card card2 = new Card(Symbol.HEART, Number.ACE);
+
+        cards.add(card1);
+        cards.add(card2);
+
+        //when
+        int actual = cards.calculateTotalPoint();
+
+        //then
+        assertThat(actual).isEqualTo(12);
+    }
+
+    @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
+    @Test
+    void considerAceHas113() {
+        //given
+        Cards cards = new Cards();
+        Card card1 = new Card(Symbol.COLVER, Number.ACE);
+        Card card2 = new Card(Symbol.COLVER, Number.ACE);
+        Card card3 = new Card(Symbol.COLVER, Number.ACE);
+        Card card4 = new Card(Symbol.COLVER, Number.ACE);
+
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+
+        //when
+        int actual = cards.calculateTotalPoint();
+
+        //then
+        assertThat(actual).isEqualTo(14);
     }
 }

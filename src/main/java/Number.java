@@ -12,7 +12,8 @@ public enum Number {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10);
+    KING(10),
+    SOFT_ACE(11);
 
     private final Integer point;
 

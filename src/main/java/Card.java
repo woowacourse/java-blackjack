@@ -14,6 +14,10 @@ public class Card {
         return number;
     }
 
+    public boolean isAce() {
+        return number.equals(Number.ACE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
