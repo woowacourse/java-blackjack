@@ -22,43 +22,46 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public static void main(String[] args) {
-        final InputView inputView = new InputView();
-        final OutputView outputView = new OutputView();
-        BlackjackController blackjackController = new BlackjackController(inputView, outputView);
-        blackjackController.gameStart();
+    public void gameStart() {
+        Participants participants = initParticipants();
+        GameManager gameManager = GameManager.of(CardDeck.of(), participants);
+
+        gameManager.distributeCards();
+        // TODO: 초기화 된 카드 결과 출력
+
+        drawToPlayers(gameManager);
+        drawToDealer(gameManager);
+
+        ResultDto resultDto = gameManager.calculateResult();
+        // TODO: 승패 결과 출력
     }
 
-    public void gameStart() {
+    private Participants initParticipants() {
         Participant dealer = Dealer.of();
-
         String rawNames = inputView.getPlayerNames();
         List<Participant> players = Arrays.stream(rawNames.split(","))
                 .map(String::trim)
                 .map(Player::of)
                 .map(player -> (Participant) player)
                 .toList();
+        return Participants.of(dealer, players);
+    }
 
-        Participants participants = Participants.of(dealer, players);
-
-        GameManager gameManager = GameManager.of(CardDeck.of(), participants);
-        gameManager.distributeCards();
-        // TODO: 초기화 된 카드 결과 출력
-
+    private void drawToPlayers(GameManager gameManager) {
         List<String> playersNames = gameManager.getPlayersName();
-
         for (String name : playersNames) {
             processPlayerDecision(name, gameManager);
         }
+    }
+
+    private static void drawToDealer(GameManager gameManager) {
         while (true) {
             boolean received = gameManager.passCardToDealer();
             if (!received) {
                 break;
             }
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            // TODO: 딜러 카드 한장 더 받았다는 것을 알림
         }
-        ResultDto resultDto = gameManager.calculateResult();
-//        outputView.printInitCards(participants);
     }
 
     private void processPlayerDecision(String name, GameManager gameManager) {
