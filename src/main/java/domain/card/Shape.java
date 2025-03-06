@@ -14,11 +14,4 @@ public enum Shape {
         this.shape = shape;
     }
 
-    public static Shape check(String input) {
-        return Arrays.stream(Shape.values())
-                .filter(shape -> shape.shape.equals(input))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 카드의 모양은 스페이드, 다이아몬드, 하트, 클로버가 있습니다."));
-    }
-
 }
