@@ -6,11 +6,13 @@ import domain.CardBundle;
 import domain.CardDeck;
 import domain.Dealer;
 import domain.Participant;
+import domain.Participants;
 import domain.Player;
 import domain.Results;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import utils.InputSplitter;
 import view.InputView;
 import view.OutputView;
 
@@ -25,22 +27,7 @@ public class BlackJackController {
     }
 
     public void start() {
-        List<Participant> participants = new ArrayList<>();
-        // 딜러 생성
-        participants.add(new Dealer());
-
-        // 게임 참여자 객체 생성
-        String userNames = inputView.inputUserNames();
-        String[] splitNames = userNames.split(",");
-        if (splitNames.length > 9) {
-            throw new IllegalArgumentException("게임의 최대 참여자는 9명을 넘을 수 없습니다.");
-        }
-        for (String splitName : splitNames) {
-            String trimName = splitName.trim();
-            Participant participant = new Player(trimName);
-            participants.add(participant);
-        }
-
+        Participants participants = createGameParticipants();
         // 덱 생성
         CardBundle cardBundle = new CardBundle();
         List<Card> allCards = cardBundle.getAllCards();
@@ -48,18 +35,19 @@ public class BlackJackController {
         Collections.shuffle(shuffledAllCards);
 
         CardDeck cardDeck = new CardDeck(shuffledAllCards);
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackManager blackJackManager = new BlackJackManager(participants.getParticipants(),
+            cardDeck);
 
         // 딜러를 포함한 모든 참여자에게 2장의 카드 분배
         blackJackManager.start();
         // 게임 시작 이후 각자의 손패를 출력
-        outputView.printInitialParticipantHands(participants);
+        outputView.printInitialParticipantHands(participants.getParticipants());
 
         // 참가자 카드 분배 입력 기능
         // 참가자를 앞에서부터 순회하며
         // 각 참가자가 카드를 추가로 받을 수 있다면
         // 카드를 받을지 여부를 입력받는다.
-        for (Participant participant : participants) {
+        for (Participant participant : participants.getParticipants()) {
             if (participant instanceof Dealer) {
                 continue;
             }
@@ -86,7 +74,7 @@ public class BlackJackController {
         System.out.println();
 
         // 딜러가 카드를 뽑을 수 있다면 카드를 뽑는다
-        for (Participant participant : participants) {
+        for (Participant participant : participants.getParticipants()) {
             if (participant instanceof Dealer) {
                 // 카드를 추가로 받을 수 있다면
                 // 카드를 받을지 여부를 입력받는다
@@ -99,7 +87,7 @@ public class BlackJackController {
         }
         System.out.println();
         // 모든 참가자의 손패와, 점수를 출력한다
-        for (Participant participant : participants) {
+        for (Participant participant : participants.getParticipants()) {
             outputView.printFullParticipantInfo(participant);
         }
 
@@ -107,4 +95,16 @@ public class BlackJackController {
         outputView.printGameResult(results);
     }
 
+    private Participants createGameParticipants() {
+        List<Participant> participants = new ArrayList<>();
+        // 초기 딜러 설정
+        participants.add(new Dealer());
+        String inputUserNames = inputView.inputUserNames();
+        List<String> userNames = InputSplitter.split(inputUserNames);
+        for (String userName : userNames) {
+            Participant participant = new Player(userName);
+            participants.add(participant);
+        }
+        return new Participants(participants);
+    }
 }
