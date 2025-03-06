@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import java.util.List;
+import java.util.function.BiFunction;
+
 import blackjack.domain.gamer.Gamer;
 
 public enum RoundResult {
@@ -14,8 +17,27 @@ public enum RoundResult {
         this.displayName = displayName;
     }
 
-    // TODO 메서드 분리하든가 리팩토링좀..;;
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
+        return getResultOf(
+            List.of(
+                RoundResult::getBustResult,
+                RoundResult::getSumResult,
+                RoundResult::getBlackjackResult),
+            gamer, otherGamer);
+    }
+
+    private static RoundResult getResultOf(List<BiFunction<Gamer, Gamer, RoundResult>> getResultFunctions, Gamer gamer,
+        Gamer otherGamer) {
+        for (var function : getResultFunctions) {
+            RoundResult roundResult = function.apply(gamer, otherGamer);
+            if (roundResult != null) {
+                return roundResult;
+            }
+        }
+        return TIE;
+    }
+
+    private static RoundResult getBustResult(Gamer gamer, Gamer otherGamer) {
         if (gamer.isBust() && otherGamer.isBust()) {
             return TIE;
         }
@@ -25,7 +47,10 @@ public enum RoundResult {
         if (otherGamer.isBust()) {
             return WIN;
         }
+        return null;
+    }
 
+    private static RoundResult getSumResult(Gamer gamer, Gamer otherGamer) {
         int gamerSumOfCards = gamer.getSumOfCards();
         int otherGamerSumOfCards = otherGamer.getSumOfCards();
 
@@ -35,7 +60,10 @@ public enum RoundResult {
         if (gamerSumOfCards < otherGamerSumOfCards) {
             return LOSE;
         }
+        return null;
+    }
 
+    private static RoundResult getBlackjackResult(Gamer gamer, Gamer otherGamer) {
         if (gamer.isBlackjack() && otherGamer.isBlackjack()) {
             return TIE;
         }
@@ -45,7 +73,7 @@ public enum RoundResult {
         if (otherGamer.isBlackjack()) {
             return LOSE;
         }
-        return TIE;
+        return null;
     }
 
     public String getDisplayName() {
