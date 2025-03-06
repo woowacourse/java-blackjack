@@ -1,13 +1,20 @@
 package blackjack.view;
 
+import blackjack.model.Card;
+import blackjack.model.Dealer;
+import blackjack.model.Participant;
+import java.util.List;
+
 public class OutputView {
 
-    public void outputFirstCardDistributionResult() {
+    public void outputFirstCardDistributionResult(List<Participant> participants, Dealer dealer) {
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         customStringBuilder.appendLine(String.format("딜러와 %s에게 2장을 나누었습니다."));
+
+        outputPlayerCardStatus(List.of(dealer.getReceivedCards().getFirstCard()));
     }
 
-    public String outputPlayerCardStatus() {
+    public String outputPlayerCardStatus(String name, List<Card> cards) {
         return String.format("%s카드: %s");
     }
 

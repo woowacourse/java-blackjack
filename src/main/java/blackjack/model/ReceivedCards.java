@@ -52,4 +52,8 @@ public class ReceivedCards {
     private boolean isBust(int point) {
         return point > 21;
     }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
 }
