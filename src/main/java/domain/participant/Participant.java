@@ -1,6 +1,8 @@
 package domain.participant;
 
-public interface Participant {
+import java.util.Map;
 
+public interface Participant {
     boolean ableToDraw(final int score);
+    Map<BattleResult, Integer> getBattleResult();
 }
