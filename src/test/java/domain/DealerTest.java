@@ -2,8 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(ReplaceUnderscores.class)
 class DealerTest {
 
     @Test
@@ -13,8 +16,10 @@ class DealerTest {
         Card twoSpade = new Card(Rank.TWO, Shape.SPADE);
         Card threeHeart = new Card(Rank.THREE, Shape.HEART);
         dealer.setUpCardDeck(twoSpade, threeHeart);
+
         //when
         var card = dealer.getOpenCard();
+
         //then
         assertThat(card).isEqualTo(twoSpade);
     }

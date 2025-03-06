@@ -4,8 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Map;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(ReplaceUnderscores.class)
 class GameResultTest {
 
     private final Map<Player, Winning> playerWinningResult
@@ -17,7 +20,6 @@ class GameResultTest {
         Map.entry(new Player("이름5"), Winning.LOSE),
         Map.entry(new Player("이름6"), Winning.LOSE)
     );
-
 
     @Test
     void 딜러의_승무패_횟수를_계산한다() {

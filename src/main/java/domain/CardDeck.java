@@ -29,11 +29,11 @@ public class CardDeck {
 
     private boolean hasAce() {
         return deck.stream()
-            .anyMatch(card -> card.getRank() == Rank.ACE_LOW);
+            .anyMatch(card -> card.getRank() == Rank.ACE);
     }
 
     private int calculateOptimalScore(int sum){
-        if (sum + Rank.ACE_LOW_HIGH_GAP <= 21) {
+        if (sum + Rank.ACE_LOW_HIGH_GAP <= Winning.BLACK_JACK) {
             return sum + Rank.ACE_LOW_HIGH_GAP;
         }
         return sum;

@@ -26,7 +26,7 @@ public class CardTest {
 
     @ParameterizedTest
     @CsvSource({
-        "ACE_LOW,1", "TWO,2", "THREE,3", "FOUR,4", "FIVE,5",
+        "ACE,1", "TWO,2", "THREE,3", "FOUR,4", "FIVE,5",
         "SIX,6", "SEVEN,7", "EIGHT,8", "NINE,9", "TEN,10"
     })
     void 숫자이면_그대로_숫자이다(Rank rank, int expectedNumber) {
