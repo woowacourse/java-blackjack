@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import blackjack.domain.RoundResult;
 import blackjack.domain.card.Card;
@@ -51,14 +51,13 @@ public abstract class Gamer {
         }
     }
 
-    // TODO stream 적용
     public Map<RoundResult, Integer> getFinalResult(List<Gamer> otherGamers) {
-        Map<RoundResult, Integer> result = new HashMap<>();
-        for (var otherGamer : otherGamers) {
-            RoundResult thisResult = RoundResult.judgeResult(this, otherGamer);
-            result.put(thisResult, result.getOrDefault(thisResult, 0) + 1);
-        }
-        return result;
+        return otherGamers.stream()
+            .map(otherGamer -> RoundResult.judgeResult(this, otherGamer))
+            .collect(Collectors.toMap(
+                result -> result,
+                result -> 1,
+                Integer::sum));
     }
 
     public abstract boolean canReceiveAdditionalCards();
