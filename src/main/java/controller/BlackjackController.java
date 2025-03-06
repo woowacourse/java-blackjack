@@ -1,11 +1,12 @@
 package controller;
 
-import domain.CardDeck;
-import domain.Dealer;
 import domain.GameManager;
-import domain.Participant;
-import domain.Participants;
-import domain.Player;
+import domain.card.CardDeck;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Participants;
+import domain.participant.Player;
+import dto.ResultDto;
 import java.util.Arrays;
 import java.util.List;
 import view.InputView;
@@ -56,6 +57,7 @@ public class BlackjackController {
             }
             System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
+        ResultDto resultDto = gameManager.calculateResult();
 //        outputView.printInitCards(participants);
     }
 

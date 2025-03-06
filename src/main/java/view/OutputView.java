@@ -1,6 +1,6 @@
 package view;
 
-import domain.Participants;
+import domain.participant.Participants;
 
 public class OutputView {
 

@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,7 +40,7 @@ class CardDeckTest {
 
         // when
         Card card = deck.popCard();
-        
+
         // then
         assertThat(card).isEqualTo(last);
     }

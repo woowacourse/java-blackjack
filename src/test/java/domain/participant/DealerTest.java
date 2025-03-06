@@ -1,8 +1,11 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import domain.card.Card;
+import domain.card.TrumpNumber;
+import domain.card.TrumpShape;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {

@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class CardTest {
 
     @Test
-    void 숫자와_문양으로_카드를_생성한다(){
+    void 숫자와_문양으로_카드를_생성한다() {
         // given
         final TrumpNumber number = TrumpNumber.ACE;
         final TrumpShape shape = TrumpShape.CLUB;

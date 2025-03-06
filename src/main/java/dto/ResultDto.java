@@ -1,7 +1,7 @@
 package dto;
 
-import domain.BlackjackResult;
-import domain.Participant;
+import domain.participant.Participant;
+import domain.result.BlackjackResult;
 import java.util.EnumMap;
 import java.util.Map;
 

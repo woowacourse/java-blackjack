@@ -1,4 +1,6 @@
-package domain;
+package domain.result;
+
+import domain.participant.Participant;
 
 public enum BlackjackResult {
 
