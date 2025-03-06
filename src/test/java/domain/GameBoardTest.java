@@ -192,7 +192,7 @@ public class GameBoardTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE, TEN, TEN, 21", "ACE, EIGHT, TWO, 21", "ACE, ACE, NINE, 21", "ACE, ACE, TEN, 21", "ACE, ACE, ACE, 13"})
+    @CsvSource(value = {"ACE, TEN, TEN, 21", "ACE, EIGHT, TWO, 21", "ACE, ACE, NINE, 21", "ACE, ACE, TEN, 12", "ACE, ACE, ACE, 13"})
     void 에이스_점수_계산_확인(CardNumber cardNumber, CardNumber cardNumber2, CardNumber cardNumber3, int expectedResult) {
         //given
         Participant targetParticipant = Player.from("우가");

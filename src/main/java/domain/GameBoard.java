@@ -65,31 +65,19 @@ public class GameBoard {
     public int getScoreOf(Participant participant) {
         CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
         List<Card> ownedCards = ownedCardDeck.getCards();
-
-        List<Card> cards = new ArrayList<>();
-        List<Card> aceCards = new ArrayList<>();
-
+        int totalScore = 0;
+        int aceCounts = 0;
         for (Card card : ownedCards) {
+            totalScore += card.getNumber();
             if (card.isAceCard()) {
-                aceCards.add(card);
-                continue;
+                aceCounts++;
             }
-            cards.add(card);
         }
-
-        int totalScore = cards.stream()
-                            .mapToInt(Card::getNumber)
-                            .sum();
-
-        for (Card aceCard : aceCards) {
-            if (totalScore + 11 <= 21) {
-                totalScore += 11;
-                continue;
+        while (aceCounts-- > 0) {
+            if (totalScore + 10 <= 21) {
+                totalScore += 10;
             }
-
-            totalScore += aceCard.getNumber();
         }
-
         return totalScore;
     }
 }
