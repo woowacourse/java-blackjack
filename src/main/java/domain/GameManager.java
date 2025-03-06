@@ -36,8 +36,9 @@ public class GameManager {
             players = players.editPlayer(player, newPlayer);
             return newPlayer;
         }
-        dealer = (Dealer) participant;
-        return dealer.drawCard(provider.provideCards(1));
+        Dealer newDealer = (Dealer) participant;
+        dealer = newDealer.drawCard(provider.provideCards(1));
+        return dealer;
     }
 
 }

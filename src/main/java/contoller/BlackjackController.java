@@ -17,6 +17,7 @@ public class BlackjackController {
         readyGame();
         drawPlayersCards();
         drawDealerCards();
+        printParticipantsCards();
     }
 
     private void readyGame() {
@@ -54,6 +55,11 @@ public class BlackjackController {
             dealer = (Dealer) gameManager.drawCard(dealer);
             OutputView.printDealerDrawMessage();
         }
-        System.out.println(dealer.getCards());
+    }
+
+    private void printParticipantsCards() {
+        Dealer dealer = gameManager.findDealer();
+        List<Player> allPlayers = gameManager.findAllPlayers();
+        OutputView.printFinalParticipant(dealer, allPlayers);
     }
 }

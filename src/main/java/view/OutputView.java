@@ -55,4 +55,25 @@ public class OutputView {
     public static void printPlayerCard(Player player) {
         System.out.printf("%s카드: %s%n", player.getName(), convertCardsToMessage(player.getCards()));
     }
+
+    public static void printFinalParticipant(Dealer dealer, List<Player> allPlayers) {
+        printFinalDealerCard(dealer);
+        printFinalAllPlayersCards(allPlayers);
+    }
+
+    private static void printFinalDealerCard(Dealer dealer) {
+        System.out.printf("%s카드: %s - 결과: %d%n",
+                dealer.getName(),
+                convertCardsToMessage(dealer.getCards()),
+                dealer.getTotalNumberSum());
+    }
+
+    private static void printFinalAllPlayersCards(List<Player> allPlayers) {
+        for (Player player : allPlayers) {
+            System.out.printf("%s카드: %s - 결과: %d%n",
+                    player.getName(),
+                    convertCardsToMessage(player.getCards()),
+                    player.getTotalNumberSum());
+        }
+    }
 }
