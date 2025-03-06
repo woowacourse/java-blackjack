@@ -43,9 +43,9 @@ class CardManagerTest {
         //then
         assertAll(
                 () -> assertThat(cardManager.findCardsByNickname(new Nickname("쿠키")).getSize())
-                        .isEqualTo(CardManager.INITIAL_CARD_COUNT),
+                        .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue()),
                 () -> assertThat(cardManager.findCardsByNickname(new Nickname("빙봉")).getSize())
-                        .isEqualTo(CardManager.INITIAL_CARD_COUNT)
+                        .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue())
         );
     }
 
@@ -67,38 +67,5 @@ class CardManagerTest {
 
         // then
         assertThat(actualValue).isEqualTo(expectedValue);
-    }
-
-    @Test
-    @DisplayName("플레이어의 카드 포인트의 합이 한계값을 넘지 않는 것을 확인할 수 있다.")
-    void canCheckIsNotOverLimitSumByNickname() {
-        //given
-        Nickname nickname = new Nickname("쿠키");
-        cardManager.initialize(List.of(nickname));
-        cardManager.addCardByNickname(nickname);
-
-        // when
-        boolean isOver = cardManager.isOverLimitSumByNickname(nickname);
-
-        // then
-        assertThat(isOver).isFalse();
-    }
-
-    @Test
-    @DisplayName("플레이어의 카드 포인트의 합이 한계값을 넘는 것을 확인할 수 있다.")
-    void canCheckIsOverLimitSumByNickname() {
-        //given
-        Nickname nickname = new Nickname("쿠키");
-        cardManager.initialize(List.of(nickname));
-
-        do {
-            cardManager.addCardByNickname(nickname);
-        } while (cardManager.calculateSumByNickname(nickname) <= CardManager.LIMIT_POINT);
-
-        // when
-        boolean isOver = cardManager.isOverLimitSumByNickname(nickname);
-
-        // then
-        assertThat(isOver).isTrue();
     }
 }

@@ -7,9 +7,6 @@ import java.util.Set;
 
 public class CardManager {
 
-    public static final int INITIAL_CARD_COUNT = 2;
-    public static final int LIMIT_POINT = 21;
-
     private final CardDeck cardDeck;
     private final Map<Nickname, Cards> nicknameToCards = new HashMap<>();
 
@@ -27,7 +24,7 @@ public class CardManager {
         Set<Nickname> nicknames = nicknameToCards.keySet();
         nicknames.forEach(nickname ->
                 nicknameToCards.get(nickname)
-                        .add(cardDeck.drawCard(INITIAL_CARD_COUNT))
+                        .add(cardDeck.drawCard(GameRule.INITIAL_CARD_COUNT.getValue()))
         );
     }
 

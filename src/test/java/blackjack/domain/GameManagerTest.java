@@ -50,11 +50,11 @@ class GameManagerTest {
         //then
         assertAll(
                 () -> assertThat(cardManager.findCardsByNickname(new Nickname("강산")).getSize())
-                        .isEqualTo(CardManager.INITIAL_CARD_COUNT),
+                        .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue()),
                 () -> assertThat(cardManager.findCardsByNickname(new Nickname("랜디")).getSize())
-                        .isEqualTo(CardManager.INITIAL_CARD_COUNT),
-                () -> assertThat(cardManager.findCardsByNickname(Nickname.createDealer()).getSize())
-                        .isEqualTo(CardManager.INITIAL_CARD_COUNT)
+                        .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue()),
+                () -> assertThat(cardManager.findCardsByNickname(Nickname.createDealerNickname()).getSize())
+                        .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue())
         );
     }
 }
