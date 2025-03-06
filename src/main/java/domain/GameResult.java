@@ -18,4 +18,12 @@ public enum GameResult {
         }
         return GameResult.DRAW;
     }
+
+    public GameResult getReverse() {
+        return switch (this) {
+            case LOSE -> WIN;
+            case WIN -> LOSE;
+            case DRAW -> DRAW;
+        };
+    }
 }
