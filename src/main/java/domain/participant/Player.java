@@ -9,29 +9,29 @@ public class Player {
     private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
-    private final CardDeck cardDeck;
+    private final CardDeck hand;
 
     public Player(String name) {
-        this.cardDeck = new CardDeck(new ArrayList<>());
+        this.hand = new CardDeck(new ArrayList<>());
         this.name = name;
     }
 
     public void hitCards(Dealer dealer) {
         for (int i = 0; i < 2; i++) {
-            cardDeck.addCard(dealer.hitCard());
+            hand.addCard(dealer.hitCard());
         }
     }
 
     public void addCard(Dealer dealer) {
-        cardDeck.addCard(dealer.hitCard());
+        hand.addCard(dealer.hitCard());
     }
 
     public int sum() {
-        return cardDeck.sum();
+        return hand.sum();
     }
 
-    public CardDeck getCardDeck() {
-        return cardDeck;
+    public CardDeck getHand() {
+        return hand;
     }
 
     private boolean isBust() {

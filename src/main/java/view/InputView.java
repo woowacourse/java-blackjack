@@ -40,7 +40,7 @@ public class InputView {
     }
 
     public void printPlayerDeck(Player player) {
-        for (Card card : player.getCardDeck().getCards()) {
+        for (Card card : player.getHand().getCards()) {
             System.out.println(card);
         }
     }
