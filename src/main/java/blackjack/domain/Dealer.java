@@ -11,8 +11,8 @@ public class Dealer extends Participant {
         super(cardDeck, cardDump);
     }
 
-    public boolean hasTakenExtraCard() {
-        if (canTakeExtraCard()) {
+    public boolean didHit() {
+        if (canHit()) {
             addCard();
             return true;
         }
@@ -20,7 +20,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    boolean canTakeExtraCard() {
+    boolean canHit() {
         int score = calculateTotalCardScore();
         return score <= DEALER_HIT_THRESHOLD;
     }

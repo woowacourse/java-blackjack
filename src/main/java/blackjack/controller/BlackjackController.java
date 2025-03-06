@@ -30,29 +30,29 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = distributeCardToPlayers();
-        Dealer dealer = distrubuteCardToDealer();
-        outputView.displayDistributedCardStatus(DistributedCardDto.from(dealer), players.stream().map(
-                DistributedCardDto::from).toList());
+        List<Player> players = createAndDistributeCardToPlayers();
+        Dealer dealer = createDealerWithInitialDeck();
+        outputView.displayDistributedCardStatus(
+                DistributedCardDto.from(dealer),
+                players.stream().map(DistributedCardDto::from).toList()
+        );
 
         hitExtraCardForPlayers(players);
         hitExtraCardForDealer(dealer);
-        outputView.displayFinalCardStatus(FinalResultDto.from(dealer), players.stream().map(
-                FinalResultDto::from).toList());
+        outputView.displayFinalCardStatus(
+                FinalResultDto.from(dealer),
+                players.stream().map(FinalResultDto::from).toList()
+        );
 
-        getGameResultAndDisplay(dealer, players);
+        generateGameResultAndDisplay(dealer, players);
     }
 
-    private List<Player> distributeCardToPlayers() {
+    private List<Player> createAndDistributeCardToPlayers() {
         String[] playerNames = getPlayerNames();
 
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            CardDeck cardDeck = new CardDeck();
-            cardDeck.add(cardDump.drawCard());
-            cardDeck.add(cardDump.drawCard());
-
-            Player player = new Player(playerName, cardDeck, cardDump);
+            Player player = createPlayerWithInitialDeck(playerName);
             players.add(player);
         }
         return players;
@@ -60,6 +60,14 @@ public class BlackjackController {
 
     private String[] getPlayerNames() {
         return processAndReturn(inputView::readPlayerName);
+    }
+
+    private Player createPlayerWithInitialDeck(String playerName) {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.add(cardDump.drawCard());
+        cardDeck.add(cardDump.drawCard());
+
+        return new Player(playerName, cardDeck, cardDump);
     }
 
     private <T> T processAndReturn(Supplier<T> supplier) {
@@ -72,7 +80,7 @@ public class BlackjackController {
         }
     }
 
-    private Dealer distrubuteCardToDealer() {
+    private Dealer createDealerWithInitialDeck() {
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(cardDump.drawCard());
         cardDeck.add(cardDump.drawCard());
@@ -81,14 +89,14 @@ public class BlackjackController {
 
     private void hitExtraCardForPlayers(final List<Player> players) {
         for (Player player : players) {
-            checkPlayerHit(player);
+            processPlayerHit(player);
         }
     }
 
-    private void checkPlayerHit(final Player player) {
+    private void processPlayerHit(final Player player) {
         process(() -> {
             while (true) {
-                if (!player.canTakeExtraCard()) {
+                if (!player.canHit()) {
                     outputView.displayBustNotice();
                     break;
                 }
@@ -115,21 +123,21 @@ public class BlackjackController {
     }
 
     private void hitExtraCardForDealer(final Dealer dealer) {
-        while (dealer.hasTakenExtraCard()) {
+        while (dealer.didHit()) {
             outputView.displayExtraDealerCardStatus();
         }
     }
 
-    private void getGameResultAndDisplay(final Dealer dealer, final List<Player> players) {
-        Map<GameResult, Integer> dealerResult = getDealerFinalResult(dealer, players);
+    private void generateGameResultAndDisplay(final Dealer dealer, final List<Player> players) {
+        Map<GameResult, Integer> dealerResult = evaluateDealerFinalResult(dealer, players);
         outputView.displayDealerResult(dealerResult);
         for (Player player : players) {
-            GameResult playerResult = getGameResultFromPlayer(player, dealer);
+            GameResult playerResult = evaluateGameResultFromPlayer(player, dealer);
             outputView.displayPlayerResult(player, playerResult);
         }
     }
 
-    private Map<GameResult, Integer> getDealerFinalResult(final Dealer dealer, final List<Player> players) {
+    private Map<GameResult, Integer> evaluateDealerFinalResult(final Dealer dealer, final List<Player> players) {
         Map<GameResult, Integer> gameFinalResult = new HashMap<>();
         for (Player player : players) {
             GameResult result = gameRule.evaluateDealerWin(player, dealer);
@@ -138,7 +146,7 @@ public class BlackjackController {
         return gameFinalResult;
     }
 
-    private GameResult getGameResultFromPlayer(final Player player, final Dealer dealer) {
+    private GameResult evaluateGameResultFromPlayer(final Player player, final Dealer dealer) {
         return gameRule.evaluatePlayerWin(player, dealer);
     }
 }

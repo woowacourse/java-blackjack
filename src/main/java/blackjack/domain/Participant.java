@@ -13,7 +13,7 @@ public abstract class Participant {
         this.cardDump = cardDump;
     }
 
-    abstract boolean canTakeExtraCard();
+    abstract boolean canHit();
 
     public abstract int calculateTotalCardScore();
 

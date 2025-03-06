@@ -19,7 +19,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
-        boolean takenExtraCard = dealer.hasTakenExtraCard();
+        boolean takenExtraCard = dealer.didHit();
 
         assertThat(takenExtraCard).isTrue();
     }
@@ -36,7 +36,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
-        boolean takenExtraCard = dealer.hasTakenExtraCard();
+        boolean takenExtraCard = dealer.didHit();
 
         assertThat(takenExtraCard).isFalse();
     }

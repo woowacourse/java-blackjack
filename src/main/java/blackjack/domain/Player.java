@@ -14,7 +14,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canTakeExtraCard() {
+    public boolean canHit() {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
         int minScore = Collections.min(possibleSum);
         return minScore <= TARGET_SCORE;

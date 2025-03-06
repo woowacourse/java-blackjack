@@ -19,7 +19,7 @@ class PlayerTest {
         Player player = new Player("user1", cardDeck, cardDump);
 
         // when
-        boolean canTakeExtraCard = player.canTakeExtraCard();
+        boolean canTakeExtraCard = player.canHit();
 
         // then
         assertThat(canTakeExtraCard).isTrue();
@@ -38,7 +38,7 @@ class PlayerTest {
         Player player = new Player("user1", cardDeck, cardDump);
 
         // when
-        boolean canTakeExtraCard = player.canTakeExtraCard();
+        boolean canTakeExtraCard = player.canHit();
 
         // then
         assertThat(canTakeExtraCard).isFalse();
