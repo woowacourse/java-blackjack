@@ -1,13 +1,11 @@
 package controller;
 
-import static view.Response.NO;
 import static view.Response.YES;
 
 import domain.Game;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
-import view.Response;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -20,30 +18,33 @@ public class BlackJackController {
 
     public void run() {
         List<String> usernames = inputView.insertUsernames();
+        Game game = initializeGame(usernames);
+        for (String username : usernames) {
+            askPlayer(game, username);
+        }
+        askDealer(game);
+        outputView.printFinalState(game.getPlayersInfo(), game.getDealer());
+        outputView.printGameStatistics(game.getGameStatistics());
+    }
+
+    private Game initializeGame(List<String> usernames) {
         Game game = new Game(usernames);
         game.distributeStartingHands();
         outputView.printInitialState(game.getPlayersInfo(), game.getDealerOneCard());
+        return game;
+    }
 
-        for (String username : usernames) {
-            while (game.canPlayerGetMoreCard(username)) {
-                Response response = inputView.getUserResponse(username);
-                if (response == YES) {
-                    game.giveCardToPlayer(username, 1);
-                    outputView.printGamerCards(username, game.getPlayerCards(username));
-                }
-                if (response == NO) {
-                    break;
-                }
-            }
+    private void askPlayer(Game game, String username) {
+        while (game.canPlayerGetMoreCard(username) && inputView.getUserResponse(username) == YES) {
+            game.giveCardToPlayer(username, 1);
+            outputView.printGamerCards(username, game.getPlayerCards(username));
         }
+    }
 
+    private void askDealer(Game game) {
         while (game.canDealerGetMoreCard()) {
             game.giveCardToDealer(1);
             outputView.printDealerDrawMoreCard();
         }
-
-        outputView.printFinalState(game.getPlayersInfo(), game.getDealer());
-
-        outputView.printGameStatistics(game.getGameStatistics());
     }
 }
