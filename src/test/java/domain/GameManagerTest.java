@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import domain.card.CardGroup;
 import domain.card.RandomCardGenerator;
@@ -255,5 +256,22 @@ public class GameManagerTest {
         //when
         //then
         assertThatCode(() -> GameManager.create(dealer, players)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void 플레이어가_중복_되어_예외가_발생한다() {
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
+
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("윌슨",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        //then
+        assertThatIllegalArgumentException().isThrownBy(() -> GameManager.create(dealer, players));
     }
 }
