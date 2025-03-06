@@ -1,6 +1,7 @@
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
@@ -8,7 +9,7 @@ public class PlayerTest {
     void 플레이어는_게임_시작_시_두_장의_카드를_받는다() {
         //given
         CardDeck cardDeck = CardDeck.createCards();
-        String name = "abc";
+        String name = "pobi";
         Player player = new Player(name);
 
         //when
@@ -22,7 +23,7 @@ public class PlayerTest {
     void 플레이어는_한_장의_카드를_받는다() {
         //given
         CardDeck cardDeck = CardDeck.createCards();
-        String name = "abc";
+        String name = "pobi";
         Player player = new Player(name);
 
         //when
@@ -31,4 +32,19 @@ public class PlayerTest {
         //then
         assertThat(actual.getCards()).hasSize(1);
     }
+
+    @Test
+    void 플레이어가_보유한_카드의_합계를_구한다() {
+        //given
+        Player player = new Player("pobi");
+        Hand hand = player.getHand();
+        List<Card> cards = hand.getCards();
+        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        cards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+
+        //when & then
+        assertThat(player.calculateTotalCardNumber()).isEqualTo(20);
+    }
+
+    
 }

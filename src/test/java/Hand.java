@@ -32,11 +32,11 @@ public class Hand {
         return totalCardNumber > BURST_BOUND;
     }
 
-    public int calculateTotalNumber() {
-        return calculateTotalNumber(this.cards);
+    public int calculateTotalCardNumber() {
+        return calculateTotalCardNumber(this.cards);
     }
 
-    private int calculateTotalNumber(List<Card> cards) {
+    private int calculateTotalCardNumber(List<Card> cards) {
         int aceCount = countAce();
         if (aceCount > 0) {
             return sumWithAcesCount(aceCount);

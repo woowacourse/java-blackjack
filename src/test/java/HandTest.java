@@ -1,7 +1,7 @@
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
 
@@ -41,7 +41,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
 
         //when
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
 
         //then
         assertThat(totalNumber).isEqualTo(22);
@@ -56,7 +56,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
 
         //when
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
 
         //then
         assertThat(totalNumber).isEqualTo(21);
@@ -72,7 +72,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TWO));
 
         //when
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
 
         //then
         assertThat(totalNumber).isEqualTo(13);
@@ -89,7 +89,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
 
         //when
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
 
         //then
         assertThat(totalNumber).isEqualTo(23);
@@ -105,7 +105,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
 
         //when & then
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
         assertThat(hand.isOverBurstBound(totalNumber)).isTrue();
     }
 
@@ -119,7 +119,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
 
         //when & then
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
         assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
     }
 
@@ -132,7 +132,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
 
         //when & then
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
         assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
     }
 
@@ -146,7 +146,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         //when & then
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
         assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
     }
 
@@ -161,7 +161,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
 
         //when & then
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
         assertThat(hand.isOverBurstBound(totalNumber)).isTrue();
     }
 
@@ -176,7 +176,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
 
         //when & then
-        int totalNumber = hand.calculateTotalNumber();
+        int totalNumber = hand.calculateTotalCardNumber();
         assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
     }
 }
