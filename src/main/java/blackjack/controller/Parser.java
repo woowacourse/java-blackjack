@@ -1,17 +1,17 @@
 package blackjack.controller;
 
 import blackjack.model.Participant;
+import blackjack.model.Participants;
 import java.util.Arrays;
-import java.util.List;
 
 public class Parser {
 
-    public static List<Participant> parseParticipants(String names) {
+    public static Participants parseParticipants(String names) {
         String[] splittedNames = names.split(",");
         validateNameCount(splittedNames);
-        return Arrays.stream(splittedNames)
+        return new Participants(Arrays.stream(splittedNames)
                 .map(Participant::new)
-                .toList();
+                .toList());
     }
 
     private static void validateNameCount(String[] splittedNames) {

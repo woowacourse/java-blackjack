@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class Participants {
     private final List<Participant> participants;
@@ -13,22 +14,25 @@ public class Participants {
         this.participants = new ArrayList<>(participants);
     }
 
-    public void validate(List<Participant> paritipants) {
-        validateParticipantCount(paritipants);
-        validateDuplicateName(paritipants);
+    public void validate(List<Participant> participants) {
+        validateParticipantCount(participants);
+        validateDuplicateName(participants);
     }
 
-    private void validateParticipantCount(List<Participant> paritipants) {
-        if (paritipants.size() < 2 || paritipants.size() > 8) {
+    private void validateParticipantCount(List<Participant> participants) {
+        if (participants.size() < 2 || participants.size() > 8) {
             throw new IllegalArgumentException("참여자는 2~8명 이여야 합니다.");
         }
     }
 
     private void validateDuplicateName(List<Participant> participants) {
         Set<Participant> uniqueParticipants = new HashSet<>(participants);
-        System.out.println(uniqueParticipants.size() + " " + participants.size());
         if (uniqueParticipants.size() != participants.size()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
+    }
+
+    public Stream<Participant> stream() {
+        return participants.stream();
     }
 }
