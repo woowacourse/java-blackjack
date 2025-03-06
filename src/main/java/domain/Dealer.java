@@ -22,4 +22,8 @@ public class Dealer {
     public void receiveCard(TrumpCard card) {
         hand.addCard(card);
     }
+
+    public Hand getHand() {
+        return hand;
+    }
 }

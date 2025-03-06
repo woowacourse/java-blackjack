@@ -58,7 +58,7 @@ public class BlackJackGame {
         deck.shuffle();
     }
 
-    public boolean isHitAllowed(Player player) {
+    public boolean isPlayerHitAllowed(Player player) {
         Hand hand = player.getHand();
         List<TrumpCard> cards = hand.getCards();
         Score score = Score.from(cards);
@@ -66,13 +66,31 @@ public class BlackJackGame {
         return score != Score.BUST && score != Score.BLACKJACK;
     }
 
-    public void processHit(Player player) {
+    public void processPlayerHit(Player player) {
         player.receiveCard(deck.draw());
     }
 
-    public void isDealerHitAllowed() {
+    public int processDealerHit() {
+        int hitCount = 0;
+
+        while (isDealerHitAllowed()) {
+            dealer.receiveCard(deck.draw());
+            hitCount++;
+        }
+
+        return hitCount;
+    }
+
+    private boolean isDealerHitAllowed() {
         Hand hand = dealer.getHand();
+        Score score = Score.from(hand.getCards());
 
-
+        return score != Score.BUST
+                && score != Score.BLACKJACK
+                && score != Score.SEVENTEEN
+                && score != Score.EIGHTEEN
+                && score != Score.NINETEEN
+                && score != Score.TWENTY
+                && score != Score.TWENTY_ONE;
     }
 }
