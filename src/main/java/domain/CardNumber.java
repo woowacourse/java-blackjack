@@ -1,3 +1,5 @@
+package domain;
+
 public enum CardNumber {
 
     ACE(11),

@@ -1,3 +1,5 @@
+package domain;
+
 public enum Pattern {
 
     DIAMOND("다이아몬드"),
