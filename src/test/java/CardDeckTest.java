@@ -148,4 +148,23 @@ public class CardDeckTest {
         );
     }
 
+    @DisplayName("블랙잭인지 아닌지 판단한다")
+    @Test
+    void test7() {
+        // given
+        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardNumber.ACE);
+        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardNumber.J);
+        CardDeck cardDeck = new CardDeck();
+
+        cardDeck.addTrumpCard(trumpCard1);
+        cardDeck.addTrumpCard(trumpCard2);
+
+
+        // when
+        boolean isBlackjack =  cardDeck.isBlackjack();
+
+        // then
+        Assertions.assertThat(isBlackjack).isEqualTo(true);
+    }
+
 }

@@ -79,7 +79,6 @@ public class GameManagerTest {
         assertThat(dealer.getSize()).isEqualTo(2);
     }
 
-
     @DisplayName("딜러와 유저의 카드의 총합을 가져온다.")
     @Test
     void test7() {
@@ -98,6 +97,27 @@ public class GameManagerTest {
         int result = gameManger.compare(player);
 
         //then
-        Assertions.assertThat(result).isEqualTo(1);
+        Assertions.assertThat(result).isEqualTo(GameManger.WIN);
+    }
+
+    @DisplayName("딜러와 유저의 총합이 같고 둘 다 블랙잭이라면 무승부를 반환한다")
+    @Test
+    void test8() {
+        //given
+        GameManger gameManger = new GameManger(List.of("수양"));
+        User player = gameManger.findUserByUsername("수양");
+        User dealer = gameManger.getDealer();
+
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.ACE));
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.NINE));
+
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.ACE));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.NINE));
+
+        //when
+        int result = gameManger.compare(player);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(GameManger.MOO);
     }
 }

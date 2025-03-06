@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 
 public class GameManger {
-    private final static int WIN = 1;
-    private final static int LOSE = 2;
-    private final static int MOO = 3;
+    public final static int WIN = 1;
+    public final static int LOSE = 2;
+    public final static int MOO = 3;
 
     private final List<User> users = new ArrayList<>();
     private final User dealer;
@@ -58,6 +58,14 @@ public class GameManger {
         if (dealer.getCardDeck().calculateScore() > player.getCardDeck().calculateScore()) {
             return LOSE;
         }
-        return MOO;
+        return compareSameScore(player);
+    }
+
+    private int compareSameScore(User player) {
+        // - [ ] 총합이 같고 딜러가 블랙잭이 아니라면 무승부이다.
+        //        - [ ] 총합이 같고 딜러가 블랙잭이면 카드 갯수를 비교한다.
+        //            - [ ] 유저도 블랙잭이면 무승부이다.
+        //            - [ ] 유저가 블랙잭이 아니면 유저의 패배다.
+        return 0;
     }
 }

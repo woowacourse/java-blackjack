@@ -62,4 +62,7 @@ public class CardDeck {
     }
 
 
+    public boolean isBlackjack() {
+        return false;
+    }
 }
