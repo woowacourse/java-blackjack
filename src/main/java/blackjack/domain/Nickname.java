@@ -13,7 +13,7 @@ public final class Nickname {
         this.value = value;
     }
 
-    public static Nickname createDealer() {
+    public static Nickname createDealerNickname() {
         return new Nickname(DEALER_NICKNAME);
     }
 
