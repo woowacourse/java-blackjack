@@ -46,5 +46,16 @@ public class PlayerTest {
         assertThat(player.calculateTotalCardNumber()).isEqualTo(20);
     }
 
-    
+    @Test
+    void 플레이어가_보유한_카드의_합계가_21을_넘었는지_판정한다() {
+        //given
+        Player player = new Player("pobi");
+        Hand hand = player.getHand();
+        List<Card> cards = hand.getCards();
+        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        cards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+
+        //when & then
+        assertThat(player.isOverBurstBound()).isFalse();
+    }
 }
