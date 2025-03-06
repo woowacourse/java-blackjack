@@ -5,30 +5,43 @@ import java.util.Set;
 
 public class Cards {
 
+    private static final int BUST_THRESHOLD = 21;
+
     private final Set<Card> cards;
 
     public Cards(final Set<Card> cards) {
         this.cards = cards;
     }
 
-    public int calculateSum() {
-        int aceCount = findAceElevenCount();
+    public int calculateResult() {
+        changeAceElevenToOneUntilNotBust();
+        return calculateSum();
+    }
 
-        while (isBurst() && aceCount > 0) {
+    private void changeAceElevenToOneUntilNotBust() {
+        int aceCount = findAceElevenCount();
+        while (isBust() && aceCount > 0) {
             aceCount--;
             changeAceElevenToOne();
         }
+    }
 
+    private int calculateSum() {
         return cards.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
     }
 
-    private boolean isBurst() {
-        int sum = cards.stream()
-                .mapToInt(Card::getNumberValue)
-                .sum();
-        return sum > 21;
+    public void addCard(final Card card) {
+        if (isBust()) {
+            throw new IllegalArgumentException();
+        }
+        cards.add(card);
+    }
+
+    private boolean isBust() {
+        int sum = calculateSum();
+        return sum > BUST_THRESHOLD;
     }
 
     private int findAceElevenCount() {
@@ -47,13 +60,6 @@ public class Cards {
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, cardShape));
-    }
-
-    public void addCard(final Card card) {
-        if (isBurst()) {
-            throw new IllegalArgumentException();
-        }
-        cards.add(card);
     }
 
     public Set<Card> getCards() {

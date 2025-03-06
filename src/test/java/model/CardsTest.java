@@ -17,7 +17,7 @@ class CardsTest {
                 new Card(CardNumber.NINE, CardShape.CLOVER),
                 new Card(CardNumber.EIGHT, CardShape.DIAMOND)
         ));
-        assertThat(cards.calculateSum()).isEqualTo(20);
+        assertThat(cards.calculateResult()).isEqualTo(20);
     }
 
     @DisplayName("Ace는 카드의 합이 21을 초과하기 전까지는 11로 계산한다.")
@@ -28,7 +28,7 @@ class CardsTest {
                 new Card(CardNumber.NINE, CardShape.CLOVER)
         ));
 
-        assertThat(cards.calculateSum()).isEqualTo(20);
+        assertThat(cards.calculateResult()).isEqualTo(20);
     }
 
     @DisplayName("예외로 Ace는 카드의 합이 21을 초과하면 1로 계산한다.")
@@ -40,7 +40,7 @@ class CardsTest {
                 new Card(CardNumber.NINE, CardShape.SPADE)
         )));
 
-        assertThat(cards.calculateSum()).isEqualTo(19);
+        assertThat(cards.calculateResult()).isEqualTo(19);
     }
 
     @DisplayName("예외로 Ace는 카드의 합이 21을 초과하면 1로 계산한다.")
@@ -53,6 +53,6 @@ class CardsTest {
                 new Card(CardNumber.QUEEN, CardShape.SPADE)
         )));
 
-        assertThat(cards.calculateSum()).isEqualTo(22);
+        assertThat(cards.calculateResult()).isEqualTo(22);
     }
 }
