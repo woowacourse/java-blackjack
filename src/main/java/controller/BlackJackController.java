@@ -26,17 +26,12 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void start() {
+    public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
-        // 덱 생성
-        CardBundle cardBundle = new CardBundle();
-        List<Card> allCards = cardBundle.getAllCards();
-        List<Card> shuffledAllCards = new ArrayList<>(allCards);
-        Collections.shuffle(shuffledAllCards);
 
-        CardDeck cardDeck = new CardDeck(shuffledAllCards);
+        CardDeck cardDeck = createCardDeck(cardBundle);
         BlackJackManager blackJackManager = new BlackJackManager(participants.getParticipants(),
-            cardDeck);
+                cardDeck);
 
         // 딜러를 포함한 모든 참여자에게 2장의 카드 분배
         blackJackManager.start();
@@ -93,6 +88,17 @@ public class BlackJackController {
 
         Results results = blackJackManager.calculateResult();
         outputView.printGameResult(results);
+    }
+
+    private CardDeck createCardDeck(CardBundle cardBundle) {
+        return new CardDeck(getShuffledAllCards(cardBundle));
+    }
+
+    private List<Card> getShuffledAllCards(CardBundle cardBundle) {
+        List<Card> allCards = cardBundle.getAllCards();
+        List<Card> shuffledAllCards = new ArrayList<>(allCards);
+        Collections.shuffle(shuffledAllCards);
+        return shuffledAllCards;
     }
 
     private Participants createGameParticipants() {
