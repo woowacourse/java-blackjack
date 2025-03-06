@@ -38,4 +38,8 @@ public class Players {
                 .orElseThrow(IllegalArgumentException::new);
         gambler.pushDealCard(cardPack, 1);
     }
+
+    public boolean isPlayerBust(final Player player) {
+        return player.calculateCardNumber() > 21;
+    }
 }
