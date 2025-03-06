@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.card.BlackjackShuffle;
+import blackjack.domain.card.Card;
+
 import java.util.Comparator;
 import java.util.List;
 

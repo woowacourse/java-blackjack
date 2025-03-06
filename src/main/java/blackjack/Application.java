@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.controller.BlackjackController;
 import blackjack.domain.GameManager;
-import blackjack.domain.RandomBlackjackShuffle;
+import blackjack.domain.card.RandomBlackjackShuffle;
 
 public class Application {
 
