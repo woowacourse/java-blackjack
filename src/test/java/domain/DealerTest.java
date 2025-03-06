@@ -1,6 +1,8 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
@@ -11,6 +13,33 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class DealerTest {
+
+    @Test
+    void 초기_카드_두장을_받아_딜러를_생성한다() {
+        // given
+        List<Card> initialCards = new ArrayList<>();
+        initialCards.add(new Card(TrumpNumber.SEVEN, TrumpEmblem.CLOVER));
+        initialCards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
+        Cards cards = new Cards(initialCards);
+
+        // when // then
+        assertDoesNotThrow(() -> new Dealer(cards));
+    }
+
+    @Test
+    void 초기_카드_세장을_받으면_예외를_발생시킨다() {
+        // given
+        List<Card> initialCards = new ArrayList<>();
+        initialCards.add(new Card(TrumpNumber.THREE, TrumpEmblem.SPADE));
+        initialCards.add(new Card(TrumpNumber.FOUR, TrumpEmblem.SPADE));
+        initialCards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
+        Cards cards = new Cards(initialCards);
+
+        // when // then
+        assertThatThrownBy(() -> new Dealer(cards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
+    }
 
     @ParameterizedTest
     @CsvSource(value = {
