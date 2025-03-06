@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class Player {
+public class Player implements Comparable<Player> {
 
     private final String name;
     private final List<Card> cards;
@@ -23,6 +23,14 @@ public class Player {
         IntStream.range(0, count)
                 .mapToObj(i -> cardPack.getDeal())
                 .forEach(cards::add);
+    }
+
+    public boolean isPlayerBust() {
+        return calculateCardNumber() > 21;
+    }
+
+    public boolean isPlayerNotBust() {
+        return !isPlayerBust();
     }
 
     public int calculateCardNumber() {
@@ -63,5 +71,19 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, cards);
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        if (this.isPlayerBust() && o.isPlayerBust()) {
+            return 0;
+        }
+        if (this.isPlayerNotBust() && o.isPlayerNotBust()) {
+            return Integer.compare(this.calculateCardNumber(), o.calculateCardNumber());
+        }
+        if (this.isPlayerNotBust() && o.isPlayerBust()) {
+            return -1;
+        }
+        return 1;
     }
 }

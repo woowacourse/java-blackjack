@@ -41,7 +41,7 @@ public class Players {
     }
 
     public boolean isPlayerBust(final Player player) {
-        return player.calculateCardNumber() > 21;
+        return player.isPlayerBust();
     }
 
     private Player getMatchPlayer(Player player) {
@@ -56,5 +56,9 @@ public class Players {
 
     public boolean isDealerHit() {
         return dealer.calculateCardNumber() <= 16;
+    }
+
+    public GameResults getGameResult() {
+        return new GameResults(dealer, gamblers);
     }
 }
