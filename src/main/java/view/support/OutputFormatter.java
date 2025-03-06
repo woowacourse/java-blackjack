@@ -42,7 +42,7 @@ public class OutputFormatter {
     }
 
     public String formatPlayerNames(List<String> names) {
-        return String.join(NAME_SEPARATOR, names);
+        return String.join(NAME_SEPARATOR, names).trim();
     }
 
     public String formatCards(Cards cards) {

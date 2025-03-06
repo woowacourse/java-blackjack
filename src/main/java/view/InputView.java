@@ -1,5 +1,6 @@
 package view;
 
+import domain.Participant;
 import java.util.List;
 import java.util.Scanner;
 import view.support.InputParser;
@@ -22,5 +23,11 @@ public class InputView {
 
     private String readLine() {
         return scanner.nextLine();
+    }
+
+    public AnswerType requestAdditionalCard(Participant participant) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", participant.name());
+        String rawAnswer = readLine();
+        return inputParser.parseAnswerType(rawAnswer);
     }
 }

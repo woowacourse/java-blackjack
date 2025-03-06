@@ -29,4 +29,8 @@ public class OutputView {
                 System.out.printf("%s카드: %s\n", player.name(), outputFormatter.formatCards(player.cards()))
         );
     }
+
+    public void printCurrentCard(Participant player) {
+        System.out.printf("%s카드: %s\n", player.name(), outputFormatter.formatCards(player.cards()));
+    }
 }

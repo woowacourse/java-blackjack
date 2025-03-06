@@ -1,7 +1,5 @@
 package domain;
 
-import static util.ExceptionConstants.ERROR_HEADER;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,10 +27,8 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public void checkMaxSum() {
-        if(calculateSumWithLowAce() > VALID_MAX_SUM_LIMIT) {
-            throw new IllegalArgumentException(ERROR_HEADER + MAX_SUM_EXCEED_ERROR);
-        }
+    public boolean isEqualAndMoreMaxSum() {
+        return calculateSumWithLowAce() >= VALID_MAX_SUM_LIMIT;
     }
 
     public void add(Card card) {
