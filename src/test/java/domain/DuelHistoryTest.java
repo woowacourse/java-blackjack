@@ -15,8 +15,8 @@ public class DuelHistoryTest {
 
 		@DisplayName("올바르게 승패를 기록한다.")
 		@ParameterizedTest
-		@CsvSource(value = {"true:1:0", "false:0:1"}, delimiter = ':')
-		public void writeDuelHistory(final boolean duelResult, final int winCount, final int loseCount) throws
+		@CsvSource(value = {"1:1:0", "-1:0:1"}, delimiter = ':')
+		public void writeDuelHistory(final int duelResult, final int winCount, final int loseCount) throws
 			Exception {
 			// given
 			final var duelHistory = new DuelHistory();

@@ -96,11 +96,15 @@ class ParticipantTest {
 				new Card(CardNumber.TEN, Emblem.SPADE), new Card(CardNumber.TWO, Emblem.CLUB));
 			final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
 			winner.pickCard(winnerDeck);
+			winner.pickCard(winnerDeck);
+			winner.pickCard(winnerDeck);
 
 			final Participant loser = new Participant();
 			final List<Card> loserCards = List.of(new Card(CardNumber.TEN, Emblem.CLUB),
 				new Card(CardNumber.TEN, Emblem.SPADE), new Card(CardNumber.TWO, Emblem.CLUB));
 			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
+			loser.pickCard(loserDeck);
+			loser.pickCard(loserDeck);
 			loser.pickCard(loserDeck);
 
 			// when

@@ -1,6 +1,9 @@
 package domain;
 
 public class DuelHistory {
+	private static final int WIN = 1;
+	private static final int DRAW = 0;
+	private static final int LOSE = -1;
 
 	private int winCount;
 	private int loseCount;
@@ -12,12 +15,16 @@ public class DuelHistory {
 		this.loseCount = 0;
 	}
 
-	public void write(boolean duelResult) {
-		if (duelResult) {
+	public void write(final int duelResult) {
+		if (duelResult >= WIN) {
 			winCount++;
-			return;
 		}
-		loseCount++;
+		if (duelResult == DRAW) {
+			drawCount++;
+		}
+		if (duelResult <= LOSE) {
+			loseCount++;
+		}
 	}
 
 	public int getWinCount() {
@@ -29,6 +36,6 @@ public class DuelHistory {
 	}
 
 	public int getDrawCount() {
-		return 0;
+		return drawCount;
 	}
 }

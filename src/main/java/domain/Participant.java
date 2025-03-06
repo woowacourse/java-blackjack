@@ -32,18 +32,23 @@ public class Participant {
 		final int score = this.calculateAllScore();
 		final int otherScore = other.calculateAllScore();
 		if (score <= 21 && otherScore > 21) {
-			duelHistory.write(true);
-			other.duelHistory.write(false);
+			duelHistory.write(1);
+			other.duelHistory.write(-1);
 			return;
 		}
 		if (score > 21 && otherScore <= 21) {
-			duelHistory.write(false);
-			other.duelHistory.write(true);
+			duelHistory.write(-1);
+			other.duelHistory.write(1);
 			return;
 		}
-		final boolean duelResult = this.calculateAllScore() > other.calculateAllScore();
+		if (score > 21 && otherScore > 21) {
+			duelHistory.write(0);
+			other.duelHistory.write(0);
+			return;
+		}
+		final int duelResult = this.calculateAllScore() - other.calculateAllScore();
 		duelHistory.write(duelResult);
-		other.duelHistory.write(!duelResult);
+		other.duelHistory.write(duelResult * -1);
 	}
 
 	public CardHand getHand() {
