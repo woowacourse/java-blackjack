@@ -5,7 +5,7 @@ import java.util.List;
 public abstract class Gamer {
 
     private final Nickname nickname;
-    private final Hand hand;
+    protected final Hand hand;
 
     public Gamer(final Nickname nickname) {
         this.nickname = nickname;
