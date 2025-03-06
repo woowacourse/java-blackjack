@@ -1,8 +1,8 @@
-package blackjack;
+package blackjack.model;
 
 import java.util.List;
 
-public class FixedCardShuffler implements CardShuffler{
+public class FixedCardShuffler implements CardShuffler {
 
     @Override
     public void shuffle(List<Card> cards) {

@@ -1,5 +1,9 @@
-package blackjack;
+package blackjack.view;
 
+import blackjack.model.Card;
+import blackjack.model.Game;
+import blackjack.model.MatchResult;
+import blackjack.model.Player;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

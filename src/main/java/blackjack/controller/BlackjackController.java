@@ -1,5 +1,13 @@
-package blackjack;
+package blackjack.controller;
 
+import blackjack.model.Card;
+import blackjack.model.Dealer;
+import blackjack.model.Deck;
+import blackjack.model.Game;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
+import blackjack.model.Player;
+import blackjack.model.RandomCardShuffler;
 import java.util.List;
 
 public class BlackjackController {

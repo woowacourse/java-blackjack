@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.model;
 
 import java.util.LinkedHashMap;
 import java.util.List;
