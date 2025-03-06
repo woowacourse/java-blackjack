@@ -18,7 +18,7 @@ public class Players {
         }
     }
 
-    public void distributeTwoCards(Deck deck) {
+    public void distributeInitialCards(Deck deck) {
         for (Player player : players) {
             player.receiveInitialCards(deck);
         }
@@ -26,5 +26,9 @@ public class Players {
 
     public int size() {
         return players.size();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

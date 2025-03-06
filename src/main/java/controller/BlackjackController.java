@@ -22,7 +22,7 @@ public class BlackjackController {
         Deck deck = DeckGenerator.generateDeck();
         Players players = createPlayers(dealer, participants);
         Blackjack blackjack = new Blackjack(players, deck);
-        blackjack.initialCardsDistribution();
+        blackjack.distributeInitialCards();
 
     }
 

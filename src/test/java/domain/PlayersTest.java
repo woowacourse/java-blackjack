@@ -22,4 +22,25 @@ class PlayersTest {
         Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 참여자_모두에게_카드를_2장씩_분배한다() {
+        // given
+        Players players = new Players(List.of(
+                new Dealer(),
+                new Participant("시소"),
+                new Participant("헤일러"),
+                new Participant("부기"),
+                new Participant("사나")
+        ));
+        Deck deck = DeckGenerator.generateDeck();
+
+        // when
+        players.distributeInitialCards(deck);
+
+        // then
+        Assertions.assertThat(players.getPlayers().stream()
+                .filter(player -> player.getCards().size() == 2)
+                .count()).isEqualTo(5);
+    }
 }

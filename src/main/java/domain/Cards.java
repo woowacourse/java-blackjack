@@ -9,7 +9,6 @@ public class Cards {
     private static final int BURST_LIMIT = 21;
 
     private final List<Card> cards;
-    private final Map<Card, Boolean> isOpened = new HashMap<>();
 
     public Cards() {
         this.cards = new ArrayList<>();
@@ -21,7 +20,6 @@ public class Cards {
 
     public void addAll(List<Card> cards) {
         this.cards.addAll(cards);
-        cards.forEach(card -> isOpened.put(card, false));
     }
 
     public int size() {
