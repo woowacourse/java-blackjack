@@ -8,10 +8,6 @@ public class Player {
         this.nickname = nickname;
     }
 
-    public static Player createDealer() {
-        return new Player(Nickname.createDealerNickname());
-    }
-
     public Nickname getNickname() {
         return nickname;
     }

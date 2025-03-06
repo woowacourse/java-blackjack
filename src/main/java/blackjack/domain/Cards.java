@@ -16,10 +16,6 @@ public class Cards {
         return new Cards(new ArrayList<>());
     }
 
-    public void add(Card card) {
-        cards.add(card);
-    }
-
     public void add(List<Card> drawnCards) {
         cards.addAll(drawnCards);
     }
@@ -35,8 +31,9 @@ public class Cards {
                 .sum();
 
         for (int i = 0; i < aceCount; i++) {
-            if(GameRule.isBurst(sumWithoutAce + GameRule.SOFT_ACE.getValue())) {
+            if (GameRule.isBurst(sumWithoutAce + GameRule.SOFT_ACE.getValue())) {
                 sumWithoutAce += CardValue.ACE.getPoint();
+                continue;
             }
             sumWithoutAce += GameRule.SOFT_ACE.getValue();
         }

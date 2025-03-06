@@ -12,16 +12,16 @@ public enum GameRule {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public static boolean isBurst(int point) {
         return point > GameRule.PLAYER_LIMIT_POINT.getValue();
     }
 
     public static boolean shouldDrawCardToDealer(int point) {
-        return point < DEALER_LIMIT_POINT.getValue();
+        return point <= DEALER_LIMIT_POINT.getValue();
+    }
+
+    public int getValue() {
+        return value;
     }
 
 
