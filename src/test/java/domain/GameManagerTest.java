@@ -80,12 +80,14 @@ public class GameManagerTest {
     @Test
     void 플레이어가_버스트_하지_않고_딜러보다_점수가_높아야_승리(){
         //given
-        CardGroup cardGroup = new CardGroup();
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
 
         final List<Player> players = List.of(
-                new Player("윌슨",cardGroup,new FaceCardGenerator()),
-                new Player("가이온",cardGroup,new FaceCardGenerator()));
-        final Dealer dealer = new Dealer(cardGroup,new TwoScoreCardGenerator());
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("가이온",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new TwoScoreCardGenerator());
 
         //when
         final GameManager gameManager = GameManager.create(dealer, players);

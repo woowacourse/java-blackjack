@@ -46,6 +46,7 @@ public class GameManager {
     }
 
     public GameResult calculateResult(final int index) {
-        return null;
+        final Player player = players.get(index);
+        return player.calculateGameResult(dealer.calculateScore());
     }
 }
