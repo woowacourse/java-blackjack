@@ -1,9 +1,22 @@
 package domain;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public enum AnswerCommand {
-    YES, NO;
+    YES("y"),
+    NO("n");
+
+    private final String command;
+
+    AnswerCommand(final String command) {
+        this.command = command;
+    }
 
     public static AnswerCommand findByAnswer(final String command) {
-        return YES;
+        return Arrays.stream(AnswerCommand.values())
+                .filter(answerCommand -> Objects.equals(answerCommand.command, command))
+                .findAny()
+                .orElse(null);
     }
 }
