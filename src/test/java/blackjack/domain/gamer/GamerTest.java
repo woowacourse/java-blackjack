@@ -85,7 +85,6 @@ class GamerTest {
         assertThat(gamer .isBlackjack()).isEqualTo(expected);
     }
 
-    // TODO Fixture 생성 후 진행
     @Test
     @DisplayName("최종 승패를 계산한다")
     void getFinalResultTest() {
@@ -94,19 +93,10 @@ class GamerTest {
         Player b = new Player("bb");
         Player c = new Player("cc");
 
-        Deck dealerDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX);
-        Deck aDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK);
-        Deck bDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO);
-        Deck cDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE);
-
-        dealer.drawCard(dealerDeck);
-        dealer.drawCard(dealerDeck);
-        a.drawCard(aDeck);
-        a.drawCard(aDeck);
-        b.drawCard(bDeck);
-        b.drawCard(bDeck);
-        c.drawCard(cDeck);
-        c.drawCard(cDeck);
+        dealer.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX));
+        a.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK));
+        b.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO));
+        c.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE));
 
         List<Gamer> players = List.of(a, b, c);
         Map<RoundResult, Integer> finalResult = dealer.getFinalResult(players);
