@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -8,7 +8,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participants.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;

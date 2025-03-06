@@ -1,11 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.ScoreCalculator;
-import blackjack.domain.participants.Player;
-import blackjack.domain.participants.Players;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
