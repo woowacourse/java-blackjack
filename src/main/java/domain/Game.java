@@ -48,7 +48,7 @@ public class Game {
     }
 
     public boolean doesDealerNeedCard() {
-        return dealer.doesDealerNeedCard();
+        return dealer.doesNeedCard();
     }
 
     public void dealerHit() {
@@ -73,7 +73,7 @@ public class Game {
     }
 
     private void registerPlayer(String playerName) {
-        CardHand initialDeal = dealer.getInitialDeal();
+        CardHand initialDeal = dealer.pickInitialDeal();
         Player player = new Player(playerName, initialDeal);
         players.put(player, GameResult.NONE);
     }

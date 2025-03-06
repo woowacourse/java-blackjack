@@ -20,16 +20,12 @@ public class Deck {
             throw new IllegalStateException("[ERROR] 카드를 생성할 수 없습니다.");
         }
         int index = generator.generate(deck.size());
-        Card card = deck.get(index);
-        deck.remove(index);
-        return card;
+        return deck.remove(index);
     }
 
     public CardHand getInitialDeal() {
-        final CardHand cardHand;
         Card firstCard = random(new RandomNumberGenerator());
         Card secondCard = random(new RandomNumberGenerator());
-        cardHand = new CardHand(Set.of(firstCard, secondCard));
-        return cardHand;
+        return new CardHand(Set.of(firstCard, secondCard));
     }
 }

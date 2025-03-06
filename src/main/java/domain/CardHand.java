@@ -30,10 +30,6 @@ public class CardHand {
         return calculateScoreWithAce();
     }
 
-    public boolean isBust() {
-        return calculateScore() > 21;
-    }
-
     private int calculateScoreWithAce() {
         int minimumSum = cards.stream()
                 .mapToInt(Card::score)
@@ -43,6 +39,10 @@ public class CardHand {
             return minimumSum - MIN_ACE_SCORE + MAX_ACE_SCORE;
         }
         return minimumSum;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > 21;
     }
 
     public boolean isBlackJack() {

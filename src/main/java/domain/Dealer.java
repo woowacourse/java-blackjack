@@ -2,7 +2,6 @@ package domain;
 
 import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.Set;
 
 public class Dealer extends GameParticipant {
     private final EnumMap<GameResult, Integer> gameResult = new EnumMap<>(GameResult.class);
@@ -18,27 +17,23 @@ public class Dealer extends GameParticipant {
         this.deck = deck;
     }
 
-    public CardHand getInitialDeal() {
-        final CardHand cardHand;
-        Card firstCard = deck.random(new RandomNumberGenerator());
-        Card secondCard = deck.random(new RandomNumberGenerator());
-        cardHand = new CardHand(Set.of(firstCard, secondCard));
-        return cardHand;
-    }
-
-    public boolean doesDealerNeedCard() {
-        return cardHand.doesDealerNeedCard();
+    public Card pickCard() {
+        return deck.random(new RandomNumberGenerator());
     }
 
     public void recordGameResult(GameResult result) {
         gameResult.put(result, gameResult.get(result) + 1);
     }
 
-    public int getGameResultCount(GameResult result) {
-        return gameResult.get(result);
+    public boolean doesNeedCard() {
+        return cardHand.doesDealerNeedCard();
     }
 
-    public Card pickCard() {
-        return deck.random(new RandomNumberGenerator());
+    public CardHand pickInitialDeal() {
+        return deck.getInitialDeal();
+    }
+
+    public int getGameResultCount(GameResult result) {
+        return gameResult.get(result);
     }
 }

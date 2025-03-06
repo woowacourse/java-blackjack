@@ -11,6 +11,10 @@ public class GameParticipant {
         this.cardHand = cardHand;
     }
 
+    public void hit(Card newCard) {
+        cardHand.add(newCard);
+    }
+
     public int calculateScore() {
         return cardHand.calculateScore();
     }
@@ -29,9 +33,5 @@ public class GameParticipant {
 
     public List<Card> getCards() {
         return cardHand.getCards();
-    }
-
-    public void hit(Card newCard) {
-        cardHand.add(newCard);
     }
 }
