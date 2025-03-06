@@ -24,6 +24,11 @@ public class Dealer implements Participant {
     }
 
     @Override
+    public boolean areYouPlayer() {
+        return false;
+    }
+
+    @Override
     public Map<BattleResult, Integer> getBattleResult() {
         return battleResult;
     }

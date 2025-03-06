@@ -24,6 +24,11 @@ public class Player implements Participant {
     }
 
     @Override
+    public boolean areYouPlayer() {
+        return true;
+    }
+
+    @Override
     public Map<BattleResult, Integer> getBattleResult() {
         return battleResult;
     }

@@ -2,12 +2,12 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.Dealer;
+import domain.participant.BattleResult;
 import domain.participant.Participant;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -79,5 +79,41 @@ public class GameBoard {
             }
         }
         return totalScore;
+    }
+
+    public void calculateBattleResult() {
+        Entry<Participant, CardDeck> cardDeckOfDealer = cardDeckOfParticipant.entrySet()
+                .stream()
+                .filter(entry -> !entry.getKey().areYouPlayer())
+                .findFirst()
+                .orElseThrow();
+
+        Participant dealer = cardDeckOfDealer.getKey();
+        int dealerScore = getScoreOf(dealer);
+        Map<BattleResult, Integer> battleResultOfDealer = dealer.getBattleResult();
+
+        for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
+            Participant participant = entry.getKey();
+            if (!participant.areYouPlayer()) {
+                continue;
+            }
+
+            int score = getScoreOf(participant);
+            if (dealerScore > score) {
+                Map<BattleResult, Integer> battleResult = participant.getBattleResult();
+                battleResult.merge(BattleResult.LOSE, 1, Integer::sum);
+                battleResultOfDealer.merge(BattleResult.WIN, 1, Integer::sum);
+                continue;
+            }
+            if (dealerScore < score) {
+                Map<BattleResult, Integer> battleResult = participant.getBattleResult();
+                battleResult.merge(BattleResult.WIN, 1, Integer::sum);
+                battleResultOfDealer.merge(BattleResult.LOSE, 1, Integer::sum);
+                continue;
+            }
+            Map<BattleResult, Integer> battleResult = participant.getBattleResult();
+            battleResult.merge(BattleResult.DRAW, 1, Integer::sum);
+            battleResultOfDealer.merge(BattleResult.DRAW, 1, Integer::sum);
+        }
     }
 }
