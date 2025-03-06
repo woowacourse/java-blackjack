@@ -9,8 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
-import blackjack.testutil.CardHandInitializerDummy;
-import blackjack.testutil.CardHandInitializerStub;
+import blackjack.domain.deck.Deck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,14 +34,10 @@ public class BlackjackJudgeTest {
     @Test
     void 블랙잭심판은_딜러의_승리_갯수를_확인할_수_있다() {
         // given
-        List<Card> dompooCards = List.of(DIAMOND_1, HEART_7);
-        List<Card> mayCards = List.of(HEART_2, HEART_3);
-        List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
-        
-        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
-        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> List.of(DIAMOND_1, HEART_7));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), () -> List.of(HEART_2, HEART_3));
+        final List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_1, HEART_5));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
@@ -53,17 +48,11 @@ public class BlackjackJudgeTest {
     @Test
     void 블랙잭심판은_딜러의_패배_갯수를_확인할_수_있다() {
         // given
-        List<Card> dompooCards = List.of(DIAMOND_1, HEART_7);
-        List<Card> mayCards = List.of(HEART_2, HEART_3);
-        List<Card> lisaCards = List.of(DIAMOND_1, HEART_8);
-        List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
-        
-        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"),
-                new CardHandInitializerStub(lisaCards));
-        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
-        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> List.of(DIAMOND_1, HEART_7));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), () -> List.of(HEART_2, HEART_3));
+        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"), () -> List.of(DIAMOND_1, HEART_8));
+        final List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_1, HEART_5));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
@@ -74,17 +63,11 @@ public class BlackjackJudgeTest {
     @Test
     void 블랙잭심판은_딜러의_무승부_갯수를_확인할_수_있다() {
         // given
-        List<Card> dompooCards = List.of(HEART_10, HEART_6);
-        List<Card> mayCards = List.of(HEART_2, HEART_3);
-        List<Card> lisaCards = List.of(DIAMOND_1, HEART_8);
-        List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
-        
-        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"),
-                new CardHandInitializerStub(lisaCards));
-        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
-        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> List.of(HEART_10, HEART_6));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), () -> List.of(HEART_2, HEART_3));
+        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"), () -> List.of(DIAMOND_1, HEART_8));
+        final List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_1, HEART_5));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
@@ -95,18 +78,14 @@ public class BlackjackJudgeTest {
     @Test
     void 한_플레이어의_승패여부를_확인할_때_존재하지_않는_플레이어라면_예외가_발생한다() {
         // given
-        List<Card> dompooCards = List.of(HEART_10, HEART_6);
-        List<Card> mayCards = List.of(HEART_2, HEART_3);
-        List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
-        
-        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
-        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> List.of(HEART_10, HEART_6));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), () -> List.of(HEART_2, HEART_3));
+        final List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_1, HEART_5));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
-        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"), new CardHandInitializerDummy());
+        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"), List::of);
         // expected
         assertThatThrownBy(() -> blackjackJudge.getWinningStatusOf(lisaCardHand))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -117,11 +96,9 @@ public class BlackjackJudgeTest {
     @MethodSource("provideCardsAndWinningStatus")
     void 블랙잭심판은_한_플레이어의_승패_여부를_확인할_수_있다(List<Card> cards, WinningStatus winningStatus) {
         // given
-        List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
-
-        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(cards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> cards);
         List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand);
-        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_1, HEART_5));
 
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
 

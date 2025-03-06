@@ -3,8 +3,9 @@ package blackjack.domain.card_hand;
 import java.util.List;
 
 import blackjack.domain.Card;
-import blackjack.domain.CardHandInitializer;
-import blackjack.domain.Deck;
+import blackjack.domain.deck.CardDrawer;
+import blackjack.domain.deck.CardHandInitializer;
+import blackjack.domain.deck.Deck;
 
 public final class DealerBlackjackCardHand implements BlackjackWinDeterminer {
     
@@ -20,9 +21,9 @@ public final class DealerBlackjackCardHand implements BlackjackWinDeterminer {
         return List.of(cardHand.getCards().getFirst());
     }
     
-    public void startAdding(final Deck deck) {
+    public void startAdding(final CardDrawer cardDrawer) {
         while (cardHand.getBlackjackSum() <= DEALER_DRAW_THRESHOLD) {
-            cardHand.addCard(deck.draw());
+            cardHand.addCard(cardDrawer.draw());
         }
     }
     

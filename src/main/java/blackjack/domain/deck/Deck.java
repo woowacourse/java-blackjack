@@ -1,11 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.deck;
+
+import blackjack.domain.Card;
 
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public final class Deck implements CardHandInitializer {
+public final class Deck implements CardHandInitializer, CardDrawer {
     
     private final Deque<Card> cards;
     
@@ -19,6 +21,7 @@ public final class Deck implements CardHandInitializer {
         return new ArrayDeque<>(cards);
     }
     
+    @Override
     public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드는 총 52장입니다.");

@@ -1,18 +1,17 @@
 package blackjack.testutil;
 
+import blackjack.domain.Card;
+import blackjack.domain.deck.CardDrawer;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-import blackjack.domain.Card;
-import blackjack.domain.Deck;
-
-public class DeckStub extends Deck {
+public class CardDrawerStub implements CardDrawer {
     
     private final Deque<Card> cards;
     
-    public DeckStub(List<Card> cards) {
-        super();
+    public CardDrawerStub(final List<Card> cards) {
         this.cards = new ArrayDeque<>(cards);
     }
     

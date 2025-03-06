@@ -3,7 +3,7 @@ package blackjack.controller;
 import java.util.List;
 
 import blackjack.domain.BlackjackJudge;
-import blackjack.domain.Deck;
+import blackjack.domain.deck.Deck;
 import blackjack.domain.Player;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;

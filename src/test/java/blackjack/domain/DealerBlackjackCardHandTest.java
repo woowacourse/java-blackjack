@@ -6,9 +6,8 @@ import java.util.stream.Stream;
 import static blackjack.testutil.TestConstants.*;
 
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
-import blackjack.testutil.CardHandInitializerDummy;
-import blackjack.testutil.CardHandInitializerStub;
-import blackjack.testutil.DeckStub;
+import blackjack.domain.deck.Deck;
+import blackjack.testutil.CardDrawerStub;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,7 @@ public class DealerBlackjackCardHandTest {
     @Test
     void 딜러_손패_숫자의_합이_16_이하인_경우_카드를_뽑는다() {
         //given
-        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(new CardHandInitializerDummy());
+        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(List::of);
 
         //when
         DealerBlackjackCardHand.startAdding(new Deck());
@@ -37,11 +36,10 @@ public class DealerBlackjackCardHandTest {
             int expectedSum
     ) {
         //given
-        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(new CardHandInitializerStub(initCards));
+        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> initCards);
 
         //when
-        final DeckStub deck = new DeckStub(deckCards);
-        DealerBlackjackCardHand.startAdding(deck);
+        DealerBlackjackCardHand.startAdding(new CardDrawerStub(deckCards));
 
         //then
         Assertions.assertThat(DealerBlackjackCardHand.getBlackjackSum()).isEqualTo(expectedSum);
@@ -70,10 +68,7 @@ public class DealerBlackjackCardHandTest {
     @Test
     void 딜러는_처음에_한_장만_공개해야_한다() {
         // given
-        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(new CardHandInitializerStub(List.of(
-                HEART_3,
-                HEART_5
-        )));
+        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(HEART_3, HEART_5));
 
         // expected
         Assertions.assertThat(DealerBlackjackCardHand.getInitialCards()).containsExactly(HEART_3);

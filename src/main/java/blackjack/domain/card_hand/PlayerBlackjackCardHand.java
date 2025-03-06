@@ -3,7 +3,7 @@ package blackjack.domain.card_hand;
 import java.util.List;
 
 import blackjack.domain.Card;
-import blackjack.domain.CardHandInitializer;
+import blackjack.domain.deck.CardHandInitializer;
 import blackjack.domain.Player;
 
 public final class PlayerBlackjackCardHand implements BlackjackWinDeterminer {
