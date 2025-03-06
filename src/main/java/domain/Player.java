@@ -18,6 +18,10 @@ public class Player {
 		return participant.calculateAllScore() <= 21;
 	}
 
+	public void pickCardOnFirstHandOut(final Deck deck) {
+		participant.pickCardOnFirstHandOut(deck);
+	}
+
 	public void pickCard(final Deck deck) {
 		participant.pickCard(deck);
 	}

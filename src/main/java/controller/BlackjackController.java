@@ -76,12 +76,8 @@ public class BlackjackController {
 	}
 
 	private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
-		players.forEach(player -> {
-			player.pickCard(deck);
-			player.pickCard(deck);
-		});
-		dealer.pickCard(deck);
-		dealer.pickCard(deck);
+		players.forEach(player -> player.pickCardOnFirstHandOut(deck));
+		dealer.pickCardOnFirstHandOut(deck);
 		outputHandOut(players, dealer);
 	}
 
