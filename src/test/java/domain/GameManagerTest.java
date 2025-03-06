@@ -217,4 +217,26 @@ public class GameManagerTest {
         assertThat(size).isEqualTo(2);
 
     }
+
+    @Test
+    void 인덱스를_이용해서_플레이어를_가져온다() {
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
+
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("가이온",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        final Player player = gameManager.findPlayerByIndex(0);
+        final String name = player.getName();
+
+        //then
+        assertThat(name).isEqualTo("윌슨");
+
+    }
 }

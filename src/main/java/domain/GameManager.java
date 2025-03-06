@@ -45,4 +45,8 @@ public class GameManager {
     public int calculatePlayerSize() {
         return players.size();
     }
+
+    public Player findPlayerByIndex(final int index) {
+        return null;
+    }
 }
