@@ -38,7 +38,6 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
-    // TODO : abstract 메서드 위치 컨벤션
     public abstract boolean isPossibleToAdd();
 
     private boolean hasACE() {

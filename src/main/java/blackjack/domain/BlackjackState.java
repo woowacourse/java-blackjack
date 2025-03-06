@@ -1,9 +1,9 @@
 package blackjack.domain;
 
 public enum BlackjackState {
-    BLACKJACK(),
-    BUST(),
-    OTHERS();
+    BLACKJACK,
+    BUST,
+    OTHERS;
 
     public static BlackjackState of(Participant participant) {
         int cardSum = participant.calculateDenominations();

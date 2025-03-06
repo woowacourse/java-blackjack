@@ -1,11 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackjackController {
 
@@ -74,10 +77,13 @@ public class BlackjackController {
     }
 
     private void showWinLoseResult(BlackjackGame blackjackGame) {
+        Map<GameResult, Integer> dealerResult = blackjackGame.calculateStatisticsForDealer();
+        Map<Player, GameResult> playerResults = blackjackGame.calculateStatisticsForPlayer();
+
         outputView.printResultTitle();
-        outputView.printDealerResult(blackjackGame.calculateStatisticsForDealer());
-        for (Player player : blackjackGame.findPlayers()) {
-            outputView.printPlayerResult(player, blackjackGame.findDealer());
+        outputView.printDealerResult(dealerResult);
+        for (Entry<Player, GameResult> playerResult : playerResults.entrySet()) {
+            outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
         }
     }
 

@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class Player extends Participant {
 
-    private static final int BLACKJACK_THRESHOLD = 21;
+    private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
 
     private final String name;
 
@@ -11,35 +11,9 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public GameResult matchGame(Dealer dealer) {
-        BlackjackState dealerState = BlackjackState.of(dealer);
-        BlackjackState playerState = BlackjackState.of(this);
-
-        if (BlackjackState.BLACKJACK.equals(dealerState) && BlackjackState.BLACKJACK.equals(playerState)) {
-            return GameResult.DRAW;
-        }
-        if (BlackjackState.BUST.equals(dealerState) && BlackjackState.BUST.equals(playerState)) {
-            return GameResult.LOSE;
-        }
-        if (BlackjackState.BUST.equals(dealerState)) {
-            return GameResult.WIN;
-        }
-        if (BlackjackState.BLACKJACK.equals(playerState)) {
-            return GameResult.WIN;
-        }
-        if (BlackjackState.OTHERS.equals(dealerState) && BlackjackState.OTHERS.equals(playerState)) {
-            int dealerSum = dealer.calculateDenominations();
-            int playerSum = this.calculateDenominations();
-            if (dealerSum < playerSum) {
-                return GameResult.WIN;
-            }
-        }
-        return GameResult.LOSE;
-    }
-
     @Override
     public boolean isPossibleToAdd() {
-        return super.calculateDenominations() < BLACKJACK_THRESHOLD;
+        return super.calculateDenominations() < PLAYER_DISTRIBUTE_CARD_THRESHOLD;
     }
 
     private void validateName(String name) {

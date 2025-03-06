@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Dealer extends Participant {
 
+    private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 16;
+
     public Dealer() {
         super();
     }
@@ -12,6 +14,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isPossibleToAdd() {
-        return super.calculateDenominations() <= 16;
+        return super.calculateDenominations() <= DEALER_DISTRIBUTE_CARD_THRESHOLD;
     }
 }

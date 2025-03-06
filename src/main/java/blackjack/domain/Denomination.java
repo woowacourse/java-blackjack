@@ -26,11 +26,14 @@ public enum Denomination {
     }
 
     public static int changeAceValue(int sum) {
-        int changedAceValue = sum - ACE.values.getFirst() + ACE.values.getLast();
+        Integer minAceValue = ACE.values.getFirst();
+        Integer maxAceValue = ACE.values.getLast();
+
+        int changedAceValue = sum + maxAceValue - minAceValue;
         if (changedAceValue <= 21) {
-            return changedAceValue;
+            return sum;
         }
-        return sum;
+        return changedAceValue;
     }
 
     public String getText() {
