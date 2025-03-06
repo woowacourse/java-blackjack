@@ -1,5 +1,9 @@
 package domain;
 
+import static domain.GameResult.DRAW;
+import static domain.GameResult.LOSE;
+import static domain.GameResult.WIN;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -11,20 +15,20 @@ public class GameStatistics {
     }
 
     public int getDealerWinCount() {
-        return (int) results.values().stream()
-                .filter(result -> result == GameResult.LOSE)
-                .count();
+        return getDealerResultCount(WIN);
     }
 
     public int getDealerLoseCount() {
-        return (int) results.values().stream()
-                .filter(result -> result == GameResult.WIN)
-                .count();
+        return getDealerResultCount(LOSE);
     }
 
     public int getDealerDrawCount() {
+        return getDealerResultCount(DRAW);
+    }
+
+    private int getDealerResultCount(GameResult gameResult) {
         return (int) results.values().stream()
-                .filter(result -> result == GameResult.DRAW)
+                .filter(result -> result == gameResult)
                 .count();
     }
 
