@@ -15,7 +15,7 @@ public class Blackjack {
         players.distributeInitialCards(deck);
     }
 
-    public void openDistributedCards() {
+    public List<Cards> openCards() {
 
     }
 }
