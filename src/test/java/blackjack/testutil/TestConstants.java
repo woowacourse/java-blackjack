@@ -3,6 +3,7 @@ package blackjack.testutil;
 import static blackjack.domain.CardShape.*;
 
 import blackjack.domain.Card;
+import blackjack.domain.Player;
 
 public class TestConstants {
     
@@ -24,4 +25,6 @@ public class TestConstants {
     public static final Card HEART_12 = new Card(12, 하트);
     public static final Card HEART_13 = new Card(13, 하트);
     public static final Card CLOVER_10 = new Card(10, 클로버);
+    
+    public static final Player DEFAULT_PLAYER = new Player("dompoo");
 }

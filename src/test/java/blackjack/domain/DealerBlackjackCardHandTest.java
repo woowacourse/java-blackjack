@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import static blackjack.testutil.TestConstants.*;
 
-import blackjack.domain.card_hand.DealerCardHand;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.testutil.CardHandInitializerDummy;
 import blackjack.testutil.CardHandInitializerStub;
 import blackjack.testutil.DeckStub;
@@ -15,20 +15,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class DealerCardHandTest {
-    
+public class DealerBlackjackCardHandTest {
+
     @Test
     void 딜러_손패_숫자의_합이_16_이하인_경우_카드를_뽑는다() {
         //given
-        DealerCardHand dealerCardHand = new DealerCardHand(new CardHandInitializerDummy());
-        
+        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(new CardHandInitializerDummy());
+
         //when
-        dealerCardHand.startAdding(new Deck());
-        
+        DealerBlackjackCardHand.startAdding(new Deck());
+
         //then
-        Assertions.assertThat(dealerCardHand.getCards().size()).isGreaterThanOrEqualTo(1);
+        Assertions.assertThat(DealerBlackjackCardHand.getCards().size()).isGreaterThanOrEqualTo(1);
     }
-    
+
     @ParameterizedTest
     @MethodSource("provideInitCardsAndDeckCardsAndExpectedSum")
     void 딜러_손패_숫자의_합이_15_이고_뽑을_수_있는_숫자가_1_2_3인_경우_18까지_뽑는다(
@@ -37,16 +37,16 @@ public class DealerCardHandTest {
             int expectedSum
     ) {
         //given
-        DealerCardHand dealerCardHand = new DealerCardHand(new CardHandInitializerStub(initCards));
-        
+        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(new CardHandInitializerStub(initCards));
+
         //when
         final DeckStub deck = new DeckStub(deckCards);
-        dealerCardHand.startAdding(deck);
-        
+        DealerBlackjackCardHand.startAdding(deck);
+
         //then
-        Assertions.assertThat(dealerCardHand.getSum()).isEqualTo(expectedSum);
+        Assertions.assertThat(DealerBlackjackCardHand.getSum()).isEqualTo(expectedSum);
     }
-    
+
     private static Stream<Arguments> provideInitCardsAndDeckCardsAndExpectedSum() {
         return Stream.of(
                 Arguments.of(
@@ -66,16 +66,16 @@ public class DealerCardHandTest {
                 )
         );
     }
-    
+
     @Test
     void 딜러는_처음에_한_장만_공개해야_한다() {
         // given
-        DealerCardHand dealerCardHand = new DealerCardHand(new CardHandInitializerStub(List.of(
+        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(new CardHandInitializerStub(List.of(
                 HEART_3,
                 HEART_5
         )));
-        
+
         // expected
-        Assertions.assertThat(dealerCardHand.getInitialCards()).containsExactly(HEART_3);
+        Assertions.assertThat(DealerBlackjackCardHand.getInitialCards()).containsExactly(HEART_3);
     }
 }

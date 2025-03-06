@@ -7,8 +7,8 @@ import static blackjack.testutil.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card_hand.DealerCardHand;
-import blackjack.domain.card_hand.PlayerCardHand;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.testutil.CardHandInitializerDummy;
 import blackjack.testutil.CardHandInitializerStub;
 import org.junit.jupiter.api.Assertions;
@@ -25,8 +25,8 @@ public class BlackjackJudgeTest {
         final Deck deck = new Deck();
         final Player dompoo = new Player("dompoo");
         final Player may = new Player("may");
-        List<PlayerCardHand> playerHands = List.of(new PlayerCardHand(dompoo, deck), new PlayerCardHand(may, deck));
-        final DealerCardHand dealerHand = new DealerCardHand(deck);
+        List<PlayerBlackjackCardHand> playerHands = List.of(new PlayerBlackjackCardHand(dompoo, deck), new PlayerBlackjackCardHand(may, deck));
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(deck);
         
         // expected
         Assertions.assertDoesNotThrow(() -> new BlackjackJudge(dealerHand, playerHands));
@@ -39,10 +39,10 @@ public class BlackjackJudgeTest {
         List<Card> mayCards = List.of(HEART_2, HEART_3);
         List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
         
-        final PlayerCardHand dompooCardHand = new PlayerCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerCardHand mayCardHand = new PlayerCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        List<PlayerCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
-        final DealerCardHand dealerHand = new DealerCardHand(new CardHandInitializerStub(dealerCards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
+        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
@@ -58,12 +58,12 @@ public class BlackjackJudgeTest {
         List<Card> lisaCards = List.of(DIAMOND_1, HEART_8);
         List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
         
-        final PlayerCardHand dompooCardHand = new PlayerCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerCardHand mayCardHand = new PlayerCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        final PlayerCardHand lisaCardHand = new PlayerCardHand(new Player("lisa"),
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
+        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"),
                 new CardHandInitializerStub(lisaCards));
-        List<PlayerCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
-        final DealerCardHand dealerHand = new DealerCardHand(new CardHandInitializerStub(dealerCards));
+        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
@@ -79,12 +79,12 @@ public class BlackjackJudgeTest {
         List<Card> lisaCards = List.of(DIAMOND_1, HEART_8);
         List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
         
-        final PlayerCardHand dompooCardHand = new PlayerCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerCardHand mayCardHand = new PlayerCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        final PlayerCardHand lisaCardHand = new PlayerCardHand(new Player("lisa"),
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
+        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"),
                 new CardHandInitializerStub(lisaCards));
-        List<PlayerCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
-        final DealerCardHand dealerHand = new DealerCardHand(new CardHandInitializerStub(dealerCards));
+        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand, lisaCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
@@ -99,14 +99,14 @@ public class BlackjackJudgeTest {
         List<Card> mayCards = List.of(HEART_2, HEART_3);
         List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
         
-        final PlayerCardHand dompooCardHand = new PlayerCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
-        final PlayerCardHand mayCardHand = new PlayerCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
-        List<PlayerCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
-        final DealerCardHand dealerHand = new DealerCardHand(new CardHandInitializerStub(dealerCards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(dompooCards));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), new CardHandInitializerStub(mayCards));
+        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
         
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
         
-        final PlayerCardHand lisaCardHand = new PlayerCardHand(new Player("lisa"), new CardHandInitializerDummy());
+        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"), new CardHandInitializerDummy());
         // expected
         assertThatThrownBy(() -> blackjackJudge.getWinningStatusOf(lisaCardHand))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -119,9 +119,9 @@ public class BlackjackJudgeTest {
         // given
         List<Card> dealerCards = List.of(DIAMOND_1, HEART_5);
 
-        final PlayerCardHand dompooCardHand = new PlayerCardHand(new Player("dompoo"), new CardHandInitializerStub(cards));
-        List<PlayerCardHand> playerHands = List.of(dompooCardHand);
-        final DealerCardHand dealerHand = new DealerCardHand(new CardHandInitializerStub(dealerCards));
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), new CardHandInitializerStub(cards));
+        List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(new CardHandInitializerStub(dealerCards));
 
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
 

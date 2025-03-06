@@ -6,13 +6,10 @@ import java.util.List;
 
 import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
-import blackjack.domain.WinningStatus;
 
-public abstract class CardHand {
+public class CardHand {
     
     private static final int BURST_THRESHOLD = 21;
-    private static final int BLACK_JACK_SUM = 21;
-    private static final int BLACK_JACK_CARD_COUNT = 2;
     
     protected final List<Card> cards = new ArrayList<>();
     
@@ -20,10 +17,12 @@ public abstract class CardHand {
         cards.addAll(initializer.init());
     }
     
-    public abstract List<Card> getInitialCards();
-    
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+    
+    public void addCard(Card card) {
+        cards.add(card);
     }
     
     public int getSum() {
@@ -75,70 +74,5 @@ public abstract class CardHand {
         for (Integer number : availableNumber) {
             newList.add(currentSum + number);
         }
-    }
-    
-    public WinningStatus isWin(final CardHand other) {
-        if (checkBurstCase(other)) {
-            return getBurstResult(other);
-        }
-        
-        if (getSum() == other.getSum()) {
-            return getDrawResult(other);
-        }
-        
-        return getSum() > other.getSum() ? WinningStatus.승리 : WinningStatus.패배;
-    }
-    
-    private boolean checkBurstCase(final CardHand other) {
-        return isBurst() || other.isBurst();
-    }
-    
-    private WinningStatus getBurstResult(final CardHand other) {
-        if (isAllBurst(other)) {
-            return WinningStatus.무승부;
-        }
-        
-        if (isMyCardOnlyBurst(other)) {
-            return WinningStatus.패배;
-        }
-        
-        return WinningStatus.승리;
-    }
-    
-    private WinningStatus getDrawResult(final CardHand other) {
-        if (is21()) {
-            return judgeDouble21(other);
-        }
-        return WinningStatus.무승부;
-    }
-    
-    private WinningStatus judgeDouble21(final CardHand other) {
-        if (isBlackjack() != other.isBlackjack()) {
-            if (isBlackjack()) {
-                return WinningStatus.승리;
-            }
-            return WinningStatus.패배;
-        }
-        return WinningStatus.무승부;
-    }
-    
-    private boolean isMyCardOnlyBurst(final CardHand other) {
-        return isBurst() && !other.isBurst();
-    }
-    
-    private boolean isAllBurst(final CardHand other) {
-        return isBurst() && other.isBurst();
-    }
-    
-    public boolean isBurst() {
-        return getSum() > BURST_THRESHOLD;
-    }
-    
-    private boolean isBlackjack() {
-        return cards.size() == BLACK_JACK_CARD_COUNT && is21();
-    }
-    
-    public boolean is21() {
-        return getSum() == BLACK_JACK_SUM;
     }
 }
