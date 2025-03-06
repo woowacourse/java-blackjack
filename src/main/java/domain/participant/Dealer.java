@@ -36,5 +36,9 @@ public class Dealer {
     public boolean isUnderThreshold() {
         return sum() <= DEALER_DRAW_THRESHOLD;
     }
+
+    public CardDeck getHand() {
+        return hand;
+    }
 }
 

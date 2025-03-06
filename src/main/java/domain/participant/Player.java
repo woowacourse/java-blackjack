@@ -49,4 +49,8 @@ public class Player {
     public MatchResult calculateWinner(int dealerSum){
         return MatchResult.calculateWinner(dealerSum, this.sum());
     }
+
+    public String getName() {
+        return name;
+    }
 }

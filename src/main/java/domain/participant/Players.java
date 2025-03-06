@@ -52,4 +52,8 @@ public class Players {
         }
         return res;
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

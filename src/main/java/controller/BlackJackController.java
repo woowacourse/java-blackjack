@@ -34,16 +34,18 @@ public class BlackJackController {
         // 2. 딜러와 플레이어에게 카드 나눠주기
         blackJack.hitCardsToParticipant();
 
-        // 3. 카드 더 받을지 물어보기 x 플레이어 수
-        blackJack.drawPlayers(() -> InputUntilValid.validatePlayerAnswer(inputView::askPlayerForHitOrStand), inputView::printPlayerDeck);
+        outputView.printParticipant(players, dealer);
 
-//        // 4. 딜러 카드 받기
+        // 3. 카드 더 받을지 물어보기 x 플레이어 수
+        blackJack.drawPlayers(() -> InputUntilValid.validatePlayerAnswer(inputView::askPlayerForHitOrStand), outputView::printPlayerDeck);
+
+        // 4. 딜러 카드 받기
         blackJack.drawDealer();
 
 //        // 5. 결과
 //        blackJack.calculateResult();
 //
 //        // 6. 최종 승패
-//        blackJack.calculateWinner();
+        blackJack.calculateWinner();
     }
 }

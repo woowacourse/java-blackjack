@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import view.InputView;
+import view.OutputView;
 
 public class PlayerTest {
     @Test
@@ -85,13 +86,14 @@ public class PlayerTest {
         System.setOut(new PrintStream(outputStream));
 
         InputView testInputView = new InputView(new Scanner(System.in));
+        OutputView testOutputView = new OutputView();
 
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
         Dealer dealer = new Dealer(cardDeck);
         Player player = new Player("pobi");
 
         //when-then
-        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testInputView::printPlayerDeck, dealer));
+        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
     }
 
     @Test

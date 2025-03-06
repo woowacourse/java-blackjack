@@ -33,6 +33,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import view.InputView;
+import view.OutputView;
 
 public class BlackJackTest {
     @Test
@@ -62,6 +63,7 @@ public class BlackJackTest {
         System.setOut(new PrintStream(outputStream));
 
         InputView testInputView = new InputView(new Scanner(System.in));
+        OutputView testOutputView = new OutputView();
 
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Dealer dealer = new Dealer(cardDeckFactory.create());
@@ -70,7 +72,7 @@ public class BlackJackTest {
         BlackJack blackJack = new BlackJack(players, dealer);
 
         //when-then
-        assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testInputView::printPlayerDeck));
+        assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck));
     }
 
     @Test

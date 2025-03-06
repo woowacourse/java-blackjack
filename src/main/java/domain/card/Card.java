@@ -17,4 +17,11 @@ public class Card {
         return number.getScore();
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Number getNumber() {
+        return number;
+    }
 }
