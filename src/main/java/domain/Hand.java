@@ -74,6 +74,10 @@ public class Hand {
                 .sum();
     }
 
+    public int getCardsCount() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return cards;
     }

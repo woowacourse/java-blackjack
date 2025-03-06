@@ -20,8 +20,8 @@ public class Player {
         return hand;
     }
 
-    public Hand getHand() {
-        return hand;
+    public int getCardsCount() {
+        return hand.getCardsCount();
     }
 
     public int calculateTotalCardNumber() {
@@ -31,5 +31,9 @@ public class Player {
     public boolean isOverBurstBound() {
         int totalCardNumber = calculateTotalCardNumber();
         return hand.isOverBurstBound(totalCardNumber);
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }
