@@ -239,4 +239,21 @@ public class GameManagerTest {
         assertThat(name).isEqualTo("윌슨");
 
     }
+
+    @Test
+    void 플레이어가_중복되지_않아_예외가_발생하지_않는다() {
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
+
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("가이온",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        //then
+        assertThatCode(() -> GameManager.create(dealer, players)).doesNotThrowAnyException();
+    }
 }

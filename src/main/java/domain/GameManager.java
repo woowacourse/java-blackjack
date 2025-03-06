@@ -22,7 +22,12 @@ public class GameManager {
     }
 
     public static GameManager create(Dealer dealer, List<Player> players) {
+        validateDuplicatePlayer(players);
         return new GameManager(dealer, players);
+    }
+
+    private static void validateDuplicatePlayer(final List<Player> players) {
+        throw new UnsupportedOperationException("Unsupported validateDuplicatePlayer");
     }
 
 

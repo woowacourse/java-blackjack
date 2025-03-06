@@ -2,6 +2,7 @@ package domain.gamer;
 
 import domain.card.CardGenerator;
 import domain.card.CardGroup;
+import java.util.Objects;
 
 public class Player extends Gamer {
     private final String name;
@@ -18,5 +19,18 @@ public class Player extends Gamer {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Player player)) {
+            return false;
+        }
+        return Objects.equals(getName(), player.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getName());
     }
 }
