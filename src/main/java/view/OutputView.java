@@ -2,11 +2,11 @@ package view;
 
 import static domain.Dealer.THRESHOLD;
 
+import controller.dto.WinLossCountDto;
 import domain.Card;
 import domain.Dealer;
 import domain.Hand;
 import domain.Player;
-import domain.WinLossCountResult;
 import domain.WinLossResult;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +41,7 @@ public class OutputView {
         System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
     }
 
-    public static void printResult(List<Player> players, Dealer dealer, WinLossCountResult winLossCountResult) {
+    public static void printResult(List<Player> players, Dealer dealer, WinLossCountDto winLossCountResult) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("## 최종 승패\n");
         stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),

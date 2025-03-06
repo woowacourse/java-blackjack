@@ -1,6 +1,6 @@
 package controller;
 
-import static domain.WinLossCountResult.computeWinLoss;
+import static controller.dto.WinLossCountDto.computeWinLoss;
 import static view.InputView.getPlayerNamesInput;
 import static view.InputView.getYnInput;
 import static view.OutputView.printDealerExtraCardsCount;

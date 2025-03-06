@@ -1,14 +1,16 @@
-package domain;
+package controller.dto;
 
+import domain.Dealer;
+import domain.Player;
 import java.util.List;
 
-public record WinLossCountResult(
+public record WinLossCountDto(
         long winCount,
         long lossCount,
         long drawCount
 ) {
 
-    public static WinLossCountResult computeWinLoss(List<Player> players, Dealer dealer) {
+    public static WinLossCountDto computeWinLoss(List<Player> players, Dealer dealer) {
         long winCount = players.stream()
                 .filter(player -> player.getHandTotal() < dealer.getHandTotal())
                 .count();
@@ -20,6 +22,6 @@ public record WinLossCountResult(
         long lossCount = players.stream()
                 .filter(player -> player.getHandTotal() > dealer.getHandTotal())
                 .count();
-        return new WinLossCountResult(winCount, lossCount, drawCount);
+        return new WinLossCountDto(winCount, lossCount, drawCount);
     }
 }
