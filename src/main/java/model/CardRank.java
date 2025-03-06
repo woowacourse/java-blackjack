@@ -1,8 +1,8 @@
 package model;
 
 public enum CardRank {
-    ACE("A", 1), //TODO : 개선
-    TWO("2", 2),
+    ACE("A", 1, 11), //TODO : 개선
+    TWO("2",2),
     THREE("3", 3),
     FOUR("4", 4),
     FIVE("5", 5),
@@ -16,18 +16,33 @@ public enum CardRank {
     KING("K", 10);
 
     private String name;
-    private int value;
+    private int defaultValue;
+    private int maxValue;
 
-    CardRank(String cardName, int value) {
+    CardRank(String cardName, int defaultValue) {
         this.name = cardName;
-        this.value = value;
+        this.defaultValue = defaultValue;
+    }
+
+    CardRank(String name, int defaultValue, int maxValue) {
+        this.name = name;
+        this.defaultValue = defaultValue;
+        this.maxValue = maxValue;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getValue() {
-        return value;
+    public int getDefaultValue() {
+        return defaultValue;
     }
+
+    public int getMaxValue() {
+        if (maxValue == 0) {
+            throw new IllegalStateException("최대 값을 선택할 수 없는 카드입니다.");
+        }
+        return maxValue;
+    }
+
 }

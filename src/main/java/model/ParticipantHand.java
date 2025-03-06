@@ -16,49 +16,53 @@ public class ParticipantHand {
     }
 
     public boolean checkBurst() {
-        return calculateScoreWithAceAsOne() > BURST_SCORE_LIMIT;
+        return calculateScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
     }
 
     public boolean checkScoreBelow(int upperBound) {
-        return calculateScoreWithAceAsOne() <= upperBound;
+        return calculateScoreWithAceAsMinValue() <= upperBound;
     }
 
     public int calculateFinalScore() {
-        if (isAceElevenPossible()){
-            //TODO : 코드의 의미가 읽히지 않음. 상수화 말고도 개선 방법이 있을까?
-            return calculateScoreWithAceAsOne() + 10;
+        if (canOneAceConvertToMaxValue()){
+            int scoreWithAce = calculateScoreWithAceAsMinValue();
+            return convertOneAceToMaxValueFrom(scoreWithAce);
         }
-        return calculateScoreWithAceAsOne();
+        return calculateScoreWithAceAsMinValue();
     }
 
-    private int calculateScoreWithAceAsOne() {
+    private int calculateScoreWithAceAsMinValue() {
         return cards.stream()
-                .mapToInt(Card::getCardRankValue)
+                .mapToInt(Card::getCardRankDefaultValue)
                 .sum();
     }
 
     private boolean checkScoreExceptAceBelow(int upperBound) {
         return cards.stream()
                 .filter(card -> card.getCardRank() != CardRank.ACE)
-                .mapToInt(Card::getCardRankValue)
+                .mapToInt(Card::getCardRankDefaultValue)
                 .sum() <= upperBound;
     }
 
-    private int calculateAceCount() {
-        return (int) cards.stream()
-                .filter(card -> card.getCardRank() == CardRank.ACE)
-                .count();
-    }
-
-    private boolean isAceElevenPossible() {
-        int countOfAce = calculateAceCount();
-        if (countOfAce == 0){
+    private boolean canOneAceConvertToMaxValue() {
+        int scoreOfAceAsMinValue = calculateAceCount();
+        if (scoreOfAceAsMinValue == 0){
             return false;
         }
-        int maxScoreOfAce = countOfAce + 10;
+        int maxScoreOfAce = convertOneAceToMaxValueFrom(scoreOfAceAsMinValue);
         int scoreExceptAceUpperBound = BURST_SCORE_LIMIT - maxScoreOfAce;
-        //TODO : 개선생각해보기
         return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
+    }
+
+    private int calculateAceCount() {
+        return cards.stream()
+                .filter(card -> card.getCardRank() == CardRank.ACE)
+                .mapToInt(Card::getCardRankDefaultValue)
+                .sum();
+    }
+
+    private int convertOneAceToMaxValueFrom(int score) {
+        return score - CardRank.ACE.getDefaultValue() + CardRank.ACE.getMaxValue();
     }
 
     public List<Card> getCards() {

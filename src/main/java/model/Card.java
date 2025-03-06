@@ -9,8 +9,8 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
-    public int getCardRankValue() {
-        return cardRank.getValue();
+    public int getCardRankDefaultValue() {
+        return cardRank.getDefaultValue();
     }
 
     public CardRank getCardRank() {
