@@ -7,9 +7,8 @@ import java.util.List;
 public class Cards {
 
     public static final int MAX_SUM_OF_CARDS = 21;
-    private static final int LARGE_ACE_NUMBER = 11;
-    private static final int SMALL_ACE_NUMBER = 1;
     private static final int CARD_COUNT_OF_BLACKJACK = 2;
+    private static final int ACE_NUMBER_DIFFERENCE = 10;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -22,37 +21,19 @@ public class Cards {
     }
 
     public int sum() {
-        int sumWithoutAce = cards.stream()
-            .filter(card -> !card.isAce())
+        int sum = cards.stream()
             .mapToInt(card -> card.number().getNumber())
             .sum();
-        int sumOfAce = getSumOfAce(sumWithoutAce);
-        return sumWithoutAce + sumOfAce;
+        if (hasAceCard()
+            && sum + ACE_NUMBER_DIFFERENCE <= MAX_SUM_OF_CARDS) {
+            return sum + ACE_NUMBER_DIFFERENCE;
+        }
+        return sum;
     }
 
-    private int getSumOfAce(int sumWithoutAce) {
-        int sumOfAce = 0;
-        int aceCardCount = getAceCardCount();
-        if (aceCardCount >= CARD_COUNT_OF_BLACKJACK) {
-            sumOfAce += aceCardCount - SMALL_ACE_NUMBER;
-        }
-        if (aceCardCount >= SMALL_ACE_NUMBER) {
-            sumOfAce += aceNumber(sumWithoutAce);
-        }
-        return sumOfAce;
-    }
-
-    private int getAceCardCount() {
-        return (int)cards.stream()
-            .filter(Card::isAce)
-            .count();
-    }
-
-    private int aceNumber(int sum) {
-        if (sum + LARGE_ACE_NUMBER > MAX_SUM_OF_CARDS) {
-            return SMALL_ACE_NUMBER;
-        }
-        return LARGE_ACE_NUMBER;
+    private boolean hasAceCard() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
