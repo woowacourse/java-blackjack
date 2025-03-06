@@ -9,16 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
-    private static final List<Card> deckCards = List.of(
-            new Card(CardNumber.A, CardShape.CLOVER)
-    );
-
-    static class FakeCardsGenerator implements CardsGenerator {
-        @Override
-        public List<Card> generate() {
-            return deckCards;
-        }
-    }
 
     @DisplayName("카드를 뽑을 수 있다.")
     @Test
@@ -66,13 +56,14 @@ public class DeckTest {
     @Test
     void 플레이어에게_카드_할당() {
         //given
-        Deck deck = new Deck(new FakeCardsGenerator());
+        Card card = new Card(CardNumber.A, CardShape.CLOVER);
+        Deck deck = new Deck(() -> new ArrayList<>(List.of(card)));
         Player player = Player.init("플레이어");
 
         //when
         deck.giveCardTo(player);
 
         //then
-        assertThat(player.getCards()).contains(deckCards.getLast());
+        assertThat(player.getCards()).contains(card);
     }
 }
