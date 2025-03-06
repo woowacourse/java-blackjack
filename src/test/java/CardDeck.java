@@ -3,6 +3,8 @@ import java.util.List;
 
 public class CardDeck {
 
+    private static final int DRAW_COUNT_WHEN_START = 2;
+
     private final List<Card> deck;
 
     public static CardDeck createCards() {
@@ -25,8 +27,9 @@ public class CardDeck {
 
     public List<Card> drawCardWhenStart() {
         List<Card> cards = new ArrayList<>();
-        cards.add(drawCard());
-        cards.add(drawCard());
+        for (int i = 0; i < DRAW_COUNT_WHEN_START; i++) {
+            cards.add(drawCard());
+        }
         return cards;
     }
 
