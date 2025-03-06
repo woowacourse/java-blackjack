@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 
+import constant.Emblem;
+
 public class Deck {
     private final Queue<Card> deck;
 
