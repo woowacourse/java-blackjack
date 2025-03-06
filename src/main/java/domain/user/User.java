@@ -42,4 +42,8 @@ public abstract class User {
     public void burst() {
         this.userInformation.burst();
     }
+
+    public boolean isBurst() {
+        return this.userInformation.isBurst();
+    }
 }

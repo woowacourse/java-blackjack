@@ -2,18 +2,22 @@ package domain.user;
 
 public class UserInformation {
     private final String name;
-    private UserStatus status;
+    private boolean isBurst;
 
     public UserInformation(String name) {
         this.name = name;
-        this.status = UserStatus.NORMAL;
+        this.isBurst = false;
     }
 
     public String getName() {
         return name;
     }
 
+    public boolean isBurst() {
+        return isBurst;
+    }
+
     public void burst() {
-        this.status = UserStatus.BURST;
+        this.isBurst = true;
     }
 }
