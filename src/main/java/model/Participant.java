@@ -1,16 +1,20 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Participant {
 
     protected final List<Card> hands;
+    protected final Map<MatchResultType, Integer> matchResult;
     protected int sum;
     protected int aceCount;
 
     protected Participant() {
         this.hands = new ArrayList<>();
+        this.matchResult = new HashMap<>();
         this.sum = 0;
         this.aceCount = 0;
     }

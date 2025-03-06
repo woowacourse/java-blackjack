@@ -27,4 +27,10 @@ public class GameManager {
         List<Card> pickCards = deck.pickCard(amount);
         participant.addCards(pickCards);
     }
+
+    public void calculateVictory() {
+        for (Player player : players.getPlayers()) {
+
+        }
+    }
 }

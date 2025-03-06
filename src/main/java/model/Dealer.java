@@ -43,4 +43,5 @@ public class Dealer extends Participant {
     public boolean isNotUp() {
         return sum < 17;
     }
+
 }
