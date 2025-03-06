@@ -6,6 +6,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.RandomCardsShuffler;
 import blackjack.domain.ScoreCalculator;
+import blackjack.domain.Victory;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class BlackjackController {
         addtionalCard(dealer, players);
         dealerAdditionalCard(dealer);
         printBlackjackResult(dealer, players);
+        printVictory(dealer);
     }
 
     private Players createPlayers() {
@@ -67,5 +69,10 @@ public class BlackjackController {
     private void printBlackjackResult(Dealer dealer, Players players) {
         OutputView.printDealerResult(dealer);
         OutputView.printPlayerResult(players.getPlayers());
+    }
+
+    private void printVictory(Dealer dealer) {
+        Victory victory = dealer.createVictory();
+        OutputView.printVictory(victory);
     }
 }

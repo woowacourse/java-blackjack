@@ -42,10 +42,6 @@ public class Dealer {
         players.sendAll((player) -> player.send(deck.draw(), deck.draw()));
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public int calculateMaxScore() {
         return scoreCalculator.calculateMaxScore(cards);
     }
@@ -86,5 +82,13 @@ public class Dealer {
                 ranks.contains(Rank.QUEEN) ||
                 ranks.contains(Rank.JACK) ||
                 ranks.contains(Rank.TEN);
+    }
+
+    public Victory createVictory() {
+        return Victory.create(this, players);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

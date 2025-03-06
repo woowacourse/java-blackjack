@@ -40,16 +40,16 @@ public class VictoryTest {
                 dealerCards,
                 new ScoreCalculator());
 
-        Map<Player, Map<WinningResult, Integer>> playerVictorytResults =
-                Map.of(pobi, Map.of(WinningResult.LOSE, 1),
-                        surf, Map.of(WinningResult.WIN, 1));
+        Map<Player, WinningResult> playerVictoryResults =
+                Map.of(pobi, WinningResult.LOSE,
+                        surf, WinningResult.WIN);
         Map<WinningResult, Integer> dealerVictoryResult = Map.of(WinningResult.LOSE, 1, WinningResult.WIN, 1);
 
         //when
         Victory victory = Victory.create(dealer, players);
 
         //then
-        Assertions.assertThat(victory.getPlayerVictorytResults()).isEqualTo(playerVictorytResults);
+        Assertions.assertThat(victory.getPlayerVictoryResults()).isEqualTo(playerVictoryResults);
         Assertions.assertThat(victory.getDealerVictoryResults()).isEqualTo(dealerVictoryResult);
     }
 }

@@ -5,7 +5,11 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
+import blackjack.domain.Victory;
+import blackjack.domain.WinningResult;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -119,5 +123,40 @@ public class OutputView {
 
     public static void printCannotAdditionalCard() {
         System.out.println("더 이상 카드를 받을 수 없습니다.");
+    }
+
+    public static void printVictory(Victory victory) {
+        Map<WinningResult, Integer> dealerVictoryResults = victory.getDealerVictoryResults();
+        Map<Player, WinningResult> playerVictoryResults = victory.getPlayerVictoryResults();
+
+        printIfPresentWinningResult(dealerVictoryResults);
+        dealerVictoryResults.getOrDefault(WinningResult.LOSE, 0);
+        for (Entry<Player, WinningResult> entry : playerVictoryResults.entrySet()) {
+            System.out.printf("%s: %s\n", entry.getKey().getName(), toKoreanWinningResult(entry.getValue()));
+        }
+    }
+
+    private static void printIfPresentWinningResult(Map<WinningResult, Integer> dealerVictoryResults) {
+        System.out.print("딜러:");
+        if (dealerVictoryResults.containsKey(WinningResult.WIN)) {
+            System.out.printf(" %d승", dealerVictoryResults.get(WinningResult.WIN));
+        }
+        if (dealerVictoryResults.containsKey(WinningResult.DRAW)) {
+            System.out.printf(" %d무", dealerVictoryResults.get(WinningResult.DRAW));
+        }
+        if (dealerVictoryResults.containsKey(WinningResult.LOSE)) {
+            System.out.printf(" %d패", dealerVictoryResults.get(WinningResult.LOSE));
+        }
+        System.out.println();
+    }
+
+    private static String toKoreanWinningResult(WinningResult winningResult) {
+        if (winningResult.equals(WinningResult.WIN)) {
+            return "승";
+        }
+        if (winningResult.equals(WinningResult.LOSE)) {
+            return "패";
+        }
+        return "무";
     }
 }

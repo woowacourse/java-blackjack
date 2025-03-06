@@ -11,6 +11,11 @@ public class WinnerDecider {
     public WinningResult decidePlayerWinning(Player player) {
         int dealerScore = dealer.calculateMaxScore();
         int playerScore = player.calculateMaxScore();
+
+        if (playerScore > 21) {
+            return WinningResult.LOSE;
+        }
+
         if (dealer.isBlackjack() && !player.isBlackjack()) {
             return WinningResult.LOSE;
         }
@@ -29,23 +34,14 @@ public class WinnerDecider {
     }
 
     public WinningResult decideDealerWinning(Player player) {
-        int dealerScore = dealer.calculateMaxScore();
-        int playerScore = player.calculateMaxScore();
-        if (dealer.isBlackjack() && !player.isBlackjack()) {
-            return WinningResult.WIN;
-        }
-
-        if (dealerScore > 21) {
+        WinningResult winningResult = decidePlayerWinning(player);
+        if (winningResult == WinningResult.WIN) {
             return WinningResult.LOSE;
         }
-
-        if (dealerScore == playerScore) {
-            return WinningResult.DRAW;
-        }
-        if (dealerScore > playerScore) {
+        if (winningResult == WinningResult.LOSE) {
             return WinningResult.WIN;
         }
-        return WinningResult.LOSE;
+        return WinningResult.DRAW;
     }
 
 
