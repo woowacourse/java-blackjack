@@ -33,6 +33,9 @@ public class Participant {
     }
 
     public GameResult calculateGameResult(Participant otherParticipant) {
+        if (isBurst()) {
+            return GameResult.LOSE;
+        }
         if (getResult() > otherParticipant.getResult()) {
             return GameResult.WIN;
         }

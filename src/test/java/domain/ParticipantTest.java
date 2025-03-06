@@ -57,7 +57,7 @@ class ParticipantTest {
         //given
         List<Card> cardList = List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.A, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.QUEEN, CardShape.DIAMOND)
         );
         Cards cards = Cards.of(cardList);
