@@ -7,7 +7,6 @@ import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,7 @@ public class DealerTest {
         CardDeck cardDeck = cardDeckFactory.create();
         Dealer dealer = new Dealer(cardDeck);
         // when-then
-        assertDoesNotThrow(dealer::hitCards);
+        assertDoesNotThrow(dealer::addCards);
 
     }
 }

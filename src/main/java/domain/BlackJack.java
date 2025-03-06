@@ -17,7 +17,7 @@ public class BlackJack {
 
     public void hitCardsToParticipant() {
         players.hitCards(dealer);
-        dealer.hitCards();
+        dealer.addCards();
     }
 
     public void draw(BooleanSupplier answer, Consumer<Player> playerDeck) {

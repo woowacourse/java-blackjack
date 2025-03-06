@@ -17,7 +17,7 @@ public class Dealer {
         return standard.hitCard();
     }
 
-    public void hitCards() {
+    public void addCards() {
         hand.addCard(hitCard());
     }
 }
