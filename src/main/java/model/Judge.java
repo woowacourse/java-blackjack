@@ -21,7 +21,7 @@ public class Judge {
         return dealerResult;
     }
 
-    private static GameResult checkResultIfNotBurst(Dealer dealer, Player player) {
+    private GameResult checkResultIfNotBurst(Dealer dealer, Player player) {
         int dealerScore = dealer.getParticipantHand().calculateFinalScore();
         int playerScore = player.getParticipantHand().calculateFinalScore();
 
@@ -34,7 +34,7 @@ public class Judge {
         return GameResult.DRAW;
     }
 
-    private static GameResult checkPlayerWin(Dealer dealer, Player player) {
+    private GameResult checkPlayerWin(Dealer dealer, Player player) {
         /**
          * player가 burst되면 무조건 player가 패배한다.
          */
