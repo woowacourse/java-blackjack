@@ -1,5 +1,8 @@
 package controller;
 
+import domain.Dealer;
+import domain.Players;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
@@ -14,6 +17,11 @@ public class BlackJackController {
     }
 
     public void run() {
+        List<String> playerNames = inputView.readPlayerNames();
+        Players players = new Players(playerNames);
 
+        Dealer dealer = new Dealer();
+
+        
     }
 }
