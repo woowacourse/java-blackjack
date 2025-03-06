@@ -13,7 +13,7 @@ public class DealerTest {
     void should_add_Card_card() {
         // given
         Card card = new Card(Shape.HEART, Rank.A);
-        Participant dealer = new Dealer("a");
+        Participant dealer = new Dealer();
 
         // when
         dealer.addCard(card);
@@ -27,7 +27,7 @@ public class DealerTest {
     @DisplayName("모두에게 보여줄 딜러의 카드를 가져온다")
     void should_return_public_able_cards() {
         //given
-        Participant dealer = new Dealer("james");
+        Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.A));
         dealer.addCard(new Card(Shape.HEART, Rank.ONE));
 
@@ -44,7 +44,7 @@ public class DealerTest {
         //given
         List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
             new Card(Shape.CLUB, Rank.EIGHT));
-        Participant dealer = new Dealer("a");
+        Participant dealer = new Dealer();
         for (Card card : cards) {
             dealer.addCard(card);
         }
@@ -62,7 +62,7 @@ public class DealerTest {
         //given
         List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
             new Card(Shape.CLUB, Rank.NINE));
-        Participant dealer = new Dealer("a");
+        Participant dealer = new Dealer();
         for (Card card : cards) {
             dealer.addCard(card);
         }

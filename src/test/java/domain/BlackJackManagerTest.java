@@ -16,7 +16,7 @@ public class BlackJackManagerTest {
     @DisplayName("게임이 시작되면 딜러를 포함한 참여자 모두에게 2장의 카드를 나눠준다")
     void should_given_all_players_that_of_2_card() {
         // given
-        List<Participant> players = List.of(new Dealer("dealer"), new Player("a"), new Player("b"));
+        List<Participant> players = List.of(new Dealer(), new Player("a"), new Player("b"));
         CardBundle cardBundle = new CardBundle();
         CardDeck cardDeck = new CardDeck(cardBundle.getAllCards());
         BlackJackManager blackJackManager = new BlackJackManager(players, cardDeck);
@@ -34,7 +34,7 @@ public class BlackJackManagerTest {
     @DisplayName("딜러와 플레이어간의 승패를 계산한다")
     void should_return_result_of_dealer_between_player() {
         // given
-        Participant dealer = new Dealer("dealer");
+        Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.FIVE));
         Participant player1 = new Player("a");
         player1.addCard(new Card(Shape.HEART, Rank.A));
@@ -51,25 +51,28 @@ public class BlackJackManagerTest {
 
         // then
         assertAll(
-                () -> {
-                    Map<GameResult, Integer> dealerExpected = new HashMap<>();
-                    dealerExpected.put(GameResult.WIN, 1);
-                    dealerExpected.put(GameResult.DRAW, 1);
-                    dealerExpected.put(GameResult.LOSE, 1);
-                    assertThat(results.getDealerResult().getDealerResult()).isEqualTo(dealerExpected);
-                },
-                () -> {
-                    List<PlayerResult> playerResults = results.getPlayerResults();
-                    assertThat(playerResults.get(0)).isEqualTo(new PlayerResult(player1, GameResult.WIN));
-                },
-                () -> {
-                    List<PlayerResult> playerResults = results.getPlayerResults();
-                    assertThat(playerResults.get(1)).isEqualTo(new PlayerResult(player2, GameResult.LOSE));
-                },
-                () -> {
-                    List<PlayerResult> playerResults = results.getPlayerResults();
-                    assertThat(playerResults.get(2)).isEqualTo(new PlayerResult(player3, GameResult.DRAW));
-                }
+            () -> {
+                Map<GameResult, Integer> dealerExpected = new HashMap<>();
+                dealerExpected.put(GameResult.WIN, 1);
+                dealerExpected.put(GameResult.DRAW, 1);
+                dealerExpected.put(GameResult.LOSE, 1);
+                assertThat(results.getDealerResult().getDealerResult()).isEqualTo(dealerExpected);
+            },
+            () -> {
+                List<PlayerResult> playerResults = results.getPlayerResults();
+                assertThat(playerResults.get(0)).isEqualTo(
+                    new PlayerResult(player1, GameResult.WIN));
+            },
+            () -> {
+                List<PlayerResult> playerResults = results.getPlayerResults();
+                assertThat(playerResults.get(1)).isEqualTo(
+                    new PlayerResult(player2, GameResult.LOSE));
+            },
+            () -> {
+                List<PlayerResult> playerResults = results.getPlayerResults();
+                assertThat(playerResults.get(2)).isEqualTo(
+                    new PlayerResult(player3, GameResult.DRAW));
+            }
         );
     }
 }
