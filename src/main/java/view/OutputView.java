@@ -13,8 +13,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public void displayCards(String name, List<String> printCards) {
-        // todo: 최종 결과를 추가해야 한다
+    private void displayCards(String name, List<String> printCards) {
         System.out.print(name + "카드: " + String.join(", ", printCards));
     }
+
+    // todo: 최종 결과를 추가해야 한다
 }
