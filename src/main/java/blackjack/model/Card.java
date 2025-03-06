@@ -1,16 +1,27 @@
 package blackjack.model;
 
-public abstract class Card {
-
+public class Card {
     private final CardShape shape;
+    private final CardType cardType;
 
-    public Card(CardShape shape) {
+    protected Card(CardShape shape, CardType cardType) {
         this.shape = shape;
+        this.cardType = cardType;
     }
 
     public CardShape getShape() {
         return shape;
     }
 
-    public abstract int getPoint();
+    public int getPoint() {
+        return cardType.getPoint();
+    }
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    public boolean equalsCardType(CardType cardType) {
+        return this.cardType.equals(cardType);
+    }
 }

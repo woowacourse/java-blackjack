@@ -11,8 +11,8 @@ class ParticipantResultTest {
         // given
         Dealer dealer = new Dealer();
         Participant participant = new Participant("프리");
-        dealer.putCard(new NormalCard(8, CardShape.SPADE));
-        participant.putCard(new NormalCard(2, CardShape.DIAMOND));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_2));
 
         // when
         ParticipantResult result = ParticipantResult.of(dealer, participant);
@@ -26,10 +26,10 @@ class ParticipantResultTest {
         // given
         Dealer dealer = new Dealer();
         Participant participant = new Participant("프리");
-        dealer.putCard(new NormalCard(8, CardShape.SPADE));
-        participant.putCard(new SpecialCard('J', CardShape.SPADE));
-        participant.putCard(new SpecialCard('Q', CardShape.SPADE));
-        participant.putCard(new SpecialCard('K', CardShape.SPADE));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.JACK));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
         ParticipantResult result = ParticipantResult.of(dealer, participant);
@@ -44,10 +44,10 @@ class ParticipantResultTest {
         // given
         Dealer dealer = new Dealer();
         Participant participant = new Participant("프리");
-        participant.putCard(new NormalCard(8, CardShape.SPADE));
-        dealer.putCard(new SpecialCard('J', CardShape.SPADE));
-        dealer.putCard(new SpecialCard('Q', CardShape.SPADE));
-        dealer.putCard(new SpecialCard('K', CardShape.SPADE));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.JACK));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
         ParticipantResult result = ParticipantResult.of(dealer, participant);
@@ -62,12 +62,13 @@ class ParticipantResultTest {
         // given
         Dealer dealer = new Dealer();
         Participant participant = new Participant("프리");
-        participant.putCard(new SpecialCard('J', CardShape.SPADE));
-        participant.putCard(new SpecialCard('Q', CardShape.SPADE));
-        participant.putCard(new SpecialCard('K', CardShape.SPADE));
-        dealer.putCard(new SpecialCard('J', CardShape.SPADE));
-        dealer.putCard(new SpecialCard('Q', CardShape.SPADE));
-        dealer.putCard(new SpecialCard('K', CardShape.SPADE));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.JACK));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.JACK));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
         ParticipantResult result = ParticipantResult.of(dealer, participant);

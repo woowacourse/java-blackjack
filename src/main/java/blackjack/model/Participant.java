@@ -1,7 +1,5 @@
 package blackjack.model;
 
-import java.util.Objects;
-
 public class Participant extends Player {
     private final String name;
 
@@ -17,19 +15,5 @@ public class Participant extends Player {
         if (name.length() < 2 || name.length() > 5) {
             throw new IllegalArgumentException("참여자 이름은 2~5글자 입니다.");
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Participant that = (Participant) o;
-        return Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
     }
 }
