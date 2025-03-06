@@ -17,6 +17,6 @@ public enum AnswerCommand {
         return Arrays.stream(AnswerCommand.values())
                 .filter(answerCommand -> Objects.equals(answerCommand.command, command))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(IllegalArgumentException::new);
     }
 }
