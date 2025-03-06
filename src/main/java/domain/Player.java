@@ -1,9 +1,7 @@
 package domain;
 
-import java.util.stream.Collectors;
-
 public class Player {
-    private String name;
+    private final String name;
     protected Hand hand;
 
     public Player(String name) {
@@ -19,12 +17,6 @@ public class Player {
         return hand.getTotal();
     }
 
-    public String openAllCards() {
-        return hand.getCards().stream()
-                .map(card -> card.getDenomination().getValue() + card.getSuit().getShape())
-                .collect(Collectors.joining(", "));
-    }
-
     public boolean isHandBust() {
         return hand.isBust();
     }
@@ -37,7 +29,16 @@ public class Player {
         hand.setOriginalAceValueToOne();
     }
 
+    public int getWinLoss(int dealerTotal) {
+        return Integer.compare(getHandTotal(), dealerTotal);
+    }
+
     public String getName() {
         return name;
     }
+
+    public Hand getHand() {
+        return hand;
+    }
+
 }

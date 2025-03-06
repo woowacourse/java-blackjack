@@ -18,7 +18,7 @@ public class Deck {
     }
 
     private void createDeckCards(Suit suit, Denomination denomination) {
-        if (denomination.equals(Denomination.ACE)){
+        if (denomination.equals(Denomination.ACE)) {
             deck.add(new Ace(suit));
             return;
         }

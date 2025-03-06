@@ -49,4 +49,8 @@ public class Hand {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
 }

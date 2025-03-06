@@ -1,25 +1,20 @@
 package domain;
 
-public class Dealer extends Player{
+public class Dealer extends Player {
 
     public static final String DEALER_NAME = "딜러";
+    public static final int THRESHOLD = 16;
 
     public Dealer() {
         super(DEALER_NAME);
     }
 
-    public String openOneCard() {
-        StringBuilder sb = new StringBuilder();
-        Card firstCard =  hand.getCards().getFirst();
-        sb.append(firstCard.getDenomination().getValue())
-                .append(firstCard.getSuit().getShape())
-                .append("\n");
-        return sb.toString();
+    public Card openOneCard() {
+        return hand.getFirstCard();
     }
 
-
     public boolean isBelowThreshold() {
-        return getHandTotal() <= 16;
+        return getHandTotal() <= THRESHOLD;
     }
 
     public int getCardCount() {

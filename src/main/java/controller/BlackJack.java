@@ -1,13 +1,20 @@
 package controller;
 
+import static domain.WinLossCountResult.computeWinLoss;
+import static view.InputView.getPlayerNamesInput;
+import static view.InputView.getYnInput;
+import static view.OutputView.printDealerExtraCardsCount;
+import static view.OutputView.printDistributeResult;
+import static view.OutputView.printEveryOneCardsNamesWithTotal;
+import static view.OutputView.printHandCardsNames;
+import static view.OutputView.printResult;
+
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class BlackJack {
 
@@ -18,53 +25,29 @@ public class BlackJack {
     private final Deck deck = new Deck();
 
     public void play() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        String playersInput = sc.nextLine();
-        enterPlayer(playersInput);
-
+        String playerNamesInput = getPlayerNamesInput();
+        enterPlayer(playerNamesInput);
         distributeCards(deck);
-
-        printDistributeResult();
-
+        printDistributeResult(players, dealer);
         playersTurn();
 
-        processDealer(dealer);
-
+        int dealerExtraCardsCount = dealersTurn(dealer);
+        printDealerExtraCardsCount(dealer, dealerExtraCardsCount);
+        printEveryOneCardsNamesWithTotal(players, dealer);
+        printResult(players, dealer, computeWinLoss(players, dealer));
     }
 
-    private void playersTurn() {
-        for (Player player : players) {
-            askPlayersChoice(player, deck);
-        }
-    }
 
-    public void askPlayersChoice(Player player, Deck deck) {
-        Scanner sc = new Scanner(System.in);
-        StringBuilder stringBuilder = new StringBuilder();
-
+    public int dealersTurn(Dealer dealer) {
+        int count = 0;
         while (true) {
-            System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-            String ynInput = sc.nextLine();
-            if (ynInput.equalsIgnoreCase("y")) {
-                drawOneMoreCard(player, stringBuilder);
-            }
-            if (ynInput.equalsIgnoreCase("n")) {
-                return;
-            }
-        }
-    }
-
-    public void processDealer(Dealer dealer) {
-
-        while (true) {
-            StringBuilder stringBuilder = new StringBuilder();
             if (dealer.isBelowThreshold()) {
-                drawOneMoreCard(dealer, stringBuilder);
+                drawOneMoreCard(dealer, new StringBuilder());
             }
             if (!dealer.isBelowThreshold()) {
-                return;
+                return count;
             }
+            count++;
         }
     }
 
@@ -76,26 +59,31 @@ public class BlackJack {
         return !player.isHandBust();
     }
 
-    private void drawOneMoreCard(Player player, StringBuilder stringBuilder) {
-        player.addCard(deck.draw());
-        printHand(player, stringBuilder);
-        System.out.println(stringBuilder);
-        resolveBust(player);
+    private void playersTurn() {
+        for (Player player : players) {
+            askPlayersChoice(player);
+        }
     }
 
-    private void printDistributeResult() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("딜러와 ")
-                .append(players.stream().map(Player::getName).collect(Collectors.joining(",")))
-                .append("에게 2장을 나누었습니다.\n");
-
-        stringBuilder.append(String.format("%s카드: ", dealer.getName()));
-        stringBuilder.append(dealer.openOneCard());
-        for (Player player : players) {
-            printHand(player, stringBuilder);
+    private void askPlayersChoice(Player player) {
+        while (true) {
+            String ynInput = getYnInput(player);
+            if (ynInput.equalsIgnoreCase("y")) {
+                drawOneMoreCard(player, new StringBuilder());
+            }
+            if (ynInput.equalsIgnoreCase("n")) {
+                return;
+            }
         }
+    }
 
-        System.out.println(stringBuilder);
+
+    private void drawOneMoreCard(Player player, StringBuilder stringBuilder) {
+        player.addCard(deck.draw());
+        if (player.getClass().equals(Player.class)) {
+            printHandCardsNames(player, stringBuilder);
+        }
+        resolveBust(player);
     }
 
     private void distributeCards(Deck deck) {
@@ -114,29 +102,14 @@ public class BlackJack {
         }
     }
 
-    private static void validateMaxPlayer(List<String> playerNames) {
+    private void validateMaxPlayer(List<String> playerNames) {
         if (playerNames.size() > 5) {
             throw new IllegalArgumentException("플레이어는 5명까지만 입력해주세요.");
         }
     }
 
-    private static void printHand(Player player, StringBuilder stringBuilder) {
-        stringBuilder.append(player.getName())
-                .append("카드: ")
-                .append(player.openAllCards())
-                .append("\n");
-    }
-
     private void drawTwoCardFromDeck(Player player, Deck deck) {
         player.addCard(deck.draw());
         player.addCard(deck.draw());
-    }
-
-    public boolean resolveBust(Player player) {
-        if (player.isHandBust() && player.containsOriginalAce()) {
-            player.setOriginalAceValueToOne();
-            resolveBust(player);
-        }
-        return !player.isHandBust();
     }
 }

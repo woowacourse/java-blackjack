@@ -102,7 +102,7 @@ class BlackJackTest {
         dealer.addCard(new Card(Denomination.TWO, Suit.CLUB));
         dealer.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
 
-        blackjack.processDealer(dealer);
+        blackjack.dealersTurn(dealer);
 
         assertThat(dealer.getCardCount()).isGreaterThan(2);
     }

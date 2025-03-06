@@ -32,11 +32,11 @@ public enum Denomination {
     }
 
     private static Integer matchIntValue(Denomination input, Denomination denomination) {
-        if(denomination.equals(input)) {
-            if(Character.isDigit(input.value.charAt(0))){
+        if (denomination.equals(input)) {
+            if (Character.isDigit(input.value.charAt(0))) {
                 return Integer.parseInt(input.value);
             }
-            if(input.equals(ACE)) {
+            if (input.equals(ACE)) {
                 return 11;
             }
             return 10;
