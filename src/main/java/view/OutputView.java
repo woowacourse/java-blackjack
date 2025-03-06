@@ -44,4 +44,19 @@ public class OutputView {
         String comment = nickname + "와 " + String.join(", ", nicknames) + "에게 2장을 나누었습니다.";
         System.out.println(comment);
     }
+
+    public static void printResult(Dealer dealer, Players players) {
+        String dealerNickname = dealer.getNickname();
+        List<String> dealerCards = dealer.getHands().stream().map(Card::getCard).toList();
+        String dealerHands = String.join(", ", dealerCards);
+        System.out.println(String.format(CARD_FORMAT + "- 결과: %d", dealerNickname, dealerHands, dealer.getSum()));
+
+
+        for (Player player : players.getPlayers()) {
+            String playerNickname = player.getNickname();
+            List<String> playerCards = player.getHands().stream().map(Card::getCard).toList();
+            String playerHands = String.join(", ", playerCards);
+            System.out.println(String.format(CARD_FORMAT + " - 결과: %d", playerNickname, playerHands, player.getSum()));
+        }
+    }
 }

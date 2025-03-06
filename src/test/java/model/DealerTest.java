@@ -21,6 +21,7 @@ class DealerTest {
         // then
         Assertions.assertThat(nickname).isEqualTo(expected);
     }
+
     @Test
     @DisplayName("카드 추가 기능이 잘 작동하는 지")
     void addCardsSuccess() {
@@ -58,5 +59,42 @@ class DealerTest {
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러 카드 합산이 조건에 부합하는 지 판별: true")
+    void isNotUpTrue() {
+
+        // given
+        List<Card> divideCards = List.of(
+                new Card(SuitType.HEARTS, RankType.JACK),
+                new Card(SuitType.CLUBS, RankType.FOUR)
+        );
+
+        Dealer dealer = Dealer.of();
+        dealer.addCards(divideCards);
+
+        // when
+        // then
+        Assertions.assertThat(dealer.isNotUp()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러 카드 합산이 조건에 부합하는 지 판별: false")
+    void isNotUpFalse() {
+
+        // given
+        List<Card> divideCards = List.of(
+                new Card(SuitType.HEARTS, RankType.JACK),
+                new Card(SuitType.CLUBS, RankType.KING)
+        );
+
+        Dealer dealer = Dealer.of();
+        dealer.addCards(divideCards);
+
+        // when
+        // then
+        System.out.println(dealer.getSum());
+        Assertions.assertThat(dealer.isNotUp()).isFalse();
     }
 }

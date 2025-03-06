@@ -3,15 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
-    private final String nickname;
-    private final List<Card> hands;
-    private int sum;
-    private int aceCount;
+    protected final List<Card> hands;
+    protected int sum;
+    protected int aceCount;
 
-    protected Participant(String nickname) {
-        this.nickname = nickname;
+    protected Participant() {
         this.hands = new ArrayList<>();
         this.sum = 0;
         this.aceCount = 0;
@@ -41,9 +39,7 @@ public class Participant {
         return score.getFirst();
     }
 
-    public String getNickname() {
-        return nickname;
-    }
+    abstract String getNickname();
 
     public List<Card> getHands() {
         return hands;
