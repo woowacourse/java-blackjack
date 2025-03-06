@@ -3,7 +3,7 @@ package controller;
 import domain.CardNumber;
 
 public class CardNumberToTextConverter {
-    public String convert(final CardNumber cardNumber) {
+    public static String convert(final CardNumber cardNumber) {
         return switch (cardNumber) {
             case ACE -> "A";
             case TWO -> "2";
