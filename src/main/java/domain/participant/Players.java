@@ -12,10 +12,17 @@ public class Players {
 
     public static Players from(List<String> names){
         validatePlayerNumbers(names);
+        validateIsDuplicate(names);
         List<Player> players = names.stream()
                 .map(Player::new)
                 .toList();
         return new Players(players);
+    }
+
+    private static void validateIsDuplicate(List<String> names) {
+        if (names.stream().distinct().count() != names.size()) {
+            throw new IllegalArgumentException("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
+        }
     }
 
     private Players(List<Player> players) {

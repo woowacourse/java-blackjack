@@ -71,6 +71,13 @@ public class PlayersTest {
     }
 
     @Test
+    @DisplayName("중복된 이름 테스트")
+    void validateIsDuplicateTest() {
+        assertThatThrownBy(() -> Players.from(List.of("pobi", "pobi")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
+    }
+    @Test
     @DisplayName("카드 드로우 테스트")
     void drawTest(){
         //given
