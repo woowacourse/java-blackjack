@@ -26,6 +26,7 @@ public class Application {
             OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
         }
         for (Name playerName : playerNames) {
+            boolean flag = false;
             while (isHit(playerName)) {
                 round.distributeCards(playerName, 1);
                 OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
@@ -34,6 +35,10 @@ public class Application {
                     OutputView.printBusted(playerName);
                     break;
                 }
+                flag = true;
+            }
+            if (!flag) {
+                OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
             }
         }
     }
