@@ -12,10 +12,10 @@ public class GameManager {
         this.provider = provider;
         List<Player> playerList = playerNames.stream()
             .map(Name::new)
-            .map(name -> new Player(name, new Cards(provider.provideCards(2))))
+            .map(name -> new Player(name, new Cards(this.provider.provideCards(2))))
             .toList();
         this.players = new Players(playerList);
-        this.dealer = new Dealer(new Cards(provider.provideCards(2)));
+        this.dealer = new Dealer(new Cards(this.provider.provideCards(2)));
     }
 
     public Dealer findDealer() {

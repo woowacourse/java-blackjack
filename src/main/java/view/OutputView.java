@@ -45,7 +45,7 @@ public class OutputView {
     private static String convertCardToMessage(Card card) {
         Symbol symbol = card.getSymbol();
         Number number = card.getNumber();
-        return number.getNumericValue() + symbol.getName();
+        return number.getFaceValue() + symbol.getName();
     }
 
     public static void printPlayerCard(Player player) {
