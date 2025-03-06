@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import blackjack.fixture.CardsFixture;
+
 class CardsTest {
 
     @ParameterizedTest
@@ -16,9 +18,7 @@ class CardsTest {
     })
     @DisplayName("카드 숫자 합을 계산한다")
     void sumTest(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
-        Cards cards = new Cards();
-        cards.add(new Card(CardType.CLOVER, cardNumber1));
-        cards.add(new Card(CardType.CLOVER, cardNumber2));
+        Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2);
 
         assertThat(cards.sum()).isEqualTo(expected);
     }
@@ -31,9 +31,7 @@ class CardsTest {
     })
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Cards cards = new Cards();
-        cards.add(new Card(CardType.CLOVER, cardNumber1));
-        cards.add(new Card(CardType.CLOVER, cardNumber2));
+        Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2);
 
         assertThat(cards.isBlackjack()).isEqualTo(expected);
     }
@@ -46,10 +44,7 @@ class CardsTest {
     })
     @DisplayName("버스트 여부를 확인한다")
     void isBustTest(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, boolean expected) {
-        Cards cards = new Cards();
-        cards.add(new Card(CardType.CLOVER, cardNumber1));
-        cards.add(new Card(CardType.CLOVER, cardNumber2));
-        cards.add(new Card(CardType.CLOVER, cardNumber3));
+        Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2, cardNumber3);
 
         assertThat(cards.isBust()).isEqualTo(expected);
     }

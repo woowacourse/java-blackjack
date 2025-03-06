@@ -11,6 +11,8 @@ import blackjack.fixture.DeckFixture;
 
 class DealerTest {
 
+    private Dealer dealer = new Dealer();
+
     @ParameterizedTest
     @CsvSource({
         "ACE,TWO,true",
@@ -19,7 +21,6 @@ class DealerTest {
     })
     @DisplayName("딜러는 카드 숫자 합이 16 이하이면 카드를 추가로 받을 수 있다")
     void canReceiveAdditionalCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Dealer dealer = new Dealer();
         dealer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
         assertThat(dealer.canReceiveAdditionalCards()).isEqualTo(expected);
     }
@@ -32,7 +33,6 @@ class DealerTest {
     })
     @DisplayName("딜러는 카드 숫자 합이 16 초과면 카드를 추가로 받을 수 없다")
     void canReceiveAdditionalCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Dealer dealer = new Dealer();
         dealer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
         assertThat(dealer.canReceiveAdditionalCards()).isEqualTo(expected);
     }

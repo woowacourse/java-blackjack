@@ -5,7 +5,6 @@ import java.util.Stack;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardType;
 import blackjack.domain.deck.CardStrategy;
 import blackjack.domain.deck.Deck;
 
@@ -13,7 +12,7 @@ public class DeckFixture {
 
     public static Deck deckOf(CardNumber... cardNumbers) {
         Stack<Card> stack = new Stack<>();
-        Arrays.stream(cardNumbers).forEach(cardNumber -> stack.add(new Card(CardType.CLOVER, cardNumber)));
+        Arrays.stream(cardNumbers).forEach(cardNumber -> stack.add(CardFixture.cardOf(cardNumber)));
 
         CardStrategy cardStrategy = new CardStrategy() {
             @Override

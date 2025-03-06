@@ -14,10 +14,11 @@ import blackjack.fixture.DeckFixture;
 
 class PlayerTest {
 
+    private Player player = new Player("Pobi");
+
     @Test
     @DisplayName("플레이어는 카드 두 장을 지급 받는다")
     void playerGetCardsTest() {
-        Player player = new Player("Pobi");
         player.initialize(Deck.generateFrom(new RandomCardStrategy()));
         assertThat(player.getCards()).hasSize(2);
     }
@@ -31,7 +32,6 @@ class PlayerTest {
     @DisplayName("버스트되었을 경우 카드를 추가로 지급받을 수 없다")
     void canReceiveAdditionalCards1(CardNumber cardNumber1, CardNumber cardNumber2,
         CardNumber cardNumber3, boolean expected) {
-        Player player = new Player("Pobi");
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
         player.initialize(deck);
         player.drawCard(deck);
@@ -47,7 +47,6 @@ class PlayerTest {
     })
     @DisplayName("버스트되지 않았을 경우 카드를 추가로 지급받을 수 있다")
     void canReceiveAdditionalCards2(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Player player = new Player("Pobi");
         player.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
         assertThat(player.canReceiveAdditionalCards()).isEqualTo(expected);
     }

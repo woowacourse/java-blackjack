@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +13,8 @@ import blackjack.fixture.DeckFixture;
 
 class RoundResultTest {
 
-    private Player player;
-    private Dealer dealer;
-
-    @BeforeEach
-    void setup() {
-        player = new Player("Pobi");
-        dealer = new Dealer();
-    }
+    private Player player= new Player("Pobi");;
+    private Dealer dealer = new Dealer();
 
     @Test
     @DisplayName("상대방만 버스트했다면 카드 숫자 합에 상관없이 승리한다")

@@ -17,6 +17,8 @@ import blackjack.fixture.DeckFixture;
 
 class GamerTest {
 
+    private Gamer gamer= new Player("Pobi");;
+
     @ParameterizedTest
     @CsvSource({
         "ACE,TWO,false",
@@ -25,7 +27,6 @@ class GamerTest {
     })
     @DisplayName("21이하인 경우 버스트되지 않는다")
     void isBustTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Gamer gamer = new Player("Pobi");
         gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
         assertThat(gamer.isBust()).isEqualTo(expected);
     }
@@ -39,7 +40,6 @@ class GamerTest {
     @DisplayName("21초과인 경우 버스트된다")
     void isBustTest2(CardNumber cardNumber1, CardNumber cardNumber2,
         CardNumber cardNumber3, boolean expected) {
-        Gamer gamer = new Player("Pobi");
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
         gamer.initialize(deck);
         gamer.drawCard(deck);
@@ -54,7 +54,6 @@ class GamerTest {
     })
     @DisplayName("버스트되지 않으면 Ace는 11로 계산한다")
     void getSumOfCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
-        Gamer gamer = new Dealer();
         gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
         assertThat(gamer.getSumOfCards()).isEqualTo(expected);
     }
@@ -67,7 +66,6 @@ class GamerTest {
     })
     @DisplayName("버스트될 것 같으면 Ace는 1로 계산한다")
     void getSumOfCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, int expected) {
-        Gamer gamer = new Dealer();
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
         gamer.initialize(deck);
         gamer.drawCard(deck);
@@ -83,14 +81,13 @@ class GamerTest {
     })
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Gamer gamer = new Player("Pobi");
         gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
         assertThat(gamer .isBlackjack()).isEqualTo(expected);
     }
 
     // TODO Fixture 생성 후 진행
     @Test
-    @DisplayName("")
+    @DisplayName("최종 승패를 계산한다")
     void getFinalResultTest() {
         Gamer dealer = new Dealer();
         Player a = new Player("aa");
