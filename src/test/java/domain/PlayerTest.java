@@ -31,4 +31,15 @@ public class PlayerTest {
         Assertions.assertThat(player.getCards().size())
                 .isEqualTo(2);
     }
+
+    @Test
+    void 이름이_같다면_같은_참여자다() {
+        // given
+        final String targetName = "훌라";
+        Player player = new Participant(targetName);
+
+        // when & then
+        Assertions.assertThat(player)
+                .isEqualTo(new Participant(targetName));
+    }
 }

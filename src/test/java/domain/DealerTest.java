@@ -1,5 +1,6 @@
 package domain;
 
+import org.assertj.core.api.Assertions;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
@@ -15,5 +16,15 @@ class DealerTest {
         // when & then
         assertThat(dealer.openInitialCards().size())
                 .isEqualTo(1);
+    }
+
+    @Test
+    void 딜러는_이름이_딜러로_고정되어있다() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when & then
+        Assertions.assertThat(dealer.getName())
+                .isEqualTo("딜러");
     }
 }

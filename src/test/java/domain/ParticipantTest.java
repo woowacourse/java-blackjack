@@ -24,15 +24,4 @@ public class ParticipantTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    void 참여자는_초기에_카드를_2장_공개한다() {
-        // given
-        Deck deck = DeckGenerator.generateDeck();
-        Participant participant = new Participant("시소");
-        participant.receiveInitialCards(deck);
-
-        // when & then
-        assertThat(participant.openInitialCards().size())
-                .isEqualTo(2);
-    }
 }

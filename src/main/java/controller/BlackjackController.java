@@ -26,15 +26,20 @@ public class BlackjackController {
         OutputView.printInitialCardsDistribution(openCardsResponse);
 
         // 참여자들의 추가 카드 분배
-        List<Participant> participants = blackjack.getParticipants();
-        for (Participant participant : participants) {
+        List<String> participantNames = blackjack.getParticipantNames();
+        for (String participantName : participantNames) {
             boolean isDone = false;
+            boolean isFirst = true;
             while (!isDone) {
-                switch (YesOrNo.from(InputView.inputWantMoreCard(participant.getName()))) {
+                switch (YesOrNo.from(InputView.inputWantMoreCard(participantName))) {
                     case YES -> {
-                        OutputView.printPlayerCards(blackjack.addCardToCurrentParticipant(participant.getName()));
+                        OutputView.printPlayerCards(blackjack.addCardToCurrentParticipant(participantName));
+                        isFirst = false;
                     }
                     case NO -> {
+                        if (isFirst) {
+                            OutputView.printPlayerCards(blackjack.getPlayerByName(participantName));
+                        }
                         isDone = true;
                     }
                 }

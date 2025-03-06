@@ -43,4 +43,23 @@ class PlayersTest {
                 .filter(player -> player.getCards().size() == 2)
                 .count()).isEqualTo(5);
     }
+
+    @Test
+    void 이름으로_참여자를_찾아_반환한다() {
+        // given
+        final String targetName = "시소";
+        Participant participant = new Participant(targetName);
+
+        Players players = new Players(List.of(
+                new Dealer(),
+                participant,
+                new Participant("헤일러"),
+                new Participant("부기"),
+                new Participant("사나")
+        ));
+
+        // when & then
+        Assertions.assertThat(players.getPlayerByName(targetName))
+                .isEqualTo(participant);
+    }
 }

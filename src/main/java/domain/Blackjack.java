@@ -24,23 +24,6 @@ public class Blackjack {
         );
     }
 
-    public PlayerResponse addCardToCurrentParticipant(String name) {
-        Player participant = players.getPlayerByName(name);
-        participant.addCard(deck);
-        return new PlayerResponse(
-                participant.getName(),
-                participant.getCards().getCards()
-        );
-    }
-
-    public PlayerResponse getParticipantByName(String name) {
-        Player participant = players.getPlayerByName(name);
-        return new PlayerResponse(
-                participant.getName(),
-                participant.getCards().getCards()
-        );
-    }
-
     private PlayerResponse openDealerCards(Player player) {
         return new PlayerResponse(player.getName(), player.openInitialCards());
     }
@@ -51,11 +34,34 @@ public class Blackjack {
                 .toList();
     }
 
-    public Player getDealer() {
+    public PlayerResponse addCardToCurrentParticipant(String name) {
+        Player participant = players.getPlayerByName(name);
+        participant.addCard(deck);
+        return new PlayerResponse(
+                participant.getName(),
+                participant.getCards().getCards()
+        );
+    }
+
+    public PlayerResponse getPlayerByName(String name) {
+        Player player = players.getPlayerByName(name);
+        return new PlayerResponse(
+                player.getName(),
+                player.getCards().getCards()
+        );
+    }
+
+    public List<String> getParticipantNames() {
+        return getParticipants().stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    private Player getDealer() {
         return players.getDealer();
     }
 
-    public List<Participant> getParticipants() {
+    private List<Participant> getParticipants() {
         return players.getParticipants()
                 .stream()
                 .map(player -> (Participant) player)
