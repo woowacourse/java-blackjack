@@ -28,6 +28,8 @@ public class BlackjackApplication {
         initializeGame();
 
         askForAdditionalCard();
+
+        decideAdditionalCardForDealer();
     }
 
     private void askForAdditionalCard() {
@@ -48,6 +50,16 @@ public class BlackjackApplication {
                 }
             }
         });
+    }
+
+    private void decideAdditionalCardForDealer() {
+        Participant dealer = participantRepository.getDealer();
+        if(dealer.cards().isUnderDrawLimit()) {
+            dealer.cards().add(cardGiver.giveOne());
+            outputView.printDealerDraw(dealer.name());
+            return;
+        }
+        outputView.printDealerNoDraw(dealer.name());
     }
 
     private void initializeGame() {

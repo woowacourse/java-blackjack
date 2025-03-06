@@ -33,4 +33,12 @@ public class OutputView {
     public void printCurrentCard(Participant player) {
         System.out.printf("%s카드: %s\n", player.name(), outputFormatter.formatCards(player.cards()));
     }
+
+    public void printDealerDraw(String dealerName) {
+        System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.", dealerName);
+    }
+
+    public void printDealerNoDraw(String dealerName) {
+        System.out.printf("%s는 17이상이라 카드를 추가로 받지 않았습니다.", dealerName);
+    }
 }
