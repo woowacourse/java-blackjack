@@ -29,6 +29,13 @@ public class OutputView {
         printHand(playerNickname, hands);
     }
 
+    public static void printDivision(Dealer dealer) {
+        String dealerNickname = dealer.getNickname();
+        System.out.println();
+        System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerNickname, 16));
+    }
+
+
     private static void printHand(String nickname, String joinedCards) {
         System.out.println(String.format(CARD_FORMAT, nickname, joinedCards));
     }

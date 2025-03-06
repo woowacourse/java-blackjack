@@ -37,4 +37,8 @@ public class Dealer extends Participant {
     public int sum() {
         return super.sum();
     }
+
+    public boolean isNotUp() {
+        return sum() < 17;
+    }
 }

@@ -22,17 +22,29 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             receiveAdditionalCard(player, gameManager);
         }
+        receiveAdditionalCard(dealer, gameManager);
     }
 
     private void receiveAdditionalCard(Player player,GameManager gameManager) {
-        while (satisfiedCondition(player)) {
+        while (satisfiedConditionByPlayer(player)) {
             gameManager.divideCardByParticipant(player,1);
             OutputView.printDivision(player);
         };
     }
 
-    private boolean satisfiedCondition(Player player) {
+    private void receiveAdditionalCard(Dealer dealer,GameManager gameManager) {
+        while (satisfiedConditionByDealer(dealer)) {
+            gameManager.divideCardByParticipant(dealer,1);
+            OutputView.printDivision(dealer);
+        };
+    }
+
+    private boolean satisfiedConditionByPlayer(Player player) {
         return player.isNotBust() && agreeIntent(player);
+    }
+
+    private boolean satisfiedConditionByDealer(Dealer dealer) {
+        return dealer.isNotUp();
     }
 
     private boolean agreeIntent(Player player) {
