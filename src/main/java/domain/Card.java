@@ -24,6 +24,10 @@ public class Card {
         return shape;
     }
 
+    public String getDisplayName() {
+        return rank.getDisplayName();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (o == null || getClass() != o.getClass()) {
