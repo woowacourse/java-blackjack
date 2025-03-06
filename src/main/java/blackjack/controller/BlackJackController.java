@@ -1,6 +1,11 @@
-package blackjack.domain;
+package blackjack.controller;
 
+import blackjack.domain.CardManager;
+import blackjack.domain.GameManager;
+import blackjack.domain.Nickname;
+import blackjack.domain.Player;
 import blackjack.dto.DrawnCardResult;
+import blackjack.dto.PlayerWinningResult;
 import java.util.List;
 
 public class BlackJackController {

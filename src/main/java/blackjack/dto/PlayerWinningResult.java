@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.dto;
+
+import blackjack.domain.GameResultType;
+import blackjack.domain.Nickname;
 
 public class PlayerWinningResult {
 

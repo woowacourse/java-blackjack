@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.dto.DrawnCardResult;
+import blackjack.dto.PlayerWinningResult;
 import java.util.ArrayList;
 import java.util.List;
 
