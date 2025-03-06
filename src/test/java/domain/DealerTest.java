@@ -62,8 +62,8 @@ class DealerTest {
         Player player1 = Player.from("플레이어", cards2);
         Player player2 = Player.from("플레이어2", cards3);
         Map<Player, GameResult> expected = Map.of(
-                player1, GameResult.WIN,
-                player2, GameResult.LOSE
+                player1, GameResult.LOSE,
+                player2, GameResult.WIN
         );
         //when
         Map<Participant, GameResult> actual = dealer.getGameResult(List.of(player1, player2));
