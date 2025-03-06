@@ -2,11 +2,9 @@ package blackjack.controller;
 
 import blackjack.model.BlackJackGame;
 import blackjack.model.Dealer;
-import blackjack.model.Deck;
 import blackjack.model.DeckInitializer;
 import blackjack.model.Participant;
 import blackjack.model.Participants;
-import blackjack.model.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -31,45 +29,31 @@ public class BlackJackController {
         );
         blackJackGame.initializeGame();
         outputView.outputFirstCardDistributionResult(participants, dealer);
-
-        participants.stream().forEach(this::inputMoreCard);
-        drawDealerCard(dealer);
-        outputView.outputDealerCardFinish();
+        inputMoreCard(blackJackGame);
+        giveMoreDealerCard(blackJackGame, dealer);
         outputView.outputFinalCardStatus(dealer, participants);
         outputView.outputFinalResult(dealer, participants);
     }
 
-    private void drawDealerCard(Dealer dealer) {
-        if (dealer.calculatePoint() <= 16) {
-            outputView.outputDealerGetCard();
-            dealer.putCard(deck.drawCard());
-            drawDealerCard(dealer);
-            outputView.printPlayerCardStatus("딜러", dealer);
-        }
-    }
-
-    private void inputMoreCard(Participant participant) {
-        String command = inputView.inputCallOrStay(participant.getName());
-        validateCommand(command);
-        if (command.equals("y")) {
-            participant.putCard(deck.drawCard());
+    private void inputMoreCard(BlackJackGame blackJackGame) {
+        while (blackJackGame.hasReady()) {
+            Participant participant = blackJackGame.getCurrentTurnParticipant();
+            boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
+            blackJackGame.receiveCard(isReceive);
             outputView.printPlayerCardStatus(participant.getName(), participant);
             if (participant.isBust()) {
                 outputView.printParticipantBust(participant.getName());
-                return;
+                blackJackGame.skipTurn();
             }
-            inputMoreCard(participant);
         }
     }
 
-    private void validateCommand(String command) {
-        if (!(command.equals("y") || command.equals("n"))) {
-            throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
+    private void giveMoreDealerCard(BlackJackGame blackJackGame, Dealer dealer) {
+        while (blackJackGame.isDrawableDealerCard()) {
+            blackJackGame.drewDealerCards();
+            outputView.outputDealerGetCard();
+            outputView.printPlayerCardStatus("딜러", dealer);
         }
-    }
-
-    public void giveInitialCards(Player player) {
-        player.putCard(deck.drawCard());
-        player.putCard(deck.drawCard());
+        outputView.outputDealerCardFinish();
     }
 }

@@ -48,6 +48,10 @@ public class BlackJackGame {
     }
 
     public boolean hasReady() {
+        return readyQueue.size() > 0;
+    }
 
+    public void skipTurn() {
+        readyQueue.poll();
     }
 }
