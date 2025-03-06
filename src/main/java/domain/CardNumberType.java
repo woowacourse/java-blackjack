@@ -20,7 +20,7 @@ public enum CardNumberType {
     QUEEN(10),
     KING(10);
 
-    private static final String CARD_NUMBER_INDEX_NO_EXISTED = "해당하는 카드 숫자의 인덱스가 존재하지 않습니다.";
+    private static final String INVALID_INDEX = "해당하는 카드 숫자의 인덱스가 존재하지 않습니다.";
     private static final int ACE_HIGH_CONVERSION_THRESHOLD = 10;
 
     private final List<Integer> cardNumbers;
@@ -61,7 +61,7 @@ public enum CardNumberType {
 
     private static void validateIndex(int index) {
         if(index >= CardNumberType.values().length) {
-            throw new IllegalArgumentException(ERROR_HEADER + CARD_NUMBER_INDEX_NO_EXISTED);
+            throw new IllegalArgumentException(ERROR_HEADER + INVALID_INDEX);
         }
     }
 
