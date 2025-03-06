@@ -4,7 +4,7 @@ import except.BlackJackException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlackjackParticipation {
+public abstract class BlackjackParticipant {
 
     private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21장 이상 받을 수 없습니다";
     private static final int BURST_STANDARD = 21;
@@ -13,7 +13,7 @@ public abstract class BlackjackParticipation {
     private final List<TrumpCard> trumpCards = new ArrayList<>();
     private final String name;
 
-    public BlackjackParticipation(String name) {
+    public BlackjackParticipant(String name) {
         this.name = name;
         validateNickname();
     }

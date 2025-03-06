@@ -1,6 +1,6 @@
 package domain;
 
-public class Dealer extends BlackjackParticipation {
+public class Dealer extends BlackjackParticipant {
 
     private static final int DEALER_STOP_HIT_STANDARD = 17;
     private static final String DEALER_NAME = "딜러";

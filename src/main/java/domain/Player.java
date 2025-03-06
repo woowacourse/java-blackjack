@@ -2,7 +2,7 @@ package domain;
 
 import except.BlackJackException;
 
-public class Player extends BlackjackParticipation {
+public class Player extends BlackjackParticipant {
 
     private final String PLAYER_CANNOT_BE_DEALER = "플레이어는 딜러일 수 없습니다";
 
