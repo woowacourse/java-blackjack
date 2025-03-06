@@ -6,7 +6,9 @@ import java.util.List;
 public class CardDeck {
     private static final int BONUS_THRESHOLD = 11;
     private static final int ACE_BONUS = 10;
+
     private final List<Card> cards;
+
     public CardDeck(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
