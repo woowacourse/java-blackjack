@@ -1,5 +1,8 @@
 package blackjack;
 
+import static blackjack.view.OutputView.*;
+import static blackjack.view.InputView.*;
+
 import blackjack.domain.CardDeck;
 import blackjack.domain.CardShuffler;
 import blackjack.domain.Round;
@@ -8,8 +11,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,45 +21,60 @@ public class Application {
         List<Name> playerNames = getPlayerNames();
         Round round = new Round(cardDeck, playerNames);
         round.distributeInitialCards();
-        OutputView.printInitialDistributionPrompt(playerNames);
-        OutputView.printGamblerCards("딜러", round.getInitialCardsByDealer());
+        printInitialDistributionPrompt(playerNames);
+        printGamblerCards("딜러", round.getInitialCardsByDealer());
         for (Name playerName : playerNames) {
-            OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
+            printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
         }
-        for (Name playerName : playerNames) {
-            boolean flag = false;
-            while (isHit(playerName)) {
-                round.distributeCards(playerName, 1);
-                OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
-                boolean isBusted = round.isPlayerBusted(playerName);
-                if (isBusted) {
-                    OutputView.printBusted(playerName);
-                    break;
-                }
-                flag = true;
-            }
-            if (!flag) {
-                OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
-            }
-        }
-        if (round.dealerMustDraw()) {
-            round.addDealerCard();
-            OutputView.printDealerDraw();
-        }
-        OutputView.printGamblerResult("딜러", round.getCardsByDealer(), round.getScoreByDealer());
+        processPlayersTurn(playerNames, round);
+        processDealerTurn(round);
+        printGameResult(round, playerNames);
+    }
+
+    private static void printGameResult(Round round, List<Name> playerNames) {
+        printGamblerResult("딜러", round.getCardsByDealer(), round.getScoreByDealer());
         for (Name playerName : playerNames) {
             List<Card> cards = round.getCardsByPlayer(playerName);
             int score = round.getScoreByPlayer(playerName);
-            OutputView.printGamblerResult(playerName.getName(), cards, score);
+            printGamblerResult(playerName.getName(), cards, score);
         }
-
         WinningDiscriminator discriminator = round.getWinningDiscriminator();
-        OutputView.printWinning(discriminator);
+        printWinning(discriminator);
+    }
+
+    private static void processDealerTurn(Round round) {
+        if (round.dealerMustDraw()) {
+            round.addDealerCard();
+            printDealerDraw();
+        }
+    }
+
+    private static void processPlayersTurn(List<Name> playerNames, Round round) {
+        for (Name playerName : playerNames) {
+            processPlayerTurn(round, playerName);
+        }
+    }
+
+    private static void processPlayerTurn(Round round, Name playerName) {
+        boolean flag = false;
+        while (isHit(playerName)) {
+            round.distributeCards(playerName, 1);
+            printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
+            boolean isBusted = round.isPlayerBusted(playerName);
+            if (isBusted) {
+                printBusted(playerName);
+                break;
+            }
+            flag = true;
+        }
+        if (!flag) {
+            printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
+        }
     }
 
     private static boolean isHit(Name playerName) {
         try {
-            return InputView.inputPlayerHit(playerName);
+            return inputPlayerHit(playerName);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return isHit(playerName);
@@ -67,7 +83,7 @@ public class Application {
 
     private static List<Name> getPlayerNames() {
         try {
-            return InputView.inputPlayerName();
+            return inputPlayerName();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getPlayerNames();
