@@ -3,6 +3,7 @@ package controller;
 import domain.CardDeck;
 import domain.CardShuffler;
 import domain.Dealer;
+import domain.Player;
 import domain.Players;
 import java.util.List;
 import view.InputView;
@@ -30,5 +31,12 @@ public class BlackJackController {
         dealer.drawCardWhenStart(cardDeck);
 
         outputView.printInitialGame(dealer, players.getPlayers());
+
+        for (Player player : players.getPlayers()) {
+            while (!player.isOverBurstBound() && inputView.readDrawMoreCard(player)) {
+                player.drawCard(cardDeck);
+                outputView.printPlayerCard(player);
+            }
+        }
     }
 }

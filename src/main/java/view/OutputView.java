@@ -19,6 +19,10 @@ public class OutputView {
         }
     }
 
+    public void printPlayerCard(Player player) {
+        System.out.printf("%s카드: %s%n", player.getName(), formatHand(player.getHand().getCards()));
+    }
+
     private String formatPlayerNames(List<Player> players) {
         return players.stream()
                 .map(Player::getName)
