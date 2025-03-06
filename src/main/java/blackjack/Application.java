@@ -5,6 +5,7 @@ import blackjack.domain.Round;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
+import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import blackjack.view.InputView;
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         List<Name> playerNames = getPlayerNames();
-        Round round = new Round(cardDeck, playerNames);
+        Round round = new Round(cardDeck, playerNames, new Dealer());
+        round.distributeInitialCards();
     }
 
     private static List<Name> getPlayerNames() {

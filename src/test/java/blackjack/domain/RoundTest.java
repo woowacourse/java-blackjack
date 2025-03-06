@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
+import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -21,12 +22,37 @@ class RoundTest {
 
         Name playerName = new Name("라젤");
         List<Name> playerNames = List.of(playerName);
-        Round round = new Round(cardDeck, playerNames);
+        Round round = new Round(cardDeck, playerNames, new Dealer());
 
         // when
         round.distributeCards(new Name("라젤"), 2);
 
         // then
         assertThat(round.getScoreByPlayer(playerName)).isEqualTo(18);
+    }
+
+    @DisplayName("게임 시작 시, 플레이어와 딜러에게 2장씩 카드를 지급한다")
+    @Test
+    void distributeInitialCardsTest() {
+        // given
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card3 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card4 = new Card(CardShape.HEART, CardType.EIGHT);
+        CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4));
+
+        Name playerName = new Name("라젤");
+        List<Name> playerNames = List.of(playerName);
+        Dealer dealer = new Dealer();
+        Round round = new Round(cardDeck, playerNames, dealer);
+
+        // when
+        round.distributeInitialCards();
+
+        // then
+        // TODO: 플레이어가 2장 받았는지 체크할 것!
+        assertThat(round.getScoreByPlayer(playerName)).isNotZero();
+        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(dealer.calculateSum()).isNotZero();
     }
 }

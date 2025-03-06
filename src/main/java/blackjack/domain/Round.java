@@ -11,10 +11,10 @@ public class Round {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Round(final CardDeck cardDeck, final List<Name> playerNames) {
+    public Round(final CardDeck cardDeck, final List<Name> playerNames, Dealer dealer) {
         this.cardDeck = cardDeck;
         this.players = registerPlayers(playerNames);
-        this.dealer = new Dealer();
+        this.dealer = dealer;
     }
 
     private List<Player> registerPlayers(final List<Name> playerNames) {
@@ -40,5 +40,14 @@ public class Round {
                 .filter(player -> player.isNameEquals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다:" + name));
+    }
+
+    public void distributeInitialCards() {
+        dealer.addCard(cardDeck.getCard());
+        dealer.addCard(cardDeck.getCard());
+        for (Player player : players) {
+            player.addCard(cardDeck.getCard());
+            player.addCard(cardDeck.getCard());
+        }
     }
 }
