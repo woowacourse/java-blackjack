@@ -1,18 +1,8 @@
 package domain;
 
-import static domain.card.Number.JACK;
-import static domain.card.Number.KING;
-import static domain.card.Number.QUEEN;
-import static domain.card.Number.SEVEN;
-import static domain.card.Shape.CLOVER;
-import static domain.card.Shape.DIAMOND;
-import static domain.card.Shape.HEART;
-import static domain.card.Shape.SPADE;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
-import domain.card.Card;
-import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Players;
 import java.io.ByteArrayInputStream;
@@ -43,7 +33,7 @@ public class BlackJackTest {
 
     @Test
     @DisplayName("카드 드로우 테스트")
-    void drawTest(){
+    void drawPlayersTest(){
         //given
         String input = "y\nn\ny\nn\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
@@ -61,6 +51,6 @@ public class BlackJackTest {
         BlackJack blackJack = new BlackJack(players, dealer);
 
         //when-then
-        assertDoesNotThrow(() -> blackJack.draw(testInputView::askPlayerForHitOrStand, testInputView::printPlayerDeck));
+        assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testInputView::printPlayerDeck));
     }
 }
