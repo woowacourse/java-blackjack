@@ -81,7 +81,7 @@ class BlackJackGameTest {
 
         // when
         BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
-        blackJackGame.drewDealerCards();
+        blackJackGame.drawDealerCards();
 
         // then
         assertThat(dealer.getReceivedCards().size()).isEqualTo(1);

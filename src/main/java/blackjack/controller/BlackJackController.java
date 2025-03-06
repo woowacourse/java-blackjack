@@ -31,8 +31,8 @@ public class BlackJackController {
         outputView.outputFirstCardDistributionResult(participants, dealer);
         inputMoreCard(blackJackGame);
         giveMoreDealerCard(blackJackGame, dealer);
-        outputView.outputFinalCardStatus(dealer, participants);
-        outputView.outputFinalResult(dealer, participants);
+        outputView.printFinalCardStatus(dealer, participants);
+        outputView.printFinalResult(dealer, participants);
     }
 
     private void inputMoreCard(BlackJackGame blackJackGame) {
@@ -50,10 +50,10 @@ public class BlackJackController {
 
     private void giveMoreDealerCard(BlackJackGame blackJackGame, Dealer dealer) {
         while (blackJackGame.isDrawableDealerCard()) {
-            blackJackGame.drewDealerCards();
+            blackJackGame.drawDealerCards();
             outputView.outputDealerGetCard();
             outputView.printPlayerCardStatus("딜러", dealer);
         }
-        outputView.outputDealerCardFinish();
+        outputView.printDealerCardDone();
     }
 }
