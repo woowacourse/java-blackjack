@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardGroup {
@@ -56,4 +57,7 @@ public class CardGroup {
         return calculateScoreWithAce(calculateScoreWithOutAce(), limit);
     }
 
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
 }

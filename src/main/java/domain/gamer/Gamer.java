@@ -4,6 +4,7 @@ import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGenerator;
 import domain.card.CardGroup;
+import java.util.List;
 
 public abstract class Gamer {
     public static final int LIMIT = 21;
@@ -37,5 +38,9 @@ public abstract class Gamer {
 
     public int calculateScore() {
         return cardGroup.calculateScore(LIMIT);
+    }
+
+    public List<Card> getCards() {
+        return cardGroup.getCards();
     }
 }
