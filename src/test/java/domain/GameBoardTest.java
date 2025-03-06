@@ -190,4 +190,39 @@ public class GameBoardTest {
         //then
         Assertions.assertThat(actual).isEqualTo(expectedResult);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"ACE, TEN, TEN, 21", "ACE, EIGHT, TWO, 21", "ACE, ACE, NINE, 21", "ACE, ACE, TEN, 21", "ACE, ACE, ACE, 13"})
+    void 에이스_점수_계산_확인(CardNumber cardNumber, CardNumber cardNumber2, CardNumber cardNumber3, int expectedResult) {
+        //given
+        Participant targetParticipant = Player.from("우가");
+        List<Participant> participants = List.of(
+                targetParticipant,
+                Player.from("히스타"),
+                Dealer.generate()
+        );
+        Card card = new Card(cardNumber, CardSymbol.CLOVER);
+        Card card2 = new Card(cardNumber2, CardSymbol.DIAMOND);
+        Card card3 = new Card(cardNumber3, CardSymbol.HEART);
+
+        GameBoard gameBoard = new GameBoard(participants);
+
+        CardDeck cardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = cardDeck.getCards();
+        cards.clear();
+        cards.add(card);
+        cards.add(card2);
+        cards.add(card3);
+
+
+        gameBoard.drawCardTo(targetParticipant);
+        gameBoard.drawCardTo(targetParticipant);
+        gameBoard.drawCardTo(targetParticipant);
+
+        //when
+        int actual = gameBoard.getScoreOf(targetParticipant);
+
+        //then
+        Assertions.assertThat(actual).isEqualTo(expectedResult);
+    }
 }
