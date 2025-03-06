@@ -13,6 +13,11 @@ public class Player {
         this.name = name;
     }
 
+    public void prepareGame(Cards totalCard) {
+        draw(totalCard);
+        draw(totalCard);
+    }
+
     public void draw(Cards totalCards) {
         validateBurst();
         cards.add(totalCards.extractCard());

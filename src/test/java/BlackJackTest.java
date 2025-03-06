@@ -323,4 +323,26 @@ class BlackJackTest {
         //then
         assertThat(actual).isEqualTo(14);
     }
+
+    @DisplayName("게임이 시작되면 플레이어는 2장의 카드를 받는다.")
+    @Test
+    void startGameGiveDefaultCards() {
+        //given
+        Player player = new Player("ad");
+
+        Cards cards = new Cards();
+        Card card1 = new Card(Symbol.COLVER, Number.ACE);
+        Card card2 = new Card(Symbol.COLVER, Number.ACE);
+        Card card3 = new Card(Symbol.COLVER, Number.ACE);
+        Card card4 = new Card(Symbol.COLVER, Number.ACE);
+
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+
+        //when //then
+        assertThatCode(() -> player.prepareGame(cards))
+                .doesNotThrowAnyException();
+    }
 }
