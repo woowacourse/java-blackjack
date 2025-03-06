@@ -20,7 +20,7 @@ public abstract class Gamer {
         return cardGroup.addCard(card);
     }
 
-    public void receiveCare(){
+    public void receiveCard(){
         cardGroup.addCard(cardGenerator.generate());
     }
 

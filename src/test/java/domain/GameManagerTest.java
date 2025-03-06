@@ -7,8 +7,11 @@ import domain.card.Card;
 import domain.card.CardGroup;
 import domain.card.CardType;
 import domain.card.RandomCardGenerator;
+import domain.gamer.Dealer;
 import domain.gamer.Player;
 import java.util.List;
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
 public class GameManagerTest {
@@ -16,9 +19,15 @@ public class GameManagerTest {
     @Test
     void 게임_매니저를_생성한다() {
         //given
-        final List<String> playerNames = List.of("윌슨", "가이온");
+        CardGroup cardGroup = new CardGroup();
+        RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup,randomCardGenerator),
+                new Player("가이온",cardGroup,randomCardGenerator));
+        Dealer dealer = new Dealer(cardGroup,randomCardGenerator);
+
         //when
-        final GameManager gameManager = GameManager.create(new RandomCardGenerator(), playerNames);
+        final GameManager gameManager = GameManager.create(dealer,players);
         //then
         assertThat(gameManager).isInstanceOf(GameManager.class);
     }
@@ -26,20 +35,27 @@ public class GameManagerTest {
     @Test
     void 딜러_점수가_16이하면_카드를_계속_뽑는다(){
         //given
-        final List<String> playerNames = List.of("윌슨", "가이온");
+        CardGroup cardGroup = new CardGroup();
+        RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
+        final List<Player> players = List.of();
+        Dealer dealer = new Dealer(cardGroup,randomCardGenerator);
+
         //when
-        final GameManager gameManager = GameManager.create(new RandomCardGenerator(), playerNames);
+        final GameManager gameManager = GameManager.create(dealer,players);
         //then
         assertThatCode(gameManager::receiveCardToDealer).doesNotThrowAnyException();
     }
 
     @Test
     void 버스트가_나기_전까지_카드를_더_받는다(){
-        final List<String> playerNames = List.of("윌슨", "가이온");
+        CardGroup cardGroup = new CardGroup();
         RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-        CardGroup cardGroup = new CardGroup(List.of(randomCardGenerator.generate()));
-        final Player player = new Player("윌슨",cardGroup);
-        final GameManager gameManager = GameManager.create(new RandomCardGenerator(), playerNames);
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup,randomCardGenerator),
+                new Player("가이온",cardGroup,randomCardGenerator));
+        final Dealer dealer = new Dealer(cardGroup,randomCardGenerator);
+        final GameManager gameManager = GameManager.create(dealer,players);
+        final Player player = new Player("윌슨",cardGroup,randomCardGenerator);
 
         boolean isHitting = gameManager.isAbleToHit(player);
 
@@ -49,16 +65,43 @@ public class GameManagerTest {
     @Test
     void 플레이어에게_카드를_추가한다() {
         //given
-        final List<String> playerNames = List.of("윌슨", "가이온");
-        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-        CardGroup cardGroup = new CardGroup(List.of(randomCardGenerator.generate()));
-        final Player player = new Player("윌슨",cardGroup);
+        CardGroup cardGroup = new CardGroup();
+        RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup,randomCardGenerator),
+                new Player("가이온",cardGroup,randomCardGenerator));
+        final Dealer dealer = new Dealer(cardGroup,randomCardGenerator);
+        final Player player = new Player("윌슨",cardGroup,randomCardGenerator);
 
-        //when
-        final GameManager gameManager = GameManager.create(randomCardGenerator, playerNames);
+        final GameManager gameManager = GameManager.create(dealer,players);
 
-        //then
-        assertThatCode(() -> gameManager.giveCardToPlayer(player)).doesNotThrowAnyException();
+
+        assertThatCode(() -> gameManager.giveCardToPlayer(player)).doesNotThrowAnyException();;
+    }
+
+    @Test
+    void 플레이어가_버스트_하지_않고_딜러보다_점수가_높아야_승리(){
+//        final List<String> playerNames = List.of("윌슨", "가이온");
+//        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
+//
+//        final GameManager gameManager = GameManager.create(randomCardGenerator, playerNames);
+//
+//
+
+    }
+
+    @Test
+    void 플레이어가_버스트_하는_경우_무조건_패배(){
+
+    }
+
+    @Test
+    void 딜러와_플레이어의_점수가_같은_경우_무승부(){
+
+    }
+
+    @Test
+    void 딜러와_플레이어가_서로_버스트한_경우_무승부(){
 
     }
 }

@@ -2,39 +2,30 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardGenerator;
-import domain.card.CardGroup;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class GameManager {
 
     private final Dealer dealer;
     private final List<Player> players;
-    private final CardGenerator cardGenerator;
 
-    public GameManager(final Dealer dealer, final List<Player> players, final CardGenerator cardGenerator) {
+    public GameManager(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
-        this.cardGenerator = cardGenerator;
     }
 
     public void receiveCardToDealer(){
         while(dealer.isLessThen(16)){
-            dealer.receiveCard(cardGenerator.generate());
+            dealer.receiveCard();
         }
     }
 
-    public static GameManager create(final CardGenerator cardGenerator, final List<String> playerNames) {
-        final Dealer dealer = new Dealer(new CardGroup(generateCards(cardGenerator)));
-        final List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            final Player player = new Player(playerName, new CardGroup(generateCards(cardGenerator)));
-            players.add(player);
-        }
-        return new GameManager(dealer, players, cardGenerator);
+    public static GameManager create(Dealer dealer, List<Player> players) {
+        return new GameManager(dealer, players);
     }
 
     private static List<Card> generateCards(final CardGenerator cardGenerator) {
@@ -51,6 +42,6 @@ public class GameManager {
     }
 
     public void giveCardToPlayer(final Player player) {
-        player.receiveCard(cardGenerator.generate());
+        player.receiveCard();
     }
 }

@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 
-import domain.card.Card;
-import domain.card.CardGroup;
-import domain.card.CardType;
-import domain.card.RandomCardGenerator;
+import domain.card.*;
 import domain.gamer.Player;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +18,10 @@ public class PlayerTest {
         final String name = "윌슨";
         final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
         final CardGroup cardGroup = new CardGroup(cards);
+        CardGenerator randomCardGenerator = new RandomCardGenerator();
 
         //when
-        final Player player = new Player(name,cardGroup);
+        final Player player = new Player(name, cardGroup, randomCardGenerator);
 
         //then
         assertThat(player).isInstanceOf(Player.class);
@@ -40,7 +38,7 @@ public class PlayerTest {
         final CardGroup cardGroup = new CardGroup(cards);
 
         //when
-        final Player player = new Player(name, cardGroup);
+        final Player player = new Player(name, cardGroup, randomCardGenerator);
         final boolean result = player.receiveCard(card);
 
         //then
@@ -106,10 +104,12 @@ public class PlayerTest {
         final List<Card> cards3 = List.of(new Card(CardType.DIAMOND_3), new Card(CardType.HEART_4));
         final CardGroup cardGroup3 = new CardGroup(cards3);
 
+        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
+
         //when
-        final Player player1 = new Player(name1, cardGroup1);
-        final Player player2 = new Player(name2, cardGroup2);
-        final Player player3 = new Player(name3, cardGroup3);
+        final Player player1 = new Player(name1, cardGroup1, randomCardGenerator);
+        final Player player2 = new Player(name2, cardGroup2, randomCardGenerator);
+        final Player player3 = new Player(name3, cardGroup3, randomCardGenerator);
 
         final GameResult gameResult1 = player1.calculateGameResult(7);
         final GameResult gameResult2 = player2.calculateGameResult(7);
