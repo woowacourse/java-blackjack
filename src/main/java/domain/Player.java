@@ -2,15 +2,18 @@ package domain;
 
 public class Player extends Participant {
 
-    private Player(Cards cards) {
+    private final String name;
+
+    private Player(String name, Cards cards) {
         super(cards);
+        this.name = name;
     }
 
-    public static Player init() {
-        return new Player(Cards.empty());
+    public static Player init(String name) {
+        return new Player(name, Cards.empty());
     }
 
-    public static Player of(Cards cards) {
-        return new Player(cards);
+    public static Player from(String name, Cards cards) {
+        return new Player(name, cards);
     }
 }
