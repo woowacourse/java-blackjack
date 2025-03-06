@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ParticipantTest {
+class GameResultTest {
 
     @DisplayName("두 참가자의 카드 합이 같은 경우, 무승부를 판단할 수 있다")
     @Test
@@ -21,7 +21,7 @@ class ParticipantTest {
         Cards cards2 = Cards.of(cardList2);
         Participant participant2 = new Participant(cards2);
         //when
-        GameResult result = participant.calculateGameResult(participant2);
+        GameResult result = GameResult.judge(participant, participant2);
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.DRAW);
     }
@@ -45,7 +45,7 @@ class ParticipantTest {
         Participant loser = new Participant(cards2);
 
         //when
-        GameResult result = winner.calculateGameResult(loser);
+        GameResult result = GameResult.judge(winner, loser);
 
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.WIN);
@@ -71,7 +71,7 @@ class ParticipantTest {
         Participant winner = new Participant(cards2);
 
         //when
-        GameResult result = burstLoser.calculateGameResult(winner);
+        GameResult result = GameResult.judge(winner, burstLoser);
 
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
@@ -96,9 +96,10 @@ class ParticipantTest {
         Participant winner = new Participant(cards2);
 
         //when
-        GameResult result = loser.calculateGameResult(winner);
+        GameResult result = GameResult.judge(loser, winner);
 
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
     }
+
 }
