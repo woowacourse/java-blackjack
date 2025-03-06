@@ -12,22 +12,22 @@ public class Player extends Participant {
     }
 
     public GameResult matchGame(Dealer dealer) {
-        BlackJackState dealerState = BlackJackState.of(dealer);
-        BlackJackState playerState = BlackJackState.of(this);
+        BlackjackState dealerState = BlackjackState.of(dealer);
+        BlackjackState playerState = BlackjackState.of(this);
 
-        if (BlackJackState.BLACKJACK.equals(dealerState) && BlackJackState.BLACKJACK.equals(playerState)) {
+        if (BlackjackState.BLACKJACK.equals(dealerState) && BlackjackState.BLACKJACK.equals(playerState)) {
             return GameResult.DRAW;
         }
-        if (BlackJackState.BUST.equals(dealerState) && BlackJackState.BUST.equals(playerState)) {
+        if (BlackjackState.BUST.equals(dealerState) && BlackjackState.BUST.equals(playerState)) {
             return GameResult.LOSE;
         }
-        if (BlackJackState.BUST.equals(dealerState)) {
+        if (BlackjackState.BUST.equals(dealerState)) {
             return GameResult.WIN;
         }
-        if (BlackJackState.BLACKJACK.equals(playerState)) {
+        if (BlackjackState.BLACKJACK.equals(playerState)) {
             return GameResult.WIN;
         }
-        if (BlackJackState.OTHERS.equals(dealerState) && BlackJackState.OTHERS.equals(playerState)) {
+        if (BlackjackState.OTHERS.equals(dealerState) && BlackjackState.OTHERS.equals(playerState)) {
             int dealerSum = dealer.calculateDenominations();
             int playerSum = this.calculateDenominations();
             if (dealerSum < playerSum) {

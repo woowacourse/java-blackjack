@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJackManager;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
@@ -9,12 +9,12 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackJackController {
+public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -23,17 +23,17 @@ public class BlackJackController {
         try {
             String input = inputView.readNames();
             List<String> names = InputParser.parseStringToList(input);
-            BlackJackManager blackJackManager = BlackJackManager.createByPlayerNames(names);
+            BlackjackGame blackjackGame = BlackjackGame.createByPlayerNames(names);
 
             // 카드 2장 배부
-            blackJackManager.initCardsToParticipants();
-            outputView.printStartGame(blackJackManager.getPlayerNames());
-            for (Participant participant : blackJackManager.getParticipants()) {
+            blackjackGame.initCardsToParticipants();
+            outputView.printStartGame(blackjackGame.getPlayerNames());
+            for (Participant participant : blackjackGame.getParticipants()) {
                 outputView.printCardResult(participant);
             }
 
             // 카드 추가 배부 여부 입력
-            for (Participant participant : blackJackManager.getParticipants()) {
+            for (Participant participant : blackjackGame.getParticipants()) {
                 if (participant instanceof Dealer) {
                     continue;
                 }
@@ -43,28 +43,28 @@ public class BlackJackController {
                     if(yesOrNo.equals("n")) {
                         break;
                     }
-                    blackJackManager.addExtraCard(player);
+                    blackjackGame.addExtraCard(player);
                     outputView.printCardResult(participant);
                 }
             }
 
             // 딜러 추가 배부
-            while (blackJackManager.addExtraCardToDealer()) {
+            while (blackjackGame.addExtraCardToDealer()) {
                 outputView.printAddExtraCardToDealer();
             }
 
             // 최종 카드 결과 출력
-            for (Participant participant : blackJackManager.getParticipants()) {
+            for (Participant participant : blackjackGame.getParticipants()) {
                 outputView.printFinalCardResult(participant);
             }
 
             outputView.printResultTitle();
-            for (Participant participant : blackJackManager.getParticipants()) {
+            for (Participant participant : blackjackGame.getParticipants()) {
                 if (participant instanceof Dealer) {
-                    outputView.printDealerResult(blackJackManager.calculateStatisticsForDealer());
+                    outputView.printDealerResult(blackjackGame.calculateStatisticsForDealer());
                     continue;
                 }
-                outputView.printPlayerResult((Player) participant, blackJackManager.findDealer());
+                outputView.printPlayerResult((Player) participant, blackjackGame.findDealer());
             }
             } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);

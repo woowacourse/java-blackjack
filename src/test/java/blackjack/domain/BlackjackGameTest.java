@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 
 @Nested
-class BlackJackManagerTest {
+class BlackjackGameTest {
 
     @Nested
     @DisplayName("플레이어 여러명 생성 테스트")
@@ -22,9 +22,9 @@ class BlackJackManagerTest {
         @DisplayName("2명 이상의 플레이어를 입력 받을 수 있다.")
         void createParticipantsByNames() {
             List<String> names = List.of("hula", "sana");
-            BlackJackManager manager = BlackJackManager.createByPlayerNames(names);
+            BlackjackGame game = BlackjackGame.createByPlayerNames(names);
 
-            List<String> playerNames = manager.getPlayerNames();
+            List<String> playerNames = game.getPlayerNames();
 
             assertAll(() -> {
                assertThat(playerNames.getFirst()).isEqualTo(names.getFirst());
@@ -41,9 +41,9 @@ class BlackJackManagerTest {
         @DisplayName("딜러와 플레이어에게 카드를 2장씩 배부할 수 있다.")
         void distributeCardsToDealerAndPlayer() {
             List<String> names = List.of("sana");
-            BlackJackManager manager = BlackJackManager.createByPlayerNames(names);
+            BlackjackGame game = BlackjackGame.createByPlayerNames(names);
 
-            assertThatCode(manager::initCardsToParticipants)
+            assertThatCode(game::initCardsToParticipants)
                     .doesNotThrowAnyException();
         }
 
@@ -51,11 +51,11 @@ class BlackJackManagerTest {
         @DisplayName("카드 한 장을 플레이어에게 추가로 배부할 수 있다.")
         void distributeExtraCardToPlayer() {
             List<String> names = List.of("sana");
-            BlackJackManager manager = BlackJackManager.createByPlayerNames(names);
-            manager.initCardsToParticipants(); // 2장 배부
+            BlackjackGame game = BlackjackGame.createByPlayerNames(names);
+            game.initCardsToParticipants(); // 2장 배부
 
-            Player player = (Player) manager.getParticipants().getLast();
-            manager.addExtraCard(player); // 총 3장 카드 보유
+            Player player = (Player) game.getParticipants().getLast();
+            game.addExtraCard(player); // 총 3장 카드 보유
 
             assertThat(player.getCards()).hasSize(3);
         }
@@ -71,9 +71,9 @@ class BlackJackManagerTest {
 
             CardDeck cardDeck = CardDeck.createCardDeck();
             List<Participant> participants = List.of(dealer);
-            BlackJackManager manager = new BlackJackManager(cardDeck, participants);
+            BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
-            assertThat(manager.addExtraCardToDealer()).isTrue();
+            assertThat(game.addExtraCardToDealer()).isTrue();
         }
 
         @Test
@@ -87,9 +87,9 @@ class BlackJackManagerTest {
 
             CardDeck cardDeck = CardDeck.createCardDeck();
             List<Participant> participants = List.of(dealer);
-            BlackJackManager manager = new BlackJackManager(cardDeck, participants);
+            BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
-            assertThat(manager.addExtraCardToDealer()).isFalse();
+            assertThat(game.addExtraCardToDealer()).isFalse();
         }
     }
 
@@ -122,9 +122,9 @@ class BlackJackManagerTest {
 
             CardDeck cardDeck = CardDeck.createCardDeck();
             List<Participant> participants = List.of(dealer, player1, player2, player3);
-            BlackJackManager manager = new BlackJackManager(cardDeck, participants);
+            BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
-            Map<GameResult, Integer> result = manager.calculateStatisticsForDealer();
+            Map<GameResult, Integer> result = game.calculateStatisticsForDealer();
             assertAll(() -> {
                 assertThat(result.get(GameResult.WIN)).isEqualTo(2);
                 assertThat(result.get(GameResult.LOSE)).isEqualTo(1);

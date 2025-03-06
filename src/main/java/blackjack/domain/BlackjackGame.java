@@ -6,17 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BlackJackManager {
+public class BlackjackGame {
 
     private final CardDeck cardDeck;
     private final List<Participant> participants;
 
-    public BlackJackManager(CardDeck cardDeck, List<Participant> participants) {
+    public BlackjackGame(CardDeck cardDeck, List<Participant> participants) {
         this.cardDeck = cardDeck;
         this.participants = participants;
     }
 
-    public static BlackJackManager createByPlayerNames(List<String> names) {
+    public static BlackjackGame createByPlayerNames(List<String> names) {
         CardDeck cardDeck = CardDeck.createCardDeck();
 
         List<Participant> participants = new ArrayList<>();
@@ -25,7 +25,7 @@ public class BlackJackManager {
             Player player = new Player(name);
             participants.add(player);
         }
-        return new BlackJackManager(cardDeck, participants);
+        return new BlackjackGame(cardDeck, participants);
     }
 
     public void initCardsToParticipants() {

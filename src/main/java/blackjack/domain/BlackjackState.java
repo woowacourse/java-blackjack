@@ -1,11 +1,11 @@
 package blackjack.domain;
 
-public enum BlackJackState {
+public enum BlackjackState {
     BLACKJACK(),
     BUST(),
     OTHERS();
 
-    public static BlackJackState of(Participant participant) {
+    public static BlackjackState of(Participant participant) {
         int cardSum = participant.calculateDenominations();
         if (participant.hasTwoCards() && cardSum == 21) {
             return BLACKJACK;

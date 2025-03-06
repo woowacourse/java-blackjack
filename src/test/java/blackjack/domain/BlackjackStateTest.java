@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 
 @Nested
-public class BlackJackStateTest {
+public class BlackjackStateTest {
 
     @Nested
     @DisplayName("참가자 결과 상태 테스트")
@@ -23,7 +23,7 @@ public class BlackJackStateTest {
             Card card2 = new Card(Suit.CLUB, Denomination.ACE);
             player.addCards(card1, card2);
 
-            assertThat(BlackJackState.of(player)).isEqualTo(BlackJackState.BLACKJACK);
+            assertThat(BlackjackState.of(player)).isEqualTo(BlackjackState.BLACKJACK);
         }
 
         @Test
@@ -36,7 +36,7 @@ public class BlackJackStateTest {
             Card card3 = new Card(Suit.CLUB, Denomination.JACK);
             player.addCards(card1, card2, card3);
 
-            assertThat(BlackJackState.of(player)).isEqualTo(BlackJackState.BUST);
+            assertThat(BlackjackState.of(player)).isEqualTo(BlackjackState.BUST);
         }
 
         @Test
@@ -48,7 +48,7 @@ public class BlackJackStateTest {
             Card card2 = new Card(Suit.CLUB, Denomination.TWO);
             player.addCards(card1, card2);
 
-            assertThat(BlackJackState.of(player)).isEqualTo(BlackJackState.OTHERS);
+            assertThat(BlackjackState.of(player)).isEqualTo(BlackjackState.OTHERS);
         }
     }
 }
