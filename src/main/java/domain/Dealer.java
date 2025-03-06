@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Comparator;
+import java.util.List;
 
 public class Dealer {
 
@@ -17,6 +18,10 @@ public class Dealer {
         return cards.getCards().stream()
                 .min(Comparator.comparingInt(card -> card.getNumber().getValue()))
                 .orElse(cards.getCards().getFirst());
+    }
+
+    public List<Card> openCards() {
+        return cards.getCards();
     }
 
     public boolean isSumUnderSixteen() {
