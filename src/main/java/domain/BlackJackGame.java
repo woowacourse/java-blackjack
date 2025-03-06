@@ -7,28 +7,30 @@ public class BlackJackGame {
 
     private final Deck deck;
     private final Dealer dealer;
+    private final Rule rule;
 
-    public BlackJackGame(Deck deck, Dealer dealer) {
-        validate(deck, dealer);
+    public BlackJackGame(Deck deck, Dealer dealer, Rule rule) {
+        validate(deck, dealer, rule);
         this.deck = deck;
         this.dealer = dealer;
+        this.rule = rule;
     }
 
-    private void validate(Deck deck, Dealer dealer) {
-        validateNotNull(deck, dealer);
+    private void validate(Deck deck, Dealer dealer, Rule rule) {
+        validateNotNull(deck, dealer, rule);
     }
 
-    private void validateNotNull(Deck deck, Dealer dealer) {
-        if (deck == null || dealer == null) {
-            throw new IllegalStateException("블랙잭게임은 덱과 딜러를 가지고 있어야합니다.");
+    private void validateNotNull(Deck deck, Dealer dealer, Rule rule) {
+        if (deck == null || dealer == null || rule == null) {
+            throw new IllegalStateException("블랙잭게임은 덱과 딜러와 룰을 가지고 있어야합니다.");
         }
     }
 
     public static BlackJackGame create() {
         Deck deck = initializeDeck();
         Dealer dealer = initializeDealer(deck);
-
-        return new BlackJackGame(deck, dealer);
+        Rule rule = initializeRule();
+        return new BlackJackGame(deck, dealer, rule);
     }
 
     private static Deck initializeDeck() {
@@ -40,6 +42,10 @@ public class BlackJackGame {
 
     private static Dealer initializeDealer(Deck deck) {
         return new Dealer(Hand.of(deck.draw(), deck.draw()));
+    }
+
+    private static Rule initializeRule() {
+        return new Rule();
     }
 
     public List<Player> createPlayers(List<String> names) {
@@ -58,39 +64,31 @@ public class BlackJackGame {
         deck.shuffle();
     }
 
-    public boolean isPlayerHitAllowed(Player player) {
-        Hand hand = player.getHand();
-        List<TrumpCard> cards = hand.getCards();
-        Score score = Score.from(cards);
-
-        return score != Score.BUST && score != Score.BLACKJACK;
+    public boolean isPlayerHitAllowed(List<TrumpCard> playerCards) {
+        return rule.isPlayerHitAllowed(playerCards);
     }
 
     public void processPlayerHit(Player player) {
+        Hand hand = player.getHand();
+        List<TrumpCard> cards = hand.getCards();
+
+        if (!isPlayerHitAllowed(cards)) {
+            throw new IllegalStateException("플레이어는 더이상 히트할 수 없습니다.");
+        }
+
         player.receiveCard(deck.draw());
     }
 
     public int processDealerHit() {
         int hitCount = 0;
+        Hand hand = dealer.getHand();
+        List<TrumpCard> cards = hand.getCards();
 
-        while (isDealerHitAllowed()) {
+        while (rule.isDealerHitAllowed(cards)) {
             dealer.receiveCard(deck.draw());
             hitCount++;
         }
 
         return hitCount;
-    }
-
-    private boolean isDealerHitAllowed() {
-        Hand hand = dealer.getHand();
-        Score score = Score.from(hand.getCards());
-
-        return score != Score.BUST
-                && score != Score.BLACKJACK
-                && score != Score.SEVENTEEN
-                && score != Score.EIGHTEEN
-                && score != Score.NINETEEN
-                && score != Score.TWENTY
-                && score != Score.TWENTY_ONE;
     }
 }
