@@ -17,7 +17,5 @@ public class Dealer extends Player {
         return getCards().calculateTotalPoint() <= HIT_THRESHOLD;
     }
 
-    private boolean canDraw() {
-        return getCards().calculateTotalPoint() <= DRAW_THRESHOLD;
-    }
+
 }
