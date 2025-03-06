@@ -1,4 +1,4 @@
-package blackjack.testutil;
+package blackjack.test_util;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.CardDrawer;

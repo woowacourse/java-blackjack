@@ -22,15 +22,15 @@ public final class Deck implements CardHandInitializer, CardDrawer {
     }
     
     @Override
+    public List<Card> init() {
+        return List.of(draw(), draw());
+    }
+    
+    @Override
     public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드는 총 52장입니다.");
         }
         return cards.poll();
-    }
-    
-    @Override
-    public List<Card> init() {
-        return List.of(draw(), draw());
     }
 }

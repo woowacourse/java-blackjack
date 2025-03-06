@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.testutil.ReaderStub;
-import blackjack.testutil.WriterStub;
+import blackjack.test_util.ReaderStub;
+import blackjack.test_util.WriterStub;
 import blackjack.view.writer.SystemWriter;
 import org.junit.jupiter.api.Test;
 

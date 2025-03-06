@@ -1,4 +1,4 @@
-package blackjack.testutil;
+package blackjack.test_util;
 
 import blackjack.view.reader.Reader;
 

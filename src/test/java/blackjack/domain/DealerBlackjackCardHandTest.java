@@ -3,14 +3,13 @@ package blackjack.domain;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static blackjack.testutil.TestConstants.*;
+import static blackjack.test_util.TestConstants.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.deck.Deck;
-import blackjack.testutil.CardDrawerStub;
-import org.assertj.core.api.Assertions;
+import blackjack.test_util.CardDrawerStub;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,13 +29,13 @@ public class DealerBlackjackCardHandTest {
 
     @Test
     void 딜러_손패_숫자의_합이_16_이하인_경우_카드를_뽑는다() {
-        //given
+        // given
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(List::of);
 
-        //when
+        // when
         DealerBlackjackCardHand.startAdding(new Deck());
 
-        //then
+        // then
         assertThat(DealerBlackjackCardHand.getCards().size()).isGreaterThanOrEqualTo(1);
     }
 
@@ -47,13 +46,13 @@ public class DealerBlackjackCardHandTest {
             List<Card> deckCards,
             int expectedSum
     ) {
-        //given
+        // given
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> initCards);
 
-        //when
+        // when
         DealerBlackjackCardHand.startAdding(new CardDrawerStub(deckCards));
 
-        //then
+        // then
         assertThat(DealerBlackjackCardHand.getBlackjackSum()).isEqualTo(expectedSum);
     }
 

@@ -16,7 +16,7 @@ public class DeckTest {
     
     @Test
     void 덱에서_카드를_한장씩_뽑을_수_있다() {
-        //given
+        // given
         final Deck deck = new Deck();
         
         // expected
@@ -25,7 +25,7 @@ public class DeckTest {
     
     @Test
     void 덱에서_52장_초과의_카드를_뽑으면_예외가_발생한다() {
-        //given
+        // given
         final Deck deck = new Deck();
         for (int i = 0; i < 52; i++) {
             deck.draw();
@@ -38,7 +38,7 @@ public class DeckTest {
     
     @Test
     void 덱에서_뽑은_카드들_중에는_중복된_카드가_없어야_한다() {
-        //given
+        // given
         final Deck deck = new Deck();
         final EnumMap<CardNumber, Integer> numberCount = getNumberMap();
         final EnumMap<CardShape, Integer> shapeCount = getShapeMap();

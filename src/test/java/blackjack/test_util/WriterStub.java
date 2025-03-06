@@ -1,4 +1,4 @@
-package blackjack.testutil;
+package blackjack.test_util;
 
 import java.util.ArrayList;
 import java.util.List;
