@@ -5,23 +5,41 @@ public enum GameResultStatus {
     DRAW,
     LOSE;
 
+    private static final int BLACKJACK_BUST_THRESHOLD = 22;
+
     public static GameResultStatus calculate(int dealerSum, int playerSum) {
-        if (dealerSum >= 22 && playerSum >= 22) {
-            return GameResultStatus.DRAW;
+        if (isBothBust(dealerSum, playerSum)) {
+            return DRAW;
         }
-        if(dealerSum >= 22) {
-            return GameResultStatus.WIN;
+        if (isDealerBust(dealerSum)) {
+            return WIN;
         }
-        if(playerSum >= 22) {
-            return GameResultStatus.LOSE;
+        if (isPlayerBust(playerSum)) {
+            return LOSE;
         }
-        if(playerSum > dealerSum) {
-            return GameResultStatus.WIN;
+        return compareHands(dealerSum, playerSum);
+    }
+
+    private static boolean isBothBust(int dealerSum, int playerSum) {
+        return isDealerBust(dealerSum) && isPlayerBust(playerSum);
+    }
+
+    private static boolean isDealerBust(int dealerSum) {
+        return dealerSum >= BLACKJACK_BUST_THRESHOLD;
+    }
+
+    private static boolean isPlayerBust(int playerSum) {
+        return playerSum >= BLACKJACK_BUST_THRESHOLD;
+    }
+
+    private static GameResultStatus compareHands(int dealerSum, int playerSum) {
+        if (playerSum > dealerSum) {
+            return WIN;
         }
-        if(playerSum == dealerSum) {
-            return GameResultStatus.DRAW;
+        if (playerSum == dealerSum) {
+            return DRAW;
         }
-        return GameResultStatus.LOSE;
+        return LOSE;
     }
 
     public boolean isEqualTo(GameResultStatus gameResultStatus) {
