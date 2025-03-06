@@ -25,6 +25,12 @@ public class Player {
                 .forEach(cards::add);
     }
 
+    public int calculateCardNumber() {
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
+    }
+
     public String getName() {
         return name;
     }
