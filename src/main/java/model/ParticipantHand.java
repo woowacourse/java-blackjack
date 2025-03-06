@@ -9,31 +9,17 @@ public class ParticipantHand {
     public ParticipantHand(){
         this.cards = new ArrayList<>();
     }
-    public ParticipantHand(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public int calculateScoreSum() {
-        //TODO : ace에 대한 상황을 덜 고려함
-        return cards.stream()
-                .mapToInt(card -> card.getCardRankValue())
-                .sum();
-    }
 
     public void add(Card card) {
         cards.add(card);
     }
 
-    public Card getFirstHand(){
-        return cards.getFirst();
-    }
-
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public boolean checkBurst() {
-        return calculateScoreSum() > 21;
+        return calculateScoreWithAceAsOne() > 21;
+    }
+
+    public boolean checkScoreBelow(int upperBound) {
+        return calculateScoreWithAceAsOne() <= upperBound;
     }
 
     public boolean isAceElevenPossible() {
@@ -50,9 +36,19 @@ public class ParticipantHand {
     public int calculateFinalScore() {
         if (isAceElevenPossible()){
             //TODO : 코드의 의미가 읽히지 않음. 상수화 말고도 개선 방법이 있을까?
-            return calculateScoreSum() + 10;
+            return calculateScoreWithAceAsOne() + 10;
         }
-        return calculateScoreSum();
+        return calculateScoreWithAceAsOne();
+    }
+
+    public Card getFirstHand(){
+        return cards.getFirst();
+    }
+
+    private int calculateScoreWithAceAsOne() {
+        return cards.stream()
+                .mapToInt(Card::getCardRankValue)
+                .sum();
     }
 
     private boolean checkScoreExceptAceBelow(int upperBound) {
@@ -66,5 +62,9 @@ public class ParticipantHand {
         return (int) cards.stream()
                 .filter(card -> card.getCardRank() == CardRank.ACE)
                 .count();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
