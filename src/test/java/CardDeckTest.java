@@ -34,7 +34,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.createCards();
 
         //when
-        Card actual = cardDeck.drawCard();
+        cardDeck.drawCard();
 
         //then
         assertThat(cardDeck.getDeck()).hasSize(51);
