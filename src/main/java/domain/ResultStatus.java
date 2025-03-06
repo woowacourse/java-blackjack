@@ -18,34 +18,37 @@ public enum ResultStatus {
     public static Map<Player, ResultStatus> judgeGameResult(Players players, Dealer dealer) {
         Map<Player, ResultStatus> result = new HashMap<>();
 
-        Map<Player, Integer> totalNumberSumByName = players.getTotalNumberSumByName();
-        for (Player player : totalNumberSumByName.keySet()) {
-            if (player.checkExceedTwentyOne()) {
-                result.put(player, ResultStatus.LOSE);
-                continue;
-            }
-
-            if (dealer.checkExceedTwentyOne()) {
-                result.put(player, ResultStatus.WIN);
-                continue;
-            }
-
-            int dealerAbs = dealer.calculateDifferenceFromTwentyOne();
-            int playerAbs = player.calculateDifferenceFromTwentyOne();
-            if (playerAbs > dealerAbs) {
-                result.put(player, ResultStatus.LOSE);
-                continue;
-            }
-
-            if (playerAbs == dealerAbs) {
-                result.put(player, ResultStatus.PUSH);
-                continue;
-            }
-
-            result.put(player, ResultStatus.WIN);
-
+        Map<Player, Integer> totalNumberSumByPlayer = players.getTotalNumberSumByPlayer();
+        for (Player player : totalNumberSumByPlayer.keySet()) {
+            judgeGameResultByPlayer(dealer, player, result);
         }
         return result;
+    }
+
+    private static void judgeGameResultByPlayer(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
+        if (player.checkExceedTwentyOne()) {
+            result.put(player, ResultStatus.LOSE);
+            return;
+        }
+        if (dealer.checkExceedTwentyOne()) {
+            result.put(player, ResultStatus.WIN);
+            return;
+        }
+        compareDifference(dealer, player, result);
+    }
+
+    private static void compareDifference(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
+        int dealerAbs = dealer.calculateDifferenceFromTwentyOne();
+        int playerAbs = player.calculateDifferenceFromTwentyOne();
+        if (playerAbs > dealerAbs) {
+            result.put(player, ResultStatus.LOSE);
+            return;
+        }
+        if (playerAbs == dealerAbs) {
+            result.put(player, ResultStatus.PUSH);
+            return;
+        }
+        result.put(player, ResultStatus.WIN);
     }
 
     public static Map<ResultStatus, Integer> initMap() {

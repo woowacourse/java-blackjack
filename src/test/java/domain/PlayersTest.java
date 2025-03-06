@@ -30,7 +30,7 @@ public class PlayersTest {
         Players players = new Players(List.of(drago, duei));
         Map<Player, Integer> expected = Map.of(drago, 22, duei, 20);
 
-        assertThat(players.getTotalNumberSumByName()).isEqualTo(expected);
+        assertThat(players.getTotalNumberSumByPlayer()).isEqualTo(expected);
     }
 
     @Test

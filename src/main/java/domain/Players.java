@@ -15,7 +15,7 @@ public class Players {
         this.players = players;
     }
 
-    public Map<Player, Integer> getTotalNumberSumByName() {
+    public Map<Player, Integer> getTotalNumberSumByPlayer() {
         return players.stream()
                 .collect(Collectors.toMap(player -> player, Player::getTotalNumberSum));
     }
