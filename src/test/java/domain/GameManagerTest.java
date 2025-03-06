@@ -74,7 +74,7 @@ public class GameManagerTest {
         final GameManager gameManager = GameManager.create(dealer,players);
 
 
-        assertThatCode(() -> gameManager.giveCardToPlayer(player)).doesNotThrowAnyException();;
+        assertThatCode(() -> gameManager.giveCardToGamer(player)).doesNotThrowAnyException();;
     }
 
     @Test
@@ -92,10 +92,10 @@ public class GameManagerTest {
         //when
         final GameManager gameManager = GameManager.create(dealer, players);
         gameManager.receiveCardToDealer();
-        gameManager.giveCardToPlayer(players.getFirst());
-        gameManager.giveCardToPlayer(players.getFirst());
-        gameManager.giveCardToPlayer(players.get(1));
-        gameManager.giveCardToPlayer(players.get(1));
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
         final GameResult gameResult1 = gameManager.calculateResult(0);
         final GameResult gameResult2 = gameManager.calculateResult(1);
 
@@ -120,13 +120,13 @@ public class GameManagerTest {
         //when
         final GameManager gameManager = GameManager.create(dealer, players);
         gameManager.receiveCardToDealer();
-        gameManager.giveCardToPlayer(players.getFirst());
-        gameManager.giveCardToPlayer(players.getFirst());
-        gameManager.giveCardToPlayer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
 
-        gameManager.giveCardToPlayer(players.get(1));
-        gameManager.giveCardToPlayer(players.get(1));
-        gameManager.giveCardToPlayer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
         final GameResult gameResult1 = gameManager.calculateResult(0);
         final GameResult gameResult2 = gameManager.calculateResult(1);
 
@@ -137,12 +137,63 @@ public class GameManagerTest {
 
     @Test
     void 딜러와_플레이어의_점수가_같은_경우_무승부(){
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
 
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("가이온",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        gameManager.receiveCardToDealer();
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
+
+        final GameResult gameResult1 = gameManager.calculateResult(0);
+        final GameResult gameResult2 = gameManager.calculateResult(1);
+
+        //then
+        assertThat(gameResult1).isEqualTo(GameResult.DRAW);
+        assertThat(gameResult2).isEqualTo(GameResult.DRAW);
     }
 
     @Test
     void 딜러와_플레이어가_서로_버스트한_경우_무승부(){
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
 
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new FaceCardGenerator()),
+                new Player("가이온",cardGroup2,new FaceCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        gameManager.receiveCardToDealer();
+        gameManager.giveCardToGamer(dealer);
+
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
+
+        final GameResult gameResult1 = gameManager.calculateResult(0);
+        final GameResult gameResult2 = gameManager.calculateResult(1);
+
+        //then
+        assertThat(gameResult1).isEqualTo(GameResult.DRAW);
+        assertThat(gameResult2).isEqualTo(GameResult.DRAW);
     }
-
 }
