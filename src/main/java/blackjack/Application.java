@@ -26,11 +26,16 @@ public class Application {
             OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
         }
         for (Name playerName : playerNames) {
-            if (isHit(playerName)) {
+            while (isHit(playerName)) {
                 round.distributeCards(playerName, 1);
+                OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
+                boolean isBusted = round.isPlayerBusted(playerName);
+                if (isBusted) {
+                    OutputView.printBusted(playerName);
+                    break;
+                }
             }
         }
-
     }
 
     private static boolean isHit(Name playerName) {

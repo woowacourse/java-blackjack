@@ -54,4 +54,8 @@ public class Round {
     public List<Card> getCardsByPlayer(Name name) {
         return findPlayer(name).getCards();
     }
+
+    public boolean isPlayerBusted(Name name) {
+        return findPlayer(name).isBust();
+    }
 }

@@ -21,4 +21,8 @@ public class OutputView {
                 .map(T::toString)
                 .collect(Collectors.joining(delimiter));
     }
+
+    public static void printBusted(final Name playerName) {
+        System.out.printf("[Bust] %s의 카드 합이 21을 초과하여 패배하였습니다.\n", playerName);
+    }
 }
