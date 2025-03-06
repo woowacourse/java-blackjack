@@ -8,6 +8,7 @@ public record FinalResultDto(
         List<String> cardInfos,
         int score,
         boolean isBust) {
+
     public static FinalResultDto from(Participant participant) {
         String name = participant.getName().trim();
         List<String> cardInfos = participant.getCardDeck().stream()

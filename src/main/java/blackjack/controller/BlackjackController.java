@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class BlackjackController {
     private final InputVIew inputView;
@@ -43,9 +44,9 @@ public class BlackjackController {
     }
 
     private List<Player> distributeCardToPlayers() {
-        String[] playerNames = inputView.readPlayerName();
-        List<Player> players = new ArrayList<>();
+        String[] playerNames = getPlayerNames();
 
+        List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
             CardDeck cardDeck = new CardDeck();
             cardDeck.add(cardDump.drawCard());
@@ -55,6 +56,20 @@ public class BlackjackController {
             players.add(player);
         }
         return players;
+    }
+
+    private String[] getPlayerNames() {
+        return processAndReturn(inputView::readPlayerName);
+    }
+
+    private <T> T processAndReturn(Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (Exception e) {
+                outputView.displayError(e.getMessage());
+            }
+        }
     }
 
     private Dealer distrubuteCardToDealer() {
@@ -71,18 +86,31 @@ public class BlackjackController {
     }
 
     private void checkPlayerHit(Player player) {
+        process(() -> {
+            while (true) {
+                if (!player.canTakeExtraCard()) {
+                    outputView.displayBustNotice();
+                    break;
+                }
+                String answer = inputView.readOneMoreCard(player.getName());
+                HitOption option = HitOption.from(answer);
+                if (option.isNo()) {
+                    break;
+                }
+                player.addCard();
+                outputView.displayCardInfo(DistributedCardDto.from(player));
+            }
+        });
+    }
+
+    private void process(Runnable runnable) {
         while (true) {
-            if (!player.canTakeExtraCard()) {
-                outputView.displayBustNotice();
+            try {
+                runnable.run();
                 break;
+            } catch (Exception e) {
+                outputView.displayError(e.getMessage());
             }
-            String answer = inputView.readOneMoreCard(player.getName());
-            HitOption option = HitOption.from(answer);
-            if (option.isNo()) {
-                break;
-            }
-            player.addCard();
-            outputView.displayCardInfo(DistributedCardDto.from(player));
         }
     }
 
