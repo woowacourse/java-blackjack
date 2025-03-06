@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Dealer extends Participant {
 
     private final String nickname;
@@ -20,28 +17,11 @@ public class Dealer extends Participant {
         return nickname;
     }
 
-    @Override
-    public void addCards(List<Card> findCards) {
-        super.addCards(findCards);
-    }
-
-    @Override
-    public boolean isNotBust() {
-        return super.isNotBust();
-    }
-
-    @Override
-    public List<Card> getHands() {
-        return super.getHands();
-    }
-
-    @Override
-    public int getSum() {
-        return super.getSum();
+    public ResultType compareTo(Player player) {
+        return ResultType.of(score.compareTo(player.score));
     }
 
     public boolean isNotUp() {
-        return sum < 17;
+        return score.getValue() < 17;
     }
-
 }

@@ -7,23 +7,23 @@ import java.util.Map;
 
 public abstract class Participant {
 
-    protected final List<Card> hands;
-    protected final Map<MatchResultType, Integer> matchResult;
-    protected int sum;
-    protected int aceCount;
+    private final List<Card> hands;
+    private final Map<MatchType, Integer> matchResult;
+    private int aceCount;
+    protected Score score;
 
     protected Participant() {
         this.hands = new ArrayList<>();
         this.matchResult = new HashMap<>();
-        this.sum = 0;
+        this.score = new Score(0);
         this.aceCount = 0;
     }
 
     public void addCards(final List<Card> findCards) {
         hands.addAll(findCards);
-        sum += findCards.stream()
+        this.score = score.plus(findCards.stream()
                 .mapToInt(card -> findScore(card.getRank().getScore()))
-                .sum();
+                .sum());
         aceCount += (int) findCards.stream()
                 .filter(o -> o.getRank().equals(RankType.ACE))
                 .count();
@@ -31,12 +31,12 @@ public abstract class Participant {
 
     public boolean isNotBust() {
 
-        while (aceCount > 0 && sum > 21) {
-            sum -= 10;
+        while (aceCount > 0 && score.getValue() > 21) {
+            this.score = score.minus(10);
             aceCount--;
         }
 
-        return sum <= 21;
+        return score.getValue() <= 21;
     }
 
     private int findScore(List<Integer> score) {
@@ -50,7 +50,15 @@ public abstract class Participant {
     }
 
     public int getSum() {
-        return sum;
+        return score.getValue();
     }
 
+    public void updateResult(MatchType type) {
+        matchResult.computeIfAbsent(type, k -> 0);
+        matchResult.put(type, matchResult.get(type) + 1);
+    }
+
+    public Map<MatchType, Integer> getMatchResult() {
+        return matchResult;
+    }
 }

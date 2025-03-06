@@ -1,6 +1,8 @@
 package model;
 
 import java.util.List;
+import java.util.Map;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -96,5 +98,14 @@ class DealerTest {
         // then
         System.out.println(dealer.getSum());
         Assertions.assertThat(dealer.isNotUp()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러의 게임 결과 업데이트가 잘 되는 지")
+    void dealerGameResult() {
+        Dealer dealer = Dealer.of();
+        dealer.updateResult(MatchType.WIN);
+        Map<MatchType, Integer> matchResult = dealer.getMatchResult();
+        Assertions.assertThat(matchResult.get(MatchType.WIN)).isEqualTo(1);
     }
 }

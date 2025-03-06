@@ -30,7 +30,10 @@ public class GameManager {
 
     public void calculateVictory() {
         for (Player player : players.getPlayers()) {
-
+            ResultType resultType = dealer.compareTo(player);
+            List<MatchType> matches = resultType.getMatches();
+            dealer.updateResult(matches.getFirst());
+            player.updateResult(matches.getLast());
         }
     }
 }

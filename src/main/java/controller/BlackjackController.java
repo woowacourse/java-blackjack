@@ -25,6 +25,8 @@ public class BlackjackController {
         receiveAdditionalCard(dealer, gameManager);
 
         OutputView.printResult(dealer, players);
+
+
     }
 
     private void receiveAdditionalCard(Player player,GameManager gameManager) {

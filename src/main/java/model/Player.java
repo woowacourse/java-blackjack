@@ -1,6 +1,5 @@
 package model;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -18,26 +17,6 @@ public class Player extends Participant {
     @Override
     public String getNickname() {
         return nickname.getValue();
-    }
-
-    @Override
-    public void addCards(List<Card> findCards) {
-        super.addCards(findCards);
-    }
-
-    @Override
-    public List<Card> getHands() {
-        return super.getHands();
-    }
-
-    @Override
-    public int getSum() {
-        return super.getSum();
-    }
-
-    @Override
-    public boolean isNotBust() {
-        return super.isNotBust();
     }
 
     @Override
