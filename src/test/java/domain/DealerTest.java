@@ -17,9 +17,24 @@ class DealerTest {
         dealer.hit(new Card(Rank.KING, Shape.CLOVER));
 
         // when
-        boolean expected = dealer.isMoreThanThreshold();
+        boolean expected = dealer.isMoreThanThreshold(16);
 
         // then
         assertThat(expected).isTrue();
+    }
+
+    @DisplayName("딜러의 카드가 기준을 넘지 않으면 false를 반환한다.")
+    @Test
+    void 딜러의_카드가_기준을_넘지_않으면_false를_반환한다() {
+
+        // given
+        Dealer dealer = new Dealer(new Nickname("딜러"));
+        dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
+
+        // when
+        boolean expected = dealer.isMoreThanThreshold(16);
+
+        // then
+        assertThat(expected).isFalse();
     }
 }
