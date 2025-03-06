@@ -11,7 +11,7 @@ public class DealerTest {
     @Test
     void 딜러는_게임_시작_시_두_장의_카드를_받는다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Dealer dealer = new Dealer();
 
         //when
@@ -24,7 +24,7 @@ public class DealerTest {
     @Test
     void 딜러는_한_장의_카드를_받는다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Dealer dealer = new Dealer();
 
         //when

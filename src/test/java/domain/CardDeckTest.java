@@ -1,17 +1,17 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardDeckTest {
 
     @Test
     void 모든_카드를_생성한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when & then
         assertThat(cardDeck.getDeck()).hasSize(52);
@@ -20,7 +20,7 @@ public class CardDeckTest {
     @Test
     void 카드를_1장_드로우한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when
         Card actual = cardDeck.drawCard();
@@ -33,7 +33,7 @@ public class CardDeckTest {
     @Test
     void 카드를_1장_드로우하면_덱의_카드_수가_1개_줄어든다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when
         cardDeck.drawCard();
@@ -45,7 +45,7 @@ public class CardDeckTest {
     @Test
     void 게임_시작을_위해_카드를_2장_드로우한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when
         List<Card> actual = cardDeck.drawCardWhenStart();
@@ -61,7 +61,7 @@ public class CardDeckTest {
     void 카드들을_섞는다() {
         //given
         CardShuffler cardShuffler = new CardShuffler();
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when
         List<Card> actual = cardDeck.shuffle(cardShuffler);

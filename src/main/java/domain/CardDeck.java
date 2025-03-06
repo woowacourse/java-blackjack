@@ -11,12 +11,13 @@ public class CardDeck {
 
     private final List<Card> deck;
 
-    public static CardDeck createCards() {
+    public static CardDeck createCards(CardShuffler cardShuffler) {
         List<Card> cards = Arrays.stream(Pattern.values())
                 .flatMap(pattern -> createCardNumbers().stream()
                         .map(cardNumber -> new Card(pattern, cardNumber)))
                 .collect(Collectors.toList());
-        return new CardDeck(cards);
+        List<Card> shuffleCards = cardShuffler.shuffle(cards);
+        return new CardDeck(shuffleCards);
     }
 
     private static List<CardNumber> createCardNumbers() {

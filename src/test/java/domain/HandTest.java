@@ -1,16 +1,16 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
 
     @Test
     void 카드_덱에서_카드_두_장을_받아온다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Hand hand = new Hand();
 
         //when
@@ -23,7 +23,7 @@ public class HandTest {
     @Test
     void 카드_덱에서_카드_한_장을_받아온다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Hand hand = new Hand();
 
         //when
