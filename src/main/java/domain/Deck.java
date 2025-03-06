@@ -21,4 +21,13 @@ public class Deck {
     public void giveCardTo(Participant participant) {
         participant.addCard(pick());
     }
+
+    public int countDealerDraw(Dealer dealer) {
+        int count = 0;
+        while (dealer.hasToDraw()) {
+            giveCardTo(dealer);
+            count++;
+        }
+        return count;
+    }
 }
