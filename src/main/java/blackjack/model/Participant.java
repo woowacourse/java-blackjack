@@ -16,4 +16,8 @@ public class Participant extends Player {
             throw new IllegalArgumentException("참여자 이름은 2~5글자 입니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

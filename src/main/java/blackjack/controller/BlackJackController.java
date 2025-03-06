@@ -29,8 +29,29 @@ public class BlackJackController {
             giveInitialCards(participant);
         }
         outputView.outputFirstCardDistributionResult(participants, dealer);
+        for (Participant participant : participants) {
+            inputMoreCard(participant);
+        }
+        drewDealerCard(dealer);
+        outputView.outputDealerCardFinish();
 
 
+    }
+
+    private void drewDealerCard(Dealer dealer) {
+        if (dealer.calculatePoint() <= 16) {
+            dealer.putCard(deck.drawCard());
+            drewDealerCard(dealer);
+        }
+    }
+
+    private void inputMoreCard(Participant participant) {
+        String command = inputView.inputCallOrStay(participant.getName());
+        if (command.equals("y")) {
+            participant.putCard(deck.drawCard());
+
+            inputMoreCard(participant);
+        }
     }
 
     public void giveInitialCards(Player player) {
