@@ -65,8 +65,10 @@ class DealerTest {
                 player1, GameResult.LOSE,
                 player2, GameResult.WIN
         );
+
         //when
-        Map<Participant, GameResult> actual = dealer.getGameResult(List.of(player1, player2));
+        Map<Player, GameResult> actual = dealer.getGameResult(List.of(player1, player2));
+
         //then
         assertThat(actual).isEqualTo(expected);
     }
