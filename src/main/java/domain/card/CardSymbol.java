@@ -1,10 +1,14 @@
 package domain.card;
 
 public enum CardSymbol {
-    HEART("하트"),
-    DIAMOND("다이아몬드"),
-    SPADE("스페이드"),
-    CLOVER("클로버");
+    HEART("♥"),
+    DIAMOND("◆"),
+    SPADE("♠"),
+    CLOVER("♣");
+
+    private static final String red      = "\u001B[31m" ;
+    private static final String cyan     = "\u001B[36m" ;
+    private static final String exit     = "\u001B[0m" ;
 
     private final String name;
 
@@ -13,6 +17,9 @@ public enum CardSymbol {
     }
 
     public String getName() {
-        return name;
+        if (this == CardSymbol.HEART || this == CardSymbol.DIAMOND) {
+            return red + name + exit;
+        }
+        return cyan + name + exit;
     }
 }

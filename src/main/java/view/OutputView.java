@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
+
     public void printDrawTwoCardsMessage(ParticipantResponse response) {
         System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n",
             response.dealerName(),
