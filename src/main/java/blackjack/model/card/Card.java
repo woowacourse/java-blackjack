@@ -1,10 +1,10 @@
-package blackjack.model;
+package blackjack.model.card;
 
 public class Card {
     private final CardShape shape;
     private final CardType cardType;
 
-    protected Card(CardShape shape, CardType cardType) {
+    public Card(CardShape shape, CardType cardType) {
         this.shape = shape;
         this.cardType = cardType;
     }

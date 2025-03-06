@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 public enum CardType {
     NORMAL_2(2, "2"),

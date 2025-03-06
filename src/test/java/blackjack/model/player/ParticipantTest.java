@@ -1,8 +1,11 @@
-package blackjack.model;
+package blackjack.model.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.CardShape;
+import blackjack.model.card.CardType;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {

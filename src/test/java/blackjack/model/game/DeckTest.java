@@ -1,7 +1,10 @@
-package blackjack.model;
+package blackjack.model.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.CardShape;
+import blackjack.model.card.CardType;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
