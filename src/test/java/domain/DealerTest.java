@@ -89,10 +89,10 @@ public class DealerTest {
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.SIX));
 
         //when
-        List<String> gameResult = dealer.judgeGameResult(List.of(player));
+        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of("패"));
+        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -113,10 +113,10 @@ public class DealerTest {
         playerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
 
         //when
-        List<String> gameResult = dealer.judgeGameResult(List.of(player));
+        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of("패"));
+        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -136,10 +136,10 @@ public class DealerTest {
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
 
         //when
-        List<String> gameResult = dealer.judgeGameResult(List.of(player));
+        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of("승"));
+        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
     }
 
     @Test
@@ -158,10 +158,10 @@ public class DealerTest {
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         //when
-        List<String> gameResult = dealer.judgeGameResult(List.of(player));
+        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of("무"));
+        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW));
     }
 
     @Test
@@ -181,10 +181,10 @@ public class DealerTest {
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         //when
-        List<String> gameResult = dealer.judgeGameResult(List.of(player));
+        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of("패"));
+        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -204,10 +204,10 @@ public class DealerTest {
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         //when
-        List<String> gameResult = dealer.judgeGameResult(List.of(player));
+        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of("승"));
+        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
     }
 
 

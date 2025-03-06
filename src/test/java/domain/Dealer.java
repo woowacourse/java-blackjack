@@ -44,47 +44,15 @@ public class Dealer {
         return hand.getCardsCount();
     }
 
-    public List<String> judgeGameResult(List<Player> players) {
-        List<String> gameResult = new ArrayList<>();
+    public List<GameResult> judgeGameResult(List<Player> players) {
+        List<GameResult> gameResult = new ArrayList<>();
         for (Player player : players) {
             gameResult.add(judgeWin(player));
         }
         return gameResult;
     }
 
-    private String judgeWin(Player player) {
-        if (player.isOverBurstBound()) {
-            return "패";
-        }
-        if (isOverBurstBound()) {
-            return "승";
-        }
-        int playerTotalCardNumber = player.calculateTotalCardNumber();
-        int dealerTotalCardNumber = calculateTotalCardNumber();
-        if (playerTotalCardNumber < dealerTotalCardNumber) {
-            return "패";
-        }
-        if (playerTotalCardNumber > dealerTotalCardNumber) {
-            return "승";
-        }
-        if (playerTotalCardNumber == 21) {
-            return judgeBlackJack(player, playerTotalCardNumber);
-        }
-        return "무";
-    }
-
-    private String judgeBlackJack(Player player, int playerTotalCardNumber) {
-        int playerCardCount = player.getCardsCount();
-        int dealerCardCount = getCardsCount();
-        if (playerCardCount == dealerCardCount) {
-            return "무";
-        }
-        if (playerCardCount == 2) {
-            return "승";
-        }
-        if (dealerCardCount == 2) {
-            return "패";
-        }
-        throw new IllegalArgumentException("[ERROR] 승패 판정에 실패하였습니다.");
+    private GameResult judgeWin(Player player) {
+        return GameResult.of(this, player);
     }
 }
