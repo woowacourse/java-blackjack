@@ -35,4 +35,10 @@ public class OutputView {
     private String getCardInfo(TrumpCard card) {
         return card.getRank().getTitle() + card.getSuit().getTitle();
     }
+
+    public void printDealerHitInfo(int dealerHitCount) {
+        for (int i = 0; i < dealerHitCount; i++) {
+            System.out.println("딜러는 카드를 한 장 더 받았습니다.");
+        }
+    }
 }

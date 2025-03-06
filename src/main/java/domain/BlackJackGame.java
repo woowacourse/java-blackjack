@@ -84,9 +84,8 @@ public class BlackJackGame {
     public int processDealerHit() {
         int hitCount = 0;
         Hand hand = dealer.getHand();
-        List<TrumpCard> cards = hand.getCards();
 
-        while (rule.isDealerHitAllowed(cards)) {
+        while (rule.isDealerHitAllowed(hand.getCards())) {
             dealer.receiveCard(deck.draw());
             hitCount++;
         }

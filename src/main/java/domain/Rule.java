@@ -12,7 +12,6 @@ public class Rule {
     }
 
     public boolean isDealerHitAllowed(List<TrumpCard> cards) {
-
         Score score = Score.from(cards);
 
         return score.isLowerThan(Score.SEVENTEEN)
