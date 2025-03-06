@@ -18,6 +18,9 @@ public class Deck {
     }
 
     public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("남아있는 카드가 없습니다.");
+        }
         return cards.pop();
     }
 
