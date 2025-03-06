@@ -325,4 +325,58 @@ public class GameBoardTest {
                 () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.LOSE)).isFalse()
         );
     }
+
+    @Test
+    void 모두가_버스트_무승부_발생_확인() {
+        //given
+        Participant participant1 = Player.from("우가");
+        Participant participant2 = Player.from("히스타");
+        Participant dealer = Dealer.generate();
+
+        List<Participant> participants = List.of(
+                participant1,
+                participant2,
+                dealer
+        );
+
+        GameBoard gameBoard = new GameBoard(participants);
+        CardDeck cardDeck = gameBoard.getPlayingCard();
+
+        List<Card> cards = cardDeck.getCards();
+        cards.clear();
+
+        cards.add(new Card(CardNumber.TEN, CardSymbol.HEART));
+        cards.add(new Card(CardNumber.TEN, CardSymbol.DIAMOND));
+        cards.add(new Card(CardNumber.TWO, CardSymbol.SPADE));
+
+        cards.add(new Card(CardNumber.TEN, CardSymbol.HEART));
+        cards.add(new Card(CardNumber.TEN, CardSymbol.DIAMOND));
+        cards.add(new Card(CardNumber.TWO, CardSymbol.SPADE));
+
+        cards.add(new Card(CardNumber.TEN, CardSymbol.HEART));
+        cards.add(new Card(CardNumber.TEN, CardSymbol.DIAMOND));
+        cards.add(new Card(CardNumber.TWO, CardSymbol.SPADE));
+
+        gameBoard.drawCardTo(participant1);
+        gameBoard.drawCardTo(participant1);
+        gameBoard.drawCardTo(participant1);
+
+        gameBoard.drawCardTo(participant2);
+        gameBoard.drawCardTo(participant2);
+        gameBoard.drawCardTo(participant2);
+
+        gameBoard.drawCardTo(dealer);
+        gameBoard.drawCardTo(dealer);
+        gameBoard.drawCardTo(dealer);
+
+        //when
+        gameBoard.calculateBattleResult();
+
+        //then
+        assertAll(
+                () -> Assertions.assertThat(participant1.getBattleResult().containsKey(BattleResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(participant2.getBattleResult().containsKey(BattleResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.DRAW)).isTrue()
+        );
+    }
 }
