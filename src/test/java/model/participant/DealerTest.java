@@ -1,7 +1,5 @@
 package model.participant;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardType;
