@@ -75,14 +75,17 @@ public class DeckTest {
         Card card2 = new Card(CardNumber.A, CardShape.HEART);
         Deck deck = new Deck(() -> new ArrayList<>(List.of(card1, card2)));
         Dealer dealer = Dealer.of(Cards.of(
-                List.of(
-                        new Card(CardNumber.TEN, CardShape.CLOVER),
-                        new Card(CardNumber.FIVE, CardShape.CLOVER)
+                new ArrayList<>(
+                        List.of(
+                                new Card(CardNumber.TEN, CardShape.CLOVER),
+                                new Card(CardNumber.FIVE, CardShape.CLOVER)
+                        )
                 )
         ));
 
         //when
         int count = deck.countDealerDraw(dealer);
+
         //then
         assertThat(count).isEqualTo(2);
     }
