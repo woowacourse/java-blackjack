@@ -10,6 +10,7 @@ public class BlackjackWinner {
     private final DealerWinStatus dealerWinStatus;
 
     private final Map<String, WinStatus> playerWinStatuses;
+    private final int BUST_STANDARD = 21;
 
     public BlackjackWinner(BlackjackResult blackjackDealerResult, List<BlackjackResult> blackjackPlayerResults) {
         this.dealerWinStatus = calculateDealerWinStatus(blackjackDealerResult, blackjackPlayerResults);
@@ -42,20 +43,33 @@ public class BlackjackWinner {
     }
 
     private int calculateDealerWin(int dealerSum, int playerSum) {
-        if (dealerSum > playerSum) {
+        if (dealerSum > playerSum && !isBust(dealerSum)) {
+            return 1;
+        }
+        if (!isBust(dealerSum) && isBust(playerSum)) {
             return 1;
         }
         return 0;
     }
 
     private int calculateDealerLose(int dealerSum, int playerSum) {
-        if (dealerSum < playerSum) {
+        if (dealerSum < playerSum && !isBust(playerSum)) {
+            return 1;
+        }
+        if (!isBust(playerSum) && isBust(dealerSum)) {
             return 1;
         }
         return 0;
     }
 
+    private boolean isBust(int sum) {
+        return sum > BUST_STANDARD;
+    }
+
     private WinStatus calculatePlayerWinStatus(int dealerSum, int playerSum) {
+        if (dealerSum > BUST_STANDARD && playerSum > BUST_STANDARD) {
+            return WinStatus.DRAW;
+        }
         if (dealerSum < playerSum) {
             return WinStatus.WIN;
         }
