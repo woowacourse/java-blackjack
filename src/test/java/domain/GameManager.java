@@ -14,7 +14,6 @@ public class GameManager {
     private final Dealer dealer;
     private final List<Player> players;
 
-
     public GameManager(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
@@ -39,5 +38,10 @@ public class GameManager {
 
     private static List<Card> generateCards(final CardGenerator cardGenerator) {
         return List.of(cardGenerator.generate(), cardGenerator.generate());
+    }
+
+
+    public boolean isHitting(Player player) {
+        return false;
     }
 }
