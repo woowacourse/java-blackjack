@@ -1,0 +1,28 @@
+package domain;
+
+public class Nickname {
+
+    private final String nickname;
+
+    public Nickname(String nickname) {
+        validateNickNameLength(nickname);
+        validateNonBlank(nickname);
+        this.nickname = nickname;
+    }
+
+    public String getValue() {
+        return nickname;
+    }
+
+    private void validateNickNameLength(String nickname) {
+        if (nickname.length() > 10) {
+            throw new IllegalArgumentException("[ERROR] 닉네임 길이는 10자를 초과할 수 없습니다.");
+        }
+    }
+    
+    private void validateNonBlank(String nickname) {
+        if (nickname.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 닉네임은 빈 값을 입력할 수 없습니다.");
+        }
+    }
+}
