@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +13,8 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public List<Integer> getCardNumbers() {
-        return cardNumber.getNumbers();
+    public List<Integer> getPoints() {
+        return cardNumber.getPoints();
     }
 
     public CardType getCardType() {

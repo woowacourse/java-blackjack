@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +19,7 @@ class CardsTest {
         );
         List<Integer> expected = List.of(13, 23);
 
-        assertThat(cards.sumAll()).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(cards.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @CsvSource(value = {"2,true", "1,false"})

@@ -1,10 +1,14 @@
-package blackjack.model;
+package blackjack.model.game;
 
-import static blackjack.model.CardCreator.createCard;
-import static org.assertj.core.api.Assertions.assertThat;
-
+import static blackjack.model.card.CardCreator.createCard;
+import blackjack.model.card.CardDeck;
+import blackjack.model.card.CardNumber;
+import blackjack.model.card.Cards;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Player;
+import blackjack.model.player.User;
 import java.util.List;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,7 +28,7 @@ class BlackJackGameTest {
 
         Dealer dealer = new Dealer("딜러");
 
-        assertThat(blackJackGame.drawCard(dealer)).isEqualTo(expected);
+        assertThat(blackJackGame.drawMoreCard(dealer)).isEqualTo(expected);
         assertThat(dealer.getCards().getValues()).hasSize(expectedSize);
     }
 
@@ -42,20 +46,20 @@ class BlackJackGameTest {
 
         blackJackGame.dealInitialCards(players);
 
-        assertThat(dealer.cards.getValues()).hasSize(2);
-        assertThat(user.cards.getValues()).hasSize(2);
+        assertThat(dealer.getCards().getValues()).hasSize(2);
+        assertThat(user.getCards().getValues()).hasSize(2);
     }
 
     private static class FakeRule extends Rule {
 
-        private boolean shouldDealerDraw;
+        private final boolean shouldDealerDraw;
 
         public FakeRule(boolean shouldDealerDraw) {
             this.shouldDealerDraw = shouldDealerDraw;
         }
 
         @Override
-        public boolean canPlayerDrawMoreCard(final Player player) {
+        public boolean canDrawMoreCard(final Player player) {
             return shouldDealerDraw;
         }
 

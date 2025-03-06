@@ -1,18 +1,17 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.stream.IntStream;
 
 public class Cards {
 
-    private final Queue<Card> values;
+    private final List<Card> values;
 
     public Cards(final List<Card> values) {
-        this.values = new LinkedList<>(values);
+        this.values = new ArrayList<>(values);
     }
 
     private Cards() {
@@ -23,21 +22,20 @@ public class Cards {
         return new Cards();
     }
 
-    public List<Integer> sumAll() {
-        List<Integer> result = new ArrayList<>();
-        dfs(result, 0, 0);
+    public List<Integer> calculatePossiblePoints() {
+        List<Integer> possiblePoints = new ArrayList<>();
+        addPossiblePoint(possiblePoints, 0, 0);
 
-        return result;
+        return possiblePoints;
     }
 
-    public void dfs(List<Integer> result, int index, int sum) {
+    private void addPossiblePoint(List<Integer> possiblePoints, int index, int sum) {
         if (index == values.size()) {
-            result.add(sum);
+            possiblePoints.add(sum);
             return;
         }
-        List<Card> listValues = new ArrayList<>(values);
-        for (int number : listValues.get(index).getCardNumbers()) {
-            dfs(result, index + 1, sum + number);
+        for (int point : values.get(index).getPoints()) {
+            addPossiblePoint(possiblePoints, index + 1, sum + point);
         }
     }
 
@@ -49,15 +47,15 @@ public class Cards {
         this.values.addAll(otherCards.values);
     }
 
-    public List<Card> getValues() {
-        return List.copyOf(values);
-    }
-
     public List<Card> pick(final int size) {
         validatePickSize(size);
         List<Card> cards = new ArrayList<>(size);
         IntStream.range(0, size)
-                .forEach(i -> cards.add(values.poll()));
+                .forEach(index -> {
+                            cards.add(values.getLast());
+                            values.removeLast();
+                        }
+                );
 
         return cards;
     }
@@ -66,6 +64,10 @@ public class Cards {
         if (values.size() < size) {
             throw new IllegalArgumentException("남은 카드가 부족합니다.");
         }
+    }
+
+    public List<Card> getValues() {
+        return List.copyOf(values);
     }
 
     @Override

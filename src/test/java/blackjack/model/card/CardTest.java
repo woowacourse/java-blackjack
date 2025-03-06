@@ -1,7 +1,6 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 
 class CardTest {

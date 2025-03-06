@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.player;
 
 public class User extends Player {
 

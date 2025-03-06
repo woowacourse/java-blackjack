@@ -1,5 +1,7 @@
-package blackjack.model;
+package blackjack.model.player;
 
+import blackjack.model.card.Cards;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,8 +17,12 @@ public abstract class Player {
         this.role = role;
     }
 
-    public List<Integer> calculateSumOfCards() {
-        return cards.sumAll();
+    public List<Integer> calculatePossiblePoints() {
+        return cards.calculatePossiblePoints();
+    }
+
+    public int getMinimumPoint() {
+        return Collections.min(cards.calculatePossiblePoints());
     }
 
     public void receiveCards(final Cards cards) {

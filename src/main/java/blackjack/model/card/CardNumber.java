@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ public enum CardNumber {
     QUEEN(List.of(10)),
     KING(List.of(10));
 
-    private final List<Integer> numbers;
+    private final List<Integer> points;
 
-    CardNumber(List<Integer> numbers) {
-        this.numbers = numbers;
+    CardNumber(List<Integer> points) {
+        this.points = points;
     }
 
-    public List<Integer> getNumbers() {
-        return numbers;
+    public List<Integer> getPoints() {
+        return points;
     }
 }

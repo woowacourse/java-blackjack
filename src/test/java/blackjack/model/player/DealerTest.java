@@ -1,6 +1,8 @@
-package blackjack.model;
+package blackjack.model.player;
 
-import static blackjack.model.CardCreator.createCard;
+import static blackjack.model.card.CardCreator.createCard;
+import blackjack.model.card.CardNumber;
+import blackjack.model.card.Cards;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,7 @@ class DealerTest {
         ));
         List<Integer> expected = List.of(9, 19);
 
-        assertThat(dealer.calculateSumOfCards()).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(dealer.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @Test

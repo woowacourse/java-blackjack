@@ -1,13 +1,18 @@
-package blackjack.model;
+package blackjack.model.game;
 
-import static blackjack.model.CardCreator.createCard;
-import static org.assertj.core.api.Assertions.assertThat;
-
+import blackjack.model.card.Card;
+import static blackjack.model.card.CardCreator.createCard;
+import blackjack.model.card.CardNumber;
+import blackjack.model.card.Cards;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Player;
+import blackjack.model.player.Role;
+import blackjack.model.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -214,7 +219,7 @@ class RuleTest {
         Dealer dealer = new Dealer("딜러");
         dealer.receiveCards(cards);
 
-        assertThat(rule.canPlayerDrawMoreCard(dealer)).isEqualTo(expected);
+        assertThat(rule.canDrawMoreCard(dealer)).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -223,7 +228,7 @@ class RuleTest {
         User user = new User("pobi");
         user.receiveCards(cards);
 
-        assertThat(rule.canPlayerDrawMoreCard(user)).isEqualTo(expected);
+        assertThat(rule.canDrawMoreCard(user)).isEqualTo(expected);
     }
 
     @MethodSource("플레이어의_점수를_계산하는_테스트_케이스")
@@ -232,7 +237,7 @@ class RuleTest {
         Player user = new User("pobi");
         user.receiveCards(cards);
 
-        assertThat(rule.calculatePoint(user)).isEqualTo(expected);
+        assertThat(rule.calculateOptimalPoint(user)).isEqualTo(expected);
     }
 
     @MethodSource("무승부_상황인지_확인하는_테스트_케이스")
@@ -257,7 +262,7 @@ class RuleTest {
     @MethodSource("게임_결과를_반환하는_테스트_케이스")
     @ParameterizedTest
     void 게임_결과를_반환한다(final Rule rule, final Player dealer, final List<Player> players,
-                         final Map<Player, List<Result>> expected) {
+                     final Map<Player, List<Result>> expected) {
         // 패패(승승), 승승(패패), 무무(무무)
         Map<Player, List<Result>> results = rule.calculateResult(dealer, players);
 
@@ -267,17 +272,17 @@ class RuleTest {
     private static class DealerWinRule extends Rule {
 
         @Override
-        public boolean isDraw(final Player player, final Player otherPlayer) {
+        public boolean isDraw(final Player player, final Player challenger) {
             return false;
         }
 
         @Override
-        public Player getWinner(final Player player, final Player otherPlayer) {
+        public Player getWinner(final Player player, final Player challenger) {
             if (player instanceof Dealer) {
                 return player;
             }
-            if (otherPlayer instanceof Dealer) {
-                return otherPlayer;
+            if (challenger instanceof Dealer) {
+                return challenger;
             }
             throw new IllegalArgumentException();
         }
@@ -287,16 +292,16 @@ class RuleTest {
     private static class DealerLoseRule extends Rule {
 
         @Override
-        public boolean isDraw(final Player player, final Player otherPlayer) {
+        public boolean isDraw(final Player player, final Player challenger) {
             return false;
         }
 
         @Override
-        public Player getWinner(final Player player, final Player otherPlayer) {
+        public Player getWinner(final Player player, final Player challenger) {
             if (player instanceof Dealer) {
-                return otherPlayer;
+                return challenger;
             }
-            if (otherPlayer instanceof Dealer) {
+            if (challenger instanceof Dealer) {
                 return player;
             }
             throw new IllegalArgumentException();
@@ -307,7 +312,7 @@ class RuleTest {
     private static class DrawRule extends Rule {
 
         @Override
-        public boolean isDraw(final Player player, final Player otherPlayer) {
+        public boolean isDraw(final Player player, final Player challenger) {
             return true;
         }
 
