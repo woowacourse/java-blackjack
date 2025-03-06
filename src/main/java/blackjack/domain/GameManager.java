@@ -24,4 +24,8 @@ public class GameManager {
     public void dealAddCard(Player player) {
         players.dealAddCard(cardPack, player);
     }
+
+    public boolean isPlayerBust(final Player player) {
+        return players.isPlayerBust(player);
+    }
 }
