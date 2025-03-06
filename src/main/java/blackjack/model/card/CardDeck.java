@@ -2,13 +2,7 @@ package blackjack.model.card;
 
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 
-public class CardDeck {
-
-    private final Cards cards;
-
-    public CardDeck(final Cards cards) {
-        this.cards = cards;
-    }
+public record CardDeck(Cards cards) {
 
     public static CardDeck initializeFrom(final DefaultCardDeckInitializer defaultCardDeckInitializer) {
         return new CardDeck(defaultCardDeckInitializer.initialize());
@@ -18,7 +12,4 @@ public class CardDeck {
         return new Cards(cards.pick(amount));
     }
 
-    public Cards getCards() {
-        return cards;
-    }
 }

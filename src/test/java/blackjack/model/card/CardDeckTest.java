@@ -18,7 +18,7 @@ class CardDeckTest {
 
         assertSoftly(softAssertions -> {
             softAssertions.assertThat(cardDeck.draw(drawSize).getValues()).hasSize(drawSize);
-            softAssertions.assertThat(cardDeck.getCards().getValues()).hasSize(0);
+            softAssertions.assertThat(cardDeck.cards().getValues()).hasSize(0);
         });
     }
 
