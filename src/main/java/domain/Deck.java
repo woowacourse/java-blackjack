@@ -17,4 +17,7 @@ public class Deck {
         cards.removeLast();
         return card;
     }
+
+    public void giveCardTo(Player player) {
+    }
 }
