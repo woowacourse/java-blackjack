@@ -92,7 +92,7 @@ public class BlackJackController {
         String playerNickname = player.getNickname();
         List<String> playerCardNames = gameBoard.getCardDeckOf(player)
                 .getCards().stream()
-                .map(card -> card.getNumber() + card.getCardSymbol())
+                .map(card -> card.getName() + card.getCardSymbol())
                 .toList();
 
         return new BlackJackResultResponse(playerNickname, playerCardNames, gameBoard.getScoreOf(player));
@@ -103,7 +103,7 @@ public class BlackJackController {
         String dealerNickname = dealer.getNickname();
         List<String> dealerCardNames = gameBoard.getCardDeckOf(dealer)
                 .getCards().stream()
-                .map(card -> card.getNumber() + card.getCardSymbol())
+                .map(card -> card.getName() + card.getCardSymbol())
                 .toList();
 
         return new BlackJackResultResponse(dealerNickname, dealerCardNames, gameBoard.getScoreOf(dealer));

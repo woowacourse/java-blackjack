@@ -1,7 +1,7 @@
 package domain.card;
 
 public enum CardNumber {
-    ACE("ACE", 1),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -11,9 +11,9 @@ public enum CardNumber {
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    JACK("JACK", 10),
-    KING("KING", 10),
-    QUEEN("QUEEN", 10);
+    JACK("JA", 10),
+    KING("K", 10),
+    QUEEN("Q", 10);
 
     private final String name;
     private final int number;
@@ -25,5 +25,9 @@ public enum CardNumber {
 
     public int getNumber() {
         return number;
+    }
+
+    public String getName() {
+        return name;
     }
 }

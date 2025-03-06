@@ -16,7 +16,7 @@ public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfPa
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
             String participantName = entry.getKey().getNickname();
             List<Card> participantCards = entry.getValue().getCards();
-            List<String> cardDisplayNames = participantCards.stream().map(card -> card.getNumber() + card.getCardSymbol()).toList();
+            List<String> cardDisplayNames = participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList();
 
             cardDeckNamesOfParticipant.put(participantName, cardDisplayNames);
         }
@@ -27,7 +27,7 @@ public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfPa
         Map<String, List<String>> cardDeckNamesOfParticipant = new HashMap<>();
 
         List<Card> participantCards = cardDeck.getCards();
-        List<String> cardDisplayNames = participantCards.stream().map(card -> card.getNumber() + card.getCardSymbol()).toList();
+        List<String> cardDisplayNames = participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList();
 
         cardDeckNamesOfParticipant.put(nickname, cardDisplayNames);
         return new CardDeckStatusResponse(cardDeckNamesOfParticipant);
