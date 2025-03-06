@@ -16,13 +16,12 @@ public class CardDeck {
     public static CardDeck of() {
         List<TrumpNumber> numbers = Arrays.stream(TrumpNumber.values()).toList();
         List<TrumpShape> shapes = Arrays.stream(TrumpShape.values()).toList();
-        Stack<Card> cards = new Stack<>();
-        for (TrumpNumber number : numbers) {
-            for (TrumpShape shape : shapes) {
-                cards.add(Card.of(number, shape));
-            }
-        }
-        return new CardDeck(cards);
+        List<Card> cards = numbers.stream()
+                .flatMap(number -> shapes.stream().map(shape -> Card.of(number, shape)))
+                .toList();
+        Stack<Card> deck = new Stack<>();
+        deck.addAll(cards);
+        return new CardDeck(deck);
     }
 
     public List<Card> getCards() {

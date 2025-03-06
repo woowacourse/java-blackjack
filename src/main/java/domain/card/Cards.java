@@ -21,21 +21,16 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int sum = 0;
-        int aceCount = 0;
-
-        for (Card card : cards) {
-            List<Integer> scores = card.getScore();
-            sum += scores.get(0);
-            if (scores.size() > 1) {
-                aceCount++;
-            }
-        }
+        int sum = cards.stream()
+                .mapToInt(card -> card.getScore().getFirst())
+                .sum();
+        long aceCount = cards.stream()
+                .filter(card -> card.getScore().size() > 1)
+                .count();
         while (aceCount > 0 && sum + 10 <= 21) {
             sum += 10;
             aceCount--;
         }
-
         return sum;
     }
 
