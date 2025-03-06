@@ -5,7 +5,10 @@ import domain.user.Player;
 import domain.user.User;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameManger {
     public final static int WIN = 1;
@@ -68,5 +71,22 @@ public class GameManger {
         return MOO;
     }
 
+    public Map<User, Integer> createGameResult() {
+        Map<User, Integer> gameResult = new LinkedHashMap<>();
+        if (dealer.isBurst()) {
+            users.forEach((user) -> putGameResultBurst(user, gameResult));
+            return gameResult;
+        }
+        users.forEach((user) -> gameResult.put(user, compare(user)));
+        return gameResult;
+    }
+
+    private void putGameResultBurst(User user, Map<User, Integer> gameResult) {
+        if (user.isBurst()) {
+            gameResult.put(user, LOSE);
+            return;
+        }
+        gameResult.put(user, WIN);
+    }
 
 }
