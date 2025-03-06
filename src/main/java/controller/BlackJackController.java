@@ -48,8 +48,37 @@ public class BlackJackController {
 
         // 딜러를 포함한 모든 참여자에게 2장의 카드 분배
         blackJackManager.start();
-
+        // 게임 시작 이후 각자의 손패를 출력
         outputView.printInitialParticipantHands(participants);
+
+        // 참가자 카드 분배 입력 기능
+        // 참가자를 앞에서부터 순회하며
+        // 각 참가자가 카드를 추가로 받을 수 있다면
+        // 카드를 받을지 여부를 입력받는다.
+        for (Participant participant : participants) {
+            if (participant instanceof Dealer) {
+                continue;
+            }
+
+            // 카드를 추가로 받을 수 있다면
+            // 카드를 받을지 여부를 입력받는다
+            boolean isPrinted = false;
+            while (!participant.isOverThan(21)) {
+                String playerWantMoreCard = inputView.inputPlayerWantMoreCard(participant);
+                if (playerWantMoreCard.equalsIgnoreCase("n")) {
+                    break;
+                }
+                // 카드를 추가로 받고 출력한다.
+                participant.addCard(cardDeck.getAndRemoveFrontCard());
+                outputView.printParticipantHand(participant);
+                isPrinted = true;
+            }
+
+            // 카드를 한 번도 받지 않은 상태라면 손패를 출력한다.
+            if (!isPrinted) {
+                outputView.printParticipantHand(participant);
+            }
+        }
     }
 
 }

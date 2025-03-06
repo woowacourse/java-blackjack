@@ -79,4 +79,14 @@ public class OutputView {
         return "";
     }
 
+    public void printParticipantHand(Participant participant) {
+        System.out.print(SPREAD_NAME_RESULT.formatted(
+                participant.getName()));
+
+        List<Card> shownCard = participant.getShownCard();
+        String cardMessage = shownCard.stream()
+                .map(this::formatCard)
+                .collect(Collectors.joining(", "));
+        System.out.println(cardMessage);
+    }
 }
