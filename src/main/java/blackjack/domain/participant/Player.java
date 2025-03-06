@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
+
 import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public class Player extends Gamer {
-
-    public static final int BLACKJACK_NUMBER = 21;
 
     private final String nickname;
 

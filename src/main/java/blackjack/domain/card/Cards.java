@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Cards {
 
-    private static final int BLACKJACK_NUMBER = 21;
+    public static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_SUBTRACT = 10;
 
     private final List<Card> cards;
