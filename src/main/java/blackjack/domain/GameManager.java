@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
@@ -21,4 +22,17 @@ public class GameManager {
     public void distributeCards() {
         cardManager.distributeCards();
     }
+
+    public void drawAdditionalCard(Player player) {
+        cardManager.addCardByNickname(player.getNickname());
+    }
+
+    public boolean isBurstPlayer(Player player) {
+        return GameRule.isBurst(cardManager.calculateSumByNickname(player.getNickname()));
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
+    }
+
 }

@@ -10,8 +10,8 @@ public class CardManager {
     private final CardDeck cardDeck;
     private final Map<Nickname, Cards> nicknameToCards = new HashMap<>();
 
-    public CardManager(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
+    public CardManager() {
+        cardDeck = CardDeck.initialize();
     }
 
     public void initialize(List<Nickname> nicknames) {
@@ -35,10 +35,6 @@ public class CardManager {
     public int calculateSumByNickname(Nickname nickname) {
         Cards cards = findCardsByNickname(nickname);
         return cards.calculateSum();
-    }
-
-    public boolean isOverLimitSumByNickname(Nickname nickname) {
-        return calculateSumByNickname(nickname) > LIMIT_POINT;
     }
 
     public void addCardByNickname(Nickname nickname) {
