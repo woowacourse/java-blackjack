@@ -1,9 +1,10 @@
-package blackjack.dto;
+package blackjack.dto.response;
 
 import java.util.List;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.dto.GamerDto;
 
 public record StartingCardsResponseDto(
     int startingCardsSize,

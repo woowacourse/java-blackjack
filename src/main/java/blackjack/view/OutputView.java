@@ -3,10 +3,10 @@ package blackjack.view;
 import java.util.stream.Collectors;
 
 import blackjack.dto.CardDto;
-import blackjack.dto.FinalResultResponseDto;
 import blackjack.dto.GamerDto;
-import blackjack.dto.RoundResultsResponseDto;
-import blackjack.dto.StartingCardsResponseDto;
+import blackjack.dto.response.FinalResultResponseDto;
+import blackjack.dto.response.RoundResultsResponseDto;
+import blackjack.dto.response.StartingCardsResponseDto;
 
 // LAST TODO 메시지 상수화
 public class OutputView {

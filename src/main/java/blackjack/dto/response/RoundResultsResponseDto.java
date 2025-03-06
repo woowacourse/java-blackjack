@@ -1,10 +1,11 @@
-package blackjack.dto;
+package blackjack.dto.response;
 
 import java.util.List;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.dto.CardDto;
 
 public record RoundResultsResponseDto(
     InnerGamer dealer,

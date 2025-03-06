@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.dto.response;
 
 import java.util.ArrayList;
 import java.util.List;

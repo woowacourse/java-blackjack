@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.dto.request;
 
 import java.util.List;
 

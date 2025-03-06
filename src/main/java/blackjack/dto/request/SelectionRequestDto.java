@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.dto.request;
 
 public record SelectionRequestDto(
     boolean selection

@@ -2,8 +2,8 @@ package blackjack.view;
 
 import java.util.Scanner;
 
-import blackjack.dto.NamesRequestDto;
-import blackjack.dto.SelectionRequestDto;
+import blackjack.dto.request.NamesRequestDto;
+import blackjack.dto.request.SelectionRequestDto;
 
 public class InputView {
 
