@@ -2,7 +2,9 @@ package view;
 
 import domain.Card;
 import domain.Game;
+import domain.GameResult;
 import domain.Player;
+import java.util.Arrays;
 import java.util.List;
 
 public class OutputView {
@@ -59,5 +61,19 @@ public class OutputView {
                 .map(Card::getNotation)
                 .toList();
         System.out.printf("%s카드: %s", name, String.join(DELIMITER, cardNotations));
+    }
+
+    public void displayGameResult(Game game) {
+        displayEmptyLine();
+        System.out.println("## 최종 승패");
+        System.out.print("딜러: ");
+        Arrays.stream(GameResult.values())
+                .filter((gameResult) -> game.getDealerGameResultCount(gameResult) != 0)
+                .forEach((gameResult) -> System.out.printf("%d%s ", game.getDealerGameResultCount(gameResult),
+                        gameResult.getName()));
+        displayEmptyLine();
+        game.getPlayers()
+                .forEach(player -> System.out.printf("%s: %s%n", player.getName(),
+                        game.getPlayerGameResult(player).getName()));
     }
 }

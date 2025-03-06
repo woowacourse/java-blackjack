@@ -43,6 +43,22 @@ public class Game {
         dealer.hit(card);
     }
 
+    public int getDealerGameResultCount(GameResult result) {
+        return dealer.getGameResultCount(result);
+    }
+
+    public GameResult getPlayerGameResult(Player player) {
+        return players.get(player);
+    }
+
+    public void calculateGameResult() {
+        for (Player player : players.keySet()) {
+            GameResult gameResult = GameResult.calculateDealerGameResult(dealer, player);
+            dealer.recordGameResult(gameResult);
+            players.put(player, GameResult.getOppositeResult(gameResult));
+        }
+    }
+
     private void registerPlayer(String playerName) {
         CardHand initialDeal = dealer.getInitialDeal();
         Player player = new Player(playerName, initialDeal);

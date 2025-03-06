@@ -15,7 +15,15 @@ public enum GameResult {
     public static GameResult calculateDealerGameResult(Dealer dealer, Player player) {
         int dealerScore = dealer.calculateScore();
         int playerScore = player.calculateScore();
-
+        if (dealer.isBust() && player.isBust()) {
+            return PUSH;
+        }
+        if (dealer.isBust()) {
+            return LOSE;
+        }
+        if (player.isBust()) {
+            return WIN;
+        }
         if (dealerScore > playerScore) {
             return WIN;
         }
@@ -23,5 +31,19 @@ public enum GameResult {
             return LOSE;
         }
         return PUSH;
+    }
+
+    public static GameResult getOppositeResult(GameResult gameResult) {
+        if (gameResult == WIN) {
+            return LOSE;
+        }
+        if (gameResult == LOSE) {
+            return WIN;
+        }
+        return PUSH;
+    }
+
+    public String getName() {
+        return name;
     }
 }

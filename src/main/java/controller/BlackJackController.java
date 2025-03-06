@@ -17,6 +17,7 @@ public class BlackJackController {
         giveAdditionalCards(game);
         giveAdditionalCardsForDealer(game);
         displayScores(game);
+        displayGameResult(game);
     }
 
     public Game startGame() {
@@ -40,6 +41,11 @@ public class BlackJackController {
 
     private void displayScores(Game game) {
         outputView.displayScore(game);
+    }
+
+    private void displayGameResult(Game game) {
+        game.calculateGameResult();
+        outputView.displayGameResult(game);
     }
 
     private void hitOrStay(Game game, Player player) {
