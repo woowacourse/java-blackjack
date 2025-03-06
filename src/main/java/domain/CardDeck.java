@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardDeck {
-    private static final int MAX_SCORE = 21;
+    public static final int MAX_SCORE = 21;
     private static final int ACE_MAX = 11;
     private static final int ACE_MIN = 1;
 
@@ -39,6 +39,11 @@ public class CardDeck {
     public boolean hasAce() {
         return cards.stream()
                 .anyMatch((card) -> card.getCardNumber() == CardNumber.ACE.getValue());
+    }
+
+    public boolean isImpossibleDraw(int maxScore) {
+        int sum = calculateScore();
+        return sum >= maxScore;
     }
 
     public boolean checkOverScore() {

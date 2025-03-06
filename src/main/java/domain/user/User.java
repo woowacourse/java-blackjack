@@ -14,6 +14,8 @@ public abstract class User {
         this.cardDeck = new CardDeck();
     }
 
+    public abstract boolean isImpossibleDraw();
+
     public void drawCard() {
         TrumpCard trumpCard = CardSetting.drawCard();
         cardDeck.addTrumpCard(trumpCard);
@@ -23,11 +25,18 @@ public abstract class User {
         return this.name.equals(name);
     }
 
+    public UserStatus checkUserStatus() {
+
+    }
     public int getSize() {
         return cardDeck.cardsSize();
     }
 
     public abstract List<TrumpCard> openCard();
+
+    public CardDeck getCardDeck() {
+        return this.cardDeck;
+    }
 
 
 }
