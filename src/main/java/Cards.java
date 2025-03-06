@@ -6,7 +6,15 @@ public class Cards {
 
     private static final int BURST_SCORE = 22;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+
+    public Cards() {
+        this.cards = new ArrayList<>();
+    }
+
+    public Cards(List<Card> cards) {
+        this.cards = cards;
+    }
 
     public void add(Card card) {
         cards.add(card);
@@ -59,6 +67,12 @@ public class Cards {
         return cards.removeLast();
     }
 
+    public List<Card> getCards() {
+        return cards.stream()
+                .map(card -> new Card(card.getSymbol(), card.getNumber()))
+                .toList();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -72,4 +86,5 @@ public class Cards {
     public int hashCode() {
         return Objects.hashCode(cards);
     }
+
 }
