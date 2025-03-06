@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,6 +36,16 @@ public class Deck {
         if (cards.stream().distinct().count() != cards.size()) {
             throw new IllegalArgumentException("덱에 중복된 카드가 있습니다.");
         }
+    }
+
+    public static Deck create() {
+        List<TrumpCard> cards = initializeCards();
+
+        return new Deck(cards);
+    }
+
+    private static ArrayList<TrumpCard> initializeCards() {
+        return new ArrayList<>(Arrays.asList(TrumpCard.values()));
     }
 
     public TrumpCard draw() {
