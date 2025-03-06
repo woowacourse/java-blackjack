@@ -12,6 +12,10 @@ public class Card {
         this.number = number;
     }
 
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
     public Number getNumber() {
         return number;
     }

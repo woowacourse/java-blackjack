@@ -9,10 +9,6 @@ public class Player extends Participant<Player>{
         super(name, cards);
     }
 
-    public String getName() {
-        return name.getName();
-    }
-
     @Override
     public Player createParticipant(List<Card> providedCards) {
         return new Player(name, cards.addCards(providedCards));

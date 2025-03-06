@@ -68,4 +68,17 @@ public class DealerTest {
 
         assertThat(dealer.getTotalNumberSum()).isEqualTo(22);
     }
+
+    @Test
+    void 딜러가_가진_첫번쨰_카드를_반환한다() {
+        Dealer dealer = new Dealer(new Cards(
+                List.of(
+                        new Card(Symbol.HEART, Number.EIGHT),
+                        new Card(Symbol.CLOVER, Number.SEVEN)
+                )));
+
+        Card expected = new Card(Symbol.HEART, Number.EIGHT);
+
+        assertThat(dealer.getInitialCard()).isEqualTo(expected);
+    }
 }

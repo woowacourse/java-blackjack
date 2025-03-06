@@ -25,4 +25,12 @@ public abstract class Participant<T extends Participant<T>> {
     }
 
     protected abstract T createParticipant(List<Card> cards);
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public Cards getCards() {
+        return cards;
+    }
 }

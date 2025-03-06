@@ -1,5 +1,4 @@
 import contoller.BlackjackController;
-import domain.GameManager;
 
 public class Application {
 

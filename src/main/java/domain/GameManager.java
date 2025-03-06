@@ -22,6 +22,10 @@ public class GameManager {
         return dealer;
     }
 
+    public List<Player> findAllPlayers() {
+        return players.findAllPlayers();
+    }
+
     public Player findPlayer(String name) {
         return players.findPlayer(name);
     }

@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +44,14 @@ public class Cards {
 
     public boolean checkExceedSixteen() {
         return totalNumberSum > 16;
+    }
+
+    public Card getInitialCard() {
+        return cards.getFirst();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     @Override

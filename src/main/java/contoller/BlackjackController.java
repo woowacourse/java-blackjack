@@ -1,8 +1,11 @@
 package contoller;
 
+import domain.Dealer;
 import domain.Deck;
 import domain.GameManager;
+import domain.Player;
 import view.InputView;
+import view.OutputView;
 
 import java.util.List;
 
@@ -17,6 +20,8 @@ public class BlackjackController {
         List<String> playerNames = InputView.readPlayerNames();
         this.gameManager = new GameManager(playerNames, new Deck());
 
-//        gameManager.findInitialCards();
+        Dealer dealer = gameManager.findDealer();
+        List<Player> allPlayers = gameManager.findAllPlayers();
+        OutputView.printInitialParticipant(dealer, allPlayers);
     }
 }

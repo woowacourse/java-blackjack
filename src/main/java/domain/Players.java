@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,10 @@ public class Players {
     public Map<String, Integer> getTotalNumberSumByName() {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, Player::getTotalNumberSum));
+    }
+
+    public List<Player> findAllPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     public Player findPlayer(String name) {

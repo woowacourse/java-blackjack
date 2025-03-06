@@ -13,6 +13,10 @@ public class Dealer extends Participant<Dealer>{
         return cards.checkExceedSixteen();
     }
 
+    public Card getInitialCard() {
+        return cards.getInitialCard();
+    }
+
     @Override
     public Dealer createParticipant(List<Card> providedCards) {
         return new Dealer(cards.addCards(providedCards));
