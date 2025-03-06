@@ -1,6 +1,7 @@
 package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,5 +55,33 @@ class CardsTest {
         )));
 
         assertThat(cards.calculateResult()).isEqualTo(22);
+    }
+
+    @DisplayName("21을 넘지 않을 경우 원한다면 얼마든지 카드를 계속 뽑을 수 있다.")
+    @Test
+    void test5() {
+        Cards cards = new Cards(new HashSet<>(Set.of(
+                new Card(CardNumber.KING, CardShape.SPADE),
+                new Card(CardNumber.QUEEN, CardShape.SPADE)))
+        );
+
+        Card cardToAdd = new Card(CardNumber.JACK, CardShape.SPADE);
+        cards.addCard(cardToAdd);
+
+        assertThat(cards.getCards()).contains(cardToAdd);
+    }
+
+    @DisplayName("21을 넘었을 때 카드를 뽑으려하면 예외를 발생시킨다.")
+    @Test
+    void test6() {
+        Cards cards = new Cards(new HashSet<>(Set.of(
+                new Card(CardNumber.KING, CardShape.SPADE),
+                new Card(CardNumber.FIVE, CardShape.SPADE),
+                new Card(CardNumber.QUEEN, CardShape.SPADE)))
+        );
+
+        Card cardToAdd = new Card(CardNumber.JACK, CardShape.SPADE);
+
+        assertThatThrownBy(() -> cards.addCard(cardToAdd));
     }
 }
