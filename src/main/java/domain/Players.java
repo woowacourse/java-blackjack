@@ -20,4 +20,14 @@ public class Players {
                         player -> player.compareTo(dealerScore)
                 ));
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getNickname)
+                .toList();
+    }
 }
