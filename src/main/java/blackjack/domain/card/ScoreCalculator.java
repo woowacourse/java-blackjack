@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static blackjack.domain.BlackjackConstants.MAX_SCORE;
 
 import java.util.List;
+import java.util.Set;
 
 public class ScoreCalculator {
 
@@ -16,7 +17,7 @@ public class ScoreCalculator {
         }
 
         Card card = cards.get(depth);
-        List<Integer> scores = card.getRank().getScore();
+        Set<Integer> scores = card.getRank().getScore();
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
         for (int score : scores) {
@@ -42,7 +43,7 @@ public class ScoreCalculator {
             return totalScore;
         }
         Card card = cards.get(depth);
-        List<Integer> scores = card.getRank().getScore();
+        Set<Integer> scores = card.getRank().getScore();
         int min = Integer.MAX_VALUE;
         for (int score : scores) {
             min = Math.min(min, minDfs(depth + 1, totalScore + score, cards));
