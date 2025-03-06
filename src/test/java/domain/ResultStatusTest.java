@@ -85,4 +85,12 @@ public class ResultStatusTest {
 
         assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
     }
+
+    @Test
+    void 게임결과_초기맵을_반환한다() {
+        Map<ResultStatus, Integer> initMap = ResultStatus.initMap();
+        Map<ResultStatus, Integer> expected = Map.of(ResultStatus.WIN, 0, ResultStatus.LOSE, 0, ResultStatus.PUSH, 0);
+
+        assertThat(initMap).isEqualTo(expected);
+    }
 }
