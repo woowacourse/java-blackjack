@@ -72,22 +72,6 @@ public class PlayerTest {
         assertThat(player.sum()).isEqualTo(12);
     }
 
-    @Test
-    @DisplayName("버스트 테스트")
-    void isBustTest(){
-        //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
-
-        //when
-        player.hitCards(dealer);
-        player.addCard(dealer);
-
-        //then
-//        assertThat(player.isBust()).isTrue();
-    }
-
     @ParameterizedTest
     @DisplayName("드로우 테스트")
     @ValueSource(strings = {"y\ny\ny\n", "y\nn\n"})
