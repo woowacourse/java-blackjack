@@ -19,7 +19,7 @@ public class CardGroup {
     private int calculateScoreWithOutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(Card::getScore)
+                .mapToInt(card -> card.getScore().getValue())
                 .sum();
     }
 

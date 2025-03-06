@@ -1,5 +1,7 @@
 package domain.card;
 
+import domain.card.CardType.Score;
+
 public class Card {
 
     private final CardType type;
@@ -8,7 +10,7 @@ public class Card {
         this.type = type;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return type.getScore();
     }
 
@@ -17,7 +19,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return type.getScore() == 1;
+        return type.getScore().getValue() == 1;
     }
 
     public int calculateAceScore(final int score, final int limit) {

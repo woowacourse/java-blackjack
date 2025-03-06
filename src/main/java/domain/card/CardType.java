@@ -80,12 +80,8 @@ public enum CardType {
         return type;
     }
 
-    public int getScore() {
-        return score.getValue();
-    }
-
-    public String getSymbol() {
-        return score.getSymbol();
+    public Score getScore() {
+        return score;
     }
 
     public enum Type {
