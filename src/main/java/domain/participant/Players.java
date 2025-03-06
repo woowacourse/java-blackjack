@@ -26,13 +26,7 @@ public class Players {
 
     public void draw(BooleanSupplier answer, Consumer<Player> playerDeck, Dealer dealer) {
         for (Player player : players) {
-            while (answer.getAsBoolean()) {
-                player.addCard(dealer);
-                playerDeck.accept(player);
-                    if(player.isBust()) {
-                        break;
-                    }
-            }
+            player.draw(answer, playerDeck, dealer);
         }
     }
 
