@@ -39,7 +39,7 @@ public class Players {
         gambler.pushDealCard(cardPack, 1);
     }
 
-    public boolean isPlayerBust(final Player player) {
-        return player.calculateCardNumber() > 21;
+    public boolean isDealerHit() {
+        return dealer.calculateCardNumber() <= 16;
     }
 }
