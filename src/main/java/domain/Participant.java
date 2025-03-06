@@ -16,6 +16,6 @@ public abstract class Participant {
     }
 
     public int calculateCardsSum() {
-        return cards.calculateSumResult();
+        return cards.calculateSum();
     }
 }

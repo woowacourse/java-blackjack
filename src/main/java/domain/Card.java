@@ -7,6 +7,18 @@ public record Card(
         CardType cardType
 ) {
 
+    public boolean isAce() {
+        return cardNumberType.isAce();
+    }
+
+    public boolean isNotAce() {
+        return cardNumberType.isNotAce();
+    }
+
+    public int getDefaultNumber() {
+        return cardNumberType.getDefaultNumber();
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {

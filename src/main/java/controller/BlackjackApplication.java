@@ -73,7 +73,7 @@ public class BlackjackApplication {
     }
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
-        if(dealer.getCards().isUnderDrawLimit()) {
+        if(dealer.isUnderDrawLimit()) {
             dealer.getCards().add(cardGiver.giveOne());
             outputView.printDealerDraw();
             return;

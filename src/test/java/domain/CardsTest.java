@@ -49,31 +49,6 @@ public class CardsTest {
         assertThat(cards.getCards()).contains(testCard);
     }
 
-    @DisplayName("카드의 합계가 16 이하이면 True를 반환한다")
-    @Test
-    void test3() {
-        //given
-        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
-                new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
-
-        //when & then
-        assertThat(cards.isUnderDrawLimit()).isTrue();
-    }
-
-    @DisplayName("카드의 합계가 16 초과이면 False를 반환한다")
-    @Test
-    void test4() {
-        //given
-        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
-                new Card(CardNumberType.ACE, CardType.DIAMOND),
-                new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
-
-        //when & then
-        assertThat(cards.isUnderDrawLimit()).isFalse();
-
-    }
 
     @DisplayName("카드의 합을 구한다")
     @Test
@@ -83,7 +58,7 @@ public class CardsTest {
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Cards cards = new Cards(testCards);
         //when
-        int sum = cards.calculateSumResult();
+        int sum = cards.calculateSum();
         //then
         assertThat(sum).isEqualTo(16);
     }
@@ -98,7 +73,7 @@ public class CardsTest {
         );
         Cards cards = new Cards(testCards);
         //when
-        int sum = cards.calculateSumResult();
+        int sum = cards.calculateSum();
         //then
         assertThat(sum).isEqualTo(12);
     }
@@ -113,7 +88,7 @@ public class CardsTest {
                 );
         Cards cards = new Cards(testCards);
         //when
-        int sum = cards.calculateSumResult();
+        int sum = cards.calculateSum();
         //then
         assertThat(sum).isEqualTo(21);
     }
@@ -128,60 +103,9 @@ public class CardsTest {
         );
         Cards cards = new Cards(testCards);
         //when
-        int sum = cards.calculateSumResult();
+        int sum = cards.calculateSum();
         //then
         assertThat(sum).isEqualTo(13);
-    }
-
-    @DisplayName("딜러의 카드 묶음이 ACE를 포함하지 않을 경우 단순 합으로 계산한다")
-    @Test
-    void test9() {
-        //given
-        List<Card> testCards = List.of(
-                new Card(CardNumberType.QUEEN, CardType.HEART),
-                new Card(CardNumberType.SIX, CardType.DIAMOND)
-        );
-        Cards cards = new Cards(testCards);
-
-        //when
-        boolean isUnderDrawLimit = cards.isUnderDrawLimit();
-
-        //then
-        assertThat(isUnderDrawLimit).isTrue();
-    }
-
-    @DisplayName("딜러의 카드 묶음이 ACE를 한 장 포함할 경우 최댓값을 합으로 간주한다")
-    @Test
-    void test11() {
-        //given
-        List<Card> testCards = List.of(
-                new Card(CardNumberType.QUEEN, CardType.HEART),
-                new Card(CardNumberType.ACE, CardType.DIAMOND)
-        );
-        Cards cards = new Cards(testCards);
-
-        //when
-        boolean isUnderDrawLimit = cards.isUnderDrawLimit();
-
-        //then
-        assertThat(isUnderDrawLimit).isFalse();
-    }
-
-    @DisplayName("딜러의 카드 묶음이 ACE를 두 장 가질 경우 추가 카드 한장을 받는다")
-    @Test
-    void test12() {
-        //given
-        List<Card> testCards = List.of(
-                new Card(CardNumberType.ACE, CardType.HEART),
-                new Card(CardNumberType.ACE, CardType.DIAMOND)
-        );
-        Cards cards = new Cards(testCards);
-
-        //when
-        boolean isUnderDrawLimit = cards.isUnderDrawLimit();
-
-        //then
-        assertThat(isUnderDrawLimit).isTrue();
     }
 
     @DisplayName("카드 묶음의 전체 카드를 추가할 수 있다")
