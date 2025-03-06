@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
 import domain.card.CardSymbol;
+import domain.participant.BattleResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameBoardTest {
 
@@ -224,5 +227,50 @@ public class GameBoardTest {
 
         //then
         Assertions.assertThat(actual).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void 승패_계산_확인() {
+        //given
+        Participant participant1 = Player.from("우가");
+        Participant participant2 = Player.from("히스타");
+        Participant dealer = Dealer.generate();
+
+        List<Participant> participants = List.of(
+                participant1,
+                participant2,
+                dealer
+        );
+
+        GameBoard gameBoard = new GameBoard(participants);
+        CardDeck cardDeck = gameBoard.getPlayingCard();
+
+        List<Card> cards = cardDeck.getCards();
+        cards.clear();
+
+        cards.add(new Card(CardNumber.ACE, CardSymbol.HEART));
+        cards.add(new Card(CardNumber.TWO, CardSymbol.DIAMOND));
+        cards.add(new Card(CardNumber.THREE, CardSymbol.SPADE));
+        cards.add(new Card(CardNumber.FOUR, CardSymbol.CLOVER));
+        cards.add(new Card(CardNumber.FIVE, CardSymbol.HEART));
+        cards.add(new Card(CardNumber.SIX, CardSymbol.DIAMOND));
+
+        gameBoard.drawCardTo(participant1);
+        gameBoard.drawCardTo(participant1);
+        gameBoard.drawCardTo(participant2);
+        gameBoard.drawCardTo(participant2);
+        gameBoard.drawCardTo(dealer);
+        gameBoard.drawCardTo(dealer);
+
+        //when
+        gameBoard.calculateBattleResult();
+
+        //then
+        assertAll(
+                () -> Assertions.assertThat(participant1.getBattleResult().containsKey(BattleResult.WIN)).isTrue(),
+                () -> Assertions.assertThat(participant2.getBattleResult().containsKey(BattleResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.WIN)).isTrue(),
+                () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.LOSE)).isTrue()
+                );
     }
 }
