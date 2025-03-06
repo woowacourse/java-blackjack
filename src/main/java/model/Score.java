@@ -1,14 +1,21 @@
 package model;
 
 public class Score implements Comparable {
+
+    private static final int BUST_CONDITION = 21;
+
     private final int value;
 
     public Score(int score) {
         this.value = score;
     }
 
+    public int compareScoreCondition() {
+        return value - BUST_CONDITION;
+    }
+
     public boolean isBust() {
-        return value > 21;
+        return compareScoreCondition() > 0;
     }
 
     @Override

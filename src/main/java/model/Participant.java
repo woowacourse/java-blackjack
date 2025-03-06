@@ -5,6 +5,8 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int ACE_OFFSET = 10;
+
     private final List<Card> hands;
     private int aceCount;
     protected Score score;
@@ -32,11 +34,11 @@ public abstract class Participant {
     public boolean isNotEnoughScoreCondition() {
 
         while (aceCount > 0 && isBust()) {
-            this.score = score.minus(10);
+            this.score = score.minus(ACE_OFFSET);
             aceCount--;
         }
 
-        return score.getValue() < 21;
+        return score.compareScoreCondition() < 0;
     }
 
     private int findScore(List<Integer> score) {

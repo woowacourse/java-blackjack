@@ -22,7 +22,7 @@ class CardDeckTest {
         // given
         // when
         // then
-        Assertions.assertThat(deck.getCards().size()).isEqualTo(52);
+        Assertions.assertThat(deck.getDeck().size()).isEqualTo(52);
     }
 
     @Test

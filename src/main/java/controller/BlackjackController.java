@@ -30,18 +30,18 @@ public class BlackjackController {
         OutputView.printResult(dealer, players);
     }
 
-    private void receiveAdditionalCard(Player player,GameManager gameManager) {
+    private void receiveAdditionalCard(Player player, GameManager gameManager) {
         while (satisfiedConditionByPlayer(player)) {
-            gameManager.divideCardByParticipant(player,1);
+            gameManager.divideCardByParticipant(player, 1);
             OutputView.printDivision(player);
-        };
+        }
     }
 
-    private void receiveAdditionalCard(Dealer dealer,GameManager gameManager) {
+    private void receiveAdditionalCard(Dealer dealer, GameManager gameManager) {
         while (satisfiedConditionByDealer(dealer)) {
-            gameManager.divideCardByParticipant(dealer,1);
+            gameManager.divideCardByParticipant(dealer, 1);
             OutputView.printDivision(dealer);
-        };
+        }
     }
 
     private boolean satisfiedConditionByPlayer(Player player) {

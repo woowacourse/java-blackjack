@@ -5,7 +5,6 @@ public class Card {
     private final SuitType suit;
     private final RankType rank;
 
-
     public Card(SuitType suit, RankType rank) {
         this.suit = suit;
         this.rank = rank;

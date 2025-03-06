@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
+    private static final String DEALER_NAME = "딜러";
+    private static final int STANDING_CONDITION = 17;
+
     private final String nickname;
     private final Map<MatchType, Integer> matchResult;
 
@@ -14,7 +17,7 @@ public class Dealer extends Participant {
     }
 
     public static Dealer of() {
-        return new Dealer("딜러");
+        return new Dealer(DEALER_NAME);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isNotUp() {
-        return score.getValue() < 17;
+        return score.getValue() < STANDING_CONDITION;
     }
 
     public void updateResult(MatchType type) {

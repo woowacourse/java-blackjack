@@ -6,13 +6,9 @@ import java.util.List;
 
 public final class CardDeck {
 
-    private final List<Card> cards;
+    private final List<Card> deck;
 
-//    static {
-//        cards = initCards();
-//    }
-
-    private static List<Card> initCards() {
+    private static List<Card> initDeck() {
         ArrayList<Card> deck = new ArrayList<>();
         for (SuitType suit : SuitType.values()) {
             for (RankType rank : RankType.values()) {
@@ -24,17 +20,17 @@ public final class CardDeck {
     }
 
     public CardDeck() {
-        cards = initCards();
+        deck = initDeck();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> getDeck() {
+        return deck;
     }
 
     public List<Card> pickCard(int amount) {
         final List<Card> findCards = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            final Card card = cards.removeFirst();
+            final Card card = deck.removeFirst();
             findCards.add(card);
         }
         return findCards;
