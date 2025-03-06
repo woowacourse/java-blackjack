@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Player {
 
     private final String name;
@@ -16,11 +18,21 @@ public class Player {
     }
 
     private void validateNotNull(String name, Hand hand) {
-        if (name == null || hand == null) {
+        if (name == null || name.isBlank() || hand == null) {
             throw new IllegalStateException("플레이어는 이름과 손패를 가져야합니다.");
         }
     }
 
+    public List<TrumpCard> retrieveInitialCards() {
+        List<TrumpCard> cards = hand.getCards();
+
+        if (cards.size() != 2) {
+            throw new IllegalStateException("플레이어는 정확히 2장의 초기 카드를 가져야 합니다.");
+        }
+
+        return cards;
+    }
+    
     public void receiveCard(TrumpCard card) {
         hand.addCard(card);
     }

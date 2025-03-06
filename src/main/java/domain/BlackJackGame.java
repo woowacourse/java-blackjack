@@ -108,4 +108,8 @@ public class BlackJackGame {
 
         return results;
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }

@@ -19,6 +19,14 @@ public class Dealer {
         }
     }
 
+    public TrumpCard retrieveFirstCard() {
+        if (hand.getCards().size() != 2) {
+            throw new IllegalStateException("딜러는 2장의 카드를 가지고 있어야 합니다.");
+        }
+
+        return hand.getCards().getFirst();
+    }
+
     public void receiveCard(TrumpCard card) {
         hand.addCard(card);
     }
