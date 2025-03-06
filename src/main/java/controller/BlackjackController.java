@@ -16,144 +16,154 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
-    private final InputView inputView;
-    private final OutputView outputView;
+	private final InputView inputView;
+	private final OutputView outputView;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-    }
+	public BlackjackController(final InputView inputView, final OutputView outputView) {
+		this.inputView = inputView;
+		this.outputView = outputView;
+	}
 
-    public void run() {
-        final List<Player> players = inputPlayers();
-        final Dealer dealer = new Dealer();
-        final Deck deck = Deck.createShuffledDeck();
+	public void run() {
+		final List<Player> players = inputPlayers();
+		final Dealer dealer = new Dealer();
+		final Deck deck = Deck.createShuffledDeck();
+		startGame(players, dealer, deck);
+	}
 
-        handOutCards(players, dealer, deck);
+	private void startGame(final List<Player> players, final Dealer dealer, final Deck deck) {
+		handOutCards(players, dealer, deck);
+		outputPickCard(players, dealer, deck);
+		outputHandResult(dealer, players);
+		duel(dealer, players);
+		outputDuelResult(dealer, players);
+	}
 
-        playerPickCard(players, deck);
-        dealerPickCard(dealer, deck);
+	private void outputHandResult(final Dealer dealer, final List<Player> players) {
+		outputDealerHandResult(dealer);
+		outputPlayersHandResult(players);
+	}
 
-        outputDealerHandResult(dealer.getParticipant());
-        outputPlayersHandResult(players);
+	private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
+		playerPickCard(players, deck);
+		dealerPickCard(dealer, deck);
+	}
 
-        duel(dealer, players);
-        outputDuelResult(dealer, players);
-    }
+	private void duel(final Dealer dealer, final List<Player> players) {
+		players.forEach(dealer::duel);
+	}
 
-    private void duel(final Dealer dealer, final List<Player> players) {
-        players.forEach(dealer::duel);
-    }
+	private void outputDuelResult(final Dealer dealer, final List<Player> players) {
+		outputView.printBlackjackDuelResultIntroduce();
+		final DuelHistory dealerHistory = dealer.getParticipant().getDuelHistory();
+		outputView.printBlackjackDealerDuelResult(dealerHistory.getWinCount() + dealerHistory.getDrawCount(),
+			dealerHistory.getLoseCount());
+		players.forEach(this::outputPlayersDuelResult);
 
-    private void outputDuelResult(final Dealer dealer, final List<Player> players) {
-        outputView.printBlackjackDuelResultIntroduce();
-        final DuelHistory dealerHistory = dealer.getParticipant().getDuelHistory();
-        outputView.printBlackjackDealerDuelResult(dealerHistory.getWinCount() + dealerHistory.getDrawCount(),
-            dealerHistory.getLoseCount());
-        players.forEach(this::outputPlayersDuelResult);
+	}
 
-    }
+	private void outputPlayersDuelResult(final Player player) {
+		final String name = player.getName();
+		final DuelHistory duelHistory = player.getParticipant().getDuelHistory();
+		outputView.printBlackjackPlayerDuelResult(name, duelHistory.getWinCount() > duelHistory.getLoseCount());
+	}
 
-    private void outputPlayersDuelResult(final Player player) {
-        final String name = player.getName();
-        final DuelHistory duelHistory = player.getParticipant().getDuelHistory();
-        outputView.printBlackjackPlayerDuelResult(name, duelHistory.getWinCount() > duelHistory.getLoseCount());
-    }
+	private List<Player> inputPlayers() {
+		final List<String> playerNames = inputView.readPlayerNames();
+		return playerNames.stream()
+			.map(Player::new)
+			.collect(Collectors.toList());
+	}
 
-    private List<Player> inputPlayers() {
-        final List<String> playerNames = inputView.readPlayerNames();
-        return playerNames.stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
-    }
+	private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
+		players.forEach(player -> {
+			player.pickCard(deck);
+			player.pickCard(deck);
+		});
+		dealer.pickCard(deck);
+		dealer.pickCard(deck);
+		outputHandOut(players, dealer);
+	}
 
-    private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
-        players.forEach(player -> {
-            player.pickCard(deck);
-            player.pickCard(deck);
-        });
-        dealer.pickCard(deck);
-        dealer.pickCard(deck);
-        outputHandOut(players, dealer);
-    }
+	private void outputHandOut(final List<Player> players, final Dealer dealer) {
+		outputView.printHandOutIntroduce(convertPlayersToNames(players));
 
-    private void outputHandOut(final List<Player> players, final Dealer dealer) {
-        final List<String> names = players.stream()
-            .map(Player::getName)
-            .collect(Collectors.toList());
-        outputView.printHandOutIntroduce(names);
+		final Participant dealerParticipant = dealer.getParticipant();
+		outputView.printDealerHandOutResult(convertedDealerCardText(dealerParticipant));
 
-        final Participant dealerParticipant = dealer.getParticipant();
-        outputView.printDealerHandOutResult(convertedDealerCardText(dealerParticipant));
+		outputView.printPlayersCard(convertPlayersToEntries(players));
+	}
 
-        final List<Map.Entry<String, List<String>>> convertedPlayers = players.stream()
-            .map(this::convertPlayerToEntry)
-            .collect(Collectors.toList());
-        outputView.printPlayersCard(convertedPlayers);
-    }
+	private static List<String> convertPlayersToNames(List<Player> players) {
+		return players.stream()
+			.map(Player::getName)
+			.collect(Collectors.toList());
+	}
 
-    private Map.Entry<String, List<String>> convertPlayerToEntry(final Player player) {
-        return new AbstractMap.SimpleEntry<>(player.getName(), convertParticipantCardText(player.getParticipant()));
-    }
+	private List<Map.Entry<String, List<String>>> convertPlayersToEntries(final List<Player> players) {
+		return players.stream()
+			.map(this::convertPlayerToEntry)
+			.collect(Collectors.toList());
+	}
 
-    private String convertedDealerCardText(final Participant dealerParticipant) {
-        final CardHand dealerHand = dealerParticipant.getCardHand();
-        final Card dealerFirstCard = dealerHand.getCards().getFirst();
-        return convertedCardText(dealerFirstCard);
-    }
+	private Map.Entry<String, List<String>> convertPlayerToEntry(final Player player) {
+		return new AbstractMap.SimpleEntry<>(player.getName(), convertParticipantCardText(player.getParticipant()));
+	}
 
-    private String convertedCardText(final Card dealerFirstCard) {
-        final String cardNumberText = CardNumberToTextConverter.convert(dealerFirstCard.number());
-        final String cardEmblemText = dealerFirstCard.emblem().getName();
-        return cardNumberText + cardEmblemText;
-    }
+	private String convertedDealerCardText(final Participant dealerParticipant) {
+		final CardHand dealerHand = dealerParticipant.getCardHand();
+		final Card dealerFirstCard = dealerHand.getCards().getFirst();
+		return convertedCardText(dealerFirstCard);
+	}
 
-    private List<String> convertParticipantCardText(final Participant dealerParticipant) {
-        return dealerParticipant.getCardHand().getCards()
-            .stream()
-            .map(this::convertedCardText)
-            .toList();
-    }
+	private String convertedCardText(final Card dealerFirstCard) {
+		final String cardNumberText = CardNumberToTextConverter.convert(dealerFirstCard.number());
+		final String cardEmblemText = dealerFirstCard.emblem().getName();
+		return cardNumberText + cardEmblemText;
+	}
 
-    private void playerPickCard(final List<Player> players, final Deck deck) {
-        for (final Player p : players) {
-            boolean isDone = false;
+	private List<String> convertParticipantCardText(final Participant dealerParticipant) {
+		return dealerParticipant.getCardHand().getCards()
+			.stream()
+			.map(this::convertedCardText)
+			.toList();
+	}
 
-            while (!isDone) {
-                isDone = true;
-                if (p.isPickCard()) {
-                    final String name = p.getName();
-                    if (inputView.readPlayerAnswer(name)) {
-                        isDone = false;
-                        p.pickCard(deck);
-                        outputView.printPlayerCards(name, convertParticipantCardText(p.getParticipant()));
-                    }
-                }
-            }
-        }
-    }
+	private void playerPickCard(final List<Player> players, final Deck deck) {
+		players.forEach(player -> ifCanPickCard(deck, player));
+	}
 
-    private void dealerPickCard(final Dealer dealer, final Deck deck) {
-        while (dealer.isPickCard()) {
-            dealer.pickCard(deck);
-            outputView.printDealerPickCard();
-        }
-    }
+	private void ifCanPickCard(Deck deck, Player p) {
+		final String name = p.getName();
+		while (p.isPickCard() && inputView.readPlayerAnswer(name)) {
+			p.pickCard(deck);
+			outputView.printPlayerCards(name, convertParticipantCardText(p.getParticipant()));
+		}
+	}
 
-    private void outputDealerHandResult(final Participant participant) {
-        final List<String> convertedCards = convertParticipantCardText(participant);
-        final int score = participant.calculateAllScore();
-        outputView.printDealerHandResult(convertedCards, score);
-    }
+	private void dealerPickCard(final Dealer dealer, final Deck deck) {
+		while (dealer.isPickCard()) {
+			dealer.pickCard(deck);
+			outputView.printDealerPickCard();
+		}
+	}
 
-    private void outputPlayersHandResult(List<Player> players) {
-        players.forEach(player -> outputPlayerHandResult(player.getName(), player.getParticipant()));
-    }
+	private void outputDealerHandResult(final Dealer dealer) {
+		final Participant participant = dealer.getParticipant();
+		final List<String> convertedCards = convertParticipantCardText(participant);
+		final int score = participant.calculateAllScore();
+		outputView.printDealerHandResult(convertedCards, score);
+	}
 
-    private void outputPlayerHandResult(final String name, final Participant participant) {
-        final List<String> convertedCards = convertParticipantCardText(participant);
-        final int score = participant.calculateAllScore();
-        outputView.printPlayerHandResult(name, convertedCards, score);
-    }
+	private void outputPlayersHandResult(List<Player> players) {
+		players.forEach(this::outputPlayerHandResult);
+	}
+
+	private void outputPlayerHandResult(final Player player) {
+		final Participant participant = player.getParticipant();
+		final List<String> convertedCards = convertParticipantCardText(participant);
+		final int score = participant.calculateAllScore();
+		outputView.printPlayerHandResult(player.getName(), convertedCards, score);
+	}
 
 }
