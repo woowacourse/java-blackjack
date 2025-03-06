@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
 import domain.constant.WinDrawLose;
-import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;

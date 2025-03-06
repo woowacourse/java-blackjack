@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
-import domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;

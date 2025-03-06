@@ -1,7 +1,5 @@
-package domain.participant;
+package domain;
 
-import domain.Card;
-import domain.Cards;
 import java.util.Comparator;
 
 public class Dealer {

@@ -1,10 +1,6 @@
-package domain.participant;
+package domain;
 
-import domain.Card;
-import domain.Cards;
-import domain.constant.TrumpNumber;
 import domain.constant.WinDrawLose;
-import java.util.List;
 
 public class Player {
 
