@@ -1,6 +1,5 @@
 package blackjack.model;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -15,10 +14,6 @@ public class Deck {
 
     public int getCardCount() {
         return cards.size();
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
     }
 
     public Card drawCard() {
