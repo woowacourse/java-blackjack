@@ -10,4 +10,8 @@ public class Player extends Participant {
         super(new ArrayList<>());
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
 }

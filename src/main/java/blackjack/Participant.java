@@ -8,7 +8,7 @@ public abstract class Participant {
 
     private final List<Card> hand;
 
-    public Participant(List<Card> hand) {
+    protected Participant(List<Card> hand) {
         this.hand = new ArrayList<>(hand);
     }
 
@@ -34,10 +34,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        if (hand.size() == 2 && getTotal() == 21) {
-            return true;
-        }
-        return false;
+        return hand.size() == 2 && getTotal() == 21;
     }
 
     public boolean isBust() {
