@@ -2,19 +2,26 @@ package domain.gamer;
 
 import domain.GameResult;
 import domain.card.Card;
+import domain.card.CardGenerator;
 import domain.card.CardGroup;
 
 public abstract class Gamer {
     public static final int LIMIT = 21;
 
     protected final CardGroup cardGroup;
+    protected final CardGenerator cardGenerator;
 
-    protected Gamer(CardGroup cardGroup) {
+    protected Gamer(CardGroup cardGroup, CardGenerator cardGenerator) {
         this.cardGroup = cardGroup;
+        this.cardGenerator = cardGenerator;
     }
 
     public boolean receiveCard(final Card card) {
         return cardGroup.addCard(card);
+    }
+
+    public void receiveCare(){
+        cardGroup.addCard(cardGenerator.generate());
     }
 
     public boolean isBust() {

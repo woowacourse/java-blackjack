@@ -1,10 +1,11 @@
 package domain.gamer;
 
+import domain.card.CardGenerator;
 import domain.card.CardGroup;
 
 public class Dealer extends Gamer{
-    public Dealer(CardGroup cardGroup) {
-        super(cardGroup);
+    public Dealer(CardGroup cardGroup, CardGenerator cardGenerator) {
+        super(cardGroup,cardGenerator);
     }
 
     public boolean isLessThen(int score){
