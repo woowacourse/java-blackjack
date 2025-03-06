@@ -5,12 +5,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackReferee {
-    public Map<Participant, GameResultStatus> judge(Participant dealer, List<Participant> participants) {
+    public GameResult judge(Participant dealer, List<Participant> participants) {
         int dealerSum = dealer.calculateCardsSum();
-        return participants.stream()
+        Map<Participant, GameResultStatus> gameResult = participants.stream()
                 .collect(Collectors.toMap(
                         participant -> participant,
                         participant -> GameResultStatus.calculate(dealerSum, participant.calculateCardsSum())
                 ));
+        return new GameResult(gameResult);
     }
 }

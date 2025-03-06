@@ -3,6 +3,7 @@ package controller;
 import domain.BlackjackReferee;
 import domain.CardGiver;
 import domain.CardRandomGenerator;
+import domain.GameResult;
 import domain.GameResultStatus;
 import domain.GivenCards;
 import domain.Participant;
@@ -63,7 +64,7 @@ public class BlackjackApplication {
 
         outputView.printCardsResult(dealer, participants);
         BlackjackReferee blackjackReferee = new BlackjackReferee();
-        Map<Participant, GameResultStatus> gameResult = blackjackReferee.judge(dealer, participants);
+        GameResult gameResult = blackjackReferee.judge(dealer, participants);
         outputView.printGameResults(gameResult);
     }
 

@@ -1,6 +1,7 @@
 package view;
 
 import domain.Card;
+import domain.GameResult;
 import domain.GameResultStatus;
 import domain.Participant;
 import java.util.List;
@@ -57,18 +58,15 @@ public class OutputView {
         });
     }
 
-    public void printGameResults(Map<Participant, GameResultStatus> gameResults) {
-        int winCount = (int)gameResults.keySet().stream()
-                .filter(participant -> gameResults.get(participant) == GameResultStatus.WIN)
-                .count();
-        int loseCount = (int)gameResults.keySet().stream()
-                .filter(participant -> gameResults.get(participant) == GameResultStatus.LOSE)
-                .count();
+    public void printGameResults(GameResult gameResult) {
+        int winCount = gameResult.calculateWinCount();
+        int loseCount = gameResult.calculateLoseCount();
         System.out.println("\n## 최종 승패");
         System.out.printf("딜러: %d승 %d패\n", loseCount, winCount);
-        gameResults.keySet()
+        gameResult.getAllParticipants()
                 .forEach(participant -> {
-                    String resultMessage = outputFormatter.formatGameResult(gameResults.get(participant));
+                    GameResultStatus gameResultstatus = gameResult.getGameResultstatus(participant);
+                    String resultMessage = outputFormatter.formatGameResult(gameResultstatus);
                     System.out.printf("%s: %s\n", participant.name(), resultMessage);
                 });
     }

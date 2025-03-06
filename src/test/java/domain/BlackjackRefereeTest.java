@@ -37,13 +37,13 @@ public class BlackjackRefereeTest {
         BlackjackReferee blackjackReferee = new BlackjackReferee();
 
         //when
-        Map<Participant, GameResultStatus> gameResult = blackjackReferee.judge(dealer, participants);
+        GameResult gameResult = blackjackReferee.judge(dealer, participants);
 
         //then
         assertSoftly(softly -> {
-            softly.assertThat(gameResult.get(winner)).isEqualTo(GameResultStatus.WIN);
-            softly.assertThat(gameResult.get(drawer)).isEqualTo(GameResultStatus.DRAW);
-            softly.assertThat(gameResult.get(loser)).isEqualTo(GameResultStatus.LOSE);
+            softly.assertThat(gameResult.getGameResultstatus(winner)).isEqualTo(GameResultStatus.WIN);
+            softly.assertThat(gameResult.getGameResultstatus(drawer)).isEqualTo(GameResultStatus.DRAW);
+            softly.assertThat(gameResult.getGameResultstatus(loser)).isEqualTo(GameResultStatus.LOSE);
         });
     }
 }
