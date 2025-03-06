@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
     @DisplayName("처음 카드를 받은 후 딜러는 하나의 카드만 오픈한다")
     @Test
-    void getInitialCardTest() {
+    void getInitialCardsTest() {
         // given
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
@@ -21,7 +21,7 @@ public class DealerTest {
         dealer.addCard(card2);
 
         // when
-        List<Card> result = dealer.getInitialCard();
+        List<Card> result = dealer.getInitialCards();
 
         // then
         assertThat(result.size()).isEqualTo(1);

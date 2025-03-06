@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Gambler {
-    public List<Card> getInitialCard() {
+    public List<Card> getInitialCards() {
         List<Card> cards = hands.getCards();
         Card firstCard = cards.getFirst();
         return List.of(firstCard);

@@ -6,8 +6,7 @@ public class Name {
     private final String name;
 
     public Name(final String name) {
-        validateForm(name);
-        this.name = name;
+        this.name = validateForm(name);
     }
 
     private String validateForm(final String name) {

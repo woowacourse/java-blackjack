@@ -20,7 +20,10 @@ public class Application {
         Round round = new Round(cardDeck, playerNames, dealer);
         round.distributeInitialCards();
         OutputView.printInitialDistributionPrompt(playerNames);
-        OutputView.printGamblerCards(new Name("딜러"), dealer.getCards());
+        OutputView.printGamblerCards(new Name("딜러"), dealer.getInitialCards());
+        for (Name playerName : playerNames) {
+            OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
+        }
     }
 
     private static List<Name> getPlayerNames() {

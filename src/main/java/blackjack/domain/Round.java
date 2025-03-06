@@ -50,4 +50,8 @@ public class Round {
             player.addCard(cardDeck.getCard());
         }
     }
+
+    public List<Card> getCardsByPlayer(Name name) {
+        return findPlayer(name).getCards();
+    }
 }
