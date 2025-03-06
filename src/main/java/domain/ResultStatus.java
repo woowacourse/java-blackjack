@@ -15,10 +15,6 @@ public enum ResultStatus {
         this.status = status;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
     public static Map<String, ResultStatus> judgeGameResult(Players players, Dealer dealer) {
         Map<String, ResultStatus> result = new HashMap<>();
 

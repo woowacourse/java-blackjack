@@ -65,12 +65,4 @@ public class Cards {
     public int hashCode() {
         return Objects.hash(cards, totalNumberSum);
     }
-
-    @Override
-    public String toString() {
-        return "Cards{" +
-            "cards=" + cards +
-            ", totalNumberSum=" + totalNumberSum +
-            '}';
-    }
 }

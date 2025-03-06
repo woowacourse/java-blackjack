@@ -35,12 +35,4 @@ public class Card {
     public int hashCode() {
         return Objects.hash(symbol, number);
     }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-            "symbol=" + symbol +
-            ", number=" + number +
-            '}';
-    }
 }
