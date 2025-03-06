@@ -153,6 +153,11 @@ public class GameManagerTest {
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J)),
                         GameManger.MOO)
         );
+    }
+
+    @DisplayName("딜러가 버스트되면 ")
+    @Test
+    void test9() {
 
     }
 
