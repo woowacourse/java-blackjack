@@ -60,11 +60,19 @@ public class BlackJackGame {
 
     public boolean isHitAllowed(Player player) {
         Hand hand = player.getHand();
+        List<TrumpCard> cards = hand.getCards();
+        Score score = Score.from(cards);
 
-        return hand.calculateScore() != Score.BUST && hand.calculateScore() != Score.BLACKJACK;
+        return score != Score.BUST && score != Score.BLACKJACK;
     }
 
     public void processHit(Player player) {
         player.receiveCard(deck.draw());
+    }
+
+    public void isDealerHitAllowed() {
+        Hand hand = dealer.getHand();
+
+
     }
 }
