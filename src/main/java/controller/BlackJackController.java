@@ -35,14 +35,14 @@ public class BlackJackController {
     }
 
     private void askPlayer(Game game, String username) {
-        while (game.canPlayerGetMoreCard(username) && inputView.getUserResponse(username) == YES) {
+        while (game.isPlayerDrawable(username) && inputView.getUserResponse(username) == YES) {
             game.giveCardToPlayer(username, 1);
             outputView.printGamerCards(username, game.getPlayerCards(username));
         }
     }
 
     private void askDealer(Game game) {
-        while (game.canDealerGetMoreCard()) {
+        while (game.isDealerDrawable()) {
             game.giveCardToDealer(1);
             outputView.printDealerDrawMoreCard();
         }

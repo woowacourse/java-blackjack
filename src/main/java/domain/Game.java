@@ -41,11 +41,11 @@ public class Game {
         return dealer.showAnyOneCard();
     }
 
-    public boolean canPlayerGetMoreCard(String username) {
-        return players.canGetMoreCard(username);
+    public boolean isPlayerDrawable(String username) {
+        return players.isDrawable(username);
     }
 
-    public boolean canDealerGetMoreCard() {
+    public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }
 

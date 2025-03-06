@@ -31,7 +31,7 @@ public class Players {
         return selectedPlayer.getCards();
     }
 
-    public boolean canGetMoreCard(String username) {
+    public boolean isDrawable(String username) {
         Player player = selectPlayer(username);
         return player.isDrawable();
     }

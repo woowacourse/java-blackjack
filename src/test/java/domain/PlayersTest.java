@@ -39,7 +39,7 @@ class PlayersTest {
         players.giveCard("김", cards);
 
         //when & then
-        Assertions.assertThat(players.canGetMoreCard("김")).isEqualTo(expected);
+        Assertions.assertThat(players.isDrawable("김")).isEqualTo(expected);
     }
 
     public static Stream<Arguments> canGetMoreCardTest() {
