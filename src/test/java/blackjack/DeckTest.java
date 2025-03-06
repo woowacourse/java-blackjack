@@ -18,8 +18,8 @@ class DeckTest {
     @Test
     void test6() {
         // given
-        DeckGenerator deckGenerator = new DeckGenerator();
-        List<Card> cards = deckGenerator.generate();
+        CardsGenerator cardsGenerator = new CardsGenerator();
+        List<Card> cards = cardsGenerator.generate();
 
         // when & then
         assertAll(
@@ -45,8 +45,8 @@ class DeckTest {
     @Test
     void test2() {
         // given
-        DeckGenerator deckGenerator = new DeckGenerator();
-        List<Card> cards = deckGenerator.generate();
+        CardsGenerator cardsGenerator = new CardsGenerator();
+        List<Card> cards = cardsGenerator.generate();
 
         ArrayList<Card> copiedCards = new ArrayList<>(cards);
         copiedCards.removeLast();
@@ -63,8 +63,8 @@ class DeckTest {
     @Test
     void test3() {
         // given
-        DeckGenerator deckGenerator = new DeckGenerator();
-        List<Card> cards = deckGenerator.generate();
+        CardsGenerator cardsGenerator = new CardsGenerator();
+        List<Card> cards = cardsGenerator.generate();
         Deck deck = new Deck(cards);
 
         // when
@@ -82,8 +82,8 @@ class DeckTest {
         @Test
         void test4() {
             // given
-            DeckGenerator deckGenerator = new DeckGenerator();
-            List<Card> cards = deckGenerator.generate();
+            CardsGenerator cardsGenerator = new CardsGenerator();
+            List<Card> cards = cardsGenerator.generate();
             Deck deck = new Deck(cards);
             int expect = 2;
 
@@ -97,8 +97,8 @@ class DeckTest {
         @DisplayName("카드가 소진되면 예외를 던진다.")
         @Test
         void test5() {
-            DeckGenerator deckGenerator = new DeckGenerator();
-            List<Card> cards = deckGenerator.generate();
+            CardsGenerator cardsGenerator = new CardsGenerator();
+            List<Card> cards = cardsGenerator.generate();
             Deck deck = new Deck(cards);
 
             assertThatThrownBy(() -> deck.takeCards(53))

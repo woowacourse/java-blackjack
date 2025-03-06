@@ -6,16 +6,16 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DeckGeneratorTest {
+class CardsGeneratorTest {
 
     @DisplayName("덱을 만들 때 카드의 개수는 52개이다")
     @Test
     void test1() {
         // given
-        DeckGenerator deckGenerator = new DeckGenerator();
+        CardsGenerator cardsGenerator = new CardsGenerator();
 
         // when
-        List<Card> cards = deckGenerator.generate();
+        List<Card> cards = cardsGenerator.generate();
 
         // then
         assertThat(cards).hasSize(52);

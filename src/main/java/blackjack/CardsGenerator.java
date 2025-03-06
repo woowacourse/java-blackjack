@@ -3,7 +3,7 @@ package blackjack;
 import java.util.Arrays;
 import java.util.List;
 
-public class DeckGenerator {
+public class CardsGenerator {
 
     public List<Card> generate() {
         return Arrays.stream(CardSuit.values())
