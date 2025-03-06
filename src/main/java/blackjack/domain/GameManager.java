@@ -7,16 +7,19 @@ public class GameManager {
     private final CardPack cardPack;
     private final Players players;
 
-    public GameManager(List<String> gamblerNames) {
+    public GameManager() {
         cardPack = new CardPack(new RandomBlackjackShuffle());
-        getPlayersByNames(gamblerNames);
-        players = new Players(getPlayersByNames(gamblerNames));
+        players = new Players();
     }
 
-    private List<Player> getPlayersByNames(List<String> gamblerNames) {
-        return gamblerNames.stream()
+    public void addGamblers(List<String> gamblerNames) {
+        List<Player> gamblers = gamblerNames.stream()
                 .map(Player::new)
                 .toList();
+        players.addGamblers(gamblers);
     }
 
+    public Players getPlayers() {
+        return players;
+    }
 }
