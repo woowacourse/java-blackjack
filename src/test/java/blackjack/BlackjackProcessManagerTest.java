@@ -1,5 +1,8 @@
 package blackjack;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,13 +12,16 @@ class BlackjackProcessManagerTest {
     @Test
     void test1() {
         // given
-        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager();
+        CardsGenerator cardsGenerator = new CardsGenerator();
+        List<Card> cards = cardsGenerator.generate();
+        Deck deck = new Deck(cards);
+        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck);
         Hand hand = new Hand();
 
         // when
         blackjackProcessManager.giveCardTo(hand);
 
         // then
-
+        assertThat(hand.getAllCards()).hasSize(2);
     }
 }

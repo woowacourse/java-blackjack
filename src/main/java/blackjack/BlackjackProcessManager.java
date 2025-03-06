@@ -1,5 +1,7 @@
 package blackjack;
 
+import java.util.List;
+
 public class BlackjackProcessManager {
     private final Deck deck;
 
@@ -8,6 +10,7 @@ public class BlackjackProcessManager {
     }
 
     public void giveCardTo(Hand hand) {
-
+        List<Card> cards = deck.takeCards(2);
+        cards.forEach(hand::takeCard);
     }
 }
