@@ -15,4 +15,8 @@ public class Player extends Gamer {
         super(player.cardGroup, player.cardGenerator);
         this.name = player.name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
