@@ -87,9 +87,29 @@ public class OutputView {
             participant.getName()));
 
         List<Card> shownCard = participant.getShownCard();
-        String cardMessage = shownCard.stream()
-            .map(this::formatCard)
-            .collect(Collectors.joining(", "));
+        String cardMessage = formatCards(shownCard);
         System.out.println(cardMessage);
     }
+
+    public void printFullParticipantInfo(Participant participant) {
+        System.out.println(formatFullParticipantInfo(participant));
+        System.out.println();
+    }
+
+    private String formatFullParticipantInfo(Participant participant) {
+        String name = participant.getName();
+        String cardsMessage = formatCards(participant.getCards());
+        int totalValue = participant.getTotalValue();
+        return String.format("%s카드: %s - 결과: %d",
+                name,
+                cardsMessage,
+                totalValue);
+    }
+    
+    private String formatCards(List<Card> cards) {
+        return cards.stream()
+                .map(this::formatCard)
+                .collect(Collectors.joining(", "));
+    }
+
 }
