@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
-import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +21,7 @@ class RoundTest {
 
         Name playerName = new Name("라젤");
         List<Name> playerNames = List.of(playerName);
-        Round round = new Round(cardDeck, playerNames, new Dealer());
+        Round round = new Round(cardDeck, playerNames);
 
         // when
         round.distributeCards(new Name("라젤"), 2);
@@ -43,8 +42,7 @@ class RoundTest {
 
         Name playerName = new Name("라젤");
         List<Name> playerNames = List.of(playerName);
-        Dealer dealer = new Dealer();
-        Round round = new Round(cardDeck, playerNames, dealer);
+        Round round = new Round(cardDeck, playerNames);
 
         // when
         round.distributeInitialCards();
@@ -52,7 +50,7 @@ class RoundTest {
         // then
         // TODO: 플레이어가 2장 받았는지 체크할 것!
         assertThat(round.getScoreByPlayer(playerName)).isNotZero();
-        assertThat(dealer.getCards().size()).isEqualTo(2);
-        assertThat(dealer.calculateSum()).isNotZero();
+        assertThat(round.getCardsByDealer().size()).isEqualTo(2);
+        assertThat(round.getScoreByDealer()).isNotZero();
     }
 }

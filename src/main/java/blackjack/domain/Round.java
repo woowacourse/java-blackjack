@@ -11,10 +11,10 @@ public class Round {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Round(final CardDeck cardDeck, final List<Name> playerNames, Dealer dealer) {
+    public Round(final CardDeck cardDeck, final List<Name> playerNames) {
         this.cardDeck = cardDeck;
         this.players = registerPlayers(playerNames);
-        this.dealer = dealer;
+        this.dealer = new Dealer();
     }
 
     private List<Player> registerPlayers(final List<Name> playerNames) {
@@ -35,6 +35,10 @@ public class Round {
         return findPlayer(name).calculateSum();
     }
 
+    public int getScoreByDealer() {
+        return dealer.calculateSum();
+    }
+
     private Player findPlayer(Name name) {
         return players.stream()
                 .filter(player -> player.isNameEquals(name))
@@ -53,6 +57,14 @@ public class Round {
 
     public List<Card> getCardsByPlayer(Name name) {
         return findPlayer(name).getCards();
+    }
+
+    public List<Card> getCardsByDealer() {
+        return dealer.getCards();
+    }
+
+    public List<Card> getInitialCardsByDealer() {
+        return dealer.getInitialCards();
     }
 
     public boolean isPlayerBusted(Name name) {

@@ -5,7 +5,6 @@ import blackjack.domain.Round;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
-import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,19 +16,19 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         List<Name> playerNames = getPlayerNames();
-        Dealer dealer = new Dealer();
-        Round round = new Round(cardDeck, playerNames, dealer);
+
+        Round round = new Round(cardDeck, playerNames);
         round.distributeInitialCards();
         OutputView.printInitialDistributionPrompt(playerNames);
-        OutputView.printGamblerCards(new Name("딜러"), dealer.getInitialCards());
+        OutputView.printGamblerCards("딜러", round.getInitialCardsByDealer());
         for (Name playerName : playerNames) {
-            OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
+            OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
         }
         for (Name playerName : playerNames) {
             boolean flag = false;
             while (isHit(playerName)) {
                 round.distributeCards(playerName, 1);
-                OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
+                OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
                 boolean isBusted = round.isPlayerBusted(playerName);
                 if (isBusted) {
                     OutputView.printBusted(playerName);
@@ -38,7 +37,7 @@ public class Application {
                 flag = true;
             }
             if (!flag) {
-                OutputView.printGamblerCards(playerName, round.getCardsByPlayer(playerName));
+                OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
             }
         }
     }
