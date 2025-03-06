@@ -17,8 +17,8 @@ public class Nickname {
     }
 
     private void validateNickNameLength(String nickname) {
-        if (nickname.length() > 10) {
-            throw new IllegalArgumentException("[ERROR] 닉네임 길이는 10자를 초과할 수 없습니다.");
+        if (nickname.length() > NAME_LENGTH_LIMIT) {
+            throw new IllegalArgumentException("[ERROR] 닉네임 길이는 " + NAME_LENGTH_LIMIT + "자를 초과할 수 없습니다.");
         }
     }
     
