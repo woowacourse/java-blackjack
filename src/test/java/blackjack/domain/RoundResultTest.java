@@ -15,7 +15,7 @@ class RoundResultTest {
 
     @Test
     @DisplayName("상대방만 버스트했다면 카드 숫자 합에 상관없이 승리한다")
-    void winnerTest1() {
+    void judgeResultTest1() {
         Player player1 = new Player("Pobi");
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
@@ -24,6 +24,7 @@ class RoundResultTest {
         Card card3 = new Card(CardType.CLOVER, CardNumber.KING);
         Card card4 = new Card(CardType.CLOVER, CardNumber.QUEEN);
         Card card5 = new Card(CardType.CLOVER, CardNumber.NINE);
+        // TODO fixture 넣으면서 deck을 randomCardGenerator를 모킹해서 넣을거고, 그러면서 drawCard를 속일수있음. 그걸로 테스트짜면 addCard를 제거할 수 있음
         player1.addCard(card1);
         player1.addCard(card2);
         dealer.addCard(card3);
@@ -37,7 +38,7 @@ class RoundResultTest {
 
     @Test
     @DisplayName("양쪽 다 버스트하지 않았다면 카드 숫자 합을 비교하여 더 높은 쪽이 승리한다")
-    void winnerTest2() {
+    void judgeResultTest2() {
         Player player1 = new Player("Pobi");
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
@@ -57,7 +58,7 @@ class RoundResultTest {
 
     @Test
     @DisplayName("동점일 경우 블랙잭(Ace + J or Q or K)은 21을 이긴다")
-    void winnerTest3() {
+    void judgeResultTest3() {
         Player player1 = new Player("Pobi");
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
@@ -79,7 +80,7 @@ class RoundResultTest {
 
     @Test
     @DisplayName("둘 다 블랙잭이면 무승부로 처리한다")
-    void winnerTest4() {
+    void judgeResultTest4() {
         Player player1 = new Player("Pobi");
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
@@ -99,7 +100,7 @@ class RoundResultTest {
 
     @Test
     @DisplayName("블랙잭이 없다면 무승부로 처리한다.")
-    void winnerTest5() {
+    void judgeResultTest5() {
         Player player1 = new Player("Pobi");
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardType.CLOVER, CardNumber.JACK);
@@ -115,9 +116,5 @@ class RoundResultTest {
         RoundResult roundResult = RoundResult.judgeResult(player1, dealer);
 
         assertThat(roundResult).isEqualTo(RoundResult.TIE);
-    }
-
-    @Test
-    void judgeResult() {
     }
 }
