@@ -33,11 +33,15 @@ public class Participant {
     }
 
     public GameResult calculateGameResult(Participant otherParticipant) {
+        // TODO: burst일 때 바로 패배로 판단하는 로직은, 플레이어한테만 해당한다. (딜러한테는 맞지 않는 로직임)
         if (isBurst()) {
             return GameResult.LOSE;
         }
         if (getResult() > otherParticipant.getResult()) {
             return GameResult.WIN;
+        }
+        if (getResult() < otherParticipant.getResult()) {
+            return GameResult.LOSE;
         }
         return GameResult.DRAW;
     }
