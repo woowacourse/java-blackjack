@@ -2,8 +2,9 @@ package blackjack.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.CardRank;
-import blackjack.CardSuit;
+import blackjack.common.CardRank;
+import blackjack.common.CardSuit;
+import blackjack.StubPossibleSumCardHolder;
 import blackjack.domain.Card;
 import blackjack.domain.CardHolder;
 import blackjack.domain.Dealer;
@@ -19,22 +20,7 @@ class GameRuleEvaluatorTest {
     void test1() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new CardHolder() {
-            @Override
-            public List<Card> getAllCards() {
-                return List.of();
-            }
-
-            @Override
-            public void takeCard(Card newCard) {
-
-            }
-
-            @Override
-            public List<Integer> getPossibleSums() {
-                return List.of(1, 16, 19);
-            }
-        };
+        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(1, 16, 19));
 
         // when
         boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(cardHolder));
@@ -48,22 +34,7 @@ class GameRuleEvaluatorTest {
     void test2() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new CardHolder() {
-            @Override
-            public List<Card> getAllCards() {
-                return List.of();
-            }
-
-            @Override
-            public void takeCard(Card newCard) {
-
-            }
-
-            @Override
-            public List<Integer> getPossibleSums() {
-                return List.of(1, 3, 13);
-            }
-        };
+        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(1, 3, 13));
 
         // when
         boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(cardHolder));
@@ -77,23 +48,7 @@ class GameRuleEvaluatorTest {
     void test3() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new CardHolder() {
-            @Override
-            public List<Card> getAllCards() {
-                return List.of();
-            }
-
-            @Override
-            public void takeCard(Card newCard) {
-
-            }
-
-            @Override
-            public List<Integer> getPossibleSums() {
-                return List.of(1, 21, 100);
-            }
-        };
-
+        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(1, 21, 100));
         // when
         boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", cardHolder));
 
@@ -106,22 +61,7 @@ class GameRuleEvaluatorTest {
     void test4() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new CardHolder() {
-            @Override
-            public List<Card> getAllCards() {
-                return List.of();
-            }
-
-            @Override
-            public void takeCard(Card newCard) {
-
-            }
-
-            @Override
-            public List<Integer> getPossibleSums() {
-                return List.of(22, 23, 100);
-            }
-        };
+        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(22, 23, 100));
 
         // when
         boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", cardHolder));

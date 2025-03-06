@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.common;
 
 public enum CardSuit {
     HEART("하트"),

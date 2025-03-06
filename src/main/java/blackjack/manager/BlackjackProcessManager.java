@@ -9,7 +9,6 @@ import blackjack.domain.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.PlayersResult;
-import java.util.Comparator;
 import java.util.List;
 
 public class BlackjackProcessManager {
@@ -61,8 +60,8 @@ public class BlackjackProcessManager {
     }
 
     public GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
-        int playerValue = findOptimisticValue(player.getPossibleSums());
-        int dealerValue = findOptimisticValue(dealer.getPossibleSums());
+        int playerValue = player.getCardHolder().getOptimisticValue();
+        int dealerValue = dealer.getCardHolder().getOptimisticValue();
 
         return GameResultType.find(playerValue, dealerValue);
     }
@@ -74,9 +73,4 @@ public class BlackjackProcessManager {
         dealerResult.addCountOf(gameResultOfDealer);
     }
 
-    private int findOptimisticValue(List<Integer> possibleSums) {
-        return possibleSums.stream().filter(sum -> sum <= 21)
-                .max(Comparator.naturalOrder())
-                .orElse(0);
-    }
 }

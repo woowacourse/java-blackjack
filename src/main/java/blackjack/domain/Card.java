@@ -1,7 +1,8 @@
 package blackjack.domain;
 
-import blackjack.CardRank;
-import blackjack.CardSuit;
+import blackjack.common.CardRank;
+import blackjack.common.CardSuit;
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -13,7 +14,7 @@ public class Card {
         this.cardRank = cardRank;
     }
 
-    public int[] getValue() {
+    public List<Integer> getValue() {
         return cardRank.getValues();
     }
 
@@ -31,11 +32,8 @@ public class Card {
         return Objects.hash(cardSuit, cardRank);
     }
 
-    @Override
-    public String toString() {
-        return "Card{" +
-                "cardSuit=" + cardSuit +
-                ", cardRank=" + cardRank +
-                '}';
+    public String toCardName(){
+        return cardRank.getDescription() + cardSuit.getDescription();
     }
+
 }

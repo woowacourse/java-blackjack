@@ -12,6 +12,8 @@ import blackjack.manager.BlackjackProcessManager;
 import blackjack.manager.CardsGenerator;
 import blackjack.manager.GameRuleEvaluator;
 import blackjack.view.Confirmation;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
@@ -27,8 +29,10 @@ public class BlackjackController {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(cardsGenerator);
 
         Deck deck = blackJackInitManager.generateDeck();
-        // 이름 입력 받은 것 넣기
-        Players players = blackJackInitManager.savePlayers(List.of(), Hand::new);
+
+        List<String> names = InputView.readNames();
+
+        Players players = blackJackInitManager.savePlayers(names, Hand::new);
         Dealer dealer = blackJackInitManager.saveDealer(Hand::new);
 
         BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, PlayersResult.create(),
@@ -40,44 +44,30 @@ public class BlackjackController {
         }
         blackjackProcessManager.giveStartingCards(dealer.getCardHolder());
 
-        // TODO 카드를 출력하는 것을 만들어야함
+        OutputView.printStartingCardsStatuses(dealer, players);
+
         for (Player player : players.getPlayers()) {
             while (gameRuleEvaluator.canTakeCardFor(player)) {
-                Confirmation confirmation = Confirmation.Y;
-                // 플레이어에게 카드 줘야하는 지 확인
-                //  TODO inputViewer한테 물어봄
+                // 플레이어에게 카드 줘야하는지 확인
+                Confirmation confirmation = InputView.askToGetMoreCard(player);
+
                 if (confirmation.equals(Confirmation.N)) {
                     break;
                 }
                 blackjackProcessManager.giveCard(player.getCardHolder());
 
-                // TODO BUSTED
+                if (gameRuleEvaluator.isBustedFor(player)){
+                    OutputView.printBustedPlayer(player);
+                }
             }
         }
 
         while (gameRuleEvaluator.canTakeCardFor(dealer)) {
-            // TODO 16이하라 출력해야 한다는 것을 표시
+            OutputView.printMoreCard();
             blackjackProcessManager.giveCard(dealer.getCardHolder());
         }
 
         blackjackProcessManager.calculateGameResult(players, dealer, gameRuleEvaluator);
-
-        // 사람 이름 입력을 받는다
-
-        // players 저장
-
-        // 카드 두 장 분배
-
-        // 딜러 카드 한 장
-        // 플레이어들 카드 두장 출력
-
-        // 플레이어 한명씩 카드 받는지 여부 (이 때, Busted되거나 N을 입력하면 기회 뺏김)
-
-        // 딜러가 더 받는지 여부  (더 받았으면 출력)
-
-        // 딜러와 플레이어들의 카드들과 결과 값 출력 (이때 결과는 21에 가까운 최적의 값으로 선택되어야함)
-
-        // 승패 출력
-
+        OutputView.printResult(players, dealer);
     }
 }

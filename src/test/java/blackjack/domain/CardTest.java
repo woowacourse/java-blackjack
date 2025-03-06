@@ -2,8 +2,8 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.CardRank;
-import blackjack.CardSuit;
+import blackjack.common.CardRank;
+import blackjack.common.CardSuit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

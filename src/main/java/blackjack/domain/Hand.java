@@ -1,13 +1,16 @@
 package blackjack.domain;
 
+import blackjack.common.Constants;
 import blackjack.common.ErrorMessage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Hand implements CardHolder {
+
     private final List<Card> cards;
 
     public Hand() {
@@ -57,10 +60,9 @@ public class Hand implements CardHolder {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Hand{" +
-                "cards=" + cards +
-                '}';
+    public int getOptimisticValue() {
+        return getPossibleSums().stream().filter(sum -> sum <= 21)
+                .max(Comparator.naturalOrder())
+                .orElse(Constants.BUSTED_VALUE);
     }
 }

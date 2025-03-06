@@ -26,4 +26,8 @@ public class Player {
     public CardHolder getCardHolder() {
         return cardHolder;
     }
+
+    public String getName() {
+        return name;
+    }
 }

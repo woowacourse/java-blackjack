@@ -8,4 +8,6 @@ public interface CardHolder {
     void takeCard(Card newCard);
 
     List<Integer> getPossibleSums();
+
+    int getOptimisticValue();
 }

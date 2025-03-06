@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.Card;
 import blackjack.domain.CardHolder;
+import java.util.Comparator;
 import java.util.List;
 
 public class StubPossibleSumCardHolder implements CardHolder {
@@ -14,16 +15,24 @@ public class StubPossibleSumCardHolder implements CardHolder {
 
     @Override
     public List<Card> getAllCards() {
-        return List.of();
+        throw new RuntimeException();
     }
 
     @Override
     public void takeCard(Card newCard) {
+        throw new RuntimeException();
 
     }
 
     @Override
     public List<Integer> getPossibleSums() {
         return integers;
+    }
+
+    @Override
+    public int getOptimisticValue() {
+        return integers.stream().filter(sum -> sum <= 21)
+                .max(Comparator.naturalOrder())
+                .orElse(0);
     }
 }
