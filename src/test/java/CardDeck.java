@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardDeck {
 
@@ -9,12 +10,10 @@ public class CardDeck {
     private final List<Card> deck;
 
     public static CardDeck createCards() {
-        List<Card> cards = new ArrayList<>();
-        for (Pattern pattern : Pattern.values()) {
-            for (CardNumber cardNumber : createCardNumbers()) {
-                cards.add(new Card(pattern, cardNumber));
-            }
-        }
+        List<Card> cards = Arrays.stream(Pattern.values())
+                .flatMap(pattern -> createCardNumbers().stream()
+                        .map(cardNumber -> new Card(pattern, cardNumber)))
+                .collect(Collectors.toList());
         return new CardDeck(cards);
     }
 
