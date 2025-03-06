@@ -22,5 +22,4 @@ public enum HitOption {
     public boolean isNo() {
         return this == NO;
     }
-
 }

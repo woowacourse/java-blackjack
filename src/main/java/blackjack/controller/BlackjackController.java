@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.CardDeck;
 import blackjack.domain.CardDump;
 import blackjack.domain.Dealer;
-import blackjack.domain.GameFinalResult;
 import blackjack.domain.GameResult;
 import blackjack.domain.GameRule;
 import blackjack.domain.Player;
@@ -12,6 +11,7 @@ import blackjack.dto.FinalResultDto;
 import blackjack.view.InputVIew;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,11 +19,13 @@ public class BlackjackController {
     private final InputVIew inputView;
     private final OutputView outputView;
     private final CardDump cardDump;
+    private final GameRule gameRule;
 
     public BlackjackController() {
         this.inputView = new InputVIew();
         this.outputView = new OutputView();
         this.cardDump = new CardDump();
+        this.gameRule = new GameRule();
     }
 
     public void run() {
@@ -83,12 +85,24 @@ public class BlackjackController {
     }
 
     private void getGameResultAndDisplay(Dealer dealer, List<Player> players) {
-        GameFinalResult gameFinalResult = new GameFinalResult(new GameRule());
-        Map<GameResult, Integer> dealerResult = gameFinalResult.getDealerFinalResult(dealer, players);
+        Map<GameResult, Integer> dealerResult = getDealerFinalResult(dealer, players);
         outputView.displayDealerResult(dealerResult);
         for (Player player : players) {
-            GameResult playerResult = gameFinalResult.getGameResultFromPlayer(player, dealer);
+            GameResult playerResult = getGameResultFromPlayer(player, dealer);
             outputView.displayPlayerResult(player, playerResult);
         }
+    }
+
+    private Map<GameResult, Integer> getDealerFinalResult(Dealer dealer, List<Player> players) {
+        Map<GameResult, Integer> gameFinalResult = new HashMap<>();
+        for (Player player : players) {
+            GameResult result = gameRule.evaluateDealerWin(player, dealer);
+            gameFinalResult.put(result, gameFinalResult.getOrDefault(result, 0) + 1);
+        }
+        return gameFinalResult;
+    }
+
+    private GameResult getGameResultFromPlayer(Player player, Dealer dealer) {
+        return gameRule.evaluatePlayerWin(player, dealer);
     }
 }

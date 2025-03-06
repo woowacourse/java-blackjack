@@ -83,7 +83,7 @@ public class GameRuleTest {
         assertThat(playerResult).isEqualTo(GameResult.DRAW);
     }
 
-    @DisplayName("플레이어가 버스트인 경우, 딜러가 이긴다.")
+    @DisplayName("플레이어가 버스트인 경우, 딜러가 이기고 플레이어가 패배한다.")
     @Test
     void testWinnerEvaluation_playerBusted() {
         //given
@@ -112,7 +112,7 @@ public class GameRuleTest {
 
     }
 
-    @DisplayName("딜러가 버스트인 경우, 딜러가 진다.")
+    @DisplayName("딜러가 버스트인 경우, 딜러가 지고 플레이어가 승리한다")
     @Test
     void testWinnerEvaluation_dealerBusted() {
         //given
