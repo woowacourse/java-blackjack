@@ -10,16 +10,18 @@ public class VictoryTest {
     @Test
     void 플레이어의_승패를_저장할_수_있다() {
         //given
-        Player pobi = new Player("pobi", List.of(
-                new Card(Suit.CLUB, Rank.THREE),
-                new Card(Suit.CLUB, Rank.TEN)
-        ), new ScoreCalculator());
-        Player surf = new Player("surf", List.of(
-                new Card(Suit.CLUB, Rank.THREE),
-                new Card(Suit.CLUB, Rank.TEN),
-                new Card(Suit.CLUB, Rank.FIVE),
-                new Card(Suit.HEART, Rank.THREE)
-        ), new ScoreCalculator());
+        Player pobi = new Player("pobi",
+                new Cards(List.of(
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.TEN)
+                ), new ScoreCalculator()));
+        Player surf = new Player("surf",
+                new Cards(List.of(
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.FIVE),
+                        new Card(Suit.HEART, Rank.THREE)
+                ), new ScoreCalculator()));
         List<Card> dealerCards = List.of(
                 new Card(Suit.CLUB, Rank.ACE),
                 new Card(Suit.CLUB, Rank.NINE)
@@ -37,8 +39,8 @@ public class VictoryTest {
         Dealer dealer = new Dealer(
                 players,
                 new Deck(cards),
-                dealerCards,
-                new ScoreCalculator());
+                new Cards(dealerCards, new ScoreCalculator())
+        );
 
         Map<Player, WinningResult> playerVictoryResults =
                 Map.of(pobi, WinningResult.LOSE,

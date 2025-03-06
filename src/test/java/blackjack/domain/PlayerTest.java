@@ -17,15 +17,18 @@ class PlayerTest {
     @Test
     void 카드_합이_21이_넘는_경우_카드를_더_받지_못한다() {
         //given
-        Player player = new Player("pobi", new ArrayList<>(Arrays.asList(
-                new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.DIAMOND, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.DIAMOND, Rank.TWO)
-        )), scoreCalculator);
+        Player player = new Player("pobi", new Cards(
+                Arrays.asList(
+                        new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.TWO)
+                ),
+                scoreCalculator
+        ));
 
         Card card = new Card(Suit.HEART, Rank.TWO);
 
@@ -41,11 +44,11 @@ class PlayerTest {
         //given
         Player player = new Player(
                 "pobi",
-                new ArrayList<>(
-                        Arrays.asList(
+                new Cards(
+                        new ArrayList<>(Arrays.asList(
                                 new Card(Suit.DIAMOND, Rank.ACE),
-                                new Card(Suit.DIAMOND, Rank.TWO)
-                        )), scoreCalculator);
+                                new Card(Suit.DIAMOND, Rank.TWO))),
+                        scoreCalculator));
 
         Card card = new Card(Suit.HEART, Rank.THREE);
 
@@ -65,11 +68,11 @@ class PlayerTest {
     @Test
     void 플레이어는_자신이_가진_카드로_21에_최대한_가깝게_점수를_계산할_수_있다() {
         //given
-        Player player = new Player("pobi", new ArrayList<>(List.of(
+        Player player = new Player("pobi", new Cards(new ArrayList<>(List.of(
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.ACE)
-        )), scoreCalculator);
+        )), new ScoreCalculator()));
 
         //when
         int maxScore = player.calculateMaxScore();
@@ -81,10 +84,10 @@ class PlayerTest {
     @Test
     void 플레이어의_카드에_A가_포함되어_있을_때_최솟값으로_점수를_계산할_수_있다() {
         //given
-        Player player = new Player("pobi", new ArrayList<>(List.of(
+        Player player = new Player("pobi", new Cards(new ArrayList<>(List.of(
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.KING)
-        )), scoreCalculator);
+        )), new ScoreCalculator()));
 
         //when
         boolean isCanSend = player.canSend();

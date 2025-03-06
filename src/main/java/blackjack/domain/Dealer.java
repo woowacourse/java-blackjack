@@ -1,27 +1,22 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Dealer {
 
     private final Players players;
     private final Deck deck;
-    private final List<Card> cards;
-    private final ScoreCalculator scoreCalculator;
+    private final Cards cards;
 
     public Dealer(Players players, Deck deck, ScoreCalculator scoreCalculator) {
-        this(players, deck, new ArrayList<>(), scoreCalculator);
+        this(players, deck, new Cards(new ArrayList<>(), scoreCalculator));
     }
 
-    public Dealer(Players players, Deck deck, List<Card> cards, ScoreCalculator scoreCalculator) {
+    public Dealer(Players players, Deck deck, Cards cards) {
         this.players = players;
         this.deck = deck;
         this.cards = cards;
-        this.scoreCalculator = scoreCalculator;
     }
 
     public void prepareBlackjack(CardsShuffler cardsShuffler) {
@@ -35,7 +30,7 @@ public class Dealer {
     }
 
     private void pickCards() {
-        cards.addAll(List.of(deck.draw(), deck.draw()));
+        cards.take(deck.draw(), deck.draw());
     }
 
     private void handOutCard() {
@@ -43,16 +38,16 @@ public class Dealer {
     }
 
     public int calculateMaxScore() {
-        return scoreCalculator.calculateMaxScore(cards);
+        return cards.calculateMaxScore();
     }
 
     public int pickAdditionalCard() {
-        int maxScore = scoreCalculator.calculateMaxScore(cards);
+        int maxScore = cards.calculateMaxScore();
         int additionalCardsNumber = 0;
         while (maxScore <= 16) {
             additionalCardsNumber++;
-            cards.add(deck.draw());
-            maxScore = scoreCalculator.calculateMaxScore(cards);
+            cards.take(deck.draw());
+            maxScore = cards.calculateMaxScore();
         }
         return additionalCardsNumber;
     }
@@ -68,20 +63,7 @@ public class Dealer {
     }
 
     public boolean isBlackjack() {
-        if (cards.size() != 2) {
-            return false;
-        }
-        Set<Rank> ranks = cards.stream()
-                .map(Card::getRank)
-                .collect(Collectors.toSet());
-        if (!ranks.contains(Rank.ACE)) {
-            return false;
-        }
-
-        return ranks.contains(Rank.KING) ||
-                ranks.contains(Rank.QUEEN) ||
-                ranks.contains(Rank.JACK) ||
-                ranks.contains(Rank.TEN);
+        return cards.isBlackjack();
     }
 
     public Victory createVictory() {
@@ -89,6 +71,6 @@ public class Dealer {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
 }

@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 import org.assertj.core.api.Assertions;
@@ -16,19 +17,23 @@ public class WinnerDeciderTest {
         //given
         Player pobi = new Player(
                 "pobi",
-                List.of(
+                new Cards(Arrays.asList(
                         new Card(Suit.CLUB, Rank.NINE),
                         new Card(Suit.CLUB, Rank.TEN)
-                ), new ScoreCalculator());
+                ), new ScoreCalculator()));
         List<Card> dealerCards = List.of(
                 new Card(Suit.HEART, Rank.NINE),
                 new Card(Suit.HEART, Rank.TEN)
         );
         Dealer dealer = new Dealer(
-                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Players(
+                        List.of(
+                                pobi,
+                                new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                        )
+                ),
                 new Deck(new Stack<>()),
-                dealerCards,
-                new ScoreCalculator());
+                new Cards(dealerCards, new ScoreCalculator()));
 
         WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
@@ -54,12 +59,11 @@ public class WinnerDeciderTest {
 
         Player pobi = new Player(
                 "pobi",
-                playerCards, new ScoreCalculator());
+                new Cards(playerCards, new ScoreCalculator()));
         Dealer dealer = new Dealer(
-                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Players(List.of(pobi, new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator())))),
                 new Deck(new Stack<>()),
-                dealerCards,
-                new ScoreCalculator());
+                new Cards(dealerCards, new ScoreCalculator()));
 
         WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
@@ -85,12 +89,12 @@ public class WinnerDeciderTest {
 
         Player pobi = new Player(
                 "pobi",
-                playerCards, new ScoreCalculator());
+                new Cards(playerCards, new ScoreCalculator())
+        );
         Dealer dealer = new Dealer(
-                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Players(List.of(pobi, new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator())))),
                 new Deck(new Stack<>()),
-                dealerCards,
-                new ScoreCalculator());
+                new Cards(dealerCards, new ScoreCalculator()));
 
         WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
@@ -106,20 +110,19 @@ public class WinnerDeciderTest {
         //given
         Player pobi = new Player(
                 "pobi",
-                List.of(
+                new Cards(List.of(
                         new Card(Suit.CLUB, Rank.NINE),
                         new Card(Suit.CLUB, Rank.TEN)
-                ), new ScoreCalculator());
+                ), new ScoreCalculator()));
         List<Card> dealerCards = List.of(
                 new Card(Suit.CLUB, Rank.NINE),
                 new Card(Suit.CLUB, Rank.SEVEN),
                 new Card(Suit.CLUB, Rank.EIGHT)
         );
         Dealer dealer = new Dealer(
-                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Players(List.of(pobi, new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator())))),
                 new Deck(new Stack<>()),
-                dealerCards,
-                new ScoreCalculator());
+                new Cards(dealerCards, new ScoreCalculator()));
 
         WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
@@ -146,12 +149,11 @@ public class WinnerDeciderTest {
 
         Player pobi = new Player(
                 "pobi",
-                playerCards, new ScoreCalculator());
+                new Cards(playerCards, new ScoreCalculator()));
         Dealer dealer = new Dealer(
-                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Players(List.of(pobi, new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator())))),
                 new Deck(new Stack<>()),
-                dealerCards,
-                new ScoreCalculator());
+                new Cards(dealerCards, new ScoreCalculator()));
 
         WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
@@ -177,12 +179,12 @@ public class WinnerDeciderTest {
 
         Player pobi = new Player(
                 "pobi",
-                playerCards, new ScoreCalculator());
+                new Cards(playerCards, new ScoreCalculator()));
         Dealer dealer = new Dealer(
-                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Players(List.of(pobi, new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator())))),
                 new Deck(new Stack<>()),
-                dealerCards,
-                new ScoreCalculator());
+                new Cards(dealerCards,
+                        new ScoreCalculator()));
 
         WinnerDecider winnerDecider = new WinnerDecider(dealer);
 

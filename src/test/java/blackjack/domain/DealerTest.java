@@ -26,9 +26,9 @@ public class DealerTest {
     void 블랙잭_게임을_준비한다() {
         //given
         Players players = new Players(
-                List.of(new Player("pobi", new ArrayList<>(), scoreCalculator),
-                        new Player("surf", new ArrayList<>(), scoreCalculator))
-        );
+                List.of(new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator())),
+                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                ));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
                 new Card(Suit.CLUB, Rank.FOUR),
@@ -69,9 +69,9 @@ public class DealerTest {
         //given
         Players players = new Players(
                 List.of(
-                        new Player("pobi", new ArrayList<>(), scoreCalculator),
-                        new Player("surf", new ArrayList<>(), scoreCalculator),
-                        new Player("fora", new ArrayList<>(), scoreCalculator)
+                        new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator())),
+                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
+                        new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
                 )
         );
         Stack<Card> cards = new Stack<>();

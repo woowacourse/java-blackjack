@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.DeckFactory;
 import blackjack.domain.Player;
@@ -18,7 +19,7 @@ public class BlackjackController {
         Players players = createPlayers();
         Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck(), new ScoreCalculator());
         handOutCards(dealer, players);
-        addtionalCard(dealer, players);
+        additionalCard(dealer, players);
         dealerAdditionalCard(dealer);
         printBlackjackResult(dealer, players);
         printVictory(dealer, players);
@@ -31,7 +32,7 @@ public class BlackjackController {
 
     private static List<Player> toPlayers(String[] playerNames) {
         return Arrays.stream(playerNames)
-                .map(name -> new Player(name.trim(), new ArrayList<>(), new ScoreCalculator()))
+                .map(name -> new Player(name.trim(), new Cards(new ArrayList<>(), new ScoreCalculator())))
                 .toList();
     }
 
@@ -40,7 +41,7 @@ public class BlackjackController {
         OutputView.printDealerAndPlayerCards(dealer.getCards(), players.getPlayers());
     }
 
-    private void addtionalCard(Dealer dealer, Players players) {
+    private void additionalCard(Dealer dealer, Players players) {
         players.sendAll((player -> {
             String answer;
             do {
