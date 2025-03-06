@@ -1,13 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.Cards;
-import blackjack.domain.Dealer;
 import blackjack.domain.DeckFactory;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
 import blackjack.domain.RandomCardsShuffler;
 import blackjack.domain.ScoreCalculator;
 import blackjack.domain.Victory;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
+import blackjack.domain.participants.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -43,21 +43,25 @@ public class BlackjackController {
 
     private void additionalCard(Dealer dealer, Players players) {
         players.sendAll((player -> {
-            String answer;
-            do {
-                answer = InputView.inputAdditionalCard(player);
-                if (answer.equals("y")) {
-                    try {
-                        dealer.sendCardToPlayer(player);
-                    } catch (IllegalArgumentException e) {
-                        OutputView.printCannotAdditionalCard();
-                        break;
-                    }
+            String answer = InputView.inputAdditionalCard(player);
+            while (answer.equals("y")) {
+                if (!sendCardToPlayer(dealer, player)) {
+                    break;
                 }
                 OutputView.printPlayerCards(player);
+                answer = InputView.inputAdditionalCard(player);
             }
-            while (answer.equals("y"));
         }));
+    }
+
+    private static boolean sendCardToPlayer(Dealer dealer, Player player) {
+        try {
+            dealer.sendCardToPlayer(player);
+            return true;
+        } catch (IllegalArgumentException e) {
+            OutputView.printCannotAdditionalCard();
+            return false;
+        }
     }
 
 

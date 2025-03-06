@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
+import blackjack.domain.Card;
+import blackjack.domain.Cards;
 import java.util.List;
 
 public class Player {

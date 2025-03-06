@@ -39,7 +39,6 @@ public class CardsTest {
         //then
         Assertions.assertThat(minScore).isEqualTo(11);
     }
-
     
     @Test
     void 카드가_블랙잭임을_계산할_수_있다() {

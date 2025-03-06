@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import blackjack.domain.Victory;
 import blackjack.domain.WinningResult;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,8 +19,8 @@ public class OutputView {
                 .collect(Collectors.joining(","));
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
         System.out.println("딜러카드: " +
-                toKoreaRank(dealerCards.get(0).getRank()) +
-                toKoreaSuit(dealerCards.get(0).getSuit())
+                toKoreaRank(dealerCards.getFirst().getRank()) +
+                toKoreaSuit(dealerCards.getFirst().getSuit())
         );
         for (Player player : players) {
             printPlayerCards(player);

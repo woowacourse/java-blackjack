@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Player;
+import blackjack.domain.participants.Player;
 import blackjack.util.Console;
 
 public class InputView {
@@ -20,13 +20,13 @@ public class InputView {
 
     public static String inputAdditionalCard(Player player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
-        String addtionalCard = Console.readLine();
-        validateAdditionalCard(addtionalCard);
-        return addtionalCard;
+        String additionalCard = Console.readLine();
+        validateAdditionalCard(additionalCard);
+        return additionalCard;
     }
 
-    private static void validateAdditionalCard(String addtionalCard) {
-        if (!addtionalCard.equals("y") && !addtionalCard.equals("n")) {
+    private static void validateAdditionalCard(String additionalCard) {
+        if (!additionalCard.equals("y") && !additionalCard.equals("n")) {
             throw new IllegalArgumentException("y 또는 n 만 입력해야 합니다.");
         }
     }
