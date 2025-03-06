@@ -20,10 +20,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public int calculateScore() {
         int sum = 0;
         int aceCount = 0;
@@ -41,5 +37,13 @@ public class Cards {
         }
 
         return sum;
+    }
+
+    public int getSize() {
+        return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

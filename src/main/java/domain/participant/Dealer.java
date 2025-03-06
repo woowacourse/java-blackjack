@@ -26,6 +26,11 @@ public class Dealer implements Participant {
         return ownedCards.calculateScore();
     }
 
+    @Override
+    public int getCardCount() {
+        return ownedCards.getSize();
+    }
+
     public List<Card> getOwnedCards() {
         return ownedCards.getCards();
     }

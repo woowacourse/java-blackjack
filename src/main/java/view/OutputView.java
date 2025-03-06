@@ -65,22 +65,21 @@ public class OutputView {
 
             playerResults.put(name, playerResult);
 
-            BlackjackResult dealerResult = BlackjackResult.getOpposite(playerResult);
-            if (dealerResult == BlackjackResult.WIN) {
+            if (playerResult == BlackjackResult.LOSE) {
                 dealerWinCount++;
             }
-            if (dealerResult == BlackjackResult.LOSE) {
+            if (playerResult == BlackjackResult.WIN) {
                 dealerLoseCount++;
             }
-            if (dealerResult == BlackjackResult.DRAW) {
+            if (playerResult == BlackjackResult.DRAW) {
                 dealerDrawCount++;
             }
         }
 
         System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + dealerDrawCount + "무");
 
-        for (Map.Entry<String, BlackjackResult> entry : playerResults.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue().getValue());
+        for (String name : playerResults.keySet()) {
+            System.out.println(name + ": " + playerResults.get(name));
         }
     }
 

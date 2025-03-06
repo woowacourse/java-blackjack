@@ -16,26 +16,47 @@ public enum BlackjackResult {
     }
 
     public static BlackjackResult getPlayerResult(Participant dealer, Participant player) {
-        int dealerScore = dealer.getScore();
-        int playerScore = player.getScore();
-
-        if (playerScore > dealerScore) {
-            return WIN;
-        }
-        if (playerScore == dealerScore) {
-            return DRAW;
-        }
-        return LOSE;
-    }
-
-    public static BlackjackResult getOpposite(BlackjackResult result) {
-        if (result == WIN) {
+        if (isPlayerLose(player, dealer)) {
             return LOSE;
         }
-        if (result == DRAW) {
-            return DRAW;
+        if (isPlayerWin(player, dealer)) {
+            return WIN;
         }
-        return WIN;
+        return DRAW;
+    }
+
+    private static boolean isPlayerLose(Participant player, Participant dealer) {
+        if (isBust(player.getScore())) {
+            return true;
+        }
+        if (isBlackjack(dealer) && !isBlackjack(player)) {
+            return true;
+        }
+        if (!isBust(dealer.getScore()) && player.getScore() < dealer.getScore()) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isPlayerWin(Participant player, Participant dealer) {
+        if (isBust(dealer.getScore())) {
+            return true;
+        }
+        if (isBlackjack(player) && !isBlackjack(dealer)) {
+            return true;
+        }
+        if (player.getScore() > dealer.getScore()) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isBust(int score) {
+        return score > 21;
+    }
+
+    private static boolean isBlackjack(Participant participant) {
+        return participant.getScore() == 21 && participant.getCardCount() == 2;
     }
 
     public String getValue() {
