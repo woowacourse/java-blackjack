@@ -13,7 +13,7 @@ public class GamerGenerator {
                 .toList();
     }
 
-    public static Dealer generateDealer(RandomCardGenerator randomCardGenerator) {
-        return null;
+    public static Dealer generateDealer(CardGenerator cardGenerator) {
+        return new Dealer(new CardGroup(),cardGenerator);
     }
 }
