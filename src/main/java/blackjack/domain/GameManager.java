@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
@@ -13,21 +12,30 @@ public class GameManager {
     }
 
     public void registerPlayers(List<Nickname> nicknames) {
-        players = new Players(new ArrayList<>(nicknames));
         nicknames.add(Nickname.createDealerNickname());
+        players = new Players(nicknames);
         cardManager.initialize(nicknames);
-        // TODO 카드 매니저에는 딜러가 있고 플레이어즈에는 없는 상황
     }
 
     public void distributeCards() {
         cardManager.distributeCards();
     }
 
-    public void drawAdditionalCard(Player player) {
+    public void hit(Player player) {
         cardManager.addCardByNickname(player.getNickname());
     }
 
-    public boolean isBurstPlayer(Player player) {
+    public int drawDealerCards() {
+        int count = 0;
+        Player dealer = players.getDealer();
+        while (GameRule.shouldDrawCardToDealer(cardManager.calculateSumByNickname(dealer.getNickname()))) {
+            cardManager.addCardByNickname(players.getDealer().getNickname());
+            count++;
+        }
+        return count;
+    }
+
+    public boolean isBustPlayer(Player player) {
         return GameRule.isBurst(cardManager.calculateSumByNickname(player.getNickname()));
     }
 

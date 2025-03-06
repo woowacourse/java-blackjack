@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -14,6 +13,12 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players.stream().filter(player -> !player.isDealer()).toList();
+    }
+
+    public Player getDealer() {
+        return players.stream().filter(Player::isDealer)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("딜러가 등록되어 있어야 합니다."));
     }
 }

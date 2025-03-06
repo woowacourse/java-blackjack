@@ -15,4 +15,8 @@ public class Player {
     public Nickname getNickname() {
         return nickname;
     }
+
+    public boolean isDealer() {
+        return nickname.equals(Nickname.createDealerNickname());
+    }
 }
