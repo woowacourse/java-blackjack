@@ -42,8 +42,8 @@ public class OutputView {
         return String.format("%s%s", card.getCardType().getDetail(), card.getShape().getDetail());
     }
 
-    public void printPlayerCardStatus(String name, Player participant) {
-        System.out.println(outputPlayerCardStatus(name, generateCardNames(participant.getReceivedCards())));
+    public void printPlayerCardStatus(String name, Player player) {
+        System.out.println(outputPlayerCardStatus(name, generateCardNames(player.getReceivedCards())));
     }
 
     public String outputPlayerCardStatus(String name, String cards) {

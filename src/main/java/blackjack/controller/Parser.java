@@ -19,4 +19,15 @@ public class Parser {
             throw new IllegalArgumentException("이름을 올바르게 입력해 주세요.");
         }
     }
+
+    public static boolean parseCommand(String comamnd) {
+        validateCommand(comamnd);
+        return comamnd.equals("y");
+    }
+
+    private static void validateCommand(String command) {
+        if (!(command.equals("y") || command.equals("n"))) {
+            throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
+        }
+    }
 }
