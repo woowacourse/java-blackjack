@@ -15,6 +15,10 @@ public class Card {
         return number.getValue();
     }
 
+    public CardNumber getNumber() {
+        return number;
+    }
+
     public CardShape getShape() {
         return shape;
     }
