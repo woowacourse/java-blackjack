@@ -44,7 +44,7 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand.startAdding(deck);
 
         //then
-        Assertions.assertThat(DealerBlackjackCardHand.getSum()).isEqualTo(expectedSum);
+        Assertions.assertThat(DealerBlackjackCardHand.getBlackjackSum()).isEqualTo(expectedSum);
     }
 
     private static Stream<Arguments> provideInitCardsAndDeckCardsAndExpectedSum() {

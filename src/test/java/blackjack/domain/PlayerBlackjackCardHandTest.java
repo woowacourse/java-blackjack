@@ -76,7 +76,7 @@ public class PlayerBlackjackCardHandTest {
         PlayerBlackjackCardHand.addCard(HEART_2);
 
         // when
-        final int sum = PlayerBlackjackCardHand.getSum();
+        final int sum = PlayerBlackjackCardHand.getBlackjackSum();
 
         // then
         assertThat(sum).isEqualTo(13);
@@ -91,7 +91,7 @@ public class PlayerBlackjackCardHandTest {
         PlayerBlackjackCardHand.addCard(HEART_13);
 
         // when
-        final int sum = PlayerBlackjackCardHand.getSum();
+        final int sum = PlayerBlackjackCardHand.getBlackjackSum();
 
         // then
         assertThat(sum).isEqualTo(30);
@@ -106,7 +106,7 @@ public class PlayerBlackjackCardHandTest {
         PlayerBlackjackCardHand.addCard(HEART_10);
 
         // when
-        final int sum = PlayerBlackjackCardHand.getSum();
+        final int sum = PlayerBlackjackCardHand.getBlackjackSum();
 
         // then
         assertThat(sum).isEqualTo(18);
@@ -123,7 +123,7 @@ public class PlayerBlackjackCardHandTest {
         PlayerBlackjackCardHand.addCard(DIAMOND_1);
 
         // when
-        final int sum = PlayerBlackjackCardHand.getSum();
+        final int sum = PlayerBlackjackCardHand.getBlackjackSum();
 
         // then
         assertThat(sum).isEqualTo(expected);
@@ -150,7 +150,7 @@ public class PlayerBlackjackCardHandTest {
         PlayerBlackjackCardHand.addCard(DIAMOND_1);
 
         // when
-        final int sum = PlayerBlackjackCardHand.getSum();
+        final int sum = PlayerBlackjackCardHand.getBlackjackSum();
 
         // then
         assertThat(sum).isEqualTo(expected);
@@ -178,7 +178,7 @@ public class PlayerBlackjackCardHandTest {
         PlayerBlackjackCardHand.addCard(HEART_1);
 
         // when
-        final int sum = PlayerBlackjackCardHand.getSum();
+        final int sum = PlayerBlackjackCardHand.getBlackjackSum();
 
         // then
         assertThat(sum).isEqualTo(expected);

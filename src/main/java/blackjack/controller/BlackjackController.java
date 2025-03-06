@@ -69,7 +69,7 @@ public class BlackjackController {
             addingCardDecision = inputView.getAddingCardDecision(playerBlackjackCardHand.getPlayerName());
             if (addingCardDecision) {
                 playerBlackjackCardHand.addCard(deck.draw());
-                outputView.outputCardsAndSum(playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getSum());
+                outputView.outputCardsAndSum(playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getBlackjackSum());
             }
         } while (addingCardDecision);
     }
@@ -82,9 +82,9 @@ public class BlackjackController {
     }
     
     private void processCardOpening(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
-        outputView.outputDealerCardsAndResult(dealerBlackjackCardHand.getCards(), dealerBlackjackCardHand.getSum());
+        outputView.outputDealerCardsAndResult(dealerBlackjackCardHand.getCards(), dealerBlackjackCardHand.getBlackjackSum());
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
-            outputView.outputPlayerCardsAndResult(playerBlackjackCardHand.getPlayerName(), playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getSum());
+            outputView.outputPlayerCardsAndResult(playerBlackjackCardHand.getPlayerName(), playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getBlackjackSum());
         }
     }
     

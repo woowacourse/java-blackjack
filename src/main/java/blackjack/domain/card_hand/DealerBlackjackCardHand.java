@@ -6,14 +6,14 @@ import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
 import blackjack.domain.Deck;
 
-public class DealerBlackjackCardHand implements BlackjackCardHand {
+public class DealerBlackjackCardHand implements BlackjackWinDeterminer {
     
     private static final int DEALER_DRAW_THRESHOLD = 16;
     
-    private final CardHand cardHand;
+    private final BlackjackCardHand cardHand;
     
     public DealerBlackjackCardHand(final CardHandInitializer initializer) {
-        this.cardHand = new CardHand(initializer);
+        this.cardHand = new BlackjackCardHand(initializer);
     }
     
     public List<Card> getInitialCards() {
@@ -21,7 +21,7 @@ public class DealerBlackjackCardHand implements BlackjackCardHand {
     }
     
     public void startAdding(final Deck deck) {
-        while (cardHand.getSum() <= DEALER_DRAW_THRESHOLD) {
+        while (cardHand.getBlackjackSum() <= DEALER_DRAW_THRESHOLD) {
             cardHand.addCard(deck.draw());
         }
     }
@@ -31,8 +31,8 @@ public class DealerBlackjackCardHand implements BlackjackCardHand {
     }
     
     @Override
-    public int getSum() {
-        return cardHand.getSum();
+    public int getBlackjackSum() {
+        return cardHand.getBlackjackSum();
     }
     
     @Override

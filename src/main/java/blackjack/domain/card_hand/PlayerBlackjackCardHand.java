@@ -6,13 +6,13 @@ import blackjack.domain.Card;
 import blackjack.domain.CardHandInitializer;
 import blackjack.domain.Player;
 
-public class PlayerBlackjackCardHand implements BlackjackCardHand {
+public class PlayerBlackjackCardHand implements BlackjackWinDeterminer {
     
-    private final CardHand cardHand;
+    private final BlackjackCardHand cardHand;
     private final Player player;
     
     public PlayerBlackjackCardHand(final Player player, final CardHandInitializer initializer) {
-        this.cardHand = new CardHand(initializer);
+        this.cardHand = new BlackjackCardHand(initializer);
         this.player = player;
     }
     
@@ -33,8 +33,8 @@ public class PlayerBlackjackCardHand implements BlackjackCardHand {
     }
     
     @Override
-    public int getSum() {
-        return cardHand.getSum();
+    public int getBlackjackSum() {
+        return cardHand.getBlackjackSum();
     }
     
     @Override
@@ -43,10 +43,10 @@ public class PlayerBlackjackCardHand implements BlackjackCardHand {
     }
     
     public boolean isAddedTo21() {
-        return getSum() == 21;
+        return getBlackjackSum() == 21;
     }
     
     public boolean isBurst() {
-        return getSum() > 21;
+        return getBlackjackSum() > 21;
     }
 }
