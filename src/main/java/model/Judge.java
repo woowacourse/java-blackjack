@@ -12,8 +12,11 @@ public class Judge {
         if (playerCards.calculateResult() > dealerCards.calculateResult()) {
             return GameResult.WIN;
         }
+        if (playerCards.calculateResult() < dealerCards.calculateResult()) {
+            return GameResult.LOSE;
+        }
 
-        return GameResult.LOSE;
+        return GameResult.DRAW;
     }
 
 }
