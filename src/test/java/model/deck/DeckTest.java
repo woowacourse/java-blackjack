@@ -1,9 +1,7 @@
-package model;
+package model.deck;
 
 import java.util.List;
 import model.card.Card;
-import model.deck.Deck;
-import model.deck.DeckCreateStrategy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

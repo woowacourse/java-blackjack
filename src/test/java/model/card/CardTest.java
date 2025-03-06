@@ -1,10 +1,7 @@
-package model;
+package model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
