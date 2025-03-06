@@ -24,4 +24,12 @@ public class OutputView {
                 .toList();
         System.out.printf("%s카드: %s%n", name, String.join(DELIMITER, cardNotations));
     }
+
+    public void displayDealerHitResult() {
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
+
+    public void displayEmptyLine() {
+        System.out.println();
+    }
 }

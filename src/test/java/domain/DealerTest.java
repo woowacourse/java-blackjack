@@ -55,13 +55,13 @@ class DealerTest {
 
     @Test
     @DisplayName("카드 2장의 합계가 16 이하인지 판단한다")
-    void testIsHit() {
+    void testDoesDealerNeedCard() {
         // given
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(SIX, DIAMOND)));
         Dealer dealer = new Dealer(cardHand);
         // when & then
-        assertThat(dealer.isHit()).isTrue();
+        assertThat(dealer.doesDealerNeedCard()).isTrue();
     }
 
     @Test

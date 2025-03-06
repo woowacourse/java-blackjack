@@ -1,13 +1,13 @@
 package domain;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class Game {
     private static final int MAX_PLAYER_COUNT = 5;
-    private final Map<Player, GameResult> players = new HashMap<>();
+    private final Map<Player, GameResult> players = new LinkedHashMap<>();
     private final Dealer dealer;
 
     public Game(List<String> playerNames) {
@@ -16,7 +16,7 @@ public class Game {
         validateDuplicateName(playerNames);
         playerNames.forEach(this::registerPlayer);
     }
-    
+
     public List<Card> getDealerCards() {
         return dealer.getCards();
     }
@@ -28,6 +28,15 @@ public class Game {
 
     public List<Player> getPlayers() {
         return List.copyOf(players.keySet());
+    }
+
+    public boolean doesDealerNeedCard() {
+        return dealer.doesDealerNeedCard();
+    }
+
+    public void dealerHit() {
+        Card card = dealer.pickCard();
+        dealer.hit(card);
     }
 
     private void registerPlayer(String playerName) {

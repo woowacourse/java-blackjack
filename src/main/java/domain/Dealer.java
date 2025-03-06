@@ -45,8 +45,8 @@ public class Dealer {
         return cardHand.isBlackJack();
     }
 
-    public boolean isHit() {
-        return cardHand.isDealerHit();
+    public boolean doesDealerNeedCard() {
+        return cardHand.doesDealerNeedCard();
     }
 
     public void recordGameResult(GameResult result) {
@@ -63,5 +63,9 @@ public class Dealer {
 
     public Card pickCard() {
         return deck.random(new RandomNumberGenerator());
+    }
+
+    public void hit(Card newCard) {
+        cardHand.add(newCard);
     }
 }

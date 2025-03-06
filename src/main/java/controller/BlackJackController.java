@@ -15,6 +15,8 @@ public class BlackJackController {
         Game game = startGame();
         outputView.displayInitialDeal(game);
         giveAdditionalCards(game);
+        giveAdditionalCardsForDealer(game);
+        System.out.println();
     }
 
     public Game startGame() {
@@ -27,6 +29,14 @@ public class BlackJackController {
                 .forEach((player) -> hitOrStay(game, player));
     }
 
+    private void giveAdditionalCardsForDealer(Game game) {
+        outputView.displayEmptyLine();
+        while (game.doesDealerNeedCard()) {
+            game.dealerHit();
+            outputView.displayDealerHitResult();
+        }
+    }
+
     private void hitOrStay(Game game, Player player) {
         Answer answer;
         do {
@@ -36,8 +46,8 @@ public class BlackJackController {
             answer = inputView.readHitOrStay(player);
             if (answer == Answer.YES) {
                 game.hit(player);
-                outputView.displayPlayerAndCards(player);
             }
+            outputView.displayPlayerAndCards(player);
         } while (answer == Answer.YES);
     }
 }

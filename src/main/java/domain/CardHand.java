@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -8,14 +8,13 @@ import java.util.Set;
 public class CardHand {
     private static final int MIN_ACE_SCORE = 1;
     private static final int MAX_ACE_SCORE = 11;
-    private static final int INITIAL_CARD_COUNT = 2;
     private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int MAX_SCORE = 21;
 
     private final Set<Card> cards;
 
     public CardHand(Set<Card> cards) {
-        this.cards = new HashSet<>(cards);
+        this.cards = new LinkedHashSet<>(cards);
     }
 
     public void add(Card newCard) {
@@ -50,8 +49,8 @@ public class CardHand {
         return calculateScore() == MAX_SCORE;
     }
 
-    public boolean isDealerHit() {
-        return cards.size() == INITIAL_CARD_COUNT && calculateScore() <= DEALER_HIT_THRESHOLD;
+    public boolean doesDealerNeedCard() {
+        return calculateScore() <= DEALER_HIT_THRESHOLD;
     }
 
     public List<Card> getCards() {
