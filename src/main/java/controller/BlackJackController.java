@@ -3,6 +3,7 @@ package controller;
 import domain.CardDeck;
 import domain.CardShuffler;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Player;
 import domain.Players;
 import java.util.List;
@@ -39,11 +40,20 @@ public class BlackJackController {
             }
         }
 
-        while (!dealer.isOverBurstBound() && dealer.isOverDrawBound()) {
+        while (!dealer.isOverBurstBound() && !dealer.isOverDrawBound()) {
             dealer.drawCard(cardDeck);
             outputView.printDealerDrawMessage();
         }
 
         outputView.printGameResult(dealer, players);
+
+        List<GameResult> gameResults = dealer.judgeGameResult(players.getPlayers());
+
+        int winCount = GameResult.WIN.countGameResult(gameResults);
+        int loseCount = GameResult.LOSE.countGameResult(gameResults);
+        int drawCount = GameResult.DRAW.countGameResult(gameResults);
+
+        outputView.printDealerWinningResult(winCount, drawCount, loseCount);
+        outputView.printWinningResult(playerNames, gameResults);
     }
 }

@@ -68,4 +68,8 @@ public enum GameResult {
         }
         throw new IllegalArgumentException("[ERROR] 대상 결과 개수 계산에 실패했습니다.");
     }
+
+    public String getResult() {
+        return result;
+    }
 }

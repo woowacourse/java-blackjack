@@ -4,6 +4,7 @@ import domain.Card;
 import domain.CardDeck;
 import domain.CardNumber;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Player;
 import domain.Players;
 import java.util.List;
@@ -12,12 +13,20 @@ public class OutputView {
 
     public void printInitialGame(Dealer dealer, List<Player> players) {
         String playerNames = formatPlayerNames(players);
-        System.out.printf("딜러와 %s에게 " + CardDeck.DRAW_COUNT_WHEN_START + "장을 나누었습니다.%n", playerNames);
+        System.out.printf("%n딜러와 %s에게 " + CardDeck.DRAW_COUNT_WHEN_START + "장을 나누었습니다.%n", playerNames);
         String dealerHand = formatHand(dealer.getInitCard());
         System.out.printf("딜러카드: %s%n", dealerHand);
         for (Player player : players) {
             System.out.printf("%s카드: %s%n", player.getName(), formatHand(player.getHand().getCards()));
         }
+        System.out.println();
+    }
+
+    private String formatPlayerNames(List<Player> players) {
+        return players.stream()
+                .map(Player::getName)
+                .reduce((a, b) -> a + ", " + b)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 플레이어 포맷팅에 실패하였습니다."));
     }
 
     public void printPlayerCard(Player player) {
@@ -26,18 +35,12 @@ public class OutputView {
 
     public void printGameResult(Dealer dealer, Players players) {
         String dealerResult = formatHand(dealer.getHand().getCards());
-        System.out.printf("딜러카드: %s - 결과: %d%n", dealerResult, dealer.calculateTotalCardNumber());
+        System.out.printf("%n딜러카드: %s - 결과: %d%n", dealerResult, dealer.calculateTotalCardNumber());
         for (Player player : players.getPlayers()) {
             String playerResult = formatHand(player.getHand().getCards());
             System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), playerResult, player.calculateTotalCardNumber());
         }
-    }
-
-    private String formatPlayerNames(List<Player> players) {
-        return players.stream()
-                .map(Player::getName)
-                .reduce((a, b) -> a + ", " + b)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 플레이어 포맷팅에 실패하였습니다."));
+        System.out.println();
     }
 
     private String formatHand(List<Card> cards) {
@@ -60,5 +63,16 @@ public class OutputView {
 
     public void printDealerDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void printDealerWinningResult(int winCount, int drawCount, int loseCount) {
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, drawCount, loseCount);
+    }
+
+    public void printWinningResult(List<String> playerNames, List<GameResult> gameResults) {
+        for (int i = 0; i < playerNames.size(); i++) {
+            System.out.printf("%s: %s%n", playerNames.get(i), gameResults.get(i).getResult());
+        }
     }
 }
