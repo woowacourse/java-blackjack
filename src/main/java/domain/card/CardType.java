@@ -1,5 +1,6 @@
 package domain.card;
 
+import static domain.card.CardType.Score.*;
 import static domain.card.CardType.Type.*;
 
 import java.util.Arrays;
@@ -7,66 +8,66 @@ import java.util.List;
 
 public enum CardType {
 
-    DIAMOND_ACE(DIAMOND, 1),
-    DIAMOND_2(DIAMOND, 2),
-    DIAMOND_3(DIAMOND, 3),
-    DIAMOND_4(DIAMOND, 4),
-    DIAMOND_5(DIAMOND, 5),
-    DIAMOND_6(DIAMOND, 6),
-    DIAMOND_7(DIAMOND, 7),
-    DIAMOND_8(DIAMOND, 8),
-    DIAMOND_9(DIAMOND, 9),
-    DIAMOND_10(DIAMOND, 10),
-    DIAMOND_J(DIAMOND, 10),
-    DIAMOND_Q(DIAMOND, 10),
-    DIAMOND_K(DIAMOND, 10),
+    DIAMOND_ACE(DIAMOND, ACE),
+    DIAMOND_2(DIAMOND, TWO),
+    DIAMOND_3(DIAMOND, THREE),
+    DIAMOND_4(DIAMOND, FOUR),
+    DIAMOND_5(DIAMOND, FIVE),
+    DIAMOND_6(DIAMOND, SIX),
+    DIAMOND_7(DIAMOND, SEVEN),
+    DIAMOND_8(DIAMOND, EIGHT),
+    DIAMOND_9(DIAMOND, NINE),
+    DIAMOND_10(DIAMOND, TEN),
+    DIAMOND_J(DIAMOND, JACK),
+    DIAMOND_Q(DIAMOND, QUEEN),
+    DIAMOND_K(DIAMOND, KING),
 
-    HEART_ACE(HEART, 1),
-    HEART_2(HEART, 2),
-    HEART_3(HEART, 3),
-    HEART_4(HEART, 4),
-    HEART_5(HEART, 5),
-    HEART_6(HEART, 6),
-    HEART_7(HEART, 7),
-    HEART_8(HEART, 8),
-    HEART_9(HEART, 9),
-    HEART_10(HEART, 10),
-    HEART_J(HEART, 10),
-    HEART_Q(HEART, 10),
-    HEART_K(HEART, 10),
+    HEART_ACE(HEART, ACE),
+    HEART_2(HEART, TWO),
+    HEART_3(HEART, THREE),
+    HEART_4(HEART, FOUR),
+    HEART_5(HEART, FIVE),
+    HEART_6(HEART, SIX),
+    HEART_7(HEART, SEVEN),
+    HEART_8(HEART, EIGHT),
+    HEART_9(HEART, NINE),
+    HEART_10(HEART, TEN),
+    HEART_J(HEART, JACK),
+    HEART_Q(HEART, QUEEN),
+    HEART_K(HEART, KING),
 
-    SPADE_ACE(SPADE, 1),
-    SPADE_2(SPADE, 2),
-    SPADE_3(SPADE, 3),
-    SPADE_4(SPADE, 4),
-    SPADE_5(SPADE, 5),
-    SPADE_6(SPADE, 6),
-    SPADE_7(SPADE, 7),
-    SPADE_8(SPADE, 8),
-    SPADE_9(SPADE, 9),
-    SPADE_10(SPADE, 10),
-    SPADE_J(SPADE, 10),
-    SPADE_Q(SPADE, 10),
-    SPADE_K(SPADE, 10),
+    SPADE_ACE(SPADE, ACE),
+    SPADE_2(SPADE, TWO),
+    SPADE_3(SPADE, THREE),
+    SPADE_4(SPADE, FOUR),
+    SPADE_5(SPADE, FIVE),
+    SPADE_6(SPADE, SIX),
+    SPADE_7(SPADE, SEVEN),
+    SPADE_8(SPADE, EIGHT),
+    SPADE_9(SPADE, NINE),
+    SPADE_10(SPADE, TEN),
+    SPADE_J(SPADE, JACK),
+    SPADE_Q(SPADE, QUEEN),
+    SPADE_K(SPADE, KING),
 
-    CLOVER_ACE(CLOVER, 1),
-    CLOVER_2(CLOVER, 2),
-    CLOVER_3(CLOVER, 3),
-    CLOVER_4(CLOVER, 4),
-    CLOVER_5(CLOVER, 5),
-    CLOVER_6(CLOVER, 6),
-    CLOVER_7(CLOVER, 7),
-    CLOVER_8(CLOVER, 8),
-    CLOVER_9(CLOVER, 9),
-    CLOVER_10(CLOVER, 10),
-    CLOVER_J(CLOVER, 10),
-    CLOVER_Q(CLOVER, 10),
-    CLOVER_K(CLOVER, 10);
+    CLOVER_ACE(CLOVER, ACE),
+    CLOVER_2(CLOVER, TWO),
+    CLOVER_3(CLOVER, THREE),
+    CLOVER_4(CLOVER, FOUR),
+    CLOVER_5(CLOVER, FIVE),
+    CLOVER_6(CLOVER, SIX),
+    CLOVER_7(CLOVER, SEVEN),
+    CLOVER_8(CLOVER, EIGHT),
+    CLOVER_9(CLOVER, NINE),
+    CLOVER_10(CLOVER, TEN),
+    CLOVER_J(CLOVER, JACK),
+    CLOVER_Q(CLOVER, QUEEN),
+    CLOVER_K(CLOVER, KING);
 
     private final Type type;
-    private final int score;
+    private final Score score;
 
-    CardType(final Type type, final int score) {
+    CardType(final Type type, final Score score) {
         this.type = type;
         this.score = score;
     }
@@ -80,13 +81,55 @@ public enum CardType {
     }
 
     public int getScore() {
-        return score;
+        return score.getValue();
+    }
+
+    public String getSymbol() {
+        return score.getSymbol();
     }
 
     public enum Type {
-        HEART,
-        SPADE,
-        CLOVER,
-        DIAMOND
+        HEART("하트"),
+        SPADE("스페이드"),
+        CLOVER("클로버"),
+        DIAMOND("다이아몬드");
+
+        private final String name;
+
+        Type(final String name) {
+            this.name = name;
+        }
+    }
+
+    public enum Score {
+        ACE(1, "A"),
+        TWO(2, "2"),
+        THREE(3, "3"),
+        FOUR(4, "4"),
+        FIVE(5, "5"),
+        SIX(6, "6"),
+        SEVEN(7, "7"),
+        EIGHT(8, "8"),
+        NINE(9, "9"),
+        TEN(10, "10"),
+        JACK(10, "J"),
+        QUEEN(10, "Q"),
+        KING(10, "K");
+
+        private final int value;
+        private final String symbol;
+
+        Score(int value, String symbol) {
+            this.value = value;
+            this.symbol = symbol;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
     }
 }
