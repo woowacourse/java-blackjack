@@ -14,11 +14,6 @@ public class Player {
         this.name = "";
     }
 
-    public Player(final CardHand hand, final String name) {
-        this.participant = new Participant(hand);
-        this.name = name;
-    }
-
     public boolean isPickCard() {
         return participant.calculateAllScore() <= 21;
     }
