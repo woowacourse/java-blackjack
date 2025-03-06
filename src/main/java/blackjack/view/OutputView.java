@@ -43,8 +43,18 @@ public class OutputView {
     }
 
     private void displayResultInfo(FinalResultDto finalResultDto) {
-        System.out.print(finalResultDto.name() + "카드: " + String.join(", ", finalResultDto.cardInfos()));
-        System.out.println(" - 결과: " + finalResultDto.score());
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(finalResultDto.name())
+                .append("카드: ")
+                .append(String.join(", ", finalResultDto.cardInfos()));
+        sb.append(" - 결과: ").append(finalResultDto.score());
+
+        if (finalResultDto.isBust()) {
+            sb.append(" (버스트)");
+        }
+
+        System.out.println(sb);
     }
 
     public void displayDealerResult(Map<GameResult, Integer> dealerResult) {

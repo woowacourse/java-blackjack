@@ -66,15 +66,19 @@ public class BlackjackController {
 
     private void hitExtraCardForPlayers(List<Player> players) {
         for (Player player : players) {
-            while (player.canTakeExtraCard()) {
-                String answer = inputView.readOneMoreCard(player.getName());
-                HitOption option = HitOption.from(answer);
-                if (option.isNo()) {
-                    break;
-                }
-                player.addCard();
-                outputView.displayCardInfo(DistributedCardDto.from(player));
+            checkPlayerHit(player);
+        }
+    }
+
+    private void checkPlayerHit(Player player) {
+        while (player.canTakeExtraCard()) {
+            String answer = inputView.readOneMoreCard(player.getName());
+            HitOption option = HitOption.from(answer);
+            if (option.isNo()) {
+                break;
             }
+            player.addCard();
+            outputView.displayCardInfo(DistributedCardDto.from(player));
         }
     }
 
