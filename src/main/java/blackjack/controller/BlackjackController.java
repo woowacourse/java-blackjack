@@ -10,7 +10,7 @@ import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackjackController {
+public class BlackjackController implements Controller {
     
     private final InputView inputView;
     private final OutputView outputView;
@@ -20,6 +20,7 @@ public class BlackjackController {
         this.outputView = outputView;
     }
     
+    @Override
     public void run() {
         final Deck deck = new Deck();
         final List<PlayerBlackjackCardHand> playerBlackjackCardHands = createPlayerCardHands(deck);
