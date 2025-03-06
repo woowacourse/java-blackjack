@@ -46,10 +46,10 @@ public class Players {
                 .collect(Collectors.toMap(Player::getUsername, Gamer::clone));
     }
 
-//    public GameStatistics calculateGameStatistics(Dealer dealer) {
-//        Map<String, GameResult> playersResult = new HashMap<>();
-//        for (Player player : players) {
-//            GameResult gameResult =
-//        }
-//    }
+    public GameStatistics calculateGameStatistics(Dealer dealer) {
+        Map<String, GameResult> gameResults = players.stream()
+                .collect(Collectors.toMap(Player::getUsername, player -> player.decideGameResult(dealer)));
+
+        return new GameStatistics(gameResults);
+    }
 }
