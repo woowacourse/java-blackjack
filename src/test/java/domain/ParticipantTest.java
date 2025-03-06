@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import exception.ErrorException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import exception.ErrorException;
 import java.util.List;
 
 public abstract class Participant {

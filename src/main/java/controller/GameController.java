@@ -11,7 +11,7 @@ import domain.dto.GameResultDto;
 import domain.dto.ParticipantCardsDto;
 import java.util.ArrayList;
 import java.util.List;
-import util.ExceptionHandler;
+import exception.ExceptionHandler;
 import view.InputView;
 import view.OutputView;
 

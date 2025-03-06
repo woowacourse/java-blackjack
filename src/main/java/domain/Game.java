@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import exception.ErrorException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

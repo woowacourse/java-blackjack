@@ -1,4 +1,4 @@
-package util;
+package exception;
 
 import java.util.Optional;
 import java.util.function.Supplier;
