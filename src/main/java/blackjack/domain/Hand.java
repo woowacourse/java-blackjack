@@ -42,7 +42,6 @@ public class Hand implements CardHolder {
         Set<Integer> possibleSums = new HashSet<>();
 
         calculatePossibleSums(possibleSums, 0, 0);
-
         return possibleSums.stream().toList();
     }
 
@@ -56,5 +55,12 @@ public class Hand implements CardHolder {
         for (int number : card.getValue()) {
             calculatePossibleSums(values, index + 1, sum + number);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Hand{" +
+                "cards=" + cards +
+                '}';
     }
 }

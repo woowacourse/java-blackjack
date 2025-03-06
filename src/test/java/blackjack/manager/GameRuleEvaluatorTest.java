@@ -1,17 +1,24 @@
-package blackjack.domain;
+package blackjack.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.CardRank;
+import blackjack.CardSuit;
+import blackjack.domain.Card;
+import blackjack.domain.CardHolder;
+import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
+import blackjack.domain.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameRuleTest {
+class GameRuleEvaluatorTest {
     @DisplayName("딜러가 가진 카드의 총합의 경우의 수 중에서 16보다 큰 숫자가 있다면 false 를 반환한다")
     @Test
     void test1() {
         // given
-        GameRule gameRule = new GameRule();
+        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
         CardHolder cardHolder = new CardHolder() {
             @Override
             public List<Card> getAllCards() {
@@ -30,7 +37,7 @@ class GameRuleTest {
         };
 
         // when
-        boolean actual = gameRule.canTakeCardFor(new Dealer(cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(cardHolder));
 
         // then
         assertThat(actual).isFalse();
@@ -40,7 +47,7 @@ class GameRuleTest {
     @Test
     void test2() {
         // given
-        GameRule gameRule = new GameRule();
+        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
         CardHolder cardHolder = new CardHolder() {
             @Override
             public List<Card> getAllCards() {
@@ -59,7 +66,7 @@ class GameRuleTest {
         };
 
         // when
-        boolean actual = gameRule.canTakeCardFor(new Dealer(cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(cardHolder));
 
         // then
         assertThat(actual).isTrue();
@@ -69,7 +76,7 @@ class GameRuleTest {
     @Test
     void test3() {
         // given
-        GameRule gameRule = new GameRule();
+        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
         CardHolder cardHolder = new CardHolder() {
             @Override
             public List<Card> getAllCards() {
@@ -88,7 +95,7 @@ class GameRuleTest {
         };
 
         // when
-        boolean actual = gameRule.canTakeCardFor(new Player("꾹이", cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", cardHolder));
 
         // then
         assertThat(actual).isTrue();
@@ -98,7 +105,7 @@ class GameRuleTest {
     @Test
     void test4() {
         // given
-        GameRule gameRule = new GameRule();
+        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
         CardHolder cardHolder = new CardHolder() {
             @Override
             public List<Card> getAllCards() {
@@ -117,9 +124,45 @@ class GameRuleTest {
         };
 
         // when
-        boolean actual = gameRule.canTakeCardFor(new Player("꾹이", cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", cardHolder));
 
         // then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("플레이어의 카드의 총합이 21을 넘으면 busted 여부의 결과가 true 가 된다")
+    @Test
+    void test5() {
+        // given
+        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
+        Hand hand = new Hand();
+        Player player = new Player("히로", hand);
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.KING));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.QUEEN));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.JACK));
+
+        // when
+        boolean actual = gameRuleEvaluator.isBustedFor(player);
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("딜러의 카드의 총합이 21을 넘으면 busted 여부의 결과가 true 가 된다")
+    @Test
+    void test6() {
+        // given
+        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
+        Hand hand = new Hand();
+        Dealer dealer = new Dealer(hand);
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.KING));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.QUEEN));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.JACK));
+
+        // when
+        boolean actual = gameRuleEvaluator.isBustedFor(dealer);
+
+        // then
+        assertThat(actual).isTrue();
     }
 }

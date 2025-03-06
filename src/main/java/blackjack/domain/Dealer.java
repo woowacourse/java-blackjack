@@ -24,4 +24,8 @@ public class Dealer {
     public Card revealFirstCard() {
         return cardHolder.getAllCards().getFirst();
     }
+
+    public CardHolder getCardHolder() {
+        return cardHolder;
+    }
 }

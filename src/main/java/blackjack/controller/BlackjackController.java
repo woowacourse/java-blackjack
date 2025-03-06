@@ -1,35 +1,86 @@
 package blackjack.controller;
 
-import blackjack.manager.CardsGenerator;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.manager.BlackJackInitManager;
 import blackjack.manager.BlackjackProcessManager;
+import blackjack.manager.CardsGenerator;
+import blackjack.manager.GameRuleEvaluator;
+import blackjack.view.Confirmation;
 import java.util.List;
 
 public class BlackjackController {
+
+    private final GameRuleEvaluator gameRuleEvaluator;
+
+    public BlackjackController(GameRuleEvaluator gameRuleEvaluator) {
+        this.gameRuleEvaluator = gameRuleEvaluator;
+    }
 
     public void run() {
         CardsGenerator cardsGenerator = new CardsGenerator();
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(cardsGenerator);
 
         Deck deck = blackJackInitManager.generateDeck();
+        // 이름 입력 받은 것 넣기
         Players players = blackJackInitManager.savePlayers(List.of(), Hand::new);
         Dealer dealer = blackJackInitManager.saveDealer(Hand::new);
 
         BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck);
 
-        // 카드를 init 한다. (이 것은 매니저에서 하든, 컨트롤러에서 하든, 잘 생각해보자)
-//        for (Player player : players.getPlayers()){
-//            while ()
-//                if (// 님 카드 받을 수 있음?)
-//            // inputView 가고
-//            // y, n이면 process 매
-//
-//
-//        }
+        // 딜러 카드 분배
+        for (Player player : players.getPlayers()) {
+            blackjackProcessManager.giveStartingCards(player.getCardHolder());
+        }
+        blackjackProcessManager.giveStartingCards(dealer.getCardHolder());
+
+        // TODO 카드를 출력하는 것을 만들어야함
+        for (Player player : players.getPlayers()) {
+            while (gameRuleEvaluator.canTakeCardFor(player)) {
+                Confirmation confirmation = Confirmation.Y;
+                // 플레이어에게 카드 줘야하는 지 확인
+                //  TODO inputViewer한테 물어봄
+                if (confirmation.equals(Confirmation.N)) {
+                    break;
+                }
+                blackjackProcessManager.giveCard(player.getCardHolder());
+
+                // TODO BUSTED
+            }
+        }
+
+        while (gameRuleEvaluator.canTakeCardFor(dealer)) {
+            // TODO 16이하라 출력해야 한다는 것을 표시
+            blackjackProcessManager.giveCard(dealer.getCardHolder());
+        }
+
+        boolean isBustedForDealer = gameRuleEvaluator.isBustedFor(dealer);
+
+        // 비교하는 작업이 시작됨
+        for (Player player : players.getPlayers()) {
+            boolean isBustedForPlayer = gameRuleEvaluator.isBustedFor(player);
+
+            // 딜러가 bust 됐다면
+            if (isBustedForDealer) {
+                if (isBustedForPlayer) {
+                    // 무로 처리한다.
+                }
+
+                // 플레이어 승리
+            }
+
+            // 딜러가 bust 안됐다면
+            if (isBustedForPlayer) {
+                // 딜러 승리
+            }
+
+            // 값 비교
+
+        }
+
         // 사람 이름 입력을 받는다
 
         // players 저장

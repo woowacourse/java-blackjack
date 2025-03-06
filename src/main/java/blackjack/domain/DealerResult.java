@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.common.GameResultType;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;

@@ -22,4 +22,8 @@ public class Player {
     public void takeCard(Card newCard) {
         cardHolder.takeCard(newCard);
     }
+
+    public CardHolder getCardHolder() {
+        return cardHolder;
+    }
 }

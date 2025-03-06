@@ -30,4 +30,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardSuit, cardRank);
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardSuit=" + cardSuit +
+                ", cardRank=" + cardRank +
+                '}';
+    }
 }
