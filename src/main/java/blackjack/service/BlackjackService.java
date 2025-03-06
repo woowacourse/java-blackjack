@@ -2,6 +2,8 @@ package blackjack.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
@@ -9,6 +11,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.dto.GamerDto;
 import blackjack.dto.request.NamesRequestDto;
+import blackjack.dto.request.SelectionRequestDto;
 import blackjack.dto.response.FinalResultResponseDto;
 import blackjack.dto.response.RoundResultsResponseDto;
 import blackjack.dto.response.StartingCardsResponseDto;
@@ -18,8 +21,6 @@ public class BlackjackService {
     private final Deck deck = Deck.generateFrom(new RandomCardStrategy());
     private final Dealer dealer = new Dealer();
     private final List<Player> players = new ArrayList<>();
-    // TODO: 반복자 리팩토링
-    private int playerCursor = 0;
 
     public void setPlayer(NamesRequestDto requestDto) {
         players.addAll(
@@ -36,29 +37,21 @@ public class BlackjackService {
         return StartingCardsResponseDto.of(dealer, players);
     }
 
-    public void nextPlayer() {
-        playerCursor++;
-    }
-
-    public String getCurrentPlayerName() {
-        return players.get(playerCursor).getName();
-    }
-
-    public void drawCardForCurrentPlayer() {
-        Player currentPlayer =players.get(playerCursor);
-        currentPlayer.drawCard(deck);
-    }
-
-    public GamerDto getNowPlayerCards() {
-        return GamerDto.from(players.get(playerCursor));
-    }
-
-    public boolean hasNextPlayer() {
-        return playerCursor < players.size();
-    }
-
-    public boolean currentPlayerCanReceiveAdditionalCards() {
-        return players.get(playerCursor).canReceiveAdditionalCards();
+    public void drawCards(
+        Function<String, SelectionRequestDto> readSelection,
+        Consumer<GamerDto> printAdditionalCard,
+        Consumer<String> printBustNotice
+    ) {
+        for (var player : players) {
+            while (readSelection.apply(player.getName()).selection()) {
+                player.drawCard(deck);
+                printAdditionalCard.accept(GamerDto.from(player));
+                if (!player.canReceiveAdditionalCards()) {
+                    printBustNotice.accept(player.getName());
+                    break;
+                }
+            }
+        }
     }
 
     public boolean dealerCanReceiveAdditionalCards() {

@@ -10,7 +10,6 @@ public class BlackjackController {
 
     public void run() {
         setPlayers();
-        // TODO 함수형 인터페이스로 view 로직 분리하여 전달하기
         drawPlayerCards();
         drawDealerCards();
         printResult();
@@ -22,17 +21,10 @@ public class BlackjackController {
     }
 
     private void drawPlayerCards() {
-        while (blackjackService.hasNextPlayer()) {
-            while (InputView.readAdditionalCardSelection(blackjackService.getCurrentPlayerName()).selection()) {
-                blackjackService.drawCardForCurrentPlayer();
-                OutputView.printAdditionalCard(blackjackService.getNowPlayerCards());
-                if (!blackjackService.currentPlayerCanReceiveAdditionalCards()) {
-                    OutputView.printBustNotice(blackjackService.getCurrentPlayerName());
-                    break;
-                }
-            }
-            blackjackService.nextPlayer();
-        }
+        blackjackService.drawCards(
+            InputView::readAdditionalCardSelection,
+            OutputView::printAdditionalCard,
+            OutputView::printBustNotice);
     }
 
     private void drawDealerCards() {
