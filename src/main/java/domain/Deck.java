@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -42,5 +43,9 @@ public class Deck {
         }
 
         return cards.removeLast();
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 }

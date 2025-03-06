@@ -40,4 +40,9 @@ public class BlackJackGame {
         
         return new Dealer(Hand.of(firstCard, secondCard));
     }
+
+    public void shuffleDeck() {
+        deck.shuffle();
+    }
+
 }
