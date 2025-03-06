@@ -101,5 +101,8 @@ public TrumpCard dealerCardFirst() {
 위 코드의 경우 생성자를 거치는 순간부터 항상 카드가 비어있는 순간이 없습니다.
 그런데 의도를 좀 더 확실히하기위해 예외 처리를 추가하는것이 좋을까요?
 
+# 협력 관계
+
+![diagram.png](./diagram.png)
 
 
