@@ -27,7 +27,7 @@ public class GameManager {
         }
     }
 
-    public static GameManager creat(final CardGenerator cardGenerator, final List<String> playerNames) {
+    public static GameManager create(final CardGenerator cardGenerator, final List<String> playerNames) {
         final Dealer dealer = new Dealer(new CardGroup(generateCards(cardGenerator)));
         final List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {

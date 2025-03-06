@@ -14,7 +14,7 @@ public class GameManagerTest {
         //given
         final List<String> playerNames = List.of("윌슨", "가이온");
         //when
-        final GameManager gameManager = GameManager.creat(new RandomCardGenerator(), playerNames);
+        final GameManager gameManager = GameManager.create(new RandomCardGenerator(), playerNames);
         //then
         assertThat(gameManager).isInstanceOf(GameManager.class);
     }
@@ -24,7 +24,7 @@ public class GameManagerTest {
         //given
         final List<String> playerNames = List.of("윌슨", "가이온");
         //when
-        final GameManager gameManager = GameManager.creat(new RandomCardGenerator(), playerNames);
+        final GameManager gameManager = GameManager.create(new RandomCardGenerator(), playerNames);
         //then
         assertThatCode(gameManager::receiveCardToDealer).doesNotThrowAnyException();
     }
