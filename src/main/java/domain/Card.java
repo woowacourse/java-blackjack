@@ -76,8 +76,7 @@ public enum Card {
     CLOVER_TEN(TEN, CLOVER),
     CLOVER_JACK(JACK, CLOVER),
     CLOVER_QUEEN(QUEEN, CLOVER),
-    CLOVER_KING(KING, CLOVER),
-    ;
+    CLOVER_KING(KING, CLOVER);
 
     private final CardRank cardRank;
     private final CardShape cardShape;
@@ -93,10 +92,6 @@ public enum Card {
 
     public CardRank getCardRank() {
         return cardRank;
-    }
-
-    public CardShape getCardShape() {
-        return cardShape;
     }
 
     public String getCardName() {

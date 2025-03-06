@@ -23,7 +23,7 @@ class DealerTest {
         dealer.addCard(cards);
 
         //when & then
-        assertThat(dealer.canGetMoreCard()).isEqualTo(expected);
+        assertThat(dealer.isDrawable()).isEqualTo(expected);
     }
 
     public static Stream<Arguments> canGetMoreCardTest() {

@@ -58,7 +58,7 @@ public class Game {
     }
 
     public boolean canDealerGetMoreCard() {
-        return dealer.canGetMoreCard();
+        return dealer.isDrawable();
     }
 
     public Gamer getDealer() {

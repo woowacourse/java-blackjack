@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Dealer extends Gamer {
     public static final int BUST_THRESHOLD = 16;
+
     private final Deck deck;
 
     public Dealer(Deck deck) {
@@ -11,7 +12,7 @@ public class Dealer extends Gamer {
         this.deck = deck;
     }
 
-    public boolean canGetMoreCard() {
+    public boolean isDrawable() {
         return this.canGetMoreCard(BUST_THRESHOLD);
     }
 
