@@ -10,6 +10,10 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
