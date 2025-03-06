@@ -1,27 +1,28 @@
 package view;
 
-import domain.Player;
 import domain.TrumpCard;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printInitialCards(List<Player> players, TrumpCard dealerFirstCard) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("딜러와 ");
-        players.forEach(player -> sb.append(player.getName()).append(", "));
-        sb.delete(sb.length() - 2, sb.length());
-        sb.append("에게 2장을 나누었습니다.\n");
-        System.out.println(sb);
-
+    public void printInitialCards(Map<String, List<TrumpCard>> playerCards, TrumpCard dealerFirstCard) {
+        System.out.println(formatPlayersList(playerCards.keySet().stream().toList()));
         System.out.printf("딜러카드: %s\n", getCardInfo(dealerFirstCard));
+        System.out.println(formatPlayerCards(playerCards));
+    }
 
-        players.forEach(player -> {
-            List<TrumpCard> cards = player.retrieveInitialCards();
-            System.out.printf("%s카드: %s, %s\n", player.getName(),
-                    getCardInfo(cards.getFirst()),
-                    getCardInfo(cards.getLast()));
-        });
+    private String formatPlayersList(List<String> players) {
+        return "딜러와 " + String.join(", ", players) + "에게 2장을 나누었습니다.";
+    }
+
+    private String formatPlayerCards(Map<String, List<TrumpCard>> playerCards) {
+        return playerCards.entrySet().stream()
+                .map(entry -> entry.getKey() + "카드: "
+                        + getCardInfo(entry.getValue().getFirst()) + ", "
+                        + getCardInfo(entry.getValue().getLast()))
+                .collect(Collectors.joining("\n"));
     }
 
     private String getCardInfo(TrumpCard card) {

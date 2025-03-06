@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Player {
 
     private final String name;
@@ -23,16 +21,6 @@ public class Player {
         }
     }
 
-    public List<TrumpCard> retrieveInitialCards() {
-        List<TrumpCard> cards = hand.getCards();
-
-        if (cards.size() != 2) {
-            throw new IllegalStateException("플레이어는 정확히 2장의 초기 카드를 가져야 합니다.");
-        }
-
-        return cards;
-    }
-    
     public void receiveCard(TrumpCard card) {
         hand.addCard(card);
     }

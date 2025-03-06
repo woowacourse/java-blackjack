@@ -2,7 +2,10 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.Player;
+import domain.TrumpCard;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -19,8 +22,20 @@ public class BlackJackController {
     }
 
     public void run() {
+        List<Player> players = createPlayers();
+        Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
+        TrumpCard dealerFirstCard = blackJackGame.getDealer().retrieveFirstCard();
+        outputView.printInitialCards(playerCards, dealerFirstCard);
+    }
+
+
+    private List<Player> createPlayers() {
         List<String> playerNames = inputView.readPlayerNames();
-        List<Player> players = blackJackGame.createPlayers(playerNames);
-        outputView.printInitialCards(players, blackJackGame.getDealer().retrieveFirstCard());
+        return blackJackGame.createPlayers(playerNames);
+    }
+
+    private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
+        return players.stream()
+                .collect(Collectors.toMap(Player::getName, player -> player.getHand().getCards()));
     }
 }
