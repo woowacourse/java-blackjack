@@ -3,7 +3,6 @@ package domain;
 import domain.card.Card;
 import domain.card.CardGenerator;
 import domain.card.CardGroup;
-import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
@@ -14,14 +13,15 @@ public class GameManager {
 
     private final Dealer dealer;
     private final List<Player> players;
+    private final CardGenerator cardGenerator;
 
-    public GameManager(final Dealer dealer, final List<Player> players) {
+    public GameManager(final Dealer dealer, final List<Player> players, final CardGenerator cardGenerator) {
         this.dealer = dealer;
         this.players = players;
+        this.cardGenerator = cardGenerator;
     }
 
     public void receiveCardToDealer(){
-        CardGenerator cardGenerator = new RandomCardGenerator();
         while(dealer.isLessThen(16)){
             dealer.receiveCard(cardGenerator.generate());
         }
@@ -34,7 +34,7 @@ public class GameManager {
             final Player player = new Player(playerName, new CardGroup(generateCards(cardGenerator)));
             players.add(player);
         }
-        return new GameManager(dealer, players);
+        return new GameManager(dealer, players, cardGenerator);
     }
 
     private static List<Card> generateCards(final CardGenerator cardGenerator) {
@@ -51,7 +51,6 @@ public class GameManager {
     }
 
     public void giveCardToPlayer(final Player player) {
-        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-        player.receiveCard(randomCardGenerator.generate());
+        player.receiveCard(cardGenerator.generate());
     }
 }
