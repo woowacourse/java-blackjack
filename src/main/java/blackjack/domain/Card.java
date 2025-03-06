@@ -1,5 +1,7 @@
-package blackjack;
+package blackjack.domain;
 
+import blackjack.CardRank;
+import blackjack.CardSuit;
 import java.util.Objects;
 
 public class Card {

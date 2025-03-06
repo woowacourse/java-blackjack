@@ -4,6 +4,4 @@ public enum GameResultType {
     WIN,
     TIE,
     LOSE;
-
-
 }

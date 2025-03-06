@@ -1,11 +1,13 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.List;
 
-public class Dealer {
+public class Player {
+    private final String name;
     private final CardHolder cardHolder;
 
-    public Dealer(CardHolder cardHolder) {
+    public Player(String name, CardHolder cardHolder) {
+        this.name = name;
         this.cardHolder = cardHolder;
     }
 
@@ -13,15 +15,11 @@ public class Dealer {
         return cardHolder.getPossibleSums();
     }
 
-    public void takeCard(Card newCard) {
-        cardHolder.takeCard(newCard);
-    }
-
     public List<Card> getAllCards() {
         return cardHolder.getAllCards();
     }
 
-    public Card revealFirstCard() {
-        return cardHolder.getAllCards().getFirst();
+    public void takeCard(Card newCard) {
+        cardHolder.takeCard(newCard);
     }
 }

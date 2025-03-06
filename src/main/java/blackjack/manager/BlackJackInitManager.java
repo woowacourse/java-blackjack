@@ -1,11 +1,16 @@
-package blackjack;
+package blackjack.manager;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.Deck;
+import blackjack.domain.Hand;
+import blackjack.domain.Player;
+import blackjack.domain.Players;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class BlackJackInitManager {
 
-    private CardsGenerator cardsGenerator;
+    private final CardsGenerator cardsGenerator;
 
     public BlackJackInitManager(CardsGenerator cardsGenerator) {
         this.cardsGenerator = cardsGenerator;

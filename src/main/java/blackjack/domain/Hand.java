@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import blackjack.common.ErrorMessage;
 import java.util.ArrayList;
