@@ -1,7 +1,7 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
-import domain.Cards;
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
 import java.util.ArrayList;
