@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.ResultStatus;
 import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
@@ -13,6 +14,7 @@ import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -42,6 +44,10 @@ public class BlackjackController {
 
         // 딜러와 플레이어가 가진 카드와 합 보여주기
         resultView.printCardsAndSum(participants);
+
+        // 딜러와 플레이어의 승패 보여주기
+        final Map<String, ResultStatus> result = blackjackGame.calculateWinningResult();
+        resultView.showWinningResult(result);
     }
 
     private void spreadDealerExtraCards(final BlackjackGame blackjackGame) {
