@@ -1,7 +1,7 @@
 package domain;
 
 public enum Rank {
-    ACE(11, "A"),
+    ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -12,8 +12,7 @@ public enum Rank {
     NINE(9, "9"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K"),
-    ;
+    KING(10, "K");
 
     private final int score;
     private final String displayName;
@@ -25,6 +24,10 @@ public enum Rank {
 
     public boolean isAce() {
         return this == ACE;
+    }
+
+    private int getAdditionalAceScore() {
+        return 0;
     }
 
     public int getScore() {

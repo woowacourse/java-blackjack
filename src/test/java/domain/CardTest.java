@@ -12,7 +12,7 @@ class CardTest {
     @DisplayName("주어진 카드의 점수를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {
-            "SPADE,ACE,11", "SPADE,THREE,3", "SPADE,JACK,10"
+            "SPADE,ACE,1", "SPADE,THREE,3", "SPADE,JACK,10"
     })
     void 주어진_카드의_점수를_반환한다(final Shape shape, final Rank rank, final int expected) {
 
