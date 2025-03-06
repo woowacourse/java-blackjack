@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.BlackjackConstants.MAX_SCORE;
+import static blackjack.domain.BlackjackConstants.BURST_THRESHOLD;
 
 import java.util.List;
 import java.util.Set;
@@ -22,7 +22,7 @@ public class ScoreCalculator {
         int min = Integer.MAX_VALUE;
         for (int score : scores) {
             int sum = maxDfs(depth + 1, totalScore + score, cards);
-            if (sum > MAX_SCORE.getSymbol()) {
+            if (sum > BURST_THRESHOLD.getSymbol()) {
                 min = Math.min(min, sum);
                 continue;
             }

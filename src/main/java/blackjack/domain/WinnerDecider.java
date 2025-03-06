@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.BlackjackConstants.MAX_SCORE;
+import static blackjack.domain.BlackjackConstants.BURST_THRESHOLD;
 
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
@@ -17,7 +17,7 @@ public class WinnerDecider {
         int dealerScore = dealer.calculateMaxScore();
         int playerScore = player.calculateMaxScore();
 
-        if (playerScore > MAX_SCORE.getSymbol()) {
+        if (playerScore > BURST_THRESHOLD.getSymbol()) {
             return WinningResult.LOSE;
         }
 
@@ -25,7 +25,7 @@ public class WinnerDecider {
             return WinningResult.LOSE;
         }
 
-        if (dealerScore > MAX_SCORE.getSymbol()) {
+        if (dealerScore > BURST_THRESHOLD.getSymbol()) {
             return WinningResult.WIN;
         }
 

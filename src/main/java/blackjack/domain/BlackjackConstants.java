@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 public enum BlackjackConstants {
-    MAX_SCORE(21);
+    BURST_THRESHOLD(21);
 
     private final int symbol;
 

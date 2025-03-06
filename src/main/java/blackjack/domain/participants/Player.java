@@ -1,6 +1,6 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.BlackjackConstants.MAX_SCORE;
+import static blackjack.domain.BlackjackConstants.BURST_THRESHOLD;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -37,6 +37,6 @@ public class Player {
 
     public boolean canSend() {
         int minScore = cards.calculateMinScore();
-        return minScore < MAX_SCORE.getSymbol();
+        return minScore < BURST_THRESHOLD.getSymbol();
     }
 }
