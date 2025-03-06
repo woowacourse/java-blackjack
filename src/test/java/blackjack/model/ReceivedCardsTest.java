@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class ReceivedCardsTest {
+class ReceivedCardsTest {
 
     @Test
     void 카드를_받는다() {
@@ -12,8 +12,8 @@ public class ReceivedCardsTest {
         ReceivedCards receivecdCards = new ReceivedCards();
 
         // when
-        receivecdCards.receive(new NormalCard(2, CardShape.CLOVER));
-        receivecdCards.receive(new NormalCard(2, CardShape.HEART));
+        receivecdCards.receive(new Card(CardShape.CLOVER, CardType.NORMAL_2));
+        receivecdCards.receive(new Card(CardShape.CLOVER, CardType.NORMAL_2));
 
         // then
         assertThat(receivecdCards.size()).isEqualTo(2);
@@ -25,9 +25,9 @@ public class ReceivedCardsTest {
         ReceivedCards receivecdCards = new ReceivedCards();
 
         // when
-        receivecdCards.receive(new AceCard(CardShape.HEART));
-        receivecdCards.receive(new AceCard(CardShape.HEART));
-        receivecdCards.receive(new NormalCard(9, CardShape.SPADE));
+        receivecdCards.receive(new Card(CardShape.HEART, CardType.ACE));
+        receivecdCards.receive(new Card(CardShape.HEART, CardType.ACE));
+        receivecdCards.receive(new Card(CardShape.HEART, CardType.NORMAL_9));
 
         // then
         assertThat(receivecdCards.calculateTotalPoint()).isEqualTo(21);
@@ -38,24 +38,10 @@ public class ReceivedCardsTest {
         // given
         ReceivedCards receivecdCards = new ReceivedCards();
         // when
-        receivecdCards.receive(new NormalCard(2, CardShape.CLOVER));
-        receivecdCards.receive(new SpecialCard('J', CardShape.HEART));
-        receivecdCards.receive(new SpecialCard('J', CardShape.HEART));
+        receivecdCards.receive(new Card(CardShape.HEART, CardType.NORMAL_2));
+        receivecdCards.receive(new Card(CardShape.HEART, CardType.JACK));
+        receivecdCards.receive(new Card(CardShape.HEART, CardType.JACK));
         // then
         assertThat(receivecdCards.isBust()).isTrue();
-    }
-
-    @Test
-    void ACE가_11점_일때_버스트면_ACE는_1점_이다() {
-        // given
-        ReceivedCards receivecdCards = new ReceivedCards();
-
-        // when
-        receivecdCards.receive(new AceCard(CardShape.CLOVER));
-        receivecdCards.receive(new SpecialCard('K', CardShape.HEART));
-        receivecdCards.receive(new SpecialCard('J', CardShape.HEART));
-
-        // then
-        assertThat(receivecdCards.get(0).getPoint()).isEqualTo(1);
     }
 }

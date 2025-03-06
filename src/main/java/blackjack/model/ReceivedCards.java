@@ -2,13 +2,11 @@ package blackjack.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ReceivedCards {
 
     private final List<Card> cards = new ArrayList<>();
-
-    public ReceivedCards() {
-    }
 
     public void receive(Card card) {
         cards.add(card);
@@ -19,31 +17,39 @@ public class ReceivedCards {
     }
 
     public int calculateTotalPoint() {
-        int point = calculateTotalDefaultPoint();
-        int aceCount = aceCount();
-        for (int i = 0; i < aceCount; i++) {
-            if (point + 10 <= 21) {
-                point += 10;
-            }
-        }
-        return point;
+        int basePoint = calculateTotalDefaultPoint();
+        int aceCount = countAces();
+        return adjustForAces(basePoint, aceCount);
     }
 
     private int calculateTotalDefaultPoint() {
-        return cards.stream().mapToInt(Card::getPoint).sum();
+        return cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
     }
 
-    private int aceCount() {
+    private int countAces() {
         return Math.toIntExact(cards.stream()
-                .filter(card -> card instanceof AceCard)
+                .filter(card -> card.equalsCardType(CardType.ACE))
                 .count());
     }
 
-    public boolean isBust() {
-        return calculateTotalPoint() > 21;
+    private int adjustForAces(int basePoint, int aceCount) {
+        return IntStream.range(0, aceCount).reduce(basePoint, (currentPoint, i) -> plusTenPoint(currentPoint));
     }
 
-    public Card get(int index) {
-        return cards.get(0);
+    private int plusTenPoint(int currentPoint) {
+        if (!isBust(currentPoint + 10)) {
+            currentPoint += 10;
+        }
+        return currentPoint;
+    }
+
+    public boolean isBust() {
+        return isBust(calculateTotalPoint());
+    }
+
+    private boolean isBust(int point) {
+        return point > 21;
     }
 }
