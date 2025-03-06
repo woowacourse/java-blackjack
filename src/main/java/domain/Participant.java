@@ -46,7 +46,7 @@ public class Participant {
         other.duelHistory.write(duelResult * -1);
     }
 
-    public CardHand getHand() {
+    public CardHand getCardHand() {
         return hand;
     }
 

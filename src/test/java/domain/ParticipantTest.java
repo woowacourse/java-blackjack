@@ -28,7 +28,7 @@ class ParticipantTest {
             participant.pickCard(deck);
 
             // then
-            assertThat(participant.getHand().hand()).isNotEmpty();
+            assertThat(participant.getCardHand().getCards()).isNotEmpty();
         }
     }
 

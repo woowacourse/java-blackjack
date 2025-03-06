@@ -97,8 +97,8 @@ public class BlackjackController {
     }
 
     private String convertedDealerCardText(final Participant dealerParticipant) {
-        final CardHand dealerHand = dealerParticipant.getHand();
-        final Card dealerFirstCard = dealerHand.hand().getFirst();
+        final CardHand dealerHand = dealerParticipant.getCardHand();
+        final Card dealerFirstCard = dealerHand.getCards().getFirst();
         return convertedCardText(dealerFirstCard);
     }
 
@@ -109,7 +109,7 @@ public class BlackjackController {
     }
 
     private List<String> convertParticipantCardText(final Participant dealerParticipant) {
-        return dealerParticipant.getHand().hand()
+        return dealerParticipant.getCardHand().getCards()
             .stream()
             .map(this::convertedCardText)
             .toList();
