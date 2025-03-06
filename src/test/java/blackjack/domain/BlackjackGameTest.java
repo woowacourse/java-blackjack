@@ -119,9 +119,9 @@ class BlackjackGameTest {
 
         // when & then
         assertAll(
-                () -> assertThat(blackjackGame.sumDealerCardDenomination(dealer)).isEqualTo(6),
-                () -> assertThat(blackjackGame.sumPlayerCardDenomination(blackjackGame.getPlayer(0))).isEqualTo(5),
-                () -> assertThat(blackjackGame.sumPlayerCardDenomination(blackjackGame.getPlayer(1))).isEqualTo(20)
+                () -> assertThat(blackjackGame.sumCardDenomination(dealer)).isEqualTo(6),
+                () -> assertThat(blackjackGame.sumCardDenomination(blackjackGame.getPlayer(0))).isEqualTo(5),
+                () -> assertThat(blackjackGame.sumCardDenomination(blackjackGame.getPlayer(1))).isEqualTo(30)
         );
 
     }

@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 
@@ -40,19 +40,15 @@ public class BlackjackGame {
         participants.spreadOneCardToDealer(cards.getFirstCard());
     }
 
+    public int sumCardDenomination(final Gamer gamer) {
+        return gamer.calculateMaxSum();
+    }
+
     public Player getPlayer(final int index) {
         return participants.getPlayers().get(index);
     }
 
     public int getPlayerSize() {
         return participants.getPlayers().size();
-    }
-
-    public int sumDealerCardDenomination(final Dealer dealer) {
-        return dealer.calculateMaxSum();
-    }
-
-    public int sumPlayerCardDenomination(final Player player) {
-        return player.calculateMaxSum();
     }
 }
