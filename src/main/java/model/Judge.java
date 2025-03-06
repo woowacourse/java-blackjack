@@ -6,7 +6,7 @@ public class Judge {
         if (playerCards.isBust()) {
             return GameResult.LOSE;
         }
-        return GameResult.DRAW;
+        return GameResult.WIN;
     }
 
 }
