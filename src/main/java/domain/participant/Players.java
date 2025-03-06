@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.MatchResult;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -34,5 +36,13 @@ public class Players {
         if (names.isEmpty() || names.size() > 6) {
             throw new IllegalArgumentException("[ERROR] 플레이어 인원은 1~6명 입니다.");
         }
+    }
+
+    public LinkedHashMap<Player, MatchResult> calculateWinner(int dealerSum) {
+        LinkedHashMap<Player, MatchResult> res = new LinkedHashMap<>();
+        for (Player player : players) {
+            res.put(player, player.calculateWinner(dealerSum));
+        }
+        return res;
     }
 }
