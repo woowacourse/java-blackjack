@@ -9,8 +9,9 @@ import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -36,13 +37,10 @@ public class Application {
     }
 
     private static CardDeck createCardDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (CardShape shape : CardShape.values()) {
-            for (CardType type : CardType.values()) {
-                Card card = new Card(shape, type);
-                cards.add(card);
-            }
-        }
+        List<Card> cards = Arrays.stream(CardShape.values())
+                .flatMap(shape -> Arrays.stream(CardType.values())
+                        .map(type -> new Card(shape, type)))
+                .collect(Collectors.toList());
         return new CardDeck(cards);
     }
 }
