@@ -3,10 +3,6 @@ package blackjack.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
@@ -36,16 +32,5 @@ class PlayerTest {
 
         // then
         assertThat(result).isEqualTo(12);
-    }
-
-    private static class ReversedSortShuffle implements BlackjackShuffle {
-
-        @Override
-        public void shuffle(List<Card> cards) {
-            cards.sort(Comparator
-                    .comparing(Card::getNumber)
-                    .thenComparing(Card::getShape));
-            Collections.reverse(cards);
-        }
     }
 }
