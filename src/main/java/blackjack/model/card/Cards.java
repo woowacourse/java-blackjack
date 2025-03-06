@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +13,11 @@ public class Cards {
 
     public Cards(final List<Card> values) {
         this.values = new ArrayList<>(values);
+    }
+
+    public Cards(final Card... cards) {
+        this.values = new ArrayList<>(Arrays.stream(cards)
+                .toList());
     }
 
     private Cards() {
@@ -64,6 +70,10 @@ public class Cards {
         if (values.size() < size) {
             throw new IllegalArgumentException("남은 카드가 부족합니다.");
         }
+    }
+
+    public Card getFirst() {
+        return values.getFirst();
     }
 
     public List<Card> getValues() {

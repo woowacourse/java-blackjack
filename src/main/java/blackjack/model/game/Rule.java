@@ -1,12 +1,16 @@
 package blackjack.model.game;
 
-import blackjack.model.player.Player;
-import blackjack.model.player.Role;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+
+import blackjack.model.card.Cards;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Player;
+import blackjack.model.player.Role;
+import blackjack.model.player.User;
 
 public class Rule {
 
@@ -23,6 +27,10 @@ public class Rule {
         return USER_DRAW_PREDICATE.test(player);
     }
 
+    public Cards openDealerCards(final Dealer dealer) {
+        return new Cards(dealer.getFirstCard());
+    }
+
     public int calculateOptimalPoint(final Player player) {
         return player.calculatePossiblePoints().stream()
                 .filter(point -> !isBust(point))
@@ -30,7 +38,7 @@ public class Rule {
                 .orElse(player.getMinimumPoint());
     }
 
-    public Map<Player, List<Result>> calculateResult(final Player dealer, final List<Player> users) {
+    public Map<Player, List<Result>> calculateResult(final Dealer dealer, final List<User> users) {
         Map<Player, List<Result>> results = new HashMap<>();
         users.forEach(
                 user -> {

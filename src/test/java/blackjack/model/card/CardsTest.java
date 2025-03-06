@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import static blackjack.model.card.CardCreator.createCard;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -63,6 +64,13 @@ class CardsTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> cards.pick(3));
+    }
+
+    @Test
+    void 첫_번째_카드를_반환한다() {
+        Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
+
+        assertThat(cards.getFirst()).isEqualTo(createCard(CardNumber.TEN));
     }
 
 }

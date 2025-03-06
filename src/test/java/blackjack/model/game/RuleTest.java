@@ -12,7 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -261,12 +264,21 @@ class RuleTest {
 
     @MethodSource("게임_결과를_반환하는_테스트_케이스")
     @ParameterizedTest
-    void 게임_결과를_반환한다(final Rule rule, final Player dealer, final List<Player> players,
+    void 게임_결과를_반환한다(final Rule rule, final Dealer dealer, final List<User> users,
                      final Map<Player, List<Result>> expected) {
-        // 패패(승승), 승승(패패), 무무(무무)
-        Map<Player, List<Result>> results = rule.calculateResult(dealer, players);
+        Map<Player, List<Result>> results = rule.calculateResult(dealer, users);
 
         assertThat(results).containsExactlyInAnyOrderEntriesOf(expected);
+    }
+
+    @Test
+    void 딜러의_카드들을_오픈한다() {
+        Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
+        Dealer dealer = new Dealer("딜러");
+        dealer.receiveCards(cards);
+
+        assertThat(rule.openDealerCards(dealer).getValues())
+                .containsExactly(createCard(CardNumber.TEN));
     }
 
     private static class DealerWinRule extends Rule {
