@@ -273,4 +273,56 @@ public class GameBoardTest {
                 () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.LOSE)).isTrue()
                 );
     }
+
+    @Test
+    void 무승부_계산_확인() {
+        //given
+        Participant participant1 = Player.from("우가");
+        Participant participant2 = Player.from("히스타");
+        Participant dealer = Dealer.generate();
+
+        List<Participant> participants = List.of(
+                participant1,
+                participant2,
+                dealer
+        );
+
+        GameBoard gameBoard = new GameBoard(participants);
+        CardDeck cardDeck = gameBoard.getPlayingCard();
+
+        List<Card> cards = cardDeck.getCards();
+        cards.clear();
+
+        cards.add(new Card(CardNumber.ACE, CardSymbol.HEART));
+        cards.add(new Card(CardNumber.TWO, CardSymbol.DIAMOND));
+        cards.add(new Card(CardNumber.THREE, CardSymbol.SPADE));
+        cards.add(new Card(CardNumber.TEN, CardSymbol.CLOVER));
+        cards.add(new Card(CardNumber.SEVEN, CardSymbol.HEART));
+        cards.add(new Card(CardNumber.SIX, CardSymbol.DIAMOND));
+
+        gameBoard.drawCardTo(participant1);
+        gameBoard.drawCardTo(participant1);
+        gameBoard.drawCardTo(participant2);
+        gameBoard.drawCardTo(participant2);
+        gameBoard.drawCardTo(dealer);
+        gameBoard.drawCardTo(dealer);
+
+        //when
+        gameBoard.calculateBattleResult();
+
+        //then
+        assertAll(
+                () -> Assertions.assertThat(participant1.getBattleResult().containsKey(BattleResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(participant1.getBattleResult().containsKey(BattleResult.WIN)).isFalse(),
+                () -> Assertions.assertThat(participant1.getBattleResult().containsKey(BattleResult.LOSE)).isFalse(),
+                
+                () -> Assertions.assertThat(participant2.getBattleResult().containsKey(BattleResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(participant2.getBattleResult().containsKey(BattleResult.WIN)).isFalse(),
+                () -> Assertions.assertThat(participant2.getBattleResult().containsKey(BattleResult.LOSE)).isFalse(),
+
+                () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.WIN)).isFalse(),
+                () -> Assertions.assertThat(dealer.getBattleResult().containsKey(BattleResult.LOSE)).isFalse()
+        );
+    }
 }
