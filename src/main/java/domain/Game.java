@@ -30,6 +30,10 @@ public class Game {
         return List.copyOf(players.keySet());
     }
 
+    public int getDealerScore() {
+        return dealer.calculateScore();
+    }
+
     public boolean doesDealerNeedCard() {
         return dealer.doesDealerNeedCard();
     }

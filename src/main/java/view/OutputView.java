@@ -12,17 +12,17 @@ public class OutputView {
         List<Player> players = game.getPlayers();
         List<String> playerNames = players.stream().map(Player::getName).toList();
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", String.join(DELIMITER, playerNames));
-        System.out.printf("딜러카드: %s%n", game.getDealerCards().getFirst().getNotation());
-        players.forEach(this::displayPlayerAndCards);
+        displayInitialDealerCards(game);
+        displayEmptyLine();
+        displayAllPlayerAndCards(players);
         System.out.println();
     }
 
-    public void displayPlayerAndCards(Player player) {
-        String name = player.getName();
-        List<String> cardNotations = player.getCards().stream()
-                .map(Card::getNotation)
-                .toList();
-        System.out.printf("%s카드: %s%n", name, String.join(DELIMITER, cardNotations));
+    public void displayAllPlayerAndCards(List<Player> players) {
+        players.forEach((player) -> {
+            displayPlayerAndCards(player);
+            displayEmptyLine();
+        });
     }
 
     public void displayDealerHitResult() {
@@ -31,5 +31,33 @@ public class OutputView {
 
     public void displayEmptyLine() {
         System.out.println();
+    }
+
+    public void displayInitialDealerCards(Game game) {
+        System.out.printf("딜러카드: %s", game.getDealerCards().getFirst().getNotation());
+    }
+
+    public void displayDealerCards(Game game) {
+        List<String> cardNotations = game.getDealerCards().stream()
+                .map(Card::getNotation)
+                .toList();
+        System.out.printf("딜러카드: %s", String.join(DELIMITER, cardNotations));
+    }
+
+    public void displayScore(Game game) {
+        displayDealerCards(game);
+        System.out.printf(" - 결과: %d%n", game.getDealerScore());
+        for (Player player : game.getPlayers()) {
+            displayPlayerAndCards(player);
+            System.out.printf(" - 결과: %d%n", player.calculateScore());
+        }
+    }
+
+    public void displayPlayerAndCards(Player player) {
+        String name = player.getName();
+        List<String> cardNotations = player.getCards().stream()
+                .map(Card::getNotation)
+                .toList();
+        System.out.printf("%s카드: %s", name, String.join(DELIMITER, cardNotations));
     }
 }
