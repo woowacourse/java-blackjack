@@ -21,5 +21,4 @@ class RankTest {
         // when & then
         assertThat(rank.isAce()).isEqualTo(expected);
     }
-
 }
