@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Set;
 
 public class Participant {
@@ -13,10 +14,6 @@ public class Participant {
 
     public void addCard(Card card) {
         cards.add(card);
-    }
-
-    public Cards getCards() {
-        return cards;
     }
 
     public int getCardScore() {
@@ -45,5 +42,9 @@ public class Participant {
                 .mapToInt(i -> i)
                 .min()
                 .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }
