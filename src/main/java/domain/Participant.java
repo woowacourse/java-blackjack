@@ -33,7 +33,7 @@ public class Participant {
     }
 
     public GameResult calculateGameResult(Participant otherParticipant) {
-        return null;
+        return GameResult.DRAW;
     }
 
     private int getMaxSum(Set<Integer> coordinates) {
