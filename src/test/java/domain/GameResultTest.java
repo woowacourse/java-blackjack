@@ -1,9 +1,12 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class GameResultTest {
 
@@ -23,7 +26,7 @@ class GameResultTest {
         //when
         GameResult result = GameResult.judge(participant, dealer);
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.DRAW);
+        assertThat(result).isEqualTo(GameResult.DRAW);
     }
 
     @DisplayName("다른 참가자보다 21에 가까운 경우, 승리를 판단할 수 있다.")
@@ -48,7 +51,7 @@ class GameResultTest {
         GameResult result = GameResult.judge(winner, loser);
 
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.WIN);
+        assertThat(result).isEqualTo(GameResult.WIN);
     }
 
     @DisplayName("참가자가 burst인 경우에는 패배로 판단한다.")
@@ -73,7 +76,7 @@ class GameResultTest {
         GameResult result = GameResult.judge(winner, burstDealer);
 
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
+        assertThat(result).isEqualTo(GameResult.LOSE);
     }
 
     @DisplayName("참가자가 burst가 아니고, 숫자가 더 작은 경우에는 패배로 판단한다.")
@@ -98,7 +101,19 @@ class GameResultTest {
         GameResult result = GameResult.judge(loser, winner);
 
         //then
-        Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
+        assertThat(result).isEqualTo(GameResult.LOSE);
     }
 
+    @DisplayName("승리를 패배로, 패배를 승리로 바꾼다")
+    @ParameterizedTest
+    @CsvSource({
+            "WIN, LOSE",
+            "LOSE, WIN"
+    })
+    void test(GameResult origin, GameResult expected) {
+        //when
+        GameResult actual = origin.getReverse();
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
