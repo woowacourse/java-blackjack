@@ -50,7 +50,7 @@ public abstract class Gamer {
         drawCard(deck, 1);
     }
 
-    public void drawCard(Deck deck, int count) {
+    private void drawCard(Deck deck, int count) {
         for (int i = 0; i < count; i++) {
             cards.add(deck.draw());
         }
