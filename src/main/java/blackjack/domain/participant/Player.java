@@ -1,20 +1,17 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.List;
 import java.util.Objects;
 
-public class Player implements Actionable {
+public class Player extends Gamer {
 
     public static final int BLACKJACK_NUMBER = 21;
 
     private final String nickname;
-    private final Cards cards;
 
     public Player(final String nickname, final Cards cards) {
+        super(cards);
         this.nickname = nickname;
-        this.cards = cards;
     }
 
     public void receiveCards(final Cards givenCards) {
@@ -25,10 +22,6 @@ public class Player implements Actionable {
     public boolean canGetMoreCard() {
         int sum = cards.calculateMinSum();
         return sum < BLACKJACK_NUMBER;
-    }
-
-    public int calculateMaxSum() {
-        return cards.calculateResult();
     }
 
     @Override
@@ -47,10 +40,5 @@ public class Player implements Actionable {
     @Override
     public String getNickname() {
         return nickname;
-    }
-
-    @Override
-    public List<Card> showCards() {
-        return cards.getCards();
     }
 }

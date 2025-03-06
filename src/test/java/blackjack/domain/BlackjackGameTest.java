@@ -65,7 +65,7 @@ class BlackjackGameTest {
         blackjackGame.spreadOneCardToPlayer(0);
 
         // then
-        assertThat(blackjackGame.getPlayer(0).showCards()).hasSize(1);
+        assertThat(blackjackGame.getPlayer(0).showAllCard()).hasSize(1);
     }
 
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다.")

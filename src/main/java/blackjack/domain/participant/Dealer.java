@@ -5,15 +5,14 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 import java.util.Objects;
 
-public class Dealer implements Actionable {
+public class Dealer extends Gamer {
 
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;
 
-    private final Cards cards;
 
     public Dealer(final Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     public void receiveCards(final Cards givenCards) {
@@ -26,13 +25,8 @@ public class Dealer implements Actionable {
         return sum <= DEALER_THRESHOLD;
     }
 
-    @Override
-    public List<Card> showCards() {
+    public List<Card> showOneCard() {
         return List.of(cards.getFirstCard());
-    }
-
-    public int calculateMaxSum() {
-        return cards.calculateResult();
     }
 
     @Override

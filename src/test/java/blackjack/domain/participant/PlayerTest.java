@@ -54,9 +54,9 @@ public class PlayerTest {
         assertThat(player).isEqualTo(new Player("엠제이", cards));
     }
 
-    @DisplayName("딜러는 카드 2개 중 1개만 보여준다.")
+    @DisplayName("플레이어는 모든 카드를 보여준다.")
     @Test
-    void showDealerCards() {
+    void showPlayerCards() {
         // given
         final Cards cards = provideCards(2);
         player.receiveCards(cards);
@@ -64,7 +64,7 @@ public class PlayerTest {
                 new Card(Shape.SPADE, Denomination.TWO));
 
         // when
-        final List<Card> playerCards = player.showCards();
+        final List<Card> playerCards = player.showAllCard();
 
         // then
         assertThat(playerCards).isEqualTo(expected);

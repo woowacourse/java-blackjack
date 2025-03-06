@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Actionable;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -47,10 +46,6 @@ public class BlackjackGame {
 
     public int getPlayerSize() {
         return participants.getPlayers().size();
-    }
-
-    public Actionable getDealer() {
-        return participants.getDealer();
     }
 
     public int sumDealerCardDenomination(final Dealer dealer) {

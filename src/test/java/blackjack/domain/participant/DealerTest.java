@@ -50,7 +50,7 @@ class DealerTest {
         dealer.receiveCards(cards);
 
         // when
-        final List<Card> dealerCards = dealer.showCards();
+        final List<Card> dealerCards = dealer.showOneCard();
 
         // then
         assertThat(dealerCards).isEqualTo(List.of(new Card(Shape.SPADE, Denomination.A)));
