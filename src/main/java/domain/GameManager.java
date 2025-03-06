@@ -43,6 +43,6 @@ public class GameManager {
 
 
     public int calculatePlayerSize() {
-        return 0;
+        return players.size();
     }
 }
