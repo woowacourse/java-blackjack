@@ -46,4 +46,9 @@ public class GameManger {
     public User getDealer() {
         return this.dealer;
     }
+
+    public int compare(User player) {
+
+        return 0;
+    }
 }

@@ -147,4 +147,5 @@ public class CardDeckTest {
                         new TrumpCard(CardShape.CLOVER, CardNumber.Q)), 30)
         );
     }
+
 }

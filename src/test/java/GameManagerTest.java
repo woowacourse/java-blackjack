@@ -1,12 +1,16 @@
 import static org.assertj.core.api.Assertions.*;
 
+import domain.CardNumber;
 import domain.CardSetting;
+import domain.CardShape;
+import domain.TrumpCard;
 import domain.user.Dealer;
 import domain.GameManger;
 import domain.user.Player;
 import domain.user.User;
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,4 +79,25 @@ public class GameManagerTest {
         assertThat(dealer.getSize()).isEqualTo(2);
     }
 
+
+    @DisplayName("딜러와 유저의 카드의 총합을 가져온다.")
+    @Test
+    void test7() {
+        //given
+        GameManger gameManger = new GameManger(List.of("수양"));
+        User player = gameManger.findUserByUsername("수양");
+        User dealer = gameManger.getDealer();
+
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.ACE));
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.NINE));
+
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.THREE));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.TWO));
+
+        //when
+        int result = gameManger.compare(player);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(1);
+    }
 }
