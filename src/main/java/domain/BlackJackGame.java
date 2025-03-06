@@ -64,5 +64,7 @@ public class BlackJackGame {
         return hand.calculateScore() != Score.BUST && hand.calculateScore() != Score.BLACKJACK;
     }
 
-
+    public void processHit(Player player) {
+        player.receiveCard(deck.draw());
+    }
 }
