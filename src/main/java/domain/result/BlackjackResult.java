@@ -37,4 +37,8 @@ public enum BlackjackResult {
         }
         return WIN;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

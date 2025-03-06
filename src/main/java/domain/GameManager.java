@@ -54,4 +54,8 @@ public class GameManager {
     public List<String> getPlayersName() {
         return Collections.unmodifiableList(players.getPlayersName());
     }
+
+    public Player getPlayerByName(String name) {
+        return players.findByName(name);
+    }
 }

@@ -27,11 +27,13 @@ public class BlackjackController {
         GameManager gameManager = GameManager.of(CardDeck.of(), dealer, players);
 
         gameManager.distributeCards();
-        // TODO: 초기화 된 카드 결과 출력
+        outputView.printInitCards(dealer, players);
 
         drawToPlayers(gameManager);
         drawToDealer(gameManager);
-        // TODO: 승패 결과 출력
+
+        outputView.printFinalCardsContent(dealer, players);
+        outputView.printResult(dealer, players);
     }
 
     private Players initParticipants() {
@@ -51,13 +53,13 @@ public class BlackjackController {
         }
     }
 
-    private static void drawToDealer(GameManager gameManager) {
+    private void drawToDealer(GameManager gameManager) {
         while (true) {
             boolean received = gameManager.passCardToDealer();
             if (!received) {
                 break;
             }
-            // TODO: 딜러 카드 한장 더 받았다는 것을 알림
+            outputView.printDealerReceived();
         }
     }
 
@@ -68,7 +70,7 @@ public class BlackjackController {
                 break;
             }
             gameManager.passCardToPlayer(name);
+            outputView.printCardsByName(gameManager.getPlayerByName(name));
         }
-        // TODO: 총 카드 결과 출력
     }
 }
