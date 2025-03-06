@@ -18,4 +18,11 @@ public class Rule {
         return !score.isHigherThan(Score.SIXTEEN)
                 && score != Score.BUST;
     }
+
+    public GameResult evaluateGameResult(List<TrumpCard> playerCards, List<TrumpCard> dealerCards) {
+        Score playerScore = Score.from(playerCards);
+        Score dealerScore = Score.from(dealerCards);
+
+        return GameResult.from(playerScore, dealerScore);
+    }
 }

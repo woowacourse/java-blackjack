@@ -25,6 +25,10 @@ public class Player {
         hand.addCard(card);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Hand getHand() {
         return hand;
     }

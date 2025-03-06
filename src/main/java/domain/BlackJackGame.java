@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -92,8 +94,18 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public Result finish(List<Player> players) {
-        return Result(dealer, players);
-    }
+    public Map<String, GameResult> calculateGameResults(List<Player> players) {
+        Map<String, GameResult> results = new HashMap<>();
 
+        players.forEach(player -> {
+            List<TrumpCard> playerCards = player.getHand().getCards();
+            List<TrumpCard> dealerCards = dealer.getHand().getCards();
+
+            GameResult gameResult = rule.evaluateGameResult(playerCards, dealerCards);
+
+            results.put(player.getName(), gameResult);
+        });
+
+        return results;
+    }
 }
