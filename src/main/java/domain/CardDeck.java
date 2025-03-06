@@ -61,8 +61,7 @@ public class CardDeck {
         return sum;
     }
 
-
     public boolean isBlackjack() {
-        return false;
+        return  cards.size() == 2 && calculateScore() == MAX_SCORE ;
     }
 }
