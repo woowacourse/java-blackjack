@@ -11,7 +11,19 @@ public enum GameResult {
         this.title = title;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public static GameResult from(Score playerScore, Score dealerScore) {
-        return DRAW;
+        if (playerScore == Score.BUST || playerScore.isLowerThan(dealerScore)) {
+            return LOSE;
+        }
+
+        if (playerScore == dealerScore) {
+            return DRAW;
+        }
+
+        return WIN;
     }
 }

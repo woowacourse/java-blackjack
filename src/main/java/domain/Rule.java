@@ -7,7 +7,7 @@ public class Rule {
     public boolean isPlayerHitAllowed(List<TrumpCard> cards) {
         Score score = Score.from(cards);
 
-        return !score.isHigherThan(Score.TWENTY)
+        return score.isLowerThan(Score.TWENTY_ONE)
                 && score != Score.BUST;
     }
 
@@ -15,7 +15,7 @@ public class Rule {
 
         Score score = Score.from(cards);
 
-        return !score.isHigherThan(Score.SIXTEEN)
+        return score.isLowerThan(Score.SEVENTEEN)
                 && score != Score.BUST;
     }
 

@@ -64,10 +64,6 @@ public enum Score {
         return totalScore;
     }
 
-    public boolean isHigherThan(Score o) {
-        return this.rank < o.rank;
-    }
-
     public boolean isLowerThan(Score o) {
         return this.rank > o.rank;
     }
