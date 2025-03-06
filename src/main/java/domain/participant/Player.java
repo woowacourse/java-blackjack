@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.MatchResult;
 import domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.function.BooleanSupplier;
@@ -43,5 +44,9 @@ public class Player {
             addCard(dealer);
             playerDeck.accept(this);
         }
+    }
+
+    public MatchResult calculateWinner(int sum){
+        return MatchResult.calculateWinner(sum, this.sum());
     }
 }
