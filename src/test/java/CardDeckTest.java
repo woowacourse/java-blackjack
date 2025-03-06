@@ -1,5 +1,7 @@
+import static domain.card.Number.A;
 import static domain.card.Number.TWO;
 import static domain.card.Shape.DIAMOND;
+import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import config.CardDeckFactory;
@@ -40,4 +42,5 @@ public class CardDeckTest {
         // then
         assertThat(cardDeck.getCards().size()).isEqualTo(1);
     }
+
 }
