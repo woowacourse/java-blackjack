@@ -1,5 +1,7 @@
 package view;
 
+import static domain.GameResultStatus.*;
+
 import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
@@ -38,11 +40,11 @@ public class OutputView {
     }
 
     public void printDealerDraw() {
-        System.out.printf("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.print("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printDealerNoDraw() {
-        System.out.printf("\n딜러는 17이상이라 카드를 추가로 받지 않았습니다.\n");
+        System.out.print("\n딜러는 17이상이라 카드를 추가로 받지 않았습니다.\n");
     }
 
     public void printCardsResult(Dealer dealer, List<Player> players) {
@@ -59,10 +61,11 @@ public class OutputView {
     }
 
     public void printGameResults(GameResult gameResult) {
-        int winCount = gameResult.calculateWinCount();
-        int loseCount = gameResult.calculateLoseCount();
+        int winCount = gameResult.calculateCount(WIN);
+        int loseCount = gameResult.calculateCount(LOSE);
+        int drawCount = gameResult.calculateCount(DRAW);
         System.out.println("\n## 최종 승패");
-        System.out.printf("딜러: %d승 %d패\n", loseCount, winCount);
+        System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
         gameResult.getAllPlayers()
                 .forEach(player -> {
                     GameResultStatus gameResultstatus = gameResult.getGameResultstatus(player);

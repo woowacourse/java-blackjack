@@ -10,15 +10,9 @@ public class GameResult {
         this.gameResults = gameResults;
     }
 
-    public int calculateWinCount() {
-        return (int) gameResults.keySet().stream()
-                .filter(participant -> gameResults.get(participant) == GameResultStatus.WIN)
-                .count();
-    }
-
-    public int calculateLoseCount() {
-        return (int) gameResults.keySet().stream()
-                .filter(participant -> gameResults.get(participant) == GameResultStatus.LOSE)
+    public int calculateCount(GameResultStatus status) {
+        return (int) getAllPlayers().stream()
+                .filter(player -> status.isEqualTo(gameResults.get(player)))
                 .count();
     }
 

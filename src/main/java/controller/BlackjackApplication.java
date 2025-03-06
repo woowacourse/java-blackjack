@@ -1,5 +1,7 @@
 package controller;
 
+import static view.AnswerType.*;
+
 import domain.BlackjackReferee;
 import domain.CardGiver;
 import domain.CardRandomGenerator;
@@ -48,7 +50,7 @@ public class BlackjackApplication {
         players.forEach(player -> {
             while (true) {
                 AnswerType answerType = inputView.requestAdditionalCard(player);
-                if(answerType.isNo()) {
+                if(answerType.isEqualTo(NO)) {
                     outputView.printCurrentCard(player);
                     break;
                 }

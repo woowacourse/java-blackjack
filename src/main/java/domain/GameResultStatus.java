@@ -23,4 +23,8 @@ public enum GameResultStatus {
         }
         return GameResultStatus.LOSE;
     }
+
+    public boolean isEqualTo(GameResultStatus gameResultStatus) {
+        return gameResultStatus == this;
+    }
 }
