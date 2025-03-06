@@ -7,23 +7,18 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public final class Deck implements CardHandInitializer, CardDrawer {
-    
+public final class Deck implements CardDrawer {
+
     private final Deque<Card> cards;
     
     public Deck() {
-        cards = initCards();
+        this.cards = initCards();
     }
     
     private Deque<Card> initCards() {
         final List<Card> cards = Card.createTrumpCards();
         Collections.shuffle(cards);
         return new ArrayDeque<>(cards);
-    }
-    
-    @Override
-    public List<Card> init() {
-        return List.of(draw(), draw());
     }
     
     @Override
