@@ -5,10 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> deck = new ArrayList<>(52);
+    private final List<Card> deck;
 
-    public Deck() {
-        initializeDeck();
+    public Deck(final List<Card> deck) {
+        this.deck = deck;
+    }
+
+    public void shuffle() {
         Collections.shuffle(deck);
     }
 
@@ -19,14 +22,4 @@ public class Deck {
         return deck.removeLast();
     }
 
-    private void initializeDeck() {
-        for (CardShape shape : CardShape.values()) {
-            for (CardNumber number : CardNumber.values()) {
-                if (number.equals(CardNumber.ACE_ONE)) {
-                    continue;
-                }
-                deck.add(new Card(number, shape));
-            }
-        }
-    }
 }
