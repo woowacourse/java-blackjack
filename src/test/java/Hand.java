@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     public static final int BURST_BOUND = 21;
-    
+
     private final List<Card> cards;
 
-    public Cards() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
