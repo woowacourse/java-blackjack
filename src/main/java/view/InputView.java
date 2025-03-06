@@ -1,5 +1,7 @@
 package view;
 
+import domain.card.Card;
+import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -27,5 +29,19 @@ public class InputView {
 
         return Arrays.stream(playerNames.split(","))
                 .toList();
+    }
+
+    public Boolean askPlayerForHitOrStand() {
+        String s = scanner.nextLine();
+        if(s.equals("y"))return true;
+        if(s.equals("n"))return false;
+
+        throw new IllegalArgumentException("[ERROR] y 또는 n으로 입력해주세요.");
+    }
+
+    public void printPlayerDeck(Player player) {
+        for (Card card : player.getCardDeck().getCards()) {
+            System.out.println(card);
+        }
     }
 }

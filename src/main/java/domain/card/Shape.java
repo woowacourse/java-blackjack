@@ -1,4 +1,4 @@
-package policy;
+package domain.card;
 
 import java.util.Arrays;
 

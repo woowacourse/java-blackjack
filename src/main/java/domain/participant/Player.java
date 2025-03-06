@@ -19,6 +19,14 @@ public class Player {
         }
     }
 
+    public void hitCard(Dealer dealer) {
+        cardDeck.addCard(dealer.hitCard());
+    }
+
+    public int sum() {
+        return cardDeck.sum();
+    }
+
     public CardDeck getCardDeck() {
         return cardDeck;
     }
