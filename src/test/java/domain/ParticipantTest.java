@@ -25,4 +25,29 @@ class ParticipantTest {
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.DRAW);
     }
+
+    @DisplayName("다른 참가자보다 21에 가까운 경우, 승리를 판단할 수 있다.")
+    @Test
+    void 승리_판단() {
+        //given
+        List<Card> cardList = List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.A, CardShape.CLOVER)
+        );
+        Cards cards = Cards.of(cardList);
+        Participant winner = new Participant(cards);
+
+        List<Card> cardList2 = List.of(
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Cards cards2 = Cards.of(cardList2);
+        Participant loser = new Participant(cards2);
+
+        //when
+        GameResult result = winner.calculateGameResult(loser);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(GameResult.WIN);
+    }
 }
