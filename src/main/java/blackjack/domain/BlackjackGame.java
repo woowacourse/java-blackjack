@@ -11,12 +11,12 @@ public class BlackjackGame {
     private final CardDeck cardDeck;
     private final List<Participant> participants;
 
-    public BlackjackGame(CardDeck cardDeck, List<Participant> participants) {
+    public BlackjackGame(final CardDeck cardDeck, final List<Participant> participants) {
         this.cardDeck = cardDeck;
         this.participants = participants;
     }
 
-    public static BlackjackGame createByPlayerNames(List<String> names) {
+    public static BlackjackGame createByPlayerNames(final List<String> names) {
         CardDeck cardDeck = CardDeck.createCardDeck();
         List<Participant> participants = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class BlackjackGame {
         }
     }
 
-    public void addExtraCard(Participant participant) {
+    public void addExtraCard(final Participant participant) {
         Card card = cardDeck.pickRandomCard();
         participant.addCards(card);
     }

@@ -28,8 +28,8 @@ class BlackjackGameTest {
             List<String> playerNames = game.getPlayerNames();
 
             assertAll(() -> {
-               assertThat(playerNames.getFirst()).isEqualTo(names.getFirst());
-               assertThat(playerNames.getLast()).isEqualTo(names.getLast());
+                assertThat(playerNames.getFirst()).isEqualTo(names.getFirst());
+                assertThat(playerNames.getLast()).isEqualTo(names.getLast());
             });
         }
     }

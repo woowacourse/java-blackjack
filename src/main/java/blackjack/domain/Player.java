@@ -6,7 +6,7 @@ public class Player extends Participant {
 
     private final String name;
 
-    public Player(String name) {
+    public Player(final String name) {
         validateName(name);
         this.name = name;
     }
@@ -16,7 +16,7 @@ public class Player extends Participant {
         return super.calculateDenominations() < PLAYER_DISTRIBUTE_CARD_THRESHOLD;
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         boolean isAllLowerCase = name.chars().allMatch(Character::isLowerCase);
         if (isAllLowerCase) {
             return;

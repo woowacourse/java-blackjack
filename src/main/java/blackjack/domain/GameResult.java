@@ -7,11 +7,11 @@ public enum GameResult {
 
     private final String text;
 
-    GameResult(String text) {
+    GameResult(final String text) {
         this.text = text;
     }
 
-    public static GameResult playerResultFrom(Dealer dealer, Player player) {
+    public static GameResult playerResultFrom(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -24,7 +24,7 @@ public enum GameResult {
         return getGameResultFromOthers(dealer, player);
     }
 
-    private static GameResult getGameResultFromOthers(Dealer dealer, Player player) {
+    private static GameResult getGameResultFromOthers(final Dealer dealer, final Player player) {
         int dealerSum = dealer.calculateDenominations();
         int playerSum = player.calculateDenominations();
 

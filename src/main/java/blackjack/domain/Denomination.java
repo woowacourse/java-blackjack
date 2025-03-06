@@ -20,12 +20,12 @@ public enum Denomination {
     private final String text;
     private final List<Integer> values;
 
-    Denomination(String text, List<Integer> values) {
+    Denomination(final String text, final List<Integer> values) {
         this.text = text;
         this.values = values;
     }
 
-    public static int changeAceValue(int sum, int blackjackValue) {
+    public static int changeAceValue(final int sum, final int blackjackValue) {
         Integer minAceValue = ACE.values.getFirst();
         Integer maxAceValue = ACE.values.getLast();
 

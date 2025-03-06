@@ -16,7 +16,7 @@ public abstract class Participant {
         this.cards = new ArrayList<>();
     }
 
-    public void addCards(Card... cards) {
+    public void addCards(final Card... cards) {
         this.cards.addAll(Arrays.asList(cards));
     }
 
@@ -35,7 +35,7 @@ public abstract class Participant {
                 .map(Denomination::getValues)
                 .map(List::getFirst)
                 .reduce(0, Integer::sum);
-        if(hasACE()) {
+        if (hasACE()) {
             sum = Denomination.changeAceValue(sum, BLACKJACK_VALUE);
         }
 

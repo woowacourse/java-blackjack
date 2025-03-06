@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
-import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -15,7 +14,7 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -34,12 +33,11 @@ public class BlackjackController {
     }
 
     private BlackjackGame enterParticipants() {
-        String input = inputView.readNames();
-        List<String> names = InputParser.parseStringToList(input);
+        List<String> names = inputView.readNames();
         return BlackjackGame.createByPlayerNames(names);
     }
 
-    private void distributeInitialCards(BlackjackGame blackjackGame) {
+    private void distributeInitialCards(final BlackjackGame blackjackGame) {
         blackjackGame.initCardsToParticipants();
         outputView.printStartGame(blackjackGame.getPlayerNames());
 
@@ -49,13 +47,13 @@ public class BlackjackController {
         }
     }
 
-    private void distributeAdditionalCardsToPlayers(BlackjackGame blackjackGame) {
+    private void distributeAdditionalCardsToPlayers(final BlackjackGame blackjackGame) {
         for (Player player : blackjackGame.findPlayers()) {
             distributeAdditionalCardsToPlayer(blackjackGame, player);
         }
     }
 
-    private void distributeAdditionalCardsToPlayer(BlackjackGame blackjackGame, Player player) {
+    private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame, final Player player) {
         while (player.isPossibleToAdd() &&
                 inputView.readGetOneMore(player.getName())) {
             blackjackGame.addExtraCard(player);
@@ -63,20 +61,20 @@ public class BlackjackController {
         }
     }
 
-    private void distributeAdditionalCardsToDealer(BlackjackGame blackjackGame) {
+    private void distributeAdditionalCardsToDealer(final BlackjackGame blackjackGame) {
         while (blackjackGame.addExtraCardToDealer()) {
             outputView.printAddExtraCardToDealer();
         }
     }
 
-    private void showFinalCards(BlackjackGame blackjackGame) {
+    private void showFinalCards(final BlackjackGame blackjackGame) {
         outputView.printDealerFinalCardResult(blackjackGame.findDealer());
         for (Player player : blackjackGame.findPlayers()) {
             outputView.printPlayerFinalCardResult(player);
         }
     }
 
-    private void showWinLoseResult(BlackjackGame blackjackGame) {
+    private void showWinLoseResult(final BlackjackGame blackjackGame) {
         Map<GameResult, Integer> dealerResult = blackjackGame.calculateStatisticsForDealer();
         Map<Player, GameResult> playerResults = blackjackGame.calculateStatisticsForPlayer();
 
@@ -87,7 +85,7 @@ public class BlackjackController {
         }
     }
 
-    private void handleException(Runnable action) {
+    private void handleException(final Runnable action) {
         try {
             action.run();
         } catch (IllegalArgumentException e) {
