@@ -74,6 +74,8 @@ class ParticipantTest {
 				new Card(CardNumber.TWO, Emblem.SPADE));
 			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
 			loser.pickCard(loserDeck);
+			loser.pickCard(loserDeck);
+			loser.pickCard(loserDeck);
 
 			// when
 			winner.duel(loser);
