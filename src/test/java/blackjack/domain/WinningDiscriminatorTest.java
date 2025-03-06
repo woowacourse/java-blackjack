@@ -36,8 +36,8 @@ class WinningDiscriminatorTest {
                 new Name("꾹이"), 20);
         WinningDiscriminator winningDiscriminator = new WinningDiscriminator(20, playerScores);
 
-        String result = winningDiscriminator.judgePlayerResult(new Name(playerName));
+        Map<Name, String> result = winningDiscriminator.judgePlayersResult();
 
-        assertThat(result).isEqualTo(expected);
+        assertThat(result.get(new Name(playerName))).isEqualTo(expected);
     }
 }
