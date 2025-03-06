@@ -30,15 +30,16 @@ public class BlackJackController {
         participants.forEach(this::inputMoreCard);
         drewDealerCard(dealer);
         outputView.outputDealerCardFinish();
-
         outputView.outputFinalCardStatus(dealer, participants);
         outputView.outputFinalResult(dealer, participants);
     }
 
     private void drewDealerCard(Dealer dealer) {
         if (dealer.calculatePoint() <= 16) {
+            outputView.outputDealerGetCard();
             dealer.putCard(deck.drawCard());
             drewDealerCard(dealer);
+            outputView.printPlayerCardStatus("딜러", dealer);
         }
     }
 
@@ -46,6 +47,11 @@ public class BlackJackController {
         String command = inputView.inputCallOrStay(participant.getName());
         if (command.equals("y")) {
             participant.putCard(deck.drawCard());
+            outputView.printPlayerCardStatus(participant.getName(), participant);
+            if (participant.isBust()) {
+                outputView.printParticipantBust(participant.getName());
+                return;
+            }
             inputMoreCard(participant);
         }
     }
@@ -54,6 +60,4 @@ public class BlackJackController {
         player.putCard(deck.drawCard());
         player.putCard(deck.drawCard());
     }
-
-
 }

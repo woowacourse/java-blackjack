@@ -4,6 +4,7 @@ import blackjack.model.Card;
 import blackjack.model.Dealer;
 import blackjack.model.Participant;
 import blackjack.model.ParticipantResult;
+import blackjack.model.Player;
 import blackjack.model.ReceivedCards;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,10 @@ public class OutputView {
 
     public String generateCardName(Card card) {
         return String.format("%s%s", card.getCardType().getDetail(), card.getShape().getDetail());
+    }
+
+    public void printPlayerCardStatus(String name, Player participant) {
+        System.out.println(outputPlayerCardStatus(name, generateCardNames(participant.getReceivedCards())));
     }
 
     public String outputPlayerCardStatus(String name, String cards) {
@@ -82,4 +87,7 @@ public class OutputView {
     }
 
 
+    public void printParticipantBust(String name) {
+        System.out.println(String.format("%s는 bust입니다.", name));
+    }
 }
