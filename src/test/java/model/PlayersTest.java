@@ -3,10 +3,14 @@ package model;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayersTest {
 
@@ -49,5 +53,45 @@ public class PlayersTest {
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("중복된 플레이어가 존재하는 지")
+    void validateDuplication() {
+        //given
+        List<String> actual = List.of(
+                "pobi",
+                "pobi"
+        );
+        //when
+        //then
+        Assertions.assertThatThrownBy(() -> Players.from(actual))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("createPlayers")
+    @DisplayName("참여 가능한 플레이어 수가 아닐 때 예외 처리")
+    void validateNumber(List<String> values) {
+        //given
+        //when
+        //then
+        Assertions.assertThatThrownBy(() -> Players.from(values))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> createPlayers() {
+        return Stream.of(
+                Arguments.arguments(
+                        List.of(
+                        )
+                ),
+                Arguments.arguments(
+                        List.of("Adam", "Alan", "Alex", "Andy", "Brad", "Carl", "Cody", "Dale",
+                                "Drew", "Eric", "Evan", "Gary", "Glen", "Hank", "Jack", "Jake",
+                                "Jeff", "Joel", "John", "Josh", "Kirk", "Leon", "Mark", "Matt",
+                                "Mike", "Nick", "Paul", "Rick", "Sean", "Wade","hippo")
+                )
+        );
     }
 }
