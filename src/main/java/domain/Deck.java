@@ -13,13 +13,17 @@ public class Deck implements CardProvider {
     public Deck() {
         List<Card> temp = new ArrayList<>();
         for (Symbol symbol : Symbol.getAllSymbols()) {
-            for (Number number : Number.getAllNumbers()) {
-                temp.add(new Card(symbol, number));
-            }
+            addAllNumbers(symbol, temp);
         }
 
         Collections.shuffle(temp);
         deck.addAll(temp);
+    }
+
+    private static void addAllNumbers(Symbol symbol, List<Card> temp) {
+        for (Number number : Number.getAllNumbers()) {
+            temp.add(new Card(symbol, number));
+        }
     }
 
     public List<Card> provideCards(int size) {

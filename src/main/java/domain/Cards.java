@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cards {
-    
+
+    public static final int BLACKJACK_SCORE = 21;
+    public static final int DEALER_DRAW_LIMIT = 16;
+    public static final int ACE_VALUE_DIFFERENCE = 10;
+
     private final List<Card> cards;
     private final int totalNumberSum;
 
@@ -20,8 +24,8 @@ public class Cards {
                 .mapToInt(card -> card.getNumber().getNumericValue())
                 .sum();
         
-        if (total > 21 && isContainsAce()) {
-            return total - 10;
+        if (total > BLACKJACK_SCORE && isContainsAce()) {
+            return total - ACE_VALUE_DIFFERENCE;
         }
 
         return total;
@@ -39,11 +43,11 @@ public class Cards {
     }
 
     public boolean checkExceedTwentyOne() {
-        return totalNumberSum > 21;
+        return totalNumberSum > BLACKJACK_SCORE;
     }
 
     public boolean checkExceedSixteen() {
-        return totalNumberSum > 16;
+        return totalNumberSum > DEALER_DRAW_LIMIT;
     }
 
     public Card getInitialCard() {
@@ -55,7 +59,7 @@ public class Cards {
     }
 
     public int calculateDifferenceFromTwentyOne() {
-        return Math.abs(totalNumberSum - 21);
+        return Math.abs(totalNumberSum - BLACKJACK_SCORE);
     }
 
     @Override
