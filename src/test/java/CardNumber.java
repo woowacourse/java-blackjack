@@ -1,6 +1,7 @@
 public enum CardNumber {
 
-    ACE(1),
+    ACE(11),
+    ACE_ANOTHER(1),
     TWO(2),
     THREE(3),
     FOUR(4),

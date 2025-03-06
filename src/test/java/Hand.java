@@ -16,19 +16,63 @@ public class Hand {
         cards.addAll(drawnCard);
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public void drawCard(CardDeck cardDeck) {
         Card drawnCard = cardDeck.drawCard();
         cards.add(drawnCard);
     }
 
-    public boolean checkBurst() {
-        int sum = cards.stream()
+    private int decideAceNumber(int totalCardNumber) {
+        if (isOverBurstBound(totalCardNumber + CardNumber.ACE.getNumber())) {
+            return totalCardNumber + CardNumber.ACE_ANOTHER.getNumber();
+        }
+        return totalCardNumber + CardNumber.ACE.getNumber();
+    }
+
+    public boolean isOverBurstBound(int totalCardNumber) {
+        return totalCardNumber > BURST_BOUND;
+    }
+
+    public int calculateTotalNumber() {
+        return calculateTotalNumber(this.cards);
+    }
+
+    private int calculateTotalNumber(List<Card> cards) {
+        int aceCount = countAce();
+        if (aceCount > 0) {
+            return sumWithAcesCount(aceCount);
+        }
+        return calculateCardNumber(cards);
+    }
+
+    private int countAce() {
+        return (int) cards.stream()
+                .map(Card::getCardNumber)
+                .filter(number -> number == CardNumber.ACE)
+                .count();
+    }
+
+    private int sumWithAcesCount(int aceCount) {
+        List<Card> removedAceHand = removeAce();
+        int totalExceptAce = calculateCardNumber(removedAceHand);
+        for (int i = 0; i < aceCount; i++) {
+            totalExceptAce = decideAceNumber(totalExceptAce);
+        }
+        return totalExceptAce;
+    }
+
+    private List<Card> removeAce() {
+        return cards.stream()
+                .filter(card -> card.getCardNumber() != CardNumber.ACE)
+                .toList();
+    }
+
+    private int calculateCardNumber(List<Card> cards) {
+        return cards.stream()
                 .mapToInt(card -> card.getCardNumber().getNumber())
                 .sum();
-        return sum > BURST_BOUND;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
