@@ -1,5 +1,8 @@
 package domain;
 
+import domain.constant.TrumpEmblem;
+import domain.constant.TrumpNumber;
+
 public class Card {
 
     private final TrumpNumber number;
