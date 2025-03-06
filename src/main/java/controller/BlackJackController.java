@@ -59,7 +59,7 @@ public class BlackJackController {
             }
             answer = inputView.readHitOrStay(player);
             if (answer == Answer.YES) {
-                game.hit(player);
+                game.playerHit(player);
             }
             outputView.displayParticipantAndCards(player);
             outputView.displayEmptyLine();

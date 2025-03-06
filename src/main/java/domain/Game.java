@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class Game {
     private static final int MAX_PLAYER_COUNT = 5;
+
     private final Map<Player, GameResult> players = new LinkedHashMap<>();
     private final Dealer dealer;
 
@@ -18,17 +19,26 @@ public class Game {
         playerNames.forEach(this::registerPlayer);
     }
 
-    public List<Card> getDealerCards() {
-        return dealer.getCards();
-    }
-
-    public void hit(Player player) {
+    public void playerHit(Player player) {
         Card card = dealer.pickCard();
         player.hit(card);
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players.keySet());
+    public void dealerHit() {
+        Card card = dealer.pickCard();
+        dealer.hit(card);
+    }
+
+    public void calculateGameResult() {
+        for (Player player : players.keySet()) {
+            GameResult gameResult = GameResult.calculateDealerGameResult(dealer, player);
+            dealer.recordGameResult(gameResult);
+            players.put(player, GameResult.getOppositeResult(gameResult));
+        }
+    }
+
+    public boolean doesDealerNeedCard() {
+        return dealer.doesNeedCard();
     }
 
     public List<GameParticipant> getParticipants() {
@@ -38,38 +48,20 @@ public class Game {
         return participants;
     }
 
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public int getDealerScore() {
-        return dealer.calculateScore();
-    }
-
-    public boolean doesDealerNeedCard() {
-        return dealer.doesNeedCard();
-    }
-
-    public void dealerHit() {
-        Card card = dealer.pickCard();
-        dealer.hit(card);
-    }
-
-    public int getDealerGameResultCount(GameResult result) {
-        return dealer.getGameResultCount(result);
+    public List<Player> getPlayers() {
+        return List.copyOf(players.keySet());
     }
 
     public GameResult getPlayerGameResult(Player player) {
         return players.get(player);
     }
 
-    public void calculateGameResult() {
-        for (Player player : players.keySet()) {
-            GameResult gameResult = GameResult.calculateDealerGameResult(dealer, player);
-            dealer.recordGameResult(gameResult);
-            players.put(player, GameResult.getOppositeResult(gameResult));
-        }
+    public List<Card> getDealerCards() {
+        return dealer.getCards();
+    }
+
+    public int getDealerGameResultCount(GameResult result) {
+        return dealer.getGameResultCount(result);
     }
 
     private void registerPlayer(String playerName) {
