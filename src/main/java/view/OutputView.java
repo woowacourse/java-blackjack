@@ -27,6 +27,7 @@ public class OutputView {
     private static final String RESULT_MESSAGE = "## 최종 승패";
 
     public void printInitialParticipantHands(List<Participant> participants) {
+        System.out.println();
         System.out.print("딜러와 ");
         String result = participants.stream().skip(1).map(Participant::getName)
             .collect(Collectors.joining(", "));
@@ -41,6 +42,7 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
             System.out.println(cardMessage);
         }
+        System.out.println();
     }
 
     private String formatCard(Card card) {

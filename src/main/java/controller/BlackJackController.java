@@ -80,6 +80,7 @@ public class BlackJackController {
                 outputView.printParticipantHand(participant);
             }
         }
+        System.out.println();
 
         // 딜러가 카드를 뽑을 수 있다면 카드를 뽑는다
         for (Participant participant : participants) {
@@ -93,7 +94,7 @@ public class BlackJackController {
                 }
             }
         }
-
+        System.out.println();
         // 모든 참가자의 손패와, 점수를 출력한다
         for (Participant participant : participants) {
             outputView.printFullParticipantInfo(participant);

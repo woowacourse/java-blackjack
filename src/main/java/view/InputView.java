@@ -16,7 +16,7 @@ public class InputView {
 
     public String inputPlayerWantMoreCard(Participant participant) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n"
-                , participant.getName());
+            , participant.getName());
         return scanner.nextLine();
     }
 }
