@@ -2,29 +2,54 @@ package blackjack.controller;
 
 import blackjack.domain.GameManager;
 import blackjack.domain.Players;
+import blackjack.domain.player.Player;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
+
+import java.util.List;
 
 public class BlackjackController {
 
-    // 출력
-    // 입력
+    private final InputView inputView;
+    private final OutputView outputView;
     private final GameManager gameManager;
 
-    public BlackjackController(final GameManager gameManager) {
+    public BlackjackController(final InputView inputView, final OutputView outputView, final GameManager gameManager) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.gameManager = gameManager;
     }
 
     public void start() {
-        // todo : 게임 참여자 추가 (기능)
-        // todo : 게임 참여 닉네임 입력
-        // todo : 닉네임 파싱
-
-        // todo : gameManager.addGamblers(파싱한 데이터);
-
+        // 1번
+        gameManager.addGamblers(readAndParseNames());
         Players players = gameManager.getPlayers();
+        outputView.printInitCards(players);
 
-        // todo : 게임 참여자 카드 공개
+        // 2번
+        List<Player> gamblers = players.getGamblers();
+        for (Player gambler : gamblers) {
+            while (!gameManager.isPlayerBust(gambler) && inputView.readOneMoreDealCard(gambler)) {
+                gameManager.dealAddCard(gambler);
+                outputView.printCardsMessage(gambler);
+            }
+        }
 
-        // todo : 추가 발급 기능 (기능)
+        // 3번
+        if (gameManager.isDealerHitThenDealAddCard()) {
+            outputView.printDealerHitAndDealCard();
+        }
 
+        // 4번
+
+    }
+
+    private List<Player> readAndParseNames() {
+        String playerNamesInput = inputView.readPlayerNames();
+        List<String> playerNames = List.of(playerNamesInput.split(","));
+
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
     }
 }
