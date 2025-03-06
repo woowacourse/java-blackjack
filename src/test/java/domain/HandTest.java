@@ -97,4 +97,31 @@ class HandTest {
             softly.assertThat(hand3.isBust()).isTrue();
         });
     }
+
+    @DisplayName("손에 에이스가 있으면 true를 반환한다.")
+    @Test
+    void 손에_에이스가_있으면_true를_반환한다() {
+
+        // given
+        hand = new Hand();
+        hand.add(card1);
+        hand.add(card2);
+
+        // when & then
+        assertThat(hand.hasAce()).isTrue();
+    }
+
+    @DisplayName("손에 에이스가 없으면 false를 반환한다.")
+    @Test
+    void 손에_에이스가_없으면_false를_반환한다() {
+
+        // given
+        hand = new Hand();
+        hand.add(card2);
+
+        // when & then
+        assertThat(hand.hasAce()).isFalse();
+    }
+
+
 }
