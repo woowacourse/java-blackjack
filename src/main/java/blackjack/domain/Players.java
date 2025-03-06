@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
@@ -7,9 +8,13 @@ public class Players {
     private final Player dealer;
     private final List<Player> gamblers;
 
-    public Players(List<Player> gamblers) {
+    public Players() {
         dealer = new Dealer();
-        this.gamblers = gamblers;
+        this.gamblers = new ArrayList<>();
+    }
+
+    public void addGamblers(List<Player> gamblers) {
+        this.gamblers.addAll(gamblers);
     }
 
     public Player getDealer() {
@@ -19,7 +24,6 @@ public class Players {
     public List<Player> getGamblers() {
         return gamblers;
     }
-
 
     public void initPlayers(CardPack cardPack) {
         dealer.pushDealCard(cardPack, 2);
