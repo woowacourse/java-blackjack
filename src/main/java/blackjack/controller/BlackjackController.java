@@ -21,7 +21,7 @@ public class BlackjackController {
         addtionalCard(dealer, players);
         dealerAdditionalCard(dealer);
         printBlackjackResult(dealer, players);
-        printVictory(dealer);
+        printVictory(dealer, players);
     }
 
     private Players createPlayers() {
@@ -71,8 +71,8 @@ public class BlackjackController {
         OutputView.printPlayerResult(players.getPlayers());
     }
 
-    private void printVictory(Dealer dealer) {
+    private void printVictory(Dealer dealer, Players players) {
         Victory victory = dealer.createVictory();
-        OutputView.printVictory(victory);
+        OutputView.printVictory(victory, players.getPlayers());
     }
 }

@@ -9,7 +9,6 @@ import blackjack.domain.Victory;
 import blackjack.domain.WinningResult;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -125,14 +124,14 @@ public class OutputView {
         System.out.println("더 이상 카드를 받을 수 없습니다.");
     }
 
-    public static void printVictory(Victory victory) {
+    public static void printVictory(Victory victory, List<Player> players) {
         Map<WinningResult, Integer> dealerVictoryResults = victory.getDealerVictoryResults();
         Map<Player, WinningResult> playerVictoryResults = victory.getPlayerVictoryResults();
 
         printIfPresentWinningResult(dealerVictoryResults);
         dealerVictoryResults.getOrDefault(WinningResult.LOSE, 0);
-        for (Entry<Player, WinningResult> entry : playerVictoryResults.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey().getName(), toKoreanWinningResult(entry.getValue()));
+        for (Player player : players) {
+            System.out.printf("%s: %s\n", player.getName(), toKoreanWinningResult(playerVictoryResults.get(player)));
         }
     }
 
