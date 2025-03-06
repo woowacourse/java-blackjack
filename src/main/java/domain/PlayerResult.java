@@ -3,12 +3,21 @@ package domain;
 import java.util.Objects;
 
 public class PlayerResult {
+
     private final Participant player;
     private final GameResult gameResult;
 
     public PlayerResult(Participant player, GameResult gameResult) {
         this.player = player;
         this.gameResult = gameResult;
+    }
+
+    public String getPlayerName() {
+        return player.getName();
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
     }
 
     @Override

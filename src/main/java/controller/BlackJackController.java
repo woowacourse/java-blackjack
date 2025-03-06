@@ -7,6 +7,7 @@ import domain.CardDeck;
 import domain.Dealer;
 import domain.Participant;
 import domain.Player;
+import domain.Results;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -97,6 +98,9 @@ public class BlackJackController {
         for (Participant participant : participants) {
             outputView.printFullParticipantInfo(participant);
         }
+
+        Results results = blackJackManager.calculateResult();
+        outputView.printGameResult(results);
     }
 
 }
