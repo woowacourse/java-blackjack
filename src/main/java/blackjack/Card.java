@@ -28,6 +28,10 @@ public class Card {
         }
     }
 
+    public String getDisplayLabel() {
+        return cardValue.getLabel() + suit.getLabel();
+    }
+
     public CardValue getCardValue() {
         return cardValue;
     }

@@ -12,7 +12,7 @@ public class Game {
 
     public Game(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
-        this.players = players;
+        this.players = List.copyOf(players);
     }
 
     public void dealInitialCards() {
@@ -56,5 +56,13 @@ public class Game {
         if (dealer.getTotal() <= DEALER_HIT_THRESHOLD) {
             dealCard(dealer);
         }
+    }
+
+    public Card getDealerVisibleCard() {
+        return dealer.getVisibleCard();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
