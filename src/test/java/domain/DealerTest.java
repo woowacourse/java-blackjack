@@ -1,6 +1,7 @@
 package domain;
 
 import static domain.card.Number.ACE;
+import static domain.card.Number.TWO;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,5 +51,31 @@ public class DealerTest {
 
         //when-then
         assertThat(dealer.sum()).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("딜러 추가 카드 뽑기 테스트")
+    void checkIsUnderThresholdTest() {
+        //given
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+        Dealer dealer = new Dealer(cardDeck);
+        dealer.addCards();
+        dealer.addCards();
+
+        //when-then
+        assertThat(dealer.isUnderThreshold()).isTrue();
+    }
+
+    @Test
+    @DisplayName("드로우 테스트")
+    void drawTest() {
+        //given
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO)));
+        Dealer dealer = new Dealer(cardDeck);
+        dealer.addCards();
+        dealer.addCards();
+
+        //when-then
+        assertDoesNotThrow(dealer::draw);
     }
 }

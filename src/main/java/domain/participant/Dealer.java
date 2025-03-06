@@ -5,6 +5,8 @@ import domain.card.CardDeck;
 import java.util.ArrayList;
 
 public class Dealer {
+    private static final int DEALER_DRAW_THRESHOLD = 16;
+
     private CardDeck standard;
     private CardDeck hand;
 
@@ -20,8 +22,19 @@ public class Dealer {
     public void addCards() {
         hand.addCard(hitCard());
     }
+
+    public void draw() {
+        if (isUnderThreshold()) {
+            addCards();
+        }
+    }
+
     public int sum() {
         return hand.sum();
+    }
+
+    public boolean isUnderThreshold() {
+        return sum() <= DEALER_DRAW_THRESHOLD;
     }
 }
 
