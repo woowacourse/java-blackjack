@@ -1,26 +1,30 @@
 package model;
 
 public class Score implements Comparable {
-  private final int value;
+    private final int value;
 
-  public Score(int score) {
-    this.value = score;
-  }
+    public Score(int score) {
+        this.value = score;
+    }
 
-  public int getValue() {
-    return value;
-  }
+    public boolean isBust() {
+        return value > 21;
+    }
 
-  @Override
-  public int compareTo(Object o) {
-    return Integer.compare(this.value, ((Score) o).value);
-  }
+    @Override
+    public int compareTo(Object o) {
+        return Integer.compare(value, ((Score) o).value);
+    }
 
-  public Score plus(int sum) {
-    return new Score(value + sum);
-  }
+    public Score plus(int sum) {
+        return new Score(value + sum);
+    }
 
-  public Score minus(int sum) {
-    return new Score(value - sum);
-  }
+    public Score minus(int sum) {
+        return new Score(value - sum);
+    }
+
+    public int getValue() {
+        return value;
+    }
 }

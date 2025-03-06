@@ -1,20 +1,16 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Participant {
 
     private final List<Card> hands;
-    private final Map<MatchType, Integer> matchResult;
     private int aceCount;
     protected Score score;
 
     protected Participant() {
         this.hands = new ArrayList<>();
-        this.matchResult = new HashMap<>();
         this.score = new Score(0);
         this.aceCount = 0;
     }
@@ -29,9 +25,13 @@ public abstract class Participant {
                 .count();
     }
 
+    public boolean isBust() {
+        return score.isBust();
+    }
+
     public boolean isNotEnoughScoreCondition() {
 
-        while (aceCount > 0 && score.getValue() > 21) {
+        while (aceCount > 0 && isBust()) {
             this.score = score.minus(10);
             aceCount--;
         }
@@ -51,14 +51,5 @@ public abstract class Participant {
 
     public int getSum() {
         return score.getValue();
-    }
-
-    public void updateResult(MatchType type) {
-        matchResult.computeIfAbsent(type, k -> 0);
-        matchResult.put(type, matchResult.get(type) + 1);
-    }
-
-    public Map<MatchType, Integer> getMatchResult() {
-        return matchResult;
     }
 }

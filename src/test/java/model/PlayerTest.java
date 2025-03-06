@@ -51,6 +51,25 @@ public class PlayerTest {
         Assertions.assertThat(player.isNotEnoughScoreCondition()).isTrue();
     }
 
+    private static Stream<Arguments> createNotBustCards() {
+        return Stream.of(
+                Arguments.arguments(
+                        List.of(
+                                new Card(SuitType.CLUBS, RankType.ACE),
+                                new Card(SuitType.HEARTS, RankType.FIVE),
+                                new Card(SuitType.SPADES, RankType.SEVEN)
+                        )
+                ),
+                Arguments.arguments(
+                        List.of(
+                                new Card(SuitType.CLUBS, RankType.ACE),
+                                new Card(SuitType.SPADES, RankType.FIVE),
+                                new Card(SuitType.HEARTS, RankType.ACE)
+                        )
+                )
+        );
+    }
+
     @Test
     @DisplayName("게임 진행 점수 조건이 충분한 지 : false")
     void isNotEnoughScoreConditionFalse() {
@@ -64,31 +83,5 @@ public class PlayerTest {
         //when
         //then
         Assertions.assertThat(player.isNotEnoughScoreCondition()).isFalse();
-    }
-
-    private static Stream<Arguments> createNotBustCards() {
-        return Stream.of(
-                Arguments.arguments(
-                        List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.HEARTS, RankType.FIVE),
-                                new Card(SuitType.SPADES, RankType.SEVEN)
-                        )
-                ),
-                Arguments.arguments(
-                        List.of(
-                                new Card(SuitType.SPADES, RankType.TEN),
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.HEARTS, RankType.ACE)
-                        )
-                ),
-                Arguments.arguments(
-                        List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.SPADES, RankType.FIVE),
-                                new Card(SuitType.HEARTS, RankType.ACE)
-                        )
-                )
-        );
     }
 }

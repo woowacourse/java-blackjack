@@ -77,7 +77,7 @@ public class OutputView {
 
         for (Player player : players.getPlayers()) {
             String nickname = player.getNickname();
-            String resultFormatByPlayer = getResultFormatByPlayer(player.getMatchResult());
+            String resultFormatByPlayer = getResultFormatByPlayer(player.getMatchType());
             System.out.printf("%s: %s%n", nickname, resultFormatByPlayer);
         }
 
@@ -95,12 +95,7 @@ public class OutputView {
         return result.toString();
     }
 
-    public static String getResultFormatByPlayer(Map<MatchType, Integer> matchResult) {
-        for (MatchType matchType : matchResult.keySet()) {
-            if (matchResult.get(matchType) == 1) {
-                return MATCH_FORMAT.get(matchType.name());
-            }
-        }
-        throw new IllegalArgumentException("존재할 수 없는 결과입니다.");
+    public static String getResultFormatByPlayer(MatchType matchType) {
+        return MATCH_FORMAT.get(matchType.name());
     }
 }
