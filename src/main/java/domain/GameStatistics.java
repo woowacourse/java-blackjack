@@ -8,18 +8,18 @@ import java.util.Collections;
 import java.util.Map;
 
 public class GameStatistics {
-    private final Map<String, GameResult> results;
+    private final Map<PlayerName, GameResult> results;
 
-    public GameStatistics(Map<String, GameResult> results) {
+    public GameStatistics(Map<PlayerName, GameResult> results) {
         this.results = results;
     }
 
     public int getDealerWinCount() {
-        return getDealerResultCount(WIN);
+        return getDealerResultCount(LOSE);
     }
 
     public int getDealerLoseCount() {
-        return getDealerResultCount(LOSE);
+        return getDealerResultCount(WIN);
     }
 
     public int getDealerDrawCount() {
@@ -32,7 +32,7 @@ public class GameStatistics {
                 .count();
     }
 
-    public Map<String, GameResult> getResults() {
+    public Map<PlayerName, GameResult> getResults() {
         return Collections.unmodifiableMap(results);
     }
 }

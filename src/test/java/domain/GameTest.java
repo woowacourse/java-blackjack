@@ -15,7 +15,7 @@ class GameTest {
 
     @BeforeEach
     void beforeEach() {
-        List<String> usernames = List.of("a", "b", "c");
+        List<PlayerName> usernames = List.of(new PlayerName("a"), new PlayerName("b"), new PlayerName("c"));
         game = new Game(usernames);
     }
 
@@ -33,7 +33,7 @@ class GameTest {
     @DisplayName("특정 플레이어에게 N장의 카드를 나눠주는 기능 테스트")
     void giveCardToPlayerTest() {
         // given
-        String username = "a";
+        PlayerName username = new PlayerName("a");
         // when
         game.giveCardToPlayer(username, 2);
         // then
@@ -47,9 +47,9 @@ class GameTest {
         game.distributeStartingHands();
 
         assertAll(() -> assertEquals(2, game.getDealer().getCards().size()),
-                () -> assertEquals(2, game.getPlayerCards("a").size()),
-                () -> assertEquals(2, game.getPlayerCards("b").size()),
-                () -> assertEquals(2, game.getPlayerCards("c").size())
+                () -> assertEquals(2, game.getPlayerCards(new PlayerName("a")).size()),
+                () -> assertEquals(2, game.getPlayerCards(new PlayerName("b")).size()),
+                () -> assertEquals(2, game.getPlayerCards(new PlayerName("c")).size())
         );
     }
 }

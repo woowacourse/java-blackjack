@@ -18,9 +18,9 @@ class PlayersTest {
     @DisplayName("특정 이름을 가진 플레이어에게 카드를 제공한다.")
     void giveCardToGamerTest() {
         // given
-        List<String> usernames = List.of("a", "b", "c");
+        List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
         Players players = new Players(usernames);
-        String username = "a";
+        PlayerName username = new PlayerName("이");
         Card card = Card.HEART_JACK;
         // when
         players.giveCard(username, List.of(card));
@@ -34,12 +34,12 @@ class PlayersTest {
     @DisplayName("특정 플레이어가 카드를 더 받을 수 있는지 확인합니다.")
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
-        List<String> usernames = List.of("김", "이", "박");
+        List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
         Players players = new Players(usernames);
-        players.giveCard("김", cards);
+        players.giveCard(new PlayerName("김"), cards);
 
         //when & then
-        Assertions.assertThat(players.isDrawable("김")).isEqualTo(expected);
+        Assertions.assertThat(players.isDrawable(new PlayerName("김"))).isEqualTo(expected);
     }
 
     public static Stream<Arguments> canGetMoreCardTest() {
@@ -55,12 +55,13 @@ class PlayersTest {
     @DisplayName("플레이어가 모두 존재하는지 확인합니다.")
     void getPlayerInfoTest() {
         // given
-        List<String> usernames = List.of("김", "이", "박");
+        List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
         Players players = new Players(usernames);
         // when
-        Map<String, Gamer> playerInfo = players.getPlayersInfo();
+        Map<PlayerName, Gamer> playerInfo = players.getPlayersInfo();
 
         // then
-        assertTrue(playerInfo.keySet().containsAll(Set.of("김", "이", "박")));
+        assertTrue(
+                playerInfo.keySet().containsAll(Set.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"))));
     }
 }

@@ -5,17 +5,13 @@ import static domain.GameResult.LOSE;
 import static domain.GameResult.WIN;
 
 public class Player extends Gamer {
-    private final String username;
+    private final PlayerName playerName;
 
     private static final int BUST_THRESHOLD = 21;
 
-    public Player(String username) {
+    public Player(PlayerName playerName) {
         super();
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
+        this.playerName = playerName;
     }
 
     public boolean isDrawable() {
@@ -29,6 +25,10 @@ public class Player extends Gamer {
             return decideGameResultWithBust(playerScore, dealerScore);
         }
         return decideGameResultWithoutBust(playerScore, dealerScore);
+    }
+
+    public PlayerName getPlayerName() {
+        return playerName;
     }
 
     private GameResult decideGameResultWithBust(int playerScore, int dealerScore) {

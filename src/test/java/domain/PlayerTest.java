@@ -21,7 +21,7 @@ class PlayerTest {
     void addCardTest() {
         //given
         Card card = Card.CLOVER_EIGHT;
-        Player player = new Player("코기");
+        Player player = new Player(new PlayerName("코기"));
 
         //when
         player.addCard(List.of(card));
@@ -35,7 +35,7 @@ class PlayerTest {
     @DisplayName("카드 숫자의 전체 합을 계산합니다.")
     void calculateCardScoreTest(List<Card> cards, int expected) {
         //given
-        Player player = new Player("코기");
+        Player player = new Player(new PlayerName("코기"));
         player.addCard(cards);
         //when
         final int cardScore = player.calculateScore();
@@ -59,7 +59,7 @@ class PlayerTest {
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
-        Player player = new Player("코기");
+        Player player = new Player(new PlayerName("코기"));
         player.addCard(cards);
         int playStandard = 21;
         // when
@@ -83,7 +83,7 @@ class PlayerTest {
     @DisplayName("딜러 숫자가 21 이하일 때, 승무패를 계산하는지 확인합니다.")
     void decideGameResultTest(List<Card> cards, GameResult expected) {
         //given
-        Player player = new Player("ㅎㅎ");
+        Player player = new Player(new PlayerName("코기"));
         player.addCard(cards);
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
         dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN));
@@ -107,7 +107,7 @@ class PlayerTest {
     @DisplayName("딜러와 플레이어가 둘 다 Bust 상황일때 무승부인지 확인합니다.")
     void decideGameResultBustTest(List<Card> cards, GameResult expected) {
         //given
-        Player player = new Player("ㅎㅎ");
+        Player player = new Player(new PlayerName("코기"));
         player.addCard(cards);
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
         dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN));

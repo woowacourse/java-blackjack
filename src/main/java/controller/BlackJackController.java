@@ -3,6 +3,7 @@ package controller;
 import static view.Response.YES;
 
 import domain.Game;
+import domain.PlayerName;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -18,26 +19,30 @@ public class BlackJackController {
 
     public void run() {
         List<String> usernames = inputView.insertUsernames();
-        Game game = initializeGame(usernames);
-        for (String username : usernames) {
-            askPlayer(game, username);
+        List<PlayerName> playerNames = usernames.stream()
+                .map(PlayerName::new)
+                .toList();
+
+        Game game = initializeGame(playerNames);
+        for (PlayerName playerName : playerNames) {
+            askPlayer(game, playerName);
         }
         askDealer(game);
         outputView.printFinalState(game.getPlayersInfo(), game.getDealer());
         outputView.printGameStatistics(game.getGameStatistics());
     }
 
-    private Game initializeGame(List<String> usernames) {
-        Game game = new Game(usernames);
+    private Game initializeGame(List<PlayerName> playerNames) {
+        Game game = new Game(playerNames);
         game.distributeStartingHands();
         outputView.printInitialState(game.getPlayersInfo(), game.getDealerOneCard());
         return game;
     }
 
-    private void askPlayer(Game game, String username) {
-        while (game.isPlayerDrawable(username) && inputView.getUserResponse(username) == YES) {
-            game.giveCardToPlayer(username, 1);
-            outputView.printGamerCards(username, game.getPlayerCards(username));
+    private void askPlayer(Game game, PlayerName playerName) {
+        while (game.isPlayerDrawable(playerName) && inputView.getUserResponse(playerName.username()) == YES) {
+            game.giveCardToPlayer(playerName, 1);
+            outputView.printGamerCards(playerName.username(), game.getPlayerCards(playerName));
         }
     }
 

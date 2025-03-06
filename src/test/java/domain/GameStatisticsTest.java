@@ -12,12 +12,13 @@ class GameStatisticsTest {
     @DisplayName("딜러의 게임 결과를 정확히 반환하는지 테스트")
     void getDealerWinCount() {
         // given
-        Map<String, GameResult> result = Map.of("a", GameResult.WIN,
-                "b", GameResult.DRAW,
-                "c", GameResult.LOSE,
-                "d", GameResult.WIN,
-                "e", GameResult.DRAW,
-                "f", GameResult.DRAW);
+        Map<PlayerName, GameResult> result = Map.of(
+                new PlayerName("a"), GameResult.WIN,
+                new PlayerName("b"), GameResult.DRAW,
+                new PlayerName("c"), GameResult.LOSE,
+                new PlayerName("d"), GameResult.WIN,
+                new PlayerName("e"), GameResult.DRAW,
+                new PlayerName("f"), GameResult.DRAW);
         GameStatistics gameStatistics = new GameStatistics(result);
         // when
         int winCount = gameStatistics.getDealerWinCount();

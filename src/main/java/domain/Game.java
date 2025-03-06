@@ -10,30 +10,30 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
-    public Game(List<String> usernames) {
+    public Game(List<PlayerName> playerNames) {
         this.dealer = new Dealer(new Deck(Card.initializeCards()));
-        this.players = new Players(usernames);
+        this.players = new Players(playerNames);
     }
 
-    public void giveCardToPlayer(String username, int count) {
-        players.giveCard(username, drawCards(count));
+    public void giveCardToPlayer(PlayerName playerName, int count) {
+        players.giveCard(playerName, drawCards(count));
     }
 
     public void giveCardToDealer(int count) {
         dealer.addCard(drawCards(count));
     }
 
-    public List<Card> getPlayerCards(String username) {
-        return players.getPlayerCard(username);
+    public List<Card> getPlayerCards(PlayerName playerName) {
+        return players.getPlayerCard(playerName);
     }
 
     public void distributeStartingHands() {
         giveCardToDealer(INITIAL_HANDS);
-        List<String> usernames = players.getUsernames();
-        usernames.forEach(username -> giveCardToPlayer(username, INITIAL_HANDS));
+        List<PlayerName> playerNames = players.getUsernames();
+        playerNames.forEach(playerName -> giveCardToPlayer(playerName, INITIAL_HANDS));
     }
 
-    public Map<String, Gamer> getPlayersInfo() {
+    public Map<PlayerName, Gamer> getPlayersInfo() {
         return players.getPlayersInfo();
     }
 
@@ -41,8 +41,8 @@ public class Game {
         return dealer.showAnyOneCard();
     }
 
-    public boolean isPlayerDrawable(String username) {
-        return players.isDrawable(username);
+    public boolean isPlayerDrawable(PlayerName playerName) {
+        return players.isDrawable(playerName);
     }
 
     public boolean isDealerDrawable() {
