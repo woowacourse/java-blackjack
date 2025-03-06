@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +12,9 @@ public class BlackjackRefereeTest {
     @Test
     void test1() {
         //given
-        Participant dealer = Participant.createDealer();
-        dealer.cards().add(new Card(CardNumberType.JACK, CardType.DIAMOND));
-        dealer.cards().add(new Card(CardNumberType.QUEEN, CardType.DIAMOND));
+        Dealer dealer = Dealer.createEmpty();
+        dealer.getCards().add(new Card(CardNumberType.JACK, CardType.DIAMOND));
+        dealer.getCards().add(new Card(CardNumberType.QUEEN, CardType.DIAMOND));
 
         Cards winCards = new Cards(List.of(
                 new Card(CardNumberType.ACE, CardType.DIAMOND),
@@ -29,15 +28,15 @@ public class BlackjackRefereeTest {
                 new Card(CardNumberType.FIVE, CardType.DIAMOND),
                 new Card(CardNumberType.EIGHT, CardType.DIAMOND)
         ));
-        Participant winner = new Participant("mimi", winCards, Role.PLAYER);
-        Participant drawer = new Participant("wade", drawCards, Role.PLAYER);
-        Participant loser = new Participant("pobi", loseCards, Role.PLAYER);
-        List<Participant> participants = List.of(winner, drawer, loser);
+        Player winner = new Player("mimi", winCards);
+        Player drawer = new Player("wade", drawCards);
+        Player loser = new Player("pobi", loseCards);
+        List<Player> tempParticipants = List.of(winner, drawer, loser);
 
         BlackjackReferee blackjackReferee = new BlackjackReferee();
 
         //when
-        GameResult gameResult = blackjackReferee.judge(dealer, participants);
+        GameResult gameResult = blackjackReferee.judge(dealer, tempParticipants);
 
         //then
         assertSoftly(softly -> {

@@ -1,11 +1,11 @@
 package view;
 
 import domain.Card;
+import domain.Dealer;
 import domain.GameResult;
 import domain.GameResultStatus;
-import domain.Participant;
+import domain.Player;
 import java.util.List;
-import java.util.Map;
 import view.support.OutputFormatter;
 
 public class OutputView {
@@ -16,44 +16,44 @@ public class OutputView {
         this.outputFormatter = outputFormatter;
     }
 
-    public void printInitialCards(Participant dealer, List<Participant> players) {
+    public void printInitialCards(Dealer dealer, List<Player> players) {
         List<String> playerNames = players.stream()
-                .map(Participant::name)
+                .map(Player::getName)
                 .toList();
         String parsedPlayerNames = outputFormatter.formatPlayerNames(playerNames);
 
-        System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealer.name(), parsedPlayerNames);
+        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", parsedPlayerNames);
 
         Card card = dealer.getFirstCard();
-        System.out.printf("%s카드: %s\n", dealer.name(), outputFormatter.formatCard(card));
+        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(card));
 
         players.forEach(
                 player ->
-                System.out.printf("%s카드: %s\n", player.name(), outputFormatter.formatCards(player.cards()))
+                System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getCards()))
         );
     }
 
-    public void printCurrentCard(Participant player) {
-        System.out.printf("%s카드: %s\n", player.name(), outputFormatter.formatCards(player.cards()));
+    public void printCurrentCard(Player player) {
+        System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getCards()));
     }
 
-    public void printDealerDraw(String dealerName) {
-        System.out.printf("\n%s는 16이하라 한장의 카드를 더 받았습니다.\n", dealerName);
+    public void printDealerDraw() {
+        System.out.printf("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public void printDealerNoDraw(String dealerName) {
-        System.out.printf("\n%s는 17이상이라 카드를 추가로 받지 않았습니다.\n", dealerName);
+    public void printDealerNoDraw() {
+        System.out.printf("\n딜러는 17이상이라 카드를 추가로 받지 않았습니다.\n");
     }
 
-    public void printCardsResult(Participant dealer, List<Participant> players) {
-        String parsedDealerCards = outputFormatter.formatCards(dealer.cards());
+    public void printCardsResult(Dealer dealer, List<Player> players) {
+        String parsedDealerCards = outputFormatter.formatCards(dealer.getCards());
         int dealerCardsSum = dealer.calculateCardsSum();
-        System.out.printf("\n%s카드: %s - 결과: %d\n", dealer.name(), parsedDealerCards, dealerCardsSum);
+        System.out.printf("\n딜러카드: %s - 결과: %d\n", parsedDealerCards, dealerCardsSum);
 
         players.forEach(player -> {
-            String parsedPlayerCards = outputFormatter.formatCards(player.cards());
+            String parsedPlayerCards = outputFormatter.formatCards(player.getCards());
             int playerCardsSum = player.calculateCardsSum();
-            System.out.printf("%s카드: %s - 결과: %d\n", player.name(), parsedPlayerCards, playerCardsSum);
+            System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), parsedPlayerCards, playerCardsSum);
 
         });
     }
@@ -63,11 +63,11 @@ public class OutputView {
         int loseCount = gameResult.calculateLoseCount();
         System.out.println("\n## 최종 승패");
         System.out.printf("딜러: %d승 %d패\n", loseCount, winCount);
-        gameResult.getAllParticipants()
-                .forEach(participant -> {
-                    GameResultStatus gameResultstatus = gameResult.getGameResultstatus(participant);
+        gameResult.getAllPlayers()
+                .forEach(player -> {
+                    GameResultStatus gameResultstatus = gameResult.getGameResultstatus(player);
                     String resultMessage = outputFormatter.formatGameResult(gameResultstatus);
-                    System.out.printf("%s: %s\n", participant.name(), resultMessage);
+                    System.out.printf("%s: %s\n", player.getName(), resultMessage);
                 });
     }
 }

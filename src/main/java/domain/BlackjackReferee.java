@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackReferee {
-    public GameResult judge(Participant dealer, List<Participant> participants) {
+    public GameResult judge(Dealer dealer, List<Player> tempParticipants) {
         int dealerSum = dealer.calculateCardsSum();
-        Map<Participant, GameResultStatus> gameResult = participants.stream()
+        Map<Player, GameResultStatus> gameResult = tempParticipants.stream()
                 .collect(Collectors.toMap(
                         participant -> participant,
                         participant -> GameResultStatus.calculate(dealerSum, participant.calculateCardsSum())

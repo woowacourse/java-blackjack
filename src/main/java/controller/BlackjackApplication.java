@@ -3,13 +3,12 @@ package controller;
 import domain.BlackjackReferee;
 import domain.CardGiver;
 import domain.CardRandomGenerator;
+import domain.Dealer;
 import domain.GameResult;
-import domain.GameResultStatus;
 import domain.GivenCards;
-import domain.Participant;
-import domain.ParticipantRepository;
+import domain.Player;
+import domain.PlayerRepository;
 import java.util.List;
-import java.util.Map;
 import view.AnswerType;
 import view.InputView;
 import view.OutputView;
@@ -18,28 +17,34 @@ public class BlackjackApplication {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ParticipantRepository participantRepository;
+    private final PlayerRepository playerRepository;
     private final CardGiver cardGiver = new CardGiver(new CardRandomGenerator(), GivenCards.createEmpty());
 
     public BlackjackApplication(InputView inputView, OutputView outputView,
-                                ParticipantRepository participantRepository) {
+                                PlayerRepository playerRepository) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.participantRepository = participantRepository;
+        this.playerRepository = playerRepository;
     }
 
     public void execute() {
-        initializeGame();
+        Dealer dealer = initializeDealer();
+
+        initializeGame(dealer);
 
         askForAdditionalCard();
 
-        decideAdditionalCardForDealer();
+        decideAdditionalCardForDealer(dealer);
 
-        calculateResult();
+        calculateResult(dealer);
+    }
+
+    private Dealer initializeDealer() {
+        return Dealer.createEmpty();
     }
 
     private void askForAdditionalCard() {
-        List<Participant> players = participantRepository.getAllPlayer();
+        List<Player> players = playerRepository.getAll();
         players.forEach(player -> {
             while (true) {
                 AnswerType answerType = inputView.requestAdditionalCard(player);
@@ -47,9 +52,9 @@ public class BlackjackApplication {
                     outputView.printCurrentCard(player);
                     break;
                 }
-                player.cards().add(cardGiver.giveOne());
+                player.getCards().add(cardGiver.giveOne());
                 outputView.printCurrentCard(player);
-                boolean isOver = player.cards().isEqualAndMoreMaxSum();
+                boolean isOver = player.getCards().isEqualAndMoreMaxSum();
                 if(isOver) {
                     System.out.println("21 이상, 너 더 못받음");
                     break;
@@ -58,37 +63,34 @@ public class BlackjackApplication {
         });
     }
 
-    private void calculateResult() {
-        Participant dealer = participantRepository.getDealer();
-        List<Participant> participants = participantRepository.getAllPlayer();
+    private void calculateResult(Dealer dealer) {
+        List<Player> tempParticipants = playerRepository.getAll();
 
-        outputView.printCardsResult(dealer, participants);
+        outputView.printCardsResult(dealer, tempParticipants);
         BlackjackReferee blackjackReferee = new BlackjackReferee();
-        GameResult gameResult = blackjackReferee.judge(dealer, participants);
+        GameResult gameResult = blackjackReferee.judge(dealer, tempParticipants);
         outputView.printGameResults(gameResult);
     }
 
-    private void decideAdditionalCardForDealer() {
-        Participant dealer = participantRepository.getDealer();
-        if(dealer.cards().isUnderDrawLimit()) {
-            dealer.cards().add(cardGiver.giveOne());
-            outputView.printDealerDraw(dealer.name());
+    private void decideAdditionalCardForDealer(Dealer dealer) {
+        if(dealer.getCards().isUnderDrawLimit()) {
+            dealer.getCards().add(cardGiver.giveOne());
+            outputView.printDealerDraw();
             return;
         }
-        outputView.printDealerNoDraw(dealer.name());
+        outputView.printDealerNoDraw();
     }
 
-    private void initializeGame() {
+    private void initializeGame(Dealer dealer) {
         List<String> playerNames = inputView.requestPlayerNames();
 
-        List<Participant> players = playerNames.stream()
-                .map(playerName -> Participant.createPlayer(playerName, cardGiver.giveDefault()))
+        List<Player> players = playerNames.stream()
+                .map(playerName -> new Player(playerName, cardGiver.giveDefault()))
                 .toList();
-        participantRepository.addAll(players);
+        playerRepository.addAll(players);
 
-        Participant dealer = participantRepository.getDealer();
         dealer.addCards(cardGiver.giveDefault());
 
-        outputView.printInitialCards(dealer, participantRepository.getAllPlayer());
+        outputView.printInitialCards(dealer, playerRepository.getAll());
     }
 }

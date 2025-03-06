@@ -1,5 +1,5 @@
 import controller.BlackjackApplication;
-import domain.ParticipantRepository;
+import domain.PlayerRepository;
 import view.InputView;
 import view.OutputView;
 import view.support.InputParser;
@@ -10,8 +10,8 @@ public class Application {
     public static void main(String[] args) {
         InputView inputView = new InputView(new InputParser());
         OutputView outputView = new OutputView(new OutputFormatter());
-        ParticipantRepository participantRepository = ParticipantRepository.getInstance();
-        BlackjackApplication blackjackApplication = new BlackjackApplication(inputView, outputView, participantRepository);
+        PlayerRepository playerRepository = PlayerRepository.getInstance();
+        BlackjackApplication blackjackApplication = new BlackjackApplication(inputView, outputView, playerRepository);
         blackjackApplication.execute();
     }
 }

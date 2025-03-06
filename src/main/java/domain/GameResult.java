@@ -4,9 +4,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameResult {
-    private final Map<Participant, GameResultStatus> gameResults;
+    private final Map<Player, GameResultStatus> gameResults;
 
-    public GameResult(Map<Participant, GameResultStatus> gameResults) {
+    public GameResult(Map<Player, GameResultStatus> gameResults) {
         this.gameResults = gameResults;
     }
 
@@ -22,11 +22,11 @@ public class GameResult {
                 .count();
     }
 
-    public Set<Participant> getAllParticipants() {
+    public Set<Player> getAllPlayers() {
         return gameResults.keySet();
     }
 
-    public GameResultStatus getGameResultstatus(Participant key) {
+    public GameResultStatus getGameResultstatus(Player key) {
         return gameResults.get(key);
     }
 }
