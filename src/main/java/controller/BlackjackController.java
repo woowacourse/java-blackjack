@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
+import view.OutputView;
 
 public class BlackjackController {
 
@@ -27,12 +28,13 @@ public class BlackjackController {
 
         // 초기 카드 오픈
         OpenCardsResponse openCardsResponse = blackjack.openPlayersCards();
-
+        OutputView.printAnnounceInitialCardsDistribution(openCardsResponse);
 
     }
 
     private List<Participant> createParticipants(String names) {
         List<String> parsed = Arrays.stream(names.split(",", -1))
+                .map(String::strip)
                 .toList();
 
         return parsed.stream()
