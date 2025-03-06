@@ -35,4 +35,8 @@ public class Participants {
     public Stream<Participant> stream() {
         return participants.stream();
     }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
 }
