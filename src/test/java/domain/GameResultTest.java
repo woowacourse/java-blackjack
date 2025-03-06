@@ -142,4 +142,36 @@ public class GameResultTest {
         //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
+
+    @Test
+    void 딜러의_승리_횟수를_계산한다() {
+        //when
+        int winCount = GameResult.WIN.countGameResult(
+                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
+
+        //then
+        Assertions.assertThat(winCount).isEqualTo(1);
+
+    }
+
+    @Test
+    void 딜러의_패배_횟수를_계산한다() {
+        //when
+        int winCount = GameResult.LOSE.countGameResult(
+                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
+
+        //then
+        Assertions.assertThat(winCount).isEqualTo(2);
+
+    }
+
+    @Test
+    void 딜러의_무승부_횟수를_계산한다() {
+        //when
+        int winCount = GameResult.DRAW.countGameResult(
+                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
+
+        //then
+        Assertions.assertThat(winCount).isEqualTo(1);
+    }
 }
