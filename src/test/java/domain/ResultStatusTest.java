@@ -27,7 +27,7 @@ public class ResultStatusTest {
                 new Card(Symbol.HEART, Number.EIGHT),
                 new Card(Symbol.SPADE, Number.TWO))));
 
-        Map<String, ResultStatus> result = Map.of("drago", ResultStatus.LOSE);
+        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.LOSE);
 
         assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
     }
@@ -45,7 +45,7 @@ public class ResultStatusTest {
                 new Card(Symbol.HEART, Number.JACK),
                 new Card(Symbol.SPADE, Number.TWO))));
 
-        Map<String, ResultStatus> result = Map.of("drago", ResultStatus.WIN);
+        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.WIN);
 
         assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
     }
@@ -63,7 +63,7 @@ public class ResultStatusTest {
                 new Card(Symbol.HEART, Number.SEVEN),
                 new Card(Symbol.SPADE, Number.TWO))));
 
-        Map<String, ResultStatus> result = Map.of("drago", ResultStatus.WIN);
+        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.WIN);
 
         assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
     }
@@ -81,7 +81,7 @@ public class ResultStatusTest {
                 new Card(Symbol.HEART, Number.EIGHT),
                 new Card(Symbol.SPADE, Number.TWO))));
 
-        Map<String, ResultStatus> result = Map.of("drago", ResultStatus.PUSH);
+        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.PUSH);
 
         assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
     }

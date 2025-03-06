@@ -26,6 +26,10 @@ public abstract class Participant<T extends Participant<T>> {
 
     protected abstract T createParticipant(List<Card> cards);
 
+    public int calculateDifferenceFromTwentyOne() {
+        return cards.calculateDifferenceFromTwentyOne();
+    }
+
     public String getName() {
         return name.getName();
     }

@@ -42,7 +42,7 @@ public class GameManager {
         return dealer;
     }
 
-    public Map<String, ResultStatus> findGameResult() {
+    public Map<Player, ResultStatus> findGameResult() {
         return ResultStatus.judgeGameResult(players, dealer);
     }
 }

@@ -9,41 +9,40 @@ public enum ResultStatus {
     PUSH("무승부")
     ;
 
-    private String status;
+    private final String status;
 
     ResultStatus(String status) {
         this.status = status;
     }
 
-    public static Map<String, ResultStatus> judgeGameResult(Players players, Dealer dealer) {
-        Map<String, ResultStatus> result = new HashMap<>();
+    public static Map<Player, ResultStatus> judgeGameResult(Players players, Dealer dealer) {
+        Map<Player, ResultStatus> result = new HashMap<>();
 
-        Map<String, Integer> totalNumberSumByName = players.getTotalNumberSumByName();
-        int totalNumberSumOfDealer = dealer.getTotalNumberSum();
-        for (String name : totalNumberSumByName.keySet()) {
-            if (totalNumberSumByName.get(name) > 21) {
-                result.put(name, ResultStatus.LOSE);
+        Map<Player, Integer> totalNumberSumByName = players.getTotalNumberSumByName();
+        for (Player player : totalNumberSumByName.keySet()) {
+            if (player.checkExceedTwentyOne()) {
+                result.put(player, ResultStatus.LOSE);
                 continue;
             }
 
             if (dealer.checkExceedTwentyOne()) {
-                result.put(name, ResultStatus.WIN);
+                result.put(player, ResultStatus.WIN);
                 continue;
             }
 
-            int dealerAbs = Math.abs(totalNumberSumOfDealer - 21);
-            int playerAbs = Math.abs(totalNumberSumByName.get(name) - 21);
+            int dealerAbs = dealer.calculateDifferenceFromTwentyOne();
+            int playerAbs = player.calculateDifferenceFromTwentyOne();
             if (playerAbs > dealerAbs) {
-                result.put(name, ResultStatus.LOSE);
+                result.put(player, ResultStatus.LOSE);
                 continue;
             }
 
             if (playerAbs == dealerAbs) {
-                result.put(name, ResultStatus.PUSH);
+                result.put(player, ResultStatus.PUSH);
                 continue;
             }
 
-            result.put(name, ResultStatus.WIN);
+            result.put(player, ResultStatus.WIN);
 
         }
         return result;

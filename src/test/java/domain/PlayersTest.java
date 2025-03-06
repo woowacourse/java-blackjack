@@ -28,7 +28,7 @@ public class PlayersTest {
                         new Card(Symbol.HEART, Number.TWO))));
 
         Players players = new Players(List.of(drago, duei));
-        Map<String, Integer> expected = Map.of("drago", 22, "duei", 20);
+        Map<Player, Integer> expected = Map.of(drago, 22, duei, 20);
 
         assertThat(players.getTotalNumberSumByName()).isEqualTo(expected);
     }

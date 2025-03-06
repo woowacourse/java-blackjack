@@ -54,6 +54,10 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
+    public int calculateDifferenceFromTwentyOne() {
+        return Math.abs(totalNumberSum - 21);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

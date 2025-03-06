@@ -79,21 +79,21 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(Map<String, ResultStatus> result) {
+    public static void printGameResult(Map<Player, ResultStatus> result) {
         Map<ResultStatus, Integer> counts = countStatusResult(result);
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패 %d무%n",
             counts.get(ResultStatus.LOSE), counts.get(ResultStatus.WIN), counts.get(ResultStatus.PUSH));
-        for (String name : result.keySet()) {
+        for (Player player : result.keySet()) {
             System.out.printf("%s: %d승 %d패 %d무%n",
-                name, counts.get(ResultStatus.WIN), counts.get(ResultStatus.LOSE), counts.get(ResultStatus.PUSH));
+                player.getName(), counts.get(ResultStatus.WIN), counts.get(ResultStatus.LOSE), counts.get(ResultStatus.PUSH));
         }
     }
 
-    private static Map<ResultStatus, Integer> countStatusResult(Map<String, ResultStatus> result) {
+    private static Map<ResultStatus, Integer> countStatusResult(Map<Player, ResultStatus> result) {
         Map<ResultStatus, Integer> counts = ResultStatus.initMap();
-        for (String playerName : result.keySet()) {
-            ResultStatus resultStatus = result.get(playerName);
+        for (Player player : result.keySet()) {
+            ResultStatus resultStatus = result.get(player);
             counts.put(resultStatus, counts.get(resultStatus) + 1);
         }
         return counts;

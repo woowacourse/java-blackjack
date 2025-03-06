@@ -35,20 +35,33 @@ public class BlackjackController {
     private void drawPlayersCards() {
         List<Player> allPlayers = gameManager.findAllPlayers();
         for (Player player : allPlayers) {
-            boolean answer;
-            boolean isFirstTurn = true;
-            do {
-                answer = InputView.askForOneMoreCard(player);
-                if (answer) {
-                    player = (Player) gameManager.drawCard(player);
-                }
+            drawCard(player);
+        }
+    }
 
-                if (isFirstTurn) {
-                    OutputView.printPlayerCard(player);
-                }
+    private void drawCard(Player player) {
+        boolean answer;
+        boolean isFirstTurn = true;
+        do {
+            answer = InputView.askForOneMoreCard(player);
+            player = drawAndCreateNewPlayer(player, answer);
 
-                isFirstTurn = false;
-            } while (!player.checkExceedTwentyOne() && answer);
+            printCardsIfFirstTurn(player, isFirstTurn);
+
+            isFirstTurn = false;
+        } while (!player.checkExceedTwentyOne() && answer);
+    }
+
+    private Player drawAndCreateNewPlayer(Player player, boolean answer) {
+        if (answer) {
+            player = (Player) gameManager.drawCard(player);
+        }
+        return player;
+    }
+
+    private static void printCardsIfFirstTurn(Player player, boolean isFirstTurn) {
+        if (isFirstTurn) {
+            OutputView.printPlayerCard(player);
         }
     }
 
@@ -67,7 +80,7 @@ public class BlackjackController {
     }
 
     private void printGameResult() {
-        Map<String, ResultStatus> result = gameManager.findGameResult();
+        Map<Player, ResultStatus> result = gameManager.findGameResult();
         OutputView.printGameResult(result);
     }
 }

@@ -89,12 +89,13 @@ public class GameManagerTest {
     @Test
     void 최종_게임_결과를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
+        Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));
+        Cards cardsOfDuei = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.SPADE, Number.ACE)));
+        Map<Player, ResultStatus> result = gameManager.findGameResult();
 
-        Map<String, ResultStatus> result = gameManager.findGameResult();
-
-        Map<String, ResultStatus> expected = Map.of(
-            "drago", ResultStatus.LOSE,
-            "duei", ResultStatus.LOSE
+        Map<Player, ResultStatus> expected = Map.of(
+            new Player(new Name("drago"), cardsOfDrago), ResultStatus.LOSE,
+            new Player(new Name("duei"), cardsOfDuei), ResultStatus.LOSE
         );
         assertThat(result).isEqualTo(expected);
     }
