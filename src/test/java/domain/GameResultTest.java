@@ -19,9 +19,9 @@ class GameResultTest {
         List<Card> cardList2 = List.of(new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER));
         Cards cards2 = Cards.of(cardList2);
-        Participant participant2 = new Participant(cards2);
+        Dealer dealer = Dealer.of(cards2);
         //when
-        GameResult result = GameResult.judge(participant, participant2);
+        GameResult result = GameResult.judge(participant, dealer);
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.DRAW);
     }
@@ -42,7 +42,7 @@ class GameResultTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
         Cards cards2 = Cards.of(cardList2);
-        Participant loser = new Participant(cards2);
+        Dealer loser = Dealer.of(cards2);
 
         //when
         GameResult result = GameResult.judge(winner, loser);
@@ -61,8 +61,7 @@ class GameResultTest {
                 new Card(CardNumber.QUEEN, CardShape.DIAMOND)
         );
         Cards cards = Cards.of(cardList);
-        Participant burstLoser = new Participant(cards);
-
+        Dealer burstDealer = Dealer.of(cards);
         List<Card> cardList2 = List.of(
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
@@ -71,7 +70,7 @@ class GameResultTest {
         Participant winner = new Participant(cards2);
 
         //when
-        GameResult result = GameResult.judge(winner, burstLoser);
+        GameResult result = GameResult.judge(winner, burstDealer);
 
         //then
         Assertions.assertThat(result).isEqualTo(GameResult.LOSE);
@@ -93,7 +92,7 @@ class GameResultTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
         Cards cards2 = Cards.of(cardList2);
-        Participant winner = new Participant(cards2);
+        Dealer winner = Dealer.of(cards2);
 
         //when
         GameResult result = GameResult.judge(loser, winner);

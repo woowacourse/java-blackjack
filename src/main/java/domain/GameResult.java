@@ -6,7 +6,7 @@ public enum GameResult {
     LOSE,
     DRAW;
 
-    public static GameResult judge(Participant self, Participant other) {
+    public static GameResult judge(Participant self, Dealer other) {
         if (self.isBurst()) {
             return GameResult.LOSE;
         }
