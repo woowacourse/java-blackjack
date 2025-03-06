@@ -8,6 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 
 public class GameManger {
+    private final static int WIN = 1;
+    private final static int LOSE = 2;
+    private final static int MOO = 3;
+
     private final List<User> users = new ArrayList<>();
     private final User dealer;
 
@@ -48,7 +52,12 @@ public class GameManger {
     }
 
     public int compare(User player) {
-
-        return 0;
+        if (dealer.getCardDeck().calculateScore() < player.getCardDeck().calculateScore()) {
+            return WIN;
+        }
+        if (dealer.getCardDeck().calculateScore() > player.getCardDeck().calculateScore()) {
+            return LOSE;
+        }
+        return MOO;
     }
 }
