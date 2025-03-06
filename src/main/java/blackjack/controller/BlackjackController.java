@@ -1,8 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
@@ -24,7 +22,7 @@ public class BlackjackController {
             BlackjackGame blackjackGame = enterParticipants();
             distributeInitialCards(blackjackGame);
 
-            distributeAdditionalCardsToPlayer(blackjackGame);
+            distributeAdditionalCardsToPlayers(blackjackGame);
             distributeAdditionalCardsToDealer(blackjackGame);
 
             showFinalCards(blackjackGame);
@@ -48,16 +46,17 @@ public class BlackjackController {
         }
     }
 
-    private void distributeAdditionalCardsToPlayer(BlackjackGame blackjackGame) {
+    private void distributeAdditionalCardsToPlayers(BlackjackGame blackjackGame) {
         for (Player player : blackjackGame.findPlayers()) {
-            while (player.isPossibleToAdd()) {
-                String yesOrNo = inputView.readGetOneMore(player.getName());
-                if (yesOrNo.equals("n")) {
-                    break;
-                }
-                blackjackGame.addExtraCard(player);
-                outputView.printPlayerCardResult(player);
-            }
+            distributeAdditionalCardsToPlayer(blackjackGame, player);
+        }
+    }
+
+    private void distributeAdditionalCardsToPlayer(BlackjackGame blackjackGame, Player player) {
+        while (player.isPossibleToAdd() &&
+                inputView.readGetOneMore(player.getName())) {
+            blackjackGame.addExtraCard(player);
+            outputView.printPlayerCardResult(player);
         }
     }
 

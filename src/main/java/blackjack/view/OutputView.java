@@ -61,7 +61,7 @@ public class OutputView {
             sb.append(gameResult.getValue()).append(gameResult.getKey().getText());
         }
 
-        System.out.printf("딜러: %s%n", sb.toString());
+        System.out.printf("딜러: %s%n", sb);
     }
 
     public void printPlayerResult(Player player, Dealer dealer) {
