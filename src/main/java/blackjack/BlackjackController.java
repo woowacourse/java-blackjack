@@ -15,7 +15,14 @@ public class BlackjackController {
         BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck);
 
         // 카드를 init 한다. (이 것은 매니저에서 하든, 컨트롤러에서 하든, 잘 생각해보자)
-
+//        for (Player player : players.getPlayers()){
+//            while ()
+//                if (// 님 카드 받을 수 있음?)
+//            // inputView 가고
+//            // y, n이면 process 매
+//
+//
+//        }
         // 사람 이름 입력을 받는다
 
         // players 저장
