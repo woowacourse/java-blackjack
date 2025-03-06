@@ -15,14 +15,11 @@ public enum GameResult {
     public static GameResult calculateDealerGameResult(Dealer dealer, Player player) {
         int dealerScore = dealer.calculateScore();
         int playerScore = player.calculateScore();
-        if (dealer.isBust() && player.isBust()) {
-            return PUSH;
+        if (player.isBust()) {
+            return WIN;
         }
         if (dealer.isBust()) {
             return LOSE;
-        }
-        if (player.isBust()) {
-            return WIN;
         }
         if (dealerScore > playerScore) {
             return WIN;
