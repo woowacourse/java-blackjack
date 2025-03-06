@@ -22,10 +22,23 @@ public class Cards {
         return new Cards();
     }
 
-    public int sumAll() {
-        return values.stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
+    public List<Integer> sumAll() {
+        List<Integer> result = new ArrayList<>();
+        dfs(result, 0, 0);
+
+        System.out.println("result = " + result);
+        return result;
+    }
+
+    public void dfs(List<Integer> result, int index, int sum) {
+        if (index == values.size()) {
+            result.add(sum);
+            return;
+        }
+        List<Card> listValues = new ArrayList<>(values);
+        for (int number : listValues.get(index).getCardNumbers()) {
+            dfs(result, index + 1, sum + number);
+        }
     }
 
     public boolean hasSize(final int size) {

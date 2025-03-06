@@ -1,10 +1,8 @@
 package blackjack.model;
 
 import static blackjack.model.CardCreator.createCard;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -26,11 +24,11 @@ class UserTest {
     void 자신이_가진_카드의_합을_반환한다() {
         User user = new User();
         user.receiveCards(new Cards(
-                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
+                List.of(createCard(CardNumber.ACE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
         ));
-        int expected = user.getCards().sumAll();
+        List<Integer> expected = List.of(9, 19);
 
-        assertThat(user.calculateSumOfCards()).isEqualTo(expected);
+        assertThat(user.calculateSumOfCards()).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @CsvSource(value = {

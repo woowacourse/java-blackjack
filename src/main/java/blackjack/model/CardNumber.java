@@ -1,28 +1,30 @@
 package blackjack.model;
 
+import java.util.List;
+
 public enum CardNumber {
 
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(11),
-    QUEEN(12),
-    KING(13);
+    ACE(List.of(1, 11)),
+    TWO(List.of(2)),
+    THREE(List.of(3)),
+    FOUR(List.of(4)),
+    FIVE(List.of(5)),
+    SIX(List.of(6)),
+    SEVEN(List.of(7)),
+    EIGHT(List.of(8)),
+    NINE(List.of(9)),
+    TEN(List.of(10)),
+    JACK(List.of(10)),
+    QUEEN(List.of(10)),
+    KING(List.of(10));
 
-    private int number;
+    private final List<Integer> numbers;
 
-    CardNumber(final int number) {
-        this.number = number;
+    CardNumber(List<Integer> numbers) {
+        this.numbers = numbers;
     }
 
-    public int getNumber() {
-        return number;
+    public List<Integer> getNumbers() {
+        return numbers;
     }
 }

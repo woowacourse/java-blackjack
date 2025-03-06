@@ -1,8 +1,7 @@
 package blackjack.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,11 +13,13 @@ class CardsTest {
         Cards cards = new Cards(
                 List.of(
                         new Card(CardType.CLOVER, CardNumber.TWO),
-                        new Card(CardType.CLOVER, CardNumber.TEN)
+                        new Card(CardType.CLOVER, CardNumber.TEN),
+                        new Card(CardType.CLOVER, CardNumber.ACE)
                 )
         );
+        List<Integer> expected = List.of(13, 23);
 
-        assertThat(cards.sumAll()).isEqualTo(12);
+        assertThat(cards.sumAll()).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @CsvSource(value = {"2,true", "1,false"})

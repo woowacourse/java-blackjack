@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -12,8 +13,16 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public int getCardNumber() {
-        return cardNumber.getNumber();
+    public List<Integer> getCardNumbers() {
+        return cardNumber.getNumbers();
+    }
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 
     @Override

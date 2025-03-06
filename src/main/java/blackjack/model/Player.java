@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.List;
+
 public abstract class Player {
 
     protected final Cards cards;
@@ -10,7 +12,7 @@ public abstract class Player {
         this.role = role;
     }
 
-    public int calculateSumOfCards() {
+    public List<Integer> calculateSumOfCards() {
         return cards.sumAll();
     }
 
