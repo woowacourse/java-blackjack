@@ -7,8 +7,6 @@ import domain.DeckGenerator;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
-import domain.dto.CardSumResponse;
-import domain.dto.OpenCardsResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,31 +18,33 @@ public class BlackjackController {
 
     public void run() {
         Blackjack blackjack = createBlackjack();
+        // 초기 카드 분배
         blackjack.distributeInitialCards();
 
         // 초기 카드 오픈
-        OpenCardsResponse openCardsResponse = blackjack.openInitialCards();
-        OutputView.printInitialCardsDistribution(openCardsResponse);
+        OutputView.printInitialCards(blackjack.openDealerCards(), blackjack.openParticipantsCards());
 
+        // 추가 카드 분배
+        addMoreCards(blackjack);
+
+        // 카드 합 결과
+        OutputView.printPlayerCardsAndSum(blackjack.getDealerNameAndCards(),
+                blackjack.getParticipantsNameAndCards(),
+                blackjack.getNameAndSumOfAllPlayers());
+    }
+
+    private void addMoreCards(Blackjack blackjack) {
         // 참여자들의 추가 카드 분배
         List<String> participantNames = blackjack.getParticipantNames();
         for (String participantName : participantNames) {
-            boolean isDone = false;
-            boolean isFirst = true;
-            while (!isDone) {
-                switch (YesOrNo.from(InputView.inputWantMoreCard(participantName))) {
-                    case YES -> {
-                        OutputView.printPlayerCards(blackjack.addCardToCurrentParticipant(participantName));
-                        isFirst = false;
-                    }
-                    case NO -> {
-                        if (isFirst) {
-                            OutputView.printPlayerCards(blackjack.getPlayerByName(participantName));
-                        }
-                        isDone = true;
-                    }
+            YesOrNo wantOneMoreCard;
+            do {
+                wantOneMoreCard = YesOrNo.from(InputView.inputWantOneMoreCard(participantName));
+                if (wantOneMoreCard.equals(YesOrNo.YES)) {
+                    blackjack.addCardToCurrentParticipant(participantName);
                 }
-            }
+                OutputView.printPlayerCards(blackjack.getNameAndCardsByName(participantName));
+            } while (wantOneMoreCard.equals(YesOrNo.YES));
         }
 
         // 딜러의 추가 카드 분배
@@ -52,10 +52,6 @@ public class BlackjackController {
         if (isAdded) {
             OutputView.printAddCardToDealer();
         }
-
-        // 카드 합 결과
-        CardSumResponse response = blackjack.getCardSumResult();
-        OutputView.printPlayerCardsAndSum(response);
     }
 
     private Blackjack createBlackjack() {

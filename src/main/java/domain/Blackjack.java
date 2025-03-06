@@ -1,9 +1,8 @@
 package domain;
 
-import domain.dto.CardSumResponse;
-import domain.dto.OpenCardsResponse;
-import domain.dto.PlayerResponse;
+import domain.dto.NameAndCards;
 import java.util.List;
+import java.util.Map;
 
 public class Blackjack {
     private final Players players;
@@ -14,31 +13,27 @@ public class Blackjack {
         this.deck = deck;
     }
 
+    // 초기 카드 분배
     public void distributeInitialCards() {
         players.distributeInitialCards(deck);
     }
 
-    public OpenCardsResponse openInitialCards() {
-        return new OpenCardsResponse(
-                openDealerCards(getDealer()),
-                openParticipantsCards(getParticipants())
-        );
+    public NameAndCards openDealerCards() {
+        Player dealer = getDealer();
+        return new NameAndCards(dealer.getName(), dealer.openInitialCards());
     }
 
-    private PlayerResponse openDealerCards(Player player) {
-        return new PlayerResponse(player.getName(), player.openInitialCards());
-    }
-
-    private List<PlayerResponse> openParticipantsCards(List<Participant> participants) {
-        return participants.stream()
-                .map(participant -> new PlayerResponse(participant.getName(), participant.openInitialCards()))
+    public List<NameAndCards> openParticipantsCards() {
+        return getParticipants().stream()
+                .map(participant -> new NameAndCards(participant.getName(), participant.openInitialCards()))
                 .toList();
     }
 
-    public PlayerResponse addCardToCurrentParticipant(String name) {
+    // 추가 카드 분배
+    public NameAndCards addCardToCurrentParticipant(String name) {
         Player participant = players.getPlayerByName(name);
         participant.addCard(deck);
-        return new PlayerResponse(
+        return new NameAndCards(
                 participant.getName(),
                 participant.getCards().getCards()
         );
@@ -48,12 +43,27 @@ public class Blackjack {
         return getDealer().addCardIfLowScore(deck);
     }
 
-    public PlayerResponse getPlayerByName(String name) {
+    public NameAndCards getNameAndCardsByName(String name) {
         Player player = players.getPlayerByName(name);
-        return new PlayerResponse(
+        return new NameAndCards(
                 player.getName(),
                 player.getCards().getCards()
         );
+    }
+
+    public Map<String, Integer> getNameAndSumOfAllPlayers() {
+        return players.mapToNameAndSum();
+    }
+
+    public NameAndCards getDealerNameAndCards() {
+        Player dealer = getDealer();
+        return new NameAndCards(dealer.getName(), dealer.getCards().getCards());
+    }
+
+    public List<NameAndCards> getParticipantsNameAndCards() {
+        return getParticipants().stream()
+                .map(participant -> new NameAndCards(participant.getName(), participant.getCards().getCards()))
+                .toList();
     }
 
     public List<String> getParticipantNames() {
@@ -62,7 +72,7 @@ public class Blackjack {
                 .toList();
     }
 
-    private Player getDealer() {
+    private Dealer getDealer() {
         return players.getDealer();
     }
 
@@ -71,18 +81,5 @@ public class Blackjack {
                 .stream()
                 .map(player -> (Participant) player)
                 .toList();
-    }
-
-    public CardSumResponse getCardSumResult() {
-        return new CardSumResponse(getNameAndCardsResponse(), players.getSumResult());
-    }
-
-    private OpenCardsResponse getNameAndCardsResponse() {
-        return new OpenCardsResponse(
-                new PlayerResponse(getDealer().getName(), getDealer().getCards().getCards()),
-                getParticipants().stream()
-                        .map(participant -> new PlayerResponse(participant.getName(), participant.getCards().getCards()))
-                        .toList()
-        );
     }
 }

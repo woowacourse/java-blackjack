@@ -1,7 +1,6 @@
 package domain;
 
-import domain.dto.OpenCardsResponse;
-import domain.dto.PlayerResponse;
+import domain.dto.NameAndCards;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -44,15 +43,15 @@ public class BlackjackTest {
         blackjack.distributeInitialCards();
 
         // when
-        OpenCardsResponse response = blackjack.openInitialCards();
-
+        NameAndCards dealer = blackjack.openDealerCards();
+        List<NameAndCards> participants = blackjack.openParticipantsCards();
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(response.dealer().cards().size())
+            softly.assertThat(dealer.cards().size())
                     .isEqualTo(1);
 
-            for (PlayerResponse playerResponse : response.participants()) {
-                softly.assertThat(playerResponse.cards().size())
+            for (NameAndCards nameAndCards : participants) {
+                softly.assertThat(nameAndCards.cards().size())
                         .isEqualTo(2);
             }
         });
@@ -72,7 +71,7 @@ public class BlackjackTest {
         Deck deck = DeckGenerator.generateDeck();
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();
-        final int drawnCount = blackjack.getPlayerByName("시소").cards().size();
+        final int drawnCount = blackjack.getNameAndCardsByName("시소").cards().size();
 
         // when & then
         Assertions.assertThat(blackjack.addCardToCurrentParticipant("시소").cards().size())

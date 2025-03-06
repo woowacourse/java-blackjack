@@ -10,7 +10,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String inputWantMoreCard(String name) {
+    public static String inputWantOneMoreCard(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니다?(예는 y, 아니오는 n)%n", name);
         return scanner.nextLine();
     }

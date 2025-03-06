@@ -1,29 +1,28 @@
 package view;
 
-import domain.dto.CardSumResponse;
-import domain.dto.OpenCardsResponse;
-import domain.dto.PlayerResponse;
+import domain.dto.NameAndCards;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
-    public static void printInitialCardsDistribution(OpenCardsResponse openCardsResponse) {
-        List<String> names = openCardsResponse.participants().stream()
-                .map(PlayerResponse::name)
+    public static void printInitialCards(NameAndCards dealer, List<NameAndCards> participants) {
+        List<String> names = participants.stream()
+                .map(NameAndCards::name)
                 .toList();
 
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", openCardsResponse.dealer().name(), String.join(", ", names));
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), String.join(", ", names));
 
         System.out.printf("%s카드: %s%n",
-                openCardsResponse.dealer().name(),
-                String.join(", ", openCardsResponse.dealer().cards().stream()
+                dealer.name(),
+                String.join(", ", dealer.cards().stream()
                         .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
                                 card.getCardShape().getTitle()))
                         .toList()));
 
-        openCardsResponse.participants().forEach(OutputView::printPlayerCards);
+        participants.forEach(OutputView::printPlayerCards);
     }
 
-    public static void printPlayerCards(PlayerResponse player) {
+    public static void printPlayerCards(NameAndCards player) {
         System.out.printf("%s카드: %s%n",
                 player.name(),
                 String.join(", ", player.cards().stream()
@@ -32,23 +31,23 @@ public class OutputView {
                         .toList()));
     }
 
-    public static void printPlayerCardsAndSum(CardSumResponse cardSumResponse) {
+    public static void printPlayerCardsAndSum(NameAndCards dealer, List<NameAndCards> participants,
+                                              Map<String, Integer> nameAndSum) {
         System.out.printf("%s카드: %s - 결과: %d%n",
-                cardSumResponse.openCardsResponse().dealer().name(),
-                String.join(", ", cardSumResponse.openCardsResponse().dealer().cards().stream()
+                dealer.name(),
+                String.join(", ", dealer.cards().stream()
                         .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
                                 card.getCardShape().getTitle()))
                         .toList()),
-                cardSumResponse.sum().get(cardSumResponse.openCardsResponse().dealer().name()));
-
-        cardSumResponse.openCardsResponse().participants().forEach(player -> {
+                nameAndSum.get(dealer.name()));
+        participants.forEach(player -> {
             System.out.printf("%s카드: %s - 결과: %d%n",
                     player.name(),
                     String.join(", ", player.cards().stream()
                             .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
                                     card.getCardShape().getTitle()))
                             .toList()),
-                    cardSumResponse.sum().get(player.name()));
+                    nameAndSum.get(player.name()));
         });
     }
 
