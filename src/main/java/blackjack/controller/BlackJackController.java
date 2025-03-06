@@ -25,13 +25,9 @@ public class BlackJackController {
         List<Participant> participants = Parser.parseParticipants(inputView.inputParticipant());
         Dealer dealer = new Dealer();
         giveInitialCards(dealer);
-        for (Participant participant : participants) {
-            giveInitialCards(participant);
-        }
+        participants.forEach(this::giveInitialCards);
         outputView.outputFirstCardDistributionResult(participants, dealer);
-        for (Participant participant : participants) {
-            inputMoreCard(participant);
-        }
+        participants.forEach(this::inputMoreCard);
         drewDealerCard(dealer);
         outputView.outputDealerCardFinish();
 
@@ -49,7 +45,6 @@ public class BlackJackController {
         String command = inputView.inputCallOrStay(participant.getName());
         if (command.equals("y")) {
             participant.putCard(deck.drawCard());
-
             inputMoreCard(participant);
         }
     }
