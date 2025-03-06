@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Player {
     private final String name;
@@ -25,6 +27,23 @@ public class Player {
 
     public int calculateMaxScore() {
         return scoreCalculator.calculateMaxScore(cards);
+    }
+
+    public boolean isBlackjack() {
+        if (cards.size() != 2) {
+            return false;
+        }
+        Set<Rank> ranks = cards.stream()
+                .map(Card::getRank)
+                .collect(Collectors.toSet());
+        if (!ranks.contains(Rank.ACE)) {
+            return false;
+        }
+
+        return ranks.contains(Rank.KING) ||
+                ranks.contains(Rank.QUEEN) ||
+                ranks.contains(Rank.JACK) ||
+                ranks.contains(Rank.TEN);
     }
 
     public List<Card> getCards() {

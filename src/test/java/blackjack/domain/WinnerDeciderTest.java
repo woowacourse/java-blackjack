@@ -2,29 +2,38 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class WinnerDeciderTest {
 
+
     @Test
     void 딜러의_점수와_같으면_무승부다() {
         //given
+        Player pobi = new Player(
+                "pobi",
+                List.of(
+                        new Card(Suit.CLUB, Rank.NINE),
+                        new Card(Suit.CLUB, Rank.TEN)
+                ), new ScoreCalculator());
         List<Card> dealerCards = List.of(
-                new Card(Suit.CLUB, Rank.NINE),
-                new Card(Suit.CLUB, Rank.TEN)
+                new Card(Suit.HEART, Rank.NINE),
+                new Card(Suit.HEART, Rank.TEN)
         );
+        Dealer dealer = new Dealer(
+                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Deck(new Stack<>()),
+                dealerCards,
+                new ScoreCalculator());
 
-        List<Card> playerCards = List.of(
-                new Card(Suit.CLUB, Rank.NINE),
-                new Card(Suit.CLUB, Rank.TEN)
-        );
-
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
+        WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
         //when
-        WinningResult result = winnerDecider.decide(playerCards);
+        WinningResult result = winnerDecider.decidePlayerWinning(pobi);
 
         //then
         assertThat(result).isEqualTo(WinningResult.DRAW);
@@ -40,13 +49,22 @@ public class WinnerDeciderTest {
 
         List<Card> playerCards = List.of(
                 new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.CLUB, Rank.TEN)
+                new Card(Suit.HEART, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
+        Player pobi = new Player(
+                "pobi",
+                playerCards, new ScoreCalculator());
+        Dealer dealer = new Dealer(
+                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Deck(new Stack<>()),
+                dealerCards,
+                new ScoreCalculator());
+
+        WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
         //when
-        WinningResult result = winnerDecider.decide(playerCards);
+        WinningResult result = winnerDecider.decidePlayerWinning(pobi);
 
         //then
         assertThat(result).isEqualTo(WinningResult.LOSE);
@@ -65,10 +83,19 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
+        Player pobi = new Player(
+                "pobi",
+                playerCards, new ScoreCalculator());
+        Dealer dealer = new Dealer(
+                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Deck(new Stack<>()),
+                dealerCards,
+                new ScoreCalculator());
+
+        WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
         //when
-        WinningResult result = winnerDecider.decide(playerCards);
+        WinningResult result = winnerDecider.decidePlayerWinning(pobi);
 
         //then
         assertThat(result).isEqualTo(WinningResult.WIN);
@@ -77,21 +104,27 @@ public class WinnerDeciderTest {
     @Test
     void 딜러가_21을_초과하면_남아있는_플레이어들의_승리이다() {
         //given
+        Player pobi = new Player(
+                "pobi",
+                List.of(
+                        new Card(Suit.CLUB, Rank.NINE),
+                        new Card(Suit.CLUB, Rank.TEN)
+                ), new ScoreCalculator());
         List<Card> dealerCards = List.of(
                 new Card(Suit.CLUB, Rank.NINE),
-                new Card(Suit.CLUB, Rank.TEN),
-                new Card(Suit.CLUB, Rank.THREE)
+                new Card(Suit.CLUB, Rank.SEVEN),
+                new Card(Suit.CLUB, Rank.EIGHT)
         );
+        Dealer dealer = new Dealer(
+                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Deck(new Stack<>()),
+                dealerCards,
+                new ScoreCalculator());
 
-        List<Card> playerCards = List.of(
-                new Card(Suit.HEART, Rank.TEN),
-                new Card(Suit.CLUB, Rank.TEN)
-        );
-
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
+        WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
         //when
-        WinningResult result = winnerDecider.decide(playerCards);
+        WinningResult result = winnerDecider.decidePlayerWinning(pobi);
 
         //then
         assertThat(result).isEqualTo(WinningResult.WIN);
@@ -111,10 +144,19 @@ public class WinnerDeciderTest {
                 new Card(Suit.CLUB, Rank.ONE)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
+        Player pobi = new Player(
+                "pobi",
+                playerCards, new ScoreCalculator());
+        Dealer dealer = new Dealer(
+                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Deck(new Stack<>()),
+                dealerCards,
+                new ScoreCalculator());
+
+        WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
         //when
-        WinningResult result = winnerDecider.decide(playerCards);
+        WinningResult result = winnerDecider.decidePlayerWinning(pobi);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
@@ -125,18 +167,27 @@ public class WinnerDeciderTest {
         //given
         List<Card> dealerCards = List.of(
                 new Card(Suit.CLUB, Rank.ACE),
-                new Card(Suit.CLUB, Rank.TEN)
+                new Card(Suit.HEART, Rank.TEN)
         );
 
         List<Card> playerCards = List.of(
-                new Card(Suit.CLUB, Rank.ACE),
+                new Card(Suit.HEART, Rank.ACE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
 
-        WinnerDecider winnerDecider = new WinnerDecider(dealerCards, new ScoreCalculator());
+        Player pobi = new Player(
+                "pobi",
+                playerCards, new ScoreCalculator());
+        Dealer dealer = new Dealer(
+                new Players(List.of(pobi, new Player("neo", new ArrayList<>(), new ScoreCalculator()))),
+                new Deck(new Stack<>()),
+                dealerCards,
+                new ScoreCalculator());
+
+        WinnerDecider winnerDecider = new WinnerDecider(dealer);
 
         //when
-        WinningResult result = winnerDecider.decide(playerCards);
+        WinningResult result = winnerDecider.decidePlayerWinning(pobi);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.DRAW);

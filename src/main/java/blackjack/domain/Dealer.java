@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Dealer {
 
@@ -12,9 +14,13 @@ public class Dealer {
     private final ScoreCalculator scoreCalculator;
 
     public Dealer(Players players, Deck deck, ScoreCalculator scoreCalculator) {
+        this(players, deck, new ArrayList<>(), scoreCalculator);
+    }
+
+    public Dealer(Players players, Deck deck, List<Card> cards, ScoreCalculator scoreCalculator) {
         this.players = players;
         this.deck = deck;
-        this.cards = new ArrayList<>();
+        this.cards = cards;
         this.scoreCalculator = scoreCalculator;
     }
 
@@ -63,5 +69,22 @@ public class Dealer {
             throw new IllegalArgumentException("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
         }
         player.send(deck.draw());
+    }
+
+    public boolean isBlackjack() {
+        if (cards.size() != 2) {
+            return false;
+        }
+        Set<Rank> ranks = cards.stream()
+                .map(Card::getRank)
+                .collect(Collectors.toSet());
+        if (!ranks.contains(Rank.ACE)) {
+            return false;
+        }
+
+        return ranks.contains(Rank.KING) ||
+                ranks.contains(Rank.QUEEN) ||
+                ranks.contains(Rank.JACK) ||
+                ranks.contains(Rank.TEN);
     }
 }

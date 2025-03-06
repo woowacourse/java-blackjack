@@ -1,23 +1,17 @@
 package blackjack.domain;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public class WinnerDecider {
 
-    private final List<Card> cards;
-    private final ScoreCalculator scoreCalculator;
+    private final Dealer dealer;
 
-    public WinnerDecider(List<Card> cards, ScoreCalculator scoreCalculator) {
-        this.cards = cards;
-        this.scoreCalculator = scoreCalculator;
+    public WinnerDecider(Dealer dealer) {
+        this.dealer = dealer;
     }
 
-    public WinningResult decide(List<Card> cards) {
-        int dealerScore = scoreCalculator.calculateMaxScore(this.cards);
-        int playerScore = scoreCalculator.calculateMaxScore(cards);
-        if (isBlackjack(this.cards) && !isBlackjack(cards)) {
+    public WinningResult decidePlayerWinning(Player player) {
+        int dealerScore = dealer.calculateMaxScore();
+        int playerScore = player.calculateMaxScore();
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
             return WinningResult.LOSE;
         }
 
@@ -34,20 +28,25 @@ public class WinnerDecider {
         return WinningResult.WIN;
     }
 
-    private boolean isBlackjack(List<Card> cards) {
-        if (cards.size() != 2) {
-            return false;
-        }
-        Set<Rank> ranks = cards.stream()
-                .map(Card::getRank)
-                .collect(Collectors.toSet());
-        if (!ranks.contains(Rank.ACE)) {
-            return false;
+    public WinningResult decideDealerWinning(Player player) {
+        int dealerScore = dealer.calculateMaxScore();
+        int playerScore = player.calculateMaxScore();
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
+            return WinningResult.WIN;
         }
 
-        return ranks.contains(Rank.KING) ||
-                ranks.contains(Rank.QUEEN) ||
-                ranks.contains(Rank.JACK) ||
-                ranks.contains(Rank.TEN);
+        if (dealerScore > 21) {
+            return WinningResult.LOSE;
+        }
+
+        if (dealerScore == playerScore) {
+            return WinningResult.DRAW;
+        }
+        if (dealerScore > playerScore) {
+            return WinningResult.WIN;
+        }
+        return WinningResult.LOSE;
     }
+
+
 }
