@@ -26,6 +26,17 @@ public class BlackJackController {
         Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
         TrumpCard dealerFirstCard = blackJackGame.getDealer().retrieveFirstCard();
         outputView.printInitialCards(playerCards, dealerFirstCard);
+
+        players.forEach(this::executePlayerHit);
+    }
+
+    private void executePlayerHit(Player player) {
+        while (blackJackGame.isPlayerHitAllowed(player.getHand().getCards()) &&
+                inputView.readProcessHit(player.getName())) {
+
+            blackJackGame.processPlayerHit(player);
+            outputView.printPlayerCards(player.getName(), player.getHand().getCards());
+        }
     }
 
 

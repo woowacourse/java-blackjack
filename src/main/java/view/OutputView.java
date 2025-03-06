@@ -25,6 +25,13 @@ public class OutputView {
                 .collect(Collectors.joining("\n"));
     }
 
+    public void printPlayerCards(String name, List<TrumpCard> playerCards) {
+        System.out.printf("%s카드:", name);
+        System.out.println(playerCards.stream()
+                .map(this::getCardInfo)
+                .collect(Collectors.joining(",")));
+    }
+
     private String getCardInfo(TrumpCard card) {
         return card.getRank().getTitle() + card.getSuit().getTitle();
     }

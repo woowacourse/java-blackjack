@@ -27,4 +27,23 @@ public class InputView {
     private String readInput() {
         return scanner.nextLine();
     }
+
+    public boolean readProcessHit(String playerName) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName);
+        String input = readInput();
+
+        return convertYesOrNo(input);
+    }
+
+    private boolean convertYesOrNo(String input) {
+        if ("y".equals(input)) {
+            return true;
+        }
+
+        if ("n".equals(input)) {
+            return false;
+        }
+
+        throw new IllegalArgumentException("선택 입력 형식이 잘못되었습니다.");
+    }
 }
