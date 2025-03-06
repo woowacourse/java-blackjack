@@ -85,9 +85,21 @@ public class OutputView {
         System.out.printf("딜러: %d승 %d패 %d무%n",
             counts.get(ResultStatus.LOSE), counts.get(ResultStatus.WIN), counts.get(ResultStatus.PUSH));
         for (Player player : result.keySet()) {
-            System.out.printf("%s: %d승 %d패 %d무%n",
-                player.getName(), counts.get(ResultStatus.WIN), counts.get(ResultStatus.LOSE), counts.get(ResultStatus.PUSH));
+            printPlayerGameResult(result, player);
         }
+    }
+
+    private static void printPlayerGameResult(Map<Player, ResultStatus> result, Player player) {
+        ResultStatus resultStatus = result.get(player);
+        if (resultStatus == ResultStatus.WIN) {
+            System.out.printf("%s: 1승%n", player.getName());
+            return;
+        }
+        if (resultStatus == ResultStatus.LOSE) {
+            System.out.printf("%s: 1패%n", player.getName());
+            return;
+        }
+        System.out.printf("%s: 1무%n", player.getName());
     }
 
     private static Map<ResultStatus, Integer> countStatusResult(Map<Player, ResultStatus> result) {
