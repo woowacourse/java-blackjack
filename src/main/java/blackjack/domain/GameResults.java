@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.player.Player;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,10 @@ public class GameResults {
                     gameResults.put(player, GameResult.getGameResult(dealer, player));
                 }
         );
+    }
+
+    public Map<Player, GameResult> getGameResults() {
+        return Collections.unmodifiableMap(gameResults);
     }
 
     public int getDealerWin() {

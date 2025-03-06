@@ -41,7 +41,8 @@ public class BlackjackController {
         }
 
         // 4번
-
+        outputView.printTotalCardsMessage(players);
+        outputView.printGameResults(players, players.getGameResult());
     }
 
     private List<Player> readAndParseNames() {
