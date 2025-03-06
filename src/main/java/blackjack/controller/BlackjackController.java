@@ -32,10 +32,11 @@ public class BlackjackController {
     public void run() {
         List<Player> players = createAndDistributeCardToPlayers();
         Dealer dealer = createDealerWithInitialDeck();
-        outputView.displayDistributedCardStatus(
-                DistributedCardDto.from(dealer),
-                players.stream().map(DistributedCardDto::from).toList()
-        );
+        outputView.displayFirstCardOfDealer(DistributedCardDto.from(dealer));
+        players.stream()
+                .map(DistributedCardDto::from)
+                .toList()
+                .forEach(outputView::displayCardInfo);
 
         hitExtraCardForPlayers(players);
         hitExtraCardForDealer(dealer);

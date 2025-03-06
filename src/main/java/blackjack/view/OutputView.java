@@ -24,6 +24,14 @@ public class OutputView {
         System.out.println();
     }
 
+    public void displayFirstCardOfDealer(final DistributedCardDto dealerDto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(dealerDto.name() + "카드: ");
+        sb.append(dealerDto.cardInfos().getFirst());
+
+        System.out.println(sb);
+    }
+
     public void displayCardInfo(final DistributedCardDto participantDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(participantDto.name() + "카드: ");
