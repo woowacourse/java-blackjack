@@ -35,7 +35,7 @@ public class PlayerTest {
         Player player = Player.of(cards);
 
         // when
-        final int result = player.getResult();
+        final int result = player.getCardScore();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -77,7 +77,7 @@ public class PlayerTest {
         Player player = Player.of(cards);
 
         //when
-        int actual = player.getResult();
+        int actual = player.getCardScore();
 
         //then
         assertThat(actual).isEqualTo(expected);

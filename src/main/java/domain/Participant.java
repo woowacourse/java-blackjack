@@ -19,7 +19,7 @@ public class Participant {
         return cards;
     }
 
-    public int getResult() {
+    public int getCardScore() {
         Set<Integer> coordinates = cards.getCoordinateSums();
         if (isBurst()) {
             return getMinSum(coordinates);

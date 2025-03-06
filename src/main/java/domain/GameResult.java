@@ -10,10 +10,10 @@ public enum GameResult {
         if (self.isBurst()) {
             return GameResult.LOSE;
         }
-        if (self.getResult() > other.getResult()) {
+        if (self.getCardScore() > other.getCardScore()) {
             return GameResult.WIN;
         }
-        if (self.getResult() < other.getResult()) {
+        if (self.getCardScore() < other.getCardScore()) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
