@@ -20,7 +20,7 @@ public class CardDeck {
         return new CardDeck(new ArrayList<>());
     }
 
-    public static CardDeck generateFullSet() {
+    public static CardDeck generateFullPlayingCard() {
         //52장 만들기
         List<Card> initializedCardSet = initializeCardSet();
         return new CardDeck(initializedCardSet);

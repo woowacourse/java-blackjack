@@ -13,11 +13,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GameBoard {
+    private static final int THRESHOLD = 21;
+
     private final Map<Participant, CardDeck> cardDeckOfParticipant;
-    private final CardDeck gameCardDeck;
+    private final CardDeck playingCard;
 
     public GameBoard(final List<Participant> participants) {
-        this.gameCardDeck = CardDeck.generateFullSet();
+        this.playingCard = CardDeck.generateFullPlayingCard();
         this.cardDeckOfParticipant = initializeCardDeckOfParticipant(participants);
     }
 
@@ -35,15 +37,15 @@ public class GameBoard {
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
             CardDeck cardDeck = entry.getValue();
 
-            Card firstCard = gameCardDeck.draw();
-            Card secondCard = gameCardDeck.draw();
+            Card firstCard = playingCard.draw();
+            Card secondCard = playingCard.draw();
             cardDeck.addCard(firstCard);
             cardDeck.addCard(secondCard);
         }
     }
 
     public void drawCardTo(Participant participant) {
-        Card drawedCard = gameCardDeck.draw();
+        Card drawedCard = playingCard.draw();
         CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
         ownedCardDeck.addCard(drawedCard);
     }
@@ -58,7 +60,7 @@ public class GameBoard {
     }
 
     public CardDeck getPlayingCard() {
-        return gameCardDeck;
+        return playingCard;
     }
 
     public boolean ableToDraw(Participant participant) {
@@ -67,25 +69,29 @@ public class GameBoard {
     }
 
     public void shufflePlayingCard() {
-        gameCardDeck.shuffle();
+        playingCard.shuffle();
     }
 
     public int getScoreOf(Participant participant) {
         CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
         List<Card> ownedCards = ownedCardDeck.getCards();
+
         int totalScore = 0;
         int aceCounts = 0;
+
         for (Card card : ownedCards) {
             totalScore += card.getNumber();
             if (card.isAceCard()) {
                 aceCounts++;
             }
         }
+
         while (aceCounts-- > 0) {
-            if (totalScore + 10 <= 21) {
+            if (totalScore + 10 <= THRESHOLD) {
                 totalScore += 10;
             }
         }
+
         return totalScore;
     }
 
@@ -101,36 +107,39 @@ public class GameBoard {
 
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
             Participant participant = entry.getKey();
-            if (!participant.areYouPlayer()) {
-                continue;
-            }
-
-            int score = getScoreOf(participant);
-            if (score > 21) {
-                if (dealerScore > 21) {
-                    updateBattleResultDraw(dealer, participant);
-                    continue;
-                }
-                updateBattleResult(dealer, participant);
-                continue;
-            }
-
-            if (score > dealerScore) {
-                updateBattleResult(participant, dealer);
-                continue;
-            }
-
-            if (score < dealerScore) {
-                if (dealerScore > 21) {
-                   updateBattleResult(participant, dealer);
-                   continue;
-                }
-                updateBattleResult(dealer, participant);
-            }
-
-            // 드로우
-            updateBattleResultDraw(dealer, participant);
+            updateBattleResultBetween(dealer, participant, dealerScore);
         }
+    }
+
+    private void updateBattleResultBetween(Participant dealer, Participant participant, int dealerScore) {
+        if (!participant.areYouPlayer()) {
+            return;
+        }
+        int score = getScoreOf(participant);
+        if (score > THRESHOLD) {
+            if (dealerScore > THRESHOLD) {
+                updateBattleResultDraw(dealer, participant);
+                return;
+            }
+            updateBattleResult(dealer, participant);
+            return;
+        }
+
+        if (score > dealerScore) {
+            updateBattleResult(participant, dealer);
+            return;
+        }
+
+        if (score < dealerScore) {
+            if (dealerScore > THRESHOLD) {
+               updateBattleResult(participant, dealer);
+               return;
+            }
+            updateBattleResult(dealer, participant);
+            return;
+        }
+
+        updateBattleResultDraw(dealer, participant);
     }
 
     private void updateBattleResultDraw(Participant dealer, Participant player) {

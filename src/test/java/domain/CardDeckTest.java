@@ -13,7 +13,7 @@ public class CardDeckTest {
     @Test
     void 카드셋_정적_팩토리_메서드_확인() {
         //given
-        CardDeck cardDeck = CardDeck.generateFullSet();
+        CardDeck cardDeck = CardDeck.generateFullPlayingCard();
 
         //when
         Assertions.assertThat(cardDeck.getCards().size()).isEqualTo(52);
@@ -31,8 +31,8 @@ public class CardDeckTest {
     @Test
     void 카드_섞기() {
         //given
-        CardDeck originCardDeck = CardDeck.generateFullSet();
-        CardDeck shuffledCardDeck = CardDeck.generateFullSet();
+        CardDeck originCardDeck = CardDeck.generateFullPlayingCard();
+        CardDeck shuffledCardDeck = CardDeck.generateFullPlayingCard();
 
         //when
         shuffledCardDeck.shuffle();
@@ -44,7 +44,7 @@ public class CardDeckTest {
     @Test
     void 카드_뽑기() {
         //given
-        CardDeck cardDeck = CardDeck.generateFullSet();
+        CardDeck cardDeck = CardDeck.generateFullPlayingCard();
 
         //when
         Card card = cardDeck.draw();
