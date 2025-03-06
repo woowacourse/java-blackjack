@@ -3,10 +3,15 @@ import domain.CardNumber;
 import domain.CardSetting;
 import domain.CardShape;
 import domain.TrumpCard;
+import java.util.List;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardDeckTest {
     @BeforeEach
@@ -47,7 +52,7 @@ public class CardDeckTest {
         int count = 0;
         for (int i = 0; i < 52; i++) {
             CardSetting.drawCard();
-            count ++;
+            count++;
         }
         System.out.println(count);
         // when & then
@@ -73,4 +78,25 @@ public class CardDeckTest {
         Assertions.assertThat(isOver).isTrue();
     }
 
+    @DisplayName("카드에 ACE가 있다면 가능한 max값을 계산하여 판단한다")
+    @ParameterizedTest
+    @MethodSource("hasAce")
+    void test5(List<TrumpCard> cards, boolean isExpectedOver) {
+        //given
+        CardDeck cardDeck = new CardDeck();
+        for (TrumpCard card : cards) {
+            cardDeck.addTrumpCard(card);
+        }
+
+        boolean isRealOver = cardDeck.checkOverScore();
+        Assertions.assertThat(isRealOver).isEqualTo(isExpectedOver);
+    }
+
+    private static Stream<Arguments> hasAce() {
+        return Stream.of(
+                Arguments.arguments(List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.ACE), false),
+                Arguments.arguments(List.of(CardNumber.K, CardNumber.J, CardNumber.ACE), false),
+                Arguments.arguments(List.of(CardNumber.ACE, CardNumber.Q), false)
+        );
+    }
 }

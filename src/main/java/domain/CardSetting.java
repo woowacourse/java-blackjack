@@ -10,7 +10,7 @@ public class CardSetting {
 
     public static void initCache() {
         Arrays.stream(CardShape.values())
-                .forEach(cardShape -> Arrays.stream(cardShape.values())
+                .forEach(cardShape -> Arrays.stream(CardNumber.values())
                         .forEach(cardNumber -> CARD_DECK.add(new TrumpCard(cardShape, cardNumber))));
         Collections.shuffle(CARD_DECK);
     }
