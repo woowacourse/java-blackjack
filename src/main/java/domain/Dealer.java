@@ -9,12 +9,12 @@ public class Dealer extends Player {
         super(DEALER_NAME);
     }
 
-    public Card openOneCard() {
-        return hand.getFirstCard();
-    }
-
     public boolean isBelowThreshold() {
         return getHandTotal() <= THRESHOLD;
+    }
+
+    public Card openOneCard() {
+        return hand.getFirstCard();
     }
 
     public int getCardCount() {

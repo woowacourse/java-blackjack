@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 public class Hand {
 
     private static final int ORIGINAL_ACE_VALUE = 11;
+    private static final int BUST_THRESHOLD = 21;
     private final List<Card> cards;
 
     public Hand() {
@@ -31,7 +32,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getTotal() > 21;
+        return getTotal() > BUST_THRESHOLD;
     }
 
     private Predicate<Card> originalAcePredicate() {

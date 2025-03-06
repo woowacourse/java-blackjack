@@ -18,7 +18,11 @@ import java.util.List;
 
 public class BlackJack {
 
-    public static final String DELIMITER = ",";
+    private static final String DELIMITER = ",";
+    private static final String YES = "y";
+    private static final String NO = "n";
+    private static final String MAX_PLAYER_EXCEPTION = "플레이어는 5명까지만 입력해주세요.";
+    private static final int MAX_PLAYER_SIZE = 5;
 
     private final List<Player> players = new ArrayList<>();
     private final Dealer dealer = new Dealer();
@@ -68,10 +72,10 @@ public class BlackJack {
     private void askPlayersChoice(Player player) {
         while (true) {
             String ynInput = getYnInput(player);
-            if (ynInput.equalsIgnoreCase("y")) {
+            if (ynInput.equalsIgnoreCase(YES)) {
                 drawOneMoreCard(player, new StringBuilder());
             }
-            if (ynInput.equalsIgnoreCase("n")) {
+            if (ynInput.equalsIgnoreCase(NO)) {
                 return;
             }
         }
@@ -103,8 +107,8 @@ public class BlackJack {
     }
 
     private void validateMaxPlayer(List<String> playerNames) {
-        if (playerNames.size() > 5) {
-            throw new IllegalArgumentException("플레이어는 5명까지만 입력해주세요.");
+        if (playerNames.size() > MAX_PLAYER_SIZE) {
+            throw new IllegalArgumentException(MAX_PLAYER_EXCEPTION);
         }
     }
 

@@ -3,8 +3,8 @@ package domain;
 import static domain.Denomination.ACE;
 
 public class Card {
-    private Denomination denomination;
-    private Suit suit;
+    private final Denomination denomination;
+    private final Suit suit;
     protected int value;
 
     public Card(Denomination denomination, Suit suit) {

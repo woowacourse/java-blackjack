@@ -20,7 +20,6 @@ public record WinLossCountResult(
         long lossCount = players.stream()
                 .filter(player -> player.getHandTotal() > dealer.getHandTotal())
                 .count();
-
         return new WinLossCountResult(winCount, lossCount, drawCount);
     }
 }
