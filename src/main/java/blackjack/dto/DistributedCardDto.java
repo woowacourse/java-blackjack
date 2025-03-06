@@ -13,5 +13,4 @@ public record DistributedCardDto(String name, List<String> cardInfos) {
 
         return new DistributedCardDto(name, cardInfos);
     }
-
 }
