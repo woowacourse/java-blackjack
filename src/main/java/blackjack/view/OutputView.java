@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     public String generateCardName(Card card) {
-        return String.format("%s%s", card.getCardType().name(), card.getShape().name());
+        return String.format("%s%s", card.getCardType().getDetail(), card.getShape().getDetail());
     }
 
     public String outputPlayerCardStatus(String name, String cards) {
