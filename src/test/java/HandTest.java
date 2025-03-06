@@ -32,7 +32,7 @@ public class HandTest {
     }
 
     @Test
-    void 보유한_카드의_합계가_21이_넘어가는지_판정한다() {
+    void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21초과_케이스() {
         //given
         Hand hand = new Hand();
         List<Card> drawnCards = hand.getCards();
@@ -44,4 +44,16 @@ public class HandTest {
         assertThat(hand.checkBurst()).isTrue();
     }
 
+    @Test
+    void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21이하_케이스() {
+        //given
+        Hand hand = new Hand();
+        List<Card> drawnCards = hand.getCards();
+        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.NINE));
+        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
+
+        //when & then
+        assertThat(hand.checkBurst()).isFalse();
+    }
 }
