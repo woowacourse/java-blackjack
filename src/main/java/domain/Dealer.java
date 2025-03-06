@@ -13,7 +13,7 @@ public class Dealer extends Gamer {
     }
 
     public boolean isDrawable() {
-        return this.canGetMoreCard(BUST_THRESHOLD);
+        return this.isDrawable(BUST_THRESHOLD);
     }
 
     public Card drawCard() {

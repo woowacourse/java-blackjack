@@ -63,7 +63,7 @@ class PlayerTest {
         player.addCard(cards);
         int playStandard = 21;
         // when
-        boolean canGetMoreCard = player.canGetMoreCard(playStandard);
+        boolean canGetMoreCard = player.isDrawable(playStandard);
         // then
         assertThat(canGetMoreCard).isEqualTo(expected);
     }

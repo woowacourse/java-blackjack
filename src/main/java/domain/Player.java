@@ -18,32 +18,36 @@ public class Player extends Gamer {
         return username;
     }
 
-    public boolean canGetMoreCard() {
-        return this.canGetMoreCard(BUST_THRESHOLD);
+    public boolean isDrawable() {
+        return this.isDrawable(BUST_THRESHOLD);
     }
 
     public GameResult decideGameResult(Dealer dealer) {
         int playerScore = this.calculateScore();
         int dealerScore = dealer.calculateScore();
+        if (playerScore > BUST_THRESHOLD || dealerScore > BUST_THRESHOLD) {
+            return decideGameResultWithBust(playerScore, dealerScore);
+        }
+        return decideGameResultWithoutBust(playerScore, dealerScore);
+    }
+
+    private GameResult decideGameResultWithBust(int playerScore, int dealerScore) {
         if (playerScore > BUST_THRESHOLD && dealerScore > BUST_THRESHOLD) {
             return DRAW;
         }
         if (playerScore > BUST_THRESHOLD) {
             return LOSE;
         }
+        return WIN;
+    }
 
-        if (dealerScore > BUST_THRESHOLD) {
-            return WIN;
-        }
-
+    private GameResult decideGameResultWithoutBust(int playerScore, int dealerScore) {
         if (dealerScore == playerScore) {
             return DRAW;
         }
-
         if (dealerScore > playerScore) {
             return LOSE;
         }
-
         return WIN;
     }
 }

@@ -33,7 +33,7 @@ public class Players {
 
     public boolean canGetMoreCard(String username) {
         Player player = selectPlayer(username);
-        return player.canGetMoreCard();
+        return player.isDrawable();
     }
 
     public List<String> getUsernames() {
