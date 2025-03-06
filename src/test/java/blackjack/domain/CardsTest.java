@@ -2,6 +2,11 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.ScoreCalculator;
+import blackjack.domain.card.Suit;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,7 +44,7 @@ public class CardsTest {
         //then
         Assertions.assertThat(minScore).isEqualTo(11);
     }
-    
+
     @Test
     void 카드가_블랙잭임을_계산할_수_있다() {
         //given

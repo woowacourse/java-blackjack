@@ -1,10 +1,10 @@
 package blackjack.controller;
 
-import blackjack.domain.Cards;
-import blackjack.domain.DeckFactory;
-import blackjack.domain.RandomCardsShuffler;
-import blackjack.domain.ScoreCalculator;
 import blackjack.domain.Victory;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.DeckFactory;
+import blackjack.domain.card.RandomCardsShuffler;
+import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;

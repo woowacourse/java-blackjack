@@ -1,11 +1,11 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.Card;
-import blackjack.domain.Cards;
-import blackjack.domain.CardsShuffler;
-import blackjack.domain.Deck;
-import blackjack.domain.ScoreCalculator;
 import blackjack.domain.Victory;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.CardsShuffler;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.ScoreCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
