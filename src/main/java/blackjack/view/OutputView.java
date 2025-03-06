@@ -7,6 +7,9 @@ import blackjack.dto.response.StartingCardsResponseDto;
 
 public class OutputView {
 
+    private OutputView() {
+    }
+
     public static void printStartingCards(StartingCardsResponseDto responseDto) {
         System.out.printf("%s와 %s에게 %d장을 나누었습니다.%n",
             responseDto.getDealerName(),
