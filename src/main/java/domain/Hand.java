@@ -25,6 +25,11 @@ public class Hand {
         return getSumOfRank() > 21;
     }
 
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
     public List<Card> getCards() {
         return cards;
     }
