@@ -13,6 +13,10 @@ public class Card {
         return cardNumber.getNumber();
     }
 
+    public String getCardSymbol() {
+        return cardSymbol.getName();
+    }
+
     public boolean isAceCard() {
         return cardNumber == CardNumber.ACE;
     }
