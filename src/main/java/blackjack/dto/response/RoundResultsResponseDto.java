@@ -5,7 +5,7 @@ import java.util.List;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Players;
-import blackjack.dto.CardDto;
+import blackjack.dto.GamerDto;
 
 public record RoundResultsResponseDto(
     InnerGamer dealer,
@@ -21,20 +21,20 @@ public record RoundResultsResponseDto(
         );
     }
 
-    // TODO: name, cards -> GamerDto로 분리할지 고민해보기
     public record InnerGamer(
-        String name,
-        List<CardDto> cards,
+        GamerDto gamer,
         int sumOfCards
     ) {
 
         private static InnerGamer from(Gamer gamer) {
             return new InnerGamer(
-                gamer.getName(),
-                gamer.getCards().stream()
-                    .map(CardDto::from)
-                    .toList(),
+                GamerDto.from(gamer),
                 gamer.getSumOfCards());
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%s - 결과: %d", gamer, sumOfCards);
         }
     }
 }

@@ -1,8 +1,10 @@
 package blackjack.dto.response;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import blackjack.domain.RoundResult;
 import blackjack.domain.gamer.Dealer;
@@ -14,7 +16,6 @@ public record FinalResultResponseDto(
     List<InnerGamer> gamers
 ) {
 
-    // LATER TODO 리팩토링
     public static FinalResultResponseDto of(Dealer dealer, Players players) {
         InnerGamer convertedDealer = InnerGamer.from(dealer, new ArrayList<>(players.getPlayers()));
         List<InnerGamer> convertedPlayers = players.getPlayers().stream()
@@ -26,10 +27,21 @@ public record FinalResultResponseDto(
     public record InnerGamer(
         String name,
         Map<RoundResult, Integer> result
-        ) {
+    ) {
 
         public static InnerGamer from(Gamer gamer, List<Gamer> otherGamers) {
             return new InnerGamer(gamer.getName(), gamer.getFinalResult(otherGamers));
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%s: %s",
+                name,
+                result.entrySet().stream()
+                    .filter(result -> result.getValue() > 0)
+                    .sorted(Comparator.comparing(result -> result.getKey().ordinal()))
+                    .map(result -> result.getValue() + result.getKey().getDisplayName())
+                    .collect(Collectors.joining(" ")));
         }
     }
 }

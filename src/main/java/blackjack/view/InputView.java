@@ -9,7 +9,6 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    // LAST TODO 메시지 상수화
     public static NamesRequestDto readNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return NamesRequestDto.from(scanner.nextLine());

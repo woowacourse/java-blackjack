@@ -30,7 +30,6 @@ public class Cards {
         return sumWithoutAce + sumOfAce;
     }
 
-    // LAST TODO : 리팩토링 고민해보기
     private int getSumOfAce(int sumWithoutAce) {
         int sumOfAce = 0;
         int aceCardCount = getAceCardCount();
