@@ -73,4 +73,12 @@ public class Game {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public List<Card> getDealerHand() {
+        return List.copyOf(dealer.getHand());
+    }
+
+    public int getDealerTotal() {
+        return dealer.getTotal();
+    }
 }

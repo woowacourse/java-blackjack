@@ -20,6 +20,9 @@ public class BlackjackController {
         game.askHitForAllPlayer(inputView::readHitOrNot, outputView::printPlayerHand);
         boolean isDealerHit = game.dealerHit();
         outputView.printDealerHit(isDealerHit);
+
+        outputView.printDealerHandAndTotal(game.getDealerHand(), game.getDealerTotal());
+        outputView.printPlayerHandAndTotal(game.getPlayers());
     }
 
     private List<Player> getPlayers() {
