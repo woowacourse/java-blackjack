@@ -53,4 +53,19 @@ public class BlackJackTest {
         //when-then
         assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testInputView::printPlayerDeck));
     }
+
+    @Test
+    @DisplayName("딜러 드로우 테스트")
+    void drawDealerTest(){
+        //given
+        CardDeckFactory cardDeckFactory = new CardDeckFactory();
+        Dealer dealer = new Dealer(cardDeckFactory.create());
+        Players players = Players.from(List.of("pobi", "lisa"));
+
+        //when
+        BlackJack blackJack = new BlackJack(players, dealer);
+
+        //then
+        assertDoesNotThrow(blackJack::drawDealer);
+    }
 }

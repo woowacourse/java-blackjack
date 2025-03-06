@@ -20,7 +20,11 @@ public class BlackJack {
         dealer.addCards();
     }
 
-    public void draw(BooleanSupplier answer, Consumer<Player> playerDeck) {
+    public void drawPlayers(BooleanSupplier answer, Consumer<Player> playerDeck) {
         players.draw(answer, playerDeck, dealer);
+    }
+
+    public void drawDealer() {
+        dealer.draw();
     }
 }

@@ -35,13 +35,11 @@ public class BlackJackController {
         blackJack.hitCardsToParticipant();
 
         // 3. 카드 더 받을지 물어보기 x 플레이어 수
-        blackJack.draw(() -> InputUntilValid.validatePlayerAnswer(inputView::askPlayerForHitOrStand), inputView::printPlayerDeck);
+        blackJack.drawPlayers(() -> InputUntilValid.validatePlayerAnswer(inputView::askPlayerForHitOrStand), inputView::printPlayerDeck);
 
 //        // 4. 딜러 카드 받기
-//        blackJack.hitCardToDealer();
-//
-//        dealer.hitCard(); // 16 이하면 뽑고 아님 말고
-//
+        blackJack.drawDealer();
+
 //        // 5. 결과
 //        blackJack.calculateResult();
 //
