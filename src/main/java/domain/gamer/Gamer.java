@@ -20,7 +20,7 @@ public abstract class Gamer {
         return cardGroup.addCard(card);
     }
 
-    public void receiveCard(){
+    public void receiveCard() {
         cardGroup.addCard(cardGenerator.generate());
     }
 
@@ -29,7 +29,9 @@ public abstract class Gamer {
     }
 
     public GameResult calculateGameResult(final int compareScore) {
-        if(isBust()) return GameResult.LOSE;
+        if (isBust()) {
+            return GameResult.LOSE;
+        }
         return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
     }
 

@@ -1,11 +1,8 @@
 package domain;
 
-import domain.card.Card;
-import domain.card.CardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
-
 import java.util.List;
 
 public class GameManager {
@@ -28,18 +25,11 @@ public class GameManager {
         return new GameManager(dealer, players);
     }
 
-    private static List<Card> generateCards(final CardGenerator cardGenerator) {
-        return List.of(cardGenerator.generate(), cardGenerator.generate());
-    }
-
 
     public boolean isAbleToHit(final Gamer gamer) {
         return !gamer.isBust();
     }
 
-    public List<Player> getPlayers() {
-        return players.stream().map(Player::new).toList();
-    }
 
     public void giveCardToGamer(final Gamer gamer) {
         gamer.receiveCard();

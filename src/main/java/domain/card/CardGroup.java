@@ -22,12 +22,14 @@ public class CardGroup {
                 .sum();
     }
 
-    private int calculateScoreWithAce(int sum, int limit){
+    private int calculateScoreWithAce(int sum, int limit) {
         int aceCount = countAce();
         sum += aceCount;
-        while(aceCount-- > 0){
+        while (aceCount-- > 0) {
             int temp = sum + 10;
-            if(temp > limit) break;
+            if (temp > limit) {
+                break;
+            }
             sum = temp;
         }
 
@@ -44,14 +46,14 @@ public class CardGroup {
         return cards.size();
     }
 
-    private int countAce(){
+    private int countAce() {
         return Math.toIntExact(cards.stream()
                 .filter(Card::isAce)
                 .count());
     }
 
     public int calculateScore(int limit) {
-        return calculateScoreWithAce(calculateScoreWithOutAce(),limit);
+        return calculateScoreWithAce(calculateScoreWithOutAce(), limit);
     }
 
 }
