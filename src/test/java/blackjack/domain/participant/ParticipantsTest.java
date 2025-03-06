@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideOver21Cards;
 import static blackjack.fixture.TestFixture.provideParticipants;
-import static blackjack.fixture.TestFixture.providePlayersWithCards;
+import static blackjack.fixture.TestFixture.provideTwoPlayersWithCards;
 import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -39,7 +39,8 @@ class ParticipantsTest {
         // then
         assertAll(
                 () -> assertThat(participants.getDealer()).isEqualTo(new Dealer(dealerCards)),
-                () -> assertThat(participants.getPlayers()).isEqualTo(providePlayersWithCards(playerCard1, playerCard2))
+                () -> assertThat(participants.getPlayers()).isEqualTo(
+                        provideTwoPlayersWithCards(playerCard1, playerCard2))
         );
     }
 
@@ -58,7 +59,7 @@ class ParticipantsTest {
         // given
         final Cards firstCards = provideUnder21Cards();
         final Cards secondCards = provideOver21Cards();
-        final List<Player> players = providePlayersWithCards(firstCards, secondCards);
+        final List<Player> players = provideTwoPlayersWithCards(firstCards, secondCards);
 
         // when & then
         assertAll(

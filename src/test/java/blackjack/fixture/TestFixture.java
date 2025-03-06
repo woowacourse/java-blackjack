@@ -41,13 +41,13 @@ public class TestFixture {
         return new Players(List.of(new Player("엠제이", provideEmptyCards()), new Player("밍트", provideEmptyCards())));
     }
 
-    public static List<Player> providePlayersWithCards(final Cards... cards) {
-        String name = "엠제이";
-        final List<Player> players = new ArrayList<>();
-        for (int i = 0; i < cards.length; i++) {
-            players.add(new Player(name + i, cards[i]));
-        }
-        return players;
+    public static List<Player> provideTwoPlayersWithCards(final Cards cards1, final Cards cards2) {
+        return List.of(new Player("엠제이", cards1), new Player("밍트", cards2));
+    }
+
+    public static List<Player> provideThreePlayersWithCards(final Cards cards1, final Cards cards2,
+                                                            final Cards cards3) {
+        return List.of(new Player("엠제이", cards1), new Player("밍트", cards2), new Player("포비", cards3));
     }
 
     public static Cards provideOver21Cards() {

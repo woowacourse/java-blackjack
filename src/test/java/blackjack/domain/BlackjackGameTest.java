@@ -5,7 +5,8 @@ import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideOver21Cards;
 import static blackjack.fixture.TestFixture.provideParticipants;
-import static blackjack.fixture.TestFixture.providePlayersWithCards;
+import static blackjack.fixture.TestFixture.provideThreePlayersWithCards;
+import static blackjack.fixture.TestFixture.provideTwoPlayersWithCards;
 import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +51,7 @@ class BlackjackGameTest {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
                 new Participants(new Dealer(provideEmptyCards()),
-                        new Players(providePlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
+                        new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
 
         // when & then
         assertAll(
@@ -80,7 +81,7 @@ class BlackjackGameTest {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
                 new Participants(new Dealer(cards),
-                        new Players(providePlayersWithCards(provideEmptyCards(), provideEmptyCards()))));
+                        new Players(provideTwoPlayersWithCards(provideEmptyCards(), provideEmptyCards()))));
 
         // when & then
         assertThat(blackjackGame.canDealerMoreCard()).isEqualTo(expected);
@@ -100,7 +101,7 @@ class BlackjackGameTest {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
                 new Participants(new Dealer(provideEmptyCards()),
-                        new Players(providePlayersWithCards(cards, provideEmptyCards()))));
+                        new Players(provideTwoPlayersWithCards(cards, provideEmptyCards()))));
 
         // when & then
         assertThat(blackjackGame.canPlayerMoreCard(0)).isEqualTo(expected);
@@ -120,7 +121,7 @@ class BlackjackGameTest {
         final Dealer dealer = new Dealer(provideUnder16Cards());
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
                 new Participants(dealer,
-                        new Players(providePlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
+                        new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
 
         // when & then
         assertAll(
@@ -146,11 +147,13 @@ class BlackjackGameTest {
                 new Card(Shape.SPADE, Denomination.K)));
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
                 new Participants(dealer,
-                        new Players(providePlayersWithCards(player1Cards, player2Cards, player3Cards))));
+                        new Players(provideThreePlayersWithCards(player1Cards, player2Cards, player3Cards))));
 
         // when & then
         final String mj = "엠제이";
+        final String mint = "밍트";
+        final String pobi = "포비";
         assertThat(blackjackGame.calculateWinningResult()).isEqualTo(
-                Map.of(mj + 0, ResultStatus.WIN, mj + 1, ResultStatus.LOSE, mj + 2, ResultStatus.DRAW));
+                Map.of(mj, ResultStatus.WIN, mint, ResultStatus.LOSE, pobi, ResultStatus.DRAW));
     }
 }
