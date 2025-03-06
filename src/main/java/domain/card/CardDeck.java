@@ -22,15 +22,11 @@ public class CardDeck {
 
     public static CardDeck generateFullPlayingCard() {
         //52장 만들기
-        List<Card> initializedCardSet = initializeCardSet();
-        return new CardDeck(initializedCardSet);
+        List<Card> initializePlayingCard = initializePlayingCard();
+        return new CardDeck(initializePlayingCard);
     }
 
-    public void shuffle() {
-        Collections.shuffle(this.cards);
-    }
-
-    private static List<Card> initializeCardSet() {
+    private static List<Card> initializePlayingCard() {
         List<Card> initCard = new ArrayList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             for (CardSymbol cardSymbol : CardSymbol.values()) {
@@ -40,6 +36,13 @@ public class CardDeck {
         return initCard;
     }
 
+    public void shuffle() {
+        Collections.shuffle(this.cards);
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
 
     public Card draw() {
         return cards.removeFirst();
@@ -47,10 +50,6 @@ public class CardDeck {
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
     }
 
     @Override

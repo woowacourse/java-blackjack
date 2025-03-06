@@ -14,10 +14,6 @@ public class Player implements Participant {
         this.battleResult = new HashMap<>();
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
     public static Player from(final String nickname) {
         return new Player(nickname);
     }
@@ -28,8 +24,13 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean areYouPlayer() {
-        return true;
+    public boolean areYouDealer() {
+        return false;
+    }
+
+    @Override
+    public String getNickname() {
+        return nickname;
     }
 
     @Override

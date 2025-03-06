@@ -14,10 +14,6 @@ public class Dealer implements Participant {
         this.battleResult = new HashMap<>();
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
     public static Dealer generate() {
         return new Dealer("딜러");
     }
@@ -28,8 +24,13 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean areYouPlayer() {
-        return false;
+    public boolean areYouDealer() {
+        return true;
+    }
+
+    @Override
+    public String getNickname() {
+        return nickname;
     }
 
     @Override

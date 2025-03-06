@@ -50,19 +50,6 @@ public class GameBoard {
         ownedCardDeck.addCard(drawedCard);
     }
 
-    public CardDeck getCardDeckOf(Participant participant) {
-        CardDeck cardDeck = cardDeckOfParticipant.get(participant);
-        return new CardDeck(cardDeck);
-    }
-
-    public Map<Participant, CardDeck> getCardDeckOfParticipant() {
-        return Collections.unmodifiableMap(cardDeckOfParticipant);
-    }
-
-    public CardDeck getPlayingCard() {
-        return playingCard;
-    }
-
     public boolean ableToDraw(Participant participant) {
         int score = getScoreOf(participant);
         return participant.ableToDraw(score);
@@ -98,7 +85,7 @@ public class GameBoard {
     public void calculateBattleResult() {
         Entry<Participant, CardDeck> cardDeckOfDealer = cardDeckOfParticipant.entrySet()
                 .stream()
-                .filter(entry -> !entry.getKey().areYouPlayer())
+                .filter(entry -> entry.getKey().areYouDealer())
                 .findFirst()
                 .orElseThrow();
 
@@ -112,7 +99,7 @@ public class GameBoard {
     }
 
     private void updateBattleResultBetween(Participant dealer, Participant participant, int dealerScore) {
-        if (!participant.areYouPlayer()) {
+        if (participant.areYouDealer()) {
             return;
         }
         int score = getScoreOf(participant);
@@ -154,5 +141,18 @@ public class GameBoard {
         Map<BattleResult, Integer> loserResult = loser.getBattleResult();
         winnerResult.merge(BattleResult.WIN, 1, Integer::sum);
         loserResult.merge(BattleResult.LOSE, 1, Integer::sum);
+    }
+
+    public CardDeck getCardDeckOf(Participant participant) {
+        CardDeck cardDeck = cardDeckOfParticipant.get(participant);
+        return new CardDeck(cardDeck);
+    }
+
+    public Map<Participant, CardDeck> getCardDeckOfParticipant() {
+        return Collections.unmodifiableMap(cardDeckOfParticipant);
+    }
+
+    public CardDeck getPlayingCard() {
+        return playingCard;
     }
 }

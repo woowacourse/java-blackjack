@@ -15,6 +15,6 @@ public enum Answer {
     public static Answer from(final String name) {
         return Arrays.stream(Answer.values())
                 .filter(value -> value.name.equals(name))
-                .findFirst().orElseThrow();
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력하세요."));
     }
 }
