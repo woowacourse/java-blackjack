@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ public class ParticipantRepository {
 
     private static final ParticipantRepository INSTANCE = new ParticipantRepository();
 
-    private final Map<String, Participant> repository = new HashMap<>();
+    private final Map<String, Participant> repository = new LinkedHashMap<>();
 
     {
         Participant dealer = Participant.createDealer();
@@ -20,6 +21,10 @@ public class ParticipantRepository {
 
     public static ParticipantRepository getInstance() {
         return INSTANCE;
+    }
+
+    public Participant getDealer() {
+        return repository.get("딜러");
     }
 
     public Participant getByName(String name) { // TODO : 존재하지 않을 경우 예외처리

@@ -186,4 +186,23 @@ public class CardsTest {
         //then
         assertThat(isUnderDrawLimit).isTrue();
     }
+
+    @DisplayName("카드 묶음의 전체 카드를 추가할 수 있다")
+    @Test
+    void test13() {
+        //given
+        List<Card> testCards = List.of(
+                new Card(CardNumberType.ACE, CardType.HEART),
+                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        );
+        Cards cards = new Cards(testCards);
+        Cards emptyCards = Cards.createEmpty();
+
+        //when
+        emptyCards.addAll(cards);
+
+        //thens
+        assertThat(emptyCards.getCards()).hasSize(2);
+        assertThat(emptyCards.getCards()).containsExactlyInAnyOrderElementsOf(testCards);
+    }
 }

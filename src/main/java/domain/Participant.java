@@ -14,12 +14,24 @@ public record Participant(
         return new Participant("딜러", Cards.createEmpty(), DEALER);
     }
 
+    public static Participant createPlayer(String name, Cards cards) {
+        return new Participant(name, cards, PLAYER);
+    }
+
+    public void addCards(Cards receivedCards) {
+        this.cards.addAll(receivedCards);
+    }
+
     public boolean isPlayer() {
         return role.isPlayer();
     }
 
     public int calculateCardsSum() {
         return cards.calculateSumResult();
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
     }
 
     @Override

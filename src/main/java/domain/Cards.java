@@ -39,6 +39,10 @@ public class Cards {
         cards.add(card);
     }
 
+    public void addAll(Cards receivedCards) {
+        this.cards.addAll(receivedCards.getCards());
+    }
+
     public boolean isUnderDrawLimit() {
         if (isAceCountEqualTo(DOUBLE_ACE_COUNT)) {
             return true;
@@ -65,6 +69,10 @@ public class Cards {
         int aceCount = calculateAceCount();
 
         return calculateSumWithAces(aceCount, cardsSumWithoutAce);
+    }
+
+    public Card getFirst() {
+        return cards.getFirst();
     }
 
     private int calculateSumWithAces(int aceCount, int cardsWithoutAceSum) {
