@@ -11,11 +11,20 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class CardTest {
+    
+    @Test
+    void 카드_모양이_NULL인_경우_예외를_발생시킨다() {
+        // expected
+        Assertions.assertThatThrownBy(() -> new Card(1, null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드 모양은 null이 될 수 없습니다.");
+    }
     
     @Test
     void 카드는_숫자와_모양을_기반으로_생성할_수_있다() {
@@ -80,17 +89,6 @@ public class CardTest {
         // expected
         assertThat(card.getBlackjackValue())
                 .containsExactlyInAnyOrder(1, 11);
-    }
-    
-    @Test
-    void 카드_문양이_null인_경우_예외가_발생한다() {
-        // given
-        CardShape shape = null;
-        
-        // expected
-        assertThatThrownBy(() -> new Card(1, shape))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("문양은 하트, 다이아몬드, 스페이드, 클로버 중 하나여야 합니다.");
     }
     
     @Test

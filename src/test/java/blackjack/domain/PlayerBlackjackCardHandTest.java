@@ -7,20 +7,38 @@ import static blackjack.domain.card.CardShape.다이아몬드;
 import static blackjack.domain.card.CardShape.하트;
 import static blackjack.testutil.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.domain.deck.Deck;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;/*  */
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerBlackjackCardHandTest {
+    
+    @Test
+    void 생성자의_파라미터가_NULL이면_예외를_발생시킨다() {
+        // given
+        
+        // expected
+        assertAll(
+                () -> assertThatThrownBy(() -> new PlayerBlackjackCardHand(null, List::of))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("플레이어는 null이 될 수 없습니다."),
+                () -> assertThatThrownBy(() -> new PlayerBlackjackCardHand(DEFAULT_PLAYER, null))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("초기 카드 지급 방식은 null이 될 수 없습니다.")
+        );
+    }
     
     @Test
     void 손패를_가진_플레이어의_이름을_확인할_수_있다() {

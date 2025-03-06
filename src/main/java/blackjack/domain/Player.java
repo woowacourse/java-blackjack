@@ -19,6 +19,9 @@ public final class Player {
     }
     
     private void validateName(final String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("플레이어의 이름은 null이 될 수 없습니다.");
+        }
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("플레이어의 이름은 %d자 이상, %d자 이하여야 합니다.".formatted(
                     MIN_NAME_LENGTH, MAX_NAME_LENGTH

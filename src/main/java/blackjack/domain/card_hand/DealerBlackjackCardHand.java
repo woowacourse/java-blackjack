@@ -13,7 +13,14 @@ public final class DealerBlackjackCardHand implements BlackjackWinDeterminer {
     private final BlackjackCardHand cardHand;
     
     public DealerBlackjackCardHand(final CardHandInitializer initializer) {
+        validateNotNull(initializer);
         this.cardHand = new BlackjackCardHand(initializer);
+    }
+    
+    private void validateNotNull(final CardHandInitializer initializer) {
+        if (initializer == null) {
+            throw new IllegalArgumentException("초기 카드 지급 방식은 null이 될 수 없습니다.");
+        }
     }
     
     public List<Card> getInitialCards() {

@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import static blackjack.testutil.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
@@ -18,6 +19,23 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class BlackjackJudgeTest {
+    
+    @Test
+    void 생성자의_파라미터가_NULL_이면_예외를_발생시킨다() {
+        // given
+        final List<PlayerBlackjackCardHand> playerBlackjackCardHands = List.of(new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of));
+        final DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(List::of);
+        
+        // expected
+        assertAll(
+            () -> assertThatThrownBy(() -> new BlackjackJudge(null, playerBlackjackCardHands))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("딜러의 손패는 null이 될 수 없습니다."),
+            () -> assertThatThrownBy(() -> new BlackjackJudge(dealerBlackjackCardHand, null))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("플래이어의 손패는 null이 될 수 없습니다.")
+        );
+    }
 
     @Test
     void 블랙잭심판은_딜러의_손패와_플레이들의_손패들로_생성된다() {
@@ -29,7 +47,7 @@ public class BlackjackJudgeTest {
         final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(deck);
         
         // expected
-        Assertions.assertDoesNotThrow(() -> new BlackjackJudge(dealerHand, playerHands));
+        assertDoesNotThrow(() -> new BlackjackJudge(dealerHand, playerHands));
     }
     
     @Test

@@ -12,8 +12,18 @@ public final class BlackjackJudge {
     private final List<PlayerBlackjackCardHand> playerBlackjackCardHands;
     
     public BlackjackJudge(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
+        validateNotNull(dealerBlackjackCardHand, playerBlackjackCardHands);
         this.dealerBlackjackCardHand = dealerBlackjackCardHand;
         this.playerBlackjackCardHands = new ArrayList<>(playerBlackjackCardHands);
+    }
+    
+    private void validateNotNull(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
+        if (dealerBlackjackCardHand == null) {
+            throw new IllegalArgumentException("딜러의 손패는 null이 될 수 없습니다.");
+        }
+        if (playerBlackjackCardHands == null) {
+            throw new IllegalArgumentException("플래이어의 손패는 null이 될 수 없습니다.");
+        }
     }
     
     public int getDealerWinningCount() {

@@ -46,6 +46,16 @@ public class PlayerTest {
     }
     
     @Test
+    void 플레이어의_이름이_NULL인_경우_예외를_발생시킨다() {
+        // given
+        
+        // expected
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> new Player(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 null이 될 수 없습니다.");
+    }
+    
+    @Test
     void 플레이어들을_생성할_수_있다() {
         // given
         final List<String> playerNames = List.of("돔푸", "메이");

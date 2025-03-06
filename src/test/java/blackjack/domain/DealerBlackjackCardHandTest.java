@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static blackjack.testutil.TestConstants.*;
+import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
@@ -16,6 +17,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class DealerBlackjackCardHandTest {
+    
+    @Test
+    void CardHandInitializer가_NULL이면_예외를_발생시킨다() {
+        // given
+        
+        // expected
+        assertThatThrownBy(() -> new DealerBlackjackCardHand(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("초기 카드 지급 방식은 null이 될 수 없습니다.");
+    }
 
     @Test
     void 딜러_손패_숫자의_합이_16_이하인_경우_카드를_뽑는다() {
@@ -26,7 +37,7 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand.startAdding(new Deck());
 
         //then
-        Assertions.assertThat(DealerBlackjackCardHand.getCards().size()).isGreaterThanOrEqualTo(1);
+        assertThat(DealerBlackjackCardHand.getCards().size()).isGreaterThanOrEqualTo(1);
     }
 
     @ParameterizedTest
@@ -43,7 +54,7 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand.startAdding(new CardDrawerStub(deckCards));
 
         //then
-        Assertions.assertThat(DealerBlackjackCardHand.getBlackjackSum()).isEqualTo(expectedSum);
+        assertThat(DealerBlackjackCardHand.getBlackjackSum()).isEqualTo(expectedSum);
     }
 
     private static Stream<Arguments> provideInitCardsAndDeckCardsAndExpectedSum() {
@@ -72,6 +83,6 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(HEART_3, HEART_5));
 
         // expected
-        Assertions.assertThat(DealerBlackjackCardHand.getInitialCards()).containsExactly(HEART_3);
+        assertThat(DealerBlackjackCardHand.getInitialCards()).containsExactly(HEART_3);
     }
 }

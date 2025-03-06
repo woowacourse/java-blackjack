@@ -1,26 +1,26 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
-import static blackjack.domain.card.CardShape.*;
-
 public final class Card {
-    
-    private static final EnumSet<CardShape> SHAPES = EnumSet.of(하트, 다이아몬드, 스페이드, 클로버);
     
     private final CardNumber number;
     private final CardShape shape;
     
     public Card(final int number, final CardShape shape) {
-        validateShape(shape);
+        validateNotNull(shape);
         this.number = CardNumber.from(number);
         this.shape = shape;
     }
     
+    private void validateNotNull(final CardShape shape) {
+        if (shape == null) {
+            throw new IllegalArgumentException("카드 모양은 null이 될 수 없습니다.");
+        }
+    }
+    
     private Card(final CardNumber number, final CardShape shape) {
-        validateShape(shape);
         this.number = number;
         this.shape = shape;
     }
@@ -33,12 +33,6 @@ public final class Card {
             }
         }
         return cards;
-    }
-    
-    private void validateShape(final CardShape shape) {
-        if (!SHAPES.contains(shape)) {
-            throw new IllegalArgumentException("문양은 하트, 다이아몬드, 스페이드, 클로버 중 하나여야 합니다.");
-        }
     }
     
     public CardNumber getNumber() {
