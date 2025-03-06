@@ -77,6 +77,22 @@ class JudgeTest {
         )));
 
         assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.LOSE);
+    }
 
+    @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 딜러의 카드 숫자의 합과 같다면 비긴다.")
+    @Test
+    void test5() {
+        Judge judge = new Judge();
+
+        Cards dealerCards = new Cards(new HashSet<>(Set.of(
+                new Card(CardNumber.QUEEN, CardShape.SPADE),
+                new Card(CardNumber.EIGHT, CardShape.SPADE)
+        )));
+        Cards playerCards = new Cards(new HashSet<>(Set.of(
+                new Card(CardNumber.QUEEN, CardShape.SPADE),
+                new Card(CardNumber.EIGHT, CardShape.SPADE)
+        )));
+
+        assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.DRAW);
     }
 }

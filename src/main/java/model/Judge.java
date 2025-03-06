@@ -15,7 +15,9 @@ public class Judge {
         if (playerCards.calculateResult() < dealerCards.calculateResult()) {
             return GameResult.LOSE;
         }
-
+        if (playerCards.calculateResult() == dealerCards.calculateResult()) {
+            return GameResult.DRAW;
+        }
         return GameResult.DRAW;
     }
 
