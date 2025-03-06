@@ -3,7 +3,7 @@ package domain;
 
 public interface Participant {
 
-    Card addOneCard(Card card);
+    boolean addOneCard(Card card);
 
     int sumCardNumbers();
 }

@@ -37,22 +37,26 @@ class PlayerTest {
                 .hasMessage("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
     }
 
-    @Test
-    void 카드를_한장_뽑아서_갖는다() {
+    @ParameterizedTest
+    @CsvSource(value = {
+            "ACE, EIGHT, ACE, true",
+            "EIGHT, SEVEN, SIX, true",
+            "KING, KING, TWO, false",
+            "QUEEN, JACK, KING, false"
+    })
+    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
         // given
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(TrumpNumber.ACE, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
-        Card card = new Card(TrumpNumber.ACE, TrumpEmblem.SPADE);
+        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
+        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        Card card = new Card(number3, TrumpEmblem.SPADE);
         Player player = new Player(initialCards);
 
         // when
-        Card drawnCard = player.addOneCard(card);
+        boolean isOverBustStandard = player.addOneCard(card);
 
         // then
-        assertThat(player.getSize()).isEqualTo(3);
-        assertThat(drawnCard.getNumber()).isEqualTo(TrumpNumber.ACE);
-        assertThat(drawnCard.getEmblem()).isEqualTo(TrumpEmblem.SPADE);
+        assertThat(isOverBustStandard).isEqualTo(expected);
     }
 
     @ParameterizedTest
