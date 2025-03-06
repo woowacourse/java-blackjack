@@ -74,6 +74,10 @@ public class OutputView {
     }
 
     public void displayPlayerResult(Player player, GameResult playerResult) {
-        System.out.println(player.getName() + ": " + playerResult.getStatus());
+        System.out.println(player.getName().trim() + ": " + playerResult.getStatus());
+    }
+
+    public void displayBustNotice() {
+        System.out.println("버스트이기 때문에 카드를 더 받을 수 없습니다.");
     }
 }

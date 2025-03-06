@@ -71,7 +71,11 @@ public class BlackjackController {
     }
 
     private void checkPlayerHit(Player player) {
-        while (player.canTakeExtraCard()) {
+        while (true) {
+            if (!player.canTakeExtraCard()) {
+                outputView.displayBustNotice();
+                break;
+            }
             String answer = inputView.readOneMoreCard(player.getName());
             HitOption option = HitOption.from(answer);
             if (option.isNo()) {
