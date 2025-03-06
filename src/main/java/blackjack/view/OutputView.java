@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
@@ -22,19 +23,15 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", playerNames));
     }
 
-    public void printCardResult(Participant participant) {
-        if (participant instanceof Dealer dealer) {
-            String cardResult =
-                    dealer.openFirstCard().denomination().getText() + dealer.openFirstCard().suit().getText();
-            System.out.printf("딜러카드: %s%n", cardResult);
-        }
-        if (participant instanceof Player player) {
-            String cardResult = player.getCards()
-                    .stream()
-                    .map(card -> card.denomination().getText() + card.suit().getText())
-                    .collect(Collectors.joining(", "));
-            System.out.printf("%s카드: %s%n", player.getName(), cardResult);
-        }
+    public void printPlayerCardResult(Player player) {
+        String cardResult = parseCardToString(player);
+        System.out.printf("%s카드: %s%n", player.getName(), cardResult);
+    }
+
+    public void printDealerCardResult(Dealer dealer) {
+        Card firstCard = dealer.openFirstCard();
+        String cardResult = firstCard.denomination().getText() + firstCard.suit().getText();
+        System.out.printf("딜러카드: %s%n", cardResult);
     }
 
     public void printAddExtraCardToDealer() {
@@ -42,18 +39,15 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
     }
 
-    public void printFinalCardResult(Participant participant) {
-        String cardResult = participant.getCards()
-                .stream()
-                .map(card -> card.denomination().getText() + card.suit().getText())
-                .collect(Collectors.joining(", "));
-        if (participant instanceof Dealer dealer) {
-            System.out.println();
-            System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.calculateDenominations());
-        }
-        if (participant instanceof Player player) {
-            System.out.printf("%s카드: %s - 결과 %d%n", player.getName(), cardResult, player.calculateDenominations());
-        }
+    public void printDealerFinalCardResult(Dealer dealer) {
+        String cardResult = parseCardToString(dealer);
+        System.out.println();
+        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.calculateDenominations());
+    }
+
+    public void printPlayerFinalCardResult(Player player) {
+        String cardResult = parseCardToString(player);
+        System.out.printf("%s카드: %s - 결과 %d%n", player.getName(), cardResult, player.calculateDenominations());
     }
 
     public void printResultTitle() {
@@ -63,7 +57,6 @@ public class OutputView {
 
     public void printDealerResult(Map<GameResult, Integer> gameResultIntegerMap) {
         StringBuilder sb = new StringBuilder();
-
         for (Entry<GameResult, Integer> gameResult : gameResultIntegerMap.entrySet()) {
             sb.append(gameResult.getValue()).append(gameResult.getKey().getText());
         }
@@ -73,5 +66,12 @@ public class OutputView {
 
     public void printPlayerResult(Player player, Dealer dealer) {
         System.out.printf("%s: %s%n", player.getName(), player.matchGame(dealer).getText());
+    }
+
+    private String parseCardToString(Participant participant) {
+        return participant.getCards()
+                .stream()
+                .map(card -> card.denomination().getText() + card.suit().getText())
+                .collect(Collectors.joining(", "));
     }
 }

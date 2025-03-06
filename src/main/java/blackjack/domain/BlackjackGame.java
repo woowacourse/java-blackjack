@@ -58,39 +58,44 @@ public class BlackjackGame {
                 .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
     }
 
-    public Map<GameResult, Integer> calculateStatisticsForDealer() {
-        Map<GameResult, Integer> result = new HashMap<>();
-        Dealer dealer = findDealer();
-
-        for(Participant participant : participants) {
-            if(participant instanceof Dealer) {
-                continue;
-            }
-            Player player = (Player) participant;
-            GameResult gameResult = player.matchGame(dealer);
-            if(gameResult == GameResult.WIN) {
-                result.put(GameResult.LOSE, result.getOrDefault(GameResult.LOSE, 0) + 1);
-            }
-            if(gameResult == GameResult.LOSE) {
-                result.put(GameResult.WIN, result.getOrDefault(GameResult.WIN, 0) + 1);
-            }
-            if(gameResult == GameResult.DRAW) {
-                result.put(GameResult.DRAW, result.getOrDefault(GameResult.DRAW, 0) + 1);
-            }
-        }
-
-        return result;
-    }
-
-    public List<String> getPlayerNames() {
+    public List<Player> findPlayers() {
         return participants.stream()
                 .filter(participant -> participant instanceof Player)
                 .map(participant -> (Player) participant)
-                .map(Player::getName)
                 .toList();
     }
 
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
+    }
+
+    public List<String> getPlayerNames() {
+        return findPlayers().stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public Map<GameResult, Integer> calculateStatisticsForDealer() {
+        Map<GameResult, Integer> result = new HashMap<>();
+        Dealer dealer = findDealer();
+
+        for (Participant participant : participants) {
+            if (participant instanceof Dealer) {
+                continue;
+            }
+            Player player = (Player) participant;
+            GameResult gameResult = player.matchGame(dealer);
+            if (gameResult == GameResult.WIN) {
+                result.put(GameResult.LOSE, result.getOrDefault(GameResult.LOSE, 0) + 1);
+            }
+            if (gameResult == GameResult.LOSE) {
+                result.put(GameResult.WIN, result.getOrDefault(GameResult.WIN, 0) + 1);
+            }
+            if (gameResult == GameResult.DRAW) {
+                result.put(GameResult.DRAW, result.getOrDefault(GameResult.DRAW, 0) + 1);
+            }
+        }
+
+        return result;
     }
 }
