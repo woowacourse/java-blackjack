@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardDeck {
@@ -7,7 +8,7 @@ public class CardDeck {
     private static final int ACE_BONUS = 10;
     private final List<Card> cards;
     public CardDeck(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public Card hitCard() {
