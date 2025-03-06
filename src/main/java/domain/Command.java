@@ -19,6 +19,14 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
     }
 
+    public static boolean isYes(final String input) {
+        return Command.YES.getDisplayCommand().equals(input);
+    }
+
+    public static boolean isNo(final String input) {
+        return Command.NO.getDisplayCommand().equals(input);
+    }
+
 
     public String getDisplayCommand() {
         return displayCommand;
