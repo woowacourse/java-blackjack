@@ -58,8 +58,7 @@ public class OutputView {
     public static String getFormattedOpenedCard(Card card){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(card.getDenomination().getValue())
-                .append(card.getSuit().getShape())
-                .append("\n");
+                .append(card.getSuit().getShape());
         return stringBuilder.toString();
     }
 
@@ -77,7 +76,8 @@ public class OutputView {
 
     private static void printEveryoneCardsNames(List<Player> players, Dealer dealer, StringBuilder stringBuilder) {
         stringBuilder.append(String.format("%s카드: ", dealer.getName()));
-        stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()));
+        stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()))
+                .append(", (???)\n");
         for (Player player : players) {
             openHand(player, stringBuilder);
             stringBuilder.append("\n");
