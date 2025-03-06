@@ -100,24 +100,61 @@ public class GameManagerTest {
         Assertions.assertThat(result).isEqualTo(GameManger.WIN);
     }
 
-    @DisplayName("딜러와 유저의 총합이 같고 둘 다 블랙잭이라면 무승부를 반환한다")
-    @Test
-    void test8() {
+    @DisplayName("딜러와 유저의 총합이 같을 때 딜러가 블랙잭이라면 무승부 혹은 패배이다.")
+    @ParameterizedTest
+    @MethodSource("addCardDeck")
+    void test8(List<TrumpCard> playerCards, List<TrumpCard> dealerCards, int expectStatus) {
         //given
         GameManger gameManger = new GameManger(List.of("수양"));
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
-        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.ACE));
-        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.NINE));
-
-        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.ACE));
-        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.NINE));
+        for (TrumpCard card : playerCards) {
+            player.getCardDeck().addTrumpCard(card);
+        }
+        for (TrumpCard card : dealerCards) {
+            dealer.getCardDeck().addTrumpCard(card);
+        }
 
         //when
         int result = gameManger.compare(player);
 
         //then
-        Assertions.assertThat(result).isEqualTo(GameManger.MOO);
+        Assertions.assertThat(result).isEqualTo(expectStatus);
     }
+
+    private static Stream<Arguments> addCardDeck() {
+        return Stream.of(
+                Arguments.arguments(
+                        List.of(
+                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                        List.of(
+                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                        GameManger.MOO),
+                Arguments.arguments(
+                        List.of(
+                                new TrumpCard(CardShape.DIA, CardNumber.FIVE),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.SIX),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                        List.of(
+                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                        GameManger.LOSE),
+                Arguments.arguments(
+                        List.of(
+                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                        List.of(
+                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J),
+                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                        GameManger.MOO)
+        );
+
+    }
+
+
 }

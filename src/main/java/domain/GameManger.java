@@ -62,10 +62,9 @@ public class GameManger {
     }
 
     private int compareSameScore(User player) {
-        // - [ ] 총합이 같고 딜러가 블랙잭이 아니라면 무승부이다.
-        //        - [ ] 총합이 같고 딜러가 블랙잭이면 카드 갯수를 비교한다.
-        //            - [ ] 유저도 블랙잭이면 무승부이다.
-        //            - [ ] 유저가 블랙잭이 아니면 유저의 패배다.
-        return 0;
+        if (dealer.getCardDeck().isBlackjack() && !player.getCardDeck().isBlackjack()) {
+            return LOSE;
+        }
+        return MOO;
     }
 }
