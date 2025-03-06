@@ -5,8 +5,8 @@ import blackjack.domain.participants.Player;
 
 public class WinnerDecider {
 
-    private final Dealer dealer;
     public static final int MAX_SCORE = 21;
+    private final Dealer dealer;
 
     public WinnerDecider(Dealer dealer) {
         this.dealer = dealer;
