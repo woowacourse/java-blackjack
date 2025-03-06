@@ -63,6 +63,10 @@ public class Cards {
         return sum() == MAX_SUM_OF_CARDS;
     }
 
+    public boolean isBust() {
+        return sum() > MAX_SUM_OF_CARDS;
+    }
+
     public int count() {
         return cards.size();
     }

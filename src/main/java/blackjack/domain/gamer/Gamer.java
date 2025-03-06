@@ -25,9 +25,8 @@ public abstract class Gamer {
         return cards.count();
     }
 
-    // TODO: 연산로직을 Cards이 이동
     public boolean isBust() {
-        return cards.sum() > Cards.MAX_SUM_OF_CARDS;
+        return cards.isBust();
     }
 
     public int getSumOfCards() {
