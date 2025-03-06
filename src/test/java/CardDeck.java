@@ -19,12 +19,8 @@ public class CardDeck {
         return cards;
     }
 
-    public List<Card> getDeck() {
-        return deck;
-    }
-
-    public Card drawCard() {
-        return deck.removeLast();
+    public List<Card> shuffle(CardShuffler cardShuffler) {
+        return cardShuffler.shuffle(this.deck);
     }
 
     public List<Card> drawCardWhenStart() {
@@ -32,5 +28,13 @@ public class CardDeck {
         cards.add(drawCard());
         cards.add(drawCard());
         return cards;
+    }
+
+    public Card drawCard() {
+        return deck.removeLast();
+    }
+
+    public List<Card> getDeck() {
+        return deck;
     }
 }

@@ -1,6 +1,8 @@
 import java.util.List;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardDeckTest {
 
@@ -27,6 +29,18 @@ public class CardDeckTest {
     }
 
     @Test
+    void 카드를_1장_드로우하면_덱의_카드_수가_1개_줄어든다() {
+        //given
+        CardDeck cardDeck = new CardDeck();
+
+        //when
+        Card actual = cardDeck.drawCard();
+
+        //then
+        assertThat(cardDeck.getDeck()).hasSize(51);
+    }
+
+    @Test
     void 게임_시작을_위해_카드를_2장_드로우한다() {
         //given
         CardDeck cardDeck = new CardDeck();
@@ -39,5 +53,18 @@ public class CardDeckTest {
                 new Card(Pattern.SPADE, CardNumber.KING),
                 new Card(Pattern.SPADE, CardNumber.QUEEN));
         assertThat(actual).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void 카드들을_섞는다() {
+        //given
+        CardShuffler cardShuffler = new CardShuffler();
+        CardDeck cardDeck = new CardDeck();
+
+        //when
+        List<Card> actual = cardDeck.shuffle(cardShuffler);
+
+        //then
+        Assertions.assertThat(actual).isNotEqualTo(cardDeck.getDeck());
     }
 }
