@@ -46,7 +46,7 @@ public class Player {
         }
     }
 
-    public MatchResult calculateWinner(int sum){
-        return MatchResult.calculateWinner(sum, this.sum());
+    public MatchResult calculateWinner(int dealerSum){
+        return MatchResult.calculateWinner(dealerSum, this.sum());
     }
 }
