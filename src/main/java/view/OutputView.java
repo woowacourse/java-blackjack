@@ -15,15 +15,19 @@ public class OutputView {
         System.out.printf("%s카드: %s%n",
                 openCardsResponse.dealer().name(),
                 String.join(", ", openCardsResponse.dealer().cards().stream()
-                .map(card -> String.format("%s%s", card.getCardNumber().getTitle(), card.getCardShape().getTitle()))
-                .toList()));
+                        .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
+                                card.getCardShape().getTitle()))
+                        .toList()));
 
-        openCardsResponse.participants().forEach(player -> {
-            System.out.printf("%s카드: %s%n",
-                    player.name(),
-                    String.join(", ", player.cards().stream()
-                            .map(card -> String.format("%s%s", card.getCardNumber().getTitle(), card.getCardShape().getTitle()))
-                            .toList()));
-        });
+        openCardsResponse.participants().forEach(OutputView::printPlayerCards);
+    }
+
+    public static void printPlayerCards(PlayerResponse player) {
+        System.out.printf("%s카드: %s%n",
+                player.name(),
+                String.join(", ", player.cards().stream()
+                        .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
+                                card.getCardShape().getTitle()))
+                        .toList()));
     }
 }

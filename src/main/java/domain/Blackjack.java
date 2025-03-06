@@ -24,21 +24,41 @@ public class Blackjack {
         );
     }
 
+    public PlayerResponse addCardToCurrentParticipant(String name) {
+        Player participant = players.getPlayerByName(name);
+        participant.addCard(deck);
+        return new PlayerResponse(
+                participant.getName(),
+                participant.getCards().getCards()
+        );
+    }
+
+    public PlayerResponse getParticipantByName(String name) {
+        Player participant = players.getPlayerByName(name);
+        return new PlayerResponse(
+                participant.getName(),
+                participant.getCards().getCards()
+        );
+    }
+
     private PlayerResponse openDealerCards(Player player) {
         return new PlayerResponse(player.getName(), player.openInitialCards());
     }
 
-    private List<PlayerResponse> openParticipantsCards(List<Player> players) {
-        return players.stream()
+    private List<PlayerResponse> openParticipantsCards(List<Participant> participants) {
+        return participants.stream()
                 .map(participant -> new PlayerResponse(participant.getName(), participant.openInitialCards()))
                 .toList();
     }
 
-    private Player getDealer() {
+    public Player getDealer() {
         return players.getDealer();
     }
 
-    private List<Player> getParticipants() {
-        return players.getParticipants();
+    public List<Participant> getParticipants() {
+        return players.getParticipants()
+                .stream()
+                .map(player -> (Participant) player)
+                .toList();
     }
 }

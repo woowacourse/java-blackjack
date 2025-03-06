@@ -18,18 +18,37 @@ import view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        String names = InputView.inputParticipantName();
-        List<Participant> participants = createParticipants(names);
-        Dealer dealer = new Dealer();
-        Deck deck = DeckGenerator.generateDeck();
-        Players players = createPlayers(dealer, participants);
-        Blackjack blackjack = new Blackjack(players, deck);
+        Blackjack blackjack = createBlackjack();
         blackjack.distributeInitialCards();
 
         // 초기 카드 오픈
         OpenCardsResponse openCardsResponse = blackjack.openInitialCards();
         OutputView.printInitialCardsDistribution(openCardsResponse);
 
+        // 참여자들의 추가 카드 분배
+        List<Participant> participants = blackjack.getParticipants();
+        for (Participant participant : participants) {
+            boolean isDone = false;
+            while (!isDone) {
+                switch (YesOrNo.from(InputView.inputWantMoreCard(participant.getName()))) {
+                    case YES -> {
+                        OutputView.printPlayerCards(blackjack.addCardToCurrentParticipant(participant.getName()));
+                    }
+                    case NO -> {
+                        isDone = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private Blackjack createBlackjack() {
+        String names = InputView.inputParticipantName();
+        List<Participant> participants = createParticipants(names);
+        Dealer dealer = new Dealer();
+        Deck deck = DeckGenerator.generateDeck();
+        Players players = createPlayers(dealer, participants);
+        return new Blackjack(players, deck);
     }
 
     private List<Participant> createParticipants(String names) {

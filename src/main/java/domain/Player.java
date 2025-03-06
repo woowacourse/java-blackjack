@@ -19,6 +19,10 @@ public abstract class Player {
         getCards().addAll(deck.drawCards(2));
     }
 
+    public void addCard(Deck deck) {
+        getCards().addAll(deck.drawCards(1));
+    }
+
     public abstract List<Card> openInitialCards();
 
     private void validateName(String name) {

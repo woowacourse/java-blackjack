@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Players {
     private static final int MAX_SIZE = 6;
@@ -30,6 +31,13 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Player getPlayerByName(String name) {
+        return players.stream()
+                .filter(player -> Objects.equals(player.getName(), name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(name + ": 존재하지 않는 플레이어 이름입니다."));
     }
 
     public Dealer getDealer() {
