@@ -2,6 +2,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.Card;
+import domain.Cards;
+import domain.CardsInitializer;
+import domain.Dealer;
+import domain.Number;
+import domain.Player;
+import domain.Result;
+import domain.Symbol;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,19 +24,19 @@ class BlackJackTest {
 
     public static Stream<Arguments> provideJQK() {
         return Stream.of(
-                Arguments.of(Number.JACK, Number.QUEEN, Number.KING)
+                Arguments.of(domain.Number.JACK, domain.Number.QUEEN, domain.Number.KING)
         );
     }
 
     public static Stream<Arguments> provideEachCardsAndExpected() {
         return Stream.of(
                 Arguments.of(List.of(
-                                new Card(Symbol.COLVER, Number.JACK),
-                                new Card(Symbol.HEART, Number.FIVE)),
+                                new Card(Symbol.COLVER, domain.Number.JACK),
+                                new Card(Symbol.HEART, domain.Number.FIVE)),
                         15),
                 Arguments.of(List.of(
-                                new Card(Symbol.COLVER, Number.SEVEN),
-                                new Card(Symbol.HEART, Number.TEN)),
+                                new Card(Symbol.COLVER, domain.Number.SEVEN),
+                                new Card(Symbol.HEART, domain.Number.TEN)),
                         17)
         );
     }
@@ -54,14 +62,14 @@ class BlackJackTest {
     void hit() {
         //given
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FIVE));
 
         Player player = new Player("ad");
 
         //when
         player.hit(totalCards);
         Cards expected = new Cards();
-        expected.add(new Card(Symbol.HEART, Number.FIVE));
+        expected.add(new Card(Symbol.HEART, domain.Number.FIVE));
 
         //then
         assertThat(player.getCards()).isEqualTo(expected);
@@ -73,9 +81,9 @@ class BlackJackTest {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FOUR));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FOUR));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.JACK));
 
         player.hit(totalCards);
         player.hit(totalCards);
@@ -93,9 +101,9 @@ class BlackJackTest {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.KING));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
-        totalCards.add(new Card(Symbol.HEART, Number.TWO));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.KING));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.TWO));
 
         player.hit(totalCards);
         player.hit(totalCards);
@@ -114,11 +122,11 @@ class BlackJackTest {
         Player player = new Player("ad");
         Cards totalCards = new Cards();
 
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.FIVE));
 
         player.hit(totalCards);
         player.hit(totalCards);
@@ -135,9 +143,9 @@ class BlackJackTest {
     void burst2() {
         //given
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.KING));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
-        totalCards.add(new Card(Symbol.HEART, Number.TWO));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.KING));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.TWO));
 
         //when
         boolean actual = totalCards.isBurst();
@@ -151,8 +159,8 @@ class BlackJackTest {
     void notBurst() {
         //given
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.KING));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.KING));
+        totalCards.add(new Card(Symbol.HEART, domain.Number.JACK));
 
         //when
         boolean actual = totalCards.isBurst();
@@ -166,7 +174,7 @@ class BlackJackTest {
     void card() {
         //given
         final var symbol = Symbol.SPADE;
-        final var number = Number.ACE;
+        final var number = domain.Number.ACE;
 
         //when //then
         assertThatCode(() -> new Card(symbol, number))
@@ -191,7 +199,7 @@ class BlackJackTest {
         //given
 
         //when
-        Number[] values = Number.values();
+        domain.Number[] values = domain.Number.values();
 
         //then
         assertThat(values).hasSize(14);
@@ -201,7 +209,7 @@ class BlackJackTest {
     @Test
     void cardNumberPoint() {
         //given
-        Number five = Number.FIVE;
+        domain.Number five = domain.Number.FIVE;
 
         //when
 
@@ -212,7 +220,7 @@ class BlackJackTest {
     @DisplayName("J, Q, K 는 각각 10으로 계산한다.")
     @ParameterizedTest
     @MethodSource("provideJQK")
-    void cardNumberPointForJQK(Number number) {
+    void cardNumberPointForJQK(domain.Number number) {
         //given
 
         //when
@@ -227,7 +235,7 @@ class BlackJackTest {
     void addCard() {
         //given
         Cards cards = new Cards();
-        Card card = new Card(Symbol.COLVER, Number.FIVE);
+        Card card = new Card(Symbol.COLVER, domain.Number.FIVE);
         //when
 
         //then
@@ -257,7 +265,7 @@ class BlackJackTest {
     void extractCard() {
         //given
         Cards cards = new Cards();
-        Card card = new Card(Symbol.COLVER, Number.FIVE);
+        Card card = new Card(Symbol.COLVER, domain.Number.FIVE);
 
         cards.add(card);
 
@@ -273,8 +281,8 @@ class BlackJackTest {
     void considerAceHas11() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.COLVER, Number.KING);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card2 = new Card(Symbol.COLVER, domain.Number.KING);
 
         cards.add(card1);
         cards.add(card2);
@@ -291,8 +299,8 @@ class BlackJackTest {
     void considerAceHas112() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.HEART, Number.ACE);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card2 = new Card(Symbol.HEART, domain.Number.ACE);
 
         cards.add(card1);
         cards.add(card2);
@@ -309,10 +317,10 @@ class BlackJackTest {
     void considerAceHas113() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.COLVER, Number.ACE);
-        Card card3 = new Card(Symbol.COLVER, Number.ACE);
-        Card card4 = new Card(Symbol.COLVER, Number.ACE);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card2 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card3 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card4 = new Card(Symbol.COLVER, domain.Number.ACE);
 
         cards.add(card1);
         cards.add(card2);
@@ -333,10 +341,10 @@ class BlackJackTest {
         Player player = new Player("ad");
 
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.COLVER, Number.ACE);
-        Card card3 = new Card(Symbol.COLVER, Number.ACE);
-        Card card4 = new Card(Symbol.COLVER, Number.ACE);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card2 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card3 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card4 = new Card(Symbol.COLVER, domain.Number.ACE);
 
         cards.add(card1);
         cards.add(card2);
@@ -353,9 +361,9 @@ class BlackJackTest {
     void canHit() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.KING);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card2 = new Card(Symbol.HEART, domain.Number.TWO);
+        Card card3 = new Card(Symbol.SPADE, domain.Number.KING);
 
         cards.add(card1);
         cards.add(card2);
@@ -379,9 +387,9 @@ class BlackJackTest {
     void cannotHit() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.JACK);
-        Card card2 = new Card(Symbol.HEART, Number.NINE);
-        Card card3 = new Card(Symbol.SPADE, Number.KING);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.JACK);
+        Card card2 = new Card(Symbol.HEART, domain.Number.NINE);
+        Card card3 = new Card(Symbol.SPADE, domain.Number.KING);
 
         cards.add(card1);
         cards.add(card2);
@@ -405,12 +413,12 @@ class BlackJackTest {
     void judgeBurstDraw() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.THREE);
-        Card card2 = new Card(Symbol.HEART, Number.SIX);
-        Card card3 = new Card(Symbol.SPADE, Number.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.THREE);
+        Card card2 = new Card(Symbol.HEART, domain.Number.SIX);
+        Card card3 = new Card(Symbol.SPADE, domain.Number.JACK);
+        Card card4 = new Card(Symbol.DIAMOND, domain.Number.JACK);
+        Card card5 = new Card(Symbol.COLVER, domain.Number.SIX);
+        Card card6 = new Card(Symbol.HEART, domain.Number.JACK);
 
         cards.add(card1);
         cards.add(card2);
@@ -440,12 +448,12 @@ class BlackJackTest {
     void judgeNotBurstDraw() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.TWO);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.SIX);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.TWO);
+        Card card2 = new Card(Symbol.HEART, domain.Number.TWO);
+        Card card3 = new Card(Symbol.SPADE, domain.Number.SIX);
+        Card card4 = new Card(Symbol.DIAMOND, domain.Number.JACK);
+        Card card5 = new Card(Symbol.COLVER, domain.Number.SIX);
+        Card card6 = new Card(Symbol.HEART, domain.Number.JACK);
 
         cards.add(card1);
         cards.add(card2);
@@ -475,12 +483,12 @@ class BlackJackTest {
     void judgeOnlyOneBurstWin() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.TWO);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.TWO);
+        Card card2 = new Card(Symbol.HEART, domain.Number.TWO);
+        Card card3 = new Card(Symbol.SPADE, domain.Number.JACK);
+        Card card4 = new Card(Symbol.DIAMOND, domain.Number.JACK);
+        Card card5 = new Card(Symbol.COLVER, domain.Number.SIX);
+        Card card6 = new Card(Symbol.HEART, domain.Number.JACK);
 
         cards.add(card1);
         cards.add(card2);
@@ -509,12 +517,12 @@ class BlackJackTest {
     void judge() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, domain.Number.ACE);
+        Card card2 = new Card(Symbol.HEART, domain.Number.TWO);
+        Card card3 = new Card(Symbol.SPADE, domain.Number.JACK);
+        Card card4 = new Card(Symbol.DIAMOND, domain.Number.JACK);
+        Card card5 = new Card(Symbol.COLVER, domain.Number.SIX);
+        Card card6 = new Card(Symbol.HEART, domain.Number.JACK);
 
         cards.add(card1);
         cards.add(card2);

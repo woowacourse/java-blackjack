@@ -1,3 +1,5 @@
+package domain;
+
 public class Dealer extends Player {
 
     private static final int HIT_THRESHOLD = 16;

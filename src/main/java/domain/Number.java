@@ -1,3 +1,5 @@
+package domain;
+
 public enum Number {
 
     ACE(1),
