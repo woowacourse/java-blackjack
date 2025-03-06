@@ -8,7 +8,7 @@ public class CardShufflerTest {
     void 카드들을_섞는다() {
         //given
         CardShuffler cardShuffler = new CardShuffler();
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = CardDeck.createCards();
 
         //when
         List<Card> actual = cardShuffler.shuffle(cardDeck.getDeck());

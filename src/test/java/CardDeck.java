@@ -5,18 +5,18 @@ public class CardDeck {
 
     private final List<Card> deck;
 
-    public CardDeck() {
-        this.deck = createCards();
-    }
-
-    private List<Card> createCards() {
+    public static CardDeck createCards() {
         List<Card> cards = new ArrayList<>();
         for (Pattern pattern : Pattern.values()) {
             for (CardNumber cardNumber : CardNumber.values()) {
                 cards.add(new Card(pattern, cardNumber));
             }
         }
-        return cards;
+        return new CardDeck(cards);
+    }
+
+    private CardDeck(List<Card> deck) {
+        this.deck = deck;
     }
 
     public List<Card> shuffle(CardShuffler cardShuffler) {
