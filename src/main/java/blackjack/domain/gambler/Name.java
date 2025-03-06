@@ -20,6 +20,10 @@ public class Name {
         return name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
@@ -32,5 +36,10 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

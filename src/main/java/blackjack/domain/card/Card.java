@@ -9,11 +9,16 @@ public class Card {
         this.type = type;
     }
 
-    public int getValue() {
+    public int getTypeValue() {
         return type.getValue();
     }
 
     public boolean isAce() {
         return type == CardType.ACE;
+    }
+
+    @Override
+    public String toString() {
+        return type.getDisplayName() + shape.getDisplayName();
     }
 }

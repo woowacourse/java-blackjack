@@ -18,7 +18,7 @@ public class Hands {
 
     public int calculateSum() {
         int sum = cards.stream()
-                .mapToInt(Card::getValue)
+                .mapToInt(Card::getTypeValue)
                 .sum();
         long aceCount = cards.stream()
                 .filter(Card::isAce)

@@ -1,11 +1,18 @@
 package blackjack.domain.card;
 
 public enum CardShape {
-    DIAMOND(),
-    HEART(),
-    CLOVER(),
-    SPADE();
+    DIAMOND("다이아몬드"),
+    HEART("하트"),
+    CLOVER("클로버"),
+    SPADE("스페이드");
 
-    CardShape() {
+    private final String displayName;
+
+    CardShape(final String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +21,10 @@ public class DealerTest {
         dealer.addCard(card2);
 
         // when
-        Card result = dealer.getInitialCard();
+        List<Card> result = dealer.getInitialCard();
 
         // then
-        assertThat(result).isEqualTo(card1);
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.getFirst()).isEqualTo(card1);
     }
 }
