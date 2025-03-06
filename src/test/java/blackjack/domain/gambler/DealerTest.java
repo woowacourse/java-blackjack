@@ -14,7 +14,7 @@ public class DealerTest {
     @Test
     void getInitialCardsTest() {
         // given
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Name("딜러"));
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
         dealer.addCard(card1);

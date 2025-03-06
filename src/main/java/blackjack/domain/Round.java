@@ -4,88 +4,92 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Dealer;
+import blackjack.domain.gambler.Gambler;
 import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Player;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Round {
+    private static final Name DEALER = new Name("딜러");
+
     private final CardDeck cardDeck;
-    private final List<Player> players;
-    private final Dealer dealer;
+    private final List<Gambler> gamblers;
 
     public Round(final CardDeck cardDeck, final List<Name> playerNames) {
         this.cardDeck = cardDeck;
-        this.players = registerPlayers(playerNames);
-        this.dealer = new Dealer();
+        this.gamblers = registerGamblers(playerNames);
     }
 
-    private List<Player> registerPlayers(final List<Name> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
+    private List<Gambler> registerGamblers(final List<Name> playerNames) {
+        List<Gambler> gamblers = new ArrayList<>();
+        gamblers.add(new Dealer(DEALER));
+        for (final Name playerName : playerNames) {
+            Player player = new Player(playerName);
+            gamblers.add(player);
+        }
+        return gamblers;
     }
 
     public void distributeCards(final Name playerName, final int cardCount) {
-        Player foundPlayer = findPlayer(playerName);
+        Gambler foundGambler = findGambler(playerName);
         for (int i = 0; i < cardCount; i++) {
             Card card = cardDeck.getCard();
-            foundPlayer.addCard(card);
+            foundGambler.addCard(card);
         }
     }
 
-    public int getScoreByPlayer(Name name) {
-        return findPlayer(name).calculateScore();
-    }
-
-    public int getScoreByDealer() {
-        return dealer.calculateScore();
-    }
-
-    private Player findPlayer(Name name) {
-        return players.stream()
-                .filter(player -> player.isNameEquals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다:" + name));
+    public int getScore(final Name name) {
+        return findGambler(name).calculateScore();
     }
 
     public void distributeInitialCards() {
-        dealer.addCard(cardDeck.getCard());
-        dealer.addCard(cardDeck.getCard());
-        for (Player player : players) {
-            player.addCard(cardDeck.getCard());
-            player.addCard(cardDeck.getCard());
+        for (final Gambler gambler : gamblers) {
+            gambler.addCard(cardDeck.getCard());
+            gambler.addCard(cardDeck.getCard());
         }
     }
 
-    public WinningDiscriminator getWinningDiscriminator() {
-        int dealerScore = dealer.calculateScore();
-        Map<Name, Integer> playerScores = players.stream()
-                .collect(toMap(Player::getName, Player::calculateScore));
-        return new WinningDiscriminator(dealerScore, playerScores);
-    }
-
-    public List<Card> getCardsByPlayer(Name name) {
-        return findPlayer(name).getCards();
-    }
-
-    public List<Card> getCardsByDealer() {
-        return dealer.getCards();
+    public List<Card> getCards(final Name name) {
+        return findGambler(name).getCards();
     }
 
     public List<Card> getInitialCardsByDealer() {
+        Dealer dealer = findDealer();
         return dealer.getInitialCards();
     }
 
-    public void addDealerCard() {
-        dealer.addCard(cardDeck.getCard());
-    }
-
     public boolean dealerMustDraw() {
-        return dealer.mustDraw();
+        Gambler dealer = findGambler(DEALER);
+        return dealer.isScoreBelow(16);
     }
 
     public boolean isPlayerBusted(Name name) {
-        return findPlayer(name).isBust();
+        return !findGambler(name).isScoreBelow(21);
+    }
+
+    public WinningDiscriminator getWinningDiscriminator() {
+        Dealer dealer = findDealer();
+        int dealerScore = dealer.calculateScore();
+        Map<Name, Integer> playerScores = gamblers.stream()
+                .filter(gambler -> gambler instanceof Player)
+                .collect(toMap(Gambler::getName, Gambler::calculateScore));
+        return new WinningDiscriminator(dealerScore, playerScores);
+    }
+
+    private Gambler findGambler(final Name name) {
+        return gamblers.stream()
+                .filter(gambler -> gambler.isNameEquals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다:" + name));
+    }
+
+    private Dealer findDealer() {
+        Gambler gambler = findGambler(DEALER);
+        if (gambler instanceof Dealer) {
+            return (Dealer) gambler;
+        }
+        throw new IllegalArgumentException("딜러가 존재하지 않습니다.");
     }
 }

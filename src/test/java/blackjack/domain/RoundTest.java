@@ -30,17 +30,17 @@ class RoundTest {
         round.distributeCards(new Name("라젤"), 2);
 
         // then
-        assertThat(round.getScoreByPlayer(playerName)).isEqualTo(18);
+        assertThat(round.getScore(playerName)).isEqualTo(18);
     }
 
     @DisplayName("게임 시작 시, 플레이어와 딜러에게 2장씩 카드를 지급한다")
     @Test
     void distributeInitialCardsTest() {
         // given
-        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
-        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card1 = new Card(CardShape.CLOVER, CardType.FIVE);
+        Card card2 = new Card(CardShape.HEART, CardType.ACE);
         Card card3 = new Card(CardShape.CLOVER, CardType.TEN);
-        Card card4 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card4 = new Card(CardShape.HEART, CardType.KING);
         CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4), shuffler);
 
         Name playerName = new Name("라젤");
@@ -51,10 +51,11 @@ class RoundTest {
         round.distributeInitialCards();
 
         // then
-        // TODO: 플레이어가 2장 받았는지 체크할 것!
-        assertThat(round.getScoreByPlayer(playerName)).isNotZero();
-        assertThat(round.getCardsByDealer().size()).isEqualTo(2);
-        assertThat(round.getScoreByDealer()).isNotZero();
+        assertThat(round.getScore(playerName)).isNotZero();
+        assertThat(round.getCards(new Name("딜러")).size()).isEqualTo(2);
+        assertThat(round.getScore(new Name("딜러"))).isEqualTo(16);
+        assertThat(round.getCards(playerName).size()).isEqualTo(2);
+        assertThat(round.getScore(playerName)).isEqualTo(20);
     }
 
     @DisplayName("게임 시작 시, 플레이어와 딜러에게 2장씩 카드를 지급한다")
