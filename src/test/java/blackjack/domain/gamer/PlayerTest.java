@@ -7,11 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardType;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
+import blackjack.fixture.DeckFixture;
 
 class PlayerTest {
 
@@ -20,7 +19,6 @@ class PlayerTest {
     void playerGetCardsTest() {
         Player player = new Player("Pobi");
         player.initialize(Deck.generateFrom(new RandomCardStrategy()));
-
         assertThat(player.getCards()).hasSize(2);
     }
 
@@ -33,13 +31,10 @@ class PlayerTest {
     @DisplayName("버스트되었을 경우 카드를 추가로 지급받을 수 없다")
     void canReceiveAdditionalCards1(CardNumber cardNumber1, CardNumber cardNumber2,
         CardNumber cardNumber3, boolean expected) {
-        Card card1 = new Card(CardType.CLOVER, cardNumber1);
-        Card card2 = new Card(CardType.HEART, cardNumber2);
-        Card card3 = new Card(CardType.DIAMOND, cardNumber3);
         Player player = new Player("Pobi");
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
+        Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
+        player.initialize(deck);
+        player.drawCard(deck);
 
         assertThat(player.canReceiveAdditionalCards()).isEqualTo(expected);
     }
@@ -52,12 +47,8 @@ class PlayerTest {
     })
     @DisplayName("버스트되지 않았을 경우 카드를 추가로 지급받을 수 있다")
     void canReceiveAdditionalCards2(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Card card1 = new Card(CardType.CLOVER, cardNumber1);
-        Card card2 = new Card(CardType.HEART, cardNumber2);
         Player player = new Player("Pobi");
-        player.addCard(card1);
-        player.addCard(card2);
-
+        player.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
         assertThat(player.canReceiveAdditionalCards()).isEqualTo(expected);
     }
 }

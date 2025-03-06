@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
+import blackjack.fixture.DeckFixture;
 
 class DeckTest {
 
@@ -24,11 +25,7 @@ class DeckTest {
     @Test
     @DisplayName("덱의 맨 위에서부터 카드를 뽑는다")
     void drawTest() {
-        Stack<Card> expected = new Stack<>();
-        expected.add(new Card(CardType.CLOVER, CardNumber.ACE));
-        expected.add(new Card(CardType.CLOVER, CardNumber.TWO));
-        expected.add(new Card(CardType.CLOVER, CardNumber.THREE));
-        Deck deck = Deck.generateFrom(() -> expected);
+        Deck deck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO, CardNumber.THREE);
 
         assertThat(deck.draw()).isEqualTo(new Card(CardType.CLOVER, CardNumber.THREE));
         assertThat(deck.draw()).isEqualTo(new Card(CardType.CLOVER, CardNumber.TWO));

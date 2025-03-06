@@ -2,13 +2,18 @@ package blackjack.domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.RoundResult;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardType;
+import blackjack.domain.deck.Deck;
+import blackjack.fixture.DeckFixture;
 
 class GamerTest {
 
@@ -20,13 +25,9 @@ class GamerTest {
     })
     @DisplayName("21이하인 경우 버스트되지 않는다")
     void isBustTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Card card1 = new Card(CardType.CLOVER, cardNumber1);
-        Card card2 = new Card(CardType.CLOVER, cardNumber2);
-        Player player = new Player("Pobi");
-        player.addCard(card1);
-        player.addCard(card2);
-
-        assertThat(player.isBust()).isEqualTo(expected);
+        Gamer gamer = new Player("Pobi");
+        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        assertThat(gamer.isBust()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -38,15 +39,11 @@ class GamerTest {
     @DisplayName("21초과인 경우 버스트된다")
     void isBustTest2(CardNumber cardNumber1, CardNumber cardNumber2,
         CardNumber cardNumber3, boolean expected) {
-        Card card1 = new Card(CardType.CLOVER, cardNumber1);
-        Card card2 = new Card(CardType.CLOVER, cardNumber2);
-        Card card3 = new Card(CardType.CLOVER, cardNumber3);
-        Player player = new Player("Pobi");
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
-
-        assertThat(player.isBust()).isEqualTo(expected);
+        Gamer gamer = new Player("Pobi");
+        Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
+        gamer.initialize(deck);
+        gamer.drawCard(deck);
+        assertThat(gamer.isBust()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -57,13 +54,9 @@ class GamerTest {
     })
     @DisplayName("버스트되지 않으면 Ace는 11로 계산한다")
     void getSumOfCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
-        Card card1 = new Card(CardType.CLOVER, cardNumber1);
-        Card card2 = new Card(CardType.HEART, cardNumber2);
-        Dealer dealer = new Dealer();
-        dealer.addCard(card1);
-        dealer.addCard(card2);
-
-        assertThat(dealer.getSumOfCards()).isEqualTo(expected);
+        Gamer gamer = new Dealer();
+        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        assertThat(gamer.getSumOfCards()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -73,17 +66,13 @@ class GamerTest {
         "ACE,QUEEN,KING,21",
     })
     @DisplayName("버스트될 것 같으면 Ace는 1로 계산한다")
-    void getSumOfCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2,
-        CardNumber cardNumber3, int expected) {
-        Card card1 = new Card(CardType.CLOVER, cardNumber1);
-        Card card2 = new Card(CardType.HEART, cardNumber2);
-        Card card3 = new Card(CardType.DIAMOND, cardNumber3);
-        Dealer dealer = new Dealer();
-        dealer.addCard(card1);
-        dealer.addCard(card2);
-        dealer.addCard(card3);
+    void getSumOfCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, int expected) {
+        Gamer gamer = new Dealer();
+        Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
+        gamer.initialize(deck);
+        gamer.drawCard(deck);
 
-        assertThat(dealer.getSumOfCards()).isEqualTo(expected);
+        assertThat(gamer.getSumOfCards()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -94,35 +83,38 @@ class GamerTest {
     })
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
-        Card card1 = new Card(CardType.CLOVER, cardNumber1);
-        Card card2 = new Card(CardType.HEART, cardNumber2);
-        Player player = new Player("Pobi");
-        player.addCard(card1);
-        player.addCard(card2);
-
-        assertThat(player.isBlackjack()).isEqualTo(expected);
+        Gamer gamer = new Player("Pobi");
+        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        assertThat(gamer .isBlackjack()).isEqualTo(expected);
     }
 
     // TODO Fixture 생성 후 진행
-/*
     @Test
+    @DisplayName("")
     void getFinalResultTest() {
         Gamer dealer = new Dealer();
-        Player aa = new Player("aa");
-        Player bb = new Player("bb");
-        Player cc = new Player("cc");
-        dealer.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        dealer.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        aa.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        aa.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        bb.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        bb.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        cc.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        cc.drawCard(Deck.generateFrom(() -> new Stack<>()));
-        List<Gamer> players = List.of(aa, bb, cc);
+        Player a = new Player("aa");
+        Player b = new Player("bb");
+        Player c = new Player("cc");
+
+        Deck dealerDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX);
+        Deck aDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK);
+        Deck bDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO);
+        Deck cDeck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE);
+
+        dealer.drawCard(dealerDeck);
+        dealer.drawCard(dealerDeck);
+        a.drawCard(aDeck);
+        a.drawCard(aDeck);
+        b.drawCard(bDeck);
+        b.drawCard(bDeck);
+        c.drawCard(cDeck);
+        c.drawCard(cDeck);
+
+        List<Gamer> players = List.of(a, b, c);
         Map<RoundResult, Integer> finalResult = dealer.getFinalResult(players);
-        assertThat(finalResult.get(RoundResult.WIN)).isEqualTo(1);
-        assertThat(finalResult.get(RoundResult.LOSE)).isEqualTo(2);
-        assertThat(finalResult.get(RoundResult.TIE)).isEqualTo(0);
-    }*/
+        assertThat(finalResult.getOrDefault(RoundResult.WIN, 0)).isEqualTo(2);
+        assertThat(finalResult.getOrDefault(RoundResult.LOSE, 0)).isEqualTo(1);
+        assertThat(finalResult.getOrDefault(RoundResult.TIE, 0)).isEqualTo(0);
+    }
 }

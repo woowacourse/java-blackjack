@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-// TODO: 테스트 리팩토링 - 단위테스트, 파라미터라이즈드, 픽스처
+// TODO: 테스트 리팩토링 - , 픽스처, given when then
 class CardNumberTest {
 
     @ParameterizedTest
