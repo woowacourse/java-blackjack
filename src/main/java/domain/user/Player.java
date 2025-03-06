@@ -18,6 +18,4 @@ public class Player extends User {
     public List<TrumpCard> openCard() {
         return this.cardDeck.getAllCard();
     }
-
-
 }

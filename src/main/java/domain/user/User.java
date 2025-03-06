@@ -6,11 +6,11 @@ import domain.TrumpCard;
 import java.util.List;
 
 public abstract class User {
-    protected final String name;
+    protected final UserInformation userInformation;
     protected final CardDeck cardDeck;
 
     public User(String name) {
-        this.name = name;
+        this.userInformation = new UserInformation(name);
         this.cardDeck = new CardDeck();
     }
 
@@ -22,11 +22,11 @@ public abstract class User {
     }
 
     public boolean has(String name) {
-        return this.name.equals(name);
+        return getName().equals(name);
     }
 
     public String getName() {
-        return this.name;
+        return this.userInformation.getName();
     }
 
     public int getSize() {
@@ -37,5 +37,9 @@ public abstract class User {
 
     public CardDeck getCardDeck() {
         return this.cardDeck;
+    }
+
+    public void burst() {
+        this.userInformation.burst();
     }
 }

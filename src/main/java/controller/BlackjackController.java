@@ -61,6 +61,7 @@ public class BlackjackController {
             player.drawCard();
             displayOpenCard(playerName, player);
         }
+        player.burst();
     }
 
     private void displayOpenCard(String playerName, User player) {
