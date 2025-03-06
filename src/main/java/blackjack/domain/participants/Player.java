@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.BlackjackConstants.MAX_SCORE;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -35,6 +37,6 @@ public class Player {
 
     public boolean canSend() {
         int minScore = cards.calculateMinScore();
-        return minScore < 21;
+        return minScore < MAX_SCORE.getSymbol();
     }
 }

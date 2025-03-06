@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.WinnerDecider.MAX_SCORE;
+import static blackjack.domain.BlackjackConstants.MAX_SCORE;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ScoreCalculator {
         int min = Integer.MAX_VALUE;
         for (int score : scores) {
             int sum = maxDfs(depth + 1, totalScore + score, cards);
-            if (sum > MAX_SCORE) {
+            if (sum > MAX_SCORE.getSymbol()) {
                 min = Math.min(min, sum);
                 continue;
             }

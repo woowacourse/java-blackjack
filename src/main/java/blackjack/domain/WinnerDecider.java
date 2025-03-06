@@ -1,11 +1,12 @@
 package blackjack.domain;
 
+import static blackjack.domain.BlackjackConstants.MAX_SCORE;
+
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 
 public class WinnerDecider {
 
-    public static final int MAX_SCORE = 21;
     private final Dealer dealer;
 
     public WinnerDecider(Dealer dealer) {
@@ -16,7 +17,7 @@ public class WinnerDecider {
         int dealerScore = dealer.calculateMaxScore();
         int playerScore = player.calculateMaxScore();
 
-        if (playerScore > MAX_SCORE) {
+        if (playerScore > MAX_SCORE.getSymbol()) {
             return WinningResult.LOSE;
         }
 
@@ -24,7 +25,7 @@ public class WinnerDecider {
             return WinningResult.LOSE;
         }
 
-        if (dealerScore > MAX_SCORE) {
+        if (dealerScore > MAX_SCORE.getSymbol()) {
             return WinningResult.WIN;
         }
 

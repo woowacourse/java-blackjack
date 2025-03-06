@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.WinnerDecider.MAX_SCORE;
+import static blackjack.domain.BlackjackConstants.MAX_SCORE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,7 +48,7 @@ public class Cards {
 
     public void take(Card... cards) {
         int minScore = scoreCalculator.calculateMaxScore(this.cards);
-        if (minScore >= MAX_SCORE) {
+        if (minScore >= MAX_SCORE.getSymbol()) {
             throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
         }
         this.cards.addAll(Arrays.asList(cards));
