@@ -16,6 +16,14 @@ public class Card {
         return number.getCoordinates();
     }
 
+    public CardNumber getCardNumber() {
+        return number;
+    }
+
+    public CardShape getCardShape() {
+        return shape;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
