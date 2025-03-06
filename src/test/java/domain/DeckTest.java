@@ -66,4 +66,24 @@ public class DeckTest {
         //then
         assertThat(player.getCards()).contains(card);
     }
+
+    @DisplayName("딜러 카드의 합이 17 이상이 될 때까지 뽑은 횟수를 반환한다")
+    @Test
+    void 딜러가_뽑은_횟수_검증() {
+        //given
+        Card card1 = new Card(CardNumber.A, CardShape.CLOVER);
+        Card card2 = new Card(CardNumber.A, CardShape.HEART);
+        Deck deck = new Deck(() -> new ArrayList<>(List.of(card1, card2)));
+        Dealer dealer = Dealer.of(Cards.of(
+                List.of(
+                        new Card(CardNumber.TEN, CardShape.CLOVER),
+                        new Card(CardNumber.FIVE, CardShape.CLOVER)
+                )
+        ));
+
+        //when
+        int count = deck.countDealerDraw(dealer);
+        //then
+        assertThat(count).isEqualTo(2);
+    }
 }
