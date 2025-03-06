@@ -27,4 +27,17 @@ public class PlayerTest {
         assertDoesNotThrow(() -> player.hitCards(dealer));
     }
 
+    @Test
+    @DisplayName("카드 추가 테스트")
+    void addCardTest() {
+        //given
+        CardDeckFactory cardDeckFactory = new CardDeckFactory();
+        CardDeck cardDeck = cardDeckFactory.create();
+        Dealer dealer = new Dealer(cardDeck);
+        Player player = new Player("pobi");
+
+        //when-then
+        assertDoesNotThrow(() -> player.addCard(dealer));
+    }
+
 }
