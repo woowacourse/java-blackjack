@@ -8,8 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-    private ScoreCalculator scoreCalculator = new ScoreCalculator();
-
     @Test
     void 플레이어_수가_최대_10명을_넘으면_예외가_발생한다() {
         //given
