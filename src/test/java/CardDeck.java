@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CardDeck {
@@ -10,11 +11,17 @@ public class CardDeck {
     public static CardDeck createCards() {
         List<Card> cards = new ArrayList<>();
         for (Pattern pattern : Pattern.values()) {
-            for (CardNumber cardNumber : CardNumber.values()) {
+            for (CardNumber cardNumber : createCardNumbers()) {
                 cards.add(new Card(pattern, cardNumber));
             }
         }
         return new CardDeck(cards);
+    }
+
+    private static List<CardNumber> createCardNumbers() {
+        return Arrays.stream(CardNumber.values())
+                .filter(createNumber -> createNumber != CardNumber.ACE_ANOTHER)
+                .toList();
     }
 
     private CardDeck(List<Card> deck) {
