@@ -2,8 +2,8 @@ package model;
 
 public enum GameResult {
     WIN("승"),
-    LOSE("패"),
     DRAW("무"),
+    LOSE("패")
     ;
 
     private final String resultMeaning;
@@ -12,4 +12,7 @@ public enum GameResult {
         this.resultMeaning = resultMeaning;
     }
 
+    public String getResultMeaning() {
+        return resultMeaning;
+    }
 }

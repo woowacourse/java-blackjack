@@ -1,9 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import model.Dealer;
 import model.Deck;
+import model.GameResult;
+import model.Judge;
 import model.Player;
 import model.Players;
 import view.InputView;
@@ -37,6 +40,16 @@ public class BlackjackController {
             dealer.receiveCard(deck.pick());
         }
 
-        OutputView.printFinalResult(dealer, players);
+        OutputView.printFinalScore(dealer, players);
+
+        Judge judge = new Judge();
+        Map<GameResult, Integer> dealerWinning = judge.decideDealerWinning(dealer, players);
+
+        OutputView.printFinalResult(dealerWinning);
+
+        for (Player player : players.getPlayers()) {
+            GameResult playerResult = judge.checkPlayerWin(dealer, player);
+            OutputView.printPlayerFinalResult(player, playerResult);
+        }
     }
 }

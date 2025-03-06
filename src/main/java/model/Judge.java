@@ -19,19 +19,24 @@ public class Judge {
         return GameResult.DRAW;
     }
 
-    public Map<GameResult, Integer> decideDealerWinning(List<GameResult> playerResult) {
+    public Map<GameResult, Integer> decideDealerWinning(Dealer dealer, Players players) {
         Map<GameResult, Integer> dealerResult = new HashMap<>();
-        for (GameResult gameResult : playerResult){
-            if (gameResult == GameResult.WIN){
-                dealerResult.merge(GameResult.LOSE, 1, Integer::sum);
-            }
-            if (gameResult == GameResult.LOSE){
-                dealerResult.merge(GameResult.WIN, 1, Integer::sum);
-            }
-            if (gameResult == GameResult.DRAW){
-                dealerResult.merge(GameResult.DRAW, 1, Integer::sum);
-            }
+        for (Player p : players.getPlayers()){
+            GameResult playerGameResult = checkPlayerWin(dealer, p);
+            decideDealerResult(playerGameResult, dealerResult);
         }
         return dealerResult;
+    }
+
+    private void decideDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
+        if (gameResult == GameResult.WIN){ //TODO : 메서드명 수정 필요
+            dealerResult.merge(GameResult.LOSE, 1, Integer::sum);
+        }
+        if (gameResult == GameResult.LOSE){
+            dealerResult.merge(GameResult.WIN, 1, Integer::sum);
+        }
+        if (gameResult == GameResult.DRAW){
+            dealerResult.merge(GameResult.DRAW, 1, Integer::sum);
+        }
     }
 }

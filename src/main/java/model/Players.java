@@ -21,13 +21,6 @@ public class Players {
         );
     }
 
-    private static void validateDuplication(List<String> playerNames) {
-        Set<String> uniqueNames = new HashSet<>(playerNames);
-        if (uniqueNames.size() != playerNames.size()) {
-            throw new IllegalArgumentException();
-        }
-    }
-
     public void startDeal(Deck deck) {
         for (Player player : players) {
             player.dealInitialCards(deck);
@@ -36,5 +29,12 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    private static void validateDuplication(List<String> playerNames) {
+        Set<String> uniqueNames = new HashSet<>(playerNames);
+        if (uniqueNames.size() != playerNames.size()) {
+            throw new IllegalArgumentException();
+        }
     }
 }

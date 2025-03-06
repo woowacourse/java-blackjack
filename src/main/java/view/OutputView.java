@@ -1,8 +1,10 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 import model.Card;
 import model.Dealer;
+import model.GameResult;
 import model.Player;
 import model.Players;
 
@@ -41,7 +43,7 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalResult(Dealer dealer, Players players) {
+    public static void printFinalScore(Dealer dealer, Players players) {
         List<String> dealerCardNames = dealer.getHandCards().stream().map(Card::getCardName).toList();
         System.out.print("딜러카드: " + String.join(", ", dealerCardNames));
         System.out.println(" - 결과: " + dealer.getParticipantHand().calculateFinalScore());
@@ -51,5 +53,24 @@ public class OutputView {
             System.out.print(player.getName() + "카드: " + String.join(", ", playerCardNames));
             System.out.println(" - 결과: " + player.getParticipantHand().calculateFinalScore());
         }
+    }
+
+    public static void printFinalResult(Map<GameResult, Integer> dealerWinning) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + getGameResultMessage(dealerWinning));
+    }
+
+    private static String getGameResultMessage(Map<GameResult, Integer> dealerWinning) {
+        String message = "";
+        for (GameResult gameResult : GameResult.values()) {
+            if (dealerWinning.containsKey(gameResult)) {
+                message += (dealerWinning.get(gameResult) + gameResult.getResultMeaning() + " ");
+            }
+        }
+        return message;
+    }
+
+    public static void printPlayerFinalResult(Player player, GameResult playerResult) {
+        System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
     }
 }
