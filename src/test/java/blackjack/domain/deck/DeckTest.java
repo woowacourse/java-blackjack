@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardType;
+import blackjack.fixture.CardFixture;
 import blackjack.fixture.DeckFixture;
 
 class DeckTest {
@@ -27,8 +27,8 @@ class DeckTest {
     void drawTest() {
         Deck deck = DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO, CardNumber.THREE);
 
-        assertThat(deck.draw()).isEqualTo(new Card(CardType.CLOVER, CardNumber.THREE));
-        assertThat(deck.draw()).isEqualTo(new Card(CardType.CLOVER, CardNumber.TWO));
-        assertThat(deck.draw()).isEqualTo(new Card(CardType.CLOVER, CardNumber.ACE));
+        assertThat(deck.draw()).isEqualTo(CardFixture.cardOf(CardNumber.THREE));
+        assertThat(deck.draw()).isEqualTo(CardFixture.cardOf(CardNumber.TWO));
+        assertThat(deck.draw()).isEqualTo(CardFixture.cardOf(CardNumber.ACE));
     }
 }
