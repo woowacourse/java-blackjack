@@ -15,28 +15,47 @@ public class BlackJack {
 
     private final List<Player> players = new ArrayList<>();
     private final Dealer dealer = new Dealer();
+    private final Deck deck = new Deck();
 
     public void play() {
         Scanner sc = new Scanner(System.in);
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String playersInput = sc.nextLine();
-        List<String> playerNames = Arrays.asList(playersInput.split(DELIMITER));
+        enterPlayer(playersInput);
 
-        if (playerNames.size() > 5) {
-            throw new IllegalArgumentException("플레이어는 5명까지만 입력해주세요.");
-        }
+        distributeCards(deck);
 
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName.trim()));
-        }
+        printDistributeResult();
 
-        Deck deck = new Deck();
-        deck.shuffle();
-        drawTwoCardFromDeck(dealer, deck);
         for (Player player : players) {
-            drawTwoCardFromDeck(player, deck);
+            askPlayersChoice(player, deck);
         }
+    }
 
+    public void askPlayersChoice(Player player, Deck deck) {
+        Scanner sc = new Scanner(System.in);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while (true) {
+            System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+            String ynInput = sc.nextLine();
+            if (ynInput.equalsIgnoreCase("y")) {
+                drawOneMoreCard(player, stringBuilder);
+            }
+            if (ynInput.equalsIgnoreCase("n")) {
+                return;
+            }
+        }
+    }
+
+    private void drawOneMoreCard(Player player, StringBuilder stringBuilder) {
+        player.addCard(deck.draw());
+        printHand(player, stringBuilder);
+        System.out.println(stringBuilder);
+        resolveBurst(player);
+    }
+
+    private void printDistributeResult() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ")
                 .append(players.stream().map(Player::getName).collect(Collectors.joining(",")))
@@ -49,24 +68,27 @@ public class BlackJack {
         }
 
         System.out.println(stringBuilder);
+    }
 
-        stringBuilder = new StringBuilder();
+    private void distributeCards(Deck deck) {
+        deck.shuffle();
+        drawTwoCardFromDeck(dealer, deck);
         for (Player player : players) {
-            while(true) {
-                System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-                String ynInput = sc.nextLine();
-                if (ynInput.equals("y")) {
-                    player.addCard(deck.draw());
-                    printHand(player, stringBuilder);
-                    System.out.println(stringBuilder);
-                    if(player.isHandBurst()) {
-                        System.out.println("Burst!! You Die!!");
-                       break;
-                    }
-                    continue;
-                }
-                break;
-            }
+            drawTwoCardFromDeck(player, deck);
+        }
+    }
+
+    private void enterPlayer(String playersInput) {
+        List<String> playerNames = Arrays.asList(playersInput.split(DELIMITER));
+        validateMaxPlayer(playerNames);
+        for (String playerName : playerNames) {
+            players.add(new Player(playerName.trim()));
+        }
+    }
+
+    private static void validateMaxPlayer(List<String> playerNames) {
+        if (playerNames.size() > 5) {
+            throw new IllegalArgumentException("플레이어는 5명까지만 입력해주세요.");
         }
     }
 
@@ -80,5 +102,13 @@ public class BlackJack {
     private void drawTwoCardFromDeck(Player player, Deck deck) {
         player.addCard(deck.draw());
         player.addCard(deck.draw());
+    }
+
+    public boolean resolveBurst(Player player) {
+        if (player.isHandBurst() && player.containsOriginalAce()) {
+            player.setOriginalAceValueToOne();
+            resolveBurst(player);
+        }
+        return !player.isHandBurst();
     }
 }

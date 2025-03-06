@@ -29,6 +29,14 @@ public class Player {
         return hand.isBurst();
     }
 
+    public boolean containsOriginalAce() {
+        return hand.containsOriginalAce();
+    }
+
+    public void setOriginalAceValueToOne() {
+        hand.setOriginalAceValueToOne();
+    }
+
     public String getName() {
         return name;
     }

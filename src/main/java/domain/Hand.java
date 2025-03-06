@@ -18,10 +18,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public boolean containsOriginalAce() {
         return cards.stream().anyMatch(originalAcePredicate());
     }
@@ -44,5 +40,9 @@ public class Hand {
 
     public int getTotal() {
         return cards.stream().mapToInt(Card::getValue).sum();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
