@@ -12,9 +12,7 @@ public abstract class Gamer {
         this.hand = new Hand();
     }
 
-    public int calculateSumOfRank() {
-        return hand.getSumOfRank();
-    }
+    public abstract int calculateSumOfRank();
 
     public boolean isBust() {
         return hand.isBust();
