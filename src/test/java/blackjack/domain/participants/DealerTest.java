@@ -55,16 +55,16 @@ public class DealerTest {
         dealer.prepareBlackjack(new FixCardsShuffler());
 
         //then
-        Assertions.assertThat(dealer.getCards())
+        Assertions.assertThat(dealer.getCards().getCards())
                 .isEqualTo(List.of(
                         new Card(Suit.SPADE, Rank.ONE),
                         new Card(Suit.HEART, Rank.ONE)
                 ));
-        Assertions.assertThat(players.getPlayers().get(0).getCards())
+        Assertions.assertThat(players.getPlayers().get(0).getCards().getCards())
                 .isEqualTo(List.of(
                         new Card(Suit.DIAMOND, Rank.ONE),
                         new Card(Suit.CLUB, Rank.ONE)));
-        Assertions.assertThat(players.getPlayers().get(1).getCards())
+        Assertions.assertThat(players.getPlayers().get(1).getCards().getCards())
                 .isEqualTo(List.of(
                         new Card(Suit.CLUB, Rank.FIVE),
                         new Card(Suit.CLUB, Rank.FOUR)));
@@ -98,7 +98,7 @@ public class DealerTest {
         dealer.pickAdditionalCard();
 
         //then
-        Assertions.assertThat(dealer.getCards())
+        Assertions.assertThat(dealer.getCards().getCards())
                 .isEqualTo(List.of(
                         new Card(Suit.CLUB, Rank.FIVE),
                         new Card(Suit.CLUB, Rank.FOUR),

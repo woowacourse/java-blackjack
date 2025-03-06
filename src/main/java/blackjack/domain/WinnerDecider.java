@@ -1,53 +1,43 @@
 package blackjack.domain;
 
-import static blackjack.domain.BlackjackConstants.BURST_THRESHOLD;
+import static blackjack.domain.BlackjackConstants.BUST_THRESHOLD;
 
-import blackjack.domain.participants.Dealer;
-import blackjack.domain.participants.Player;
+import blackjack.domain.card.Cards;
 
 public class WinnerDecider {
 
-    private final Dealer dealer;
+    public WinningResult decideWinning(Cards mainCards, Cards subCards) {
+        int mainScore = mainCards.calculateMaxScore();
+        int subScore = subCards.calculateMaxScore();
 
-    public WinnerDecider(Dealer dealer) {
-        this.dealer = dealer;
-    }
-
-    public WinningResult decidePlayerWinning(Player player) {
-        int dealerScore = dealer.calculateMaxScore();
-        int playerScore = player.calculateMaxScore();
-
-        if (playerScore > BURST_THRESHOLD.getSymbol()) {
-            return WinningResult.LOSE;
-        }
-
-        if (dealer.isBlackjack() && !player.isBlackjack()) {
-            return WinningResult.LOSE;
-        }
-
-        if (dealerScore > BURST_THRESHOLD.getSymbol()) {
-            return WinningResult.WIN;
-        }
-
-        if (dealerScore == playerScore) {
+        if (mainScore > BUST_THRESHOLD.getSymbol() && subScore > BUST_THRESHOLD.getSymbol()) {
             return WinningResult.DRAW;
         }
-        if (dealerScore > playerScore) {
-            return WinningResult.LOSE;
-        }
-        return WinningResult.WIN;
-    }
 
-    public WinningResult decideDealerWinning(Player player) {
-        WinningResult winningResult = decidePlayerWinning(player);
-        if (winningResult == WinningResult.WIN) {
+        if (mainScore > BUST_THRESHOLD.getSymbol()) {
             return WinningResult.LOSE;
         }
-        if (winningResult == WinningResult.LOSE) {
+
+        if (subScore > BUST_THRESHOLD.getSymbol()) {
             return WinningResult.WIN;
         }
-        return WinningResult.DRAW;
+
+        if (mainCards.isBlackjack() && !subCards.isBlackjack()) {
+            return WinningResult.WIN;
+        }
+
+        if (subCards.isBlackjack() && !mainCards.isBlackjack()) {
+            return WinningResult.LOSE;
+        }
+
+        if (mainScore == subScore) {
+            return WinningResult.DRAW;
+        }
+
+        if (mainScore > subScore) {
+            return WinningResult.WIN;
+        }
+
+        return WinningResult.LOSE;
     }
-
-
 }

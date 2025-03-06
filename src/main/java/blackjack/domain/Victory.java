@@ -13,13 +13,13 @@ public class Victory {
     public static Victory create(Dealer dealer, Players players) {
         Map<Player, WinningResult> playerVictoryResults = new HashMap<>();
         Map<WinningResult, Integer> dealerVictoryResults = new HashMap<>();
-        WinnerDecider winnerDecider = new WinnerDecider(dealer);
+        WinnerDecider winnerDecider = new WinnerDecider();
 
         players.sendAll((player -> {
-            WinningResult playerWinningResult = winnerDecider.decidePlayerWinning(player);
+            WinningResult playerWinningResult = winnerDecider.decideWinning(player.getCards(), dealer.getCards());
             playerVictoryResults.put(player, playerWinningResult);
 
-            WinningResult dealerWinningResult = winnerDecider.decideDealerWinning(player);
+            WinningResult dealerWinningResult = winnerDecider.decideWinning(dealer.getCards(), player.getCards());
             dealerVictoryResults.put(
                     dealerWinningResult,
                     dealerVictoryResults.getOrDefault(dealerWinningResult, 0) + 1);

@@ -1,13 +1,11 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.Victory;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.CardsShuffler;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ScoreCalculator;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Dealer {
 
@@ -71,7 +69,11 @@ public class Dealer {
         return Victory.create(this, players);
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
+    }
+
+    public int getCardSize() {
+        return cards.getSize();
     }
 }

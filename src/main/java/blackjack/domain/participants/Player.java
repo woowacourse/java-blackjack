@@ -1,10 +1,9 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.BlackjackConstants.BURST_THRESHOLD;
+import static blackjack.domain.BlackjackConstants.BUST_THRESHOLD;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.List;
 
 public class Player {
     private final String name;
@@ -27,8 +26,8 @@ public class Player {
         return cards.isBlackjack();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 
     public String getName() {
@@ -37,6 +36,6 @@ public class Player {
 
     public boolean canSend() {
         int minScore = cards.calculateMinScore();
-        return minScore < BURST_THRESHOLD.getSymbol();
+        return minScore < BUST_THRESHOLD.getSymbol();
     }
 }

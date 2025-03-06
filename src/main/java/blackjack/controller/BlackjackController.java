@@ -66,9 +66,9 @@ public class BlackjackController {
 
 
     private void dealerAdditionalCard(Dealer dealer) {
-        int prevSize = dealer.getCards().size();
+        int prevSize = dealer.getCardSize();
         dealer.pickAdditionalCard();
-        int nextSize = dealer.getCards().size();
+        int nextSize = dealer.getCardSize();
         OutputView.printDealerAdditionalCard(nextSize - prevSize);
     }
 

@@ -10,7 +10,6 @@ import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
@@ -41,7 +40,6 @@ class PlayerTest {
                 .hasMessage("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
     }
 
-    @DisplayName("")
     @Test
     void 플레이어는_추가로_카드를_받을_수_있다() {
         //given
@@ -59,8 +57,7 @@ class PlayerTest {
         player.send(card);
 
         //then
-        assertThat(player.getCards()).hasSize(3);
-        assertThat(player.getCards()).isEqualTo(
+        assertThat(player.getCards().getCards()).isEqualTo(
                 Arrays.asList(
                         new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.TWO),
