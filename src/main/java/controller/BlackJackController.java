@@ -38,5 +38,10 @@ public class BlackJackController {
                 outputView.printPlayerCard(player);
             }
         }
+
+        while (!dealer.isOverBurstBound() && dealer.isOverDrawBound()) {
+            dealer.drawCard(cardDeck);
+            outputView.printDealerDrawMessage();
+        }
     }
 }

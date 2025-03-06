@@ -47,4 +47,8 @@ public class OutputView {
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
+
+    public void printDealerDrawMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 }
