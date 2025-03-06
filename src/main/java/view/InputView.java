@@ -25,8 +25,8 @@ public class InputView {
                 .toList();
     }
 
-    public Boolean askPlayerForHitOrStand() {
-        System.out.println(ASK_HIT_OR_STAND);
+    public Boolean askPlayerForHitOrStand(Player player) {
+        System.out.printf(ASK_HIT_OR_STAND, player.getName());
         String s = scanner.nextLine();
         if(s.equals("y"))return true;
         if(s.equals("n"))return false;

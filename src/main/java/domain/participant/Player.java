@@ -5,6 +5,7 @@ import domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Player {
     private static final int BLACKJACK_NUMBER = 21;
@@ -39,8 +40,8 @@ public class Player {
         return sum() > BLACKJACK_NUMBER;
     }
 
-    public void draw(BooleanSupplier answer, Consumer<Player> playerDeck, Dealer dealer) {
-        while (!isBust() && answer.getAsBoolean()) {
+    public void draw(Function<Player, Boolean> answer, Consumer<Player> playerDeck, Dealer dealer) {
+        while (!isBust() && answer.apply(this)) {
             addCard(dealer);
             playerDeck.accept(this);
         }

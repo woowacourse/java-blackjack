@@ -37,7 +37,7 @@ public class BlackJackController {
         outputView.printParticipant(players, dealer);
 
         // 3. 카드 더 받을지 물어보기 x 플레이어 수
-        blackJack.drawPlayers(() -> InputUntilValid.validatePlayerAnswer(inputView::askPlayerForHitOrStand), outputView::printPlayerDeck);
+        blackJack.drawPlayers((player) -> InputUntilValid.validatePlayerAnswer(player, inputView::askPlayerForHitOrStand), outputView::printPlayerDeck);
 
         // 4. 딜러 카드 받기
         blackJack.drawDealer();

@@ -6,6 +6,7 @@ import domain.participant.Players;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BlackJack {
     private final Players players;
@@ -21,7 +22,7 @@ public class BlackJack {
         dealer.addCards();
     }
 
-    public void drawPlayers(BooleanSupplier answer, Consumer<Player> playerDeck) {
+    public void drawPlayers(Function<Player, Boolean> answer, Consumer<Player> playerDeck) {
         players.draw(answer, playerDeck, dealer);
     }
 

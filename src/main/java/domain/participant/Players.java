@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Players {
 
@@ -33,7 +34,7 @@ public class Players {
         players.forEach(player -> player.hitCards(dealer));
     }
 
-    public void draw(BooleanSupplier answer, Consumer<Player> playerDeck, Dealer dealer) {
+    public void draw(Function<Player, Boolean> answer, Consumer<Player> playerDeck, Dealer dealer) {
         for (Player player : players) {
             player.draw(answer, playerDeck, dealer);
         }
