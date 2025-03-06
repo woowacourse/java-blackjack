@@ -144,9 +144,7 @@ public class BlackjackController {
     }
 
     private void outputPlayersHandResult(List<Player> players) {
-        for (final Player player : players) {
-            outputPlayerHandResult(player.getName(), player.getParticipant());
-        }
+        players.forEach(player -> outputPlayerHandResult(player.getName(), player.getParticipant()));
     }
 
     private void outputPlayerHandResult(final String name, final Participant participant) {
