@@ -5,61 +5,112 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackGameTest {
+class BlackJackGameTest {
 
     @Test
     void 게임이_시작하면_모든_플레이어에게_카드를_두장씩_배분한다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant = new Participant("벡터");
-        Participants participants = new Participants(List.of(participant));
+        Participant participant1 = new Participant("벡터");
+        Participant participant2 = new Participant("한스");
+        Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
+
         // when
-        BlackJackGame blackJackGame = new BlackJackGame(decdeckInitializer, dealer, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
         blackJackGame.initializeGame();
+
         // then
         assertThat(dealer.getReceivedCards().size()).isEqualTo(2);
-        assertThat(participant.getReceivedCards().size()).isEqualTo(2);
+        assertThat(participant1.getReceivedCards().size()).isEqualTo(2);
+        assertThat(participant2.getReceivedCards().size()).isEqualTo(2);
 
     }
 
     @Test
     void 참여자가_카드를_받는다() {
         // given
+        Dealer dealer = new Dealer();
+        Participant participant1 = new Participant("벡터");
+        Participant participant2 = new Participant("한스");
+        Participants participants = new Participants(List.of(participant1, participant2));
+        DeckInitializer deckInitializer = new DeckInitializer();
 
         // when
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        blackJackGame.receiveCard(true);
+        blackJackGame.receiveCard(true);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(participant1.getReceivedCards().size()).isEqualTo(2);
     }
 
     @Test
     void 참여자가_카드를_받지_않는다() {
         // given
+        Dealer dealer = new Dealer();
+        Participant participant1 = new Participant("벡터");
+        Participant participant2 = new Participant("한스");
+        Participants participants = new Participants(List.of(participant1, participant2));
+        DeckInitializer deckInitializer = new DeckInitializer();
 
         // when
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        blackJackGame.receiveCard(true);
+        blackJackGame.receiveCard(false);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(participant1.getReceivedCards().size()).isEqualTo(1);
+        assertThat(blackJackGame.getCurrentTurnParticipant()).isEqualTo(participant2);
     }
 
     @Test
-    void 딜러의_카드의_합이_16_이하라면_카드를_더_받는다() {
+    void 딜러에게_카드를_추가한다() {
         // given
+        Dealer dealer = new Dealer();
+        Participant participant1 = new Participant("벡터");
+        Participant participant2 = new Participant("한스");
+        Participants participants = new Participants(List.of(participant1, participant2));
+        DeckInitializer deckInitializer = new DeckInitializer();
 
         // when
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        blackJackGame.drewDealerCards();
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(dealer.getReceivedCards().size()).isEqualTo(1);
     }
 
     @Test
-    void 딜러의_카드의_합이_17_이상이라면_카드를_더_받지_않는다() {
+    void 딜러의_포인트가_16_이하면_카드를_더_받아야_한다() {
         // given
-
+        Dealer dealer = new Dealer();
+        Participant participant1 = new Participant("벡터");
+        Participant participant2 = new Participant("한스");
+        Participants participants = new Participants(List.of(participant1, participant2));
+        DeckInitializer deckInitializer = new DeckInitializer();
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        dealer.putCard(new Card(CardShape.HEART, CardType.NORMAL_2));
         // when
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(blackJackGame.isDrawableDealerCard()).isTrue();
+    }
+
+    @Test
+    void 딜러의_포인트가_17_이상이면_카드를_더_받지_않는다() {
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant1 = new Participant("벡터");
+        Participant participant2 = new Participant("한스");
+        Participants participants = new Participants(List.of(participant1, participant2));
+        DeckInitializer deckInitializer = new DeckInitializer();
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        dealer.putCard(new Card(CardShape.HEART, CardType.KING));
+        dealer.putCard(new Card(CardShape.HEART, CardType.NORMAL_9));
+        // when
+
+        // then
+        assertThat(blackJackGame.isDrawableDealerCard()).isFalse();
     }
 }
