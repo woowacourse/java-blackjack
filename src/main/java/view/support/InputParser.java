@@ -2,6 +2,7 @@ package view.support;
 
 import static util.ExceptionConstants.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import util.ExceptionConstants;
@@ -16,8 +17,9 @@ public class InputParser {
     );
 
     public List<String> parsePlayerNames(String rawPlayerNames) {
-        String[] playerNames = rawPlayerNames.split(NAME_SEPARATOR);
-        return List.of(playerNames);
+        return Arrays.stream(rawPlayerNames.split(NAME_SEPARATOR))
+                .map(String::trim)
+                .toList();
     }
 
     public AnswerType parseAnswerType(String rawAnswer) {

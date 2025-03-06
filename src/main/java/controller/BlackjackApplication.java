@@ -1,11 +1,14 @@
 package controller;
 
+import domain.BlackjackReferee;
 import domain.CardGiver;
 import domain.CardRandomGenerator;
+import domain.GameResultStatus;
 import domain.GivenCards;
 import domain.Participant;
 import domain.ParticipantRepository;
 import java.util.List;
+import java.util.Map;
 import view.AnswerType;
 import view.InputView;
 import view.OutputView;
@@ -30,6 +33,8 @@ public class BlackjackApplication {
         askForAdditionalCard();
 
         decideAdditionalCardForDealer();
+
+        calculateResult();
     }
 
     private void askForAdditionalCard() {
@@ -50,6 +55,16 @@ public class BlackjackApplication {
                 }
             }
         });
+    }
+
+    private void calculateResult() {
+        Participant dealer = participantRepository.getDealer();
+        List<Participant> participants = participantRepository.getAllPlayer();
+
+        outputView.printCardsResult(dealer, participants);
+        BlackjackReferee blackjackReferee = new BlackjackReferee();
+        Map<Participant, GameResultStatus> gameResult = blackjackReferee.judge(dealer, participants);
+        outputView.printGameResults(gameResult);
     }
 
     private void decideAdditionalCardForDealer() {

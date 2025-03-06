@@ -1,8 +1,10 @@
 package view;
 
 import domain.Card;
+import domain.GameResultStatus;
 import domain.Participant;
 import java.util.List;
+import java.util.Map;
 import view.support.OutputFormatter;
 
 public class OutputView {
@@ -35,10 +37,39 @@ public class OutputView {
     }
 
     public void printDealerDraw(String dealerName) {
-        System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.", dealerName);
+        System.out.printf("\n%s는 16이하라 한장의 카드를 더 받았습니다.\n", dealerName);
     }
 
     public void printDealerNoDraw(String dealerName) {
-        System.out.printf("%s는 17이상이라 카드를 추가로 받지 않았습니다.", dealerName);
+        System.out.printf("\n%s는 17이상이라 카드를 추가로 받지 않았습니다.\n", dealerName);
+    }
+
+    public void printCardsResult(Participant dealer, List<Participant> players) {
+        String parsedDealerCards = outputFormatter.formatCards(dealer.cards());
+        int dealerCardsSum = dealer.calculateCardsSum();
+        System.out.printf("\n%s카드: %s - 결과: %d\n", dealer.name(), parsedDealerCards, dealerCardsSum);
+
+        players.forEach(player -> {
+            String parsedPlayerCards = outputFormatter.formatCards(player.cards());
+            int playerCardsSum = player.calculateCardsSum();
+            System.out.printf("%s카드: %s - 결과: %d\n", player.name(), parsedPlayerCards, playerCardsSum);
+
+        });
+    }
+
+    public void printGameResults(Map<Participant, GameResultStatus> gameResults) {
+        int winCount = (int)gameResults.keySet().stream()
+                .filter(participant -> gameResults.get(participant) == GameResultStatus.WIN)
+                .count();
+        int loseCount = (int)gameResults.keySet().stream()
+                .filter(participant -> gameResults.get(participant) == GameResultStatus.LOSE)
+                .count();
+        System.out.println("\n## 최종 승패");
+        System.out.printf("딜러: %d승 %d패\n", loseCount, winCount);
+        gameResults.keySet()
+                .forEach(participant -> {
+                    String resultMessage = outputFormatter.formatGameResult(gameResults.get(participant));
+                    System.out.printf("%s: %s\n", participant.name(), resultMessage);
+                });
     }
 }

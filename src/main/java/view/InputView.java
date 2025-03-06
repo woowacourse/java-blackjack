@@ -26,7 +26,7 @@ public class InputView {
     }
 
     public AnswerType requestAdditionalCard(Participant participant) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", participant.name());
+        System.out.printf("\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", participant.name());
         String rawAnswer = readLine();
         return inputParser.parseAnswerType(rawAnswer);
     }
