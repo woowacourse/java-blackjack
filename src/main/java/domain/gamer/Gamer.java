@@ -31,4 +31,8 @@ public abstract class Gamer {
     public GameResult calculateGameResult(final int compareScore) {
         return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
     }
+
+    public int calculateScore() {
+        return cardGroup.calculateScore(LIMIT);
+    }
 }
