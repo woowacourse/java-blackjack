@@ -1,5 +1,7 @@
 package view;
 
+import domain.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,4 +21,9 @@ public class InputView {
             .toList();
     }
 
+    public static boolean askForOneMoreCard(Player player) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
+        String input = scanner.nextLine();
+        return Answer.selectAnswer(input);
+    }
 }

@@ -47,4 +47,8 @@ public class OutputView {
         Number number = card.getNumber();
         return number.getNumericValue() + symbol.getName();
     }
+
+    public static void printPlayerCard(Player player) {
+        System.out.printf("%s카드: %s%n", player.getName(), convertCardsToMessage(player.getCards()));
+    }
 }

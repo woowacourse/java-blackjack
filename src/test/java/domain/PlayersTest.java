@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +44,19 @@ public class PlayersTest {
 
         Player expected = new Player(new Name(drago), cards);
         assertThat(player).isEqualTo(expected);
+    }
+
+    @Test
+    void 플레이어를_새로운_플레이어로_교체한다() {
+        Cards cards = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.FOUR)));
+        Player player = new Player(new Name("drago"), cards);
+        Players players = new Players(new ArrayList<>(List.of(player)));
+
+        Cards newCards = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
+                new Card(Symbol.CLOVER, Number.FOUR), new Card(Symbol.HEART, Number.JACK)));
+        Player newPlayer = new Player(new Name("drago"), newCards);
+        Players expected = new Players(List.of(newPlayer));
+
+        assertThat(players.editPlayer(player, newPlayer)).isEqualTo(expected);
     }
 }

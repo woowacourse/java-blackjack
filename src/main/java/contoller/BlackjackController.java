@@ -13,10 +13,19 @@ public class BlackjackController {
 
     private GameManager gameManager;
 
-    public BlackjackController() {
+    public void run() {
+        readyGame();
+
+        List<Player> allPlayers = gameManager.findAllPlayers();
+        for (Player player : allPlayers) {
+            while (!player.checkExceedTwentyOne() && InputView.askForOneMoreCard(player)) {
+                Player drawnCardPlayer = gameManager.drawCard(player);
+                OutputView.printPlayerCard(drawnCardPlayer);
+            }
+        }
     }
 
-    public void run() {
+    private void readyGame() {
         List<String> playerNames = InputView.readPlayerNames();
         this.gameManager = new GameManager(playerNames, new Deck());
 

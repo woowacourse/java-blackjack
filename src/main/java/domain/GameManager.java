@@ -29,4 +29,11 @@ public class GameManager {
     public Player findPlayer(String name) {
         return players.findPlayer(name);
     }
+
+    public Player drawCard(Player player) {
+        Player newPlayer = player.drawCard(provider.provideCards(1));
+        players = players.editPlayer(player, newPlayer);
+        return newPlayer;
+    }
+
 }
