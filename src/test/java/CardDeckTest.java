@@ -38,9 +38,11 @@ public class CardDeckTest {
     void test2() {
         // given
         int originCardDeckSize = CardSetting.getCardDeck().size();
+
         // when
         CardSetting.drawCard();
         int afterDrawDeckSize = CardSetting.getCardDeck().size();
+
         // then
         Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
     }
@@ -159,12 +161,10 @@ public class CardDeckTest {
         cardDeck.addTrumpCard(trumpCard1);
         cardDeck.addTrumpCard(trumpCard2);
 
-
         // when
         boolean isBlackjack =  cardDeck.isBlackjack();
 
         // then
         Assertions.assertThat(isBlackjack).isEqualTo(true);
     }
-
 }
