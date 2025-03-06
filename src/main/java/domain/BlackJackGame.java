@@ -34,6 +34,7 @@ public class BlackJackGame {
     private static Deck initializeDeck() {
         Deck deck = Deck.create();
         deck.shuffle();
+
         return deck;
     }
 
@@ -56,5 +57,12 @@ public class BlackJackGame {
     public void shuffleDeck() {
         deck.shuffle();
     }
+
+    public boolean isHitAllowed(Player player) {
+        Hand hand = player.getHand();
+
+        return hand.calculateScore() != Score.BUST && hand.calculateScore() != Score.BLACKJACK;
+    }
+
 
 }
