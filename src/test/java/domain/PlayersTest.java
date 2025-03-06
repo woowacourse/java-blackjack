@@ -1,21 +1,33 @@
 package domain;
 
+import static domain.card.Number.JACK;
+import static domain.card.Number.KING;
+import static domain.card.Number.QUEEN;
+import static domain.card.Shape.DIAMOND;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
-import domain.participant.Player;
 import domain.participant.Players;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import view.InputView;
 
 public class PlayersTest {
     @Test
@@ -56,5 +68,26 @@ public class PlayersTest {
                 List.of("포비", "이든", "네오", "저스틴", "링크", "말론", "리사"),
                 List.of()
         ));
+    }
+
+    @Test
+    @DisplayName("카드 드로우 테스트")
+    void drawTest(){
+        //given
+        String input = "y\nn\ny\nn\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+        System.setIn(inputStream);
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        InputView testInputView = new InputView(new Scanner(System.in));
+
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        Dealer dealer = new Dealer(cardDeck);
+        Players players = Players.from(List.of("pobi", "lisa"));
+
+        //when-then
+        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testInputView::printPlayerDeck, dealer));
     }
 }
