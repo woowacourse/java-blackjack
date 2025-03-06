@@ -67,6 +67,14 @@ public class Round {
         return dealer.getInitialCards();
     }
 
+    public void addDealerCard() {
+        dealer.addCard(cardDeck.getCard());
+    }
+
+    public boolean dealerMustDraw() {
+        return dealer.mustDraw();
+    }
+
     public boolean isPlayerBusted(Name name) {
         return findPlayer(name).isBust();
     }

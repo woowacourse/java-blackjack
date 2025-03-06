@@ -25,4 +25,8 @@ public class OutputView {
     public static void printBusted(final Name playerName) {
         System.out.printf("[Bust] %s의 카드 합이 21을 초과하여 패배하였습니다.\n", playerName);
     }
+
+    public static void printDealerDraw() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 }

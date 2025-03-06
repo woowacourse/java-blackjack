@@ -9,4 +9,8 @@ public class Dealer extends Gambler {
         Card firstCard = cards.getFirst();
         return List.of(firstCard);
     }
+
+    public boolean mustDraw() {
+        return hands.isSumBelow(16);
+    }
 }

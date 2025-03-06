@@ -40,6 +40,11 @@ public class Application {
                 OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
             }
         }
+
+        if (round.dealerMustDraw()) {
+            round.addDealerCard();
+            OutputView.printDealerDraw();
+        }
     }
 
     private static boolean isHit(Name playerName) {
