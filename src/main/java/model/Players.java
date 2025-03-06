@@ -21,7 +21,7 @@ public class Players {
         );
     }
 
-    public void startDeal(Deck deck) {
+    public void dealInitialCards(Deck deck) {
         for (Player player : players) {
             player.dealInitialCards(deck);
         }

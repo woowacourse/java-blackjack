@@ -16,33 +16,48 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = InputView.readPlayerNames();
-
         Players players = Players.from(playerNames);
         Dealer dealer = new Dealer();
         Deck deck = Deck.of();
-        players.startDeal(deck);
-        dealer.dealInitialCards(deck);
-        OutputView.printInitialDealResult(dealer, players);
 
-        for (Player player : players.getPlayers()) {
-            boolean flag = true;
-            while ((flag == InputView.readHit(player))) {
-                player.receiveCard(deck.pick());
-                OutputView.printHitResult(player);
-                if (player.isBurst()) {
-                    break;
-                }; //TODO : 수정은 나중에
-            }
-        }
+        dealInitially(players, deck, dealer);
+
+        hitOrStandAtPlayersTurn(players, deck);
+        hitOrStandAtDealerTurn(dealer, deck);
+
+        OutputView.printFinalScore(dealer, players);
+        printWinningResultV2(players, dealer);
+    }
+
+    private static void hitOrStandAtDealerTurn(Dealer dealer, Deck deck) {
         boolean flag = true;
         while (flag == dealer.checkScoreUnderSixteen()){
              OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());
         }
+    }
 
-        OutputView.printFinalScore(dealer, players);
+    private static void hitOrStandAtPlayersTurn(Players players, Deck deck) {
+        for (Player player : players.getPlayers()) {
+            hitOrStandAtOnePlayerTurn(deck, player);
+        }
+    }
 
-        printWinningResultV1(players, dealer);
+    private static void hitOrStandAtOnePlayerTurn(Deck deck, Player player) {
+        boolean flag = true;
+        while ((flag == InputView.readHit(player))) {
+            player.receiveCard(deck.pick());
+            OutputView.printHitResult(player);
+            if (player.isBurst()) {
+                break;
+            };
+        }
+    }
+
+    private static void dealInitially(Players players, Deck deck, Dealer dealer) {
+        players.dealInitialCards(deck);
+        dealer.dealInitialCards(deck);
+        OutputView.printInitialDealResult(dealer, players);
     }
 
     private static void printWinningResultV2(Players players, Dealer dealer) {
