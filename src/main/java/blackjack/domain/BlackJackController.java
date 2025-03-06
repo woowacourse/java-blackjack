@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.dto.DrawnCardResult;
 import java.util.List;
 
 public class BlackJackController {
@@ -20,6 +21,13 @@ public class BlackJackController {
         }
 
         int count = gameManager.drawDealerCards();
+        // TODO 뷰 출력
+
+        List<DrawnCardResult> drawnCardResults = gameManager.calculateDrawnCardResults();
+        // TODO 뷰 출력
+
+        List<PlayerWinningResult> playerWinningResults = gameManager.calculateGameResult();
+        // TODO 뷰 출력
     }
 
 }
