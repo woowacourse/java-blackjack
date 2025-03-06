@@ -43,5 +43,7 @@ public class BlackJackController {
             dealer.drawCard(cardDeck);
             outputView.printDealerDrawMessage();
         }
+
+        outputView.printGameResult(dealer, players);
     }
 }

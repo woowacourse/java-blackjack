@@ -5,6 +5,7 @@ import domain.CardDeck;
 import domain.CardNumber;
 import domain.Dealer;
 import domain.Player;
+import domain.Players;
 import java.util.List;
 
 public class OutputView {
@@ -21,6 +22,15 @@ public class OutputView {
 
     public void printPlayerCard(Player player) {
         System.out.printf("%s카드: %s%n", player.getName(), formatHand(player.getHand().getCards()));
+    }
+
+    public void printGameResult(Dealer dealer, Players players) {
+        String dealerResult = formatHand(dealer.getHand().getCards());
+        System.out.printf("딜러카드: %s - 결과: %d%n", dealerResult, dealer.calculateTotalCardNumber());
+        for (Player player : players.getPlayers()) {
+            String playerResult = formatHand(player.getHand().getCards());
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), playerResult, player.calculateTotalCardNumber());
+        }
     }
 
     private String formatPlayerNames(List<Player> players) {
