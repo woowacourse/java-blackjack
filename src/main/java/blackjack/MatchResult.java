@@ -1,7 +1,17 @@
 package blackjack;
 
 public enum MatchResult {
-    LOSE, WIN, DRAW;
+
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무"),
+    ;
+
+    private final String label;
+
+    MatchResult(String label) {
+        this.label = label;
+    }
 
     public static MatchResult judge(Dealer dealer, Player player) {
         if (player.isBust()) {
@@ -34,5 +44,19 @@ public enum MatchResult {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public static MatchResult reverse(MatchResult matchResult) {
+        if (matchResult == WIN) {
+            return LOSE;
+        }
+        if (matchResult == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

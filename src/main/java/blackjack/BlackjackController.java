@@ -23,6 +23,9 @@ public class BlackjackController {
 
         outputView.printDealerHandAndTotal(game.getDealerHand(), game.getDealerTotal());
         outputView.printPlayerHandAndTotal(game.getPlayers());
+
+        outputView.printMatchResult(game.judgeMatchResults());
+
     }
 
     private List<Player> getPlayers() {

@@ -1,6 +1,8 @@
 package blackjack;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class Game {
@@ -64,6 +66,14 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public Map<Player, MatchResult> judgeMatchResults() {
+        Map<Player, MatchResult> results = new LinkedHashMap<>();
+        for (Player player : players) {
+            results.put(player, MatchResult.judge(dealer, player));
+        }
+        return results;
     }
 
     public Card getDealerVisibleCard() {

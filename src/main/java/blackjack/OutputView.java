@@ -1,9 +1,40 @@
 package blackjack;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static void printDealerMatchResult(Map<Player, MatchResult> playerMatchResults) {
+        EnumMap<MatchResult, Integer> dealerMatchResult = calculateDealerMatchResult(playerMatchResults);
+        System.out.print("딜러:");
+        for (Entry<MatchResult, Integer> matchEntry : dealerMatchResult.entrySet()) {
+            if (matchEntry.getValue() != 0) {
+                System.out.print(" " + matchEntry.getValue() + matchEntry.getKey().getLabel());
+            }
+        }
+        System.out.println();
+    }
+
+    private static EnumMap<MatchResult, Integer> calculateDealerMatchResult(
+            Map<Player, MatchResult> playerMatchResults) {
+        EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap<>(MatchResult.class);
+        for (MatchResult matchResult : playerMatchResults.values()) {
+            dealerMatchResult.merge(MatchResult.reverse(matchResult), 1, Integer::sum);
+        }
+        return dealerMatchResult;
+    }
+
+    private static void printPlayersMatchResult(Map<Player, MatchResult> playerMatchResults) {
+        for (Entry<Player, MatchResult> playerMatchResultEntry : playerMatchResults.entrySet()) {
+            System.out.printf("%s: %s%n",
+                    playerMatchResultEntry.getKey().getName(),
+                    playerMatchResultEntry.getValue().getLabel());
+        }
+    }
 
     public void printInitialCards(Card dealerVisibleCard, List<Player> players) {
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", joinPlayerNamesWithComma(players));
@@ -54,5 +85,11 @@ public class OutputView {
             System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player), player.getTotal());
         }
         System.out.println();
+    }
+
+    public void printMatchResult(Map<Player, MatchResult> playerMatchResults) {
+        System.out.println("## 최종 승패");
+        printDealerMatchResult(playerMatchResults);
+        printPlayersMatchResult(playerMatchResults);
     }
 }

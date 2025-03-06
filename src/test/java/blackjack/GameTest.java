@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.function.Predicate;
 import org.junit.jupiter.api.DisplayName;
@@ -160,9 +161,11 @@ class GameTest {
         game.dealInitialCards();
 
         //when
-        game.dealerHit();
+        boolean isDealerHit = game.dealerHit();
 
         // then
+        assertThat(isDealerHit)
+                .isSameAs(true);
         assertThat(dealer.getHand())
                 .hasSize(3);
     }
@@ -185,10 +188,44 @@ class GameTest {
         game.dealInitialCards();
 
         //when
-        game.dealerHit();
+        boolean isDealerHit = game.dealerHit();
 
         // then
+        assertThat(isDealerHit)
+                .isSameAs(false);
         assertThat(dealer.getHand())
                 .hasSize(2);
+    }
+
+    // public Map<Player, MatchResult> judgeMatchResults() {
+    //        Map<Player, MatchResult> results = new LinkedHashMap<>();
+    //        for (Player player : players) {
+    //            results.put(player, MatchResult.judge(dealer, player));
+    //        }
+    //        return results;
+    //    }
+
+    @DisplayName("모든 플레이어의 승부를 판단한다.")
+    @Test
+    void judgeMatchResultsTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Suit.SPADES, CardValue.TEN),
+                new Card(Suit.HEARTS, CardValue.TEN),
+                new Card(Suit.SPADES, CardValue.SEVEN),
+                new Card(Suit.SPADES, CardValue.TEN)
+        );
+        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
+        Dealer dealer = new Dealer(deck);
+        List<Player> players = List.of(new Player("pobi"));
+        Game game = new Game(dealer, players);
+        game.dealInitialCards();
+
+        // when
+        Map<Player, MatchResult> playerMatchResults = game.judgeMatchResults();
+
+        // then
+        assertThat(playerMatchResults.get(new Player("pobi")))
+                .isSameAs(MatchResult.WIN);
     }
 }

@@ -128,4 +128,20 @@ class MatchResultTest {
         assertThat(matchResult)
                 .isSameAs(expected);
     }
+
+    @DisplayName("승부의 반대를 알 수 있다.")
+    @ParameterizedTest
+    @CsvSource({
+            "WIN, LOSE",
+            "LOSE, WIN",
+            "DRAW, DRAW"
+    })
+    void reverseTest(MatchResult matchResult, MatchResult expected) {
+        // when
+        MatchResult reverseMatchResult = MatchResult.reverse(matchResult);
+
+        // then
+        assertThat(reverseMatchResult)
+                .isSameAs(expected);
+    }
 }
