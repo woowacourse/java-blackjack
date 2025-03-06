@@ -14,6 +14,10 @@ public class Player implements Participant {
         this.battleResult = new HashMap<>();
     }
 
+    public String getName() {
+        return nickname;
+    }
+
     public static Player from(final String nickname) {
         return new Player(nickname);
     }

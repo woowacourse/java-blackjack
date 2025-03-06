@@ -14,6 +14,10 @@ public class Dealer implements Participant {
         this.battleResult = new HashMap<>();
     }
 
+    public String getName() {
+        return nickname;
+    }
+
     public static Dealer generate() {
         return new Dealer("딜러");
     }
