@@ -1,7 +1,7 @@
 package domain.card;
 
 public enum Number {
-    A(1),
+    ACE(1),
     TWO(2),
     THREE(2),
     FOUR(4),
@@ -11,9 +11,9 @@ public enum Number {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    J(10),
-    Q(10),
-    K(10);
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
     private final int score;
 
@@ -21,14 +21,9 @@ public enum Number {
         this.score = score;
     }
 
-    public int calculateScore(int sum) {
-        return score;
-    }
-
     public boolean isA() {
-        return score == A.score;
+        return score == ACE.score;
     }
-
 
     public int getScore() {
         return score;
