@@ -80,7 +80,7 @@ class PlayerTest {
 
     @ParameterizedTest
     @MethodSource
-    @DisplayName("승무패를 계산하는지 확인합니다.")
+    @DisplayName("딜러 숫자가 21 이하일 때, 승무패를 계산하는지 확인합니다.")
     void decideGameResultTest(List<Card> cards, GameResult expected) {
         //given
         Player player = new Player("ㅎㅎ");
@@ -99,6 +99,28 @@ class PlayerTest {
                 Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), LOSE),
                 Arguments.of(List.of(Card.HEART_SEVEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW),
                 Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE, Card.HEART_ACE), LOSE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("딜러와 플레이어가 둘 다 Bust 상황일때 무승부인지 확인합니다.")
+    void decideGameResultBustTest(List<Card> cards, GameResult expected) {
+        //given
+        Player player = new Player("ㅎㅎ");
+        player.addCard(cards);
+        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN));
+
+        //when & then
+        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+    }
+
+    public static Stream<Arguments> decideGameResultBustTest() {
+        return Stream.of(
+                Arguments.of(List.of(Card.HEART_QUEEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW),
+                Arguments.of(List.of(Card.HEART_THREE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), DRAW),
+                Arguments.of(List.of(Card.HEART_TWO, Card.CLOVER_JACK, Card.CLOVER_TEN), DRAW)
         );
     }
 }

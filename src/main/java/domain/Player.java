@@ -25,14 +25,25 @@ public class Player extends Gamer {
     public GameResult decideGameResult(Dealer dealer) {
         int playerScore = this.calculateScore();
         int dealerScore = dealer.calculateScore();
+        if (playerScore > BUST_THRESHOLD && dealerScore > BUST_THRESHOLD) {
+            return DRAW;
+        }
+        if (playerScore > BUST_THRESHOLD) {
+            return LOSE;
+        }
+
+        if (dealerScore > BUST_THRESHOLD) {
+            return WIN;
+        }
 
         if (dealerScore == playerScore) {
             return DRAW;
         }
 
-        if (dealerScore > playerScore || playerScore > 21) {
+        if (dealerScore > playerScore) {
             return LOSE;
         }
+
         return WIN;
     }
 }
