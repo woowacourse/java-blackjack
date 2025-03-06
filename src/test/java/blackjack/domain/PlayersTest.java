@@ -52,6 +52,27 @@ class PlayersTest {
         assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("플레이어의 카드가 버스트면 TRUE를 반환한다")
+    void 플레이어의_카드가_버스트면_TRUE를_반환한다() {
+        // given
+        Players players = new Players();
+        CardPack cardPack = new CardPack(new SortShuffle());
+
+        Player player = new Player("두리");
+        players.addGamblers(List.of(player));
+
+        players.dealAddCard(cardPack, player);
+        players.dealAddCard(cardPack, player);
+        players.dealAddCard(cardPack, player);
+
+        // when
+        boolean result = players.isPlayerBust(player);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
     private static class SortShuffle implements BlackjackShuffle {
 
         @Override
