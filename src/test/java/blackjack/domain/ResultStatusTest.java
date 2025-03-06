@@ -10,14 +10,16 @@ class ResultStatusTest {
 
     @DisplayName("두 개의 값으로 승리 결과를 계산한다.")
     @CsvSource({
-            "19, WIN",
-            "20, DRAW",
-            "21, LOSE"
+            "20, 19, WIN",
+            "20, 20, DRAW",
+            "20, 21, LOSE",
+            "20, 25, WIN",
+            "23, 25, DRAW",
+            "23, 18, LOSE"
     })
     @ParameterizedTest
-    void calculateResultStatus(final int comparedSum, final ResultStatus resultStatus) {
+    void calculateResultStatus(final int sum, final int comparedSum, final ResultStatus resultStatus) {
         // given
-        int sum = 20;
 
         // when & then
         assertThat(ResultStatus.calculateResultStatus(sum, comparedSum)).isEqualTo(resultStatus);
