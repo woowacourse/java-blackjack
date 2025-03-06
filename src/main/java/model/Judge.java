@@ -6,7 +6,14 @@ public class Judge {
         if (playerCards.isBust()) {
             return GameResult.LOSE;
         }
-        return GameResult.WIN;
+        if (dealerCards.isBust()) {
+            return GameResult.WIN;
+        }
+        if (playerCards.calculateResult() > dealerCards.calculateResult()) {
+            return GameResult.WIN;
+        }
+
+        return GameResult.LOSE;
     }
 
 }
