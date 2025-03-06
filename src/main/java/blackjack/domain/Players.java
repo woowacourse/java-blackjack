@@ -31,12 +31,27 @@ public class Players {
                 gambler.pushDealCard(cardPack, 2));
     }
 
-    public void dealAddCard(CardPack cardPack, Player player) {
-        Player gambler = gamblers.stream()
+    public void dealAddCardForDealer(CardPack cardPack) {
+        dealAddCard(cardPack, dealer);
+    }
+
+    public void dealAddCard(CardPack cardPack, Player addPlayer) {
+        Player player = getMatchPlayer(addPlayer);
+        player.pushDealCard(cardPack, 1);
+    }
+
+    public boolean isPlayerBust(final Player player) {
+        return player.calculateCardNumber() > 21;
+    }
+
+    private Player getMatchPlayer(Player player) {
+        if (player.equals(dealer)) {
+            return dealer;
+        }
+        return gamblers.stream()
                 .filter(current -> current.equals(player))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
-        gambler.pushDealCard(cardPack, 1);
     }
 
     public boolean isDealerHit() {
