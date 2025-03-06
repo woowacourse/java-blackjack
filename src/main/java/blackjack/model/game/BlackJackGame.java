@@ -1,5 +1,9 @@
-package blackjack.model;
+package blackjack.model.game;
 
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Participant;
+import blackjack.model.player.Participants;
+import blackjack.model.player.Player;
 import java.util.Deque;
 import java.util.LinkedList;
 

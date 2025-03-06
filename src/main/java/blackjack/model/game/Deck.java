@@ -1,5 +1,6 @@
-package blackjack.model;
+package blackjack.model.game;
 
+import blackjack.model.card.Card;
 import java.util.List;
 import java.util.Stack;
 

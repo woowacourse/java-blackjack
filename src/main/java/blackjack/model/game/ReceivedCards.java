@@ -1,5 +1,7 @@
-package blackjack.model;
+package blackjack.model.game;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.CardType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -59,6 +61,6 @@ public class ReceivedCards {
     }
 
     public Stream<Card> stream() {
-        return  cards.stream();
+        return cards.stream();
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.model.Participant;
-import blackjack.model.Participants;
+import blackjack.model.player.Participant;
+import blackjack.model.player.Participants;
 import java.util.Arrays;
 
 public class Parser {
