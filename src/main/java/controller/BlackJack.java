@@ -27,6 +27,12 @@ public class BlackJack {
 
         printDistributeResult();
 
+        playersTurn();
+
+        
+    }
+
+    private void playersTurn() {
         for (Player player : players) {
             askPlayersChoice(player, deck);
         }
@@ -52,7 +58,7 @@ public class BlackJack {
         player.addCard(deck.draw());
         printHand(player, stringBuilder);
         System.out.println(stringBuilder);
-        resolveBurst(player);
+        resolveBust(player);
     }
 
     private void printDistributeResult() {
@@ -104,11 +110,11 @@ public class BlackJack {
         player.addCard(deck.draw());
     }
 
-    public boolean resolveBurst(Player player) {
-        if (player.isHandBurst() && player.containsOriginalAce()) {
+    public boolean resolveBust(Player player) {
+        if (player.isHandBust() && player.containsOriginalAce()) {
             player.setOriginalAceValueToOne();
-            resolveBurst(player);
+            resolveBust(player);
         }
-        return !player.isHandBurst();
+        return !player.isHandBust();
     }
 }

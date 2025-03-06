@@ -30,7 +30,7 @@ public class Hand {
         originalAce.setValueToOne();
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return getTotal() > 21;
     }
 

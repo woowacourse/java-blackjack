@@ -79,7 +79,7 @@ public class HandTest {
         hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
         hand.addCard(new Ace(Suit.CLUB));
 
-        assertThat(hand.isBurst()).isFalse();
+        assertThat(hand.isBust()).isFalse();
     }
 
 }

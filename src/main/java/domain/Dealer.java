@@ -16,4 +16,9 @@ public class Dealer extends Player{
                 .append("\n");
         return sb.toString();
     }
+
+
+    public boolean aboveThreshold() {
+        return getHandTotal() > 16;
+    }
 }

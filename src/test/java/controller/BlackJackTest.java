@@ -16,7 +16,7 @@ class BlackJackTest {
 
     @Nested
     @DisplayName("버스트 처리 테스트")
-    class BurstTest {
+    class BustTest {
         @Test
         @DisplayName("버스트 발생 안하는 경우")
         void test1() {
@@ -28,7 +28,7 @@ class BlackJackTest {
             moru.addCard(new Card(Denomination.EIGHT, Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBurst(moru)).isTrue();
+            assertThat(blackjack.resolveBust(moru)).isTrue();
         }
 
         @Test
@@ -43,7 +43,7 @@ class BlackJackTest {
             moru.addCard(new Card(Denomination.TEN, Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBurst(moru)).isFalse();
+            assertThat(blackjack.resolveBust(moru)).isFalse();
         }
 
         @Test
@@ -58,7 +58,7 @@ class BlackJackTest {
             moru.addCard(new Ace(Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBurst(moru)).isTrue();
+            assertThat(blackjack.resolveBust(moru)).isTrue();
         }
 
         @Test
@@ -73,7 +73,7 @@ class BlackJackTest {
             moru.addCard(new Ace(Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBurst(moru)).isTrue();
+            assertThat(blackjack.resolveBust(moru)).isTrue();
         }
 
         @Test
@@ -89,7 +89,7 @@ class BlackJackTest {
             moru.addCard(new Ace(Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBurst(moru)).isFalse();
+            assertThat(blackjack.resolveBust(moru)).isFalse();
         }
     }
 }
