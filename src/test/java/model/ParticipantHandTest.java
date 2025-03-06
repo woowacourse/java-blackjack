@@ -45,7 +45,9 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
-
+        int a = participantHand.calculateFinalScore();
+        int expect = 21;
+        assertEquals(expect, a);
         //when
         boolean burst = participantHand.checkBurst();
 

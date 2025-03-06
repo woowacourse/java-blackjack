@@ -33,13 +33,7 @@ public class ParticipantHand {
     }
 
     public boolean checkBurst() {
-        int score = calculateScoreSum();
-        for (Card card : cards) {
-            if (card.getCardRank() == CardRank.ACE) {
-                score+=1;
-            }
-        }
-        return score > 21;
+        return calculateScoreSum() > 21;
     }
 
     public boolean isAceElevenPossible() {

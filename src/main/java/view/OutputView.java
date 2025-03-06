@@ -71,8 +71,10 @@ public class OutputView {
         return message;
     }
 
-    public static void printPlayerFinalResult(Player player, GameResult playerResult) {
-        System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
+    public static void printPlayerFinalResult(Map<Player, GameResult> playerGameResult) {
+        for (Player player : playerGameResult.keySet()){
+            System.out.println(player.getName() + ": " + playerGameResult.get(player).getResultMeaning());
+        }
     }
 
     public static void printPlayerFinalResultV2(PlayerWinningResult playerWinningResult) {

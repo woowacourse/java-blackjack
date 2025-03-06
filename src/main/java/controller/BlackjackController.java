@@ -55,13 +55,10 @@ public class BlackjackController {
 
     private static void printWinningResultV1(Dealer dealer, Players players) {
         Judge judge = new Judge();
-        Map<GameResult, Integer> dealerWinning = judge.decideDealerWinning(dealer, players);
+        Map<Player, GameResult> playerWinning = judge.decidePlayerWinning(players, dealer);
+        Map<GameResult, Integer> dealerWinning = judge.decideDealerWinning(playerWinning);
 
         OutputView.printDealerFinalResult(dealerWinning);
-
-        for (Player player : players.getPlayers()) {
-            GameResult playerResult = judge.checkPlayerWin(dealer, player);
-            OutputView.printPlayerFinalResult(player, playerResult);
-        }
+        OutputView.printPlayerFinalResult(playerWinning);
     }
 }
