@@ -25,7 +25,7 @@ class GameTest {
         // when
         game.giveCardToDealer(2);
         // then
-        List<Card> dealerCards = game.getDealerCards();
+        List<Card> dealerCards = game.getDealer().getCards();
         assertThat(dealerCards.size()).isEqualTo(2);
     }
 
@@ -46,21 +46,10 @@ class GameTest {
     void distributeStartingHandsTest() {
         game.distributeStartingHands();
 
-        assertAll(() -> assertEquals(2, game.getDealerCards().size()),
+        assertAll(() -> assertEquals(2, game.getDealer().getCards().size()),
                 () -> assertEquals(2, game.getPlayerCards("a").size()),
                 () -> assertEquals(2, game.getPlayerCards("b").size()),
                 () -> assertEquals(2, game.getPlayerCards("c").size())
         );
     }
-
-//    @Test
-//    @DisplayName("특정 플레이어가 카드를 더 받을 수 있는지 테스트한다.")
-//    void canGetMoreCardTest() {
-//        // given
-//        String username = "a";
-//        // when
-//        boolean canGetMoreCard = game.canGetMoreCard(username);
-//        // then
-//        assertThat(canGetMoreCard).isTrue();
-//    }
 }

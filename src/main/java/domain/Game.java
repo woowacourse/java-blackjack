@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Game {
+    public static final int INITIAL_HANDS = 2;
+
     private final Dealer dealer;
     private final Players players;
 
@@ -21,28 +23,14 @@ public class Game {
         dealer.addCard(drawCards(count));
     }
 
-    private List<Card> drawCards(int count) {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            Card newCard = dealer.drawCard();
-            cards.add(newCard);
-        }
-
-        return cards;
-    }
-
-    public List<Card> getDealerCards() {
-        return dealer.getCards();
-    }
-
     public List<Card> getPlayerCards(String username) {
         return players.getPlayerCard(username);
     }
 
     public void distributeStartingHands() {
-        giveCardToDealer(2);
+        giveCardToDealer(INITIAL_HANDS);
         List<String> usernames = players.getUsernames();
-        usernames.forEach(username -> giveCardToPlayer(username, 2));
+        usernames.forEach(username -> giveCardToPlayer(username, INITIAL_HANDS));
     }
 
     public Map<String, Gamer> getPlayersInfo() {
@@ -67,5 +55,14 @@ public class Game {
 
     public GameStatistics getGameStatistics() {
         return players.calculateGameStatistics(dealer);
+    }
+
+    private List<Card> drawCards(int count) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            Card newCard = dealer.drawCard();
+            cards.add(newCard);
+        }
+        return cards;
     }
 }

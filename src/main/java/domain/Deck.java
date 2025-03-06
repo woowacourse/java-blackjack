@@ -14,7 +14,6 @@ public class Deck {
         validateDuplicate(cards);
         List<Card> copiedCards = new ArrayList<>(cards);
         Collections.shuffle(copiedCards);
-
         copiedCards.forEach(deck::push);
     }
 
