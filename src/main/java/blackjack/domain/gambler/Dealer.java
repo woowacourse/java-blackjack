@@ -11,6 +11,6 @@ public class Dealer extends Gambler {
     }
 
     public boolean mustDraw() {
-        return hands.isSumBelow(16);
+        return hands.isScoreBelow(16);
     }
 }

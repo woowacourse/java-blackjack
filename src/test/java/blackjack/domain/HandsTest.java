@@ -25,7 +25,7 @@ class HandsTest {
         }
 
         // when
-        int result = hands.calculateSum();
+        int result = hands.calculateScore();
 
         // then
         assertThat(result).isEqualTo(sum);
@@ -62,7 +62,7 @@ class HandsTest {
 
     @DisplayName("카드의 합이 특정 값 이하이면 True를 반환한다")
     @Test
-    void isSumBelowTest1() {
+    void isScoreBelowTest1() {
         // given
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
@@ -73,7 +73,7 @@ class HandsTest {
         hands.addNewCard(card2);
 
         // when
-        boolean result = hands.isSumBelow(21);
+        boolean result = hands.isScoreBelow(21);
 
         // then
         assertThat(result).isTrue();
@@ -81,7 +81,7 @@ class HandsTest {
 
     @DisplayName("카드의 합이 특정 값 초과이면 False를 반환한다")
     @Test
-    void isSumBelowTest2() {
+    void isScoreBelowTest2() {
         // given
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
@@ -94,7 +94,7 @@ class HandsTest {
         hands.addNewCard(card3);
 
         // when
-        boolean result = hands.isSumBelow(21);
+        boolean result = hands.isScoreBelow(21);
 
         // then
         assertThat(result).isFalse();

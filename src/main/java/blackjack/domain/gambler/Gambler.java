@@ -11,8 +11,8 @@ public abstract class Gambler {
         hands.addNewCard(card);
     }
 
-    public int calculateSum() {
-        return hands.calculateSum();
+    public int calculateScore() {
+        return hands.calculateScore();
     }
 
     public List<Card> getCards() {
@@ -20,6 +20,6 @@ public abstract class Gambler {
     }
 
     public boolean isBust() {
-        return !hands.isSumBelow(21);
+        return !hands.isScoreBelow(21);
     }
 }

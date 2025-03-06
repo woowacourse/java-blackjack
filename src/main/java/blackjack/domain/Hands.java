@@ -16,7 +16,7 @@ public class Hands {
         cards.add(card);
     }
 
-    public int calculateSum() {
+    public int calculateScore() {
         int sum = cards.stream()
                 .mapToInt(Card::getTypeValue)
                 .sum();
@@ -26,8 +26,8 @@ public class Hands {
         return Rule.adjustSumByAce(sum, (int) aceCount);
     }
 
-    public boolean isSumBelow(final int criteria) {
-        return calculateSum() <= criteria;
+    public boolean isScoreBelow(final int criteria) {
+        return calculateScore() <= criteria;
     }
 
     public List<Card> getCards() {

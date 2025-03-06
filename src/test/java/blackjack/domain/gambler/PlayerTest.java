@@ -27,7 +27,7 @@ class PlayerTest {
         player.addCard(card1);
         player.addCard(card2);
 
-        assertThat(player.calculateSum()).isEqualTo(18);
+        assertThat(player.calculateScore()).isEqualTo(18);
     }
 
     @DisplayName("카드의 합이 21이하인 경우 버스트가 아니다")

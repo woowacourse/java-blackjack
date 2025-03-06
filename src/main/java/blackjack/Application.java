@@ -40,10 +40,15 @@ public class Application {
                 OutputView.printGamblerCards(playerName.getName(), round.getCardsByPlayer(playerName));
             }
         }
-
         if (round.dealerMustDraw()) {
             round.addDealerCard();
             OutputView.printDealerDraw();
+        }
+        OutputView.printGamblerResult("딜러", round.getCardsByDealer(), round.getScoreByDealer());
+        for (Name playerName : playerNames) {
+            List<Card> cards = round.getCardsByPlayer(playerName);
+            int score = round.getScoreByPlayer(playerName);
+            OutputView.printGamblerResult(playerName.getName(), cards, score);
         }
     }
 

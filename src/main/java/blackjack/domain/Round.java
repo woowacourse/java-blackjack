@@ -32,11 +32,11 @@ public class Round {
     }
 
     public int getScoreByPlayer(Name name) {
-        return findPlayer(name).calculateSum();
+        return findPlayer(name).calculateScore();
     }
 
     public int getScoreByDealer() {
-        return dealer.calculateSum();
+        return dealer.calculateScore();
     }
 
     private Player findPlayer(Name name) {
