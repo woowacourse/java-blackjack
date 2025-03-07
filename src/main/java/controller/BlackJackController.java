@@ -63,9 +63,8 @@ public class BlackJackController {
 
     private Deck generateDeck() {
         final DeckGenerator deckGenerator = new DeckGenerator();
-        final List<Card> cards = deckGenerator.generate();
-        deckGenerator.shuffle(cards, new Random());
-        return new Deck(cards);
+        final List<Card> deck = deckGenerator.shuffle(deckGenerator.generate(), new Random());
+        return new Deck(deck);
     }
 
     private Dealer generateDealer() {

@@ -31,9 +31,9 @@ class DeckGeneratorTest {
         final Random random = new Random(123);
 
         // when
-        deckGenerator.shuffle(cards, random);
+        final List<Card> shuffledCards = deckGenerator.shuffle(cards, random);
 
         // then
-        Assertions.assertThat(previousCards).isNotEqualTo(cards);
+        Assertions.assertThat(previousCards).isNotEqualTo(shuffledCards);
     }
 }
