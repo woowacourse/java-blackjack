@@ -16,10 +16,12 @@ public enum ParticipantResult {
         if (dealer.isBust()) {
             return WIN;
         }
+        return compareDealerAndParticipantPoint(dealer, participant);
+    }
 
+    private static ParticipantResult compareDealerAndParticipantPoint(final Dealer dealer, final Participant participant) {
         int dealerPoint = dealer.calculatePoint();
         int participantPoint = participant.calculatePoint();
-
         if (dealerPoint > participantPoint) {
             return LOSE;
         }

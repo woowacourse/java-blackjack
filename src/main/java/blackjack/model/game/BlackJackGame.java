@@ -6,13 +6,15 @@ import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Queue;
 
 public class BlackJackGame {
+    public static final int DEALER_DRAWBLE_LIMIT = 16;
+
     private final Deck deck;
     private final Participants participants;
     private final Dealer dealer;
-    private final Deque<Participant> readyQueue;
+    private final Queue<Participant> readyQueue;
 
     public BlackJackGame(final DeckInitializer deckInitializer, final Dealer dealer, final Participants participants) {
         this.deck = deckInitializer.generateDeck();
@@ -23,36 +25,36 @@ public class BlackJackGame {
 
     public void initializeGame() {
         participants.stream()
-                .forEach(this::putTowCard);
-        putTowCard(dealer);
+                .forEach(this::giveTwoCards);
+        giveTwoCards(dealer);
     }
 
-    private void putTowCard(final Player player) {
+    private void giveTwoCards(final Player player) {
         player.putCard(deck.drawCard());
         player.putCard(deck.drawCard());
     }
 
-    public void receiveCard(final boolean isPlayerWantCard) {
+    public void giveCardToCurrentTurnParticipant(final boolean isPlayerWantCard) {
         if (isPlayerWantCard) {
-            readyQueue.getFirst().putCard(deck.drawCard());
+            readyQueue.peek().putCard(deck.drawCard());
             return;
         }
         readyQueue.poll();
     }
 
     public Participant getCurrentTurnParticipant() {
-        return readyQueue.getFirst();
+        return readyQueue.peek();
     }
 
     public boolean isDealerCardDrawable() {
-        return dealer.calculatePoint() <= 16;
+        return dealer.calculatePoint() <= DEALER_DRAWBLE_LIMIT;
     }
 
     public void drawDealerCard() {
         dealer.putCard(deck.drawCard());
     }
 
-    public boolean hasReady() {
+    public boolean canGiveCardToParticipant() {
         return !readyQueue.isEmpty();
     }
 

@@ -44,8 +44,8 @@ class BlackJackGameTest {
 
         // when
         BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
-        blackJackGame.receiveCard(true);
-        blackJackGame.receiveCard(true);
+        blackJackGame.giveCardToCurrentTurnParticipant(true);
+        blackJackGame.giveCardToCurrentTurnParticipant(true);
 
         // then
         assertThat(participant1.getReceivedCards().size()).isEqualTo(2);
@@ -62,8 +62,8 @@ class BlackJackGameTest {
 
         // when
         BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
-        blackJackGame.receiveCard(true);
-        blackJackGame.receiveCard(false);
+        blackJackGame.giveCardToCurrentTurnParticipant(true);
+        blackJackGame.giveCardToCurrentTurnParticipant(false);
 
         // then
         assertThat(participant1.getReceivedCards().size()).isEqualTo(1);

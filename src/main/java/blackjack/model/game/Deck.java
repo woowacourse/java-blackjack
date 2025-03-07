@@ -12,7 +12,6 @@ public class Deck {
         this.cards.addAll(cards);
     }
 
-
     public int getCardCount() {
         return cards.size();
     }

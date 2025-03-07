@@ -13,13 +13,13 @@ public class DeckInitializer {
 
     public Deck generateDeck() {
         List<Card> cards = Stream.of(CardShape.values())
-                .flatMap(generateCard())
+                .flatMap(generateAllTypeCard())
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
         return new Deck(cards);
     }
 
-    private static Function<CardShape, Stream<? extends Card>> generateCard() {
+    private Function<CardShape, Stream<Card>> generateAllTypeCard() {
         return cardShape -> Stream.of(CardType.values()).map(cardType -> new Card(cardShape, cardType));
     }
 }

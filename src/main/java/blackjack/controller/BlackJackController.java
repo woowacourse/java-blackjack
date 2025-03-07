@@ -35,10 +35,10 @@ public class BlackJackController {
     }
 
     private void giveMoreCardToWantingParticipants(final BlackJackGame blackJackGame) {
-        while (blackJackGame.hasReady()) {
+        while (blackJackGame.canGiveCardToParticipant()) {
             Participant participant = blackJackGame.getCurrentTurnParticipant();
             boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
-            blackJackGame.receiveCard(isReceive);
+            blackJackGame.giveCardToCurrentTurnParticipant(isReceive);
             outputView.printPlayerCardStatus(participant.getName(), participant);
             checkBust(blackJackGame, participant);
         }

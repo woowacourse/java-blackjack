@@ -33,7 +33,8 @@ public class OutputView {
     }
 
     public String generateCardNames(final ReceivedCards receivedCards) {
-        return receivedCards.stream()
+        return receivedCards.getCards()
+                .stream()
                 .map(this::generateCardName)
                 .collect(Collectors.joining(", "));
     }

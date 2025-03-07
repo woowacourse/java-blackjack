@@ -1,14 +1,16 @@
 package blackjack.model.game;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.CardType;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class ReceivedCards {
 
+    public static final int BUST_LIMIT = 21;
+    public static final int ACE_INCREASABLE_POINT = 10;
     private final List<Card> cards = new ArrayList<>();
 
     public void receive(Card card) {
@@ -37,13 +39,16 @@ public class ReceivedCards {
                 .count());
     }
 
-    private int adjustForAces(int basePoint, int aceCount) {
-        return IntStream.range(0, aceCount).reduce(basePoint, (currentPoint, i) -> plusTenPoint(currentPoint));
+    private int adjustForAces(final int basePoint, final int aceCount) {
+        return IntStream.range(0, aceCount)
+                .reduce(basePoint,
+                        (currentPoint, count) -> plusTenPoint(currentPoint)
+                );
     }
 
     private int plusTenPoint(int currentPoint) {
-        if (!isBust(currentPoint + 10)) {
-            currentPoint += 10;
+        if (!isBust(currentPoint + ACE_INCREASABLE_POINT)) {
+            currentPoint += ACE_INCREASABLE_POINT;
         }
         return currentPoint;
     }
@@ -52,15 +57,15 @@ public class ReceivedCards {
         return isBust(calculateTotalPoint());
     }
 
-    private boolean isBust(int point) {
-        return point > 21;
+    private boolean isBust(final int point) {
+        return point > BUST_LIMIT;
     }
 
     public Card getFirstCard() {
         return cards.getFirst();
     }
 
-    public Stream<Card> stream() {
-        return cards.stream();
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(this.cards);
     }
 }
