@@ -18,11 +18,11 @@ public abstract class Gamer {
         return hand.isBust();
     }
 
-    public void receiveInitialCards(List<Card> cards) {
+    public void receiveInitialCards(final List<Card> cards) {
         cards.forEach(hand::add);
     }
 
-    public void hit(Card card) {
+    public void hit(final Card card) {
         hand.add(card);
     }
 

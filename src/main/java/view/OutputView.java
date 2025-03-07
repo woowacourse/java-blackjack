@@ -14,13 +14,14 @@ public final class OutputView {
     private OutputView() {
     }
 
-    public static void printInitialSettingMessage(final String dealerName, final List<Nickname> playerNames,
+    public static void printInitialSettingMessage(final String dealerName,
+                                                  final List<Nickname> playerNames,
                                                   final int cardAmount) {
 
         final List<String> nicknames = playerNames.stream()
                 .map(Nickname::getDisplayName)
                 .toList();
-        String message = String.format(
+        final String message = String.format(
                 "%s와 %s에게 %d장을 나누었습니다.",
                 dealerName,
                 String.join(", ", nicknames),
@@ -29,12 +30,12 @@ public final class OutputView {
         print(message);
     }
 
-    public static void printCardsInHand(String name, List<Card> cards) {
+    public static void printCardsInHand(final String name, final List<Card> cards) {
 
         final List<String> cardGroup = cards.stream()
                 .map(card -> card.getDisplayName() + card.getShape().getTitle())
                 .toList();
-        String message = String.format("%s카드: %s", name, String.join(", ", cardGroup));
+        final String message = String.format("%s카드: %s", name, String.join(", ", cardGroup));
         print(message);
     }
 
@@ -48,13 +49,13 @@ public final class OutputView {
 
     public static void printCardsInHandWithResults(final Dealer dealer, final List<Player> players) {
         print(getMessage(dealer));
-        for (Player player : players) {
+        for (final Player player : players) {
             print(getMessage(player));
         }
     }
 
     private static String getMessage(final Gamer gamer) {
-        List<Card> cards = gamer.getCards();
+        final List<Card> cards = gamer.getCards();
         final List<String> cardGroup = cards.stream()
                 .map(card -> card.getDisplayName() + card.getShape().getTitle())
                 .toList();
@@ -67,8 +68,10 @@ public final class OutputView {
         );
     }
 
-    public static void printFinalResults(final String dealerName, final Map<FinalResult, Integer> resultCounts,
-                                         final Map<Player, FinalResult> playerResults) {
+    public static void printFinalResults(final String dealerName,
+                                         final Map<FinalResult, Integer> resultCounts,
+                                         final Map<Player, FinalResult> playerResults
+    ) {
 
         print("## 최종 승패");
         final Integer win = resultCounts.getOrDefault(FinalResult.WIN, 0);

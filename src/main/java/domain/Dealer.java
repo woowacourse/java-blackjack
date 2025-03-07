@@ -5,8 +5,8 @@ public class Dealer extends Gamer {
         super(nickname);
     }
 
-    public boolean canHit(int threshold) {
-        int sumOfRank = hand.getSumOfRank();
+    public boolean canHit(final int threshold) {
+        final int sumOfRank = hand.getSumOfRank();
         if (hand.hasAce()) {
             return sumOfRank + 10 <= threshold;
         }

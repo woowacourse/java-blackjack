@@ -12,14 +12,14 @@ public final class InputView {
         return readValidInput();
     }
 
-    public static String readQuestOneMoreCard(String name) {
+    public static String readQuestOneMoreCard(final String name) {
         print(String.format("%s는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
         return readValidInput();
     }
 
     private static String readValidInput() {
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+        final Scanner scanner = new Scanner(System.in);
+        final String input = scanner.nextLine();
 
         if (input.isBlank()) {
             throw new IllegalArgumentException("입력이 올바르지 않습니다.");

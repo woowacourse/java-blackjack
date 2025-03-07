@@ -17,7 +17,7 @@ public class Player extends Gamer {
 
         if (hand.hasAce()) {
             final List<Card> cards = this.hand.getCards();
-            List<Integer> sumOfRanks = calculateAllSums(cards);
+            final List<Integer> sumOfRanks = calculateAllSums(cards);
 
             return sumOfRanks.stream()
                     .filter(sum -> sum <= 21)
@@ -28,20 +28,24 @@ public class Player extends Gamer {
         return hand.getSumOfRank();
     }
 
-    private List<Integer> calculateAllSums(List<Card> cards) {
-        Set<Integer> resultSet = new HashSet<>();
+    private List<Integer> calculateAllSums(final List<Card> cards) {
+        final Set<Integer> resultSet = new HashSet<>();
         calculateAllSums(cards, 0, 0, resultSet);
-        List<Integer> resultList = new ArrayList<>(resultSet);
+        final List<Integer> resultList = new ArrayList<>(resultSet);
         Collections.sort(resultList);
         return resultList;
     }
 
-    private void calculateAllSums(List<Card> cards, int index, int currentSum, Set<Integer> resultSet) {
+    private void calculateAllSums(final List<Card> cards,
+                                  final int index,
+                                  final int currentSum,
+                                  final Set<Integer> resultSet
+    ) {
         if (index == cards.size()) {
             resultSet.add(currentSum);
             return;
         }
-        Card card = cards.get(index);
+        final Card card = cards.get(index);
         if (card.isAce()) {
             calculateAllSums(cards, index + 1, currentSum + 1, resultSet);
             calculateAllSums(cards, index + 1, currentSum + 11, resultSet);

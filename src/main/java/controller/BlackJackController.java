@@ -51,7 +51,7 @@ public class BlackJackController {
     }
 
     private Deck generateDeck() {
-        DeckGenerator deckGenerator = new DeckGenerator();
+        final DeckGenerator deckGenerator = new DeckGenerator();
         final List<Card> cards = deckGenerator.generate();
         deckGenerator.shuffle(cards, new Random());
         return new Deck(cards);
@@ -69,7 +69,7 @@ public class BlackJackController {
     }
 
     private void processPlayerHit(final List<Player> players, final Deck deck) {
-        for (Player player : players) {
+        for (final Player player : players) {
             if (isNotMoreCard(deck, player)) {
                 continue;
             }
@@ -78,7 +78,7 @@ public class BlackJackController {
     }
 
     private static boolean isNotMoreCard(final Deck deck, final Player player) {
-        String input = InputView.readQuestOneMoreCard(player.getDisplayName());
+        final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
         if (Command.isYes(input)) {
             final Card card = deck.drawCard();
             player.hit(card);
@@ -117,8 +117,8 @@ public class BlackJackController {
 
     private void processFinalResult(final Dealer dealer, final List<Player> players) {
         OutputView.printCardsInHandWithResults(dealer, players);
-        Map<Player, FinalResult> playerResults = FinalResult.makePlayerResult(players, dealer);
-        Map<FinalResult, Integer> resultCounts = FinalResult.makeDealerResult(playerResults);
+        final Map<Player, FinalResult> playerResults = FinalResult.makePlayerResult(players, dealer);
+        final Map<FinalResult, Integer> resultCounts = FinalResult.makeDealerResult(playerResults);
         OutputView.printFinalResults(dealer.getDisplayName(), resultCounts, playerResults);
     }
 }

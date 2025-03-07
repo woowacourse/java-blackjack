@@ -27,7 +27,6 @@ public enum Command {
         return Command.NO.getDisplayCommand().equals(input.toUpperCase());
     }
 
-
     public String getDisplayCommand() {
         return displayCommand;
     }
