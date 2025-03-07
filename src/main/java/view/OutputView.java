@@ -1,6 +1,11 @@
 package view;
 
-import model.*;
+import model.card.Card;
+import model.participant.Dealer;
+import model.participant.Participant;
+import model.participant.Player;
+import model.participant.Players;
+import model.score.MatchType;
 
 import java.util.List;
 import java.util.Map;

@@ -1,9 +1,9 @@
 package controller;
 
-import model.Dealer;
+import model.participant.Dealer;
 import model.GameManager;
-import model.Player;
-import model.Players;
+import model.participant.Player;
+import model.participant.Players;
 import view.InputView;
 import view.OutputView;
 

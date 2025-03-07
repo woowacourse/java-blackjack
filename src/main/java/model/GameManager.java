@@ -1,5 +1,14 @@
 package model;
 
+import model.card.Card;
+import model.card.CardDeck;
+import model.participant.Dealer;
+import model.participant.Participant;
+import model.participant.Player;
+import model.participant.Players;
+import model.score.MatchType;
+import model.score.ResultType;
+
 import java.util.ArrayList;
 import java.util.List;
 

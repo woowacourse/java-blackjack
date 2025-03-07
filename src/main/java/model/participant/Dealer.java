@@ -1,4 +1,7 @@
-package model;
+package model.participant;
+
+import model.score.MatchType;
+import model.score.ResultType;
 
 import java.util.HashMap;
 import java.util.Map;

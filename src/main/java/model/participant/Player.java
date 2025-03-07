@@ -1,4 +1,6 @@
-package model;
+package model.participant;
+
+import model.score.MatchType;
 
 import java.util.Objects;
 

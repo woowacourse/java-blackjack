@@ -1,4 +1,8 @@
-package model;
+package model.participant;
+
+import model.score.Score;
+import model.card.Card;
+import model.card.RankType;
 
 import java.util.ArrayList;
 import java.util.List;

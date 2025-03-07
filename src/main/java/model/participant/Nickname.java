@@ -1,4 +1,4 @@
-package model;
+package model.participant;
 
 import java.util.Objects;
 

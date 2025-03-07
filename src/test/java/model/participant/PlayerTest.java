@@ -1,5 +1,9 @@
-package model;
+package model.participant;
 
+import model.card.Card;
+import model.card.CardDeck;
+import model.card.RankType;
+import model.card.SuitType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
