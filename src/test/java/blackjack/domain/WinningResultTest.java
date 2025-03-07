@@ -9,7 +9,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class WinnerDeciderTest {
+public class WinningResultTest {
 
     @Test
     void 승부를_보는_두명이_모두_21을_초과한_경우_무승부이다() {
@@ -30,10 +30,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.DRAW);
@@ -57,10 +56,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.WIN);
@@ -83,10 +81,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.WIN);
@@ -110,10 +107,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.WIN);
@@ -137,10 +133,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.DRAW);
@@ -162,10 +157,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
@@ -189,10 +183,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
@@ -216,10 +209,9 @@ public class WinnerDeciderTest {
                 ),
                 new ScoreCalculator()
         );
-        WinnerDecider winnerDecider = new WinnerDecider();
 
         //when
-        WinningResult result = winnerDecider.decideWinning(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
         Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
