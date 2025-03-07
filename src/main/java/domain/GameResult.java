@@ -8,6 +8,8 @@ public enum GameResult {
     LOSE("패"),
     DRAW("무");
 
+    public static final int BLACK_JACK_CONDITION_COUNT = 2;
+
     private final String result;
 
     GameResult(String result) {
@@ -21,6 +23,10 @@ public enum GameResult {
         if (dealer.isOverBurstBound()) {
             return GameResult.WIN;
         }
+        return judgeTotalCardNumber(dealer, player);
+    }
+
+    private static GameResult judgeTotalCardNumber(Dealer dealer, Player player) {
         int playerTotalCardNumber = player.calculateTotalCardNumber();
         int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
         if (playerTotalCardNumber < dealerTotalCardNumber) {
@@ -29,7 +35,7 @@ public enum GameResult {
         if (playerTotalCardNumber > dealerTotalCardNumber) {
             return GameResult.WIN;
         }
-        if (playerTotalCardNumber == 21) {
+        if (playerTotalCardNumber == Hand.BURST_BOUND) {
             return judgeBlackJack(dealer, player);
         }
         return GameResult.DRAW;
@@ -41,10 +47,10 @@ public enum GameResult {
         if (playerCardCount == dealerCardCount) {
             return GameResult.DRAW;
         }
-        if (playerCardCount == 2) {
+        if (playerCardCount == BLACK_JACK_CONDITION_COUNT) {
             return GameResult.WIN;
         }
-        if (dealerCardCount == 2) {
+        if (dealerCardCount == BLACK_JACK_CONDITION_COUNT) {
             return GameResult.LOSE;
         }
         throw new IllegalArgumentException("[ERROR] 승패 판정에 실패하였습니다.");
