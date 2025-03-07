@@ -120,6 +120,23 @@ class BlackJackGameTest {
             assertThat(score).isEqualTo(Score.BLACKJACK);
         }
 
+        @Test
+        @DisplayName("게임 결과를 올바르게 계산한다.")
+        void calculateGameResults() {
+            // given
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            Player player1 = new Player("Alice", Hand.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS));
+            Player player2 = new Player("Bob", Hand.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS));
+            List<Player> players = List.of(player1, player2);
+
+            // when
+            Map<String, GameResult> results = blackJackGame.calculateGameResults(players);
+
+            // then
+            assertThat(results).containsKeys("Alice", "Bob");
+        }
+    }
+
     @Nested
     class InvalidCases {
 
