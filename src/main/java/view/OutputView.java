@@ -1,15 +1,12 @@
 package view;
 
-import static domain.Dealer.THRESHOLD;
-
 import controller.dto.WinLossCountDto;
-import domain.Card;
-import domain.Dealer;
-import domain.Hand;
-import domain.Player;
-import domain.WinLossResult;
+import domain.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static domain.Dealer.THRESHOLD;
 
 public class OutputView {
     public static void printDistributeResult(List<Player> players, Dealer dealer) {
@@ -37,8 +34,15 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printDealerExtraCardsCount(Dealer dealer, int dealerExtraCardsCount) {
-        System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
+    public static void printBust() {
+        System.out.println("You Die!!");
+    }
+
+    public static void printDealerExtraCardsCount(Dealer dealer) {
+        int dealerExtraCardsCount = dealer.getExtraHandSize();
+        if (dealerExtraCardsCount > 0) {
+            System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
+        }
     }
 
     public static void printResult(List<Player> players, Dealer dealer, WinLossCountDto winLossCountResult) {
@@ -55,7 +59,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static String getFormattedOpenedCard(Card card){
+    public static String getFormattedOpenedCard(Card card) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(card.getDenomination().getValue())
                 .append(card.getSuit().getShape());
@@ -86,7 +90,13 @@ public class OutputView {
 
     private static void openCardsWithTotal(Player player, StringBuilder stringBuilder) {
         openHand(player, stringBuilder);
-        stringBuilder.append(String.format(" - 결과: %d", player.getHandTotal()))
+        int totalScore = player.getHandTotal();
+
+        String scoreMessage = Integer.toString(totalScore);
+        if (totalScore == 0) {
+            scoreMessage = "버스트";
+        }
+        stringBuilder.append(String.format(" - 결과: %s", scoreMessage))
                 .append("\n");
     }
 
