@@ -7,8 +7,6 @@ import java.util.function.Predicate;
 
 public class Game {
 
-    public static final int DEALER_HIT_THRESHOLD = 16;
-
     private final Dealer dealer;
     private final List<Player> players;
 
@@ -31,37 +29,33 @@ public class Game {
         participant.receiveHand(card);
     }
 
-    public void askHitForAllPlayer(Predicate<String> playerHitDecision, PlayerAction playerAction) {
+    public void askHitForAllPlayer(PlayerHandVisualizer playerHandVisualizer) {
         for (Player player : players) {
-            askHit(player, playerHitDecision, playerAction);
+            askHit(player, playerHandVisualizer);
         }
     }
 
-    private void askHit(Player player, Predicate<String> playerHitDecision, PlayerAction playerAction) {
+    private void askHit(Player player, PlayerHandVisualizer playerHandVisualizer) {
         if (player.isBlackjack()) {
             return;
         }
-        playTurn(player, playerHitDecision, playerAction);
+        playTurn(player, playerHandVisualizer);
     }
 
-    private void playTurn(Player player, Predicate<String> playerHitDecision, PlayerAction playerAction) {
+    private void playTurn(Player player, PlayerHandVisualizer playerHandVisualizer) {
         boolean isFirstTurn = true;
-        while (!player.isBust() && shouldPlayerHit(player, playerHitDecision)) {
+        while (!player.isBust() && player.shouldHit()) {
             dealCard(player);
-            playerAction.accept(player);
+            playerHandVisualizer.accept(player);
             isFirstTurn = false;
         }
         if (isFirstTurn) {
-            playerAction.accept(player);
+            playerHandVisualizer.accept(player);
         }
     }
 
-    private boolean shouldPlayerHit(Player player, Predicate<String> playerHitDecision) {
-        return playerHitDecision.test(player.getName());
-    }
-
     public boolean dealerHit() {
-        if (dealer.getTotal() <= DEALER_HIT_THRESHOLD) {
+        if (dealer.shouldHit()) {
             dealCard(dealer);
             return true;
         }

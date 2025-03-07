@@ -12,6 +12,8 @@ public abstract class Participant {
         this.hand = new ArrayList<>(hand);
     }
 
+    public abstract boolean shouldHit();
+
     public void receiveHand(Card card) {
         hand.add(card);
     }

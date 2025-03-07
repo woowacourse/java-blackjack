@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Dealer extends Participant {
 
+    public static final int DEALER_HIT_THRESHOLD = 16;
+
     private final Deck deck;
 
     public Dealer(Deck deck) {
@@ -13,6 +15,11 @@ public class Dealer extends Participant {
 
     public Card drawCard() {
         return deck.draw();
+    }
+
+    @Override
+    public boolean shouldHit() {
+        return getTotal() <= DEALER_HIT_THRESHOLD;
     }
 
     public Card getVisibleCard() {

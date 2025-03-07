@@ -180,8 +180,29 @@ class DealerTest {
         Dealer dealer = new Dealer(deck);
 
         // when, then
-        assertThatCode(() -> dealer.getVisibleCard())
+        assertThatCode(dealer::getVisibleCard)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러가 가진 패가 없습니다.");
+    }
+
+    @DisplayName("가진 패의 총합이 16이하인 경우 히트한다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, SIX, true",
+            "TEN, SEVEN, false"
+    })
+    void shouldHitTrueTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
+        // given
+        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
+        Dealer dealer = new Dealer(deck);
+        dealer.receiveHand(new Card(Suit.SPADES, cardValue1));
+        dealer.receiveHand(new Card(Suit.SPADES, cardValue2));
+
+        // when
+        boolean shouldHit = dealer.shouldHit();
+
+        // then
+        assertThat(shouldHit)
+                .isSameAs(expected);
     }
 }

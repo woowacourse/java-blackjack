@@ -40,7 +40,7 @@ public class BlackjackController {
     }
 
     private void askHitForAllPlayer(Game game) {
-        game.askHitForAllPlayer(inputView::readHitOrNot, outputView::printPlayerHand);
+        game.askHitForAllPlayer(outputView::printPlayerHand);
     }
 
     private void dealerHitOrNot(Game game) {
@@ -51,7 +51,7 @@ public class BlackjackController {
     private List<Player> getPlayers() {
         List<String> playerNames = inputView.readPlayerNames();
         return playerNames.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, inputView::readHitOrNot))
                 .toList();
     }
 

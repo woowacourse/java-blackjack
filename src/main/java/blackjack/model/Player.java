@@ -6,10 +6,17 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private final String name;
+    private final HitDecisionStrategy hitDecisionStrategy;
 
-    public Player(String name) {
+    public Player(String name, HitDecisionStrategy hitDecisionStrategy) {
         super(new ArrayList<>());
         this.name = name;
+        this.hitDecisionStrategy = hitDecisionStrategy;
+    }
+
+    @Override
+    public boolean shouldHit() {
+        return hitDecisionStrategy.decideHit(name);
     }
 
     public String getName() {

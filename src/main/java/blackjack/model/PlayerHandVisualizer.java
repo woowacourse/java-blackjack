@@ -1,7 +1,7 @@
 package blackjack.model;
 
 @FunctionalInterface
-public interface PlayerAction {
+public interface PlayerHandVisualizer {
 
     void accept(Player player);
 }

@@ -1,13 +1,13 @@
 package blackjack.model;
 
+import static blackjack.TestFixtures.NO_HIT_STRATEGY;
+import static blackjack.TestFixtures.TEST_EMPTY_VISUALIZER;
+import static blackjack.TestFixtures.createHitDecisionStrategy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.function.Predicate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ class GameTest {
     void createTest() {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        List<Player> players = List.of(new Player("pobi"), new Player("neo"));
+        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY), new Player("neo", NO_HIT_STRATEGY));
 
         // when, then
         assertThatCode(() -> new Game(new Dealer(deck), players))
@@ -32,7 +32,7 @@ class GameTest {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"), new Player("neo"));
+        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY), new Player("neo", NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
 
         // when
@@ -51,16 +51,13 @@ class GameTest {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, false));
+        List<Player> players = List.of(new Player("pobi", hitDecisionStrategy));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
-        Queue<Boolean> playerAnswers = new LinkedList<>(List.of(true, false));
-        Predicate<String> predicate = answer -> playerAnswers.poll();
-        PlayerAction testEmptyAction = player -> {};
-
         //when
-        game.askHitForAllPlayer(predicate, testEmptyAction);
+        game.askHitForAllPlayer(TEST_EMPTY_VISUALIZER);
 
         // then
         assertThat(players)
@@ -98,20 +95,17 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true));
+        List<Player> players = List.of(new Player("pobi", hitDecisionStrategy));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
-        Queue<Boolean> playerAnswers = new LinkedList<>(List.of(true));
-        Predicate<String> predicate = answer -> playerAnswers.poll();
-        PlayerAction testEmptyAction = player -> {};
-
         //when
-        game.askHitForAllPlayer(predicate, testEmptyAction);
+        game.askHitForAllPlayer(TEST_EMPTY_VISUALIZER);
 
         // then
-        assertThat(playerAnswers)
-                .hasSize(1);
+        assertThat(players)
+                .allSatisfy(player -> assertThat(player.getHand()).hasSize(2));
     }
 
     @DisplayName("버스트인 경우 히트 여부를 묻지 않는다.")
@@ -127,20 +121,17 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, true));
+        List<Player> players = List.of(new Player("pobi", hitDecisionStrategy));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
-        Queue<Boolean> playerAnswers = new LinkedList<>(List.of(true, true, false));
-        Predicate<String> predicate = answer -> playerAnswers.poll();
-        PlayerAction testEmptyAction = player -> {};
-
         //when
-        game.askHitForAllPlayer(predicate, testEmptyAction);
+        game.askHitForAllPlayer(TEST_EMPTY_VISUALIZER);
 
         // then
-        assertThat(playerAnswers)
-                .hasSize(2);
+        assertThat(players)
+                .allSatisfy(player -> assertThat(player.getHand()).hasSize(3));
     }
 
     @DisplayName("딜러가 가진 패의 합이 16 이하인 경우 카드 한장을 추가로 받는다.")
@@ -156,7 +147,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -183,7 +174,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -197,14 +188,6 @@ class GameTest {
                 .hasSize(2);
     }
 
-    // public Map<Player, MatchResult> judgeMatchResults() {
-    //        Map<Player, MatchResult> results = new LinkedHashMap<>();
-    //        for (Player player : players) {
-    //            results.put(player, MatchResult.judge(dealer, player));
-    //        }
-    //        return results;
-    //    }
-
     @DisplayName("모든 플레이어의 승부를 판단한다.")
     @Test
     void judgeMatchResultsTest() {
@@ -217,7 +200,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -225,7 +208,7 @@ class GameTest {
         Map<Player, MatchResult> playerMatchResults = game.judgeMatchResults();
 
         // then
-        assertThat(playerMatchResults.get(new Player("pobi")))
+        assertThat(playerMatchResults.get(new Player("pobi", NO_HIT_STRATEGY)))
                 .isSameAs(MatchResult.WIN);
     }
 }
