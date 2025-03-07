@@ -3,8 +3,10 @@ package blackjack.controller;
 import blackjack.configuration.ApplicationConfiguration;
 import blackjack.domain.GameManager;
 import blackjack.domain.Nickname;
-import blackjack.domain.PlayerWinningStatistics;
-import blackjack.dto.DrawnCardResult;
+import blackjack.domain.Player;
+import blackjack.dto.HandsAfterDrawingCard;
+import blackjack.dto.HandsBeforeDrawingCard;
+import blackjack.dto.PlayerWinningStatistics;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -27,24 +29,9 @@ public class BlackJackController {
         gameManager.registerPlayers(nicknames);
         gameManager.distributeCards();
 
-//        List<Player> players = gameManager.getPlayers();
-//        Player dealer = new Player(Nickname.createDealerNickname());
-//
-//        outputView.printCardHeader(players);
-//        outputView.printCard(dealer.getNickname(), List.of(gameManager.findCardsByPlayer(dealer).getFirst()));
-//
-//        for (Player player : players) {
-//            List<Card> cards = gameManager.findCardsByPlayer(player);
-//
-//            outputView.printCard(player.getNickname(), cards);
-//        }
-//
-//        for (Player player : players) {
-//            while (!gameManager.isBustPlayer(player) && inputView.readWannaHit(player.getNickname())) {
-//                gameManager.hit(player);
-//                outputView.printCard(player.getNickname(), gameManager.findCardsByPlayer(player));
-//            }
-//        }
+        printHandsBeforeDrawingCard();
+
+        processHit();
 
         printDealerHit();
         printDrawnCardResult();
@@ -55,14 +42,29 @@ public class BlackJackController {
         return inputView.readNicknames().stream().map(Nickname::new).collect(Collectors.toList());
     }
 
+    private void processHit() {
+        List<Player> players = gameManager.getPlayers();
+        for (Player player : players) {
+            while (!gameManager.isBustPlayer(player) && inputView.readWannaHit(player.getNickname())) {
+                gameManager.hit(player);
+                outputView.printCard(player.getNickname(), gameManager.findCardsByPlayer(player));
+            }
+        }
+    }
+
+    private void printHandsBeforeDrawingCard() {
+        HandsBeforeDrawingCard hands = gameManager.getHandBeforeDrawCard();
+        outputView.printHandsBeforeDrawingCard(hands);
+    }
+
     private void printDealerHit() {
         int count = gameManager.drawDealerCards();
         outputView.printDealerHit(count);
     }
 
     private void printDrawnCardResult() {
-        List<DrawnCardResult> drawnCardResults = gameManager.calculateDrawnCardResults();
-        outputView.printDrawnCardResults(drawnCardResults);
+        HandsAfterDrawingCard handAfterDrawCard = gameManager.getHandAfterDrawCard();
+        outputView.printHandsAfterDrawingCard(handAfterDrawCard);
     }
 
     private void printPlayerWinningResults() {

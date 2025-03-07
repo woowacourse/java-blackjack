@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.dto;
 
-import blackjack.dto.PlayerWinningResult;
+import blackjack.domain.GameResultType;
 import java.util.List;
 
 public class PlayerWinningStatistics {

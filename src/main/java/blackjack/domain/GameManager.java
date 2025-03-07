@@ -1,8 +1,11 @@
 package blackjack.domain;
 
-import blackjack.dto.DrawnCardResult;
+import blackjack.dto.HandState;
+import blackjack.dto.HandsAfterDrawingCard;
+import blackjack.dto.HandsBeforeDrawingCard;
+import blackjack.dto.HiddenDealerHandState;
 import blackjack.dto.PlayerWinningResult;
-import java.util.ArrayList;
+import blackjack.dto.PlayerWinningStatistics;
 import java.util.List;
 
 public class GameManager {
@@ -25,6 +28,7 @@ public class GameManager {
         Player dealer = gameUserStorage.getDealer();
         cardManager.addCardByNickname(dealer, 2);
     }
+
 
     public List<Card> findCardsByPlayer(Player player) {
         return cardManager.findCardsByNickname(player);
@@ -52,18 +56,17 @@ public class GameManager {
         return gameUserStorage.getPlayers();
     }
 
-    public List<DrawnCardResult> calculateDrawnCardResults() {
-        List<DrawnCardResult> drawnCardResults = new ArrayList<>();
+    public HandsBeforeDrawingCard getHandBeforeDrawCard() {
+        HiddenDealerHandState dealerHandState = getHiddenDealerHandState();
+        List<HandState> playerHandStates = getAllPlayerHandState();
+        return new HandsBeforeDrawingCard(dealerHandState, playerHandStates);
+    }
 
+    public HandsAfterDrawingCard getHandAfterDrawCard() {
         Player dealer = gameUserStorage.getDealer();
-        drawnCardResults.add(getDrawnCardResult(dealer));
-
-        List<Player> allPlayers = gameUserStorage.getPlayers();
-        allPlayers.stream()
-                .map(this::getDrawnCardResult)
-                .forEach(drawnCardResults::add);
-
-        return drawnCardResults;
+        HandState dealerHandState = getHandState(dealer);
+        List<HandState> playerHandStates = getAllPlayerHandState();
+        return new HandsAfterDrawingCard(dealerHandState, playerHandStates);
     }
 
     public PlayerWinningStatistics calculateGameResult() {
@@ -98,10 +101,23 @@ public class GameManager {
         return new PlayerWinningResult(player.getNickname(), GameResultType.DRAW);
     }
 
-    private DrawnCardResult getDrawnCardResult(Player player) {
+    private HiddenDealerHandState getHiddenDealerHandState() {
+        Player dealer = gameUserStorage.getDealer();
+        List<Card> cards = cardManager.findCardsByNickname(dealer);
+        return new HiddenDealerHandState(dealer.getNickname(), cards.getFirst());
+    }
+
+    private List<HandState> getAllPlayerHandState() {
+        List<Player> allPlayers = gameUserStorage.getPlayers();
+        return allPlayers.stream()
+                .map(this::getHandState)
+                .toList();
+    }
+
+    private HandState getHandState(Player player) {
         List<Card> cards = cardManager.findCardsByNickname(player);
         int point = cardManager.calculateSumByNickname(player);
-        return new DrawnCardResult(player.getNickname(), cards, point);
+        return new HandState(player.getNickname(), cards, point);
     }
 }
 

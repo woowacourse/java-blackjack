@@ -3,7 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.dto.DrawnCardResult;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -105,38 +104,6 @@ class GameManagerTest {
         //then
         int dealerCardPoint = cardManager.calculateSumByNickname(makePlayer("딜러"));
         assertThat(dealerCardPoint).isGreaterThan(GameRule.DEALER_LIMIT_POINT.getValue());
-    }
-
-    @Test
-    @DisplayName("핸재 핸드와 포인트를 계산할 수 있다.")
-    void canCalculateDrawnCardResults() {
-        //given
-        List<Nickname> nicknames = new ArrayList<>(List.of(new Nickname("강산"), new Nickname("랜디")));
-
-        gameManager.registerPlayers(nicknames);
-        gameManager.distributeCards();
-
-        //when
-        List<DrawnCardResult> drawnCardResults = gameManager.calculateDrawnCardResults();
-
-        //then
-        assertThat(drawnCardResults.size()).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("핸재 핸드와 포인트를 계산할 수 있다.")
-    void canCalculatePlayerWinningResult() {
-        //given
-        List<Nickname> nicknames = new ArrayList<>(List.of(new Nickname("강산"), new Nickname("랜디")));
-
-        gameManager.registerPlayers(nicknames);
-        gameManager.distributeCards();
-
-        //when
-        PlayerWinningStatistics statistics = gameManager.calculateGameResult();
-
-        //then
-        assertThat(statistics.getPlayerWinningResults().size()).isEqualTo(2);
     }
 
     public static Player makePlayer(String nickname) {

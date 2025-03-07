@@ -11,4 +11,8 @@ public class Player {
     public Nickname getNickname() {
         return nickname;
     }
+
+    public String getNicknameValue() {
+        return nickname.getValue();
+    }
 }

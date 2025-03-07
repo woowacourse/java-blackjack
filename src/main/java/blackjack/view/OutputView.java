@@ -3,22 +3,28 @@ package blackjack.view;
 import blackjack.domain.Card;
 import blackjack.domain.GameResultType;
 import blackjack.domain.Nickname;
-import blackjack.domain.Player;
-import blackjack.domain.PlayerWinningStatistics;
-import blackjack.dto.DrawnCardResult;
+import blackjack.dto.HandState;
+import blackjack.dto.HandsAfterDrawingCard;
+import blackjack.dto.HandsBeforeDrawingCard;
+import blackjack.dto.HiddenDealerHandState;
 import blackjack.dto.PlayerWinningResult;
+import blackjack.dto.PlayerWinningStatistics;
 import java.util.List;
 
 public class OutputView {
 
-    public void printCardHeader(List<Player> players) {
-        System.out.print("딜러와 ");
-        System.out.print(String.join(", ", players.stream().map(player -> player.getNickname().getValue()).toList()));
-        System.out.println("에게 2장을 나누었습니다.");
+    public void printHandsBeforeDrawingCard(HandsBeforeDrawingCard hands) {
+        printCardDistributionHeader(hands);
+        printHiddenDealerHands(hands.dealerHand());
+        for (HandState handState : hands.playerHand()) {
+            String playerContent = makeCardContent(handState.nickname(), handState.cards());
+            System.out.println(playerContent);
+        }
+        System.out.println();
     }
 
     public void printCard(Nickname nickname, List<Card> cardsByPlayer) {
-        System.out.println(buildCardContent(nickname, cardsByPlayer));
+        System.out.println(makeCardContent(nickname, cardsByPlayer));
     }
 
     public void printDealerHit(int count) {
@@ -28,10 +34,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printDrawnCardResults(List<DrawnCardResult> drawnCardResults) {
-        for (DrawnCardResult drawnCardResult : drawnCardResults) {
-            String content = buildCardContent(drawnCardResult.nickname(), drawnCardResult.cards());
-            System.out.printf("%s - 결과: %s%n", content, drawnCardResult.point());
+    public void printHandsAfterDrawingCard(HandsAfterDrawingCard handStates) {
+        HandState dealerHandState = handStates.dealerHand();
+        String dealerContent = makeCardContent(dealerHandState.nickname(), dealerHandState.cards());
+        System.out.printf("%s - 결과: %s%n", dealerContent, dealerHandState.point());
+        for (HandState handState : handStates.playerHand()) {
+            String content = makeCardContent(handState.nickname(), handState.cards());
+            System.out.printf("%s - 결과: %s%n", content, handState.point());
         }
         System.out.println();
     }
@@ -42,7 +51,7 @@ public class OutputView {
 
         for (GameResultType gameResultType : GameResultType.values()) {
             System.out.print(playerWinningStatistics.getDealerStatistics(gameResultType)
-                    + GameResultType.WIN.getDescription() + " ");
+                    + gameResultType.getDescription() + " ");
         }
         System.out.println();
 
@@ -52,11 +61,31 @@ public class OutputView {
         }
     }
 
-    private String buildCardContent(Nickname nickname, List<Card> cardsByPlayer) {
+    private void printCardDistributionHeader(HandsBeforeDrawingCard hands) {
+        String dealerNameContent = hands.dealerHand().nickname().getValue();
+        List<Nickname> playerNicknames = hands.playerHand().stream()
+                .map(HandState::nickname)
+                .toList();
+        String playerNameContent = makeNicknamesContent(playerNicknames);
+        String content = String.format("%s와 %s에게 2장을 나누었습니다.", dealerNameContent, playerNameContent);
+        System.out.println(content);
+    }
+
+    private void printHiddenDealerHands(HiddenDealerHandState handState) {
+        String dealerContent = makeCardContent(handState.nickname(), List.of(handState.card()));
+        System.out.println(dealerContent);
+    }
+
+    private String makeCardContent(Nickname nickname, List<Card> cardsByPlayer) {
         List<String> cards = cardsByPlayer.stream()
                 .map(card -> card.getValue().getDescription() + card.getShape())
                 .toList();
         String cardContents = String.join(", ", cards);
         return String.format("%s카드: %s", nickname.getValue(), cardContents);
+    }
+
+    private String makeNicknamesContent(List<Nickname> nicknames) {
+        List<String> nicknameValues = nicknames.stream().map(Nickname::getValue).toList();
+        return String.join(", ", nicknameValues);
     }
 }
