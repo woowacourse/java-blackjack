@@ -299,7 +299,30 @@ public class GameManagerTest {
 
         //then
         assertThat(result).containsEntry(GameResult.WIN, 2);
+    }
 
+    @Test
+    void 플레이어의_게임_결과를_계산한다() {
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
 
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new TwoScoreCardGenerator()),
+                new Player("가이온",cardGroup2,new TwoScoreCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        gameManager.giveCardsToDealer();
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
+        final Map<String, GameResult> result = gameManager.calculatePlayerGameResult();
+
+        //then
+        assertThat(result).containsEntry("윌슨", GameResult.LOSE).containsEntry("가이온", GameResult.LOSE);
     }
 }

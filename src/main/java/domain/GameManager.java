@@ -84,4 +84,8 @@ public class GameManager {
         }
         return result;
     }
+
+    public Map<String, GameResult> calculatePlayerGameResult() {
+        return null;
+    }
 }
