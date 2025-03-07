@@ -12,9 +12,9 @@ public abstract class Gamer {
         this.cards = cards;
     }
 
-    abstract public boolean canGetMoreCard();
+    public abstract boolean canGetMoreCard();
 
-    abstract public String getNickname();
+    public abstract String getNickname();
 
     public List<Card> showAllCard() {
         return cards.getCards();
