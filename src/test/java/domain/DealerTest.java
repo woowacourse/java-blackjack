@@ -1,7 +1,9 @@
 package domain;
 
 import static controller.BlackJackController.THRESHOLD;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,12 +15,12 @@ class DealerTest {
     void 에이스가_없을_때_딜러의_카드가_기준을_넘으면_true를_반환한다() {
 
         // given
-        Dealer dealer = new Dealer(new Nickname("딜러"));
+        final Dealer dealer = new Dealer(new Nickname("딜러"));
         dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
         dealer.hit(new Card(Rank.SIX, Shape.CLOVER));
 
         // when
-        boolean expected = dealer.canHit(THRESHOLD);
+        final boolean expected = dealer.canHit(THRESHOLD);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
@@ -32,12 +34,12 @@ class DealerTest {
     void 에이스가_없을_때_딜러의_카드가_기준을_넘지_않으면_false를_반환한다() {
 
         // given
-        Dealer dealer = new Dealer(new Nickname("딜러"));
+        final Dealer dealer = new Dealer(new Nickname("딜러"));
         dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
         dealer.hit(new Card(Rank.SEVEN, Shape.CLOVER));
 
         // when
-        boolean expected = dealer.canHit(THRESHOLD);
+        final boolean expected = dealer.canHit(THRESHOLD);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
@@ -51,11 +53,11 @@ class DealerTest {
     void 에이스가_있을_때_에이스_1장을_11로_가정한_카드의_합계가_기준값을_안_넘을_시_true를_반환한다() {
 
         // given
-        Dealer dealer = new Dealer(new Nickname("새로이"));
+        final Dealer dealer = new Dealer(new Nickname("새로이"));
         dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
         dealer.hit(new Card(Rank.TWO, Shape.CLOVER));
         // when
-        boolean expected = dealer.canHit(16);
+        final boolean expected = dealer.canHit(16);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
@@ -69,17 +71,34 @@ class DealerTest {
     void 에이스가_있을_때_에이스_1장을_11로_가정한_카드의_합계까_기준값을_넘을_시_false를_반환한다() {
 
         // given
-        Dealer dealer = new Dealer(new Nickname("새로이"));
+        final Dealer dealer = new Dealer(new Nickname("새로이"));
         dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
         dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
 
         // when
-        boolean expected = dealer.canHit(16);
+        final boolean expected = dealer.canHit(16);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(21);
             softly.assertThat(expected).isFalse();
         });
+    }
+
+    @DisplayName("딜러의 첫번째 카드를 가져온다.")
+    @Test
+    void 딜러의_첫번쨰_카드를_가져온다() {
+
+        // given
+        final Dealer dealer = new Dealer(new Nickname("새로이"));
+        final Card card1 = new Card(Rank.JACK, Shape.CLOVER);
+        final Card card2 = new Card(Rank.ACE, Shape.CLOVER);
+        dealer.receiveInitialCards(List.of(card1, card2));
+
+        // when
+        final Card dealerFirstCard = dealer.getFirstCard();
+
+        // then
+        assertThat(dealerFirstCard).isEqualTo(card1);
     }
 }
