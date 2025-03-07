@@ -25,7 +25,7 @@ public class BlackjackController {
         hitOrStandAtDealerTurn(dealer, deck);
 
         OutputView.printFinalScore(dealer, players);
-        printWinningResultV2(players, dealer);
+        printWinningResult(players, dealer);
     }
 
     private static void hitOrStandAtDealerTurn(Dealer dealer, Deck deck) {
@@ -59,7 +59,7 @@ public class BlackjackController {
         OutputView.printInitialDealResult(dealer, players);
     }
 
-    private static void printWinningResultV2(Players players, Dealer dealer) {
+    private static void printWinningResult(Players players, Dealer dealer) {
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
 

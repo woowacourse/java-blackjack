@@ -16,7 +16,7 @@ class ParticipantHandTest {
     }
     @Test
     @DisplayName("받은 카드 합이 21 이하면 burst가 아니라고 반환한다")
-    void 받은카드_burst_아닐때_계산() {
+    void 받은카드_isBurst_아닐때_계산() {
         //given
         participantHand.add(new Card(CardRank.EIGHT, CardSuit.DIAMOND));
 
@@ -44,7 +44,7 @@ class ParticipantHandTest {
 
     @Test
     @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 이하일때 burst인지 확인한다.")
-    void 받은카드가_ace포함일때_burst_계산() {
+    void 받은카드가_ace포함일때_isBurst_계산() {
         //given
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
@@ -59,7 +59,7 @@ class ParticipantHandTest {
 
     @Test
     @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 초과일때 burst인지 확인한다.")
-    void 받은카드가_ace포함일때_계산_합_21_초과일때_burst_계산() {
+    void 받은카드가_ace포함일때_계산_합_21_초과일때_isBurst_계산() {
         //given
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
