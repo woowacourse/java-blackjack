@@ -1,7 +1,7 @@
 package blackjack.domain.fake;
 
-import blackjack.domain.Shuffler;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Shuffler;
 import java.util.List;
 
 public class TestShuffler implements Shuffler {

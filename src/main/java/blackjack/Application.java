@@ -1,15 +1,21 @@
 package blackjack;
 
 import static blackjack.domain.Rule.DEALER_NAME;
-import static blackjack.view.OutputView.*;
-import static blackjack.view.InputView.*;
+import static blackjack.view.InputView.inputPlayerHit;
+import static blackjack.view.InputView.inputPlayerName;
+import static blackjack.view.OutputView.printBusted;
+import static blackjack.view.OutputView.printDealerDraw;
+import static blackjack.view.OutputView.printGamblerCards;
+import static blackjack.view.OutputView.printGamblerResult;
+import static blackjack.view.OutputView.printInitialDistributionPrompt;
+import static blackjack.view.OutputView.printWinning;
 
-import blackjack.domain.CardDeck;
-import blackjack.domain.CardShuffler;
 import blackjack.domain.Round;
 import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.card.CardShuffler;
 import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
 import java.util.Arrays;

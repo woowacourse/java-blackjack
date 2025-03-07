@@ -6,6 +6,7 @@ import static blackjack.domain.Rule.DEALER_NAME;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Gambler;
 import blackjack.domain.gambler.Name;

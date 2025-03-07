@@ -1,6 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
 import java.util.List;
 
 public interface Shuffler {

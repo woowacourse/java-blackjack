@@ -1,14 +1,13 @@
 package blackjack.domain;
 
 import static blackjack.domain.Rule.DEALER_NAME;
-import static blackjack.view.WinningType.DEFEAT;
-import static blackjack.view.WinningType.DRAW;
-import static blackjack.view.WinningType.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
+import blackjack.domain.card.Shuffler;
 import blackjack.domain.fake.TestShuffler;
 import blackjack.domain.gambler.Name;
 import blackjack.view.WinningType;
