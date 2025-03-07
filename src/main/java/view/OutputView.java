@@ -21,7 +21,7 @@ public class OutputView {
             Map.of(ACE, "A", QUEEN, "Q", JACK, "J", KING, "K"));
     private static final String COMMA_DELIMITER = ", ";
 
-    private final String HIT_CARDS = "%n딜러와 %s에게 2장을 나누었습니다.%n";
+    private final String HIT_CARDS = "딜러와 %s에게 2장을 나누었습니다.%n";
     private final String PLAYER_CARDS = "%s카드: ";
     private final String DEALER_CARDS = "딜러카드: ";
     private final String HIT_DEALER_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
@@ -30,6 +30,7 @@ public class OutputView {
     private final String DEALER_RESULT = "딜러: %d승 %d패";
     private final String WINNER_RESULT = "%s: 승";
     private final String LOSER_RESULT = "%s: 패";
+    private final String NEW_LINE = System.lineSeparator();
 
     public void printParticipant(Players players, Dealer dealer){
         printHitNotice(players);
@@ -38,6 +39,7 @@ public class OutputView {
         for(Player player : players.getPlayers()){
             printPlayerDeck(player);
         }
+        System.out.print(NEW_LINE);
     }
 
     private void printDealerDeck(Dealer dealer) {
@@ -50,6 +52,7 @@ public class OutputView {
         for(Player player : players.getPlayers()){
             playersName.add(player.getName());
         }
+        System.out.print(NEW_LINE);
         System.out.printf(HIT_CARDS, String.join(COMMA_DELIMITER, playersName));
     }
 
@@ -68,4 +71,10 @@ public class OutputView {
         return NUMBER_SYMBOL_MAP.getOrDefault(number, String.valueOf(number.getScore())) + shape.getShape();
     }
 
+    public void printDrawDealer(Dealer dealer) {
+        if(dealer.isUnderThreshold()){
+            System.out.print(NEW_LINE);
+            System.out.println(HIT_DEALER_CARD);
+        }
+    }
 }
