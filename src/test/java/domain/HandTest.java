@@ -64,5 +64,16 @@ class HandTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("손패에 중복된 카드가 있습니다.");
         }
+        @DisplayName("손패와 새로 받은 카드는 중복될 수 없다")
+        @Test
+        void validateAddDuplicateCard() {
+            // given
+            Hand hand = Hand.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_SPADES);
+
+            // when & then
+            assertThatThrownBy(() -> hand.addCard(TrumpCard.ACE_OF_SPADES))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이미 손패에 있는 카드입니다.");
+        }
     }
 }
