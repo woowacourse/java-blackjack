@@ -6,7 +6,6 @@ import java.util.Objects;
 public abstract class Player {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
-    private static final int ADD_CARD_THRESHOLD = 16;
 
     private final String name;
     private final Cards cards;
@@ -15,6 +14,12 @@ public abstract class Player {
         validateName(name);
         this.name = name;
         cards = new Cards();
+    }
+
+    private void validateName(String name) {
+        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException(name + ": 이름은 2자 이상 10자 이하여야 합니다.");
+        }
     }
 
     public void receiveInitialCards(Deck deck) {
@@ -26,12 +31,6 @@ public abstract class Player {
     }
 
     public abstract List<Card> openInitialCards();
-
-    private void validateName(String name) {
-        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(name + ": 이름은 2자 이상 10자 이하여야 합니다.");
-        }
-    }
 
     public Cards getCards() {
         return cards;
@@ -53,13 +52,5 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
-    }
-
-    public boolean addCardIfLowScore(Deck deck) {
-        if (cards.calculateOptimalSum() <= ADD_CARD_THRESHOLD) {
-            addCard(deck);
-            return true;
-        }
-        return false;
     }
 }
