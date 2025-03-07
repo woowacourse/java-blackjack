@@ -7,8 +7,8 @@ import domain.CardDeck;
 import domain.Dealer;
 import domain.Participant;
 import domain.Participants;
+import domain.ParticipantsResult;
 import domain.Player;
-import domain.Results;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,14 +46,15 @@ public class BlackJackController {
         calculateBackJackResultProcess(participants, blackJackManager);
     }
 
-    private void calculateBackJackResultProcess(Participants participants, BlackJackManager blackJackManager) {
+    private void calculateBackJackResultProcess(Participants participants,
+        BlackJackManager blackJackManager) {
         printAllParticipantsInfo(participants);
         printAllParticipantGameResult(blackJackManager);
     }
 
     private void printAllParticipantGameResult(BlackJackManager blackJackManager) {
-        Results results = blackJackManager.calculateResult();
-        outputView.printGameResult(results);
+        ParticipantsResult participantsResult = blackJackManager.calculateResult();
+        outputView.printGameResult(participantsResult);
     }
 
     private void printAllParticipantsInfo(Participants participants) {

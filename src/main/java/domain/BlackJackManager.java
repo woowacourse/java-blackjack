@@ -14,10 +14,6 @@ public class BlackJackManager {
         this.cardDeck = cardDeck;
     }
 
-    public List<Participant> getPlayers() {
-        return participants;
-    }
-
     // 게임이 시작되면 모든 플레이어에게 카드를 2장씩 나눠준다.
     public void start() {
         for (Participant participant : participants) {
@@ -27,13 +23,12 @@ public class BlackJackManager {
     }
 
     // 게임의 결과를 반환한다
-    public Results calculateResult() {
+    public ParticipantsResult calculateResult() {
         // 플레이어와 딜러를 분리
         final Participant dealer = participants.getFirst();
         final List<Participant> players = new ArrayList<>(participants);
         players.removeFirst();
-
-        List<PlayerResult> playerResults = new ArrayList<PlayerResult>();
+        List<PlayerResult> playerResults = new ArrayList<>();
         DealerResult dealerResult = new DealerResult();
         for (final Participant player : players) {
             // 딜러-플레이어 중 딜러의 결과를 얻는다.
@@ -41,8 +36,7 @@ public class BlackJackManager {
             dealerResult.add(currentDealerResult);
             playerResults.add(new PlayerResult(player, currentDealerResult.reverse()));
         }
-
-        return new Results(dealerResult, playerResults);
+        return new ParticipantsResult(dealerResult, playerResults);
     }
 
     @Override

@@ -11,9 +11,9 @@ import static domain.Shape.SPADE;
 import domain.Card;
 import domain.GameResult;
 import domain.Participant;
+import domain.ParticipantsResult;
 import domain.PlayerResult;
 import domain.Rank;
-import domain.Results;
 import domain.Shape;
 import java.util.List;
 import java.util.Map;
@@ -109,10 +109,10 @@ public class OutputView {
         return cards.stream().map(this::formatCard).collect(Collectors.joining(", "));
     }
 
-    public void printGameResult(Results results) {
+    public void printGameResult(ParticipantsResult participantsResult) {
         System.out.println();
         System.out.println(RESULT_MESSAGE);
-        Map<GameResult, Integer> dealerResult = results.getDealerResult().getDealerResult();
+        Map<GameResult, Integer> dealerResult = participantsResult.dealerResult().getDealerResult();
         String dealerName = "딜러: ";
         System.out.print(dealerName);
         String dealerWinMessage = formatDealerWinMessage(dealerResult.get(WIN));
@@ -123,7 +123,7 @@ public class OutputView {
         System.out.print(dealerDrawMessage);
         System.out.println();
 
-        List<PlayerResult> playerResults = results.getPlayerResults();
+        List<PlayerResult> playerResults = participantsResult.playerResults();
         for (PlayerResult playerResult : playerResults) {
             System.out.printf("%s: %s%n", playerResult.getPlayerName(),
                 formatGameResult(playerResult.getGameResult()));

@@ -47,7 +47,7 @@ public class BlackJackManagerTest {
         BlackJackManager blackJackManager = new BlackJackManager(players, cardDeck);
 
         // when
-        Results results = blackJackManager.calculateResult();
+        ParticipantsResult participantsResult = blackJackManager.calculateResult();
 
         // then
         assertAll(
@@ -56,20 +56,21 @@ public class BlackJackManagerTest {
                 dealerExpected.put(GameResult.WIN, 1);
                 dealerExpected.put(GameResult.DRAW, 1);
                 dealerExpected.put(GameResult.LOSE, 1);
-                assertThat(results.getDealerResult().getDealerResult()).isEqualTo(dealerExpected);
+                assertThat(participantsResult.dealerResult().getDealerResult()).isEqualTo(
+                    dealerExpected);
             },
             () -> {
-                List<PlayerResult> playerResults = results.getPlayerResults();
+                List<PlayerResult> playerResults = participantsResult.playerResults();
                 assertThat(playerResults.get(0)).isEqualTo(
                     new PlayerResult(player1, GameResult.WIN));
             },
             () -> {
-                List<PlayerResult> playerResults = results.getPlayerResults();
+                List<PlayerResult> playerResults = participantsResult.playerResults();
                 assertThat(playerResults.get(1)).isEqualTo(
                     new PlayerResult(player2, GameResult.LOSE));
             },
             () -> {
-                List<PlayerResult> playerResults = results.getPlayerResults();
+                List<PlayerResult> playerResults = participantsResult.playerResults();
                 assertThat(playerResults.get(2)).isEqualTo(
                     new PlayerResult(player3, GameResult.DRAW));
             }
