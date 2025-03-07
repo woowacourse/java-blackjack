@@ -15,10 +15,13 @@ public class GameManager {
         this.players = players;
     }
 
-    public void receiveCardToDealer(){
+    public int giveCardsToDealer(){
+        int count = 0;
         while(dealer.isLessThen(16)){
             dealer.receiveCard();
+            count++;
         }
+        return count;
     }
 
     public static GameManager create(Dealer dealer, List<Player> players) {

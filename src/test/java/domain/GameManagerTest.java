@@ -42,7 +42,7 @@ public class GameManagerTest {
         //when
         final GameManager gameManager = GameManager.create(dealer,players);
         //then
-        assertThatCode(gameManager::receiveCardToDealer).doesNotThrowAnyException();
+        assertThatCode(gameManager::giveCardsToDealer).doesNotThrowAnyException();
     }
 
     @Test
@@ -92,7 +92,7 @@ public class GameManagerTest {
 
         //when
         final GameManager gameManager = GameManager.create(dealer, players);
-        gameManager.receiveCardToDealer();
+        gameManager.giveCardsToDealer();
         gameManager.giveCardToGamer(players.getFirst());
         gameManager.giveCardToGamer(players.getFirst());
         gameManager.giveCardToGamer(players.get(1));
@@ -120,7 +120,7 @@ public class GameManagerTest {
 
         //when
         final GameManager gameManager = GameManager.create(dealer, players);
-        gameManager.receiveCardToDealer();
+        gameManager.giveCardsToDealer();
         gameManager.giveCardToGamer(players.getFirst());
         gameManager.giveCardToGamer(players.getFirst());
         gameManager.giveCardToGamer(players.getFirst());
@@ -150,7 +150,7 @@ public class GameManagerTest {
 
         //when
         final GameManager gameManager = GameManager.create(dealer, players);
-        gameManager.receiveCardToDealer();
+        gameManager.giveCardsToDealer();
         gameManager.giveCardToGamer(players.getFirst());
         gameManager.giveCardToGamer(players.getFirst());
 
@@ -179,7 +179,7 @@ public class GameManagerTest {
 
         //when
         final GameManager gameManager = GameManager.create(dealer, players);
-        gameManager.receiveCardToDealer();
+        gameManager.giveCardsToDealer();
         gameManager.giveCardToGamer(dealer);
 
         gameManager.giveCardToGamer(players.getFirst());
