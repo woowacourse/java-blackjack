@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,15 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("Deck 은 맨 위에서 카드 한장을 뽑을 수 있다.")
+    @DisplayName("Deck 은 맨 아래에서 카드 한장을 뽑을 수 있다.")
     void test4() {
         Deck deck = new Deck();
 
         Card card = deck.draw();
-        assertThat(card.getSuit()).isEqualTo(Suit.CLUB);
-        assertThat(card.getDenomination()).isEqualTo(Denomination.ACE);
+
+        assertAll(
+                () -> assertThat(card.getSuit()).isEqualTo(Suit.DIAMOND),
+                () -> assertThat(card.getDenomination()).isEqualTo(Denomination.KING)
+        );
     }
 }

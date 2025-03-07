@@ -1,19 +1,21 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class Deck {
 
-    private final List<Card> deck;
+    private final Stack<Card> deck;
 
     public Deck() {
-        deck = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Denomination denomination : Denomination.values()) {
-                createDeckCards(suit, denomination);
-            }
+        deck = new Stack<>();
+
+        int denominationLength = Denomination.values().length;
+        for (int i = 0; i < 52; i++) {
+            Suit suit = Suit.values()[i / denominationLength];
+            Denomination denomination = Denomination.values()[i % denominationLength];
+            createDeckCards(suit, denomination);
         }
     }
 
@@ -30,7 +32,7 @@ public class Deck {
     }
 
     public Card draw() {
-        return deck.removeFirst();
+        return deck.pop();
     }
 
     public List<Card> getDeck() {
