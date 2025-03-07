@@ -46,8 +46,8 @@ public class OutputView {
     }
 
     private String formatCard(Card card) {
-        return String.format(SPREAD_CARD_RESULT, formatCardRank(card.getRank()),
-            formatCardShape(card.getShape()));
+        return String.format(SPREAD_CARD_RESULT, formatCardRank(card.rank()),
+            formatCardShape(card.shape()));
     }
 
     public void printDealerPickMessage() {
