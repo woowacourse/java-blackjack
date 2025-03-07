@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
+import blackjack.domain.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.PlayersResult;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class OutputView {
@@ -41,7 +41,8 @@ public final class OutputView {
         System.out.println(player.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
     }
 
-    public static void printGameResult(DealerResult dealerResult, PlayersResult playersResult) {
+    public static void printGameResult(Map<GameResultType, Integer> dealerResult,
+                                       Map<Player, GameResultType> playersResult) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%n", Parser.parseDealerGameResult(dealerResult));
         System.out.println(Parser.parsePlayerGameResult(playersResult));

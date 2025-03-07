@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Card {
+
     private final CardSuit cardSuit;
     private final CardRank cardRank;
 

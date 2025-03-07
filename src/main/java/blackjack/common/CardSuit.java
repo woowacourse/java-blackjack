@@ -1,6 +1,7 @@
 package blackjack.common;
 
 public enum CardSuit {
+
     HEART("하트"),
     DIAMOND("다이아몬드"),
     CLUB("클로버"),

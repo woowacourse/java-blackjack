@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum GameResultType {
+
     WIN((value, comparedValue) -> value > comparedValue, "승"),
     TIE(Integer::equals, "무"),
     LOSE((value, comparedValue) -> value < comparedValue, "패");

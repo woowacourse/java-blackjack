@@ -10,6 +10,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.PlayersResult;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackProcessManager {
     private static final int STARTING_CARD_SIZE = 2;
@@ -19,10 +20,10 @@ public class BlackjackProcessManager {
     private final PlayersResult playersResult;
     private final DealerResult dealerResult;
 
-    public BlackjackProcessManager(Deck deck, PlayersResult playersResult, DealerResult dealerResult) {
+    public BlackjackProcessManager(Deck deck) {
         this.deck = deck;
-        this.playersResult = playersResult;
-        this.dealerResult = dealerResult;
+        this.playersResult = PlayersResult.create();
+        this.dealerResult = DealerResult.create();
     }
 
     public void giveStartingCards(CardHolder cardHolder) {
@@ -73,6 +74,14 @@ public class BlackjackProcessManager {
 
         playersResult.save(player, gameResultOfPlayer);
         dealerResult.addCountOf(gameResultOfDealer);
+    }
+
+    public Map<Player, GameResultType> getPlayersResult() {
+        return playersResult.getAllResult();
+    }
+
+    public Map<GameResultType, Integer> getDealerResult() {
+        return dealerResult.getDealerResult();
     }
 
 }

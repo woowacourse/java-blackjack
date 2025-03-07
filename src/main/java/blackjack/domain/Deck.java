@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Deck {
+
     private static final int DECK_SIZE = 52;
     private final List<Card> cards;
 
@@ -17,9 +18,6 @@ public class Deck {
     }
 
     private void validate(List<Card> cards) {
-        // 덱에서 개수에 대한 검증을 스스로 해야 할지? Generator에게 책임을 위임시켜야할지
-        // 테스트 할 때의 불편함이 있음
-
         if (cards.size() != DECK_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DECK_SIZE.getMessage());
         }

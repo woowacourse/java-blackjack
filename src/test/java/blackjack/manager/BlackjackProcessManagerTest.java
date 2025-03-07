@@ -5,12 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.StubPossibleSumCardHolder;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResultType;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
-import blackjack.domain.PlayersResult;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +23,7 @@ class BlackjackProcessManagerTest {
         CardsGenerator cardsGenerator = new CardsGenerator();
         List<Card> cards = cardsGenerator.generate();
         Deck deck = new Deck(cards);
-        blackjackProcessManager = new BlackjackProcessManager(deck, PlayersResult.create(), DealerResult.create());
+        blackjackProcessManager = new BlackjackProcessManager(deck);
     }
 
     @DisplayName("처음에 카드 2장 쥐어준다.")

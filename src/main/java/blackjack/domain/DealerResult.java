@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class DealerResult {
+
     private final Map<GameResultType, Integer> dealerResult;
 
     private DealerResult() {

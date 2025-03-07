@@ -4,10 +4,8 @@ import blackjack.common.Constants;
 import blackjack.domain.Card;
 import blackjack.domain.CardHolder;
 import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
 import blackjack.domain.GameResultType;
 import blackjack.domain.Player;
-import blackjack.domain.PlayersResult;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,17 +57,14 @@ public final class Parser {
                 .collect(Collectors.joining(", "));
     }
 
-    public static String parseDealerGameResult(DealerResult dealerResult) {
-        Map<GameResultType, Integer> results = dealerResult.getDealerResult();
-
+    public static String parseDealerGameResult(Map<GameResultType, Integer> dealerResult) {
         return Arrays.stream(GameResultType.values())
-                .map(gameResultType -> parseResultCount(results, gameResultType))
+                .map(gameResultType -> parseResultCount(dealerResult, gameResultType))
                 .collect(Collectors.joining(" "));
     }
 
-    public static String parsePlayerGameResult(PlayersResult playersResult) {
-        Map<Player, GameResultType> playerGameResultTypes = playersResult.getAllResult();
-        return playerGameResultTypes.entrySet().stream().map(entry -> {
+    public static String parsePlayerGameResult(Map<Player, GameResultType> playersResult) {
+        return playersResult.entrySet().stream().map(entry -> {
             Player player = entry.getKey();
             GameResultType resultType = entry.getValue();
             return player.getName() + ": " + resultType.getDescription();

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Hand implements CardHolder {
+    // TODO 해당 로직을 참여자에 추가해도 될 거 같다.
 
     private final List<Card> cards;
 
@@ -48,7 +49,7 @@ public class Hand implements CardHolder {
         return possibleSums.stream().toList();
     }
 
-    public void calculatePossibleSums(Set<Integer> values, int index, int sum) {
+    private void calculatePossibleSums(Set<Integer> values, int index, int sum) {
         if (cards.size() == index) {
             values.add(sum);
             return;
@@ -61,7 +62,7 @@ public class Hand implements CardHolder {
     }
 
     public int getOptimisticValue() {
-        return getPossibleSums().stream().filter(sum -> sum <= 21)
+        return getPossibleSums().stream().filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
                 .max(Comparator.naturalOrder())
                 .orElse(Constants.BUSTED_VALUE);
     }
