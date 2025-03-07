@@ -9,7 +9,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackManagerTest {
+public class BlackJackResultCalculatorTest {
 
     @Test
     @DisplayName("딜러와 플레이어간의 승패를 계산한다")
@@ -24,11 +24,11 @@ public class BlackJackManagerTest {
         Participant player3 = new Player("c");
         player3.addCard(new Card(Shape.SPADE, Rank.FIVE));
         List<Participant> players = List.of(dealer, player1, player2, player3);
-        BlackJackManager blackJackManager = new BlackJackManager();
+        BlackJackResultCalculator blackJackResultCalculator = new BlackJackResultCalculator();
 
         Participants participants = new Participants(players);
         // when
-        ParticipantsResult participantsResult = blackJackManager.calculateResult(participants);
+        ParticipantsResult participantsResult = blackJackResultCalculator.calculate(participants);
 
         // then
         assertAll(

@@ -1,6 +1,6 @@
 package controller;
 
-import domain.BlackJackManager;
+import domain.BlackJackResultCalculator;
 import domain.Card;
 import domain.CardBundle;
 import domain.CardDeck;
@@ -30,7 +30,7 @@ public class BlackJackController {
         Participants participants = createGameParticipants();
 
         CardDeck cardDeck = createCardDeck(cardBundle);
-        BlackJackManager blackJackManager = new BlackJackManager();
+        BlackJackResultCalculator blackJackResultCalculator = new BlackJackResultCalculator();
 
         receiveCardProcessOfParticipants(participants, cardDeck);
 
@@ -38,7 +38,7 @@ public class BlackJackController {
         receiveCardProcessOfPlayer(participants, cardDeck);
         receiveCardProcessOfDealer(participants, cardDeck);
 
-        calculateBackJackResultProcess(participants, blackJackManager);
+        calculateBackJackResultProcess(participants, blackJackResultCalculator);
     }
 
     private void receiveCardProcessOfParticipants(Participants participants,
@@ -51,14 +51,14 @@ public class BlackJackController {
     }
 
     private void calculateBackJackResultProcess(Participants participants,
-        BlackJackManager blackJackManager) {
+        BlackJackResultCalculator blackJackResultCalculator) {
         printAllParticipantsInfo(participants);
-        printAllParticipantGameResult(participants, blackJackManager);
+        printAllParticipantGameResult(participants, blackJackResultCalculator);
     }
 
     private void printAllParticipantGameResult(Participants participants,
-        BlackJackManager blackJackManager) {
-        ParticipantsResult participantsResult = blackJackManager.calculateResult(participants);
+        BlackJackResultCalculator blackJackResultCalculator) {
+        ParticipantsResult participantsResult = blackJackResultCalculator.calculate(participants);
         outputView.printGameResult(participantsResult);
     }
 

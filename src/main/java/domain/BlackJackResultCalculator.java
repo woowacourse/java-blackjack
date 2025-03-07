@@ -3,9 +3,9 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJackManager {
+public class BlackJackResultCalculator {
 
-    public ParticipantsResult calculateResult(Participants participants) {
+    public ParticipantsResult calculate(Participants participants) {
         Participant dealer = participants.getDealer();
         List<Participant> players = participants.getPlayerParticipants();
         List<PlayerResult> playerResults = new ArrayList<>();
