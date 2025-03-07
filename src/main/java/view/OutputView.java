@@ -61,9 +61,11 @@ public class OutputView {
 
     public void printGameResult(final Map<GameResult, Integer> dealerGameResult, final Map<String, GameResult> playerGameResult) {
         final StringBuilder sb = new StringBuilder();
-        final String dealerMessage = dealerGameResult.entrySet().stream()
+        final String dealerGameResultMessage = dealerGameResult.entrySet().stream()
                 .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getDescription()))
                 .collect(Collectors.joining(" "));
+
+        final String dealerMessage = String.format("딜러: %s", dealerGameResultMessage);
         final String playerMessage = playerGameResult.entrySet().stream()
                 .map(entry -> String.format("%s: %s", entry.getKey(), entry.getValue().getDescription()))
                 .collect(Collectors.joining(LINE_SEPARATOR));
