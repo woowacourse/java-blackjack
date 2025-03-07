@@ -51,12 +51,12 @@ public class Cards {
     }
 
     private void changeAceElevenToOne() {
-        final Card aceElevenCard = cards.stream()
+        Card aceElevenCard = cards.stream()
                 .filter(card -> card.isSameNumber(CardNumber.ACE_ELEVEN))
                 .findAny()
                 .orElseThrow();
 
-        final CardShape cardShape = aceElevenCard.getShape();
+        CardShape cardShape = aceElevenCard.getShape();
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, cardShape));

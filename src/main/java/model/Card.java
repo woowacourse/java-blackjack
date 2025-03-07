@@ -12,16 +12,16 @@ public class Card {
         this.cardShape = cardShape;
     }
 
-    public CardNumber getNumber() {
-        return number;
+    public boolean isSameNumber(final CardNumber number) {
+        return this.number == number;
     }
 
     public int getNumberValue() {
         return number.getNumber();
     }
 
-    public boolean isSameNumber(final CardNumber number) {
-        return this.number == number;
+    public CardNumber getNumber() {
+        return number;
     }
 
     public CardShape getShape() {

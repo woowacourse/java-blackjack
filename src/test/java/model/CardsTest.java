@@ -84,4 +84,18 @@ class CardsTest {
 
         assertThatThrownBy(() -> cards.addCard(cardToAdd));
     }
+
+    @DisplayName("첫 번째 순서의 카드를 반환한다.")
+    @Test
+    void test7() {
+        Cards cards = new Cards(new ArrayList<>(List.of(
+                new Card(CardNumber.KING, CardShape.SPADE),
+                new Card(CardNumber.FIVE, CardShape.SPADE),
+                new Card(CardNumber.QUEEN, CardShape.SPADE)))
+        );
+
+        Card expected = new Card(CardNumber.KING, CardShape.SPADE);
+
+        assertThat(cards.getFirstCard()).isEqualTo(expected);
+    }
 }

@@ -23,7 +23,7 @@ public class GameResults {
         if (GameResult.WIN.equals(gameResult)) {
             return GameResult.LOSE;
         }
-        if(GameResult.LOSE.equals(gameResult)) {
+        if (GameResult.LOSE.equals(gameResult)) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;

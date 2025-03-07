@@ -20,18 +20,17 @@ public class Players {
 
     public void addCardByName(final String name, final Card card) {
         findCardsByName(name).addCard(card);
-        // TODO : 테스트 해야함 !
     }
 
     public boolean checkIsBustByName(final String name) {
         return findCardsByName(name).isBust();
     }
 
-    public Set<String> getNames() {
-        return players.keySet();
-    }
-
     public int getResultByName(final String name) {
         return findCardsByName(name).calculateResult();
+    }
+
+    public Set<String> getNames() {
+        return players.keySet();
     }
 }
