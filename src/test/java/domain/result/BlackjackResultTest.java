@@ -8,16 +8,19 @@ import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import org.junit.jupiter.api.Disabled;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class BlackjackResultTest {
 
-    @Disabled
     @Test
     void 딜러와_플레이어를_입력받아_딜러의_승패를_반환한다() {
         // given
-        Dealer dealer = Dealer.of(CardDeck.of());
+        List<Card> cards = List.of(
+                Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
+                Card.of(TrumpNumber.SIX, TrumpShape.CLUB)
+        );
+        Dealer dealer = Dealer.of(CardDeck.of(cards));
         dealer.receive();
         dealer.receive();
         Player player = Player.of("pobi1");

@@ -5,13 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.CardDeckGenerator;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class GameManagerTest {
@@ -19,8 +19,8 @@ class GameManagerTest {
     @Test
     void 게임_메니저를_생성한다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
-        Dealer dealer = Dealer.of(CardDeck.of());
+        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
+        Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),
@@ -37,7 +37,7 @@ class GameManagerTest {
     @Test
     void 게임을_시작하고_카드를_두_장씩_배부한다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
+        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
@@ -58,7 +58,7 @@ class GameManagerTest {
     @Test
     void 참가자들의_이름_목록을_가져온다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
+        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
@@ -79,7 +79,7 @@ class GameManagerTest {
     @Test
     void 이름을_받아_해당_플레이어에게_카드를_준다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
+        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
         Player target = Player.of("pobi1");
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
@@ -101,7 +101,7 @@ class GameManagerTest {
     @Test
     void 플레이어의_현재_카드_점수를_계산한다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
+        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
         Player target = Player.of("pobi1");
         target.receive(Card.of(TrumpNumber.NINE, TrumpShape.CLUB));
 
@@ -122,11 +122,15 @@ class GameManagerTest {
         assertThat(score).isEqualTo(9);
     }
 
-    @Disabled
     @Test
     void 딜러의_카드_합이_16_이하면_카드를_한_장_받고_true를_반환한다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
+        List<Card> cards = List.of(
+                Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
+                Card.of(TrumpNumber.FIVE, TrumpShape.CLUB),
+                Card.of(TrumpNumber.FIVE, TrumpShape.CLUB)
+        );
+        CardDeck cardDeck = CardDeck.of(cards);
         Dealer dealer = Dealer.of(cardDeck);
         dealer.receive();
         dealer.receive();
@@ -146,11 +150,14 @@ class GameManagerTest {
         assertThat(result).isTrue();
     }
 
-    @Disabled
     @Test
     void 딜러의_카드_합이_16_초과면_카드를_받지_않고_false를_반환한다() {
         // given
-        CardDeck cardDeck = CardDeck.of();
+        List<Card> cards = List.of(
+                Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
+                Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB)
+        );
+        CardDeck cardDeck = CardDeck.of(cards);
         Dealer dealer = Dealer.of(cardDeck);
         dealer.receive();
         dealer.receive();

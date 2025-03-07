@@ -11,7 +11,7 @@ class CardDeckTest {
     @Test
     void 카드_덱을_초기화한다() {
         // when
-        CardDeck cardDeck = CardDeck.of();
+        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
 
         // then
         assertThat(cardDeck.getCards())
@@ -21,8 +21,8 @@ class CardDeckTest {
     @RepeatedTest(100)
     void 카드가_셔플이_되었는지_확인한다() {
         // given
-        CardDeck deck1 = CardDeck.of();
-        CardDeck deck2 = CardDeck.of();
+        CardDeck deck1 = CardDeck.of(CardDeckGenerator.generateCardDeck());
+        CardDeck deck2 = CardDeck.of(CardDeckGenerator.generateCardDeck());
 
         // when
         List<Card> cards1 = deck1.getCards();
@@ -35,7 +35,7 @@ class CardDeckTest {
     @Test
     void 가장_위에_있는_카드를_반환한다() {
         // given
-        CardDeck deck = CardDeck.of();
+        CardDeck deck = CardDeck.of(CardDeckGenerator.generateCardDeck());
         Card last = deck.getCards().getLast();
 
         // when

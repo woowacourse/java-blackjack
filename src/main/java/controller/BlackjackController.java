@@ -2,6 +2,7 @@ package controller;
 
 import domain.GameManager;
 import domain.card.CardDeck;
+import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -21,7 +22,9 @@ public class BlackjackController {
     }
 
     public void gameStart() {
-        Dealer dealer = Dealer.of(CardDeck.of());
+        Dealer dealer = Dealer.of(
+                CardDeck.of(CardDeckGenerator.generateCardDeck())
+        );
         Players players = initParticipants();
         GameManager gameManager = GameManager.of(dealer, players);
 

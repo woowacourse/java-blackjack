@@ -3,11 +3,8 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.TrumpNumber;
-import domain.card.TrumpShape;
-import org.junit.jupiter.api.Disabled;
+import domain.card.CardDeckGenerator;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
@@ -17,16 +14,14 @@ class DealerTest {
         // given nothing
 
         // when & then
-        assertThatCode(() -> Dealer.of(CardDeck.of()))
+        assertThatCode(() -> Dealer.of(CardDeck.of(CardDeckGenerator.generateCardDeck())))
                 .doesNotThrowAnyException();
     }
 
-    @Disabled
     @Test
     void 카드를_한_장_받는다() {
         // given
-        Dealer dealer = Dealer.of(CardDeck.of());
-        Card card = Card.of(TrumpNumber.NINE, TrumpShape.CLUB);
+        Dealer dealer = Dealer.of(CardDeck.of(CardDeckGenerator.generateCardDeck()));
 
         // when
         dealer.receive();
