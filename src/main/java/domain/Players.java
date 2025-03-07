@@ -1,6 +1,7 @@
 package domain;
 
 import domain.constant.WinDrawLose;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,8 +17,9 @@ public class Players {
     public Map<Player, WinDrawLose> deriveResults(int dealerScore) {
         return players.stream()
                 .collect(Collectors.toMap(
-                player -> player,
-                player -> player.compareTo(dealerScore)
+                        player -> player,
+                        player -> player.compareTo(dealerScore),
+                        (x, y) -> y, LinkedHashMap::new
                 ));
     }
 

@@ -48,7 +48,7 @@ public class OutputView {
         int dealerDrawCount = 0;
         int dealerLoseCount = 0;
         for (Entry<Player, WinDrawLose> entry : playerWinDrawLoseMap.entrySet()) {
-            System.out.println(entry.getKey().getNickname() + ": " + entry.getValue().getMessage());
+//            System.out.println(entry.getKey().getNickname() + ": " + entry.getValue().getMessage());
             if (entry.getValue() == WinDrawLose.WIN) {
                 dealerLoseCount++;
             }
@@ -60,6 +60,9 @@ public class OutputView {
             }
         }
         System.out.println("딜러: " + formatDealerWin(dealerWinCount) + formatDealerDraw(dealerDrawCount) + formatDealerLose(dealerLoseCount));
+        for (Entry<Player, WinDrawLose> entry : playerWinDrawLoseMap.entrySet()) {
+            System.out.println(entry.getKey().getNickname() + ": " + entry.getValue().getMessage());
+        }
     }
 
     public String formatDealerWin(int dealerWinCount) {
