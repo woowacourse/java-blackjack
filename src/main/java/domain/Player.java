@@ -49,7 +49,7 @@ public class Player {
 
     private void validateInitialCardsSize(Cards cards) {
         if (cards.getSize() != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
+            throw new IllegalArgumentException("[ERROR] 초기 카드는 " + INITIAL_CARD_COUNT + "장을 받아야 합니다.");
         }
     }
 
