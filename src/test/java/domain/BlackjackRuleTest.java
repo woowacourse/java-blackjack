@@ -1,14 +1,14 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackRuleTest {
     private final GameRule rule = new BlackjackRule();
@@ -199,5 +199,104 @@ class BlackjackRuleTest {
                         "DRAW"
                 )
         );
+    }
+
+    @DisplayName("두 명 모두 버스트가 아닌 경우, 합이 더 큰 사람이 승리한다")
+    @Test
+    void 승패_검증() {
+        // given
+        Cards cards1 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.THREE, CardShape.CLOVER)
+        ));
+        Cards cards2 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        // when
+        GameResult actual = rule.getResult(cards1, cards2);
+
+        //then
+        assertThat(actual).isEqualTo(GameResult.WIN);
+    }
+
+    @DisplayName("플레이어의 카드가 버스트인 경우, 패배한다")
+    @Test
+    void 플레이어의_카드가_버스트인_경우_패배한다() {
+        // given
+        Cards cards1 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        Cards cards2 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        // when
+        GameResult actual = rule.getResult(cards1, cards2);
+
+        //then
+        assertThat(actual).isEqualTo(GameResult.LOSE);
+    }
+
+    @DisplayName("딜러가 버스트인 경우, 승리한다")
+    @Test
+    void 딜러가_버스트인_경우_승리한다() {
+        // given
+        Cards cards1 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.A, CardShape.CLOVER)
+        ));
+        Cards cards2 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        // when
+        GameResult actual = rule.getResult(cards1, cards2);
+
+        //then
+        assertThat(actual).isEqualTo(GameResult.WIN);
+    }
+
+    @DisplayName("모두 버스트가 아니면서 합이 같으면 비긴다")
+    @Test
+    void 두명_모두_버스트가_아니면서_합이_같으면_비긴다() {
+        // given
+        Cards cards1 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        Cards cards2 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        // when
+        GameResult actual = rule.getResult(cards1, cards2);
+
+        //then
+        assertThat(actual).isEqualTo(GameResult.DRAW);
+    }
+
+    @DisplayName("둘 다 버스트인 경우, 패배한다")
+    @Test
+    void 둘_다_버스트인_경우_패배한다() {
+        // given
+        Cards cards1 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        Cards cards2 = Cards.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        ));
+        // when
+        GameResult actual = rule.getResult(cards1, cards2);
+
+        //then
+        assertThat(actual).isEqualTo(GameResult.LOSE);
     }
 }
