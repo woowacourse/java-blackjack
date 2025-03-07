@@ -61,4 +61,48 @@ class RuleTest {
             );
         }
 
+        @ParameterizedTest
+        @DisplayName("딜러가 히트를 할 수 있는 경우")
+        @MethodSource("provideDealerHitAllowedCases")
+        void isDealerHitAllowed(List<TrumpCard> cards) {
+            // given
+            Rule rule = new Rule();
+
+            // when
+            boolean result = rule.isDealerHitAllowed(cards);
+
+            // then
+            assertThat(result).isTrue();
+        }
+
+        static Stream<Arguments> provideDealerHitAllowedCases() {
+            return Stream.of(
+                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)),
+                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES)),
+                    Arguments.of(
+                            List.of(TrumpCard.THREE_OF_HEARTS, TrumpCard.THREE_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES))
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("딜러가 히트를 할 수 없는 경우")
+        @MethodSource("provideDealerHitNotAllowedCases")
+        void isDealerHitNotAllowed(List<TrumpCard> cards) {
+            // given
+            Rule rule = new Rule();
+
+            // when
+            boolean result = rule.isDealerHitAllowed(cards);
+
+            // then
+            assertThat(result).isFalse();
+        }
+
+        static Stream<Arguments> provideDealerHitNotAllowedCases() {
+            return Stream.of(
+                    Arguments.of(List.of(TrumpCard.TEN_OF_SPADES, TrumpCard.SEVEN_OF_CLUBS)),
+                    Arguments.of(List.of(TrumpCard.KING_OF_DIAMONDS, TrumpCard.QUEEN_OF_SPADES)),
+                    Arguments.of(List.of(TrumpCard.JACK_OF_CLUBS, TrumpCard.KING_OF_HEARTS, TrumpCard.FOUR_OF_SPADES))
+            );
+        }
 }
