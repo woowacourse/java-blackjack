@@ -1,5 +1,7 @@
 package domain;
 
+import static controller.BlackJackController.THRESHOLD;
+
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,11 +18,11 @@ class DealerTest {
         dealer.hit(new Card(Rank.SIX, Shape.CLOVER));
 
         // when
-        boolean expected = dealer.canHit(16);
+        boolean expected = dealer.canHit(THRESHOLD);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(16);
+            softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(THRESHOLD);
             softly.assertThat(expected).isTrue();
         });
     }
@@ -35,7 +37,7 @@ class DealerTest {
         dealer.hit(new Card(Rank.SEVEN, Shape.CLOVER));
 
         // when
-        boolean expected = dealer.canHit(16);
+        boolean expected = dealer.canHit(THRESHOLD);
 
         // then
         SoftAssertions.assertSoftly(softly -> {

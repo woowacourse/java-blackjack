@@ -1,5 +1,7 @@
 package domain;
 
+import static controller.BlackJackController.BUST_NUMBER;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -7,6 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Player extends Gamer {
+
+    private static final int ACE_DEFAULT_NUMBER = 1;
+    private static final int ACE_ADDITIONAL_NUMBER = 11;
 
     public Player(final Nickname nickname) {
         super(nickname);
@@ -20,7 +25,7 @@ public class Player extends Gamer {
             final List<Integer> sumOfRanks = calculateAllSums(cards);
 
             return sumOfRanks.stream()
-                    .filter(sum -> sum <= 21)
+                    .filter(sum -> sum <= BUST_NUMBER)
                     .max(Integer::compareTo)
                     .orElseGet(() -> sumOfRanks.stream().min(Integer::compareTo).orElse(0));
         }
@@ -47,8 +52,8 @@ public class Player extends Gamer {
         }
         final Card card = cards.get(index);
         if (card.isAce()) {
-            calculateAllSums(cards, index + 1, currentSum + 1, resultSet);
-            calculateAllSums(cards, index + 1, currentSum + 11, resultSet);
+            calculateAllSums(cards, index + 1, currentSum + ACE_DEFAULT_NUMBER, resultSet);
+            calculateAllSums(cards, index + 1, currentSum + ACE_ADDITIONAL_NUMBER, resultSet);
             return;
         }
         calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);

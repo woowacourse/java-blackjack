@@ -1,5 +1,7 @@
 package domain;
 
+import static controller.BlackJackController.BUST_NUMBER;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
@@ -44,11 +46,11 @@ public enum FinalResult {
     }
 
     private static FinalResult getIntegerFinalResultFunction(final int playerSum, final int dealerSum) {
-        if (playerSum > 21) {
+        if (playerSum > BUST_NUMBER) {
             return LOSE;
         }
 
-        if (dealerSum > 21) {
+        if (dealerSum > BUST_NUMBER) {
             return WIN;
         }
         return FinalResult.findBySumOfRank(playerSum, dealerSum);

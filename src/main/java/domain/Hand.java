@@ -1,5 +1,7 @@
 package domain;
 
+import static controller.BlackJackController.BUST_NUMBER;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getSumOfRank() > 21;
+        return getSumOfRank() > BUST_NUMBER;
     }
 
     public boolean hasAce() {

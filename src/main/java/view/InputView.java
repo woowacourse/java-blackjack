@@ -30,6 +30,4 @@ public final class InputView {
     private static void print(final String message) {
         System.out.println(message);
     }
-
-
 }
