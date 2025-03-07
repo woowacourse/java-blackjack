@@ -12,9 +12,6 @@ public enum ResultStatus {
         if (sum <= BLACKJACK_NUMBER) {
             return calculateResultStatusUnder21(sum, comparedSum);
         }
-        if (comparedSum > BLACKJACK_NUMBER) {
-            return DRAW;
-        }
         return LOSE;
     }
 

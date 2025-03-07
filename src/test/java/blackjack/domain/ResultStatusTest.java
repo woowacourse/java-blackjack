@@ -8,13 +8,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class ResultStatusTest {
 
-    @DisplayName("두 개의 값으로 승리 결과를 계산한다.")
+    @DisplayName("두 개의 값으로 플레이어의 승리 결과를 계산한다.")
     @CsvSource({
             "20, 19, WIN",
             "20, 20, DRAW",
             "20, 21, LOSE",
             "20, 25, WIN",
-            "23, 25, DRAW",
+            "23, 25, LOSE",
             "23, 18, LOSE"
     })
     @ParameterizedTest
