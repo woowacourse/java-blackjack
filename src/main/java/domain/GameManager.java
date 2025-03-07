@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class GameManager {
 
-    public static final int INITIAL_DRAW_SIZE = 2;
-    public static final int DEFAULT_DRAW_SIZE = 1;
+    private static final int INITIAL_DRAW_SIZE = 2;
+    private static final int DEFAULT_DRAW_SIZE = 1;
 
     private final CardProvider provider;
     private Players players;

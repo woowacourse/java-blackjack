@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class Cards {
 
-    public static final int BLACKJACK_SCORE = 21;
-    public static final int DEALER_DRAW_LIMIT = 16;
-    public static final int ACE_VALUE_DIFFERENCE = 10;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int DEALER_DRAW_LIMIT = 16;
+    private static final int ACE_VALUE_DIFFERENCE = 10;
 
     private final List<Card> cards;
     private final int totalNumberSum;

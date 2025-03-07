@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Dealer extends Participant<Dealer>{
 
-    public static final String DEALER_DEFAULT_NAME = "딜러";
+    private static final String DEALER_DEFAULT_NAME = "딜러";
 
     public Dealer(Cards cards) {
         super(new Name(DEALER_DEFAULT_NAME), cards);

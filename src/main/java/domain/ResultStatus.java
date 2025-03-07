@@ -6,8 +6,7 @@ import java.util.Map;
 public enum ResultStatus {
     WIN("승"),
     LOSE("패"),
-    PUSH("무승부")
-    ;
+    PUSH("무승부");
 
     private final String status;
 
