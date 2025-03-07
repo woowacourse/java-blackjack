@@ -14,6 +14,7 @@ import model.GameResults;
 import model.Judge;
 import model.PlayerCardsFactory;
 import model.Players;
+import model.UserInput;
 import view.InputView;
 import view.OutputView;
 
@@ -55,11 +56,11 @@ public class BlackjackController {
                 if (players.checkIsBustByName(name)) {
                     break;
                 }
-                String decision = inputView.askForAdditionalCard(name);
-                if (decision.equals("n")) {
+                UserInput decision = UserInput.from(inputView.askForAdditionalCard(name));
+                if (decision.equals(UserInput.NO)) {
                     break;
                 }
-                if (decision.equals("y")) {
+                if (decision.equals(UserInput.YES)) {
                     players.addCardByName(name, deck.getCard());
                     Cards playerCards = players.findCardsByName(name);
                     outputView.printCardsWithName(name, getCardDtos(playerCards));
