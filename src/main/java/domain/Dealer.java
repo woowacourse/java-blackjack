@@ -13,9 +13,9 @@ public class Dealer {
         this.hand = new Hand();
     }
 
-    public Hand drawCardWhenStart(CardDeck cardDeck) {
+    public List<Card> drawCardWhenStart(CardDeck cardDeck) {
         hand.drawCardWhenStart(cardDeck);
-        return hand;
+        return List.of(hand.getCards().getFirst());
     }
 
     public Hand drawCard(CardDeck cardDeck) {
@@ -23,8 +23,12 @@ public class Dealer {
         return hand;
     }
 
-    public List<Card> getInitCard() {
-        return List.of(hand.getCards().getFirst());
+    public List<GameResult> judgeGameResult(List<Player> players) {
+        List<GameResult> gameResult = new ArrayList<>();
+        for (Player player : players) {
+            gameResult.add(judgeWin(player));
+        }
+        return gameResult;
     }
 
     public Hand getHand() {
@@ -46,14 +50,6 @@ public class Dealer {
 
     public int getCardsCount() {
         return hand.getCardsCount();
-    }
-
-    public List<GameResult> judgeGameResult(List<Player> players) {
-        List<GameResult> gameResult = new ArrayList<>();
-        for (Player player : players) {
-            gameResult.add(judgeWin(player));
-        }
-        return gameResult;
     }
 
     private GameResult judgeWin(Player player) {

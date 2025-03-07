@@ -1,10 +1,10 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
 
@@ -15,10 +15,10 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         //when
-        Hand actual = dealer.drawCardWhenStart(cardDeck);
+        dealer.drawCardWhenStart(cardDeck);
 
         //then
-        assertThat(actual.getCards()).hasSize(2);
+        assertThat(dealer.getHand().getCards()).hasSize(2);
     }
 
     @Test

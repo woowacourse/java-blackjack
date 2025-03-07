@@ -24,10 +24,11 @@ public class Hand {
     }
 
     private int decideAceNumber(int totalCardNumber) {
-        if (isOverBurstBound(totalCardNumber + CardNumber.ACE.getNumber())) {
+        int totalCardNumberWithAce = totalCardNumber + CardNumber.ACE.getNumber();
+        if (isOverBurstBound(totalCardNumberWithAce)) {
             return totalCardNumber + CardNumber.ACE_ANOTHER.getNumber();
         }
-        return totalCardNumber + CardNumber.ACE.getNumber();
+        return totalCardNumberWithAce;
     }
 
     public boolean isOverBurstBound(int totalCardNumber) {
@@ -35,10 +36,6 @@ public class Hand {
     }
 
     public int calculateTotalCardNumber() {
-        return calculateTotalCardNumber(this.cards);
-    }
-
-    private int calculateTotalCardNumber(List<Card> cards) {
         int aceCount = countAce();
         if (aceCount > 0) {
             return sumWithAcesCount(aceCount);

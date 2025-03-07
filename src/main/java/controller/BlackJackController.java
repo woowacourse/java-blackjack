@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Card;
 import domain.CardDeck;
 import domain.CardShuffler;
 import domain.Dealer;
@@ -35,9 +36,9 @@ public class BlackJackController {
 
     private void startBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
         players.drawCardWhenStart(cardDeck);
-        dealer.drawCardWhenStart(cardDeck);
+        List<Card> dealerCard = dealer.drawCardWhenStart(cardDeck);
 
-        outputView.printInitialGame(dealer, players.getPlayers());
+        outputView.printInitialGame(dealerCard, players.getPlayers());
     }
 
     private void playBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
