@@ -1,17 +1,17 @@
 package model.deck;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import model.card.Card;
 
-public class Deck implements DeckStrategy {
+public class Deck {
 
-    private final ArrayDeque<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck(DeckCreateStrategy createStrategy) {
         this.cards = new ArrayDeque<>(createStrategy.createAllCards());
     }
 
-    @Override
     public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("뽑을 카드 없음");
