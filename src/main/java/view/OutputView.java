@@ -5,7 +5,6 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
-import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -14,16 +13,6 @@ public class OutputView {
 
     public void printErrorMessage(RuntimeException exception) {
         System.out.printf("[ERROR] %s", exception.getMessage());
-    }
-
-    public void printParticipantCardsInfo(Dealer dealer, List<Player> players, int cardCount) {
-        List<String> names = players.stream().map(Player::getName).toList();
-        String namesText = String.join(", ", names);
-        System.out.printf("딜러와 %s에게 %d장을 나누었습니다.\n", namesText, cardCount);
-        printDealerCard(dealer);
-        for (Player player : players) {
-            printPlayerCards(player);
-        }
     }
 
     public void printPlayerCards(Player player) {
@@ -40,6 +29,14 @@ public class OutputView {
 
     public void printResult(Map<GameResult, Integer> dealerResult, Map<Player, GameResult> playerResult) {
         System.out.println("## 최종 승패");
+        String dealerResultText = getDealerResultText(dealerResult);
+        System.out.println(dealerResultText);
+        playerResult.keySet().forEach(player -> {
+            System.out.printf("%s: %s\n", player.getName(), getGameResultText(playerResult.get(player)));
+        });
+    }
+
+    private String getDealerResultText(Map<GameResult, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder("딜러: ");
         if (dealerResult.containsKey(GameResult.WIN)) {
             stringBuilder.append(String.format("%d승", dealerResult.get(GameResult.WIN)));
@@ -50,10 +47,7 @@ public class OutputView {
         if (dealerResult.containsKey(GameResult.LOSE)) {
             stringBuilder.append(String.format(" %d패", dealerResult.get(GameResult.LOSE)));
         }
-        System.out.println(stringBuilder);
-        playerResult.keySet().forEach(player -> {
-            System.out.printf("%s: %s\n", player.getName(), getGameResultText(playerResult.get(player)));
-        });
+        return stringBuilder.toString();
     }
 
     private String getGameResultText(GameResult gameResult) {
@@ -62,14 +56,6 @@ public class OutputView {
             case WIN -> "승";
             case DRAW -> "무";
         };
-    }
-
-    private void printDealerCard(Dealer dealer) {
-        System.out.printf("딜러카드: %s\n", getDealerCardText(dealer.getCards()));
-    }
-
-    private String getDealerCardText(Cards cards) {
-        return getCardText(cards.getCards().getFirst());
     }
 
     private String getCardsText(Cards cards) {
