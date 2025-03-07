@@ -4,8 +4,9 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
+
+import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
 
 public class BlackJackGame {
     private final Deck deck;
@@ -17,7 +18,7 @@ public class BlackJackGame {
         this.deck = deckInitializer.generateDeck();
         this.participants = participants;
         this.dealer = dealer;
-        this.readyQueue = new LinkedList<>(participants.getParticipants());
+        this.readyQueue = new ArrayDeque<>(participants.getParticipants());
     }
 
     public void initializeGame() {
@@ -31,8 +32,8 @@ public class BlackJackGame {
         player.putCard(deck.drawCard());
     }
 
-    public void receiveCard(final boolean isReceive) {
-        if (isReceive) {
+    public void receiveCard(final boolean isPlayerWantCard) {
+        if (isPlayerWantCard) {
             readyQueue.getFirst().putCard(deck.drawCard());
             return;
         }
@@ -43,16 +44,16 @@ public class BlackJackGame {
         return readyQueue.getFirst();
     }
 
-    public boolean isDrawableDealerCard() {
+    public boolean isDealerCardDrawable() {
         return dealer.calculatePoint() <= 16;
     }
 
-    public void drewDealerCards() {
+    public void drawDealerCard() {
         dealer.putCard(deck.drawCard());
     }
 
     public boolean hasReady() {
-        return readyQueue.size() > 0;
+        return !readyQueue.isEmpty();
     }
 
     public void skipTurn() {

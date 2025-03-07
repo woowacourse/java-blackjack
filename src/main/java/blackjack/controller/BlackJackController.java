@@ -28,28 +28,32 @@ public class BlackJackController {
         );
         blackJackGame.initializeGame();
         outputView.outputFirstCardDistributionResult(participants, dealer);
-        inputMoreCard(blackJackGame);
+        giveMoreCardToWantingParticipants(blackJackGame);
         giveMoreDealerCard(blackJackGame, dealer);
         outputView.outputFinalCardStatus(dealer, participants);
         outputView.outputFinalResult(dealer, participants);
     }
 
-    private void inputMoreCard(final BlackJackGame blackJackGame) {
+    private void giveMoreCardToWantingParticipants(final BlackJackGame blackJackGame) {
         while (blackJackGame.hasReady()) {
             Participant participant = blackJackGame.getCurrentTurnParticipant();
             boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
             blackJackGame.receiveCard(isReceive);
             outputView.printPlayerCardStatus(participant.getName(), participant);
-            if (participant.isBust()) {
-                outputView.printParticipantBust(participant.getName());
-                blackJackGame.skipTurn();
-            }
+            checkBust(blackJackGame, participant);
+        }
+    }
+
+    private void checkBust(final BlackJackGame blackJackGame, final Participant participant) {
+        if (participant.isBust()) {
+            outputView.printParticipantBust(participant.getName());
+            blackJackGame.skipTurn();
         }
     }
 
     private void giveMoreDealerCard(final BlackJackGame blackJackGame, final Dealer dealer) {
-        while (blackJackGame.isDrawableDealerCard()) {
-            blackJackGame.drewDealerCards();
+        while (blackJackGame.isDealerCardDrawable()) {
+            blackJackGame.drawDealerCard();
             outputView.outputDealerGetCard();
             outputView.printPlayerCardStatus("딜러", dealer);
         }

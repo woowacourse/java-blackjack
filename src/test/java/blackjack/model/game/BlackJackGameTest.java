@@ -81,7 +81,7 @@ class BlackJackGameTest {
 
         // when
         BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
-        blackJackGame.drewDealerCards();
+        blackJackGame.drawDealerCard();
 
         // then
         assertThat(dealer.getReceivedCards().size()).isEqualTo(1);
@@ -100,7 +100,7 @@ class BlackJackGameTest {
         // when
 
         // then
-        assertThat(blackJackGame.isDrawableDealerCard()).isTrue();
+        assertThat(blackJackGame.isDealerCardDrawable()).isTrue();
     }
 
     @Test
@@ -117,6 +117,6 @@ class BlackJackGameTest {
         // when
 
         // then
-        assertThat(blackJackGame.isDrawableDealerCard()).isFalse();
+        assertThat(blackJackGame.isDealerCardDrawable()).isFalse();
     }
 }
