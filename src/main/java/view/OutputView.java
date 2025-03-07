@@ -79,7 +79,7 @@ public class OutputView {
         System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + dealerDrawCount + "무");
 
         for (String name : playerResults.keySet()) {
-            System.out.println(name + ": " + playerResults.get(name));
+            System.out.println(name + ": " + playerResults.get(name).getValue());
         }
     }
 

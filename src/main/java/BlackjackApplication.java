@@ -10,6 +10,10 @@ public class BlackjackApplication {
 
         final BlackjackController controller = new BlackjackController(inputView, outputView);
 
-        controller.gameStart();
+        try {
+            controller.gameStart();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
     }
 }
