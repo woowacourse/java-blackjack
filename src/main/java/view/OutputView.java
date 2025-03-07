@@ -47,18 +47,22 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
         List<CardNumber> honorCards = CardNumber.getHonorCard();
         for (Card card : cards) {
-            if (honorCards.contains(card.getCardNumber())) {
-                stringBuilder.append(card.getCardNumber().name().charAt(0))
-                        .append(card.getPattern().getPattern())
-                        .append(", ");
-                continue;
-            }
-            stringBuilder.append(card.getCardNumber().getNumber())
-                    .append(card.getPattern().getPattern())
-                    .append(", ");
+            formatSingleCard(card, honorCards, stringBuilder);
         }
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         return stringBuilder.toString();
+    }
+
+    private void formatSingleCard(Card card, List<CardNumber> honorCards, StringBuilder stringBuilder) {
+        if (honorCards.contains(card.getCardNumber())) {
+            stringBuilder.append(card.getCardNumber().name().charAt(0))
+                    .append(card.getPattern().getPattern())
+                    .append(", ");
+            return;
+        }
+        stringBuilder.append(card.getCardNumber().getNumber())
+                .append(card.getPattern().getPattern())
+                .append(", ");
     }
 
     public void printDealerDrawMessage() {
