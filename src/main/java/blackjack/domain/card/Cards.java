@@ -21,6 +21,10 @@ public class Cards {
         if (isUnderThreshold(sum)) {
             return sum;
         }
+        return calculateResultWithSmallerAce(sum);
+    }
+
+    private int calculateResultWithSmallerAce(int sum) {
         int aceCount = countAce(cards);
         while (!isUnderThreshold(sum) && aceCount-- > 0) {
             sum -= ACE_SUBTRACT;
