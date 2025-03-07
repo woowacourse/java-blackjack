@@ -39,7 +39,7 @@ public class BlackJackController {
         outputView.printInitialParticipantHands(participants.getParticipants());
 
         // 참가자 카드 분배 기능
-        pickPlayerCardProcess(participants, cardDeck);
+        playerReceiveCardProcess(participants, cardDeck);
 
         // 딜러가 카드를 뽑을 수 있다면 카드를 뽑는다
         for (Participant participant : participants.getParticipants()) {
@@ -63,7 +63,7 @@ public class BlackJackController {
         outputView.printGameResult(results);
     }
 
-    private void pickPlayerCardProcess(Participants participants, CardDeck cardDeck) {
+    private void playerReceiveCardProcess(Participants participants, CardDeck cardDeck) {
         for (Participant participant : participants.getPlayerParticipants()) {
             inputAskReceiveExtraCard(cardDeck, participant);
         }
