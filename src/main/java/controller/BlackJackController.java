@@ -1,8 +1,10 @@
 package controller;
 
 import domain.BlackJackGame;
+import domain.GameResult;
 import domain.Player;
 import domain.TrumpCard;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,10 +29,10 @@ public class BlackJackController {
         players.forEach(this::executePlayerHit);
         executeDealerHit();
 
-        Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
-        List<TrumpCard> dealerCards = blackJackGame.getDealer().getHand().getCards();
-        outputView.printCardsResult(playerCards, dealerCards);
+        displayCardResult(players);
+        displayGameResult(players);
     }
+
 
     private List<Player> executeInitializeCards() {
         List<Player> players = createPlayers();
@@ -61,8 +63,43 @@ public class BlackJackController {
         outputView.printDealerHitInfo(dealerHitCount);
     }
 
+    private void displayCardResult(List<Player> players) {
+        Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
+        List<TrumpCard> dealerCards = blackJackGame.getDealer().getHand().getCards();
+        outputView.printCardsResult(playerCards, dealerCards);
+    }
+
     private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, player -> player.getHand().getCards()));
+    }
+
+    private List<GameResult> createDealerGameResult(Map<String, GameResult> playerGameResults) {
+        List<GameResult> dealerGameResults = new ArrayList<>();
+        playerGameResults.values().forEach(gameResult -> {
+            calculateDealerGameResult(gameResult, dealerGameResults);
+        });
+
+        return dealerGameResults;
+    }
+
+    private static void calculateDealerGameResult(GameResult gameResult, List<GameResult> dealerGameResults) {
+        if (gameResult == GameResult.WIN) {
+            dealerGameResults.add(GameResult.LOSE);
+            return;
+        }
+
+        if (gameResult == GameResult.LOSE) {
+            dealerGameResults.add(GameResult.WIN);
+            return;
+        }
+
+        dealerGameResults.add(GameResult.DRAW);
+    }
+
+    private void displayGameResult(List<Player> players) {
+        Map<String, GameResult> playerGameResults = blackJackGame.calculateGameResults(players);
+        List<GameResult> dealerGameResult = createDealerGameResult(playerGameResults);
+        outputView.printGameResult(playerGameResults, dealerGameResult);
     }
 }
