@@ -8,9 +8,6 @@ public final class CardDeck {
 
     private final List<Card> deck = initDeck();
 
-    public CardDeck() {
-    }
-
     private static List<Card> initDeck() {
         ArrayList<Card> deck = new ArrayList<>();
         for (SuitType suit : SuitType.values()) {

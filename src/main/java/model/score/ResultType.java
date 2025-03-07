@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ResultType {
+
     WIN_LOSE(1, List.of(MatchType.WIN,MatchType.LOSE)),
     DRAW(0,List.of(MatchType.DRAW,MatchType.DRAW)),
     LOSE_WIN(-1,List.of(MatchType.LOSE,MatchType.WIN));

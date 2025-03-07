@@ -3,6 +3,7 @@ package controller;
 import java.util.Arrays;
 
 public enum Intent {
+
     Y("y"),
     N("n");
 

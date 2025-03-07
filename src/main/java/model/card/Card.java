@@ -17,5 +17,4 @@ public class Card {
     public RankType getRank() {
         return rank;
     }
-
 }
