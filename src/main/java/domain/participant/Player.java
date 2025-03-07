@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player implements Participant {
-    private static final int BUST_THRESHOLD = 21;
+    public static final int BUST_THRESHOLD = 21;
 
     private final String nickname;
     private final Map<BattleResult, Integer> battleResult;
