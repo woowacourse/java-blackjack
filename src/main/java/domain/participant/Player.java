@@ -3,7 +3,6 @@ package domain.participant;
 import domain.MatchResult;
 import domain.card.CardDeck;
 import java.util.ArrayList;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 

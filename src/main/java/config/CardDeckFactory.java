@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeckFactory {
+
     public CardDeck create() {
         List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
