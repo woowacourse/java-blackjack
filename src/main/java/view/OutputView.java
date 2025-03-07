@@ -37,8 +37,10 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printDealerExtraCardsCount(Dealer dealer, int dealerExtraCardsCount) {
-        System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
+    public static void printDealerExtraCardsCount(Dealer dealer) {
+        int dealerExtraCardsCount = dealer.getExtraSize();
+        if (dealerExtraCardsCount > 0)
+            System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
     }
 
     public static void printResult(List<Player> players, Dealer dealer, WinLossCountDto winLossCountResult) {
@@ -53,6 +55,10 @@ public class OutputView {
                     WinLossResult.of(player.getWinLoss(dealer.getHandTotal())).getWinLossMessage()));
         }
         System.out.println(stringBuilder);
+    }
+
+    public static void printBust() {
+        System.out.println("YOU DIE!!!!!!!!!!!!!!!!");
     }
 
     public static String getFormattedOpenedCard(Card card){
@@ -86,7 +92,11 @@ public class OutputView {
 
     private static void openCardsWithTotal(Player player, StringBuilder stringBuilder) {
         openHand(player, stringBuilder);
-        stringBuilder.append(String.format(" - 결과: %d", player.getHandTotal()))
+        String totalScore = Integer.toString(player.getHandTotal());
+        if (totalScore.equals("0")) {
+            totalScore = "Bust!";
+        }
+        stringBuilder.append(String.format(" - 결과: %s", totalScore))
                 .append("\n");
     }
 
