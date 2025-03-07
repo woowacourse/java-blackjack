@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Dealer extends Gamer {
 
     private static final int ACE_ADDITIONAL_NUMBER = 10;
@@ -23,5 +25,10 @@ public class Dealer extends Gamer {
             return sumOfRank + ACE_ADDITIONAL_NUMBER;
         }
         return sumOfRank;
+    }
+
+    public Card getFirstCard() {
+        final List<Card> cards = hand.getCards();
+        return cards.getFirst();
     }
 }

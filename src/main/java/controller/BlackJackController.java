@@ -21,7 +21,7 @@ public class BlackJackController {
     private static final String DEALER_NAME = "딜러";
     public static final int THRESHOLD = 16;
     public static final int BUST_NUMBER = 21;
-
+    
     public void run() {
         final List<Nickname> nicknames = readNicknames();
         final List<Player> players = generatePlayers(nicknames);
@@ -69,7 +69,7 @@ public class BlackJackController {
     private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
                                   final List<Player> players) {
         OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
-        OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getCards().getFirst()));
+        OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
         players.forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
     }
 
