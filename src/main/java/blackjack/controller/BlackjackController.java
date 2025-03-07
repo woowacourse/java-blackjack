@@ -51,7 +51,7 @@ public class BlackjackController {
     }
 
     private String[] getPlayerNames() {
-        return processAndReturn(inputView::readPlayerName);
+        return getReturnWithRetry(inputView::readPlayerName);
     }
 
     private Player createPlayerWithInitialDeck(String playerName) {
@@ -60,16 +60,6 @@ public class BlackjackController {
         cardDeck.add(cardDump.drawCard());
 
         return new Player(playerName, cardDeck, cardDump);
-    }
-
-    private <T> T processAndReturn(Supplier<T> supplier) {
-        while (true) {
-            try {
-                return supplier.get();
-            } catch (Exception e) {
-                outputView.displayError(e.getMessage());
-            }
-        }
     }
 
     private Dealer createDealerWithInitialDeck() {
@@ -86,32 +76,25 @@ public class BlackjackController {
     }
 
     private void processPlayerHit(final Player player) {
-        process(() -> {
-            while (true) {
-                if (!player.canHit()) {
-                    outputView.displayBustNotice();
-                    break;
-                }
-                String answer = inputView.readOneMoreCard(player.getName());
-                HitOption option = HitOption.from(answer);
-                if (option.isNo()) {
-                    break;
-                }
-                player.addCard();
-                outputView.displayCardInfo(DistributedCardDto.from(player));
+        while (true) {
+            if (!player.canHit()) {
+                outputView.displayBustNotice();
+                break;
             }
-        });
+
+            HitOption option = getHitOption(player);
+            if (option.isNo()) break;
+
+            player.addCard();
+            outputView.displayCardInfo(DistributedCardDto.from(player));
+        }
     }
 
-    private void process(Runnable runnable) {
-        while (true) {
-            try {
-                runnable.run();
-                break;
-            } catch (Exception e) {
-                outputView.displayError(e.getMessage());
-            }
-        }
+    private HitOption getHitOption(Player player) {
+        return getReturnWithRetry(() -> {
+            String answer = inputView.readOneMoreCard(player.getName());
+            return HitOption.from(answer);
+        });
     }
 
     private void hitExtraCardForDealer(final Dealer dealer) {
@@ -127,6 +110,16 @@ public class BlackjackController {
         for (Player player : players) {
             GameResult playerResult = gameReport.getPlayerResult(player, dealer);
             outputView.displayPlayerResult(player, playerResult);
+        }
+    }
+
+    private <T> T getReturnWithRetry(Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (Exception e) {
+                outputView.displayError(e.getMessage());
+            }
         }
     }
 }
