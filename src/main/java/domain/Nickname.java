@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Nickname {
 
     private static final String REGEX = "^[a-zA-Z가-힣]{2,5}$";
@@ -19,5 +21,18 @@ public class Nickname {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Nickname nickname)) {
+            return false;
+        }
+        return Objects.equals(getDisplayName(), nickname.getDisplayName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getDisplayName());
     }
 }

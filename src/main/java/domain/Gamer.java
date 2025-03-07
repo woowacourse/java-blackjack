@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Gamer {
 
@@ -32,6 +33,19 @@ public abstract class Gamer {
 
     public List<Card> getCards() {
         return hand.getCards();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Gamer gamer)) {
+            return false;
+        }
+        return Objects.equals(nickname, gamer.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(nickname);
     }
 }
 
