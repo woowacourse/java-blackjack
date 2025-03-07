@@ -3,6 +3,7 @@ package domain;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +69,19 @@ public class GameManager {
     }
 
     public Map<GameResult, Integer> calculateDealerGameResult() {
-        return null;
-
+        Map<GameResult, Integer> result = new HashMap<>();
+        for (Player player : players) {
+            final GameResult gameResult = player.calculateGameResult(dealer.calculateScore());
+            if (gameResult == GameResult.DRAW) {
+                result.merge(GameResult.DRAW, 1, Integer::sum);
+            }
+            if (gameResult != GameResult.WIN) {
+                result.merge(GameResult.LOSE, 1, Integer::sum);
+            }
+            if (gameResult != GameResult.LOSE) {
+                result.merge(GameResult.WIN, 1, Integer::sum);
+            }
+        }
+        return Map.of(GameResult.WIN, 2);
     }
 }

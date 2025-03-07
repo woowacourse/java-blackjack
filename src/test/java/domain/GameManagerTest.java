@@ -285,7 +285,7 @@ public class GameManagerTest {
 
         final List<Player> players = List.of(
                 new Player("윌슨",cardGroup1,new TwoScoreCardGenerator()),
-                new Player("윌슨",cardGroup2,new TwoScoreCardGenerator()));
+                new Player("가이온",cardGroup2,new TwoScoreCardGenerator()));
         final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
 
         //when
