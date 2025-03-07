@@ -7,35 +7,39 @@ import blackjack.dto.HiddenDealerHandState;
 import blackjack.dto.PlayerWinningResult;
 import blackjack.dto.PlayerWinningStatistics;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class GameManager {
 
     private final CardManager cardManager;
     private final GameUserStorage gameUserStorage;
+    private HitInputOutput hitInputOutput;
 
     public GameManager(CardManager cardManager, GameUserStorage gameUserStorage) {
         this.cardManager = cardManager;
         this.gameUserStorage = gameUserStorage;
     }
 
-    public void registerPlayers(List<Nickname> nicknames) {
-        gameUserStorage.initialize(nicknames);
+    public void initialize(Function<Nickname, Boolean> inputHit, Consumer<HandState> outputHit) {
+        hitInputOutput = new HitInputOutput(inputHit, outputHit);
     }
 
-    public void distributeCards() {
+    public HandsBeforeDrawingCard startGame(List<Nickname> nicknames) {
+        registerPlayers(nicknames);
+        distributeCards();
+        return getHandBeforeDrawCard();
+    }
+
+    public void processHit() {
         List<Player> players = gameUserStorage.getPlayers();
-        players.forEach(player -> cardManager.addCardByNickname(player, 2));
-        Player dealer = gameUserStorage.getDealer();
-        cardManager.addCardByNickname(dealer, 2);
-    }
-
-
-    public List<Card> findCardsByPlayer(Player player) {
-        return cardManager.findCardsByNickname(player);
-    }
-
-    public void hit(Player player) {
-        cardManager.addCardByNickname(player, 1);
+        for (Player player : players) {
+            while (!checkHitStop(player)) {
+                hit(player);
+                HandState hitResult = getHandState(player);
+                hitInputOutput.executePrintingHitResult(hitResult);
+            }
+        }
     }
 
     public int drawDealerCards() {
@@ -46,20 +50,6 @@ public class GameManager {
             count++;
         }
         return count;
-    }
-
-    public boolean isBustPlayer(Player player) {
-        return GameRule.isBurst(cardManager.calculateSumByNickname(player));
-    }
-
-    public List<Player> getPlayers() {
-        return gameUserStorage.getPlayers();
-    }
-
-    public HandsBeforeDrawingCard getHandBeforeDrawCard() {
-        HiddenDealerHandState dealerHandState = getHiddenDealerHandState();
-        List<HandState> playerHandStates = getAllPlayerHandState();
-        return new HandsBeforeDrawingCard(dealerHandState, playerHandStates);
     }
 
     public HandsAfterDrawingCard getHandAfterDrawCard() {
@@ -77,6 +67,37 @@ public class GameManager {
         return new PlayerWinningStatistics(allPlayers.stream()
                 .map(player -> calculatePlayerWinningResult(player, dealerPoint))
                 .toList());
+    }
+
+    private void registerPlayers(List<Nickname> nicknames) {
+        gameUserStorage.initialize(nicknames);
+    }
+
+    private void distributeCards() {
+        List<Player> players = gameUserStorage.getPlayers();
+        players.forEach(player -> cardManager.addCardByNickname(player, 2));
+        Player dealer = gameUserStorage.getDealer();
+        cardManager.addCardByNickname(dealer, 2);
+    }
+
+    private void hit(Player player) {
+        cardManager.addCardByNickname(player, 1);
+    }
+
+    private boolean checkHitStop(Player player) {
+        boolean wannaHit = hitInputOutput.executeReadIngWannaHit(player.getNickname());
+        boolean isBurst = isBustPlayer(player);
+        return isBurst || !wannaHit;
+    }
+
+    private boolean isBustPlayer(Player player) {
+        return GameRule.isBurst(cardManager.calculateSumByNickname(player));
+    }
+
+    private HandsBeforeDrawingCard getHandBeforeDrawCard() {
+        HiddenDealerHandState dealerHandState = getHiddenDealerHandState();
+        List<HandState> playerHandStates = getAllPlayerHandState();
+        return new HandsBeforeDrawingCard(dealerHandState, playerHandStates);
     }
 
     private PlayerWinningResult calculatePlayerWinningResult(Player player, int dealerPoint) {
