@@ -1,7 +1,7 @@
 package model;
 
 
-public class Player extends Participant{
+public class Player extends Participant {
     private final String name;
 
     public Player(String name) {

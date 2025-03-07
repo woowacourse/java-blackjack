@@ -30,8 +30,8 @@ public class BlackjackController {
 
     private static void hitOrStandAtDealerTurn(Dealer dealer, Deck deck) {
         boolean flag = true;
-        while (flag == dealer.checkScoreUnderSixteen()){
-             OutputView.printDealerDealResult();
+        while (flag == dealer.checkScoreUnderSixteen()) {
+            OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());
         }
     }
@@ -49,7 +49,7 @@ public class BlackjackController {
             OutputView.printHitResult(player);
             if (player.isBurst()) {
                 break;
-            };
+            }
         }
     }
 
@@ -64,6 +64,6 @@ public class BlackjackController {
         Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
 
         OutputView.printDealerFinalResult(dealerWinningResult);
-        OutputView.printPlayerFinalResultV2(participantWinningResult);
+        OutputView.printPlayerFinalResult(participantWinningResult);
     }
 }

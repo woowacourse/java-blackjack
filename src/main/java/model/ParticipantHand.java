@@ -7,7 +7,7 @@ public class ParticipantHand {
     private static final int BURST_SCORE_LIMIT = 21;
     private final List<Card> cards;
 
-    public ParticipantHand(){
+    public ParticipantHand() {
         this.cards = new ArrayList<>();
     }
 
@@ -24,7 +24,7 @@ public class ParticipantHand {
     }
 
     public int calculateFinalScore() {
-        if (canOneAceConvertToMaxValue()){
+        if (canOneAceConvertToMaxValue()) {
             int scoreWithAce = calculateScoreWithAceAsMinValue();
             return convertOneAceToMaxValueFrom(scoreWithAce);
         }
@@ -46,7 +46,7 @@ public class ParticipantHand {
 
     private boolean canOneAceConvertToMaxValue() {
         int scoreOfAceAsMinValue = calculateAceCount();
-        if (scoreOfAceAsMinValue == 0){
+        if (scoreOfAceAsMinValue == 0) {
             return false;
         }
         int maxScoreOfAce = convertOneAceToMaxValueFrom(scoreOfAceAsMinValue);
