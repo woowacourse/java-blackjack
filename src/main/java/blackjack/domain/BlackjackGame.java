@@ -48,7 +48,7 @@ public class BlackjackGame {
     }
 
     public Map<String, ResultStatus> calculateWinningResult() {
-        final int dealerSum = participants.getDealer().calculateMaxSum();
+        final int dealerSum = participants.calculateDealerMaxSum();
         final Map<String, ResultStatus> result = new HashMap<>();
         for (Player player : participants.getPlayers()) {
             final int playerSum = player.calculateMaxSum();

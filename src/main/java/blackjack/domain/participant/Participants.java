@@ -29,11 +29,15 @@ public class Participants {
 
     public void spreadOneCardToPlayer(final int index, final Card card) {
         final Player player = players.getPlayer(index);
-        player.receiveCards(new Cards(List.of(card)));
+        spreadOneCard(player, card);
     }
 
     public void spreadOneCardToDealer(final Card card) {
-        dealer.receiveCards(new Cards(List.of(card)));
+        spreadOneCard(dealer, card);
+    }
+
+    private void spreadOneCard(final Gamer gamer, final Card card) {
+        gamer.receiveCards(new Cards(List.of(card)));
     }
 
     public boolean canDealerGetMoreCard() {
@@ -42,6 +46,10 @@ public class Participants {
 
     public int getParticipantSize() {
         return DEALER_COUNT + players.getSize();
+    }
+
+    public int calculateDealerMaxSum() {
+        return dealer.calculateMaxSum();
     }
 
     public List<Player> getPlayers() {
