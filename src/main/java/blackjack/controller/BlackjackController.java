@@ -78,7 +78,13 @@ public class BlackjackController {
     }
 
     private boolean isMoreCard(final Player player) {
-        return inputView.askMoreCard(player).equals(YES);
+        try {
+            final Answer answer = Answer.from(inputView.askMoreCard(player));
+            return answer.isYes();
+        } catch (IllegalArgumentException exception) {
+            resultView.showException(exception);
+            return isMoreCard(player);
+        }
     }
 
     private Players makePlayers() {
