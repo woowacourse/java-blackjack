@@ -20,11 +20,6 @@ public class Dealer extends Participant {
         return new Dealer(DEALER_NAME);
     }
 
-    @Override
-    public String getNickname() {
-        return nickname;
-    }
-
     public ResultType compareTo(Player player) {
         if (player.isBust()) {
             return ResultType.WIN_LOSE;
@@ -46,5 +41,10 @@ public class Dealer extends Participant {
 
     public Map<MatchType, Integer> getMatchResult() {
         return matchResult;
+    }
+
+    @Override
+    public String getNickname() {
+        return nickname;
     }
 }

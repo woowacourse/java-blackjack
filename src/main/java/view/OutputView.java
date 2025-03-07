@@ -8,7 +8,6 @@ import java.util.Map;
 public class OutputView {
 
     private static final String CARD_FORMAT = "%s카드: %s";
-    private static final String RESULT_FORMAT = "%s: %d승 %패 %무";
     private static final Map<String, String> MATCH_FORMAT = Map.of(
             "WIN", "승",
             "DRAW", "무",

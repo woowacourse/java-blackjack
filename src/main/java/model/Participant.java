@@ -27,8 +27,8 @@ public abstract class Participant {
                 .count();
     }
 
-    public boolean isBust() {
-        return score.isBust();
+    private int findScore(List<Integer> score) {
+        return score.getFirst();
     }
 
     public boolean isNotEnoughScoreCondition() {
@@ -41,17 +41,17 @@ public abstract class Participant {
         return score.compareScoreCondition() < 0;
     }
 
-    private int findScore(List<Integer> score) {
-        return score.getFirst();
+    public boolean isBust() {
+        return score.isBust();
+    }
+
+    public int getSum() {
+        return score.getValue();
     }
 
     abstract String getNickname();
 
     public List<Card> getHands() {
         return hands;
-    }
-
-    public int getSum() {
-        return score.getValue();
     }
 }

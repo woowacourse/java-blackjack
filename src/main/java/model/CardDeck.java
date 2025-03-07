@@ -6,7 +6,10 @@ import java.util.List;
 
 public final class CardDeck {
 
-    private static final List<Card> deck = initDeck();
+    private final List<Card> deck = initDeck();
+
+    public CardDeck() {
+    }
 
     private static List<Card> initDeck() {
         ArrayList<Card> deck = new ArrayList<>();
@@ -22,14 +25,6 @@ public final class CardDeck {
         Collections.shuffle(deck);
     }
 
-    public CardDeck() {
-        // deck = initDeck();
-    }
-
-    public List<Card> getDeck() {
-        return deck;
-    }
-
     public List<Card> pickCard(int amount) {
         final List<Card> findCards = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
@@ -37,5 +32,9 @@ public final class CardDeck {
             findCards.add(card);
         }
         return findCards;
+    }
+
+    public List<Card> getDeck() {
+        return deck;
     }
 }

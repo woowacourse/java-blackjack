@@ -10,17 +10,12 @@ public class Score implements Comparable {
         this.value = score;
     }
 
-    public int compareScoreCondition() {
-        return value - BUST_CONDITION;
-    }
-
     public boolean isBust() {
         return compareScoreCondition() > 0;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return Integer.compare(value, ((Score) o).value);
+    public int compareScoreCondition() {
+        return value - BUST_CONDITION;
     }
 
     public Score plus(int sum) {
@@ -33,5 +28,10 @@ public class Score implements Comparable {
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return Integer.compare(value, ((Score) o).value);
     }
 }

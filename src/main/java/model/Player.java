@@ -15,6 +15,14 @@ public class Player extends Participant {
         return new Player(nickname);
     }
 
+    public void updateResult(MatchType matchType) {
+        this.matchType = matchType;
+    }
+
+    public MatchType getMatchType() {
+        return matchType;
+    }
+
     @Override
     public String getNickname() {
         return nickname.getValue();
@@ -30,13 +38,5 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hashCode(nickname);
-    }
-
-    public void updateResult(MatchType matchType) {
-        this.matchType = matchType;
-    }
-
-    public MatchType getMatchType() {
-        return matchType;
     }
 }
