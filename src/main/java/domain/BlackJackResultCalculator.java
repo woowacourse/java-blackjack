@@ -14,7 +14,8 @@ public class BlackJackResultCalculator {
         List<PlayerResult> playerResults = new ArrayList<>();
         DealerResult dealerResult = new DealerResult();
         for (Participant player : players) {
-            GameResult currentDealerResult = GameResult.calculateResult(dealer, player);
+            GameResult currentDealerResult = GameResult.calculateDealerResult(dealer.getTotalValue(),
+                    player.getTotalValue());
             dealerResult.add(currentDealerResult);
             playerResults.add(new PlayerResult(player, currentDealerResult.reverse()));
         }

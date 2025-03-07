@@ -3,31 +3,35 @@ package domain;
 public enum GameResult {
     WIN, DRAW, LOSE;
 
-    public static GameResult calculateResult(Participant dealer, Participant player) {
-        final int dealerValue = dealer.getTotalValue();
-        final int playerValue = player.getTotalValue();
-        // 버스트 케이스
-        if (dealer.isBurst() && player.isBurst()) {
+    public static GameResult calculateDealerResult(int dealerValue, int playerValue) {
+        if (isBurstBy(dealerValue) || isBurstBy(playerValue)) {
+            return calculateBurstResult(dealerValue, playerValue);
+        }
+        return calculateResult(dealerValue, playerValue);
+    }
+
+    private static GameResult calculateBurstResult(int dealerValue, int playerValue) {
+        if (isBurstBy(dealerValue) && isBurstBy(playerValue)) {
             return DRAW;
         }
-        if (dealer.isBurst()) {
-            return LOSE;
-        }
-        if (player.isBurst()) {
+        if (isBurstBy(playerValue)) {
             return WIN;
         }
+        return LOSE;
+    }
 
-        // 둘 다 21 이하인 경우
-        if (dealerValue == playerValue) {
-            return DRAW;
-        }
+    private static GameResult calculateResult(int dealerValue, int playerValue) {
         if (dealerValue > playerValue) {
             return WIN;
         }
         if (dealerValue < playerValue) {
             return LOSE;
         }
-        return WIN;
+        return DRAW;
+    }
+
+    private static boolean isBurstBy(int value) {
+        return value > BlackJackRule.BURST_UPPER_BOUND;
     }
 
     public GameResult reverse() {

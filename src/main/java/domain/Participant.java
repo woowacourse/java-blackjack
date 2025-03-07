@@ -31,13 +31,13 @@ public abstract class Participant {
 
     public int getTotalValue() {
         final long constTotalValue = cards.stream()
-            .filter(card -> !card.isAce())
-            .mapToInt(Card::getValue)
-            .sum();
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getValue)
+                .sum();
 
         final long aceCount = cards.stream()
-            .filter(Card::isAce)
-            .count();
+                .filter(Card::isAce)
+                .count();
 
         long totalValue = constTotalValue;
         for (int i = 0; i <= aceCount; ++i) {
@@ -47,10 +47,6 @@ public abstract class Participant {
             }
         }
         return (int) totalValue;
-    }
-
-    public boolean isBurst() {
-        return getTotalValue() > BlackJackRule.BURST_UPPER_BOUND;
     }
 
     public abstract boolean canPick();
@@ -75,8 +71,8 @@ public abstract class Participant {
     @Override
     public String toString() {
         return "Participant{" +
-            "name='" + name + '\'' +
-            ", cards=" + cards +
-            '}';
+                "name='" + name + '\'' +
+                ", cards=" + cards +
+                '}';
     }
 }
