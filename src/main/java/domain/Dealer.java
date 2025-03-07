@@ -31,9 +31,9 @@ public class Dealer extends Participant {
     public Map<Player, GameResult> getGameResult(List<Player> players) {
         Map<Player, GameResult> gameResult = new HashMap<>();
         for (Player player : players) {
-            GameResult judge = GameResult.judge(player, this);
-            gameResult.put(player, judge);
-            GameResult dealerResult = judge.getReverse();
+            GameResult playerResult = rule.getResult(player.getCards(), getCards());
+            gameResult.put(player, playerResult);
+            GameResult dealerResult = playerResult.getReverse();
             result.put(dealerResult, result.getOrDefault(dealerResult, 0) + 1);
         }
         return gameResult;

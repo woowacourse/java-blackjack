@@ -1,15 +1,12 @@
 package domain;
 
-import java.util.List;
-import java.util.Set;
-
 public class Participant {
-
-    private static final int SUM_LIMIT = 21;
-    protected final Cards cards;
+    private final Cards cards;
+    protected final GameRule rule;
 
     public Participant(Cards cards) {
         this.cards = cards;
+        this.rule = new BlackjackRule();
     }
 
     public void addCard(Card card) {
@@ -17,31 +14,11 @@ public class Participant {
     }
 
     public int getCardScore() {
-        Set<Integer> coordinates = cards.getCoordinateSums();
-        if (isBurst()) {
-            return getMinSum(coordinates);
-        }
-        return getMaxSum(coordinates);
+        return rule.getScore(cards);
     }
 
     public boolean isBurst() {
-        Set<Integer> coordinates = cards.getCoordinateSums();
-        return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
-    }
-
-    private int getMaxSum(Set<Integer> coordinates) {
-        return coordinates.stream()
-                .filter(coordinate -> coordinate <= SUM_LIMIT)
-                .mapToInt(i -> i)
-                .max()
-                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
-    }
-
-    private int getMinSum(Set<Integer> coordinates) {
-        return coordinates.stream()
-                .mapToInt(i -> i)
-                .min()
-                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
+        return rule.isBurst(cards);
     }
 
     public List<Card> getCards() {
