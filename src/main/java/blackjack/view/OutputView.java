@@ -17,6 +17,7 @@ public class OutputView {
         String names = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(","));
+        System.out.println();
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
         System.out.println("딜러카드: " +
                 toKoreaRank(dealerCards.getCards().getFirst().getRank()) +
@@ -25,6 +26,7 @@ public class OutputView {
         for (Player player : players) {
             printPlayerCards(player);
         }
+        System.out.println();
     }
 
     public static void printPlayerCards(Player player) {
@@ -35,6 +37,7 @@ public class OutputView {
 
     public static void printDealerAdditionalCard(int additionalCardsNumber) {
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", additionalCardsNumber);
+        System.out.println();
     }
 
     public static void printDealerResult(Dealer dealer) {
@@ -47,6 +50,7 @@ public class OutputView {
             String cards = toKoreanCards(player.getCards());
             System.out.println(player.getName() + "카드: " + cards + " - 결과: " + player.calculateMaxScore());
         }
+        System.out.println();
     }
 
     private static String toKoreanCards(Cards dealerCards) {
@@ -125,7 +129,7 @@ public class OutputView {
     public static void printVictory(Victory victory, List<Player> players) {
         Map<WinningResult, Integer> dealerVictoryResults = victory.getDealerVictoryResults();
         Map<Player, WinningResult> playerVictoryResults = victory.getPlayerVictoryResults();
-
+        System.out.println("## 최종 승패");
         printIfPresentWinningResult(dealerVictoryResults);
         dealerVictoryResults.getOrDefault(WinningResult.LOSE, 0);
         for (Player player : players) {
@@ -155,5 +159,9 @@ public class OutputView {
             return "패";
         }
         return "무";
+    }
+
+    public static void printErrorMessage(IllegalArgumentException e) {
+        System.out.println("[ERROR] " + e.getMessage());
     }
 }

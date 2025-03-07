@@ -16,13 +16,18 @@ import java.util.List;
 
 public class BlackjackController {
     public void run() {
-        Players players = createPlayers();
-        Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck(), new ScoreCalculator());
-        handOutCards(dealer, players);
-        additionalCard(dealer, players);
-        dealerAdditionalCard(dealer);
-        printBlackjackResult(dealer, players);
-        printVictory(dealer, players);
+        try {
+
+            Players players = createPlayers();
+            Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck(), new ScoreCalculator());
+            handOutCards(dealer, players);
+            additionalCard(dealer, players);
+            dealerAdditionalCard(dealer);
+            printBlackjackResult(dealer, players);
+            printVictory(dealer, players);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+        }
     }
 
     private Players createPlayers() {
