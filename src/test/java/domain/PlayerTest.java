@@ -79,9 +79,16 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"KING, KING, EIGHT, 28, DRAW", "KING, NINE, EIGHT, 28, DRAW", "KING, KING, EIGHT, 27, DRAW",
-            "KING, THREE, FOUR, 27, WIN", "KING, KING, EIGHT, 18, LOSE", "KING, THREE, EIGHT, 18, WIN",
-            "KING, THREE, FOUR, 18, LOSE", "KING, THREE, EIGHT, 21, DRAW",})
+    @CsvSource(value = {
+            "KING, KING, EIGHT, 28, LOSE",
+            "KING, NINE, EIGHT, 28, LOSE",
+            "KING, KING, EIGHT, 27, LOSE",
+            "KING, THREE, FOUR, 27, WIN",
+            "KING, KING, EIGHT, 18, LOSE",
+            "KING, THREE, EIGHT, 18, WIN",
+            "KING, THREE, FOUR, 18, LOSE",
+            "KING, THREE, EIGHT, 21, DRAW"
+    })
     void 딜러와의_승무패를_정한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int dealerScore,
                        WinDrawLose expected) {
         // given
