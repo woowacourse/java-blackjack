@@ -6,6 +6,11 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BLACKJACK_HAND_COUNT = 2;
+    private static final int BLACKJACK_VALUE_TOTAL = 21;
+    private static final int SOFT_ACE_VALUE = 11;
+    private static final int SOFT_HAND_AVAILABLE_THRESHOLD = 10;
+
     protected final List<Card> hand;
 
     protected Participant(List<Card> hand) {
@@ -49,8 +54,8 @@ public abstract class Participant {
     private int calculateAceValue(int total) {
         int aceCount = getAceCountInHand();
         int aceValue = 0;
-        if (total <= 10) {
-            aceValue += 11;
+        if (total <= SOFT_HAND_AVAILABLE_THRESHOLD) {
+            aceValue += SOFT_ACE_VALUE;
             aceCount--;
         }
         return aceValue + (aceCount * CardValue.ACE.getDefaultValue());
@@ -63,11 +68,11 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.size() == 2 && getTotal() == 21;
+        return hand.size() == BLACKJACK_HAND_COUNT && getTotal() == BLACKJACK_VALUE_TOTAL;
     }
 
     public boolean isBust() {
-        return 21 < getTotal();
+        return BLACKJACK_VALUE_TOTAL < getTotal();
     }
 
     public List<Card> getHand() {
