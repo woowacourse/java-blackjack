@@ -1,26 +1,32 @@
 package blackjack.controller;
 
+import blackjack.configuration.ApplicationConfiguration;
+import blackjack.domain.GameManager;
+import blackjack.domain.Nickname;
+import blackjack.domain.PlayerWinningStatistics;
+import blackjack.dto.DrawnCardResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final GameManager gameManager;
 
-    public BlackJackController() {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
+    public BlackJackController(ApplicationConfiguration configuration) {
+        this.inputView = configuration.getInputView();
+        this.outputView = configuration.getOutputView();
+        this.gameManager = configuration.getGameManager();
     }
 
     public void run() {
-//        List<Nickname> nicknames = inputView.readNicknames().stream().map(Nickname::new).collect(Collectors.toList());
-//
-//        CardManager cardManager = new CardManager();
-//        GameManager gameManager = new GameManager(cardManager);
-//        gameManager.registerPlayers(nicknames);
-//        gameManager.distributeCards();
-//
+        List<Nickname> nicknames = readNicknames();
+        gameManager.registerPlayers(nicknames);
+        gameManager.distributeCards();
+
 //        List<Player> players = gameManager.getPlayers();
 //        Player dealer = new Player(Nickname.createDealerNickname());
 //
@@ -39,15 +45,28 @@ public class BlackJackController {
 //                outputView.printCard(player.getNickname(), gameManager.findCardsByPlayer(player));
 //            }
 //        }
-//
-//        int count = gameManager.drawDealerCards();
-//        outputView.printDealerHit(count);
-//
-//        List<DrawnCardResult> drawnCardResults = gameManager.calculateDrawnCardResults();
-//        outputView.printDrawnCardResults(drawnCardResults);
-//
-//        PlayerWinningStatistics statistics = gameManager.calculateGameResult();
-//        outputView.printPlayerWinningResults(statistics);
+
+        printDealerHit();
+        printDrawnCardResult();
+        printPlayerWinningResults();
     }
 
+    private List<Nickname> readNicknames() {
+        return inputView.readNicknames().stream().map(Nickname::new).collect(Collectors.toList());
+    }
+
+    private void printDealerHit() {
+        int count = gameManager.drawDealerCards();
+        outputView.printDealerHit(count);
+    }
+
+    private void printDrawnCardResult() {
+        List<DrawnCardResult> drawnCardResults = gameManager.calculateDrawnCardResults();
+        outputView.printDrawnCardResults(drawnCardResults);
+    }
+
+    private void printPlayerWinningResults() {
+        PlayerWinningStatistics statistics = gameManager.calculateGameResult();
+        outputView.printPlayerWinningResults(statistics);
+    }
 }
