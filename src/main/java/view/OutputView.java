@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OutputView {
 
-    public void printInitialGame(List<Card> dealerCard, List<Player> players) {
+    public void printInitialGame(Card dealerCard, List<Player> players) {
         String playerNames = formatPlayerNames(players);
         System.out.printf("%n딜러와 %s에게 " + CardDeck.DRAW_COUNT_WHEN_START + "장을 나누었습니다.%n", playerNames);
         String dealerHand = formatHand(dealerCard);
@@ -41,6 +41,14 @@ public class OutputView {
             System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), playerResult, player.calculateTotalCardNumber());
         }
         System.out.println();
+    }
+
+    private String formatHand(Card dealerCard) {
+        StringBuilder stringBuilder = new StringBuilder();
+        List<CardNumber> honorCards = CardNumber.getHonorCard();
+        formatSingleCard(dealerCard, honorCards, stringBuilder);
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+        return stringBuilder.toString();
     }
 
     private String formatHand(List<Card> cards) {

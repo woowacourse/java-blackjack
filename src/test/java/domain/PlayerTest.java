@@ -15,10 +15,10 @@ public class PlayerTest {
         Player player = new Player(name);
 
         //when
-        Hand actual = player.drawCardWhenStart(cardDeck);
+        player.drawCardWhenStart(cardDeck);
 
         //then
-        assertThat(actual.getCards()).hasSize(2);
+        assertThat(player.getHand().getCards()).hasSize(2);
     }
 
     @Test
