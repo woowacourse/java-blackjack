@@ -8,9 +8,6 @@ public class ParticipantWinningResult {
     private final Map<Player, GameResult> result;
 
     public static ParticipantWinningResult of(Players players, Dealer dealer) {
-        /**
-         * player 별로 승패 결과를 저장한다.
-         */
         Map<Player, GameResult> result = new HashMap<>();
         for (Player player : players.getPlayers()) {
             result.put(player, checkPlayerWin(dealer, player));

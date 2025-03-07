@@ -12,7 +12,7 @@ import model.Players;
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
 
-    public static void printInitialDealResult(Dealer dealer, Players players){
+    public static void printInitialDealResult(Dealer dealer, Players players) {
         printCardDivision(players);
         Card firstDealerCard = dealer.getFirstHand();
         System.out.println("딜러카드: " + firstDealerCard.getCardName());
@@ -25,23 +25,16 @@ public class OutputView {
         }
     }
 
-    private static void printCardDivision(Players players) {
-        List<String> playerNames = players.getPlayers().stream()
-                .map(Player::getName)
-                .toList();
-        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", String.join(JOIN_DELIMITER, playerNames));
-    }
-
     public static void printHitOrStand(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printHitResult(Player player){
+    public static void printHitResult(Player player) {
         List<String> cardsName = player.getHandCards().stream().map(Card::getCardName).toList();
         System.out.println(player.getName() + "카드: " + String.join(JOIN_DELIMITER, cardsName));
     }
 
-    public static void printDealerDealResult(){
+    public static void printDealerDealResult() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -62,6 +55,14 @@ public class OutputView {
         System.out.println("딜러: " + getGameResultMessage(dealerWinning));
     }
 
+    public static void printPlayerFinalResult(ParticipantWinningResult participantWinningResult) {
+        Map<Player, GameResult> playerResults = participantWinningResult.getResult();
+        for (Player player : playerResults.keySet()) {
+            GameResult playerResult = participantWinningResult.getResult().get(player);
+            System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
+        }
+    }
+
     private static String getGameResultMessage(Map<GameResult, Integer> dealerWinning) {
         String message = "";
         for (GameResult gameResult : GameResult.values()) {
@@ -72,17 +73,11 @@ public class OutputView {
         return message;
     }
 
-    public static void printPlayerFinalResult(Map<Player, GameResult> playerGameResult) {
-        for (Player player : playerGameResult.keySet()){
-            System.out.println(player.getName() + ": " + playerGameResult.get(player).getResultMeaning());
-        }
+    private static void printCardDivision(Players players) {
+        List<String> playerNames = players.getPlayers().stream()
+                .map(Player::getName)
+                .toList();
+        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", String.join(JOIN_DELIMITER, playerNames));
     }
 
-    public static void printPlayerFinalResultV2(ParticipantWinningResult participantWinningResult) {
-        Map<Player, GameResult> playerResults = participantWinningResult.getResult();
-        for (Player player : playerResults.keySet()) {
-            GameResult playerResult = participantWinningResult.getResult().get(player);
-            System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
-        }
-    }
 }

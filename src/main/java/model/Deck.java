@@ -9,8 +9,8 @@ public class Deck {
 
     public static Deck of() {
         List<Card> deck = new ArrayList<>();
-        for (CardSuit cardSuit : CardSuit.values()){
-            for (CardRank rank : CardRank.values()){
+        for (CardSuit cardSuit : CardSuit.values()) {
+            for (CardRank rank : CardRank.values()) {
                 Card card = new Card(rank, cardSuit);
                 deck.add(card);
             }
@@ -29,8 +29,9 @@ public class Deck {
         deck.remove(card);
         return card;
     }
-    private void validateDeckEmpty(){
-        if (deck.isEmpty()){
+
+    private void validateDeckEmpty() {
+        if (deck.isEmpty()) {
             throw new IllegalStateException("[ERROR] 주어진 모든 카드들을 소진하였습니다");
         }
     }

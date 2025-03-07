@@ -21,6 +21,7 @@ public class DeckTest {
         //when
         Card card = deck.pick();
 
+        //then
         assertThat(card).isEqualTo(firstCard);
     }
 
@@ -28,11 +29,10 @@ public class DeckTest {
     @DisplayName("Deck에서 뽑을 카드가 없는 경우 예외 발생.")
     void Deck에서_뽑을_카드가_없는_경우() {
         //given
-        Card firstCard = new Card(CardRank.FOUR, CardSuit.CLOVER);
         Deck deck = new Deck(new ArrayList<>(0));
 
-        //when
-        assertThatThrownBy(()-> deck.pick()).isInstanceOf(IllegalStateException.class);
+        //when, then
+        assertThatThrownBy(() -> deck.pick()).isInstanceOf(IllegalStateException.class);
     }
 
 }

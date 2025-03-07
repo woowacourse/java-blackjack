@@ -1,14 +1,14 @@
 package model;
 
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
     private static final int DEALER_HIT_THRESHOLD = 16;
 
     public Dealer() {
         super();
     }
 
-    public Card getFirstHand(){
+    public Card getFirstHand() {
         return getParticipantHand().getCards().getFirst();
     }
 
