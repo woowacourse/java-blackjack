@@ -79,17 +79,42 @@ class BlackJackGameTest {
         }
 
         @Test
-        @DisplayName("블랙잭게임은 덱과 딜러와 룰을 가져야한다.")
-        void validateNotNull() {
+        @DisplayName("플레이어가 히트하면 카드가 추가된다.")
+        void processPlayerHit() {
             // given
-            Deck nullDeck = null;
-            Dealer nullDealer = null;
-            Rule nullRule = null;
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            Player player = new Player("Alice", Hand.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES));
+
+            // when
+            blackJackGame.processPlayerHit(player);
+
+            // then
+            assertThat(player.getHand().getCards()).hasSize(3);
+        }
+    @Nested
+    class InvalidCases {
+
+        @ParameterizedTest
+        @DisplayName("플레이어가 히트 할 수 없다면 히트를 할 수 없다.")
+        @MethodSource("provideHitNotAllowedCases")
+        void processPlayerHit(List<TrumpCard> cards) {
+            // given
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            Player player = new Player("Alice", new Hand(cards));
 
             // when & then
-            assertThatThrownBy(() -> new BlackJackGame(nullDeck, nullDealer, nullRule))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("블랙잭게임은 덱과 딜러와 룰을 가지고 있어야합니다.");
+            assertThatThrownBy(() -> blackJackGame.processPlayerHit(player))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("플레이어는 더이상 히트할 수 없습니다.");
+        }
+
+        static Stream<Arguments> provideHitNotAllowedCases() {
+            return Stream.of(
+                    Arguments.of(List.of(TrumpCard.TEN_OF_SPADES, TrumpCard.ACE_OF_HEARTS)),
+                    Arguments.of(
+                            List.of(TrumpCard.KING_OF_DIAMONDS, TrumpCard.QUEEN_OF_SPADES, TrumpCard.TWO_OF_HEARTS)),
+                    Arguments.of(List.of(TrumpCard.JACK_OF_CLUBS, TrumpCard.KING_OF_HEARTS, TrumpCard.FOUR_OF_SPADES))
+            );
         }
     }
 }
