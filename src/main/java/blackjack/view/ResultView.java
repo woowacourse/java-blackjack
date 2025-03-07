@@ -101,7 +101,11 @@ public class ResultView {
         }
     }
 
-    private static int countResultStatus(final Map<String, ResultStatus> result, final ResultStatus input) {
+    public void showException(final RuntimeException exception) {
+        System.out.println(exception.getMessage());
+    }
+
+    private int countResultStatus(final Map<String, ResultStatus> result, final ResultStatus input) {
         return (int) result.values().stream()
                 .filter(resultStatus -> resultStatus == input)
                 .count();
