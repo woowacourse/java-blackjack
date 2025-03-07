@@ -1,6 +1,8 @@
 package view;
 
 import model.card.Card;
+import model.card.RankType;
+import model.card.SuitType;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
@@ -18,13 +20,37 @@ public class OutputView {
             "LOSE", "패"
     );
 
+    private static final Map<String, String> RANK_FORMAT = Map.ofEntries(
+            Map.entry("TWO", "2"),
+            Map.entry("THREE", "3"),
+            Map.entry("FOUR", "4"),
+            Map.entry("FIVE", "5"),
+            Map.entry("SIX", "6"),
+            Map.entry("SEVEN", "7"),
+            Map.entry("EIGHT", "8"),
+            Map.entry("NINE", "9"),
+            Map.entry("TEN", "10"),
+            Map.entry("KING", "K"),
+            Map.entry("JACK", "J"),
+            Map.entry("QUEEN", "Q"),
+            Map.entry("ACE", "A")
+    );
+
+    private static final Map<String, String> SUIT_FORMAT = Map.of(
+            "DIAMONDS", "다이아몬드",
+            "HEARTS", "하트",
+            "SPADES", "스페이드",
+            "CLUBS", "클로버"
+    );
+
     public static void printDivisionStart(Dealer dealer, Players values) {
         String dealerNickname = dealer.getNickname();
         List<String> playerNicknames = values.getNicknames();
         System.out.println(formatDivideCommentByNickname(dealerNickname, playerNicknames));
-        String dealerCard = dealer.getHands().getFirst().getCard();
+        Card card = dealer.getHands().getFirst();
+        String formattedDealerCard = getCardFormat(card);
         String handsHeader = formatHandsHeader(dealerNickname);
-        System.out.println(formatBasicForm(handsHeader, dealerCard));
+        System.out.println(formatBasicForm(handsHeader, formattedDealerCard));
         List<Player> players = values.getPlayers();
         for (Player player : players) {
             System.out.println(formatHands(player));
@@ -86,9 +112,17 @@ public class OutputView {
         return MATCH_FORMAT.get(matchType.name());
     }
 
+    public static String getCardFormat(Card card) {
+        RankType rankType = card.getRank();
+        SuitType suitType = card.getSuit();
+        return RANK_FORMAT.get(rankType.name()) + SUIT_FORMAT.get(suitType.name());
+    }
+
     private static String formatHands(Participant participant) {
         String nickname = participant.getNickname();
-        List<String> joinedCards = participant.getHands().stream().map(Card::getCard).toList();
+        List<String> joinedCards = participant.getHands().stream().map(
+                OutputView::getCardFormat
+        ).toList();
         String joinedHands = String.join(", ", joinedCards);
         String handsHeader = formatHandsHeader(nickname);
         return formatBasicForm(handsHeader, joinedHands);

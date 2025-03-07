@@ -18,7 +18,4 @@ public class Card {
         return rank;
     }
 
-    public String getCard() {
-        return rank.getDisplayName() + suit.getDisplayName();
-    }
 }
