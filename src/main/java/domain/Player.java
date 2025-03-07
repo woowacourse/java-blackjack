@@ -1,6 +1,8 @@
 package domain;
 
 public class Player {
+    public static final int LOSS = -1;
+
     private final String name;
     protected Hand hand;
 
@@ -29,7 +31,14 @@ public class Player {
         hand.setOriginalAceValueToOne();
     }
 
+    public void setHandTotalToZero() {
+        hand.setAllCardValueToZero();
+    }
+
     public int getWinLoss(int dealerTotal) {
+        if (isHandBust()) {
+            return LOSS;
+        }
         return Integer.compare(getHandTotal(), dealerTotal);
     }
 

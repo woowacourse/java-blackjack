@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Hand {
-
     private static final int ORIGINAL_ACE_VALUE = 11;
     private static final int BUST_THRESHOLD = 21;
+    public static final int INITIAL_SIZE = 2;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -31,6 +32,12 @@ public class Hand {
         originalAce.setValueToOne();
     }
 
+    public void setAllCardValueToZero() {
+        for (Card card : cards) {
+            card.setValueToZero();
+        }
+    }
+
     public boolean isBust() {
         return getTotal() > BUST_THRESHOLD;
     }
@@ -45,6 +52,10 @@ public class Hand {
 
     public int getSize() {
         return cards.size();
+    }
+
+    public int getExtraSize() {
+        return getSize() - INITIAL_SIZE;
     }
 
     public List<Card> getCards() {
