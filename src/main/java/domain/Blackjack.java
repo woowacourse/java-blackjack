@@ -32,7 +32,7 @@ public class Blackjack {
     // 추가 카드 분배
     public NameAndCards addCardToCurrentParticipant(String name) {
         Player participant = players.getPlayerByName(name);
-        participant.addCard(deck);
+        participant.drawOneCard(deck);
         return new NameAndCards(
                 participant.getName(),
                 participant.getCards().getCards()
@@ -40,7 +40,7 @@ public class Blackjack {
     }
 
     public boolean addCardToDealerIfLowScore() {
-        return getDealer().addCardIfLowScore(deck);
+        return getDealer().drawOneCardIfLowScore(deck);
     }
 
     public NameAndCards getNameAndCardsByName(String name) {

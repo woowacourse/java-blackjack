@@ -49,10 +49,10 @@ class DealerTest {
 
                 new Card(CardShape.SPADE, CardNumber.EIGHT)
         )));
-        dealer.addCard(deck);
+        dealer.drawOneCard(deck);
 
         // when & then
-        Assertions.assertThat(dealer.addCardIfLowScore(deck))
+        Assertions.assertThat(dealer.drawOneCardIfLowScore(deck))
                 .isTrue();
     }
 }

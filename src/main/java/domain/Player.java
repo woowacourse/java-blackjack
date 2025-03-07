@@ -26,7 +26,7 @@ public abstract class Player {
         getCards().addAll(deck.drawCards(2));
     }
 
-    public void addCard(Deck deck) {
+    public void drawOneCard(Deck deck) {
         getCards().addAll(deck.drawCards(1));
     }
 
