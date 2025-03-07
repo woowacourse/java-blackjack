@@ -25,12 +25,6 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public static void main(String[] args) {
-        BlackjackController blackjackController = new BlackjackController(new InputView(),
-            new OutputView());
-        blackjackController.play();
-    }
-
     public void play() {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
