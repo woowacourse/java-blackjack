@@ -6,6 +6,8 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.rule.BlackjackRule;
 import domain.rule.GameRule;
 import java.util.List;
@@ -137,11 +139,13 @@ class BlackjackRuleTest {
     @MethodSource("createGameResultCase")
     void 게임_결과_반환(List<Card> self, List<Card> other, GameResult expected) {
         // given
-        Cards selfCards = Cards.of(self);
+        Cards playerCards = Cards.of(self);
         Cards dealerCards = Cards.of(other);
+        Player player = Player.from("player", playerCards);
+        Dealer dealer = Dealer.of(dealerCards);
 
         // when
-        GameResult actual = rule.getResult(selfCards, dealerCards);
+        GameResult actual = rule.getResult(player, dealer);
 
         // then
         assertThat(actual).isSameAs(expected);
@@ -211,16 +215,19 @@ class BlackjackRuleTest {
     @Test
     void 승패_검증() {
         // given
-        Cards cards1 = Cards.of(List.of(
+        Cards playerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.THREE, CardShape.CLOVER)
         ));
-        Cards cards2 = Cards.of(List.of(
+        Cards dealerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
+        Player player = Player.from("player", playerCards);
+        Dealer dealer = Dealer.of(dealerCards);
+
         // when
-        GameResult actual = rule.getResult(cards1, cards2);
+        GameResult actual = rule.getResult(player, dealer);
 
         //then
         assertThat(actual).isEqualTo(GameResult.WIN);
@@ -230,17 +237,20 @@ class BlackjackRuleTest {
     @Test
     void 플레이어의_카드가_버스트인_경우_패배한다() {
         // given
-        Cards cards1 = Cards.of(List.of(
+        Cards playerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Cards cards2 = Cards.of(List.of(
+        Cards dealerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
+        Player player = Player.from("player", playerCards);
+        Dealer dealer = Dealer.of(dealerCards);
+
         // when
-        GameResult actual = rule.getResult(cards1, cards2);
+        GameResult actual = rule.getResult(player, dealer);
 
         //then
         assertThat(actual).isEqualTo(GameResult.LOSE);
@@ -250,17 +260,20 @@ class BlackjackRuleTest {
     @Test
     void 딜러가_버스트인_경우_승리한다() {
         // given
-        Cards cards1 = Cards.of(List.of(
+        Cards playerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.A, CardShape.CLOVER)
         ));
-        Cards cards2 = Cards.of(List.of(
+        Cards dealerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
+        Player player = Player.from("player", playerCards);
+        Dealer dealer = Dealer.of(dealerCards);
+
         // when
-        GameResult actual = rule.getResult(cards1, cards2);
+        GameResult actual = rule.getResult(player, dealer);
 
         //then
         assertThat(actual).isEqualTo(GameResult.WIN);
@@ -270,16 +283,19 @@ class BlackjackRuleTest {
     @Test
     void 두명_모두_버스트가_아니면서_합이_같으면_비긴다() {
         // given
-        Cards cards1 = Cards.of(List.of(
+        Cards playerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Cards cards2 = Cards.of(List.of(
+        Cards dealerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
+        Player player = Player.from("player", playerCards);
+        Dealer dealer = Dealer.of(dealerCards);
+
         // when
-        GameResult actual = rule.getResult(cards1, cards2);
+        GameResult actual = rule.getResult(player, dealer);
 
         //then
         assertThat(actual).isEqualTo(GameResult.DRAW);
@@ -289,18 +305,21 @@ class BlackjackRuleTest {
     @Test
     void 둘_다_버스트인_경우_패배한다() {
         // given
-        Cards cards1 = Cards.of(List.of(
+        Cards playerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Cards cards2 = Cards.of(List.of(
+        Cards dealerCards = Cards.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
+        Player player = Player.from("player", playerCards);
+        Dealer dealer = Dealer.of(dealerCards);
+
         // when
-        GameResult actual = rule.getResult(cards1, cards2);
+        GameResult actual = rule.getResult(player, dealer);
 
         //then
         assertThat(actual).isEqualTo(GameResult.LOSE);

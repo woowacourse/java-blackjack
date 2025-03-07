@@ -2,6 +2,8 @@ package domain.rule;
 
 import domain.GameResult;
 import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.Set;
 
 public class BlackjackRule implements GameRule {
@@ -24,14 +26,14 @@ public class BlackjackRule implements GameRule {
 
     // TODO: 파라미터로 누구의 카드인지 구별해야 하는가? (self는 Player, other는 Dealer여야 함)
     @Override
-    public GameResult getResult(Cards self, Cards other) {
-        if (isBurst(self)) {
+    public GameResult getResult(Player player, Dealer dealer) {
+        if (isBurst(player.getCards())) {
             return GameResult.LOSE;
         }
-        if (isBurst(other) || getScore(self) > getScore(other)) {
+        if (isBurst(dealer.getCards()) || getScore(player.getCards()) > getScore(dealer.getCards())) {
             return GameResult.WIN;
         }
-        if (getScore(self) < getScore(other)) {
+        if (getScore(player.getCards()) < getScore(dealer.getCards())) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
