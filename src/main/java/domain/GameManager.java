@@ -93,4 +93,12 @@ public class GameManager {
         }
         return resultMap;
     }
+
+    public void giveCardToAllGamer(){
+        giveCardToGamer(dealer);
+        for(Player player : players){
+            giveCardToGamer(player);
+            giveCardToGamer(player);
+        }
+    }
 }
