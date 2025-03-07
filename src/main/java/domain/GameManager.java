@@ -4,6 +4,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import java.util.List;
+import java.util.Map;
 
 public class GameManager {
 
@@ -64,5 +65,10 @@ public class GameManager {
 
     public Player findPlayerByIndex(final int index) {
         return players.get(index);
+    }
+
+    public Map<GameResult, Integer> calculateDealerGameResult() {
+        return null;
+
     }
 }

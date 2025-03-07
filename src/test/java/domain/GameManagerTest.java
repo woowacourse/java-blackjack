@@ -11,6 +11,7 @@ import domain.fake.TwoScoreCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class GameManagerTest {
@@ -273,5 +274,32 @@ public class GameManagerTest {
         //when
         //then
         assertThatIllegalArgumentException().isThrownBy(() -> GameManager.create(dealer, players));
+    }
+
+    @Test
+    void 딜러의_게임_결과를_계산한다() {
+        //given
+        CardGroup cardGroup1 = new CardGroup();
+        CardGroup cardGroup2 = new CardGroup();
+        CardGroup cardGroup3 = new CardGroup();
+
+        final List<Player> players = List.of(
+                new Player("윌슨",cardGroup1,new TwoScoreCardGenerator()),
+                new Player("윌슨",cardGroup2,new TwoScoreCardGenerator()));
+        final Dealer dealer = new Dealer(cardGroup3,new FaceCardGenerator());
+
+        //when
+        final GameManager gameManager = GameManager.create(dealer, players);
+        gameManager.giveCardsToDealer();
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.getFirst());
+        gameManager.giveCardToGamer(players.get(1));
+        gameManager.giveCardToGamer(players.get(1));
+        final Map<GameResult, Integer> result = gameManager.calculateDealerGameResult();
+
+        //then
+        assertThat(result).containsEntry(GameResult.WIN, 2);
+
+
     }
 }
