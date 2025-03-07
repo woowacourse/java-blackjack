@@ -34,6 +34,8 @@ public class OutputView {
     private final String RESULT_INTRO = "## 최종 승패";
     private final String DEALER_RESULT = "딜러: ";
     private final String PLAYER_RESULT = "%s: %s";
+    private final int INIT_COUNT = 0;
+    private final int ONE_MORE_COUNT = 1;
 
     private final String NEW_LINE = System.lineSeparator();
 
@@ -84,7 +86,7 @@ public class OutputView {
 
         Map<MatchResult, Integer> dealerMatchResult = calculateDealerResult(playerMatchResult);
         for(MatchResult matchResult : dealerMatchResult.keySet()) {
-            if (dealerMatchResult.get(matchResult) == 0) continue;
+            if (dealerMatchResult.get(matchResult) == INIT_COUNT) continue;
             System.out.printf(dealerMatchResult.get(matchResult) + matchResult.getValue() + " ");
         }
 
@@ -128,7 +130,7 @@ public class OutputView {
         Map<MatchResult, Integer> dealerMatchResult = initDealerMatchResult();
 
         for (MatchResult matchResult : playerMatchResult.values()) {
-            dealerMatchResult.merge(matchResult, 1, Integer::sum);
+            dealerMatchResult.merge(matchResult, ONE_MORE_COUNT, Integer::sum);
         }
 
         swap(dealerMatchResult);
@@ -144,9 +146,9 @@ public class OutputView {
 
     private Map<MatchResult, Integer> initDealerMatchResult() {
         Map<MatchResult, Integer> dealerMatchResult = new LinkedHashMap<>();
-        dealerMatchResult.put(WIN, 0);
-        dealerMatchResult.put(DRAW, 0);
-        dealerMatchResult.put(LOSE, 0);
+        dealerMatchResult.put(WIN, INIT_COUNT);
+        dealerMatchResult.put(DRAW, INIT_COUNT);
+        dealerMatchResult.put(LOSE, INIT_COUNT);
         return dealerMatchResult;
     }
 

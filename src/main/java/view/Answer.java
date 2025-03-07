@@ -10,7 +10,7 @@ public enum Answer {
         this.response = response;
     }
 
-    public static boolean isYes(String userInput) {
+    public static boolean isYes(final String userInput) {
         if (userInput.equals(YES.response)) {
             return true;
         }
@@ -20,6 +20,5 @@ public enum Answer {
         }
 
         throw new IllegalArgumentException("[ERROR] y 또는 n으로 입력해주세요.");
-
     }
 }

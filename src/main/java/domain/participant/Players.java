@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Players {
+    private static final int MAXIMUM_PLAYER_NUMBER = 6;
 
     private final List<Player> players;
 
@@ -42,7 +43,7 @@ public class Players {
     }
 
     private static void validatePlayerNumbers(final List<String> names) {
-        if (names.isEmpty() || names.size() > 6) {
+        if (names.isEmpty() || names.size() > MAXIMUM_PLAYER_NUMBER) {
             throw new IllegalArgumentException("[ERROR] 플레이어 인원은 1~6명 입니다.");
         }
     }
