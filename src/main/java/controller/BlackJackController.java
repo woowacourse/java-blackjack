@@ -38,21 +38,10 @@ public class BlackJackController {
         // 게임 시작 이후 각자의 손패를 출력
         outputView.printInitialParticipantHands(participants.getParticipants());
 
-        // 참가자 카드 분배 기능
+        // Note: 모든 참가자들의 카드 받기 기능
         playerReceiveCardProcess(participants, cardDeck);
+        dealerReceiveCardProcess(participants, cardDeck);
 
-        // 딜러가 카드를 뽑을 수 있다면 카드를 뽑는다
-        for (Participant participant : participants.getParticipants()) {
-            if (participant instanceof Dealer) {
-                // 카드를 추가로 받을 수 있다면
-                // 카드를 받을지 여부를 입력받는다
-                while (participant.canPick()) {
-                    // 카드를 추가로 받고 출력한다.
-                    participant.addCard(cardDeck.getAndRemoveFrontCard());
-                    outputView.printDealerPickMessage();
-                }
-            }
-        }
         System.out.println();
         // 모든 참가자의 손패와, 점수를 출력한다
         for (Participant participant : participants.getParticipants()) {
@@ -61,6 +50,14 @@ public class BlackJackController {
 
         Results results = blackJackManager.calculateResult();
         outputView.printGameResult(results);
+    }
+
+    private void dealerReceiveCardProcess(Participants participants, CardDeck cardDeck) {
+        Participant dealer = participants.getDealer();
+        while (dealer.canPick()) {
+            dealer.addCard(cardDeck.getAndRemoveFrontCard());
+            outputView.printDealerPickMessage();
+        }
     }
 
     private void playerReceiveCardProcess(Participants participants, CardDeck cardDeck) {
