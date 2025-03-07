@@ -18,8 +18,6 @@ import java.util.Map;
 
 public class BlackjackController {
 
-    private static final String YES = "y";
-
     private final InputView inputView;
     private final ResultView resultView;
 
