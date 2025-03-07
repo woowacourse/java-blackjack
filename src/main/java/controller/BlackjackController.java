@@ -10,6 +10,7 @@ import java.util.Map;
 import view.CardConverter;
 import view.InputView;
 import view.OutputView;
+import view.Parser;
 
 public class BlackjackController {
     private final OutputView outputView;
@@ -21,39 +22,38 @@ public class BlackjackController {
     }
 
     public void run() {
-        // todo: parse, validate
-        // todo: 참여자 이름은 dealer나 딜러일 수 없다
-        // 참여자 입력
-        List<String> playerNames = inputView.inputUsers();
+        List<String> playerNames = Parser.parserStringToList(inputView.inputUsers());
         GameManger gameManger = new GameManger(playerNames);
 
-        // 첫 카드 배부 (2장씩)
+        distributionFirstCard(gameManger, playerNames);
+
+        additionalPlayerCard(playerNames, gameManger);
+        addtionalDealerCard(gameManger);
+
+        createGameResult(gameManger, playerNames);
+
+        caculateGameResult(gameManger);
+    }
+
+    private void distributionFirstCard(GameManger gameManger, List<String> playerNames) {
         CardSetting.initCache();
         gameManger.firstHandOutCard();
 
-        // 첫 카드를 출력한다
         displayOpenCard(gameManger.getDealer().getName(), gameManger.getDealer());
         playerNames.forEach(playerName -> displayOpenCard(playerName, gameManger.findUserByUsername(playerName)));
+    }
 
-        // 모든 플레이어에게 추가 카드 배분, 단 21이상인 경우 선택지 없음
-        playerNames.forEach(playerName ->
-                addCardAllPlayer(gameManger, playerName));
-
-        // 딜러 추가 카드 배분, 단 16이상인 경우 선택지 없음
+    private void addtionalDealerCard(GameManger gameManger) {
         User dealer = gameManger.getDealer();
         while (!dealer.isImpossibleDraw()) {
             dealer.drawCard();
             outputView.displayDealerAddCard();
         }
+    }
 
-        // 결과 출력
-        createGameResult(gameManger, playerNames);
-
-        // 승패 계산
-        Map<User, Integer> gameResult = gameManger.createGameResult();
-        calculateDealerResult(gameResult);
-
-        outputView.displayGameResult(gameResult);
+    private void additionalPlayerCard(List<String> playerNames, GameManger gameManger) {
+        playerNames.forEach(playerName ->
+                addCardAllPlayer(gameManger, playerName));
     }
 
     private void calculateDealerResult(Map<User, Integer> gameResult) {
@@ -114,5 +114,12 @@ public class BlackjackController {
                         dealerCard.getCardNumber()
                 )).toList();
         outputView.displayOpenCards(name, dealerPrintCards);
+    }
+
+    private void caculateGameResult(GameManger gameManger) {
+        Map<User, Integer> gameResult = gameManger.createGameResult();
+        calculateDealerResult(gameResult);
+
+        outputView.displayGameResult(gameResult);
     }
 }

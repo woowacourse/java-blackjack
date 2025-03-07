@@ -1,19 +1,13 @@
 package view;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
     private Scanner scanner = new Scanner(System.in);
 
-    public List<String> inputUsers() {
+    public String inputUsers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return Arrays.stream(scanner.next().split(","))
-                .toList()
-                .stream()
-                .map(String::trim)
-                .toList();
+        return scanner.next().trim();
     }
 
     public String inputYesOrNo(String playerName) {
