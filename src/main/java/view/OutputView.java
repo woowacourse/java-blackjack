@@ -24,25 +24,26 @@ public class OutputView {
     private final String HIT_CARDS = "딜러와 %s에게 2장을 나누었습니다.%n";
     private final String PLAYER_CARDS = "%s카드: ";
     private final String DEALER_CARDS = "딜러카드: ";
-    private final String HIT_DEALER_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private final String HIT_DEALER_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private final String SCORE = " - 결과: %d";
     private final String RESULT_INTRO = "## 최종 승패";
     private final String DEALER_RESULT = "딜러: %d승 %d패";
     private final String WINNER_RESULT = "%s: 승";
     private final String LOSER_RESULT = "%s: 패";
+
     private final String NEW_LINE = System.lineSeparator();
 
     public void printParticipant(Players players, Dealer dealer){
         printHitNotice(players);
-        printDealerDeck(dealer);
+        printDealerDeckWithHidden(dealer);
 
         for(Player player : players.getPlayers()){
-            printPlayerDeck(player);
+            System.out.println(printPlayerDeck(player));
         }
         System.out.print(NEW_LINE);
     }
 
-    private void printDealerDeck(Dealer dealer) {
+    private void printDealerDeckWithHidden(Dealer dealer) {
         System.out.println(DEALER_CARDS + toSymbol(dealer.getHand().getCards().getFirst()));
     }
 
@@ -56,13 +57,22 @@ public class OutputView {
         System.out.printf(HIT_CARDS, String.join(COMMA_DELIMITER, playersName));
     }
 
-    public void printPlayerDeck(Player player) {
+    public String printPlayerDeck(Player player) {
         System.out.printf(PLAYER_CARDS, player.getName());
         List<String> cardSymbols = new ArrayList<>();
         for (Card card : player.getHand().getCards()) {
             cardSymbols.add(toSymbol(card));
         }
-        System.out.println(String.join(COMMA_DELIMITER, cardSymbols));
+        return String.join(COMMA_DELIMITER, cardSymbols);
+    }
+
+    public String printDealerDeck(Dealer dealer) {
+        System.out.printf(DEALER_CARDS);
+        List<String> cardSymbols = new ArrayList<>();
+        for (Card card : dealer.getHand().getCards()) {
+            cardSymbols.add(toSymbol(card));
+        }
+        return String.join(COMMA_DELIMITER, cardSymbols);
     }
 
     private static String toSymbol(Card card) {
@@ -74,7 +84,18 @@ public class OutputView {
     public void printDrawDealer(Dealer dealer) {
         if(dealer.isUnderThreshold()){
             System.out.print(NEW_LINE);
-            System.out.println(HIT_DEALER_CARD);
+            System.out.print(HIT_DEALER_CARD);
+        }
+    }
+
+    public void printScore(Players players, Dealer dealer) {
+        System.out.print(NEW_LINE);
+        System.out.print(printDealerDeck(dealer));
+        System.out.printf(SCORE+NEW_LINE, dealer.sum());
+
+        for (Player player : players.getPlayers()) {
+            System.out.print(printPlayerDeck(player));
+            System.out.printf(SCORE+NEW_LINE, player.sum());
         }
     }
 }

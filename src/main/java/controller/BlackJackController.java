@@ -43,6 +43,7 @@ public class BlackJackController {
 
         // 5. 결과
 //        blackJack.calculateResult();
+        outputView.printScore(players, dealer);
         // 6. 최종 승패
         blackJack.calculateWinner();
     }
