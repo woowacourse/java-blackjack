@@ -6,7 +6,7 @@ import java.util.Objects;
 public abstract class Gamer {
 
     private final Nickname nickname;
-    protected final Hand hand;
+    private final Hand hand;
 
     public Gamer(final Nickname nickname) {
         this.nickname = nickname;
@@ -33,6 +33,10 @@ public abstract class Gamer {
 
     public List<Card> getCards() {
         return hand.getCards();
+    }
+
+    protected Hand getHand() {
+        return hand;
     }
 
     @Override

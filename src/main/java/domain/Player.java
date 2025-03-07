@@ -19,9 +19,10 @@ public class Player extends Gamer {
 
     @Override
     public int calculateSumOfRank() {
+        final Hand hand = getHand();
 
         if (hand.hasAce()) {
-            final List<Card> cards = this.hand.getCards();
+            final List<Card> cards = hand.getCards();
             final List<Integer> sumOfRanks = calculateAllSums(cards);
 
             return sumOfRanks.stream()

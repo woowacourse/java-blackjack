@@ -11,6 +11,7 @@ public class Dealer extends Gamer {
     }
 
     public boolean canHit(final int threshold) {
+        final Hand hand = getHand();
         final int sumOfRank = hand.getSumOfRank();
         if (hand.hasAce()) {
             return sumOfRank + ACE_ADDITIONAL_NUMBER <= threshold;
@@ -20,6 +21,7 @@ public class Dealer extends Gamer {
 
     @Override
     public int calculateSumOfRank() {
+        final Hand hand = getHand();
         final int sumOfRank = hand.getSumOfRank();
         if (hand.hasAce()) {
             return sumOfRank + ACE_ADDITIONAL_NUMBER;
@@ -28,6 +30,7 @@ public class Dealer extends Gamer {
     }
 
     public Card getFirstCard() {
+        final Hand hand = getHand();
         final List<Card> cards = hand.getCards();
         return cards.getFirst();
     }
