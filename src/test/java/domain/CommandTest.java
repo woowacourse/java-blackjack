@@ -20,4 +20,31 @@ class CommandTest {
         //when & then
         assertThat(Command.find(input)).isEqualTo(command);
     }
+
+    @DisplayName("Y가 입력되면 true 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "Y, true", "N, false"
+    })
+    void Y가_입력되면_true_아니면_false를_반환한다(String input, boolean expected) {
+
+        // given
+
+        //when & then
+        assertThat(Command.isYes(input)).isEqualTo(expected);
+    }
+
+    @DisplayName("N이 입력되면 true 아니면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "N, true", "Y, false"
+    })
+    void N이_입력되면_true_아니면_false를_반환한다(String input, boolean expected) {
+
+        // given
+
+        //when & then
+        assertThat(Command.isNo(input)).isEqualTo(expected);
+    }
 }
+
