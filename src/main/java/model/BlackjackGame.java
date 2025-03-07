@@ -13,6 +13,8 @@ import model.participant.Players;
 
 public class BlackjackGame {
 
+    private static final int INITIAL_COUNT = 2;
+
     private final Dealer dealer;
     private final Players players;
     private final Deck deck;
@@ -24,7 +26,7 @@ public class BlackjackGame {
     }
 
     public void startGame() {
-        for (int i = 0; i < 2; i++) {
+        for (int initialCount = 0; initialCount < INITIAL_COUNT; initialCount++) {
             dealer.receiveCard(deck.draw());
             players.getPlayers()
                     .forEach(player -> player.receiveCard(deck.draw()));
@@ -53,11 +55,7 @@ public class BlackjackGame {
     }
 
     public Map<GameResult, Integer> calculateDealerGameResult(Map<Player, GameResult> playerGameResults) {
-        Map<GameResult, Integer> dealerResults = new EnumMap<>(GameResult.class);
-
-        for (GameResult gameResult : GameResult.values()) {
-            dealerResults.put(gameResult, 0);
-        }
+        Map<GameResult, Integer> dealerResults = initializeDealerResults();
 
         for (GameResult gameResult : playerGameResults.values()) {
             if (gameResult.equals(GameResult.WIN)) {
@@ -69,6 +67,15 @@ public class BlackjackGame {
                 continue;
             }
             dealerResults.put(GameResult.DRAW, dealerResults.get(GameResult.DRAW) + 1);
+        }
+        return dealerResults;
+    }
+
+    private Map<GameResult, Integer> initializeDealerResults() {
+        Map<GameResult, Integer> dealerResults = new EnumMap<>(GameResult.class);
+
+        for (GameResult gameResult : GameResult.values()) {
+            dealerResults.put(gameResult, 0);
         }
         return dealerResults;
     }
