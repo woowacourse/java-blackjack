@@ -39,7 +39,7 @@ public class OutputView {
     }
 
     public String generateCardName(final Card card) {
-        return String.format("%s%s", card.getCardType().getDetail(), card.getShape().getDetail());
+        return String.format("%s%s", card.getCardType().getSymbol(), card.getShape().getName());
     }
 
     public void printPlayerCardStatus(final String name, final Player player) {

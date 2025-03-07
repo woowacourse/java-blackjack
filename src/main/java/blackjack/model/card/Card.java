@@ -4,24 +4,24 @@ public class Card {
     private final CardShape shape;
     private final CardType cardType;
 
-    public Card(CardShape shape, CardType cardType) {
+    public Card(final CardShape shape, final CardType cardType) {
         this.shape = shape;
         this.cardType = cardType;
     }
 
-    public CardShape getShape() {
-        return shape;
+    public boolean isAceCard() {
+        return this.cardType.equals(CardType.ACE);
     }
 
     public int getPoint() {
-        return cardType.getPoint();
+        return this.cardType.getPoint();
+    }
+
+    public CardShape getShape() {
+        return this.shape;
     }
 
     public CardType getCardType() {
-        return cardType;
-    }
-
-    public boolean equalsCardType(final CardType cardType) {
-        return this.cardType.equals(cardType);
+        return this.cardType;
     }
 }

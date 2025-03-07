@@ -33,7 +33,7 @@ public class ReceivedCards {
 
     private int countAces() {
         return Math.toIntExact(cards.stream()
-                .filter(card -> card.equalsCardType(CardType.ACE))
+                .filter(Card::isAceCard)
                 .count());
     }
 

@@ -7,13 +7,13 @@ public enum CardShape {
     CLOVER("클로버"),
     ;
 
-    private final String detail;
+    private final String name;
 
-    CardShape(String detail) {
-        this.detail = detail;
+    CardShape(final String name) {
+        this.name = name;
     }
 
-    public String getDetail() {
-        return detail;
+    public String getName() {
+        return name;
     }
 }
