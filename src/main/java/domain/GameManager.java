@@ -6,6 +6,7 @@ import domain.gamer.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameManager {
 
@@ -86,6 +87,11 @@ public class GameManager {
     }
 
     public Map<String, GameResult> calculatePlayerGameResult() {
-        return null;
+        return players.stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> player.calculateGameResult(dealer.calculateScore()),
+                        (newResult, oldResult) -> newResult
+                ));
     }
 }
