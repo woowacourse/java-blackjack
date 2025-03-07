@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class Players {
 
+    private static final int MAX_PLAYER_COUNT = 4;
     private final List<Player> players;
 
     public Players(final List<Player> players) {
@@ -15,7 +16,7 @@ public class Players {
     }
 
     private void validatePlayerCount(final List<Player> players) {
-        if (players.size() > 4 || players.isEmpty()) {
+        if (players.size() > MAX_PLAYER_COUNT || players.isEmpty()) {
             throw new IllegalArgumentException("플레이어는 최소 1명, 최대 4명입니다.");
         }
     }
