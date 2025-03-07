@@ -20,4 +20,8 @@ public class Dealer extends Player {
     public int getCardCount() {
         return hand.getSize();
     }
+
+    public int getExtraSize() {
+        return hand.getExtraSize();
+    }
 }

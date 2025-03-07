@@ -29,6 +29,10 @@ public class Player {
         hand.setOriginalAceValueToOne();
     }
 
+    public void setHandTotalToZero() {
+        hand.setAllCardValueToZero();
+    }
+
     public int getWinLoss(int dealerTotal) {
         return Integer.compare(getHandTotal(), dealerTotal);
     }

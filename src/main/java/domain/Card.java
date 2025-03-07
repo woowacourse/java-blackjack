@@ -17,6 +17,10 @@ public class Card {
         return denomination.equals(ACE);
     }
 
+    public void setValueToZero() {
+        value = 0;
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }

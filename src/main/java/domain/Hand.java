@@ -9,6 +9,7 @@ public class Hand {
 
     private static final int ORIGINAL_ACE_VALUE = 11;
     private static final int BUST_THRESHOLD = 21;
+    public static final int INITIAL_SIZE = 2;
     private final List<Card> cards;
 
     public Hand() {
@@ -31,6 +32,10 @@ public class Hand {
         originalAce.setValueToOne();
     }
 
+    public void setAllCardValueToZero() {
+        cards.forEach(Card::setValueToZero);
+    }
+
     public boolean isBust() {
         return getTotal() > BUST_THRESHOLD;
     }
@@ -47,6 +52,10 @@ public class Hand {
         return cards.size();
     }
 
+    public int getExtraSize() {
+        return cards.size()- INITIAL_SIZE;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -54,4 +63,6 @@ public class Hand {
     public Card getFirstCard() {
         return cards.getFirst();
     }
+
+
 }

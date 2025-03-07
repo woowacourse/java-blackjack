@@ -3,6 +3,7 @@ package controller;
 import static controller.dto.WinLossCountDto.computeWinLoss;
 import static view.InputView.getPlayerNamesInput;
 import static view.InputView.getYnInput;
+import static view.OutputView.printBust;
 import static view.OutputView.printDealerExtraCardsCount;
 import static view.OutputView.printDistributeResult;
 import static view.OutputView.printEveryOneCardsNamesWithTotal;
@@ -34,25 +35,40 @@ public class BlackJack {
         distributeCards(deck);
         printDistributeResult(players, dealer);
         playersTurn();
-
-        int dealerExtraCardsCount = dealersTurn(dealer);
-        printDealerExtraCardsCount(dealer, dealerExtraCardsCount);
+        dealersTurn(dealer);
+        printDealerExtraCardsCount(dealer);
         printEveryOneCardsNamesWithTotal(players, dealer);
         printResult(players, dealer, computeWinLoss(players, dealer));
     }
 
 
-    public int dealersTurn(Dealer dealer) {
-        int count = 0;
-        while (true) {
-            if (dealer.isBelowThreshold()) {
-                drawOneMoreCard(dealer, new StringBuilder());
-            }
-            if (!dealer.isBelowThreshold()) {
-                return count;
-            }
-            count++;
+    private void playersTurn() {
+        for (Player player : players) {
+            askPlayersChoice(player);
         }
+    }
+
+    private void askPlayersChoice(Player player) {
+        boolean isAlive = resolveBust(player);
+        while (isAlive) {
+            String ynInput = getYnInput(player);
+            if (ynInput.equalsIgnoreCase(YES)) {
+                isAlive = drawOneMoreCard(player, new StringBuilder());
+            }
+            if (ynInput.equalsIgnoreCase(NO)) {
+                return;
+            }
+        }
+        printBust();
+        player.setHandTotalToZero();
+    }
+
+    private boolean drawOneMoreCard(Player player, StringBuilder stringBuilder) {
+        player.addCard(deck.draw());
+        if (player.getClass().equals(Player.class)) {
+            printHandCardsNames(player, stringBuilder);
+        }
+        return resolveBust(player);
     }
 
     public boolean resolveBust(Player player) {
@@ -63,31 +79,18 @@ public class BlackJack {
         return !player.isHandBust();
     }
 
-    private void playersTurn() {
-        for (Player player : players) {
-            askPlayersChoice(player);
-        }
-    }
-
-    private void askPlayersChoice(Player player) {
-        while (true) {
-            String ynInput = getYnInput(player);
-            if (ynInput.equalsIgnoreCase(YES)) {
-                drawOneMoreCard(player, new StringBuilder());
+    public void dealersTurn(Dealer dealer) {
+        boolean isAlive = resolveBust(dealer);
+        while (isAlive) {
+            if (dealer.isBelowThreshold()) {
+                isAlive = drawOneMoreCard(dealer, new StringBuilder());
             }
-            if (ynInput.equalsIgnoreCase(NO)) {
+            if (isAlive && !dealer.isBelowThreshold()) {
                 return;
             }
         }
-    }
-
-
-    private void drawOneMoreCard(Player player, StringBuilder stringBuilder) {
-        player.addCard(deck.draw());
-        if (player.getClass().equals(Player.class)) {
-            printHandCardsNames(player, stringBuilder);
-        }
-        resolveBust(player);
+        dealer.setHandTotalToZero();
+        printBust();
     }
 
     private void distributeCards(Deck deck) {
