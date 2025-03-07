@@ -21,11 +21,11 @@ public class GameRuleEvaluator {
                 .anyMatch(sum -> sum <= Constants.BUSTED_STANDARD_VALUE);
     }
 
-    public boolean isBustedFor(Player player) {
+    public boolean isBusted(Player player) {
         return isBusted(player.getCardHolder());
     }
 
-    public boolean isBustedFor(Dealer dealer) {
+    public boolean isBusted(Dealer dealer) {
         return isBusted(dealer.getCardHolder());
     }
 

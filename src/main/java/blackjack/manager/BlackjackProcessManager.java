@@ -36,30 +36,37 @@ public class BlackjackProcessManager {
         card.forEach(cardHolder::takeCard);
     }
 
-    public void calculateGameResult(Players players, Dealer dealer, GameRuleEvaluator gameRuleEvaluator) {
-        boolean isBustedForDealer = gameRuleEvaluator.isBustedFor(dealer);
-
+    public void calculateCardResult(Players players, Dealer dealer, GameRuleEvaluator gameRuleEvaluator) {
         for (Player player : players.getPlayers()) {
-            boolean isBustedForPlayer = gameRuleEvaluator.isBustedFor(player);
-
-            if (isBustedForDealer) {
-                if (isBustedForPlayer) {
-                    saveResultWithPlayerResult(player, GameResultType.TIE);
-                    continue;
-                }
-
-                saveResultWithPlayerResult(player, GameResultType.WIN);
-                continue;
-            }
-
-            if (isBustedForPlayer) {
-                saveResultWithPlayerResult(player, GameResultType.LOSE);
-                continue;
-            }
-
-            GameResultType resultOfPlayer = decideResultOfPlayer(player, dealer);
-            saveResultWithPlayerResult(player, resultOfPlayer);
+            saveResult(dealer, gameRuleEvaluator, player);
         }
+    }
+
+    private void saveResult(Dealer dealer, GameRuleEvaluator gameRuleEvaluator, Player player) {
+        boolean isBustedDealer = gameRuleEvaluator.isBusted(dealer);
+        boolean isBustedPlayer = gameRuleEvaluator.isBusted(player);
+
+        if (isBustedDealer) {
+            processForBustedDealer(player, isBustedPlayer);
+            return;
+        }
+
+        if (isBustedPlayer) {
+            saveResultWithPlayerResult(player, GameResultType.LOSE);
+            return;
+        }
+
+        GameResultType resultOfPlayer = decideResultOfPlayer(player, dealer);
+        saveResultWithPlayerResult(player, resultOfPlayer);
+    }
+
+    private void processForBustedDealer(Player player, boolean isBustedPlayer) {
+        if (isBustedPlayer) {
+            saveResultWithPlayerResult(player, GameResultType.TIE);
+            return;
+        }
+
+        saveResultWithPlayerResult(player, GameResultType.WIN);
     }
 
     public GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
