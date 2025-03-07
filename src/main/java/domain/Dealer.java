@@ -5,8 +5,11 @@ import java.util.List;
 
 public class Dealer extends Participant  {
 
+    private static final int ADD_CARD_UPPER_BOUND = 16;
+    private static final String DEALER_NAME = "딜러";
+
     protected Dealer() {
-        super("딜러");
+        super(DEALER_NAME);
     }
 
     @Override
@@ -18,6 +21,6 @@ public class Dealer extends Participant  {
     @Override
     public boolean ableToAddCard() {
         int cardsScore = cards.calculateScore();
-        return cardsScore <= 16;
+        return cardsScore <= ADD_CARD_UPPER_BOUND;
     }
 }

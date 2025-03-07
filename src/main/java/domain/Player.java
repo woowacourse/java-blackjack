@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.Cards.BLACKJACK_SCORE;
+
 import domain.card.Card;
 import java.util.List;
 
@@ -17,6 +19,6 @@ public class Player extends Participant {
     @Override
     public boolean ableToAddCard() {
         int cardsScore = cards.calculateScore();
-        return cardsScore <= 21;
+        return cardsScore <= BLACKJACK_SCORE;
     }
 }
