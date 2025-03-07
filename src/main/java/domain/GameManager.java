@@ -34,7 +34,7 @@ public class GameManager {
 
     private static void validateDuplicatePlayer(final List<Player> players) {
         if (isDuplicate(players)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR] 플레이어는 중복될 수 없습니다.");
         }
     }
 

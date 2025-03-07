@@ -8,6 +8,7 @@ import domain.gamer.GamerGenerator;
 import domain.gamer.Player;
 import java.util.List;
 import java.util.Objects;
+import util.LoopTemplate;
 import view.InputView;
 import view.OutputView;
 
@@ -22,11 +23,11 @@ public class BlackJackController {
     }
 
     public void gameStart() {
-        final List<String> playerNames = inputView.readPlayers();
+        final List<String> playerNames = LoopTemplate.tryCatchLoop(inputView::readPlayers);
         final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
         final Dealer dealer = GamerGenerator.generateDealer(randomCardGenerator);
         final List<Player> players = GamerGenerator.generatePlayer(playerNames, randomCardGenerator);
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final GameManager gameManager = LoopTemplate.tryCatchLoop(() -> GameManager.create(dealer, players));
         gameManager.giveCardToGamer(dealer);
         gameManager.giveCardToGamer(dealer);
         for (Player player : players) {
@@ -41,10 +42,10 @@ public class BlackJackController {
             if (!gameManager.isAbleToHit(player)) {
                 continue;
             }
-            AnswerCommand answerCommand = inputView.readAnswer(player.getName());
+            AnswerCommand answerCommand = LoopTemplate.tryCatchLoop(() -> inputView.readAnswer(player.getName()));
             outputView.printPlayerCards(player);
             while (Objects.equals(answerCommand, AnswerCommand.YES) && gameManager.isAbleToHit(player)) {
-                answerCommand = inputView.readAnswer(player.getName());
+                answerCommand = LoopTemplate.tryCatchLoop(() -> inputView.readAnswer(player.getName()));
                 if (Objects.equals(answerCommand, AnswerCommand.NO)) {
                     continue;
                 }

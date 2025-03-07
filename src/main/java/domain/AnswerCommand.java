@@ -17,6 +17,6 @@ public enum AnswerCommand {
         return Arrays.stream(AnswerCommand.values())
                 .filter(answerCommand -> Objects.equals(answerCommand.command, command))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 커멘드 입니다."));
     }
 }
