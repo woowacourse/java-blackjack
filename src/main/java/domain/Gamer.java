@@ -1,15 +1,15 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 public abstract class Gamer implements Cloneable {
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
     protected Gamer() {
-        this.cards = new HashSet<>();
+        this.cards = new ArrayList<>();
     }
 
     public int calculateScore() {
@@ -24,6 +24,7 @@ public abstract class Gamer implements Cloneable {
     }
 
     public void addCard(List<Card> addedCards) {
+        validateDuplicate(addedCards);
         cards.addAll(addedCards);
     }
 
@@ -43,7 +44,7 @@ public abstract class Gamer implements Cloneable {
     }
 
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return Collections.unmodifiableList(cards);
     }
 
 
@@ -56,5 +57,14 @@ public abstract class Gamer implements Cloneable {
             return lowAceTotal;
         }
         return highAceTotal;
+    }
+
+    private void validateDuplicate(List<Card> addedCards) {
+        if (addedCards.size() != Set.of(addedCards).size()) {
+            throw new IllegalArgumentException("새로 뽑은 카드에 중복이 있습니다.");
+        }
+        if (addedCards.stream().anyMatch(this.cards::contains)) {
+            throw new IllegalArgumentException("기존 카드와 중복 카드가 있습니다.");
+        }
     }
 }
