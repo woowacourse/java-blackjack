@@ -24,8 +24,7 @@ public class GameRuleTest {
         Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
-        GameRule gameRule = new GameRule();
-        GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.WIN);
@@ -49,8 +48,7 @@ public class GameRuleTest {
         Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
-        GameRule gameRule = new GameRule();
-        GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.LOSE);
@@ -74,9 +72,8 @@ public class GameRuleTest {
         Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
-        GameRule gameRule = new GameRule();
-        GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
-        GameResult playerResult = gameRule.evaluatePlayerWin(player, dealer);
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.DRAW);
@@ -102,9 +99,8 @@ public class GameRuleTest {
         Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
-        GameRule gameRule = new GameRule();
-        GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
-        GameResult playerResult = gameRule.evaluatePlayerWin(player, dealer);
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.WIN);
@@ -131,9 +127,8 @@ public class GameRuleTest {
         Dealer dealer = new Dealer(cardDeck2, cardDump);
 
         //when
-        GameRule gameRule = new GameRule();
-        GameResult dealerResult = gameRule.evaluateDealerWin(player, dealer);
-        GameResult playerResult = gameRule.evaluatePlayerWin(player, dealer);
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.LOSE);

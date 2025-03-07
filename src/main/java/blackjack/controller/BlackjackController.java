@@ -3,15 +3,14 @@ package blackjack.controller;
 import blackjack.domain.CardDeck;
 import blackjack.domain.CardDump;
 import blackjack.domain.Dealer;
+import blackjack.domain.GameReport;
 import blackjack.domain.GameResult;
-import blackjack.domain.GameRule;
 import blackjack.domain.Player;
 import blackjack.dto.DistributedCardDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.view.InputVIew;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -20,13 +19,11 @@ public class BlackjackController {
     private final InputVIew inputView;
     private final OutputView outputView;
     private final CardDump cardDump;
-    private final GameRule gameRule;
 
     public BlackjackController() {
         this.inputView = new InputVIew();
         this.outputView = new OutputView();
         this.cardDump = new CardDump();
-        this.gameRule = new GameRule();
     }
 
     public void run() {
@@ -130,24 +127,12 @@ public class BlackjackController {
     }
 
     private void generateGameResultAndDisplay(final Dealer dealer, final List<Player> players) {
-        Map<GameResult, Integer> dealerResult = evaluateDealerFinalResult(dealer, players);
+        GameReport gameReport = new GameReport();
+        Map<GameResult, Integer> dealerResult = gameReport.getDealerResult(dealer, players);
         outputView.displayDealerResult(dealerResult);
         for (Player player : players) {
-            GameResult playerResult = evaluateGameResultFromPlayer(player, dealer);
+            GameResult playerResult = gameReport.getPlayerResult(player, dealer);
             outputView.displayPlayerResult(player, playerResult);
         }
-    }
-
-    private Map<GameResult, Integer> evaluateDealerFinalResult(final Dealer dealer, final List<Player> players) {
-        Map<GameResult, Integer> gameFinalResult = new HashMap<>();
-        for (Player player : players) {
-            GameResult result = gameRule.evaluateDealerWin(player, dealer);
-            gameFinalResult.put(result, gameFinalResult.getOrDefault(result, 0) + 1);
-        }
-        return gameFinalResult;
-    }
-
-    private GameResult evaluateGameResultFromPlayer(final Player player, final Dealer dealer) {
-        return gameRule.evaluatePlayerWin(player, dealer);
     }
 }
