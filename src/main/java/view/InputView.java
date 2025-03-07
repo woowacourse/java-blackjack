@@ -13,7 +13,7 @@ public class InputView {
     }
 
     public String readOneMoreCardResponse(String name) {
-        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
         String response = scanner.nextLine();
         validateYesOrNo(response);
         return response;
