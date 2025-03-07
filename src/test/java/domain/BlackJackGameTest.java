@@ -105,6 +105,21 @@ class BlackJackGameTest {
             // then
             assertThat(dealer.getHand().getCards()).hasSize(initialCards + hitCount);
         }
+
+        @Test
+        @DisplayName("주어진 카드 목록의 점수를 올바르게 계산한다.")
+        void calculateScore() {
+            // given
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
+
+            // when
+            Score score = blackJackGame.caculateScore(cards);
+
+            // then
+            assertThat(score).isEqualTo(Score.BLACKJACK);
+        }
+
     @Nested
     class InvalidCases {
 
