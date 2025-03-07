@@ -29,16 +29,14 @@ class DealerTest {
     @Test
     void 초기_카드_세장을_받으면_예외를_발생시킨다() {
         // given
-        List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(TrumpNumber.THREE, TrumpEmblem.SPADE));
-        initialCards.add(new Card(TrumpNumber.FOUR, TrumpEmblem.SPADE));
+        List<Card> initialCards = makeCards(TrumpNumber.THREE, TrumpNumber.FOUR);
         initialCards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
         Cards cards = new Cards(initialCards);
 
         // when // then
         assertThatThrownBy(() -> new Dealer(cards))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 초기 카드는 두 장을 받아야 합니다.");
+                .hasMessage("[ERROR] 초기 카드는 2장을 받아야 합니다.");
     }
 
     @ParameterizedTest
@@ -50,9 +48,7 @@ class DealerTest {
     })
     void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
         // given
-        List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
         Card card = new Card(number3, TrumpEmblem.SPADE);
         Dealer dealer = new Dealer(cards);
@@ -72,9 +68,7 @@ class DealerTest {
     })
     void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
         // given
-        List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
         Dealer dealer = new Dealer(cards);
         dealer.addOneCard(new Card(number3, TrumpEmblem.HEART));
@@ -95,9 +89,7 @@ class DealerTest {
     })
     void 딜러의_카드_총합이_16이하인지_확인한다(TrumpNumber number1, TrumpNumber number2, boolean expected) {
         // given
-        List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
         Dealer dealer = new Dealer(cards);
 
@@ -111,9 +103,7 @@ class DealerTest {
     @Test
     void 초기_딜러의_카드중_작은_숫자_한장을_오픈한다() {
         // given
-        List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(TrumpNumber.ACE, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(TrumpNumber.KING, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.KING);
         Cards cards = new Cards(initialCards);
         Dealer dealer = new Dealer(cards);
 
@@ -123,5 +113,12 @@ class DealerTest {
         // then
         assertThat(card.getNumber()).isEqualTo(TrumpNumber.KING);
         assertThat(card.getEmblem()).isEqualTo(TrumpEmblem.HEART);
+    }
+
+    private List<Card> makeCards(TrumpNumber number1, TrumpNumber number2) {
+        List<Card> initialCards = new ArrayList<>();
+        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
+        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        return initialCards;
     }
 }

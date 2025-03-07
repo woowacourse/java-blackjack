@@ -20,11 +20,8 @@ class CardsTest {
     })
     void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
         // given
-        List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        Cards cards = makeCards(number1, number2);
         Card card = new Card(number3, TrumpEmblem.SPADE);
-        Cards cards = new Cards(initialCards);
 
         // when
         boolean isOverBustStandard = cards.addOneCard(card);
@@ -41,10 +38,7 @@ class CardsTest {
     })
     void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
         // given
-        List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
-        Cards cards = new Cards(initialCards);
+        Cards cards = makeCards(number1, number2);
         cards.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
@@ -54,4 +48,10 @@ class CardsTest {
         assertThat(sumCards).isEqualTo(expected);
     }
 
+    private Cards makeCards(TrumpNumber number1, TrumpNumber number2) {
+        List<Card> initialCards = new ArrayList<>();
+        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
+        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        return new Cards(initialCards);
+    }
 }

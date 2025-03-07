@@ -24,10 +24,7 @@ class CardTest {
     void 카드의_총합을_계산한다() {
         // given
         List<Card> emptyCards = new ArrayList<>();
-        emptyCards.add(createCard(TrumpEmblem.DIAMOND, TrumpNumber.ACE));
-        emptyCards.add(createCard(TrumpEmblem.SPADE, TrumpNumber.TWO));
-        emptyCards.add(createCard(TrumpEmblem.CLOVER, TrumpNumber.THREE));
-        emptyCards.add(createCard(TrumpEmblem.HEART, TrumpNumber.FOUR));
+        addCards(emptyCards);
         Cards cards = new Cards(emptyCards);
 
         // when
@@ -37,8 +34,15 @@ class CardTest {
         assertThat(sum).isEqualTo(20);
     }
 
-    private static Card createCard(TrumpEmblem emblem, TrumpNumber number) {
+    private Card createCard(TrumpEmblem emblem, TrumpNumber number) {
         return new Card(number, emblem);
+    }
+
+    private void addCards(List<Card> emptyCards) {
+        emptyCards.add(createCard(TrumpEmblem.DIAMOND, TrumpNumber.ACE));
+        emptyCards.add(createCard(TrumpEmblem.SPADE, TrumpNumber.TWO));
+        emptyCards.add(createCard(TrumpEmblem.CLOVER, TrumpNumber.THREE));
+        emptyCards.add(createCard(TrumpEmblem.HEART, TrumpNumber.FOUR));
     }
 
 }
