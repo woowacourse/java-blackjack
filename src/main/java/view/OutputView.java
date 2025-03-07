@@ -4,9 +4,9 @@ import domain.Card;
 import domain.CardNumber;
 import domain.CardShape;
 import domain.Cards;
-import domain.Dealer;
 import domain.GameResult;
-import domain.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 

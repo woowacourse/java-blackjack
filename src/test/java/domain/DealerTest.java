@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;

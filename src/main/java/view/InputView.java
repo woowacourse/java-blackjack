@@ -1,7 +1,7 @@
 package view;
 
 import controller.Answer;
-import domain.Player;
+import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
