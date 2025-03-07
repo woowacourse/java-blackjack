@@ -51,6 +51,3 @@ class DealerCardsFactoryTest {
         assertThat(cards.getCards()).hasSize(4);
     }
 }
-
-
-// TODO : 커밋 쪼개기 !!
