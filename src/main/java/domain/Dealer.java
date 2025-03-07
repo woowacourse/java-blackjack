@@ -15,7 +15,7 @@ public class Dealer extends Player {
     }
 
     public boolean drawOneCardIfLowScore(Deck deck) {
-        if (getCards().calculateOptimalSum() <= ADD_CARD_THRESHOLD) {
+        if (getCards().computeOptimalSum() <= ADD_CARD_THRESHOLD) {
             drawOneCard(deck);
             return true;
         }

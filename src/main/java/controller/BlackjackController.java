@@ -31,6 +31,10 @@ public class BlackjackController {
         OutputView.printPlayerCardsAndSum(blackjack.getDealerNameAndCards(),
                 blackjack.getParticipantsNameAndCards(),
                 blackjack.getNameAndSumOfAllPlayers());
+
+        // 최종 승패 결과 출력
+        OutputView.printMatchResult(blackjack.computeDealerMatchResult(),
+                blackjack.computeParticipantsMatchResult());
     }
 
     private void addMoreCards(Blackjack blackjack) {

@@ -20,7 +20,7 @@ public class CardsTest {
         final int expected = 19;
 
         // when
-        int sum = cards.calculateOptimalSum();
+        int sum = cards.computeOptimalSum();
 
         // then
         assertThat(sum).isEqualTo(expected);
@@ -40,7 +40,7 @@ public class CardsTest {
         final int expected = 25;
 
         // when
-        int sum = cards.calculateOptimalSum();
+        int sum = cards.computeOptimalSum();
 
         // then
         assertThat(sum).isEqualTo(expected);

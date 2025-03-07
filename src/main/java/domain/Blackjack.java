@@ -1,6 +1,8 @@
 package domain;
 
+import domain.dto.DealerResult;
 import domain.dto.NameAndCards;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,5 +83,36 @@ public class Blackjack {
                 .stream()
                 .map(player -> (Participant) player)
                 .toList();
+    }
+
+    public DealerResult computeDealerMatchResult() {
+        Map<String, MatchResult> participantNameAndMatchResult = computeParticipantsMatchResult();
+        Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
+        participantNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
+                matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
+
+        return new DealerResult(getDealer().getName(), matchResultCount);
+    }
+
+    public Map<String, MatchResult> computeParticipantsMatchResult() {
+        Map<String, MatchResult> participantNameAndMatchResult = new LinkedHashMap<>();
+        Dealer dealer = getDealer();
+        List<Participant> participants = getParticipants();
+
+        for (Participant participant: participants) {
+            MatchResult matchResult = calculatePariticipantMatchResult(dealer, participant);
+            participantNameAndMatchResult.put(participant.getName(), matchResult);
+        }
+        return participantNameAndMatchResult;
+    }
+
+    private MatchResult calculatePariticipantMatchResult(Dealer dealer, Participant participant) {
+        if (participant.getCards().isBurst() && dealer.getCards().isBurst() || participant.getCards().isBurst()) {
+            return MatchResult.LOSE;
+        }
+        if (dealer.getCards().isBurst()) {
+            return MatchResult.WIN;
+        }
+        return MatchResult.compareBySum(participant.getCards().computeOptimalSum(), dealer.getCards().computeOptimalSum());
     }
 }

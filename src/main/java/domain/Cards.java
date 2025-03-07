@@ -12,11 +12,6 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    // TODO: 미사용
-    public Cards(List<Card> cards) {
-        this.cards = cards;
-    }
-
     public void addAll(List<Card> cards) {
         this.cards.addAll(cards);
     }
@@ -25,9 +20,9 @@ public class Cards {
         return cards.size();
     }
 
-    public int calculateOptimalSum() {
+    public int computeOptimalSum() {
         List<Integer> candidates = new ArrayList<>();
-        calculateCandidates(0, 0, cards, candidates);
+        computeCandidates(0, 0, cards, candidates);
 
         return candidates.stream()
                 .filter(sum -> sum <= BURST_LIMIT)
@@ -39,17 +34,17 @@ public class Cards {
     }
 
     public boolean isBurst() {
-        return calculateOptimalSum() > BURST_LIMIT;
+        return computeOptimalSum() > BURST_LIMIT;
     }
 
-    private void calculateCandidates(int cardIndex, int sum, List<Card> cards, List<Integer> candidates) {
+    private void computeCandidates(int cardIndex, int sum, List<Card> cards, List<Integer> candidates) {
         if (cardIndex == cards.size()) {
             candidates.add(sum);
             return;
         }
 
         for (int score : cards.get(cardIndex).getScores()) {
-            calculateCandidates(cardIndex + 1, sum + score, cards, candidates);
+            computeCandidates(cardIndex + 1, sum + score, cards, candidates);
         }
     }
 
