@@ -1,5 +1,6 @@
-package domain;
+package domain.game;
 
+import domain.participant.Player;
 import java.util.Map;
 
 public class GameResult {

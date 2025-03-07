@@ -1,13 +1,13 @@
 package controller;
 
-import domain.Card;
-import domain.Dealer;
-import domain.FinalResultDTO;
-import domain.GameManager;
-import domain.GameResult;
-import domain.Player;
-import domain.SetUpCardsDTO;
-import domain.TakeMoreCardSelector;
+import domain.card.Card;
+import domain.participant.Dealer;
+import dto.FinalResultDTO;
+import domain.game.GameManager;
+import domain.game.GameResult;
+import domain.participant.Player;
+import dto.SetUpCardsDTO;
+import domain.game.TakeMoreCardSelector;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

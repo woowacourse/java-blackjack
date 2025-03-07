@@ -1,5 +1,8 @@
-package domain;
+package domain.game;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.card.CardPack;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

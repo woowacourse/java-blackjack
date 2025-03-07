@@ -1,12 +1,12 @@
 package view;
 
-import domain.Card;
-import domain.FinalResultDTO;
-import domain.GameResult;
-import domain.Rank;
-import domain.SetUpCardsDTO;
-import domain.Shape;
-import domain.Winning;
+import domain.card.Card;
+import dto.FinalResultDTO;
+import domain.game.GameResult;
+import domain.card.Rank;
+import dto.SetUpCardsDTO;
+import domain.card.Shape;
+import domain.game.Winning;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
