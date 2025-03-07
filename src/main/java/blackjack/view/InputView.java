@@ -34,21 +34,21 @@ public class InputView {
         return names;
     }
 
-    private static void validateNameEqualsDealerName(String[] parsedName) {
+    private static void validateNameEqualsDealerName(final String[] parsedName) {
         List<String> playerNames = List.of(parsedName);
         if (playerNames.contains(DEALER_NAME.toString())) {
             throw new IllegalArgumentException(NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
         }
     }
 
-    private static void validateDuplicatedNames(List<Name> names) {
+    private static void validateDuplicatedNames(final List<Name> names) {
         Set<Name> removedDuplicatedNames = new HashSet<>(names);
         if (removedDuplicatedNames.size() != names.size()) {
             throw new IllegalArgumentException(NAME_CANNOT_BE_DUPLICATED.getMessage());
         }
     }
 
-    public static boolean inputPlayerHit(Name name) {
+    public static boolean inputPlayerHit(final Name name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)\n", name, OPTION_YES, OPTION_NO);
         String answer = scanner.nextLine();
         if (answer.equals(OPTION_YES)) {
@@ -60,7 +60,7 @@ public class InputView {
         throw new IllegalArgumentException(INVALID_HIT_RESPONSE.getMessage());
     }
 
-    private static void validatePlayers(String[] parsedName) {
+    private static void validatePlayers(final String[] parsedName) {
         if (parsedName.length > MAX_PLAYER_COUNT || parsedName.length < MIN_PLAYER_COUNT) {
             throw new IllegalArgumentException(INVALID_PLAYER_COUNT.getMessage());
         }

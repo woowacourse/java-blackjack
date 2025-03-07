@@ -67,7 +67,7 @@ public class Round {
         return dealer.isScoreBelow(DEALER_DRAW_THRESHOLD);
     }
 
-    public boolean isPlayerBusted(Name name) {
+    public boolean isPlayerBusted(final Name name) {
         return !findGambler(name).isScoreBelow(BLACK_JACK);
     }
 

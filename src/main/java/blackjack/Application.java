@@ -9,6 +9,7 @@ import static blackjack.view.OutputView.printGamblerCards;
 import static blackjack.view.OutputView.printGamblerResult;
 import static blackjack.view.OutputView.printInitialDistributionPrompt;
 import static blackjack.view.OutputView.printWinning;
+import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Round;
 import blackjack.domain.WinningDiscriminator;
@@ -20,7 +21,6 @@ import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -39,7 +39,7 @@ public class Application {
         List<Card> cards = Arrays.stream(CardShape.values())
                 .flatMap(shape -> Arrays.stream(CardType.values())
                         .map(type -> new Card(shape, type)))
-                .collect(Collectors.toList());
+                .collect(toList());
         return new CardDeck(cards, new CardShuffler());
     }
 

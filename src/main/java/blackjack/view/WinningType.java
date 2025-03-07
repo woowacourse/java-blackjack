@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public enum WinningType {
     WIN("승"),
@@ -23,6 +23,6 @@ public enum WinningType {
 
     public static Map<WinningType, Integer> createWinningResult() {
         return Arrays.stream(WinningType.values())
-                .collect(Collectors.toMap(identity(), type -> 0));
+                .collect(toMap(identity(), type -> 0));
     }
 }

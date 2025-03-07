@@ -5,6 +5,7 @@ import static blackjack.domain.Rule.DEALER_DRAW_THRESHOLD;
 import static blackjack.view.WinningType.DEFEAT;
 import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;
+import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
@@ -12,7 +13,6 @@ import blackjack.domain.gambler.Name;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
@@ -40,24 +40,30 @@ public class OutputView {
         System.out.printf("%s카드: %s - 결과: %d\n", name, ownCards, score);
     }
 
-    public static void printWinning(WinningDiscriminator winningDiscriminator) {
-        System.out.println("##최종 승패");
-        Map<WinningType, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
+    private static <T> String joinToStringByDelimiter(final List<T> components, final String delimiter) {
+        return components.stream()
+                .map(T::toString)
+                .collect(joining(delimiter));
+    }
 
+    public static void printWinning(final WinningDiscriminator winningDiscriminator) {
+        System.out.println("##최종 승패");
+        printDealerWinning(winningDiscriminator);
+        printPlayerWinning(winningDiscriminator);
+    }
+
+    private static void printDealerWinning(WinningDiscriminator winningDiscriminator) {
+        Map<WinningType, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
         Integer winCount = dealerWinning.get(WIN);
         Integer drawCount = dealerWinning.get(DRAW);
         Integer defeatCount = dealerWinning.get(DEFEAT);
         System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, defeatCount);
-
-        Map<Name, WinningType> playerWinning = winningDiscriminator.judgePlayersResult();
-        for (Entry<Name, WinningType> entry : playerWinning.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getDisplayName());
-        }
     }
 
-    private static <T> String joinToStringByDelimiter(final List<T> components, final String delimiter) {
-        return components.stream()
-                .map(T::toString)
-                .collect(Collectors.joining(delimiter));
+    private static void printPlayerWinning(WinningDiscriminator winningDiscriminator) {
+        Map<Name, WinningType> playerWinning = winningDiscriminator.judgePlayersResult();
+        for (final Entry<Name, WinningType> entry : playerWinning.entrySet()) {
+            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getDisplayName());
+        }
     }
 }

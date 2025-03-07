@@ -6,56 +6,56 @@ import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;
 import static blackjack.view.WinningType.createWinningResult;
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.gambler.Name;
 import blackjack.view.WinningType;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class WinningDiscriminator {
     private final int dealerScore;
     private final Map<Name, Integer> playerScores;
 
-    public WinningDiscriminator(int dealerScore, Map<Name, Integer> playerScores) {
+    public WinningDiscriminator(final int dealerScore, final Map<Name, Integer> playerScores) {
         this.dealerScore = dealerScore;
         this.playerScores = playerScores;
     }
 
+    public Map<Name, WinningType> judgePlayersResult() {
+        return playerScores.keySet()
+                .stream()
+                .collect(toMap(identity(), this::judgePlayerResult));
+    }
+
     public Map<WinningType, Integer> judgeDealerResult() {
         Map<WinningType, Integer> winningResult = createWinningResult();
-
-        for (Integer playerScore : playerScores.values()) {
-            if (playerScore > BLACK_JACK) {
-                winningResult.put(WIN, winningResult.get(WIN) + 1);
-                continue;
-            }
-
-            if (dealerScore > BLACK_JACK) {
-                winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
-                continue;
-            }
-
-            if (playerScore > dealerScore) {
-                winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
-                continue;
-            }
-
-            if (playerScore < dealerScore) {
-                winningResult.put(WIN, winningResult.get(WIN) + 1);
-                continue;
-            }
-            winningResult.put(DRAW, winningResult.get(DRAW) + 1);
+        for (final Integer playerScore : playerScores.values()) {
+            countDealerWinning(playerScore, winningResult);
         }
-
         return winningResult;
     }
 
-    public Map<Name, WinningType> judgePlayersResult() {
-        return playerScores.keySet().stream()
-                .collect(Collectors.toMap(identity(), this::judgePlayerResult));
+    private void countDealerWinning(final int playerScore, final Map<WinningType, Integer> winningResult) {
+        if (playerScore > BLACK_JACK) {
+            winningResult.put(WIN, winningResult.get(WIN) + 1);
+            return;
+        }
+        if (dealerScore > BLACK_JACK) {
+            winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
+            return;
+        }
+        if (playerScore > dealerScore) {
+            winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
+            return;
+        }
+        if (playerScore < dealerScore) {
+            winningResult.put(WIN, winningResult.get(WIN) + 1);
+            return;
+        }
+        winningResult.put(DRAW, winningResult.get(DRAW) + 1);
     }
 
-    private WinningType judgePlayerResult(Name name) {
+    private WinningType judgePlayerResult(final Name name) {
         int playerScore = playerScores.get(name);
         if (playerScore > BLACK_JACK) {
             return DEFEAT;

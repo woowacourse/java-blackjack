@@ -12,9 +12,7 @@ public abstract class Gambler {
         this.name = name;
     }
 
-    public abstract List<Card> getInitialCards();
-
-    public boolean isNameEquals(Name name) {
+    public boolean isNameEquals(final Name name) {
         return Objects.equals(name, this.name);
     }
 
@@ -37,4 +35,6 @@ public abstract class Gambler {
     public Name getName() {
         return name;
     }
+
+    public abstract List<Card> getInitialCards();
 }
