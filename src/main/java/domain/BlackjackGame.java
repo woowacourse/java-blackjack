@@ -37,10 +37,6 @@ public class BlackjackGame {
         drawDealerCard();
     }
 
-    private void drawDealerCard() {
-        blackjackParticipants.addDealerDraw(deck.drawCard());
-    }
-
     public List<BlackjackResult> currentPlayerBlackjackResult() {
         List<BlackjackResult> blackjackResults = new ArrayList<>();
         for (String name : blackjackParticipants.getPlayerNames()) {
@@ -82,13 +78,17 @@ public class BlackjackGame {
         blackjackParticipants.addCard(name, deck.drawCard());
     }
 
+    private void drawDealerCard() {
+        blackjackParticipants.addDealerCard(deck.drawCard());
+    }
+
     public boolean isBust(String name) {
         return blackjackParticipants.isBust(name);
     }
 
     public void dealerHit() {
         if (blackjackParticipants.dealerDrawable()) {
-            blackjackParticipants.addDealerDraw(deck.drawCard());
+            blackjackParticipants.addDealerCard(deck.drawCard());
         }
     }
 

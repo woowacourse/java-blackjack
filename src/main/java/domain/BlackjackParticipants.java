@@ -7,18 +7,13 @@ import java.util.stream.Collectors;
 public class BlackjackParticipants {
 
     private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
-    
+
     private final List<Player> players;
     private final Dealer dealer;
 
     public BlackjackParticipants(List<Player> players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
-    }
-
-    public void addCard(String name, TrumpCard trumpCard) {
-        Player findPlayer = findPlayer(name);
-        findPlayer.addDraw(trumpCard);
     }
 
     private Player findPlayer(String name) {
@@ -61,7 +56,12 @@ public class BlackjackParticipants {
         return !player.isDrawable();
     }
 
-    public void addDealerDraw(TrumpCard trumpCard) {
+    public void addCard(String name, TrumpCard trumpCard) {
+        Player findPlayer = findPlayer(name);
+        findPlayer.addDraw(trumpCard);
+    }
+
+    public void addDealerCard(TrumpCard trumpCard) {
         dealer.addDraw(trumpCard);
     }
 

@@ -29,7 +29,6 @@ public class BlackjackController {
     }
 
     public void startBlackjack() {
-        BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
         List<String> names = handleInput(this::handleNames);
         startBlackjack(names);
     }
