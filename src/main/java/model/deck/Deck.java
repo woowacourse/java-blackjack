@@ -14,7 +14,7 @@ public class Deck {
 
     public Card draw() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("뽑을 카드 없음");
+            throw new IllegalStateException("[ERROR] 뽑을 카드가 없습니다.");
         }
         return cards.pop();
     }
