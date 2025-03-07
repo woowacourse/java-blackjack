@@ -5,7 +5,7 @@ public class Player {
     private final Participant participant;
     private boolean isWinDuel;
 
-    public Player(String name) {
+    public Player(final String name) {
         this.participant = new Participant();
         this.name = name;
         isWinDuel = false;

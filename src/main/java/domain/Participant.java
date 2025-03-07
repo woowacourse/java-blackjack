@@ -2,16 +2,13 @@ package domain;
 
 public class Participant {
     private final CardHand hand;
-    private final DuelHistory duelHistory;
 
     public Participant() {
         hand = new CardHand();
-        duelHistory = new DuelHistory();
     }
 
     public Participant(final CardHand hand) {
         this.hand = hand;
-        this.duelHistory = new DuelHistory();
     }
 
     public void pickCardOnFirstHandOut(final Deck deck) {
@@ -30,10 +27,6 @@ public class Participant {
 
     public CardHand getCardHand() {
         return hand;
-    }
-
-    public DuelHistory getDuelHistory() {
-        return duelHistory;
     }
 }
 

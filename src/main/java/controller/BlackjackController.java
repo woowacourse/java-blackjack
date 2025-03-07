@@ -9,7 +9,6 @@ import domain.Card;
 import domain.CardHand;
 import domain.Dealer;
 import domain.Deck;
-import domain.DuelHistory;
 import domain.Participant;
 import domain.Player;
 import view.InputView;
@@ -66,8 +65,7 @@ public class BlackjackController {
 
     private void outputPlayersDuelResult(final Player player) {
         final String name = player.getName();
-        final DuelHistory duelHistory = player.getParticipant().getDuelHistory();
-        outputView.printBlackjackPlayerDuelResult(name, duelHistory.getWinCount() > duelHistory.getLoseCount());
+        outputView.printBlackjackPlayerDuelResult(name, player.getIsWinDuel());
     }
 
     private List<Player> inputPlayers() {
