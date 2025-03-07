@@ -27,10 +27,6 @@ public class InputView {
 
     public Boolean askPlayerForHitOrStand(final Player player) {
         System.out.printf(ASK_HIT_OR_STAND, player.getName());
-        String s = scanner.nextLine();
-        if(s.equals("y"))return true;
-        if(s.equals("n"))return false;
-
-        throw new IllegalArgumentException("[ERROR] y 또는 n으로 입력해주세요.");
+        return Answer.isYes(scanner.nextLine());
     }
 }
