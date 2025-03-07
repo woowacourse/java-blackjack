@@ -23,12 +23,24 @@ public class BlackjackController {
     }
 
     public void start() {
-        // 1번
-        gameManager.addGamblers(readAndParseNames());
-        Players players = gameManager.getPlayers();
-        outputView.printInitCards(players);
+        Players players = initPlayers();
+        dealMoreCards(players);
+        dealMoreDealerCards();
+        displayGameResults(players);
+    }
 
-        // 2번
+    private void displayGameResults(final Players players) {
+        outputView.printTotalCardsMessage(players);
+        outputView.printGameResults(players, players.getGameResult());
+    }
+
+    private void dealMoreDealerCards() {
+        while (gameManager.isDealerHitThenDealAddCard()) {
+            outputView.printDealerHitAndDealCard();
+        }
+    }
+
+    private void dealMoreCards(final Players players) {
         List<Player> gamblers = players.getGamblers();
         for (Player gambler : gamblers) {
             while (!gameManager.isPlayerBust(gambler) && inputView.readOneMoreDealCard(gambler)) {
@@ -36,15 +48,13 @@ public class BlackjackController {
                 outputView.printCardsMessage(gambler);
             }
         }
+    }
 
-        // 3번
-        while (gameManager.isDealerHitThenDealAddCard()) {
-            outputView.printDealerHitAndDealCard();
-        }
-
-        // 4번
-        outputView.printTotalCardsMessage(players);
-        outputView.printGameResults(players, players.getGameResult());
+    private Players initPlayers() {
+        gameManager.addGamblers(readAndParseNames());
+        Players players = gameManager.getPlayers();
+        outputView.printInitCards(players);
+        return players;
     }
 
     private List<Player> readAndParseNames() {
