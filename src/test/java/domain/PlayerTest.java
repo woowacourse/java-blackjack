@@ -100,7 +100,7 @@ public class PlayerTest {
         }
 
         //when
-        boolean isOver = player.isOverThan(standardValue);
+        boolean isOver = player.isBurst();
 
         //then
         assertThat(isOver).isTrue();
@@ -120,7 +120,7 @@ public class PlayerTest {
         }
 
         //when
-        boolean isOver = player.isOverThan(standardValue);
+        boolean isOver = player.isBurst();
 
         //then
         assertThat(isOver).isFalse();

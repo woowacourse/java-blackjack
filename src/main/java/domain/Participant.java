@@ -49,8 +49,8 @@ public abstract class Participant {
         return (int) totalValue;
     }
 
-    public boolean isOverThan(int standardValue) {
-        return getTotalValue() > standardValue;
+    public boolean isBurst() {
+        return getTotalValue() > BlackJackRule.BURST_UPPER_BOUND;
     }
 
     public abstract boolean canPick();

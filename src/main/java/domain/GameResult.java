@@ -7,13 +7,13 @@ public enum GameResult {
         final int dealerValue = dealer.getTotalValue();
         final int playerValue = player.getTotalValue();
         // 버스트 케이스
-        if (dealerValue > 21 && playerValue > 21) {
+        if (dealer.isBurst() && player.isBurst()) {
             return DRAW;
         }
-        if (dealerValue > 21) {
+        if (dealer.isBurst()) {
             return LOSE;
         }
-        if (playerValue > 21) {
+        if (player.isBurst()) {
             return WIN;
         }
 
