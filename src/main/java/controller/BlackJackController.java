@@ -43,13 +43,23 @@ public class BlackJackController {
         dealerReceiveCardProcess(participants, cardDeck);
 
         System.out.println();
-        // 모든 참가자의 손패와, 점수를 출력한다
+        calculateBackJackResultProcess(participants, blackJackManager);
+    }
+
+    private void calculateBackJackResultProcess(Participants participants, BlackJackManager blackJackManager) {
+        printAllParticipantsInfo(participants);
+        printAllParticipantGameResult(blackJackManager);
+    }
+
+    private void printAllParticipantGameResult(BlackJackManager blackJackManager) {
+        Results results = blackJackManager.calculateResult();
+        outputView.printGameResult(results);
+    }
+
+    private void printAllParticipantsInfo(Participants participants) {
         for (Participant participant : participants.getParticipants()) {
             outputView.printFullParticipantInfo(participant);
         }
-
-        Results results = blackJackManager.calculateResult();
-        outputView.printGameResult(results);
     }
 
     private void dealerReceiveCardProcess(Participants participants, CardDeck cardDeck) {
