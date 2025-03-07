@@ -5,7 +5,7 @@
 - 플레이어, 딜러의 중복 코드 제거
 - 책임 잘 분배하기(기능을 해치지 않는 선에서 책임과 해야하는 일이 명확한 코드)
 - TDD - 요구사항 분석을 잘해서 도메인에 대한 이해는 다 하고 시작.
-  (설계를 많이 하겠다는 뜻은 아님)
+  (설계를 하는 시간은 최소화)
   최소 단위로 테스트를 작성하면서 더 작은 단위가 나오면 그 테스트를 구현하고, 그러면서도 자연스럽게 설계가 좋게 나오게
   (이번에는 TDD 사이클단위로 커밋을 남기지는 않으려 합니다)
 - 시간내에 제출
@@ -29,118 +29,105 @@
     - [x] 플레이어는 카드의 합이 21이하인 경우 카드를 받을 수 있다
     - [x] 카드의 합이 21이 넘은 경우 더 이상 받을 수 없다
 
+
 # 질문
 
 ## 캡슐화 vs 중복 코드 제거
 
 이번 미션의 목표로는
 
-- 딜러와 플레이어에서 발생하는 중복 코드를 제거해야 한다. 가 있었습니다.   
-  이를 해결하기 위해서 추상클래스로 상속(isA라서 도입해도 된다고 판단)하였고, 일부분 해소되었습니다.
+- `딜러와 플레이어에서 발생하는 중복 코드를 제거해야 한다.` 가 있었습니다.   
+  이를 해결하기 위해서 **추상클래스**로 상속하였고, 일부분 해소되었습니다.
 - 그런데 딜러와 플레이어에게 카드를 주는 행위는, 현재 만들어진 책임을 깨지 않는 선에서는잘 해결이 되지 않았습니다.
 
-``` 기존 코드
+```java
             blackjackParticipants.addDealerCard(deck.drawCard());
             public void drawCard(String name) {
               blackjackParticipants.addCard(name, deck.drawCard());
             }
 ```
 
-기존 코드에는 비슷한 객체(플레이어는 이름을 가지고 딜러는 이름을 가지지 않기 때문에)   
-임에도 불구하고 추가하는 메서드를 2가지 가지고 있습니다. 위 코드가 중복 코드라고 보고 개선을 해보려고 하였습니다.
+코드에는 플레이어와 딜러 객체가 서로 비슷한 부분이 있음에도 불구하고 추가하는 메서드를 개별적으로 가지고 있습니다. 위 코드가 중복 코드라고 보고 개선을 해보려고 하였습니다.
 
-```코드 2
+
+##### 방법 1
+
+```java
 public void drawCard(BlackjackPlayer blackjackPlayer) {
   blackjackPlayer.addCard(deck.drawCard());
 }
 ```
 
-위 코드를 생각해보았는데, 위 코드의 경우 외부에서 BlackjackPlayer를 가지고 있게 되어서 blackjackPlayer에 대한 관리까지 이제 외부에서 해야합니다.   
-캡슐화가 깨졌다고 생각합니다.
+위 코드의 경우 외부에서 BlackjackPlayer를 가지고 있게 되고, blackjackPlayer에 대한 관리까지 외부에서 해야합니다. 이 경우 캡슐화가 깨졌다고 생각합니다.
 
-```방법 3```
+##### 방법 2 
 
-- DEALER에게 "딜러"라는 식별 이름 부여하여 players 컬렉션에 포함시키기
+- DEALER에게 `"딜러"`라는 식별 이름 부여하여 players 컬렉션에 포함시키기
 - 위 방법은 players에 왜 딜러가 있어야하지?라는 의문과 함께,외부에서 "딜러"라는 이름을 통해 내부에서 처리한다는 것을 이해해야하는 단점이 있었습니다.
 
-## 결론
+### 결론
 
-- 위 3가지 방법중 저는 캡슐화가 가장 잘 되어있는 기존 코드를 유지하기로 결정하였습니다.      
+- 위 2가지 방법을 적용하지 않고 캡슐화가 가장 잘 되어있는 기존 코드를 유지하기로 결정하였습니다.      
   캡슐화라는 가치는 객체지향에서 꽤 높은 우선순위라고 생각하는 편입니다.(책임이 잘 분배되었는지도 판단할 수 있다고 생각합니다)   
-  위 부분은 뭔가 구현을 잘해서 해결할 수 있는 방법은 아닌것 같아 리뷰어분에게 꼭
-  물어봐야겠다고 생각하였습니다!
+  위 부분은 뭔가 구현을 잘해서 해결할 수 있는 방법은 아닌것 같아 리뷰어분에게 꼭 물어봐야겠다고 생각하였습니다!
+  
+---
 
-## 전략 패턴 도입
+## 테스트 관련
 
-- 테스트를 작성하고 성공시키는 과정에서 "어떻게하면 테스트를 제어할 수 있을까? -> 전략 패턴 도입하자"로 의사결정을 하였는데,
-  성공 과정에서 테스트를 시키기 위해서 도입한것이 괜찮을지 궁금합니다.
-- 전략 패턴에서, validate를 정의함으로써 항상 뽑을때 validate가 동반되어야한다는 것을 인터페이스에서 명시하였는데
-  이렇게 동작을 제한하는 것에 대해서 어떻게 생각하시는지 궁금합니다.
+- 추상 클래스나 상속같은 관계에서 코드를 재사용하기 떄문에 테스트가 중복되는 경우가 많다고 생각합니다. 이번 미션에서는 테스트가 설계서라는 측면에서 둘 다 동일한 동작을 보증하기 위해 테스트를 중복되게 작성을 했습니다.
+  이 경우 테스트에서는 중복코드가 생기는 것이 마음에 걸렸는데, 이렇게 테스트 코드를 중복되더라도 두는 것이 좋을 지, 아니면 하나의 테스트 코드만 두는 것이 좋은 지 궁금합니다. 
 
-## 제네릭 도입 상황
+## 협력 관계를 포함하는 테스트 vs 기능만을 테스트
+- 블랙잭 승패 계산에 대한 테스트 코드에서 다음과 같은 내용이 있었습니다.
+```java
+    @Test
+    void 블랙잭_승패_계산() {
+        ...
+        BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult(); // <<<<<
+        List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
+        BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
+        ...
+    }
+```
 
-- 카드 List와 Set을 허용하게 하고 싶었는데 remove의 반환형이 달라 List로 형변환해서 사용하는 식으로 구현을 했다
-- 이럴때 제네릭을 쓴다면 커스텀해서 사용할 수 있을 것 같은데, 이때 성능은 어쩔수 없이 포기해야하는 부분인지 궁금해요.
+위 코드는 블랙잭 결과로 승패를 계산하는 로직을 테스트하는 코드입니다.
+블랙잭 승패 계산에서는 BlackjackResult라는 객체를 이용하여 승패를 계산합니다. 
+1. **실제 애플리케이션에서 사용되는 객체**를 이용하여 BlackjackResult를 생성 - 기존의 코드를 사용하여 테스트 할 수 있습니다.
+2. BlackjackResult를 **직접 생성** - 승패 계산 기능만을 테스트 할 수 있습니다.
 
-## 추상 클래스 도입
+협력 관계를 포함하여 테스트해야 하는지, 아니면 그 기능만을 테스트해야 하는건지 궁금합니다.
 
-- 추상 클래스는 단순 중복 코드 제거를 위해서 도입했을때 결합도가 높아지는 단점이 있는 것으로 알고 있는데,
-  이번 추상 클래스를 도입하게 된 상황은 완전히 딜러와 플레이어가 블랙잭플레이어라는 그룹안에서 완전히 isA라고 생각하여서 도입하였는데
-  이 경우에는 추상 클래스 도입시에 결합도 단점은 없어보이는데 어떻게 생각하시나요?
-- 추상 클래스나 상속같은 관계에서 테스트가 중복이 될 것 같은데 이번에는 테스트가 설계서라는 측면에서 둘다 동일한 동작을 보증하기 위해 테스트를 중복되게 작성을 했는데,
-  이러면 테스트에서는 중복코드가 생기는 것이 마음에 걸렸는데, 이 부분 어떻게 테스트 진행해야 효율적일지 궁금해요
+---
 
 ## 방어적 api 설계
 
-- 일반적인 흐름상에서는 문제가없지만 방어적으로 api를 설계하려고 했다 (drawStrategy가 실제 게임상에서는 deck이 빌 일이 없지만 그에 대한 예외처리를 구현함)
-  일반적인 흐름상에서만 로직을 생각하는것과 방어적으로 설계할때무조건 방어적 설계 하는게 좋다고 생각되는데 어떻게 생각하시는지?   
-  ex)
+1. 방어적 설계(Defensive Design)에 대한 고민
 
+일반적인 흐름에서는 문제가 발생하지 않지만, 방어적인 API 설계를 고려하여 예외 처리를 구현했습니다.
+```java
+public interface DrawStrategy {
+
+    TrumpCard draw(Deque<TrumpCard> trumpCards);
+    
+    void validateDraw(Deque<TrumpCard> trumpCards); // < 현재 코드에서는 발생할 일이 없음
+}
 ```
+
+예를 들어, drawStrategy의 경우 실제 게임에서는 deck이 빌 일이 없지만, 예외 처리를 추가하여 대비했습니다.
+일반적인 로직만 고려하는 설계와 방어적 설계를 적용하는 방식 중 항상 방어적 설계를 적용하는 것이 더 좋은 선택일까요?
+
+
+예외 처리를 통한 코드의 명확성 향상 여부
+
+아래 코드에서 dealerCards()는 생성자에서 값이 초기화되므로, 카드가 비어 있는 상황이 절대 발생하지 않습니다.
+```java 
 public TrumpCard dealerCardFirst() {
-        return dealerCards().get(0);
-    }
+    return dealerCards().get(0); // << 만약 dealerCards가 비어있다면?
+}
 ```
-
-위 코드의 경우 생성자를 거치는 순간부터 항상 카드가 비어있는 순간이 없습니다.
-그런데 의도를 좀 더 확실히하기위해 예외 처리를 추가하는것이 좋을까요?
-
-## 테스트에 있어서 협력 관계에 있는 코드를 사용하는 것이 좋은지 아니면 계층을 최소화해서 테스트 하는것이 좋은지 궁금합니다.
-
-```
-    @Test
-    void 블랙잭_승패_계산() {
-        Deque<TrumpCard> trumpCards = new LinkedList<>(
-                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
-                        new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.NINE),
-                        new TrumpCard(Suit.CLOVER, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.J)));
-        Deck deck = new Deck(new BlackjackDeckGenerator(), new TestDrawStrategy(trumpCards));
-        Dealer dealer = new Dealer();
-        List<String> names = List.of("포비", "루키");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
-        BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
-        List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
-        BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
-
-        assertThat(blackjackWinner.getDealerWinStatus())
-                .isEqualTo(new DealerWinStatus(0, 1));
-        assertThat(blackjackWinner.getPlayerWinStatuses().get("포비"))
-                .isEqualTo(WinStatus.DRAW);
-        assertThat(blackjackWinner.getPlayerWinStatuses().get("루키"))
-                .isEqualTo(WinStatus.WIN);
-    }
-    
-    위 코드는 Deck으로부터 카드를 받아와서 승패를 계산하는 로직을 내포하고 있습니다.
-    그런데 위 코드에서 Deck이 연관되는 방식과,
-    Deck 없이 BlackjackResult를 직접 만들어서 테스트 하는 방식 어느 방식이 더 나을지 궁금합니다.
-    기존의 코드를 사용하는 점에서는 전자 방식이 더 매력적이라고 생각됩니다.
-    
-```
-
-## 각 객체들이 모두 협력이 잘 되었을때는 동작이 문제가 없음 그러나 각각 객체만으로는 블랙잭 상태가 엄밀하지 않다. 이부분까지 고려해서 방어적으로 설계해야하는지
-
-# 협력 관계
-
-![diagram.png](./diagram.png)
+하지만, 의도를 더욱 명확히 하기 위해 예외 처리를 추가하는 것이 좋을지 고민됩니다.
+예외 처리를 추가하면 코드의 안전성이 높아질까요, 아니면 불필요한 오버헤드가 될까요?
+이 경우 의도를 드러내는 코드와 방어적 설계 간의 적절한 균형을 어떻게 맞춰야 할까요?
 
 
