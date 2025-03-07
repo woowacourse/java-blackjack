@@ -19,13 +19,17 @@ public class CardsInitializer {
         List<Number> numbers = getNumbers();
         List<Symbol> symbols = getSymbols();
 
+        insertCards(numbers, symbols, cards);
+
+        return cards;
+    }
+
+    private void insertCards(List<Number> numbers, List<Symbol> symbols, List<Card> cards) {
         for (Number number : numbers) {
             for (Symbol symbol : symbols) {
                 cards.add(new Card(symbol, number));
             }
         }
-
-        return cards;
     }
 
     private List<Symbol> getSymbols() {
