@@ -21,9 +21,9 @@ public final class OutputView {
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
-        System.out.println(Parser.parseDealerStartCardStatus(dealer));
+        System.out.println(Formatter.parseDealerStartCardStatus(dealer));
         for (Player player : players.getPlayers()) {
-            System.out.println(Parser.parsePlayerCardStatus(player));
+            System.out.println(Formatter.parsePlayerCardStatus(player));
         }
     }
 
@@ -32,15 +32,15 @@ public final class OutputView {
     }
 
     public static void printCardResult(Players players, Dealer dealer) {
-        System.out.println(Parser.parseDealerCardResult(dealer));
+        System.out.println(Formatter.parseDealerCardResult(dealer));
 
         for (Player player : players.getPlayers()) {
-            System.out.println(Parser.parsePlayerCardResult(player));
+            System.out.println(Formatter.parsePlayerCardResult(player));
         }
     }
 
     public static void printCardResult(Player player) {
-        System.out.println(Parser.parsePlayerCardResult(player));
+        System.out.println(Formatter.parsePlayerCardResult(player));
     }
 
     public static void printBustedPlayer(Player player) {
@@ -50,8 +50,8 @@ public final class OutputView {
     public static void printGameResult(Map<GameResultType, Integer> dealerResult,
                                        Map<Player, GameResultType> playersResult) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %s%n", Parser.parseDealerGameResult(dealerResult));
-        System.out.println(Parser.parsePlayerGameResult(playersResult));
+        System.out.printf("딜러: %s%n", Formatter.parseDealerGameResult(dealerResult));
+        System.out.println(Formatter.parsePlayerGameResult(playersResult));
     }
 
 }

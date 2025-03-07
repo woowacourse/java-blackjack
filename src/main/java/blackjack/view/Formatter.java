@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class Parser {
+public final class Formatter {
 
-    private Parser() {
+    private Formatter() {
     }
 
     public static String parsePlayerCardResult(Player player) {
