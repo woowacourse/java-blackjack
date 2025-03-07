@@ -11,4 +11,13 @@ public class Dealer extends Gamer {
     public boolean isLessThen(int score) {
         return this.cardGroup.calculateScore(Gamer.LIMIT) <= score;
     }
+
+    public int giveCardsToDealer(){
+        int count = 0;
+        while(isLessThen(16)){
+            receiveCard(1);
+            count++;
+        }
+        return count;
+    }
 }

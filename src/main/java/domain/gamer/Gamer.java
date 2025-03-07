@@ -21,8 +21,10 @@ public abstract class Gamer {
         return cardGroup.addCard(card);
     }
 
-    public void receiveCard() {
-        cardGroup.addCard(cardGenerator.generate());
+    public void receiveCard(int count) {
+        while (count-- > 0) {
+            cardGroup.addCard(cardGenerator.generate());
+        }
     }
 
     public boolean isBust() {

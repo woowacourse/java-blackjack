@@ -39,8 +39,7 @@ public class OutputView {
 
     public void printPlayerCards(final Player player) {
         final String playerCardsMessage = createCardsMessage(player.getName(), player.getCards().toArray(new Card[0]));
-        final String message = String.format("%s카드: %s", player.getName(), playerCardsMessage);
-        System.out.println(message);
+        System.out.println(playerCardsMessage);
 
     }
 
