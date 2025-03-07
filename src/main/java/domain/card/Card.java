@@ -4,6 +4,8 @@ import domain.card.CardType.Score;
 
 public class Card {
 
+    private static final int ACE_HIGH_SCORE = 11;
+    private static final int ACE_LOW_SCORE = 1;
     private final CardType type;
 
     public Card(CardType type) {
@@ -19,14 +21,14 @@ public class Card {
     }
 
     public boolean isAce() {
-        return type.getScore().getValue() == 1;
+        return type.getScore().getValue() == ACE_LOW_SCORE;
     }
 
     public int calculateAceScore(final int score, final int limit) {
         final int result = limit - score;
-        int aceScore = 1;
-        if (result >= 11) {
-            aceScore = 11;
+        int aceScore = ACE_LOW_SCORE;
+        if (result >= ACE_HIGH_SCORE) {
+            aceScore = ACE_HIGH_SCORE;
         }
         return aceScore;
     }

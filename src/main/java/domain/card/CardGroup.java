@@ -6,6 +6,7 @@ import java.util.List;
 
 public class CardGroup {
 
+    private static final int ACE_DISTANCE_SCORE = 10;
     private final List<Card> cards;
 
     public CardGroup() {
@@ -23,18 +24,16 @@ public class CardGroup {
                 .sum();
     }
 
-    private int calculateScoreWithAce(int sum, int limit) {
-        int aceCount = countAce();
-        sum += aceCount;
-        while (aceCount-- > 0) {
-            int temp = sum + 10;
-            if (temp > limit) {
-                break;
-            }
-            sum = temp;
-        }
+    private int calculateScoreWithAce(int sum, int limit, int aceCount) {
+        final int result = sum + aceCount;
+        return result + addScoreWithAce(0,limit - result , aceCount);
+    }
 
-        return sum;
+    private int addScoreWithAce(int sum, int limit, int aceCount) {
+        if (aceCount <= 0 || sum + ACE_DISTANCE_SCORE > limit) {
+            return sum;
+        }
+        return addScoreWithAce(sum + ACE_DISTANCE_SCORE, limit, aceCount -1);
     }
 
     public boolean addCard(final Card card) {
@@ -54,7 +53,7 @@ public class CardGroup {
     }
 
     public int calculateScore(int limit) {
-        return calculateScoreWithAce(calculateScoreWithOutAce(), limit);
+        return calculateScoreWithAce(calculateScoreWithOutAce(), limit, countAce());
     }
 
     public List<Card> getCards() {
