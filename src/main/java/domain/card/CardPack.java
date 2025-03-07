@@ -30,6 +30,6 @@ public class CardPack {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 }
