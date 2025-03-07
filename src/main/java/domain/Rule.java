@@ -18,6 +18,10 @@ public class Rule {
                 && score != Score.BUST;
     }
 
+    public Score evaluateScore(List<TrumpCard> cards) {
+        return Score.from(cards);
+    }
+
     public GameResult evaluateGameResult(List<TrumpCard> playerCards, List<TrumpCard> dealerCards) {
         Score playerScore = Score.from(playerCards);
         Score dealerScore = Score.from(dealerCards);

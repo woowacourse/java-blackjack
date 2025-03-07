@@ -11,10 +11,6 @@ public enum GameResult {
         this.title = title;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public static GameResult from(Score playerScore, Score dealerScore) {
         if (playerScore == Score.BUST || playerScore.isLowerThan(dealerScore)) {
             return LOSE;
@@ -25,5 +21,9 @@ public enum GameResult {
         }
 
         return WIN;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

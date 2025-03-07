@@ -62,10 +62,6 @@ public class BlackJackGame {
         return players;
     }
 
-    public void shuffleDeck() {
-        deck.shuffle();
-    }
-
     public boolean isPlayerHitAllowed(List<TrumpCard> playerCards) {
         return rule.isPlayerHitAllowed(playerCards);
     }
@@ -91,6 +87,10 @@ public class BlackJackGame {
         }
 
         return hitCount;
+    }
+
+    public Score caculateScore(List<TrumpCard> cards) {
+        return rule.evaluateScore(cards);
     }
 
     public Map<String, GameResult> calculateGameResults(List<Player> players) {

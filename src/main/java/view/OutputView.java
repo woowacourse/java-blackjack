@@ -1,7 +1,7 @@
 package view;
 
+import controller.dto.CardScoreDto;
 import domain.GameResult;
-import domain.Score;
 import domain.TrumpCard;
 import java.util.List;
 import java.util.Map;
@@ -40,28 +40,24 @@ public class OutputView {
         }
     }
 
-    public void printCardsResult(Map<String, List<TrumpCard>> playerCards, List<TrumpCard> dealerCards) {
+    public void printCardsResult(Map<String, CardScoreDto> playerCardScoreDto, CardScoreDto dealerCardScoreDtos) {
         System.out.print("딜러카드: ");
-        System.out.print(dealerCards.stream()
+        System.out.print(dealerCardScoreDtos.cards().stream()
                 .map(this::getCardInfo)
                 .collect(Collectors.joining(",")));
-        System.out.printf(" - 결과: %s\n", getScore(dealerCards));
+        System.out.printf(" - 결과: %s\n", dealerCardScoreDtos.score());
 
-        playerCards.forEach((name, cards) -> {
+        playerCardScoreDto.forEach((name, cardScoreDto) -> {
             System.out.printf("%s카드: ", name);
-            System.out.print(cards.stream()
+            System.out.print(cardScoreDto.cards().stream()
                     .map(this::getCardInfo)
                     .collect(Collectors.joining(",")));
-            System.out.printf(" - 결과: %s\n", getScore(cards));
+            System.out.printf(" - 결과: %s\n", cardScoreDto.score());
         });
     }
 
     private String getCardInfo(TrumpCard card) {
         return card.getRank().getTitle() + card.getSuit().getTitle();
-    }
-
-    private String getScore(List<TrumpCard> dealerCards) {
-        return Score.from(dealerCards).getTitle();
     }
 
     public void printGameResult(Map<String, GameResult> playerGameResults, List<GameResult> dealerGameResult) {
