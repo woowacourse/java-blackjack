@@ -15,7 +15,7 @@ public class Deck {
         }
     }
 
-    public Card random(NumberGenerator generator) {
+    public Card draw(NumberGenerator generator) {
         if (deck.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드를 생성할 수 없습니다.");
         }
@@ -24,8 +24,8 @@ public class Deck {
     }
 
     public CardHand getInitialDeal() {
-        Card firstCard = random(new RandomNumberGenerator());
-        Card secondCard = random(new RandomNumberGenerator());
+        Card firstCard = draw(new RandomNumberGenerator());
+        Card secondCard = draw(new RandomNumberGenerator());
         return new CardHand(Set.of(firstCard, secondCard));
     }
 }

@@ -18,7 +18,7 @@ public class Dealer extends GameParticipant {
     }
 
     public Card pickCard() {
-        return deck.random(new RandomNumberGenerator());
+        return deck.draw(new RandomNumberGenerator());
     }
 
     public void recordGameResult(GameResult result) {

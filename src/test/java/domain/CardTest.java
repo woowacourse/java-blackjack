@@ -12,7 +12,7 @@ class CardTest {
     @DisplayName("랜덤으로 카드를 선택할 때 최대 카드 갯수 이내이면 예외가 발생하지 않는다.")
     void testRandomCreation() {
         Deck deck = new Deck();
-        assertThatCode(() -> deck.random(new RandomNumberGenerator())).doesNotThrowAnyException();
+        assertThatCode(() -> deck.draw(new RandomNumberGenerator())).doesNotThrowAnyException();
     }
 
     @Test
@@ -21,10 +21,10 @@ class CardTest {
         // given
         Deck deck = new Deck();
         for (int i = 0; i < 52; i++) {
-            deck.random(new RandomNumberGenerator());
+            deck.draw(new RandomNumberGenerator());
         }
         // when && then
-        assertThatThrownBy(() -> deck.random(new RandomNumberGenerator())).isInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(() -> deck.draw(new RandomNumberGenerator())).isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("[ERROR] 카드를 생성할 수 없습니다.");
     }
 }
