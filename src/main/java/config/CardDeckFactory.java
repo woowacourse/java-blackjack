@@ -19,7 +19,7 @@ public class CardDeckFactory {
         return new CardDeck(cards);
     }
 
-    private static void selectNumbers(Shape shape, List<Card> cards) {
+    private static void selectNumbers(final Shape shape, final List<Card> cards) {
         for (Number number : Number.values()) {
             cards.add(new Card(shape, number));
         }

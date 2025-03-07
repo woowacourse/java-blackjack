@@ -10,9 +10,9 @@ public class InputView {
     private final String PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private final String ASK_HIT_OR_STAND = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
-    public InputView(Scanner scanner) {
+    public InputView(final Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -25,7 +25,7 @@ public class InputView {
                 .toList();
     }
 
-    public Boolean askPlayerForHitOrStand(Player player) {
+    public Boolean askPlayerForHitOrStand(final Player player) {
         System.out.printf(ASK_HIT_OR_STAND, player.getName());
         String s = scanner.nextLine();
         if(s.equals("y"))return true;

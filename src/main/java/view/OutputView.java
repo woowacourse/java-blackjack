@@ -37,7 +37,7 @@ public class OutputView {
 
     private final String NEW_LINE = System.lineSeparator();
 
-    public void printParticipant(Players players, Dealer dealer){
+    public void printParticipant(final Players players, final Dealer dealer){
         printHitNotice(players);
         printDealerDeckWithHidden(dealer);
 
@@ -46,35 +46,11 @@ public class OutputView {
         }
         System.out.print(NEW_LINE);
     }
-
-    private void printDealerDeckWithHidden(Dealer dealer) {
-        System.out.println(DEALER_CARDS + toSymbol(dealer.getHand().getCards().getFirst()));
-    }
-
-    private void printHitNotice(Players players) {
-        List<String> playersName = new ArrayList<>();
-
-        for(Player player : players.getPlayers()){
-            playersName.add(player.getName());
-        }
-        System.out.print(NEW_LINE);
-        System.out.printf(HIT_CARDS, String.join(COMMA_DELIMITER, playersName));
-    }
-
-    public void printPlayerDeck(Player player) {
+    public void printPlayerDeck(final Player player) {
         System.out.println(resultMaker(player));
     }
 
-    private String resultMaker(Player player) {
-        System.out.printf(PLAYER_CARDS, player.getName());
-        List<String> cardSymbols = new ArrayList<>();
-        for (Card card : player.getHand().getCards()) {
-            cardSymbols.add(toSymbol(card));
-        }
-        return String.join(COMMA_DELIMITER, cardSymbols);
-    }
-
-    public String printDealerDeck(Dealer dealer) {
+    public String printDealerDeck(final Dealer dealer) {
         System.out.printf(DEALER_CARDS);
         List<String> cardSymbols = new ArrayList<>();
         for (Card card : dealer.getHand().getCards()) {
@@ -83,20 +59,14 @@ public class OutputView {
         return String.join(COMMA_DELIMITER, cardSymbols);
     }
 
-    private static String toSymbol(Card card) {
-        Number number = card.getNumber();
-        Shape shape = card.getShape();
-        return NUMBER_SYMBOL_MAP.getOrDefault(number, String.valueOf(number.getScore())) + shape.getShape();
-    }
-
-    public void printDrawDealer(Dealer dealer) {
+    public void printDrawDealer(final Dealer dealer) {
         if(dealer.isUnderThreshold()){
             System.out.print(NEW_LINE);
             System.out.print(HIT_DEALER_CARD);
         }
     }
 
-    public void printScore(Players players, Dealer dealer) {
+    public void printScore(final Players players, final Dealer dealer) {
         System.out.print(NEW_LINE);
         System.out.print(printDealerDeck(dealer));
         System.out.printf(SCORE+NEW_LINE, dealer.sum());
@@ -107,7 +77,7 @@ public class OutputView {
         }
     }
 
-    public void printResult(Map<Player, MatchResult> playerMatchResult){
+    public void printResult(final Map<Player, MatchResult> playerMatchResult){
         System.out.print(NEW_LINE);
         System.out.println(RESULT_INTRO);
         System.out.print(DEALER_RESULT);
@@ -125,7 +95,36 @@ public class OutputView {
         });
     }
 
-    private Map<MatchResult, Integer> calculateDealerResult(Map<Player, MatchResult> playerMatchResult) {
+    private void printDealerDeckWithHidden(final Dealer dealer) {
+        System.out.println(DEALER_CARDS + toSymbol(dealer.getHand().getCards().getFirst()));
+    }
+
+    private void printHitNotice(final Players players) {
+        List<String> playersName = new ArrayList<>();
+
+        for(Player player : players.getPlayers()){
+            playersName.add(player.getName());
+        }
+        System.out.print(NEW_LINE);
+        System.out.printf(HIT_CARDS, String.join(COMMA_DELIMITER, playersName));
+    }
+
+    private String resultMaker(final Player player) {
+        System.out.printf(PLAYER_CARDS, player.getName());
+        List<String> cardSymbols = new ArrayList<>();
+        for (Card card : player.getHand().getCards()) {
+            cardSymbols.add(toSymbol(card));
+        }
+        return String.join(COMMA_DELIMITER, cardSymbols);
+    }
+
+    private static String toSymbol(final Card card) {
+        Number number = card.getNumber();
+        Shape shape = card.getShape();
+        return NUMBER_SYMBOL_MAP.getOrDefault(number, String.valueOf(number.getScore())) + shape.getShape();
+    }
+
+    private Map<MatchResult, Integer> calculateDealerResult(final Map<Player, MatchResult> playerMatchResult) {
         Map<MatchResult, Integer> dealerMatchResult = initDealerMatchResult();
 
         for (MatchResult matchResult : playerMatchResult.values()) {
@@ -136,7 +135,7 @@ public class OutputView {
         return dealerMatchResult;
     }
 
-    private void swap(Map<MatchResult, Integer> dealerMatchResult) {
+    private void swap(final Map<MatchResult, Integer> dealerMatchResult) {
         int winningCount = dealerMatchResult.get(WIN);
         int losingCount = dealerMatchResult.get(LOSE);
         dealerMatchResult.put(WIN, losingCount);

@@ -17,7 +17,7 @@ public enum Number {
 
     private final int score;
 
-    Number(int score) {
+    Number(final int score) {
         this.score = score;
     }
 

@@ -11,7 +11,7 @@ public class BlackJack {
     private final Players players;
     private final Dealer dealer;
 
-    public BlackJack(Players players, Dealer dealer) {
+    public BlackJack(final Players players, final Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
@@ -21,7 +21,7 @@ public class BlackJack {
         dealer.addCards();
     }
 
-    public void drawPlayers(Function<Player, Boolean> answer, Consumer<Player> playerDeck) {
+    public void drawPlayers(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck) {
         players.draw(answer, playerDeck, dealer);
     }
 

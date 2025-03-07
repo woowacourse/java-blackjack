@@ -10,7 +10,7 @@ public enum Shape {
 
     private final String shape;
 
-    Shape(String shape) {
+    Shape(final String shape) {
         this.shape = shape;
     }
 

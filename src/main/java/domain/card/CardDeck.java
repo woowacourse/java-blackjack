@@ -9,7 +9,7 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardDeck(List<Card> cards) {
+    public CardDeck(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
@@ -17,7 +17,7 @@ public class CardDeck {
         return cards.removeFirst();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 

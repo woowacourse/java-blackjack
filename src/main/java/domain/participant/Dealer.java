@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public class Dealer {
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
-    private CardDeck standard;
-    private CardDeck hand;
+    private final CardDeck standard;
+    private final CardDeck hand;
 
-    public Dealer(CardDeck standard) {
+    public Dealer(final CardDeck standard) {
         this.standard = standard;
         this.hand = new CardDeck(new ArrayList<>());
     }

@@ -13,38 +13,30 @@ public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void start() {
-        // 세팅
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
-
-        // 1. 이름 입력받고 플레이어 생성
         Players players = Players.from(inputView.readPlayersName());
         Dealer dealer = new Dealer(cardDeck);
 
-        // 블랙잭 시작
-        BlackJack blackJack = new BlackJack(players, dealer);
+        playBlackJack(players, dealer);
+    }
 
-        // 2. 딜러와 플레이어에게 카드 나눠주기
+    private void playBlackJack(final Players players, final Dealer dealer) {
+        BlackJack blackJack = new BlackJack(players, dealer);
         blackJack.hitCardsToParticipant();
         outputView.printParticipant(players, dealer);
 
-        // 3. 카드 더 받을지 물어보기 x 플레이어 수
         blackJack.drawPlayers((player) -> InputUntilValid.validatePlayerAnswer(player, inputView::askPlayerForHitOrStand), outputView::printPlayerDeck);
 
-        // 4. 딜러 카드 받기
         blackJack.drawDealer();
         outputView.printDrawDealer(dealer);
-
-        // 5. 결과
         outputView.printScore(players, dealer);
-
-        // 6. 최종 승패
         outputView.printResult(blackJack.calculatePlayerResult());
     }
 }

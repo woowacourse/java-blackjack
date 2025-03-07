@@ -9,11 +9,11 @@ public enum MatchResult {
 
     private final String value;
 
-    MatchResult(String value) {
+    MatchResult(final String value) {
         this.value = value;
     }
 
-    public static MatchResult calculateWinner(int dealerSum, int playerSum) {
+    public static MatchResult calculateWinner(final int dealerSum, final int playerSum) {
         if (dealerSum > playerSum || playerSum > BLACKJACK_NUMBER) {
             return LOSE;
         }

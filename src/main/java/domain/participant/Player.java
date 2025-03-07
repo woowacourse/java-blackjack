@@ -12,18 +12,18 @@ public class Player {
     private final String name;
     private final CardDeck hand;
 
-    public Player(String name) {
+    public Player(final String name) {
         this.hand = new CardDeck(new ArrayList<>());
         this.name = name;
     }
 
-    public void hitCards(Dealer dealer) {
+    public void hitCards(final Dealer dealer) {
         for (int i = 0; i < 2; i++) {
             hand.addCard(dealer.hitCard());
         }
     }
 
-    public void addCard(Dealer dealer) {
+    public void addCard(final Dealer dealer) {
         hand.addCard(dealer.hitCard());
     }
 
@@ -31,26 +31,27 @@ public class Player {
         return hand.sum();
     }
 
-    public CardDeck getHand() {
-        return hand;
-    }
-
-    private boolean isBust() {
-        return sum() > BLACKJACK_NUMBER;
-    }
-
-    public void draw(Function<Player, Boolean> answer, Consumer<Player> playerDeck, Dealer dealer) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Dealer dealer) {
         while (!isBust() && answer.apply(this)) {
             addCard(dealer);
             playerDeck.accept(this);
         }
     }
 
-    public MatchResult calculateWinner(int dealerSum){
+    public MatchResult calculateWinner(final int dealerSum){
         return MatchResult.calculateWinner(dealerSum, this.sum());
+    }
+
+    private boolean isBust() {
+        return sum() > BLACKJACK_NUMBER;
     }
 
     public String getName() {
         return name;
     }
+
+    public CardDeck getHand() {
+        return hand;
+    }
+
 }
