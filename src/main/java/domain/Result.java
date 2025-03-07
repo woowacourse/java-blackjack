@@ -1,7 +1,15 @@
 package domain;
 
 public enum Result {
-    DRAW, WIN, LOSE;
+    WIN("승"),
+    DRAW("무"),
+    LOSE("패");
+
+    private final String state;
+
+    Result(String state) {
+        this.state = state;
+    }
 
     public static Result judge(Cards dealerCards, Cards playersCards) {
         int dealerScore = dealerCards.calculateTotalPoint();
@@ -31,5 +39,9 @@ public enum Result {
         }
 
         return LOSE;
+    }
+
+    public String getState() {
+        return state;
     }
 }
