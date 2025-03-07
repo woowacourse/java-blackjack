@@ -38,7 +38,7 @@ public class BlackJackController {
         final int size = gameManager.calculatePlayerSize();
         for (int index = 0; index < size; index++) {
             final Player player = gameManager.findPlayerByIndex(index);
-            if (gameManager.isAbleToHit(player)) {
+            if (!gameManager.isAbleToHit(player)) {
                 continue;
             }
             AnswerCommand answerCommand = inputView.readAnswer(player.getName());
