@@ -6,7 +6,6 @@ import domain.gamer.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameManager {
 
@@ -57,6 +56,7 @@ public class GameManager {
     public GameResult calculateResult(final int index) {
         final Player player = players.get(index);
         if(dealer.isBust() && player.isBust()) return GameResult.DRAW;
+        if(dealer.isBust()) return GameResult.WIN;
         return player.calculateGameResult(dealer.calculateScore());
     }
 
@@ -71,8 +71,8 @@ public class GameManager {
 
     public Map<GameResult, Integer> calculateDealerGameResult() {
         Map<GameResult, Integer> result = new HashMap<>();
-        for (Player player : players) {
-            final GameResult gameResult = player.calculateGameResult(dealer.calculateScore());
+        for(int i=0; i<players.size(); i++){
+            final GameResult gameResult = calculateResult(i);
             if (gameResult == GameResult.DRAW) {
                 result.merge(GameResult.DRAW, 1, Integer::sum);
             }
@@ -87,11 +87,10 @@ public class GameManager {
     }
 
     public Map<String, GameResult> calculatePlayerGameResult() {
-        return players.stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> player.calculateGameResult(dealer.calculateScore()),
-                        (newResult, oldResult) -> newResult
-                ));
+        Map<String, GameResult> resultMap = new HashMap<>();
+        for(int i=0; i<players.size(); i++){
+            resultMap.put(players.get(i).getName(),calculateResult(i));
+        }
+        return resultMap;
     }
 }
