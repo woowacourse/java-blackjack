@@ -25,12 +25,16 @@ public class Rule {
         return USER_DRAW_PREDICATE.test(player);
     }
 
-    public Cards openCards(final Player player) {
+    public Cards openInitialCards(final Player player) {
         Cards playerCards = player.getCards();
         if (player.hasRole(Role.DEALER)) {
             return new Cards(playerCards.getFirst());
         }
         return playerCards;
+    }
+
+    public Cards openAllCards(final Player player) {
+        return player.getCards();
     }
 
     public int calculateOptimalPoint(final Player player) {

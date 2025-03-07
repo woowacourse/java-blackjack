@@ -1,6 +1,7 @@
 package blackjack.model.game;
 
 import static blackjack.model.card.CardCreator.createCard;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -193,7 +195,7 @@ class RuleTest {
         );
     }
 
-    private static Stream<Arguments> 플레이어의_카드들을_오픈하는_테스트_케이스() {
+    private static Stream<Arguments> 플레이어의_시작_카드들을_오픈하는_테스트_케이스() {
         Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
         return Stream.of(
                 Arguments.of(
@@ -293,13 +295,23 @@ class RuleTest {
         assertThat(results).containsAllEntriesOf(expected);
     }
 
-    @MethodSource("플레이어의_카드들을_오픈하는_테스트_케이스")
+    @MethodSource("플레이어의_시작_카드들을_오픈하는_테스트_케이스")
     @ParameterizedTest
-    void 플레이어의_카드들을_오픈한다(final Player player, final Cards cards, final Cards expected) {
+    void 플레이어의_시작_카드들을_오픈한다(final Player player, final Cards cards, final Cards expected) {
         player.receiveCards(cards);
 
-        assertThat(rule.openCards(player).getValues())
+        assertThat(rule.openInitialCards(player).getValues())
                 .containsAll(expected.getValues());
+    }
+
+    @Test
+    void 플레이어의_모든_카드들을_오픈한다() {
+        Player player = new User("pobi");
+        Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
+        player.receiveCards(cards);
+
+        assertThat(rule.openAllCards(player)).isEqualTo(
+                new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))));
     }
 
     private static class DealerWinRule extends Rule {
