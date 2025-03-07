@@ -2,10 +2,6 @@ package domain;
 
 import java.util.Objects;
 
-//GameManager
-//Map<P, Cs>
-//setGame
-
 public class Player {
 
     private final String name;
@@ -27,8 +23,12 @@ public class Player {
 
     private void validateBurst() {
         if (cards.isBurst()) {
-            throw new IllegalStateException("[ERROR] 버스트되면 초과하면 카드를 뽑을 수 없습니다.");
+            throw new IllegalStateException("[ERROR] 버스트되면 카드를 뽑을 수 없습니다.");
         }
+    }
+
+    public boolean isBurst() {
+        return cards.isBurst();
     }
 
     public int getScore() {
@@ -45,11 +45,15 @@ public class Player {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        return Objects.equals(getName(), player.getName()) && Objects.equals(getCards(), player.getCards());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hash(getName(), getCards());
+    }
+
+    public String getName() {
+        return this.name;
     }
 }
