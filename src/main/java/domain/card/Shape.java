@@ -13,7 +13,7 @@ public enum Shape {
         this.shape = shape;
     }
 
-    public String getShape() {
+    public String getName() {
         return shape;
     }
 }

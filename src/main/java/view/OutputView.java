@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    Map<Rank, String> rankNames = Map.ofEntries(
+    private static final Map<Rank, String> RANK_NAMES = Map.ofEntries(
         Map.entry(Rank.ACE, "A"),
         Map.entry(Rank.TWO, "2"),
         Map.entry(Rank.THREE, "3"),
@@ -29,33 +29,34 @@ public class OutputView {
         Map.entry(Rank.KING, "K")
     );
 
-    Map<Shape, String> shapeNames = Map.ofEntries(
-        Map.entry(Shape.SPADE, "스페이드"),
-        Map.entry(Shape.DIAMOND, "다이아몬드"),
-        Map.entry(Shape.HEART, "하트"),
-        Map.entry(Shape.CLOVER, "클로버")
+    private static final Map<Shape, String> SHAPE_NAMES = Map.ofEntries(
+        Map.entry(Shape.SPADE, Shape.SPADE.getName()),
+        Map.entry(Shape.DIAMOND, Shape.DIAMOND.getName()),
+        Map.entry(Shape.HEART, Shape.HEART.getName()),
+        Map.entry(Shape.CLOVER, Shape.CLOVER.getName())
     );
 
-    Map<Winning, String> winningNames = Map.ofEntries(
+    private static final Map<Winning, String> WINNING_NAMES = Map.ofEntries(
         Map.entry(Winning.WIN, "승"),
         Map.entry(Winning.DRAW, "무"),
         Map.entry(Winning.LOSE, "패")
     );
 
     private String cardNameOf(Card card) {
-        return rankNames.get(card.rank()) + shapeNames.get(card.shape());
+        return RANK_NAMES.get(card.rank()) + SHAPE_NAMES.get(card.shape());
     }
 
     public void printSetUpCardDeck(SetUpCardsDTO setUpCardsDTO) {
         Card dealerOpenCard = setUpCardsDTO.dealerOpenCard();
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", playerNames(setUpCardsDTO));
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", playerNames(setUpCardsDTO));
+
         System.out.println("딜러카드: " + cardNameOf(dealerOpenCard));
         Map<String, List<Card>> playerCards = setUpCardsDTO.cards();
         playerCards.forEach((key, value) -> System.out.printf("%s카드: %s%n", key, cardNames(value)));
     }
 
     public void printTakenMoreCards(String name, List<Card> cards) {
-        System.out.printf("%s카드: %s\n", name, cardNames(cards));
+        System.out.printf("%s카드: %s%n", name, cardNames(cards));
     }
 
     public void printDealerTake() {
@@ -63,11 +64,24 @@ public class OutputView {
     }
 
     public void printFinalCardDeck(List<FinalResultDTO> dtos) {
-        dtos.forEach(dto -> System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), cardNames(dto.cards()), dto.score()));
+        dtos.forEach(
+            dto -> System.out.printf("%s카드: %s - 결과: %d\n",
+            dto.name(), cardNames(dto.cards()), dto.score())
+        );
     }
 
     public void printGameResult(GameResult gameResult) {
         System.out.println("## 최종 승패");
+        printDealerWinnings(gameResult);
+
+        gameResult.getPlayerWinningResult()
+            .forEach(
+                (player, winning) -> System.out.printf("%s: %s\n",
+                    player.getName(), WINNING_NAMES.get(winning))
+            );
+    }
+
+    private static void printDealerWinnings(GameResult gameResult) {
         System.out.print("딜러: ");
         if(gameResult.countDealerWin() > 0){
             System.out.print(gameResult.countDealerWin() + "승 ");
@@ -79,10 +93,6 @@ public class OutputView {
             System.out.print(gameResult.countDealerLose() + "패 ");
         }
         System.out.println();
-
-        gameResult.getPlayerWinningResult()
-            .forEach(((player, winning) -> System.out.printf("%s: %s\n", player.getName(),
-                winningNames.get(winning))));
     }
 
     private String cardNames(List<Card> cards) {

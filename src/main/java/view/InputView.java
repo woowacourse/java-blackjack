@@ -18,14 +18,14 @@ public class InputView {
             .map(Player::new)
             .toList();
     }
-//pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
+
     public boolean getYesOrNo(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
-        if(input.equalsIgnoreCase("y")) {
+        if("y".equalsIgnoreCase(input)) {
             return true;
         }
-        if(input.equalsIgnoreCase("n")) {
+        if("n".equalsIgnoreCase(input)) {
             return false;
         }
         throw new IllegalArgumentException("y또는 n만 입력가능합니다.");
