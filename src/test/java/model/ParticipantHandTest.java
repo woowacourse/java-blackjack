@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -72,32 +73,16 @@ class ParticipantHandTest {
         Assertions.assertTrue(burst);
     }
 
-//    @Test
-//    @DisplayName("ACE가 한장일때 ACE를 뺸 나머지의 합이 10 이하일경우 true")
-//    void ACE를_제외한_나머지의_합이_10_이하이다(){
-//        ParticipantHand participantHand = new ParticipantHand();
-//        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
-//        participantHand.add(new Card(CardRank.EIGHT, CardSuit.HEART));
-//        participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
-//
-//        boolean result = participantHand.isAceElevenPossible();
-//
-//        assertTrue(result);
-//    }
+    @Test
+    @DisplayName("특정 숫자 이하인 경우 true 반환")
+    void 특정_숫자_이하_값인_경우_true_반환(){
+        ParticipantHand participantHand = new ParticipantHand();
+        participantHand.add(new Card(CardRank.SIX, CardSuit.DIAMOND));
+        participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
-//    @Test
-//    @DisplayName("ACE가 한장일 때 ACE를 뺸 나머지의 합이 11 이샹일경우 false")
-//    void ACE를_제외한_나머지의_합이_11_이상이다(){
-//        ParticipantHand participantHand = new ParticipantHand();
-//        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
-//        participantHand.add(new Card(CardRank.NINE, CardSuit.HEART));
-//        participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
-//
-//        boolean result = participantHand.isAceElevenPossible();
-//
-//        assertFalse(result);
-//    }
-
+        assertTrue(participantHand.checkScoreBelow(16));
+    }
+    
     @Test
     @DisplayName("ACE를 뺀 나머지의 합이 10 이하일 경우 ACE 한 장을 11로 계산한다")
     void ACE_를_뺸_나머지의_합이_10이하일_경우_ACE_한_장을_11로_계산(){

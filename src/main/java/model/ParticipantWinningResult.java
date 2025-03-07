@@ -32,15 +32,9 @@ public class ParticipantWinningResult {
     }
 
     private static GameResult checkPlayerWin(Dealer dealer, Player player) {
-        /**
-         * player가 burst되면 무조건 player가 패배한다.
-         */
         if (player.isBurst()) {
             return GameResult.LOSE;
         }
-        /**
-         * player는 burst가 아닐 때 딜러가 burst면 player는 무조건 승리한다.
-         */
         if (dealer.isBurst()) {
             return GameResult.WIN;
         }

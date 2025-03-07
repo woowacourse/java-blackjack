@@ -5,7 +5,6 @@ import java.util.Map;
 import model.Dealer;
 import model.Deck;
 import model.GameResult;
-import model.Judge;
 import model.Player;
 import model.ParticipantWinningResult;
 import model.Players;
@@ -66,14 +65,5 @@ public class BlackjackController {
 
         OutputView.printDealerFinalResult(dealerWinningResult);
         OutputView.printPlayerFinalResultV2(participantWinningResult);
-    }
-
-    private static void printWinningResultV1(Players players, Dealer dealer) {
-        Judge judge = new Judge();
-        Map<Player, GameResult> playerWinning = judge.decidePlayerWinning(players, dealer);
-        Map<GameResult, Integer> dealerWinning = judge.decideDealerWinning(playerWinning);
-
-        OutputView.printDealerFinalResult(dealerWinning);
-        OutputView.printPlayerFinalResult(playerWinning);
     }
 }

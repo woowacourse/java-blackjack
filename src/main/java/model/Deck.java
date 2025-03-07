@@ -24,8 +24,14 @@ public class Deck {
     }
 
     public Card pick() {
+        validateDeckEmpty();
         Card card = deck.getFirst();
         deck.remove(card);
         return card;
+    }
+    private void validateDeckEmpty(){
+        if (deck.isEmpty()){
+            throw new IllegalStateException("[ERROR] 주어진 모든 카드들을 소진하였습니다");
+        }
     }
 }
