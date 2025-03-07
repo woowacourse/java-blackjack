@@ -81,17 +81,18 @@ public class BlackJackController {
         outputView.printBlankLine();
     }
 
+    /***
+     * extraReceiveCardProcess에서 카드를 받은 후 들고 있는 카드를 출력하며 true를 반환합니다.
+     *  카드를 한 번도 받지 않은 상태라면 들고 있는 카드를 출력한다.
+     */
     private void inputAskReceiveExtraCard(CardDeck cardDeck, Participant participant) {
-        boolean isPrinted = false;
-        isPrinted = extraReceiveCardProcess(cardDeck, participant, isPrinted);
-        // 카드를 한 번도 받지 않은 상태라면 손패를 출력한다.
-        if (!isPrinted) {
+        if (!extraReceiveCardProcess(cardDeck, participant)) {
             outputView.printParticipantHand(participant);
         }
     }
 
-    private boolean extraReceiveCardProcess(CardDeck cardDeck, Participant participant,
-        boolean isPrinted) {
+    private boolean extraReceiveCardProcess(CardDeck cardDeck, Participant participant) {
+        boolean isPrinted = false;
         while (participant.canPick()) {
             String playerWantMoreCard = inputView.inputPlayerWantMoreCard(participant);
             if (playerWantMoreCard.equalsIgnoreCase("n")) {
