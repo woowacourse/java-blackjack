@@ -8,8 +8,8 @@ public class Application {
 
     public static void main(String[] args) {
         BlackjackController blackJackController = new BlackjackController(
-                new InputView(),
-                new OutputView()
+            new InputView(),
+            new OutputView()
         );
         blackJackController.start();
     }

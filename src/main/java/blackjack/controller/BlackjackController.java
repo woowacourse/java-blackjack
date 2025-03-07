@@ -54,9 +54,10 @@ public class BlackjackController {
         }
     }
 
-    private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame, final Player player) {
+    private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame,
+        final Player player) {
         while (player.isPossibleToAdd() &&
-                inputView.readGetOneMore(player.getName())) {
+            inputView.readGetOneMore(player.getName())) {
             blackjackGame.addExtraCard(player);
             outputView.printPlayerCardResult(player.getName(), player.openCards());
         }
@@ -72,7 +73,8 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.findDealer();
         outputView.printDealerFinalCardResult(dealer.calculateDenominations(), dealer.openCards());
         for (Player player : blackjackGame.findPlayers()) {
-            outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(), player.openCards());
+            outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(),
+                player.openCards());
         }
     }
 

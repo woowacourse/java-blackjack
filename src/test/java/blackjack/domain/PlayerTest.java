@@ -31,8 +31,8 @@ public class PlayerTest {
         @DisplayName("영어 이름이 아니면 예외를 발생시킨다.")
         void createPlayerByEmptyName(String name) {
             assertThatThrownBy(() -> new Player(name))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이름은 알파벳 소문자만 입력 가능합니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 알파벳 소문자만 입력 가능합니다.");
         }
     }
 
@@ -46,9 +46,9 @@ public class PlayerTest {
             Player player = new Player("sana");
 
             List<Card> cardsUnder21 = List.of(
-                    new Card(Suit.HEART, Denomination.TWO),
-                    new Card(Suit.SPADE, Denomination.TEN),
-                    new Card(Suit.CLUB, Denomination.ACE)
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.CLUB, Denomination.ACE)
             );
             player.addCards(cardsUnder21.get(0), cardsUnder21.get(1), cardsUnder21.get(2));
 
@@ -61,9 +61,9 @@ public class PlayerTest {
             Player player = new Player("sana");
 
             List<Card> cardsOver21 = List.of(
-                    new Card(Suit.HEART, Denomination.TWO),
-                    new Card(Suit.SPADE, Denomination.TEN),
-                    new Card(Suit.CLUB, Denomination.JACK)
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.CLUB, Denomination.JACK)
             );
             player.addCards(cardsOver21.get(0), cardsOver21.get(1), cardsOver21.get(2));
 

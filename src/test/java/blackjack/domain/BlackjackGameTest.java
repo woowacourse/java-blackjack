@@ -45,7 +45,7 @@ class BlackjackGameTest {
             BlackjackGame game = BlackjackGame.createByPlayerNames(names);
 
             assertThatCode(game::initCardsToParticipants)
-                    .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
         }
 
         @Test
@@ -66,8 +66,8 @@ class BlackjackGameTest {
         void distributeExtraCardToDealer() {
             Dealer dealer = new Dealer();
             List<Card> cardsUnder16 = List.of(
-                    new Card(Suit.HEART, Denomination.SIX),
-                    new Card(Suit.SPADE, Denomination.KING)
+                new Card(Suit.HEART, Denomination.SIX),
+                new Card(Suit.SPADE, Denomination.KING)
             );
             dealer.addCards(cardsUnder16.get(0), cardsUnder16.get(1));
 
@@ -83,8 +83,8 @@ class BlackjackGameTest {
         void notDistributeExtraCardToDealer() {
             Dealer dealer = new Dealer();
             List<Card> cardsOver16 = List.of(
-                    new Card(Suit.HEART, Denomination.SEVEN),
-                    new Card(Suit.SPADE, Denomination.KING)
+                new Card(Suit.HEART, Denomination.SEVEN),
+                new Card(Suit.SPADE, Denomination.KING)
             );
             dealer.addCards(cardsOver16.get(0), cardsOver16.get(1));
 
@@ -106,29 +106,29 @@ class BlackjackGameTest {
         void initCards() {
             Dealer dealer = new Dealer();
             List<Card> initialCards1 = List.of(
-                    new Card(Suit.HEART, Denomination.NINE),
-                    new Card(Suit.SPADE, Denomination.KING)
+                new Card(Suit.HEART, Denomination.NINE),
+                new Card(Suit.SPADE, Denomination.KING)
             );
             dealer.addCards(initialCards1.get(0), initialCards1.get(1));
 
             Player player1 = new Player("hula"); // 패배
             List<Card> initialCards2 = List.of(
-                    new Card(Suit.HEART, Denomination.SIX),
-                    new Card(Suit.SPADE, Denomination.KING)
+                new Card(Suit.HEART, Denomination.SIX),
+                new Card(Suit.SPADE, Denomination.KING)
             );
             player1.addCards(initialCards2.get(0), initialCards2.get(1));
 
             Player player2 = new Player("sana"); // 승리
             List<Card> initialCards3 = List.of(
-                    new Card(Suit.HEART, Denomination.ACE),
-                    new Card(Suit.SPADE, Denomination.KING)
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.SPADE, Denomination.KING)
             );
             player2.addCards(initialCards3.get(0), initialCards3.get(1));
 
             Player player3 = new Player("jason"); // 패배
             List<Card> initialCards4 = List.of(
-                    new Card(Suit.HEART, Denomination.FIVE),
-                    new Card(Suit.SPADE, Denomination.KING)
+                new Card(Suit.HEART, Denomination.FIVE),
+                new Card(Suit.SPADE, Denomination.KING)
             );
             player3.addCards(initialCards4.get(0), initialCards4.get(1));
 

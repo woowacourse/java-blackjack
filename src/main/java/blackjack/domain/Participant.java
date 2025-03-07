@@ -22,7 +22,7 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARDS_SIZE
-                && calculateDenominations() == BLACKJACK_VALUE;
+            && calculateDenominations() == BLACKJACK_VALUE;
     }
 
     public boolean isBust() {
@@ -31,10 +31,10 @@ public abstract class Participant {
 
     public int calculateDenominations() {
         int sum = cards.stream()
-                .map(Card::denomination)
-                .map(Denomination::getValues)
-                .map(List::getFirst)
-                .reduce(0, Integer::sum);
+            .map(Card::denomination)
+            .map(Denomination::getValues)
+            .map(List::getFirst)
+            .reduce(0, Integer::sum);
         if (hasACE()) {
             sum = Denomination.convertAceValue(sum, BLACKJACK_VALUE);
         }
@@ -52,7 +52,7 @@ public abstract class Participant {
 
     private boolean hasACE() {
         return cards.stream()
-                .map(Card::denomination)
-                .anyMatch(denomination -> denomination == Denomination.ACE);
+            .map(Card::denomination)
+            .anyMatch(denomination -> denomination == Denomination.ACE);
     }
 }

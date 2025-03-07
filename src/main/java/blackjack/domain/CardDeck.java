@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
+
     private final List<Card> cards;
 
     public CardDeck(final List<Card> cards) {
