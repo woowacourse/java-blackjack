@@ -18,10 +18,10 @@ public class DealerTest {
         dealer.addCards(cards);
 
         //when
-        boolean isUnderDrawLimit = dealer.isUnderDrawLimit();
+        boolean isPossibleDraw = dealer.isPossibleDraw();
 
         //then
-        assertThat(isUnderDrawLimit).isTrue();
+        assertThat(isPossibleDraw).isTrue();
     }
 
     @DisplayName("카드의 합계가 16 초과이면 False를 반환한다")
@@ -36,10 +36,10 @@ public class DealerTest {
         dealer.addCards(cards);
 
         //when
-        boolean isUnderDrawLimit = dealer.isUnderDrawLimit();
+        boolean isPossibleDraw = dealer.isPossibleDraw();
 
         //then
-        assertThat(isUnderDrawLimit).isFalse();
+        assertThat(isPossibleDraw).isFalse();
     }
 
     @DisplayName("딜러의 카드 묶음이 ACE를 포함하지 않을 경우 단순 합으로 계산한다")
@@ -55,10 +55,10 @@ public class DealerTest {
         dealer.addCards(cards);
 
         //when
-        boolean isUnderDrawLimit = dealer.isUnderDrawLimit();
+        boolean isPossibleDraw = dealer.isPossibleDraw();
 
         //then
-        assertThat(isUnderDrawLimit).isTrue();
+        assertThat(isPossibleDraw).isTrue();
     }
 
     @DisplayName("딜러의 카드 묶음이 ACE를 한 장 포함할 경우 최댓값을 합으로 간주한다")
@@ -74,10 +74,10 @@ public class DealerTest {
         dealer.addCards(cards);
 
         //when
-        boolean isUnderDrawLimit = dealer.isUnderDrawLimit();
+        boolean isPossibleDraw = dealer.isPossibleDraw();
 
         //then
-        assertThat(isUnderDrawLimit).isFalse();
+        assertThat(isPossibleDraw).isFalse();
     }
 
     @DisplayName("딜러의 카드 묶음이 ACE를 두 장 가질 경우 추가 카드 한장을 받는다")
@@ -93,9 +93,9 @@ public class DealerTest {
         dealer.addCards(cards);
 
         //when
-        boolean isUnderDrawLimit = dealer.isUnderDrawLimit();
+        boolean isPossibleDraw = dealer.isPossibleDraw();
 
         //then
-        assertThat(isUnderDrawLimit).isTrue();
+        assertThat(isPossibleDraw).isTrue();
     }
 }

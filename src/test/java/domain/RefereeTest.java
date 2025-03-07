@@ -31,7 +31,7 @@ public class RefereeTest {
         Player winner = new Player("mimi", winCards);
         Player drawer = new Player("wade", drawCards);
         Player loser = new Player("pobi", loseCards);
-        Players players = new Players(List.of(winner, drawer, loser));
+        Players players = Players.create(List.of(winner, drawer, loser));
 
         Referee referee = new Referee();
 
