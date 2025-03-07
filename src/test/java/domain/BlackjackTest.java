@@ -3,6 +3,7 @@ package domain;
 import domain.dto.NameAndCards;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
@@ -113,5 +114,43 @@ public class BlackjackTest {
 
         // then
         Assertions.assertThat(actual).isTrue();
+    }
+
+    @Test
+    void 참여자들의_승패_결과를_반환한다() {
+        // given
+        Players players = new Players(List.of(
+                new Dealer(),
+                new Participant("시소"),
+                new Participant("헤일러"),
+                new Participant("부기"),
+                new Participant("사나")
+        ));
+
+        Deck deck = new Deck(new ArrayList<>(List.of(
+                new Card(CardShape.SPADE, CardNumber.FIVE),
+                new Card(CardShape.SPADE, CardNumber.FIVE),
+                new Card(CardShape.SPADE, CardNumber.THREE),
+                new Card(CardShape.SPADE, CardNumber.THREE),
+                new Card(CardShape.SPADE, CardNumber.TWO),
+                new Card(CardShape.SPADE, CardNumber.TWO),
+                new Card(CardShape.SPADE, CardNumber.SEVEN),
+                new Card(CardShape.SPADE, CardNumber.SEVEN),
+                new Card(CardShape.SPADE, CardNumber.FIVE),
+                new Card(CardShape.SPADE, CardNumber.FIVE)
+        )));
+        Blackjack blackjack = new Blackjack(players, deck);
+        blackjack.distributeInitialCards();
+
+        // when
+        Map<String, MatchResult> results = blackjack.computeParticipantsMatchResult();
+
+        // then
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(results.get("시소")).isEqualTo(MatchResult.WIN);
+            softly.assertThat(results.get("헤일러")).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(results.get("부기")).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(results.get("사나")).isEqualTo(MatchResult.DRAW);
+        });
     }
 }
