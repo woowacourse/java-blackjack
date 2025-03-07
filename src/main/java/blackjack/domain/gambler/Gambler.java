@@ -8,7 +8,7 @@ public abstract class Gambler {
     protected final Hands hands = new Hands();
     private final Name name;
 
-    public Gambler(final Name name) {
+    protected Gambler(final Name name) {
         this.name = name;
     }
 
