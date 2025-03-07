@@ -19,20 +19,47 @@ public abstract class Participant {
     }
 
     public int getTotal() {
-        int total = 0;
-        for (Card card : hand) {
-            CardValue cardValue = card.getCardValue();
-            total += cardValue.getDefaultValue();
-        }
-        if (total <= 11 && hasAce()) {
-            total += 10;
+        int total = sumHandWithoutAce();
+        if (hasAce()) {
+            return total + calculateAceValue(total);
         }
         return total;
+    }
+
+    private int sumHandWithoutAce() {
+        List<Card> handWithoutAce = getHandWithoutAce();
+        int total = 0;
+        for (Card card : handWithoutAce) {
+            total += card.getCardValue().getDefaultValue();
+        }
+        return total;
+    }
+
+    private List<Card> getHandWithoutAce() {
+        return hand.stream()
+                .filter(card -> card.getCardValue() != CardValue.ACE)
+                .toList();
     }
 
     private boolean hasAce() {
         return hand.stream()
                 .anyMatch(card -> card.getCardValue() == CardValue.ACE);
+    }
+
+    private int calculateAceValue(int total) {
+        int aceCount = getAceCountInHand();
+        int aceValue = 0;
+        if (total <= 10) {
+            aceValue += 11;
+            aceCount--;
+        }
+        return aceValue + (aceCount * CardValue.ACE.getDefaultValue());
+    }
+
+    private int getAceCountInHand() {
+        return (int) hand.stream()
+                .filter(card -> card.getCardValue() == CardValue.ACE)
+                .count();
     }
 
     public boolean isBlackjack() {
