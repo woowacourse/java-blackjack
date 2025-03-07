@@ -2,8 +2,8 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public abstract class Gamer implements Cloneable {
     private final List<Card> cards;
@@ -60,7 +60,7 @@ public abstract class Gamer implements Cloneable {
     }
 
     private void validateDuplicate(List<Card> addedCards) {
-        if (addedCards.size() != Set.of(addedCards).size()) {
+        if (addedCards.size() != new HashSet<>(addedCards).size()) {
             throw new IllegalArgumentException("새로 뽑은 카드에 중복이 있습니다.");
         }
         if (addedCards.stream().anyMatch(this.cards::contains)) {
