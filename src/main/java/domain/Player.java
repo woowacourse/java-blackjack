@@ -4,7 +4,7 @@ public class Player {
     private static final int MAX_SCORE = 21;
     private final String name;
     private final Participant participant;
-	
+
     private boolean isWinDuel;
 
     public Player(final String name) {

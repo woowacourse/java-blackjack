@@ -10,7 +10,7 @@ public class Participant {
     public Participant(final CardHand hand) {
         this.hand = hand;
     }
-
+    
     public void pickCardOnFirstHandOut(final Deck deck) {
         pickCard(deck);
         pickCard(deck);

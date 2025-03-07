@@ -5,7 +5,7 @@ public class Dealer {
     private final Participant participant;
     private int winCount = 0;
     private int loseCount = 0;
-
+ 
     public Dealer() {
         this.participant = new Participant();
     }

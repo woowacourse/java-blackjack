@@ -5,7 +5,6 @@ public enum Emblem {
     SPADE("스페이드"),
     CLUB("클로버"),
     DIAMOND("다이아몬드");
-
     private final String name;
 
     Emblem(final String name) {
