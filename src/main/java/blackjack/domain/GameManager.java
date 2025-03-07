@@ -34,7 +34,11 @@ public class GameManager {
     public void processHit() {
         List<Player> players = gameUserStorage.getPlayers();
         for (Player player : players) {
-            while (!checkHitStop(player)) {
+            while (!isBustPlayer(player)) {
+                boolean wannaHit = hitInputOutput.executeReadIngWannaHit(player.getNickname());
+                if (!wannaHit) {
+                    return;
+                }
                 hit(player);
                 HandState hitResult = getHandState(player);
                 hitInputOutput.executePrintingHitResult(hitResult);
@@ -82,12 +86,6 @@ public class GameManager {
 
     private void hit(Player player) {
         cardManager.addCardByNickname(player, 1);
-    }
-
-    private boolean checkHitStop(Player player) {
-        boolean wannaHit = hitInputOutput.executeReadIngWannaHit(player.getNickname());
-        boolean isBurst = isBustPlayer(player);
-        return isBurst || !wannaHit;
     }
 
     private boolean isBustPlayer(Player player) {
