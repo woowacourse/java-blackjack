@@ -1,5 +1,6 @@
-package domain;
+package domain.rule;
 
+import domain.GameResult;
 import domain.card.Cards;
 
 public interface GameRule {
