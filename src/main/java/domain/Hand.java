@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Hand {
 
@@ -46,5 +47,19 @@ public class Hand {
 
     public List<TrumpCard> getCards() {
         return List.copyOf(cards);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Hand hand = (Hand) o;
+        return Objects.equals(cards, hand.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cards);
     }
 }
