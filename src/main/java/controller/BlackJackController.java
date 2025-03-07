@@ -40,7 +40,9 @@ public class BlackJackController {
 
     private List<Nickname> readNicknames() {
         final String inputNicknames = InputView.readPlayerName();
-        return Arrays.stream(inputNicknames.split(",")).map(Nickname::new).toList();
+        return Arrays.stream(inputNicknames.split(","))
+                .map(Nickname::new)
+                .toList();
     }
 
     private Players generatePlayers(final List<Nickname> nicknames) {

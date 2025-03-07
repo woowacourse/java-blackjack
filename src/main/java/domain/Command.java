@@ -20,11 +20,17 @@ public enum Command {
     }
 
     public static boolean isYes(final String input) {
-        return Command.YES.getDisplayCommand().equals(input.toUpperCase());
+        return Command
+                .YES
+                .getDisplayCommand()
+                .equals(input.toUpperCase());
     }
 
     public static boolean isNo(final String input) {
-        return Command.NO.getDisplayCommand().equals(input.toUpperCase());
+        return Command
+                .NO
+                .getDisplayCommand()
+                .equals(input.toUpperCase());
     }
 
     public String getDisplayCommand() {

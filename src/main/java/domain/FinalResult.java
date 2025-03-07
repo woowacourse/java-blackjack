@@ -57,7 +57,8 @@ public enum FinalResult {
     }
 
     public static Map<FinalResult, Integer> makeDealerResult(final Map<Player, FinalResult> playerResults) {
-        return playerResults.values().stream()
+        return playerResults.values()
+                .stream()
                 .collect(Collectors.toMap(
                         finalResult -> finalResult,
                         finalResult -> 1,
