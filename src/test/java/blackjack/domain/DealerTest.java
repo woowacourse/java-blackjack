@@ -1,7 +1,9 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,11 @@ class DealerTest {
 
             dealer.addCards(card1, card2);
 
-            assertThat(dealer.openFirstCard()).isEqualTo(card1);
+            List<Card> cards = dealer.openInitialCards();
+            assertAll(() -> {
+                assertThat(cards).hasSize(1);
+                assertThat(cards.getFirst()).isEqualTo(card1);
+            });
         }
     }
 

@@ -58,7 +58,7 @@ class BlackjackGameTest {
             Player player = (Player) game.getParticipants().getLast();
             game.addExtraCard(player); // 총 3장 카드 보유
 
-            assertThat(player.getCards()).hasSize(3);
+            assertThat(player.openCards()).hasSize(3);
         }
 
         @Test

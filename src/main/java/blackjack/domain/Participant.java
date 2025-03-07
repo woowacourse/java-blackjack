@@ -42,9 +42,11 @@ public abstract class Participant {
         return sum;
     }
 
-    public List<Card> getCards() {
+    public List<Card> openCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public abstract List<Card> openInitialCards();
 
     public abstract boolean isPossibleToAdd();
 

@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Dealer extends Participant {
 
     private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 16;
@@ -8,8 +10,9 @@ public class Dealer extends Participant {
         super();
     }
 
-    public Card openFirstCard() {
-        return super.cards.getFirst();
+    @Override
+    public List<Card> openInitialCards() {
+        return List.of(super.cards.getFirst());
     }
 
     @Override

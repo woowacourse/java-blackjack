@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Player extends Participant {
 
     private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
@@ -9,6 +11,11 @@ public class Player extends Participant {
     public Player(final String name) {
         validateName(name);
         this.name = name;
+    }
+
+    @Override
+    public List<Card> openInitialCards() {
+        return super.cards;
     }
 
     @Override

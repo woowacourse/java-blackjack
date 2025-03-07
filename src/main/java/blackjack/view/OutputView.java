@@ -1,10 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
-import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Participant;
-import blackjack.domain.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,13 +19,13 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", playerNames));
     }
 
-    public void printPlayerCardResult(final Player player) {
-        String cardResult = parseCardToString(player);
-        System.out.printf("%s카드: %s%n", player.getName(), cardResult);
+    public void printPlayerCardResult(final String name, final List<Card> cards) {
+        String cardResult = parseCardToString(cards);
+        System.out.printf("%s카드: %s%n", name, cardResult);
     }
 
-    public void printDealerCardResult(final Dealer dealer) {
-        Card firstCard = dealer.openFirstCard();
+    public void printDealerCardResult(final List<Card> cards) {
+        Card firstCard = cards.getFirst();
         String cardResult = firstCard.denomination().getText() + firstCard.suit().getText();
         System.out.printf("딜러카드: %s%n", cardResult);
     }
@@ -38,15 +35,15 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
     }
 
-    public void printDealerFinalCardResult(final Dealer dealer) {
-        String cardResult = parseCardToString(dealer);
+    public void printDealerFinalCardResult(final int sum, final List<Card> cards) {
+        String cardResult = parseCardToString(cards);
         System.out.println();
-        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.calculateDenominations());
+        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, sum);
     }
 
-    public void printPlayerFinalCardResult(final Player player) {
-        String cardResult = parseCardToString(player);
-        System.out.printf("%s카드: %s - 결과 %d%n", player.getName(), cardResult, player.calculateDenominations());
+    public void printPlayerFinalCardResult(final String name, final int sum, final List<Card> cards) {
+        String cardResult = parseCardToString(cards);
+        System.out.printf("%s카드: %s - 결과 %d%n", name, cardResult, sum);
     }
 
     public void printResultTitle() {
@@ -64,12 +61,12 @@ public class OutputView {
         System.out.printf("딜러: %s%n", sb);
     }
 
-    public void printPlayerResult(final Player player, final GameResult gameResult) {
-        System.out.printf("%s: %s%n", player.getName(), gameResult.getText());
+    public void printPlayerResult(final String name, final GameResult gameResult) {
+        System.out.printf("%s: %s%n", name, gameResult.getText());
     }
 
-    private String parseCardToString(final Participant participant) {
-        return participant.getCards()
+    private String parseCardToString(final List<Card> cards) {
+        return cards
                 .stream()
                 .map(card -> card.denomination().getText() + card.suit().getText())
                 .collect(Collectors.joining(", "));

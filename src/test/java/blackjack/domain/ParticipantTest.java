@@ -18,6 +18,11 @@ public class ParticipantTest {
     void initParticipant() {
         participant = new Participant() {
             @Override
+            public List<Card> openInitialCards() {
+                return super.openCards();
+            }
+
+            @Override
             public boolean isPossibleToAdd() {
                 return false;
             }
@@ -36,7 +41,7 @@ public class ParticipantTest {
 
             participant.addCards(card1, card2);
 
-            List<Card> cards = participant.getCards();
+            List<Card> cards = participant.openCards();
 
             assertAll(() -> {
                 assertThat(cards.getFirst().suit()).isEqualTo(Suit.HEART);
@@ -54,7 +59,7 @@ public class ParticipantTest {
 
             participant.addCards(card1, card2);
 
-            assertThat(participant.getCards()).hasSize(2);
+            assertThat(participant.openCards()).hasSize(2);
         }
     }
 

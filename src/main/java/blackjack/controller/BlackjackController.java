@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
@@ -41,9 +42,9 @@ public class BlackjackController {
         blackjackGame.initCardsToParticipants();
         outputView.printStartGame(blackjackGame.getPlayerNames());
 
-        outputView.printDealerCardResult(blackjackGame.findDealer());
+        outputView.printDealerCardResult(blackjackGame.findDealer().openInitialCards());
         for (Player player : blackjackGame.findPlayers()) {
-            outputView.printPlayerCardResult(player);
+            outputView.printPlayerCardResult(player.getName(), player.openCards());
         }
     }
 
@@ -57,7 +58,7 @@ public class BlackjackController {
         while (player.isPossibleToAdd() &&
                 inputView.readGetOneMore(player.getName())) {
             blackjackGame.addExtraCard(player);
-            outputView.printPlayerCardResult(player);
+            outputView.printPlayerCardResult(player.getName(), player.openCards());
         }
     }
 
@@ -68,9 +69,10 @@ public class BlackjackController {
     }
 
     private void showFinalCards(final BlackjackGame blackjackGame) {
-        outputView.printDealerFinalCardResult(blackjackGame.findDealer());
+        Dealer dealer = blackjackGame.findDealer();
+        outputView.printDealerFinalCardResult(dealer.calculateDenominations(), dealer.openCards());
         for (Player player : blackjackGame.findPlayers()) {
-            outputView.printPlayerFinalCardResult(player);
+            outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(), player.openCards());
         }
     }
 
@@ -81,7 +83,7 @@ public class BlackjackController {
         outputView.printResultTitle();
         outputView.printDealerResult(dealerResult);
         for (Entry<Player, GameResult> playerResult : playerResults.entrySet()) {
-            outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
+            outputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
         }
     }
 
