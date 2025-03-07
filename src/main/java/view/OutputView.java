@@ -43,7 +43,7 @@ public class OutputView {
     );
 
     private String cardNameOf(Card card) {
-        return rankNames.get(card.getRank()) + shapeNames.get(card.getShape());
+        return rankNames.get(card.rank()) + shapeNames.get(card.shape());
     }
 
     public void printSetUpCardDeck(SetUpCardsDTO setUpCardsDTO) {

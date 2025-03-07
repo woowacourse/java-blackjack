@@ -30,7 +30,7 @@ public class CardDeck {
 
     private boolean hasAce() {
         return deck.stream()
-            .anyMatch(card -> card.getRank() == Rank.ACE);
+            .anyMatch(card -> card.rank() == Rank.ACE);
     }
 
     private int calculateOptimalScore(int sum){
