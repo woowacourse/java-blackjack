@@ -129,4 +129,38 @@ class RuleTest {
             );
         }
 
+        @ParameterizedTest
+        @DisplayName("플레이어와 딜러 점수를 비교하여 게임 결과를 평가한다")
+        @MethodSource("provideGameResultEvaluationCases")
+        void evaluateGameResult(List<TrumpCard> playerCards, List<TrumpCard> dealerCards, GameResult expectedResult) {
+            // given
+            Rule rule = new Rule();
+
+            // when
+            GameResult result = rule.evaluateGameResult(playerCards, dealerCards);
+
+            // then
+            assertThat(result).isEqualTo(expectedResult);
+        }
+
+        static Stream<Arguments> provideGameResultEvaluationCases() {
+            return Stream.of(
+                    Arguments.of(
+                            List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS),
+                            List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS),
+                            GameResult.WIN
+                    ),
+                    Arguments.of(
+                            List.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS),
+                            List.of(TrumpCard.TEN_OF_CLUBS, TrumpCard.QUEEN_OF_SPADES),
+                            GameResult.DRAW
+                    ),
+                    Arguments.of(
+                            List.of(TrumpCard.FIVE_OF_SPADES, TrumpCard.THREE_OF_DIAMONDS),
+                            List.of(TrumpCard.TEN_OF_SPADES, TrumpCard.SEVEN_OF_HEARTS),
+                            GameResult.LOSE
+                    )
+            );
+        }
+    }
 }
