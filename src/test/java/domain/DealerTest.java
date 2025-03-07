@@ -60,16 +60,25 @@ public class DealerTest {
 			final CardHand cardHand = new CardHand(List.of(card1, card2));
 			final var dealer = new Dealer(cardHand);
 
-			final Player player = new Player("Winner");
+			final Player player = new Player("loser");
 			final List<Card> playerCards = List.of(new Card(CardNumber.ACE, Emblem.CLUB));
 			final Deck playerDeck = new Deck(new ArrayDeque<>(playerCards));
 			player.pickCard(playerDeck);
 
+			final Player winner = new Player("w");
+			final List<Card> winnerCards = List.of(new Card(CardNumber.ACE, Emblem.CLUB),
+				new Card(CardNumber.TEN, Emblem.CLUB));
+			final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
+			winner.pickCard(winnerDeck);
+			winner.pickCard(winnerDeck);
+
 			// when
 			dealer.startDuel(player);
+			dealer.startDuel(winner);
 
 			// then
 			assertThat(dealer.getWinCount()).isEqualTo(1);
+			assertThat(dealer.getLoseCount()).isEqualTo(1);
 		}
 
 	}
