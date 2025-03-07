@@ -1,11 +1,20 @@
 package view;
 
-import domain.*;
-
+import domain.Card;
+import domain.CardNumber;
+import domain.CardShape;
+import domain.Cards;
+import domain.Dealer;
+import domain.GameResult;
+import domain.Player;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
+    public void printErrorMessage(RuntimeException exception) {
+        System.out.printf("[ERROR] %s", exception.getMessage());
+    }
 
     public void printParticipantCardsInfo(Dealer dealer, List<Player> players, int cardCount) {
         List<String> names = players.stream().map(Player::getName).toList();

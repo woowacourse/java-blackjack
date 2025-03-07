@@ -1,7 +1,10 @@
 package controller;
 
-import domain.*;
-
+import domain.Dealer;
+import domain.Deck;
+import domain.GameResult;
+import domain.Player;
+import domain.RandomCardsGenerator;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -18,16 +21,20 @@ public class BlackJackController {
     }
 
     public void run() {
-        Deck deck = new Deck(new RandomCardsGenerator());
-        Dealer dealer = Dealer.init();
-        List<Player> players = createPlayers();
+        try {
+            Deck deck = new Deck(new RandomCardsGenerator());
+            Dealer dealer = Dealer.init();
+            List<Player> players = createPlayers();
 
-        deck.handoutCards(dealer, players);
-        askNewCardToAllPlayers(deck, players);
-        setupDealerCards(dealer, deck);
+            deck.handoutCards(dealer, players);
+            askNewCardToAllPlayers(deck, players);
+            setupDealerCards(dealer, deck);
 
-        showCardsResult(dealer, players);
-        showGameResult(dealer, players);
+            showCardsResult(dealer, players);
+            showGameResult(dealer, players);
+        } catch (RuntimeException e) {
+            outputView.printErrorMessage(e);
+        }
     }
 
     private List<Player> createPlayers() {
