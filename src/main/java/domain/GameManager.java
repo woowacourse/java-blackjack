@@ -75,13 +75,13 @@ public class GameManager {
             if (gameResult == GameResult.DRAW) {
                 result.merge(GameResult.DRAW, 1, Integer::sum);
             }
-            if (gameResult != GameResult.WIN) {
+            if (gameResult == GameResult.WIN) {
                 result.merge(GameResult.LOSE, 1, Integer::sum);
             }
-            if (gameResult != GameResult.LOSE) {
+            if (gameResult == GameResult.LOSE) {
                 result.merge(GameResult.WIN, 1, Integer::sum);
             }
         }
-        return Map.of(GameResult.WIN, 2);
+        return result;
     }
 }
