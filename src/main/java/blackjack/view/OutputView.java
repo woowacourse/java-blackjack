@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.domain.Rule.BLACK_JACK;
+import static blackjack.domain.Rule.DEALER_DRAW_THRESHOLD;
 import static blackjack.view.WinningType.DEFEAT;
 import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;
@@ -13,26 +15,28 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String JOIN_DELIMITER = ", ";
+
     public static void printInitialDistributionPrompt(final List<Name> playerNames) {
-        String names = joinToStringByDelimiter(playerNames, ", ");
+        String names = joinToStringByDelimiter(playerNames, JOIN_DELIMITER);
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", names);
     }
 
     public static void printGamblerCards(final Name name, final List<Card> cards) {
-        String ownCards = joinToStringByDelimiter(cards, ", ");
+        String ownCards = joinToStringByDelimiter(cards, JOIN_DELIMITER);
         System.out.printf("%s카드: %s\n", name, ownCards);
     }
 
     public static void printBusted(final Name playerName) {
-        System.out.printf("[Bust] %s의 카드 합이 21을 초과하여 패배하였습니다.\n", playerName);
+        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, BLACK_JACK);
     }
 
     public static void printDealerDraw() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_DRAW_THRESHOLD);
     }
 
     public static void printGamblerResult(final Name name, final List<Card> cards, final int score) {
-        String ownCards = joinToStringByDelimiter(cards, ", ");
+        String ownCards = joinToStringByDelimiter(cards, JOIN_DELIMITER);
         System.out.printf("%s카드: %s - 결과: %d\n", name, ownCards, score);
     }
 

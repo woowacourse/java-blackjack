@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.Rule.BLACK_JACK;
 import static blackjack.view.WinningType.DEFEAT;
 import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;
@@ -24,12 +25,12 @@ public class WinningDiscriminator {
         Map<WinningType, Integer> winningResult = createWinningResult();
 
         for (Integer playerScore : playerScores.values()) {
-            if (playerScore > 21) {
+            if (playerScore > BLACK_JACK) {
                 winningResult.put(WIN, winningResult.get(WIN) + 1);
                 continue;
             }
 
-            if (dealerScore > 21) {
+            if (dealerScore > BLACK_JACK) {
                 winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
                 continue;
             }
@@ -56,7 +57,7 @@ public class WinningDiscriminator {
 
     private WinningType judgePlayerResult(Name name) {
         int playerScore = playerScores.get(name);
-        if (playerScore > 21) {
+        if (playerScore > BLACK_JACK) {
             return DEFEAT;
         }
         if (playerScore > dealerScore) {

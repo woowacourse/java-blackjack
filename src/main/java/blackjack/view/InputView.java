@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import static blackjack.domain.Rule.DEALER_NAME;
 import static blackjack.view.ErrorMessage.INVALID_HIT_RESPONSE;
 import static blackjack.view.ErrorMessage.INVALID_PLAYER_COUNT;
 import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_DUPLICATED;
@@ -14,11 +15,16 @@ import java.util.Set;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String SPLIT_DELIMITER = ",";
+    private static final String OPTION_YES = "y";
+    private static final String OPTION_NO = "n";
+    private static final int MAX_PLAYER_COUNT = 6;
+    private static final int MIN_PLAYER_COUNT = 1;
 
     public static List<Name> inputPlayerName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String answer = scanner.nextLine();
-        String[] parsedName = answer.split(",");
+        String[] parsedName = answer.split(SPLIT_DELIMITER);
         validatePlayers(parsedName);
         validateNameEqualsDealerName(parsedName);
         List<Name> names = Arrays.stream(parsedName)
@@ -30,7 +36,7 @@ public class InputView {
 
     private static void validateNameEqualsDealerName(String[] parsedName) {
         List<String> playerNames = List.of(parsedName);
-        if (playerNames.contains("딜러")) {
+        if (playerNames.contains(DEALER_NAME.toString())) {
             throw new IllegalArgumentException(NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
         }
     }
@@ -43,19 +49,19 @@ public class InputView {
     }
 
     public static boolean inputPlayerHit(Name name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)\n", name, OPTION_YES, OPTION_NO);
         String answer = scanner.nextLine();
-        if (answer.equals("y")) {
+        if (answer.equals(OPTION_YES)) {
             return true;
         }
-        if (answer.equals("n")) {
+        if (answer.equals(OPTION_NO)) {
             return false;
         }
         throw new IllegalArgumentException(INVALID_HIT_RESPONSE.getMessage());
     }
 
     private static void validatePlayers(String[] parsedName) {
-        if (parsedName.length > 6 || parsedName.length < 1) {
+        if (parsedName.length > MAX_PLAYER_COUNT || parsedName.length < MIN_PLAYER_COUNT) {
             throw new IllegalArgumentException(INVALID_PLAYER_COUNT.getMessage());
         }
     }

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.Rule.BLACK_JACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -73,7 +74,7 @@ class HandsTest {
         hands.addNewCard(card2);
 
         // when
-        boolean result = hands.isScoreBelow(21);
+        boolean result = hands.isScoreBelow(BLACK_JACK);
 
         // then
         assertThat(result).isTrue();
