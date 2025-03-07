@@ -1,4 +1,4 @@
-package domain.cardsGenerator;
+package domain.card.cardsGenerator;
 
 import domain.card.Card;
 import domain.card.CardNumber;
