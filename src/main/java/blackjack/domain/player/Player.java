@@ -12,6 +12,8 @@ public abstract class Player implements Comparable<Player> {
 
     private final Name name;
     private final List<Card> cards;
+    private static final int MAX_HAND_VALUE = 21;
+    private static final int ACE_ADDITIONAL_VALUE = 10;
 
     public Player(final String name) {
         this.name = new Name(name);
@@ -29,7 +31,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     public boolean isPlayerBust() {
-        return calculateCardNumber() > 21;
+        return calculateCardNumber() > MAX_HAND_VALUE;
     }
 
     public boolean isPlayerNotBust() {
@@ -57,7 +59,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     private boolean canCalculateAceWithEleven(int sum) {
-        return hasAce() && sum + 10 <= 21;
+        return hasAce() && sum + ACE_ADDITIONAL_VALUE <= MAX_HAND_VALUE;
     }
 
     private boolean hasAce() {

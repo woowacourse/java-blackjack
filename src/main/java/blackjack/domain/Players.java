@@ -12,6 +12,8 @@ public class Players {
 
     private final Player dealer;
     private final List<Player> gamblers;
+    private static final int PLAYERS_INIT_CARD_COUNT = 2;
+    private static final int DEALER_HIT_MAX_VALUE = 16;
 
     public Players() {
         dealer = new Dealer();
@@ -39,9 +41,9 @@ public class Players {
     }
 
     public void initPlayers(CardPack cardPack) {
-        dealer.pushDealCard(cardPack, 2);
+        dealer.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT);
         gamblers.forEach(gambler ->
-                gambler.pushDealCard(cardPack, 2));
+                gambler.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT));
     }
 
     public void dealAddCardForDealer(CardPack cardPack) {
@@ -69,7 +71,7 @@ public class Players {
     }
 
     public boolean isDealerHit() {
-        return dealer.calculateCardNumber() <= 16;
+        return dealer.calculateCardNumber() <= DEALER_HIT_MAX_VALUE;
     }
 
     public GameResults getGameResult() {
