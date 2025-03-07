@@ -2,11 +2,14 @@ package domain;
 
 public enum GameResult {
 
-    WIN,
-    LOSE,
-    DRAW;
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무");
 
-    GameResult() {
+    private final String description;
+
+    GameResult(final String description) {
+        this.description = description;
     }
 
     public static GameResult findByScores(int score, int compareScore) {
@@ -17,5 +20,9 @@ public enum GameResult {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
