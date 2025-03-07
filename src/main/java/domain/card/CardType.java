@@ -95,6 +95,10 @@ public enum CardType {
         Type(final String name) {
             this.name = name;
         }
+
+        public String getName() {
+            return name;
+        }
     }
 
     public enum Score {
