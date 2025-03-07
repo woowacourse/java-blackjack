@@ -30,7 +30,6 @@ public class BlackJackController {
         Participants participants = createGameParticipants();
 
         CardDeck cardDeck = createCardDeck(cardBundle);
-        BlackJackResultCalculator blackJackResultCalculator = new BlackJackResultCalculator();
 
         receiveCardProcessOfParticipants(participants, cardDeck);
 
@@ -38,7 +37,7 @@ public class BlackJackController {
         receiveCardProcessOfPlayer(participants, cardDeck);
         receiveCardProcessOfDealer(participants, cardDeck);
 
-        calculateBackJackResultProcess(participants, blackJackResultCalculator);
+        calculateBackJackResultProcess(participants);
     }
 
     private void receiveCardProcessOfParticipants(Participants participants,
@@ -50,15 +49,13 @@ public class BlackJackController {
         outputView.printInitialParticipantHands(participants.getParticipants());
     }
 
-    private void calculateBackJackResultProcess(Participants participants,
-        BlackJackResultCalculator blackJackResultCalculator) {
+    private void calculateBackJackResultProcess(Participants participants) {
         printAllParticipantsInfo(participants);
-        printAllParticipantGameResult(participants, blackJackResultCalculator);
+        printAllParticipantGameResult(participants);
     }
 
-    private void printAllParticipantGameResult(Participants participants,
-        BlackJackResultCalculator blackJackResultCalculator) {
-        ParticipantsResult participantsResult = blackJackResultCalculator.calculate(participants);
+    private void printAllParticipantGameResult(Participants participants) {
+        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
         outputView.printGameResult(participantsResult);
     }
 

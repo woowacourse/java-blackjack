@@ -5,7 +5,10 @@ import java.util.List;
 
 public class BlackJackResultCalculator {
 
-    public ParticipantsResult calculate(Participants participants) {
+    private BlackJackResultCalculator() {
+    }
+
+    public static ParticipantsResult calculate(Participants participants) {
         Participant dealer = participants.getDealer();
         List<Participant> players = participants.getPlayerParticipants();
         List<PlayerResult> playerResults = new ArrayList<>();

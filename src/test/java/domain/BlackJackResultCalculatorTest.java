@@ -24,11 +24,10 @@ public class BlackJackResultCalculatorTest {
         Participant player3 = new Player("c");
         player3.addCard(new Card(Shape.SPADE, Rank.FIVE));
         List<Participant> players = List.of(dealer, player1, player2, player3);
-        BlackJackResultCalculator blackJackResultCalculator = new BlackJackResultCalculator();
-
         Participants participants = new Participants(players);
+
         // when
-        ParticipantsResult participantsResult = blackJackResultCalculator.calculate(participants);
+        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
 
         // then
         assertAll(
