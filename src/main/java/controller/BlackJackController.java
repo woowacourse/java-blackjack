@@ -38,14 +38,27 @@ public class BlackJackController {
         final int size = gameManager.calculatePlayerSize();
         for (int index = 0; index < size; index++) {
             final Player player = gameManager.findPlayerByIndex(index);
-            while (gameManager.isAbleToHit(player)) {
-                final AnswerCommand answerCommand = inputView.readAnswer(player.getName());
+            if (gameManager.isAbleToHit(player)) {
+                continue;
+            }
+            AnswerCommand answerCommand = inputView.readAnswer(player.getName());
+            outputView.printPlayerCards(player);
+            while (Objects.equals(answerCommand, AnswerCommand.YES) && gameManager.isAbleToHit(player)) {
+                answerCommand = inputView.readAnswer(player.getName());
                 if (Objects.equals(answerCommand, AnswerCommand.NO)) {
-                    break;
+                    continue;
                 }
                 player.receiveCard();
             }
         }
+
+        final int count = gameManager.giveCardsToDealer();
+        if (count > 0) {
+            outputView.printDealerReceivedCardCount(count);
+        }
+
+        outputView.printGamerCardsAndScore(dealer, players);
+        outputView.printGameResult(gameManager.calculateDealerGameResult(), gameManager.calculatePlayerGameResult());
     }
 
 
