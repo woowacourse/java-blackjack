@@ -42,7 +42,7 @@ public enum CardNumberType {
         return ACE.cardNumbers.getLast();
     }
 
-    public static CardNumberType findByRandom(int randomIndex) {
+    public static CardNumberType findByRandomIndex(int randomIndex) {
         validateIndex(randomIndex);
         return CardNumberType.values()[randomIndex];
     }

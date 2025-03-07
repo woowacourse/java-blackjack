@@ -7,8 +7,8 @@ public class CardRandomGenerator implements RandomGenerator<Card> {
 
     public Card generate() {
         return new Card(
-                CardNumberType.findByRandom(createCardNumberTypeRandomIndex()),
-                CardType.findByRandom(createCardTypeRandomIndex())
+                CardNumberType.findByRandomIndex(createCardNumberTypeRandomIndex()),
+                CardType.findByRandomIndex(createCardTypeRandomIndex())
         );
     }
 

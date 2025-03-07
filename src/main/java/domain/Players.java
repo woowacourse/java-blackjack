@@ -6,8 +6,19 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         this.players = players;
+    }
+
+    public static Players createByNames(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(playerName -> new Player(playerName, Cards.createEmpty()))
+                .toList();
+        return new Players(players);
+    }
+
+    public static Players create(List<Player> players) {
+        return new Players(players);
     }
 
     public List<Player> getPlayers() {

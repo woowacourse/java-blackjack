@@ -10,7 +10,7 @@ public enum CardType {
 
     private static final String INVALID_INDEX = "해당하는 카드 모양의 인덱스가 존재하지 않습니다.";
 
-    public static CardType findByRandom(int randomIndex) {
+    public static CardType findByRandomIndex(int randomIndex) {
         validateIndex(randomIndex);
         return CardType.values()[randomIndex];
     }

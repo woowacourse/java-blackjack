@@ -10,7 +10,7 @@ public class GameResult {
         this.gameResults = gameResults;
     }
 
-    public int calculateCount(GameResultStatus status) {
+    public int calculateStatusCount(GameResultStatus status) {
         return (int) getAllPlayers().stream()
                 .filter(player -> status.isEqualTo(gameResults.get(player)))
                 .count();

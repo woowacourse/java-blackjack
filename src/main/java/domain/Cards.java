@@ -5,6 +5,7 @@ import static domain.CardNumberType.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Cards {
     private static final int VALID_MAX_SUM_LIMIT = 21;
@@ -87,5 +88,19 @@ public class Cards {
     private boolean hasNotAce() {
         return cards.stream()
                 .noneMatch(card -> card.isEqualCardNumberType(ACE));
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Cards other = (Cards) object;
+        return Objects.equals(cards, other.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cards);
     }
 }

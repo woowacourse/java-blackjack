@@ -5,7 +5,6 @@ import static view.AnswerType.*;
 import domain.Players;
 import domain.Referee;
 import domain.CardGiver;
-import domain.Cards;
 import domain.Dealer;
 import domain.GameResult;
 import domain.Participant;
@@ -34,7 +33,6 @@ public class BlackjackApplication {
 
     public void execute() {
         final Dealer dealer = Dealer.createEmpty();;
-        final Referee referee = new Referee();
         final Players players = initializePlayers();
 
         initializeParticipantCards(dealer, players);
@@ -43,14 +41,12 @@ public class BlackjackApplication {
 
         decideAdditionalCardForDealer(dealer);
 
-        calculateResult(dealer, players, referee);
+        calculateResult(dealer, players);
     }
 
     private Players initializePlayers() {
         List<String> playerNames = inputView.requestPlayerNames();
-        List<Player> players = createPlayers(playerNames);
-
-        return new Players(players);
+        return Players.createByNames(playerNames);
     }
 
     private void initializeParticipantCards(Dealer dealer, Players players) {
@@ -62,11 +58,12 @@ public class BlackjackApplication {
     }
 
     private void askForAdditionalCard(Players players) {
-        players.getPlayers().forEach(this::processPlayerCardRequest);
+        players.getPlayers()
+                .forEach(this::processPlayerCardRequest);
     }
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
-        if(dealer.isUnderDrawLimit()) {
+        if(dealer.isPossibleDraw()) {
             dealer.addCard(cardGiver.giveOne());
             outputView.printDealerDraw();
             return;
@@ -74,16 +71,12 @@ public class BlackjackApplication {
         outputView.printDealerNoDraw();
     }
 
-    private void calculateResult(Dealer dealer, Players players, Referee referee) {
+    private void calculateResult(Dealer dealer, Players players) {
+        final Referee referee = new Referee();
+
         outputView.printCardsResult(dealer, players);
         GameResult gameResult = referee.judge(dealer, players);
         outputView.printGameResults(gameResult);
-    }
-
-    private List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(playerName -> new Player(playerName, Cards.createEmpty()))
-                .toList();
     }
 
     private void processPlayerCardRequest(Player player) {

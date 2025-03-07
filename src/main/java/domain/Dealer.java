@@ -17,7 +17,7 @@ public class Dealer extends Participant{
         return cards.getFirst();
     }
 
-    public boolean isUnderDrawLimit() {
+    public boolean isPossibleDraw() {
         if (cards.isAceCountEqualTo(DOUBLE_ACE_COUNT)) {
             return true;
         }

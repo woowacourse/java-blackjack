@@ -56,9 +56,9 @@ public class OutputView {
     }
 
     public void printGameResults(GameResult gameResult) {
-        int winCount = gameResult.calculateCount(WIN);
-        int loseCount = gameResult.calculateCount(LOSE);
-        int drawCount = gameResult.calculateCount(DRAW);
+        int winCount = gameResult.calculateStatusCount(WIN);
+        int loseCount = gameResult.calculateStatusCount(LOSE);
+        int drawCount = gameResult.calculateStatusCount(DRAW);
         System.out.println("\n## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
         gameResult.getAllPlayers()

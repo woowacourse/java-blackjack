@@ -1,11 +1,14 @@
 package domain;
 
+import static util.ExceptionConstants.ERROR_HEADER;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GivenCards {
     private static final int ALL_CARD_COUNT = 52;
     private static final int DEFAULT_CARD_COUNT = 2;
+    private static final String NO_ENOUGH_CARD = "카드가 2장 미만으로 남았습니다.";
 
     private final List<Card> givenCards;
 
@@ -29,7 +32,13 @@ public class GivenCards {
         return true;
     }
 
-    public boolean notEnoughUnique() {
+    public void checkEnoughUnique() {
+        if (isNotEnoughUnique()) {
+            throw new IllegalStateException(ERROR_HEADER + NO_ENOUGH_CARD);
+        }
+    }
+
+    public boolean isNotEnoughUnique() {
         return ALL_CARD_COUNT - givenCards.size() < DEFAULT_CARD_COUNT;
     }
 }
