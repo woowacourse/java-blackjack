@@ -15,10 +15,10 @@ public abstract class Participant {
 
     abstract boolean canHit();
 
-    public abstract int calculateTotalCardScore();
+    public abstract int calculateScore();
 
     public boolean isBust() {
-        return calculateTotalCardScore() > TARGET_SCORE;
+        return calculateScore() > TARGET_SCORE;
     }
 
     public void addCard() {

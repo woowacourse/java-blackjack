@@ -15,7 +15,7 @@ public record FinalResultDto(
         List<String> cardInfos = participant.getCardDeck().stream()
                 .map(card -> card.getRank().getName() + card.getSuit().getName())
                 .toList();
-        int score = participant.calculateTotalCardScore();
+        int score = participant.calculateScore();
         boolean isBust = participant.isBust();
 
         return new FinalResultDto(name, cardInfos, score, isBust);

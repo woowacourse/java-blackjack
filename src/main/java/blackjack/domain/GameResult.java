@@ -12,8 +12,8 @@ public enum GameResult {
     }
 
     public static GameResult checkDealerWin(final Player player, final Dealer dealer) {
-        int playerScore = player.calculateTotalCardScore();
-        int dealerScore = dealer.calculateTotalCardScore();
+        int playerScore = player.calculateScore();
+        int dealerScore = dealer.calculateScore();
 
         if (player.isBust()) {
             return GameResult.WIN;

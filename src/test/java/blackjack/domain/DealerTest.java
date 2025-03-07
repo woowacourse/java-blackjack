@@ -53,7 +53,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
-        int totalScore = dealer.calculateTotalCardScore();
+        int totalScore = dealer.calculateScore();
         assertThat(totalScore).isEqualTo(17);
     }
 

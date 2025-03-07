@@ -56,7 +56,7 @@ class PlayerTest {
         Player player = new Player("user1", cardDeck, cardDump);
 
         // when
-        int totalScore = player.calculateTotalCardScore();
+        int totalScore = player.calculateScore();
         assertThat(totalScore).isEqualTo(17);
     }
 
@@ -72,7 +72,7 @@ class PlayerTest {
         Player player = new Player("user1", cardDeck, cardDump);
 
         // when
-        int totalScore = player.calculateTotalCardScore();
+        int totalScore = player.calculateScore();
         assertThat(totalScore).isEqualTo(20);
     }
 
@@ -89,7 +89,7 @@ class PlayerTest {
         Player player = new Player("user1", cardDeck, cardDump);
 
         // when
-        int totalScore = player.calculateTotalCardScore();
+        int totalScore = player.calculateScore();
         assertThat(totalScore).isEqualTo(17);
     }
 
@@ -106,7 +106,7 @@ class PlayerTest {
         Player player = new Player("user1", cardDeck, cardDump);
 
         // when
-        int totalScore = player.calculateTotalCardScore();
+        int totalScore = player.calculateScore();
         assertThat(totalScore).isEqualTo(21);
     }
 

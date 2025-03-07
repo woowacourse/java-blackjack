@@ -21,7 +21,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public int calculateTotalCardScore() {
+    public int calculateScore() {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
         return possibleSum.stream()
                 .filter(sum -> sum <= TARGET_SCORE)
