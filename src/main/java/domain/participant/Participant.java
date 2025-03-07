@@ -1,9 +1,9 @@
 package domain.participant;
 
 import domain.BlackjackRule;
-import domain.Card;
-import domain.Cards;
 import domain.GameRule;
+import domain.card.Card;
+import domain.card.Cards;
 
 public class Participant {
     private final Cards cards;

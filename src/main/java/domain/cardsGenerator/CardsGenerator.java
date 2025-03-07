@@ -1,6 +1,6 @@
 package domain.cardsGenerator;
 
-import domain.Card;
+import domain.card.Card;
 import java.util.List;
 
 public interface CardsGenerator {

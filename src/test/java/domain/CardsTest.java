@@ -2,6 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.card.Cards;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;

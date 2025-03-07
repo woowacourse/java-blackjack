@@ -1,10 +1,10 @@
 package view;
 
-import domain.Card;
-import domain.CardNumber;
-import domain.CardShape;
-import domain.Cards;
 import domain.GameResult;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;

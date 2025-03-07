@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Cards;
+import domain.card.Cards;
 import java.util.Objects;
 
 public class Player extends Participant {

@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.Cards;
 import domain.GameResult;
+import domain.card.Cards;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
