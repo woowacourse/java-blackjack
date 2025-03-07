@@ -5,9 +5,12 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
+import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class OutputView {
 
@@ -23,8 +26,18 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", count);
     }
 
-    public void printCardsAndResult(String name, Cards cards, int result) {
-        System.out.printf("%s카드: %s - 결과: %d\n", name, getCardsText(cards), result);
+    public void printPlayersCardAndSum(Players players) {
+        Set<Player> allPlayers = players.getPlayers();
+        allPlayers.forEach(this::printCardsAndResult);
+    }
+
+    public void printDealerCardsAndResult(Dealer dealer) {
+        System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(dealer.getCards()), dealer.getCardScore());
+    }
+
+    public void printCardsAndResult(Player player) {
+        System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), getCardsText(player.getCards()),
+                player.getCardScore());
     }
 
     public void printResult(Map<GameResult, Integer> dealerResult, Map<Player, GameResult> playerResult) {

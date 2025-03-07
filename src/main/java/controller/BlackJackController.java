@@ -63,10 +63,8 @@ public class BlackJackController {
     }
 
     private void showCardsResult(Dealer dealer, Players players) {
-        outputView.printCardsAndResult("딜러", dealer.getCards(), dealer.getCardScore());
-        for (Player player : players.getPlayers()) {
-            outputView.printCardsAndResult(player.getName(), player.getCards(), player.getCardScore());
-        }
+        outputView.printDealerCardsAndResult(dealer);
+        outputView.printPlayersCardAndSum(players);
     }
 
     private void showGameResult(Dealer dealer, Players players) {
