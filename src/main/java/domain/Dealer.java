@@ -2,10 +2,11 @@ package domain;
 
 public class Dealer extends Gamer {
 
+    private static final String NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
 
     public Dealer() {
-        super("딜러");
+        super(NAME);
     }
 
     public boolean hit(Cards totalCards) {
