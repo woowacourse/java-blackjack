@@ -1,7 +1,9 @@
-package domain.participant;
+package domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
