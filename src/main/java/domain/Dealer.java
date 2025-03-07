@@ -5,14 +5,15 @@ public class Dealer extends Player {
     private static final int HIT_THRESHOLD = 16;
 
     public Dealer() {
-        super("dealer");
+        super("딜러");
     }
 
-    @Override
-    public void hit(Cards totalCards) {
+    public boolean dealerHit(Cards totalCards) {
         if (canHit()) {
             super.hit(totalCards);
+            return true;
         }
+        return false;
     }
 
     private boolean canHit() {
