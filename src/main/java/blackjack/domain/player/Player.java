@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class Player implements Comparable<Player> {
+public abstract class Player implements Comparable<Player> {
 
     private final String name;
     private final List<Card> cards;
@@ -50,9 +50,7 @@ public class Player implements Comparable<Player> {
         return name;
     }
 
-    public List<Card> getOpenedCards() {
-        return getCards();
-    }
+    abstract public List<Card> getOpenedCards();
 
     public List<Card> getCards() {
         return cards;
