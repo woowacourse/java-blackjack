@@ -29,25 +29,29 @@ public class BlackjackController {
     }
 
     public void run() {
-        // 블랙잭 게임 구성하기
         final CardManager cardManager = new CardManager(new CardRandomGenerator());
         final Participants participants = makeParticipants();
         final BlackjackGame blackjackGame = new BlackjackGame(cardManager, participants);
 
-        // 초기 분배하기
-        blackjackGame.spreadInitialCards();
-        resultView.printSpreadCard(participants);
-
-        // 플레이어마다 카드 나눠주기
-        spreadPlayersExtraCards(blackjackGame);
-        spreadDealerExtraCards(blackjackGame);
-
-        // 딜러와 플레이어가 가진 카드와 합 보여주기
+        spreadInitialCards(blackjackGame, participants);
+        spreadExtraCards(blackjackGame);
         resultView.printCardsAndSum(participants);
+        showWinningResult(blackjackGame);
+    }
 
-        // 딜러와 플레이어의 승패 보여주기
+    private void showWinningResult(final BlackjackGame blackjackGame) {
         final Map<String, ResultStatus> result = blackjackGame.calculateWinningResult();
         resultView.showWinningResult(result);
+    }
+
+    private void spreadExtraCards(final BlackjackGame blackjackGame) {
+        spreadPlayersExtraCards(blackjackGame);
+        spreadDealerExtraCards(blackjackGame);
+    }
+
+    private void spreadInitialCards(final BlackjackGame blackjackGame, final Participants participants) {
+        blackjackGame.spreadInitialCards();
+        resultView.printSpreadCard(participants);
     }
 
     private void spreadDealerExtraCards(final BlackjackGame blackjackGame) {

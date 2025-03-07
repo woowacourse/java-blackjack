@@ -95,6 +95,10 @@ public class ResultView {
         int drawCount = countResultStatus(result, ResultStatus.DRAW);
         int loseCount = countResultStatus(result, ResultStatus.WIN);
         System.out.printf(WINNING_DEALER_RESULT_FORMAT + LINE, winCount, drawCount, loseCount);
+        showResultStatus(result);
+    }
+
+    private void showResultStatus(final Map<String, ResultStatus> result) {
         for (Entry<String, ResultStatus> entry : result.entrySet()) {
             System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey(),
                     getResultStatusName(entry.getValue()));
