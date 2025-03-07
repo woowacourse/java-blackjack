@@ -69,4 +69,14 @@ class GameManagerTest {
                 () -> assertThat(gameManager.getPlayers().getDealer().getCards().size()).isEqualTo(1)
         );
     }
+
+    @Test
+    @DisplayName("딜러의 카드가 히트가 아니면 false 를 반환한다")
+    void if_the_dealer_card_is_not_hit_get_false() {
+        GameManager gameManager = new GameManager(blackjackShuffle);
+        gameManager.addGamblers(List.of(new Gambler("비타")));
+        boolean result = gameManager.isDealerHitThenDealAddCard();
+
+        assertThat(result).isFalse();
+    }
 }

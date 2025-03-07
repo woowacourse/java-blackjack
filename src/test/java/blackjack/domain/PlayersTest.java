@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
 
@@ -90,6 +91,24 @@ class PlayersTest {
         // then
         assertThat(result)
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름은 중복 될 수 없다")
+    void the_player_s_name_is_duplicate___no() {
+        Players players = new Players();
+        assertThatThrownBy(() ->
+                players.addGamblers(List.of(new Gambler("비타"), new Gambler("비타"), new Gambler("비타")))
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름은 길이가 공백이면 예외를 던진다")
+    void 플레이어의_이름은_길이가_공백이면_예외를_던진다() {
+        Players players = new Players();
+        assertThatThrownBy(() ->
+                players.addGamblers(List.of(new Gambler("")))
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 
     private static class SortShuffle implements BlackjackShuffle {
