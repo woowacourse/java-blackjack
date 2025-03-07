@@ -2,11 +2,13 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -48,4 +50,61 @@ public class PlayerTest {
 
     }
 
+    @Nested
+    @DisplayName("결투를 진행한다.")
+    class Duel {
+
+        @DisplayName("올바르게 승자를 가려낸다.")
+        @Test
+        public void duel() throws Exception {
+            // given
+            final Player winner = new Player("Winner");
+            final List<Card> winnerCards = List.of(new Card(CardNumber.ACE, Emblem.CLUB));
+            final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
+            winner.pickCard(winnerDeck);
+
+            final Player loser = new Player("Loser");
+            final List<Card> loserCards = List.of(new Card(CardNumber.NINE, Emblem.CLUB));
+            final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
+            loser.pickCard(loserDeck);
+
+            final Dealer dealer = new Dealer();
+            final List<Card> dealerCards = List.of(new Card(CardNumber.TEN, Emblem.CLUB));
+            final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
+            dealer.pickCard(dealerDeck);
+
+            // when
+            winner.duel(dealer.getParticipant());
+            loser.duel(dealer.getParticipant());
+
+            // then
+            assertThat(winner.getIsWinDuel()).isTrue();
+            assertThat(loser.getIsWinDuel()).isFalse();
+        }
+
+        @DisplayName("21점이 넘는다면, 상대방이 승리한다.")
+        @Test
+        public void duelOverThan() throws Exception {
+            // given
+            final Player loser = new Player("Loser");
+            final List<Card> loserCards = List.of(
+                new Card(CardNumber.TEN, Emblem.SPADE), new Card(CardNumber.TEN, Emblem.CLUB),
+                new Card(CardNumber.TWO, Emblem.SPADE));
+            final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
+            loser.pickCard(loserDeck);
+            loser.pickCard(loserDeck);
+            loser.pickCard(loserDeck);
+
+            final Dealer dealer = new Dealer();
+            final List<Card> dealerCards = List.of(new Card(CardNumber.TEN, Emblem.CLUB));
+            final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
+            dealer.pickCard(dealerDeck);
+
+            // when
+            loser.duel(dealer.getParticipant());
+
+            // then
+            assertThat(loser.getIsWinDuel()).isFalse();
+        }
+    }
 }
