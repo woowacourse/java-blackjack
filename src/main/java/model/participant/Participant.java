@@ -1,5 +1,6 @@
 package model.participant;
 
+import java.util.Collections;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
@@ -37,6 +38,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return Collections.unmodifiableList(cards.getCards());
     }
 }
