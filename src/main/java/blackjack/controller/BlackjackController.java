@@ -59,14 +59,15 @@ public class BlackjackController {
 
     private void spreadPlayersExtraCards(final BlackjackGame blackjackGame) {
         for (int index = 0; index < blackjackGame.getPlayerSize(); index++) {
-            final Player player = blackjackGame.getPlayer(index);
-            while (blackjackGame.canPlayerMoreCard(index)) {
-                if (!isMoreCard(player)) {
-                    break;
-                }
-                blackjackGame.spreadOneCardToPlayer(index);
-                resultView.printParticipantTotalCards(player);
-            }
+            spreadExtraCards(blackjackGame, index);
+        }
+    }
+
+    private void spreadExtraCards(final BlackjackGame blackjackGame, final int index) {
+        final Player player = blackjackGame.getPlayer(index);
+        while (blackjackGame.canPlayerMoreCard(index) && isMoreCard(player)) {
+            blackjackGame.spreadOneCardToPlayer(index);
+            resultView.printParticipantTotalCards(player);
         }
     }
 
