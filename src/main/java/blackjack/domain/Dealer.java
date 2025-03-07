@@ -21,8 +21,9 @@ public class Dealer extends Participant {
 
     @Override
     boolean canHit() {
-        int score = calculateScore();
-        return score <= DEALER_HIT_THRESHOLD;
+        Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
+        int hitScore = Collections.max(possibleScore);
+        return hitScore <= DEALER_HIT_THRESHOLD;
     }
 
     @Override
