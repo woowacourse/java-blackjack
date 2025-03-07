@@ -80,25 +80,9 @@ public class GameManager {
     }
 
     private PlayerWinningResult calculatePlayerWinningResult(Player player, int dealerPoint) {
-
         int playerPoint = cardManager.calculateSumByNickname(player);
-        if (playerPoint > 21) {
-            playerPoint = 0;
-        }
-
-        if (dealerPoint > 21) {
-            dealerPoint = 0;
-        }
-
-        if (playerPoint > dealerPoint) {
-            return new PlayerWinningResult(player.getNickname(), GameResultType.WIN);
-        }
-
-        if (playerPoint < dealerPoint) {
-            return new PlayerWinningResult(player.getNickname(), GameResultType.LOSE);
-        }
-
-        return new PlayerWinningResult(player.getNickname(), GameResultType.DRAW);
+        GameResultType resultType = GameResultType.parse(playerPoint, dealerPoint);
+        return new PlayerWinningResult(player.getNickname(), resultType);
     }
 
     private HiddenDealerHandState getHiddenDealerHandState() {

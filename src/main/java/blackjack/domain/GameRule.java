@@ -24,5 +24,10 @@ public enum GameRule {
         return value;
     }
 
-
+    public static int processBustPoint(int point) {
+        if (point > 21) {
+            return 0;
+        }
+        return point;
+    }
 }

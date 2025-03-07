@@ -31,13 +31,15 @@ public class CardManager {
         List<Card> drawnCards = cardDeck.drawCard(count);
 
         if (!nicknameToCards.containsKey(player.getNickname())) {
-            Cards newCards = Cards.initialize();
-            newCards.add(drawnCards);
-            nicknameToCards.put(player.getNickname(), newCards);
-            return;
+            registerDefaultCards(player);
         }
 
         Cards cards = nicknameToCards.get(player.getNickname());
         cards.add(drawnCards);
+    }
+
+    private void registerDefaultCards(Player player) {
+        Cards newCards = Cards.initialize();
+        nicknameToCards.put(player.getNickname(), newCards);
     }
 }

@@ -22,6 +22,19 @@ public enum GameResultType {
         return DRAW;
     }
 
+    public static GameResultType parse(int playerPoint, int dealerPoint) {
+        playerPoint = GameRule.processBustPoint(playerPoint);
+        dealerPoint = GameRule.processBustPoint(dealerPoint);
+
+        if (playerPoint > dealerPoint) {
+            return GameResultType.WIN;
+        }
+        if (playerPoint < dealerPoint) {
+            return GameResultType.LOSE;
+        }
+        return DRAW;
+    }
+
     public String getDescription() {
         return description;
     }
