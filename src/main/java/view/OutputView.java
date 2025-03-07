@@ -1,26 +1,17 @@
 package view;
 
 import domain.Card;
-import domain.CardDeck;
-import domain.Dealer;
-import domain.Player;
 import domain.Rank;
 import domain.SetUpCardsDTO;
 import domain.Shape;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-/*    Map<Rank, String> //ACE -> "A"
-    Map<Shape, String> //SPADE -> "스페이드"*/
-
     Map<Rank, String> rankNames = Map.ofEntries(
         Map.entry(Rank.ACE, "A"),
-        Map.entry(Rank.ACE_HIGH, "A"),
         Map.entry(Rank.TWO, "2"),
         Map.entry(Rank.THREE, "3"),
         Map.entry(Rank.FOUR, "4"),
@@ -52,6 +43,14 @@ public class OutputView {
         System.out.println("딜러카드: " + cardNameOf(dealerOpenCard));
         Map<String, List<Card>> playerCards = setUpCardsDTO.cards();
         playerCards.forEach((key, value) -> System.out.printf("%s카드: %s%n", key, cardNames(value)));
+    }
+
+    public void printTakenMoreCards(String name, List<Card> cards) {
+        System.out.printf("%s카드: %s\n", name, cardNames(cards));
+    }
+
+    public void printDealerTake() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     private String cardNames(List<Card> cards) {

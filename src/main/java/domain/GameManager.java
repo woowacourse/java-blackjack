@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,6 +23,25 @@ public class GameManager {
     public void distributeSetUpCards() {
         dealer.setUpCardDeck(cardPack.poll(), cardPack.poll());
         players.forEach(player -> player.setUpCardDeck(cardPack.poll(), cardPack.poll()));
+    }
+
+    public void distributeExtraCards(TakeMoreCardSelector selector) {
+        for (Player player : players) {
+            while (player.canTakeMoreCard()) {
+                if (selector.isYes(player.getName())){
+                    player.takeMoreCard(cardPack.poll());
+                    selector.takenResult(player.getName(), player.getCards());
+                    continue;
+                }
+                selector.takenResult(player.getName(), player.getCards());
+                break;
+            }
+        }
+
+        if (dealer.canTakeMoreCard()) {
+            dealer.takeMoreCard(cardPack.poll());
+            selector.dealerTakenResult();
+        }
     }
 
     public GameResult evaluateFinalScore() {

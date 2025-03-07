@@ -5,6 +5,7 @@ import domain.Dealer;
 import domain.GameManager;
 import domain.Player;
 import domain.SetUpCardsDTO;
+import domain.TakeMoreCardSelector;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,8 @@ public class BlackjackController {
         gameManager.distributeSetUpCards();
         SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(setUpCardsDTO);
+
+        gameManager.distributeExtraCards(new TakeMoreCardViewSelector());
     }
 
     public SetUpCardsDTO createSetUpCardsDTO(Dealer dealer, List<Player> players) {
@@ -44,5 +47,23 @@ public class BlackjackController {
         players.forEach(p -> cards.put(p.getName(), p.getCards()));
 
         return new SetUpCardsDTO(dealerOpenCard, cards);
+    }
+
+    private class TakeMoreCardViewSelector implements TakeMoreCardSelector {
+
+        @Override
+        public boolean isYes(String name) {
+            return inputView.getYesOrNo(name);
+        }
+
+        @Override
+        public void takenResult(String name, List<Card> cards) {
+            outputView.printTakenMoreCards(name, cards);
+        }
+
+        @Override
+        public void dealerTakenResult() {
+            outputView.printDealerTake();
+        }
     }
 }

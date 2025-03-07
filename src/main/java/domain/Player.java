@@ -33,6 +33,11 @@ public class Player implements Participant {
     }
 
     @Override
+    public boolean canTakeMoreCard(){
+        return (calculateScore() <= 21);
+    }
+
+    @Override
     public void takeMoreCard(Card card) {
         cardDeck.takeMore(card);
     }
