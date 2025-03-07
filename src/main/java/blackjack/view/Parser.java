@@ -67,10 +67,10 @@ public final class Parser {
         return playersResult.entrySet().stream().map(entry -> {
             Player player = entry.getKey();
             GameResultType resultType = entry.getValue();
-            return player.getName() + ": " + resultType.getDescription();
+
+            return player.getName() + ": " + parseGameResult(resultType);
         }).collect(Collectors.joining(System.lineSeparator()));
     }
-
 
     private static String parseResultCount(Map<GameResultType, Integer> results, GameResultType gameResultType) {
         Integer count = results.getOrDefault(gameResultType, 0);
@@ -78,7 +78,19 @@ public final class Parser {
             return "";
         }
 
-        return count + gameResultType.getDescription();
+        return count + parseGameResult(gameResultType);
+    }
+
+    private static String parseGameResult(GameResultType gameResultType) {
+        if (gameResultType.equals(GameResultType.WIN)) {
+            return "승";
+        }
+
+        if (gameResultType.equals(GameResultType.LOSE)) {
+            return "패";
+        }
+
+        return "무";
     }
 
 

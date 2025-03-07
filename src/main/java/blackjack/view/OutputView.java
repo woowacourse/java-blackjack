@@ -33,8 +33,14 @@ public final class OutputView {
 
     public static void printCardResult(Players players, Dealer dealer) {
         System.out.println(Parser.parseDealerCardResult(dealer));
-        players.getPlayers()
-                .forEach(player -> System.out.println(Parser.parsePlayerCardResult(player)));
+
+        for (Player player : players.getPlayers()) {
+            System.out.println(Parser.parsePlayerCardResult(player));
+        }
+    }
+
+    public static void printCardResult(Player player) {
+        System.out.println(Parser.parsePlayerCardResult(player));
     }
 
     public static void printBustedPlayer(Player player) {

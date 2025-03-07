@@ -31,47 +31,52 @@ public class BlackjackController {
 
         giveStartingCards(players, dealer);
 
-        giveMoreCardForPlayers(players);
-        giveMoreCardForDealer(dealer);
+        giveMoreCardFor(players);
+        giveMoreCardFor(dealer);
 
         printCardResult(players, dealer);
         printGameResult();
     }
 
-    private void giveMoreCardForDealer(Dealer dealer) {
+    private void giveMoreCardFor(Dealer dealer) {
         while (gameRuleEvaluator.canTakeCardFor(dealer)) {
             OutputView.printMoreCard();
             blackjackProcessManager.giveCard(dealer.getCardHolder());
         }
     }
 
-    private void giveMoreCardForPlayers(Players players) {
+    private void giveMoreCardFor(Players players) {
         for (Player player : players.getPlayers()) {
-            giveMoreCardForPlayer(player);
+            giveMoreCardFor(player);
         }
     }
 
-    private void giveMoreCardForPlayer(Player player) {
-        // TODO DEPTH 낮추는 방법 찾기
-        while (gameRuleEvaluator.canTakeCardFor(player)) {
-            Confirmation confirmation = InputView.askToGetMoreCard(player);
+    private void giveMoreCardFor(Player player) {
+        Confirmation confirmation = InputView.askToGetMoreCard(player);
+        if (confirmation.equals(Confirmation.N)) {
+            OutputView.printCardResult(player);
+            return;
+        }
 
-            if (confirmation.equals(Confirmation.N)) {
-                break;
-            }
-            blackjackProcessManager.giveCard(player.getCardHolder());
+        blackjackProcessManager.giveCard(player.getCardHolder());
+        OutputView.printCardResult(player);
 
-            if (gameRuleEvaluator.isBusted(player)) {
-                OutputView.printBustedPlayer(player);
-            }
+        if (gameRuleEvaluator.isBustedFor(player)) {
+            OutputView.printBustedPlayer(player);
+            return;
+        }
+
+        if (gameRuleEvaluator.canTakeCardFor(player)) {
+            giveMoreCardFor(player);
         }
     }
 
     private void giveStartingCards(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            blackjackProcessManager.giveStartingCards(player.getCardHolder());
+            blackjackProcessManager.giveStartingCardsFor(player);
         }
-        blackjackProcessManager.giveStartingCards(dealer.getCardHolder());
+
+        blackjackProcessManager.giveStartingCardsFor(dealer);
 
         OutputView.printStartingCardsStatuses(dealer, players);
     }

@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public class Player{
-    // TODO 참여자로 변경
+
     private final String name;
     private final CardHolder cardHolder;
 

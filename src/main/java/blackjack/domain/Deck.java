@@ -43,7 +43,8 @@ public class Deck {
         validateEmpty(size);
 
         return IntStream.range(0, size)
-                .mapToObj(i -> cards.removeLast()).toList();
+                .mapToObj(i -> cards.removeLast())
+                .toList();
     }
 
     private void validateEmpty(int size) {

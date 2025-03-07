@@ -26,14 +26,15 @@ class BlackjackProcessManagerTest {
         blackjackProcessManager = new BlackjackProcessManager(deck);
     }
 
-    @DisplayName("처음에 카드 2장 쥐어준다.")
+    @DisplayName("처음에 플레이어에게 카드 2장 쥐어준다.")
     @Test
     void test1() {
         // given
         Hand hand = new Hand();
+        Player player = new Player("꾹이", hand);
 
         // when
-        blackjackProcessManager.giveStartingCards(hand);
+        blackjackProcessManager.giveStartingCardsFor(player);
 
         // then
         assertThat(hand.getAllCards()).hasSize(2);

@@ -7,6 +7,7 @@ import blackjack.domain.Player;
 import java.util.List;
 
 public class GameRuleEvaluator {
+
     private static final int DEALER_MUST_TAKE_UNDER = 16;
 
     public boolean canTakeCardFor(Dealer dealer) {
@@ -21,15 +22,15 @@ public class GameRuleEvaluator {
                 .anyMatch(sum -> sum <= Constants.BUSTED_STANDARD_VALUE);
     }
 
-    public boolean isBusted(Player player) {
-        return isBusted(player.getCardHolder());
+    public boolean isBustedFor(Player player) {
+        return isBustedFor(player.getCardHolder());
     }
 
-    public boolean isBusted(Dealer dealer) {
-        return isBusted(dealer.getCardHolder());
+    public boolean isBustedFor(Dealer dealer) {
+        return isBustedFor(dealer.getCardHolder());
     }
 
-    private boolean isBusted(CardHolder cardHolder) {
+    private boolean isBustedFor(CardHolder cardHolder) {
         List<Integer> possibleSums = cardHolder.getPossibleSums();
 
         return possibleSums.stream()

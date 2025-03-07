@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackProcessManager {
+
     private static final int STARTING_CARD_SIZE = 2;
     private static final int ADDITIONAL_CARD_SIZE = 1;
 
@@ -26,14 +27,24 @@ public class BlackjackProcessManager {
         this.dealerResult = DealerResult.create();
     }
 
-    public void giveStartingCards(CardHolder cardHolder) {
+    public void giveStartingCardsFor(Dealer dealer) {
         List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
+
+        CardHolder cardHolder = dealer.getCardHolder();
+        cards.forEach(cardHolder::takeCard);
+    }
+
+    public void giveStartingCardsFor(Player player) {
+        List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
+
+        CardHolder cardHolder = player.getCardHolder();
         cards.forEach(cardHolder::takeCard);
     }
 
     public void giveCard(CardHolder cardHolder) {
-        List<Card> card = deck.takeCards(ADDITIONAL_CARD_SIZE);
-        card.forEach(cardHolder::takeCard);
+        List<Card> cards = deck.takeCards(ADDITIONAL_CARD_SIZE);
+
+        cards.forEach(cardHolder::takeCard);
     }
 
     public void calculateCardResult(Players players, Dealer dealer, GameRuleEvaluator gameRuleEvaluator) {
@@ -43,11 +54,11 @@ public class BlackjackProcessManager {
     }
 
     private void saveResult(Dealer dealer, GameRuleEvaluator gameRuleEvaluator, Player player) {
-        boolean isBustedDealer = gameRuleEvaluator.isBusted(dealer);
-        boolean isBustedPlayer = gameRuleEvaluator.isBusted(player);
+        boolean isBustedDealer = gameRuleEvaluator.isBustedFor(dealer);
+        boolean isBustedPlayer = gameRuleEvaluator.isBustedFor(player);
 
         if (isBustedDealer) {
-            processForBustedDealer(player, isBustedPlayer);
+            processWhenDealerIsBusted(player, isBustedPlayer);
             return;
         }
 
@@ -60,7 +71,7 @@ public class BlackjackProcessManager {
         saveResultWithPlayerResult(player, resultOfPlayer);
     }
 
-    private void processForBustedDealer(Player player, boolean isBustedPlayer) {
+    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer) {
         if (isBustedPlayer) {
             saveResultWithPlayerResult(player, GameResultType.TIE);
             return;
