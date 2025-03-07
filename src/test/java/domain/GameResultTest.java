@@ -87,4 +87,15 @@ class GameResultTest {
         // then
         assertThat(result).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @DisplayName("버스트 값이면 true를 반환한다")
+    @CsvSource(value = {"21, false", "22,true"})
+    void should_return_true_when_burst(int value, boolean expected) {
+        // when
+        boolean result = GameResult.isBurstBy(value);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
 }

@@ -30,7 +30,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    private static boolean isBurstBy(int value) {
+    public static boolean isBurstBy(int value) {
         return value > BlackJackRule.BURST_UPPER_BOUND;
     }
 

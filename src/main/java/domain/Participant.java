@@ -30,23 +30,34 @@ public abstract class Participant {
     }
 
     public int getTotalValue() {
-        final long constTotalValue = cards.stream()
+        final int constTotalValue = calculateConstValue(cards);
+        final int aceCount = getAceCount();
+        return calculateTotalValue(constTotalValue, aceCount);
+    }
+
+    private int calculateTotalValue(int baseValue, int aceCount) {
+        int candidateResult = baseValue;
+        for (int oneValueCount = 0; oneValueCount <= aceCount; ++oneValueCount) {
+            candidateResult = baseValue + (oneValueCount * 1) + ((aceCount - oneValueCount) * 11);
+            if (GameResult.isBurstBy(candidateResult)) {
+                continue;
+            }
+            return candidateResult;
+        }
+        return candidateResult;
+    }
+
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int calculateConstValue(List<Card> cards) {
+        return cards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getValue)
                 .sum();
-
-        final long aceCount = cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        long totalValue = constTotalValue;
-        for (int i = 0; i <= aceCount; ++i) {
-            totalValue = constTotalValue + (i * 1) + ((aceCount - i) * 11);
-            if (totalValue <= 21) {
-                return (int) totalValue;
-            }
-        }
-        return (int) totalValue;
     }
 
     public abstract boolean canPick();
