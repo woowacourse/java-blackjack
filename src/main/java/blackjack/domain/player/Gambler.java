@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Gambler extends Player {
+
     public Gambler(String name) {
         super(name);
     }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameResults {
+
     Map<Player, GameResult> gameResults;
 
     public GameResults(Player dealer, List<Player> gamblers) {
