@@ -2,6 +2,7 @@ package view;
 
 import domain.Card;
 import domain.Dealer;
+import domain.Gamer;
 import domain.Player;
 import domain.Result;
 import java.util.EnumMap;
@@ -15,7 +16,7 @@ public class OutputView {
 
     public void printInitialCards(Dealer dealer, List<Player> players) {
         String playerNames = players.stream().map(Player::getName).collect(Collectors.joining(", "));
-        System.out.printf(NEXT_LINE + "%s와 %s에게 2장을 나누었습니다.%s", dealer.getName(), playerNames, NEXT_LINE);
+        System.out.printf(NEXT_LINE + "%s와 %s에게 2장을 나누었습니다.%s", "딜러", playerNames, NEXT_LINE);
 
         System.out.printf("%s카드: %s%n", dealer.getName(), formatSingleCard(dealer.getCards().getCards().getFirst()));
 
@@ -24,11 +25,11 @@ public class OutputView {
     }
 
     public void printCards(Player player) {
-        cardFormmat(player);
+        cardFormat(player);
         System.out.println();
     }
 
-    private void cardFormmat(Player player) {
+    private void cardFormat(Gamer player) {
         String cards = player.getCards().getCards().stream().map(this::formatSingleCard)
                 .collect(Collectors.joining(", "));
         System.out.printf("%s카드: %s", player.getName(), cards);
@@ -44,11 +45,11 @@ public class OutputView {
 
 
     public void printResult(Dealer dealer, List<Player> players) {
-        cardFormmat(dealer);
+        cardFormat(dealer);
         printScore(dealer);
 
         for (Player player : players) {
-            cardFormmat(player);
+            cardFormat(player);
             printScore(player);
         }
 
@@ -75,7 +76,7 @@ public class OutputView {
         }
     }
 
-    private void printScore(Player player) {
-        System.out.printf(" - 결과: %d%n", player.getScore());
+    private void printScore(Gamer gamer) {
+        System.out.printf(" - 결과: %d%n", gamer.getScore());
     }
 }

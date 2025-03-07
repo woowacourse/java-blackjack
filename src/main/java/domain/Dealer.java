@@ -1,6 +1,6 @@
 package domain;
 
-public class Dealer extends Player {
+public class Dealer extends Gamer {
 
     private static final int HIT_THRESHOLD = 16;
 
@@ -8,9 +8,9 @@ public class Dealer extends Player {
         super("딜러");
     }
 
-    public boolean dealerHit(Cards totalCards) {
+    public boolean hit(Cards totalCards) {
         if (canHit()) {
-            super.hit(totalCards);
+            add(totalCards);
             return true;
         }
         return false;
@@ -19,6 +19,5 @@ public class Dealer extends Player {
     private boolean canHit() {
         return getCards().calculateTotalPoint() <= HIT_THRESHOLD;
     }
-
 
 }

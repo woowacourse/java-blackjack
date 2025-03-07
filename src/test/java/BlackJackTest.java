@@ -375,7 +375,7 @@ class BlackJackTest {
         int initialPoint = dealer.getCards().calculateTotalPoint();
 
         //when
-        dealer.dealerHit(cards);
+        dealer.hit(cards);
         int actual = dealer.getCards().calculateTotalPoint();
 
         //then
@@ -401,7 +401,7 @@ class BlackJackTest {
         int initialPoint = dealer.getCards().calculateTotalPoint();
 
         //when
-        dealer.dealerHit(cards);
+        dealer.hit(cards);
         int actual = dealer.getCards().calculateTotalPoint();
 
         //then

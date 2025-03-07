@@ -53,7 +53,7 @@ public class BlackJackController {
             while (option.equals(YES_SIGN));
         }
 
-        if (dealer.dealerHit(deck)) {
+        if (dealer.hit(deck)) {
             outputView.printDealerHitSuccess();
         }
 

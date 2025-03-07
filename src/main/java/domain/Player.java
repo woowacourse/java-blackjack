@@ -2,13 +2,10 @@ package domain;
 
 import java.util.Objects;
 
-public class Player {
-
-    private final String name;
-    private final Cards cards = new Cards();
+public class Player extends Gamer {
 
     public Player(String name) {
-        this.name = name;
+        super(name);
     }
 
     public void prepareGame(Cards totalCard) {
@@ -18,25 +15,13 @@ public class Player {
 
     public void hit(Cards totalCards) {
         validateBurst();
-        cards.add(totalCards.extractCard());
+        add(totalCards);
     }
 
     private void validateBurst() {
-        if (cards.isBurst()) {
+        if (isBurst()) {
             throw new IllegalStateException("[ERROR] 버스트되면 카드를 뽑을 수 없습니다.");
         }
-    }
-
-    public boolean isBurst() {
-        return cards.isBurst();
-    }
-
-    public int getScore() {
-        return cards.calculateTotalPoint();
-    }
-
-    public Cards getCards() {
-        return cards;
     }
 
     @Override
@@ -45,15 +30,16 @@ public class Player {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(getName(), player.getName()) && Objects.equals(getCards(), player.getCards());
+        return Objects.equals(getName(), player.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getCards());
+        return Objects.hashCode(getName());
     }
 
+    @Override
     public String getName() {
-        return this.name;
+        return super.getName();
     }
 }
