@@ -25,7 +25,7 @@ public class InputView {
 
     private void validateYesOrNo(String input) {
         if (!input.equals(YES) && !input.equals(NO)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("y또는 n만 입력 가능합니다.");
         }
     }
 }

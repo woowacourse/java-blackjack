@@ -64,7 +64,8 @@ public class Players {
         return gamblers.stream()
                 .filter(current -> current.equals(player))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() ->
+                        new IllegalArgumentException("서버에 오류가 발생했습니다."));
     }
 
     public boolean isDealerHit() {
