@@ -10,11 +10,11 @@ import java.util.stream.IntStream;
 
 public abstract class Player implements Comparable<Player> {
 
-    private final String name;
+    private final Name name;
     private final List<Card> cards;
 
     public Player(final String name) {
-        this.name = name;
+        this.name = new Name(name);
         cards = new ArrayList<>();
     }
 
@@ -47,7 +47,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     abstract public List<Card> getOpenedCards();
@@ -70,12 +70,12 @@ public abstract class Player implements Comparable<Player> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(name, player.name) && Objects.equals(cards, player.cards);
+        return Objects.equals(name, player.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name);
     }
 
     @Override

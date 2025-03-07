@@ -5,6 +5,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Players {
@@ -18,7 +19,15 @@ public class Players {
     }
 
     public void addGamblers(List<Player> gamblers) {
+        validateHasDuplication(gamblers);
         this.gamblers.addAll(gamblers);
+    }
+
+    private void validateHasDuplication(List<Player> gamblers) {
+        int size = new HashSet<>(gamblers).size();
+        if (gamblers.size() != size) {
+            throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
+        }
     }
 
     public Player getDealer() {
