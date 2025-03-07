@@ -4,7 +4,7 @@
 
 ### 설계도
 
-![img_1.png](img_1.png)
+![img.png](img.png)
 
 ### 기능 구현 목록
 

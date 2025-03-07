@@ -24,15 +24,15 @@ public class BlackjackController {
     public void run() {
         List<String> playerNames = Parser.parserStringToList(inputView.inputUsers());
         GameManger gameManger = new GameManger(playerNames);
-
         distributionFirstCard(gameManger, playerNames);
 
         additionalPlayerCard(playerNames, gameManger);
         addtionalDealerCard(gameManger);
 
         createGameResult(gameManger, playerNames);
-
         caculateGameResult(gameManger);
+
+        inputView.close();
     }
 
     private void distributionFirstCard(GameManger gameManger, List<String> playerNames) {
@@ -84,7 +84,7 @@ public class BlackjackController {
 
     private void displayOpenCard(String playerName, User player) {
         List<String> cards = player.openCard().stream()
-                .map(card -> CardConverter.createTrumpCard(card.getCardShape(), card.getCardNumber())).toList();
+                .map(card -> CardConverter.createTrumpCard(card.cardShape(), card.cardNumber())).toList();
         outputView.displayOpenCards(playerName, cards);
     }
 
@@ -111,8 +111,8 @@ public class BlackjackController {
     private void displayConvertCards(String name, List<TrumpCard> dealerCards, int score) {
         List<String> dealerPrintCards = dealerCards.stream()
                 .map(dealerCard -> CardConverter.createTrumpCard(
-                        dealerCard.getCardShape(),
-                        dealerCard.getCardNumber()
+                        dealerCard.cardShape(),
+                        dealerCard.cardNumber()
                 )).toList();
         outputView.displayOpenCardsResult(name, dealerPrintCards, score);
     }
