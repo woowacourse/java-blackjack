@@ -12,6 +12,8 @@ import domain.dto.ParticipantCardsDto;
 import java.util.ArrayList;
 import java.util.List;
 import exception.ExceptionHandler;
+import java.util.Map;
+import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -34,7 +36,7 @@ public class GameController {
     }
 
     private void registerGamePlayers() {
-        ExceptionHandler.repeatUntilSuccess(() ->{
+        ExceptionHandler.repeatUntilSuccess(() -> {
             List<String> names = InputView.readPlayerNames();
             game.registerPlayers(names);
         });
@@ -84,15 +86,13 @@ public class GameController {
     }
 
     private void determineGameResult() {
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayers();
-        GameResult dealerGameResult = game.determineGameResult(dealer.getName());
-        GameResultDto dealerGameResultDto = createGameResultDto(dealer, dealerGameResult);
+        Map<Participant, GameResult> dealerGameResult = game.determineDealerGameResult();
+        Entry<Participant, GameResult> dealerEntry = dealerGameResult.entrySet().iterator().next();
+        GameResultDto dealerGameResultDto = createGameResultDto(dealerEntry.getKey(), dealerEntry.getValue());
+
+        Map<Participant, GameResult> playerGameResults = game.determinePlayersGameResult();
         List<GameResultDto> playerGameResultDtos = new ArrayList<>();
-        for (Player player : players) {
-            GameResult playerGameResult = game.determineGameResult(player.getName());
-            playerGameResultDtos.add(createGameResultDto(player, playerGameResult));
-        }
+        playerGameResults.forEach((key, value) -> playerGameResultDtos.add(createGameResultDto(key, value)));
         OutputView.printFinalGameResult(dealerGameResultDto, playerGameResultDtos);
     }
 
@@ -108,7 +108,8 @@ public class GameController {
     }
 
     private ParticipantCardsDto createParticipantInitialCardsDto(Participant participant) {
-        return new ParticipantCardsDto(participant.getName(), participant.getInitialCards(), participant.getCardsScore());
+        return new ParticipantCardsDto(participant.getName(), participant.getInitialCards(),
+                participant.getCardsScore());
     }
 
     private ParticipantCardsDto createParticipantCardsDto(Participant participant) {

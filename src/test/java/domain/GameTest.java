@@ -9,7 +9,9 @@ import domain.card.Rank;
 import domain.card.Suit;
 import exception.ErrorException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,12 +38,13 @@ public class GameTest {
     @DisplayName("딜러 게임 결과 계산 기능 테스트")
     void dealerGameResultTest() {
         // given & when
-        GameResult gameResult = game.determineGameResult("딜러");
+        Map<Participant, GameResult> gameResult = game.determineDealerGameResult();
+        GameResult dealerGameResult = gameResult.values().iterator().next();
         // then
         assertAll(
-                () -> assertEquals(1, gameResult.getStatusCount(GameStatus.WIN)),
-                () -> assertEquals(1, gameResult.getStatusCount(GameStatus.TIE)),
-                () -> assertEquals(1, gameResult.getStatusCount(GameStatus.LOSE))
+                () -> assertEquals(1, dealerGameResult.getStatusCount(GameStatus.WIN)),
+                () -> assertEquals(1, dealerGameResult.getStatusCount(GameStatus.TIE)),
+                () -> assertEquals(1, dealerGameResult.getStatusCount(GameStatus.LOSE))
         );
     }
 
@@ -50,12 +53,17 @@ public class GameTest {
     @DisplayName("플레이어 게임 결과 계산 기능 테스트")
     void playerGameResultTest(String name, int win, int tie, int lose) {
         // given & when
-        GameResult gameResult = game.determineGameResult(name);
+        Map<Participant, GameResult> gameResult = game.determinePlayersGameResult();
+        Participant participant = gameResult.keySet().stream()
+                .filter(player -> player.isParticipant(name))
+                .findFirst()
+                .orElseThrow();
+        GameResult playerGameResult = gameResult.get(participant);
         // then
         assertAll(
-                () -> assertEquals(win, gameResult.getStatusCount(GameStatus.WIN)),
-                () -> assertEquals(tie, gameResult.getStatusCount(GameStatus.TIE)),
-                () -> assertEquals(lose, gameResult.getStatusCount(GameStatus.LOSE))
+                () -> assertEquals(win, playerGameResult.getStatusCount(GameStatus.WIN)),
+                () -> assertEquals(tie, playerGameResult.getStatusCount(GameStatus.TIE)),
+                () -> assertEquals(lose, playerGameResult.getStatusCount(GameStatus.LOSE))
         );
     }
 
@@ -64,8 +72,9 @@ public class GameTest {
     void duplicateParticipantNamesTest() {
         // given
         String name = "pobi,jason,pobi";
+        List<String> names = Arrays.stream(name.split(",")).toList();
         // when & then
-        assertThatThrownBy(() -> game.determineGameResult(name))
+        assertThatThrownBy(() -> game.registerPlayers(names))
                 .isInstanceOf(ErrorException.class)
                 .hasMessageContaining("[ERROR]");
     }

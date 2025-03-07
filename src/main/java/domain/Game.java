@@ -4,9 +4,10 @@ import domain.card.Card;
 import exception.ErrorException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Set;
 
 public class Game {
@@ -36,12 +37,43 @@ public class Game {
         }
     }
 
-    public GameResult determineGameResult(String name) {
-        Participant participant = findParticipantBy(name);
-        if (isDealer(name)) {
-            return determineDealerGameResult((Dealer) participant);
+    private void distributeInitialCard(List<Card> cards) {
+        dealer.addCard(cards.removeFirst());
+        for (Player player : players) {
+            player.addCard(cards.removeFirst());
         }
-        return determinePlayerGameResult((Player) participant);
+    }
+
+    public Map<Participant, GameResult> determineDealerGameResult() {
+        Map<Participant, GameResult> gameResult = new HashMap<>();
+        GameResult dealerGameResult = new GameResult();
+        for (Player player : players) {
+            determineGameResult(dealer, player, dealerGameResult);
+        }
+        gameResult.put(dealer, dealerGameResult);
+        return gameResult;
+    }
+
+    public Map<Participant, GameResult> determinePlayersGameResult() {
+        Map<Participant, GameResult> gameResult = new HashMap<>();
+        for (Player player : players) {
+            GameResult playerGameResult = new GameResult();
+            gameResult.put(player, determineGameResult(player, dealer, playerGameResult));
+        }
+        return gameResult;
+    }
+
+    private GameResult determineGameResult(Participant participant, Participant other, GameResult gameResult) {
+        GameStatus gameStatus = participant.determineGameStatus(other);
+        gameResult.addStatusCount(gameStatus);
+        return gameResult;
+    }
+
+    private void validateDistinct(List<String> names) {
+        Set<String> distinctNames = new HashSet<>(names);
+        if (distinctNames.size() != names.size()) {
+            throw new ErrorException("참여자 이름은 중복될 수 없습니다.");
+        }
     }
 
     public Dealer getDealer() {
@@ -50,49 +82,5 @@ public class Game {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    private boolean isDealer(String name) {
-        return Objects.equals(name, "딜러");
-    }
-
-    private void distributeInitialCard(List<Card> cards) {
-        dealer.addCard(cards.removeFirst());
-        for (Player player : players) {
-            player.addCard(cards.removeFirst());
-        }
-    }
-
-    private Participant findParticipantBy(String name) {
-        if (isDealer(name)) {
-            return dealer;
-        }
-        return players.stream()
-                .filter(p -> p.isParticipant(name))
-                .findFirst()
-                .orElseThrow(() -> new ErrorException("존재하지 않는 참여자입니다."));
-    }
-
-    private GameResult determineDealerGameResult(Dealer dealer) {
-        GameResult dealerGameResult = new GameResult();
-        for (Player player : players) {
-            GameStatus dealerGameStatus = dealer.determineGameStatus(player);
-            dealerGameResult.addStatusCount(dealerGameStatus);
-        }
-        return dealerGameResult;
-    }
-
-    private GameResult determinePlayerGameResult(Player player) {
-        GameResult playerGameResult = new GameResult();
-        GameStatus playerGameStatus = player.determineGameStatus(dealer);
-        playerGameResult.addStatusCount(playerGameStatus);
-        return playerGameResult;
-    }
-
-    private void validateDistinct(List<String> names) {
-        Set<String> distinctNames = new HashSet<>(names);
-        if (distinctNames.size() != names.size()) {
-            throw new ErrorException("참여자 이름은 중복될 수 없습니다.");
-        }
     }
 }
