@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public abstract class Gamer implements Cloneable {
+    private static final int GAMER_BUST_THRESHOLD = 21;
     private final List<Card> cards;
 
     protected Gamer() {
@@ -49,11 +50,11 @@ public abstract class Gamer implements Cloneable {
 
 
     private int calculateAceValue(boolean containAce, int lowAceTotal) {
-        if (!containAce || lowAceTotal > 21) {
+        if (!containAce || lowAceTotal > GAMER_BUST_THRESHOLD) {
             return lowAceTotal;
         }
         int highAceTotal = lowAceTotal - CardRank.ACE.getValue() + CardRank.SPECIAL_ACE.getValue();
-        if (highAceTotal > 21) {
+        if (highAceTotal > GAMER_BUST_THRESHOLD) {
             return lowAceTotal;
         }
         return highAceTotal;
