@@ -24,7 +24,7 @@ public class BlackJackGame {
 
     private void validateNotNull(Deck deck, Dealer dealer, Rule rule) {
         if (deck == null || dealer == null || rule == null) {
-            throw new IllegalStateException("블랙잭게임은 덱과 딜러와 룰을 가지고 있어야합니다.");
+            throw new IllegalArgumentException("블랙잭게임은 덱과 딜러와 룰을 가지고 있어야합니다.");
         }
     }
 
