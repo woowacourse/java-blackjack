@@ -1,5 +1,10 @@
 package blackjack.view;
 
+import static blackjack.view.ErrorMessage.INVALID_HIT_RESPONSE;
+import static blackjack.view.ErrorMessage.INVALID_PLAYER_COUNT;
+import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_DUPLICATED;
+import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_EQUAL_DEALER_NAME;
+
 import blackjack.domain.gambler.Name;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,6 +20,7 @@ public class InputView {
         String answer = scanner.nextLine();
         String[] parsedName = answer.split(",");
         validatePlayers(parsedName);
+        validateNameEqualsDealerName(parsedName);
         List<Name> names = Arrays.stream(parsedName)
                 .map(Name::new)
                 .toList();
@@ -22,10 +28,17 @@ public class InputView {
         return names;
     }
 
+    private static void validateNameEqualsDealerName(String[] parsedName) {
+        List<String> playerNames = List.of(parsedName);
+        if (playerNames.contains("딜러")) {
+            throw new IllegalArgumentException(NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
+        }
+    }
+
     private static void validateDuplicatedNames(List<Name> names) {
         Set<Name> removedDuplicatedNames = new HashSet<>(names);
         if (removedDuplicatedNames.size() != names.size()) {
-            throw new IllegalArgumentException("닉네임 중복은 허용하지 않습니다");
+            throw new IllegalArgumentException(NAME_CANNOT_BE_DUPLICATED.getMessage());
         }
     }
 
@@ -38,12 +51,12 @@ public class InputView {
         if (answer.equals("n")) {
             return false;
         }
-        throw new IllegalArgumentException("응답이 올바르지 않습니다.");
+        throw new IllegalArgumentException(INVALID_HIT_RESPONSE.getMessage());
     }
 
     private static void validatePlayers(String[] parsedName) {
         if (parsedName.length > 6 || parsedName.length < 1) {
-            throw new IllegalArgumentException("플레이어는 최소 1명부터 최대 6명까지 입니다.");
+            throw new IllegalArgumentException(INVALID_PLAYER_COUNT.getMessage());
         }
     }
 }

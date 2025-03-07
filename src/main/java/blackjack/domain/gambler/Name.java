@@ -1,5 +1,8 @@
 package blackjack.domain.gambler;
 
+import static blackjack.view.ErrorMessage.INVALID_PLAYER_NAME_FORMAT;
+import static blackjack.view.ErrorMessage.INVALID_PLAYER_NAME_LENGTH;
+
 import java.util.Objects;
 
 public class Name {
@@ -11,10 +14,10 @@ public class Name {
 
     private String validateForm(final String name) {
         if (name.length() < 2 || name.length() > 5) {
-            throw new IllegalArgumentException("[ERROR]");
+            throw new IllegalArgumentException(INVALID_PLAYER_NAME_LENGTH.getMessage());
         }
         if (name.split(" ").length != 1) {
-            throw new IllegalArgumentException("[ERROR]");
+            throw new IllegalArgumentException(INVALID_PLAYER_NAME_FORMAT.getMessage());
         }
         return name;
     }
