@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 public class CardNumberTest {
     @DisplayName("열 세개의 숫자 중 하나의 숫자를 뽑는다.")
     @Test
-    void test(){
-
+    void test() {
         // given
         int oneIndex = 13;
 

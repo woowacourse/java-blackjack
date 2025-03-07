@@ -96,24 +96,25 @@ public class BlackjackController {
     private void displayDealer(GameManger gameManger) {
         Dealer dealer = (Dealer) gameManger.getDealer();
         List<TrumpCard> dealerCards = dealer.openAllCard();
-
-        displayConvertCards(dealer.getName(), dealerCards);
+        int score = dealer.getCardDeck().calculateScore();
+        displayConvertCards(dealer.getName(), dealerCards, score);
     }
 
     private void displayPlayers(GameManger gameManger, List<String> playerNames) {
         playerNames.stream()
-                .map(playerName -> gameManger.findUserByUsername(playerName))
+                .map(gameManger::findUserByUsername)
                 .toList()
-                .forEach(player -> displayConvertCards(player.getName(), player.openCard()));
+                .forEach(player -> displayConvertCards(player.getName(), player.openCard(),
+                        player.getCardDeck().calculateScore()));
     }
 
-    private void displayConvertCards(String name, List<TrumpCard> dealerCards) {
+    private void displayConvertCards(String name, List<TrumpCard> dealerCards, int score) {
         List<String> dealerPrintCards = dealerCards.stream()
                 .map(dealerCard -> CardConverter.createTrumpCard(
                         dealerCard.getCardShape(),
                         dealerCard.getCardNumber()
                 )).toList();
-        outputView.displayOpenCards(name, dealerPrintCards);
+        outputView.displayOpenCardsResult(name, dealerPrintCards, score);
     }
 
     private void caculateGameResult(GameManger gameManger) {

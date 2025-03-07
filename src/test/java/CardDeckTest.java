@@ -56,7 +56,7 @@ public class CardDeckTest {
             CardSetting.drawCard();
             count++;
         }
-        System.out.println(count);
+
         // when & then
         Assertions.assertThatThrownBy(CardSetting::drawCard)
                 .isInstanceOf(IllegalArgumentException.class)
@@ -76,7 +76,10 @@ public class CardDeckTest {
         cardDeck.addTrumpCard(trumpCard2);
         cardDeck.addTrumpCard(trumpCard3);
 
+        // when
         boolean isOver = cardDeck.checkOverScore();
+
+        // then
         Assertions.assertThat(isOver).isTrue();
     }
 
@@ -90,6 +93,7 @@ public class CardDeckTest {
             cardDeck.addTrumpCard(card);
         }
 
+        // when & then
         boolean isRealOver = cardDeck.checkOverScore();
         Assertions.assertThat(isRealOver).isEqualTo(isExpectedOver);
     }
@@ -162,7 +166,7 @@ public class CardDeckTest {
         cardDeck.addTrumpCard(trumpCard2);
 
         // when
-        boolean isBlackjack =  cardDeck.isBlackjack();
+        boolean isBlackjack = cardDeck.isBlackjack();
 
         // then
         Assertions.assertThat(isBlackjack).isEqualTo(true);

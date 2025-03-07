@@ -13,17 +13,16 @@ public class OutputView {
 
     public void displayOpenCards(String name, List<String> printCards) {
         displayCards(name, printCards);
-        System.out.println();
     }
 
     private void displayCards(String name, List<String> printCards) {
-        System.out.print(name + "카드: " + String.join(", ", printCards));
+        System.out.print(name + "카드: " + String.join(", ", printCards) +"\n");
     }
 
 
     public void displayDealerGameResult(int winCount, int loseCount, int mooCount) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패 %d 무승부\n",winCount,loseCount,mooCount);
+        System.out.println("\n## 최종 승패");
+        System.out.printf("딜러: %d승 %d패 %d 무승부\n", winCount, loseCount, mooCount);
     }
 
     public void displayGameResult(Map<User, Integer> gameResult) {
@@ -46,5 +45,7 @@ public class OutputView {
         System.out.println(name + ": " + gameResult);
     }
 
-    // todo: 최종 결과를 추가해야 한다
+    public void displayOpenCardsResult(String name, List<String> printCards, int score) {
+        System.out.print(name + "카드: " + String.join(", ", printCards + (" - 결과: " + score)) +"\n");
+    }
 }
