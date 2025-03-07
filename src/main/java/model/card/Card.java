@@ -11,7 +11,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardNumber == CardNumber.ACE;
+        return cardNumber.equals(CardNumber.ACE);
     }
 
     public CardNumber getCardNumber() {
