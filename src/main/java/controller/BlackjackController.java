@@ -11,28 +11,46 @@ import view.OutputView;
 public class BlackjackController {
 
     public void run() {
+        BlackjackGame game = initialize();
+        processPlayersTurn(game);
+        processDealerTurn(game);
+        processGameResult(game);
+    }
+
+    private BlackjackGame initialize() {
         List<String> playerNames = InputView.readNicknames();
         BlackjackGame game = new BlackjackGame(playerNames);
 
         game.startGame();
         OutputView.printInitialCards(game.getDealer(), game.getPlayers());
+        return game;
+    }
 
+    private void processPlayersTurn(BlackjackGame game) {
         for (Player player : game.getPlayers().getPlayers()) {
-            while (player.canReceiveCard()) {
-                boolean drawOneMore = InputView.readDrawOneMore(player.getNickname());
-                if (!drawOneMore) {
-                    break;
-                }
-                game.runPlayerTurn(player);
-                OutputView.printPlayerCards(player);
+            processPlayerTurn(game, player);
+        }
+    }
+
+    private void processPlayerTurn(BlackjackGame game, Player player) {
+        while (player.canReceiveCard()) {
+            boolean drawOneMore = InputView.readDrawOneMore(player.getNickname());
+            if (!drawOneMore) {
+                break;
             }
+            game.runPlayerTurn(player);
+            OutputView.printPlayerCards(player);
         }
+    }
 
+    private void processDealerTurn(BlackjackGame game) {
         while (game.getDealer().canReceiveCard()) {
-            OutputView.printDealerReceivedCard();
             game.runDealerTurn();
+            OutputView.printDealerReceivedCard();
         }
+    }
 
+    private void processGameResult(BlackjackGame game) {
         OutputView.printAllCardAndScore(game.getPlayers(), game.getDealer());
         Map<Player, GameResult> playerGameResults = game.calculatePlayerGameResult();
         Map<GameResult, Integer> dealerResults = game.calculateDealerGameResult(playerGameResults);
