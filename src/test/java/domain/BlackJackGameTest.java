@@ -54,6 +54,29 @@ class BlackJackGameTest {
             });
         }
 
+        @ParameterizedTest
+        @DisplayName("플레이어의 히트 판단 여부를 판단한다")
+        @MethodSource("provideDealerHitAllowedCases")
+        void isPlayerHitAllowed(List<TrumpCard> cards) {
+            // given
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            Player player = new Player("Alice", new Hand(cards));
+
+            // when
+            boolean result = blackJackGame.isPlayerHitAllowed(player.getHand().getCards());
+
+            // then
+            assertThat(result).isTrue();
+        }
+
+        static Stream<Arguments> provideDealerHitAllowedCases() {
+            return Stream.of(
+                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)),
+                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES)),
+                    Arguments.of(
+                            List.of(TrumpCard.THREE_OF_HEARTS, TrumpCard.THREE_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES))
+            );
+        }
 
         @Test
         @DisplayName("블랙잭게임은 덱과 딜러와 룰을 가져야한다.")
