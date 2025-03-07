@@ -58,8 +58,8 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어의 카드가 버스트면 TRUE를 반환한다")
-    void 플레이어의_카드가_버스트면_TRUE를_반환한다() {
+    @DisplayName("플레이어의 카드가 버스트면 TRUE 를 반환한다")
+    void if_the_players_card_is_bust_it_returns_true() {
         // given
         Players players = new Players();
         CardPack cardPack = new CardPack(new SortShuffle());
@@ -79,8 +79,8 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드가 16이하인 경우 TRUE를 반환한다")
-    void 딜러의_카드가_16이하인_경우_TRUE를_반환한다() {
+    @DisplayName("딜러의 카드가 16이하인 경우 TRUE 를 반환한다")
+    void the_dealers_card_is_less_than_16_or_less() {
         // given
         Players players = new Players();
 
