@@ -1,5 +1,6 @@
 package blackjack.manager;
 
+import blackjack.domain.CardHolder;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
@@ -20,7 +21,7 @@ public class BlackJackInitManager {
         return new Deck(cardsGenerator.generate());
     }
 
-    public Players savePlayers(List<String> names, Supplier<Hand> cardHolderSupplier) {
+    public Players savePlayers(List<String> names, Supplier<CardHolder> cardHolderSupplier) {
         List<Player> players = names.stream()
                 .map(name -> new Player(name, cardHolderSupplier.get()))
                 .toList();
