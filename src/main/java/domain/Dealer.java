@@ -26,6 +26,13 @@ public class Dealer {
 	}
 
 	public void startDuel(final Player player) {
+		player.duel(participant);
+		final boolean isWinPlayerDuelResult = player.getIsWinDuel();
+		if (isWinPlayerDuelResult) {
+			loseCount++;
+			return;
+		}
+		winCount++;
 	}
 
 	public Participant getParticipant() {
@@ -33,6 +40,10 @@ public class Dealer {
 	}
 
 	public int getWinCount() {
-		return 0;
+		return winCount;
+	}
+
+	public int getLoseCount() {
+		return loseCount;
 	}
 }
