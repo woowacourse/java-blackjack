@@ -9,8 +9,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class BlackJackGame {
-    public static final int DEALER_DRAWBLE_LIMIT = 16;
-
     private final Deck deck;
     private final Participants participants;
     private final Dealer dealer;
@@ -48,7 +46,7 @@ public class BlackJackGame {
     }
 
     public boolean isDealerCardDrawable() {
-        return dealer.calculatePoint() <= DEALER_DRAWBLE_LIMIT;
+        return dealer.isCardDrawable();
     }
 
     public void drawDealerCard() {
