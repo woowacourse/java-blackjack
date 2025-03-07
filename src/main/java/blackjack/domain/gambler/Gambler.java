@@ -20,7 +20,7 @@ public abstract class Gambler {
     }
 
     public void addCard(final Card card) {
-        hands.addNewCard(card);
+        hands.addCard(card);
     }
 
     public int calculateScore() {

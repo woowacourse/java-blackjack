@@ -20,7 +20,6 @@ class CardTest {
         assertThat(card).extracting("type").isEqualTo(type);
     }
 
-
     @DisplayName("상태가 같으면 같은 객체이다.")
     @Test
     void equalsTest() {

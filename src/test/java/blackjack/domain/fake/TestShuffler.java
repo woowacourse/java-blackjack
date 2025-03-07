@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.fake;
 
+import blackjack.domain.Shuffler;
 import blackjack.domain.card.Card;
 import java.util.List;
 
