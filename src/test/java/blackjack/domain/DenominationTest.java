@@ -16,15 +16,15 @@ class DenominationTest {
         @Test
         @DisplayName("합에 따라서 에이스를 1로 계산한다.")
         void notChangeAceValue() {
-            int sum = 17;
-            assertThat(Denomination.convertAceValue(sum, 21)).isEqualTo(17);
+            int cardSumContainsAce = 17;
+            assertThat(Denomination.convertAceValue(cardSumContainsAce, 21)).isEqualTo(17);
         }
 
         @Test
         @DisplayName("합에 따라서 에이스를 11로 계산한다.")
         void changeAceValue() {
-            int sum = 11;
-            assertThat(Denomination.convertAceValue(sum, 21)).isEqualTo(21);
+            int cardSumContainsAce = 11;
+            assertThat(Denomination.convertAceValue(cardSumContainsAce, 21)).isEqualTo(21);
         }
     }
 }

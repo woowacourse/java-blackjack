@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,9 +91,5 @@ public class BlackjackGame {
         return findPlayers().stream()
                 .map(Player::getName)
                 .toList();
-    }
-
-    public List<Participant> getParticipants() {
-        return Collections.unmodifiableList(participants);
     }
 }

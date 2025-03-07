@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,10 @@ public class PlayerTest {
     @DisplayName("플레이어 생성 테스트")
     class CreatePlayerTest {
 
-        @Test
+        @ParameterizedTest
+        @ValueSource(strings = {"iiif", "pppk"})
         @DisplayName("한 명의 플레이어를 이름으로 생성할 수 있다.")
-        void createPlayerByName() {
-            String name = "jason";
+        void createPlayerByName(String name) {
             Player player = new Player(name);
 
             assertThat(player).isInstanceOf(Player.class);
@@ -44,11 +45,12 @@ public class PlayerTest {
         void canDistributeCard_Under21() {
             Player player = new Player("sana");
 
-            Card card1 = new Card(Suit.HEART, Denomination.TWO);
-            Card card2 = new Card(Suit.SPADE, Denomination.TEN);
-            Card card3 = new Card(Suit.CLUB, Denomination.ACE);
-
-            player.addCards(card1, card2, card3);
+            List<Card> cardsUnder21 = List.of(
+                    new Card(Suit.HEART, Denomination.TWO),
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.ACE)
+            );
+            player.addCards(cardsUnder21.get(0), cardsUnder21.get(1), cardsUnder21.get(2));
 
             assertThat(player.isPossibleToAdd()).isTrue();
         }
@@ -58,11 +60,12 @@ public class PlayerTest {
         void canDistributeCard_Over21() {
             Player player = new Player("sana");
 
-            Card card1 = new Card(Suit.HEART, Denomination.TWO);
-            Card card2 = new Card(Suit.SPADE, Denomination.TEN);
-            Card card3 = new Card(Suit.CLUB, Denomination.JACK);
-
-            player.addCards(card1, card2, card3);
+            List<Card> cardsOver21 = List.of(
+                    new Card(Suit.HEART, Denomination.TWO),
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.JACK)
+            );
+            player.addCards(cardsOver21.get(0), cardsOver21.get(1), cardsOver21.get(2));
 
             assertThat(player.isPossibleToAdd()).isFalse();
         }

@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,7 +16,7 @@ public class CardTest {
         @Test
         @DisplayName("카드가 52장이 만들어진다.")
         void generateCardCache() {
-            assertThat(Card.values().size()).isEqualTo(52);
+            assertThat(Card.values()).hasSize(52);
         }
     }
 }

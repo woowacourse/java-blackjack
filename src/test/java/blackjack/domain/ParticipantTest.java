@@ -34,7 +34,7 @@ public class ParticipantTest {
     class CardDistributeTest {
 
         @Test
-        @DisplayName("참가자는 카드 두 장을 배부 받을 수 있다.")
+        @DisplayName("참가자는 카드를 여러장 배부 받을 수 있다.")
         void distributeTwoCards() {
             Card card1 = new Card(Suit.HEART, Denomination.ACE);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
@@ -42,24 +42,13 @@ public class ParticipantTest {
             participant.addCards(card1, card2);
 
             List<Card> cards = participant.openCards();
-
             assertAll(() -> {
+                assertThat(cards).hasSize(2);
                 assertThat(cards.getFirst().suit()).isEqualTo(Suit.HEART);
                 assertThat(cards.getFirst().denomination()).isEqualTo(Denomination.ACE);
                 assertThat(cards.getLast().suit()).isEqualTo(Suit.SPADE);
                 assertThat(cards.getLast().denomination()).isEqualTo(Denomination.KING);
             });
-        }
-
-        @Test
-        @DisplayName("초기 배부 후, 카드 갯수는 2장이다.")
-        void hasTwoCards() {
-            Card card1 = new Card(Suit.HEART, Denomination.ACE);
-            Card card2 = new Card(Suit.SPADE, Denomination.KING);
-
-            participant.addCards(card1, card2);
-
-            assertThat(participant.openCards()).hasSize(2);
         }
     }
 
@@ -68,16 +57,16 @@ public class ParticipantTest {
     class CardSumTest {
 
         @Test
-        @DisplayName("에이스가 없을 시, 카드의 합을 계산한다.")
+        @DisplayName("에이스가 없을 시 단순 합을 계산한다.")
         void cardSumWithoutACE() {
             Card card1 = new Card(Suit.HEART, Denomination.TWO);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
 
             participant.addCards(card1, card2);
 
-            int sum = participant.calculateDenominations();
+            int cardSum = participant.calculateDenominations();
 
-            assertThat(sum).isEqualTo(12);
+            assertThat(cardSum).isEqualTo(12);
         }
 
         @Test
@@ -88,9 +77,9 @@ public class ParticipantTest {
 
             participant.addCards(card1, card2);
 
-            int sum = participant.calculateDenominations();
+            int cardSumWithAceValue11 = participant.calculateDenominations();
 
-            assertThat(sum).isEqualTo(21);
+            assertThat(cardSumWithAceValue11).isEqualTo(21);
         }
 
         @Test
@@ -102,9 +91,9 @@ public class ParticipantTest {
 
             participant.addCards(card1, card2, card3);
 
-            int sum = participant.calculateDenominations();
+            int cardSumWithAceValue1 = participant.calculateDenominations();
 
-            assertThat(sum).isEqualTo(13);
+            assertThat(cardSumWithAceValue1).isEqualTo(13);
         }
     }
 }
