@@ -4,7 +4,7 @@ import domain.Dealer;
 import domain.Deck;
 import domain.GameResult;
 import domain.Player;
-import domain.RandomCardsGenerator;
+import domain.cardsGenerator.RandomCardsGenerator;
 import java.util.List;
 import java.util.Map;
 import view.InputView;

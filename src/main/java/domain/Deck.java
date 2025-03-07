@@ -1,5 +1,6 @@
 package domain;
 
+import domain.cardsGenerator.CardsGenerator;
 import java.util.List;
 
 public class Deck {
