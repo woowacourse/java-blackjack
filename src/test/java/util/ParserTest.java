@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParserTest {
-
     @Test
     @DisplayName("주어진 구분자로 문자열을 나누는지 확인합니다.")
     void splitByDelimiterTest() {
