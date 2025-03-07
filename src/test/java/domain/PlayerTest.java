@@ -29,10 +29,10 @@ public class PlayerTest {
         Player player = new Player(name);
 
         //when
-        Hand actual = player.drawCard(cardDeck);
+        player.drawCard(cardDeck);
 
         //then
-        assertThat(actual.getCards()).hasSize(1);
+        assertThat(player.getHand().getCards()).hasSize(1);
     }
 
     @Test
