@@ -1,15 +1,15 @@
 package domain.participant;
 
-import domain.BlackjackRule;
-import domain.GameRule;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.rule.BlackjackRule;
+import domain.rule.GameRule;
 
 public class Participant {
     private final Cards cards;
     protected final GameRule rule;
 
-    public Participant(Cards cards) {
+    protected Participant(Cards cards) {
         this.cards = cards;
         this.rule = new BlackjackRule();
     }
