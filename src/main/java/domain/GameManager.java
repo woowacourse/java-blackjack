@@ -26,7 +26,6 @@ public class GameManager {
         return new GameManager(dealer, players);
     }
 
-
     public Map<GameResult, Integer> calculateDealerGameResult() {
         final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
         return GameResult.getAllGameResults().stream()
@@ -38,6 +37,14 @@ public class GameManager {
                 ));
     }
 
+    public Map<String, GameResult> calculatePlayerGameResult() {
+        Map<String, GameResult> resultMap = new HashMap<>();
+        for (Player player : players) {
+            resultMap.put(player.getName(), calculateResult(player));
+        }
+        return resultMap;
+    }
+
     private GameResult calculateResult(final Player player) {
         if (dealer.isBust() && player.isBust()) {
             return GameResult.DRAW;
@@ -46,13 +53,5 @@ public class GameManager {
             return GameResult.WIN;
         }
         return player.calculateGameResult(dealer.calculateScore());
-    }
-
-    public Map<String, GameResult> calculatePlayerGameResult() {
-        Map<String, GameResult> resultMap = new HashMap<>();
-        for (Player player : players) {
-            resultMap.put(player.getName(), calculateResult(player));
-        }
-        return resultMap;
     }
 }
