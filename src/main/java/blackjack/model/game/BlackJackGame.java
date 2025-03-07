@@ -24,7 +24,8 @@ public class BlackJackGame {
     }
 
     public void initializeGame() {
-        participants.stream()
+        participants.getParticipants()
+                .stream()
                 .forEach(this::giveTwoCards);
         giveTwoCards(dealer);
     }

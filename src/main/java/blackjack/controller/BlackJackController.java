@@ -39,14 +39,14 @@ public class BlackJackController {
             Participant participant = blackJackGame.getCurrentTurnParticipant();
             boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
             blackJackGame.giveCardToCurrentTurnParticipant(isReceive);
-            outputView.printPlayerCardStatus(participant.getName(), participant);
+            outputView.outputPlayerCardStatus(participant);
             checkBust(blackJackGame, participant);
         }
     }
 
     private void checkBust(final BlackJackGame blackJackGame, final Participant participant) {
         if (participant.isBust()) {
-            outputView.printParticipantBust(participant.getName());
+            outputView.outputParticipantBust(participant.getName());
             blackJackGame.skipTurn();
         }
     }
@@ -55,7 +55,7 @@ public class BlackJackController {
         while (blackJackGame.isDealerCardDrawable()) {
             blackJackGame.drawDealerCard();
             outputView.outputDealerGetCard();
-            outputView.printPlayerCardStatus("딜러", dealer);
+            outputView.outputPlayerCardStatus(dealer);
         }
         outputView.outputDealerCardFinish();
     }

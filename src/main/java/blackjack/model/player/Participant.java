@@ -3,6 +3,9 @@ package blackjack.model.player;
 import java.util.Objects;
 
 public class Participant extends Player {
+    public static final int MINIMUM_NAME_LENGTH = 2;
+    public static final int MAXMIUM_NAME_LENGTH = 5;
+
     private final String name;
 
     public Participant(final String name) {
@@ -14,8 +17,8 @@ public class Participant extends Player {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("참여자 이름을 입력해주세요.");
         }
-        if (name.length() < 2 || name.length() > 5) {
-            throw new IllegalArgumentException("참여자 이름은 2~5글자 입니다.");
+        if (name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXMIUM_NAME_LENGTH) {
+            throw new IllegalArgumentException(String.format("참여자 이름은 %d~%d글자 입니다.", MINIMUM_NAME_LENGTH, MAXMIUM_NAME_LENGTH));
         }
     }
 

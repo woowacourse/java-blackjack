@@ -1,12 +1,11 @@
 package blackjack.model.player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class Participants {
+    public static final int MINIMUM_PARTICIPANTS_COUNT = 2;
+    public static final int MAXIMUM_PARTICIPANTS_COUNT = 8;
+
     private final List<Participant> participants;
 
     public Participants(final List<Participant> participants) {
@@ -20,7 +19,7 @@ public class Participants {
     }
 
     private void validateParticipantCount(final List<Participant> participants) {
-        if (participants.size() < 2 || participants.size() > 8) {
+        if (participants.size() < MINIMUM_PARTICIPANTS_COUNT || participants.size() > MAXIMUM_PARTICIPANTS_COUNT) {
             throw new IllegalArgumentException("참여자는 2~8명 이여야 합니다.");
         }
     }
@@ -32,11 +31,7 @@ public class Participants {
         }
     }
 
-    public Stream<Participant> stream() {
-        return participants.stream();
-    }
-
     public List<Participant> getParticipants() {
-        return participants;
+        return Collections.unmodifiableList(participants);
     }
 }

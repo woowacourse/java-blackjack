@@ -4,10 +4,16 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 
 public enum ParticipantResult {
-    WIN,
-    LOSE,
-    DRAW,
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무"),
     ;
+
+    private final String description;
+
+    ParticipantResult(final String description) {
+        this.description = description;
+    }
 
     public static ParticipantResult of(final Dealer dealer, final Participant participant) {
         if (participant.isBust()) {
@@ -29,5 +35,9 @@ public enum ParticipantResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
