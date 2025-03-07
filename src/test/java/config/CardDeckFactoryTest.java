@@ -1,6 +1,7 @@
+package config;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import config.CardDeckFactory;
 import domain.card.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

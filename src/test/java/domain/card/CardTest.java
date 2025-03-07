@@ -1,8 +1,9 @@
+package domain.card;
+
 import static domain.card.Number.ACE;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

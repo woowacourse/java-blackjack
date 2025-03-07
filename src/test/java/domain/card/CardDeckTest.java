@@ -1,3 +1,5 @@
+package domain.card;
+
 import static domain.card.Number.ACE;
 import static domain.card.Number.FIVE;
 import static domain.card.Number.JACK;
@@ -10,8 +12,6 @@ import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import config.CardDeckFactory;
-import domain.card.Card;
-import domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
