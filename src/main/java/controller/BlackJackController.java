@@ -23,20 +23,23 @@ public class BlackJackController {
     }
 
     public void gameStart() {
-        final List<String> playerNames = LoopTemplate.tryCatchLoop(inputView::readPlayers);
         final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
         final Dealer dealer = GamerGenerator.generateDealer(randomCardGenerator);
-        final List<Player> players = GamerGenerator.generatePlayer(playerNames, randomCardGenerator);
-        final GameManager gameManager = LoopTemplate.tryCatchLoop(() -> GameManager.create(dealer, players));
+        final List<Player> players = LoopTemplate.tryCatchLoop(() ->
+        {
+            final List<String> playerNames = LoopTemplate.tryCatchLoop(inputView::readPlayers);
+            return GamerGenerator.generatePlayer(playerNames, randomCardGenerator);
+        });
+        final GameManager gameManager = GameManager.create(dealer, players);
         gameManager.giveCardToGamer(dealer);
         gameManager.giveCardToGamer(dealer);
+        final int size = gameManager.calculatePlayerSize();
         for (Player player : players) {
             gameManager.giveCardToGamer(player);
             gameManager.giveCardToGamer(player);
         }
         outputView.printDealerAndPlayersCards(dealer, players);
 
-        final int size = gameManager.calculatePlayerSize();
         for (int index = 0; index < size; index++) {
             final Player player = gameManager.findPlayerByIndex(index);
             if (!gameManager.isAbleToHit(player)) {
