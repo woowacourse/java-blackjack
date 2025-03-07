@@ -2,6 +2,8 @@ package domain;
 
 import static controller.BlackJackController.BUST_NUMBER;
 
+import domain.gamer.Dealer;
+import domain.gamer.Player;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;

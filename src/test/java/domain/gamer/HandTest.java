@@ -1,8 +1,11 @@
-package domain;
+package domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import domain.deck.Card;
+import domain.deck.Rank;
+import domain.deck.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;

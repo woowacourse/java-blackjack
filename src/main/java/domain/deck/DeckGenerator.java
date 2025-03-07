@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,7 +1,8 @@
-package domain;
+package domain.gamer;
 
 import static controller.BlackJackController.BUST_NUMBER;
 
+import domain.deck.Card;
 import java.util.ArrayList;
 import java.util.List;
 

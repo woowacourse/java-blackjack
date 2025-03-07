@@ -1,11 +1,11 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
 import domain.FinalResult;
-import domain.Gamer;
-import domain.Nickname;
-import domain.Player;
+import domain.deck.Card;
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Nickname;
+import domain.gamer.Player;
 import java.util.List;
 import java.util.Map;
 

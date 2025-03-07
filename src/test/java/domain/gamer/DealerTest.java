@@ -1,8 +1,11 @@
-package domain;
+package domain.gamer;
 
 import static controller.BlackJackController.THRESHOLD;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.deck.Card;
+import domain.deck.Rank;
+import domain.deck.Shape;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;

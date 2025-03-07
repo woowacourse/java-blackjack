@@ -2,6 +2,12 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.deck.Card;
+import domain.deck.Rank;
+import domain.deck.Shape;
+import domain.gamer.Dealer;
+import domain.gamer.Nickname;
+import domain.gamer.Player;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.SoftAssertions;

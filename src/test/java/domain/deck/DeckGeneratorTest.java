@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 import java.util.List;
 import java.util.Random;

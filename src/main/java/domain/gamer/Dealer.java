@@ -1,5 +1,6 @@
-package domain;
+package domain.gamer;
 
+import domain.deck.Card;
 import java.util.List;
 
 public class Dealer extends Gamer {

@@ -1,14 +1,14 @@
 package controller;
 
-import domain.Card;
 import domain.Command;
-import domain.Dealer;
-import domain.Deck;
-import domain.DeckGenerator;
 import domain.FinalResult;
-import domain.Nickname;
-import domain.Player;
-import domain.Players;
+import domain.deck.Card;
+import domain.deck.Deck;
+import domain.deck.DeckGenerator;
+import domain.gamer.Dealer;
+import domain.gamer.Nickname;
+import domain.gamer.Player;
+import domain.gamer.Players;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

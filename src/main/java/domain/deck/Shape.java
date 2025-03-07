@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 public enum Shape {
     DIAMOND("다이아몬드"),
