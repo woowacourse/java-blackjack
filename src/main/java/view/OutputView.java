@@ -13,6 +13,19 @@ import model.participant.Players;
 
 public class OutputView {
 
+    private static final String CLOVER = "클로버";
+    private static final String SPADE = "스페이드";
+    private static final String DIAMOND = "다이아몬드";
+    private static final String HEART = "하트";
+    private static final String WIN = "승";
+    private static final String LOSE = "패";
+    private static final String DRAW = "무";
+    private static final String ACE = "A";
+    private static final String JACK = "J";
+    private static final String QUEEN = "Q";
+    private static final String KING = "K";
+    private static final String NICKNAME_SEPARATOR = ", ";
+
     private static final String ALL_CARDS = "%s: %s";
     private static final String RESULT = " - 결과: %s";
 
@@ -22,7 +35,7 @@ public class OutputView {
     public static void printInitialCards(Dealer dealer, Players players) {
         printNewLine();
         print("딜러와 ");
-        print(String.join(", ", players.getPlayers().stream()
+        print(String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()
                 .map(Participant::getNickname)
                 .toList())
         );
@@ -62,7 +75,7 @@ public class OutputView {
     }
 
     private static String allCardToString(List<Card> cards) {
-        return String.join(", ", cards.stream()
+        return String.join(NICKNAME_SEPARATOR, cards.stream()
                 .map(OutputView::cardToString)
                 .toList());
     }
@@ -78,18 +91,19 @@ public class OutputView {
         printNewLine();
 
         for (Player player : playerResults.keySet()) {
-            System.out.printf("%s: %s%n", player.getNickname(), gameResultToString(playerResults.get(player)));
+            System.out.printf(ALL_CARDS, player.getNickname(), gameResultToString(playerResults.get(player)));
+            printNewLine();
         }
     }
 
     private static String gameResultToString(GameResult gameResult) {
         if (gameResult.equals(GameResult.WIN)) {
-            return "승";
+            return WIN;
         }
         if (gameResult.equals(GameResult.LOSE)) {
-            return "패";
+            return LOSE;
         }
-        return "무";
+        return DRAW;
     }
 
     private static String cardToString(Card card) {
@@ -98,31 +112,31 @@ public class OutputView {
 
     private static String cardNumberToString(Card card) {
         if (card.getCardNumber() == CardNumber.ACE) {
-            return "A";
+            return ACE;
         }
         if (card.getCardNumber() == CardNumber.QUEEN) {
-            return "Q";
+            return QUEEN;
         }
         if (card.getCardNumber() == CardNumber.JACK) {
-            return "J";
+            return JACK;
         }
         if (card.getCardNumber() == CardNumber.KING) {
-            return "K";
+            return KING;
         }
         return String.valueOf(card.getCardNumber().getValues().get(0));
     }
 
     private static String cardTypeToString(Card card) {
         if (card.getCardType() == CardType.CLOVER) {
-            return "클로버";
+            return CLOVER;
         }
         if (card.getCardType() == CardType.DIAMOND) {
-            return "다이아몬드";
+            return DIAMOND;
         }
         if (card.getCardType() == CardType.SPADE) {
-            return "스페이드";
+            return SPADE;
         }
-        return "하트";
+        return HEART;
     }
 
     private static void print(String message) {
