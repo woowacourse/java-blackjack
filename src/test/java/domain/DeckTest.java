@@ -20,7 +20,8 @@ class DeckTest {
         @Test
         void drawCard() {
             // given
-            List<TrumpCard> cards = Arrays.stream(TrumpCard.values()).toList();
+            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
+                    .toList();
             Deck deck = new Deck(cards);
 
             // when & then
@@ -31,7 +32,8 @@ class DeckTest {
         @Test
         void shuffle() {
             // given
-            List<TrumpCard> cards = Arrays.stream(TrumpCard.values()).toList();
+            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
+                    .toList();
             Deck originalDeck = new Deck(cards);
             Deck firstShuffledDeck = new Deck(cards);
             Deck secondShuffledDeck = new Deck(cards);
@@ -42,8 +44,10 @@ class DeckTest {
 
             // then
             assertSoftly(softly -> {
-                softly.assertThat(firstShuffledDeck).isNotEqualTo(originalDeck);
-                softly.assertThat(secondShuffledDeck).isNotEqualTo(firstShuffledDeck);
+                softly.assertThat(firstShuffledDeck)
+                        .isNotEqualTo(originalDeck);
+                softly.assertThat(secondShuffledDeck)
+                        .isNotEqualTo(firstShuffledDeck);
             });
         }
     }
@@ -58,7 +62,9 @@ class DeckTest {
             List<TrumpCard> nullCards = null;
 
             // when & then
-            assertThatThrownBy(() -> new Deck(nullCards)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> new Deck(nullCards))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("덱은 카드를 가지고 있어야합니다.");
         }
 
         @DisplayName("덱의 카드는 52장 이어야한다.")
@@ -71,7 +77,9 @@ class DeckTest {
             cards.add(TrumpCard.ACE_OF_CLUBS);
 
             // then
-            assertThatThrownBy(() -> new Deck(cards)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> new Deck(cards))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("덱의 크기는 52여야 합니다.");
         }
 
         @DisplayName("덱의 카드는 중복되지 않아야한다.")
@@ -81,11 +89,33 @@ class DeckTest {
             List<TrumpCard> cards = new ArrayList<>();
 
             // when
-            cards.add(TrumpCard.ACE_OF_CLUBS);
-            cards.add(TrumpCard.ACE_OF_CLUBS);
-
+            for (int i = 0; i < 52; i++) {
+                cards.add(TrumpCard.ACE_OF_CLUBS);
+            }
             //then
-            assertThatThrownBy(() -> new Deck(cards)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> new Deck(cards))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("덱에 중복된 카드가 있습니다.");
+        }
+
+        @DisplayName("덱은 카드가 없다면 카드를 줄 수 없다")
+        @Test
+        void nonCardTest() {
+            // given
+            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
+                    .toList();
+            Deck deck = new Deck(cards);
+
+            // when
+            for (int i = 0; i < 52; i++) {
+                deck.draw();
+            }
+
+            // then
+            assertThatThrownBy(deck::draw)
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("덱에 카드가 없습니다.");
         }
     }
+
 }
