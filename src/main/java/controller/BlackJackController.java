@@ -5,13 +5,13 @@ import domain.Deck;
 import domain.Nickname;
 import domain.Player;
 import domain.Players;
-import domain.constant.WinDrawLose;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
+
+    public static final String HIT_COMMAND = "y";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -30,14 +30,7 @@ public class BlackJackController {
         outputView.printInitialGameSettings(players, dealer);
 
         for (Player player : players.getPlayers()) {
-            while (inputView.readOneMoreCardResponse(player.getNickname()).equals("y")) {
-                boolean isOverBustStandard = player.addOneCard(deck.drawOneCard());
-                if (!isOverBustStandard) {
-                    outputView.printPlayerIsOverBust(player);
-                    break;
-                }
-                outputView.printPlayerCards(player);
-            }
+            selectHitOrStand(player, deck);
             outputView.printPlayerCards(player);
         }
 
@@ -47,9 +40,18 @@ public class BlackJackController {
         }
 
         outputView.printGameSummary(players, dealer);
-        Map<Player, WinDrawLose> playerWinDrawLoseMap = players.deriveResults(dealer.sumCardNumbers());
-        outputView.printGameResult(playerWinDrawLoseMap);
+        outputView.printGameResult(players.deriveResults(dealer.sumCardNumbers()));
+    }
 
+    private void selectHitOrStand(Player player, Deck deck) {
+        while (inputView.readOneMoreCardResponse(player.getNickname()).equals(HIT_COMMAND)) {
+            boolean isUnderBustStandard = player.addOneCard(deck.drawOneCard());
+            if (!isUnderBustStandard) {
+                outputView.printPlayerIsOverBust(player);
+                break;
+            }
+            outputView.printPlayerCards(player);
+        }
     }
 
     private Players registerPlayers(List<String> names, Deck deck) {
