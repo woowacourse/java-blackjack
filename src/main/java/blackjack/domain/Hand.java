@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Hand implements CardHolder {
+
     private final List<Card> cards;
 
     public Hand() {
