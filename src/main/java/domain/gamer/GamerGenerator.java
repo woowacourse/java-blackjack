@@ -10,15 +10,15 @@ public class GamerGenerator {
 
     }
 
-    public static List<Player> generatePlayer(List<String> playerNames, CardGenerator cardGenerator){
+    public static List<Player> generatePlayer(List<String> playerNames, CardGenerator cardGenerator) {
         validateDuplicate(playerNames);
         return playerNames.stream()
-                .map(name -> new Player(name,new CardGroup(),cardGenerator))
+                .map(name -> new Player(name, new CardGroup(), cardGenerator))
                 .toList();
     }
 
     public static Dealer generateDealer(CardGenerator cardGenerator) {
-        return new Dealer(new CardGroup(),cardGenerator);
+        return new Dealer(new CardGroup(), cardGenerator);
     }
 
     private static void validateDuplicate(final List<String> playerNames) {

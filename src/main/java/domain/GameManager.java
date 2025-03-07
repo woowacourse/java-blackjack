@@ -39,15 +39,19 @@ public class GameManager {
     }
 
     private GameResult calculateResult(final Player player) {
-        if(dealer.isBust() && player.isBust()) return GameResult.DRAW;
-        if(dealer.isBust()) return GameResult.WIN;
+        if (dealer.isBust() && player.isBust()) {
+            return GameResult.DRAW;
+        }
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
         return player.calculateGameResult(dealer.calculateScore());
     }
 
     public Map<String, GameResult> calculatePlayerGameResult() {
         Map<String, GameResult> resultMap = new HashMap<>();
-        for(Player player : players) {
-            resultMap.put(player.getName(),calculateResult(player));
+        for (Player player : players) {
+            resultMap.put(player.getName(), calculateResult(player));
         }
         return resultMap;
     }

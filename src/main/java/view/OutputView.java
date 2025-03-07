@@ -49,16 +49,19 @@ public class OutputView {
 
     public void printGamerCardsAndScore(final Dealer dealer, final List<Player> players) {
         final String messageFormat = "%s - 결과: %d";
-        final String dealerMessage = String.format(messageFormat, createCardsMessage("딜러", dealer.getCards().toArray(new Card[0])),
+        final String dealerMessage = String.format(messageFormat,
+                createCardsMessage("딜러", dealer.getCards().toArray(new Card[0])),
                 dealer.calculateScore());
         final String playerMessage = players.stream()
                 .map(player -> String.format(messageFormat,
-                        createCardsMessage(player.getName(), player.getCards().toArray(new Card[0])), player.calculateScore()))
+                        createCardsMessage(player.getName(), player.getCards().toArray(new Card[0])),
+                        player.calculateScore()))
                 .collect(Collectors.joining(LINE_SEPARATOR));
         System.out.println(LINE_SEPARATOR + dealerMessage + LINE_SEPARATOR + playerMessage);
     }
 
-    public void printGameResult(final Map<GameResult, Integer> dealerGameResult, final Map<String, GameResult> playerGameResult) {
+    public void printGameResult(final Map<GameResult, Integer> dealerGameResult,
+                                final Map<String, GameResult> playerGameResult) {
         final StringBuilder sb = new StringBuilder();
         final String dealerGameResultMessage = dealerGameResult.entrySet().stream()
                 .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getDescription()))

@@ -29,53 +29,7 @@ public class GameManagerTest {
         //then
         assertThat(gameManager).isInstanceOf(GameManager.class);
     }
-//
-//    @Test
-//    void 딜러_점수가_16이하면_카드를_계속_뽑는다(){
-//        //given
-//        CardGroup cardGroup = new CardGroup();
-//        RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-//        final List<Player> players = List.of();
-//        Dealer dealer = new Dealer(cardGroup,randomCardGenerator);
-//
-//        //when
-//        final GameManager gameManager = GameManager.create(dealer,players);
-//        //then
-//        assertThatCode(gameManager::giveCardsToDealer).doesNotThrowAnyException();
-//    }
-//
-//    @Test
-//    void 버스트가_나기_전까지_카드를_더_받는다(){
-//        CardGroup cardGroup = new CardGroup();
-//        RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-//        final List<Player> players = List.of(
-//                new Player("윌슨",cardGroup,randomCardGenerator),
-//                new Player("가이온",cardGroup,randomCardGenerator));
-//        final Dealer dealer = new Dealer(cardGroup,randomCardGenerator);
-//        final GameManager gameManager = GameManager.create(dealer,players);
-//        final Player player = new Player("윌슨",cardGroup,randomCardGenerator);
-//
-//        boolean isHitting = gameManager.isAbleToHit(player);
-//
-//        assertThat(isHitting).isTrue();
-//    }
-//
-//    @Test
-//    void 플레이어에게_카드를_추가한다() {
-//        //given
-//        CardGroup cardGroup = new CardGroup();
-//        RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-//        final List<Player> players = List.of(
-//                new Player("윌슨",cardGroup,randomCardGenerator),
-//                new Player("가이온",cardGroup,randomCardGenerator));
-//        final Dealer dealer = new Dealer(cardGroup,randomCardGenerator);
-//        final Player player = new Player("윌슨",cardGroup,randomCardGenerator);
-//
-//        final GameManager gameManager = GameManager.create(dealer,players);
-//
-//
-//        assertThatCode(() -> gameManager.giveCardToGamer(player)).doesNotThrowAnyException();;
-//    }
+
 
     @Test
     void 플레이어가_버스트_하지_않고_딜러보다_점수가_높아야_승리() {

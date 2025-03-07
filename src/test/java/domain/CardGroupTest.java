@@ -93,7 +93,7 @@ public class CardGroupTest {
         }
 
         @Test
-        void 카드에_에이스가_포함되어_있을때_점수를_계산한다2(){
+        void 카드에_에이스가_포함되어_있을때_점수를_계산한다2() {
             //given
             final List<Card> cards = List.of(
                     new Card(CardType.DIAMOND_J),
@@ -109,7 +109,7 @@ public class CardGroupTest {
         }
 
         @Test
-        void 카드에_에이스가_포함되어_있을때_점수를_계산한다3(){
+        void 카드에_에이스가_포함되어_있을때_점수를_계산한다3() {
             //given
             final List<Card> cards = List.of(
                     new Card(CardType.DIAMOND_J),

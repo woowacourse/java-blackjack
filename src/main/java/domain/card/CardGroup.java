@@ -26,14 +26,14 @@ public class CardGroup {
 
     private int calculateScoreWithAce(int sum, int limit, int aceCount) {
         final int result = sum + aceCount;
-        return result + addScoreWithAce(0,limit - result , aceCount);
+        return result + addScoreWithAce(0, limit - result, aceCount);
     }
 
     private int addScoreWithAce(int sum, int limit, int aceCount) {
         if (aceCount <= 0 || sum + ACE_DISTANCE_SCORE > limit) {
             return sum;
         }
-        return addScoreWithAce(sum + ACE_DISTANCE_SCORE, limit, aceCount -1);
+        return addScoreWithAce(sum + ACE_DISTANCE_SCORE, limit, aceCount - 1);
     }
 
     public boolean addCard(final Card card) {

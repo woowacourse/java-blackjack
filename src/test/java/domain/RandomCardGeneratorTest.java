@@ -25,7 +25,7 @@ public class RandomCardGeneratorTest {
     }
 
     @Test
-    void 다이아_에이스를_생성한다(){
+    void 다이아_에이스를_생성한다() {
         AceCardGenerator aceCardGenerator = new AceCardGenerator();
         final Card card = aceCardGenerator.generate();
 

@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 
 class CardTest {
     @Nested
-    class cardConstructor{
+    class cardConstructor {
         @Test
-        void 카드를_생성한다(){
+        void 카드를_생성한다() {
             Card card = new Card(CardType.CLOVER_ACE);
 
             assertThat(card).isInstanceOf(Card.class);
