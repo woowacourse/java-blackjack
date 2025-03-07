@@ -1,8 +1,5 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
@@ -12,6 +9,8 @@ import blackjack.model.player.Player;
 import blackjack.model.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackJackController {
 
@@ -35,6 +34,17 @@ public class BlackJackController {
         }
         dealInitialCards(users, dealer, blackJackGame);
         outputView.printDealInitialCardsResult(dealer, users, rule);
+
+        for (User user : users) {
+            while (rule.canDrawMoreCard(user) && inputView.readUserDrawMoreCard(user)) {
+                blackJackGame.drawMoreCard(user);
+                outputView.printPlayerCards(user);
+            }
+        }
+
+        outputView.printDealerDrawnMoreCards(blackJackGame.drawMoreCard(dealer));
+        outputView.printOptimalPoints(dealer, users, rule);
+        outputView.printGameResult(rule.calculateResult(dealer, users));
     }
 
     private void dealInitialCards(final List<User> users, final Player dealer, final BlackJackGame blackJackGame) {

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -15,4 +16,16 @@ public class InputView {
         ).toList();
     }
 
+    public boolean readUserDrawMoreCard(final User user) {
+        System.out.println(user.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String choice = scanner.nextLine();
+        validateChoice(choice);
+        return choice.equals("y");
+    }
+
+    private void validateChoice(final String choice) {
+        if (!choice.equals("y") && !choice.equals("n")) {
+            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
+        }
+    }
 }

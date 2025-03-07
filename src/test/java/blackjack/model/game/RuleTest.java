@@ -9,12 +9,11 @@ import blackjack.model.player.Player;
 import blackjack.model.player.Role;
 import blackjack.model.player.User;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -169,27 +168,36 @@ class RuleTest {
                         new DealerWinRule(), makePlayerWithName(Role.DEALER, "딜러"),
                         List.of(makePlayerWithName(Role.USER, "pobi"),
                                 makePlayerWithName(Role.USER, "json")),
-                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), List.of(Result.WIN, Result.WIN),
-                                makePlayerWithName(Role.USER, "pobi"), List.of(Result.LOSE),
-                                makePlayerWithName(Role.USER, "json"), List.of(Result.LOSE)
+                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), makeResultMap(2, 0, 0),
+                                makePlayerWithName(Role.USER, "pobi"), makeResultMap(0, 0, 1),
+                                makePlayerWithName(Role.USER, "json"), makeResultMap(0, 0, 1)
                         )),
                 Arguments.of(
                         new DealerLoseRule(), makePlayerWithName(Role.DEALER, "딜러"),
                         List.of(makePlayerWithName(Role.USER, "pobi"),
                                 makePlayerWithName(Role.USER, "json")),
-                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), List.of(Result.LOSE, Result.LOSE),
-                                makePlayerWithName(Role.USER, "pobi"), List.of(Result.WIN),
-                                makePlayerWithName(Role.USER, "json"), List.of(Result.WIN)
+                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), makeResultMap(0, 0, 2),
+                                makePlayerWithName(Role.USER, "pobi"), makeResultMap(1, 0, 0),
+                                makePlayerWithName(Role.USER, "json"), makeResultMap(1, 0, 0)
                         )),
                 Arguments.of(
                         new DrawRule(), makePlayerWithName(Role.DEALER, "딜러"),
                         List.of(makePlayerWithName(Role.USER, "pobi"),
                                 makePlayerWithName(Role.USER, "json")),
-                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), List.of(Result.DRAW, Result.DRAW),
-                                makePlayerWithName(Role.USER, "pobi"), List.of(Result.DRAW),
-                                makePlayerWithName(Role.USER, "json"), List.of(Result.DRAW)
+                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), makeResultMap(0, 2, 0),
+                                makePlayerWithName(Role.USER, "pobi"), makeResultMap(0, 1, 0),
+                                makePlayerWithName(Role.USER, "json"), makeResultMap(0, 1, 0)
                         ))
         );
+    }
+
+    private static Map<Result, Integer> makeResultMap(final int winCount, final int drawCount, final int loseCount) {
+        Map<Result, Integer> result = new LinkedHashMap<>(Result.getResultBoard());
+        result.put(Result.WIN, winCount);
+        result.put(Result.DRAW, drawCount);
+        result.put(Result.LOSE, loseCount);
+
+        return result;
     }
 
     private static Player makePlayer(final Role role, final Card... cards) {
@@ -265,10 +273,10 @@ class RuleTest {
     @MethodSource("게임_결과를_반환하는_테스트_케이스")
     @ParameterizedTest
     void 게임_결과를_반환한다(final Rule rule, final Dealer dealer, final List<User> users,
-                     final Map<Player, List<Result>> expected) {
-        Map<Player, List<Result>> results = rule.calculateResult(dealer, users);
+                     final Map<Player, Map<Result, Integer>> expected) {
+        Map<Player, Map<Result, Integer>> results = rule.calculateResult(dealer, users);
 
-        assertThat(results).containsExactlyInAnyOrderEntriesOf(expected);
+        assertThat(results).containsAllEntriesOf(expected);
     }
 
     @Test
