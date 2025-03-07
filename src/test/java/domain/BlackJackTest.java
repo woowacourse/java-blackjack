@@ -1,12 +1,9 @@
 package domain;
 
-import static domain.MatchResult.LOSE;
 import static domain.MatchResult.WIN;
 import static domain.card.Number.ACE;
-import static domain.card.Number.EIGHT;
 import static domain.card.Number.FIVE;
 import static domain.card.Number.JACK;
-import static domain.card.Number.NINE;
 import static domain.card.Number.QUEEN;
 import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
@@ -25,7 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -92,7 +88,7 @@ public class BlackJackTest {
 
     @Test
     @DisplayName("결과 선출 테스트")
-    void calculateWinnerTest() {
+    void calculatePlayerResultTest() {
         //given
         Players players = Players.from(List.of("pobi", "lisa"));
         CardDeck cardDeck = new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK), new Card(HEART, ACE), new Card(CLOVER, ACE)));
@@ -102,7 +98,7 @@ public class BlackJackTest {
 
         //when
         blackJack.hitCardsToParticipant();
-        Map<Player, MatchResult> playerMatchResultMap = blackJack.calculateWinner();
+        Map<Player, MatchResult> playerMatchResultMap = blackJack.calculatePlayerResult();
 
         //then
         SoftAssertions softAssertions = new SoftAssertions();

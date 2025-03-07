@@ -42,9 +42,9 @@ public class BlackJackController {
         outputView.printDrawDealer(dealer);
 
         // 5. 결과
-//        blackJack.calculateResult();
         outputView.printScore(players, dealer);
+
         // 6. 최종 승패
-        blackJack.calculateWinner();
+        outputView.printResult(blackJack.calculatePlayerResult());
     }
 }

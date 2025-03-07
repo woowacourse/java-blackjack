@@ -4,7 +4,6 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -30,7 +29,7 @@ public class BlackJack {
         dealer.draw();
     }
 
-    public Map<Player, MatchResult> calculateWinner() {
+    public Map<Player, MatchResult> calculatePlayerResult() {
         return players.calculateWinner(dealer.sum());
     }
 }
