@@ -15,7 +15,7 @@ public class Dealer {
 
     private void validateNotNull(Hand hand) {
         if (hand == null) {
-            throw new IllegalStateException("딜러는 손패를 가져야합니다.");
+            throw new IllegalArgumentException("딜러는 손패를 가져야합니다.");
         }
     }
 
