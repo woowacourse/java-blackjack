@@ -13,7 +13,7 @@ class CommandTest {
     @CsvSource(value = {
             "Y, YES", "N, NO"
     })
-    void 입력에_대한_커맨드가_반환된다(String input, Command command) {
+    void 입력에_대한_커맨드가_반환된다(final String input, final Command command) {
 
         // given
 
@@ -26,7 +26,7 @@ class CommandTest {
     @CsvSource(value = {
             "Y, true", "N, false"
     })
-    void Y가_입력되면_true_아니면_false를_반환한다(String input, boolean expected) {
+    void Y가_입력되면_true_아니면_false를_반환한다(final String input, final boolean expected) {
 
         // given
 
@@ -39,7 +39,7 @@ class CommandTest {
     @CsvSource(value = {
             "N, true", "Y, false"
     })
-    void N이_입력되면_true_아니면_false를_반환한다(String input, boolean expected) {
+    void N이_입력되면_true_아니면_false를_반환한다(final String input, final boolean expected) {
 
         // given
 

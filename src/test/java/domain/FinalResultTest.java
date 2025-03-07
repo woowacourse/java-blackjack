@@ -48,7 +48,7 @@ class FinalResultTest {
     @CsvSource(value = {
             "15, 14, WIN", "15, 17, LOSE", "15, 15, DRAW"
     })
-    void 카드_합에_따른_승패_결과_반환한다(int sumOfRank, int otherSumOfRank, FinalResult expected) {
+    void 카드_합에_따른_승패_결과_반환한다(final int sumOfRank, final int otherSumOfRank, final FinalResult expected) {
 
         // given
         final FinalResult finalResult = FinalResult.findBySumOfRank(sumOfRank, otherSumOfRank);
@@ -64,7 +64,7 @@ class FinalResultTest {
         // given
 
         // when
-        Map<Player, FinalResult> finalResults = FinalResult.makePlayerResult(List.of(player1, player2, player3),
+        final Map<Player, FinalResult> finalResults = FinalResult.makePlayerResult(List.of(player1, player2, player3),
                 dealer);
 
         //then
@@ -80,17 +80,17 @@ class FinalResultTest {
     void 딜러의_승패_결과를_생성한다() {
 
         // given
-        Player player1 = new Player(new Nickname("체체"));
-        Player player2 = new Player(new Nickname("새로이"));
-        Player player3 = new Player(new Nickname("체로이"));
-        Player player4 = new Player(new Nickname("짱구"));
-        Dealer dealer1 = new Dealer(new Nickname("딜러"));
-        Dealer dealer2 = new Dealer(new Nickname("훈이"));
+        final Player player1 = new Player(new Nickname("체체"));
+        final Player player2 = new Player(new Nickname("새로이"));
+        final Player player3 = new Player(new Nickname("체로이"));
+        final Player player4 = new Player(new Nickname("짱구"));
+        final Dealer dealer1 = new Dealer(new Nickname("딜러"));
+        final Dealer dealer2 = new Dealer(new Nickname("훈이"));
 
-        Card card1 = new Card(Rank.KING, Shape.CLOVER);
-        Card card2 = new Card(Rank.JACK, Shape.CLOVER);
-        Card card3 = new Card(Rank.ACE, Shape.CLOVER);
-        Card card4 = new Card(Rank.TEN, Shape.CLOVER);
+        final Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card2 = new Card(Rank.JACK, Shape.CLOVER);
+        final Card card3 = new Card(Rank.ACE, Shape.CLOVER);
+        final Card card4 = new Card(Rank.TEN, Shape.CLOVER);
 
         player1.hit(card1);
         player1.hit(card2);
@@ -109,13 +109,13 @@ class FinalResultTest {
         dealer2.hit(card3);
         dealer2.hit(card4);
 
-        Map<Player, FinalResult> finalResults1 = FinalResult.makePlayerResult(
+        final Map<Player, FinalResult> finalResults1 = FinalResult.makePlayerResult(
                 List.of(player1, player2, player3, player4), dealer1);
-        Map<Player, FinalResult> finalResults2 = FinalResult.makePlayerResult(List.of(player1), dealer2);
+        final Map<Player, FinalResult> finalResults2 = FinalResult.makePlayerResult(List.of(player1), dealer2);
 
         // when
-        Map<FinalResult, Integer> dealerResult1 = FinalResult.makeDealerResult(finalResults1);
-        Map<FinalResult, Integer> dealerResult2 = FinalResult.makeDealerResult(finalResults2);
+        final Map<FinalResult, Integer> dealerResult1 = FinalResult.makeDealerResult(finalResults1);
+        final Map<FinalResult, Integer> dealerResult2 = FinalResult.makeDealerResult(finalResults2);
 
         //then
         SoftAssertions.assertSoftly(softly -> {

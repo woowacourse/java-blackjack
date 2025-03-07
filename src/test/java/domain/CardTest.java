@@ -28,7 +28,7 @@ class CardTest {
     @CsvSource(value = {
             "ACE, SPADE, true", "THREE, SPADE, false", "JACK, SPADE, false"
     })
-    void 카드가_예이스면_true_아니면_false를_반환한다(Rank rank, Shape shape, boolean expected) {
+    void 카드가_예이스면_true_아니면_false를_반환한다(final Rank rank, final Shape shape, final boolean expected) {
 
         // given
         // when & then

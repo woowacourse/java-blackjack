@@ -40,7 +40,7 @@ class PlayerTest {
         final Card card = new Card(Rank.SIX, Shape.CLOVER);
 
         // when
-        int previousResult = player.calculateSumOfRank();
+        final int previousResult = player.calculateSumOfRank();
         player.hit(card);
 
         // then
@@ -52,16 +52,16 @@ class PlayerTest {
     void 플레이어가_버스트면_true를_반환한다() {
 
         // given
-        Card card1 = new Card(Rank.KING, Shape.CLOVER);
-        Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
-        Card card3 = new Card(Rank.JACK, Shape.CLOVER);
+        final Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
+        final Card card3 = new Card(Rank.JACK, Shape.CLOVER);
         final Player player = new Player(new Nickname("hihi"));
         player.hit(card1);
         player.hit(card2);
         player.hit(card3);
 
         // when
-        boolean actual = player.isBust();
+        final boolean actual = player.isBust();
 
         // then
         assertThat(actual).isTrue();
@@ -72,12 +72,12 @@ class PlayerTest {
     void 플레이어가_버스트면_false를_반환한다() {
 
         // given
-        Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card1 = new Card(Rank.KING, Shape.CLOVER);
         final Player player = new Player(new Nickname("hihi"));
         player.hit(card1);
 
         // when
-        boolean actual = player.isBust();
+        final boolean actual = player.isBust();
 
         // then
         assertThat(actual).isFalse();
@@ -88,8 +88,8 @@ class PlayerTest {
     void 플레이어는_초기_카드_두_장을_받는다() {
 
         // given
-        Card card1 = new Card(Rank.KING, Shape.CLOVER);
-        Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
+        final Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
 
         // when & then
         assertThatCode(() -> player.receiveInitialCards(List.of(card1, card2)))
@@ -101,7 +101,7 @@ class PlayerTest {
     void 플레이어는_카드_한_장을_받는다() {
 
         // given
-        Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card1 = new Card(Rank.KING, Shape.CLOVER);
 
         // when & then
         assertThatCode(() -> player.hit(card1))
@@ -114,18 +114,18 @@ class PlayerTest {
             "TWO,EIGHT,ACE,21", "ACE,ACE,ACE,13",
             "KING,JACK,ACE,21", "THREE,FOUR,FIVE,12",
     })
-    void 플레이어의_카드_중_최고_값을_반환한다(Rank rank1, Rank rank2, Rank rank3, int expected) {
+    void 플레이어의_카드_중_최고_값을_반환한다(final Rank rank1, final Rank rank2, final Rank rank3, final int expected) {
 
         // given
-        Card card1 = new Card(rank1, Shape.CLOVER);
-        Card card2 = new Card(rank2, Shape.CLOVER);
-        Card card3 = new Card(rank3, Shape.CLOVER);
+        final Card card1 = new Card(rank1, Shape.CLOVER);
+        final Card card2 = new Card(rank2, Shape.CLOVER);
+        final Card card3 = new Card(rank3, Shape.CLOVER);
 
         player.receiveInitialCards(List.of(card1, card2));
         player.hit(card3);
 
         // when
-        int sumOfRank = player.calculateSumOfRank();
+        final int sumOfRank = player.calculateSumOfRank();
 
         // then
         assertThat(sumOfRank).isEqualTo(expected);
@@ -136,17 +136,17 @@ class PlayerTest {
     void 플레이어의_카드_중_최고_값을_반환한다2() {
 
         // given
-        Card card1 = new Card(Rank.KING, Shape.CLOVER);
-        Card card2 = new Card(Rank.KING, Shape.CLOVER);
-        Card card3 = new Card(Rank.KING, Shape.CLOVER);
-        Card card4 = new Card(Rank.ACE, Shape.CLOVER);
+        final Card card1 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card2 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card3 = new Card(Rank.KING, Shape.CLOVER);
+        final Card card4 = new Card(Rank.ACE, Shape.CLOVER);
 
         player.receiveInitialCards(List.of(card1, card2));
         player.hit(card3);
         player.hit(card4);
 
         // when
-        int sumOfRank = player.calculateSumOfRank();
+        final int sumOfRank = player.calculateSumOfRank();
 
         // then
         assertThat(sumOfRank).isEqualTo(31);

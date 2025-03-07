@@ -13,7 +13,7 @@ class DeckGeneratorTest {
     void 카드_목록을_구성한다() {
 
         // given
-        DeckGenerator deckGenerator = new DeckGenerator();
+        final DeckGenerator deckGenerator = new DeckGenerator();
 
         // when & then
         Assertions.assertThatCode(deckGenerator::generate)
