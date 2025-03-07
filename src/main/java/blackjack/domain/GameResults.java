@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.player.Player;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,19 +18,19 @@ public class GameResults {
         );
     }
 
-    public Map<Player, GameResult> getGameResults() {
-        return Collections.unmodifiableMap(gameResults);
+    public GameResult getGameResult(Player player) {
+        return gameResults.get(player);
     }
 
     public int getDealerWin() {
         return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.WIN)
+                entry.getValue().equals(GameResult.LOSE)
         ).count();
     }
 
     public int getDealerLose() {
         return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.LOSE)
+                entry.getValue().equals(GameResult.WIN)
         ).count();
     }
 

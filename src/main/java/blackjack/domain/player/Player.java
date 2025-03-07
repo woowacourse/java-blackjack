@@ -87,8 +87,8 @@ public abstract class Player implements Comparable<Player> {
             return Integer.compare(this.calculateCardNumber(), o.calculateCardNumber());
         }
         if (this.isPlayerNotBust() && o.isPlayerBust()) {
-            return -1;
+            return 1;
         }
-        return 1;
+        return -1;
     }
 }
