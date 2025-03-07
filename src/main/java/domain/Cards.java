@@ -12,6 +12,7 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
+    // TODO: 미사용
     public Cards(List<Card> cards) {
         this.cards = cards;
     }

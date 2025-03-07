@@ -37,20 +37,28 @@ public class BlackjackController {
         // 참여자들의 추가 카드 분배
         List<String> participantNames = blackjack.getParticipantNames();
         for (String participantName : participantNames) {
-            YesOrNo wantOneMoreCard;
-            do {
-                wantOneMoreCard = YesOrNo.from(InputView.inputWantOneMoreCard(participantName));
-                if (wantOneMoreCard.equals(YesOrNo.YES)) {
-                    blackjack.addCardToCurrentParticipant(participantName);
-                }
-                OutputView.printPlayerCards(blackjack.getNameAndCardsByName(participantName));
-            } while (wantOneMoreCard.equals(YesOrNo.YES));
+            addMoreCardsEachParticipant(blackjack, participantName);
         }
 
         // 딜러의 추가 카드 분배
         boolean isAdded = blackjack.addCardToDealerIfLowScore();
         if (isAdded) {
             OutputView.printAddCardToDealer();
+        }
+    }
+
+    private void addMoreCardsEachParticipant(Blackjack blackjack, String participantName) {
+        YesOrNo wantOneMoreCard;
+        do {
+            wantOneMoreCard = YesOrNo.from(InputView.inputWantOneMoreCard(participantName));
+            addMoreCardByAnswer(blackjack, participantName, wantOneMoreCard);
+            OutputView.printPlayerCards(blackjack.getNameAndCardsByName(participantName));
+        } while (wantOneMoreCard.equals(YesOrNo.YES));
+    }
+
+    private void addMoreCardByAnswer(Blackjack blackjack, String participantName, YesOrNo wantOneMoreCard) {
+        if (wantOneMoreCard.equals(YesOrNo.YES)) {
+            blackjack.addCardToCurrentParticipant(participantName);
         }
     }
 
