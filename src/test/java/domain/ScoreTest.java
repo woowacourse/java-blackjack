@@ -38,4 +38,24 @@ class ScoreTest {
         }
     }
 
+    @ParameterizedTest
+    @DisplayName("점수를 비교한다.")
+    @MethodSource("provideScoreComparisonCases")
+    void isLowerThan(Score firstScore, Score secondScore, boolean expectedResult) {
+        // when
+        boolean result = firstScore.isLowerThan(secondScore);
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    static Stream<Arguments> provideScoreComparisonCases() {
+        return Stream.of(
+                Arguments.of(Score.BUST, Score.TWENTY_ONE, true),
+                Arguments.of(Score.TEN, Score.ELEVEN, true),
+                Arguments.of(Score.FIFTEEN, Score.TWENTY, true),
+                Arguments.of(Score.TWENTY, Score.TWENTY, false),
+                Arguments.of(Score.TWENTY_ONE, Score.TWENTY, false)
+        );
+    }
 }
