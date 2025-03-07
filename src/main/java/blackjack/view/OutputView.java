@@ -12,34 +12,6 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static void printDealerMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        EnumMap<MatchResult, Integer> dealerMatchResult = calculateDealerMatchResult(playerMatchResults);
-        System.out.print("딜러:");
-        for (Entry<MatchResult, Integer> matchEntry : dealerMatchResult.entrySet()) {
-            if (matchEntry.getValue() != 0) {
-                System.out.print(" " + matchEntry.getValue() + matchEntry.getKey().getLabel());
-            }
-        }
-        System.out.println();
-    }
-
-    private static EnumMap<MatchResult, Integer> calculateDealerMatchResult(
-            Map<Player, MatchResult> playerMatchResults) {
-        EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap<>(MatchResult.class);
-        for (MatchResult matchResult : playerMatchResults.values()) {
-            dealerMatchResult.merge(MatchResult.reverse(matchResult), 1, Integer::sum);
-        }
-        return dealerMatchResult;
-    }
-
-    private static void printPlayersMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        for (Entry<Player, MatchResult> playerMatchResultEntry : playerMatchResults.entrySet()) {
-            System.out.printf("%s: %s%n",
-                    playerMatchResultEntry.getKey().getName(),
-                    playerMatchResultEntry.getValue().getLabel());
-        }
-    }
-
     public void printInitialCards(Card dealerVisibleCard, List<Player> players) {
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", joinPlayerNamesWithComma(players));
         System.out.printf("딜러카드: %s%n", dealerVisibleCard.getDisplayLabel());
@@ -49,29 +21,14 @@ public class OutputView {
         System.out.println();
     }
 
-    private String joinPlayerNamesWithComma(List<Player> players) {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
-    }
-
-    private String getHand(Player player) {
-        return player.getHand()
-                .stream()
-                .map(Card::getDisplayLabel)
-                .collect(Collectors.joining(", "));
-    }
-
     public void printPlayerHand(Player player) {
         System.out.printf("%s: %s%n", player.getName(), getHand(player));
     }
 
-    public void printDealerHit(boolean isDealerHit) {
-        if (isDealerHit) {
-            System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Game.DEALER_HIT_THRESHOLD);
-            return;
-        }
-        System.out.println();
+    private String joinPlayerNamesWithComma(List<Player> players) {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
     }
 
     public void printDealerHandAndTotal(List<Card> hand, int total) {
@@ -84,9 +41,10 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    public void printPlayerHandAndTotal(List<Player> players) {
-        for (Player player : players) {
-            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player), player.getTotal());
+    public void printDealerHit(boolean isDealerHit) {
+        if (isDealerHit) {
+            System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Game.DEALER_HIT_THRESHOLD);
+            return;
         }
         System.out.println();
     }
@@ -95,5 +53,49 @@ public class OutputView {
         System.out.println("## 최종 승패");
         printDealerMatchResult(playerMatchResults);
         printPlayersMatchResult(playerMatchResults);
+    }
+
+    private void printDealerMatchResult(Map<Player, MatchResult> playerMatchResults) {
+        EnumMap<MatchResult, Integer> dealerMatchResult = calculateDealerMatchResult(playerMatchResults);
+        System.out.printf("딜러: %s%n", formatDealerMatchResult(dealerMatchResult));
+    }
+
+    private String formatDealerMatchResult(EnumMap<MatchResult, Integer> dealerMatchResult) {
+        return dealerMatchResult.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() != 0)
+                .map(entry -> entry.getValue() + entry.getKey().getLabel())
+                .collect(Collectors.joining(" "));
+    }
+
+    private EnumMap<MatchResult, Integer> calculateDealerMatchResult(
+            Map<Player, MatchResult> playerMatchResults) {
+        EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap<>(MatchResult.class);
+        for (MatchResult matchResult : playerMatchResults.values()) {
+            dealerMatchResult.merge(MatchResult.reverse(matchResult), 1, Integer::sum);
+        }
+        return dealerMatchResult;
+    }
+
+    private void printPlayersMatchResult(Map<Player, MatchResult> playerMatchResults) {
+        for (Entry<Player, MatchResult> playerMatchResultEntry : playerMatchResults.entrySet()) {
+            System.out.printf("%s: %s%n",
+                    playerMatchResultEntry.getKey().getName(),
+                    playerMatchResultEntry.getValue().getLabel());
+        }
+    }
+
+    public void printPlayerHandAndTotal(List<Player> players) {
+        for (Player player : players) {
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player), player.getTotal());
+        }
+        System.out.println();
+    }
+
+    private String getHand(Player player) {
+        return player.getHand()
+                .stream()
+                .map(Card::getDisplayLabel)
+                .collect(Collectors.joining(", "));
     }
 }
