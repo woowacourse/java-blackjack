@@ -38,8 +38,12 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE, EIGHT, ACE, true", "EIGHT, SEVEN, SIX, true", "KING, KING, TWO, false",
-            "QUEEN, JACK, KING, false"})
+    @CsvSource(value = {
+            "ACE, EIGHT, ACE, true",
+            "EIGHT, SEVEN, SIX, true",
+            "KING, KING, TWO, false",
+            "QUEEN, JACK, KING, false"
+    })
     void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
@@ -55,7 +59,11 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE, ACE, KING, 12", "ACE, THREE, FOUR, 18", "ACE, THREE, KING, 14",})
+    @CsvSource(value = {
+            "ACE, ACE, KING, 12",
+            "ACE, THREE, FOUR, 18",
+            "ACE, THREE, KING, 14",
+    })
     void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);

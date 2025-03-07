@@ -27,15 +27,22 @@ public class Player {
 
     public WinDrawLose compareTo(int dealerScore) {
         int sum = sumCardNumbers();
-
-        if ((sum > BUST_STANDARD && dealerScore > BUST_STANDARD) || sum == dealerScore) {
-            return WinDrawLose.DRAW;
+        if (sum > BUST_STANDARD || dealerScore > BUST_STANDARD) {
+            return getWinDrawLoseWhenOverBustStandard(sum);
         }
+        return getWinDrawLose(dealerScore, sum);
+    }
+
+    private WinDrawLose getWinDrawLoseWhenOverBustStandard(int sum) {
         if (sum > BUST_STANDARD) {
             return WinDrawLose.LOSE;
         }
-        if (dealerScore > BUST_STANDARD) {
-            return WinDrawLose.WIN;
+        return WinDrawLose.WIN;
+    }
+
+    private WinDrawLose getWinDrawLose(int dealerScore, int sum) {
+        if (sum == dealerScore) {
+            return WinDrawLose.DRAW;
         }
         if (sum > dealerScore) {
             return WinDrawLose.WIN;
