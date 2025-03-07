@@ -27,19 +27,17 @@ public class BlackJackController {
         final Dealer dealer = GamerGenerator.generateDealer(randomCardGenerator);
         final List<Player> players = requestPlayers(randomCardGenerator);
         final GameManager gameManager = new GameManager(dealer, players);
-
         giveCardToAllGamer(dealer, players);
         requestHit(dealer, players);
         printDealerReceiveCardCount(dealer);
-
         outputView.printGamerCardsAndScore(dealer, players);
         outputView.printGameResult(gameManager.calculateDealerGameResult(), gameManager.calculatePlayerGameResult());
     }
 
     private void giveCardToAllGamer(final Dealer dealer, final List<Player> players) {
-        dealer.receiveCard(2);
+        dealer.receiveCard(1);
         for (Player player : players) {
-            player.receiveCard(2);
+            player.receiveCard(1);
         }
     }
 
