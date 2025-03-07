@@ -14,11 +14,12 @@ class GameManagerTest {
 
     GameManager gameManager;
     CardManager cardManager;
+    GameUserStorage gameUserStorage;
 
     @BeforeEach
     void setUp() {
         cardManager = new CardManager();
-        gameManager = new GameManager(cardManager);
+        gameManager = new GameManager(cardManager, gameUserStorage);
     }
 
     @Test
@@ -51,7 +52,7 @@ class GameManagerTest {
                         .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue()),
                 () -> assertThat(cardManager.findCardsByNickname(new Nickname("랜디")).getSize())
                         .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue()),
-                () -> assertThat(cardManager.findCardsByNickname(Nickname.createDealerNickname()).getSize())
+                () -> assertThat(cardManager.findCardsByNickname(new Nickname("딜러")).getSize())
                         .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue())
         );
     }
@@ -84,7 +85,7 @@ class GameManagerTest {
         gameManager.drawDealerCards();
 
         //then
-        int dealerCardPoint = cardManager.calculateSumByNickname(Nickname.createDealerNickname());
+        int dealerCardPoint = cardManager.calculateSumByNickname(new Nickname("딜러"));
         assertThat(dealerCardPoint).isGreaterThan(GameRule.DEALER_LIMIT_POINT.getValue());
     }
 
@@ -98,7 +99,7 @@ class GameManagerTest {
         gameManager.drawDealerCards();
 
         //then
-        int dealerCardPoint = cardManager.calculateSumByNickname(Nickname.createDealerNickname());
+        int dealerCardPoint = cardManager.calculateSumByNickname(new Nickname("딜러"));
         assertThat(dealerCardPoint).isGreaterThan(GameRule.DEALER_LIMIT_POINT.getValue());
     }
 

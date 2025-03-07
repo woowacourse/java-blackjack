@@ -8,15 +8,15 @@ import java.util.List;
 public class GameManager {
 
     private final CardManager cardManager;
-    private Players players;
+    private final GameUserStorage gameUserStorage;
 
-    public GameManager(CardManager cardManager) {
+    public GameManager(CardManager cardManager, GameUserStorage gameUserStorage) {
         this.cardManager = cardManager;
+        this.gameUserStorage = gameUserStorage;
     }
 
     public void registerPlayers(List<Nickname> nicknames) {
-        nicknames.add(Nickname.createDealerNickname());
-        players = new Players(nicknames);
+        gameUserStorage.initialize(nicknames);
         cardManager.initialize(nicknames);
     }
 
@@ -34,9 +34,9 @@ public class GameManager {
 
     public int drawDealerCards() {
         int count = 0;
-        Player dealer = players.getDealer();
+        Player dealer = gameUserStorage.getDealer();
         while (GameRule.shouldDrawCardToDealer(cardManager.calculateSumByNickname(dealer.getNickname()))) {
-            cardManager.addCardByNickname(players.getDealer().getNickname());
+            cardManager.addCardByNickname(gameUserStorage.getDealer().getNickname());
             count++;
         }
         return count;
@@ -47,16 +47,16 @@ public class GameManager {
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return gameUserStorage.getPlayers();
     }
 
     public List<DrawnCardResult> calculateDrawnCardResults() {
         List<DrawnCardResult> drawnCardResults = new ArrayList<>();
 
-        Player dealer = players.getDealer();
+        Player dealer = gameUserStorage.getDealer();
         drawnCardResults.add(getDrawnCardResult(dealer));
 
-        List<Player> allPlayers = players.getPlayers();
+        List<Player> allPlayers = gameUserStorage.getPlayers();
         allPlayers.stream()
                 .map(this::getDrawnCardResult)
                 .forEach(drawnCardResults::add);
@@ -65,10 +65,10 @@ public class GameManager {
     }
 
     public PlayerWinningStatistics calculateGameResult() {
-        Player dealer = players.getDealer();
+        Player dealer = gameUserStorage.getDealer();
         int dealerPoint = cardManager.calculateSumByNickname(dealer.getNickname());
 
-        List<Player> allPlayers = players.getPlayers();
+        List<Player> allPlayers = gameUserStorage.getPlayers();
         return new PlayerWinningStatistics(allPlayers.stream()
                 .map(player -> calculatePlayerWinningResult(player, dealerPoint))
                 .toList());
