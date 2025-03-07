@@ -29,7 +29,7 @@ public class Deck {
     }
 
     private void validateDuplicateCard(final Queue<Card> deck) {
-        HashSet<Card> notDuplicateCards = new HashSet<>(deck);
+        final HashSet<Card> notDuplicateCards = new HashSet<>(deck);
         if (deck.size() != notDuplicateCards.size()) {
             throw new IllegalArgumentException("덱에는 중복된 카드가 들어올 수 없습니다!");
         }
