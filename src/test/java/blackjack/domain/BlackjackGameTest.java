@@ -156,4 +156,19 @@ class BlackjackGameTest {
         assertThat(blackjackGame.calculateWinningResult()).isEqualTo(
                 Map.of(mj, ResultStatus.WIN, mint, ResultStatus.LOSE, pobi, ResultStatus.DRAW));
     }
+
+    @DisplayName("한 장의 카드를 딜러에게 준다.")
+    @Test
+    void spreadOneCardToDealer() {
+        // given
+        Participants participants = provideParticipants();
+        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+                participants);
+
+        // when
+        blackjackGame.spreadOneCardToDealer();
+
+        // then
+        assertThat(participants.getDealer().showAllCard()).hasSize(1);
+    }
 }
