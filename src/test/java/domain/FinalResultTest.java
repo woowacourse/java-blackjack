@@ -83,10 +83,14 @@ class FinalResultTest {
         Player player1 = new Player(new Nickname("체체"));
         Player player2 = new Player(new Nickname("새로이"));
         Player player3 = new Player(new Nickname("체로이"));
-        Dealer dealer = new Dealer(new Nickname("딜러"));
+        Player player4 = new Player(new Nickname("짱구"));
+        Dealer dealer1 = new Dealer(new Nickname("딜러"));
+        Dealer dealer2 = new Dealer(new Nickname("훈이"));
+
         Card card1 = new Card(Rank.KING, Shape.CLOVER);
         Card card2 = new Card(Rank.JACK, Shape.CLOVER);
         Card card3 = new Card(Rank.ACE, Shape.CLOVER);
+        Card card4 = new Card(Rank.TEN, Shape.CLOVER);
 
         player1.hit(card1);
         player1.hit(card2);
@@ -94,20 +98,33 @@ class FinalResultTest {
         player2.hit(card2);
         player3.hit(card1);
         player3.hit(card2);
-        dealer.hit(card1);
-        dealer.hit(card2);
+        player4.hit(card1);
+        player4.hit(card2);
+        player4.hit(card3);
+        player4.hit(card4);
+        dealer1.hit(card1);
+        dealer1.hit(card2);
+        dealer2.hit(card1);
+        dealer2.hit(card2);
+        dealer2.hit(card3);
+        dealer2.hit(card4);
 
-        Map<Player, FinalResult> finalResults = FinalResult.makePlayerResult(List.of(player1, player2, player3),
-                dealer);
+        Map<Player, FinalResult> finalResults1 = FinalResult.makePlayerResult(
+                List.of(player1, player2, player3, player4),
+                dealer1);
+        Map<Player, FinalResult> finalResults2 = FinalResult.makePlayerResult(List.of(player1),
+                dealer1);
 
         // when
-        Map<FinalResult, Integer> dealerResult = FinalResult.makeDealerResult(finalResults);
+        Map<FinalResult, Integer> dealerResult1 = FinalResult.makeDealerResult(finalResults1);
+        Map<FinalResult, Integer> dealerResult2 = FinalResult.makeDealerResult(finalResults2);
 
         //then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealerResult.get(FinalResult.WIN)).isEqualTo(1);
-            softly.assertThat(dealerResult.get(FinalResult.LOSE)).isEqualTo(1);
-            softly.assertThat(dealerResult.get(FinalResult.DRAW)).isEqualTo(1);
+            softly.assertThat(dealerResult1.get(FinalResult.WIN)).isEqualTo(1);
+            softly.assertThat(dealerResult1.get(FinalResult.LOSE)).isEqualTo(2);
+            softly.assertThat(dealerResult1.get(FinalResult.DRAW)).isEqualTo(1);
+            softly.assertThat(dealerResult2.get(FinalResult.WIN)).isEqualTo(1);
         });
     }
 }
