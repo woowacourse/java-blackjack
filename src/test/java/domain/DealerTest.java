@@ -10,6 +10,26 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
+    @Nested
+    class ValidCases {
+
+        @DisplayName("딜러의 첫번째 카드를 가져온다.")
+        @Test
+        void retrieveFirstCard() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES,
+                    TrumpCard.TWO_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+
+            // when
+            Dealer dealer = new Dealer(hand);
+
+            // then
+            assertThat(dealer.retrieveFirstCard()).isEqualTo(TrumpCard.ACE_OF_SPADES);
+        }
+    }
 
     @Nested
     class InvalidCases {
@@ -26,4 +46,20 @@ class DealerTest {
                     .hasMessage("딜러는 손패를 가져야합니다.");
         }
 
+        @DisplayName("딜러의 첫번째 카드를 가져올 때 딜러는 2장의 카드를 가지고 있어야 한다.")
+        @Test
+        void retrieveFirstCard() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+            Dealer dealer = new Dealer(hand);
+
+            // when & then
+            assertThatThrownBy(dealer::retrieveFirstCard)
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("딜러는 2장의 카드를 가지고 있어야 합니다.");
+        }
+    }
 }
