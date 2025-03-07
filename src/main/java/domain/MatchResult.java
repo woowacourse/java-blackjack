@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public enum MatchResult {
     WIN("승"),
     LOSE("패"),
@@ -10,10 +12,6 @@ public enum MatchResult {
 
     MatchResult(String title) {
         this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public static MatchResult compareBySum(int sum1, int sum2) {
@@ -34,5 +32,13 @@ public enum MatchResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public static List<MatchResult> sortedValues() {
+        return List.of(WIN, LOSE, DRAW);
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

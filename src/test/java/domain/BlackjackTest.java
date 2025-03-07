@@ -74,7 +74,7 @@ public class BlackjackTest {
         final int drawnCount = blackjack.getNameAndCardsByName("시소").cards().size();
 
         // when & then
-        Assertions.assertThat(blackjack.addCardToCurrentParticipant("시소").cards().size())
+        Assertions.assertThat(blackjack.addCardByName("시소").cards().size())
                 .isEqualTo(drawnCount + 1);
 
 

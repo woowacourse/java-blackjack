@@ -31,8 +31,7 @@ public class Blackjack {
                 .toList();
     }
 
-    // 추가 카드 분배
-    public NameAndCards addCardToCurrentParticipant(String name) {
+    public NameAndCards addCardByName(String name) {
         Player participant = players.getPlayerByName(name);
         participant.drawOneCard(deck);
         return new NameAndCards(
@@ -88,6 +87,8 @@ public class Blackjack {
     public DealerResult computeDealerMatchResult() {
         Map<String, MatchResult> participantNameAndMatchResult = computeParticipantsMatchResult();
         Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
+        MatchResult.sortedValues().forEach(matchResult -> matchResultCount.put(matchResult, 0));
+        
         participantNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
                 matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
 
@@ -99,7 +100,7 @@ public class Blackjack {
         Dealer dealer = getDealer();
         List<Participant> participants = getParticipants();
 
-        for (Participant participant: participants) {
+        for (Participant participant : participants) {
             MatchResult matchResult = calculatePariticipantMatchResult(dealer, participant);
             participantNameAndMatchResult.put(participant.getName(), matchResult);
         }
@@ -113,6 +114,7 @@ public class Blackjack {
         if (dealer.getCards().isBurst()) {
             return MatchResult.WIN;
         }
-        return MatchResult.compareBySum(participant.getCards().computeOptimalSum(), dealer.getCards().computeOptimalSum());
+        return MatchResult.compareBySum(participant.getCards().computeOptimalSum(),
+                dealer.getCards().computeOptimalSum());
     }
 }

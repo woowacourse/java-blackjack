@@ -1,7 +1,7 @@
 package view;
 
-import domain.dto.DealerResult;
 import domain.MatchResult;
+import domain.dto.DealerResult;
 import domain.dto.NameAndCards;
 import java.util.List;
 import java.util.Map;
@@ -14,45 +14,33 @@ public class OutputView {
 
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), String.join(", ", names));
 
-        System.out.printf("%s카드: %s%n",
-                dealer.name(),
-                String.join(", ", dealer.cards().stream()
-                        .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
-                                card.getCardShape().getTitle()))
-                        .toList()));
-
+        printPlayerCards(dealer);
         participants.forEach(OutputView::printPlayerCards);
         System.out.println();
     }
 
     public static void printPlayerCards(NameAndCards player) {
-        System.out.printf("%s카드: %s%n",
-                player.name(),
+        System.out.printf("%s카드: %s%n", player.name(),
                 String.join(", ", player.cards().stream()
                         .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
                                 card.getCardShape().getTitle()))
                         .toList()));
     }
 
-    public static void printPlayerCardsAndSum(NameAndCards dealer, List<NameAndCards> participants,
-                                              Map<String, Integer> nameAndSum) {
-        System.out.printf("%s카드: %s - 결과: %d%n",
-                dealer.name(),
-                String.join(", ", dealer.cards().stream()
+    public static void printPlayersCardsAndSum(NameAndCards dealer, List<NameAndCards> participants,
+                                               Map<String, Integer> nameAndSum) {
+        printPlayerCardsAndSum(nameAndSum, dealer);
+        participants.forEach(player -> printPlayerCardsAndSum(nameAndSum, player));
+        System.out.println();
+    }
+
+    private static void printPlayerCardsAndSum(Map<String, Integer> nameAndSum, NameAndCards player) {
+        System.out.printf("%s카드: %s - 결과: %d%n", player.name(),
+                String.join(", ", player.cards().stream()
                         .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
                                 card.getCardShape().getTitle()))
                         .toList()),
-                nameAndSum.get(dealer.name()));
-        participants.forEach(player -> {
-            System.out.printf("%s카드: %s - 결과: %d%n",
-                    player.name(),
-                    String.join(", ", player.cards().stream()
-                            .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
-                                    card.getCardShape().getTitle()))
-                            .toList()),
-                    nameAndSum.get(player.name()));
-        });
-        System.out.println();
+                nameAndSum.get(player.name()));
     }
 
     public static void printAddCardToDealer() {
@@ -66,16 +54,10 @@ public class OutputView {
     }
 
     private static String convertToDealerMatchResultFormat(DealerResult dealerResult) {
-        StringBuilder builder = new StringBuilder();
-        if (dealerResult.matchResultCount().containsKey(MatchResult.WIN)) {
-            builder.append(dealerResult.matchResultCount().get(MatchResult.WIN)).append("승 ");
-        }
-        if (dealerResult.matchResultCount().containsKey(MatchResult.LOSE)) {
-            builder.append(dealerResult.matchResultCount().get(MatchResult.LOSE)).append("패 ");
-        }
-        if (dealerResult.matchResultCount().containsKey(MatchResult.DRAW)) {
-            builder.append(dealerResult.matchResultCount().get(MatchResult.DRAW)).append("무 ");
-        }
-        return builder.toString();
+        StringBuilder sb = new StringBuilder();
+        dealerResult.matchResultCount().forEach((key, value) -> {
+            sb.append(String.format("%d%s ", value, key.getTitle()));
+        });
+        return sb.toString();
     }
 }

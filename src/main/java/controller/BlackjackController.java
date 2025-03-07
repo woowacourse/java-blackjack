@@ -18,51 +18,40 @@ public class BlackjackController {
 
     public void run() {
         Blackjack blackjack = createBlackjack();
-        // 초기 카드 분배
         blackjack.distributeInitialCards();
-
-        // 초기 카드 오픈
         OutputView.printInitialCards(blackjack.openDealerCards(), blackjack.openParticipantsCards());
 
-        // 추가 카드 분배
         addMoreCards(blackjack);
 
-        // 카드 합 결과
-        OutputView.printPlayerCardsAndSum(blackjack.getDealerNameAndCards(),
-                blackjack.getParticipantsNameAndCards(),
-                blackjack.getNameAndSumOfAllPlayers());
-
-        // 최종 승패 결과 출력
-        OutputView.printMatchResult(blackjack.computeDealerMatchResult(),
-                blackjack.computeParticipantsMatchResult());
+        OutputView.printPlayersCardsAndSum(blackjack.getDealerNameAndCards(),
+                blackjack.getParticipantsNameAndCards(), blackjack.getNameAndSumOfAllPlayers());
+        OutputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
     }
 
     private void addMoreCards(Blackjack blackjack) {
-        // 참여자들의 추가 카드 분배
         List<String> participantNames = blackjack.getParticipantNames();
         for (String participantName : participantNames) {
-            addMoreCardsEachParticipant(blackjack, participantName);
+            addMoreCardsByName(blackjack, participantName);
         }
 
-        // 딜러의 추가 카드 분배
         boolean isAdded = blackjack.addCardToDealerIfLowScore();
         if (isAdded) {
             OutputView.printAddCardToDealer();
         }
     }
 
-    private void addMoreCardsEachParticipant(Blackjack blackjack, String participantName) {
-        YesOrNo wantOneMoreCard;
+    private void addMoreCardsByName(Blackjack blackjack, String participantName) {
+        YesOrNo yesOrNo;
         do {
-            wantOneMoreCard = YesOrNo.from(InputView.inputWantOneMoreCard(participantName));
-            addMoreCardByAnswer(blackjack, participantName, wantOneMoreCard);
+            yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participantName));
+            addOneCardByNameIfYes(blackjack, participantName, yesOrNo);
             OutputView.printPlayerCards(blackjack.getNameAndCardsByName(participantName));
-        } while (wantOneMoreCard.equals(YesOrNo.YES));
+        } while (yesOrNo.equals(YesOrNo.YES));
     }
 
-    private void addMoreCardByAnswer(Blackjack blackjack, String participantName, YesOrNo wantOneMoreCard) {
-        if (wantOneMoreCard.equals(YesOrNo.YES)) {
-            blackjack.addCardToCurrentParticipant(participantName);
+    private void addOneCardByNameIfYes(Blackjack blackjack, String name, YesOrNo yesOrNo) {
+        if (yesOrNo.equals(YesOrNo.YES)) {
+            blackjack.addCardByName(name);
         }
     }
 
