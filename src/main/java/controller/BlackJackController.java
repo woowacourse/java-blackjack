@@ -30,30 +30,35 @@ public class BlackJackController {
         Participants participants = createGameParticipants();
 
         CardDeck cardDeck = createCardDeck(cardBundle);
-        BlackJackManager blackJackManager = new BlackJackManager(participants.getParticipants(),
-            cardDeck);
+        BlackJackManager blackJackManager = new BlackJackManager();
 
-        // 딜러를 포함한 모든 참여자에게 2장의 카드 분배
-        blackJackManager.start();
-        // 게임 시작 이후 각자의 손패를 출력
-        outputView.printInitialParticipantHands(participants.getParticipants());
+        receiveCardProcessOfParticipants(participants, cardDeck);
 
         // Note: 모든 참가자들의 카드 받기 기능
         receiveCardProcessOfPlayer(participants, cardDeck);
         receiveCardProcessOfDealer(participants, cardDeck);
 
-        System.out.println();
         calculateBackJackResultProcess(participants, blackJackManager);
+    }
+
+    private void receiveCardProcessOfParticipants(Participants participants,
+        CardDeck cardDeck) {
+        for (Participant participant : participants.getParticipants()) {
+            participant.addCard(cardDeck.getAndRemoveFrontCard());
+            participant.addCard(cardDeck.getAndRemoveFrontCard());
+        }
+        outputView.printInitialParticipantHands(participants.getParticipants());
     }
 
     private void calculateBackJackResultProcess(Participants participants,
         BlackJackManager blackJackManager) {
         printAllParticipantsInfo(participants);
-        printAllParticipantGameResult(blackJackManager);
+        printAllParticipantGameResult(participants, blackJackManager);
     }
 
-    private void printAllParticipantGameResult(BlackJackManager blackJackManager) {
-        ParticipantsResult participantsResult = blackJackManager.calculateResult();
+    private void printAllParticipantGameResult(Participants participants,
+        BlackJackManager blackJackManager) {
+        ParticipantsResult participantsResult = blackJackManager.calculateResult(participants);
         outputView.printGameResult(participantsResult);
     }
 
