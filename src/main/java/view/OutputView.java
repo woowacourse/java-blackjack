@@ -1,6 +1,7 @@
 package view;
 
 import domain.Card;
+import domain.FinalResultDTO;
 import domain.Rank;
 import domain.SetUpCardsDTO;
 import domain.Shape;
@@ -51,6 +52,10 @@ public class OutputView {
 
     public void printDealerTake() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void printFinalCardDeck(List<FinalResultDTO> dtos) {
+        dtos.forEach(dto -> System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), cardNames(dto.cards()), dto.score()));
     }
 
     private String cardNames(List<Card> cards) {
