@@ -27,6 +27,27 @@ class DeckTest {
             assertThat(deck.draw()).isEqualTo(cards.getLast());
         }
 
+        @DisplayName("덱은 카드를 섞을 수 있다")
+        @Test
+        void shuffle() {
+            // given
+            List<TrumpCard> cards = Arrays.stream(TrumpCard.values()).toList();
+            Deck originalDeck = new Deck(cards);
+            Deck firstShuffledDeck = new Deck(cards);
+            Deck secondShuffledDeck = new Deck(cards);
+
+            // when
+            firstShuffledDeck.shuffle();
+            secondShuffledDeck.shuffle();
+
+            // then
+            assertSoftly(softly -> {
+                softly.assertThat(firstShuffledDeck).isNotEqualTo(originalDeck);
+                softly.assertThat(secondShuffledDeck).isNotEqualTo(firstShuffledDeck);
+            });
+        }
+    }
+
     @Nested
     class InvalidCases {
 
