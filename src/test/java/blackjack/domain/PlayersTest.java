@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.BlackjackShuffle;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class PlayersTest {
     void 플레이어_목록을_추가한다() {
         Players players = new Players();
 
-        players.addGamblers(List.of(new Player("두리"), new Player("비타")));
+        players.addGamblers(List.of(new Gambler("두리"), new Gambler("비타")));
 
         assertThat(players.getGamblers().size()).isEqualTo(2);
     }
@@ -30,7 +31,7 @@ class PlayersTest {
     void give_two_cards() {
         Players players = new Players();
         CardPack cardPack = new CardPack(new SortShuffle());
-        players.addGamblers(List.of(new Player("두리")));
+        players.addGamblers(List.of(new Gambler("두리")));
 
         players.initPlayers(cardPack);
         List<Card> result = players.getGamblers().getFirst().getCards();
@@ -63,7 +64,7 @@ class PlayersTest {
         Players players = new Players();
         CardPack cardPack = new CardPack(new SortShuffle());
 
-        Player player = new Player("두리");
+        Player player = new Gambler("두리");
         players.addGamblers(List.of(player));
 
         players.dealAddCard(cardPack, player);
