@@ -5,6 +5,7 @@ import domain.card.Deck;
 import domain.card.cardsGenerator.RandomCardsGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -24,7 +25,7 @@ public class BlackJackController {
         try {
             Deck deck = new Deck(new RandomCardsGenerator());
             Dealer dealer = Dealer.init();
-            List<Player> players = createPlayers();
+            Players players = createPlayers();
 
             deck.handoutCards(dealer, players);
             askNewCardToAllPlayers(deck, players);
@@ -37,13 +38,14 @@ public class BlackJackController {
         }
     }
 
-    private List<Player> createPlayers() {
+    private Players createPlayers() {
         List<String> names = inputView.readPlayerNames();
-        return names.stream().map(Player::init).toList();
+        List<Player> players = names.stream().map(Player::init).toList();
+        return new Players(players);
     }
 
-    private void askNewCardToAllPlayers(Deck deck, List<Player> players) {
-        for (Player player : players) {
+    private void askNewCardToAllPlayers(Deck deck, Players players) {
+        for (Player player : players.getPlayers()) {
             askNewCardToPlayer(player, deck);
         }
     }
@@ -60,14 +62,14 @@ public class BlackJackController {
         outputView.printDealerDrawCount(count);
     }
 
-    private void showCardsResult(Dealer dealer, List<Player> players) {
+    private void showCardsResult(Dealer dealer, Players players) {
         outputView.printCardsAndResult("딜러", dealer.getCards(), dealer.getCardScore());
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             outputView.printCardsAndResult(player.getName(), player.getCards(), player.getCardScore());
         }
     }
 
-    private void showGameResult(Dealer dealer, List<Player> players) {
+    private void showGameResult(Dealer dealer, Players players) {
         Map<Player, GameResult> playerResult = dealer.getGameResult(players);
         Map<GameResult, Integer> dealerResult = dealer.getResult();
         outputView.printResult(dealerResult, playerResult);

@@ -4,7 +4,9 @@ import domain.card.cardsGenerator.CardsGenerator;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
+import java.util.Set;
 
 public class Deck {
     private final static int INIT_COUNT = 2;
@@ -37,8 +39,9 @@ public class Deck {
         return count;
     }
 
-    public void handoutCards(Dealer dealer, List<Player> participants) {
+    public void handoutCards(Dealer dealer, Players players) {
         giveInitCards(dealer);
+        Set<Player> participants = players.getPlayers();
         for (Participant participant : participants) {
             giveInitCards(participant);
         }

@@ -5,7 +5,6 @@ import domain.card.Cards;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -30,9 +29,9 @@ public class Dealer extends Participant {
         return this.getCardScore() <= DRAW_BOUNDARY;
     }
 
-    public Map<Player, GameResult> getGameResult(List<Player> players) {
+    public Map<Player, GameResult> getGameResult(Players players) {
         Map<Player, GameResult> gameResult = new HashMap<>();
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             GameResult playerResult = rule.getResult(player.getCards(), getCards());
             gameResult.put(player, playerResult);
             GameResult dealerResult = playerResult.getReverse();

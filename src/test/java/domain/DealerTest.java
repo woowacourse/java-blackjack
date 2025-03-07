@@ -8,6 +8,7 @@ import domain.card.CardShape;
 import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -73,7 +74,7 @@ class DealerTest {
         );
 
         //when
-        Map<Player, GameResult> actual = dealer.getGameResult(List.of(player1, player2));
+        Map<Player, GameResult> actual = dealer.getGameResult(new Players(List.of(player1, player2)));
 
         //then
         assertThat(actual).isEqualTo(expected);
