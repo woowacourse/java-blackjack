@@ -6,11 +6,15 @@ import java.util.Arrays;
 
 public class Parser {
 
+    public static final String NAME_DELIMITER = ",";
+    public static final String ANSWER_YES = "y";
+    public static final String ANSWER_NO = "n";
+
     public static Participants parseParticipants(final String names) {
-        String[] splittedNames = names.split(",");
+        String[] splittedNames = names.split(NAME_DELIMITER);
         validateNameCount(splittedNames);
         return new Participants(Arrays.stream(splittedNames)
-                .map(Participant::new)
+                .map(name -> new Participant(name.trim()))
                 .toList());
     }
 
@@ -20,13 +24,13 @@ public class Parser {
         }
     }
 
-    public static boolean parseCommand(final String comamnd) {
-        validateCommand(comamnd);
-        return comamnd.equals("y");
+    public static boolean parseCommand(final String command) {
+        validateCommand(command);
+        return command.equalsIgnoreCase(ANSWER_YES);
     }
 
     private static void validateCommand(final String command) {
-        if (!(command.equals("y") || command.equals("n"))) {
+        if (!(command.equalsIgnoreCase(ANSWER_YES) || command.equalsIgnoreCase(ANSWER_NO))) {
             throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
         }
     }
