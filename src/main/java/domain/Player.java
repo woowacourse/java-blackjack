@@ -9,7 +9,7 @@ public class Player {
     public static final int INITIAL_CARD_COUNT = 2;
 
     private final Nickname nickname;
-    private Cards cards;
+    private final Cards cards;
 
     public Player(Nickname nickname, Cards cards) {
         validateInitialCardsSize(cards);
