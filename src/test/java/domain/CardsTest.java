@@ -8,17 +8,17 @@ import org.junit.jupiter.api.Test;
 
 public class CardsTest {
 
-    @DisplayName("기존 카드의 합이 21 이상이라면 true를 반환한다")
+    @DisplayName("기존 카드의 합이 21 초과라면 true를 반환한다")
     @Test
     void test1() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.THREE, CardType.CLOVER),
+        List<Card> testCards = List.of(new Card(CardNumberType.FOUR, CardType.CLOVER),
                 new Card(CardNumberType.EIGHT, CardType.DIAMOND),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Cards cards = new Cards(testCards);
 
         //when & then
-        assertThat(cards.isEqualAndMoreMaxSum()).isTrue();
+        assertThat(cards.isBust()).isTrue();
     }
 
     @DisplayName("추가 배분 시 카드의 합을 구할 때, ACE는 모두 1로 계산하며 예외가 발생하지 않는다")
@@ -32,7 +32,7 @@ public class CardsTest {
         Cards cards = new Cards(testCards);
 
         //when
-        assertThat(cards.isEqualAndMoreMaxSum()).isFalse();
+        assertThat(cards.isBust()).isFalse();
     }
 
     @DisplayName("새로 배분된 카드를 저장한다")

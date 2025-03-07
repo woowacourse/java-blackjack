@@ -2,14 +2,15 @@ package controller;
 
 import static view.AnswerType.*;
 
-import domain.BlackjackReferee;
+import domain.Players;
+import domain.Referee;
 import domain.CardGiver;
-import domain.CardRandomGenerator;
+import domain.Cards;
 import domain.Dealer;
 import domain.GameResult;
-import domain.GivenCards;
+import domain.Participant;
 import domain.Player;
-import domain.PlayerRepository;
+import java.util.ArrayList;
 import java.util.List;
 import view.AnswerType;
 import view.InputView;
@@ -19,80 +20,96 @@ public class BlackjackApplication {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final PlayerRepository playerRepository;
-    private final CardGiver cardGiver = new CardGiver(new CardRandomGenerator(), GivenCards.createEmpty());
+    private final CardGiver cardGiver;
 
-    public BlackjackApplication(InputView inputView, OutputView outputView,
-                                PlayerRepository playerRepository) {
+    public BlackjackApplication(
+            InputView inputView,
+            OutputView outputView,
+            CardGiver cardGiver
+    ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.playerRepository = playerRepository;
+        this.cardGiver = cardGiver;
     }
 
     public void execute() {
-        Dealer dealer = initializeDealer();
+        final Dealer dealer = Dealer.createEmpty();;
+        final Referee referee = new Referee();
+        final Players players = initializePlayers();
 
-        initializeGame(dealer);
+        initializeParticipantCards(dealer, players);
 
-        askForAdditionalCard();
+        askForAdditionalCard(players);
 
         decideAdditionalCardForDealer(dealer);
 
-        calculateResult(dealer);
+        calculateResult(dealer, players, referee);
     }
 
-    private Dealer initializeDealer() {
-        return Dealer.createEmpty();
+    private Players initializePlayers() {
+        List<String> playerNames = inputView.requestPlayerNames();
+        List<Player> players = createPlayers(playerNames);
+
+        return new Players(players);
     }
 
-    private void askForAdditionalCard() {
-        List<Player> players = playerRepository.getAll();
-        players.forEach(player -> {
-            while (true) {
-                AnswerType answerType = inputView.requestAdditionalCard(player);
-                if(answerType.isEqualTo(NO)) {
-                    outputView.printCurrentCard(player);
-                    break;
-                }
-                player.getCards().add(cardGiver.giveOne());
-                outputView.printCurrentCard(player);
-                boolean isOver = player.getCards().isEqualAndMoreMaxSum();
-                if(isOver) {
-                    System.out.println("21 이상, 너 더 못받음");
-                    break;
-                }
-            }
-        });
+    private void initializeParticipantCards(Dealer dealer, Players players) {
+        List<Participant> participants = new ArrayList<>(players.getPlayers());
+        participants.add(dealer);
+        cardGiver.giveDefaultTo(participants);
+
+        outputView.printInitialCards(dealer, players);
     }
 
-    private void calculateResult(Dealer dealer) {
-        List<Player> tempParticipants = playerRepository.getAll();
-
-        outputView.printCardsResult(dealer, tempParticipants);
-        BlackjackReferee blackjackReferee = new BlackjackReferee();
-        GameResult gameResult = blackjackReferee.judge(dealer, tempParticipants);
-        outputView.printGameResults(gameResult);
+    private void askForAdditionalCard(Players players) {
+        players.getPlayers().forEach(this::processPlayerCardRequest);
     }
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
         if(dealer.isUnderDrawLimit()) {
-            dealer.getCards().add(cardGiver.giveOne());
+            dealer.addCard(cardGiver.giveOne());
             outputView.printDealerDraw();
             return;
         }
         outputView.printDealerNoDraw();
     }
 
-    private void initializeGame(Dealer dealer) {
-        List<String> playerNames = inputView.requestPlayerNames();
+    private void calculateResult(Dealer dealer, Players players, Referee referee) {
+        outputView.printCardsResult(dealer, players);
+        GameResult gameResult = referee.judge(dealer, players);
+        outputView.printGameResults(gameResult);
+    }
 
-        List<Player> players = playerNames.stream()
-                .map(playerName -> new Player(playerName, cardGiver.giveDefault()))
+    private List<Player> createPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(playerName -> new Player(playerName, Cards.createEmpty()))
                 .toList();
-        playerRepository.addAll(players);
+    }
 
-        dealer.addCards(cardGiver.giveDefault());
+    private void processPlayerCardRequest(Player player) {
+        AnswerType answerType = inputView.requestAdditionalCard(player);
+        while (isPossibleRequest(player, answerType)) {
+            cardGiver.giveAdditionalCard(player, answerType);
+            outputView.printCurrentCard(player);
+            answerType = inputView.requestAdditionalCard(player);
+        }
+        showMessageIfBust(player);
+        showCurrentCardIfNo(player, answerType);
+    }
 
-        outputView.printInitialCards(dealer, playerRepository.getAll());
+    private void showMessageIfBust(Player player) {
+        if (player.hasBustCards()) {
+            outputView.printBustMessage();
+        }
+    }
+
+    private void showCurrentCardIfNo(Player player, AnswerType answerType) {
+        if (answerType.isEqualTo(NO)) {
+            outputView.printCurrentCard(player);
+        }
+    }
+
+    private boolean isPossibleRequest(Player player, AnswerType answerType) {
+        return answerType.isEqualTo(YES) && !player.hasBustCards();
     }
 }

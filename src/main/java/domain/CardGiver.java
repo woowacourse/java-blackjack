@@ -1,10 +1,12 @@
 package domain;
 
 import static util.ExceptionConstants.*;
+import static view.AnswerType.NO;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import view.AnswerType;
 
 public class CardGiver {
     private static final int DEFAULT_CARD_GIVE_COUNT = 2;
@@ -36,5 +38,18 @@ public class CardGiver {
                 .filter(givenCards::addUnique)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException(ERROR_HEADER + NO_EXIST_CARD));
+    }
+
+    public void giveDefaultTo(List<Participant> participants) {
+        participants.forEach(participant -> {
+            participant.addCards(giveDefault());
+        });
+    }
+
+    public void giveAdditionalCard(Player player, AnswerType answerType) {
+        if (answerType.isEqualTo(NO)) {
+            return;
+        }
+        player.addCard(giveOne());
     }
 }

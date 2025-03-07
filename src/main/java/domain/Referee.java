@@ -1,13 +1,12 @@
 package domain;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackjackReferee {
-    public GameResult judge(Dealer dealer, List<Player> players) {
+public class Referee {
+    public GameResult judge(Dealer dealer, Players players) {
         int dealerSum = dealer.calculateCardsSum();
-        Map<Player, GameResultStatus> gameResult = players.stream()
+        Map<Player, GameResultStatus> gameResult = players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         player -> player,
                         player -> GameResultStatus.calculate(dealerSum, player.calculateCardsSum())

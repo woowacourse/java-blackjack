@@ -10,6 +10,10 @@ public class Player extends Participant{
         this.name = name;
     }
 
+    public boolean hasBustCards() {
+        return cards.isBust();
+    }
+
     public String getName() {
         return name;
     }

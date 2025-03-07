@@ -27,8 +27,8 @@ public class Cards {
         return cards.getFirst();
     }
 
-    public boolean isEqualAndMoreMaxSum() {
-        return calculateSumWithLowAce() >= VALID_MAX_SUM_LIMIT;
+    public boolean isBust() {
+        return calculateSumWithLowAce() > VALID_MAX_SUM_LIMIT;
     }
 
     public boolean isAceCountEqualTo(int targetCount) {

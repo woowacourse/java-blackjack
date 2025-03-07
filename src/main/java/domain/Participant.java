@@ -15,6 +15,10 @@ public abstract class Participant {
         cards.addAll(receivedCards);
     }
 
+    public void addCard(Card receivedCard) {
+        cards.add(receivedCard);
+    }
+
     public int calculateCardsSum() {
         return cards.calculateSum();
     }

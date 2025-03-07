@@ -2,11 +2,11 @@ package view;
 
 import static domain.GameResultStatus.*;
 
-import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
 import domain.GameResultStatus;
 import domain.Player;
+import domain.Players;
 import java.util.List;
 import view.support.OutputFormatter;
 
@@ -18,18 +18,13 @@ public class OutputView {
         this.outputFormatter = outputFormatter;
     }
 
-    public void printInitialCards(Dealer dealer, List<Player> players) {
-        List<String> playerNames = players.stream()
-                .map(Player::getName)
-                .toList();
+    public void printInitialCards(Dealer dealer, Players players) {
+        List<String> playerNames = players.getAllPlayersName();
         String parsedPlayerNames = outputFormatter.formatPlayerNames(playerNames);
 
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", parsedPlayerNames);
-
-        Card card = dealer.getFirstCard();
-        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(card));
-
-        players.forEach(
+        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealer.getFirstCard()));
+        players.getPlayers().forEach(
                 player ->
                 System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getCards()))
         );
@@ -47,12 +42,12 @@ public class OutputView {
         System.out.print("\n딜러는 17이상이라 카드를 추가로 받지 않았습니다.\n");
     }
 
-    public void printCardsResult(Dealer dealer, List<Player> players) {
+    public void printCardsResult(Dealer dealer, Players players) {
         String parsedDealerCards = outputFormatter.formatCards(dealer.getCards());
         int dealerCardsSum = dealer.calculateCardsSum();
         System.out.printf("\n딜러카드: %s - 결과: %d\n", parsedDealerCards, dealerCardsSum);
 
-        players.forEach(player -> {
+        players.getPlayers().forEach(player -> {
             String parsedPlayerCards = outputFormatter.formatCards(player.getCards());
             int playerCardsSum = player.calculateCardsSum();
             System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), parsedPlayerCards, playerCardsSum);
@@ -72,5 +67,9 @@ public class OutputView {
                     String resultMessage = outputFormatter.formatGameResult(gameResultstatus);
                     System.out.printf("%s: %s\n", player.getName(), resultMessage);
                 });
+    }
+
+    public void printBustMessage() {
+        System.out.println("카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
     }
 }

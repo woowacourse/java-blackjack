@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackjackRefereeTest {
+public class RefereeTest {
 
     @DisplayName("딜러와 참여자의 카드 합을 비교해 참여자의 승패 여부를 결정한다")
     @Test
@@ -31,12 +31,12 @@ public class BlackjackRefereeTest {
         Player winner = new Player("mimi", winCards);
         Player drawer = new Player("wade", drawCards);
         Player loser = new Player("pobi", loseCards);
-        List<Player> tempParticipants = List.of(winner, drawer, loser);
+        Players players = new Players(List.of(winner, drawer, loser));
 
-        BlackjackReferee blackjackReferee = new BlackjackReferee();
+        Referee referee = new Referee();
 
         //when
-        GameResult gameResult = blackjackReferee.judge(dealer, tempParticipants);
+        GameResult gameResult = referee.judge(dealer, players);
 
         //then
         assertSoftly(softly -> {
