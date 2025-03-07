@@ -35,5 +35,19 @@ class DeckTest {
             // then
             assertThatThrownBy(() -> new Deck(cards)).isInstanceOf(IllegalArgumentException.class);
         }
+
+        @DisplayName("덱의 카드는 중복되지 않아야한다.")
+        @Test
+        void validateNotDuplicate() {
+            // given
+            List<TrumpCard> cards = new ArrayList<>();
+
+            // when
+            cards.add(TrumpCard.ACE_OF_CLUBS);
+            cards.add(TrumpCard.ACE_OF_CLUBS);
+
+            //then
+            assertThatThrownBy(() -> new Deck(cards)).isInstanceOf(IllegalArgumentException.class);
+        }
     }
 }
