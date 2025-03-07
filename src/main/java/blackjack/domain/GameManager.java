@@ -17,33 +17,35 @@ public class GameManager {
 
     public void registerPlayers(List<Nickname> nicknames) {
         gameUserStorage.initialize(nicknames);
-        cardManager.initialize(nicknames);
-    }
-
-    public List<Card> findCardsByPlayer(Player player) {
-        return cardManager.findCardsByNickname(player.getNickname()).getCards();
     }
 
     public void distributeCards() {
-        cardManager.distributeCards();
+        List<Player> players = gameUserStorage.getPlayers();
+        players.forEach(player -> cardManager.addCardByNickname(player, 2));
+        Player dealer = gameUserStorage.getDealer();
+        cardManager.addCardByNickname(dealer, 2);
+    }
+
+    public List<Card> findCardsByPlayer(Player player) {
+        return cardManager.findCardsByNickname(player);
     }
 
     public void hit(Player player) {
-        cardManager.addCardByNickname(player.getNickname());
+        cardManager.addCardByNickname(player, 1);
     }
 
     public int drawDealerCards() {
         int count = 0;
         Player dealer = gameUserStorage.getDealer();
-        while (GameRule.shouldDrawCardToDealer(cardManager.calculateSumByNickname(dealer.getNickname()))) {
-            cardManager.addCardByNickname(gameUserStorage.getDealer().getNickname());
+        while (GameRule.shouldDrawCardToDealer(cardManager.calculateSumByNickname(dealer))) {
+            cardManager.addCardByNickname(gameUserStorage.getDealer(), 1);
             count++;
         }
         return count;
     }
 
     public boolean isBustPlayer(Player player) {
-        return GameRule.isBurst(cardManager.calculateSumByNickname(player.getNickname()));
+        return GameRule.isBurst(cardManager.calculateSumByNickname(player));
     }
 
     public List<Player> getPlayers() {
@@ -66,7 +68,7 @@ public class GameManager {
 
     public PlayerWinningStatistics calculateGameResult() {
         Player dealer = gameUserStorage.getDealer();
-        int dealerPoint = cardManager.calculateSumByNickname(dealer.getNickname());
+        int dealerPoint = cardManager.calculateSumByNickname(dealer);
 
         List<Player> allPlayers = gameUserStorage.getPlayers();
         return new PlayerWinningStatistics(allPlayers.stream()
@@ -76,7 +78,7 @@ public class GameManager {
 
     private PlayerWinningResult calculatePlayerWinningResult(Player player, int dealerPoint) {
 
-        int playerPoint = cardManager.calculateSumByNickname(player.getNickname());
+        int playerPoint = cardManager.calculateSumByNickname(player);
         if (playerPoint > 21) {
             playerPoint = 0;
         }
@@ -97,9 +99,9 @@ public class GameManager {
     }
 
     private DrawnCardResult getDrawnCardResult(Player player) {
-        Cards cards = cardManager.findCardsByNickname(player.getNickname());
-        int point = cardManager.calculateSumByNickname(player.getNickname());
-        return new DrawnCardResult(player.getNickname(), cards.getCards(), point);
+        List<Card> cards = cardManager.findCardsByNickname(player);
+        int point = cardManager.calculateSumByNickname(player);
+        return new DrawnCardResult(player.getNickname(), cards, point);
     }
 }
 

@@ -3,7 +3,6 @@ package blackjack.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class CardManager {
 
@@ -14,32 +13,31 @@ public class CardManager {
         cardDeck = CardDeck.initialize();
     }
 
-    public void initialize(List<Nickname> nicknames) {
-        nicknames.forEach(
-                nickname -> nicknameToCards.put(nickname, Cards.initialize())
-        );
+    public List<Card> findCardsByNickname(Player player) {
+        if (nicknameToCards.containsKey(player.getNickname())) {
+            return nicknameToCards.get(player.getNickname()).getCards();
+        }
+        return List.of();
     }
 
-    public void distributeCards() {
-        Set<Nickname> nicknames = nicknameToCards.keySet();
-        nicknames.forEach(nickname ->
-                nicknameToCards.get(nickname)
-                        .add(cardDeck.drawCard(GameRule.INITIAL_CARD_COUNT.getValue()))
-        );
+    public int calculateSumByNickname(Player player) {
+        if (nicknameToCards.containsKey(player.getNickname())) {
+            return nicknameToCards.get(player.getNickname()).calculateSum();
+        }
+        return 0;
     }
 
-    public Cards findCardsByNickname(Nickname nickname) {
-        return nicknameToCards.get(nickname);
-    }
+    public void addCardByNickname(Player player, int count) {
+        List<Card> drawnCards = cardDeck.drawCard(count);
 
-    public int calculateSumByNickname(Nickname nickname) {
-        Cards cards = findCardsByNickname(nickname);
-        return cards.calculateSum();
-    }
+        if (!nicknameToCards.containsKey(player.getNickname())) {
+            Cards newCards = Cards.initialize();
+            newCards.add(drawnCards);
+            nicknameToCards.put(player.getNickname(), newCards);
+            return;
+        }
 
-    public void addCardByNickname(Nickname nickname) {
-        List<Card> drawnCard = cardDeck.drawCard(1);
-        findCardsByNickname(nickname).add(drawnCard);
+        Cards cards = nicknameToCards.get(player.getNickname());
+        cards.add(drawnCards);
     }
-
 }

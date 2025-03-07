@@ -18,6 +18,7 @@ class GameManagerTest {
 
     @BeforeEach
     void setUp() {
+        gameUserStorage = new GameUserStorage();
         cardManager = new CardManager();
         gameManager = new GameManager(cardManager, gameUserStorage);
     }
@@ -32,8 +33,11 @@ class GameManagerTest {
         gameManager.registerPlayers(nicknames);
 
         // then
-        nicknames.forEach(nickname ->
-                assertThat(cardManager.findCardsByNickname(nickname).getSize()).isZero());
+        assertThat(gameUserStorage.getPlayers())
+                .extracting(Player::getNickname)
+                .containsExactlyInAnyOrderElementsOf(nicknames);
+        assertThat(gameUserStorage.getDealer().getNickname())
+                .isEqualTo(new Nickname("딜러"));
     }
 
     @Test
@@ -48,11 +52,11 @@ class GameManagerTest {
 
         //then
         assertAll(
-                () -> assertThat(cardManager.findCardsByNickname(new Nickname("강산")).getSize())
+                () -> assertThat(cardManager.findCardsByNickname(makePlayer("강산")).size())
                         .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue()),
-                () -> assertThat(cardManager.findCardsByNickname(new Nickname("랜디")).getSize())
+                () -> assertThat(cardManager.findCardsByNickname(makePlayer("랜디")).size())
                         .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue()),
-                () -> assertThat(cardManager.findCardsByNickname(new Nickname("딜러")).getSize())
+                () -> assertThat(cardManager.findCardsByNickname(makePlayer("딜러")).size())
                         .isEqualTo(GameRule.INITIAL_CARD_COUNT.getValue())
         );
     }
@@ -65,13 +69,13 @@ class GameManagerTest {
         gameManager.registerPlayers(nicknames);
         gameManager.distributeCards();
         Player player = gameManager.getPlayers().get(0);
-        int originalCardCount = cardManager.findCardsByNickname(player.getNickname()).getSize();
+        int originalCardCount = cardManager.findCardsByNickname(player).size();
 
         //when
         gameManager.hit(player);
 
         //then
-        int actualCardCount = cardManager.findCardsByNickname(player.getNickname()).getSize();
+        int actualCardCount = cardManager.findCardsByNickname(player).size();
         assertThat(actualCardCount).isEqualTo(originalCardCount + 1);
     }
 
@@ -85,7 +89,7 @@ class GameManagerTest {
         gameManager.drawDealerCards();
 
         //then
-        int dealerCardPoint = cardManager.calculateSumByNickname(new Nickname("딜러"));
+        int dealerCardPoint = cardManager.calculateSumByNickname(makePlayer("딜러"));
         assertThat(dealerCardPoint).isGreaterThan(GameRule.DEALER_LIMIT_POINT.getValue());
     }
 
@@ -99,7 +103,7 @@ class GameManagerTest {
         gameManager.drawDealerCards();
 
         //then
-        int dealerCardPoint = cardManager.calculateSumByNickname(new Nickname("딜러"));
+        int dealerCardPoint = cardManager.calculateSumByNickname(makePlayer("딜러"));
         assertThat(dealerCardPoint).isGreaterThan(GameRule.DEALER_LIMIT_POINT.getValue());
     }
 
@@ -135,4 +139,7 @@ class GameManagerTest {
         assertThat(statistics.getPlayerWinningResults().size()).isEqualTo(2);
     }
 
+    public static Player makePlayer(String nickname) {
+        return new Player(new Nickname(nickname));
+    }
 }
