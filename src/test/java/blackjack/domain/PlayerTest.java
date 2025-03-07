@@ -26,7 +26,7 @@ public class PlayerTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"포비", "sa나", "훌라627", "HULA"})
+        @ValueSource(strings = {"포비_", "sa나!", "훌라627", "HULA,"})
         @DisplayName("영어 이름이 아니면 예외를 발생시킨다.")
         void createPlayerByEmptyName(String name) {
             assertThatThrownBy(() -> new Player(name))

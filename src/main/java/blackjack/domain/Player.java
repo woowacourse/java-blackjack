@@ -17,8 +17,8 @@ public class Player extends Participant {
     }
 
     private void validateName(final String name) {
-        boolean isAllLowerCase = name.chars().allMatch(Character::isLowerCase);
-        if (isAllLowerCase) {
+        boolean isAllLetter = name.chars().allMatch(Character::isLetter);
+        if (isAllLetter) {
             return;
         }
         throw new IllegalArgumentException("이름은 알파벳 소문자만 입력 가능합니다.");
