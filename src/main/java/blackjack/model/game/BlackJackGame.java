@@ -43,11 +43,11 @@ public class BlackJackGame {
         dealer.putCard(deck.drawCard());
     }
 
-    public boolean hasReady() {
+    public boolean hasReadyParticipant() {
         return turn.hasReadyParticipant();
     }
 
-    public void skipTurn() {
+    public void changeNextTurn() {
         turn.skipTurn();
     }
 

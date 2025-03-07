@@ -9,7 +9,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -19,7 +18,6 @@ public class BlackJackController {
     }
 
     public void run() {
-
         Participants participants = Parser.parseParticipants(inputView.inputParticipant());
         Dealer dealer = new Dealer();
         BlackJackGame blackJackGame = new BlackJackGame(
@@ -29,21 +27,21 @@ public class BlackJackController {
         );
         blackJackGame.initializeGame();
         outputView.outputFirstCardDistributionResult(participants, dealer);
-        inputMoreCard(blackJackGame);
+        giveMoreParticipantCard(blackJackGame);
         giveMoreDealerCard(blackJackGame, dealer);
         outputView.printFinalCardStatus(dealer, participants);
         outputView.printFinalResult(dealer, participants);
     }
 
-    private void inputMoreCard(BlackJackGame blackJackGame) {
-        while (blackJackGame.hasReady()) {
+    private void giveMoreParticipantCard(BlackJackGame blackJackGame) {
+        while (blackJackGame.hasReadyParticipant()) {
             Participant participant = blackJackGame.getCurrentTurnParticipant();
             boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
             blackJackGame.receiveCard(isReceive);
             outputView.printPlayerCardStatus(participant.getName(), participant);
             if (participant.isBust()) {
                 outputView.printParticipantBust(participant.getName());
-                blackJackGame.skipTurn();
+                blackJackGame.changeNextTurn();
             }
         }
     }
