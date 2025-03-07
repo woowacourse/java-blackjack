@@ -110,10 +110,8 @@ class FinalResultTest {
         dealer2.hit(card4);
 
         Map<Player, FinalResult> finalResults1 = FinalResult.makePlayerResult(
-                List.of(player1, player2, player3, player4),
-                dealer1);
-        Map<Player, FinalResult> finalResults2 = FinalResult.makePlayerResult(List.of(player1),
-                dealer1);
+                List.of(player1, player2, player3, player4), dealer1);
+        Map<Player, FinalResult> finalResults2 = FinalResult.makePlayerResult(List.of(player1), dealer2);
 
         // when
         Map<FinalResult, Integer> dealerResult1 = FinalResult.makeDealerResult(finalResults1);
