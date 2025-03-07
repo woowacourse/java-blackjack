@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.card.CardDeck;
 import java.util.List;
 
 public class Players {
@@ -8,26 +7,26 @@ public class Players {
     private static final int MAX_PLAYERS = 5;
     private static final int MIN_PLAYERS = 1;
 
-    private final List<Participant> players;
+    private final List<Player> players;
 
-    private Players(List<Participant> players) {
+    private Players(List<Player> players) {
         this.players = players;
     }
 
-    public static Players of(List<Participant> players) {
+    public static Players of(List<Player> players) {
         validatePlayersNumber(players);
         return new Players(players);
     }
 
-    private static void validatePlayersNumber(List<Participant> players) {
+    private static void validatePlayersNumber(List<Player> players) {
         if (players.size() > MAX_PLAYERS || players.size() < MIN_PLAYERS) {
             throw new IllegalArgumentException("참여 가능한 플레이어는 최소 1명, 최대 5명 입니다.");
         }
     }
 
-    public void receiveCards(CardDeck cardDeck) {
-        for (Participant participant : players) {
-            participant.receive(cardDeck.popCard());
+    public void receiveCards(Dealer dealer) {
+        for (Player player : players) {
+            player.receive(dealer.drawCard());
         }
     }
 

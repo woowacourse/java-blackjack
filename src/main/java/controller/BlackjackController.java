@@ -3,7 +3,6 @@ package controller;
 import domain.GameManager;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Arrays;
@@ -22,9 +21,9 @@ public class BlackjackController {
     }
 
     public void gameStart() {
-        Dealer dealer = Dealer.of();
+        Dealer dealer = Dealer.of(CardDeck.of());
         Players players = initParticipants();
-        GameManager gameManager = GameManager.of(CardDeck.of(), dealer, players);
+        GameManager gameManager = GameManager.of(dealer, players);
 
         gameManager.distributeCards();
         outputView.printInitCards(dealer, players);
@@ -38,10 +37,9 @@ public class BlackjackController {
 
     private Players initParticipants() {
         String rawNames = inputView.getPlayerNames();
-        List<Participant> players = Arrays.stream(rawNames.split(","))
+        List<Player> players = Arrays.stream(rawNames.split(","))
                 .map(String::trim)
                 .map(Player::of)
-                .map(player -> (Participant) player)
                 .toList();
         return Players.of(players);
     }

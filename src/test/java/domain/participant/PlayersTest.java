@@ -13,7 +13,7 @@ class PlayersTest {
     @Test
     void 게임_참가자들을_관리하는_모델을_생성한다() {
         // given
-        List<Participant> players = List.of(Player.of("pobi1"),
+        List<Player> players = List.of(Player.of("pobi1"),
                 Player.of("pobi2"),
                 Player.of("pobi3"),
                 Player.of("pobi4"),
@@ -27,7 +27,7 @@ class PlayersTest {
     @Test
     void 게임_참가자_최소_인원_미만_시_예외가_발생한다() {
         // given
-        List<Participant> players = List.of();
+        List<Player> players = List.of();
 
         // when & then
         assertThatThrownBy(() -> Players.of(players))
@@ -38,7 +38,7 @@ class PlayersTest {
     @Test
     void 게임_참가자_최대_인원_초과_시_예외가_발생한다() {
         // given
-        List<Participant> players = List.of(Player.of("pobi1"),
+        List<Player> players = List.of(Player.of("pobi1"),
                 Player.of("pobi2"),
                 Player.of("pobi3"),
                 Player.of("pobi4"),
@@ -62,9 +62,10 @@ class PlayersTest {
                         Player.of("pobi3")
                 )
         );
+        Dealer dealer = Dealer.of(cardDeck);
 
         // when
-        players.receiveCards(cardDeck);
+        players.receiveCards(dealer);
 
         // then
         assertThat(cardDeck.getCards()).hasSize(49);

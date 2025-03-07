@@ -5,7 +5,7 @@ import domain.card.Cards;
 import domain.result.BlackjackResult;
 import java.util.List;
 
-public class Player implements Participant {
+public class Player {
 
     private final String name;
     private final Cards ownedCards;
@@ -19,17 +19,14 @@ public class Player implements Participant {
         return new Player(name);
     }
 
-    @Override
     public void receive(final Card card) {
         ownedCards.add(card);
     }
 
-    @Override
     public int getScore() {
         return ownedCards.calculateScore();
     }
 
-    @Override
     public int getCardCount() {
         return ownedCards.getSize();
     }

@@ -1,32 +1,35 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.CardDeck;
 import domain.card.Cards;
 import java.util.List;
 
-public class Dealer implements Participant {
-
+public class Dealer {
+    private final CardDeck cardDeck;
     private final Cards ownedCards;
 
-    private Dealer() {
+    private Dealer(CardDeck cardDeck) {
+        this.cardDeck = cardDeck;
         this.ownedCards = Cards.of();
     }
 
-    public static Dealer of() {
-        return new Dealer();
+    public static Dealer of(CardDeck cardDeck) {
+        return new Dealer(cardDeck);
     }
 
-    @Override
-    public void receive(Card card) {
-        ownedCards.add(card);
+    public Card drawCard() {
+        return cardDeck.popCard();
     }
 
-    @Override
+    public void receive() {
+        ownedCards.add(cardDeck.popCard());
+    }
+
     public int getScore() {
         return ownedCards.calculateScore();
     }
 
-    @Override
     public int getCardCount() {
         return ownedCards.getSize();
     }

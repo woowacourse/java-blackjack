@@ -1,6 +1,7 @@
 package domain.result;
 
-import domain.participant.Participant;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 public enum BlackjackResult {
 
@@ -15,7 +16,7 @@ public enum BlackjackResult {
         this.value = value;
     }
 
-    public static BlackjackResult getPlayerResult(Participant dealer, Participant player) {
+    public static BlackjackResult getPlayerResult(Dealer dealer, Player player) {
         if (isPlayerLose(player, dealer)) {
             return LOSE;
         }
@@ -25,38 +26,34 @@ public enum BlackjackResult {
         return DRAW;
     }
 
-    private static boolean isPlayerLose(Participant player, Participant dealer) {
+    private static boolean isPlayerLose(Player player, Dealer dealer) {
         if (isBust(player.getScore())) {
             return true;
         }
-        if (isBlackjack(dealer) && !isBlackjack(player)) {
+        if (isBlackjack(dealer.getScore(), dealer.getCardCount()) &&
+                !isBlackjack(player.getScore(), player.getCardCount())) {
             return true;
         }
-        if (!isBust(dealer.getScore()) && player.getScore() < dealer.getScore()) {
-            return true;
-        }
-        return false;
+        return !isBust(dealer.getScore()) && player.getScore() < dealer.getScore();
     }
 
-    private static boolean isPlayerWin(Participant player, Participant dealer) {
+    private static boolean isPlayerWin(Player player, Dealer dealer) {
         if (isBust(dealer.getScore())) {
             return true;
         }
-        if (isBlackjack(player) && !isBlackjack(dealer)) {
+        if (isBlackjack(player.getScore(), player.getCardCount()) &&
+                !isBlackjack(dealer.getScore(), dealer.getCardCount())) {
             return true;
         }
-        if (player.getScore() > dealer.getScore()) {
-            return true;
-        }
-        return false;
+        return player.getScore() > dealer.getScore();
     }
 
     private static boolean isBust(int score) {
         return score > 21;
     }
 
-    private static boolean isBlackjack(Participant participant) {
-        return participant.getScore() == 21 && participant.getCardCount() == 2;
+    private static boolean isBlackjack(int score, int cardCount) {
+        return score == 21 && cardCount == 2;
     }
 
     public String getValue() {
