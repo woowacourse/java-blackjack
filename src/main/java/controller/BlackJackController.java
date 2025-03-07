@@ -8,6 +8,7 @@ import domain.DeckGenerator;
 import domain.FinalResult;
 import domain.Nickname;
 import domain.Player;
+import domain.Players;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -21,19 +22,20 @@ public class BlackJackController {
     private static final String DEALER_NAME = "딜러";
     public static final int THRESHOLD = 16;
     public static final int BUST_NUMBER = 21;
-    
+
     public void run() {
         final List<Nickname> nicknames = readNicknames();
-        final List<Player> players = generatePlayers(nicknames);
+        final Players players = generatePlayers(nicknames);
         final Deck deck = generateDeck();
-        setGame(players, deck);
+        final List<Player> playerGroup = players.getPlayers();
+        setGame(playerGroup, deck);
         final Dealer dealer = generateDealer();
         dealer.receiveInitialCards(List.of(deck.drawCard(), deck.drawCard()));
-        printGameSetting(dealer, nicknames, players);
+        printGameSetting(dealer, nicknames, playerGroup);
 
-        processPlayerHit(players, deck);
+        processPlayerHit(playerGroup, deck);
         processDealerHit(dealer, deck);
-        processFinalResult(dealer, players);
+        processFinalResult(dealer, playerGroup);
     }
 
     private List<Nickname> readNicknames() {
@@ -41,10 +43,12 @@ public class BlackJackController {
         return Arrays.stream(inputNicknames.split(",")).map(Nickname::new).toList();
     }
 
-    private List<Player> generatePlayers(final List<Nickname> nicknames) {
-        return nicknames.stream()
+    private Players generatePlayers(final List<Nickname> nicknames) {
+        final List<Player> players = nicknames.stream()
                 .map(Player::new)
                 .toList();
+
+        return new Players(players);
     }
 
     private void setGame(final List<Player> players, final Deck deck) {
