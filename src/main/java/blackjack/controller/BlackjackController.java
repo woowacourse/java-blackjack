@@ -2,10 +2,12 @@ package blackjack.controller;
 
 import blackjack.domain.GameManager;
 import blackjack.domain.Players;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -49,8 +51,10 @@ public class BlackjackController {
         String playerNamesInput = inputView.readPlayerNames();
         List<String> playerNames = List.of(playerNamesInput.split(","));
 
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            players.add(new Gambler(playerName));
+        }
+        return players;
     }
 }
