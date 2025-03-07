@@ -27,4 +27,8 @@ public class GameResult {
             .filter(winning -> winning == Winning.WIN)
             .count();
     }
+
+    public Map<Player, Winning> getPlayerWinningResult() {
+        return playerWinningResult;
+    }
 }
