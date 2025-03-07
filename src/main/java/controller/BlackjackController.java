@@ -1,11 +1,13 @@
 package controller;
 
 import dto.CardDto;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import model.Cards;
 import model.DealerCardsFactory;
 import model.Deck;
@@ -21,11 +23,14 @@ import view.OutputView;
 public class BlackjackController {
 
     private final Deck deck;
+    private final Judge judge;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(final Deck deck, final InputView inputView, final OutputView outputView) {
+    public BlackjackController(final Deck deck, final Judge judge, final InputView inputView,
+                               final OutputView outputView) {
         this.deck = deck;
+        this.judge = judge;
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -33,40 +38,13 @@ public class BlackjackController {
     public void start() {
         deck.shuffle();
 
-        List<String> names = inputView.readPlayerNames();
-
-        Players players = generatePlayers(names);
+        Players players = generatePlayersWithCards(inputView.readPlayerNames());
         Cards dealerCards = DealerCardsFactory.generate(deck);
-
-        outputView.printNewLine();
-        outputView.printPlayers(names);
-        Set<String> sequencedNames = players.getNames();
-
-        outputView.printDealerFirstCard(CardDto.from(dealerCards.getFirstCard()));
-
-        for (String name : sequencedNames) {
-            List<CardDto> playerCardDtos = getCardDtos(players.findCardsByName(name));
-            outputView.printCardsWithName(name, playerCardDtos);
-        }
-
         outputView.printNewLine();
 
-        for (String name : sequencedNames) {
-            while (true) {
-                if (players.checkIsBustByName(name)) {
-                    break;
-                }
-                UserInput decision = UserInput.from(inputView.askForAdditionalCard(name));
-                if (decision.equals(UserInput.NO)) {
-                    break;
-                }
-                if (decision.equals(UserInput.YES)) {
-                    players.addCardByName(name, deck.getCard());
-                    Cards playerCards = players.findCardsByName(name);
-                    outputView.printCardsWithName(name, getCardDtos(playerCards));
-                }
-            }
-        }
+        printPlayersAndInitialCards(players, dealerCards);
+
+        players.getNames().forEach(name -> askForAdditionalCardByName(name, players));
         outputView.printNewLine();
 
         for (int count = 0; count < dealerCards.getAdditionalDrawCount(); count++) {
@@ -75,24 +53,19 @@ public class BlackjackController {
         outputView.printNewLine();
 
         outputView.printCardsWithNameAndResult("딜러", getCardDtos(dealerCards), dealerCards.calculateResult());
-        for (final String name : sequencedNames) {
-            outputView.printCardsWithNameAndResult(
-                    name,
-                    getCardDtos(players.findCardsByName(name)),
-                    players.getResultByName(name)
-            );
-        }
+        players.getNames().forEach(name -> outputView.printCardsWithNameAndResult(
+                name,
+                getCardDtos(players.findCardsByName(name)),
+                players.getResultByName(name)
+        ));
 
-        Judge judge = new Judge();
-        Map<String, GameResult> rawGameResults = new HashMap<>();
-
-        for (String name : sequencedNames) {
-            GameResult result = judge.determineGameResult(dealerCards, players.findCardsByName(name));
-            rawGameResults.put(name, result);
-        }
-        GameResults gameResults = new GameResults(rawGameResults);
+        GameResults gameResults = calculateGameResults(players, dealerCards);
 
         outputView.printNewLine();
+        printGameResult(gameResults, players);
+    }
+
+    private void printGameResult(final GameResults gameResults, final Players players) {
         outputView.printGameResultHeader();
         outputView.printDealerGameResult(
                 gameResults.calculateDealerResultCount(GameResult.WIN),
@@ -100,8 +73,44 @@ public class BlackjackController {
                 gameResults.calculateDealerResultCount(GameResult.LOSE)
         );
 
-        for (final String name : sequencedNames) {
-            outputView.printPlayerGameResult(name, gameResults.getGameResultByName(name).getName());
+        players.getNames().forEach(name ->
+                outputView.printPlayerGameResult(name, gameResults.getGameResultByName(name).getName()));
+    }
+
+    private GameResults calculateGameResults(final Players players, final Cards dealerCards) {
+        return new GameResults(players.getNames().stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        name -> judge.determineGameResult(dealerCards, players.findCardsByName(name)
+                )))
+        );
+    }
+
+    private void printPlayersAndInitialCards(final Players players, final Cards dealerCards) {
+        outputView.printPlayers(new ArrayList<>(players.getNames()));
+        printInitialCardsWithName(dealerCards, players);
+        outputView.printNewLine();
+    }
+
+    private void askForAdditionalCardByName(final String name, final Players players) {
+        while (!players.checkIsBustByName(name)) {
+            UserInput decision = UserInput.from(inputView.askForAdditionalCard(name));
+            if (decision.equals(UserInput.NO)) {
+                break;
+            }
+            if (decision.equals(UserInput.YES)) {
+                players.addCardByName(name, deck.getCard());
+                Cards playerCards = players.findCardsByName(name);
+                outputView.printCardsWithName(name, getCardDtos(playerCards));
+            }
+        }
+    }
+
+    private void printInitialCardsWithName(final Cards dealerCards, final Players players) {
+        outputView.printDealerFirstCard(CardDto.from(dealerCards.getFirstCard()));
+        for (String name : players.getNames()) {
+            List<CardDto> playerCardDtos = getCardDtos(players.findCardsByName(name));
+            outputView.printCardsWithName(name, playerCardDtos);
         }
     }
 
@@ -111,7 +120,7 @@ public class BlackjackController {
                 .toList();
     }
 
-    private Players generatePlayers(final List<String> names) {
+    private Players generatePlayersWithCards(final List<String> names) {
         Map<String, Cards> rawPlayers = new LinkedHashMap<>(names.size());
         names.forEach(name -> rawPlayers.put(name, PlayerCardsFactory.generate(deck)));
         return new Players(rawPlayers);

@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
 
     private static final int BUST_THRESHOLD = 21;
+    private static final int INITIAL_CARDS_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -34,14 +35,13 @@ public class Cards {
 
     public void addCard(final Card card) {
         if (isBust()) {
-            throw new IllegalArgumentException();
+            throw new IllegalStateException("버스트일 때는 카드를 추가할 수 없습니다.");
         }
         cards.add(card);
     }
 
     public boolean isBust() {
-        int sum = calculateSum();
-        return sum > BUST_THRESHOLD;
+        return calculateSum() > BUST_THRESHOLD;
     }
 
     private int findAceElevenCount() {
@@ -56,14 +56,12 @@ public class Cards {
                 .findAny()
                 .orElseThrow();
 
-        CardShape cardShape = aceElevenCard.getShape();
-
         cards.remove(aceElevenCard);
-        cards.add(new Card(CardNumber.ACE_ONE, cardShape));
+        cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
     }
 
     public int getAdditionalDrawCount() {
-        return cards.size() - 2;
+        return cards.size() - INITIAL_CARDS_COUNT;
     }
 
     public Card getFirstCard() {
