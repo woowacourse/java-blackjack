@@ -1,14 +1,31 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+
+    @Nested
+    class ValidCase {
+
+        @DisplayName("덱은 마지막 카드를 줘야한다")
+        @Test
+        void drawCard() {
+            // given
+            List<TrumpCard> cards = Arrays.stream(TrumpCard.values()).toList();
+            Deck deck = new Deck(cards);
+
+            // when & then
+            assertThat(deck.draw()).isEqualTo(cards.getLast());
+        }
 
     @Nested
     class InvalidCases {
