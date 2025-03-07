@@ -25,7 +25,7 @@ public class BlackjackController {
         }
         receiveAdditionalCard(dealer, gameManager);
 
-        OutputView.printScore(dealer, players);
+        OutputView.printAllParticipantScore(dealer, players);
 
         gameManager.calculateVictory();
         OutputView.printResult(dealer, players);
@@ -34,14 +34,14 @@ public class BlackjackController {
     private void receiveAdditionalCard(Player player, GameManager gameManager) {
         while (satisfiedConditionByPlayer(player)) {
             gameManager.divideCardByParticipant(player, 1);
-            OutputView.printDivision(player);
+            OutputView.printCurrentHands(player);
         }
     }
 
     private void receiveAdditionalCard(Dealer dealer, GameManager gameManager) {
         while (satisfiedConditionByDealer(dealer)) {
             gameManager.divideCardByParticipant(dealer, 1);
-            OutputView.printDivision(dealer);
+            OutputView.printStandingDealer(dealer);
         }
     }
 

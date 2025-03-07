@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-
-    private static final String CARD_FORMAT = "%s카드: %s";
+    private static final String BASIC_FORM = "%s: %s";
     private static final Map<String, String> MATCH_FORMAT = Map.of(
             "WIN", "승",
             "DRAW", "무",
@@ -17,53 +16,37 @@ public class OutputView {
     public static void printDivisionStart(Dealer dealer, Players values) {
         String dealerNickname = dealer.getNickname();
         List<String> playerNicknames = values.getNicknames();
-        printDivideCommentByNickname(dealerNickname, playerNicknames);
+        System.out.println(formatDivideCommentByNickname(dealerNickname, playerNicknames));
         String dealerCard = dealer.getHands().getFirst().getCard();
-        printHand(dealerNickname, dealerCard);
-
+        String handsHeader = formatHandsHeader(dealerNickname);
+        System.out.println(formatBasicForm(handsHeader, dealerCard));
         List<Player> players = values.getPlayers();
         for (Player player : players) {
-            printDivision(player);
+            System.out.println(formatHands(player));
         }
         System.out.println();
     }
 
-    public static void printDivision(Player player) {
-        String playerNickname = player.getNickname();
-        List<String> playerCards = player.getHands().stream().map(Card::getCard).toList();
-        String hands = String.join(", ", playerCards);
-        printHand(playerNickname, hands);
+    public static void printCurrentHands(Player player) {
+        System.out.println(formatHands(player));
     }
 
-    public static void printDivision(Dealer dealer) {
+    public static void printStandingDealer(Dealer dealer) {
         String dealerNickname = dealer.getNickname();
         System.out.println();
         System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerNickname, 16));
     }
 
 
-    private static void printHand(String nickname, String joinedCards) {
-        System.out.println(String.format(CARD_FORMAT, nickname, joinedCards));
-    }
-
-    private static void printDivideCommentByNickname(String nickname, List<String> nicknames) {
-        String comment = nickname + "와 " + String.join(", ", nicknames) + "에게 2장을 나누었습니다.";
-        System.out.println(comment);
-    }
-
-    public static void printScore(Dealer dealer, Players players) {
-        String dealerNickname = dealer.getNickname();
-        List<String> dealerCards = dealer.getHands().stream().map(Card::getCard).toList();
-        String dealerHands = String.join(", ", dealerCards);
-        System.out.println(String.format(CARD_FORMAT + "- 결과: %d", dealerNickname, dealerHands, dealer.getSum()));
-
-
+    public static void printAllParticipantScore(Dealer dealer, Players players) {
+        printScore(dealer);
         for (Player player : players.getPlayers()) {
-            String playerNickname = player.getNickname();
-            List<String> playerCards = player.getHands().stream().map(Card::getCard).toList();
-            String playerHands = String.join(", ", playerCards);
-            System.out.println(String.format(CARD_FORMAT + " - 결과: %d", playerNickname, playerHands, player.getSum()));
+            printScore(player);
         }
+    }
+
+    private static void printScore(Participant participant) {
+        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getSum());
     }
 
     public static void printResult(Dealer dealer, Players players) {
@@ -96,5 +79,25 @@ public class OutputView {
 
     public static String getResultFormatByPlayer(MatchType matchType) {
         return MATCH_FORMAT.get(matchType.name());
+    }
+
+    private static String formatHands(Participant participant) {
+        String nickname = participant.getNickname();
+        List<String> joinedCards = participant.getHands().stream().map(Card::getCard).toList();
+        String joinedHands = String.join(", ", joinedCards);
+        String handsHeader = formatHandsHeader(nickname);
+        return formatBasicForm(handsHeader, joinedHands);
+    }
+
+    private static String formatDivideCommentByNickname(String nickname, List<String> nicknames) {
+        return nickname + "와 " + String.join(", ", nicknames) + "에게 2장을 나누었습니다.";
+    }
+
+    private static String formatBasicForm(String key, String value) {
+        return String.format((BASIC_FORM), key, value);
+    }
+
+    private static String formatHandsHeader(String nickname) {
+        return String.format("%s카드", nickname);
     }
 }

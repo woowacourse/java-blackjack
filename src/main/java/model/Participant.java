@@ -49,7 +49,7 @@ public abstract class Participant {
         return score.getValue();
     }
 
-    abstract String getNickname();
+    abstract public String getNickname();
 
     public List<Card> getHands() {
         return hands;
