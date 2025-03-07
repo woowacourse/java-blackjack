@@ -36,7 +36,7 @@ public abstract class Participant {
                 .map(List::getFirst)
                 .reduce(0, Integer::sum);
         if (hasACE()) {
-            sum = Denomination.changeAceValue(sum, BLACKJACK_VALUE);
+            sum = Denomination.convertAceValue(sum, BLACKJACK_VALUE);
         }
 
         return sum;

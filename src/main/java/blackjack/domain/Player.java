@@ -23,15 +23,15 @@ public class Player extends Participant {
         return super.calculateDenominations() < PLAYER_DISTRIBUTE_CARD_THRESHOLD;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validateName(final String name) {
         boolean isAllLetter = name.chars().allMatch(Character::isLetter);
         if (isAllLetter) {
             return;
         }
         throw new IllegalArgumentException("이름은 알파벳 소문자만 입력 가능합니다.");
-    }
-
-    public String getName() {
-        return name;
     }
 }

@@ -25,13 +25,13 @@ public enum Denomination {
         this.values = values;
     }
 
-    public static int changeAceValue(final int sum, final int blackjackValue) {
+    public static int convertAceValue(final int sum, final int blackjackValue) {
         Integer minAceValue = ACE.values.getFirst();
         Integer maxAceValue = ACE.values.getLast();
 
-        int changedAceValue = sum + maxAceValue - minAceValue;
-        if (changedAceValue <= blackjackValue) {
-            return changedAceValue;
+        int convertedSum = sum + maxAceValue - minAceValue;
+        if (convertedSum <= blackjackValue) {
+            return convertedSum;
         }
         return sum;
     }
