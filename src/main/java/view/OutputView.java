@@ -43,7 +43,7 @@ public class OutputView {
     public void printBlackJackResult(List<BlackJackResultResponse> resultResponses) {
         System.out.println();
         for (BlackJackResultResponse response : resultResponses) {
-            System.out.printf("%s카드: %s - 결과: %d%n",
+            System.out.printf("%s 카드: %s - 결과: %d%n",
                 response.nickname(),
                 String.join(", ", response.cardNames()),
                 response.totalScore()
