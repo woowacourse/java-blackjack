@@ -8,8 +8,9 @@ public class Dealer extends Gambler {
         super(name);
     }
 
+    @Override
     public List<Card> getInitialCards() {
-        List<Card> cards = hands.getCards();
+        List<Card> cards = getCards();
         Card firstCard = cards.getFirst();
         return List.of(firstCard);
     }

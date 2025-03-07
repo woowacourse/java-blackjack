@@ -1,5 +1,6 @@
 package blackjack;
 
+import static blackjack.domain.Rule.DEALER_NAME;
 import static blackjack.view.OutputView.*;
 import static blackjack.view.InputView.*;
 
@@ -16,8 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Application {
-    private static final Name DEALER = new Name("딜러");
-
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         List<Name> playerNames = getPlayerNames();
@@ -48,9 +47,9 @@ public class Application {
     }
 
     private static void printInitialCards(final Round round, final List<Name> playerNames) {
-        printGamblerCards("딜러", round.getInitialCardsByDealer());
+        printGamblerCards(DEALER_NAME, round.getInitialCards(DEALER_NAME));
         for (Name playerName : playerNames) {
-            printGamblerCards(playerName.getName(), round.getCards(playerName));
+            printGamblerCards(playerName, round.getInitialCards(playerName));
         }
     }
 
@@ -60,12 +59,9 @@ public class Application {
         }
     }
 
-    /**
-     * 딜러를 상수화 TODO
-     */
     private static void processDealerTurn(final Round round) {
         if (round.dealerMustDraw()) {
-            round.distributeCards(DEALER, 1);
+            round.distributeCards(DEALER_NAME, 1);
             printDealerDraw();
         }
     }
@@ -74,7 +70,7 @@ public class Application {
         boolean flag = false;
         while (isHit(playerName)) {
             round.distributeCards(playerName, 1);
-            printGamblerCards(playerName.getName(), round.getCards(playerName));
+            printGamblerCards(playerName, round.getCards(playerName));
             boolean isBusted = round.isPlayerBusted(playerName);
             if (isBusted) {
                 printBusted(playerName);
@@ -83,7 +79,7 @@ public class Application {
             flag = true;
         }
         if (!flag) {
-            printGamblerCards(playerName.getName(), round.getCards(playerName));
+            printGamblerCards(playerName, round.getCards(playerName));
         }
     }
 
@@ -97,11 +93,11 @@ public class Application {
     }
 
     private static void printGameResult(final Round round, final List<Name> playerNames) {
-        printGamblerResult(DEALER.getName(), round.getCards(DEALER), round.getScore(DEALER));
+        printGamblerResult(DEALER_NAME, round.getCards(DEALER_NAME), round.getScore(DEALER_NAME));
         for (Name playerName : playerNames) {
             List<Card> cards = round.getCards(playerName);
             int score = round.getScore(playerName);
-            printGamblerResult(playerName.getName(), cards, score);
+            printGamblerResult(playerName, cards, score);
         }
         WinningDiscriminator discriminator = round.getWinningDiscriminator();
         printWinning(discriminator);

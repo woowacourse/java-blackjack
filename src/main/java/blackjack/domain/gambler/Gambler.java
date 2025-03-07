@@ -6,21 +6,18 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Gambler {
+    protected final Hands hands = new Hands();
     private final Name name;
 
     public Gambler(final Name name) {
         this.name = name;
     }
 
-    public Name getName() {
-        return name;
-    }
+    public abstract List<Card> getInitialCards();
 
     public boolean isNameEquals(Name name) {
         return Objects.equals(name, this.name);
     }
-
-    protected final Hands hands = new Hands();
 
     public void addCard(final Card card) {
         hands.addNewCard(card);
@@ -30,11 +27,15 @@ public abstract class Gambler {
         return hands.calculateScore();
     }
 
+    public boolean isScoreBelow(final int criteria) {
+        return hands.isScoreBelow(criteria);
+    }
+
     public List<Card> getCards() {
         return hands.getCards();
     }
 
-    public boolean isScoreBelow(final int criteria) {
-        return hands.isScoreBelow(criteria);
+    public Name getName() {
+        return name;
     }
 }

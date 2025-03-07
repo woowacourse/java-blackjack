@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.Rule.DEALER_NAME;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
@@ -12,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Round {
-    private static final Name DEALER = new Name("딜러");
-
     private final CardDeck cardDeck;
     private final List<Gambler> gamblers;
 
@@ -24,7 +23,7 @@ public class Round {
 
     private List<Gambler> registerGamblers(final List<Name> playerNames) {
         List<Gambler> gamblers = new ArrayList<>();
-        gamblers.add(new Dealer(DEALER));
+        gamblers.add(new Dealer(DEALER_NAME));
         for (final Name playerName : playerNames) {
             Player player = new Player(playerName);
             gamblers.add(player);
@@ -55,13 +54,13 @@ public class Round {
         return findGambler(name).getCards();
     }
 
-    public List<Card> getInitialCardsByDealer() {
-        Dealer dealer = findDealer();
-        return dealer.getInitialCards();
+    public List<Card> getInitialCards(final Name name) {
+        Gambler gambler = findGambler(name);
+        return gambler.getInitialCards();
     }
 
     public boolean dealerMustDraw() {
-        Gambler dealer = findGambler(DEALER);
+        Gambler dealer = findGambler(DEALER_NAME);
         return dealer.isScoreBelow(16);
     }
 
@@ -70,7 +69,7 @@ public class Round {
     }
 
     public WinningDiscriminator getWinningDiscriminator() {
-        Dealer dealer = findDealer();
+        Gambler dealer = findGambler(DEALER_NAME);
         int dealerScore = dealer.calculateScore();
         Map<Name, Integer> playerScores = gamblers.stream()
                 .filter(gambler -> gambler instanceof Player)
@@ -83,13 +82,5 @@ public class Round {
                 .filter(gambler -> gambler.isNameEquals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다:" + name));
-    }
-
-    private Dealer findDealer() {
-        Gambler gambler = findGambler(DEALER);
-        if (gambler instanceof Dealer) {
-            return (Dealer) gambler;
-        }
-        throw new IllegalArgumentException("딜러가 존재하지 않습니다.");
     }
 }

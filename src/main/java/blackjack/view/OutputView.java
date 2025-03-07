@@ -18,7 +18,7 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", names);
     }
 
-    public static void printGamblerCards(final String name, final List<Card> cards) {
+    public static void printGamblerCards(final Name name, final List<Card> cards) {
         String ownCards = joinToStringByDelimiter(cards, ", ");
         System.out.printf("%s카드: %s\n", name, ownCards);
     }
@@ -31,7 +31,7 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printGamblerResult(final String name, final List<Card> cards, final int score) {
+    public static void printGamblerResult(final Name name, final List<Card> cards, final int score) {
         String ownCards = joinToStringByDelimiter(cards, ", ");
         System.out.printf("%s카드: %s - 결과: %d\n", name, ownCards, score);
     }
