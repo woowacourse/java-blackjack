@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import model.deck.Deck;
-import model.deck.DeckCreator;
+import model.deck.ShuffledDeckCreator;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
@@ -20,7 +20,7 @@ public class BlackjackGame {
     public BlackjackGame(List<String> playerNames) {
         this.dealer = new Dealer();
         this.players = new Players(playerNames);
-        this.deck = new Deck(new DeckCreator());
+        this.deck = new Deck(new ShuffledDeckCreator());
     }
 
     public void startGame() {

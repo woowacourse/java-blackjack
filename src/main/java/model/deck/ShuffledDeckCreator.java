@@ -7,7 +7,7 @@ import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardType;
 
-public class DeckCreator implements DeckCreateStrategy {
+public class ShuffledDeckCreator implements DeckCreateStrategy {
 
     @Override
     public List<Card> createAllCards() {
