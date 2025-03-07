@@ -17,6 +17,20 @@ public class CardGroup {
         this.cards = new ArrayList<>(cards);
     }
 
+    public boolean addCard(final Card card) {
+        final int size = cards.size();
+        cards.add(card);
+        return size + 1 == cards.size();
+    }
+
+    public int countCards() {
+        return cards.size();
+    }
+
+    public int calculateScore(int limit) {
+        return calculateScoreWithAce(calculateScoreWithOutAce(), limit, countAce());
+    }
+
     private int calculateScoreWithOutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
@@ -36,24 +50,10 @@ public class CardGroup {
         return addScoreWithAce(sum + ACE_DISTANCE_SCORE, limit, aceCount - 1);
     }
 
-    public boolean addCard(final Card card) {
-        final int size = cards.size();
-        cards.add(card);
-        return size + 1 == cards.size();
-    }
-
-    public int countCards() {
-        return cards.size();
-    }
-
     private int countAce() {
         return Math.toIntExact(cards.stream()
                 .filter(Card::isAce)
                 .count());
-    }
-
-    public int calculateScore(int limit) {
-        return calculateScoreWithAce(calculateScoreWithOutAce(), limit, countAce());
     }
 
     public List<Card> getCards() {
