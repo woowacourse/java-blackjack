@@ -17,7 +17,7 @@ class GameManagerTest {
 
     @Test
     @DisplayName("참가자를 추가한다")
-    void 참가자를_추가한다() {
+    void addParticipants() {
         List<Player> names = List.of(new Gambler("비타"));
 
         GameManager gameManager = new GameManager(blackjackShuffle);
@@ -41,7 +41,7 @@ class GameManagerTest {
 
     @Test
     @DisplayName("플레이어의 카드가 버스트면 TRUE를 반환한다")
-    void 플레이어의_카드가_버스트면_TRUE를_반환한다() {
+    void ifThePlayerS_CardIsBurstItReturns_True() {
         Player player = new Gambler("비타");
         List<Player> names = List.of(player);
 
@@ -56,7 +56,7 @@ class GameManagerTest {
 
     @Test
     @DisplayName("딜러의 카드가 히트면 카드를 한장 추가한다")
-    void 딜러의_카드가_히트면_카드를_한장_추가한다() {
+    void ifTheDealerS_CardIsHitAddACard() {
         // given
         GameManager gameManager = new GameManager(blackjackShuffle);
 

@@ -17,7 +17,7 @@ class CardPackTest {
 
     @Test
     @DisplayName("카드팩 객체에 52장의 카드를 생성한다")
-    void 카드팩_객체에_52장의_카드를_생성한다() {
+    void cardPack_Crafts52CardsInObjects() {
         // given
         CardPack cardPack = new CardPack(new SortShuffle());
 

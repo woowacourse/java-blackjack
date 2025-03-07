@@ -12,7 +12,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("카드의 합을 계산해 반환한다")
-    void 카드의_합을_계산해_반환한다() {
+    void calculate_calculation_check_rot() {
         // given
         Player player = new Gambler("두리");
         player.pushDealCard(new CardPack(new SortShuffle()), 3);

@@ -18,7 +18,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("플레이어 목록을 추가한다")
-    void 플레이어_목록을_추가한다() {
+    void player_List() {
         Players players = new Players();
 
         players.addGamblers(List.of(new Gambler("두리"), new Gambler("비타")));
