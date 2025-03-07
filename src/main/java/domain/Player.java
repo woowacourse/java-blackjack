@@ -3,7 +3,6 @@ package domain;
 import java.util.Objects;
 
 public class Player extends Participant {
-
     private final String name;
 
     private Player(String name, Cards cards) {
