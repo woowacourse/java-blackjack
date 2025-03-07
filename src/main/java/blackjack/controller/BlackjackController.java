@@ -38,7 +38,7 @@ public class BlackjackController {
         }
 
         // 3번
-        if (gameManager.isDealerHitThenDealAddCard()) {
+        while (gameManager.isDealerHitThenDealAddCard()) {
             outputView.printDealerHitAndDealCard();
         }
 
