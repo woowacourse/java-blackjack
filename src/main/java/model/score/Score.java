@@ -1,6 +1,6 @@
 package model.score;
 
-public class Score implements Comparable {
+public class Score implements Comparable<Score> {
 
     private static final int BUST_CONDITION = 21;
 
@@ -31,7 +31,7 @@ public class Score implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        return Integer.compare(value, ((Score) o).value);
+    public int compareTo(Score o) {
+        return Integer.compare(value, o.value);
     }
 }
