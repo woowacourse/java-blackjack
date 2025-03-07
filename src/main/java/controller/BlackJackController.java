@@ -28,26 +28,43 @@ public class BlackJackController {
         CardShuffler cardShuffler = new CardShuffler();
         CardDeck cardDeck = CardDeck.createCards(cardShuffler);
 
+        startBlackJack(cardDeck, players, dealer);
+        playBlackJack(cardDeck, players, dealer);
+        judgeGameResult(players, dealer);
+    }
+
+    private void startBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
         players.drawCardWhenStart(cardDeck);
         dealer.drawCardWhenStart(cardDeck);
 
         outputView.printInitialGame(dealer, players.getPlayers());
+    }
 
+    private void playBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            while (!player.isOverBurstBound() && inputView.readDrawMoreCard(player)) {
-                player.drawCard(cardDeck);
-                outputView.printPlayerCard(player);
-            }
+            decidePlayerHitOrStand(cardDeck, player);
         }
+        decideDealerHitOrStand(cardDeck, dealer);
+        outputView.printGameResult(dealer, players);
+    }
 
+    private void decidePlayerHitOrStand(CardDeck cardDeck, Player player) {
+        while (!player.isOverBurstBound() && inputView.readDrawMoreCard(player)) {
+            player.drawCard(cardDeck);
+            outputView.printPlayerCard(player);
+        }
+    }
+
+    private void decideDealerHitOrStand(CardDeck cardDeck, Dealer dealer) {
         while (!dealer.isOverBurstBound() && !dealer.isOverDrawBound()) {
             dealer.drawCard(cardDeck);
             outputView.printDealerDrawMessage();
         }
+    }
 
-        outputView.printGameResult(dealer, players);
-
+    private void judgeGameResult(Players players, Dealer dealer) {
         List<GameResult> gameResults = dealer.judgeGameResult(players.getPlayers());
+        List<String> playerNames = players.getAllPlayerNames();
 
         int winCount = GameResult.WIN.countGameResult(gameResults);
         int loseCount = GameResult.LOSE.countGameResult(gameResults);

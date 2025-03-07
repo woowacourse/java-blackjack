@@ -42,4 +42,10 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public List<String> getAllPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
 }
