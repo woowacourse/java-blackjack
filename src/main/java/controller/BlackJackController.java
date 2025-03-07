@@ -1,12 +1,12 @@
 package controller;
 
-import domain.Card;
-import domain.CardDeck;
-import domain.CardShuffler;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Player;
-import domain.Players;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardShuffler;
+import domain.game.Dealer;
+import domain.game.GameResult;
+import domain.game.Player;
+import domain.game.Players;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

@@ -1,4 +1,6 @@
-package domain;
+package domain.game;
+
+import domain.card.CardDeck;
 
 public class Player {
 

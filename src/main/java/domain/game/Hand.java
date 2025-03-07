@@ -1,5 +1,8 @@
-package domain;
+package domain.game;
 
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 

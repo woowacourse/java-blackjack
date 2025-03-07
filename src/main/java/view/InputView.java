@@ -1,6 +1,6 @@
 package view;
 
-import domain.Player;
+import domain.game.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

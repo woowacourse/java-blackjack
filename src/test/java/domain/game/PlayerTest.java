@@ -1,5 +1,10 @@
-package domain;
+package domain.game;
 
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardNumber;
+import domain.card.Pattern;
+import domain.card.TestShuffler;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
