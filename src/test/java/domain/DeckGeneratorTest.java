@@ -29,8 +29,8 @@ class DeckGeneratorTest {
         final List<Card> cards = deckGenerator.generate();
         final List<Card> previousCards = List.copyOf(cards);
         final Random random = new Random(123);
-        // when
 
+        // when
         deckGenerator.shuffle(cards, random);
 
         // then
