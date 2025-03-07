@@ -105,4 +105,28 @@ class RuleTest {
                     Arguments.of(List.of(TrumpCard.JACK_OF_CLUBS, TrumpCard.KING_OF_HEARTS, TrumpCard.FOUR_OF_SPADES))
             );
         }
+
+        @ParameterizedTest
+        @DisplayName("카드 목록의 점수를 올바르게 평가한다")
+        @MethodSource("provideScoreEvaluationCases")
+        void evaluateScore(List<TrumpCard> cards, Score expectedScore) {
+            // given
+            Rule rule = new Rule();
+
+            // when
+            Score result = rule.evaluateScore(cards);
+
+            // then
+            assertThat(result).isEqualTo(expectedScore);
+        }
+
+        static Stream<Arguments> provideScoreEvaluationCases() {
+            return Stream.of(
+                    Arguments.of(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS), Score.BLACKJACK),
+                    Arguments.of(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS), Score.SIXTEEN),
+                    Arguments.of(List.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS), Score.TWENTY),
+                    Arguments.of(List.of(TrumpCard.FIVE_OF_SPADES, TrumpCard.THREE_OF_DIAMONDS), Score.EIGHT)
+            );
+        }
+
 }
