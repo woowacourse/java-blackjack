@@ -50,5 +50,19 @@ class HandTest {
                     .hasMessage("손패는 카드를 가지고 있어야합니다.");
         }
 
+        @DisplayName("손패에 중복된 카드가 있으면 안된다")
+        @Test
+        void validateNotDuplicate() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES,
+                    TrumpCard.ACE_OF_SPADES
+            );
+
+            // when & then
+            assertThatThrownBy(() -> new Hand(cards))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("손패에 중복된 카드가 있습니다.");
+        }
     }
 }
