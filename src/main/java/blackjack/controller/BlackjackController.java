@@ -8,7 +8,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.dto.DistributedCardDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.view.InputVIew;
+import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class BlackjackController {
-    private final InputVIew inputView;
+    private final InputView inputView;
     private final OutputView outputView;
     private final CardDump cardDump;
 
-    public BlackjackController(InputVIew inputView, OutputView outputView, CardDump cardDump) {
+    public BlackjackController(InputView inputView, OutputView outputView, CardDump cardDump) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.cardDump = cardDump;
