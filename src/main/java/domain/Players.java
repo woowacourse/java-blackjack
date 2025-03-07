@@ -19,12 +19,6 @@ public class Players {
         selectedPlayer.addCard(cards);
     }
 
-    private Player selectPlayer(PlayerName playerName) {
-        return players.stream().filter(player -> player.getPlayerName().equals(playerName))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
-    }
-
     public List<Card> getPlayerCard(PlayerName playerName) {
         Player selectedPlayer = selectPlayer(playerName);
 
@@ -62,5 +56,11 @@ public class Players {
                 ));
 
         return new GameStatistics(gameResults);
+    }
+
+    private Player selectPlayer(PlayerName playerName) {
+        return players.stream().filter(player -> player.getPlayerName().equals(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
     }
 }
