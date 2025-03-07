@@ -27,10 +27,6 @@ public class Dealer {
         return hand.getCards().getFirst();
     }
 
-    public void receiveCard(TrumpCard card) {
-        hand.addCard(card);
-    }
-
     public Hand getHand() {
         return hand;
     }

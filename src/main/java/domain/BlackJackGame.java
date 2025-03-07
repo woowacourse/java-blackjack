@@ -74,7 +74,7 @@ public class BlackJackGame {
             throw new IllegalStateException("플레이어는 더이상 히트할 수 없습니다.");
         }
 
-        player.receiveCard(deck.draw());
+        hand.addCard(deck.draw());
     }
 
     public int processDealerHit() {
@@ -82,7 +82,7 @@ public class BlackJackGame {
         Hand hand = dealer.getHand();
 
         while (rule.isDealerHitAllowed(hand.getCards())) {
-            dealer.receiveCard(deck.draw());
+            hand.addCard(deck.draw());
             hitCount++;
         }
 

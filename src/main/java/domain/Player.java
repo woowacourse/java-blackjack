@@ -21,10 +21,6 @@ public class Player {
         }
     }
 
-    public void receiveCard(TrumpCard card) {
-        hand.addCard(card);
-    }
-
     public String getName() {
         return name;
     }

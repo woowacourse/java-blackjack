@@ -59,7 +59,6 @@ public class BlackJackController {
     private void executePlayerHit(Player player) {
         while (blackJackGame.isPlayerHitAllowed(player.getHand().getCards()) &&
                 inputView.readProcessHit(player.getName())) {
-
             blackJackGame.processPlayerHit(player);
             outputView.printPlayerCards(player.getName(), player.getHand().getCards());
         }
