@@ -1,10 +1,9 @@
 package domain;
 
-import java.util.List;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {
 
@@ -55,18 +54,5 @@ public class CardDeckTest {
                 new Card(Pattern.SPADE, CardNumber.KING),
                 new Card(Pattern.SPADE, CardNumber.QUEEN));
         assertThat(actual).containsExactlyElementsOf(expected);
-    }
-
-    @Test
-    void 카드들을_섞는다() {
-        //given
-        CardShuffler cardShuffler = new CardShuffler();
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-
-        //when
-        List<Card> actual = cardDeck.shuffle(cardShuffler);
-
-        //then
-        Assertions.assertThat(actual).isNotEqualTo(cardDeck.getDeck());
     }
 }

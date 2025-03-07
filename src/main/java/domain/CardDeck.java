@@ -22,16 +22,16 @@ public class CardDeck {
 
     private static List<CardNumber> createCardNumbers() {
         return Arrays.stream(CardNumber.values())
-                .filter(createNumber -> createNumber != CardNumber.ACE_ANOTHER)
+                .filter(CardDeck::removeAnotherAce)
                 .toList();
+    }
+
+    private static boolean removeAnotherAce(CardNumber createNumber) {
+        return createNumber != CardNumber.ACE_ANOTHER;
     }
 
     private CardDeck(List<Card> deck) {
         this.deck = deck;
-    }
-
-    public List<Card> shuffle(CardShuffler cardShuffler) {
-        return cardShuffler.shuffle(this.deck);
     }
 
     public List<Card> drawCardWhenStart() {
