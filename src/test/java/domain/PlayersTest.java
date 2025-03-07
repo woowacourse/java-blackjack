@@ -24,6 +24,24 @@ class PlayersTest {
     }
 
     @Test
+    void 플레이어_이름이_중복될_경우_예외가_발생한다() {
+        // given
+        List<Player> players = List.of(
+                new Dealer(),
+                new Participant("시소"),
+                new Participant("헤일러"),
+                new Participant("사나"),
+                new Participant("사나"),
+                new Participant("히스타"),
+                new Participant("포스티")
+        );
+
+        // when & then
+        Assertions.assertThatThrownBy(() -> new Players(players))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 참여자_모두에게_카드를_2장씩_분배한다() {
         // given
         Players players = new Players(List.of(

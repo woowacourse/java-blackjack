@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -12,6 +13,7 @@ public class Players {
 
     public Players(List<Player> players) {
         validateSize(players);
+        validateUniqueNames(players);
         this.players = players;
     }
 
@@ -61,5 +63,15 @@ public class Players {
             sumResult.put(player.getName(), player.getCards().calculateOptimalSum());
         }
         return sumResult;
+    }
+
+    public void validateUniqueNames(List<Player> players) {
+        List<String> names = players.stream()
+                .map(Player::getName)
+                .toList();
+
+        if (new HashSet<>(names).size() != names.size()) {
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        }
     }
 }
