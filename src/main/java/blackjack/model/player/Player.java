@@ -9,7 +9,7 @@ public abstract class Player {
     protected Player() {
     }
 
-    public void putCard(Card card) {
+    public void putCard(final Card card) {
         receivedCards.receive(card);
     }
 

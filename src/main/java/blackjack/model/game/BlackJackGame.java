@@ -13,7 +13,7 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Deque<Participant> readyQueue;
 
-    public BlackJackGame(DeckInitializer deckInitializer, Dealer dealer, Participants participants) {
+    public BlackJackGame(final DeckInitializer deckInitializer, final Dealer dealer, final Participants participants) {
         this.deck = deckInitializer.generateDeck();
         this.participants = participants;
         this.dealer = dealer;
@@ -26,12 +26,12 @@ public class BlackJackGame {
         putTowCard(dealer);
     }
 
-    private void putTowCard(Player player) {
+    private void putTowCard(final Player player) {
         player.putCard(deck.drawCard());
         player.putCard(deck.drawCard());
     }
 
-    public void receiveCard(boolean isReceive) {
+    public void receiveCard(final boolean isReceive) {
         if (isReceive) {
             readyQueue.getFirst().putCard(deck.drawCard());
             return;

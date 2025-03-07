@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Parser {
 
-    public static Participants parseParticipants(String names) {
+    public static Participants parseParticipants(final String names) {
         String[] splittedNames = names.split(",");
         validateNameCount(splittedNames);
         return new Participants(Arrays.stream(splittedNames)
@@ -14,18 +14,18 @@ public class Parser {
                 .toList());
     }
 
-    private static void validateNameCount(String[] splittedNames) {
+    private static void validateNameCount(final String[] splittedNames) {
         if (splittedNames.length == 0) {
             throw new IllegalArgumentException("이름을 올바르게 입력해 주세요.");
         }
     }
 
-    public static boolean parseCommand(String comamnd) {
+    public static boolean parseCommand(final String comamnd) {
         validateCommand(comamnd);
         return comamnd.equals("y");
     }
 
-    private static void validateCommand(String command) {
+    private static void validateCommand(final String command) {
         if (!(command.equals("y") || command.equals("n"))) {
             throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
         }

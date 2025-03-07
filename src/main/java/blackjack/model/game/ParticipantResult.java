@@ -9,7 +9,7 @@ public enum ParticipantResult {
     DRAW,
     ;
 
-    public static ParticipantResult of(Dealer dealer, Participant participant) {
+    public static ParticipantResult of(final Dealer dealer, final Participant participant) {
         if (participant.isBust()) {
             return LOSE;
         }
@@ -28,6 +28,4 @@ public enum ParticipantResult {
         }
         return DRAW;
     }
-
-
 }

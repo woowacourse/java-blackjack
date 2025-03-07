@@ -19,7 +19,7 @@ public enum CardType {
     private final int point;
     private final String detail;
 
-    CardType(int point, String detail) {
+    CardType(final int point, final String detail) {
         this.point = point;
         this.detail = detail;
     }

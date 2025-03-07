@@ -7,7 +7,7 @@ import java.util.Stack;
 public class Deck {
     private final Stack<Card> cards;
 
-    public Deck(List<Card> cards) {
+    public Deck(final List<Card> cards) {
         this.cards = new Stack<>();
         this.cards.addAll(cards);
     }

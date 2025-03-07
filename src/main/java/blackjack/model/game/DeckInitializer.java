@@ -17,7 +17,6 @@ public class DeckInitializer {
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
         return new Deck(cards);
-
     }
 
     private static Function<CardShape, Stream<? extends Card>> generateCard() {

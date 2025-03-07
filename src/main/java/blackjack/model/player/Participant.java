@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Participant extends Player {
     private final String name;
 
-    public Participant(String name) {
+    public Participant(final String name) {
         validate(name);
         this.name = name;
     }
 
-    private void validate(String name) {
+    private void validate(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("참여자 이름을 입력해주세요.");
         }

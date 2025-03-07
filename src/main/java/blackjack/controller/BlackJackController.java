@@ -13,13 +13,12 @@ public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
-
         Participants participants = Parser.parseParticipants(inputView.inputParticipant());
         Dealer dealer = new Dealer();
         BlackJackGame blackJackGame = new BlackJackGame(
@@ -35,7 +34,7 @@ public class BlackJackController {
         outputView.outputFinalResult(dealer, participants);
     }
 
-    private void inputMoreCard(BlackJackGame blackJackGame) {
+    private void inputMoreCard(final BlackJackGame blackJackGame) {
         while (blackJackGame.hasReady()) {
             Participant participant = blackJackGame.getCurrentTurnParticipant();
             boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
@@ -48,7 +47,7 @@ public class BlackJackController {
         }
     }
 
-    private void giveMoreDealerCard(BlackJackGame blackJackGame, Dealer dealer) {
+    private void giveMoreDealerCard(final BlackJackGame blackJackGame, final Dealer dealer) {
         while (blackJackGame.isDrawableDealerCard()) {
             blackJackGame.drewDealerCards();
             outputView.outputDealerGetCard();

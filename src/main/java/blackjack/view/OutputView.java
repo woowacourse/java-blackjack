@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void outputFirstCardDistributionResult(Participants participants, Dealer dealer) {
+    public void outputFirstCardDistributionResult(final Participants participants, final Dealer dealer) {
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         customStringBuilder.appendLine(String.format(
                 "딜러와 %s에게 2장을 나누었습니다.",
@@ -32,25 +32,25 @@ public class OutputView {
         customStringBuilder.print();
     }
 
-    public String generateCardNames(ReceivedCards receivedCards) {
+    public String generateCardNames(final ReceivedCards receivedCards) {
         return receivedCards.stream()
                 .map(this::generateCardName)
                 .collect(Collectors.joining(", "));
     }
 
-    public String generateCardName(Card card) {
+    public String generateCardName(final Card card) {
         return String.format("%s%s", card.getCardType().getDetail(), card.getShape().getDetail());
     }
 
-    public void printPlayerCardStatus(String name, Player player) {
+    public void printPlayerCardStatus(final String name, final Player player) {
         System.out.println(outputPlayerCardStatus(name, generateCardNames(player.getReceivedCards())));
     }
 
-    public String outputPlayerCardStatus(String name, String cards) {
+    public String outputPlayerCardStatus(final String name, final String cards) {
         return String.format("%s카드: %s", name, cards);
     }
 
-    public void outputFinalCardStatus(Dealer dealer, Participants participants) {
+    public void outputFinalCardStatus(final Dealer dealer, final Participants participants) {
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         customStringBuilder.appendLine(String.format("%s - 결과 : %d",
                 outputPlayerCardStatus("딜러", generateCardNames(dealer.getReceivedCards())), dealer.calculatePoint()));
@@ -70,7 +70,7 @@ public class OutputView {
         System.out.println("딜러는 17이상이라 더이상 카드를 받을 수 없습니다.");
     }
 
-    public void outputFinalResult(Dealer dealer, Participants participants) {
+    public void outputFinalResult(final Dealer dealer, final Participants participants) {
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         System.out.println("## 최종 승패");
 
@@ -87,7 +87,7 @@ public class OutputView {
     }
 
 
-    public void printParticipantBust(String name) {
+    public void printParticipantBust(final String name) {
         System.out.println(String.format("%s는 bust입니다.", name));
     }
 }
