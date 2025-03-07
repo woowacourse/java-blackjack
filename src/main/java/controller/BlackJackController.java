@@ -54,9 +54,13 @@ public class BlackJackController {
     private void requestHit(Dealer dealer, List<Player> players) {
         outputView.printDealerAndPlayersCards(dealer, players);
         for (Player player : players) {
-            if(!player.isBust()){
-                receiveCardIsAbleToGetCard(player);
-            }
+            receiveCard(player);
+        }
+    }
+
+    private void receiveCard(Player player) {
+        if(!player.isBust()){
+            receiveCardIsAbleToGetCard(player);
         }
     }
 
