@@ -36,7 +36,7 @@ public class BlackjackController {
         blackjackGame.spreadInitialCards();
         resultView.printSpreadCard(participants);
 
-        // 플레이어마다 카드 나눠주기
+        // 플레이어들과 딜러에게 추가 카드 나눠주기
         spreadPlayersExtraCards(blackjackGame);
         spreadDealerExtraCards(blackjackGame);
 
