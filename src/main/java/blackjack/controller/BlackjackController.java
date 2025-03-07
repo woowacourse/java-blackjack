@@ -20,10 +20,10 @@ public class BlackjackController {
     private final OutputView outputView;
     private final CardDump cardDump;
 
-    public BlackjackController() {
-        this.inputView = new InputVIew();
-        this.outputView = new OutputView();
-        this.cardDump = new CardDump();
+    public BlackjackController(InputVIew inputView, OutputView outputView, CardDump cardDump) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.cardDump = cardDump;
     }
 
     public void run() {
