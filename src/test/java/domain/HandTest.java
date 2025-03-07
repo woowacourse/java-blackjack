@@ -35,5 +35,20 @@ class HandTest {
         }
     }
 
+    @Nested
+    class InvalidCases {
+
+        @DisplayName("손패는 카드가 있어야 한다")
+        @Test
+        void validateNotNull() {
+            // given
+            List<TrumpCard> nullCards = null;
+
+            // when & then
+            assertThatThrownBy(() -> new Hand(nullCards))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("손패는 카드를 가지고 있어야합니다.");
+        }
+
     }
 }
