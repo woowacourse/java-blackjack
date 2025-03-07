@@ -91,6 +91,20 @@ class BlackJackGameTest {
             // then
             assertThat(player.getHand().getCards()).hasSize(3);
         }
+
+        @Test
+        @DisplayName("딜러가 히트하면 적절한 횟수만큼 카드가 추가된다.")
+        void processDealerHit() {
+            // given
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            int initialCards = dealer.getHand().getCards().size();
+
+            // when
+            int hitCount = blackJackGame.processDealerHit();
+
+            // then
+            assertThat(dealer.getHand().getCards()).hasSize(initialCards + hitCount);
+        }
     @Nested
     class InvalidCases {
 
