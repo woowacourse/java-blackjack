@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultTest {
@@ -17,20 +18,17 @@ class GameResultTest {
         @DisplayName("플레이어가 버스트이거나, 딜러보다 점수가 낮으면 LOSE를 반환한다.")
         @MethodSource("provideLoseCases")
         void playerLoses(Score playerScore, Score dealerScore) {
-            // when
             GameResult result = GameResult.from(playerScore, dealerScore);
-
-            // then
             assertThat(result).isEqualTo(GameResult.LOSE);
         }
 
-        static Stream<Score[]> provideLoseCases() {
+        static Stream<Arguments> provideLoseCases() {
             return Stream.of(
-                    new Score[]{Score.BUST, Score.TWENTY_ONE},
-                    new Score[]{Score.BUST, Score.BUST},
-                    new Score[]{Score.TEN, Score.ELEVEN},
-                    new Score[]{Score.FIFTEEN, Score.TWENTY},
-                    new Score[]{Score.SEVEN, Score.EIGHT}
+                    Arguments.of(Score.BUST, Score.TWENTY_ONE),
+                    Arguments.of(Score.BUST, Score.BUST),
+                    Arguments.of(Score.TEN, Score.ELEVEN),
+                    Arguments.of(Score.FIFTEEN, Score.TWENTY),
+                    Arguments.of(Score.SEVEN, Score.EIGHT)
             );
         }
 
@@ -38,18 +36,15 @@ class GameResultTest {
         @DisplayName("플레이어와 딜러의 점수가 같으면 DRAW를 반환한다.")
         @MethodSource("provideDrawCases")
         void gameIsDraw(Score playerScore, Score dealerScore) {
-            // when
             GameResult result = GameResult.from(playerScore, dealerScore);
-
-            // then
             assertThat(result).isEqualTo(GameResult.DRAW);
         }
 
-        static Stream<Score[]> provideDrawCases() {
+        static Stream<Arguments> provideDrawCases() {
             return Stream.of(
-                    new Score[]{Score.TWENTY_ONE, Score.TWENTY_ONE},
-                    new Score[]{Score.TWENTY, Score.TWENTY},
-                    new Score[]{Score.SEVENTEEN, Score.SEVENTEEN}
+                    Arguments.of(Score.TWENTY_ONE, Score.TWENTY_ONE),
+                    Arguments.of(Score.TWENTY, Score.TWENTY),
+                    Arguments.of(Score.SEVENTEEN, Score.SEVENTEEN)
             );
         }
 
@@ -57,19 +52,16 @@ class GameResultTest {
         @DisplayName("플레이어 점수가 더 높으면 WIN을 반환한다.")
         @MethodSource("provideWinCases")
         void playerWins(Score playerScore, Score dealerScore) {
-            // when
             GameResult result = GameResult.from(playerScore, dealerScore);
-
-            // then
             assertThat(result).isEqualTo(GameResult.WIN);
         }
 
-        static Stream<Score[]> provideWinCases() {
+        static Stream<Arguments> provideWinCases() {
             return Stream.of(
-                    new Score[]{Score.TWENTY_ONE, Score.TWENTY},
-                    new Score[]{Score.NINETEEN, Score.SEVENTEEN},
-                    new Score[]{Score.EIGHTEEN, Score.SEVEN},
-                    new Score[]{Score.TEN, Score.NINE}
+                    Arguments.of(Score.TWENTY_ONE, Score.TWENTY),
+                    Arguments.of(Score.NINETEEN, Score.SEVENTEEN),
+                    Arguments.of(Score.EIGHTEEN, Score.SEVEN),
+                    Arguments.of(Score.TEN, Score.NINE)
             );
         }
     }
