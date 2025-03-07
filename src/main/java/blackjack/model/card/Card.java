@@ -8,5 +8,4 @@ public record Card(CardType cardType, CardNumber cardNumber) {
         return cardNumber.getPoints();
     }
 
-
 }

@@ -1,8 +1,10 @@
 package blackjack.model.game;
 
-import blackjack.model.card.CardDeck;
-import blackjack.model.player.Player;
 import java.util.List;
+
+import blackjack.model.card.CardDeck;
+import blackjack.model.card.initializer.CardDeckInitializer;
+import blackjack.model.player.Player;
 
 public class BlackJackGame {
 
@@ -14,6 +16,11 @@ public class BlackJackGame {
 
     public BlackJackGame(final CardDeck cardDeck, final Rule rule) {
         this.cardDeck = cardDeck;
+        this.rule = rule;
+    }
+
+    public BlackJackGame(final CardDeckInitializer cardDeckInitializer, final Rule rule) {
+        this.cardDeck = CardDeck.initializeFrom(cardDeckInitializer);
         this.rule = rule;
     }
 
@@ -34,4 +41,5 @@ public class BlackJackGame {
     private void drawCard(final Player player, final int amount) {
         player.receiveCards(cardDeck.draw(amount));
     }
+
 }

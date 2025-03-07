@@ -1,7 +1,9 @@
 package blackjack.controller;
 
-import blackjack.model.card.CardDeck;
-import blackjack.model.card.initializer.DefaultCardDeckInitializer;
+import java.util.ArrayList;
+import java.util.List;
+
+import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
 import blackjack.model.game.Rule;
 import blackjack.model.player.Dealer;
@@ -9,42 +11,60 @@ import blackjack.model.player.Player;
 import blackjack.model.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final CardDeckInitializer cardDeckInitializer;
 
-    public BlackJackController(final InputView inputView, final OutputView outputView) {
+    public BlackJackController(
+            final InputView inputView, final OutputView outputView, final CardDeckInitializer cardDeckInitializer
+    ) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.cardDeckInitializer = cardDeckInitializer;
     }
 
     public void run() {
-        CardDeck cardDeck = CardDeck.initializeFrom(new DefaultCardDeckInitializer());
         Rule rule = new Rule();
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, rule);
+        BlackJackGame blackJackGame = new BlackJackGame(cardDeckInitializer, rule);
 
         Dealer dealer = new Dealer("딜러");
-        List<User> users = new ArrayList<>();
-        for (String userName : inputView.readUserNames()) {
-            users.add(new User(userName));
-        }
+        List<User> users = makeUsers();
         dealInitialCards(users, dealer, blackJackGame);
         outputView.printDealInitialCardsResult(dealer, users, rule);
 
-        for (User user : users) {
-            while (rule.canDrawMoreCard(user) && inputView.readUserDrawMoreCard(user)) {
-                blackJackGame.drawMoreCard(user);
-                outputView.printPlayerCards(user);
-            }
-        }
+        usersDrawMoreCards(users, rule, blackJackGame);
 
-        outputView.printDealerDrawnMoreCards(blackJackGame.drawMoreCard(dealer));
+        dealerDrawMoreCards(blackJackGame, dealer);
         outputView.printOptimalPoints(dealer, users, rule);
         outputView.printGameResult(rule.calculateResult(dealer, users));
+    }
+
+    private List<User> makeUsers() {
+        return inputView.readUserNames()
+                .stream()
+                .map(User::new)
+                .toList();
+    }
+
+    private void usersDrawMoreCards(final List<User> users, final Rule rule, final BlackJackGame blackJackGame) {
+        for (User user : users) {
+            userDrawMoreCards(rule, blackJackGame, user);
+        }
+    }
+
+    private void userDrawMoreCards(final Rule rule, final BlackJackGame blackJackGame, final User user) {
+        while (rule.canDrawMoreCard(user) && inputView.readUserDrawMoreCard(user)) {
+            blackJackGame.drawMoreCard(user);
+            outputView.printPlayerCards(user, rule);
+        }
+    }
+
+    private void dealerDrawMoreCards(final BlackJackGame blackJackGame, final Dealer dealer) {
+        boolean isDrawn = blackJackGame.drawMoreCard(dealer);
+        outputView.printDealerDrawnMoreCards(isDrawn);
     }
 
     private void dealInitialCards(final List<User> users, final Player dealer, final BlackJackGame blackJackGame) {

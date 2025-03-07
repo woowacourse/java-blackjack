@@ -18,13 +18,13 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
         System.out.println();
         System.out.println(dealer.getName() + "와 " + userNames + "에게 2장을 나누었습니다.");
-        System.out.println(dealer.getName() + "카드: " + formatCards(rule.openDealerCards(dealer)));
-        users.forEach(this::printPlayerCards);
+        System.out.println(dealer.getName() + "카드: " + formatCards(rule.openCards(dealer)));
+        users.forEach(user -> printPlayerCards(user, rule));
         System.out.println();
     }
 
-    public void printPlayerCards(final Player player) {
-        System.out.println(player.getName() + "카드: " + formatCards(player.getCards()));
+    public void printPlayerCards(final Player player, final Rule rule) {
+        System.out.println(player.getName() + "카드: " + formatCards(rule.openCards(player)));
     }
 
     private String formatCards(final Cards cards) {
