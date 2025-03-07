@@ -39,8 +39,8 @@ public class BlackJackController {
         outputView.printInitialParticipantHands(participants.getParticipants());
 
         // Note: 모든 참가자들의 카드 받기 기능
-        playerReceiveCardProcess(participants, cardDeck);
-        dealerReceiveCardProcess(participants, cardDeck);
+        receiveCardProcessOfPlayer(participants, cardDeck);
+        receiveCardProcessOfDealer(participants, cardDeck);
 
         System.out.println();
         calculateBackJackResultProcess(participants, blackJackManager);
@@ -62,19 +62,20 @@ public class BlackJackController {
         }
     }
 
-    private void dealerReceiveCardProcess(Participants participants, CardDeck cardDeck) {
+    private void receiveCardProcessOfDealer(Participants participants, CardDeck cardDeck) {
         Participant dealer = participants.getDealer();
         while (dealer.canPick()) {
             dealer.addCard(cardDeck.getAndRemoveFrontCard());
             outputView.printDealerPickMessage();
         }
+        outputView.printBlankLine();
     }
 
-    private void playerReceiveCardProcess(Participants participants, CardDeck cardDeck) {
+    private void receiveCardProcessOfPlayer(Participants participants, CardDeck cardDeck) {
         for (Participant participant : participants.getPlayerParticipants()) {
             inputAskReceiveExtraCard(cardDeck, participant);
         }
-        System.out.println();
+        outputView.printBlankLine();
     }
 
     private void inputAskReceiveExtraCard(CardDeck cardDeck, Participant participant) {

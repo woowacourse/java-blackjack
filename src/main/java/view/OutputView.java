@@ -163,4 +163,8 @@ public class OutputView {
         }
         return "";
     }
+
+    public void printBlankLine() {
+        System.out.println();
+    }
 }
