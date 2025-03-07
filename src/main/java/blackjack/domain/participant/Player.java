@@ -14,10 +14,6 @@ public class Player extends Gamer {
         this.nickname = nickname;
     }
 
-    public void receiveCards(final Cards givenCards) {
-        cards.addAll(givenCards);
-    }
-
     @Override
     public boolean canGetMoreCard() {
         int sum = cards.calculateMinSum();

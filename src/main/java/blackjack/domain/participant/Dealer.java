@@ -15,10 +15,6 @@ public class Dealer extends Gamer {
         super(cards);
     }
 
-    public void receiveCards(final Cards givenCards) {
-        cards.addAll(givenCards);
-    }
-
     @Override
     public boolean canGetMoreCard() {
         int sum = cards.calculateMinSum();

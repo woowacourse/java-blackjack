@@ -20,6 +20,10 @@ public abstract class Gamer {
         return cards.getCards();
     }
 
+    public void receiveCards(final Cards givenCards) {
+        cards.addAll(givenCards);
+    }
+
     public int calculateMaxSum() {
         return cards.calculateResult();
     }
