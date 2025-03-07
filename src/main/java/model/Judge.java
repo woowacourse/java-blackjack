@@ -1,7 +1,6 @@
 package model;
 
 public class Judge {
-
     public GameResult determineGameResult(final Cards dealerCards, final Cards playerCards) {
         if (playerCards.isBust()) {
             return GameResult.LOSE;
@@ -20,5 +19,4 @@ public class Judge {
         }
         return GameResult.DRAW;
     }
-
 }

@@ -2,7 +2,8 @@ package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,12 @@ class JudgeTest {
     void test1() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new HashSet<>(Set.of(
+        Cards dealerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.EIGHT, CardShape.SPADE),
                 new Card(CardNumber.NINE, CardShape.SPADE)
         )));
 
-        Cards playerCards = new Cards(new HashSet<>(Set.of(
+        Cards playerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.TWO, CardShape.SPADE)
@@ -32,12 +33,12 @@ class JudgeTest {
     void test2() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new HashSet<>(Set.of(
+        Cards dealerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.TWO, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new HashSet<>(Set.of(
+        Cards playerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.EIGHT, CardShape.SPADE),
                 new Card(CardNumber.NINE, CardShape.SPADE)
         )));
@@ -50,11 +51,11 @@ class JudgeTest {
     void test3() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new HashSet<>(Set.of(
+        Cards dealerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.SEVEN, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new HashSet<>(Set.of(
+        Cards playerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));
@@ -67,11 +68,11 @@ class JudgeTest {
     void test4() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new HashSet<>(Set.of(
+        Cards dealerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new HashSet<>(Set.of(
+        Cards playerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.SEVEN, CardShape.SPADE)
         )));
@@ -84,11 +85,11 @@ class JudgeTest {
     void test5() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new HashSet<>(Set.of(
+        Cards dealerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new HashSet<>(Set.of(
+        Cards playerCards = new Cards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));

@@ -1,15 +1,15 @@
 package model;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class Cards {
 
     private static final int BUST_THRESHOLD = 21;
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
-    public Cards(final Set<Card> cards) {
+    public Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -39,7 +39,7 @@ public class Cards {
         cards.add(card);
     }
 
-    private boolean isBust() {
+    public boolean isBust() {
         int sum = calculateSum();
         return sum > BUST_THRESHOLD;
     }
@@ -62,7 +62,15 @@ public class Cards {
         cards.add(new Card(CardNumber.ACE_ONE, cardShape));
     }
 
-    public Set<Card> getCards() {
-        return Collections.unmodifiableSet(cards);
+    public int getAdditionalDrawCount() {
+        return cards.size() - 2;
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
