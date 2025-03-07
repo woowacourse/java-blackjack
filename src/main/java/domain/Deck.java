@@ -3,6 +3,8 @@ package domain;
 import java.util.List;
 
 public class Deck {
+    private final static int INIT_COUNT = 2;
+
     private final List<Card> cards;
 
     public Deck(CardsGenerator cardsGenerator) {
@@ -29,5 +31,18 @@ public class Deck {
             count++;
         }
         return count;
+    }
+
+    public void handoutCards(Dealer dealer, List<Player> participants) {
+        giveInitCards(dealer);
+        for (Participant participant : participants) {
+            giveInitCards(participant);
+        }
+    }
+
+    private void giveInitCards(Participant participant) {
+        for (int i = 0; i < INIT_COUNT; ++i) {
+            participant.addCard(pick());
+        }
     }
 }

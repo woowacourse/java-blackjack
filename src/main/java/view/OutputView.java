@@ -1,11 +1,7 @@
 package view;
 
-import domain.Card;
-import domain.CardNumber;
-import domain.CardShape;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Player;
+import domain.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +25,7 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", count);
     }
 
-    public void printCardsAndResult(String name, List<Card> cards, int result) {
+    public void printCardsAndResult(String name, Cards cards, int result) {
         System.out.printf("%s카드: %s - 결과: %d\n", name, getCardsText(cards), result);
     }
 
@@ -63,12 +59,12 @@ public class OutputView {
         System.out.printf("딜러카드: %s\n", getDealerCardText(dealer.getCards()));
     }
 
-    private String getDealerCardText(List<Card> cards) {
-        return getCardText(cards.getFirst());
+    private String getDealerCardText(Cards cards) {
+        return getCardText(cards.getCards().getFirst());
     }
 
-    private String getCardsText(List<Card> cards) {
-        List<String> formatted = cards.stream()
+    private String getCardsText(Cards cards) {
+        List<String> formatted = cards.getCards().stream()
                 .map(this::getCardText)
                 .toList();
         return String.join(", ", formatted);

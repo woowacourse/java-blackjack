@@ -21,7 +21,7 @@ public class Participant {
         return rule.isBurst(cards);
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 }

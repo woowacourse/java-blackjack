@@ -1,10 +1,7 @@
 package controller;
 
-import domain.Dealer;
-import domain.Deck;
-import domain.GameResult;
-import domain.Player;
-import domain.RandomCardsGenerator;
+import domain.*;
+
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -21,24 +18,16 @@ public class BlackJackController {
     }
 
     public void run() {
-        //덱 생성
         Deck deck = new Deck(new RandomCardsGenerator());
         Dealer dealer = Dealer.init();
         List<Player> players = createPlayers();
 
-        distributeCards(deck, dealer, players);
-        askNewCard(deck, dealer, players);
+        deck.handoutCards(dealer, players);
+        askNewCardToAllPlayers(deck, players);
+        setupDealerCards(dealer, deck);
 
-        // 결과 출력
-        outputView.printCardsAndResult("딜러", dealer.getCards(), dealer.getCardScore());
-        for (Player player : players) {
-            outputView.printCardsAndResult(player.getName(), player.getCards(), player.getCardScore());
-        }
-
-        // 승패 출력
-        Map<Player, GameResult> playerResult = dealer.getGameResult(players);
-        Map<GameResult, Integer> dealerResult = dealer.getResult();
-        outputView.printResult(dealerResult, playerResult);
+        showCardsResult(dealer, players);
+        showGameResult(dealer, players);
     }
 
     private List<Player> createPlayers() {
@@ -46,25 +35,34 @@ public class BlackJackController {
         return names.stream().map(Player::init).toList();
     }
 
-    private void distributeCards(Deck deck, Dealer dealer, List<Player> players) {
-        deck.giveCardTo(dealer);
-        dealer.addCard(deck.pick());
-
+    private void askNewCardToAllPlayers(Deck deck, List<Player> players) {
         for (Player player : players) {
-            deck.giveCardTo(player);
-            deck.giveCardTo(player);
+            askNewCardToPlayer(player, deck);
         }
-        outputView.printParticipantCardsInfo(dealer, players, 2);
     }
 
-    private void askNewCard(Deck deck, Dealer dealer, List<Player> players) {
-        for (Player player : players) {
-            while (!player.isBurst() && !inputView.readYesOrNo(player).isNo()) {
-                deck.giveCardTo(player);
-                outputView.printPlayerCards(player);
-            }
+    private void askNewCardToPlayer(Player player, Deck deck) {
+        while (!player.isBurst() && inputView.readYesOrNo(player).isYes()) {
+            deck.giveCardTo(player);
+            outputView.printPlayerCards(player);
         }
+    }
+
+    private void setupDealerCards(Dealer dealer, Deck deck) {
         final int count = deck.countDealerDraw(dealer);
         outputView.printDealerDrawCount(count);
+    }
+
+    private void showCardsResult(Dealer dealer, List<Player> players) {
+        outputView.printCardsAndResult("딜러", dealer.getCards(), dealer.getCardScore());
+        for (Player player : players) {
+            outputView.printCardsAndResult(player.getName(), player.getCards(), player.getCardScore());
+        }
+    }
+
+    private void showGameResult(Dealer dealer, List<Player> players) {
+        Map<Player, GameResult> playerResult = dealer.getGameResult(players);
+        Map<GameResult, Integer> dealerResult = dealer.getResult();
+        outputView.printResult(dealerResult, playerResult);
     }
 }
