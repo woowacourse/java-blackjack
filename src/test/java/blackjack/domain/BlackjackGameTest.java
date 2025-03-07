@@ -74,6 +74,22 @@ class BlackjackGameTest {
         assertThat(blackjackGame.getPlayer(0).showAllCard()).hasSize(1);
     }
 
+    @DisplayName("한 장의 카드를 딜러에게 준다.")
+    @Test
+    void spreadOneCardToDealer() {
+        // given
+
+        final Participants participants = provideParticipants();
+        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+                participants);
+
+        // when
+        blackjackGame.spreadOneCardToDealer();
+
+        // then
+        assertThat(participants.getDealer().showAllCard()).hasSize(1);
+    }
+
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다.")
     @ParameterizedTest
     @MethodSource
