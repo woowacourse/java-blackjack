@@ -4,14 +4,11 @@ import static factory.BlackJackCreator.createCardBundle;
 import static factory.BlackJackCreator.createCardDeck;
 import static factory.BlackJackCreator.createParticipants;
 
-import domain.BlackJackResultCalculator;
 import domain.CardDeck;
 import domain.Participant;
-import domain.ParticipantResult;
 import domain.Participants;
 import domain.ParticipantsResult;
 import domain.Player;
-import java.util.Set;
 import view.InputView;
 import view.OutputView;
 
@@ -55,11 +52,8 @@ public class BlackJackController {
     }
 
     private void printAllParticipantGameResult(Participants participants) {
-        ParticipantsResult participantsResults = BlackJackResultCalculator.calculate(participants);
-        Set<ParticipantResult> participantsResult = participantsResults.getParticipantsResult();
-        for (ParticipantResult participantResult : participantsResult) {
-            System.out.println(participantResult.get());
-        }
+        ParticipantsResult calculateParticipantsResult = participants.calculate();
+        outputView.printGameResult(calculateParticipantsResult);
     }
 
     private void printAllParticipantsInfo(Participants participants) {

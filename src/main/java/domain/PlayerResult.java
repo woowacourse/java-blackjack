@@ -19,4 +19,9 @@ public class PlayerResult extends Player implements ParticipantResult {
     public void add(GameResult gameResult) {
         return;
     }
+
+    @Override
+    public String toString() {
+        return super.getName() + ": " + gameResult.getKoreanName();
+    }
 }

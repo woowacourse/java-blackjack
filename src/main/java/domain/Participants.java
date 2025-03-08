@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Participants {
 
@@ -24,5 +26,31 @@ public class Participants {
 
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
+    }
+
+    public ParticipantsResult calculate() {
+        int dealerValue = 0;
+        for (Participant participant : participants) {
+            if (participant instanceof Dealer) {
+                dealerValue = participant.getTotalValue();
+                break;
+            }
+        }
+
+        Set<ParticipantResult> tmpResult = new LinkedHashSet<>();
+        ParticipantResult dealerResult = new DealerResult();
+        tmpResult.add(dealerResult);
+
+        for (Participant participant : participants) {
+            if (participant instanceof Player) {
+                GameResult gameResult = GameResult.calculateDealerResult(dealerValue,
+                    participant.getTotalValue());
+                ParticipantResult playerResult = new PlayerResult(participant.getName(),
+                    gameResult.reverse());
+                dealerResult.add(gameResult);
+                tmpResult.add(playerResult);
+            }
+        }
+        return new ParticipantsResult(tmpResult);
     }
 }

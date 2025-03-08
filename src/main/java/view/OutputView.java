@@ -1,19 +1,19 @@
 package view;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
 import static domain.Shape.CLUB;
 import static domain.Shape.DIAMOND;
 import static domain.Shape.HEART;
 import static domain.Shape.SPADE;
 
 import domain.Card;
-import domain.GameResult;
+import domain.DealerResult;
 import domain.Participant;
+import domain.ParticipantResult;
+import domain.ParticipantsResult;
 import domain.Rank;
 import domain.Shape;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -106,64 +106,27 @@ public class OutputView {
         return cards.stream().map(this::formatCard).collect(Collectors.joining(", "));
     }
 
-    /*
-        public void printGameResult(ParticipantsResult participantsResult) {
-            System.out.println();
-            System.out.println(RESULT_MESSAGE);
+    public void printGameResult(ParticipantsResult participantsResult) {
+        System.out.println();
+        System.out.println(RESULT_MESSAGE);
 
-            Set<ParticipantResult> results = participantsResult.getParticipantsResult();
+        Set<ParticipantResult> getParticipantsResult = participantsResult.getParticipantsResult();
 
-            String dealerName = "딜러: ";
-            System.out.print(dealerName);
-            String dealerWinMessage = formatDealerWinMessage(dealerResult.get(WIN));
-            System.out.print(dealerWinMessage);
-            String dealerLoseMessage = formatDealerLoseMessage(dealerResult.get(LOSE));
-            System.out.print(dealerLoseMessage);
-            String dealerDrawMessage = formatDealerDrawMessage(dealerResult.get(DRAW));
-            System.out.print(dealerDrawMessage);
-            System.out.println();
-
-            List<PlayerResult> playerResults = participantsResult.playerResults();
-            for (PlayerResult playerResult : playerResults) {
-                System.out.printf("%s: %s%n", playerResult.getPlayerName(),
-                    formatGameResult(playerResult.getGameResult()));
+        for (ParticipantResult participantResult : getParticipantsResult) {
+            if (participantResult instanceof DealerResult) {
+                printDealerResult(participantResult);
+                continue;
             }
+            printPlayerResult(participantResult);
         }
-
-
-     */
-    private String formatDealerWinMessage(Integer integer) {
-        if (integer == null) {
-            return "";
-        }
-        return String.format("%d승 ", integer);
     }
 
-    private String formatDealerLoseMessage(Integer integer) {
-        if (integer == null) {
-            return "";
-        }
-        return String.format("%d패 ", integer);
+    private void printPlayerResult(ParticipantResult participantResult) {
+        System.out.println(participantResult);
     }
 
-    private String formatDealerDrawMessage(Integer integer) {
-        if (integer == null) {
-            return "";
-        }
-        return String.format("%d무 ", integer);
-    }
-
-    private String formatGameResult(GameResult gameResult) {
-        if (gameResult == WIN) {
-            return "승";
-        }
-        if (gameResult == DRAW) {
-            return "무";
-        }
-        if (gameResult == LOSE) {
-            return "패";
-        }
-        return "";
+    private void printDealerResult(ParticipantResult participantResult) {
+        System.out.println(participantResult);
     }
 
     public void printBlankLine() {

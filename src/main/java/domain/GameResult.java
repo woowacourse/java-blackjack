@@ -1,7 +1,13 @@
 package domain;
 
 public enum GameResult {
-    WIN, DRAW, LOSE;
+    WIN("승"), DRAW("무"), LOSE("패");
+
+    private final String koreanName;
+
+    GameResult(String koreanName) {
+        this.koreanName = koreanName;
+    }
 
     public static GameResult calculateDealerResult(int dealerValue, int playerValue) {
         if (isBurstBy(dealerValue) || isBurstBy(playerValue)) {
@@ -42,5 +48,9 @@ public enum GameResult {
             return LOSE;
         }
         return WIN;
+    }
+
+    public String getKoreanName() {
+        return koreanName;
     }
 }

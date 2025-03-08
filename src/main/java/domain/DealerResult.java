@@ -41,4 +41,27 @@ public class DealerResult extends Dealer implements ParticipantResult {
     public int hashCode() {
         return Objects.hashCode(dealerResult);
     }
+
+    @Override
+    public String toString() {
+        return super.getName() + ": " + result();
+        /*
+        return super.getName() + ": " + dealerResult.get(WIN) + "승 " + dealerResult.get(LOSE) + "패 "
+            + dealerResult.get(DRAW) + "무";
+
+         */
+    }
+
+    private String result() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (GameResult gameResult : GameResult.values()) {
+            String koreanName = gameResult.getKoreanName();
+            if (dealerResult.get(gameResult) == null) {
+                continue;
+            }
+            stringBuilder.append(dealerResult.get(gameResult));
+            stringBuilder.append(koreanName + " ");
+        }
+        return stringBuilder.toString();
+    }
 }
