@@ -36,10 +36,9 @@ public class CardGroup {
         return addScoreWithAce(sum + ACE_DISTANCE_SCORE, limit, aceCount - 1);
     }
 
-    public boolean addCard(final Card card) {
+    public void addCard(final Card card) {
         final int size = cards.size();
         cards.add(card);
-        return size + 1 == cards.size();
     }
 
     public int countCards() {
