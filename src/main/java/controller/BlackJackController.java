@@ -28,6 +28,7 @@ public class BlackJackController {
             Players players = createPlayers();
 
             deck.handoutCards(dealer, players);
+            printInitialParticipantsHand(dealer, players);
             askNewCardToAllPlayers(deck, players);
             setupDealerCards(dealer, deck);
 
@@ -42,6 +43,10 @@ public class BlackJackController {
         List<String> names = inputView.readPlayerNames();
         List<Player> players = names.stream().map(Player::init).toList();
         return new Players(players);
+    }
+
+    private void printInitialParticipantsHand(Dealer dealer, Players players) {
+        outputView.printParticipantsHand(dealer, players);
     }
 
     private void askNewCardToAllPlayers(Deck deck, Players players) {

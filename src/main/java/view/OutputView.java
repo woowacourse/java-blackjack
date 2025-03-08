@@ -11,6 +11,7 @@ import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -18,8 +19,19 @@ public class OutputView {
         System.out.printf("[ERROR] %s", exception.getMessage());
     }
 
+    public void printParticipantsHand(Dealer dealer, Players players) {
+        System.out.printf("%n딜러와 %s에게 %d장을 나누었습니다.%n", createPlayerNames(players), dealer.getCards().getCards().size());
+        System.out.printf("딜러카드: %s%n", getCardText(dealer.getCards().getCards().getFirst()));
+        players.getPlayers().forEach(this::printPlayerCards);
+        printEmptyLine();
+    }
+
+    private String createPlayerNames(Players players) {
+        return players.getPlayers().stream().map(Player::getName).collect(Collectors.joining(", "));
+    }
+
     public void printPlayerCards(Player player) {
-        System.out.printf("%s카드: %s\n", player.getName(), getCardsText(player.getCards()));
+        System.out.printf("%s카드: %s%n", player.getName(), getCardsText(player.getCards()));
     }
 
     public void printDealerDrawCount(int count) {
@@ -101,5 +113,9 @@ public class OutputView {
             case CLOVER -> "클로버";
             case DIAMOND -> "다이아몬드";
         };
+    }
+
+    private void printEmptyLine() {
+        System.out.println();
     }
 }
