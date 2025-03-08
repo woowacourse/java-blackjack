@@ -19,9 +19,12 @@ public class Victory {
             playerVictoryResults.put(player, playerWinningResult);
 
             WinningResult dealerWinningResult = WinningResult.decide(dealer.getCards(), player.getCards());
-            dealerVictoryResults.put(
-                    dealerWinningResult,
-                    dealerVictoryResults.getOrDefault(dealerWinningResult, 0) + 1);
+            dealerVictoryResults.compute(dealerWinningResult, (winningResult, totalCount) -> {
+                if (totalCount == null) {
+                    return 1;
+                }
+                return totalCount + 1;
+            });
         }));
         return new Victory(playerVictoryResults, dealerVictoryResults);
     }
