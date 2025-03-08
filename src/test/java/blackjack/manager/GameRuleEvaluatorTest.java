@@ -82,7 +82,7 @@ class GameRuleEvaluatorTest {
         hand.takeCard(new Card(CardSuit.SPADE, CardRank.JACK));
 
         // when
-        boolean actual = gameRuleEvaluator.isBustedFor(player);
+        boolean actual = gameRuleEvaluator.isBustedFor(player.getCardHolder());
 
         // then
         assertThat(actual).isTrue();
@@ -100,7 +100,7 @@ class GameRuleEvaluatorTest {
         hand.takeCard(new Card(CardSuit.SPADE, CardRank.JACK));
 
         // when
-        boolean actual = gameRuleEvaluator.isBustedFor(dealer);
+        boolean actual = gameRuleEvaluator.isBustedFor(dealer.getCardHolder());
 
         // then
         assertThat(actual).isTrue();

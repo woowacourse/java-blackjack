@@ -64,7 +64,7 @@ public class BlackjackController {
         blackjackProcessManager.giveCard(player.getCardHolder());
         OutputView.printCardResult(player);
 
-        if (gameRuleEvaluator.isBustedFor(player)) {
+        if (gameRuleEvaluator.isBustedFor(player.getCardHolder())) {
             OutputView.printBustedPlayer(player);
             return;
         }

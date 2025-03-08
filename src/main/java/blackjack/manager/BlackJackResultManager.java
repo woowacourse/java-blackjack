@@ -25,8 +25,8 @@ public class BlackJackResultManager {
     }
 
     private void saveResult(Dealer dealer, GameRuleEvaluator gameRuleEvaluator, Player player) {
-        boolean isBustedDealer = gameRuleEvaluator.isBustedFor(dealer);
-        boolean isBustedPlayer = gameRuleEvaluator.isBustedFor(player);
+        boolean isBustedDealer = gameRuleEvaluator.isBustedFor(dealer.getCardHolder());
+        boolean isBustedPlayer = gameRuleEvaluator.isBustedFor(player.getCardHolder());
 
         if (isBustedDealer) {
             processWhenDealerIsBusted(player, isBustedPlayer);

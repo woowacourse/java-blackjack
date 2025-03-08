@@ -22,15 +22,7 @@ public class GameRuleEvaluator {
                 .anyMatch(sum -> sum <= Constants.BUSTED_STANDARD_VALUE);
     }
 
-    public boolean isBustedFor(Player player) {
-        return isBustedFor(player.getCardHolder());
-    }
-
-    public boolean isBustedFor(Dealer dealer) {
-        return isBustedFor(dealer.getCardHolder());
-    }
-
-    private boolean isBustedFor(CardHolder cardHolder) {
+    public boolean isBustedFor(CardHolder cardHolder) {
         List<Integer> possibleSums = cardHolder.getPossibleSums();
 
         return possibleSums.stream()
