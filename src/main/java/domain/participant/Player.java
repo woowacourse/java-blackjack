@@ -8,7 +8,6 @@ import java.util.function.Function;
 
 public class Player {
     private static final int BLACKJACK_NUMBER = 21;
-    private final int INITIAL_HIT_COUNT = 2;
 
     private final String name;
     private final CardDeck hand;
@@ -19,9 +18,7 @@ public class Player {
     }
 
     public void hitCards(final CardDeck standard) {
-        for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
-            hand.addCard(standard.hitCard());
-        }
+        hand.hitCards(standard);
     }
 
     public void addCard(final CardDeck standard) {

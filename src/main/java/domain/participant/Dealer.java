@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Dealer {
     private static final int DEALER_DRAW_THRESHOLD = 16;
-    private final int INITIAL_HIT_COUNT = 2;
 
     private final CardDeck hand;
 
@@ -14,9 +13,7 @@ public class Dealer {
     }
 
     public void hitCards(final CardDeck standard) {
-        for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
-            hand.addCard(standard.hitCard());
-        }
+        hand.hitCards(standard);
     }
 
     public void draw(final CardDeck standard) {

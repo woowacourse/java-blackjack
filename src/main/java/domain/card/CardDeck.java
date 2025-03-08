@@ -6,6 +6,7 @@ import java.util.List;
 public class CardDeck {
     private static final int BONUS_THRESHOLD = 11;
     private static final int ACE_BONUS = 10;
+    private final int INITIAL_HIT_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -15,6 +16,12 @@ public class CardDeck {
 
     public Card hitCard() {
         return cards.removeFirst();
+    }
+
+    public void hitCards(final CardDeck standard) {
+        for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
+            this.addCard(standard.hitCard());
+        }
     }
 
     public void addCard(final Card card) {
