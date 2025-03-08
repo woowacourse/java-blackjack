@@ -1,16 +1,18 @@
 package domain;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
-import static domain.GameResult.calculateDealerResult;
+import static domain.participant.GameResult.DRAW;
+import static domain.participant.GameResult.LOSE;
+import static domain.participant.GameResult.WIN;
+import static domain.participant.GameResult.calculateDealerResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.participant.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class GameResultTest {
+
     @ParameterizedTest
     @DisplayName("버스트로 비기는 경우")
     @CsvSource(value = {"22, 22", "23, 22", "22, 23"})

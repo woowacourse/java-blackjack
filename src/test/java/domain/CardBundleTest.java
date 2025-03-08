@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardBundle;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +20,7 @@ public class CardBundleTest {
 
         //when
         List<Card> allCards = cardBundle.getAllCards();
-        
+
         //then
         Set<Card> testAllCards = new HashSet<>(allCards);
         assertThat(allCards).hasSize(testAllCards.size());

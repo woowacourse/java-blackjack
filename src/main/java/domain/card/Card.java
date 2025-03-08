@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public record Card(Shape shape, Rank rank) {
 

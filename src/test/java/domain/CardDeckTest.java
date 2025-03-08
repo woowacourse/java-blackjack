@@ -2,6 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.Rank;
+import domain.card.Shape;
 import java.util.Deque;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

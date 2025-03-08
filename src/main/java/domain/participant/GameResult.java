@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.card.BlackJackRule;
 
 public enum GameResult {
     WIN("승"), DRAW("무"), LOSE("패");

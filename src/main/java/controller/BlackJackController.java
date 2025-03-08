@@ -4,11 +4,11 @@ import static factory.BlackJackCreator.createCardBundle;
 import static factory.BlackJackCreator.createCardDeck;
 import static factory.BlackJackCreator.createParticipants;
 
-import domain.CardDeck;
-import domain.Participant;
-import domain.Participants;
-import domain.ParticipantsResult;
-import domain.Player;
+import domain.card.CardDeck;
+import domain.participant.Participant;
+import domain.participant.Participants;
+import domain.participant.ParticipantsResult;
+import domain.participant.Player;
 import view.InputView;
 import view.OutputView;
 

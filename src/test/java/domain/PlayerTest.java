@@ -2,6 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
+import domain.participant.Participant;
+import domain.participant.Player;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -43,16 +48,20 @@ public class PlayerTest {
 
     private static Stream<Arguments> cardsArguments() {
         return Stream.of(Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.KING), new Card(Shape.HEART, Rank.QUEEN),
-                                new Card(Shape.HEART, Rank.ONE)), 21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.HEART, Rank.QUEEN)), 21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.HEART, Rank.QUEEN),
-                        new Card(Shape.HEART, Rank.ONE)), 12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.A)), 12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.EIGHT),
-                        new Card(Shape.SPADE, Rank.A)), 20), Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.A),
-                                new Card(Shape.CLUB, Rank.A), new Card(Shape.SPADE, Rank.TEN)), 13));
+                List.of(new Card(Shape.HEART, Rank.KING), new Card(Shape.HEART, Rank.QUEEN),
+                    new Card(Shape.HEART, Rank.ONE)), 21),
+            Arguments.arguments(
+                List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.HEART, Rank.QUEEN)), 21),
+            Arguments.arguments(
+                List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.HEART, Rank.QUEEN),
+                    new Card(Shape.HEART, Rank.ONE)), 12),
+            Arguments.arguments(
+                List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.A)), 12),
+            Arguments.arguments(
+                List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.EIGHT),
+                    new Card(Shape.SPADE, Rank.A)), 20), Arguments.arguments(
+                List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.A),
+                    new Card(Shape.CLUB, Rank.A), new Card(Shape.SPADE, Rank.TEN)), 13));
     }
 
     @ParameterizedTest
@@ -80,8 +89,9 @@ public class PlayerTest {
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 21 이하일 경우, true를 반환한다")
     void should_return_true_when_can_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING), new Card(Shape.HEART, Rank.QUEEN),
-                new Card(Shape.HEART, Rank.ONE));
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+            new Card(Shape.HEART, Rank.QUEEN),
+            new Card(Shape.HEART, Rank.ONE));
         Participant player = new Player("a");
         for (Card card : cards) {
             player.addCard(card);
@@ -95,8 +105,9 @@ public class PlayerTest {
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 22 이상 경우, false를 반환한다")
     void should_return_false_when_cannot_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING), new Card(Shape.HEART, Rank.QUEEN),
-                new Card(Shape.HEART, Rank.TWO));
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+            new Card(Shape.HEART, Rank.QUEEN),
+            new Card(Shape.HEART, Rank.TWO));
         Participant player = new Player("a");
         for (Card card : cards) {
             player.addCard(card);

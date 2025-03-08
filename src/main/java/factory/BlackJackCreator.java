@@ -1,13 +1,13 @@
 package factory;
 
 
-import domain.Card;
-import domain.CardBundle;
-import domain.CardDeck;
-import domain.Dealer;
-import domain.Participant;
-import domain.Participants;
-import domain.Player;
+import domain.card.Card;
+import domain.card.CardBundle;
+import domain.card.CardDeck;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Participants;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

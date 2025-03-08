@@ -1,17 +1,17 @@
 package view;
 
-import static domain.Shape.CLUB;
-import static domain.Shape.DIAMOND;
-import static domain.Shape.HEART;
-import static domain.Shape.SPADE;
+import static domain.card.Shape.CLUB;
+import static domain.card.Shape.DIAMOND;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
 
-import domain.Card;
-import domain.DealerResult;
-import domain.Participant;
-import domain.ParticipantResult;
-import domain.ParticipantsResult;
-import domain.Rank;
-import domain.Shape;
+import domain.card.Card;
+import domain.participant.DealerResult;
+import domain.participant.Participant;
+import domain.participant.ParticipantResult;
+import domain.participant.ParticipantsResult;
+import domain.card.Rank;
+import domain.card.Shape;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

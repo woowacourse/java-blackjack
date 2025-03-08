@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,15 +50,15 @@ public abstract class Participant {
 
     private int getAceCount() {
         return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+            .filter(Card::isAce)
+            .count();
     }
 
     private int calculateConstValue(List<Card> cards) {
         return cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getValue)
-                .sum();
+            .filter(card -> !card.isAce())
+            .mapToInt(Card::getValue)
+            .sum();
     }
 
     public abstract boolean canPick();
@@ -82,8 +83,8 @@ public abstract class Participant {
     @Override
     public String toString() {
         return "Participant{" +
-                "name='" + name + '\'' +
-                ", cards=" + cards +
-                '}';
+            "name='" + name + '\'' +
+            ", cards=" + cards +
+            '}';
     }
 }
