@@ -44,7 +44,7 @@ public class BlackjackController {
 	}
 
 	private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
-		playerPickCard(players, deck);
+		ifCanPickCard(players, deck);
 		dealerPickCard(dealer, deck);
 	}
 
@@ -112,15 +112,15 @@ public class BlackjackController {
 		return dealerParticipant.getCardHand().getCards().stream().map(this::convertedCardText).toList();
 	}
 
-	private void playerPickCard(final List<Player> players, final Deck deck) {
+	private void ifCanPickCard(final List<Player> players, final Deck deck) {
 		players.forEach(player -> ifCanPickCard(deck, player));
 	}
 
-	private void ifCanPickCard(Deck deck, Player p) {
-		final String name = p.getName();
-		while (p.isPickCard() && inputView.readPlayerAnswer(name)) {
-			p.pickCard(deck);
-			outputView.printPlayerCards(name, convertParticipantCardText(p.getParticipant()));
+	private void ifCanPickCard(final Deck deck, final Player player) {
+		final String name = player.getName();
+		while (player.isPickCard() && inputView.readPlayerAnswer(name)) {
+			player.pickCard(deck);
+			outputView.printPlayerCards(name, convertParticipantCardText(player.getParticipant()));
 		}
 	}
 
