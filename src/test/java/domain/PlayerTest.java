@@ -104,7 +104,7 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer(cardDeck);
         player.addCard(dealer);
-        dealer.addCards();
+        dealer.hitCards();
 
         //when-then
         assertThat(player.calculateWinner(dealer.sum())).isEqualTo(LOSE);

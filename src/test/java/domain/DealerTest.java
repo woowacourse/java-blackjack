@@ -5,6 +5,7 @@ import static domain.card.Number.JACK;
 import static domain.card.Number.TWO;
 import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
+import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -36,13 +37,13 @@ public class DealerTest {
 
     @Test
     @DisplayName("카드 추가 테스트")
-    void addCardsTest() {
+    void hitCardsTest() {
         // given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
         Dealer dealer = new Dealer(cardDeck);
         // when-then
-        assertDoesNotThrow(dealer::addCards);
+        assertDoesNotThrow(dealer::hitCards);
     }
 
 
@@ -50,13 +51,14 @@ public class DealerTest {
     @DisplayName("카드 합계 테스트")
     void sumTest() {
         //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO), new Card(HEART, TWO)));
         Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        dealer.hitCards();
+        dealer.hitCards();
+        dealer.hitCards();
 
         //when-then
-        assertThat(dealer.sum()).isEqualTo(12);
+        assertThat(dealer.sum()).isEqualTo(6);
     }
 
     @Test
@@ -65,8 +67,8 @@ public class DealerTest {
         //given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        dealer.hitCards();
+        dealer.hitCards();
 
         //when-then
         assertThat(dealer.isUnderThreshold()).isTrue();
@@ -78,8 +80,8 @@ public class DealerTest {
     void drawTest(CardDeck cardDeck) {
         //given
         Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        dealer.hitCards();
+        dealer.hitCards();
 
         //when-then
         assertDoesNotThrow(dealer::draw);

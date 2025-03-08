@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.MatchResult;
+import domain.card.CardDeck;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Consumer;
@@ -24,13 +25,13 @@ public class Players {
         this.players = players;
     }
 
-    public void hitCards(final Dealer dealer) {
-        players.forEach(player -> player.hitCards(dealer));
+    public void hitCards(final CardDeck standard) {
+        players.forEach(player -> player.hitCards(standard));
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Dealer dealer) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final CardDeck standard) {
         for (Player player : players) {
-            player.draw(answer, playerDeck, dealer);
+            player.draw(answer, playerDeck, standard);
         }
     }
 

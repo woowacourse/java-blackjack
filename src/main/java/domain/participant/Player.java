@@ -18,23 +18,23 @@ public class Player {
         this.name = name;
     }
 
-    public void hitCards(final Dealer dealer) {
+    public void hitCards(final CardDeck standard) {
         for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
-            hand.addCard(dealer.hitCard());
+            hand.addCard(standard.hitCard());
         }
     }
 
-    public void addCard(final Dealer dealer) {
-        hand.addCard(dealer.hitCard());
+    public void addCard(final CardDeck standard) {
+        hand.addCard(standard.hitCard());
     }
 
     public int sum() {
         return hand.sum();
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Dealer dealer) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final CardDeck standard) {
         while (!isBust() && answer.apply(this)) {
-            addCard(dealer);
+            addCard(standard);
             playerDeck.accept(this);
         }
     }

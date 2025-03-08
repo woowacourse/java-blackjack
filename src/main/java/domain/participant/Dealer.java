@@ -1,31 +1,27 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.CardDeck;
 import java.util.ArrayList;
 
 public class Dealer {
     private static final int DEALER_DRAW_THRESHOLD = 16;
+    private final int INITIAL_HIT_COUNT = 2;
 
-    private final CardDeck standard;
     private final CardDeck hand;
 
-    public Dealer(final CardDeck standard) {
-        this.standard = standard;
+    public Dealer(){
         this.hand = new CardDeck(new ArrayList<>());
     }
 
-    public Card hitCard() {
-        return standard.hitCard();
+    public void hitCards(final CardDeck standard) {
+        for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
+            hand.addCard(standard.hitCard());
+        }
     }
 
-    public void addCards() {
-        hand.addCard(hitCard());
-    }
-
-    public void draw() {
+    public void draw(final CardDeck standard) {
         if (isUnderThreshold()) {
-            addCards();
+            hand.addCard(standard.hitCard());
         }
     }
 

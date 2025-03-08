@@ -22,20 +22,21 @@ public class BlackJackController {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
         Players players = Players.from(inputView.readPlayersName());
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer dealer = new Dealer();
 
-        playBlackJack(players, dealer);
+        playBlackJack(players, dealer, cardDeck);
     }
 
-    private void playBlackJack(final Players players, final Dealer dealer) {
-        BlackJack blackJack = new BlackJack(players, dealer);
+    private void playBlackJack(final Players players, final Dealer dealer, final CardDeck cardDeck) {
+        BlackJack blackJack = new BlackJack(players, dealer, cardDeck);
         blackJack.hitCardsToParticipant();
         outputView.printParticipant(players, dealer);
 
         blackJack.drawPlayers((player) -> InputUntilValid.validatePlayerAnswer(player, inputView::askPlayerForHitOrStand), outputView::printPlayerDeck);
 
-        blackJack.drawDealer();
         outputView.printDrawDealer(dealer);
+        blackJack.drawDealer();
+
         outputView.printScore(players, dealer);
         outputView.printResult(blackJack.calculatePlayerResult());
     }
