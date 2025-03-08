@@ -24,7 +24,7 @@ public class PlayerTest {
         @DisplayName("플레이어가 카드를 뽑을지 여부를 올바르게 반환한다.")
         @ParameterizedTest
         @MethodSource("providePlayerHand")
-        public void isPickCard(final List<TrumpCard> cards, final boolean expected) throws Exception {
+        public void isPickCard(final List<TrumpCard> cards, final boolean expected) {
             // given
             final Hand hand = new Hand(cards);
             final Participant participant = new Participant(hand);
@@ -56,7 +56,7 @@ public class PlayerTest {
 
         @DisplayName("올바르게 승자를 가려낸다.")
         @Test
-        public void duel() throws Exception {
+        public void duel() {
             // given
             final Player winner = new Player("Winner");
             final List<TrumpCard> winnerCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
@@ -84,7 +84,7 @@ public class PlayerTest {
 
         @DisplayName("21점이 넘는다면, 상대방이 승리한다.")
         @Test
-        public void duelOverThan() throws Exception {
+        public void duelOverThan() {
             // given
             final Player loser = new Player("Loser");
             final List<TrumpCard> loserCards = List.of(
@@ -109,7 +109,7 @@ public class PlayerTest {
 
         @DisplayName("상대방이 21점이 넘고 내가 21점 이하라면, 내가 승리한다.")
         @Test
-        public void duelOverThanX() throws Exception {
+        public void duelOverThanX() {
             // given
             final Player loser = new Player("Loser");
             final List<TrumpCard> loserCards = List.of(
