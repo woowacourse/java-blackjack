@@ -18,7 +18,6 @@ public class ExceptionMessagePrintControllerProxy implements Controller {
             target.run();
         } catch (Exception e) {
             writer.write("[ERROR] " + e.getMessage());
-            throw new IllegalStateException(e);
         }
     }
 }
