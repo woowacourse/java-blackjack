@@ -60,10 +60,10 @@ class RoundTest {
 
         // then
         assertThat(round.getScore(playerName)).isNotZero();
-        assertThat(round.getCards(DEALER_NAME)).size().isEqualTo(2);
+        assertThat(round.getCards(DEALER_NAME)).hasSize(2);
         assertThat(round.getCards(DEALER_NAME)).contains(card1, card2);
         assertThat(round.getScore(DEALER_NAME)).isEqualTo(16);
-        assertThat(round.getCards(playerName)).size().isEqualTo(2);
+        assertThat(round.getCards(playerName)).hasSize(2);
         assertThat(round.getCards(playerName)).contains(card3, card4);
         assertThat(round.getScore(playerName)).isEqualTo(20);
     }
