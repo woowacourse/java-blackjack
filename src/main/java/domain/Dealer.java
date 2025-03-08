@@ -11,8 +11,8 @@ public class Dealer extends Participant<Dealer>{
         super(new Name(DEALER_DEFAULT_NAME), cards);
     }
 
-    public boolean checkExceedSixteen() {
-        return cards.checkExceedSixteen();
+    public boolean checkDealerNeedsMoreCard() {
+        return cards.checkDealerNeedsMoreCard();
     }
 
     public Card getInitialCard() {

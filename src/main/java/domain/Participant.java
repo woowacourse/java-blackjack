@@ -17,7 +17,7 @@ public abstract class Participant<T extends Participant<T>> {
     }
 
     public boolean checkExceedTwentyOne() {
-        return cards.checkExceedTwentyOne();
+        return cards.checkBurst();
     }
 
     public int getTotalNumberSum() {
@@ -27,7 +27,7 @@ public abstract class Participant<T extends Participant<T>> {
     protected abstract T createParticipant(List<Card> cards);
 
     public int calculateDifferenceFromTwentyOne() {
-        return cards.calculateDifferenceFromTwentyOne();
+        return cards.calculateDifferenceFromBurst();
     }
 
     public String getName() {

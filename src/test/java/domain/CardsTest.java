@@ -76,8 +76,8 @@ public class CardsTest {
         Cards exceedCards = new Cards(otherCardList);
 
         assertAll(
-                () -> assertThat(notExceedCards.checkExceedTwentyOne()).isFalse(),
-                () -> assertThat(exceedCards.checkExceedTwentyOne()).isTrue()
+                () -> assertThat(notExceedCards.checkBurst()).isFalse(),
+                () -> assertThat(exceedCards.checkBurst()).isTrue()
         );
     }
 

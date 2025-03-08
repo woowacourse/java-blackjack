@@ -12,11 +12,9 @@ public class Cards {
     private static final int ACE_VALUE_DIFFERENCE = 10;
 
     private final List<Card> cards;
-    private final int totalNumberSum;
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
-        this.totalNumberSum = calculateTotalCardNumber();
+        this.cards = new ArrayList<>(cards);
     }
 
     public int calculateTotalCardNumber() {
@@ -42,12 +40,16 @@ public class Cards {
         return new Cards(newCards);
     }
 
-    public boolean checkExceedTwentyOne() {
-        return totalNumberSum > BLACKJACK_SCORE;
+    public boolean checkBurst() {
+        return calculateTotalCardNumber() > BLACKJACK_SCORE;
     }
 
-    public boolean checkExceedSixteen() {
-        return totalNumberSum > DEALER_DRAW_LIMIT;
+    public boolean checkDealerNeedsMoreCard() {
+        return calculateTotalCardNumber() > DEALER_DRAW_LIMIT;
+    }
+
+    public int calculateDifferenceFromBurst() {
+        return Math.abs(calculateTotalCardNumber() - BLACKJACK_SCORE);
     }
 
     public Card getInitialCard() {
@@ -58,19 +60,15 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public int calculateDifferenceFromTwentyOne() {
-        return Math.abs(totalNumberSum - BLACKJACK_SCORE);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Cards cards1 = (Cards) o;
-        return totalNumberSum == cards1.totalNumberSum && Objects.equals(cards, cards1.cards);
+        return Objects.equals(cards, cards1.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards, totalNumberSum);
+        return Objects.hashCode(cards);
     }
 }

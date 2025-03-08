@@ -67,7 +67,7 @@ public class BlackjackController {
 
     private void drawDealerCards() {
         Dealer dealer = gameManager.findDealer();
-        while (!dealer.checkExceedSixteen()) {
+        while (!dealer.checkDealerNeedsMoreCard()) {
             dealer = (Dealer) gameManager.drawCard(dealer);
             OutputView.printDealerDrawMessage();
         }
