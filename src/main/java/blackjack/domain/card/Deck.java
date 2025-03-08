@@ -7,10 +7,24 @@ import java.util.Stack;
 
 public class Deck {
 
+    private static final Stack<Card> DEFAULT_CARDS = new Stack<>();
+
     private final Stack<Card> cards;
+
+    static {
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                DEFAULT_CARDS.push(new Card(suit, rank));
+            }
+        }
+    }
 
     public Deck(Stack<Card> cards) {
         this.cards = cards;
+    }
+
+    public static Deck defaultDeck() {
+        return new Deck(DEFAULT_CARDS);
     }
 
     public Stack<Card> getCards() {
