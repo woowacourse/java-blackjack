@@ -21,10 +21,10 @@ public enum GameResult {
         if (player.isBlackjack() || dealer.isBust()) {
             return WIN;
         }
-        return getGameResultFromOthers(dealer, player);
+        return getGameResultByScore(dealer, player);
     }
 
-    private static GameResult getGameResultFromOthers(final Dealer dealer, final Player player) {
+    private static GameResult getGameResultByScore(final Dealer dealer, final Player player) {
         int dealerSum = dealer.calculateDenominations();
         int playerSum = player.calculateDenominations();
 

@@ -8,7 +8,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class BlackjackController {
 
@@ -82,9 +81,7 @@ public class BlackjackController {
 
         outputView.printResultTitle();
         outputView.printDealerResult(dealerResult);
-        for (Entry<Player, GameResult> playerResult : playerResults.entrySet()) {
-            outputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
-        }
+        playerResults.forEach((player, result) -> outputView.printPlayerResult(player.getName(), result));
     }
 
     private void handleException(final Runnable action) {
