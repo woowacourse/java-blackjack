@@ -4,13 +4,14 @@ import static blackjack.domain.Rule.BLACK_JACK;
 import static blackjack.view.WinningType.DEFEAT;
 import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;
-import static blackjack.view.WinningType.createWinningResult;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.gambler.Name;
 import blackjack.view.WinningType;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 public class WinningDiscriminator {
     private final int dealerScore;
@@ -28,7 +29,7 @@ public class WinningDiscriminator {
     }
 
     public Map<WinningType, Integer> judgeDealerResult() {
-        Map<WinningType, Integer> winningResult = createWinningResult();
+        Map<WinningType, Integer> winningResult = WinningType.createWinningResult();
         for (final Integer playerScore : playerScores.values()) {
             countDealerWinning(playerScore, winningResult);
         }
@@ -36,23 +37,24 @@ public class WinningDiscriminator {
     }
 
     private void countDealerWinning(final int playerScore, final Map<WinningType, Integer> winningResult) {
+        BiFunction<WinningType, Integer, Integer> plusCount = (key, count) -> count + 1;
         if (playerScore > BLACK_JACK) {
-            winningResult.put(WIN, winningResult.get(WIN) + 1);
+            winningResult.computeIfPresent(WIN, plusCount);
             return;
         }
         if (dealerScore > BLACK_JACK) {
-            winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
+            winningResult.computeIfPresent(DEFEAT, plusCount);
             return;
         }
         if (playerScore > dealerScore) {
-            winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
+            winningResult.computeIfPresent(DEFEAT, plusCount);
             return;
         }
         if (playerScore < dealerScore) {
-            winningResult.put(WIN, winningResult.get(WIN) + 1);
+            winningResult.computeIfPresent(WIN, plusCount);
             return;
         }
-        winningResult.put(DRAW, winningResult.get(DRAW) + 1);
+        winningResult.computeIfPresent(DRAW, plusCount);
     }
 
     private WinningType judgePlayerResult(final Name name) {
