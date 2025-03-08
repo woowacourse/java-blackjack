@@ -9,7 +9,9 @@ public enum WinningStatus {
     ;
     
     private static final int BUST_THRESHOLD = 21;
-    
+    private static final int BLACKJACK_SUM = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     public static WinningStatus determineWinningStatus(
             final BlackjackWinDeterminable myHand,
             final BlackjackWinDeterminable opponentHand
@@ -65,6 +67,6 @@ public enum WinningStatus {
     }
     
     private static boolean isBlackjack(final BlackjackWinDeterminable cardHand) {
-        return cardHand.getBlackjackSum() == 21 && cardHand.getSize() == 2;
+        return cardHand.getBlackjackSum() == BLACKJACK_SUM && cardHand.getSize() == BLACKJACK_CARD_SIZE;
     }
 }
