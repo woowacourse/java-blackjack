@@ -26,6 +26,7 @@ public class Deck implements CardProvider {
         }
     }
 
+    @Override
     public List<Card> provideCards(int size) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < size; i++) {
