@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@Nested
 public class CardDeckTest {
 
     @Nested
@@ -62,7 +61,7 @@ public class CardDeckTest {
                 cardDeck.pickRandomCard();
             }
 
-            assertThatThrownBy(() -> cardDeck.pickRandomCard())
+            assertThatThrownBy(cardDeck::pickRandomCard)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드덱의 카드를 모두 소진하여 더이상 카드를 뽑을 수 없습니다.");
         }
