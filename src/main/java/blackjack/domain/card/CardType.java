@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.Rule.MAX_ACE_VALUE;
+import static blackjack.domain.card.Card.MAX_ACE_VALUE;
 
 public enum CardType {
     TWO(2, "2"),

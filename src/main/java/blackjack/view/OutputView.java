@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.domain.Rule.DEALER_DRAW_THRESHOLD;
+import static blackjack.domain.Round.BLACK_JACK;
+import static blackjack.domain.Round.DEALER_DRAW_THRESHOLD;
 import static blackjack.view.WinningType.DEFEAT;
 import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;

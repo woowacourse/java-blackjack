@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Rule.BLACK_JACK;
+import static blackjack.domain.Round.BLACK_JACK;
 import static blackjack.view.WinningType.DEFEAT;
 import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;

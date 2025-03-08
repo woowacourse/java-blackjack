@@ -1,8 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.domain.Rule.DEALER_DRAW_THRESHOLD;
-import static blackjack.domain.Rule.DEALER_NAME;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
@@ -16,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Round {
+    public static final Name DEALER_NAME = new Name("딜러");
+    public static final int BLACK_JACK = 21;
+    public static final int DEALER_DRAW_THRESHOLD = 16;
+
     private final CardDeck cardDeck;
     private final List<Gambler> gamblers;
 

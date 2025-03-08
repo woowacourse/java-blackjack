@@ -3,6 +3,9 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
+    public static final int MAX_ACE_VALUE = 11;
+    public static final int MIN_ACE_VALUE = 1;
+
     private final CardShape shape;
     private final CardType type;
 
