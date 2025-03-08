@@ -32,11 +32,10 @@ public abstract class Participant {
     public int calculateDenominations() {
         int sum = cards.stream()
                 .map(Card::denomination)
-                .map(Denomination::getValues)
-                .map(List::getFirst)
+                .map(Denomination::getMinValue)
                 .reduce(0, Integer::sum);
         if (hasACE()) {
-            sum = Denomination.convertAceValue(sum, BLACKJACK_VALUE);
+            return Denomination.convertAceValue(sum, BLACKJACK_VALUE);
         }
 
         return sum;
