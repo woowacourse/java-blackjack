@@ -29,10 +29,13 @@ public class CardDeckTest {
         // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO)));
 
-        // when-then
+        // when
+        Card card = cardDeck.hitCard();
+
+        // then
         assertSoftly(softly -> {
-            softly.assertThat(cardDeck.hitCard().getShape()).isEqualTo(DIAMOND);
-            softly.assertThat(cardDeck.hitCard().getNumber()).isEqualTo(TWO);
+            softly.assertThat(card.getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(card.getNumber()).isEqualTo(TWO);
         });
     }
 
