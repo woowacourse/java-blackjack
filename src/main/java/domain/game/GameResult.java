@@ -23,10 +23,10 @@ public enum GameResult {
         if (dealer.isOverBurstBound()) {
             return GameResult.WIN;
         }
-        return judgeTotalCardNumber(dealer, player);
+        return judgeGameResultIfNotBust(dealer, player);
     }
 
-    private static GameResult judgeTotalCardNumber(Dealer dealer, Player player) {
+    private static GameResult judgeGameResultIfNotBust(Dealer dealer, Player player) {
         int playerTotalCardNumber = player.calculateTotalCardNumber();
         int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
         if (playerTotalCardNumber < dealerTotalCardNumber) {
@@ -36,12 +36,12 @@ public enum GameResult {
             return GameResult.WIN;
         }
         if (playerTotalCardNumber == Hand.BURST_BOUND) {
-            return judgeBlackJack(dealer, player);
+            return judgeGameResultIfBlackJack(dealer, player);
         }
         return GameResult.DRAW;
     }
 
-    private static GameResult judgeBlackJack(Dealer dealer, Player player) {
+    private static GameResult judgeGameResultIfBlackJack(Dealer dealer, Player player) {
         int playerCardCount = player.getCardsCount();
         int dealerCardCount = dealer.getCardsCount();
         if (playerCardCount == dealerCardCount) {
