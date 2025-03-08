@@ -2,6 +2,7 @@ package domain;
 
 public class Dealer {
 	private static final int DEALER_PICK_CARD_CONDITION_SCORE = 16;
+
 	private final Participant participant;
 
 	public Dealer() {

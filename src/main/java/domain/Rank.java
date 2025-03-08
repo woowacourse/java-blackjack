@@ -17,6 +17,7 @@ public enum Rank {
 
 	public static final int BUST_SCORE = 21;
 	private static final int ACE_MIN = 1;
+
 	private final int score;
 
 	Rank(final int score) {
