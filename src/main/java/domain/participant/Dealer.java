@@ -3,7 +3,7 @@ package domain.participant;
 import domain.card.CardDeck;
 import java.util.ArrayList;
 
-public class Dealer implements Participant{
+public class Dealer {
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     private final CardDeck hand;
@@ -12,7 +12,6 @@ public class Dealer implements Participant{
         this.hand = new CardDeck(new ArrayList<>());
     }
 
-    @Override
     public void hitCards(final CardDeck standard) {
         hand.hitCards(standard);
     }
@@ -23,7 +22,6 @@ public class Dealer implements Participant{
         }
     }
 
-    @Override
     public int sum() {
         return hand.sum();
     }

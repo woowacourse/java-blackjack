@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Player implements Participant{
+public class Player {
     private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
@@ -17,7 +17,6 @@ public class Player implements Participant{
         this.name = name;
     }
 
-    @Override
     public void hitCards(final CardDeck standard) {
         hand.hitCards(standard);
     }
@@ -30,7 +29,6 @@ public class Player implements Participant{
         }
     }
 
-    @Override
     public int sum() {
         return hand.sum();
     }
