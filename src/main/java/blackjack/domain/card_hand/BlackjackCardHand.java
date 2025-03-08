@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class BlackjackCardHand {
@@ -38,13 +39,11 @@ public final class BlackjackCardHand {
     }
     
     private List<Integer> createAvailableSum(final List<List<Integer>> availableNumbers) {
-        List<Integer> availableSum = new ArrayList<>();
-        availableSum.add(0);
-        
-        for (List<Integer> availableNumber : availableNumbers) {
-            availableSum = calculateAvailableSum(availableNumber, availableSum);
-        }
-        return availableSum;
+        return availableNumbers.stream()
+                .reduce(
+                        Collections.singletonList(0),
+                        this::calculateAvailableSum
+                );
     }
     
     private Integer calculateClosestToBlackJack(final List<Integer> availableSum) {
