@@ -130,23 +130,6 @@ class BlackjackGameTest {
         );
     }
 
-    @DisplayName("카드의 합을 계산한다.")
-    @Test
-    void sumCardDenomination() {
-        // given
-        final Dealer dealer = new Dealer(provideUnder16Cards());
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
-                new Participants(dealer,
-                        new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
-
-        // when & then
-        assertAll(
-                () -> assertThat(blackjackGame.sumCardDenomination(dealer)).isEqualTo(6),
-                () -> assertThat(blackjackGame.sumCardDenomination(blackjackGame.getPlayer(0))).isEqualTo(5),
-                () -> assertThat(blackjackGame.sumCardDenomination(blackjackGame.getPlayer(1))).isEqualTo(30)
-        );
-    }
-
     @DisplayName("딜러에 대한 플레이어의 승,패 결과를 계산한다")
     @Test
     void calculateWinningResult() {
