@@ -1,10 +1,18 @@
 package blackjack.domain.gambler;
 
+import static blackjack.domain.card.CardType.ACE;
+import static blackjack.domain.card.CardType.EIGHT;
+import static blackjack.domain.card.CardType.FIVE;
+import static blackjack.domain.card.CardType.SIX;
+import static blackjack.domain.card.CardType.TEN;
+import static blackjack.domain.card.CardType.THREE;
+import static blackjack.domain.card.CardType.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +29,8 @@ class HandsTest {
     void isScoreBelowTest(int score, boolean expected) {
         // given
         Hands hands = new Hands();
-        hands.addCard(new Card(CardShape.CLOVER, CardType.TEN));
-        hands.addCard(new Card(CardShape.HEART, CardType.EIGHT));
+        hands.addCard(new Card(CardShape.CLOVER, TEN));
+        hands.addCard(new Card(CardShape.HEART, EIGHT));
 
         // when
         boolean result = hands.isScoreBelow(score);
@@ -36,8 +44,8 @@ class HandsTest {
     void calculateScoreTest() {
         // given
         Hands hands = new Hands();
-        hands.addCard(new Card(CardShape.CLOVER, CardType.TEN));
-        hands.addCard(new Card(CardShape.HEART, CardType.EIGHT));
+        hands.addCard(new Card(CardShape.CLOVER, TEN));
+        hands.addCard(new Card(CardShape.HEART, EIGHT));
 
         // when
         int result = hands.calculateScore();
@@ -47,7 +55,7 @@ class HandsTest {
     }
 
     @DisplayName("에이스를 고려하여 카드의 합을 계산한다")
-    @MethodSource("returnCardsContainsAceAndSum")
+    @MethodSource(value = {"returnAceShouldBeConsideredAsMinValue", "returnAceShouldBeConsideredAsMaxValue"})
     @ParameterizedTest
     void calculateScoreConsiderAceTest(List<Card> cards, int sum) {
         // given
@@ -63,34 +71,28 @@ class HandsTest {
         assertThat(result).isEqualTo(sum);
     }
 
-    static Stream<Arguments> returnCardsContainsAceAndSum() {
-        Arguments arguments1 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.ACE), new Card(CardShape.HEART, CardType.EIGHT)), 19);
-        Arguments arguments2 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.ACE), new Card(CardShape.HEART, CardType.TEN)), 21);
-        Arguments arguments3 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.ACE), new Card(CardShape.HEART, CardType.ACE)), 12);
-        Arguments arguments4 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.TWO),
-                        new Card(CardShape.HEART, CardType.THREE),
-                        new Card(CardShape.HEART, CardType.ACE)), 16);
-        Arguments arguments5 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.FIVE),
-                        new Card(CardShape.HEART, CardType.SIX),
-                        new Card(CardShape.HEART, CardType.ACE)), 12);
-        Arguments arguments6 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.FIVE),
-                        new Card(CardShape.HEART, CardType.ACE),
-                        new Card(CardShape.HEART, CardType.ACE)), 17);
-        Arguments arguments7 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.FIVE),
-                        new Card(CardShape.HEART, CardType.ACE),
-                        new Card(CardShape.HEART, CardType.ACE)), 17);
-        Arguments arguments8 = Arguments.arguments(
-                List.of(new Card(CardShape.CLOVER, CardType.ACE),
-                        new Card(CardShape.HEART, CardType.ACE),
-                        new Card(CardShape.HEART, CardType.ACE)), 13);
-        return Stream.of(arguments1, arguments2, arguments3, arguments4, arguments5, arguments6, arguments7,
-                arguments8);
+    static Stream<Arguments> returnAceShouldBeConsideredAsMaxValue() {
+        Arguments arguments1 = Arguments.arguments(createCards(ACE, EIGHT), 19);
+        Arguments arguments2 = Arguments.arguments(createCards(ACE, TEN), 21);
+        Arguments arguments3 = Arguments.arguments(createCards(TWO, THREE, ACE), 16);
+        return Stream.of(arguments1, arguments2, arguments3);
+    }
+
+    static Stream<Arguments> returnAceShouldBeConsideredAsMinValue() {
+        Arguments arguments1 = Arguments.arguments(createCards(ACE, ACE), 12);
+        Arguments arguments2 = Arguments.arguments(createCards(FIVE, SIX, ACE), 12);
+        Arguments arguments3 = Arguments.arguments(createCards(FIVE, ACE, ACE), 17);
+        Arguments arguments4 = Arguments.arguments(createCards(ACE, ACE, ACE), 13);
+        return Stream.of(arguments1, arguments2, arguments3, arguments4);
+    }
+
+    private static List<Card> createCards(CardType... types) {
+        return Arrays.stream(types)
+                .map(HandsTest::createCard)
+                .toList();
+    }
+
+    private static Card createCard(final CardType type) {
+        return new Card(CardShape.DIAMOND, type);
     }
 }
