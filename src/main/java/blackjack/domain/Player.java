@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Player{
+public class Player {
 
     private final String name;
     private final CardHolder cardHolder;

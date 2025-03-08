@@ -1,7 +1,5 @@
 package blackjack.manager;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.StubPossibleSumCardHolder;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
@@ -10,6 +8,7 @@ import blackjack.domain.GameResultType;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
