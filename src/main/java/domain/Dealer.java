@@ -8,7 +8,7 @@ public class Dealer extends Participant<Dealer>{
     private static final String DEALER_DEFAULT_NAME = "딜러";
 
     public Dealer(Cards cards) {
-        super(new Name(DEALER_DEFAULT_NAME), cards);
+        super(DEALER_DEFAULT_NAME, cards);
     }
 
     public boolean checkDealerNeedsMoreCard() {

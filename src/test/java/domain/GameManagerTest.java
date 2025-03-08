@@ -53,11 +53,11 @@ public class GameManagerTest {
     void 플레이어가_카드를뽑으면_새로운플레이어를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago"), new TestCardProvider());
         Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));
-        Player player = new Player(new Name("drago"), cardsOfDrago);
+        Player player = new Player("drago", cardsOfDrago);
 
         Cards newCardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK),
                 new Card(Symbol.SPADE, Number.KING)));
-        Player expected = new Player(new Name("drago"), newCardsOfDrago);
+        Player expected = new Player("drago", newCardsOfDrago);
 
         assertThat(gameManager.drawCard(player)).isEqualTo(expected);
     }
@@ -83,8 +83,8 @@ public class GameManagerTest {
         Map<Player, ResultStatus> result = gameManager.findGameResult();
 
         Map<Player, ResultStatus> expected = Map.of(
-            new Player(new Name("drago"), cardsOfDrago), ResultStatus.LOSE,
-            new Player(new Name("duei"), cardsOfDuei), ResultStatus.LOSE
+            new Player("drago", cardsOfDrago), ResultStatus.LOSE,
+            new Player("duei", cardsOfDuei), ResultStatus.LOSE
         );
         assertThat(result).isEqualTo(expected);
     }

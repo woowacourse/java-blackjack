@@ -14,12 +14,18 @@ public class GameManager {
 
     public GameManager(List<String> playerNames, CardProvider provider) {
         this.provider = provider;
-        List<Player> playerList = playerNames.stream()
-            .map(Name::new)
-            .map(name -> new Player(name, new Cards(this.provider.provideCards(INITIAL_DRAW_SIZE))))
+        this.players = new Players(createPlayers(playerNames));
+        this.dealer = new Dealer(new Cards(drawInitialCards()));
+    }
+
+    private List<Player> createPlayers(List<String> playerNames) {
+        return playerNames.stream()
+            .map(name -> new Player(name, new Cards(drawInitialCards())))
             .toList();
-        this.players = new Players(playerList);
-        this.dealer = new Dealer(new Cards(this.provider.provideCards(INITIAL_DRAW_SIZE)));
+    }
+
+    private List<Card> drawInitialCards() {
+        return this.provider.provideCards(INITIAL_DRAW_SIZE);
     }
 
     public Dealer findDealer() {

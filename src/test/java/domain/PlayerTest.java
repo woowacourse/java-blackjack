@@ -16,24 +16,24 @@ public class PlayerTest {
 
     @Test
     void 플레이어가_카드를_뽑는다() {
-        Player player = new Player(new Name("drago"), new Cards(
+        Player player = new Player("drago", new Cards(
             List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK))));
         Card drawCard = new Card(Symbol.HEART, Number.FOUR);
         List<Card> providedCards = List.of(drawCard);
 
         Player newPlayer = player.drawCard(providedCards);
-        Player expectedPlayer = new Player(new Name("drago"), new Cards(
+        Player expectedPlayer = new Player("drago", new Cards(
             List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK), drawCard)));
         assertThat(newPlayer).isEqualTo(expectedPlayer);
     }
 
     @Test
     void 플레이어가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
-        Player drago = new Player(new Name("drago"), new Cards(
+        Player drago = new Player("drago", new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK),
                         new Card(Symbol.HEART, Number.KING))));
 
-        Player duei = new Player(new Name("duei"), new Cards(
+        Player duei = new Player("duei", new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK))));
 
         assertAll(
@@ -44,7 +44,7 @@ public class PlayerTest {
 
     @Test
     void 플레이어의_이름과_카드리스트의_총합을_반환한다() {
-        Player player = new Player(new Name("drago"), new Cards(
+        Player player = new Player("drago", new Cards(
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
                         new Card(Symbol.DIAMOND, Number.JACK),
                         new Card(Symbol.HEART, Number.FOUR))));

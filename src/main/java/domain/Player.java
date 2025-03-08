@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public class Player extends Participant<Player>{
 
-    public Player(Name name, Cards cards) {
+    public Player(String name, Cards cards) {
         super(name, cards);
     }
 
     @Override
     public Player createParticipant(List<Card> providedCards) {
-        return new Player(name, cards.addCards(providedCards));
+        return new Player(name.getName(), cards.addCards(providedCards));
     }
 
     @Override

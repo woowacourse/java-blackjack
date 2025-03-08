@@ -94,8 +94,8 @@ public class CardsTest {
         Cards exceedCards = new Cards(otherCardList);
 
         assertAll(
-            () -> assertThat(notExceedCards.checkExceedSixteen()).isFalse(),
-            () -> assertThat(exceedCards.checkExceedSixteen()).isTrue()
+            () -> assertThat(notExceedCards.checkDealerNeedsMoreCard()).isFalse(),
+            () -> assertThat(exceedCards.checkDealerNeedsMoreCard()).isTrue()
         );
     }
 }
