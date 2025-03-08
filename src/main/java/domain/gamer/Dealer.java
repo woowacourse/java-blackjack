@@ -31,7 +31,7 @@ public class Dealer {
         }
     }
 
-    public boolean isLessThen(int score) {
+    private boolean isLessThen(int score) {
         return player.calculateScore() <= score;
     }
 
