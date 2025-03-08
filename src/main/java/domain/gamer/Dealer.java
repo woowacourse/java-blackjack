@@ -4,6 +4,8 @@ import domain.card.CardGenerator;
 import domain.card.CardGroup;
 
 public class Dealer extends Gamer {
+    private final int DEALER_HIT_ROLE = 16;
+
     public Dealer(CardGroup cardGroup, CardGenerator cardGenerator) {
         super(cardGroup, cardGenerator);
     }
@@ -14,8 +16,8 @@ public class Dealer extends Gamer {
 
     public int giveCardsToDealer() {
         int count = 0;
-        while (isLessThen(16)) {
-            receiveCard(1);
+        while (isLessThen(DEALER_HIT_ROLE)) {
+            receiveCard();
             count++;
         }
         return count;
