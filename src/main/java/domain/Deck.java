@@ -27,9 +27,9 @@ public class Deck {
 		return new Deck(new ArrayDeque<>(cards));
 	}
 
-	private static Stream<Card> makeCards(Rank cardNumber) {
+	private static Stream<Card> makeCards(final Rank rank) {
 		return Arrays.stream(Suit.values())
-			.map(emblem -> new Card(cardNumber, emblem));
+			.map(emblem -> new Card(rank, emblem));
 	}
 
 	private void validateDuplicateCard(final Queue<Card> deck) {
