@@ -10,14 +10,6 @@ public abstract class Card {
         this.rank = rank;
     }
 
-    // TODO OCP 위반 해결
-    public static Card of(CardSuit suit, CardRank rank) {
-        if (rank == CardRank.ACE) {
-            return new AceCard(suit);
-        }
-        return new NormalCard(suit, rank);
-    }
-
     public boolean isAce() {
         return this.rank.equals(CardRank.ACE);
     }
