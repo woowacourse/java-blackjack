@@ -8,8 +8,8 @@ public record TrumpCard(
     Rank rank,
     Suit suit
 ) {
-    public boolean isMatchRank(final Rank rank) {
-        return Objects.equals(rank, rank);
+    public boolean isMatchRank(final Rank other) {
+        return Objects.equals(rank, other);
     }
 
     public int sumScore(final int score) {
