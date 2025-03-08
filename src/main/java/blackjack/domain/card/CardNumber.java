@@ -19,17 +19,17 @@ public enum CardNumber {
     NUMBER_K(13, List.of(10)),
     ;
     
-    private final int value;
+    private final int trumpCardSequence;
     private final List<Integer> blackjackValue;
     
-    CardNumber(final int value, final List<Integer> blackjackValue) {
-        this.value = value;
+    CardNumber(final int trumpCardSequence, final List<Integer> blackjackValue) {
+        this.trumpCardSequence = trumpCardSequence;
         this.blackjackValue = blackjackValue;
     }
     
     public static CardNumber from(final int number) {
         return Arrays.stream(CardNumber.values())
-                .filter(cardNumber -> cardNumber.value == number)
+                .filter(cardNumber -> cardNumber.trumpCardSequence == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("숫자는 1부터 13 사이여야 합니다."));
     }
