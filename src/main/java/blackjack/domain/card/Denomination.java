@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.List;
+import java.util.Set;
 
 public enum Denomination {
 
@@ -18,7 +19,7 @@ public enum Denomination {
     Q(List.of(10)),
     J(List.of(10));
 
-    private static final List<Denomination> SPECIAL_DENOMINATION = List.of(Denomination.A, Denomination.K,
+    private static final Set<Denomination> SPECIAL_DENOMINATION = Set.of(Denomination.A, Denomination.K,
             Denomination.Q, Denomination.J);
 
     private final List<Integer> numbers;
@@ -28,8 +29,7 @@ public enum Denomination {
     }
 
     public String getName() {
-        final boolean isSpecialDenomination = SPECIAL_DENOMINATION.stream()
-                .anyMatch(denomination -> denomination == this);
+        final boolean isSpecialDenomination = SPECIAL_DENOMINATION.contains(this);
         if (isSpecialDenomination) {
             return this.name();
         }
