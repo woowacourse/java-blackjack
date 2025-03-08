@@ -16,7 +16,7 @@ class CardTest {
         Card card = new Card(CardSuit.HEART, CardRank.EIGHT);
 
         // when & then
-        assertThat(card.getValue()).contains(8);
+        assertThat(card.getRankValues()).contains(8);
     }
 
     @DisplayName("ACE의 경우에는 1과 11의 값을 가질 수 있다.")
@@ -26,7 +26,7 @@ class CardTest {
         Card ace = new Card(CardSuit.CLUB, CardRank.ACE);
 
         // when & then
-        assertThat(ace.getValue()).containsExactlyInAnyOrder(1, 11);
+        assertThat(ace.getRankValues()).containsExactlyInAnyOrder(1, 11);
     }
 
     @DisplayName("값과 타입으로 동일한 객체인지 확인한다")

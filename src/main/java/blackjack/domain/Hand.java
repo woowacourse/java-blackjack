@@ -55,7 +55,7 @@ public class Hand implements CardHolder {
         }
 
         Card card = cards.get(index);
-        for (int number : card.getValue()) {
+        for (int number : card.getRankValues()) {
             calculatePossibleSums(values, index + 1, sum + number);
         }
     }

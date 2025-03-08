@@ -16,7 +16,7 @@ public class Card {
         this.cardRank = cardRank;
     }
 
-    public List<Integer> getValue() {
+    public List<Integer> getRankValues() {
         return Collections.unmodifiableList(cardRank.getValues());
     }
 
