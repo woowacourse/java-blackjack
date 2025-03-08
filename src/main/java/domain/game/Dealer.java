@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Dealer {
 
-    public static final int DEALER_DRAW_BOUND = 16;
+    private static final int DEALER_DRAW_BOUND = 16;
 
     private final Hand hand;
 

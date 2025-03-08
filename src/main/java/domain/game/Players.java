@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Players {
 
-    public static final int MAX_PLAYER_COUNT = 5;
+    private static final int MAX_PLAYER_COUNT = 5;
 
     private final List<Player> players;
 
