@@ -20,20 +20,27 @@ public class Cards {
     }
 
     public int calculateTotalRank() {
-        int total = cards.stream()
-                .mapToInt(card -> card.getRank().getNumericValue())
-                .sum();
+        int total = getTotalOfAllCardsRank();
+        int aceCount = getAceCount();
         
-        if (total > BLACKJACK_SCORE && isContainsAce()) {
-            return total - ACE_VALUE_DIFFERENCE;
+        while (total > BLACKJACK_SCORE && aceCount > 0) {
+            total -= ACE_VALUE_DIFFERENCE;
+            aceCount--;
         }
 
         return total;
     }
 
-    private boolean isContainsAce() {
+    private int getTotalOfAllCardsRank() {
         return cards.stream()
-                .anyMatch(Card::isAce);
+                .mapToInt(card -> card.getRank().getNumericValue())
+                .sum();
+    }
+
+    private int getAceCount() {
+        return Math.toIntExact(cards.stream()
+                .filter(Card::isAce)
+                .count());
     }
 
     public Cards addCards(List<Card> providedCards) {

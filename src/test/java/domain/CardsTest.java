@@ -33,7 +33,28 @@ public class CardsTest {
         List<Card> cardList = List.of(card1, card2, card3);
         Cards cards = new Cards(cardList);
 
-        assertThat(cards.calculateTotalRank()).isEqualTo(21 );
+        assertThat(cards.calculateTotalRank()).isEqualTo(21);
+    }
+
+    @Test
+    void 카드리스트에_에이스가_두장이면_한장의_에이스를_1로_간주하여_합을_구한다() {
+        Card card1 = new Card(Suit.HEART, Rank.ACE);
+        Card card2 = new Card(Suit.CLOVER, Rank.ACE);
+        List<Card> cardList = List.of(card1, card2);
+        Cards cards = new Cards(cardList);
+
+        assertThat(cards.calculateTotalRank()).isEqualTo(12);
+    }
+
+    @Test
+    void 카드리스트에_에이스가_세장이면_두장의_에이스를_1로_간주하여_합을_구한다() {
+        Card card1 = new Card(Suit.HEART, Rank.ACE);
+        Card card2 = new Card(Suit.CLOVER, Rank.ACE);
+        Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
+        List<Card> cardList = List.of(card1, card2, card3);
+        Cards cards = new Cards(cardList);
+
+        assertThat(cards.calculateTotalRank()).isEqualTo(13);
     }
 
     @Test
