@@ -25,11 +25,11 @@ public enum ResultStatus {
     }
 
     private static void judgeGameResultByPlayer(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
-        if (player.checkExceedTwentyOne()) {
+        if (player.isBurst()) {
             result.put(player, ResultStatus.LOSE);
             return;
         }
-        if (dealer.checkExceedTwentyOne()) {
+        if (dealer.isBurst()) {
             result.put(player, ResultStatus.WIN);
             return;
         }

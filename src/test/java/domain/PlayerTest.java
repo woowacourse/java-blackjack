@@ -37,8 +37,8 @@ public class PlayerTest {
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK))));
 
         assertAll(
-                () -> assertThat(drago.checkExceedTwentyOne()).isTrue(),
-                () -> assertThat(duei.checkExceedTwentyOne()).isFalse()
+                () -> assertThat(drago.isBurst()).isTrue(),
+                () -> assertThat(duei.isBurst()).isFalse()
         );
     }
 

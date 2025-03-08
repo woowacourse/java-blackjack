@@ -42,11 +42,11 @@ public class Cards {
         return new Cards(newCards);
     }
 
-    public boolean checkExceedTwentyOne() {
+    public boolean isBlackjackScoreExceeded() {
         return totalRankSum > BLACKJACK_SCORE;
     }
 
-    public boolean checkExceedSixteen() {
+    public boolean isDealerDrawLimitExceeded() {
         return totalRankSum > DEALER_DRAW_LIMIT;
     }
 

@@ -15,16 +15,16 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class DealerTest {
 
     @Test
-    void 딜러의_카드_숫자_총합이_16초과면_true_아니면_false_반환한다() {
-        Dealer exceedSixteenDealer = new Dealer(
-            new Cards(List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK))));
+    void 딜러의_카드_숫자_총합이_16이하면_true_아니면_false_반환한다() {
+        Dealer shouldHitDealer = new Dealer(
+                new Cards(List.of(new Card(Suit.CLOVER, Rank.SIX), new Card(Suit.HEART, Rank.JACK))));
 
-        Dealer notExceedSixteenDealer = new Dealer(
-            new Cards(List.of(new Card(Suit.CLOVER, Rank.TWO), new Card(Suit.HEART, Rank.JACK))));
+        Dealer shouldNotHitDealer = new Dealer(
+            new Cards(List.of(new Card(Suit.CLOVER, Rank.SEVEN), new Card(Suit.HEART, Rank.JACK))));
 
         assertAll(
-            () -> assertThat(exceedSixteenDealer.checkExceedSixteen()).isTrue(),
-            () -> assertThat(notExceedSixteenDealer.checkExceedSixteen()).isFalse()
+                () -> assertThat(shouldHitDealer.shouldHit()).isTrue(),
+                () -> assertThat(shouldNotHitDealer.shouldHit()).isFalse()
         );
     }
 
@@ -53,8 +53,8 @@ public class DealerTest {
             List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK))));
 
         assertAll(
-            () -> assertThat(exceedDealer.checkExceedTwentyOne()).isTrue(),
-            () -> assertThat(notExceedDealer.checkExceedTwentyOne()).isFalse()
+            () -> assertThat(exceedDealer.isBurst()).isTrue(),
+            () -> assertThat(notExceedDealer.isBurst()).isFalse()
         );
     }
 

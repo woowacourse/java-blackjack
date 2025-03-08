@@ -16,8 +16,8 @@ public abstract class Participant<T extends Participant<T>> {
         return createParticipant(providedCards);
     }
 
-    public boolean checkExceedTwentyOne() {
-        return cards.checkExceedTwentyOne();
+    public boolean isBurst() {
+        return cards.isBlackjackScoreExceeded();
     }
 
     public int getTotalRankSum() {
