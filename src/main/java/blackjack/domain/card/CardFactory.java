@@ -1,18 +1,19 @@
 package blackjack.domain.card;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class CardFactory {
 
-    private static final Map<String, Card> CACHE = new HashMap<>();
+    private static final Map<CardSuit, Map<CardRank, Card>> CACHE = new EnumMap<>(CardSuit.class);
 
     static {
         for (CardSuit suit : CardSuit.values()) {
+            Map<CardRank, Card> rankMap = new EnumMap<>(CardRank.class);
             for (CardRank rank : CardRank.values()) {
-                String key = suit.name() + "_" + rank.name();
-                CACHE.put(key, resolveCard(suit, rank));
+                rankMap.put(rank, resolveCard(suit, rank));
             }
+            CACHE.put(suit, rankMap);
         }
     }
 
@@ -20,8 +21,7 @@ public class CardFactory {
     }
 
     public static Card create(CardSuit suit, CardRank rank) {
-        String key = suit.name() + "_" + rank.name();
-        return CACHE.get(key);
+        return CACHE.get(suit).get(rank);
     }
 
     private static Card resolveCard(CardSuit suit, CardRank rank) {
