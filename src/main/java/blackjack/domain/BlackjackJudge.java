@@ -8,51 +8,48 @@ import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 
 public final class BlackjackJudge {
     
-    private final DealerBlackjackCardHand dealerBlackjackCardHand;
-    private final List<PlayerBlackjackCardHand> playerBlackjackCardHands;
+    private final DealerBlackjackCardHand dealerHand;
+    private final List<PlayerBlackjackCardHand> playerHands;
     
-    public BlackjackJudge(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
-        validateNotNull(dealerBlackjackCardHand, playerBlackjackCardHands);
-        this.dealerBlackjackCardHand = dealerBlackjackCardHand;
-        this.playerBlackjackCardHands = new ArrayList<>(playerBlackjackCardHands);
+    public BlackjackJudge(final DealerBlackjackCardHand dealerHand, final List<PlayerBlackjackCardHand> playerHands) {
+        validateNotNull(dealerHand, playerHands);
+        this.dealerHand = dealerHand;
+        this.playerHands = new ArrayList<>(playerHands);
     }
     
-    private void validateNotNull(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
-        if (dealerBlackjackCardHand == null) {
+    private void validateNotNull(final DealerBlackjackCardHand dealerHand, final List<PlayerBlackjackCardHand> playerHands) {
+        if (dealerHand == null) {
             throw new IllegalArgumentException("딜러의 손패는 null이 될 수 없습니다.");
         }
-        if (playerBlackjackCardHands == null) {
+        if (playerHands == null) {
             throw new IllegalArgumentException("플래이어의 손패는 null이 될 수 없습니다.");
         }
     }
     
     public int getDealerWinningCount() {
-        return getCountOf(WinningStatus.승리);
+        return calculateDealerWinningStatusCountOf(WinningStatus.승리);
     }
     
     public int getDealerLosingCount() {
-        return getCountOf(WinningStatus.패배);
+        return calculateDealerWinningStatusCountOf(WinningStatus.패배);
     }
     
     public int getDealerDrawingCount() {
-        return getCountOf(WinningStatus.무승부);
+        return calculateDealerWinningStatusCountOf(WinningStatus.무승부);
     }
     
-    private int getCountOf(final WinningStatus status) {
-        int count = 0;
-        for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
-            if (WinningStatus.determineWinningStatus(dealerBlackjackCardHand, playerBlackjackCardHand) == status) {
-                count++;
-            }
-        }
-        return count;
+    private int calculateDealerWinningStatusCountOf(final WinningStatus status) {
+        return (int) playerHands.stream()
+                .map(playerHand -> WinningStatus.determineWinningStatus(dealerHand, playerHand))
+                .filter(winningStatus -> winningStatus == status)
+                .count();
     }
     
-    public WinningStatus getWinningStatusOf(final PlayerBlackjackCardHand playerBlackjackCardHand) {
-        if (!playerBlackjackCardHands.contains(playerBlackjackCardHand)) {
+    public WinningStatus getWinningStatusOf(final PlayerBlackjackCardHand playerHand) {
+        if (!playerHands.contains(playerHand)) {
             throw new IllegalArgumentException("존재하지 않는 플레이어 손패입니다.");
         }
         
-        return WinningStatus.determineWinningStatus(playerBlackjackCardHand, dealerBlackjackCardHand);
+        return WinningStatus.determineWinningStatus(playerHand, dealerHand);
     }
 }
