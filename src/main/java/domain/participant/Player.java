@@ -28,7 +28,7 @@ public class Player {
     }
 
     public int sum() {
-        return hand.sum();
+        return hand.sumWithAce();
     }
 
     public MatchResult calculateWinner(final int dealerSum) {

@@ -28,7 +28,7 @@ public class CardDeck {
         cards.add(card);
     }
 
-    public int sum() {
+    public int sumWithAce() {
         int sum = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();

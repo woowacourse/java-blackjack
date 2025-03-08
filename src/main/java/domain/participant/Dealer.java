@@ -23,7 +23,7 @@ public class Dealer {
     }
 
     public int sum() {
-        return hand.sum();
+        return hand.sumWithAce();
     }
 
     public boolean isUnderThreshold() {

@@ -55,12 +55,12 @@ public class CardDeckTest {
 
     @ParameterizedTest
     @DisplayName("카드 합계 테스트")
-    @MethodSource("provideCardDeckForSum")
-    void sumTest(CardDeck cardDeck, int expectedSum){
-        assertThat(cardDeck.sum()).isEqualTo(expectedSum);
+    @MethodSource("provideCardDeckForSumWithAce")
+    void sumWithAceTest(CardDeck cardDeck, int expectedSum){
+        assertThat(cardDeck.sumWithAce()).isEqualTo(expectedSum);
     }
 
-    private static Stream<Arguments> provideCardDeckForSum(){
+    private static Stream<Arguments> provideCardDeckForSumWithAce(){
         return Stream.of(Arguments.of(
                 new CardDeck(List.of(new Card(DIAMOND, ACE))), 11,
                 new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE))), 12,
