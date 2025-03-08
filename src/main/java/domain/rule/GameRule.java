@@ -1,14 +1,14 @@
 package domain.rule;
 
 import domain.GameResult;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
 public interface GameRule {
-    boolean isBurst(Cards cards);
+    boolean isBurst(Hand hand);
 
-    int getScore(Cards cards);
+    int getScore(Hand hand);
 
     GameResult getResult(Player player, Dealer dealer);
 }

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -15,18 +15,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class CardsTest {
+public class HandTest {
 
     @DisplayName("카드를 추가할 수 있다")
     @Test
     void test1() {
         //given
-        Cards cards = Cards.empty();
+        Hand hand = Hand.empty();
         Card card = new Card(CardNumber.TWO, CardShape.CLOVER);
         //when
-        cards.add(card);
+        hand.add(card);
         //then
-        assertThat(cards.getCards()).contains(card);
+        assertThat(hand.getCards()).contains(card);
     }
 
     @DisplayName("숫자 카드의 합을 구할 수 있다")
@@ -36,9 +36,9 @@ public class CardsTest {
         //given
         Card card1 = new Card(number1, CardShape.CLOVER);
         Card card2 = new Card(number2, CardShape.CLOVER);
-        Cards cards = Cards.of(List.of(card1, card2));
+        Hand hand = Hand.of(List.of(card1, card2));
         //when
-        Set<Integer> actual = cards.getCoordinateSums();
+        Set<Integer> actual = hand.getCoordinateSums();
         //then
         assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
@@ -59,10 +59,10 @@ public class CardsTest {
         //given
         Card card1 = new Card(number1, CardShape.CLOVER);
         Card card2 = new Card(number2, CardShape.CLOVER);
-        Cards cards = Cards.of(List.of(card1, card2));
+        Hand hand = Hand.of(List.of(card1, card2));
 
         //when
-        Set<Integer> actual = cards.getCoordinateSums();
+        Set<Integer> actual = hand.getCoordinateSums();
 
         //then
         assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
@@ -84,10 +84,10 @@ public class CardsTest {
         Card card1 = new Card(number1, CardShape.CLOVER);
         Card card2 = new Card(number2, CardShape.CLOVER);
         Card card3 = new Card(number3, CardShape.CLOVER);
-        Cards cards = Cards.of(List.of(card1, card2, card3));
+        Hand hand = Hand.of(List.of(card1, card2, card3));
 
         //when
-        Set<Integer> actual = cards.getCoordinateSums();
+        Set<Integer> actual = hand.getCoordinateSums();
 
         //then
         assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);

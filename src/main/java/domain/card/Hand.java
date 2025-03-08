@@ -6,20 +6,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Cards {
+public class Hand {
 
     private final List<Card> cards;
 
-    private Cards(List<Card> cards) {
+    private Hand(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static Cards empty() {
-        return new Cards(new ArrayList<>());
+    public static Hand empty() {
+        return new Hand(new ArrayList<>());
     }
 
-    public static Cards of(List<Card> cards) {
-        return new Cards(cards);
+    public static Hand of(List<Card> cards) {
+        return new Hand(cards);
     }
 
     public void add(Card card) {

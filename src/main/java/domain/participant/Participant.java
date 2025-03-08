@@ -1,32 +1,32 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.rule.BlackjackRule;
 import domain.rule.GameRule;
 
 public class Participant {
-    private final Cards cards;
+    private final Hand hand;
     protected final GameRule rule;
 
-    protected Participant(Cards cards) {
-        this.cards = cards;
+    protected Participant(Hand hand) {
+        this.hand = hand;
         this.rule = new BlackjackRule();
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public int getCardScore() {
-        return rule.getScore(cards);
+        return rule.getScore(hand);
     }
 
     public boolean isBurst() {
-        return rule.isBurst(cards);
+        return rule.isBurst(hand);
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 }

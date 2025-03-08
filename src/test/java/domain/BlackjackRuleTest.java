@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.rule.BlackjackRule;
@@ -26,10 +26,10 @@ class BlackjackRuleTest {
     @MethodSource("createCardsCase")
     void 최적_결과_선택_21_이하(List<Card> inputCards, int expected) {
         // given
-        Cards cards = Cards.of(inputCards);
+        Hand hand = Hand.of(inputCards);
 
         // when
-        final int score = rule.getScore(cards);
+        final int score = rule.getScore(hand);
 
         // then
         assertThat(score).isEqualTo(expected);
@@ -67,10 +67,10 @@ class BlackjackRuleTest {
     @MethodSource("createBurstCardsCase")
     void 가장_가까운_값_선택(List<Card> inputCards, int expected) {
         // given
-        Cards cards = Cards.of(inputCards);
+        Hand hand = Hand.of(inputCards);
 
         // when
-        final int score = rule.getScore(cards);
+        final int score = rule.getScore(hand);
 
         //then
         assertThat(score).isEqualTo(expected);
@@ -104,10 +104,10 @@ class BlackjackRuleTest {
     @MethodSource("createBurstCase")
     void test1(List<Card> inputCard, boolean expected) {
         // given
-        Cards cards = Cards.of(inputCard);
+        Hand hand = Hand.of(inputCard);
 
         // when
-        final boolean actual = rule.isBurst(cards);
+        final boolean actual = rule.isBurst(hand);
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -139,10 +139,10 @@ class BlackjackRuleTest {
     @MethodSource("createGameResultCase")
     void 게임_결과_반환(List<Card> self, List<Card> other, GameResult expected) {
         // given
-        Cards playerCards = Cards.of(self);
-        Cards dealerCards = Cards.of(other);
-        Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Hand playerHand = Hand.of(self);
+        Hand dealerHand = Hand.of(other);
+        Player player = Player.from("player", playerHand);
+        Dealer dealer = Dealer.of(dealerHand);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -215,16 +215,16 @@ class BlackjackRuleTest {
     @Test
     void 승패_검증() {
         // given
-        Cards playerCards = Cards.of(List.of(
+        Hand playerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.THREE, CardShape.CLOVER)
         ));
-        Cards dealerCards = Cards.of(List.of(
+        Hand dealerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Player player = Player.from("player", playerHand);
+        Dealer dealer = Dealer.of(dealerHand);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -237,17 +237,17 @@ class BlackjackRuleTest {
     @Test
     void 플레이어의_카드가_버스트인_경우_패배한다() {
         // given
-        Cards playerCards = Cards.of(List.of(
+        Hand playerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Cards dealerCards = Cards.of(List.of(
+        Hand dealerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Player player = Player.from("player", playerHand);
+        Dealer dealer = Dealer.of(dealerHand);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -260,17 +260,17 @@ class BlackjackRuleTest {
     @Test
     void 딜러가_버스트인_경우_승리한다() {
         // given
-        Cards playerCards = Cards.of(List.of(
+        Hand playerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.A, CardShape.CLOVER)
         ));
-        Cards dealerCards = Cards.of(List.of(
+        Hand dealerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Player player = Player.from("player", playerHand);
+        Dealer dealer = Dealer.of(dealerHand);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -283,16 +283,16 @@ class BlackjackRuleTest {
     @Test
     void 두명_모두_버스트가_아니면서_합이_같으면_비긴다() {
         // given
-        Cards playerCards = Cards.of(List.of(
+        Hand playerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Cards dealerCards = Cards.of(List.of(
+        Hand dealerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Player player = Player.from("player", playerHand);
+        Dealer dealer = Dealer.of(dealerHand);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -305,18 +305,18 @@ class BlackjackRuleTest {
     @Test
     void 둘_다_버스트인_경우_패배한다() {
         // given
-        Cards playerCards = Cards.of(List.of(
+        Hand playerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Cards dealerCards = Cards.of(List.of(
+        Hand dealerHand = Hand.of(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Player player = Player.from("player", playerHand);
+        Dealer dealer = Dealer.of(dealerHand);
 
         // when
         GameResult actual = rule.getResult(player, dealer);

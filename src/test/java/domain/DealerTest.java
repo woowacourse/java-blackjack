@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -25,8 +25,8 @@ class DealerTest {
     @MethodSource("createDrawCase")
     void test1(List<Card> inputCard, boolean expected) {
         //given
-        Cards cards = Cards.of(inputCard);
-        Dealer dealer = Dealer.of(cards);
+        Hand hand = Hand.of(inputCard);
+        Dealer dealer = Dealer.of(hand);
         //when
         boolean actual = dealer.hasToDraw();
         //then
@@ -47,27 +47,27 @@ class DealerTest {
     @Test
     void test() {
         //given
-        Cards cards1 = Cards.of(
+        Hand hand1 = Hand.of(
                 List.of(
                         new Card(CardNumber.TEN, CardShape.CLOVER),
                         new Card(CardNumber.THREE, CardShape.CLOVER)
                 )
         );
-        Cards cards2 = Cards.of(
+        Hand hand2 = Hand.of(
                 List.of(
                         new Card(CardNumber.TEN, CardShape.CLOVER),
                         new Card(CardNumber.TWO, CardShape.CLOVER)
                 )
         );
-        Cards cards3 = Cards.of(
+        Hand hand3 = Hand.of(
                 List.of(
                         new Card(CardNumber.A, CardShape.CLOVER),
                         new Card(CardNumber.FOUR, CardShape.CLOVER)
                 )
         );
-        Dealer dealer = Dealer.of(cards1);
-        Player player1 = Player.from("플레이어", cards2);
-        Player player2 = Player.from("플레이어2", cards3);
+        Dealer dealer = Dealer.of(hand1);
+        Player player1 = Player.from("플레이어", hand2);
+        Player player2 = Player.from("플레이어2", hand3);
         Map<Player, GameResult> expected = Map.of(
                 player1, GameResult.LOSE,
                 player2, GameResult.WIN

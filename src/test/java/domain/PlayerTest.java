@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Player;
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,10 +25,10 @@ public class PlayerTest {
         player.addCard(card);
 
         // when
-        Cards cards = player.getCards();
+        Hand hand = player.getCards();
 
         // then
-        assertThat(cards.getCards()).contains(card);
+        assertThat(hand.getCards()).contains(card);
     }
 
     @DisplayName("21 이하일 때, 최적의 결과를 선택할 수 있다.")
@@ -36,8 +36,8 @@ public class PlayerTest {
     @MethodSource("createCardsCase")
     void 최적_결과_선택_21_이하(List<Card> inputCards, int expected) {
         // given
-        Cards cards = Cards.of(inputCards);
-        Player player = Player.from("플레이어1", cards);
+        Hand hand = Hand.of(inputCards);
+        Player player = Player.from("플레이어1", hand);
 
         // when
         final int result = player.getCardScore();
@@ -78,8 +78,8 @@ public class PlayerTest {
     @MethodSource("createBurstCardsCase")
     void 가장_가까운_값_선택(List<Card> inputCards, int expected) {
         //given
-        Cards cards = Cards.of(inputCards);
-        Player player = Player.from("플레이어1", cards);
+        Hand hand = Hand.of(inputCards);
+        Player player = Player.from("플레이어1", hand);
 
         //when
         int actual = player.getCardScore();
@@ -116,8 +116,8 @@ public class PlayerTest {
     @MethodSource("createBurstCase")
     void test1(List<Card> inputCard, boolean expected) {
         //given
-        Cards cards = Cards.of(inputCard);
-        Player dealer = Player.from("플레이어1", cards);
+        Hand hand = Hand.of(inputCard);
+        Player dealer = Player.from("플레이어1", hand);
         //when
         final boolean actual = dealer.isBurst();
         //then

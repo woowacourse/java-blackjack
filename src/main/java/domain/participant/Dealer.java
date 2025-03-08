@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.GameResult;
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -12,17 +12,17 @@ public class Dealer extends Participant {
 
     private final Map<GameResult, Integer> result;
 
-    private Dealer(Cards cards) {
-        super(cards);
+    private Dealer(Hand hand) {
+        super(hand);
         this.result = new EnumMap<>(GameResult.class);
     }
 
     public static Dealer init() {
-        return new Dealer(Cards.empty());
+        return new Dealer(Hand.empty());
     }
 
-    public static Dealer of(Cards cards) {
-        return new Dealer(cards);
+    public static Dealer of(Hand hand) {
+        return new Dealer(hand);
     }
 
     public boolean hasToDraw() {

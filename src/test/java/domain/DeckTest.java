@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
 import domain.card.Deck;
+import domain.card.Hand;
 import domain.card.cardsGenerator.RandomCardsGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -70,10 +70,10 @@ public class DeckTest {
 
         //when
         deck.giveCardTo(player);
-        Cards cards = player.getCards();
+        Hand hand = player.getCards();
 
         //then
-        assertThat(cards.getCards()).contains(card);
+        assertThat(hand.getCards()).contains(card);
     }
 
     @DisplayName("딜러 카드의 합이 17 이상이 될 때까지 뽑은 횟수를 반환한다")
@@ -83,7 +83,7 @@ public class DeckTest {
         Card card1 = new Card(CardNumber.A, CardShape.CLOVER);
         Card card2 = new Card(CardNumber.A, CardShape.HEART);
         Deck deck = new Deck(() -> new ArrayList<>(List.of(card1, card2)));
-        Dealer dealer = Dealer.of(Cards.of(
+        Dealer dealer = Dealer.of(Hand.of(
                 new ArrayList<>(
                         List.of(
                                 new Card(CardNumber.TEN, CardShape.CLOVER),

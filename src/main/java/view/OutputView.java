@@ -4,7 +4,7 @@ import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -85,8 +85,8 @@ public class OutputView {
         };
     }
 
-    private String getCardsText(Cards cards) {
-        List<String> formatted = cards.getCards().stream()
+    private String getCardsText(Hand hand) {
+        List<String> formatted = hand.getCards().stream()
                 .map(this::getCardText)
                 .toList();
         return String.join(", ", formatted);

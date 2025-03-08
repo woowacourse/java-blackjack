@@ -1,7 +1,7 @@
 package domain.rule;
 
 import domain.GameResult;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.Set;
@@ -10,15 +10,15 @@ public class BlackjackRule implements GameRule {
     private static final int SUM_LIMIT = 21;
 
     @Override
-    public boolean isBurst(Cards cards) {
-        Set<Integer> coordinates = cards.getCoordinateSums();
+    public boolean isBurst(Hand hand) {
+        Set<Integer> coordinates = hand.getCoordinateSums();
         return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
     }
 
     @Override
-    public int getScore(Cards cards) {
-        Set<Integer> coordinates = cards.getCoordinateSums();
-        if (isBurst(cards)) {
+    public int getScore(Hand hand) {
+        Set<Integer> coordinates = hand.getCoordinateSums();
+        if (isBurst(hand)) {
             return getMinSum(coordinates);
         }
         return getMaxSum(coordinates);
