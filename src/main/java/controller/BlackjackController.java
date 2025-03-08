@@ -54,8 +54,7 @@ public class BlackjackController {
     }
 
     private void hitOrStandAtDealerTurn(Dealer dealer, Deck deck) {
-        boolean flag = true;
-        while (flag == dealer.checkScoreUnderSixteen()) {
+        while (dealer.checkScoreUnderSixteen()) {
             OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());
         }
