@@ -21,7 +21,7 @@ public class Deck {
                 .flatMap(number -> Arrays.stream(TrumpEmblem.values())
                         .map(emblem -> new Card(number, emblem)))
                 .collect(Collectors.toList());
-        shuffle(cards);
+        Collections.shuffle(cards);
         return new Deck(new Cards(cards));
     }
 
@@ -34,10 +34,6 @@ public class Deck {
 
     public Card drawOneCard() {
         return deck.drawOneCard();
-    }
-
-    private static void shuffle(List<Card> deck) {
-        Collections.shuffle(deck);
     }
 
     public int getSize() {
