@@ -13,7 +13,7 @@ public class GamerGenerator {
     public static List<Player> generatePlayer(List<String> playerNames, CardGenerator cardGenerator) {
         validateDuplicate(playerNames);
         return playerNames.stream()
-                .map(name -> new Player(name, new CardGroup(), cardGenerator))
+                .map(name -> new Player(name ,new CardGroup(), cardGenerator))
                 .toList();
     }
 

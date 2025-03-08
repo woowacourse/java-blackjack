@@ -3,15 +3,16 @@ package domain.gamer;
 import domain.card.CardGenerator;
 import domain.card.CardGroup;
 
-public class Dealer extends Gamer {
+public class Dealer extends Player {
+    private static final String DEALER_NAME = "NEO";
     private final int DEALER_HIT_ROLE = 16;
 
     public Dealer(CardGroup cardGroup, CardGenerator cardGenerator) {
-        super(cardGroup, cardGenerator);
+        super(DEALER_NAME,cardGroup, cardGenerator);
     }
 
     public boolean isLessThen(int score) {
-        return this.cardGroup.calculateScore(Gamer.LIMIT) <= score;
+        return this.cardGroup.calculateScore(Player.LIMIT) <= score;
     }
 
     public int giveCardsToDealer() {

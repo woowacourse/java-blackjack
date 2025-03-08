@@ -4,9 +4,10 @@ import domain.GameManager;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.GamerGenerator;
-import domain.gamer.Player;
+
 import java.util.List;
 
+import domain.gamer.Player;
 import util.LoopTemplate;
 import view.InputView;
 import view.OutputView;
