@@ -2,8 +2,6 @@ package domain;
 
 public class Dealer {
 	private final Participant participant;
-	private int winCount = 0;
-	private int loseCount = 0;
 
 	public Dealer() {
 		this.participant = new Participant();
@@ -27,23 +25,9 @@ public class Dealer {
 
 	public void startDuel(final Player player) {
 		player.duel(participant);
-		final boolean isWinPlayerDuelResult = player.isWinDuel();
-		if (isWinPlayerDuelResult) {
-			loseCount++;
-			return;
-		}
-		winCount++;
 	}
 
 	public Participant getParticipant() {
 		return participant;
-	}
-
-	public int getWinCount() {
-		return winCount;
-	}
-
-	public int getLoseCount() {
-		return loseCount;
 	}
 }

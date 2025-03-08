@@ -3,18 +3,15 @@ package domain;
 public class Player {
 	private final String name;
 	private final Participant participant;
-	private boolean isWinDuel;
 
 	public Player(final String name) {
 		this.participant = new Participant();
 		this.name = name;
-		isWinDuel = false;
 	}
 
-	public Player(final Participant participant) {
+	public Player(final String name, final Participant participant) {
+		this.name = name;
 		this.participant = participant;
-		this.name = "";
-		isWinDuel = false;
 	}
 
 	public boolean isPickCard() {
@@ -33,17 +30,19 @@ public class Player {
 		final int score = participant.calculateAllScore();
 		final int otherScore = other.calculateAllScore();
 		if (score > 21) {
+			other.writeWin(participant);
 			return;
 		}
 		if (otherScore > 21) {
-			isWinDuel = true;
+			participant.writeWin(other);
 			return;
 		}
-		isWinDuel = score > otherScore;
-	}
+		if (score > otherScore) {
+			participant.writeWin(other);
+			return;
+		}
 
-	public boolean isWinDuel() {
-		return isWinDuel;
+		other.writeWin(participant);
 	}
 
 	public String getName() {

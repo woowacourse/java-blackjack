@@ -28,7 +28,7 @@ public class PlayerTest {
 			// given
 			final CardHand cardHand = new CardHand(cards);
 			final Participant participant = new Participant(cardHand);
-			final Player p = new Player(participant);
+			final Player p = new Player("", participant);
 
 			// when
 			final boolean actual = p.isPickCard();
@@ -78,8 +78,8 @@ public class PlayerTest {
 			loser.duel(dealer.getParticipant());
 
 			// then
-			assertThat(winner.isWinDuel()).isTrue();
-			assertThat(loser.isWinDuel()).isFalse();
+			assertThat(winner.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+			assertThat(loser.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
 		}
 
 		@DisplayName("21점이 넘는다면, 상대방이 승리한다.")
@@ -104,7 +104,7 @@ public class PlayerTest {
 			loser.duel(dealer.getParticipant());
 
 			// then
-			assertThat(loser.isWinDuel()).isFalse();
+			assertThat(loser.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
 		}
 
 		@DisplayName("상대방이 21점이 넘고 내가 21점 이하라면, 내가 승리한다.")
@@ -130,7 +130,7 @@ public class PlayerTest {
 			loser.duel(dealer.getParticipant());
 
 			// then
-			assertThat(loser.isWinDuel()).isTrue();
+			assertThat(loser.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
 		}
 	}
 }

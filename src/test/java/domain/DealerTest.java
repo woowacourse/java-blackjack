@@ -77,8 +77,8 @@ public class DealerTest {
 			dealer.startDuel(winner);
 
 			// then
-			assertThat(dealer.getWinCount()).isEqualTo(1);
-			assertThat(dealer.getLoseCount()).isEqualTo(1);
+			assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+			assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
 		}
 
 	}
