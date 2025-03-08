@@ -17,7 +17,7 @@ public class PlayerTest {
     @Test
     void 플레이어가_카드를_뽑는다() {
         Player player = new Player(new ParticipantName("drago"), new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK))));
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK))));
         Card drawCard = new Card(Suit.HEART, Rank.FOUR);
         List<Card> providedCards = List.of(drawCard);
 
@@ -30,11 +30,13 @@ public class PlayerTest {
     @Test
     void 플레이어가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
         Player drago = new Player(new ParticipantName("drago"), new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK),
-                        new Card(Suit.HEART, Rank.KING))));
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.FOUR))));
 
         Player duei = new Player(new ParticipantName("duei"), new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK))));
+                List.of(new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.JACK))));
 
         assertAll(
                 () -> assertThat(drago.isBurst()).isTrue(),

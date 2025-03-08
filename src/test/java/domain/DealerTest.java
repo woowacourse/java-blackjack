@@ -16,11 +16,11 @@ public class DealerTest {
 
     @Test
     void 딜러의_카드_숫자_총합이_16이하면_true_아니면_false_반환한다() {
-        Dealer shouldHitDealer = new Dealer(
-                new Cards(List.of(new Card(Suit.CLOVER, Rank.SIX), new Card(Suit.HEART, Rank.JACK))));
+        Dealer shouldHitDealer = new Dealer(new Cards(
+                List.of(new Card(Suit.CLOVER, Rank.SIX), new Card(Suit.HEART, Rank.JACK))));
 
-        Dealer shouldNotHitDealer = new Dealer(
-            new Cards(List.of(new Card(Suit.CLOVER, Rank.SEVEN), new Card(Suit.HEART, Rank.JACK))));
+        Dealer shouldNotHitDealer = new Dealer(new Cards(
+                List.of(new Card(Suit.CLOVER, Rank.SEVEN), new Card(Suit.HEART, Rank.JACK))));
 
         assertAll(
                 () -> assertThat(shouldHitDealer.shouldHit()).isTrue(),
@@ -31,26 +31,26 @@ public class DealerTest {
     @Test
     void 딜러가_카드를_뽑는다() {
         Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK))));
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK))));
         Card drawCard = new Card(Suit.HEART, Rank.FOUR);
         List<Card> providedCards = List.of(drawCard);
 
         Dealer newDealer = dealer.drawCard(providedCards);
         Dealer expectedDealer = new Dealer(new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK), drawCard)));
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK), drawCard)));
+
         assertThat(newDealer).isEqualTo(expectedDealer);
     }
 
     @Test
     void 딜러가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
         Dealer exceedDealer = new Dealer(new Cards(
-            List.of(
-                new Card(Suit.DIAMOND, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.JACK),
-                new Card(Suit.HEART, Rank.FOUR))));
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.FOUR))));
 
         Dealer notExceedDealer = new Dealer(new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK))));
+                List.of(new Card(Suit.DIAMOND, Rank.ACE), new Card(Suit.DIAMOND, Rank.JACK))));
 
         assertAll(
             () -> assertThat(exceedDealer.isBurst()).isTrue(),
@@ -61,8 +61,7 @@ public class DealerTest {
     @Test
     void 딜러가_가진_카드리스트의_총합을_반환한다() {
         Dealer dealer = new Dealer(new Cards(
-                List.of(
-                        new Card(Suit.DIAMOND, Rank.EIGHT),
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.FOUR))));
 
@@ -72,10 +71,7 @@ public class DealerTest {
     @Test
     void 딜러가_가진_첫번쨰_카드를_반환한다() {
         Dealer dealer = new Dealer(new Cards(
-                List.of(
-                        new Card(Suit.HEART, Rank.EIGHT),
-                        new Card(Suit.CLOVER, Rank.SEVEN)
-                )));
+                List.of(new Card(Suit.HEART, Rank.EIGHT), new Card(Suit.CLOVER, Rank.SEVEN))));
 
         Card expected = new Card(Suit.HEART, Rank.EIGHT);
 

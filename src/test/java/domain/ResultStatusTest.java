@@ -24,8 +24,8 @@ public class ResultStatusTest {
 
         Dealer dealer = new Dealer(new Cards(
             List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.HEART, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.TWO))));
+                new Card(Suit.HEART, Rank.JACK),
+                new Card(Suit.SPADE, Rank.ACE))));
 
         Map<Player, ResultStatus> result = Map.of(player, ResultStatus.LOSE);
 
@@ -36,7 +36,7 @@ public class ResultStatusTest {
     void 플레이어가_가진_숫자들의_합이_21을_초과하지않고_딜러숫자의합이_21을_초과하면_플레이어는_승리한다() {
         Player player = new Player(new ParticipantName("drago"), new Cards(
             List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.CLOVER, Rank.EIGHT),
+                new Card(Suit.CLOVER, Rank.NINE),
                 new Card(Suit.HEART, Rank.TWO))));
         Players players = new Players(List.of(player));
 
@@ -54,13 +54,13 @@ public class ResultStatusTest {
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않는경우_21에가까운_플레이어가_승리한다() {
         Player player = new Player(new ParticipantName("drago"), new Cards(
             List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.CLOVER, Rank.EIGHT),
+                new Card(Suit.CLOVER, Rank.NINE),
                 new Card(Suit.HEART, Rank.TWO))));
         Players players = new Players(List.of(player));
 
         Dealer dealer = new Dealer(new Cards(
             List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.HEART, Rank.SEVEN),
+                new Card(Suit.HEART, Rank.EIGHT),
                 new Card(Suit.SPADE, Rank.TWO))));
 
         Map<Player, ResultStatus> result = Map.of(player, ResultStatus.WIN);
@@ -72,13 +72,13 @@ public class ResultStatusTest {
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않고_동일하면_무승부이다() {
         Player player = new Player(new ParticipantName("drago"), new Cards(
             List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.CLOVER, Rank.EIGHT),
+                new Card(Suit.CLOVER, Rank.NINE),
                 new Card(Suit.HEART, Rank.TWO))));
         Players players = new Players(List.of(player));
 
         Dealer dealer = new Dealer(new Cards(
             List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.HEART, Rank.EIGHT),
+                new Card(Suit.HEART, Rank.NINE),
                 new Card(Suit.SPADE, Rank.TWO))));
 
         Map<Player, ResultStatus> result = Map.of(player, ResultStatus.PUSH);

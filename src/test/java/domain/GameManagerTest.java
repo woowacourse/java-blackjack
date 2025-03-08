@@ -41,7 +41,8 @@ public class GameManagerTest {
     @Test
     void 초기_딜러_카드_정보를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
-        Cards cardsOfDealer = new Cards(List.of(new Card(Suit.SPADE, Rank.KING), new Card(Suit.CLOVER, Rank.ACE)));
+        Cards cardsOfDealer = new Cards(
+                List.of(new Card(Suit.SPADE, Rank.KING), new Card(Suit.CLOVER, Rank.ACE)));
 
         Dealer result = gameManager.findDealer();
 
@@ -52,11 +53,14 @@ public class GameManagerTest {
     @Test
     void 플레이어가_카드를뽑으면_새로운플레이어를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago"), new TestCardProvider());
-        Cards cardsOfDrago = new Cards(List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
+        Cards cardsOfDrago = new Cards(
+                List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
         Player player = new Player(new ParticipantName("drago"), cardsOfDrago);
 
-        Cards newCardsOfDrago = new Cards(List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK),
-                new Card(Suit.SPADE, Rank.KING)));
+        Cards newCardsOfDrago = new Cards(
+                List.of(new Card(Suit.CLOVER, Rank.EIGHT),
+                        new Card(Suit.HEART, Rank.JACK),
+                        new Card(Suit.SPADE, Rank.KING)));
         Player expected = new Player(new ParticipantName("drago"), newCardsOfDrago);
 
         assertThat(gameManager.drawCard(player)).isEqualTo(expected);
@@ -65,11 +69,14 @@ public class GameManagerTest {
     @Test
     void 딜러가_카드를뽑으면_새로운딜러를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago"), new TestCardProvider());
-        Cards cardsOfDealer = new Cards(List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.SPADE, Rank.ACE)));
+        Cards cardsOfDealer = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.SPADE, Rank.ACE)));
         Dealer dealer = new Dealer(cardsOfDealer);
 
-        Cards newCardsOfDealer = new Cards(List.of(
-                new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.SPADE, Rank.ACE), new Card(Suit.SPADE, Rank.KING)));
+        Cards newCardsOfDealer = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.SPADE, Rank.ACE),
+                        new Card(Suit.SPADE, Rank.KING)));
         Dealer expected = new Dealer(newCardsOfDealer);
 
         assertThat(gameManager.drawCard(dealer)).isEqualTo(expected);
@@ -78,8 +85,10 @@ public class GameManagerTest {
     @Test
     void 최종_게임_결과를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
-        Cards cardsOfDrago = new Cards(List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
-        Cards cardsOfDuei = new Cards(List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.SPADE, Rank.ACE)));
+        Cards cardsOfDrago = new Cards(
+                List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
+        Cards cardsOfDuei = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.SPADE, Rank.ACE)));
         Map<Player, ResultStatus> result = gameManager.findGameResult();
 
         Map<Player, ResultStatus> expected = Map.of(
