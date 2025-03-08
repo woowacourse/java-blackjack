@@ -2,21 +2,20 @@ package domain;
 
 public class Player {
     private static final int MAX_SCORE = 21;
+    
     private final String name;
     private final Participant participant;
 
-    private boolean isWinDuel;
+    private boolean isWinDuel = false;
 
     public Player(final String name) {
         this.participant = new Participant();
         this.name = name;
-        isWinDuel = false;
     }
 
     public Player(final String name, final Participant participant) {
         this.participant = participant;
         this.name = name;
-        isWinDuel = false;
     }
 
     public boolean isPickCard() {
@@ -44,7 +43,7 @@ public class Player {
         isWinDuel = score > otherScore;
     }
 
-    public boolean getIsWinDuel() {
+    public boolean isWinDuel() {
         return isWinDuel;
     }
 

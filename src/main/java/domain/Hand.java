@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-
     private final List<TrumpCard> cards;
 
     public Hand() {
@@ -26,7 +25,7 @@ public class Hand {
             score = card.sumScore(score);
         }
 
-        return Rank.ifOverThanBustScoreAceIsMIN(score, calculateAceCount());
+        return Rank.ifBustAceIsMIN(score, calculateAceCount());
     }
 
     private int calculateAceCount() {

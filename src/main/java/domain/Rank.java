@@ -22,7 +22,7 @@ public enum Rank {
         this.score = score;
     }
 
-    public static int ifOverThanBustScoreAceIsMIN(int score, int aceCount) {
+    public static int ifBustAceIsMIN(int score, int aceCount) {
         while (score > 21 && aceCount-- > 0) {
             score -= ACE.score;
             score += ACE_MIN;
