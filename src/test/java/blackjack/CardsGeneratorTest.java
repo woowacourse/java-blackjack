@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import blackjack.manager.CardsGenerator;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;

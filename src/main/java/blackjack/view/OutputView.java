@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResultType;
+import blackjack.domain.result.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import java.util.Map;

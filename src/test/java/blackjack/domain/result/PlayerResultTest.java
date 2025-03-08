@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
+import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.PlayersResult;
 import java.util.LinkedHashMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;

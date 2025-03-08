@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GameResultType;
 import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

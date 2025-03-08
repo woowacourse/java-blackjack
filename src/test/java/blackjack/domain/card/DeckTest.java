@@ -1,8 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.common.CardRank;
-import blackjack.common.CardSuit;
 import blackjack.common.ErrorMessage;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardSuit;
+import blackjack.domain.card.Deck;
 import blackjack.manager.CardsGenerator;
 import java.util.ArrayList;
 import java.util.List;

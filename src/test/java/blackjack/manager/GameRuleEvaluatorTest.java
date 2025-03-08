@@ -1,12 +1,12 @@
 package blackjack.manager;
 
 import blackjack.StubPossibleSumCardHolder;
-import blackjack.common.CardRank;
-import blackjack.common.CardSuit;
-import blackjack.domain.Card;
-import blackjack.domain.CardHolder;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardSuit;
+import blackjack.domain.card.Card;
+import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
+import blackjack.domain.cardholder.Hand;
 import blackjack.domain.Player;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;

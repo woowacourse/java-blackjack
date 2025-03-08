@@ -1,4 +1,4 @@
-package blackjack.common;
+package blackjack.domain.card;
 
 public enum CardSuit {
 

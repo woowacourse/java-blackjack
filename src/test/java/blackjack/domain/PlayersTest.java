@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.common.ErrorMessage;
+import blackjack.domain.cardholder.Hand;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

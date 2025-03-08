@@ -1,14 +1,14 @@
 package blackjack.manager;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardHolder;
+import blackjack.domain.card.Card;
+import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
-import blackjack.domain.Deck;
-import blackjack.domain.GameResultType;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.card.Deck;
+import blackjack.domain.result.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.PlayersResult;
+import blackjack.domain.result.PlayersResult;
 import java.util.List;
 import java.util.Map;
 

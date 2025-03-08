@@ -1,6 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import blackjack.common.ErrorMessage;
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

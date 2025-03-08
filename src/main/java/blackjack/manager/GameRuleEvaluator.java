@@ -1,7 +1,7 @@
 package blackjack.manager;
 
 import blackjack.common.Constants;
-import blackjack.domain.CardHolder;
+import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import java.util.List;

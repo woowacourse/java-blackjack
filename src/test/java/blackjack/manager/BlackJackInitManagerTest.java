@@ -1,6 +1,6 @@
 package blackjack.manager;
 
-import blackjack.domain.Hand;
+import blackjack.domain.cardholder.Hand;
 import blackjack.domain.Players;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
