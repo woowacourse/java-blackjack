@@ -20,7 +20,7 @@ class PlayersTest {
                 .toList();
 
         // when
-        Players players = new Players(playersToBeSaved);
+        Players players = Players.from(playersToBeSaved);
 
         // then
         assertThat(players.getPlayers()).hasSize(2);
@@ -37,7 +37,7 @@ class PlayersTest {
                 .toList();
 
         // when & then
-        assertThatThrownBy(() -> new Players(playersToBeSaved))
+        assertThatThrownBy(() -> Players.from(playersToBeSaved))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
 

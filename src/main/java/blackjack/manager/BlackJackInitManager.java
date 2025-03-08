@@ -25,7 +25,7 @@ public class BlackJackInitManager {
                 .map(name -> new Player(name, cardHolderSupplier.get()))
                 .toList();
 
-        return new Players(players);
+        return Players.from(players);
     }
 
     public Dealer saveDealer(Supplier<CardHolder> cardHolderSupplier) {

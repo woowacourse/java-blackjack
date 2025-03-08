@@ -9,9 +9,13 @@ public class Players {
     private static final int PLAYERS_VALID_SIZE = 7;
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         validate(players);
         this.players = players;
+    }
+
+    public static Players from(List<Player> players) {
+        return new Players(players);
     }
 
     public List<Player> getPlayers() {
