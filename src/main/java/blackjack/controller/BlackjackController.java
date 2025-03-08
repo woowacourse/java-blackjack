@@ -76,10 +76,10 @@ public class BlackjackController {
 
     private void giveStartingCards(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            blackjackProcessManager.giveStartingCardsFor(player);
+            blackjackProcessManager.giveStartingCardsFor(player.getCardHolder());
         }
 
-        blackjackProcessManager.giveStartingCardsFor(dealer);
+        blackjackProcessManager.giveStartingCardsFor(dealer.getCardHolder());
 
         OutputView.printStartingCardsStatuses(dealer, players);
     }

@@ -2,9 +2,7 @@ package blackjack.manager;
 
 import blackjack.domain.Card;
 import blackjack.domain.CardHolder;
-import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.Player;
 import java.util.List;
 
 public class BlackjackProcessManager {
@@ -18,17 +16,9 @@ public class BlackjackProcessManager {
         this.deck = deck;
     }
 
-    public void giveStartingCardsFor(Dealer dealer) {
+    public void giveStartingCardsFor(CardHolder cardHolder) {
         List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
 
-        CardHolder cardHolder = dealer.getCardHolder();
-        cards.forEach(cardHolder::takeCard);
-    }
-
-    public void giveStartingCardsFor(Player player) {
-        List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
-
-        CardHolder cardHolder = player.getCardHolder();
         cards.forEach(cardHolder::takeCard);
     }
 

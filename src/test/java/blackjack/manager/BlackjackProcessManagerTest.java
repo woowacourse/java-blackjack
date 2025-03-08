@@ -34,7 +34,7 @@ class BlackjackProcessManagerTest {
         Player player = new Player("꾹이", hand);
 
         // when
-        blackjackProcessManager.giveStartingCardsFor(player);
+        blackjackProcessManager.giveStartingCardsFor(player.getCardHolder());
 
         // then
         assertThat(hand.getAllCards()).hasSize(2);
