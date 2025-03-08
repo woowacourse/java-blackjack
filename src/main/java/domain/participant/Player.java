@@ -2,21 +2,15 @@ package domain.participant;
 
 import domain.MatchResult;
 import domain.card.CardDeck;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Player {
+public class Player extends Participant{
     private final String name;
-    private final CardDeck hand;
 
     public Player(final String name) {
-        this.hand = new CardDeck(new ArrayList<>());
+        super();
         this.name = name;
-    }
-
-    public void hitCards(final CardDeck standard) {
-        hand.hitCards(standard);
     }
 
     public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
@@ -25,10 +19,6 @@ public class Player {
             hand.addCard(standard.hitCard());
             playerDeck.accept(this);
         }
-    }
-
-    public int sum() {
-        return hand.sumWithAce();
     }
 
     public MatchResult calculateWinner(final int dealerSum) {
@@ -42,10 +32,5 @@ public class Player {
     public String getName() {
         return name;
     }
-
-    public CardDeck getHand() {
-        return hand;
-    }
-
 
 }

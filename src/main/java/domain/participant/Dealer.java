@@ -2,19 +2,12 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.CardDeck;
-import java.util.ArrayList;
 
-public class Dealer {
+public class Dealer extends Participant{
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
-    private final CardDeck hand;
-
     public Dealer() {
-        this.hand = new CardDeck(new ArrayList<>());
-    }
-
-    public void hitCards(final CardDeck standard) {
-        hand.hitCards(standard);
+        super();
     }
 
     public Card getHandExceptHidden(){
@@ -27,16 +20,9 @@ public class Dealer {
         }
     }
 
-    public int sum() {
-        return hand.sumWithAce();
-    }
-
     public boolean isUnderThreshold() {
         return sum() <= DEALER_DRAW_THRESHOLD;
     }
 
-    public CardDeck getHand() {
-        return hand;
-    }
 }
 
