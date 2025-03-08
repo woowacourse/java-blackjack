@@ -43,20 +43,23 @@ public class Cards {
                 ranks.contains(Rank.TEN);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public void take(Card... cards) {
-        int minScore = scoreCalculator.calculateMaxScore(this.cards);
-        if (minScore >= BUST_THRESHOLD.getSymbol()) {
+        if (isBust()) {
             throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
         }
         this.cards.addAll(Arrays.asList(cards));
     }
 
+    public boolean isBust() {
+        return scoreCalculator.calculateMinScore(cards) > BUST_THRESHOLD.getSymbol();
+    }
+
     public int getSize() {
         return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     @Override
