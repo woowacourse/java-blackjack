@@ -15,6 +15,7 @@ public enum Rank {
 	QUEEN(10),
 	KING(10);
 
+	public static final int BUST_SCORE = 21;
 	private static final int ACE_MIN = 1;
 	private final int score;
 
@@ -23,7 +24,7 @@ public enum Rank {
 	}
 
 	public static int ifOverThanBustScoreAceIsMIN(int score, int aceCount) {
-		while (score > 21 && aceCount-- > 0) {
+		while (score > BUST_SCORE && aceCount-- > 0) {
 			score -= ACE.score;
 			score += ACE_MIN;
 		}

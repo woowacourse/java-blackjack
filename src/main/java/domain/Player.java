@@ -1,7 +1,6 @@
 package domain;
 
 public class Player {
-	private static final int MAX_SCORE = 21;
 	private final String name;
 	private final Participant participant;
 
@@ -16,7 +15,7 @@ public class Player {
 	}
 
 	public boolean isPickCard() {
-		return participant.calculateAllScore() <= MAX_SCORE;
+		return participant.calculateAllScore() <= Rank.BUST_SCORE;
 	}
 
 	public void pickCardOnFirstHandOut(final Deck deck) {
@@ -30,11 +29,11 @@ public class Player {
 	public void duel(final Participant other) {
 		final int score = participant.calculateAllScore();
 		final int otherScore = other.calculateAllScore();
-		if (score > MAX_SCORE) {
+		if (score > Rank.BUST_SCORE) {
 			other.writeWin(participant);
 			return;
 		}
-		if (otherScore > MAX_SCORE) {
+		if (otherScore > Rank.BUST_SCORE) {
 			participant.writeWin(other);
 			return;
 		}
