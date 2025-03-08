@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
-    private final Cards deck;
+    private final Cards cards;
 
     private Deck(Cards cards) {
-        this.deck = cards;
+        this.cards = cards;
     }
 
     public static Deck initialize() {
@@ -27,17 +27,17 @@ public class Deck {
 
     public Cards drawInitialCards() {
         List<Card> cards = new ArrayList<>();
-        cards.add(deck.drawOneCard());
-        cards.add(deck.drawOneCard());
+        cards.add(this.cards.drawOneCard());
+        cards.add(this.cards.drawOneCard());
         return new Cards(cards);
     }
 
     public Card drawOneCard() {
-        return deck.drawOneCard();
+        return cards.drawOneCard();
     }
 
     public int getSize() {
-        return deck.getSize();
+        return cards.getSize();
     }
 
 }
