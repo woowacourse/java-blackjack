@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.Card;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import dto.FinalResultDTO;
 import domain.game.GameManager;
 import domain.game.GameResult;
@@ -50,7 +51,7 @@ public class BlackjackController {
         Card dealerOpenCard = dealer.getOpenCard();
 
         Map<String, List<Card>> cards = players.stream()
-                .collect(Collectors.toMap(Player::getName, player -> dealer.getCards()
+                .collect(Collectors.toMap(Player::getName, Participant::getCards
                         , (player1, player2) -> player1, LinkedHashMap::new));
 
         return new SetUpCardsDTO(dealerOpenCard, cards);
