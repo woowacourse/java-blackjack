@@ -44,7 +44,7 @@ public final class Game {
 
     private void playTurn(Player player, PlayerHandVisualizer playerHandVisualizer) {
         boolean isFirstTurn = true;
-        while (!player.isBust() && player.shouldHit()) {
+        while (player.shouldHit()) {
             dealCard(player);
             playerHandVisualizer.accept(player);
             isFirstTurn = false;

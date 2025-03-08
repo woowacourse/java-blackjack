@@ -22,6 +22,9 @@ public abstract class Participant {
     public abstract boolean shouldHit();
 
     public void receiveHand(Card card) {
+        if (BLACKJACK_VALUE_TOTAL <= getTotal()) {
+            throw new IllegalArgumentException("더 이상 카드를 받을 수 없습니다.");
+        }
         hand.add(card);
     }
 
@@ -70,7 +73,8 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.size() == BLACKJACK_HAND_COUNT && getTotal() == BLACKJACK_VALUE_TOTAL;
+        return hand.size() == BLACKJACK_HAND_COUNT
+                && getTotal() == BLACKJACK_VALUE_TOTAL;
     }
 
     public boolean isBust() {

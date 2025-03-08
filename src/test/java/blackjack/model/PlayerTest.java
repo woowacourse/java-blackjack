@@ -47,6 +47,22 @@ class PlayerTest {
 
     }
 
+    @DisplayName("가진 패의 총합이 21 이상일 때 카드를 받는 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenReceiveCardAfterHandExceeds21() {
+        // given
+        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+
+        // when
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+
+        // then
+        assertThatCode(() -> player.receiveHand(SPADE_TEN_CARD))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("더 이상 카드를 받을 수 없습니다.");
+    }
+
     @DisplayName("가진 패의 총합을 계산한다.")
     @Test
     void calculateHandTotalTest() {
@@ -160,5 +176,21 @@ class PlayerTest {
         // when
         assertThat(shouldHit)
                 .isTrue();
+    }
+
+    @DisplayName("가진 패의 총합이 21 이상인 경우 히트할 수 없다.")
+    @Test
+    void shouldHitTest() {
+        // given
+        Player player = new Player(new Name("pobi"), createHitDecisionStrategy(List.of(true)));
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+
+        // then
+        boolean shouldHit = player.shouldHit();
+
+        // when
+        assertThat(shouldHit)
+                .isFalse();
     }
 }

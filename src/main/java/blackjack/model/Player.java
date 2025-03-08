@@ -16,7 +16,14 @@ public final class Player extends Participant {
 
     @Override
     public boolean shouldHit() {
+        if (!canHit()) {
+            return false;
+        }
         return hitDecisionStrategy.decideHit(name);
+    }
+
+    private boolean canHit() {
+        return getTotal() < 21;
     }
 
     public Name getName() {

@@ -54,6 +54,22 @@ class DealerTest {
                 .contains(SPADE_ACE_CARD);
     }
 
+    @DisplayName("가진 패의 총합이 21 이상일 때 카드를 받는 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenReceiveCardAfterHandExceeds21() {
+        // given
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+
+        // when
+        dealer.receiveHand(SPADE_ACE_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
+
+        // then
+        assertThatCode(() -> dealer.receiveHand(SPADE_TEN_CARD))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("더 이상 카드를 받을 수 없습니다.");
+    }
+
     @DisplayName("가진 패의 총합을 계산한다.")
     @Test
     void calculateHandTotalTest() {
