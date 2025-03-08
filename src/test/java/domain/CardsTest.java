@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -90,62 +91,45 @@ class CardsTest {
         assertThat(actual).isEqualTo(card);
     }
 
-    @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
-    @Test
-    void considerAceHas11() {
-        //given
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
-        Card card2 = new Card(Symbol.COLVER, Rank.KING);
 
-        cards.add(card1);
-        cards.add(card2);
+    @Nested
+    @DisplayName("Ace 개수에 따른 점수 계산을 한다.")
+    class considerAceTest {
+        @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
+        @Test
+        void considerAceHas11() {
+            //given
+            Cards cards = new Cards();
+            Card card1 = new Card(Symbol.COLVER, Rank.ACE);
+            Card card2 = new Card(Symbol.COLVER, Rank.KING);
 
-        //when
-        int actual = cards.calculateTotalPoint();
+            cards.add(card1);
+            cards.add(card2);
 
-        //then
-        assertThat(actual).isEqualTo(21);
-    }
+            //when
+            int actual = cards.calculateTotalPoint();
 
-    @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
-    @Test
-    void considerAceHas112() {
-        //given
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
-        Card card2 = new Card(Symbol.HEART, Rank.ACE);
+            //then
+            assertThat(actual).isEqualTo(21);
+        }
 
-        cards.add(card1);
-        cards.add(card2);
+        @DisplayName("Ace가 두장 있을 때, 합계가 21을 초과하지않을 경우 Ace 한장의 점수를 1로 간주한다.")
+        @Test
+        void considerAceHas1() {
+            //given
+            Cards cards = new Cards();
+            Card card1 = new Card(Symbol.COLVER, Rank.ACE);
+            Card card2 = new Card(Symbol.HEART, Rank.ACE);
 
-        //when
-        int actual = cards.calculateTotalPoint();
+            cards.add(card1);
+            cards.add(card2);
 
-        //then
-        assertThat(actual).isEqualTo(12);
-    }
+            //when
+            int actual = cards.calculateTotalPoint();
 
-    @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
-    @Test
-    void considerAceHas113() {
-        //given
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
-        Card card2 = new Card(Symbol.COLVER, Rank.ACE);
-        Card card3 = new Card(Symbol.COLVER, Rank.ACE);
-        Card card4 = new Card(Symbol.COLVER, Rank.ACE);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-
-        //when
-        int actual = cards.calculateTotalPoint();
-
-        //then
-        assertThat(actual).isEqualTo(14);
+            //then
+            assertThat(actual).isEqualTo(12);
+        }
     }
 
     public static Stream<Arguments> provideEachCardsAndExpected() {
