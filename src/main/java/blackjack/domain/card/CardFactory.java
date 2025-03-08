@@ -7,8 +7,8 @@ public class CardFactory {
 
     public static Card create(CardSuit suit, CardRank rank) {
         if (rank.isAce()) {
-            return new AceCard(suit);
+            return AceCard.from(suit);
         }
-        return new NormalCard(suit, rank);
+        return NormalCard.of(suit, rank);
     }
 }
