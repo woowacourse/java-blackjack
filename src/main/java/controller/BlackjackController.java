@@ -20,18 +20,20 @@ public class BlackjackController {
         Deck deck = Deck.of();
 
         dealInitially(players, deck, dealer);
+        OutputView.printInitialDealResult(dealer, players);
 
         hitOrStandAtPlayersTurn(players, deck);
         hitOrStandAtDealerTurn(dealer, deck);
-
         OutputView.printFinalScore(dealer, players);
-        printWinningResult(players, dealer);
+
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
+        printFinalGameResult(dealerWinningResult, participantWinningResult);
     }
 
     private void dealInitially(Players players, Deck deck, Dealer dealer) {
         players.dealInitialCards(deck);
         dealer.dealInitialCards(deck);
-        OutputView.printInitialDealResult(dealer, players);
     }
 
     private void hitOrStandAtPlayersTurn(Players players, Deck deck) {
@@ -42,7 +44,7 @@ public class BlackjackController {
 
     private void hitOrStandAtOnePlayerTurn(Deck deck, Player player) {
         boolean flag = true;
-        while ((flag == InputView.readHit(player))) {
+        while (flag == InputView.readHit(player)) {
             player.receiveCard(deck.pick());
             OutputView.printHitResult(player);
             if (player.isBurst()) {
@@ -59,10 +61,8 @@ public class BlackjackController {
         }
     }
 
-    private void printWinningResult(Players players, Dealer dealer) {
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
-
+    private void printFinalGameResult(Map<GameResult, Integer> dealerWinningResult,
+                                      ParticipantWinningResult participantWinningResult) {
         OutputView.printDealerFinalResult(dealerWinningResult);
         OutputView.printPlayerFinalResult(participantWinningResult);
     }
