@@ -1,8 +1,18 @@
 package blackjack.model;
 
+import static blackjack.model.card.CardFixtures.NO_SHUFFLER;
+import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
+import static blackjack.model.card.CardFixtures.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.CardValue;
+import blackjack.model.card.Deck;
+import blackjack.model.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +28,8 @@ class DealerTest {
     void drawCardTest() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Suit.SPADES, CardValue.ACE));
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
+        cards.add(SPADE_ACE_CARD);
+        Deck deck = Deck.createDeckByCards(cards, NO_SHUFFLER);
         Dealer dealer = new Dealer(deck);
 
         // when
@@ -27,55 +37,46 @@ class DealerTest {
 
         // then
         assertThat(card)
-                .isEqualTo(new Card(Suit.SPADES, CardValue.ACE));
+                .isEqualTo(SPADE_ACE_CARD);
     }
 
     @DisplayName("카드를 한장 받는다.")
     @Test
     void receiveHandTest() {
         // given
-        List<Card> cards = new ArrayList<>();
-        Card card = new Card(Suit.SPADES, CardValue.ACE);
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
 
         // when
-        dealer.receiveHand(card);
+        dealer.receiveHand(SPADE_ACE_CARD);
 
         // then
         assertThat(dealer.getHand())
-                .contains(new Card(Suit.SPADES, CardValue.ACE));
+                .contains(SPADE_ACE_CARD);
     }
 
     @DisplayName("가진 패의 총합을 계산한다.")
     @Test
     void calculateHandTotalTest() {
         // given
-        Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-        dealer.receiveHand(spadeTen);
-        dealer.receiveHand(spadeFive);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_TEN_CARD);
+        dealer.receiveHand(SPADE_SIX_CARD);
 
         // when
         int total = dealer.getTotal();
 
         // then
         assertThat(total)
-                .isEqualTo(15);
+                .isEqualTo(16);
     }
 
-    @DisplayName("ACE를 가진 채, 총합이 11 이하인 경우 ACE를 11로 간주한다.")
+    @DisplayName("ACE를 가진 채, ACE를 제외한 총합이 11 이하인 경우 ACE를 11로 간주한다.")
     @Test
     void calculateHandTotalWithAceTest() {
         // given
-        Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
-        Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-        dealer.receiveHand(spadeTen);
-        dealer.receiveHand(spadeAce);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_ACE_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
 
         // when
         int total = dealer.getTotal();
@@ -85,25 +86,21 @@ class DealerTest {
                 .isEqualTo(21);
     }
 
-    @DisplayName("ACE를 가진 채, 총합이 11 초과인 경우 ACE를 1로 간주한다.")
+    @DisplayName("ACE를 가진 채, ACE를 제외한 총합이 11 초과인 경우 ACE를 1로 간주한다.")
     @Test
     void calculateHandTotalWithAceTestOver11() {
         // given
-        Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
-        Card spadeTwo = new Card(Suit.SPADES, CardValue.TWO);
-        Card spadeNine = new Card(Suit.SPADES, CardValue.NINE);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-        dealer.receiveHand(spadeAce);
-        dealer.receiveHand(spadeTwo);
-        dealer.receiveHand(spadeNine);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_ACE_CARD);
+        dealer.receiveHand(SPADE_TWO_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
 
         // when
         int total = dealer.getTotal();
 
         // then
         assertThat(total)
-                .isEqualTo(12);
+                .isEqualTo(13);
     }
 
     @DisplayName("패가 2장만 있고, 합이 21이면 블랙잭이다.")
@@ -112,14 +109,11 @@ class DealerTest {
             "TEN, ACE, true",
             "TEN, TEN, false",
     })
-    void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
+    void isBlackjackTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
         // given
-        Card spadeTen = new Card(Suit.SPADES, value1);
-        Card spadeAce = new Card(Suit.SPADES, value2);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-        dealer.receiveHand(spadeTen);
-        dealer.receiveHand(spadeAce);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(createCard(Suit.SPADES, cardValue1));
+        dealer.receiveHand(createCard(Suit.SPADES, cardValue2));
 
         // when
         boolean isBlackjack = dealer.isBlackjack();
@@ -135,16 +129,12 @@ class DealerTest {
             "TEN, TEN, TEN, true",
             "TWO, TWO, ACE, false",
     })
-    void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
+    void isBustTest(CardValue cardValue1, CardValue cardValue2, CardValue cardValue3, boolean expected) {
         // given
-        Card card1 = new Card(Suit.SPADES, value1);
-        Card card2 = new Card(Suit.SPADES, value2);
-        Card card3 = new Card(Suit.SPADES, value3);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-        dealer.receiveHand(card1);
-        dealer.receiveHand(card2);
-        dealer.receiveHand(card3);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(createCard(Suit.SPADES, cardValue1));
+        dealer.receiveHand(createCard(Suit.SPADES, cardValue2));
+        dealer.receiveHand(createCard(Suit.SPADES, cardValue3));
 
         // when
         boolean isBust = dealer.isBust();
@@ -158,11 +148,11 @@ class DealerTest {
     @Test
     void getVisibleCardTest() {
         // give
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
         Card firstCard = dealer.drawCard();
         dealer.receiveHand(firstCard);
-        dealer.receiveHand(dealer.drawCard());
+        Card secondCard = dealer.drawCard();
+        dealer.receiveHand(secondCard);
 
         // when
         Card visibleCard = dealer.getVisibleCard();
@@ -170,14 +160,15 @@ class DealerTest {
         // then
         assertThat(visibleCard)
                 .isEqualTo(firstCard);
+        assertThat(visibleCard)
+                .isNotEqualTo(secondCard);
     }
 
     @DisplayName("보여줄 때 가진 패가 없는 경우 예외가 발생한다.")
     @Test
     void shouldThrowException_WhenNoHandGetVisibleCardTest() {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(new ArrayList<>(), NO_SHUFFLER));
 
         // when, then
         assertThatCode(dealer::getVisibleCard)
@@ -193,10 +184,9 @@ class DealerTest {
     })
     void shouldHitTrueTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-        dealer.receiveHand(new Card(Suit.SPADES, cardValue1));
-        dealer.receiveHand(new Card(Suit.SPADES, cardValue2));
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(createCard(Suit.SPADES, cardValue1));
+        dealer.receiveHand(createCard(Suit.SPADES, cardValue2));
 
         // when
         boolean shouldHit = dealer.shouldHit();

@@ -1,17 +1,16 @@
 package blackjack.controller;
 
-import blackjack.model.Card;
 import blackjack.model.Dealer;
-import blackjack.model.Deck;
+import blackjack.model.card.Deck;
 import blackjack.model.Game;
 import blackjack.model.Name;
 import blackjack.model.Player;
-import blackjack.model.RandomCardShuffler;
+import blackjack.model.card.RandomCardShuffler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -38,7 +37,7 @@ public class BlackjackController {
     }
 
     private Game createGame(List<Player> players) {
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler()));
+        Dealer dealer = new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
         return new Game(dealer, players);
     }
 

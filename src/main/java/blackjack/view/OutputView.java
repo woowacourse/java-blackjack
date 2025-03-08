@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.Card;
+import blackjack.model.card.Card;
 import blackjack.model.Dealer;
 import blackjack.model.MatchResult;
 import blackjack.model.Player;

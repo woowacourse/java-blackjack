@@ -1,10 +1,8 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,14 +36,17 @@ class CardTest {
                 .isEqualTo(new Card(Suit.SPADES, CardValue.ACE));
     }
 
-    @DisplayName("52장의 서로 다른 카드 덱을 생성한다.")
+    @DisplayName("카드의 모양과 숫자를 알 수 있다.")
     @Test
-    void createDeckTest() {
+    void getDisplayLabelTest() {
+        // given
+        Card card = new Card(Suit.SPADES, CardValue.ACE);
+
         // when
-        List<Card> cards = Card.createDeck();
+        String displayLabel = card.getDisplayLabel();
 
         // then
-        assertThat(cards.size())
-                .isSameAs(Set.copyOf(cards).size());
+        assertThat(displayLabel)
+                .isEqualTo("A스페이드");
     }
 }

@@ -2,9 +2,16 @@ package blackjack.model;
 
 import static blackjack.TestFixtures.NO_HIT_STRATEGY;
 import static blackjack.TestFixtures.createHitDecisionStrategy;
+import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
+import static blackjack.model.card.CardFixtures.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.model.card.CardValue;
+import blackjack.model.card.Suit;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,15 +36,14 @@ class PlayerTest {
     @Test
     void receiveHandTest() {
         // given
-        Card card = new Card(Suit.SPADES, CardValue.ACE);
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
 
         // when
-        player.receiveHand(card);
+        player.receiveHand(SPADE_ACE_CARD);
 
         // then
         assertThat(player.getHand())
-                .contains(card);
+                .contains(SPADE_ACE_CARD);
 
     }
 
@@ -45,30 +51,26 @@ class PlayerTest {
     @Test
     void calculateHandTotalTest() {
         // given
-        Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
 
         // when
-        player.receiveHand(spadeTen);
-        player.receiveHand(spadeFive);
+        player.receiveHand(SPADE_TEN_CARD);
+        player.receiveHand(SPADE_SIX_CARD);
 
         // then
         assertThat(player.getTotal())
-                .isEqualTo(15);
+                .isEqualTo(16);
     }
 
     @DisplayName("ACE를 가진 채, 총합이 11 이하인 경우 ACE를 11로 간주한다.")
     @Test
     void calculateHandTotalWithAceTest() {
         // given
-        Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
-        Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
 
         // when
-        player.receiveHand(spadeAce);
-        player.receiveHand(spadeTen);
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
 
         // then
         assertThat(player.getTotal())
@@ -79,19 +81,16 @@ class PlayerTest {
     @Test
     void calculateHandTotalWithAceTestOver11() {
         // given
-        Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
-        Card spadeTwo = new Card(Suit.SPADES, CardValue.TWO);
-        Card spadeNine = new Card(Suit.SPADES, CardValue.NINE);
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
 
         // when
-        player.receiveHand(spadeAce);
-        player.receiveHand(spadeTwo);
-        player.receiveHand(spadeNine);
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TWO_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
 
         // then
         assertThat(player.getTotal())
-                .isEqualTo(12);
+                .isEqualTo(13);
     }
 
     @DisplayName("패가 2장만 있고, 합이 21이면 블랙잭이다.")
@@ -102,11 +101,9 @@ class PlayerTest {
     })
     void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
         // given
-        Card spadeTen = new Card(Suit.SPADES, value1);
-        Card spadeAce = new Card(Suit.SPADES, value2);
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        player.receiveHand(spadeTen);
-        player.receiveHand(spadeAce);
+        player.receiveHand(createCard(Suit.SPADES, value1));
+        player.receiveHand(createCard(Suit.SPADES, value2));
 
         // when
         boolean isBlackjack = player.isBlackjack();
@@ -124,13 +121,10 @@ class PlayerTest {
     })
     void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
         // given
-        Card card1 = new Card(Suit.SPADES, value1);
-        Card card2 = new Card(Suit.SPADES, value2);
-        Card card3 = new Card(Suit.SPADES, value3);
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        player.receiveHand(card1);
-        player.receiveHand(card2);
-        player.receiveHand(card3);
+        player.receiveHand(createCard(Suit.SPADES, value1));
+        player.receiveHand(createCard(Suit.SPADES, value2));
+        player.receiveHand(createCard(Suit.SPADES, value3));
 
         // when
         boolean isBust = player.isBust();

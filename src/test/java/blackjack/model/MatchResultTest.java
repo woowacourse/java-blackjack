@@ -1,8 +1,15 @@
 package blackjack.model;
 
 import static blackjack.TestFixtures.NO_HIT_STRATEGY;
+import static blackjack.model.card.CardFixtures.NO_SHUFFLER;
+import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
+import static blackjack.model.card.CardFixtures.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.CardValue;
+import blackjack.model.card.Deck;
+import blackjack.model.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,10 +23,10 @@ class MatchResultTest {
     void lose_WhenPlayerBust() {
         // given
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
-        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
-        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        player.receiveHand(SPADE_TEN_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
 
         // when
         MatchResult matchResult = MatchResult.judge(dealer, player);
@@ -34,10 +41,10 @@ class MatchResultTest {
     void win_WhenPlayerNoBustAndDealerBust() {
         // given
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_TEN_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
 
         // when
         MatchResult matchResult = MatchResult.judge(dealer, player);
@@ -52,11 +59,11 @@ class MatchResultTest {
     void draw_WhenAllBlackjack() {
         // given
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
-        player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_ACE_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
 
         // when
         MatchResult matchResult = MatchResult.judge(dealer, player);
@@ -71,11 +78,11 @@ class MatchResultTest {
     void win_WhenOnlyPlayerBlackjack() {
         // given
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
-        player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_TEN_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
 
         // when
         MatchResult matchResult = MatchResult.judge(dealer, player);
@@ -90,11 +97,11 @@ class MatchResultTest {
     void lose_WhenOnlyDealerBlackjack() {
         // given
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
-        dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
+        player.receiveHand(SPADE_TEN_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_ACE_CARD);
+        dealer.receiveHand(SPADE_TEN_CARD);
 
         // when
         MatchResult matchResult = MatchResult.judge(dealer, player);
@@ -111,16 +118,16 @@ class MatchResultTest {
             "KING, NINE, KING, NINE, DRAW",
             "KING, KING, KING, EIGHT, WIN"
     })
-    void judgeTest(CardValue playerCard1, CardValue playerCard2,
-                   CardValue dealerCard1, CardValue dealerCard2,
+    void judgeTest(CardValue playerCardValue1, CardValue playerCardValue2,
+                   CardValue dealerCardValue1, CardValue dealerCardValue2,
                    MatchResult expected) {
         // given
         Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-        player.receiveHand(new Card(Suit.SPADES, playerCard1));
-        player.receiveHand(new Card(Suit.SPADES, playerCard2));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
-        dealer.receiveHand(new Card(Suit.SPADES, dealerCard1));
-        dealer.receiveHand(new Card(Suit.SPADES, dealerCard2));
+        player.receiveHand(createCard(Suit.SPADES, playerCardValue1));
+        player.receiveHand(createCard(Suit.SPADES, playerCardValue2));
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(createCard(Suit.SPADES, dealerCardValue1));
+        dealer.receiveHand(createCard(Suit.SPADES, dealerCardValue2));
 
         // when
         MatchResult matchResult = MatchResult.judge(dealer, player);

@@ -1,8 +1,10 @@
 package blackjack.model;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Deck;
 import java.util.ArrayList;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
 

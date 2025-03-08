@@ -3,7 +3,7 @@ package blackjack.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private final Name name;
     private final HitDecisionStrategy hitDecisionStrategy;

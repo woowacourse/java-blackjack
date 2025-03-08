@@ -1,9 +1,11 @@
-package blackjack.model;
+package blackjack.model.card;
 
+import static blackjack.model.card.CardFixtures.NO_SHUFFLER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,25 +17,21 @@ class DeckTest {
     @Test
     void drawTest() {
         // given
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Suit.SPADES, CardValue.ACE));
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        int expected = deck.size() - 1;
+        Deck deck = Deck.createStandardDeck(NO_SHUFFLER);
 
         // when
         deck.draw();
 
         // then
         assertThat(deck.size())
-                .isSameAs(expected);
+                .isSameAs(51);
     }
 
     @DisplayName("더이상 뽑을 카드가 없는 경우 예외가 발생한다.")
     @Test
     void shouldThrowException_WhenRunOutOfCard() {
         // given
-        List<Card> cards = new ArrayList<>();
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
+        Deck deck = Deck.createDeckByCards(List.of(), NO_SHUFFLER);
 
         // when, then
         assertThatCode(deck::draw)
@@ -45,16 +43,17 @@ class DeckTest {
     @Test
     void createShuffleDeckTest() {
         // given
-        List<Card> cards = Card.createDeck();
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.SPADES, CardValue.ACE));
+        cards.add(new Card(Suit.SPADES, CardValue.KING));
 
         // when
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
+        Deck deck = Deck.createDeckByCards(cards, Collections::reverse);
 
         // then
-        for (Card card : cards) {
-            Card drawedCard = deck.draw();
-            assertThat(card)
-                    .isEqualTo(drawedCard);
-        }
+        assertThat(deck.draw())
+                .isEqualTo(new Card(Suit.SPADES, CardValue.KING));
+        assertThat(deck.draw())
+                .isEqualTo(new Card(Suit.SPADES, CardValue.ACE));
     }
 }

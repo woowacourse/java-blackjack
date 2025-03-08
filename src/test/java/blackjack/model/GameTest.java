@@ -3,9 +3,17 @@ package blackjack.model;
 import static blackjack.TestFixtures.NO_HIT_STRATEGY;
 import static blackjack.TestFixtures.TEST_EMPTY_VISUALIZER;
 import static blackjack.TestFixtures.createHitDecisionStrategy;
+import static blackjack.model.card.CardFixtures.NO_SHUFFLER;
+import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_SEVEN_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Deck;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -18,13 +26,13 @@ class GameTest {
     @Test
     void createTest() {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
         List<Player> players = List.of(
                 new Player(new Name("pobi"), NO_HIT_STRATEGY),
                 new Player(new Name("neo"), NO_HIT_STRATEGY));
 
         // when, then
-        assertThatCode(() -> new Game(new Dealer(deck), players))
+        assertThatCode(() -> new Game(dealer, players))
                 .doesNotThrowAnyException();
     }
 
@@ -32,8 +40,7 @@ class GameTest {
     @Test
     void dealInitialCardsTest() {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
         List<Player> players = List.of(
                 new Player(new Name("pobi"), NO_HIT_STRATEGY),
                 new Player(new Name("neo"), NO_HIT_STRATEGY));
@@ -53,8 +60,7 @@ class GameTest {
     @Test
     void playTurnForAllPlayerTest() {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
         HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, false));
         List<Player> players = List.of(new Player(new Name("pobi"), hitDecisionStrategy));
         Game game = new Game(dealer, players);
@@ -72,10 +78,7 @@ class GameTest {
     @Test
     void getDealerVisibleCardTest() {
         // given
-        Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
-        Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Deck deck = Deck.createShuffledDeck(List.of(spadeFive, spadeTen), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(List.of(SPADE_SIX_CARD, SPADE_TEN_CARD), NO_SHUFFLER));
         Game game = new Game(dealer, List.of());
         game.dealInitialCards();
 
@@ -84,7 +87,9 @@ class GameTest {
 
         // then
         assertThat(dealerVisibleCard)
-                .isEqualTo(spadeFive);
+                .isEqualTo(SPADE_SIX_CARD);
+        assertThat(dealerVisibleCard)
+                .isNotEqualTo(SPADE_TEN_CARD);
     }
 
     @DisplayName("처음 받은 패가 블랙잭인 경우, 히트 여부를 묻지 않는다.")
@@ -92,13 +97,13 @@ class GameTest {
     void playTurn_ForAllPlayer_WhenBlackjackTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Suit.SPADES, CardValue.ACE),
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.TWO),
-                new Card(Suit.SPADES, CardValue.FIVE)
+                SPADE_ACE_CARD,
+                SPADE_TEN_CARD,
+                SPADE_SEVEN_CARD,
+                SPADE_TEN_CARD,
+                SPADE_TEN_CARD
         );
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
         HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true));
         List<Player> players = List.of(new Player(new Name("pobi"), hitDecisionStrategy));
         Game game = new Game(dealer, players);
@@ -117,14 +122,13 @@ class GameTest {
     void playTurn_ForAllPlayer_WhenBustTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.HEARTS, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.TWO),
-                new Card(Suit.SPADES, CardValue.FIVE),
-                new Card(Suit.HEARTS, CardValue.TWO)
+                SPADE_TEN_CARD,
+                SPADE_TEN_CARD,
+                SPADE_SEVEN_CARD,
+                SPADE_TEN_CARD,
+                SPADE_TWO_CARD
         );
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
         HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, true));
         List<Player> players = List.of(new Player(new Name("pobi"), hitDecisionStrategy));
         Game game = new Game(dealer, players);
@@ -143,14 +147,13 @@ class GameTest {
     void dealerHitTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.HEARTS, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.SIX),
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.FOUR)
+                SPADE_TEN_CARD,
+                SPADE_TEN_CARD,
+                SPADE_SEVEN_CARD,
+                SPADE_TWO_CARD,
+                SPADE_TEN_CARD
         );
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
         List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
@@ -170,14 +173,13 @@ class GameTest {
     void dealerHitWhenOver16Test() {
         // given
         List<Card> cards = List.of(
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.HEARTS, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.SEVEN),
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.FOUR)
+                SPADE_TEN_CARD,
+                SPADE_TEN_CARD,
+                SPADE_SEVEN_CARD,
+                SPADE_TEN_CARD,
+                SPADE_TEN_CARD
         );
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
         List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
@@ -197,13 +199,12 @@ class GameTest {
     void judgeMatchResultsTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.HEARTS, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.SEVEN),
-                new Card(Suit.SPADES, CardValue.TEN)
+                SPADE_TEN_CARD,
+                SPADE_TEN_CARD,
+                SPADE_SEVEN_CARD,
+                SPADE_TEN_CARD
         );
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
         List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
