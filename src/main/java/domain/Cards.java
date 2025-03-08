@@ -65,7 +65,7 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public int calculateDifferenceFromTwentyOne() {
+    public int calculateDifferenceFromBlackjackScore() {
         return Math.abs(totalRankSum - BLACKJACK_SCORE);
     }
 

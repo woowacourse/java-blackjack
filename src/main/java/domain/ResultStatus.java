@@ -37,8 +37,8 @@ public enum ResultStatus {
     }
 
     private static void compareDifference(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
-        int dealerAbs = dealer.calculateDifferenceFromTwentyOne();
-        int playerAbs = player.calculateDifferenceFromTwentyOne();
+        int dealerAbs = dealer.calculateDifferenceFromBlackjackScore();
+        int playerAbs = player.calculateDifferenceFromBlackjackScore();
         if (playerAbs > dealerAbs) {
             result.put(player, ResultStatus.LOSE);
             return;
