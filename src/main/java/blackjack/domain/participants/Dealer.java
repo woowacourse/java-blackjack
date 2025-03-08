@@ -58,10 +58,6 @@ public class Dealer {
         player.send(deck.draw());
     }
 
-    public boolean isBlackjack() {
-        return cards.isBlackjack();
-    }
-
     public Victory createVictory() {
         return Victory.create(this, players);
     }

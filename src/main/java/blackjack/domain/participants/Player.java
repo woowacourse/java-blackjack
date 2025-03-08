@@ -20,10 +20,6 @@ public class Player {
         return cards.calculateMaxScore();
     }
 
-    public boolean isBlackjack() {
-        return cards.isBlackjack();
-    }
-
     public Cards getCards() {
         return cards;
     }
