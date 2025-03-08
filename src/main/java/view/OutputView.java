@@ -14,7 +14,7 @@ public class OutputView {
 
     public static void printInitialDealResult(Dealer dealer, Players players) {
         printCardDivision(players);
-        Card firstDealerCard = dealer.getFirstHand();
+        Card firstDealerCard = dealer.openFirstCard();
         System.out.println("딜러카드: " + firstDealerCard.getCardName());
 
         for (Player player : players.getPlayers()) {

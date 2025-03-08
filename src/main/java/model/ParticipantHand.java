@@ -31,6 +31,10 @@ public class ParticipantHand {
         return calculateScoreWithAceAsMinValue();
     }
 
+    public Card openFirstCard(){
+        return cards.getFirst();
+    }
+
     private int calculateScoreWithAceAsMinValue() {
         return cards.stream()
                 .mapToInt(Card::getCardRankDefaultValue)
