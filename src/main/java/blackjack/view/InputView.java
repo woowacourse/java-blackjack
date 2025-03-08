@@ -25,7 +25,7 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String answer = scanner.nextLine();
         String[] parsedName = answer.split(SPLIT_DELIMITER);
-        validatePlayers(parsedName);
+        validatePlayersCount(parsedName);
         validateNameEqualsDealerName(parsedName);
         List<Name> names = Arrays.stream(parsedName)
                 .map(Name::new)
@@ -60,8 +60,9 @@ public class InputView {
         throw new IllegalArgumentException(INVALID_HIT_RESPONSE.getMessage());
     }
 
-    private static void validatePlayers(final String[] parsedName) {
-        if (parsedName.length > MAX_PLAYER_COUNT || parsedName.length < MIN_PLAYER_COUNT) {
+    private static void validatePlayersCount(final String[] parsedName) {
+        int playersCount = parsedName.length;
+        if (playersCount > MAX_PLAYER_COUNT || parsedName.length < MIN_PLAYER_COUNT) {
             throw new IllegalArgumentException(INVALID_PLAYER_COUNT.getMessage());
         }
     }
