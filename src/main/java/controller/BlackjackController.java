@@ -66,9 +66,7 @@ public class BlackjackController {
 
 	private List<Player> inputPlayers() {
 		final List<String> playerNames = inputView.readPlayerNames();
-		return playerNames.stream()
-			.map(Player::new)
-			.collect(Collectors.toList());
+		return playerNames.stream().map(Player::new).collect(Collectors.toList());
 	}
 
 	private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
@@ -87,15 +85,11 @@ public class BlackjackController {
 	}
 
 	private static List<String> convertPlayersToNames(List<Player> players) {
-		return players.stream()
-			.map(Player::getName)
-			.collect(Collectors.toList());
+		return players.stream().map(Player::getName).collect(Collectors.toList());
 	}
 
 	private List<Map.Entry<String, List<String>>> convertPlayersToEntries(final List<Player> players) {
-		return players.stream()
-			.map(this::convertPlayerToEntry)
-			.collect(Collectors.toList());
+		return players.stream().map(this::convertPlayerToEntry).collect(Collectors.toList());
 	}
 
 	private Map.Entry<String, List<String>> convertPlayerToEntry(final Player player) {
@@ -109,16 +103,13 @@ public class BlackjackController {
 	}
 
 	private String convertedCardText(final Card dealerFirstCard) {
-		final String cardNumberText = CardNumberToTextConverter.convert(dealerFirstCard.rank());
+		final String cardNumberText = RankMessage.convertRankToMessage(dealerFirstCard.rank());
 		final String cardEmblemText = dealerFirstCard.suit().getName();
 		return cardNumberText + cardEmblemText;
 	}
 
 	private List<String> convertParticipantCardText(final Participant dealerParticipant) {
-		return dealerParticipant.getCardHand().getCards()
-			.stream()
-			.map(this::convertedCardText)
-			.toList();
+		return dealerParticipant.getCardHand().getCards().stream().map(this::convertedCardText).toList();
 	}
 
 	private void playerPickCard(final List<Player> players, final Deck deck) {
