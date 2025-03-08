@@ -8,10 +8,13 @@ import domain.game.GameResult;
 import domain.participant.Player;
 import dto.SetUpCardsDTO;
 import domain.game.TakeMoreCardSelector;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import view.InputView;
 import view.OutputView;
 
@@ -46,8 +49,9 @@ public class BlackjackController {
     public SetUpCardsDTO createSetUpCardsDTO(Dealer dealer, List<Player> players) {
         Card dealerOpenCard = dealer.getOpenCard();
 
-        Map<String, List<Card>> cards = new LinkedHashMap<>();
-        players.forEach(p -> cards.put(p.getName(), p.getCards()));
+        Map<String, List<Card>> cards = players.stream()
+                .collect(Collectors.toMap(Player::getName, player -> dealer.getCards()
+                        , (player1, player2) -> player1, LinkedHashMap::new));
 
         return new SetUpCardsDTO(dealerOpenCard, cards);
     }
@@ -56,7 +60,7 @@ public class BlackjackController {
         List<FinalResultDTO> finalResultDTOs = new ArrayList<>();
         FinalResultDTO finalResultDTO = new FinalResultDTO("딜러", dealer.getCards(), dealer.calculateScore());
         finalResultDTOs.add(finalResultDTO);
-        for(Player player : players) {
+        for (Player player : players) {
             FinalResultDTO finalResultDTO1 = new FinalResultDTO(player.getName(), player.getCards(), player.calculateScore());
             finalResultDTOs.add(finalResultDTO1);
         }
