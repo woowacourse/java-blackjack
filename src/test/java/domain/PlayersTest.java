@@ -17,12 +17,12 @@ public class PlayersTest {
 
     @Test
     void 플레이어별_이름과_카드리스트의_총합을_반환한다() {
-        Player drago = new Player(new Name("drago"), new Cards(
+        Player drago = new Player(new ParticipantName("drago"), new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.FOUR))));
 
-        Player duei = new Player(new Name("duei"), new Cards(
+        Player duei = new Player(new ParticipantName("duei"), new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.TWO))));
@@ -36,12 +36,12 @@ public class PlayersTest {
     @Test
     void 플레이어를_새로운_플레이어로_교체한다() {
         Cards cards = new Cards(List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.FOUR)));
-        Player player = new Player(new Name("drago"), cards);
+        Player player = new Player(new ParticipantName("drago"), cards);
         Players players = new Players(new ArrayList<>(List.of(player)));
 
         Cards newCards = new Cards(List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                 new Card(Suit.CLOVER, Rank.FOUR), new Card(Suit.HEART, Rank.JACK)));
-        Player newPlayer = new Player(new Name("drago"), newCards);
+        Player newPlayer = new Player(new ParticipantName("drago"), newCards);
         Players expected = new Players(List.of(newPlayer));
 
         assertThat(players.editPlayer(player, newPlayer)).isEqualTo(expected);

@@ -5,24 +5,24 @@ import java.util.Objects;
 
 public class Player extends Participant<Player>{
 
-    public Player(Name name, Cards cards) {
-        super(name, cards);
+    public Player(ParticipantName participantName, Cards cards) {
+        super(participantName, cards);
     }
 
     @Override
     public Player createParticipant(List<Card> providedCards) {
-        return new Player(name, cards.addCards(providedCards));
+        return new Player(participantName, cards.addCards(providedCards));
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(name, player.name) && Objects.equals(cards, player.cards);
+        return Objects.equals(participantName, player.participantName) && Objects.equals(cards, player.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(participantName, cards);
     }
 }

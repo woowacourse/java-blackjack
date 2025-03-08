@@ -15,7 +15,7 @@ public class GameManager {
     public GameManager(List<String> playerNames, CardProvider provider) {
         this.provider = provider;
         List<Player> playerList = playerNames.stream()
-            .map(Name::new)
+            .map(ParticipantName::new)
             .map(name -> new Player(name, new Cards(this.provider.provideCards(INITIAL_DRAW_SIZE))))
             .toList();
         this.players = new Players(playerList);

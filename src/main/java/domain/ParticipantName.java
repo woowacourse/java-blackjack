@@ -2,11 +2,11 @@ package domain;
 
 import java.util.Objects;
 
-public class Name {
+public class ParticipantName {
 
     private final String name;
 
-    public Name(String name) {
+    public ParticipantName(String name) {
         validateBlank(name);
         this.name = name;
     }
@@ -24,8 +24,8 @@ public class Name {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
+        ParticipantName participantName1 = (ParticipantName) o;
+        return Objects.equals(name, participantName1.name);
     }
 
     @Override

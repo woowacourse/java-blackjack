@@ -4,11 +4,11 @@ import java.util.List;
 
 public abstract class Participant<T extends Participant<T>> {
 
-    protected Name name;
+    protected ParticipantName participantName;
     protected Cards cards;
 
-    public Participant(Name name, Cards cards) {
-        this.name = name;
+    public Participant(ParticipantName participantName, Cards cards) {
+        this.participantName = participantName;
         this.cards = cards;
     }
 
@@ -31,7 +31,7 @@ public abstract class Participant<T extends Participant<T>> {
     }
 
     public String getName() {
-        return name.getName();
+        return participantName.getName();
     }
 
     public Cards getCards() {
