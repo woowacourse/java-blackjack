@@ -71,7 +71,7 @@ class BlackjackGameTest {
             );
             dealer.addCards(cardsUnder16.get(0), cardsUnder16.get(1));
 
-            CardDeck cardDeck = CardDeck.createCardDeck();
+            CardDeck cardDeck = CardDeck.shuffleCardDeck();
             List<Participant> participants = List.of(dealer);
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
@@ -88,7 +88,7 @@ class BlackjackGameTest {
             );
             dealer.addCards(cardsOver16.get(0), cardsOver16.get(1));
 
-            CardDeck cardDeck = CardDeck.createCardDeck();
+            CardDeck cardDeck = CardDeck.shuffleCardDeck();
             List<Participant> participants = List.of(dealer);
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
@@ -132,7 +132,7 @@ class BlackjackGameTest {
             );
             player3.addCards(initialCards4.get(0), initialCards4.get(1));
 
-            CardDeck cardDeck = CardDeck.createCardDeck();
+            CardDeck cardDeck = CardDeck.shuffleCardDeck();
             List<Participant> participants = List.of(dealer, player1, player2, player3);
             game = new BlackjackGame(cardDeck, participants);
         }

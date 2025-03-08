@@ -10,13 +10,18 @@ public class BlackjackGame {
     private final CardDeck cardDeck;
     private final List<Participant> participants;
 
+    public BlackjackGame() {
+        this.cardDeck = CardDeck.shuffleCardDeck();
+        this.participants = new ArrayList<>();
+    }
+
     public BlackjackGame(final CardDeck cardDeck, final List<Participant> participants) {
         this.cardDeck = cardDeck;
         this.participants = participants;
     }
 
     public static BlackjackGame createByPlayerNames(final List<String> names) {
-        CardDeck cardDeck = CardDeck.createCardDeck();
+        CardDeck cardDeck = CardDeck.shuffleCardDeck();
         List<Participant> participants = new ArrayList<>();
 
         participants.add(new Dealer());
