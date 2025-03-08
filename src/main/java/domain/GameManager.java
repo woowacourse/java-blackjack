@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameManager {
+    private static final int START_RECEIVE_CARD = 2;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -20,9 +21,9 @@ public class GameManager {
     }
 
     public static GameManager create(final Dealer dealer, final List<Player> players) {
-        dealer.receiveCard(2);
+        dealer.receiveCard(START_RECEIVE_CARD);
         for (Player player : players) {
-            player.receiveCard(2);
+            player.receiveCard(START_RECEIVE_CARD);
         }
         return new GameManager(dealer, players);
     }
