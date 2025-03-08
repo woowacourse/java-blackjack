@@ -15,10 +15,10 @@ public enum Result {
         int dealerScore = dealerCards.calculateTotalPoint();
         int playerScore = playersCards.calculateTotalPoint();
 
-        boolean dealerBurst = dealerCards.isBurst();
-        boolean playersBurst = playersCards.isBurst();
+        boolean dealerBust = dealerCards.isBust();
+        boolean playersBust = playersCards.isBust();
 
-        if (dealerBurst && playersBurst) {
+        if (dealerBust && playersBust) {
             return DRAW;
         }
 
@@ -26,11 +26,11 @@ public enum Result {
             return DRAW;
         }
 
-        if (dealerBurst) {
+        if (dealerBust) {
             return LOSE;
         }
 
-        if (playersBurst) {
+        if (playersBust) {
             return WIN;
         }
 

@@ -66,13 +66,13 @@ public class BlackJackController {
             player.hit(deck);
             outputView.printCards(player);
         }
-        if (!player.isBurst()) {
+        if (!player.isBust()) {
             outputView.printCards(player);
         }
     }
 
     private boolean canHit(Player player) {
-        return !player.isBurst() && YES_SIGN.equals(getYesOrNo(player));
+        return !player.isBust() && YES_SIGN.equals(getYesOrNo(player));
     }
 
     private String getYesOrNo(Player player) {

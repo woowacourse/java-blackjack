@@ -20,7 +20,7 @@ public class Player extends Gamer {
     }
 
     private void validateBurst() {
-        if (isBurst()) {
+        if (isBust()) {
             throw new IllegalStateException("[ERROR] 버스트되면 카드를 뽑을 수 없습니다.");
         }
     }

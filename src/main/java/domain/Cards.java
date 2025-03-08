@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Cards {
 
-    private static final int BURST_SCORE = 22;
+    private static final int BUST_SCORE = 22;
 
     private final List<Card> cards;
 
@@ -55,14 +55,14 @@ public class Cards {
     }
 
     private int calculateAcePoint(int totalPoint, Rank ace) {
-        if (totalPoint + Rank.SOFT_ACE.getPoint() >= BURST_SCORE) {
+        if (totalPoint + Rank.SOFT_ACE.getPoint() >= BUST_SCORE) {
             return ace.getPoint();
         }
         return Rank.SOFT_ACE.getPoint();
     }
 
-    public boolean isBurst() {
-        return calculateTotalPoint() >= BURST_SCORE;
+    public boolean isBust() {
+        return calculateTotalPoint() >= BUST_SCORE;
     }
 
     public Card extractCard() {

@@ -65,7 +65,7 @@ class PlayerTest {
 
     @DisplayName("플레이어는 버스트되면 카드를 더 뽑을 수 없다.")
     @Test
-    void burstIsNotHit() {
+    void bustIsNotHit() {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();
@@ -85,7 +85,7 @@ class PlayerTest {
 
     @DisplayName("플레이어는 버스트 되지 않으면 카드를 더 뽑을 수 있다.")
     @Test
-    void notBurstHit() {
+    void notBustHit() {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();

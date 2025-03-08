@@ -9,7 +9,7 @@ class ResultTest {
 
     @DisplayName("플레이어와 딜러 모두 버스트라면 무승부다")
     @Test
-    void judgeBurstDraw() {
+    void judgeBustDraw() {
         //given
         Cards cards = new Cards();
         Card card1 = new Card(Symbol.COLVER, Rank.THREE);
@@ -44,7 +44,7 @@ class ResultTest {
 
     @DisplayName("플레이어와 딜러 모두 버스트가 아닐때 점수가 같다면 무승부다.")
     @Test
-    void judgeNotBurstDraw() {
+    void judgeNotBustDraw() {
         //given
         Cards cards = new Cards();
         Card card1 = new Card(Symbol.COLVER, Rank.TWO);
@@ -79,7 +79,7 @@ class ResultTest {
 
     @DisplayName("플레이어와 딜러 중 한쪽만 버스트라면 점수에 상관없이 버스트가 아닌 쪽이 승리한다.")
     @Test
-    void judgeOnlyOneBurstWin() {
+    void judgeOnlyOneBustWin() {
         //given
         Cards cards = new Cards();
         Card card1 = new Card(Symbol.COLVER, Rank.TWO);

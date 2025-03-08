@@ -14,8 +14,8 @@ public abstract class Gamer {
         add(totalCard);
     }
 
-    public boolean isBurst() {
-        return cards.isBurst();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public int getScore() {

@@ -15,7 +15,7 @@ class CardsTest {
 
     @DisplayName("점수가 21점을 초과하면 버스트된다.")
     @Test
-    void burst2() {
+    void bust() {
         //given
         Cards totalCards = new Cards();
         totalCards.add(new Card(Symbol.HEART, Rank.KING));
@@ -23,7 +23,7 @@ class CardsTest {
         totalCards.add(new Card(Symbol.HEART, Rank.TWO));
 
         //when
-        boolean actual = totalCards.isBurst();
+        boolean actual = totalCards.isBust();
 
         //then
         assertThat(actual).isTrue();
@@ -31,14 +31,14 @@ class CardsTest {
 
     @DisplayName("점수가 21점을 초과하지않으면 버스트되지 않는다.")
     @Test
-    void notBurst() {
+    void notBust() {
         //given
         Cards totalCards = new Cards();
         totalCards.add(new Card(Symbol.HEART, Rank.KING));
         totalCards.add(new Card(Symbol.HEART, Rank.JACK));
 
         //when
-        boolean actual = totalCards.isBurst();
+        boolean actual = totalCards.isBust();
 
         //then
         assertThat(actual).isFalse();
