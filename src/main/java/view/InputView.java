@@ -1,6 +1,6 @@
 package view;
 
-import domain.AnswerCommand;
+import controller.AnswerCommand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

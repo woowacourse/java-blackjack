@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import controller.AnswerCommand;
 import org.junit.jupiter.api.Test;
 
 public class AnswerCommandTest {

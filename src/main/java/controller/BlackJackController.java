@@ -1,6 +1,5 @@
 package controller;
 
-import domain.AnswerCommand;
 import domain.GameManager;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
