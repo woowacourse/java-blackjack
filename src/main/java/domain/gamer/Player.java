@@ -13,7 +13,6 @@ public class Player {
     protected final CardGenerator cardGenerator;
     private final String name;
 
-
     public Player(String name, CardGroup cardGroup, CardGenerator cardGenerator) {
         this.name = name;
         this.cardGroup = cardGroup;
