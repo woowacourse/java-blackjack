@@ -3,5 +3,5 @@ package blackjack.model;
 @FunctionalInterface
 public interface HitDecisionStrategy {
 
-    boolean decideHit(String playerName);
+    boolean decideHit(Name playerName);
 }

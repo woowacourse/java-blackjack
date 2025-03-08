@@ -22,12 +22,12 @@ public class OutputView {
     }
 
     public void printPlayerHand(Player player) {
-        System.out.printf("%s: %s%n", player.getName(), getHand(player));
+        System.out.printf("%s: %s%n", player.getName().value(), getHand(player));
     }
 
     private String joinPlayerNamesWithComma(List<Player> players) {
         return players.stream()
-                .map(Player::getName)
+                .map(player -> player.getName().value())
                 .collect(Collectors.joining(", "));
     }
 
@@ -80,14 +80,14 @@ public class OutputView {
     private void printPlayersMatchResult(Map<Player, MatchResult> playerMatchResults) {
         for (Entry<Player, MatchResult> playerMatchResultEntry : playerMatchResults.entrySet()) {
             System.out.printf("%s: %s%n",
-                    playerMatchResultEntry.getKey().getName(),
+                    playerMatchResultEntry.getKey().getName().value(),
                     playerMatchResultEntry.getValue().getLabel());
         }
     }
 
     public void printPlayerHandAndTotal(List<Player> players) {
         for (Player player : players) {
-            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player), player.getTotal());
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName().value(), getHand(player), player.getTotal());
         }
         System.out.println();
     }

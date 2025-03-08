@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
-    private final String name;
+    private final Name name;
     private final HitDecisionStrategy hitDecisionStrategy;
 
-    public Player(String name, HitDecisionStrategy hitDecisionStrategy) {
+    public Player(Name name, HitDecisionStrategy hitDecisionStrategy) {
         super(new ArrayList<>());
         this.name = name;
         this.hitDecisionStrategy = hitDecisionStrategy;
@@ -19,7 +19,7 @@ public class Player extends Participant {
         return hitDecisionStrategy.decideHit(name);
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

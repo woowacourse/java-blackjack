@@ -19,7 +19,9 @@ class GameTest {
     void createTest() {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY), new Player("neo", NO_HIT_STRATEGY));
+        List<Player> players = List.of(
+                new Player(new Name("pobi"), NO_HIT_STRATEGY),
+                new Player(new Name("neo"), NO_HIT_STRATEGY));
 
         // when, then
         assertThatCode(() -> new Game(new Dealer(deck), players))
@@ -32,7 +34,9 @@ class GameTest {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY), new Player("neo", NO_HIT_STRATEGY));
+        List<Player> players = List.of(
+                new Player(new Name("pobi"), NO_HIT_STRATEGY),
+                new Player(new Name("neo"), NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
 
         // when
@@ -52,7 +56,7 @@ class GameTest {
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
         HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, false));
-        List<Player> players = List.of(new Player("pobi", hitDecisionStrategy));
+        List<Player> players = List.of(new Player(new Name("pobi"), hitDecisionStrategy));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -96,7 +100,7 @@ class GameTest {
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
         HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true));
-        List<Player> players = List.of(new Player("pobi", hitDecisionStrategy));
+        List<Player> players = List.of(new Player(new Name("pobi"), hitDecisionStrategy));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -122,7 +126,7 @@ class GameTest {
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
         HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, true));
-        List<Player> players = List.of(new Player("pobi", hitDecisionStrategy));
+        List<Player> players = List.of(new Player(new Name("pobi"), hitDecisionStrategy));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -147,7 +151,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY));
+        List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -174,7 +178,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY));
+        List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -200,7 +204,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi", NO_HIT_STRATEGY));
+        List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -208,7 +212,7 @@ class GameTest {
         Map<Player, MatchResult> playerMatchResults = game.judgeMatchResults();
 
         // then
-        assertThat(playerMatchResults.get(new Player("pobi", NO_HIT_STRATEGY)))
+        assertThat(playerMatchResults.get(new Player(new Name("pobi"), NO_HIT_STRATEGY)))
                 .isSameAs(MatchResult.WIN);
     }
 }

@@ -4,6 +4,7 @@ import blackjack.model.Card;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.Game;
+import blackjack.model.Name;
 import blackjack.model.Player;
 import blackjack.model.RandomCardShuffler;
 import blackjack.view.InputView;
@@ -29,6 +30,13 @@ public class BlackjackController {
         displayResult(game);
     }
 
+    private List<Player> getPlayers() {
+        List<String> playerNames = inputView.readPlayerNames();
+        return playerNames.stream()
+                .map(name -> new Player(new Name(name), inputView::readHitOrNot))
+                .toList();
+    }
+
     private Game createGame(List<Player> players) {
         Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler()));
         return new Game(dealer, players);
@@ -46,13 +54,6 @@ public class BlackjackController {
     private void dealerHitOrNot(Game game) {
         boolean isDealerHit = game.dealerHit();
         outputView.printDealerHit(isDealerHit);
-    }
-
-    private List<Player> getPlayers() {
-        List<String> playerNames = inputView.readPlayerNames();
-        return playerNames.stream()
-                .map(name -> new Player(name, inputView::readHitOrNot))
-                .toList();
     }
 
     private void displayResult(Game game) {
