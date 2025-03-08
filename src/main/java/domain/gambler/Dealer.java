@@ -1,5 +1,7 @@
-package domain;
+package domain.gambler;
 
+import domain.Card;
+import domain.Cards;
 import java.util.Comparator;
 import java.util.List;
 

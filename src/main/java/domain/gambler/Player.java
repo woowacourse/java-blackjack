@@ -1,5 +1,7 @@
-package domain;
+package domain.gambler;
 
+import domain.Card;
+import domain.Cards;
 import domain.constant.WinDrawLose;
 import java.util.List;
 

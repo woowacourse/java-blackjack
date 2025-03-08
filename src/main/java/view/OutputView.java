@@ -1,9 +1,9 @@
 package view;
 
 import domain.Card;
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
+import domain.gambler.Dealer;
+import domain.gambler.Player;
+import domain.gambler.Players;
 import domain.constant.WinDrawLose;
 import java.util.EnumMap;
 import java.util.List;

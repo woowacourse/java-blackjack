@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
+import domain.gambler.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;

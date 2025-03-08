@@ -1,4 +1,4 @@
-package domain;
+package domain.gambler;
 
 import domain.constant.WinDrawLose;
 import java.util.LinkedHashMap;

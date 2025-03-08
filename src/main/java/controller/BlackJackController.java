@@ -1,10 +1,10 @@
 package controller;
 
-import domain.Dealer;
+import domain.gambler.Dealer;
 import domain.Deck;
-import domain.Nickname;
-import domain.Player;
-import domain.Players;
+import domain.gambler.Nickname;
+import domain.gambler.Player;
+import domain.gambler.Players;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
