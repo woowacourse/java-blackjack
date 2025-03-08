@@ -23,7 +23,7 @@ public abstract class Gamer {
 
     public void receiveCard(int count) {
         while (count-- > 0) {
-            cardGroup.addCard(cardGenerator.generate());
+            receiveCard();
         }
     }
 
