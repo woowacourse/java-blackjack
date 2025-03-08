@@ -38,14 +38,11 @@ public class ParticipantHand {
     }
 
     private boolean checkScoreExceptAceBelow(int upperBound) {
-        return cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getCardRankDefaultValue)
-                .sum() <= upperBound;
+        return calculateExceptAceScore() <= upperBound;
     }
 
     private boolean canOneAceConvertToMaxValue() {
-        int scoreOfAceAsMinValue = calculateAceCount();
+        int scoreOfAceAsMinValue = calculateTotalAceScore();
         if (scoreOfAceAsMinValue == 0) {
             return false;
         }
@@ -54,9 +51,16 @@ public class ParticipantHand {
         return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
     }
 
-    private int calculateAceCount() {
+    private int calculateTotalAceScore() {
         return cards.stream()
                 .filter(Card::isAce)
+                .mapToInt(Card::getCardRankDefaultValue)
+                .sum();
+    }
+
+    private int calculateExceptAceScore() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
                 .mapToInt(Card::getCardRankDefaultValue)
                 .sum();
     }
