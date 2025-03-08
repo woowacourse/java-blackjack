@@ -52,9 +52,33 @@ public class BlackjackGame {
         final Map<String, ResultStatus> result = new HashMap<>();
         for (Player player : participants.getPlayers()) {
             final int playerSum = player.calculateMaxSum();
-            result.put(player.getNickname(), ResultStatus.calculateResultStatus(playerSum, dealerSum));
+            result.put(player.getNickname(), calculateResultStatus(playerSum, dealerSum));
         }
         return Collections.unmodifiableMap(result);
+    }
+
+    public ResultStatus calculateResultStatus(final int sum, final int comparedSum) {
+        if (sum <= BLACKJACK_NUMBER) {
+            return calculateResultStatusUnder21(sum, comparedSum);
+        }
+        return ResultStatus.LOSE;
+    }
+
+    private ResultStatus calculateResultStatusUnder21(final int sum, final int comparedSum) {
+        if (comparedSum <= BLACKJACK_NUMBER) {
+            return calculateResultStatusBothUnder21(sum, comparedSum);
+        }
+        return ResultStatus.WIN;
+    }
+
+    private ResultStatus calculateResultStatusBothUnder21(final int sum, final int comparedSum) {
+        if (sum > comparedSum) {
+            return ResultStatus.WIN;
+        }
+        if (sum == comparedSum) {
+            return ResultStatus.DRAW;
+        }
+        return ResultStatus.LOSE;
     }
 
     public Player getPlayer(final int index) {
