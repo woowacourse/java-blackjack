@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public abstract class Player implements Comparable<Player> {
+public abstract class Player {
 
     private final Name name;
     private final List<Card> cards;
@@ -74,19 +74,5 @@ public abstract class Player implements Comparable<Player> {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public int compareTo(Player o) {
-        if (this.isPlayerBust() && o.isPlayerBust()) {
-            return 0;
-        }
-        if (this.isPlayerNotBust() && o.isPlayerNotBust()) {
-            return Integer.compare(this.calculateCardNumber(), o.calculateCardNumber());
-        }
-        if (this.isPlayerNotBust() && o.isPlayerBust()) {
-            return 1;
-        }
-        return -1;
     }
 }

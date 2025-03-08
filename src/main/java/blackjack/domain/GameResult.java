@@ -9,13 +9,27 @@ public enum GameResult {
     DRAW;
 
     public static GameResult getGameResult(Player dealer, Player player) {
-        if (dealer.compareTo(player) > 0) {
+        if (isPlayerLoser(dealer, player)) {
             return GameResult.LOSE;
         }
-        if (dealer.compareTo(player) < 0) {
+        if (isPlayerWinner(dealer, player)) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
+    }
+
+    private static boolean isPlayerWinner(Player dealer, Player player) {
+        if (dealer.isPlayerNotBust() && player.isPlayerNotBust()) {
+            return dealer.calculateCardNumber() < player.calculateCardNumber();
+        }
+        return dealer.isPlayerBust() && player.isPlayerNotBust();
+    }
+
+    private static boolean isPlayerLoser(Player dealer, Player player) {
+        if (dealer.isPlayerNotBust() && player.isPlayerNotBust()) {
+            return dealer.calculateCardNumber() > player.calculateCardNumber();
+        }
+        return dealer.isPlayerNotBust() && player.isPlayerBust();
     }
 }
 
