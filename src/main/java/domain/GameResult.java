@@ -21,10 +21,10 @@ public enum GameResult {
     }
 
     public static GameResult swapGameResult(final GameResult gameResult) {
-        if (Objects.equals(gameResult, WIN)) {
+        if (gameResult == WIN) {
             return LOSE;
         }
-        if (Objects.equals(gameResult, LOSE)) {
+        if (gameResult == LOSE) {
             return WIN;
         }
         return DRAW;
