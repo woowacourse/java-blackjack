@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Hand {
 
-    public static final int BURST_BOUND = 21;
+    public static final int BUST_BOUND = 21;
 
     private final List<Card> cards;
 
@@ -28,14 +28,14 @@ public class Hand {
 
     private int decideAceNumber(int totalCardNumber) {
         int totalCardNumberWithAce = totalCardNumber + CardNumber.ACE.getNumber();
-        if (isOverBurstBound(totalCardNumberWithAce)) {
+        if (isOverBustBound(totalCardNumberWithAce)) {
             return totalCardNumber + CardNumber.ACE_ANOTHER.getNumber();
         }
         return totalCardNumberWithAce;
     }
 
-    public boolean isOverBurstBound(int totalCardNumber) {
-        return totalCardNumber > BURST_BOUND;
+    public boolean isOverBustBound(int totalCardNumber) {
+        return totalCardNumber > BUST_BOUND;
     }
 
     public int calculateTotalCardNumber() {

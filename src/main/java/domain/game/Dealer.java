@@ -43,9 +43,9 @@ public class Dealer {
         return hand.calculateTotalCardNumber();
     }
 
-    public boolean isOverBurstBound() {
+    public boolean isOverBustBound() {
         int totalCardNumber = calculateTotalCardNumber();
-        return hand.isOverBurstBound(totalCardNumber);
+        return hand.isOverBustBound(totalCardNumber);
     }
 
     public boolean isOverDrawBound() {

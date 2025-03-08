@@ -51,14 +51,14 @@ public class BlackJackController {
     }
 
     private void decidePlayerHitOrStand(CardDeck cardDeck, Player player) {
-        while (!player.isOverBurstBound() && inputView.readDrawMoreCard(player)) {
+        while (!player.isOverBustBound() && inputView.readDrawMoreCard(player)) {
             player.drawCard(cardDeck);
             outputView.printPlayerCard(player);
         }
     }
 
     private void decideDealerHitOrStand(CardDeck cardDeck, Dealer dealer) {
-        while (!dealer.isOverBurstBound() && !dealer.isOverDrawBound()) {
+        while (!dealer.isOverBustBound() && !dealer.isOverDrawBound()) {
             dealer.drawCard(cardDeck);
             outputView.printDealerDrawMessage();
         }

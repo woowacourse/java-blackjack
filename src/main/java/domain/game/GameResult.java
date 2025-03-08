@@ -17,10 +17,10 @@ public enum GameResult {
     }
 
     public static GameResult of(Dealer dealer, Player player) {
-        if (player.isOverBurstBound()) {
+        if (player.isOverBustBound()) {
             return GameResult.LOSE;
         }
-        if (dealer.isOverBurstBound()) {
+        if (dealer.isOverBustBound()) {
             return GameResult.WIN;
         }
         return judgeGameResultIfNotBust(dealer, player);
@@ -35,7 +35,7 @@ public enum GameResult {
         if (playerTotalCardNumber > dealerTotalCardNumber) {
             return GameResult.WIN;
         }
-        if (playerTotalCardNumber == Hand.BURST_BOUND) {
+        if (playerTotalCardNumber == Hand.BUST_BOUND) {
             return judgeGameResultIfBlackJack(dealer, player);
         }
         return GameResult.DRAW;

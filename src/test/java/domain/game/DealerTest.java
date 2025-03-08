@@ -77,7 +77,7 @@ public class DealerTest {
         cards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         //when & then
-        assertThat(dealer.isOverBurstBound()).isFalse();
+        assertThat(dealer.isOverBustBound()).isFalse();
     }
 
     @Test

@@ -1,5 +1,7 @@
 package domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
@@ -7,8 +9,6 @@ import domain.card.Pattern;
 import domain.card.TestShuffler;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
 
@@ -113,7 +113,7 @@ public class HandTest {
 
         //when & then
         int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBurstBound(totalNumber)).isTrue();
+        assertThat(hand.isOverBustBound(totalNumber)).isTrue();
     }
 
     @Test
@@ -127,7 +127,7 @@ public class HandTest {
 
         //when & then
         int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
     }
 
     @Test
@@ -140,7 +140,7 @@ public class HandTest {
 
         //when & then
         int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
     }
 
     @Test
@@ -154,7 +154,7 @@ public class HandTest {
 
         //when & then
         int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
     }
 
     @Test
@@ -169,7 +169,7 @@ public class HandTest {
 
         //when & then
         int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBurstBound(totalNumber)).isTrue();
+        assertThat(hand.isOverBustBound(totalNumber)).isTrue();
     }
 
     @Test
@@ -184,6 +184,6 @@ public class HandTest {
 
         //when & then
         int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBurstBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
     }
 }

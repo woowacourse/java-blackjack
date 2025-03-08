@@ -1,5 +1,7 @@
 package domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
@@ -7,8 +9,6 @@ import domain.card.Pattern;
 import domain.card.TestShuffler;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
 
@@ -63,6 +63,6 @@ public class PlayerTest {
         cards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         //when & then
-        assertThat(player.isOverBurstBound()).isFalse();
+        assertThat(player.isOverBustBound()).isFalse();
     }
 }
