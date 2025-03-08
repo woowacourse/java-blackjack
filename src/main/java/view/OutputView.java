@@ -11,12 +11,9 @@ import static domain.Shape.SPADE;
 import domain.Card;
 import domain.GameResult;
 import domain.Participant;
-import domain.ParticipantsResult;
-import domain.PlayerResult;
 import domain.Rank;
 import domain.Shape;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -109,27 +106,32 @@ public class OutputView {
         return cards.stream().map(this::formatCard).collect(Collectors.joining(", "));
     }
 
-    public void printGameResult(ParticipantsResult participantsResult) {
-        System.out.println();
-        System.out.println(RESULT_MESSAGE);
-        Map<GameResult, Integer> dealerResult = participantsResult.dealerResult().getDealerResult();
-        String dealerName = "딜러: ";
-        System.out.print(dealerName);
-        String dealerWinMessage = formatDealerWinMessage(dealerResult.get(WIN));
-        System.out.print(dealerWinMessage);
-        String dealerLoseMessage = formatDealerLoseMessage(dealerResult.get(LOSE));
-        System.out.print(dealerLoseMessage);
-        String dealerDrawMessage = formatDealerDrawMessage(dealerResult.get(DRAW));
-        System.out.print(dealerDrawMessage);
-        System.out.println();
+    /*
+        public void printGameResult(ParticipantsResult participantsResult) {
+            System.out.println();
+            System.out.println(RESULT_MESSAGE);
 
-        List<PlayerResult> playerResults = participantsResult.playerResults();
-        for (PlayerResult playerResult : playerResults) {
-            System.out.printf("%s: %s%n", playerResult.getPlayerName(),
-                formatGameResult(playerResult.getGameResult()));
+            Set<ParticipantResult> results = participantsResult.getParticipantsResult();
+
+            String dealerName = "딜러: ";
+            System.out.print(dealerName);
+            String dealerWinMessage = formatDealerWinMessage(dealerResult.get(WIN));
+            System.out.print(dealerWinMessage);
+            String dealerLoseMessage = formatDealerLoseMessage(dealerResult.get(LOSE));
+            System.out.print(dealerLoseMessage);
+            String dealerDrawMessage = formatDealerDrawMessage(dealerResult.get(DRAW));
+            System.out.print(dealerDrawMessage);
+            System.out.println();
+
+            List<PlayerResult> playerResults = participantsResult.playerResults();
+            for (PlayerResult playerResult : playerResults) {
+                System.out.printf("%s: %s%n", playerResult.getPlayerName(),
+                    formatGameResult(playerResult.getGameResult()));
+            }
         }
-    }
 
+
+     */
     private String formatDealerWinMessage(Integer integer) {
         if (integer == null) {
             return "";

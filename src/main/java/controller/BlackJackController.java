@@ -7,8 +7,11 @@ import static factory.BlackJackCreator.createParticipants;
 import domain.BlackJackResultCalculator;
 import domain.CardDeck;
 import domain.Participant;
+import domain.ParticipantResult;
 import domain.Participants;
 import domain.ParticipantsResult;
+import domain.Player;
+import java.util.Set;
 import view.InputView;
 import view.OutputView;
 
@@ -26,8 +29,14 @@ public class BlackJackController {
         Participants participants = createGameParticipants();
         CardDeck cardDeck = createCardDeck(createCardBundle());
         receiveCardProcessOfParticipants(participants, cardDeck);
-        receiveCardProcessOfPlayer(participants, cardDeck);
-        receiveCardProcessOfDealer(participants, cardDeck);
+
+        for (Participant participant : participants.getParticipants()) {
+            if (participant instanceof Player) {
+                inputAskReceiveExtraCard(cardDeck, participant);
+                continue;
+            }
+            receiveCardProcessOfDealer(participant, cardDeck);
+        }
         calculateBackJackResultProcess(participants);
     }
 
@@ -46,8 +55,11 @@ public class BlackJackController {
     }
 
     private void printAllParticipantGameResult(Participants participants) {
-        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
-        outputView.printGameResult(participantsResult);
+        ParticipantsResult participantsResults = BlackJackResultCalculator.calculate(participants);
+        Set<ParticipantResult> participantsResult = participantsResults.getParticipantsResult();
+        for (ParticipantResult participantResult : participantsResult) {
+            System.out.println(participantResult.get());
+        }
     }
 
     private void printAllParticipantsInfo(Participants participants) {
@@ -56,18 +68,10 @@ public class BlackJackController {
         }
     }
 
-    private void receiveCardProcessOfDealer(Participants participants, CardDeck cardDeck) {
-        Participant dealer = participants.getDealer();
-        while (dealer.canPick()) {
-            dealer.addCard(cardDeck.getAndRemoveFrontCard());
+    private void receiveCardProcessOfDealer(Participant participant, CardDeck cardDeck) {
+        while (participant.canPick()) {
+            participant.addCard(cardDeck.getAndRemoveFrontCard());
             outputView.printDealerPickMessage();
-        }
-        outputView.printBlankLine();
-    }
-
-    private void receiveCardProcessOfPlayer(Participants participants, CardDeck cardDeck) {
-        for (Participant participant : participants.getPlayerParticipants()) {
-            inputAskReceiveExtraCard(cardDeck, participant);
         }
         outputView.printBlankLine();
     }

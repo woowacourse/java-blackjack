@@ -1,24 +1,29 @@
 package domain;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class DealerResult {
+public class DealerResult extends Dealer implements ParticipantResult {
+
     private final Map<GameResult, Integer> dealerResult;
 
     public DealerResult() {
         this.dealerResult = new HashMap<>();
     }
 
+    @Override
     public void add(GameResult gameResult) {
-        int value = dealerResult.getOrDefault(gameResult, 0) + 1;
-        dealerResult.put(gameResult, value);
+        dealerResult.put(gameResult, dealerResult.getOrDefault(gameResult, 0) + 1);
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
-        return dealerResult;
+
+    @Override
+    public Map<GameResult, Integer> get() {
+        return Collections.unmodifiableMap(dealerResult);
     }
+
 
     @Override
     public boolean equals(Object o) {

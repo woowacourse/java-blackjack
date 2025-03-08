@@ -25,17 +25,4 @@ public class Participants {
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
-
-    public List<Participant> getPlayerParticipants() {
-        return participants.stream()
-            .filter(participant -> participant.getClass() == Player.class)
-            .toList();
-    }
-
-    public Participant getDealer() {
-        return participants.stream()
-            .filter(participant -> participant.getClass() == Dealer.class)
-            .findFirst()
-            .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
-    }
 }

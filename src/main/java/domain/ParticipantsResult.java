@@ -1,7 +1,17 @@
 package domain;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.Set;
 
-public record ParticipantsResult(DealerResult dealerResult, List<PlayerResult> playerResults) {
+public class ParticipantsResult {
 
+    private final Set<ParticipantResult> participantsResult;
+
+    public ParticipantsResult(Set<ParticipantResult> participantsResult) {
+        this.participantsResult = participantsResult;
+    }
+
+    public Set<ParticipantResult> getParticipantsResult() {
+        return Collections.unmodifiableSet(participantsResult);
+    }
 }

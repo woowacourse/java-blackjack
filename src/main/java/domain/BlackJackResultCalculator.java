@@ -1,7 +1,7 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BlackJackResultCalculator {
 
@@ -9,15 +9,28 @@ public class BlackJackResultCalculator {
     }
 
     public static ParticipantsResult calculate(Participants participants) {
-        Participant dealer = participants.getDealer();
-        DealerResult dealerResult = new DealerResult();
-        List<PlayerResult> playerResults = new ArrayList<>();
-        for (Participant player : participants.getPlayerParticipants()) {
-            GameResult currentDealerResult = GameResult.calculateDealerResult(dealer.getTotalValue(),
-                    player.getTotalValue());
-            dealerResult.add(currentDealerResult);
-            playerResults.add(new PlayerResult(player, currentDealerResult.reverse()));
+        int dealerValue = 0;
+        for (Participant participant : participants.getParticipants()) {
+            if (participant instanceof Dealer) {
+                dealerValue = participant.getTotalValue();
+                break;
+            }
         }
-        return new ParticipantsResult(dealerResult, playerResults);
+
+        Set<ParticipantResult> tmpResult = new HashSet<>();
+        ParticipantResult dealerResult = new DealerResult();
+
+        for (Participant participant : participants.getParticipants()) {
+            if (participant instanceof Player) {
+                GameResult gameResult = GameResult.calculateDealerResult(dealerValue,
+                    participant.getTotalValue());
+                ParticipantResult playerResult = new PlayerResult(participant.getName(),
+                    gameResult);
+                dealerResult.add(gameResult.reverse());
+                tmpResult.add(playerResult);
+            }
+        }
+        tmpResult.add(dealerResult);
+        return new ParticipantsResult(tmpResult);
     }
 }
