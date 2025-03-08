@@ -11,13 +11,11 @@ import blackjack.domain.participants.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BlackjackController {
     public void run() {
         try {
-
             Players players = createPlayers();
             Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck(), new ScoreCalculator());
             handOutCards(dealer, players);
@@ -31,13 +29,13 @@ public class BlackjackController {
     }
 
     private Players createPlayers() {
-        String[] playerNames = InputView.inputPlayerNames();
+        List<String> playerNames = InputView.inputPlayerNames();
         return new Players(toPlayers(playerNames));
     }
 
-    private static List<Player> toPlayers(String[] playerNames) {
-        return Arrays.stream(playerNames)
-                .map(name -> new Player(name.trim(), new Cards(new ArrayList<>(), new ScoreCalculator())))
+    private static List<Player> toPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(name -> new Player(name, new Cards(new ArrayList<>(), new ScoreCalculator())))
                 .toList();
     }
 
@@ -48,13 +46,11 @@ public class BlackjackController {
 
     private void additionalCard(Dealer dealer, Players players) {
         players.sendAll((player -> {
-            String answer = InputView.inputAdditionalCard(player);
-            while (answer.equals("y")) {
+            while (InputView.inputAdditionalCard(player)) {
                 if (!sendCardToPlayer(dealer, player)) {
                     break;
                 }
                 OutputView.printPlayerCards(player);
-                answer = InputView.inputAdditionalCard(player);
             }
         }));
     }
