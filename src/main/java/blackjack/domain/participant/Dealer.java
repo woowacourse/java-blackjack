@@ -10,7 +10,6 @@ public class Dealer extends Gamer {
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;
 
-
     public Dealer(final Cards cards) {
         super(cards);
     }
