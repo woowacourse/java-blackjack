@@ -22,13 +22,11 @@ public class Participants {
         players.receiveCards(cards.getPartialCards(size, cards.getSize()), size);
     }
 
-    public boolean canPlayerGetMoreCard(final int index) {
-        final Player player = players.getPlayer(index);
+    public boolean canPlayerGetMoreCard(final Player player) {
         return player.canGetMoreCard();
     }
 
-    public void spreadOneCardToPlayer(final int index, final Card card) {
-        final Player player = players.getPlayer(index);
+    public void spreadOneCardToPlayer(final Player player, final Card card) {
         spreadOneCard(player, card);
     }
 

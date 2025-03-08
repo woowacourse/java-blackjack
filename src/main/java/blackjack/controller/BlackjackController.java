@@ -91,8 +91,8 @@ public class BlackjackController {
 
     private void spreadExtraCards(final BlackjackGame blackjackGame, final int index) {
         final Player player = blackjackGame.getPlayer(index);
-        while (blackjackGame.canPlayerMoreCard(index) && isMoreCard(player)) {
-            blackjackGame.spreadOneCardToPlayer(index);
+        while (blackjackGame.canPlayerMoreCard(player) && isMoreCard(player)) {
+            blackjackGame.spreadOneCardToPlayer(player);
             resultView.printParticipantTotalCards(player);
         }
     }

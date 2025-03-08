@@ -19,6 +19,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.random.CardRandomGenerator;
 import java.util.List;
@@ -49,14 +50,19 @@ class BlackjackGameTest {
     @Test
     void canPlayerMoreCardToPlayer() {
         // given
+        final Participants participants = new Participants(new Dealer(provideEmptyCards()),
+                new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards())));
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
-                new Participants(new Dealer(provideEmptyCards()),
-                        new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
+                participants);
 
-        // when & then
+        // when
+        Player player1 = blackjackGame.getPlayer(0);
+        Player player2 = blackjackGame.getPlayer(1);
+
+        // then
         assertAll(
-                () -> assertThat(blackjackGame.canPlayerMoreCard(0)).isTrue(),
-                () -> assertThat(blackjackGame.canPlayerMoreCard(1)).isFalse()
+                () -> assertThat(blackjackGame.canPlayerMoreCard(player1)).isTrue(),
+                () -> assertThat(blackjackGame.canPlayerMoreCard(player2)).isFalse()
         );
     }
 
@@ -68,7 +74,8 @@ class BlackjackGameTest {
                 provideParticipants());
 
         // when
-        blackjackGame.spreadOneCardToPlayer(0);
+        final Player player = blackjackGame.getPlayer(0);
+        blackjackGame.spreadOneCardToPlayer(player);
 
         // then
         assertThat(blackjackGame.getPlayer(0).showAllCard()).hasSize(1);
@@ -120,7 +127,8 @@ class BlackjackGameTest {
                         new Players(provideTwoPlayersWithCards(cards, provideEmptyCards()))));
 
         // when & then
-        assertThat(blackjackGame.canPlayerMoreCard(0)).isEqualTo(expected);
+        final Player player = blackjackGame.getPlayer(0);
+        assertThat(blackjackGame.canPlayerMoreCard(player)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> canPlayerMoreCard() {

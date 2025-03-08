@@ -26,13 +26,13 @@ public class BlackjackGame {
         participants.spreadAllTwoCards(cards);
     }
 
-    public boolean canPlayerMoreCard(final int index) {
-        return participants.canPlayerGetMoreCard(index);
+    public boolean canPlayerMoreCard(final Player player) {
+        return participants.canPlayerGetMoreCard(player);
     }
 
-    public void spreadOneCardToPlayer(final int index) {
+    public void spreadOneCardToPlayer(final Player player) {
         final Cards cards = cardManager.spreadCards(1);
-        participants.spreadOneCardToPlayer(index, cards.getFirstCard());
+        participants.spreadOneCardToPlayer(player, cards.getFirstCard());
     }
 
     public boolean canDealerMoreCard() {
