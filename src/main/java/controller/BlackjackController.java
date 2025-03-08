@@ -30,43 +30,17 @@ public class BlackjackController {
 		startGame(players, dealer, deck);
 	}
 
+	private List<Player> inputPlayers() {
+		final List<String> playerNames = inputView.readPlayerNames();
+		return playerNames.stream().map(Player::new).collect(Collectors.toList());
+	}
+
 	private void startGame(final List<Player> players, final Dealer dealer, final Deck deck) {
 		handOutCards(players, dealer, deck);
 		outputPickCard(players, dealer, deck);
 		outputHandResult(dealer, players);
 		duel(dealer, players);
 		outputDuelResult(players, dealer);
-	}
-
-	private void outputHandResult(final Dealer dealer, final List<Player> players) {
-		outputDealerHandResult(dealer);
-		outputPlayersHandResult(players);
-	}
-
-	private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
-		ifCanPickCard(players, deck);
-		dealerPickCard(dealer, deck);
-	}
-
-	private void duel(final Dealer dealer, final List<Player> players) {
-		players.forEach(dealer::startDuel);
-	}
-
-	private void outputDuelResult(final List<Player> players, final Dealer dealer) {
-		outputView.printBlackjackDuelResultIntroduce();
-		outputView.printBlackjackDealerDuelResult(dealer.getWinCount(), dealer.getLoseCount());
-		players.forEach(this::outputPlayersDuelResult);
-
-	}
-
-	private void outputPlayersDuelResult(final Player player) {
-		final String name = player.getName();
-		outputView.printBlackjackPlayerDuelResult(name, player.isWinDuel());
-	}
-
-	private List<Player> inputPlayers() {
-		final List<String> playerNames = inputView.readPlayerNames();
-		return playerNames.stream().map(Player::new).collect(Collectors.toList());
 	}
 
 	private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
@@ -84,8 +58,14 @@ public class BlackjackController {
 		outputView.printPlayersCard(convertPlayersToEntries(players));
 	}
 
-	private static List<String> convertPlayersToNames(List<Player> players) {
+	private List<String> convertPlayersToNames(final List<Player> players) {
 		return players.stream().map(Player::getName).collect(Collectors.toList());
+	}
+
+	private String convertedDealerCardText(final Participant dealerParticipant) {
+		final CardHand dealerHand = dealerParticipant.getCardHand();
+		final Card dealerFirstCard = dealerHand.getCards().getFirst();
+		return convertedCardText(dealerFirstCard);
 	}
 
 	private List<Map.Entry<String, List<String>>> convertPlayersToEntries(final List<Player> players) {
@@ -96,27 +76,16 @@ public class BlackjackController {
 		return new AbstractMap.SimpleEntry<>(player.getName(), convertParticipantCardText(player.getParticipant()));
 	}
 
-	private String convertedDealerCardText(final Participant dealerParticipant) {
-		final CardHand dealerHand = dealerParticipant.getCardHand();
-		final Card dealerFirstCard = dealerHand.getCards().getFirst();
-		return convertedCardText(dealerFirstCard);
+	private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
+		playersIfCanPickCard(players, deck);
+		dealerIfCanPickCard(dealer, deck);
 	}
 
-	private String convertedCardText(final Card dealerFirstCard) {
-		final String cardNumberText = RankMessage.convertRankToMessage(dealerFirstCard.rank());
-		final String cardEmblemText = dealerFirstCard.suit().getName();
-		return cardNumberText + cardEmblemText;
+	private void playersIfCanPickCard(final List<Player> players, final Deck deck) {
+		players.forEach(player -> playerIfCanPickCard(deck, player));
 	}
 
-	private List<String> convertParticipantCardText(final Participant dealerParticipant) {
-		return dealerParticipant.getCardHand().getCards().stream().map(this::convertedCardText).toList();
-	}
-
-	private void ifCanPickCard(final List<Player> players, final Deck deck) {
-		players.forEach(player -> ifCanPickCard(deck, player));
-	}
-
-	private void ifCanPickCard(final Deck deck, final Player player) {
+	private void playerIfCanPickCard(final Deck deck, final Player player) {
 		final String name = player.getName();
 		while (player.isPickCard() && inputView.readPlayerAnswer(name)) {
 			player.pickCard(deck);
@@ -124,11 +93,16 @@ public class BlackjackController {
 		}
 	}
 
-	private void dealerPickCard(final Dealer dealer, final Deck deck) {
+	private void dealerIfCanPickCard(final Dealer dealer, final Deck deck) {
 		while (dealer.isPickCard()) {
 			dealer.pickCard(deck);
 			outputView.printDealerPickCard();
 		}
+	}
+
+	private void outputHandResult(final Dealer dealer, final List<Player> players) {
+		outputDealerHandResult(dealer);
+		outputPlayersHandResult(players);
 	}
 
 	private void outputDealerHandResult(final Dealer dealer) {
@@ -138,7 +112,17 @@ public class BlackjackController {
 		outputView.printDealerHandResult(convertedCards, score);
 	}
 
-	private void outputPlayersHandResult(List<Player> players) {
+	private List<String> convertParticipantCardText(final Participant dealerParticipant) {
+		return dealerParticipant.getCardHand().getCards().stream().map(this::convertedCardText).toList();
+	}
+
+	private String convertedCardText(final Card dealerFirstCard) {
+		final String cardNumberText = RankMessage.convertRankToMessage(dealerFirstCard.rank());
+		final String cardEmblemText = dealerFirstCard.suit().getName();
+		return cardNumberText + cardEmblemText;
+	}
+
+	private void outputPlayersHandResult(final List<Player> players) {
 		players.forEach(this::outputPlayerHandResult);
 	}
 
@@ -149,4 +133,19 @@ public class BlackjackController {
 		outputView.printPlayerHandResult(player.getName(), convertedCards, score);
 	}
 
+	private void duel(final Dealer dealer, final List<Player> players) {
+		players.forEach(dealer::startDuel);
+	}
+
+	private void outputDuelResult(final List<Player> players, final Dealer dealer) {
+		outputView.printBlackjackDuelResultIntroduce();
+		outputView.printBlackjackDealerDuelResult(dealer.getWinCount(), dealer.getLoseCount());
+		players.forEach(this::outputPlayersDuelResult);
+
+	}
+
+	private void outputPlayersDuelResult(final Player player) {
+		final String name = player.getName();
+		outputView.printBlackjackPlayerDuelResult(name, player.isWinDuel());
+	}
 }
