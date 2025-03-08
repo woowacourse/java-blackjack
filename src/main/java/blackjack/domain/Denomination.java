@@ -29,9 +29,9 @@ public enum Denomination {
         this.maxValue = maxValue;
     }
 
-    public static int convertAceValue(final int sum, final int blackjackValue) {
+    public static int convertAceValue(final int sum, final int threshold) {
         int convertedSum = sum + ACE.maxValue - ACE.minValue;
-        if (convertedSum <= blackjackValue) {
+        if (convertedSum <= threshold) {
             return convertedSum;
         }
         return sum;
