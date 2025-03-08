@@ -32,7 +32,7 @@ public class Player {
     }
 
     public MatchResult calculateWinner(final int dealerSum) {
-        return MatchResult.calculateWinner(dealerSum, this.sum());
+        return MatchResult.calculateResultOfPlayer(dealerSum, this.sum());
     }
 
     private boolean isBust() {

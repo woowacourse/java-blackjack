@@ -13,11 +13,11 @@ public enum MatchResult {
         this.value = value;
     }
 
-    public static MatchResult calculateWinner(final int dealerSum, final int playerSum) {
-        if (dealerSum > playerSum || isBust(playerSum)) {
+    public static MatchResult calculateResultOfPlayer(final int dealerSum, final int playerSum) {
+        if ((!isBust(dealerSum) && dealerSum > playerSum) || isBust(playerSum)) {
             return LOSE;
         }
-        if (dealerSum < playerSum) {
+        if (dealerSum < playerSum || isBust(dealerSum)) {
             return WIN;
         }
         return DRAW;
