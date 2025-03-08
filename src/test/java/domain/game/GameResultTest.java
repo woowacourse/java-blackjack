@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class GameResultTest {
 
     @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다() {
+    void 플레이어와_딜러_사이의_승패를_판정한다() {
         //given
         Dealer dealer = new Dealer();
         Hand dealerHand = dealer.getHand();
@@ -32,7 +32,7 @@ public class GameResultTest {
     }
 
     @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
+    void 플레이어와_딜러_사이의_승패를_판정한다_둘다_버스트() {
         //given
         Dealer dealer = new Dealer();
         Hand dealerHand = dealer.getHand();
@@ -56,7 +56,7 @@ public class GameResultTest {
     }
 
     @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
+    void 플레이어와_딜러_사이의_승패를_판정한다_딜러만_버스트() {
         //given
         Dealer dealer = new Dealer();
         Hand dealerHand = dealer.getHand();
@@ -79,7 +79,73 @@ public class GameResultTest {
     }
 
     @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
+    void 플레이어와_딜러_사이의_승패를_판정한다_딜러의_총합이_21에_가깝다() {
+        //given
+        Dealer dealer = new Dealer();
+        Hand dealerHand = dealer.getHand();
+        List<Card> dealerCards = dealerHand.getCards();
+        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+
+        Player player = new Player("pobi");
+        Hand playerHand = player.getHand();
+        List<Card> playerCards = playerHand.getCards();
+        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        playerCards.add(new Card(Pattern.CLOVER, CardNumber.NINE));
+
+        //when
+        GameResult gameResult = GameResult.of(dealer, player);
+
+        //then
+        Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    void 플레이어와_딜러_사이의_승패를_판정한다_플레이어의_총합이_21에_가깝다() {
+        //given
+        Dealer dealer = new Dealer();
+        Hand dealerHand = dealer.getHand();
+        List<Card> dealerCards = dealerHand.getCards();
+        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.NINE));
+
+        Player player = new Player("pobi");
+        Hand playerHand = player.getHand();
+        List<Card> playerCards = playerHand.getCards();
+        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        playerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+
+        //when
+        GameResult gameResult = GameResult.of(dealer, player);
+
+        //then
+        Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    void 플레이어와_딜러_사이의_승패를_판정한다_딜러와_플레이어의_총합이_같다() {
+        //given
+        Dealer dealer = new Dealer();
+        Hand dealerHand = dealer.getHand();
+        List<Card> dealerCards = dealerHand.getCards();
+        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+
+        Player player = new Player("pobi");
+        Hand playerHand = player.getHand();
+        List<Card> playerCards = playerHand.getCards();
+        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        playerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+
+        //when
+        GameResult gameResult = GameResult.of(dealer, player);
+
+        //then
+        Assertions.assertThat(gameResult).isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    void 플레이어와_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
         //given
         Dealer dealer = new Dealer();
         Hand dealerHand = dealer.getHand();
@@ -101,7 +167,7 @@ public class GameResultTest {
     }
 
     @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
+    void 플레이어와_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
         //given
         Dealer dealer = new Dealer();
         Hand dealerHand = dealer.getHand();
@@ -124,7 +190,7 @@ public class GameResultTest {
     }
 
     @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
+    void 플레이어와_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
         //given
         Dealer dealer = new Dealer();
         Hand dealerHand = dealer.getHand();

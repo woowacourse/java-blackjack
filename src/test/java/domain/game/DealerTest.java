@@ -1,5 +1,7 @@
 package domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
@@ -8,8 +10,6 @@ import domain.card.TestShuffler;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
 
@@ -24,6 +24,21 @@ public class DealerTest {
 
         //then
         assertThat(dealer.getHand().getCards()).hasSize(2);
+    }
+
+    @Test
+    void 딜러는_게임_시작_시_한_장의_카드를_공개한다() {
+        //given
+        Dealer dealer = new Dealer();
+        Hand hand = dealer.getHand();
+        List<Card> cards = hand.getCards();
+        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+
+        //when
+        Card singleCard = dealer.getSingleCard();
+
+        //then
+        assertThat(singleCard.equals(new Card(Pattern.SPADE, CardNumber.TEN))).isTrue();
     }
 
     @Test
