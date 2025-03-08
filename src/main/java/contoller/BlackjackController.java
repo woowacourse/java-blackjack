@@ -46,7 +46,7 @@ public class BlackjackController {
             answer = InputView.askForOneMoreCard(player);
             player = drawAndCreateNewPlayer(player, answer);
 
-            printCardsIfFirstTurn(player, isFirstTurn);
+            printCardsIfFirstTurn(player, isFirstTurn, answer);
 
             isFirstTurn = false;
         } while (!player.checkExceedTwentyOne() && answer);
@@ -60,8 +60,8 @@ public class BlackjackController {
         return player;
     }
 
-    private static void printCardsIfFirstTurn(Player player, boolean isFirstTurn) {
-        if (isFirstTurn) {
+    private static void printCardsIfFirstTurn(Player player, boolean isFirstTurn, boolean answer) {
+        if (isFirstTurn || answer) {
             OutputView.printPlayerCard(player);
         }
     }

@@ -41,7 +41,7 @@ public class GameManager {
     }
 
     public void editPlayers(Player newPlayer) {
-        players.editPlayer(newPlayer);
+        players = players.editPlayer(newPlayer);
     }
 
     public Map<Player, ResultStatus> findGameResult() {
