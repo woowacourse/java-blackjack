@@ -7,27 +7,14 @@ import blackjack.domain.card.FixCardsShuffler;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
-    private Stack<Card> deck;
-    private ScoreCalculator scoreCalculator;
-
-    @BeforeEach
-    public void setUp() {
-        deck = new Stack<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                deck.add(new Card(suit, rank));
-            }
-        }
-        scoreCalculator = new ScoreCalculator();
-    }
 
     @Test
     void 블랙잭_게임을_준비한다() {
@@ -36,8 +23,7 @@ public class DealerTest {
                 List.of(new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator())),
                         new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator()))
                 ));
-        Stack<Card> cards = new Stack<>();
-        cards.addAll(List.of(
+        Deque<Card> cards = new ArrayDeque<>(List.of(
                 new Card(Suit.CLUB, Rank.FOUR),
                 new Card(Suit.CLUB, Rank.FIVE),
                 new Card(Suit.CLUB, Rank.ONE),
@@ -49,7 +35,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(
                 players,
                 new Deck(cards),
-                scoreCalculator);
+                new ScoreCalculator());
 
         //when
         dealer.prepareBlackjack(new FixCardsShuffler());
@@ -57,17 +43,17 @@ public class DealerTest {
         //then
         Assertions.assertThat(dealer.getCards().getCards())
                 .isEqualTo(List.of(
-                        new Card(Suit.SPADE, Rank.ONE),
-                        new Card(Suit.HEART, Rank.ONE)
+                        new Card(Suit.CLUB, Rank.FOUR),
+                        new Card(Suit.CLUB, Rank.FIVE)
                 ));
         Assertions.assertThat(players.getPlayers().get(0).getCards().getCards())
                 .isEqualTo(List.of(
-                        new Card(Suit.DIAMOND, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.ONE)));
+                        new Card(Suit.CLUB, Rank.ONE),
+                        new Card(Suit.DIAMOND, Rank.ONE)));
         Assertions.assertThat(players.getPlayers().get(1).getCards().getCards())
                 .isEqualTo(List.of(
-                        new Card(Suit.CLUB, Rank.FIVE),
-                        new Card(Suit.CLUB, Rank.FOUR)));
+                        new Card(Suit.HEART, Rank.ONE),
+                        new Card(Suit.SPADE, Rank.ONE)));
 
     }
 
@@ -81,18 +67,14 @@ public class DealerTest {
                         new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
                 )
         );
-        Stack<Card> cards = new Stack<>();
-        cards.addAll(
-                List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
-        );
+        Deque<Card> cards = new ArrayDeque<>(List.of(
+                new Card(Suit.CLUB, Rank.FIVE),
+                new Card(Suit.CLUB, Rank.FOUR),
+                new Card(Suit.CLUB, Rank.THREE),
+                new Card(Suit.CLUB, Rank.TEN)
+        ));
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+        Dealer dealer = new Dealer(players, deck, new ScoreCalculator());
 
         //when
         dealer.pickAdditionalCard();

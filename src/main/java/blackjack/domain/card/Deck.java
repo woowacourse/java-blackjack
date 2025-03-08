@@ -1,15 +1,15 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class Deck {
 
-    private static final Stack<Card> DEFAULT_CARDS = new Stack<>();
+    private static final Deque<Card> DEFAULT_CARDS = new ArrayDeque<>();
 
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
     static {
         for (Suit suit : Suit.values()) {
@@ -19,16 +19,12 @@ public class Deck {
         }
     }
 
-    public Deck(Stack<Card> cards) {
+    public Deck(Deque<Card> cards) {
         this.cards = cards;
     }
 
     public static Deck defaultDeck() {
         return new Deck(DEFAULT_CARDS);
-    }
-
-    public Stack<Card> getCards() {
-        return cards;
     }
 
     public Card draw() {
@@ -44,7 +40,6 @@ public class Deck {
             shuffledCard.add(cards.pop());
         }
         cardsShuffler.shuffle(shuffledCard);
-        Collections.reverse(shuffledCard);
         cards.addAll(shuffledCard);
     }
 }

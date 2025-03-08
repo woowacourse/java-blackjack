@@ -11,9 +11,11 @@ import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.domain.winning.Victory;
 import blackjack.domain.winning.WinningResult;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -38,8 +40,7 @@ public class VictoryTest {
                 new Card(Suit.CLUB, Rank.NINE)
         );
         Players players = new Players(List.of(pobi, surf));
-        Stack<Card> cards = new Stack<>();
-        cards.addAll(List.of(
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
                 new Card(Suit.CLUB, Rank.FOUR),
                 new Card(Suit.CLUB, Rank.FIVE),
                 new Card(Suit.CLUB, Rank.ONE),
