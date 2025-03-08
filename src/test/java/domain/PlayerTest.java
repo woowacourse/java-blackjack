@@ -3,9 +3,11 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.card.*;
+import domain.fake.AceCardGenerator;
 import domain.gamer.Player;
 import org.junit.jupiter.api.Test;
 
@@ -32,20 +34,17 @@ public class PlayerTest {
     void 플레이어에게_카드를_준다() {
         //given
         final String name = "윌슨";
-        final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
-        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-        final Card card = randomCardGenerator.generate();
+        final List<Card> cards = new ArrayList<>();
+        final CardGenerator cardGenerator = new AceCardGenerator();
         final CardGroup cardGroup = new CardGroup(cards);
 
         //when
-        final Player player = new Player(name, cardGroup, randomCardGenerator);
-        final boolean result = player.receiveCard(card);
+        final Player player = new Player(name, cardGroup, cardGenerator);
+        player.receiveCard();
 
         //then
-        assertThat(result).isTrue();
-
+        assertThat(cardGroup.getCards().size()).isEqualTo(1);
     }
-
 
     @Test
     void 플레이어의_게임_결과를_판단_한다() {

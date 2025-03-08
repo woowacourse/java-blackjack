@@ -17,8 +17,8 @@ public abstract class Gamer {
         this.cardGenerator = cardGenerator;
     }
 
-    public boolean receiveCard(final Card card) {
-        return cardGroup.addCard(card);
+    public void receiveCard(){
+        cardGroup.addCard(cardGenerator.generate());
     }
 
     public void receiveCard(int count) {
