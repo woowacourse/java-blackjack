@@ -24,7 +24,7 @@ public class Deck {
     }
 
     public static Deck defaultDeck() {
-        return new Deck(DEFAULT_CARDS);
+        return new Deck(new ArrayDeque<>(DEFAULT_CARDS));
     }
 
     public Card draw() {
