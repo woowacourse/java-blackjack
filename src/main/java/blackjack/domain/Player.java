@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.common.ErrorMessage;
 import java.util.List;
 
 public class Player{
@@ -8,8 +9,15 @@ public class Player{
     private final CardHolder cardHolder;
 
     public Player(String name, CardHolder cardHolder) {
+        validName(name);
         this.name = name;
         this.cardHolder = cardHolder;
+    }
+
+    public void validName(String name){
+        if (name == null || name.isBlank()){
+            throw new IllegalArgumentException(ErrorMessage.USE_VALID_NAME.getMessage());
+        }
     }
 
     public List<Integer> getPossibleSums() {
