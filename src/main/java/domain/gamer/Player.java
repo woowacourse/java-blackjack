@@ -4,6 +4,7 @@ import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGenerator;
 import domain.card.CardGroup;
+
 import java.util.List;
 
 import static domain.GameManager.LIMIT;
@@ -20,7 +21,7 @@ public class Player {
         this.cardGenerator = cardGenerator;
     }
 
-    public void receiveCard(){
+    public void receiveCard() {
         cardGroup.addCard(cardGenerator.generate());
     }
 

@@ -27,14 +27,14 @@ public class CardGroup {
     }
 
     private int calculateScoreWithAce(int sum, int aceCount) {
-        final int upperAceScoreCount = availableUpperAceScoreCount(sum,aceCount);
+        final int upperAceScoreCount = availableUpperAceScoreCount(sum, aceCount);
         return sum + ACE_HIGH_SCORE * upperAceScoreCount + (aceCount - upperAceScoreCount) * ACE_LOW_SCORE;
     }
 
     private int availableUpperAceScoreCount(int sum, int aceCount) {
         sum += aceCount * ACE_LOW_SCORE;
         int count = 0;
-        while(sum + (ACE_HIGH_SCORE - ACE_LOW_SCORE) <= LIMIT && count < aceCount){
+        while (sum + (ACE_HIGH_SCORE - ACE_LOW_SCORE) <= LIMIT && count < aceCount) {
             count++;
             sum += (ACE_HIGH_SCORE - ACE_LOW_SCORE);
         }

@@ -27,7 +27,7 @@ public class BlackJackController {
         final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
         final Dealer dealer = GamerGenerator.generateDealer(randomCardGenerator);
         final List<Player> players = requestPlayers(randomCardGenerator);
-        final GameManager gameManager = GameManager.create(dealer,players);
+        final GameManager gameManager = GameManager.create(dealer, players);
 
         requestHit(dealer, players);
         printDealerReceiveCardCount(dealer);
@@ -52,20 +52,20 @@ public class BlackJackController {
     }
 
     private void receiveCard(Player player) {
-        if(!player.isBust()){
+        if (!player.isBust()) {
             receiveCardIsAbleToGetCard(player);
         }
     }
 
-    private void receiveCardIsAbleToGetCard(Player player){
-        if(requestAnswerCommand(player) == AnswerCommand.NO){
+    private void receiveCardIsAbleToGetCard(Player player) {
+        if (requestAnswerCommand(player) == AnswerCommand.NO) {
             outputView.printPlayerCards(player);
             return;
         }
         do {
             player.receiveCard(1);
             outputView.printPlayerCards(player);
-        }while(!player.isBust() && requestAnswerCommand(player) == AnswerCommand.YES);
+        } while (!player.isBust() && requestAnswerCommand(player) == AnswerCommand.YES);
     }
 
     private AnswerCommand requestAnswerCommand(Player player) {

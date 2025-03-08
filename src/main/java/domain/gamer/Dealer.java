@@ -6,21 +6,21 @@ import domain.card.CardGroup;
 
 import java.util.List;
 
-public class Dealer{
+public class Dealer {
     private static final String DEALER_NAME = "NEO";
     private final int DEALER_HIT_ROLE = 16;
 
     private final Player player;
 
     public Dealer(CardGroup cardGroup, CardGenerator cardGenerator) {
-        player = new Player(DEALER_NAME,cardGroup,cardGenerator);
+        player = new Player(DEALER_NAME, cardGroup, cardGenerator);
     }
 
     public int calculateScore() {
         return player.calculateScore();
     }
 
-    public void receiveCard(int count){
+    public void receiveCard(int count) {
         player.receiveCard(count);
     }
 
@@ -37,11 +37,11 @@ public class Dealer{
         return player.calculateScore() <= score;
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return player.isBust();
     }
 
-    public List<Card> getCards(){
+    public List<Card> getCards() {
         return player.getCards();
     }
 }

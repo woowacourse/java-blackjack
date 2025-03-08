@@ -6,9 +6,7 @@ import java.util.List;
 
 public class GamerGenerator {
 
-    private GamerGenerator() {
-
-    }
+    private GamerGenerator() {}
 
     public static List<Player> generatePlayer(List<String> playerNames, CardGenerator cardGenerator) {
         validateDuplicate(playerNames);
