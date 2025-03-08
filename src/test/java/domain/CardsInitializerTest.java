@@ -48,7 +48,7 @@ class CardsInitializerTest {
         Cards cards = cardsInitializer.initialize();
         List<Card> cardList = cards.getCards();
         //then
-        assertThatThrownBy(() -> cardList.add(new Card(Symbol.HEART, Number.FIVE)))
+        assertThatThrownBy(() -> cardList.add(new Card(Symbol.HEART, Rank.FIVE)))
                 .isInstanceOf(RuntimeException.class);
     }
 

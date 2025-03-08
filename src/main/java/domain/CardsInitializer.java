@@ -16,7 +16,7 @@ public class CardsInitializer {
     private List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
 
-        List<Number> numbers = getNumbers();
+        List<Rank> numbers = getNumbers();
         List<Symbol> symbols = getSymbols();
 
         insertCards(numbers, symbols, cards);
@@ -24,8 +24,8 @@ public class CardsInitializer {
         return cards;
     }
 
-    private void insertCards(List<Number> numbers, List<Symbol> symbols, List<Card> cards) {
-        for (Number number : numbers) {
+    private void insertCards(List<Rank> numbers, List<Symbol> symbols, List<Card> cards) {
+        for (Rank number : numbers) {
             for (Symbol symbol : symbols) {
                 cards.add(new Card(symbol, number));
             }
@@ -36,9 +36,9 @@ public class CardsInitializer {
         return Arrays.stream(Symbol.values()).toList();
     }
 
-    private List<Number> getNumbers() {
-        return Arrays.stream(Number.values())
-                .filter(number -> !number.equals(Number.SOFT_ACE))
+    private List<Rank> getNumbers() {
+        return Arrays.stream(Rank.values())
+                .filter(number -> !number.equals(Rank.SOFT_ACE))
                 .toList();
     }
 }

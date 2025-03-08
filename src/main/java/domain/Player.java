@@ -8,6 +8,7 @@ public class Player extends Gamer {
         super(name);
     }
 
+    @Override
     public void prepareGame(Cards totalCard) {
         hit(totalCard);
         hit(totalCard);

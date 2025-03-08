@@ -18,9 +18,9 @@ class CardsTest {
     void burst2() {
         //given
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.KING));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
-        totalCards.add(new Card(Symbol.HEART, Number.TWO));
+        totalCards.add(new Card(Symbol.HEART, Rank.KING));
+        totalCards.add(new Card(Symbol.HEART, Rank.JACK));
+        totalCards.add(new Card(Symbol.HEART, Rank.TWO));
 
         //when
         boolean actual = totalCards.isBurst();
@@ -34,8 +34,8 @@ class CardsTest {
     void notBurst() {
         //given
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.KING));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, Rank.KING));
+        totalCards.add(new Card(Symbol.HEART, Rank.JACK));
 
         //when
         boolean actual = totalCards.isBurst();
@@ -49,7 +49,7 @@ class CardsTest {
     void addCard() {
         //given
         Cards cards = new Cards();
-        Card card = new Card(Symbol.COLVER, Number.FIVE);
+        Card card = new Card(Symbol.COLVER, Rank.FIVE);
         //when
 
         //then
@@ -79,7 +79,7 @@ class CardsTest {
     void extractCard() {
         //given
         Cards cards = new Cards();
-        Card card = new Card(Symbol.COLVER, Number.FIVE);
+        Card card = new Card(Symbol.COLVER, Rank.FIVE);
 
         cards.add(card);
 
@@ -95,8 +95,8 @@ class CardsTest {
     void considerAceHas11() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.COLVER, Number.KING);
+        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
+        Card card2 = new Card(Symbol.COLVER, Rank.KING);
 
         cards.add(card1);
         cards.add(card2);
@@ -113,8 +113,8 @@ class CardsTest {
     void considerAceHas112() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.HEART, Number.ACE);
+        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
+        Card card2 = new Card(Symbol.HEART, Rank.ACE);
 
         cards.add(card1);
         cards.add(card2);
@@ -131,10 +131,10 @@ class CardsTest {
     void considerAceHas113() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.COLVER, Number.ACE);
-        Card card3 = new Card(Symbol.COLVER, Number.ACE);
-        Card card4 = new Card(Symbol.COLVER, Number.ACE);
+        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
+        Card card2 = new Card(Symbol.COLVER, Rank.ACE);
+        Card card3 = new Card(Symbol.COLVER, Rank.ACE);
+        Card card4 = new Card(Symbol.COLVER, Rank.ACE);
 
         cards.add(card1);
         cards.add(card2);
@@ -151,12 +151,12 @@ class CardsTest {
     public static Stream<Arguments> provideEachCardsAndExpected() {
         return Stream.of(
                 Arguments.of(List.of(
-                                new Card(Symbol.COLVER, Number.JACK),
-                                new Card(Symbol.HEART, Number.FIVE)),
+                                new Card(Symbol.COLVER, Rank.JACK),
+                                new Card(Symbol.HEART, Rank.FIVE)),
                         15),
                 Arguments.of(List.of(
-                                new Card(Symbol.COLVER, Number.SEVEN),
-                                new Card(Symbol.HEART, Number.TEN)),
+                                new Card(Symbol.COLVER, Rank.SEVEN),
+                                new Card(Symbol.HEART, Rank.TEN)),
                         17)
         );
     }

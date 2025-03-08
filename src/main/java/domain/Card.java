@@ -5,18 +5,18 @@ import java.util.Objects;
 public class Card {
 
     private final Symbol symbol;
-    private final Number number;
+    private final Rank number;
 
-    public Card(Symbol symbol, Number number) {
+    public Card(Symbol symbol, Rank number) {
         this.symbol = symbol;
         this.number = number;
     }
 
     public boolean isAce() {
-        return number.equals(Number.ACE);
+        return number.equals(Rank.ACE);
     }
 
-    public Number getNumber() {
+    public Rank getNumber() {
         return number;
     }
 

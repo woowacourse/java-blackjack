@@ -12,12 +12,12 @@ class ResultTest {
     void judgeBurstDraw() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.THREE);
-        Card card2 = new Card(Symbol.HEART, Number.SIX);
-        Card card3 = new Card(Symbol.SPADE, Number.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, Rank.THREE);
+        Card card2 = new Card(Symbol.HEART, Rank.SIX);
+        Card card3 = new Card(Symbol.SPADE, Rank.JACK);
+        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
+        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
+        Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
         cards.add(card1);
         cards.add(card2);
@@ -47,12 +47,12 @@ class ResultTest {
     void judgeNotBurstDraw() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.TWO);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.SIX);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, Rank.TWO);
+        Card card2 = new Card(Symbol.HEART, Rank.TWO);
+        Card card3 = new Card(Symbol.SPADE, Rank.SIX);
+        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
+        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
+        Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
         cards.add(card1);
         cards.add(card2);
@@ -82,12 +82,12 @@ class ResultTest {
     void judgeOnlyOneBurstWin() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.TWO);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, Rank.TWO);
+        Card card2 = new Card(Symbol.HEART, Rank.TWO);
+        Card card3 = new Card(Symbol.SPADE, Rank.JACK);
+        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
+        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
+        Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
         cards.add(card1);
         cards.add(card2);
@@ -116,12 +116,12 @@ class ResultTest {
     void judge() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card5 = new Card(Symbol.COLVER, Number.SIX);
-        Card card6 = new Card(Symbol.HEART, Number.JACK);
+        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
+        Card card2 = new Card(Symbol.HEART, Rank.TWO);
+        Card card3 = new Card(Symbol.SPADE, Rank.JACK);
+        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
+        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
+        Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
         cards.add(card1);
         cards.add(card2);

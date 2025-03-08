@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class NumberTest {
+class RankTest {
 
     @DisplayName("카드의 숫자는 1부터 k까지 14개다.")
     @Test
@@ -17,7 +17,7 @@ class NumberTest {
         //given
 
         //when
-        Number[] values = Number.values();
+        Rank[] values = Rank.values();
 
         //then
         assertThat(values).hasSize(14);
@@ -27,7 +27,7 @@ class NumberTest {
     @Test
     void cardNumberPoint() {
         //given
-        Number five = Number.FIVE;
+        Rank five = Rank.FIVE;
 
         //when
 
@@ -38,7 +38,7 @@ class NumberTest {
     @DisplayName("J, Q, K 는 각각 10으로 계산한다.")
     @ParameterizedTest
     @MethodSource("provideJQK")
-    void cardNumberPointForJQK(Number number) {
+    void cardNumberPointForJQK(Rank number) {
         //given
 
         //when
@@ -48,7 +48,11 @@ class NumberTest {
     }
 
     public static Stream<Arguments> provideJQK() {
-        return Stream.of(Arguments.of(Number.JACK, Number.QUEEN, Number.KING));
+        return Stream.of(
+                Arguments.of(
+                        Rank.JACK,
+                        Rank.QUEEN,
+                        Rank.KING));
     }
 
 }

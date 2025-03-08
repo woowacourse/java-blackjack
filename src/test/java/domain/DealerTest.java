@@ -12,9 +12,9 @@ class DealerTest {
     void canHit() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.HEART, Number.TWO);
-        Card card3 = new Card(Symbol.SPADE, Number.KING);
+        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
+        Card card2 = new Card(Symbol.HEART, Rank.TWO);
+        Card card3 = new Card(Symbol.SPADE, Rank.KING);
 
         cards.add(card1);
         cards.add(card2);
@@ -38,9 +38,9 @@ class DealerTest {
     void cannotHit() {
         //given
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.JACK);
-        Card card2 = new Card(Symbol.HEART, Number.NINE);
-        Card card3 = new Card(Symbol.SPADE, Number.KING);
+        Card card1 = new Card(Symbol.COLVER, Rank.JACK);
+        Card card2 = new Card(Symbol.HEART, Rank.NINE);
+        Card card3 = new Card(Symbol.SPADE, Rank.KING);
 
         cards.add(card1);
         cards.add(card2);
