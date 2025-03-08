@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> deck;
+    private final List<Card> deckCards;
 
     public static Deck of() {
         List<Card> deck = new ArrayList<>();
@@ -19,19 +19,19 @@ public class Deck {
         return new Deck(deck);
     }
 
-    public Deck(List<Card> deck) {
-        this.deck = deck;
+    public Deck(List<Card> deckCards) {
+        this.deckCards = deckCards;
     }
 
     public Card pick() {
         validateDeckEmpty();
-        Card card = deck.getFirst();
-        deck.remove(card);
+        Card card = deckCards.getFirst();
+        deckCards.remove(card);
         return card;
     }
 
     private void validateDeckEmpty() {
-        if (deck.isEmpty()) {
+        if (deckCards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 주어진 모든 카드들을 소진하였습니다");
         }
     }
