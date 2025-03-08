@@ -43,10 +43,6 @@ public class BlackjackGame {
         participants.spreadOneCardToDealer(cards.getFirstCard());
     }
 
-    public int sumCardDenomination(final Gamer gamer) {
-        return gamer.calculateMaxSum();
-    }
-
     public Map<String, ResultStatus> calculateWinningResult() {
         final int dealerSum = participants.calculateDealerMaxSum();
         final Map<String, ResultStatus> result = new HashMap<>();
