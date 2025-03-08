@@ -7,13 +7,13 @@ public enum Shape {
     CLOVER("클로버"),
     ;
 
-    private final String shape;
+    private final String name;
 
-    Shape(String shape) {
-        this.shape = shape;
+    Shape(String name) {
+        this.name = name;
     }
 
     public String getName() {
-        return shape;
+        return name;
     }
 }
