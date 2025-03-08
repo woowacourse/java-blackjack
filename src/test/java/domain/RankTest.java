@@ -9,10 +9,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("숫자 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class NumberTest {
+public class RankTest {
 
     @Test
     void 전체숫자를_반환한다() {
-        assertThat(Number.getAllNumbers()).hasSize(13);
+        assertThat(Rank.getAllRanks()).hasSize(13);
     }
 }

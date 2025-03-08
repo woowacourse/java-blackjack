@@ -12,16 +12,16 @@ public class Cards {
     private static final int ACE_VALUE_DIFFERENCE = 10;
 
     private final List<Card> cards;
-    private final int totalNumberSum;
+    private final int totalRankSum;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
-        this.totalNumberSum = calculateTotalCardNumber();
+        this.totalRankSum = calculateTotalRank();
     }
 
-    public int calculateTotalCardNumber() {
+    public int calculateTotalRank() {
         int total = cards.stream()
-                .mapToInt(card -> card.getNumber().getNumericValue())
+                .mapToInt(card -> card.getRank().getNumericValue())
                 .sum();
         
         if (total > BLACKJACK_SCORE && isContainsAce()) {
@@ -43,11 +43,11 @@ public class Cards {
     }
 
     public boolean checkExceedTwentyOne() {
-        return totalNumberSum > BLACKJACK_SCORE;
+        return totalRankSum > BLACKJACK_SCORE;
     }
 
     public boolean checkExceedSixteen() {
-        return totalNumberSum > DEALER_DRAW_LIMIT;
+        return totalRankSum > DEALER_DRAW_LIMIT;
     }
 
     public Card getInitialCard() {
@@ -59,18 +59,18 @@ public class Cards {
     }
 
     public int calculateDifferenceFromTwentyOne() {
-        return Math.abs(totalNumberSum - BLACKJACK_SCORE);
+        return Math.abs(totalRankSum - BLACKJACK_SCORE);
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Cards cards1 = (Cards) o;
-        return totalNumberSum == cards1.totalNumberSum && Objects.equals(cards, cards1.cards);
+        return totalRankSum == cards1.totalRankSum && Objects.equals(cards, cards1.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards, totalNumberSum);
+        return Objects.hash(cards, totalRankSum);
     }
 }

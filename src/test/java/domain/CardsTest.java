@@ -16,46 +16,46 @@ public class CardsTest {
 
     @Test
     void 카드리스트에_에이스가_있고_합이_21을_초과하면_에이스를_1로_간주하여_합을_구한다() {
-        Card card1 = new Card(Symbol.DIAMOND, Number.JACK);
-        Card card2 = new Card(Symbol.CLOVER, Number.JACK);
-        Card card3 = new Card(Symbol.DIAMOND, Number.ACE);
+        Card card1 = new Card(Suit.DIAMOND, Rank.JACK);
+        Card card2 = new Card(Suit.CLOVER, Rank.JACK);
+        Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
         List<Card> cardList = List.of(card1, card2, card3);
         Cards cards = new Cards(cardList);
 
-        assertThat(cards.calculateTotalCardNumber()).isEqualTo(21);
+        assertThat(cards.calculateTotalRank()).isEqualTo(21);
     }
 
     @Test
     void 카드리스트에_에이스가_있고_합이_21이하이면_에이스를_11로_간주하여_합을_구한다() {
-        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
-        Card card2 = new Card(Symbol.CLOVER, Number.TWO);
-        Card card3 = new Card(Symbol.DIAMOND, Number.ACE);
+        Card card1 = new Card(Suit.DIAMOND, Rank.TWO);
+        Card card2 = new Card(Suit.CLOVER, Rank.TWO);
+        Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
         List<Card> cardList = List.of(card1, card2, card3);
         Cards cards = new Cards(cardList);
 
-        assertThat(cards.calculateTotalCardNumber()).isEqualTo(15);
+        assertThat(cards.calculateTotalRank()).isEqualTo(15);
     }
 
     @Test
     void 카드리스트에_에이스가_없는경우_단순합을_구한다() {
-        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
-        Card card2 = new Card(Symbol.CLOVER, Number.TWO);
-        Card card3 = new Card(Symbol.DIAMOND, Number.THREE);
+        Card card1 = new Card(Suit.DIAMOND, Rank.TWO);
+        Card card2 = new Card(Suit.CLOVER, Rank.TWO);
+        Card card3 = new Card(Suit.DIAMOND, Rank.THREE);
         List<Card> cardList = List.of(card1, card2, card3);
         Cards cards = new Cards(cardList);
 
-        assertThat(cards.calculateTotalCardNumber()).isEqualTo(7);
+        assertThat(cards.calculateTotalRank()).isEqualTo(7);
     }
 
     @Test
     void 카드리스트에_카드를_추가한다() {
-        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
-        Card card2 = new Card(Symbol.CLOVER, Number.TWO);
-        Card card3 = new Card(Symbol.DIAMOND, Number.THREE);
+        Card card1 = new Card(Suit.DIAMOND, Rank.TWO);
+        Card card2 = new Card(Suit.CLOVER, Rank.TWO);
+        Card card3 = new Card(Suit.DIAMOND, Rank.THREE);
         List<Card> cardList = List.of(card1, card2, card3);
         Cards cards = new Cards(cardList);
 
-        Card providedCard = new Card(Symbol.CLOVER, Number.EIGHT);
+        Card providedCard = new Card(Suit.CLOVER, Rank.EIGHT);
         Cards newCards = cards.addCards(List.of(providedCard));
 
         List<Card> newCardList = List.of(card1, card2, card3, providedCard);
@@ -65,10 +65,10 @@ public class CardsTest {
 
     @Test
     void 카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
-        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
-        Card card2 = new Card(Symbol.CLOVER, Number.EIGHT);
-        Card card3 = new Card(Symbol.DIAMOND, Number.THREE);
-        Card card4 = new Card(Symbol.DIAMOND, Number.JACK);
+        Card card1 = new Card(Suit.DIAMOND, Rank.TWO);
+        Card card2 = new Card(Suit.CLOVER, Rank.EIGHT);
+        Card card3 = new Card(Suit.DIAMOND, Rank.THREE);
+        Card card4 = new Card(Suit.DIAMOND, Rank.JACK);
         List<Card> cardList = List.of(card1, card2, card3);
         Cards notExceedCards = new Cards(cardList);
 
@@ -83,10 +83,10 @@ public class CardsTest {
 
     @Test
     void 카드리스트의_합계가_16초과이면_true_아니면_false를_반환한다() {
-        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
-        Card card2 = new Card(Symbol.CLOVER, Number.EIGHT);
-        Card card3 = new Card(Symbol.DIAMOND, Number.SIX);
-        Card card4 = new Card(Symbol.DIAMOND, Number.ACE);
+        Card card1 = new Card(Suit.DIAMOND, Rank.TWO);
+        Card card2 = new Card(Suit.CLOVER, Rank.EIGHT);
+        Card card3 = new Card(Suit.DIAMOND, Rank.SIX);
+        Card card4 = new Card(Suit.DIAMOND, Rank.ACE);
         List<Card> cardList = List.of(card1, card2, card3);
         Cards notExceedCards = new Cards(cardList);
 

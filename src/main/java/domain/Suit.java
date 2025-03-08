@@ -3,7 +3,7 @@ package domain;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Symbol {
+public enum Suit {
     DIAMOND("다이아몬드"),
     SPADE("스페이드"),
     CLOVER("클로버"),
@@ -11,11 +11,11 @@ public enum Symbol {
 
     private final String name;
 
-    Symbol(String name) {
+    Suit(String name) {
         this.name = name;
     }
 
-    public static List<Symbol> getAllSymbols() {
+    public static List<Suit> getAllSuits() {
         return Arrays.stream(values()).toList();
     }
 

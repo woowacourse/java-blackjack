@@ -3,7 +3,7 @@ package domain;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Number {
+public enum Rank {
     ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -21,7 +21,7 @@ public enum Number {
     private final int numericValue;
     private final String faceValue;
 
-    Number(int numericValue, String faceValue) {
+    Rank(int numericValue, String faceValue) {
         this.numericValue = numericValue;
         this.faceValue = faceValue;
     }
@@ -34,7 +34,7 @@ public enum Number {
         return faceValue;
     }
 
-    public static List<Number> getAllNumbers() {
+    public static List<Rank> getAllRanks() {
         return Arrays.stream(values())
                 .toList();
     }

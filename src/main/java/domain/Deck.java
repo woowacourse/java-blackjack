@@ -12,17 +12,17 @@ public class Deck implements CardProvider {
 
     public Deck() {
         List<Card> temp = new ArrayList<>();
-        for (Symbol symbol : Symbol.getAllSymbols()) {
-            addAllNumbers(symbol, temp);
+        for (Suit suit : Suit.getAllSuits()) {
+            addAllRanks(suit, temp);
         }
 
         Collections.shuffle(temp);
         deck.addAll(temp);
     }
 
-    private static void addAllNumbers(Symbol symbol, List<Card> temp) {
-        for (Number number : Number.getAllNumbers()) {
-            temp.add(new Card(symbol, number));
+    private static void addAllRanks(Suit suit, List<Card> temp) {
+        for (Rank rank : Rank.getAllRanks()) {
+            temp.add(new Card(suit, rank));
         }
     }
 

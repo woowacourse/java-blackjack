@@ -20,8 +20,8 @@ public abstract class Participant<T extends Participant<T>> {
         return cards.checkExceedTwentyOne();
     }
 
-    public int getTotalNumberSum() {
-        return cards.calculateTotalCardNumber();
+    public int getTotalRankSum() {
+        return cards.calculateTotalRank();
     }
 
     protected abstract T createParticipant(List<Card> cards);

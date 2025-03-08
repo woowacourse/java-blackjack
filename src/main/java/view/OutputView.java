@@ -3,11 +3,11 @@ package view;
 import domain.Card;
 import domain.Cards;
 import domain.Dealer;
-import domain.Number;
+import domain.Rank;
 import domain.Participant;
 import domain.Player;
 import domain.ResultStatus;
-import domain.Symbol;
+import domain.Suit;
 
 import java.util.List;
 import java.util.Map;
@@ -49,9 +49,9 @@ public class OutputView {
     }
 
     private static String convertCardToMessage(Card card) {
-        Symbol symbol = card.getSymbol();
-        Number number = card.getNumber();
-        return number.getFaceValue() + symbol.getName();
+        Suit suit = card.getSuit();
+        Rank rank = card.getRank();
+        return rank.getFaceValue() + suit.getName();
     }
 
     public static void printPlayerCard(Player player) {
@@ -67,7 +67,7 @@ public class OutputView {
         System.out.printf("%s카드: %s - 결과: %d%n",
                 dealer.getName(),
                 convertCardsToMessage(dealer.getCards()),
-                dealer.getTotalNumberSum());
+                dealer.getTotalRankSum());
     }
 
     private static void printFinalAllPlayersCards(List<Player> allPlayers) {
@@ -75,7 +75,7 @@ public class OutputView {
             System.out.printf("%s카드: %s - 결과: %d%n",
                     player.getName(),
                     convertCardsToMessage(player.getCards()),
-                    player.getTotalNumberSum());
+                    player.getTotalRankSum());
         }
     }
 

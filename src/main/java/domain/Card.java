@@ -4,35 +4,35 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Symbol symbol;
-    private final Number number;
+    private final Suit suit;
+    private final Rank rank;
 
-    public Card(Symbol symbol, Number number) {
-        this.symbol = symbol;
-        this.number = number;
+    public Card(Suit suit, Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public Number getNumber() {
-        return number;
+    public Rank getRank() {
+        return rank;
     }
 
     public boolean isAce() {
-        return number.equals(Number.ACE);
+        return rank.equals(Rank.ACE);
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return symbol == card.symbol && number == card.number;
+        return suit == card.suit && rank == card.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, number);
+        return Objects.hash(suit, rank);
     }
 }

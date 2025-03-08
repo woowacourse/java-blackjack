@@ -17,8 +17,8 @@ public enum ResultStatus {
     public static Map<Player, ResultStatus> judgeGameResult(Players players, Dealer dealer) {
         Map<Player, ResultStatus> result = new HashMap<>();
 
-        Map<Player, Integer> totalNumberSumByPlayer = players.getTotalNumberSumByPlayer();
-        for (Player player : totalNumberSumByPlayer.keySet()) {
+        Map<Player, Integer> totalRankSumByPlayer = players.getTotalRankSumByPlayer();
+        for (Player player : totalRankSumByPlayer.keySet()) {
             judgeGameResultByPlayer(dealer, player, result);
         }
         return result;

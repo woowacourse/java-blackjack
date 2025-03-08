@@ -11,12 +11,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("모양 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class SymbolTest {
+public class SuitTest {
 
     @Test
     void 모든_모양을_반환한다() {
-        List<Symbol> expected = List.of(Symbol.DIAMOND, Symbol.SPADE, Symbol.CLOVER, Symbol.HEART);
+        List<Suit> expected = List.of(Suit.DIAMOND, Suit.SPADE, Suit.CLOVER, Suit.HEART);
 
-        assertThat(Symbol.getAllSymbols()).isEqualTo(expected);
+        assertThat(Suit.getAllSuits()).isEqualTo(expected);
     }
 }
