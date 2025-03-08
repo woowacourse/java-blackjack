@@ -2,7 +2,6 @@ package domain;
 
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,10 +25,7 @@ public class Deck {
     }
 
     public Cards drawInitialCards() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(this.cards.drawOneCard());
-        cards.add(this.cards.drawOneCard());
-        return new Cards(cards);
+        return new Cards(List.of(cards.drawOneCard(), cards.drawOneCard()));
     }
 
     public Card drawOneCard() {
