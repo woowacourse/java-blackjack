@@ -8,6 +8,7 @@ import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import config.CardDeckFactory;
 import domain.card.Card;
@@ -83,5 +84,24 @@ public class DealerTest {
                 new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))), 3,
                 new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 2
         ));
+    }
+
+    @Test
+    @DisplayName("히든 카드를 제외한 카드 반환 테스트")
+    void getCardExceptHiddenTest(){
+        // given
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+        Dealer dealer = new Dealer();
+        dealer.hitCards(cardDeck);
+
+        // when
+        Card card = dealer.getHandExceptHidden();
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(card.getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(card.getNumber()).isEqualTo(ACE);
+        });
+
     }
 }

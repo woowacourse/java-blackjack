@@ -15,6 +15,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -72,5 +73,22 @@ public class CardDeckTest {
                 new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 19,
                 new CardDeck(List.of(new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 20
         ));
+    }
+
+    @Test
+    @DisplayName("히든 카드를 제외한 카드 반환 테스트")
+    void getCardExceptHiddenTest(){
+        // given
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+
+        // when
+        Card card = cardDeck.getCardExceptHidden();
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(card.getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(card.getNumber()).isEqualTo(ACE);
+        });
+
     }
 }
