@@ -20,7 +20,7 @@ public class CardDeck {
         return new CardDeck(cards);
     }
 
-    public Cards getCards() {
+    protected Cards getCards() {
         return cards;
     }
 }
