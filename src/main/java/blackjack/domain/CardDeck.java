@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CardDeck {
     private final List<Card> cards;
@@ -11,11 +12,22 @@ public class CardDeck {
     }
 
     public static CardDeck createCardDeck() {
-        return new CardDeck(Card.values());
+        List<Card> cards = shuffleNewDeck();
+        return new CardDeck(cards);
+    }
+
+    private static List<Card> shuffleNewDeck() {
+        List<Card> cards = Card.values();
+        Collections.shuffle(cards);
+        return cards;
     }
 
     public Card pickRandomCard() {
-        Collections.shuffle(cards);
-        return cards.removeFirst();
+        try {
+            return cards.removeFirst();
+        } catch (NoSuchElementException e) {
+            cards.addAll(shuffleNewDeck());
+            return pickRandomCard();
+        }
     }
 }
