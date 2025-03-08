@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,7 +75,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsUnder16.get(0), cardsUnder16.get(1));
 
             CardDeck cardDeck = CardDeck.createCardDeck();
-            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new ArrayList<>());
+            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new Players(List.of()));
 
             assertThat(game.addExtraCardToDealer()).isTrue();
         }
@@ -92,7 +91,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsOver16.get(0), cardsOver16.get(1));
 
             CardDeck cardDeck = CardDeck.createCardDeck();
-            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new ArrayList<>());
+            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new Players(List.of()));
 
             assertThat(game.addExtraCardToDealer()).isFalse();
         }
@@ -136,7 +135,7 @@ class BlackjackGameTest {
 
             CardDeck cardDeck = CardDeck.createCardDeck();
             List<Player> players = List.of(player1, player2, player3);
-            game = new BlackjackGame(cardDeck, dealer, players);
+            game = new BlackjackGame(cardDeck, dealer, new Players(players));
         }
 
         @Test

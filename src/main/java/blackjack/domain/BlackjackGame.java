@@ -1,17 +1,19 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
     private final CardDeck cardDeck;
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
-    public BlackjackGame(final CardDeck cardDeck, Dealer dealer, final List<Player> players) {
+    public BlackjackGame(final CardDeck cardDeck, Dealer dealer, final Players players) {
         this.cardDeck = cardDeck;
         this.dealer = dealer;
         this.players = players;
@@ -25,17 +27,12 @@ public class BlackjackGame {
             Player player = new Player(name);
             players.add(player);
         }
-        return new BlackjackGame(cardDeck, new Dealer(), players);
+        return new BlackjackGame(cardDeck, new Dealer(), new Players(players));
     }
 
     public void initCardsToParticipants() {
-        List<Participant> participants = new ArrayList<>(players);
-        participants.add(dealer);
-        for (Participant participant : participants) {
-            Card card1 = cardDeck.pickRandomCard();
-            Card card2 = cardDeck.pickRandomCard();
-            participant.addCards(card1, card2);
-        }
+        dealer.addInitialCards(cardDeck);
+        players.addTwoCards(cardDeck);
     }
 
     public void addExtraCard(final Participant participant) {
@@ -52,23 +49,18 @@ public class BlackjackGame {
     }
 
     public Map<Player, GameResult> calculateStatisticsForPlayer() {
-        Map<Player, GameResult> playerResult = new HashMap<>();
-        for (Player player : players) {
-            GameResult gameResult = GameResult.playerResultFrom(dealer, player);
-            playerResult.put(player, gameResult);
-        }
-        return playerResult;
+        return players.calculateStatistics(dealer);
     }
 
     public Map<GameResult, Integer> calculateStatisticsForDealer() {
-        Map<GameResult, Integer> result = new HashMap<>();
-
-        for (Player player : players) {
-            GameResult playerResult = GameResult.playerResultFrom(dealer, player);
-            GameResult dealerResult = playerResult.changeStatusOpposite();
-            result.put(dealerResult, result.getOrDefault(dealerResult, 0) + 1);
-        }
-        return result;
+        return calculateStatisticsForPlayer().values()
+                .stream()
+                .map(GameResult::changeStatusOpposite)
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        value -> 1,
+                        Integer::sum
+                ));
     }
 
     public Dealer getDealer() {
@@ -76,6 +68,6 @@ public class BlackjackGame {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players.getPlayers());
     }
 }
