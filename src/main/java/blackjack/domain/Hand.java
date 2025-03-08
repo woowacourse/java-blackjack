@@ -66,4 +66,14 @@ public class Hand implements CardHolder {
                 .max(Comparator.naturalOrder())
                 .orElse(Constants.BUSTED_VALUE);
     }
+
+    @Override
+    public Card getCard(int position) {
+        if (position < 0 || position >= cards.size()) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_CARD_INDEX.getMessage());
+        }
+
+        return cards.get(position);
+    }
+
 }

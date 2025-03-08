@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final int FIRST_CARD_POSITION = 0;
+
     private final CardHolder cardHolder;
 
     public Dealer(CardHolder cardHolder) {
@@ -23,7 +25,7 @@ public class Dealer {
     }
 
     public Card revealFirstCard() {
-        return cardHolder.getAllCards().getFirst();
+        return cardHolder.getCard(FIRST_CARD_POSITION);
     }
 
     public CardHolder getCardHolder() {

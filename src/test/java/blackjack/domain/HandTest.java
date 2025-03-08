@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.common.CardRank;
 import blackjack.common.CardSuit;
+import blackjack.common.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,5 +77,29 @@ class HandTest {
         // give & when & then
         assertThatThrownBy(() -> Hand.of(null, null))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("원하는 인덱스의 Card를 가져온다.")
+    @Test
+    void test7() {
+        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
+        Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
+        Hand hand = Hand.of(card1, card2);
+
+        Card result = hand.getCard(0);
+
+        assertThat(result).isEqualTo(card1);
+    }
+
+    @DisplayName("해당 인덱스의 Card가 없다면 예외를 반환한다.")
+    @Test
+    void test8() {
+        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
+        Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
+        Hand hand = Hand.of(card1, card2);
+
+        assertThatThrownBy(() -> hand.getCard(2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.INVALID_CARD_INDEX.getMessage());
     }
 }

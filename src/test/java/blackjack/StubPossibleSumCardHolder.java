@@ -21,7 +21,6 @@ public class StubPossibleSumCardHolder implements CardHolder {
     @Override
     public void takeCard(Card newCard) {
         throw new RuntimeException();
-
     }
 
     @Override
@@ -34,5 +33,10 @@ public class StubPossibleSumCardHolder implements CardHolder {
         return integers.stream().filter(sum -> sum <= 21)
                 .max(Comparator.naturalOrder())
                 .orElse(0);
+    }
+
+    @Override
+    public Card getCard(int position) {
+        throw new RuntimeException();
     }
 }
