@@ -19,7 +19,8 @@ public class CardBundle {
     }
 
     private void initCards() {
-        Arrays.stream(Shape.values()).forEachOrdered(this::pickRank);
+        Arrays.stream(Shape.values())
+            .forEachOrdered(this::pickRank);
     }
 
     private void pickRank(Shape shape) {

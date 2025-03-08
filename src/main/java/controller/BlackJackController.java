@@ -1,18 +1,14 @@
 package controller;
 
+import static factory.BlackJackCreator.createCardBundle;
+import static factory.BlackJackCreator.createCardDeck;
+import static factory.BlackJackCreator.createParticipants;
+
 import domain.BlackJackResultCalculator;
-import domain.Card;
-import domain.CardBundle;
 import domain.CardDeck;
-import domain.Dealer;
 import domain.Participant;
 import domain.Participants;
 import domain.ParticipantsResult;
-import domain.Player;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import utils.InputSplitter;
 import view.InputView;
 import view.OutputView;
 
@@ -26,17 +22,12 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void start(CardBundle cardBundle) {
+    public void start() {
         Participants participants = createGameParticipants();
-
-        CardDeck cardDeck = createCardDeck(cardBundle);
-
+        CardDeck cardDeck = createCardDeck(createCardBundle());
         receiveCardProcessOfParticipants(participants, cardDeck);
-
-        // Note: 모든 참가자들의 카드 받기 기능
         receiveCardProcessOfPlayer(participants, cardDeck);
         receiveCardProcessOfDealer(participants, cardDeck);
-
         calculateBackJackResultProcess(participants);
     }
 
@@ -105,27 +96,8 @@ public class BlackJackController {
         return isPrinted;
     }
 
-    private CardDeck createCardDeck(CardBundle cardBundle) {
-        return new CardDeck(getShuffledAllCards(cardBundle));
-    }
-
-    private List<Card> getShuffledAllCards(CardBundle cardBundle) {
-        List<Card> allCards = cardBundle.getAllCards();
-        List<Card> shuffledAllCards = new ArrayList<>(allCards);
-        Collections.shuffle(shuffledAllCards);
-        return shuffledAllCards;
-    }
-
     private Participants createGameParticipants() {
-        List<Participant> participants = new ArrayList<>();
-        // 초기 딜러 설정
-        participants.add(new Dealer());
         String inputUserNames = inputView.inputUserNames();
-        List<String> userNames = InputSplitter.split(inputUserNames);
-        for (String userName : userNames) {
-            Participant participant = new Player(userName);
-            participants.add(participant);
-        }
-        return new Participants(participants);
+        return createParticipants(inputUserNames);
     }
 }
