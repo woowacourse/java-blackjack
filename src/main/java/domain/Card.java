@@ -12,16 +12,16 @@ public class Card {
         this.number = number;
     }
 
+    public boolean isAce() {
+        return number.equals(Number.ACE);
+    }
+
     public Symbol getSymbol() {
         return symbol;
     }
 
     public Number getNumber() {
         return number;
-    }
-
-    public boolean isAce() {
-        return number.equals(Number.ACE);
     }
 
     @Override
