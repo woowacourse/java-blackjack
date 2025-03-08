@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Player {
+public class Player implements Participant{
     private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
@@ -17,22 +17,25 @@ public class Player {
         this.name = name;
     }
 
+    @Override
     public void hitCards(final CardDeck standard) {
         hand.hitCards(standard);
     }
 
-    public int sum() {
-        return hand.sum();
-    }
-
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final CardDeck standard) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
+                     final CardDeck standard) {
         while (!isBust() && answer.apply(this)) {
             hand.addCard(standard.hitCard());
             playerDeck.accept(this);
         }
     }
 
-    public MatchResult calculateWinner(final int dealerSum){
+    @Override
+    public int sum() {
+        return hand.sum();
+    }
+
+    public MatchResult calculateWinner(final int dealerSum) {
         return MatchResult.calculateWinner(dealerSum, this.sum());
     }
 
