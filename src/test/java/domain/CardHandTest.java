@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import constant.Emblem;
+import constant.Suit;
 
 class CardHandTest {
 
@@ -31,20 +31,20 @@ class CardHandTest {
 
 		private static Stream<Arguments> getCardList() {
 			return Stream.of(
-				Arguments.of(List.of(new Card(Rank.NINE, Emblem.CLUB), new Card(Rank.NINE, Emblem.HEART)),
+				Arguments.of(List.of(new Card(Rank.NINE, Suit.CLUB), new Card(Rank.NINE, Suit.HEART)),
 					18),
-				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART)),
+				Arguments.of(List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.ACE, Suit.HEART)),
 					12),
-				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.TEN, Emblem.HEART)),
+				Arguments.of(List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.TEN, Suit.HEART)),
 					21),
-				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
-					new Card(Rank.TEN, Emblem.HEART)), 12),
-				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
-					new Card(Rank.TEN, Emblem.CLUB), new Card(Rank.TEN, Emblem.HEART)), 22),
-				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
-					new Card(Rank.ACE, Emblem.SPADE)), 13),
-				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
-					new Card(Rank.ACE, Emblem.SPADE), new Card(Rank.ACE, Emblem.DIAMOND)), 14)
+				Arguments.of(List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.ACE, Suit.HEART),
+					new Card(Rank.TEN, Suit.HEART)), 12),
+				Arguments.of(List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.ACE, Suit.HEART),
+					new Card(Rank.TEN, Suit.CLUB), new Card(Rank.TEN, Suit.HEART)), 22),
+				Arguments.of(List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.ACE, Suit.HEART),
+					new Card(Rank.ACE, Suit.SPADE)), 13),
+				Arguments.of(List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.ACE, Suit.HEART),
+					new Card(Rank.ACE, Suit.SPADE), new Card(Rank.ACE, Suit.DIAMOND)), 14)
 			);
 		}
 	}

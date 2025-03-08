@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import constant.Emblem;
+import constant.Suit;
 
 public class DeckTest {
 
@@ -21,7 +21,7 @@ public class DeckTest {
 		@Test
 		public void validateDuplicate() throws Exception {
 			// given
-			final Card club = new Card(Rank.TWO, Emblem.CLUB);
+			final Card club = new Card(Rank.TWO, Suit.CLUB);
 			final var q = new ArrayDeque<>(List.of(club, club));
 
 			// when & then
@@ -39,9 +39,9 @@ public class DeckTest {
 		public void pickCard() throws Exception {
 			// given
 			final Rank cardNumber = Rank.TWO;
-			final var d = new ArrayDeque<>(List.of(new Card(cardNumber, Emblem.CLUB)));
+			final var d = new ArrayDeque<>(List.of(new Card(cardNumber, Suit.CLUB)));
 			final var deck = new Deck(d);
-			final var expected = new Card(cardNumber, Emblem.CLUB);
+			final var expected = new Card(cardNumber, Suit.CLUB);
 
 			// when
 			final var actual = deck.pickCard();

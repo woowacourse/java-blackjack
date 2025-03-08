@@ -2,17 +2,17 @@ package domain;
 
 import java.util.Objects;
 
-import constant.Emblem;
+import constant.Suit;
 
 public record Card(
-	Rank number,
-	Emblem emblem
+	Rank rank,
+	Suit suit
 ) {
 	public boolean isMatchNumber(final Rank cardNumber) {
-		return Objects.equals(number, cardNumber);
+		return Objects.equals(rank, cardNumber);
 	}
 
 	public int sumNumber(final int score) {
-		return number.sum(score);
+		return rank.sum(score);
 	}
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import constant.Emblem;
+import constant.Suit;
 
 public class DealerTest {
 
@@ -34,8 +34,8 @@ public class DealerTest {
 		@Test
 		public void isPickCard1() throws Exception {
 			// given
-			final Card card1 = new Card(Rank.TEN, Emblem.CLUB);
-			final Card card2 = new Card(Rank.SEVEN, Emblem.HEART);
+			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
+			final Card card2 = new Card(Rank.SEVEN, Suit.HEART);
 			final CardHand cardHand = new CardHand(List.of(card1, card2));
 			final var dealer = new Dealer(cardHand);
 
@@ -55,19 +55,19 @@ public class DealerTest {
 		@Test
 		void startDuel() throws Exception {
 			// given
-			final Card card1 = new Card(Rank.TEN, Emblem.CLUB);
-			final Card card2 = new Card(Rank.SEVEN, Emblem.HEART);
+			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
+			final Card card2 = new Card(Rank.SEVEN, Suit.HEART);
 			final CardHand cardHand = new CardHand(List.of(card1, card2));
 			final var dealer = new Dealer(cardHand);
 
 			final Player player = new Player("loser");
-			final List<Card> playerCards = List.of(new Card(Rank.ACE, Emblem.CLUB));
+			final List<Card> playerCards = List.of(new Card(Rank.ACE, Suit.CLUB));
 			final Deck playerDeck = new Deck(new ArrayDeque<>(playerCards));
 			player.pickCard(playerDeck);
 
 			final Player winner = new Player("w");
-			final List<Card> winnerCards = List.of(new Card(Rank.ACE, Emblem.CLUB),
-				new Card(Rank.TEN, Emblem.CLUB));
+			final List<Card> winnerCards = List.of(new Card(Rank.ACE, Suit.CLUB),
+				new Card(Rank.TEN, Suit.CLUB));
 			final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
 			winner.pickCard(winnerDeck);
 			winner.pickCard(winnerDeck);

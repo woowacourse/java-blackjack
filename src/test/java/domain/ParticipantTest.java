@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import constant.Emblem;
+import constant.Suit;
 
 class ParticipantTest {
 	@Nested
@@ -21,7 +21,7 @@ class ParticipantTest {
 		public void pickCard() {
 			// given
 			final Participant participant = new Participant();
-			final List<Card> cards = List.of(new Card(Rank.ACE, Emblem.CLUB));
+			final List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB));
 			final Deck deck = new Deck(new ArrayDeque<>(cards));
 
 			// when

@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import constant.Emblem;
+import constant.Suit;
 
 public class Deck {
 	private final Queue<Card> deck;
@@ -28,7 +28,7 @@ public class Deck {
 	}
 
 	private static Stream<Card> makeCards(Rank cardNumber) {
-		return Arrays.stream(Emblem.values())
+		return Arrays.stream(Suit.values())
 			.map(emblem -> new Card(cardNumber, emblem));
 	}
 

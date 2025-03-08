@@ -109,8 +109,8 @@ public class BlackjackController {
 	}
 
 	private String convertedCardText(final Card dealerFirstCard) {
-		final String cardNumberText = CardNumberToTextConverter.convert(dealerFirstCard.number());
-		final String cardEmblemText = dealerFirstCard.emblem().getName();
+		final String cardNumberText = CardNumberToTextConverter.convert(dealerFirstCard.rank());
+		final String cardEmblemText = dealerFirstCard.suit().getName();
 		return cardNumberText + cardEmblemText;
 	}
 
