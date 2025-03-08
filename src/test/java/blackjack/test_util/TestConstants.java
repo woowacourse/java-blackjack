@@ -5,26 +5,31 @@ import static blackjack.domain.card.CardShape.*;
 import blackjack.domain.card.Card;
 import blackjack.domain.Player;
 
+import java.util.List;
+
 public class TestConstants {
     
-    public static final Card DIAMOND_1 = new Card(1, 다이아몬드);
-    public static final Card DIAMOND_5 = new Card(5, 다이아몬드);
-    public static final Card DIAMOND_9 = new Card(9, 다이아몬드);
-    public static final Card DIAMOND_10 = new Card(10, 다이아몬드);
-    public static final Card HEART_1 = new Card(1, 하트);
-    public static final Card HEART_2 = new Card(2, 하트);
-    public static final Card HEART_3 = new Card(3, 하트);
-    public static final Card HEART_4 = new Card(4, 하트);
-    public static final Card HEART_5 = new Card(5, 하트);
-    public static final Card HEART_6 = new Card(6, 하트);
-    public static final Card HEART_7 = new Card(7, 하트);
-    public static final Card HEART_8 = new Card(8, 하트);
-    public static final Card HEART_9 = new Card(9, 하트);
-    public static final Card HEART_10 = new Card(10, 하트);
-    public static final Card HEART_11 = new Card(11, 하트);
-    public static final Card HEART_12 = new Card(12, 하트);
-    public static final Card HEART_13 = new Card(13, 하트);
-    public static final Card CLOVER_10 = new Card(10, 클로버);
+    private static final List<Card> CARDS = Card.createTrumpCards();
+
+    public static final Card HEART_1 = CARDS.get(0);
+    public static final Card HEART_2 = CARDS.get(1);
+    public static final Card HEART_3 = CARDS.get(2);
+    public static final Card HEART_4 = CARDS.get(3);
+    public static final Card HEART_5 = CARDS.get(4);
+    public static final Card HEART_6 = CARDS.get(5);
+    public static final Card HEART_7 = CARDS.get(6);
+    public static final Card HEART_8 = CARDS.get(7);
+    public static final Card HEART_9 = CARDS.get(8);
+    public static final Card HEART_10 = CARDS.get(9);
+    public static final Card HEART_11 = CARDS.get(10);
+    public static final Card HEART_12 = CARDS.get(11);
+    public static final Card HEART_13 = CARDS.get(12);
+    
+    public static final Card DIAMOND_1 = CARDS.get(13);
+    public static final Card DIAMOND_5 = CARDS.get(17);
+    public static final Card DIAMOND_9 = CARDS.get(21);
+    public static final Card DIAMOND_10 = CARDS.get(22);
+    public static final Card CLOVER_10 = CARDS.get(49);
     
     public static final Player DEFAULT_PLAYER = new Player("dompoo");
 }

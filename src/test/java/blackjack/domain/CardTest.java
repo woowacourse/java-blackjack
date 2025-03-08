@@ -1,8 +1,11 @@
 package blackjack.domain;
 
+import blackjack.test_util.TestConstants;
+
 import java.util.EnumMap;
 import java.util.List;
 
+import static blackjack.test_util.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -11,104 +14,53 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+
+import java.util.stream.Stream;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class CardTest {
-    
-    @Test
-    void 카드_모양이_NULL인_경우_예외를_발생시킨다() {
-        // expected
-        Assertions.assertThatThrownBy(() -> new Card(1, null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드 모양은 null이 될 수 없습니다.");
-    }
-    
-    @Test
-    void 카드는_숫자와_모양을_기반으로_생성할_수_있다() {
-        // given
-        int number = 1;
-        CardShape shape = CardShape.다이아몬드;
-        
-        // expected
-        assertDoesNotThrow(() -> new Card(number, shape));
-    }
-    
-    
-    @ParameterizedTest
-    @ValueSource(ints = {0, 14})
-    void 카드_숫자의_범위가_1에서_13이_아닌_경우_예외가_발생한다(int number) {
-        // given
-        CardShape shape = CardShape.다이아몬드;
-        
-        // expected
-        assertThatThrownBy(() -> new Card(number, shape))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("숫자는 1부터 13 사이여야 합니다.");
-    }
-    
+
     @Test
     void 카드는_가능한_블랙잭_숫자를_반환할_수_있다() {
-        // given
-        int number = 7;
-        CardShape shape = CardShape.다이아몬드;
-        
-        // when
-        final Card card = new Card(number, shape);
-        
         // expected
-        assertThat(card.getBlackjackValue())
+        assertThat(HEART_7.getBlackjackValue())
                 .containsExactlyInAnyOrder(7);
     }
     
     @ParameterizedTest
-    @ValueSource(ints = {11, 12, 13})
-    void JQK는_블랙잭_숫자에서_10으로_반환된다(int number) {
-        // given
-        CardShape shape = CardShape.다이아몬드;
-        
-        // when
-        final Card card = new Card(number, shape);
-        
+    @MethodSource("provideJQKCards")
+    void JQK는_블랙잭_숫자에서_10으로_반환된다(Card card) {
         // expected
         assertThat(card.getBlackjackValue())
                 .containsExactlyInAnyOrder(10);
     }
     
+    private static Stream<Arguments> provideJQKCards() {
+        return Stream.of(
+                Arguments.of(HEART_11),
+                Arguments.of(HEART_12),
+                Arguments.of(HEART_13)
+        );
+    }
+    
     @Test
     void A는_블랙잭_숫자에서_1과_11로_반환된다() {
-        // given
-        int number = 1;
-        CardShape shape = CardShape.다이아몬드;
-        
-        // when
-        final Card card = new Card(number, shape);
-        
         // expected
-        assertThat(card.getBlackjackValue())
+        assertThat(HEART_1.getBlackjackValue())
                 .containsExactlyInAnyOrder(1, 11);
     }
     
     @Test
-    void 카드는_문양과_숫자가_같아도_동일하다고_판단되지_않는다() {
-        // given
-        int number = 1;
-        CardShape shape = CardShape.다이아몬드;
-        
-        // expected
-        assertThat(new Card(number, shape)).isNotEqualTo(new Card(number, shape));
-    }
-    
-    @Test
     void 카드를_생성하면_모양과_숫자를_알_수_있다() {
-        // given
-        int number = 1;
-        CardShape shape = CardShape.다이아몬드;
-        
-        // when
-        final Card card = new Card(number, shape);
+        // given, when
+        final Card card = DIAMOND_1;
         
         // then
         assertAll(
