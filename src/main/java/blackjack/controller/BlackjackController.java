@@ -5,6 +5,7 @@ import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.manager.BlackJackInitManager;
+import blackjack.manager.BlackJackResultManager;
 import blackjack.manager.BlackjackProcessManager;
 import blackjack.manager.GameRuleEvaluator;
 import blackjack.view.Confirmation;
@@ -17,11 +18,13 @@ public class BlackjackController {
     private final GameRuleEvaluator gameRuleEvaluator;
     private final BlackJackInitManager blackJackInitManager;
     private final BlackjackProcessManager blackjackProcessManager;
+    private final BlackJackResultManager blackJackResultManager;
 
     public BlackjackController(GameRuleEvaluator gameRuleEvaluator, BlackJackInitManager blackJackInitManager) {
         this.gameRuleEvaluator = gameRuleEvaluator;
         this.blackJackInitManager = blackJackInitManager;
         this.blackjackProcessManager = new BlackjackProcessManager(blackJackInitManager.generateDeck());
+        this.blackJackResultManager = new BlackJackResultManager();
     }
 
     public void run() {
@@ -82,12 +85,12 @@ public class BlackjackController {
     }
 
     private void printCardResult(Players players, Dealer dealer) {
-        blackjackProcessManager.calculateCardResult(players, dealer, gameRuleEvaluator);
+        blackJackResultManager.calculateCardResult(players, dealer, gameRuleEvaluator);
         OutputView.printCardResult(players, dealer);
     }
 
     private void printGameResult() {
-        OutputView.printGameResult(blackjackProcessManager.getDealerResult(),
-                blackjackProcessManager.getPlayersResult());
+        OutputView.printGameResult(blackJackResultManager.getDealerResult(),
+                blackJackResultManager.getPlayersResult());
     }
 }

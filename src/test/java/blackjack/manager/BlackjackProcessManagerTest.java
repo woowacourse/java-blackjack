@@ -52,33 +52,7 @@ class BlackjackProcessManagerTest {
         assertThat(hand.getAllCards()).hasSize(1);
     }
 
-    @DisplayName("플레이어의 결과를 판단한다.")
-    @Test
-    void test3() {
-        // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
-        Player player = new Player("꾹이", new StubPossibleSumCardHolder(List.of(15, 19, 20)));
 
-        // when
-        GameResultType gameResultType = blackjackProcessManager.decideResultOfPlayer(player, dealer);
-
-        // then
-        assertThat(gameResultType).isEqualTo(GameResultType.LOSE);
-    }
-
-    @DisplayName("플레이어의 결과를 판단한다.")
-    @Test
-    void test4() {
-        // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
-        Player player = new Player("꾹이", new StubPossibleSumCardHolder(List.of(15, 19, 21)));
-
-        // when
-        GameResultType gameResultType = blackjackProcessManager.decideResultOfPlayer(player, dealer);
-
-        // then
-        assertThat(gameResultType).isEqualTo(GameResultType.TIE);
-    }
 
 
 }
