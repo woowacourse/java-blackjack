@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.result.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.result.GameResultType;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,9 +21,9 @@ public final class OutputView {
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
-        System.out.println(Formatter.parseDealerStartCardStatus(dealer));
+        System.out.println(Formatter.formatDealerStartCardStatus(dealer));
         for (Player player : players.getPlayers()) {
-            System.out.println(Formatter.parsePlayerCardStatus(player));
+            System.out.println(Formatter.formatPlayerCardStatus(player));
         }
     }
 
@@ -32,15 +32,15 @@ public final class OutputView {
     }
 
     public static void printCardResult(Players players, Dealer dealer) {
-        System.out.println(Formatter.parseDealerCardResult(dealer));
+        System.out.println(Formatter.formatDealerCardResult(dealer));
 
         for (Player player : players.getPlayers()) {
-            System.out.println(Formatter.parsePlayerCardResult(player));
+            System.out.println(Formatter.formatPlayerCardResult(player));
         }
     }
 
     public static void printCardResult(Player player) {
-        System.out.println(Formatter.parsePlayerCardResult(player));
+        System.out.println(Formatter.formatPlayerCardResult(player));
     }
 
     public static void printBustedPlayer(Player player) {
@@ -50,8 +50,8 @@ public final class OutputView {
     public static void printGameResult(Map<GameResultType, Integer> dealerResult,
                                        Map<Player, GameResultType> playersResult) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %s%n", Formatter.parseDealerGameResult(dealerResult));
-        System.out.println(Formatter.parsePlayerGameResult(playersResult));
+        System.out.printf("딜러: %s%n", Formatter.formatDealerGameResult(dealerResult));
+        System.out.println(Formatter.formatPlayerGameResult(playersResult));
     }
 
 }

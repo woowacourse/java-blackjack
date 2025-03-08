@@ -18,6 +18,14 @@ public class Card {
         return Collections.unmodifiableList(cardRank.getValues());
     }
 
+    public CardSuit getSuit() {
+        return cardSuit;
+    }
+
+    public CardRank getRank() {
+        return cardRank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -31,9 +39,4 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardSuit, cardRank);
     }
-
-    public String toCardName() {
-        return cardRank.getDescription() + cardSuit.getDescription();
-    }
-
 }

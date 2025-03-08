@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.result.GameResultType;
+import blackjack.domain.Player;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
