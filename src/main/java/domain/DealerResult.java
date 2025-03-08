@@ -18,7 +18,6 @@ public class DealerResult extends Dealer implements ParticipantResult {
         dealerResult.put(gameResult, dealerResult.getOrDefault(gameResult, 0) + 1);
     }
 
-
     @Override
     public Map<GameResult, Integer> get() {
         return Collections.unmodifiableMap(dealerResult);
@@ -26,30 +25,8 @@ public class DealerResult extends Dealer implements ParticipantResult {
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        DealerResult that = (DealerResult) o;
-        return Objects.equals(dealerResult, that.dealerResult);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(dealerResult);
-    }
-
-    @Override
     public String toString() {
         return super.getName() + ": " + result();
-        /*
-        return super.getName() + ": " + dealerResult.get(WIN) + "승 " + dealerResult.get(LOSE) + "패 "
-            + dealerResult.get(DRAW) + "무";
-
-         */
     }
 
     private String result() {
@@ -63,5 +40,22 @@ public class DealerResult extends Dealer implements ParticipantResult {
             stringBuilder.append(koreanName + " ");
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        DealerResult that = (DealerResult) o;
+        return Objects.equals(dealerResult, that.dealerResult);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), dealerResult);
     }
 }
