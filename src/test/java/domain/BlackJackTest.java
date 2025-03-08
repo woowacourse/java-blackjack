@@ -37,11 +37,10 @@ public class BlackJackTest {
     void hitCardsToParticipantTest(){
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Dealer dealer = new Dealer(cardDeckFactory.create());
         Players players = Players.from(List.of("pobi", "lisa"));
 
         //when
-        BlackJack blackJack = new BlackJack(players, dealer);
+        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeckFactory.create());
 
         //then
         assertDoesNotThrow(blackJack::hitCardsToParticipant);
@@ -62,10 +61,9 @@ public class BlackJackTest {
         OutputView testOutputView = new OutputView();
 
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Dealer dealer = new Dealer(cardDeckFactory.create());
         Players players = Players.from(List.of("pobi", "lisa"));
 
-        BlackJack blackJack = new BlackJack(players, dealer);
+        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeckFactory.create());
 
         //when-then
         assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck));
@@ -76,11 +74,10 @@ public class BlackJackTest {
     void drawDealerTest(){
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Dealer dealer = new Dealer(cardDeckFactory.create());
         Players players = Players.from(List.of("pobi", "lisa"));
 
         //when
-        BlackJack blackJack = new BlackJack(players, dealer);
+        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeckFactory.create());
 
         //then
         assertDoesNotThrow(blackJack::drawDealer);
@@ -92,9 +89,8 @@ public class BlackJackTest {
         //given
         Players players = Players.from(List.of("pobi", "lisa"));
         CardDeck cardDeck = new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK), new Card(HEART, ACE), new Card(CLOVER, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
 
-        BlackJack blackJack = new BlackJack(players, dealer);
+        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeck);
 
         //when
         blackJack.hitCardsToParticipant();

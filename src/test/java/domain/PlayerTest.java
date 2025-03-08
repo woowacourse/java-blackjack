@@ -1,10 +1,12 @@
 package domain;
 
-import static domain.MatchResult.LOSE;
+import static domain.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
+import static domain.card.Number.THREE;
+import static domain.card.Number.TWO;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
@@ -37,38 +39,36 @@ public class PlayerTest {
         Player player = new Player("pobi");
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
 
         // when
-        player.hitCards(dealer);
+        player.hitCards(cardDeck);
 
         // then
-        assertDoesNotThrow(() -> player.hitCards(dealer));
+        assertDoesNotThrow(() -> player.hitCards(cardDeck));
     }
 
-    @Test
-    @DisplayName("카드 추가 테스트")
-    void addCardTest() {
-        //given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
-
-        //when-then
-        assertDoesNotThrow(() -> player.addCard(dealer));
-    }
+//    @Test
+//    @DisplayName("카드 추가 테스트")
+//    void addCardTest() {
+//        //given
+//        CardDeckFactory cardDeckFactory = new CardDeckFactory();
+//        CardDeck cardDeck = cardDeckFactory.create();
+//        Dealer dealer = new Dealer();
+//        Player player = new Player("pobi");
+//
+//        //when-then
+//        assertDoesNotThrow(() -> player.draw());
+//    }
 
     @Test
     @DisplayName("카드 합계 테스트")
     void sumTest() {
         //given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
         Player player = new Player("pobi");
 
         //when
-        player.hitCards(dealer);
+        player.hitCards(cardDeck);
 
         //then
         assertThat(player.sum()).isEqualTo(12);
@@ -89,11 +89,10 @@ public class PlayerTest {
         OutputView testOutputView = new OutputView();
 
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Dealer dealer = new Dealer(cardDeck);
         Player player = new Player("pobi");
 
         //when-then
-        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
+        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
     }
 
     @Test
@@ -101,12 +100,13 @@ public class PlayerTest {
     void calculateWinner() {
         //given
         Player player = new Player("pobi");
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        player.addCard(dealer);
-        dealer.hitCards();
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE), new Card(HEART, TWO), new Card(DIAMOND, THREE)));
+        Dealer dealer = new Dealer();
+
+        player.hitCards(cardDeck);
+        dealer.hitCards(cardDeck);
 
         //when-then
-        assertThat(player.calculateWinner(dealer.sum())).isEqualTo(LOSE);
+        assertThat(player.calculateWinner(dealer.sum())).isEqualTo(WIN);
     }
 }

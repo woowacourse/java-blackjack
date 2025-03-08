@@ -42,8 +42,6 @@ public class PlayersTest {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
 
-        Dealer dealer = new Dealer(cardDeck);
-
         //when-then
 
 //        assertSoftly(softly -> {
@@ -51,8 +49,7 @@ public class PlayersTest {
 //            softly.assertThat(playerList.get(1).getCardDeck().getCardsSize()).isEqualTo(2);
 //        });
 
-        assertDoesNotThrow(() -> players.hitCards(dealer));
-
+        assertDoesNotThrow(() -> players.hitCards(cardDeck));
     }
 
     @ParameterizedTest
@@ -93,10 +90,9 @@ public class PlayersTest {
         OutputView testOutputView = new OutputView();
 
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Dealer dealer = new Dealer(cardDeck);
         Players players = Players.from(List.of("pobi", "lisa"));
 
         //when-then
-        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
+        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
     }
 }

@@ -23,17 +23,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class DealerTest {
-    @Test
-    @DisplayName("카드 분배 테스트")
-    void hitCardsToParticipantTest() {
-        // given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
-        //when-then
-        assertThat(dealer.hitCard()).isInstanceOf(Card.class);
-
-    }
 
     @Test
     @DisplayName("카드 추가 테스트")
@@ -41,23 +30,23 @@ public class DealerTest {
         // given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer dealer = new Dealer();
+
         // when-then
-        assertDoesNotThrow(dealer::hitCards);
+        assertDoesNotThrow(() -> dealer.hitCards(cardDeck));
     }
 
 
     @Test
     @DisplayName("카드 합계 테스트")
     void sumTest() {
-        //given
+        // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO), new Card(HEART, TWO)));
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.hitCards();
-        dealer.hitCards();
-        dealer.hitCards();
+        Dealer dealer = new Dealer();
+        dealer.hitCards(cardDeck);
+        dealer.draw(cardDeck);
 
-        //when-then
+        // when-then
         assertThat(dealer.sum()).isEqualTo(6);
     }
 
@@ -66,9 +55,8 @@ public class DealerTest {
     void checkIsUnderThresholdTest() {
         //given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.hitCards();
-        dealer.hitCards();
+        Dealer dealer = new Dealer();
+        dealer.hitCards(cardDeck);
 
         //when-then
         assertThat(dealer.isUnderThreshold()).isTrue();
@@ -79,12 +67,11 @@ public class DealerTest {
     @MethodSource("provideCardDeckForDrawTest")
     void drawTest(CardDeck cardDeck) {
         //given
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.hitCards();
-        dealer.hitCards();
+        Dealer dealer = new Dealer();
+        dealer.hitCards(cardDeck);
 
         //when-then
-        assertDoesNotThrow(dealer::draw);
+        assertDoesNotThrow(() -> dealer.draw(cardDeck));
     }
 
     private static Stream<Arguments> provideCardDeckForDrawTest() {

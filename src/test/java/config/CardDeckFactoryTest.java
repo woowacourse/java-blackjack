@@ -13,6 +13,7 @@ public class CardDeckFactoryTest {
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
 
+        //when-then
         assertThat(cardDeckFactory.create()).isInstanceOf(CardDeck.class);
     }
 }
