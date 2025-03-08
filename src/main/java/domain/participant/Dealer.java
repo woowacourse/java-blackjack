@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import java.util.ArrayList;
 
@@ -14,6 +15,10 @@ public class Dealer {
 
     public void hitCards(final CardDeck standard) {
         hand.hitCards(standard);
+    }
+
+    public Card getHandExceptHidden(){
+        return hand.getCardExceptHidden();
     }
 
     public void draw(final CardDeck standard) {

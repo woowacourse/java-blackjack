@@ -98,7 +98,7 @@ public class OutputView {
     }
 
     private void printDealerDeckWithHidden(final Dealer dealer) {
-        System.out.println(DEALER_CARDS + toSymbol(dealer.getHand().getCards().getFirst()));
+        System.out.println(DEALER_CARDS + toSymbol(dealer.getHandExceptHidden()));
     }
 
     private void printHitNotice(final Players players) {

@@ -45,7 +45,12 @@ public class CardDeck {
                 .anyMatch(Card::isA);
     }
 
+    public Card getCardExceptHidden() {
+        return cards.getFirst();
+    }
+
     public List<Card> getCards() {
         return cards;
     }
+
 }
