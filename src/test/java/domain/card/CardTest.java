@@ -12,7 +12,10 @@ public class CardTest {
     @Test
     @DisplayName("A 판별 테스트")
     void isATest() {
+        // given
         Card card = new Card(SPADE, ACE);
+
+        // when-then
         assertThat(card.isA()).isTrue();
     }
 }

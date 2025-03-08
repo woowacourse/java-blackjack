@@ -10,7 +10,7 @@ import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import config.CardDeckFactory;
 import domain.card.Card;
@@ -38,12 +38,17 @@ public class BlackJackTest {
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Players players = Players.from(List.of("pobi", "lisa"));
+        Dealer dealer = new Dealer();
 
         //when
-        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeckFactory.create());
+        BlackJack blackJack = new BlackJack(players, dealer, cardDeckFactory.create());
+        blackJack.hitCardsToParticipant();
 
         //then
-        assertDoesNotThrow(blackJack::hitCardsToParticipant);
+        assertSoftly(softly -> {
+            softly.assertThat(players.getPlayers().getFirst().getHand().getCards().size()).isEqualTo(2);
+            softly.assertThat(dealer.getHand().getCards().size()).isEqualTo(2);
+        });
     }
 
     @Test
@@ -65,8 +70,11 @@ public class BlackJackTest {
 
         BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeckFactory.create());
 
-        //when-then
-        assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck));
+        //when
+        blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck);
+
+        //then
+        assertThat(players.getPlayers().getFirst().getHand().getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -75,12 +83,14 @@ public class BlackJackTest {
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Players players = Players.from(List.of("pobi", "lisa"));
+        Dealer dealer = new Dealer();
 
         //when
-        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeckFactory.create());
+        BlackJack blackJack = new BlackJack(players, dealer, cardDeckFactory.create());
+        blackJack.drawDealer();
 
         //then
-        assertDoesNotThrow(blackJack::drawDealer);
+        assertThat(dealer.getHand().getCards().size()).isEqualTo(1);
     }
 
     @Test

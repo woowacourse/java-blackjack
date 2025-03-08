@@ -10,8 +10,8 @@ import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import config.CardDeckFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -22,21 +22,18 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardDeckTest {
-    @Test
-    @DisplayName("카드 개수 테스트")
-    void cardSizeTest() {
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-
-        assertThat(cardDeckFactory.create()).isInstanceOf(CardDeck.class);
-    }
 
     @Test
     @DisplayName("카드 한 장 뽑기 테스트")
     void hitCardTest() {
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
+        // given
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO)));
 
-        assertThat(cardDeck.hitCard()).isInstanceOf(Card.class);
+        // when-then
+        assertSoftly(softly -> {
+            softly.assertThat(cardDeck.hitCard().getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(cardDeck.hitCard().getNumber()).isEqualTo(TWO);
+        });
     }
 
     @Test

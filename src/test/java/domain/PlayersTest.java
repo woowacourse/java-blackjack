@@ -1,18 +1,15 @@
 package domain;
 
 import static domain.card.Number.JACK;
-import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
 import static domain.card.Shape.DIAMOND;
-import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.Dealer;
 import domain.participant.Players;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,7 +31,7 @@ public class PlayersTest {
     @Test
     @DisplayName("카드 분배 테스트")
     void hitCardsTest(){
-        //given
+        // given
         Players players = Players.from(new ArrayList<>(
                 List.of("pobi", "lisa")
         ));
@@ -42,14 +39,14 @@ public class PlayersTest {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
 
-        //when-then
+        // when
+        players.hitCards(cardDeck);
 
-//        assertSoftly(softly -> {
-//            softly.assertThat(playerList.getFirst().getCardDeck().getCardsSize()).isEqualTo(2);
-//            softly.assertThat(playerList.get(1).getCardDeck().getCardsSize()).isEqualTo(2);
-//        });
-
-        assertDoesNotThrow(() -> players.hitCards(cardDeck));
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(players.getPlayers().getFirst().getHand().getCards().size()).isEqualTo(2);
+            softly.assertThat(players.getPlayers().get(1).getHand().getCards().size()).isEqualTo(2);
+        });
     }
 
     @ParameterizedTest
@@ -78,8 +75,8 @@ public class PlayersTest {
     @Test
     @DisplayName("카드 드로우 테스트")
     void drawTest(){
-        //given
-        String input = "y\nn\ny\nn\n";
+        // given
+        String input = "y\nn\nn\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
 
@@ -89,10 +86,16 @@ public class PlayersTest {
         InputView testInputView = new InputView(new Scanner(System.in));
         OutputView testOutputView = new OutputView();
 
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK)));
         Players players = Players.from(List.of("pobi", "lisa"));
 
-        //when-then
-        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
+        // when
+        players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck);
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(players.getPlayers().getFirst().getHand().getCards().size()).isEqualTo(1);
+            softly.assertThat(players.getPlayers().get(1).getHand().getCards().size()).isEqualTo(0);
+        });
     }
 }

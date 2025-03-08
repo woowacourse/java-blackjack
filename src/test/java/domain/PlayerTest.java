@@ -11,7 +11,6 @@ import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.Card;
@@ -44,41 +43,28 @@ public class PlayerTest {
         player.hitCards(cardDeck);
 
         // then
-        assertDoesNotThrow(() -> player.hitCards(cardDeck));
+        assertThat(player.getHand().getCards().size()).isEqualTo(2);
     }
-
-//    @Test
-//    @DisplayName("카드 추가 테스트")
-//    void addCardTest() {
-//        //given
-//        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-//        CardDeck cardDeck = cardDeckFactory.create();
-//        Dealer dealer = new Dealer();
-//        Player player = new Player("pobi");
-//
-//        //when-then
-//        assertDoesNotThrow(() -> player.draw());
-//    }
 
     @Test
     @DisplayName("카드 합계 테스트")
     void sumTest() {
-        //given
+        // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Player player = new Player("pobi");
 
-        //when
+        // when
         player.hitCards(cardDeck);
 
-        //then
+        // then
         assertThat(player.sum()).isEqualTo(12);
     }
 
     @ParameterizedTest
     @DisplayName("드로우 테스트")
-    @ValueSource(strings = {"y\ny\ny\n", "y\nn\n"})
+    @ValueSource(strings = {"y\ny\ny\ny\n", "y\ny\ny\nn\n"})
     void drawTest(String input) {
-        //given
+        // given
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
 
@@ -91,14 +77,17 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
         Player player = new Player("pobi");
 
-        //when-then
-        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
+        // when
+        player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck);
+
+        // then
+        assertThat(player.getHand().getCards().size()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("승패 결정 테스트")
     void calculateWinner() {
-        //given
+        // given
         Player player = new Player("pobi");
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE), new Card(HEART, TWO), new Card(DIAMOND, THREE)));
         Dealer dealer = new Dealer();
@@ -106,7 +95,7 @@ public class PlayerTest {
         player.hitCards(cardDeck);
         dealer.hitCards(cardDeck);
 
-        //when-then
+        // when-then
         assertThat(player.calculateWinner(dealer.sum())).isEqualTo(WIN);
     }
 }

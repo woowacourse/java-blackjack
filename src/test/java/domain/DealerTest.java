@@ -8,7 +8,6 @@ import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.Card;
@@ -32,8 +31,10 @@ public class DealerTest {
         CardDeck cardDeck = cardDeckFactory.create();
         Dealer dealer = new Dealer();
 
-        // when-then
-        assertDoesNotThrow(() -> dealer.hitCards(cardDeck));
+        // when
+        dealer.hitCards(cardDeck);
+        // then
+        assertThat(dealer.getHand().getCards().size()).isEqualTo(2);
     }
 
 
@@ -65,19 +66,22 @@ public class DealerTest {
     @ParameterizedTest
     @DisplayName("드로우 테스트")
     @MethodSource("provideCardDeckForDrawTest")
-    void drawTest(CardDeck cardDeck) {
-        //given
+    void drawTest(CardDeck cardDeck, int size) {
+        // given
         Dealer dealer = new Dealer();
         dealer.hitCards(cardDeck);
 
-        //when-then
-        assertDoesNotThrow(() -> dealer.draw(cardDeck));
+        // when
+        dealer.draw(cardDeck);
+
+        // then
+        assertThat(dealer.getHand().getCards().size()).isEqualTo(size);
     }
 
     private static Stream<Arguments> provideCardDeckForDrawTest() {
         return Stream.of(Arguments.of(
-                new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))),
-                new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK)))
+                new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))), 3,
+                new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 2
         ));
     }
 }
