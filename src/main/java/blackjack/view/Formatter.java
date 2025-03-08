@@ -15,28 +15,28 @@ public final class Formatter {
     private Formatter() {
     }
 
-    public static String parsePlayerCardResult(Player player) {
-        String message = parsePlayerCardStatus(player) + " - 결과: ";
+    public static String parseCardResult(Player player) {
+        String message = parseCardStatus(player) + " - 결과: ";
         CardHolder cardHolder = player.getCardHolder();
 
         return message + parseCardResultValue(cardHolder);
     }
 
-    public static String parsePlayerCardStatus(Player player) {
+    public static String parseCardResult(Dealer dealer) {
+        CardHolder cardHolder = dealer.getCardHolder();
+
+        return parseCardStatus(dealer) + " - 결과: " + parseCardResultValue(cardHolder);
+    }
+
+    public static String parseCardStatus(Player player) {
         return player.getName() + "카드: " + parseStartingCardStatus(player.getCardHolder());
     }
 
-    public static String parseDealerStartCardStatus(Dealer dealer) {
+    public static String parseStartCardStatus(Dealer dealer) {
         return "딜러카드: " + dealer.revealFirstCard().toCardName();
     }
 
-    public static String parseDealerCardResult(Dealer dealer) {
-        CardHolder cardHolder = dealer.getCardHolder();
-
-        return parseDealerCardStatus(dealer) + " - 결과: " + parseCardResultValue(cardHolder);
-    }
-
-    private static String parseDealerCardStatus(Dealer dealer) {
+    private static String parseCardStatus(Dealer dealer) {
         return "딜러카드: " + parseStartingCardStatus(dealer.getCardHolder());
     }
 
