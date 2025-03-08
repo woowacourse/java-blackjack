@@ -4,8 +4,8 @@ import domain.card.CardType.Score;
 
 public class Card {
 
-    private static final int ACE_HIGH_SCORE = 11;
-    private static final int ACE_LOW_SCORE = 1;
+    public static final int ACE_HIGH_SCORE = 11;
+    public static final int ACE_LOW_SCORE = 1;
     private final CardType type;
 
     public Card(CardType type) {

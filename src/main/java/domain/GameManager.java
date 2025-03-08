@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameManager {
+    public static final int LIMIT = 21;
     private static final int START_RECEIVE_CARD = 2;
 
     private final Dealer dealer;

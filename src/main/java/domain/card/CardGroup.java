@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static domain.GameManager.LIMIT;
+import static domain.card.Card.*;
+
 public class CardGroup {
 
-    private static final int ACE_DISTANCE_SCORE = 10;
     private final List<Card> cards;
 
     public CardGroup() {
@@ -24,20 +26,26 @@ public class CardGroup {
                 .sum();
     }
 
-    private int calculateScoreWithAce(int sum, int limit, int aceCount) {
-        final int result = sum + aceCount;
-        return result + addScoreWithAce(0, limit - result, aceCount);
+    private int calculateScoreWithAce(int sum, int aceCount) {
+        final int upperAceScoreCount = availableUpperAceScoreCount(sum,aceCount);
+        return sum + ACE_HIGH_SCORE * upperAceScoreCount + (aceCount - upperAceScoreCount) * ACE_LOW_SCORE;
     }
 
-    private int addScoreWithAce(int sum, int limit, int aceCount) {
-        if (aceCount <= 0 || sum + ACE_DISTANCE_SCORE > limit) {
-            return sum;
+    private int availableUpperAceScoreCount(int sum, int aceCount) {
+        sum += aceCount * ACE_LOW_SCORE;
+        int count = 0;
+        while(sum + (ACE_HIGH_SCORE - ACE_LOW_SCORE) <= LIMIT && count < aceCount){
+            count++;
+            sum += (ACE_HIGH_SCORE - ACE_LOW_SCORE);
         }
-        return addScoreWithAce(sum + ACE_DISTANCE_SCORE, limit, aceCount - 1);
+        return count;
+    }
+
+    public int calculateScore() {
+        return calculateScoreWithAce(calculateScoreWithOutAce(), countAce());
     }
 
     public void addCard(final Card card) {
-        final int size = cards.size();
         cards.add(card);
     }
 
@@ -49,10 +57,6 @@ public class CardGroup {
         return Math.toIntExact(cards.stream()
                 .filter(Card::isAce)
                 .count());
-    }
-
-    public int calculateScore(int limit) {
-        return calculateScoreWithAce(calculateScoreWithOutAce(), limit, countAce());
     }
 
     public List<Card> getCards() {

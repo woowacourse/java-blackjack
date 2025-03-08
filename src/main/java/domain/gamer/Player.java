@@ -6,8 +6,9 @@ import domain.card.CardGenerator;
 import domain.card.CardGroup;
 import java.util.List;
 
+import static domain.GameManager.LIMIT;
+
 public class Player {
-    public static final int LIMIT = 21;
 
     protected final CardGroup cardGroup;
     protected final CardGenerator cardGenerator;
@@ -30,18 +31,18 @@ public class Player {
     }
 
     public boolean isBust() {
-        return this.cardGroup.calculateScore(LIMIT) > LIMIT;
+        return this.cardGroup.calculateScore() > LIMIT;
     }
 
     public GameResult calculateGameResult(final int compareScore) {
         if (isBust()) {
             return GameResult.LOSE;
         }
-        return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
+        return GameResult.findByScores(cardGroup.calculateScore(), compareScore);
     }
 
     public int calculateScore() {
-        return cardGroup.calculateScore(LIMIT);
+        return cardGroup.calculateScore();
     }
 
     public List<Card> getCards() {
