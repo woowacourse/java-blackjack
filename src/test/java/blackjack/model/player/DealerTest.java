@@ -1,17 +1,17 @@
 package blackjack.model.player;
 
 import static blackjack.model.card.CardCreator.createCard;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.Cards;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import blackjack.model.card.CardNumber;
+import blackjack.model.card.Cards;
 
 class DealerTest {
 
@@ -52,7 +52,7 @@ class DealerTest {
     @Test
     void 자신의_최저_포인트를_계산한다() {
         dealer.receiveCards(new Cards(
-                        List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
+                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
         ));
 
         assertThat(dealer.getMinimumPoint()).isEqualTo(16);

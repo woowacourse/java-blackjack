@@ -1,13 +1,14 @@
 package blackjack.model.card.initializer;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardType;
-import blackjack.model.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import blackjack.model.card.Card;
+import blackjack.model.card.CardNumber;
+import blackjack.model.card.CardType;
+import blackjack.model.card.Cards;
 
 public class DefaultCardDeckInitializer implements CardDeckInitializer {
 
@@ -27,4 +28,5 @@ public class DefaultCardDeckInitializer implements CardDeckInitializer {
         Collections.shuffle(cards);
         return cards;
     }
+
 }

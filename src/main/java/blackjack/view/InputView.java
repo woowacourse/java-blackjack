@@ -1,9 +1,10 @@
 package blackjack.view;
 
-import blackjack.model.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import blackjack.model.player.User;
 
 public class InputView {
 
@@ -28,4 +29,5 @@ public class InputView {
             throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }
     }
+
 }

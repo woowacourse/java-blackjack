@@ -1,17 +1,20 @@
 package blackjack.model.game;
 
 import static blackjack.model.card.CardCreator.createCard;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
-import java.util.List;
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class BlackJackGameTest {
 

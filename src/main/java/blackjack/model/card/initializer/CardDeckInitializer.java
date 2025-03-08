@@ -6,4 +6,5 @@ import blackjack.model.card.Cards;
 public interface CardDeckInitializer {
 
     Cards initialize();
+
 }

@@ -1,8 +1,10 @@
 package blackjack.model.card.initializer;
 
-import blackjack.model.card.Cards;
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
+
+import blackjack.model.card.Cards;
 
 class DefaultCardDeckInitializerTest {
 

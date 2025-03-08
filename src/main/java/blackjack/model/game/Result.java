@@ -1,7 +1,8 @@
 package blackjack.model.game;
 
-import blackjack.model.player.Player;
 import java.util.Map;
+
+import blackjack.model.player.Player;
 
 public enum Result {
 

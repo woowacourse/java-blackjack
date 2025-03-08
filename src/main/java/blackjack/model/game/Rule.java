@@ -1,14 +1,15 @@
 package blackjack.model.game;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+
 import blackjack.model.card.Cards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Role;
 import blackjack.model.player.User;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 
 public class Rule {
 

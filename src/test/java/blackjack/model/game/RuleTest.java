@@ -1,7 +1,6 @@
 package blackjack.model.game;
 
 import static blackjack.model.card.CardCreator.createCard;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
