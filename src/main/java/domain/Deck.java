@@ -20,7 +20,7 @@ public class Deck implements CardProvider {
         deck.addAll(temp);
     }
 
-    private static void addAllNumbers(Symbol symbol, List<Card> temp) {
+    private void addAllNumbers(Symbol symbol, List<Card> temp) {
         for (Number number : Number.getAllNumbers()) {
             temp.add(new Card(symbol, number));
         }
