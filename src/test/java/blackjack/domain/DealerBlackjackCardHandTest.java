@@ -82,6 +82,6 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(HEART_3, HEART_5));
 
         // expected
-        assertThat(DealerBlackjackCardHand.getInitialCards()).containsExactly(HEART_3);
+        assertThat(DealerBlackjackCardHand.getInitialCard()).isEqualTo(HEART_3);
     }
 }

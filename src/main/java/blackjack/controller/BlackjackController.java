@@ -50,7 +50,7 @@ public class BlackjackController implements Controller {
     ) {
         final List<String> playerNames = extractPlayerNames(playerHands);
         outputView.outputInitialCardOpeningMessage(playerNames);
-        outputView.outputDealerCards(dealerHand.getInitialCards());
+        outputView.outputDealerCards(List.of(dealerHand.getInitialCard()));
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerHands) {
             outputView.outputPlayerCards(playerBlackjackCardHand.getPlayerName(), playerBlackjackCardHand.getInitialCards());
         }

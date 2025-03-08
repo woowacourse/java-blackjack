@@ -23,8 +23,8 @@ public final class DealerBlackjackCardHand implements BlackjackWinDeterminable {
         }
     }
     
-    public List<Card> getInitialCards() {
-        return List.of(cardHand.getCards().getFirst());
+    public Card getInitialCard() {
+        return cardHand.getCards().getFirst();
     }
     
     public void startAdding(final CardDrawer cardDrawer) {
