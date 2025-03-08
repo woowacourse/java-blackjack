@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Cards {
 
     private static final int BLACKJACK_SCORE = 21;
-    private static final int DEALER_DRAW_LIMIT = 16;
     private static final int ACE_VALUE_DIFFERENCE = 10;
 
     private final List<Card> cards;
@@ -42,10 +41,6 @@ public class Cards {
 
     public boolean checkBurst() {
         return calculateTotalCardNumber() > BLACKJACK_SCORE;
-    }
-
-    public boolean checkDealerNeedsMoreCard() {
-        return calculateTotalCardNumber() > DEALER_DRAW_LIMIT;
     }
 
     public int calculateDifferenceFromBurst() {

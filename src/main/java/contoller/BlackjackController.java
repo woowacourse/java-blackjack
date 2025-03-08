@@ -49,7 +49,7 @@ public class BlackjackController {
             printCardsIfFirstTurn(player, isFirstTurn, answer);
 
             isFirstTurn = false;
-        } while (!player.checkExceedTwentyOne() && answer);
+        } while (!player.checkExceedBurst() && answer);
     }
 
     private Player drawAndCreateNewPlayer(Player player, boolean answer) {
@@ -68,8 +68,9 @@ public class BlackjackController {
 
     private void drawDealerCards() {
         Dealer dealer = gameManager.findDealer();
-        while (!dealer.checkDealerNeedsMoreCard()) {
+        while (dealer.checkDealerNeedsMoreCard()) {
             dealer = gameManager.drawCard(dealer);
+            gameManager.editDealer(dealer);
             OutputView.printDealerDrawMessage();
         }
     }

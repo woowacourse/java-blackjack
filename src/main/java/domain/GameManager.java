@@ -44,6 +44,10 @@ public class GameManager {
         players = players.editPlayer(newPlayer);
     }
 
+    public void editDealer(Dealer newDealer) {
+        this.dealer = newDealer;
+    }
+
     public Map<Player, ResultStatus> findGameResult() {
         return ResultStatus.judgeGameResult(players, dealer);
     }

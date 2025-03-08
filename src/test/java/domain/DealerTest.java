@@ -53,8 +53,8 @@ public class DealerTest {
             List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK))));
 
         assertAll(
-            () -> assertThat(exceedDealer.checkExceedTwentyOne()).isTrue(),
-            () -> assertThat(notExceedDealer.checkExceedTwentyOne()).isFalse()
+            () -> assertThat(exceedDealer.checkExceedBurst()).isTrue(),
+            () -> assertThat(notExceedDealer.checkExceedBurst()).isFalse()
         );
     }
 
@@ -80,5 +80,23 @@ public class DealerTest {
         Card expected = new Card(Symbol.HEART, Number.EIGHT);
 
         assertThat(dealer.getInitialCard()).isEqualTo(expected);
+    }
+
+    @Test
+    void 카드리스트의_합계가_16초과이면_true_아니면_false를_반환한다() {
+        Card card1 = new Card(Symbol.DIAMOND, Number.TWO);
+        Card card2 = new Card(Symbol.CLOVER, Number.EIGHT);
+        Card card3 = new Card(Symbol.DIAMOND, Number.SIX);
+        Card card4 = new Card(Symbol.DIAMOND, Number.ACE);
+        List<Card> cardList = List.of(card1, card2, card3);
+        Dealer notExceedDealer = new Dealer(new Cards(cardList));
+
+        List<Card> otherCardList = List.of(card1, card2, card3, card4);
+        Dealer exceedDealer = new Dealer(new Cards(otherCardList));
+
+        assertAll(
+            () -> assertThat(notExceedDealer.checkDealerNeedsMoreCard()).isTrue(),
+            () -> assertThat(exceedDealer.checkDealerNeedsMoreCard()).isFalse()
+        );
     }
 }

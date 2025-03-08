@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Dealer extends Participant<Dealer>{
 
+    private static final int DEALER_DRAW_LIMIT = 16;
+
     private static final String DEALER_DEFAULT_NAME = "딜러";
 
     public Dealer(Cards cards) {
@@ -12,7 +14,7 @@ public class Dealer extends Participant<Dealer>{
     }
 
     public boolean checkDealerNeedsMoreCard() {
-        return cards.checkDealerNeedsMoreCard();
+        return cards.calculateTotalCardNumber() <= DEALER_DRAW_LIMIT;
     }
 
     public Card getInitialCard() {
