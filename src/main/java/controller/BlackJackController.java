@@ -30,6 +30,7 @@ public class BlackJackController {
         final GameManager gameManager = GameManager.create(dealer, players);
 
         requestHit(dealer, players);
+        gameManager.dealerHitUntilStand();
         printDealerReceiveCardCount(dealer);
 
         outputView.printGamerCardsAndScore(dealer, players);
@@ -73,7 +74,7 @@ public class BlackJackController {
     }
 
     private void printDealerReceiveCardCount(Dealer dealer) {
-        final int count = dealer.giveCardsToDealer();
+        int count = dealer.getReceivedCardCount();
         if (count > 0) {
             outputView.printDealerReceivedCardCount(count);
         }

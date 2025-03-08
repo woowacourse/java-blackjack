@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import domain.GameManager;
 import domain.card.Card;
 import domain.card.CardGenerator;
 import domain.card.CardGroup;
@@ -24,13 +25,10 @@ public class Dealer {
         player.receiveCard(count);
     }
 
-    public int giveCardsToDealer() {
-        int count = 0;
+    public void hitCardUntilStand() {
         while (isLessThen(DEALER_HIT_ROLE)) {
             player.receiveCard();
-            count++;
         }
-        return count;
     }
 
     public boolean isLessThen(int score) {
@@ -43,5 +41,9 @@ public class Dealer {
 
     public List<Card> getCards() {
         return player.getCards();
+    }
+
+    public int getReceivedCardCount(){
+        return player.getCards().size() - GameManager.START_RECEIVE_CARD;
     }
 }

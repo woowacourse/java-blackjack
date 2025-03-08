@@ -32,7 +32,9 @@ public class DealerTest {
 
         //when
         Dealer dealer = new Dealer(cardGroup, faceCardGenerator);
-        final int count = dealer.giveCardsToDealer();
+        dealer.hitCardUntilStand();
+        int count = dealer.getReceivedCardCount() + GameManager.START_RECEIVE_CARD;
+
         //then
         assertThat(count).isEqualTo(2);
     }

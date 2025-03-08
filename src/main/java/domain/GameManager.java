@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class GameManager {
     public static final int LIMIT = 21;
-    private static final int START_RECEIVE_CARD = 2;
+    public static final int START_RECEIVE_CARD = 2;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -28,7 +28,6 @@ public class GameManager {
         }
         return new GameManager(dealer, players);
     }
-
 
     public Map<GameResult, Integer> calculateDealerGameResult() {
         final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
@@ -57,5 +56,9 @@ public class GameManager {
             resultMap.put(player.getName(), calculateResult(player));
         }
         return resultMap;
+    }
+
+    public void dealerHitUntilStand(){
+        dealer.hitCardUntilStand();
     }
 }
