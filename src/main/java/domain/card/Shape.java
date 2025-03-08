@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.Arrays;
-
 public enum Shape {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
