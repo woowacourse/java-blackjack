@@ -13,8 +13,8 @@ public class Card {
         return cardRank.getDefaultValue();
     }
 
-    public CardRank getCardRank() {
-        return cardRank;
+    public boolean isAce(){
+        return cardRank == CardRank.ACE;
     }
 
     public String getCardName() {

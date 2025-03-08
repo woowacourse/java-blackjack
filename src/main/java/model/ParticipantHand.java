@@ -39,7 +39,7 @@ public class ParticipantHand {
 
     private boolean checkScoreExceptAceBelow(int upperBound) {
         return cards.stream()
-                .filter(card -> card.getCardRank() != CardRank.ACE)
+                .filter(card -> !card.isAce())
                 .mapToInt(Card::getCardRankDefaultValue)
                 .sum() <= upperBound;
     }
@@ -56,7 +56,7 @@ public class ParticipantHand {
 
     private int calculateAceCount() {
         return cards.stream()
-                .filter(card -> card.getCardRank() == CardRank.ACE)
+                .filter(Card::isAce)
                 .mapToInt(Card::getCardRankDefaultValue)
                 .sum();
     }
