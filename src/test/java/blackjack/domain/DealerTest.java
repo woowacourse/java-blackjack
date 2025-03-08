@@ -19,9 +19,9 @@ class DealerTest {
         Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
-        boolean takenExtraCard = dealer.didHit();
+        boolean canTakeExtraCard = dealer.canHit();
 
-        assertThat(takenExtraCard).isTrue();
+        assertThat(canTakeExtraCard).isTrue();
     }
 
     @DisplayName("딜러는 카드의 합이 17 이상이면 카드를 더 받지 않는다.")
@@ -36,9 +36,9 @@ class DealerTest {
         Dealer dealer = new Dealer(cardDeck, cardDump);
 
         // when
-        boolean takenExtraCard = dealer.didHit();
+        boolean canTakeExtraCard = dealer.canHit();
 
-        assertThat(takenExtraCard).isFalse();
+        assertThat(canTakeExtraCard).isFalse();
     }
 
     @DisplayName("딜러는 자신이 가진 카드 덱의 합을 계산할 수 있다")

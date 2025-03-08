@@ -115,7 +115,8 @@ public class BlackjackController {
     }
 
     private void hitExtraCardForDealer(final Dealer dealer) {
-        while (dealer.didHit()) {
+        while (dealer.canHit()) {
+            dealer.addCard();
             outputView.displayExtraDealerCardStatus();
         }
     }

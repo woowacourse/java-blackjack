@@ -14,14 +14,6 @@ public class Dealer extends Participant {
         this.cardDump = cardDump;
     }
 
-    public boolean didHit() {
-        if (canHit()) {
-            addCard();
-            return true;
-        }
-        return false;
-    }
-
     public Card giveCardToPlayer() {
         return cardDump.drawCard();
     }
@@ -31,7 +23,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    boolean canHit() {
+    public boolean canHit() {
         int score = calculateTotalCardScore();
         return score <= DEALER_HIT_THRESHOLD;
     }
