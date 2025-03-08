@@ -31,12 +31,6 @@ public final class BlackjackCardHand {
         return calculateClosestToBlackJack(availableSum);
     }
     
-    private static Integer calculateMinAvailableSum(final List<Integer> availableSum) {
-        return availableSum.stream()
-                .min(Integer::compareTo)
-                .orElseThrow();
-    }
-    
     private List<Integer> createAvailableSum(final List<List<Integer>> availableNumbers) {
         List<Integer> availableSum = new ArrayList<>();
         availableSum.add(0);
@@ -47,6 +41,12 @@ public final class BlackjackCardHand {
         return availableSum;
     }
     
+    private static Integer calculateMinAvailableSum(final List<Integer> availableSum) {
+        return availableSum.stream()
+                .min(Integer::compareTo)
+                .orElseThrow();
+    }
+    
     private Integer calculateClosestToBlackJack(final List<Integer> availableSum) {
         return availableSum.stream()
                 .filter(number -> number <= BUST_THRESHOLD)
@@ -55,17 +55,9 @@ public final class BlackjackCardHand {
     }
     
     private List<Integer> calculateAvailableSum(final List<Integer> availableNumber, List<Integer> availableSum) {
-        final List<Integer> newList = new ArrayList<>();
-        for (Integer currentSum : availableSum) {
-            addAvailableSums(availableNumber, currentSum, newList);
-        }
-        return newList;
-    }
-    
-    private void addAvailableSums(final List<Integer> availableNumber, final Integer currentSum, final List<Integer> newList) {
-        for (Integer number : availableNumber) {
-            newList.add(currentSum + number);
-        }
+        return availableSum.stream()
+                .flatMap(currentSum -> availableNumber.stream().map(number -> number + currentSum))
+                .toList();
     }
     
     public List<Card> getCards() {
