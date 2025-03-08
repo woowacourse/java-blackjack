@@ -14,13 +14,17 @@ public enum MatchResult {
     }
 
     public static MatchResult calculateWinner(final int dealerSum, final int playerSum) {
-        if (dealerSum > playerSum || playerSum > BLACKJACK_NUMBER) {
+        if (dealerSum > playerSum || isBust(playerSum)) {
             return LOSE;
         }
         if (dealerSum < playerSum) {
             return WIN;
         }
         return DRAW;
+    }
+
+    public static boolean isBust(int sum) {
+        return sum > BLACKJACK_NUMBER;
     }
 
     public String getValue() {

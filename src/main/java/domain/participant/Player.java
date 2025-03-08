@@ -7,8 +7,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Player {
-    private static final int BLACKJACK_NUMBER = 21;
-
     private final String name;
     private final CardDeck hand;
 
@@ -38,7 +36,7 @@ public class Player {
     }
 
     private boolean isBust() {
-        return sum() > BLACKJACK_NUMBER;
+        return MatchResult.isBust(sum());
     }
 
     public String getName() {
