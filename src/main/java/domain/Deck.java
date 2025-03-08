@@ -9,37 +9,37 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import constant.Emblem;
+import constant.Suit;
 
 public class Deck {
-    private final Queue<Card> deck;
+    private final Queue<TrumpCard> deck;
 
-    public Deck(final Queue<Card> deck) {
+    public Deck(final Queue<TrumpCard> deck) {
         validateDuplicateCard(deck);
         this.deck = new ArrayDeque<>(deck);
     }
 
-    public static Deck createShuffledDeck() {
-        final List<Card> cards = Arrays.stream(CardNumber.values())
+    public static Deck generateShuffledDeck() {
+        final List<TrumpCard> cards = Arrays.stream(Rank.values())
             .flatMap(Deck::makeCards)
             .collect(Collectors.toList());
         Collections.shuffle(cards);
         return new Deck(new ArrayDeque<>(cards));
     }
 
-    private static Stream<Card> makeCards(CardNumber cardNumber) {
-        return Arrays.stream(Emblem.values())
-            .map(emblem -> new Card(cardNumber, emblem));
+    private static Stream<TrumpCard> makeCards(Rank rank) {
+        return Arrays.stream(Suit.values())
+            .map(emblem -> new TrumpCard(rank, emblem));
     }
 
-    private void validateDuplicateCard(final Queue<Card> deck) {
-        final HashSet<Card> notDuplicateCards = new HashSet<>(deck);
+    private void validateDuplicateCard(final Queue<TrumpCard> deck) {
+        final HashSet<TrumpCard> notDuplicateCards = new HashSet<>(deck);
         if (deck.size() != notDuplicateCards.size()) {
             throw new IllegalArgumentException("덱에는 중복된 카드가 들어올 수 없습니다!");
         }
     }
 
-    public Card pickCard() {
+    public TrumpCard pickCard() {
         if (deck.isEmpty()) {
             throw new NullPointerException("덱에 남아있는 카드가 없습니다.");
         }

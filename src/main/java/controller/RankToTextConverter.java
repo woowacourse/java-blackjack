@@ -1,10 +1,10 @@
 package controller;
 
-import domain.CardNumber;
+import domain.Rank;
 
-public class CardNumberToTextConverter {
-    public static String convert(final CardNumber cardNumber) {
-        return switch (cardNumber) {
+public class RankToTextConverter {
+    public static String convert(final Rank rank) {
+        return switch (rank) {
             case ACE -> "A";
             case TWO -> "2";
             case THREE -> "3";

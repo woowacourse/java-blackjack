@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.Card;
-import domain.CardHand;
 import domain.Dealer;
 import domain.Deck;
+import domain.Hand;
 import domain.Participant;
 import domain.Player;
+import domain.TrumpCard;
 import view.InputView;
 import view.OutputView;
 
@@ -26,7 +26,7 @@ public class BlackjackController {
     public void run() {
         final List<Player> players = inputPlayers();
         final Dealer dealer = new Dealer();
-        final Deck deck = Deck.createShuffledDeck();
+        final Deck deck = Deck.generateShuffledDeck();
         startGame(players, dealer, deck);
     }
 
@@ -56,7 +56,6 @@ public class BlackjackController {
         outputView.printBlackjackDuelResultIntroduce();
         outputView.printBlackjackDealerDuelResult(dealer.getWinCount(), dealer.getLoseCount());
         players.forEach(this::outputPlayersDuelResult);
-
     }
 
     private void outputPlayersDuelResult(final Player player) {
@@ -103,19 +102,19 @@ public class BlackjackController {
     }
 
     private String convertedDealerCardText(final Participant dealerParticipant) {
-        final CardHand dealerHand = dealerParticipant.getCardHand();
-        final Card dealerFirstCard = dealerHand.getCards().getFirst();
+        final Hand dealerHand = dealerParticipant.getCards();
+        final TrumpCard dealerFirstCard = dealerHand.getCards().getFirst();
         return convertedCardText(dealerFirstCard);
     }
 
-    private String convertedCardText(final Card dealerFirstCard) {
-        final String cardNumberText = CardNumberToTextConverter.convert(dealerFirstCard.number());
-        final String cardEmblemText = dealerFirstCard.emblem().getName();
-        return cardNumberText + cardEmblemText;
+    private String convertedCardText(final TrumpCard dealerFirstTrumpCard) {
+        final String rankToText = RankToTextConverter.convert(dealerFirstTrumpCard.rank());
+        final String suitToText = dealerFirstTrumpCard.suit().getValue();
+        return rankToText + suitToText;
     }
 
     private List<String> convertParticipantCardText(final Participant dealerParticipant) {
-        return dealerParticipant.getCardHand().getCards()
+        return dealerParticipant.getCards().getCards()
             .stream()
             .map(this::convertedCardText)
             .toList();
@@ -125,11 +124,11 @@ public class BlackjackController {
         players.forEach(player -> ifCanPickCard(deck, player));
     }
 
-    private void ifCanPickCard(Deck deck, Player p) {
-        final String name = p.getName();
-        while (p.isPickCard() && inputView.readPlayerAnswer(name)) {
-            p.pickCard(deck);
-            outputView.printPlayerCards(name, convertParticipantCardText(p.getParticipant()));
+    private void ifCanPickCard(Deck deck, Player player) {
+        final String name = player.getName();
+        while (player.isPickCard() && inputView.readPlayerAnswer(name)) {
+            player.pickCard(deck);
+            outputView.printPlayerCards(name, convertParticipantCardText(player.getParticipant()));
         }
     }
 
@@ -143,19 +142,18 @@ public class BlackjackController {
     private void outputDealerHandResult(final Dealer dealer) {
         final Participant participant = dealer.getParticipant();
         final List<String> convertedCards = convertParticipantCardText(participant);
-        final int score = participant.calculateAllScore();
+        final int score = participant.calculateScore();
         outputView.printDealerHandResult(convertedCards, score);
     }
 
-    private void outputPlayersHandResult(List<Player> players) {
+    private void outputPlayersHandResult(final List<Player> players) {
         players.forEach(this::outputPlayerHandResult);
     }
 
     private void outputPlayerHandResult(final Player player) {
         final Participant participant = player.getParticipant();
         final List<String> convertedCards = convertParticipantCardText(participant);
-        final int score = participant.calculateAllScore();
+        final int score = participant.calculateScore();
         outputView.printPlayerHandResult(player.getName(), convertedCards, score);
     }
-
 }

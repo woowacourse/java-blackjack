@@ -5,17 +5,17 @@ public class Dealer {
     private final Participant participant;
     private int winCount = 0;
     private int loseCount = 0;
- 
+
     public Dealer() {
         this.participant = new Participant();
     }
 
-    public Dealer(final CardHand hand) {
+    public Dealer(final Hand hand) {
         this.participant = new Participant(hand);
     }
 
     public boolean isPickCard() {
-        return participant.calculateAllScore() <= DEALER_MAX_SCORE_FOR_PICK;
+        return participant.calculateScore() <= DEALER_MAX_SCORE_FOR_PICK;
     }
 
     public void pickCardOnFirstHandOut(final Deck deck) {

@@ -13,14 +13,14 @@ public class Player {
         isWinDuel = false;
     }
 
-    public Player(final Participant participant) {
+    public Player(final String name, final Participant participant) {
         this.participant = participant;
-        this.name = "";
+        this.name = name;
         isWinDuel = false;
     }
 
     public boolean isPickCard() {
-        return participant.calculateAllScore() <= MAX_SCORE;
+        return participant.calculateScore() <= MAX_SCORE;
     }
 
     public void pickCardOnFirstHandOut(final Deck deck) {
@@ -32,8 +32,8 @@ public class Player {
     }
 
     public void duel(final Participant other) {
-        final int score = participant.calculateAllScore();
-        final int otherScore = other.calculateAllScore();
+        final int score = participant.calculateScore();
+        final int otherScore = other.calculateScore();
         if (score > MAX_SCORE) {
             return;
         }
