@@ -15,6 +15,12 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
+    public static Players from(final List<String> names) {
+        return new Players(names.stream()
+                .map(name -> new Player(name, new Cards(new ArrayList<>())))
+                .toList());
+    }
+
     private void validate(List<Player> players) {
         if (isDuplicate(players)) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름을 입력했습니다.");

@@ -116,8 +116,6 @@ public class BlackjackController {
     private Players makePlayers() {
         String names = inputView.readNames();
         List<String> parsedNames = StringParser.parseComma(names);
-        return new Players(parsedNames.stream()
-                .map(name -> new Player(name, new Cards(new ArrayList<>())))
-                .toList());
+        return Players.from(parsedNames);
     }
 }
