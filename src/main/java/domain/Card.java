@@ -5,14 +5,14 @@ import java.util.Objects;
 import constant.Emblem;
 
 public record Card(
-    CardNumber number,
-    Emblem emblem
+	Rank number,
+	Emblem emblem
 ) {
-    public boolean isMatchNumber(final CardNumber cardNumber) {
-        return Objects.equals(number, cardNumber);
-    }
+	public boolean isMatchNumber(final Rank cardNumber) {
+		return Objects.equals(number, cardNumber);
+	}
 
-    public int sumNumber(final int score) {
-        return number.sum(score);
-    }
+	public int sumNumber(final int score) {
+		return number.sum(score);
+	}
 }

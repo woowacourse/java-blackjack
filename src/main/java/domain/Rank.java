@@ -1,6 +1,6 @@
 package domain;
 
-public enum CardNumber {
+public enum Rank {
 	ACE(11),
 	TWO(2),
 	THREE(3),
@@ -18,7 +18,7 @@ public enum CardNumber {
 	private static final int ACE_MIN = 1;
 	private final int score;
 
-	CardNumber(final int score) {
+	Rank(final int score) {
 		this.score = score;
 	}
 

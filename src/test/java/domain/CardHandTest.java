@@ -14,39 +14,39 @@ import constant.Emblem;
 
 class CardHandTest {
 
-    @Nested
-    @DisplayName("모든 Card의 점수 합을 계산한다.")
-    class CalculateAllScore {
+	@Nested
+	@DisplayName("모든 Card의 점수 합을 계산한다.")
+	class CalculateAllScore {
 
-        @ParameterizedTest
-        @MethodSource("getCardList")
-        @DisplayName("모든 Card의 점수 합을 올바르게 계산한다.")
-        void test_calculateAllScore(List<Card> cards, int expected) {
-            //given
-            var cardHand = new CardHand(cards);
+		@ParameterizedTest
+		@MethodSource("getCardList")
+		@DisplayName("모든 Card의 점수 합을 올바르게 계산한다.")
+		void test_calculateAllScore(List<Card> cards, int expected) {
+			//given
+			var cardHand = new CardHand(cards);
 
-            //when&then
-            Assertions.assertThat(cardHand.calculateAllScore()).isEqualTo(expected);
-        }
+			//when&then
+			Assertions.assertThat(cardHand.calculateAllScore()).isEqualTo(expected);
+		}
 
-        private static Stream<Arguments> getCardList() {
-            return Stream.of(
-                Arguments.of(List.of(new Card(CardNumber.NINE, Emblem.CLUB), new Card(CardNumber.NINE, Emblem.HEART)),
-                    18),
-                Arguments.of(List.of(new Card(CardNumber.ACE, Emblem.CLUB), new Card(CardNumber.ACE, Emblem.HEART)),
-                    12),
-                Arguments.of(List.of(new Card(CardNumber.ACE, Emblem.CLUB), new Card(CardNumber.TEN, Emblem.HEART)),
-                    21),
-                Arguments.of(List.of(new Card(CardNumber.ACE, Emblem.CLUB), new Card(CardNumber.ACE, Emblem.HEART),
-                    new Card(CardNumber.TEN, Emblem.HEART)), 12),
-                Arguments.of(List.of(new Card(CardNumber.ACE, Emblem.CLUB), new Card(CardNumber.ACE, Emblem.HEART),
-                    new Card(CardNumber.TEN, Emblem.CLUB), new Card(CardNumber.TEN, Emblem.HEART)), 22),
-                Arguments.of(List.of(new Card(CardNumber.ACE, Emblem.CLUB), new Card(CardNumber.ACE, Emblem.HEART),
-                    new Card(CardNumber.ACE, Emblem.SPADE)), 13),
-                Arguments.of(List.of(new Card(CardNumber.ACE, Emblem.CLUB), new Card(CardNumber.ACE, Emblem.HEART),
-                    new Card(CardNumber.ACE, Emblem.SPADE), new Card(CardNumber.ACE, Emblem.DIAMOND)), 14)
-            );
-        }
-    }
+		private static Stream<Arguments> getCardList() {
+			return Stream.of(
+				Arguments.of(List.of(new Card(Rank.NINE, Emblem.CLUB), new Card(Rank.NINE, Emblem.HEART)),
+					18),
+				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART)),
+					12),
+				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.TEN, Emblem.HEART)),
+					21),
+				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
+					new Card(Rank.TEN, Emblem.HEART)), 12),
+				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
+					new Card(Rank.TEN, Emblem.CLUB), new Card(Rank.TEN, Emblem.HEART)), 22),
+				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
+					new Card(Rank.ACE, Emblem.SPADE)), 13),
+				Arguments.of(List.of(new Card(Rank.ACE, Emblem.CLUB), new Card(Rank.ACE, Emblem.HEART),
+					new Card(Rank.ACE, Emblem.SPADE), new Card(Rank.ACE, Emblem.DIAMOND)), 14)
+			);
+		}
+	}
 
 }

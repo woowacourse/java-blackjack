@@ -27,12 +27,12 @@ public class CardHand {
 			score = card.sumNumber(score);
 		}
 
-		return CardNumber.ifOverThanBustScoreAceIsMIN(score, calculateAceCount());
+		return Rank.ifOverThanBustScoreAceIsMIN(score, calculateAceCount());
 	}
 
 	private int calculateAceCount() {
 		return (int)cards.stream()
-			.filter(card -> card.isMatchNumber(CardNumber.ACE))
+			.filter(card -> card.isMatchNumber(Rank.ACE))
 			.count();
 	}
 

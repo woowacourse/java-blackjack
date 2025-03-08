@@ -20,14 +20,14 @@ public class Deck {
 	}
 
 	public static Deck createShuffledDeck() {
-		final List<Card> cards = Arrays.stream(CardNumber.values())
+		final List<Card> cards = Arrays.stream(Rank.values())
 			.flatMap(Deck::makeCards)
 			.collect(Collectors.toList());
 		Collections.shuffle(cards);
 		return new Deck(new ArrayDeque<>(cards));
 	}
 
-	private static Stream<Card> makeCards(CardNumber cardNumber) {
+	private static Stream<Card> makeCards(Rank cardNumber) {
 		return Arrays.stream(Emblem.values())
 			.map(emblem -> new Card(cardNumber, emblem));
 	}

@@ -40,11 +40,11 @@ public class PlayerTest {
 		private static Stream<Arguments> providePlayerHand() {
 			return Stream.of(
 				Arguments.of(
-					List.of(new Card(CardNumber.TEN, Emblem.CLUB), new Card(CardNumber.TEN, Emblem.DIAMOND),
-						new Card(CardNumber.ACE, Emblem.CLUB)), true),
+					List.of(new Card(Rank.TEN, Emblem.CLUB), new Card(Rank.TEN, Emblem.DIAMOND),
+						new Card(Rank.ACE, Emblem.CLUB)), true),
 				Arguments.of(
-					List.of(new Card(CardNumber.TEN, Emblem.DIAMOND),
-						new Card(CardNumber.TEN, Emblem.CLUB), new Card(CardNumber.TWO, Emblem.CLUB)), false)
+					List.of(new Card(Rank.TEN, Emblem.DIAMOND),
+						new Card(Rank.TEN, Emblem.CLUB), new Card(Rank.TWO, Emblem.CLUB)), false)
 			);
 		}
 
@@ -59,17 +59,17 @@ public class PlayerTest {
 		public void duel() throws Exception {
 			// given
 			final Player winner = new Player("Winner");
-			final List<Card> winnerCards = List.of(new Card(CardNumber.ACE, Emblem.CLUB));
+			final List<Card> winnerCards = List.of(new Card(Rank.ACE, Emblem.CLUB));
 			final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
 			winner.pickCard(winnerDeck);
 
 			final Player loser = new Player("Loser");
-			final List<Card> loserCards = List.of(new Card(CardNumber.NINE, Emblem.CLUB));
+			final List<Card> loserCards = List.of(new Card(Rank.NINE, Emblem.CLUB));
 			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
 			loser.pickCard(loserDeck);
 
 			final Dealer dealer = new Dealer();
-			final List<Card> dealerCards = List.of(new Card(CardNumber.TEN, Emblem.CLUB));
+			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Emblem.CLUB));
 			final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
 			dealer.pickCard(dealerDeck);
 
@@ -88,15 +88,15 @@ public class PlayerTest {
 			// given
 			final Player loser = new Player("Loser");
 			final List<Card> loserCards = List.of(
-				new Card(CardNumber.TEN, Emblem.SPADE), new Card(CardNumber.TEN, Emblem.CLUB),
-				new Card(CardNumber.TWO, Emblem.SPADE));
+				new Card(Rank.TEN, Emblem.SPADE), new Card(Rank.TEN, Emblem.CLUB),
+				new Card(Rank.TWO, Emblem.SPADE));
 			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
 			loser.pickCard(loserDeck);
 			loser.pickCard(loserDeck);
 			loser.pickCard(loserDeck);
 
 			final Dealer dealer = new Dealer();
-			final List<Card> dealerCards = List.of(new Card(CardNumber.TEN, Emblem.CLUB));
+			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Emblem.CLUB));
 			final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
 			dealer.pickCard(dealerDeck);
 
@@ -113,14 +113,14 @@ public class PlayerTest {
 			// given
 			final Player loser = new Player("Loser");
 			final List<Card> loserCards = List.of(
-				new Card(CardNumber.TEN, Emblem.SPADE));
+				new Card(Rank.TEN, Emblem.SPADE));
 			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
 			loser.pickCard(loserDeck);
 
 			final Dealer dealer = new Dealer();
 			final List<Card> dealerCards = List.of(
-				new Card(CardNumber.TEN, Emblem.SPADE), new Card(CardNumber.TEN, Emblem.CLUB),
-				new Card(CardNumber.TWO, Emblem.SPADE));
+				new Card(Rank.TEN, Emblem.SPADE), new Card(Rank.TEN, Emblem.CLUB),
+				new Card(Rank.TWO, Emblem.SPADE));
 			final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
 			dealer.pickCard(dealerDeck);
 			dealer.pickCard(dealerDeck);
