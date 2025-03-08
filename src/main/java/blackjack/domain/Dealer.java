@@ -7,8 +7,11 @@ public class Dealer extends Participant {
     private final static String DEALER_NAME = "딜러";
     private final static int DEALER_HIT_THRESHOLD = 16;
 
+    private final CardDump cardDump;
+
     public Dealer(CardDeck cardDeck, CardDump cardDump) {
-        super(cardDeck, cardDump);
+        super(cardDeck);
+        this.cardDump = cardDump;
     }
 
     public boolean didHit() {
@@ -17,6 +20,14 @@ public class Dealer extends Participant {
             return true;
         }
         return false;
+    }
+
+    public Card giveCardToPlayer() {
+        return cardDump.drawCard();
+    }
+
+    public void addCard() {
+        cardDeck.add(cardDump.drawCard());
     }
 
     @Override

@@ -17,12 +17,12 @@ public class GameReportTest {
         CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
-        Player player1 = new Player("player1", cardDeck1, cardDump);
+        Player player1 = new Player("player1", cardDeck1);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
-        Player player2 = new Player("player2", cardDeck2, cardDump);
+        Player player2 = new Player("player2", cardDeck2);
 
         CardDeck cardDeck3 = new CardDeck();
         cardDeck3.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -43,12 +43,12 @@ public class GameReportTest {
         CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 20
-        Player player1 = new Player("player1", cardDeck1, cardDump);
+        Player player1 = new Player("player1", cardDeck1);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); // 16
-        Player player2 = new Player("player2", cardDeck2, cardDump);
+        Player player2 = new Player("player2", cardDeck2);
 
         CardDeck cardDeck3 = new CardDeck();
         cardDeck3.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -72,7 +72,7 @@ public class GameReportTest {
         CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 20
-        Player player1 = new Player("player1", cardDeck1, cardDump);
+        Player player1 = new Player("player1", cardDeck1);
 
         CardDeck cardDeck3 = new CardDeck();
         cardDeck3.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -93,7 +93,7 @@ public class GameReportTest {
         CardDump cardDump = new CardDump();
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.FIVE)); // 14
-        Player player1 = new Player("player1", cardDeck1, cardDump);
+        Player player1 = new Player("player1", cardDeck1);
 
         CardDeck cardDeck3 = new CardDeck();
         cardDeck3.add(new Card(CardSuit.CLUB, CardRank.NINE));

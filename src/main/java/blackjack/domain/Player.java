@@ -8,9 +8,13 @@ public class Player extends Participant {
 
     private final String name;
 
-    public Player(String name, CardDeck cardDeck, CardDump cardDump) {
-        super(cardDeck, cardDump);
+    public Player(String name, CardDeck cardDeck) {
+        super(cardDeck);
         this.name = name;
+    }
+
+    public void addCard(Card card) {
+        cardDeck.add(card);
     }
 
     @Override

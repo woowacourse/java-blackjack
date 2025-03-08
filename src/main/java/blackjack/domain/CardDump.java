@@ -7,10 +7,9 @@ import java.util.List;
 public class CardDump {
     static final String EMPTY_CARD_DUMP = "[ERROR] 카드 덤프가 비어 있습니다!";
 
-    private final List<Card> cardDump;
+    private final List<Card> cardDump = initializeCardDump();
 
     public CardDump() {
-        cardDump = initializeCardDump();
         shuffle();
     }
 

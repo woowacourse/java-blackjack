@@ -6,11 +6,9 @@ public abstract class Participant {
     private static final int TARGET_SCORE = 21;
 
     protected final CardDeck cardDeck;
-    protected final CardDump cardDump;
 
-    public Participant(CardDeck cardDeck, CardDump cardDump) {
+    public Participant(CardDeck cardDeck) {
         this.cardDeck = cardDeck;
-        this.cardDump = cardDump;
     }
 
     abstract boolean canHit();
@@ -19,10 +17,6 @@ public abstract class Participant {
 
     public boolean isBust() {
         return calculateTotalCardScore() > TARGET_SCORE;
-    }
-
-    public void addCard() {
-        cardDeck.add(cardDump.drawCard());
     }
 
     public List<Card> getCardDeck() {

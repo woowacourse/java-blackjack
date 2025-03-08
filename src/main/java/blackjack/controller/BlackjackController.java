@@ -32,7 +32,7 @@ public class BlackjackController {
 
         outputView.displayCardDistribution(DistributedCardDto.from(dealer), DistributedCardDto.fromPlayers(players));
 
-        hitExtraCardForPlayers(players);
+        hitExtraCardForPlayers(players, dealer);
         hitExtraCardForDealer(dealer);
         outputView.displayFinalCardStatus(FinalResultDto.from(dealer), FinalResultDto.fromPlayers(players));
 
@@ -54,12 +54,12 @@ public class BlackjackController {
         return processAndReturn(inputView::readPlayerName);
     }
 
-    private Player createPlayerWithInitialDeck(String playerName) {
+    private Player createPlayerWithInitialDeck(final String playerName) {
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(cardDump.drawCard());
         cardDeck.add(cardDump.drawCard());
 
-        return new Player(playerName, cardDeck, cardDump);
+        return new Player(playerName, cardDeck);
     }
 
     private <T> T processAndReturn(Supplier<T> supplier) {
@@ -79,13 +79,13 @@ public class BlackjackController {
         return new Dealer(cardDeck, cardDump);
     }
 
-    private void hitExtraCardForPlayers(final List<Player> players) {
+    private void hitExtraCardForPlayers(final List<Player> players, final Dealer dealer) {
         for (Player player : players) {
-            processPlayerHit(player);
+            processPlayerHit(player, dealer);
         }
     }
 
-    private void processPlayerHit(final Player player) {
+    private void processPlayerHit(final Player player, final Dealer dealer) {
         process(() -> {
             while (true) {
                 if (!player.canHit()) {
@@ -97,7 +97,7 @@ public class BlackjackController {
                 if (option.isNo()) {
                     break;
                 }
-                player.addCard();
+                player.addCard(dealer.giveCardToPlayer());
                 outputView.displayCardInfo(DistributedCardDto.from(player));
             }
         });

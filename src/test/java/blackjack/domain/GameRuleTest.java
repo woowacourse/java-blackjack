@@ -16,7 +16,7 @@ public class GameRuleTest {
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardDeck1, cardDump);
+        Player player = new Player("player1", cardDeck1);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -40,7 +40,7 @@ public class GameRuleTest {
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.FIVE));
 
-        Player player = new Player("player1", cardDeck1, cardDump);
+        Player player = new Player("player1", cardDeck1);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -63,7 +63,7 @@ public class GameRuleTest {
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardDeck1, cardDump);
+        Player player = new Player("player1", cardDeck1);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -90,7 +90,7 @@ public class GameRuleTest {
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.JACK));
 
-        Player player = new Player("player1", cardDeck1, cardDump);
+        Player player = new Player("player1", cardDeck1);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -117,7 +117,7 @@ public class GameRuleTest {
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardDeck1, cardDump);
+        Player player = new Player("player1", cardDeck1);
 
         CardDeck cardDeck2 = new CardDeck();
         cardDeck2.add(new Card(CardSuit.CLUB, CardRank.NINE));
