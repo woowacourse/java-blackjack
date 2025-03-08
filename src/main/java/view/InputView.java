@@ -29,9 +29,13 @@ public class InputView {
         String regex = "^[a-zA-Zㄱ-ㅎ가-힣]+$";
 
         for (String name : names) {
-            if (!Pattern.matches(regex, name)) {
-                throw new IllegalArgumentException("[ERROR] 잘못된 이름 형식입니다. 입력값 : " + name);
-            }
+            validateInputName(name, regex);
+        }
+    }
+
+    private static void validateInputName(String name, String regex) {
+        if (!Pattern.matches(regex, name)) {
+            throw new IllegalArgumentException("[ERROR] 잘못된 이름 형식입니다. 입력값 : " + name);
         }
     }
 
