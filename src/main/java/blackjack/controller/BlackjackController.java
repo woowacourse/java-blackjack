@@ -41,14 +41,14 @@ public class BlackjackController {
         blackjackGame.initCardsToParticipants();
         outputView.printStartGame(blackjackGame.getPlayerNames());
 
-        outputView.printDealerCardResult(blackjackGame.findDealer().openInitialCards());
-        for (Player player : blackjackGame.findPlayers()) {
+        outputView.printDealerCardResult(blackjackGame.getDealer().openInitialCards());
+        for (Player player : blackjackGame.getPlayers()) {
             outputView.printPlayerCardResult(player.getName(), player.openCards());
         }
     }
 
     private void distributeAdditionalCardsToPlayers(final BlackjackGame blackjackGame) {
-        for (Player player : blackjackGame.findPlayers()) {
+        for (Player player : blackjackGame.getPlayers()) {
             distributeAdditionalCardsToPlayer(blackjackGame, player);
         }
     }
@@ -68,9 +68,9 @@ public class BlackjackController {
     }
 
     private void showFinalCards(final BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.findDealer();
+        Dealer dealer = blackjackGame.getDealer();
         outputView.printDealerFinalCardResult(dealer.calculateDenominations(), dealer.openCards());
-        for (Player player : blackjackGame.findPlayers()) {
+        for (Player player : blackjackGame.getPlayers()) {
             outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(), player.openCards());
         }
     }

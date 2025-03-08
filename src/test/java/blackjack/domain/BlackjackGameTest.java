@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,7 +56,7 @@ class BlackjackGameTest {
             BlackjackGame game = BlackjackGame.createByPlayerNames(names);
             game.initCardsToParticipants(); // 2장 배부
 
-            Player player = game.findPlayers().getFirst();
+            Player player = game.getPlayers().getFirst();
             game.addExtraCard(player); // 총 3장 카드 보유
 
             assertThat(player.openCards()).hasSize(3);
@@ -72,8 +73,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsUnder16.get(0), cardsUnder16.get(1));
 
             CardDeck cardDeck = CardDeck.createCardDeck();
-            List<Participant> participants = List.of(dealer);
-            BlackjackGame game = new BlackjackGame(cardDeck, participants);
+            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new ArrayList<>());
 
             assertThat(game.addExtraCardToDealer()).isTrue();
         }
@@ -89,8 +89,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsOver16.get(0), cardsOver16.get(1));
 
             CardDeck cardDeck = CardDeck.createCardDeck();
-            List<Participant> participants = List.of(dealer);
-            BlackjackGame game = new BlackjackGame(cardDeck, participants);
+            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new ArrayList<>());
 
             assertThat(game.addExtraCardToDealer()).isFalse();
         }
@@ -133,15 +132,15 @@ class BlackjackGameTest {
             player3.addCards(initialCards4.get(0), initialCards4.get(1));
 
             CardDeck cardDeck = CardDeck.createCardDeck();
-            List<Participant> participants = List.of(dealer, player1, player2, player3);
-            game = new BlackjackGame(cardDeck, participants);
+            List<Player> players = List.of(player1, player2, player3);
+            game = new BlackjackGame(cardDeck, dealer, players);
         }
 
         @Test
         @DisplayName("플레이어의 승패 통계를 계산할 수 있다.")
         void calculatePlayerStatistics() {
             Map<Player, GameResult> playerResult = game.calculateStatisticsForPlayer();
-            List<Player> players = game.findPlayers();
+            List<Player> players = game.getPlayers();
             Player player1 = players.get(0);
             Player player2 = players.get(1);
             Player player3 = players.get(2);
