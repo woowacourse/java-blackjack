@@ -24,11 +24,18 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public Players editPlayer(Player player, Player newPlayer) {
+    public Players editPlayer(Player newPlayer) {
         List<Player> newPlayers = new ArrayList<>(players);
-        int index = newPlayers.indexOf(player);
-        newPlayers.set(index, newPlayer);
+        String name = newPlayer.getName();
+        Player originalPlayer = findOriginalPlayer(name);
+        newPlayers.set(players.indexOf(originalPlayer), newPlayer);
         return new Players(newPlayers);
+    }
+
+    private Player findOriginalPlayer(String name) {
+        return players.stream()
+            .filter(player -> player.getName().equals(name))
+            .findFirst().orElseThrow();
     }
 
     @Override

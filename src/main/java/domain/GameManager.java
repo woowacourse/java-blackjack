@@ -37,16 +37,11 @@ public class GameManager {
     }
 
     public <T extends Participant<T>> T drawCard(T participant) {
-        T newParticipant = participant.createParticipant(provider.provideCards(DEFAULT_DRAW_SIZE));
+        return participant.createParticipant(provider.provideCards(DEFAULT_DRAW_SIZE));
+    }
 
-        if (newParticipant instanceof Player newPlayer) {
-            players = players.editPlayer((Player) participant, newPlayer);
-        }
-        if (newParticipant instanceof Dealer newDealer) {
-            dealer = newDealer;
-        }
-
-        return newParticipant;
+    public void editPlayers(Player newPlayer) {
+        players.editPlayer(newPlayer);
     }
 
     public Map<Player, ResultStatus> findGameResult() {

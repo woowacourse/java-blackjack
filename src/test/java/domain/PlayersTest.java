@@ -44,6 +44,6 @@ public class PlayersTest {
         Player newPlayer = new Player("drago", newCards);
         Players expected = new Players(List.of(newPlayer));
 
-        assertThat(players.editPlayer(player, newPlayer)).isEqualTo(expected);
+        assertThat(players.editPlayer(newPlayer)).isEqualTo(expected);
     }
 }
