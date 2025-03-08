@@ -61,7 +61,7 @@ public class BlackjackController {
 
 	private void outputPlayersDuelResult(final Player player) {
 		final String name = player.getName();
-		outputView.printBlackjackPlayerDuelResult(name, player.getIsWinDuel());
+		outputView.printBlackjackPlayerDuelResult(name, player.isWinDuel());
 	}
 
 	private List<Player> inputPlayers() {

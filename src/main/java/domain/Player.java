@@ -42,7 +42,7 @@ public class Player {
 		isWinDuel = score > otherScore;
 	}
 
-	public boolean getIsWinDuel() {
+	public boolean isWinDuel() {
 		return isWinDuel;
 	}
 

@@ -27,7 +27,7 @@ public class Dealer {
 
 	public void startDuel(final Player player) {
 		player.duel(participant);
-		final boolean isWinPlayerDuelResult = player.getIsWinDuel();
+		final boolean isWinPlayerDuelResult = player.isWinDuel();
 		if (isWinPlayerDuelResult) {
 			loseCount++;
 			return;
