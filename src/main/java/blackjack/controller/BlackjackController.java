@@ -39,7 +39,11 @@ public class BlackjackController {
 
     private void distributeInitialCards(final BlackjackGame blackjackGame) {
         blackjackGame.initCardsToParticipants();
-        outputView.printStartGame(blackjackGame.getPlayerNames());
+        List<String> playerNames = blackjackGame.getPlayers()
+                .stream()
+                .map(Player::getName)
+                .toList();
+        outputView.printStartGame(playerNames);
 
         outputView.printDealerCardResult(blackjackGame.getDealer().openInitialCards());
         for (Player player : blackjackGame.getPlayers()) {
@@ -71,7 +75,8 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getDealer();
         outputView.printDealerFinalCardResult(dealer.calculateDenominations(), dealer.openCards());
         for (Player player : blackjackGame.getPlayers()) {
-            outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(), player.openCards());
+            outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(),
+                    player.openCards());
         }
     }
 

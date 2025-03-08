@@ -26,7 +26,10 @@ class BlackjackGameTest {
             List<String> names = List.of("hula", "sana");
             BlackjackGame game = BlackjackGame.createByPlayerNames(names);
 
-            List<String> playerNames = game.getPlayerNames();
+            List<String> playerNames = game.getPlayers()
+                    .stream()
+                    .map(Player::getName)
+                    .toList();
 
             assertAll(() -> {
                 assertThat(playerNames.getFirst()).isEqualTo(names.getFirst());

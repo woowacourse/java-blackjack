@@ -71,12 +71,6 @@ public class BlackjackGame {
         return result;
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
-    }
-
     public Dealer getDealer() {
         return dealer;
     }
