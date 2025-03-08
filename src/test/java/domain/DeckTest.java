@@ -49,6 +49,17 @@ public class DeckTest {
 			// then
 			assertThat(actual).isEqualTo(expected);
 		}
-
 	}
+
+	@DisplayName("카드를 모두뽑았다면, 예외가 발생한다.")
+	@Test
+	public void pickCardEmpty() throws Exception {
+		// given
+		final var deck = new Deck(new ArrayDeque<>());
+		// when&then
+		assertThatThrownBy(deck::pickCard)
+			.isInstanceOf(NullPointerException.class)
+			.hasMessageContaining("덱에 남아있는 카드가 없습니다.");
+	}
+
 }

@@ -40,6 +40,9 @@ public class Deck {
 	}
 
 	public Card pickCard() {
+		if (deck.isEmpty()) {
+			throw new NullPointerException("덱에 남아있는 카드가 없습니다.");
+		}
 		return deck.poll();
 	}
 }
