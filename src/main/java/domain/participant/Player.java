@@ -21,17 +21,13 @@ public class Player {
         hand.hitCards(standard);
     }
 
-    public void addCard(final CardDeck standard) {
-        hand.addCard(standard.hitCard());
-    }
-
     public int sum() {
         return hand.sum();
     }
 
     public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final CardDeck standard) {
         while (!isBust() && answer.apply(this)) {
-            addCard(standard);
+            hand.addCard(standard.hitCard());
             playerDeck.accept(this);
         }
     }
