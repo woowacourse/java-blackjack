@@ -5,6 +5,7 @@ import static factory.BlackJackCreator.createCardDeck;
 import static factory.BlackJackCreator.createParticipants;
 
 import domain.card.CardDeck;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.ParticipantsResult;
@@ -26,15 +27,30 @@ public class BlackJackController {
         Participants participants = createGameParticipants();
         CardDeck cardDeck = createCardDeck(createCardBundle());
         receiveCardProcessOfParticipants(participants, cardDeck);
-
-        for (Participant participant : participants.getParticipants()) {
-            if (participant instanceof Player) {
-                inputAskReceiveExtraCard(cardDeck, participant);
-                continue;
-            }
-            receiveCardProcessOfDealer(participant, cardDeck);
-        }
+        receiveExtraCardProcessOfPlayer(participants, cardDeck);
+        receiveExtraCardProcessOfDealer(participants, cardDeck);
         calculateBackJackResultProcess(participants);
+    }
+
+    private void receiveExtraCardProcessOfDealer(Participants participants, CardDeck cardDeck) {
+        participants.getParticipants().stream()
+            .filter(participant -> participant instanceof Dealer)
+            .findFirst()
+            .ifPresent(participant -> receiveCardProcessOfDealer(participant, cardDeck));
+    }
+
+    private void receiveCardProcessOfDealer(Participant participant, CardDeck cardDeck) {
+        while (participant.canPick()) {
+            participant.addCard(cardDeck.getAndRemoveFrontCard());
+            outputView.printDealerPickMessage();
+        }
+        outputView.printBlankLine();
+    }
+
+    private void receiveExtraCardProcessOfPlayer(Participants participants, CardDeck cardDeck) {
+        participants.getParticipants().stream()
+            .filter(participant -> participant instanceof Player)
+            .forEach(participant -> inputAskReceiveExtraCard(cardDeck, participant));
     }
 
     private void receiveCardProcessOfParticipants(Participants participants,
@@ -60,14 +76,6 @@ public class BlackJackController {
         for (Participant participant : participants.getParticipants()) {
             outputView.printFullParticipantInfo(participant);
         }
-    }
-
-    private void receiveCardProcessOfDealer(Participant participant, CardDeck cardDeck) {
-        while (participant.canPick()) {
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-            outputView.printDealerPickMessage();
-        }
-        outputView.printBlankLine();
     }
 
     /***
