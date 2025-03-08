@@ -25,7 +25,7 @@ class ParticipantsTest {
 
     @DisplayName("모든 참가자에게 카드 두장씩 분배한다.")
     @Test
-    void test() {
+    void spreadTwoCardsToEveryGamer() {
         // given
         Cards cards = provideCards(6);
         final Cards totalCards = provideCards(6);
@@ -44,13 +44,13 @@ class ParticipantsTest {
         );
     }
 
-    @DisplayName("참가자 수를 계산한다.")
+    @DisplayName("처음에 나눠줘야할 카드의 수를 계산한다.")
     @Test
     void calculateParticipantsSize() {
         // given
 
         // when & then
-        assertThat(participants.getParticipantSize()).isEqualTo(3);
+        assertThat(participants.calculateInitialCardsCount()).isEqualTo(6);
     }
 
     @DisplayName("플레이어가 카드를 더 얻을 수 있으면 true를 반환한다.")

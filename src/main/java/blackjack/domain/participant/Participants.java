@@ -44,8 +44,8 @@ public class Participants {
         return dealer.canGetMoreCard();
     }
 
-    public int getParticipantSize() {
-        return DEALER_COUNT + players.getSize();
+    public int calculateInitialCardsCount() {
+        return 2 * (DEALER_COUNT + players.getSize());
     }
 
     public int calculateDealerMaxSum() {

@@ -1,8 +1,9 @@
 package blackjack.domain;
 
+import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
+
 import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.Collections;
@@ -20,7 +21,7 @@ public class BlackjackGame {
     }
 
     public void spreadInitialCards() {
-        int cardsCount = 2 * participants.getParticipantSize();
+        int cardsCount = participants.calculateInitialCardsCount();
         final Cards cards = cardManager.spreadCards(cardsCount);
         participants.spreadAllTwoCards(cards);
     }
