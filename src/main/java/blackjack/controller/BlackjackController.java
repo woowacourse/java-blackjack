@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.Victory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.RandomCardsShuffler;
@@ -8,6 +7,7 @@ import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.winning.Victory;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;

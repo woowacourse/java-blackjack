@@ -1,10 +1,10 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.Victory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.CardsShuffler;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ScoreCalculator;
+import blackjack.domain.winning.Victory;
 import java.util.ArrayList;
 
 public class Dealer {

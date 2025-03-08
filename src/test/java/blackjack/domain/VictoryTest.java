@@ -9,6 +9,8 @@ import blackjack.domain.card.Suit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.winning.Victory;
+import blackjack.domain.winning.WinningResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public enum BlackjackConstants {
     BUST_THRESHOLD(21);
