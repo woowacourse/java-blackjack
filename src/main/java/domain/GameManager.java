@@ -28,6 +28,7 @@ public class GameManager {
         return new GameManager(dealer, players);
     }
 
+
     public Map<GameResult, Integer> calculateDealerGameResult() {
         final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
         return GameResult.getAllGameResults().stream()
