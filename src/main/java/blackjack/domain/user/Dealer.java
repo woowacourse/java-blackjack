@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Dealer {
 
-    private static String DEALER_NAME = "딜러";
+    private final static String DEALER_NAME = "딜러";
 
     private final Player player;
     private final CardDeck cardDeck;
@@ -41,6 +41,7 @@ public class Dealer {
     }
 
     public Card findFirstCard() {
+        validateBeforeDrawInitialCards();
         List<Card> cards = player.getHand();
         return cards.getFirst();
     }
@@ -55,5 +56,11 @@ public class Dealer {
 
     public int getPoint() {
         return player.getPoint();
+    }
+
+    private void validateBeforeDrawInitialCards() {
+        if (player.getHand().isEmpty()) {
+            throw new IllegalArgumentException("초기 카드 분배를 먼저 수행해야합니다.");
+        }
     }
 }

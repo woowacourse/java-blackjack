@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
@@ -68,5 +69,13 @@ class DealerTest {
         dealer.drawSelfInitialCard();
         Card firstCard = dealer.findFirstCard();
         assertThat(firstCard).isEqualTo(FIRST_CARD);
+    }
+
+    @Test
+    @DisplayName("초기 카드 분배를 수행하지 않고 첫번재 카드를 출력할 경우 예외를 발생시킨다.")
+    void cannotFindFirstCardBeforeDistributionInitialCards() {
+        assertThatCode(() -> dealer.findFirstCard())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("초기 카드 분배를 먼저 수행해야합니다.");
     }
 }
