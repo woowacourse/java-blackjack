@@ -12,10 +12,9 @@ public class Dealer {
     private final Player player;
     private final CardDeck cardDeck;
 
-    public Dealer() {
-        Nickname dealerName = new Nickname(DEALER_NAME);
-        this.player = new Player(dealerName);
-        this.cardDeck = new CardDeck();
+    public Dealer(CardDeck cardDeck) {
+        this.player = new Player(new Nickname(DEALER_NAME));
+        this.cardDeck = cardDeck;
     }
 
     public void drawSelfInitialCard() {

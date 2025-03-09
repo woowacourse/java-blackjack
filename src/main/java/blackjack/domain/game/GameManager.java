@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Nickname;
 import blackjack.domain.user.Player;
@@ -34,7 +35,7 @@ public class GameManager {
 
     private void resetGame() {
         players = new ArrayList<>();
-        dealer = new Dealer();
+        dealer = new Dealer(new CardDeck());
     }
 
     private void registerPlayer(List<Nickname> nicknames) {
