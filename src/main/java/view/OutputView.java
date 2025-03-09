@@ -15,6 +15,9 @@ public class OutputView {
     private static final String SPREAD_CARD_RESULT = "%s%s";
     private static final String SPREAD_PLAYER_MESSAGE = "%s에게 2장을 나누었습니다.";
     private static final String RESULT_MESSAGE = "## 최종 승패";
+    private static final String DEALER_EXTRA_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String GAME_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
+
 
     public void printInitialParticipantHands(List<Participant> participants) {
         System.out.println();
@@ -41,12 +44,11 @@ public class OutputView {
     }
 
     public void printDealerPickMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_EXTRA_CARD_MESSAGE);
     }
 
     public void printParticipantHand(Participant participant) {
         System.out.print(SPREAD_NAME_RESULT.formatted(participant.getName()));
-
         List<Card> shownCard = participant.getShownCard();
         String cardMessage = formatCards(shownCard);
         System.out.println(cardMessage);
@@ -60,7 +62,7 @@ public class OutputView {
         String name = participant.getName();
         String cardsMessage = formatCards(participant.getCards());
         int totalValue = participant.getTotalValue();
-        return String.format("%s카드: %s - 결과: %d", name, cardsMessage, totalValue);
+        return String.format(GAME_RESULT_MESSAGE, name, cardsMessage, totalValue);
     }
 
     private String formatCards(List<Card> cards) {
@@ -70,9 +72,7 @@ public class OutputView {
     public void printGameResult(ParticipantsResult participantsResult) {
         System.out.println();
         System.out.println(RESULT_MESSAGE);
-
         Set<ParticipantResult> getParticipantsResult = participantsResult.getParticipantsResult();
-
         for (ParticipantResult participantResult : getParticipantsResult) {
             if (participantResult instanceof DealerResult) {
                 printDealerResult(participantResult);
