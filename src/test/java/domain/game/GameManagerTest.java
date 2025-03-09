@@ -78,13 +78,13 @@ public class GameManagerTest {
         Card kingHeart = new Card(Rank.KING, Shape.HEART);
         Card nineHeart = new Card(Rank.NINE, Shape.HEART);
 
-        dealer.setUpCardDeck(tenSpade, tenDiamond);
-        winnerPlayer1.setUpCardDeck(aceSpade, tenHeart);
-        drawPlayer1.setUpCardDeck(tenClover, jackSpade);
-        drawPlayer2.setUpCardDeck(jackDiamond, jackHeart);
-        losePlayer1.setUpCardDeck(kingSpade, nineSpade);
-        losePlayer2.setUpCardDeck(kingDiamond, nineDiamond);
-        losePlayer3.setUpCardDeck(kingHeart, nineHeart);
+        dealer.takeCards(tenSpade, tenDiamond);
+        winnerPlayer1.takeCards(aceSpade, tenHeart);
+        drawPlayer1.takeCards(tenClover, jackSpade);
+        drawPlayer2.takeCards(jackDiamond, jackHeart);
+        losePlayer1.takeCards(kingSpade, nineSpade);
+        losePlayer2.takeCards(kingDiamond, nineDiamond);
+        losePlayer3.takeCards(kingHeart, nineHeart);
 
         //when
         GameResult gameResult = gameManager.evaluateFinalScore();

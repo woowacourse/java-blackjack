@@ -24,15 +24,15 @@ public class GameManager {
     }
 
     public void distributeSetUpCards() {
-        dealer.setUpCardDeck(cardPack.poll(), cardPack.poll());
-        players.forEach(player -> player.setUpCardDeck(cardPack.poll(), cardPack.poll()));
+        dealer.takeCards(cardPack.poll(), cardPack.poll());
+        players.forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
     }
 
     public void distributeExtraCards(TakeMoreCardSelector selector) {
         for (Player player : players) {
             while (player.canTakeMoreCard()) {
                 if (selector.isYes(player.getName())){
-                    player.takeMoreCard(cardPack.poll());
+                    player.takeCards(cardPack.poll());
                     selector.takenResult(player.getName(), player.getCards());
                     continue;
                 }
@@ -42,7 +42,7 @@ public class GameManager {
         }
 
         if (dealer.canTakeMoreCard()) {
-            dealer.takeMoreCard(cardPack.poll());
+            dealer.takeCards(cardPack.poll());
             selector.dealerTakenResult();
         }
     }

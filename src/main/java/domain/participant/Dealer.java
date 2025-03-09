@@ -1,12 +1,13 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDeck;
 
-public class Dealer extends Participant {
+public class Dealer extends AbstractGambler {
+
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super(new CardDeck());
+        super(DEALER_NAME);
     }
 
     public Card getOpenCard() {

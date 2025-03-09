@@ -18,16 +18,16 @@ class CardDeckTest {
     private final Card twoDiamond = new Card(Rank.TWO, Shape.DIAMOND);
 
     @Test
-    void 카드덱의_초기카드_2장을_설정할수있다() {
-        cardDeck.setUpCards(jClover, fiveHeart);
+    void 카드덱에_카드를_추가할_수_있다() {
+        cardDeck.takeCards(twoDiamond);
 
         List<Card> cards = cardDeck.getCards();
-        assertThat(cards).contains(jClover, fiveHeart);
+        assertThat(cards).contains(twoDiamond);
     }
 
     @Test
     void 카드의_점수의_합을_구할수있다() {
-        cardDeck.setUpCards(jClover, fiveHeart);
+        cardDeck.takeCards(jClover, fiveHeart);
 
         var score = cardDeck.calculateScore();
 
@@ -36,7 +36,7 @@ class CardDeckTest {
 
     @Test
     void A가있을때_나머지숫자의_합이_11이상이면_1을_선택() {
-        cardDeck.setUpCards(aceHeart, aceClover);
+        cardDeck.takeCards(aceHeart, aceClover);
 
         var score = cardDeck.calculateScore();
 
@@ -45,20 +45,10 @@ class CardDeckTest {
 
     @Test
     void A가있을때_나머지숫자의_합이_10이하이면_11을_선택() {
-        cardDeck.setUpCards(aceHeart, jClover);
+        cardDeck.takeCards(aceHeart, jClover);
 
         var score = cardDeck.calculateScore();
 
         assertThat(score).isEqualTo(21);
-    }
-
-    @Test
-    void 카드덱에_카드를_추가한다() {
-        cardDeck.setUpCards(jClover, fiveHeart);
-
-        cardDeck.takeMore(twoDiamond);
-
-        List<Card> cards = cardDeck.getCards();
-        assertThat(cards).contains(jClover, fiveHeart, twoDiamond);
     }
 }

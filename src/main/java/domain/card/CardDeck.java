@@ -2,19 +2,15 @@ package domain.card;
 
 import domain.game.Winning;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CardDeck {
 
     private final List<Card> deck = new ArrayList<>();
 
-    public void setUpCards(Card card1, Card card2) {
-        deck.add(card1);
-        deck.add(card2);
-    }
-
-    public void takeMore(Card card) {
-        deck.add(card);
+    public void takeCards(Card... cards) {
+        deck.addAll(Arrays.asList(cards));
     }
 
     public int calculateScore() {
