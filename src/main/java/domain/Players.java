@@ -36,6 +36,18 @@ public class Players {
         return player.isDrawable();
     }
 
+    public GameStatistics calculateGameStatistics(Dealer dealer) {
+        Map<PlayerName, GameResult> gameResults = players.stream()
+                .collect(Collectors.toMap(
+                        Player::getPlayerName,
+                        player -> player.decideGameResult(dealer),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
+
+        return new GameStatistics(gameResults);
+    }
+
     public List<PlayerName> getUsernames() {
         return players.stream()
                 .map(Player::getPlayerName)
@@ -50,17 +62,5 @@ public class Players {
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
-    }
-
-    public GameStatistics calculateGameStatistics(Dealer dealer) {
-        Map<PlayerName, GameResult> gameResults = players.stream()
-                .collect(Collectors.toMap(
-                        Player::getPlayerName,
-                        player -> player.decideGameResult(dealer),
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                ));
-
-        return new GameStatistics(gameResults);
     }
 }

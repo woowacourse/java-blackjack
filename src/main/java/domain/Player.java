@@ -27,10 +27,6 @@ public class Player extends Gamer {
         return decideGameResultWithoutBust(playerScore, dealerScore);
     }
 
-    public PlayerName getPlayerName() {
-        return playerName;
-    }
-
     private GameResult decideGameResultWithBust(int playerScore, int dealerScore) {
         if (playerScore > BUST_THRESHOLD && dealerScore > BUST_THRESHOLD) {
             return DRAW;
@@ -49,5 +45,9 @@ public class Player extends Gamer {
             return LOSE;
         }
         return WIN;
+    }
+
+    public PlayerName getPlayerName() {
+        return playerName;
     }
 }

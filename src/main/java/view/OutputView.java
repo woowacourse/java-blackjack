@@ -61,6 +61,10 @@ public class OutputView {
         System.out.println();
     }
 
+    private void printGamerScore(Gamer gamer) {
+        System.out.printf(" - 결과: %d\n", gamer.calculateScore());
+    }
+
     public void printGameStatistics(GameStatistics gameStatistics) {
         System.out.println("##최종 승패");
         int dealerDrawCount = gameStatistics.getDealerDrawCount();
@@ -76,9 +80,5 @@ public class OutputView {
         results.forEach((key, value) -> {
             System.out.printf("%s: %s\n", key.username(), GAME_RESULT.get(value));
         });
-    }
-
-    private void printGamerScore(Gamer gamer) {
-        System.out.printf(" - 결과: %d\n", gamer.calculateScore());
     }
 }

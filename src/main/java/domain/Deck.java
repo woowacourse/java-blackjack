@@ -17,11 +17,6 @@ public class Deck {
         copiedCards.forEach(deck::push);
     }
 
-    public Card draw() {
-        validateEmpty();
-        return deck.pop();
-    }
-
     private void validateDuplicate(List<Card> cards) {
         Set<Card> cardSet = new HashSet<>(cards);
         if (cardSet.size() != cards.size()) {
@@ -29,6 +24,11 @@ public class Deck {
         }
     }
 
+    public Card draw() {
+        validateEmpty();
+        return deck.pop();
+    }
+    
     private void validateEmpty() {
         if (deck.isEmpty()) {
             throw new IllegalStateException("카드가 없습니다.");

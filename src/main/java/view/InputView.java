@@ -21,12 +21,12 @@ public class InputView {
         return splittedNames;
     }
 
+    private String readLine() {
+        return new Scanner(System.in).nextLine();
+    }
+
     public boolean isYes(String userResponse) {
         System.out.printf("\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", userResponse);
         return UserResponses.get(userResponse);
-    }
-
-    private String readLine() {
-        return new Scanner(System.in).nextLine();
     }
 }

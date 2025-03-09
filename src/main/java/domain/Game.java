@@ -15,14 +15,6 @@ public class Game {
         this.players = new Players(playerNames);
     }
 
-    public void giveCardToPlayer(PlayerName playerName, int count) {
-        players.giveCard(playerName, drawCards(count));
-    }
-
-    public void giveCardToDealer(int count) {
-        dealer.addCard(drawCards(count));
-    }
-
     public List<Card> getPlayerCards(PlayerName playerName) {
         return players.getPlayerCard(playerName);
     }
@@ -31,6 +23,23 @@ public class Game {
         giveCardToDealer(INITIAL_HANDS);
         List<PlayerName> playerNames = players.getUsernames();
         playerNames.forEach(playerName -> giveCardToPlayer(playerName, INITIAL_HANDS));
+    }
+
+    public void giveCardToDealer(int count) {
+        dealer.addCard(drawCards(count));
+    }
+
+    public void giveCardToPlayer(PlayerName playerName, int count) {
+        players.giveCard(playerName, drawCards(count));
+    }
+
+    private List<Card> drawCards(int count) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            Card newCard = dealer.drawCard();
+            cards.add(newCard);
+        }
+        return cards;
     }
 
     public Map<PlayerName, Gamer> getPlayersInfo() {
@@ -55,14 +64,5 @@ public class Game {
 
     public GameStatistics getGameStatistics() {
         return players.calculateGameStatistics(dealer);
-    }
-
-    private List<Card> drawCards(int count) {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            Card newCard = dealer.drawCard();
-            cards.add(newCard);
-        }
-        return cards;
     }
 }

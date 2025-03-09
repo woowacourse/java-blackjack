@@ -24,9 +24,29 @@ public abstract class Gamer implements Cloneable {
         return calculateAceValue(containAce, lowAceTotal);
     }
 
+    private int calculateAceValue(boolean containAce, int lowAceTotal) {
+        if (!containAce || lowAceTotal > GAMER_BUST_THRESHOLD) {
+            return lowAceTotal;
+        }
+        int highAceTotal = lowAceTotal - CardRank.ACE.getValue() + CardRank.SPECIAL_ACE.getValue();
+        if (highAceTotal > GAMER_BUST_THRESHOLD) {
+            return lowAceTotal;
+        }
+        return highAceTotal;
+    }
+
     public void addCard(List<Card> addedCards) {
         validateDuplicate(addedCards);
         cards.addAll(addedCards);
+    }
+
+    private void validateDuplicate(List<Card> addedCards) {
+        if (addedCards.size() != new HashSet<>(addedCards).size()) {
+            throw new IllegalArgumentException("새로 뽑은 카드에 중복이 있습니다.");
+        }
+        if (addedCards.stream().anyMatch(this.cards::contains)) {
+            throw new IllegalArgumentException("기존 카드와 중복 카드가 있습니다.");
+        }
     }
 
     public boolean isDrawable(int standard) {
@@ -46,26 +66,5 @@ public abstract class Gamer implements Cloneable {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-
-    private int calculateAceValue(boolean containAce, int lowAceTotal) {
-        if (!containAce || lowAceTotal > GAMER_BUST_THRESHOLD) {
-            return lowAceTotal;
-        }
-        int highAceTotal = lowAceTotal - CardRank.ACE.getValue() + CardRank.SPECIAL_ACE.getValue();
-        if (highAceTotal > GAMER_BUST_THRESHOLD) {
-            return lowAceTotal;
-        }
-        return highAceTotal;
-    }
-
-    private void validateDuplicate(List<Card> addedCards) {
-        if (addedCards.size() != new HashSet<>(addedCards).size()) {
-            throw new IllegalArgumentException("새로 뽑은 카드에 중복이 있습니다.");
-        }
-        if (addedCards.stream().anyMatch(this.cards::contains)) {
-            throw new IllegalArgumentException("기존 카드와 중복 카드가 있습니다.");
-        }
     }
 }
