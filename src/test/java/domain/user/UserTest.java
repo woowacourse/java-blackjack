@@ -1,11 +1,9 @@
 package domain.user;
 
-import domain.CardDeck;
 import domain.GameManger;
 import domain.TrumpCard;
 import java.util.List;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

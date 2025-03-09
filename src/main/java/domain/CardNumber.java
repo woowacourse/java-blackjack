@@ -13,7 +13,8 @@ public enum CardNumber {
     TEN(10, "10"),
     J(10, "J"),
     Q(10, "Q"),
-    K(10, "K");
+    K(10, "K"),
+    ;
 
     private final int value;
     private final String displayName;
