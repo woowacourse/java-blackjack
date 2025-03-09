@@ -10,6 +10,10 @@ public abstract class Card {
         this.rank = rank;
     }
 
+    public static Card of(CardSuit suit, CardRank rank) {
+        return CardFactory.create(suit, rank);
+    }
+
     public boolean isAce() {
         return this.rank.equals(CardRank.ACE);
     }

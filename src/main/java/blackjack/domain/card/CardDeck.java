@@ -13,7 +13,7 @@ public class CardDeck {
 
         for (CardSuit suit : CardSuit.values()) {
             for (CardRank rank : CardRank.values()) {
-                cards.add(CardFactory.create(suit, rank));
+                cards.add(Card.of(suit, rank));
             }
         }
 

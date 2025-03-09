@@ -20,7 +20,7 @@ public class CardFactory {
     private CardFactory() {
     }
 
-    public static Card create(CardSuit suit, CardRank rank) {
+    protected static Card create(CardSuit suit, CardRank rank) {
         return CACHE.get(suit).get(rank);
     }
 
