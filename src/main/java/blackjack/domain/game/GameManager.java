@@ -104,7 +104,8 @@ public class GameManager {
             PlayerWinningResult winningResult = new PlayerWinningResult(player.getNickname(), winningType);
             winningResults.add(winningResult);
         }
-        new WinningState(winningResults);
+        WinningState winningState = new WinningState(winningResults);
+        gameInputOutput.executePrintGameResult(winningState);
     }
 
     private HandState makeHandState(Player player) {
