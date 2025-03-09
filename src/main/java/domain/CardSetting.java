@@ -8,6 +8,9 @@ import java.util.List;
 public class CardSetting {
     private static final List<TrumpCard> CARD_DECK = new ArrayList<>();
 
+    private CardSetting() {
+    }
+
     public static void initCache() {
         Arrays.stream(CardShape.values())
                 .forEach(cardShape -> Arrays.stream(CardNumber.values())

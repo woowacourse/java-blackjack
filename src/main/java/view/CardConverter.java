@@ -4,6 +4,9 @@ import domain.CardNumber;
 import domain.CardShape;
 
 public class CardConverter {
+    private CardConverter() {
+    }
+
     public static String createTrumpCard(CardShape cardShape, CardNumber cardNumber) {
         return numberToText(cardNumber) + shapeToText(cardShape);
     }

@@ -9,7 +9,7 @@ public abstract class User {
     protected final String name;
     protected final CardDeck cardDeck;
 
-    public User(String name) {
+    protected User(String name) {
         this.name = name;
         this.cardDeck = new CardDeck();
     }
