@@ -7,20 +7,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackjackParticipantsManager<T extends BlackjackParticipant> {
+public class BlackjackParticipantsManager<E extends BlackjackParticipant> {
 
     private static final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
     private static final String INVALID_HANDS_STATE = "아직 카드를 받지 않은 참여자입니다.";
 
-    private final List<T> players;
+    private final List<E> players;
     private final Dealer dealer;
 
-    public BlackjackParticipantsManager(List<T> players, Dealer dealer) {
+    public BlackjackParticipantsManager(List<E> players, Dealer dealer) {
         this.players = new ArrayList<>(players);
         this.dealer = dealer;
     }
 
-    private T findPlayer(String name) {
+    private E findPlayer(String name) {
         return players.stream()
                 .filter(player -> player.name().equals(name))
                 .findFirst()
@@ -53,7 +53,7 @@ public class BlackjackParticipantsManager<T extends BlackjackParticipant> {
     }
 
     public int calculateCardSum(String name) {
-        T player = findPlayer(name);
+        E player = findPlayer(name);
         return player.calculateCardSum();
     }
 
@@ -66,12 +66,12 @@ public class BlackjackParticipantsManager<T extends BlackjackParticipant> {
     }
 
     public boolean isBust(String name) {
-        T player = findPlayer(name);
+        E player = findPlayer(name);
         return !player.isBurst(player.calculateCardSum());
     }
 
     public void addCard(String name, TrumpCard trumpCard) {
-        T player = findPlayer(name);
+        E player = findPlayer(name);
         player.addDraw(trumpCard);
     }
 
