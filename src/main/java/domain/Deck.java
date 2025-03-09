@@ -15,7 +15,14 @@ public class Deck {
     }
 
     private Card drawCard() {
+        validateEmpty();
         return cards.removeLast();
+    }
+
+    private void validateEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("덱에 남은 카드가 없습니다.");
+        }
     }
 
     public List<Card> drawCards(int count) {
