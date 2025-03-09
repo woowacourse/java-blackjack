@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.GameManager;
 import blackjack.domain.Players;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Gambler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -28,8 +28,8 @@ public class BlackjackController {
     }
 
     private void dealMoreCards(final Players players) {
-        List<Player> gamblers = players.getGamblers();
-        for (Player gambler : gamblers) {
+        List<Gambler> gamblers = players.getGamblers();
+        for (Gambler gambler : gamblers) {
             while (!gameManager.isPlayerBust(gambler) && inputView.readOneMoreDealCard(gambler)) {
                 gameManager.dealAddCard(gambler);
                 outputView.printCardsMessage(gambler);
@@ -55,8 +55,8 @@ public class BlackjackController {
         return players;
     }
 
-    private List<Player> readAndParseNames() {
+    private List<Gambler> readAndParseNames() {
         String playerNamesInput = inputView.readPlayerNames();
-        return PlayerNameParser.parseNames(playerNamesInput);
+        return GamblerNameParse.parseNames(playerNamesInput);
     }
 }

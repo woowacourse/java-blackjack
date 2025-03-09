@@ -65,15 +65,15 @@ class PlayersTest {
         Players players = new Players();
         CardPack cardPack = new CardPack(new SortShuffle());
 
-        Player player = new Gambler("두리");
-        players.addGamblers(List.of(player));
+        Gambler gambler = new Gambler("두리");
+        players.addGamblers(List.of(gambler));
 
-        players.dealAddCard(cardPack, player);
-        players.dealAddCard(cardPack, player);
-        players.dealAddCard(cardPack, player);
+        players.dealAddCard(cardPack, gambler);
+        players.dealAddCard(cardPack, gambler);
+        players.dealAddCard(cardPack, gambler);
 
         // when
-        boolean result = players.isPlayerBust(player);
+        boolean result = players.isPlayerBust(gambler);
 
         // then
         assertThat(result).isTrue();

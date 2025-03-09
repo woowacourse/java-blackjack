@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.card.BlackjackShuffle;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ class GameManagerTest {
     @Test
     @DisplayName("참가자를 추가한다")
     void addParticipants() {
-        List<Player> names = List.of(new Gambler("비타"));
+        List<Gambler> names = List.of(new Gambler("비타"));
 
         GameManager gameManager = new GameManager(blackjackShuffle);
         gameManager.addGamblers(names);
@@ -30,26 +29,26 @@ class GameManagerTest {
     @DisplayName("참가자에게 카드를 한장 추가 발부한다")
     @Test
     void deal_card_to_gambler_test() {
-        Player player = new Gambler("두리");
+        Gambler gambler = new Gambler("두리");
 
         GameManager gameManager = new GameManager(blackjackShuffle);
-        gameManager.addGamblers(List.of(player));
+        gameManager.addGamblers(List.of(gambler));
 
-        gameManager.dealAddCard(player);
-        assertThat(player.getCards().size()).isEqualTo(3);
+        gameManager.dealAddCard(gambler);
+        assertThat(gambler.getCards().size()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("플레이어의 카드가 버스트면 TRUE를 반환한다")
     void ifThePlayerS_CardIsBurstItReturns_True() {
-        Player player = new Gambler("비타");
-        List<Player> names = List.of(player);
+        Gambler gambler = new Gambler("비타");
+        List<Gambler> names = List.of(gambler);
 
         GameManager gameManager = new GameManager(blackjackShuffle);
         gameManager.addGamblers(names);
-        gameManager.dealAddCard(player);
+        gameManager.dealAddCard(gambler);
 
-        boolean result = gameManager.isPlayerBust(player);
+        boolean result = gameManager.isPlayerBust(gambler);
 
         assertThat(result).isTrue();
     }

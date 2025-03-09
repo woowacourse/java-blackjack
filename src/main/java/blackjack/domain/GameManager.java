@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.BlackjackShuffle;
 import blackjack.domain.card.CardPack;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class GameManager {
         players = new Players();
     }
 
-    public void addGamblers(List<Player> gamblerNames) {
+    public void addGamblers(List<Gambler> gamblerNames) {
         players.addGamblers(gamblerNames);
         players.initPlayers(cardPack);
     }

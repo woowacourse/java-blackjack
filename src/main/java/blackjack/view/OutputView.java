@@ -4,6 +4,8 @@ import blackjack.domain.GameResult;
 import blackjack.domain.GameResults;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
 import java.util.ArrayList;
@@ -46,8 +48,8 @@ public class OutputView {
     }
 
     public void printGameResults(Players players, GameResults gameResults) {
-        List<Player> gamblers = players.getGamblers();
-        Player dealer = players.getDealer();
+        List<Gambler> gamblers = players.getGamblers();
+        Dealer dealer = players.getDealer();
         System.out.println("## 최종 승패");
         System.out.printf("%s: %s\n", dealer.getName(), getDealerWinLoseMessage(gameResults));
         gamblers.forEach(gambler ->
@@ -68,7 +70,7 @@ public class OutputView {
         return dealerWinLoseRate.toString();
     }
 
-    private String getGamblerWinLoseMessage(Player gambler, GameResults gameResults) {
+    private String getGamblerWinLoseMessage(Gambler gambler, GameResults gameResults) {
         GameResult result = gameResults.getGameResult(gambler);
         return GameResultView.getShapeMessage(result);
     }
@@ -83,7 +85,7 @@ public class OutputView {
                 CardShapeView.getShapeMessage(card.getShape());
     }
 
-    private List<Player> getDealerGamblerList(Player dealer, List<Player> gamblers) {
+    private List<Player> getDealerGamblerList(Player dealer, List<Gambler> gamblers) {
         List<Player> allPlayers = new ArrayList<>();
         allPlayers.add(dealer);
         allPlayers.addAll(gamblers);

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
 
 public enum GameResult {
 
@@ -8,28 +9,28 @@ public enum GameResult {
     LOSE,
     DRAW;
 
-    public static GameResult getGameResult(Player dealer, Player player) {
-        if (isPlayerLoser(dealer, player)) {
+    public static GameResult getGameResult(Dealer dealer, Gambler gambler) {
+        if (isGamblerLoser(dealer, gambler)) {
             return GameResult.LOSE;
         }
-        if (isPlayerWinner(dealer, player)) {
+        if (isGamblerWinner(dealer, gambler)) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
     }
 
-    private static boolean isPlayerWinner(Player dealer, Player player) {
-        if (dealer.isPlayerNotBust() && player.isPlayerNotBust()) {
-            return dealer.calculateCardNumber() < player.calculateCardNumber();
+    private static boolean isGamblerWinner(Dealer dealer, Gambler gambler) {
+        if (dealer.isPlayerNotBust() && gambler.isPlayerNotBust()) {
+            return dealer.calculateCardNumber() < gambler.calculateCardNumber();
         }
-        return dealer.isPlayerBust() && player.isPlayerNotBust();
+        return dealer.isPlayerBust() && gambler.isPlayerNotBust();
     }
 
-    private static boolean isPlayerLoser(Player dealer, Player player) {
-        if (dealer.isPlayerNotBust() && player.isPlayerNotBust()) {
-            return dealer.calculateCardNumber() > player.calculateCardNumber();
+    private static boolean isGamblerLoser(Dealer dealer, Gambler gambler) {
+        if (dealer.isPlayerNotBust() && gambler.isPlayerNotBust()) {
+            return dealer.calculateCardNumber() > gambler.calculateCardNumber();
         }
-        return dealer.isPlayerNotBust() && player.isPlayerBust();
+        return dealer.isPlayerNotBust() && gambler.isPlayerBust();
     }
 }
 

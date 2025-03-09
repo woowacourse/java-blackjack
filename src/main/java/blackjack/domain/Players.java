@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class Players {
 
-    private final Player dealer;
-    private final List<Player> gamblers;
+    private final Dealer dealer;
+    private final List<Gambler> gamblers;
     private static final int PLAYERS_INIT_CARD_COUNT = 2;
     private static final int DEALER_HIT_MAX_VALUE = 16;
 
@@ -20,23 +21,23 @@ public class Players {
         this.gamblers = new ArrayList<>();
     }
 
-    public void addGamblers(List<Player> gamblers) {
+    public void addGamblers(List<Gambler> gamblers) {
         validateHasDuplication(gamblers);
         this.gamblers.addAll(gamblers);
     }
 
-    private void validateHasDuplication(List<Player> gamblers) {
+    private void validateHasDuplication(List<Gambler> gamblers) {
         int size = new HashSet<>(gamblers).size();
         if (gamblers.size() != size) {
             throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
         }
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
-    public List<Player> getGamblers() {
+    public List<Gambler> getGamblers() {
         return gamblers;
     }
 

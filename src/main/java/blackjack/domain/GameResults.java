@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,9 +9,9 @@ import java.util.Map;
 
 public class GameResults {
 
-    Map<Player, GameResult> gameResults;
+    Map<Gambler, GameResult> gameResults;
 
-    public GameResults(Player dealer, List<Player> gamblers) {
+    public GameResults(Dealer dealer, List<Gambler> gamblers) {
         gameResults = new HashMap<>();
         gamblers.forEach(
                 player -> {
@@ -19,8 +20,8 @@ public class GameResults {
         );
     }
 
-    public GameResult getGameResult(Player player) {
-        return gameResults.get(player);
+    public GameResult getGameResult(Gambler gambler) {
+        return gameResults.get(gambler);
     }
 
     public int getDealerWin() {
