@@ -21,8 +21,8 @@ public class GameManager {
         players.initPlayers(cardPack);
     }
 
-    public void dealAddCard(Player player) {
-        players.dealAddCard(cardPack, player);
+    public void dealAddCard(final Player player) {
+        player.pushDealCard(cardPack, 1);
     }
 
     public boolean isPlayerBust(final Player player) {
