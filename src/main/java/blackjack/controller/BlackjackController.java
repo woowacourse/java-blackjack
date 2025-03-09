@@ -22,7 +22,7 @@ public class BlackjackController {
 
         Dealer dealer = new Dealer(new CardDeck(), cardDump);
         dealer.createInitialCardDeck();
-        List<Player> players = distributeCardToPlayers(dealer, inputView, outputView);
+        List<Player> players = distributeCardToPlayers(dealer, inputView);
         outputView.displayCardDistribution(DistributedCardDto.from(dealer), DistributedCardDto.fromPlayers(players));
 
         hitExtraCardForPlayers(players, dealer, inputView, outputView);
@@ -32,9 +32,8 @@ public class BlackjackController {
         generateGameResultAndDisplay(dealer, players, outputView);
     }
 
-    private List<Player> distributeCardToPlayers(final Dealer dealer, final InputView inputView,
-                                                 final OutputView outputView) {
-        String[] playerNames = getPlayerNames(inputView, outputView);
+    private List<Player> distributeCardToPlayers(final Dealer dealer, final InputView inputView) {
+        String[] playerNames = inputView.readPlayerName();
         List<Player> players = new ArrayList<>();
 
         for (String playerName : playerNames) {
@@ -43,16 +42,6 @@ public class BlackjackController {
             players.add(player);
         }
         return players;
-    }
-
-    private String[] getPlayerNames(final InputView inputView, final OutputView outputView) {
-        while (true) {
-            try {
-                return inputView.readPlayerName();
-            } catch (Exception e) {
-                outputView.displayError(e.getMessage());
-            }
-        }
     }
 
     private void hitExtraCardForPlayers(final List<Player> players, final Dealer dealer,
@@ -64,22 +53,21 @@ public class BlackjackController {
 
     private void processPlayerHit(final Player player, final Dealer dealer,
                                   final InputView inputView, final OutputView outputView) {
-        while (true) {
-            try {
-                if (!player.canHit()) {
-                    outputView.displayBustNotice();
-                    break;
-                }
-                String answer = inputView.readOneMoreCard(player.getName());
-                if (HitOption.from(answer).isNo()) {
-                    break;
-                }
-                player.addCard(dealer.giveCardToPlayer());
-                outputView.displayCardInfo(DistributedCardDto.from(player));
-            } catch (Exception e) {
-                outputView.displayError(e.getMessage());
+        while (canContinuePlayerHit(player, outputView)) {
+            String answer = inputView.readOneMoreCard(player.getName());
+            if (HitOption.from(answer).isNo()) {
+                break;
             }
+            player.addCard(dealer.giveCardToPlayer());
+            outputView.displayCardInfo(DistributedCardDto.from(player));
         }
+    }
+
+    private boolean canContinuePlayerHit(final Player player, final OutputView outputView) {
+        if (!player.canHit()) {
+            outputView.displayBustNotice();
+        }
+        return player.canHit();
     }
 
     private void hitExtraCardForDealer(final Dealer dealer, final OutputView outputView) {
