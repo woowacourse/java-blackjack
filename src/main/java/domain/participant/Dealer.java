@@ -1,11 +1,10 @@
 package domain.participant;
 
 import domain.GameResult;
+import domain.card.Card;
 import domain.card.Cards;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 public class Dealer extends Participant {
     public static final int DRAW_BOUNDARY = 16;
@@ -15,6 +14,12 @@ public class Dealer extends Participant {
     private Dealer(Cards cards) {
         super(cards);
         this.result = new EnumMap<>(GameResult.class);
+    }
+
+    @Override
+    public List<Card> getShowCards() {
+        List<Card> cards = getCards().getValues();
+        return cards.subList(0, 1);
     }
 
     public static Dealer init() {

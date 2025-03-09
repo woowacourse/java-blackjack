@@ -1,6 +1,9 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.Cards;
+
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -17,6 +20,11 @@ public class Player extends Participant {
 
     public static Player from(String name, Cards cards) {
         return new Player(name, cards);
+    }
+
+    @Override
+    public List<Card> getShowCards() {
+        return getCards().getValues();
     }
 
     public String getName() {

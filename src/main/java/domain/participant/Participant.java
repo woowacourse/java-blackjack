@@ -5,7 +5,9 @@ import domain.card.Cards;
 import domain.rule.BlackjackRule;
 import domain.rule.GameRule;
 
-public class Participant {
+import java.util.List;
+
+public abstract class Participant {
     private final Cards cards;
     private final GameRule rule;
 
@@ -33,4 +35,6 @@ public class Participant {
     public GameRule getRule() {
         return rule;
     }
+
+    public abstract List<Card> getShowCards();
 }
