@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CardPack {
 
@@ -13,8 +14,10 @@ public class CardPack {
         blackjackShuffle.shuffle(cards);
     }
 
-    public Card getDeal() {
-        return cards.removeLast();
+    public List<Card> getDealByCount(final int count) {
+        return IntStream.range(0, count)
+                .mapToObj(count1 -> cards.removeLast())
+                .toList();
     }
 
     public List<Card> getCards() {

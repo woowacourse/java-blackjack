@@ -6,7 +6,6 @@ import blackjack.domain.card.CardPack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public abstract class Player implements Comparable<Player> {
 
@@ -22,9 +21,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     public void pushDealCard(final CardPack cardPack, final int count) {
-        IntStream.range(0, count)
-                .mapToObj(i -> cardPack.getDeal())
-                .forEach(cards::add);
+        cards.addAll(cardPack.getDealByCount(count));
     }
 
     public boolean isPlayerBust() {
