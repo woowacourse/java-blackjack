@@ -14,12 +14,12 @@ public abstract class BlackjackParticipant {
     private final List<TrumpCard> trumpCards = new ArrayList<>();
     private final String name;
 
-    public BlackjackParticipant(String name) {
+    BlackjackParticipant(String name) {
+        validateNickname(name);
         this.name = name;
-        validateNickname();
     }
 
-    private void validateNickname() {
+    private void validateNickname(String name) {
         if (name == null || name.isBlank()) {
             throw new BlackJackException(INVALID_NAME);
         }
