@@ -34,6 +34,19 @@ public class GameBoardTest {
     }
 
     @Test
+    void 게임판_정적_팩토리_메서드_테스트() {
+        // given
+        Dealer dealer = Dealer.generate();
+        List<Player> players = List.of(Player.from("우가"), Player.from("히스타"));
+
+        // when
+        GameBoard gameBoard = GameBoard.generateOf(dealer, players);
+
+        // then
+        Assertions.assertThat(gameBoard).isInstanceOf(GameBoard.class);
+    }
+
+    @Test
     void 카드를_모두에게_2장씩_나눠준다() {
         //given
         List<Participant> participants = List.of(
