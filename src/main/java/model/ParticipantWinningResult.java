@@ -63,7 +63,7 @@ public class ParticipantWinningResult {
         }
     }
 
-    private static void updateDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
+    private void updateDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
         dealerResult.merge(gameResult, 1, Integer::sum);
     }
 

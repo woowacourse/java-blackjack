@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ParticipantHand {
@@ -45,20 +46,21 @@ public class ParticipantHand {
     }
 
     private boolean canOneAceConvertToMaxValue() {
-        int scoreOfAceAsMinValue = calculateAceCount();
-        if (scoreOfAceAsMinValue == 0) {
+        int aceScoreAsMinValue = calculateAceScoreAsMinValue();
+        if (aceScoreAsMinValue == 0) {
             return false;
         }
-        int maxScoreOfAce = convertOneAceToMaxValueFrom(scoreOfAceAsMinValue);
+        int maxScoreOfAce = convertOneAceToMaxValueFrom(aceScoreAsMinValue);
         int scoreExceptAceUpperBound = BURST_SCORE_LIMIT - maxScoreOfAce;
         return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
     }
 
-    private int calculateAceCount() {
-        return cards.stream()
+    private int calculateAceScoreAsMinValue() {
+        int aceCount = cards.stream()
                 .filter(card -> card.getCardRank() == CardRank.ACE)
                 .mapToInt(Card::getCardRankDefaultValue)
                 .sum();
+        return aceCount * CardRank.ACE.getDefaultValue();
     }
 
     private int convertOneAceToMaxValueFrom(int score) {
@@ -66,6 +68,6 @@ public class ParticipantHand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -29,7 +30,7 @@ public class Participant {
     }
 
     public List<Card> getHandCards() {
-        return participantHand.getCards();
+        return Collections.unmodifiableList(participantHand.getCards());
     }
 
     public ParticipantHand getParticipantHand() {
