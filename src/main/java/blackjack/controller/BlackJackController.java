@@ -40,10 +40,14 @@ public class BlackJackController {
             boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
             blackJackGame.receiveCard(isReceive);
             outputView.printPlayerCardStatus(participant.getName(), participant);
-            if (participant.isBust()) {
-                outputView.printParticipantBust(participant.getName());
-                blackJackGame.changeNextTurn();
-            }
+            handleBust(participant, blackJackGame);
+        }
+    }
+
+    private void handleBust(Participant participant, BlackJackGame blackJackGame) {
+        if (participant.isBust()) {
+            outputView.printParticipantBust(participant.getName());
+            blackJackGame.changeNextTurn();
         }
     }
 
