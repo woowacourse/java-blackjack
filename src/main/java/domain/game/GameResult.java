@@ -8,7 +8,7 @@ public enum GameResult {
     LOSE("패"),
     DRAW("무");
 
-    public static final int BLACK_JACK_CONDITION_COUNT = 2;
+    private static final int BLACK_JACK_CONDITION_COUNT = 2;
     private static final int BLACK_JACK_NUMBER = 21;
 
     private final String result;
