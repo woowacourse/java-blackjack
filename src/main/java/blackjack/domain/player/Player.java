@@ -11,7 +11,7 @@ import static blackjack.domain.card.CardNumber.ACE_ELEVEN_VALUE;
 
 public abstract class Player {
 
-    public static final int BUST_THRESHOLD = 21;
+    private static final int BUST_THRESHOLD = 21;
 
     private final Name name;
     private final List<Card> cards;

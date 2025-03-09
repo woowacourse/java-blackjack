@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Players {
 
-    public static final int HIT_THRESHOLD = 16;
+    private static final int HIT_THRESHOLD = 16;
 
     private final Player dealer;
     private final List<Player> gamblers;
