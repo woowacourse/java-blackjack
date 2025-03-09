@@ -8,7 +8,7 @@ import java.util.Map;
 public class BlackjackWinner {
 
     private final int BUST_STANDARD = 21;
-    
+
     private final DealerWinStatus dealerWinStatus;
     private final Map<String, WinStatus> playerWinStatuses;
 
@@ -67,16 +67,36 @@ public class BlackjackWinner {
     }
 
     private WinStatus calculatePlayerWinStatus(int dealerSum, int playerSum) {
-        if (dealerSum > BUST_STANDARD && playerSum > BUST_STANDARD) {
+        if (isPlayerDraw(dealerSum, playerSum)) {
             return WinStatus.DRAW;
         }
-        if (dealerSum < playerSum) {
+        if (isPlayerWin(dealerSum, playerSum)) {
             return WinStatus.WIN;
         }
-        if (dealerSum > playerSum) {
-            return WinStatus.LOSE;
+        return WinStatus.LOSE;
+    }
+
+    private boolean isPlayerWin(int dealerSum, int playerSum) {
+        if (isBust(dealerSum) && isBust(playerSum)) {
+            return false;
         }
-        return WinStatus.DRAW;
+        if (isBust(playerSum)) {
+            return false;
+        }
+        if (isBust(dealerSum)) {
+            return true;
+        }
+        return playerSum > dealerSum;
+    }
+
+    private boolean isPlayerDraw(int dealerSum, int playerSum) {
+        if (dealerSum == playerSum) {
+            return true;
+        }
+        if (isBust(dealerSum) && isBust(playerSum)) {
+            return true;
+        }
+        return false;
     }
 
     public DealerWinStatus getDealerWinStatus() {

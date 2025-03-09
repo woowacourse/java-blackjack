@@ -43,6 +43,29 @@ public class BlackjackWinnerTest {
     }
 
     @Test
+    void 딜러가_버스트이고_플레이어가_숫자가_작을때_플레이어가_이긴다() {
+        Deque<TrumpCard> trumpCards = new LinkedList<>(
+                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
+                        new TrumpCard(Suit.HEART, CardValue.SEVEN), new TrumpCard(Suit.HEART, CardValue.NINE),
+                        new TrumpCard(Suit.CLOVER, CardValue.TWO), new TrumpCard(Suit.CLOVER, CardValue.J)));
+        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
+
+        Dealer dealer = new Dealer();
+        List<String> names = List.of("포비");
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        blackjackGame.drawCard("포비");
+        blackjackGame.dealerHit();
+        BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
+        List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
+        BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
+
+        assertThat(blackjackWinner.getDealerWinStatus())
+                .isEqualTo(new DealerWinStatus(0, 1));
+        assertThat(blackjackWinner.getPlayerWinStatuses().get("포비"))
+                .isEqualTo(WinStatus.WIN);
+    }
+
+    @Test
     void 딜러와_플레이어가_둘다_버스트면_무승부로_처리한다() {
         Deque<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
