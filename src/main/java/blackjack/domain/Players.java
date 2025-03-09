@@ -18,7 +18,7 @@ public class Players {
 
     public Players() {
         dealer = new Dealer();
-        this.gamblers = new ArrayList<>();
+        gamblers = new ArrayList<>();
     }
 
     public void addGamblers(List<Gambler> gamblers) {
