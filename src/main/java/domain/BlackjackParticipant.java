@@ -33,8 +33,7 @@ public abstract class BlackjackParticipant {
     }
 
     public int calculateCardSum() {
-        int sum = trumpCards.stream()
-                .map(TrumpCard::cardNumberValue)
+        int sum = trumpCards.stream().map(TrumpCard::cardNumberValue)
                 .reduce(Integer::sum)
                 .orElse(0);
         int aceCount = (int) trumpCards.stream()
@@ -53,7 +52,7 @@ public abstract class BlackjackParticipant {
         return sum;
     }
 
-    private boolean isBurst(int number) {
+    public boolean isBurst(int number) {
         return BURST_STANDARD < number;
     }
 

@@ -1,37 +1,37 @@
 package domain;
 
 import except.BlackJackException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackjackParticipants {
+public class BlackjackParticipants<T extends BlackjackParticipant> {
 
     private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
 
-    private final List<Player> players;
+    private final List<T> players;
     private final Dealer dealer;
 
-    public BlackjackParticipants(List<Player> players, Dealer dealer) {
-        this.players = players;
+    public BlackjackParticipants(List<T> players, Dealer dealer) {
+        this.players = new ArrayList<>(players);
         this.dealer = dealer;
     }
 
-    private Player findPlayer(String name) {
+    private T findPlayer(String name) {
         return players.stream()
-                .filter((player) -> player.name().equals(name))
+                .filter(player -> player.name().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new BlackJackException(INVALID_PLAYER));
     }
 
     public List<String> getPlayerNames() {
         return players.stream()
-                .map(Player::name)
+                .map(BlackjackParticipant::name)
                 .collect(Collectors.toList());
     }
 
     public List<TrumpCard> playerCards(String name) {
-        Player player = findPlayer(name);
-        return player.trumpCards();
+        return findPlayer(name).trumpCards();
     }
 
     public List<TrumpCard> dealerCards() {
@@ -39,7 +39,7 @@ public class BlackjackParticipants {
     }
 
     public int calculateCardSum(String name) {
-        Player player = findPlayer(name);
+        T player = findPlayer(name);
         return player.calculateCardSum();
     }
 
@@ -52,13 +52,13 @@ public class BlackjackParticipants {
     }
 
     public boolean isBust(String name) {
-        Player player = findPlayer(name);
+        T player = findPlayer(name);
         return !player.isDrawable();
     }
 
     public void addCard(String name, TrumpCard trumpCard) {
-        Player findPlayer = findPlayer(name);
-        findPlayer.addDraw(trumpCard);
+        T player = findPlayer(name);
+        player.addDraw(trumpCard);
     }
 
     public void addDealerCard(TrumpCard trumpCard) {
