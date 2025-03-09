@@ -14,6 +14,7 @@ public class OutputView {
     public void printInitialGame(Card dealerCard, List<Player> players) {
         String playerNames = formatPlayerNames(players);
         System.out.printf("%n딜러와 %s에게 " + CardDeck.DRAW_COUNT_WHEN_START + "장을 나누었습니다.%n", playerNames);
+
         System.out.printf("딜러카드: %s%n", dealerCard.formatSingleCard());
         for (Player player : players) {
             printPlayerCard(player);
@@ -34,6 +35,7 @@ public class OutputView {
     public void printGameResult(Dealer dealer, Players players) {
         String dealerResult = formatCard(dealer.getCards());
         System.out.printf("%n딜러카드: %s - 결과: %d%n", dealerResult, dealer.calculateTotalCardNumber());
+
         for (Player player : players.getPlayers()) {
             String playerResult = formatCard(player.getCards());
             System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), playerResult, player.calculateTotalCardNumber());
