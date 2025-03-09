@@ -33,11 +33,9 @@ public class BlackJackController {
 
         outputView.printInitialCards(dealer, players);
 
-        processGame(players);
+        processPlayersTurn(players);
 
-        if (dealer.hit(deck)) {
-            outputView.printDealerHitSuccess();
-        }
+        processDealerTurn(dealer);
 
         outputView.printCardResult(dealer, players);
         showWinLoseResult(players, dealer);
@@ -55,7 +53,7 @@ public class BlackJackController {
         players.forEach(player -> player.prepareGame(deck));
     }
 
-    private void processGame(List<Player> players) {
+    private void processPlayersTurn(List<Player> players) {
         for (Player player : players) {
             selectChoice(player);
         }
@@ -77,6 +75,15 @@ public class BlackJackController {
 
     private String getYesOrNo(Player player) {
         return inputView.readYesOrNo(player);
+    }
+
+    private void processDealerTurn(Dealer dealer) {
+        try {
+            dealer.hit(deck);
+            outputView.printDealerHitSuccess();
+        } catch (IllegalStateException e) {
+            outputView.printDealerHitFail();
+        }
     }
 
     private void showWinLoseResult(List<Player> players, Dealer dealer) {

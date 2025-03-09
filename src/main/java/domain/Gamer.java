@@ -33,5 +33,7 @@ public abstract class Gamer {
     public String getName() {
         return this.name;
     }
+
+    public abstract void hit(Cards totalCards);
 }
 

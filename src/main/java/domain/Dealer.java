@@ -9,16 +9,16 @@ public class Dealer extends Gamer {
         super(NAME);
     }
 
-    public boolean hit(Cards totalCards) {
-        if (canHit()) {
-            add(totalCards);
-            return true;
-        }
-        return false;
+    @Override
+    public void hit(Cards totalCards) {
+        validateHitState();
+        add(totalCards);
     }
 
-    private boolean canHit() {
-        return getCards().calculateTotalPoint() <= HIT_THRESHOLD;
+    private void validateHitState() {
+        if (getCards().calculateTotalPoint() > HIT_THRESHOLD) {
+            throw new IllegalStateException("딜러는 카드를 뽑을 수 없는 상태입니다.");
+        }
     }
 
 }

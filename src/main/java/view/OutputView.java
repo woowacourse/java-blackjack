@@ -38,6 +38,10 @@ public class OutputView {
         System.out.println(NEXT_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEXT_LINE);
     }
 
+    public void printDealerHitFail() {
+        System.out.println(NEXT_LINE + "딜러는 17이상이라 카드를 더 받지 않았습니다." + NEXT_LINE);
+    }
+
     public void printCardResult(Dealer dealer, List<Player> players) {
         cardFormat(dealer);
         printScore(dealer);
