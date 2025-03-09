@@ -5,9 +5,12 @@ import domain.TrumpCard;
 import java.util.List;
 
 public class Player extends User {
+    private final String name;
+
     public Player(String name) {
-        super(name);
+        super();
         validate(name);
+        this.name = name;
     }
 
     @Override
@@ -18,6 +21,15 @@ public class Player extends User {
     @Override
     public List<TrumpCard> openCard() {
         return this.cardDeck.getAllCard();
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    public boolean hasName(String name) {
+        return this.name.equals(name);
     }
 
     private void validate(String name) {

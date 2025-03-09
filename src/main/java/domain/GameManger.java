@@ -14,15 +14,15 @@ public class GameManger {
     public final static int LOSE = 2;
     public final static int MOO = 3;
 
-    private final List<User> users = new ArrayList<>();
-    private final User dealer;
+    private final List<Player> users = new ArrayList<>();
+    private final Dealer dealer;
 
     public GameManger(List<String> names) {
         validate(names);
         for (String name : names) {
             users.add(new Player(name));
         }
-        this.dealer = new Dealer("딜러");
+        this.dealer = new Dealer();
     }
 
     private void validate(List<String> names) {
@@ -42,9 +42,9 @@ public class GameManger {
         }
     }
 
-    public User findUserByUsername(String name) {
+    public Player findUserByUsername(String name) {
         return users.stream()
-                .filter(user -> user.hasName(name))
+                .filter(player -> player.hasName(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }

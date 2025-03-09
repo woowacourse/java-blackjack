@@ -38,7 +38,7 @@ class UserTest {
         @Test
         void test2() {
             // given
-            User user = new Dealer("dealer");
+            User user = new Dealer();
             user.drawCard();
             user.drawCard();
 

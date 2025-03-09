@@ -6,11 +6,9 @@ import domain.TrumpCard;
 import java.util.List;
 
 public abstract class User {
-    protected final String name;
     protected final CardHand cardDeck;
 
-    protected User(String name) {
-        this.name = name;
+    protected User() {
         this.cardDeck = new CardHand();
     }
 
@@ -18,17 +16,11 @@ public abstract class User {
 
     public abstract List<TrumpCard> openCard();
 
+    public abstract String getName();
+
     public void drawCard() {
         TrumpCard trumpCard = CardDeck.drawCard();
         cardDeck.addTrumpCard(trumpCard);
-    }
-
-    public boolean hasName(String name) {
-        return this.name.equals(name);
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public int getSize() {
