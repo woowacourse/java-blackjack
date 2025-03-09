@@ -2,11 +2,11 @@ package controller;
 
 import domain.card.Card;
 import domain.participant.Dealer;
-import dto.FinalResultDTO;
+import dto.ParticipantResultResponse;
 import domain.game.GameManager;
 import domain.game.GameResult;
 import domain.participant.Player;
-import dto.SetUpCardsDTO;
+import dto.ParticipantsCardsResponse;
 import domain.game.TakeMoreCardSelector;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,37 +31,37 @@ public class BlackjackController {
         GameManager gameManager = new GameManager(dealer, players);
         gameManager.shuffle();
         gameManager.distributeSetUpCards();
-        SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
-        outputView.printSetUpCardDeck(setUpCardsDTO);
+        ParticipantsCardsResponse participantsCardsResponse = createSetUpCardsDTO(dealer, players);
+        outputView.printSetUpCardDeck(participantsCardsResponse);
 
         gameManager.distributeExtraCards(new TakeMoreCardViewSelector());
 
-        List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
-        outputView.printFinalCardDeck(finalResultDTOS);
+        List<ParticipantResultResponse> participantResultRespons = createFinalResultDTOs(dealer, players);
+        outputView.printFinalCardDeck(participantResultRespons);
 
         GameResult gameResult = gameManager.evaluateFinalScore();
         outputView.printGameResult(gameResult);
     }
 
-    public SetUpCardsDTO createSetUpCardsDTO(Dealer dealer, List<Player> players) {
+    public ParticipantsCardsResponse createSetUpCardsDTO(Dealer dealer, List<Player> players) {
         Card dealerOpenCard = dealer.getOpenCard();
 
         Map<String, List<Card>> cards = new LinkedHashMap<>();
         players.forEach(p -> cards.put(p.getName(), p.getCards()));
 
-        return new SetUpCardsDTO(dealerOpenCard, cards);
+        return new ParticipantsCardsResponse(dealerOpenCard, cards);
     }
 
-    public List<FinalResultDTO> createFinalResultDTOs(Dealer dealer, List<Player> players) {
-        List<FinalResultDTO> finalResultDTOs = new ArrayList<>();
-        FinalResultDTO finalResultDTO = new FinalResultDTO("딜러", dealer.getCards(), dealer.calculateScore());
-        finalResultDTOs.add(finalResultDTO);
+    public List<ParticipantResultResponse> createFinalResultDTOs(Dealer dealer, List<Player> players) {
+        List<ParticipantResultResponse> participantResultRespons = new ArrayList<>();
+        ParticipantResultResponse participantResultResponse = new ParticipantResultResponse("딜러", dealer.getCards(), dealer.calculateScore());
+        participantResultRespons.add(participantResultResponse);
         for(Player player : players) {
-            FinalResultDTO finalResultDTO1 = new FinalResultDTO(player.getName(), player.getCards(), player.calculateScore());
-            finalResultDTOs.add(finalResultDTO1);
+            ParticipantResultResponse participantResultResponse1 = new ParticipantResultResponse(player.getName(), player.getCards(), player.calculateScore());
+            participantResultRespons.add(participantResultResponse1);
         }
 
-        return finalResultDTOs;
+        return participantResultRespons;
     }
 
     private class TakeMoreCardViewSelector implements TakeMoreCardSelector {

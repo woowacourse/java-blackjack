@@ -3,7 +3,7 @@ package dto;
 import domain.card.Card;
 import java.util.List;
 
-public record FinalResultDTO(
+public record ParticipantResultResponse(
     String name,
     List<Card> cards,
     int score
