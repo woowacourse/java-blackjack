@@ -36,7 +36,7 @@ public class BlackJackController {
     private void startBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
         players.drawCardWhenStart(cardDeck);
         dealer.drawCardWhenStart(cardDeck);
-        Card dealerCard = dealer.getSingleCard();
+        Card dealerCard = dealer.openSingleCard();
 
         outputView.printInitialGame(dealerCard, players.getPlayers());
     }

@@ -6,22 +6,21 @@ import domain.card.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public class Participant {
 
-    public static final int BURST_BOUND = 21;
+    protected static final int BURST_BOUND = 21;
 
-    private final List<Card> cards;
+    protected final List<Card> cards;
 
-    public Hand() {
+    public Participant() {
         this.cards = new ArrayList<>();
     }
 
-    public void drawCardWhenStart(CardDeck cardDeck) {
-        List<Card> drawnCard = cardDeck.drawCardWhenStart();
-        cards.addAll(drawnCard);
+    public final void drawCardWhenStart(CardDeck cardDeck) {
+        cards.addAll(cardDeck.drawCardWhenStart());
     }
 
-    public void drawCard(CardDeck cardDeck) {
+    public final void drawCard(CardDeck cardDeck) {
         Card drawnCard = cardDeck.drawCard();
         cards.add(drawnCard);
     }
@@ -34,11 +33,16 @@ public class Hand {
         return totalCardNumberWithAce;
     }
 
-    public boolean isOverBurstBound(int totalCardNumber) {
+    private boolean isOverBurstBound(int totalCardNumber) {
         return totalCardNumber > BURST_BOUND;
     }
 
-    public int calculateTotalCardNumber() {
+    public final boolean isOverBurstBound() {
+        int totalCardNumber = calculateTotalCardNumber();
+        return isOverBurstBound(totalCardNumber);
+    }
+
+    public final int calculateTotalCardNumber() {
         int aceCount = countAce();
         if (aceCount > 0) {
             return sumWithAcesCount(aceCount);
@@ -48,7 +52,7 @@ public class Hand {
 
     private int countAce() {
         return (int) cards.stream()
-                .map(Card::getCardNumber)
+                .map(Card::cardNumber)
                 .filter(number -> number == CardNumber.ACE)
                 .count();
     }
@@ -64,21 +68,21 @@ public class Hand {
 
     private List<Card> removeAce() {
         return cards.stream()
-                .filter(card -> card.getCardNumber() != CardNumber.ACE)
+                .filter(card -> card.cardNumber() != CardNumber.ACE)
                 .toList();
     }
 
     private int calculateCardNumber(List<Card> cards) {
         return cards.stream()
-                .mapToInt(card -> card.getCardNumber().getNumber())
+                .mapToInt(card -> card.cardNumber().getNumber())
                 .sum();
     }
 
-    public int getCardsCount() {
+    public final int getCardsCount() {
         return cards.size();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return cards;
     }
 }

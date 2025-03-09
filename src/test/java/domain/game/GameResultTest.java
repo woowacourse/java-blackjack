@@ -13,14 +13,12 @@ public class GameResultTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다() {
         //given
         Dealer dealer = new Dealer();
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
+        List<Card> dealerCards = dealer.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.SEVEN));
 
         Player player = new Player("pobi");
-        Hand playerHand = player.getHand();
-        List<Card> playerCards = playerHand.getCards();
+        List<Card> playerCards = player.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.SIX));
 
@@ -35,15 +33,14 @@ public class GameResultTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
         //given
         Dealer dealer = new Dealer();
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
+
+        List<Card> dealerCards = dealer.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
 
         Player player = new Player("pobi");
-        Hand playerHand = player.getHand();
-        List<Card> playerCards = playerHand.getCards();
+        List<Card> playerCards = player.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         playerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
@@ -59,15 +56,14 @@ public class GameResultTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
         //given
         Dealer dealer = new Dealer();
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
+
+        List<Card> dealerCards = dealer.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
 
         Player player = new Player("pobi");
-        Hand playerHand = player.getHand();
-        List<Card> playerCards = playerHand.getCards();
+        List<Card> playerCards = player.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
 
@@ -82,14 +78,13 @@ public class GameResultTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
         //given
         Dealer dealer = new Dealer();
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
+
+        List<Card> dealerCards = dealer.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         Player player = new Player("pobi");
-        Hand playerHand = player.getHand();
-        List<Card> playerCards = playerHand.getCards();
+        List<Card> playerCards = player.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
@@ -104,14 +99,13 @@ public class GameResultTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
         //given
         Dealer dealer = new Dealer();
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
+
+        List<Card> dealerCards = dealer.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         Player player = new Player("pobi");
-        Hand playerHand = player.getHand();
-        List<Card> playerCards = playerHand.getCards();
+        List<Card> playerCards = player.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.EIGHT));
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
@@ -127,15 +121,14 @@ public class GameResultTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
         //given
         Dealer dealer = new Dealer();
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
+
+        List<Card> dealerCards = dealer.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.EIGHT));
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         Player player = new Player("pobi");
-        Hand playerHand = player.getHand();
-        List<Card> playerCards = playerHand.getCards();
+        List<Card> playerCards = player.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
@@ -146,11 +139,14 @@ public class GameResultTest {
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
 
+    private static List<GameResult> provideGameResult() {
+        return List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW);
+    }
+
     @Test
     void 딜러의_승리_횟수를_계산한다() {
         //when
-        int winCount = GameResult.WIN.countGameResultFromDealer(
-                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
+        int winCount = GameResult.WIN.countGameResultFromDealer(provideGameResult());
 
         //then
         Assertions.assertThat(winCount).isEqualTo(1);
@@ -160,8 +156,7 @@ public class GameResultTest {
     @Test
     void 딜러의_패배_횟수를_계산한다() {
         //when
-        int winCount = GameResult.LOSE.countGameResultFromDealer(
-                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
+        int winCount = GameResult.LOSE.countGameResultFromDealer(provideGameResult());
 
         //then
         Assertions.assertThat(winCount).isEqualTo(2);
@@ -171,8 +166,7 @@ public class GameResultTest {
     @Test
     void 딜러의_무승부_횟수를_계산한다() {
         //when
-        int winCount = GameResult.DRAW.countGameResultFromDealer(
-                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
+        int winCount = GameResult.DRAW.countGameResultFromDealer(provideGameResult());
 
         //then
         Assertions.assertThat(winCount).isEqualTo(1);

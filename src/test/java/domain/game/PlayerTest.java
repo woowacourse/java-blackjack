@@ -22,7 +22,7 @@ public class PlayerTest {
         player.drawCardWhenStart(cardDeck);
 
         //then
-        assertThat(player.getHand().getCards()).hasSize(2);
+        assertThat(player.getCards()).hasSize(2);
     }
 
     @Test
@@ -36,15 +36,14 @@ public class PlayerTest {
         player.drawCard(cardDeck);
 
         //then
-        assertThat(player.getHand().getCards()).hasSize(1);
+        assertThat(player.getCards()).hasSize(1);
     }
 
     @Test
     void 플레이어가_보유한_카드의_합계를_구한다() {
         //given
         Player player = new Player("pobi");
-        Hand hand = player.getHand();
-        List<Card> cards = hand.getCards();
+        List<Card> cards = player.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         cards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
 
@@ -56,8 +55,7 @@ public class PlayerTest {
     void 플레이어가_보유한_카드의_합계가_21을_넘었는지_판정한다() {
         //given
         Player player = new Player("pobi");
-        Hand hand = player.getHand();
-        List<Card> cards = hand.getCards();
+        List<Card> cards = player.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         cards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
