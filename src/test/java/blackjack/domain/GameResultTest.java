@@ -20,7 +20,7 @@ class GameResultTest {
         dealer.pushDealCard(cardPack, 1);
         gambler.pushDealCard(cardPack, 2);
 
-        assertThat(GameResult.getGameResult(dealer, gambler))
+        assertThat(GameResult.evaluateGameResult(dealer, gambler))
                 .isEqualTo(GameResult.WIN);
     }
 
@@ -34,7 +34,7 @@ class GameResultTest {
         dealer.pushDealCard(cardPack, 2);
         gambler.pushDealCard(cardPack, 1);
 
-        assertThat(GameResult.getGameResult(dealer, gambler))
+        assertThat(GameResult.evaluateGameResult(dealer, gambler))
                 .isEqualTo(GameResult.LOSE);
     }
 
@@ -48,7 +48,7 @@ class GameResultTest {
         dealer.pushDealCard(cardPack, 1);
         gambler.pushDealCard(cardPack, 1);
 
-        assertThat(GameResult.getGameResult(dealer, gambler))
+        assertThat(GameResult.evaluateGameResult(dealer, gambler))
                 .isEqualTo(GameResult.DRAW);
     }
 
@@ -62,7 +62,7 @@ class GameResultTest {
         dealer.pushDealCard(cardPack, 3); // 10, 10, 10 총합 30
         gambler.pushDealCard(cardPack, 3);
 
-        assertThat(GameResult.getGameResult(dealer, gambler))
+        assertThat(GameResult.evaluateGameResult(dealer, gambler))
                 .isEqualTo(GameResult.DRAW);
     }
 
@@ -76,7 +76,7 @@ class GameResultTest {
         dealer.pushDealCard(cardPack, 1);
         gambler.pushDealCard(cardPack, 3); // 10, 10, 10 총합 30
 
-        assertThat(GameResult.getGameResult(dealer, gambler))
+        assertThat(GameResult.evaluateGameResult(dealer, gambler))
                 .isEqualTo(GameResult.LOSE);
     }
 
@@ -90,7 +90,7 @@ class GameResultTest {
         dealer.pushDealCard(cardPack, 3); // 10, 10, 10 총합 30
         gambler.pushDealCard(cardPack, 1);
 
-        assertThat(GameResult.getGameResult(dealer, gambler))
+        assertThat(GameResult.evaluateGameResult(dealer, gambler))
                 .isEqualTo(GameResult.WIN);
     }
 }

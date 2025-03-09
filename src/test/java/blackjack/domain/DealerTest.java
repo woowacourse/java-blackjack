@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +15,13 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 한장의 카드만 공개한다")
     void dealerRevealsOnlyOneCard() {
-        Players players = new Players();
-        players.initPlayers(new CardPack(new SortShuffle()));
-        int openedCardsSize = players.getDealer().getOpenedCards().size();
-        assertThat(openedCardsSize).isEqualTo(1);
+        CardPack cardPack = new CardPack(new SortShuffle());
+        Dealer dealer = new Dealer();
+
+        dealer.pushDealCard(cardPack, 2);
+        List<Card> cards = dealer.getOpenedCards();
+
+        assertThat(cards.size()).isEqualTo(1);
     }
 
     @Test
