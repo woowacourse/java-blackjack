@@ -1,12 +1,11 @@
 package model.participant;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 import model.Deck.Card;
 import model.Deck.Deck;
 
-public class Participant {
+public abstract class Participant {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
     private final ParticipantHand participantHand;
 
@@ -32,7 +31,7 @@ public class Participant {
     }
 
     public List<Card> getHandCards() {
-        return Collections.unmodifiableList(participantHand.getCards());
+        return participantHand.getCards();
     }
 
     public ParticipantHand getParticipantHand() {

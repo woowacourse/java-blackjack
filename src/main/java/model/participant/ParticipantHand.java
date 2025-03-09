@@ -15,7 +15,14 @@ public final class ParticipantHand {
     }
 
     public void add(final Card card) {
+        validateDuplication(card);
         cards.add(card);
+    }
+
+    private void validateDuplication(Card card) {
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException("중복 카드가 선택되었습니다.");
+        }
     }
 
     public boolean checkBurst() {
