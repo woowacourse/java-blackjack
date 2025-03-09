@@ -1,3 +1,5 @@
+package domain;
+
 import domain.BlackjackDeck;
 import domain.BlackjackDeckGenerator;
 import domain.BlackjackGame;

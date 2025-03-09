@@ -1,22 +1,15 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIterable;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.BlackjackDeck;
-import domain.BlackjackDeckGenerator;
-import domain.BlackjackGame;
-import domain.BlackjackResult;
-import domain.CardValue;
-import domain.Dealer;
-import domain.Suit;
-import domain.TrumpCard;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.TestDrawStrategy;
 import except.BlackJackException;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -28,7 +21,6 @@ public class BlackjackGameTest {
     @Test
     void 플레이어_수는_딜러_포함_2명_이상이여야_한다() {
         List<String> names = List.of("");
-        Dealer dealer = new Dealer();
         BlackjackDeck blackjackDeck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
         assertThatThrownBy(() -> new BlackjackGame(names,
                 blackjackDeck, new Dealer()))
