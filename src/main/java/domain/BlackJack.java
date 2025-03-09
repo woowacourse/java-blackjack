@@ -14,23 +14,22 @@ import java.util.Map;
 import java.util.Set;
 
 public class BlackJack {
-    private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
     public BlackJack(List<String> names) {
         List<Player> players = names.stream().map(Player::init).toList();
-        deck = new Deck(new RandomCardsGenerator());
-        this.dealer = Dealer.init();
+        Deck deck = new Deck(new RandomCardsGenerator());
+        this.dealer = new Dealer(Cards.empty(), deck);
         this.players = new Players(players);
     }
 
     public void handoutCards() {
-        deck.handoutCards(dealer, players);
+        dealer.handoutCards(players);
     }
 
     public void giveOneCardTo(Participant participant) {
-        deck.giveCardTo(participant);
+        dealer.giveOneCardTo(participant);
     }
 
     public List<Card> getShowDealerCards() {
@@ -42,7 +41,7 @@ public class BlackJack {
     }
 
     public int getDealerDrawnCount() {
-        return deck.drawCardTo(dealer);
+        return dealer.drawCards();
     }
 
     public int getDealerScore() {

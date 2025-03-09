@@ -2,10 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardShape;
-import domain.card.Cards;
+import domain.card.*;
+import domain.card.cardsGenerator.RandomCardsGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.rule.BlackjackRule;
@@ -20,6 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackRuleTest {
     private final GameRule rule = new BlackjackRule();
+    private final Deck deck = new Deck(new RandomCardsGenerator());
 
     @DisplayName("21 이하일 때, 최적의 결과를 선택할 수 있다.")
     @ParameterizedTest
@@ -142,7 +141,7 @@ class BlackjackRuleTest {
         Cards playerCards = Cards.of(self);
         Cards dealerCards = Cards.of(other);
         Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -224,7 +223,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -247,7 +246,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -270,7 +269,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -292,7 +291,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -316,7 +315,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerCards);
-        Dealer dealer = Dealer.of(dealerCards);
+        Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
         GameResult actual = rule.getResult(player, dealer);

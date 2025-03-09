@@ -4,15 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardShape;
-import domain.card.Cards;
 import domain.card.Deck;
 import domain.card.cardsGenerator.RandomCardsGenerator;
-import domain.participant.Dealer;
-import domain.participant.Player;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,44 +55,5 @@ public class DeckTest {
 
         // when & then
         assertThatThrownBy(deck::pick).isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("플레이어에게 카드를 할당할 수 있다.")
-    @Test
-    void 플레이어에게_카드_할당() {
-        //given
-        Card card = new Card(CardNumber.A, CardShape.CLOVER);
-        Deck deck = new Deck(() -> new ArrayList<>(List.of(card)));
-        Player player = Player.init("플레이어");
-
-        //when
-        deck.giveCardTo(player);
-        Cards cards = player.getCards();
-
-        //then
-        assertThat(cards.getValues()).contains(card);
-    }
-
-    @DisplayName("딜러 카드의 합이 17 이상이 될 때까지 뽑은 횟수를 반환한다")
-    @Test
-    void 딜러가_뽑은_횟수_검증() {
-        //given
-        Card card1 = new Card(CardNumber.A, CardShape.CLOVER);
-        Card card2 = new Card(CardNumber.A, CardShape.HEART);
-        Deck deck = new Deck(() -> new ArrayList<>(List.of(card1, card2)));
-        Dealer dealer = Dealer.of(Cards.of(
-                new ArrayList<>(
-                        List.of(
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.FIVE, CardShape.CLOVER)
-                        )
-                )
-        ));
-
-        //when
-        int count = deck.drawCardTo(dealer);
-
-        //then
-        assertThat(count).isEqualTo(2);
     }
 }
