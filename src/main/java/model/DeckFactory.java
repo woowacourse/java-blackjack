@@ -9,12 +9,15 @@ public class DeckFactory {
         List<Card> deck = new ArrayList<>(52);
         for (CardShape shape : CardShape.values()) {
             for (CardNumber number : CardNumber.values()) {
-                if (number.equals(CardNumber.ACE_ONE)) {
-                    continue;
-                }
-                deck.add(new Card(number, shape));
+                addCardIfShapeNotAceOne(shape, number, deck);
             }
         }
         return deck;
+    }
+
+    private static void addCardIfShapeNotAceOne(CardShape shape, CardNumber number, List<Card> deck) {
+        if (!number.equals(CardNumber.ACE_ONE)) {
+            deck.add(new Card(number, shape));
+        }
     }
 }
