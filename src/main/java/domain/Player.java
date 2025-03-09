@@ -32,6 +32,8 @@ public abstract class Player {
 
     public abstract List<Card> openInitialCards();
 
+    public abstract boolean isDealer();
+
     public List<Card> getCards() {
         return cards.getCards();
     }

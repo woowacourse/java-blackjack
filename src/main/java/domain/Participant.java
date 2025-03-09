@@ -11,4 +11,8 @@ public class Participant extends Player {
     public List<Card> openInitialCards() {
         return getCards(2);
     }
+    
+    public boolean isDealer() {
+        return false;
+    }
 }

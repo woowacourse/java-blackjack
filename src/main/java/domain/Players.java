@@ -46,14 +46,14 @@ public class Players {
 
     public Dealer getDealer() {
         return (Dealer) players.stream()
-                .filter(player -> player instanceof Dealer)
+                .filter(Player::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러는 항상 1명이 존재해야 합니다."));
     }
 
     public List<Player> getParticipants() {
         return players.stream()
-                .filter(player -> player instanceof Participant)
+                .filter(player -> !player.isDealer())
                 .toList();
     }
 
