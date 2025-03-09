@@ -23,6 +23,16 @@ public class Players {
         }
     }
 
+    private void validateUniqueNames(List<Player> players) {
+        List<String> names = players.stream()
+                .map(Player::getName)
+                .toList();
+
+        if (new HashSet<>(names).size() != names.size()) {
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        }
+    }
+
     public void distributeInitialCards(Deck deck) {
         for (Player player : players) {
             player.receiveInitialCards(deck);
@@ -63,15 +73,5 @@ public class Players {
             sumResult.put(player.getName(), player.computeOptimalSum());
         }
         return sumResult;
-    }
-
-    public void validateUniqueNames(List<Player> players) {
-        List<String> names = players.stream()
-                .map(Player::getName)
-                .toList();
-
-        if (new HashSet<>(names).size() != names.size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
-        }
     }
 }
