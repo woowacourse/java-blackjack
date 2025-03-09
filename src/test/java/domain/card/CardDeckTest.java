@@ -1,6 +1,7 @@
 package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -54,5 +55,19 @@ public class CardDeckTest {
                 new Card(Pattern.SPADE, CardNumber.KING),
                 new Card(Pattern.SPADE, CardNumber.QUEEN));
         assertThat(actual).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void 카드_덱이_비어있으면_예외를_던진다() {
+        //given
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        int deckSize = cardDeck.getDeck().size();
+        for (int i = 0; i < deckSize; i++) {
+            cardDeck.drawCard();
+        }
+
+        //when & then
+        assertThatThrownBy(cardDeck::drawCard)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
