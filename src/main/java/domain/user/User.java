@@ -1,17 +1,17 @@
 package domain.user;
 
+import domain.CardHand;
 import domain.CardDeck;
-import domain.CardSetting;
 import domain.TrumpCard;
 import java.util.List;
 
 public abstract class User {
     protected final String name;
-    protected final CardDeck cardDeck;
+    protected final CardHand cardDeck;
 
     protected User(String name) {
         this.name = name;
-        this.cardDeck = new CardDeck();
+        this.cardDeck = new CardHand();
     }
 
     public abstract boolean isImpossibleDraw();
@@ -19,7 +19,7 @@ public abstract class User {
     public abstract List<TrumpCard> openCard();
 
     public void drawCard() {
-        TrumpCard trumpCard = CardSetting.drawCard();
+        TrumpCard trumpCard = CardDeck.drawCard();
         cardDeck.addTrumpCard(trumpCard);
     }
 
@@ -35,7 +35,7 @@ public abstract class User {
         return cardDeck.cardsSize();
     }
 
-    public CardDeck getCardDeck() {
+    public CardHand getCardDeck() {
         return this.cardDeck;
     }
 

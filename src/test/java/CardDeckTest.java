@@ -1,6 +1,6 @@
-import domain.CardDeck;
+import domain.CardHand;
 import domain.CardNumber;
-import domain.CardSetting;
+import domain.CardDeck;
 import domain.CardShape;
 import domain.TrumpCard;
 import java.util.List;
@@ -16,8 +16,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class CardDeckTest {
     @BeforeEach
     public void setUp() {
-        CardSetting.bin();
-        CardSetting.initCache();
+        CardDeck.bin();
+        CardDeck.initCache();
     }
 
     @DisplayName("실행 시점에 서로 다른 카드 52장을 초기화한다.")
@@ -27,7 +27,7 @@ public class CardDeckTest {
         int index = 0;
 
         // when
-        TrumpCard card = CardSetting.getCard(index);
+        TrumpCard card = CardDeck.getCard(index);
 
         // then
         Assertions.assertThat(card).isInstanceOf(TrumpCard.class);
@@ -37,11 +37,11 @@ public class CardDeckTest {
     @Test
     void test2() {
         // given
-        int originCardDeckSize = CardSetting.getCardDeck().size();
+        int originCardDeckSize = CardDeck.getCardDeck().size();
 
         // when
-        CardSetting.drawCard();
-        int afterDrawDeckSize = CardSetting.getCardDeck().size();
+        CardDeck.drawCard();
+        int afterDrawDeckSize = CardDeck.getCardDeck().size();
 
         // then
         Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
@@ -53,12 +53,12 @@ public class CardDeckTest {
         // given
         int count = 0;
         for (int i = 0; i < 52; i++) {
-            CardSetting.drawCard();
+            CardDeck.drawCard();
             count++;
         }
 
         // when & then
-        Assertions.assertThatThrownBy(CardSetting::drawCard)
+        Assertions.assertThatThrownBy(CardDeck::drawCard)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드가 다 떨어졌습니다");
     }
@@ -70,7 +70,7 @@ public class CardDeckTest {
         TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardNumber.K);
         TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardNumber.J);
         TrumpCard trumpCard3 = new TrumpCard(CardShape.CLOVER, CardNumber.FIVE);
-        CardDeck cardDeck = new CardDeck();
+        CardHand cardDeck = new CardHand();
 
         cardDeck.addTrumpCard(trumpCard1);
         cardDeck.addTrumpCard(trumpCard2);
@@ -88,7 +88,7 @@ public class CardDeckTest {
     @MethodSource("hasAce")
     void test5(List<TrumpCard> cards, boolean isExpectedOver) {
         //given
-        CardDeck cardDeck = new CardDeck();
+        CardHand cardDeck = new CardHand();
         for (TrumpCard card : cards) {
             cardDeck.addTrumpCard(card);
         }
@@ -119,7 +119,7 @@ public class CardDeckTest {
     @MethodSource("cardDeck")
     void test6(List<TrumpCard> cards, int expectedSum) {
         // given
-        CardDeck cardDeck = new CardDeck();
+        CardHand cardDeck = new CardHand();
         for (TrumpCard card : cards) {
             cardDeck.addTrumpCard(card);
         }
@@ -160,7 +160,7 @@ public class CardDeckTest {
         // given
         TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardNumber.ACE);
         TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardNumber.J);
-        CardDeck cardDeck = new CardDeck();
+        CardHand cardDeck = new CardHand();
 
         cardDeck.addTrumpCard(trumpCard1);
         cardDeck.addTrumpCard(trumpCard2);

@@ -1,7 +1,7 @@
 import static org.assertj.core.api.Assertions.*;
 
 import domain.CardNumber;
-import domain.CardSetting;
+import domain.CardDeck;
 import domain.CardShape;
 import domain.TrumpCard;
 import domain.user.Dealer;
@@ -22,8 +22,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class GameManagerTest {
     @BeforeEach
     public void setUp() {
-        CardSetting.bin();
-        CardSetting.initCache();
+        CardDeck.bin();
+        CardDeck.initCache();
     }
 
     @DisplayName("유저는 최소 1명 이상 7명 이하여야 한다.")

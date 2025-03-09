@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.CardDeck;
+import domain.CardHand;
 import domain.TrumpCard;
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class Player extends User {
 
     @Override
     public boolean isImpossibleDraw() {
-        return cardDeck.isImpossibleDraw(CardDeck.MAX_SCORE);
+        return cardDeck.isImpossibleDraw(CardHand.MAX_SCORE);
     }
 
     @Override

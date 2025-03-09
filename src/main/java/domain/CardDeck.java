@@ -1,67 +1,41 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
-    public static final int MAX_SCORE = 21;
-    private static final int ACE_MAX = 11;
-    private static final int ACE_MIN = 1;
+    private static final List<TrumpCard> CARD_DECK = new ArrayList<>();
 
-    private final List<TrumpCard> cards;
-
-    public CardDeck() {
-        this.cards = new ArrayList<>();
+    private CardDeck() {
     }
 
-    public void addTrumpCard(TrumpCard card) {
-        cards.add(card);
+    public static void initCache() {
+        Arrays.stream(CardShape.values())
+                .forEach(cardShape -> Arrays.stream(CardNumber.values())
+                        .forEach(cardNumber -> CARD_DECK.add(new TrumpCard(cardShape, cardNumber))));
+        Collections.shuffle(CARD_DECK);
     }
 
-    public int cardsSize() {
-        return cards.size();
-    }
-
-    public List<TrumpCard> getFirstCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("");
+    public static void bin() {
+        while (!CARD_DECK.isEmpty()) {
+            CARD_DECK.removeFirst();
         }
-        return List.of(cards.getFirst());
     }
 
-    public List<TrumpCard> getAllCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("");
+    public static TrumpCard drawCard() {
+        if (CARD_DECK.isEmpty()) {
+            throw new IllegalArgumentException("카드가 다 떨어졌습니다");
         }
-        return new ArrayList<>(cards);
+        return CARD_DECK.removeFirst();
     }
 
-    public boolean hasAce() {
-        return cards.stream()
-                .anyMatch((card) -> card.getCardNumberValue() == CardNumber.ACE.getValue());
+    public static TrumpCard getCard(int index) {
+        return CARD_DECK.get(index);
     }
 
-    public boolean isImpossibleDraw(int maxScore) {
-        int sum = calculateScore();
-        return sum >= maxScore;
-    }
-
-    public boolean checkOverScore() {
-        int sum = calculateScore();
-        return sum > MAX_SCORE;
-    }
-
-    public int calculateScore() {
-        int sum = cards.stream()
-                .mapToInt(TrumpCard::getCardNumberValue)
-                .sum();
-        if (hasAce() && sum <= ACE_MAX) {
-            sum += (ACE_MAX - ACE_MIN);
-        }
-        return sum;
-    }
-
-    public boolean isBlackjack() {
-        return  cards.size() == 2 && calculateScore() == MAX_SCORE ;
+    public static List<TrumpCard> getCardDeck() {
+        return CARD_DECK;
     }
 }

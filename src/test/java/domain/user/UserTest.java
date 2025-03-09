@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.CardSetting;
+import domain.CardDeck;
 import domain.TrumpCard;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 class UserTest {
     @BeforeEach
     public void setUp() {
-        CardSetting.bin();
-        CardSetting.initCache();
+        CardDeck.bin();
+        CardDeck.initCache();
     }
 
     @Nested
