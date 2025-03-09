@@ -43,7 +43,7 @@ public class Cards {
         return result;
     }
 
-    public List<Card> getCards() {
+    public List<Card> getValues() {
         return Collections.unmodifiableList(cards);
     }
 }

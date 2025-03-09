@@ -26,7 +26,7 @@ public class CardsTest {
         //when
         cards.add(card);
         //then
-        assertThat(cards.getCards()).contains(card);
+        assertThat(cards.getValues()).contains(card);
     }
 
     @DisplayName("숫자 카드의 합을 구할 수 있다")

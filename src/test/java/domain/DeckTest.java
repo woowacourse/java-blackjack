@@ -73,7 +73,7 @@ public class DeckTest {
         Cards cards = player.getCards();
 
         //then
-        assertThat(cards.getCards()).contains(card);
+        assertThat(cards.getValues()).contains(card);
     }
 
     @DisplayName("딜러 카드의 합이 17 이상이 될 때까지 뽑은 횟수를 반환한다")
