@@ -1,7 +1,6 @@
 package domain;
 
 import domain.dto.DealerResult;
-import domain.dto.NameAndCards;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,68 +18,17 @@ public class Blackjack {
         players.distributeInitialCards(deck);
     }
 
-    public NameAndCards openDealerCards() {
-        Player dealer = getDealer();
-        return new NameAndCards(dealer.getName(), dealer.openInitialCards());
-    }
-
-    public List<NameAndCards> openParticipantsCards() {
-        return getParticipants().stream()
-                .map(participant -> new NameAndCards(participant.getName(), participant.openInitialCards()))
-                .toList();
-    }
-
-    public NameAndCards addCardByName(String name) {
+    public void addCardByName(String name) {
         Player participant = players.getPlayerByName(name);
         participant.drawOneCard(deck);
-        return new NameAndCards(
-                participant.getName(),
-                participant.getCards()
-        );
     }
 
     public boolean addCardToDealerIfLowScore() {
         return getDealer().drawOneCardIfLowScore(deck);
     }
 
-    public NameAndCards getNameAndCardsByName(String name) {
-        Player player = players.getPlayerByName(name);
-        return new NameAndCards(
-                player.getName(),
-                player.getCards()
-        );
-    }
-
     public Map<String, Integer> getNameAndSumOfAllPlayers() {
         return players.mapToNameAndSum();
-    }
-
-    public NameAndCards getDealerNameAndCards() {
-        Player dealer = getDealer();
-        return new NameAndCards(dealer.getName(), dealer.getCards());
-    }
-
-    public List<NameAndCards> getParticipantsNameAndCards() {
-        return getParticipants().stream()
-                .map(participant -> new NameAndCards(participant.getName(), participant.getCards()))
-                .toList();
-    }
-
-    public List<String> getParticipantNames() {
-        return getParticipants().stream()
-                .map(Player::getName)
-                .toList();
-    }
-
-    private Dealer getDealer() {
-        return players.getDealer();
-    }
-
-    private List<Participant> getParticipants() {
-        return players.getParticipants()
-                .stream()
-                .map(player -> (Participant) player)
-                .toList();
     }
 
     public DealerResult computeDealerMatchResult() {
@@ -115,5 +63,20 @@ public class Blackjack {
         }
         return MatchResult.compareBySum(participant.computeOptimalSum(),
                 dealer.computeOptimalSum());
+    }
+    
+    public Dealer getDealer() {
+        return players.getDealer();
+    }
+
+    public List<Participant> getParticipants() {
+        return players.getParticipants()
+                .stream()
+                .map(player -> (Participant) player)
+                .toList();
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

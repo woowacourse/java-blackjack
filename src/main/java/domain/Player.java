@@ -22,6 +22,11 @@ public abstract class Player {
         }
     }
 
+    public abstract void openInitialCards();
+
+    public abstract boolean isDealer();
+
+
     public void receiveInitialCards(Deck deck) {
         cards.addAll(deck.drawCards(2));
     }
@@ -30,24 +35,24 @@ public abstract class Player {
         cards.addAll(deck.drawCards(1));
     }
 
-    public abstract List<Card> openInitialCards();
-
-    public abstract boolean isDealer();
-
-    public List<Card> getCards() {
-        return cards.getCards();
+    public void openCards(int count) {
+        cards.openCards(count);
     }
 
-    public List<Card> getCards(int count) {
-        return cards.getCards(count);
+    public int computeOptimalSum() {
+        return cards.computeOptimalSum();
     }
 
     public boolean isBurst() {
         return cards.isBurst();
     }
 
-    public int computeOptimalSum() {
-        return cards.computeOptimalSum();
+    public List<Card> getOpenedCards() {
+        return cards.getOpenedCards();
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
     public String getName() {

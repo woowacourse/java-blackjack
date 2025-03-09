@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Players {
+
     private static final int MAX_SIZE = 6;
 
     private final List<Player> players;
@@ -39,6 +40,14 @@ public class Players {
         }
     }
 
+    public Map<String, Integer> mapToNameAndSum() {
+        Map<String, Integer> sumResult = new HashMap<>();
+        for (Player player : players) {
+            sumResult.put(player.getName(), player.computeOptimalSum());
+        }
+        return sumResult;
+    }
+
     public int size() {
         return players.size();
     }
@@ -65,13 +74,5 @@ public class Players {
         return players.stream()
                 .filter(player -> !player.isDealer())
                 .toList();
-    }
-
-    public Map<String, Integer> mapToNameAndSum() {
-        Map<String, Integer> sumResult = new HashMap<>();
-        for (Player player : players) {
-            sumResult.put(player.getName(), player.computeOptimalSum());
-        }
-        return sumResult;
     }
 }

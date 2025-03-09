@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Dealer extends Player {
     private static final int ADD_CARD_THRESHOLD = 16;
 
@@ -10,8 +8,8 @@ public class Dealer extends Player {
     }
 
     @Override
-    public List<Card> openInitialCards() {
-        return getCards(1);
+    public void openInitialCards() {
+        openCards(1);
     }
 
     public boolean drawOneCardIfLowScore(Deck deck) {

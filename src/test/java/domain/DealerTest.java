@@ -15,9 +15,10 @@ class DealerTest {
         Deck deck = DeckGenerator.generateDeck();
         Dealer dealer = new Dealer();
         dealer.receiveInitialCards(deck);
+        dealer.openInitialCards();
 
         // when & then
-        assertThat(dealer.openInitialCards().size())
+        assertThat(dealer.getOpenedCards().size())
                 .isEqualTo(1);
     }
 
