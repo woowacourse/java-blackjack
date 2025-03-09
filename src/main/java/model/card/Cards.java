@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Cards {
     private static final int BUST_THRESHOLD = 21;
-    private static final int INITIAL_CARDS_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -53,14 +52,14 @@ public class Cards {
         Card aceElevenCard = cards.stream()
                 .filter(card -> card.isSameNumber(CardNumber.ACE_ELEVEN))
                 .findAny()
-                .orElseThrow(()-> new IllegalStateException("1로 취급할 A가 없습니다."));
+                .orElseThrow(() -> new IllegalStateException("1로 취급할 A가 없습니다."));
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
     }
 
-    public int getAdditionalDrawCount() {
-        return cards.size() - INITIAL_CARDS_COUNT;
+    public int getCardsSize() {
+        return cards.size();
     }
 
     public Card getFirstCard() {

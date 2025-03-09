@@ -5,6 +5,7 @@ import model.deck.Deck;
 
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
+    private static final int INITIAL_CARDS_COUNT = 2;
 
     public Dealer(Deck deck) {
         super();
@@ -27,5 +28,9 @@ public class Dealer extends Participant {
 
     public Card getFirstCard() {
         return cards.getFirstCard();
+    }
+
+    public int getAdditionalDrawCount() {
+        return cards.getCardsSize() - INITIAL_CARDS_COUNT;
     }
 }

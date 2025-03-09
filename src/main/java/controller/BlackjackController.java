@@ -3,10 +3,10 @@ package controller;
 import dto.CardDto;
 import java.util.List;
 import java.util.stream.Collectors;
-import model.deck.Deck;
 import model.Judge;
 import model.UserInput;
 import model.card.Cards;
+import model.deck.Deck;
 import model.gameresult.GameResult;
 import model.gameresult.GameResults;
 import model.participant.Dealer;
@@ -36,6 +36,7 @@ public class BlackjackController {
 
         printInitialGameState(players, dealer);
         playPlayerTurns(players);
+        printDealerDrawCount(dealer);
         printFinalGameState(dealer, players);
         printGameResult(players, dealer);
     }
@@ -76,6 +77,12 @@ public class BlackjackController {
 
     private boolean wantsAdditionalCard(final Player player) {
         return UserInput.from(inputView.askForAdditionalCard(player.getName())).equals(UserInput.YES);
+    }
+
+    private void printDealerDrawCount(final Dealer dealer) {
+        for (int count = 0; count < dealer.getAdditionalDrawCount(); count++) {
+            outputView.printDealerDrawn();
+        }
     }
 
     private void printFinalGameState(final Dealer dealer, final Players players) {
