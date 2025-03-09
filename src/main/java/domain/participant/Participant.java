@@ -7,7 +7,7 @@ import domain.rule.GameRule;
 
 public class Participant {
     private final Cards cards;
-    protected final GameRule rule;
+    private final GameRule rule;
 
     protected Participant(Cards cards) {
         this.cards = cards;
@@ -28,5 +28,9 @@ public class Participant {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public GameRule getRule() {
+        return rule;
     }
 }
