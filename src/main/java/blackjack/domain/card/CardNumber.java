@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 public enum CardNumber {
+
     ACE(1),
     TWO(2),
     THREE(3),

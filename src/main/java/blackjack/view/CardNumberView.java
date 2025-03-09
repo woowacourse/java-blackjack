@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.CardNumber;
 
 public enum CardNumberView {
+
     ACE("A"),
     TWO("2"),
     THREE("3"),

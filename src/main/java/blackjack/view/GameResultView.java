@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.GameResult;
 
 public enum GameResultView {
+
     WIN("승"),
     LOSE("패"),
     DRAW("무");
