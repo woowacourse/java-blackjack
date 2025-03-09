@@ -7,9 +7,6 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -59,21 +56,18 @@ public class OutputView {
     }
 
     public void printFinalResult(Dealer dealer, Participants participants) {
-        Map<ParticipantResult, Integer> winLoseResult = new EnumMap<>(ParticipantResult.class);
-        Arrays.stream(ParticipantResult.values())
-                .forEach(participantResult -> winLoseResult.put(participantResult, 0));
+        Map<ParticipantResult, Integer> winLoseResult = dealer.calculateResult(participants);
         CustomStringBuilder playerContents = new CustomStringBuilder();
         CustomStringBuilder dealerContents = new CustomStringBuilder();
         dealerContents.appendLine("## 최종 승패");
-        participants.stream().forEach(participant -> {
-            ParticipantResult participantResult = participant.dueWith(dealer);
-            playerContents.appendLine(String.format("%s: %s", participant.getName(), participantResult.getDetail()));
-            winLoseResult.merge(participantResult, 1, Integer::sum);
-        });
         dealerContents.appendLine(String.format("딜러: %d승 %d패",
                 winLoseResult.get(ParticipantResult.LOSE),
                 winLoseResult.get(ParticipantResult.WIN))
         );
+        participants.stream().forEach(participant -> {
+            ParticipantResult participantResult = participant.dueWith(dealer);
+            playerContents.appendLine(String.format("%s: %s", participant.getName(), participantResult.getDetail()));
+        });
         dealerContents.print();
         playerContents.print();
     }
