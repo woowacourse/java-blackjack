@@ -167,6 +167,11 @@ public class GameBoard {
         return playingCard;
     }
 
+    public List<Participant> getParticipants() {
+        return cardDeckOfParticipant.keySet().stream()
+                .toList();
+    }
+
     public List<Participant> getPlayers() {
         return cardDeckOfParticipant.keySet().stream()
                 .filter(participant -> !participant.areYouDealer())

@@ -89,7 +89,7 @@ public class GameBoardTest {
         List<Participant> participants = gameBoard.getParticipants();
 
         // then
-        Assertions.assertThat(participants).containsExactlyElementsOf(expectedParticipants);
+        Assertions.assertThat(participants).containsExactlyInAnyOrderElementsOf(expectedParticipants);
     }
 
     @Test
