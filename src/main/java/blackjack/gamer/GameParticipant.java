@@ -11,7 +11,7 @@ public abstract class GameParticipant {
         this.cards = cards;
     }
 
-    public void addCard(Card card) {
+    public void drawCard(Card card) {
         cards.add(card);
     }
 

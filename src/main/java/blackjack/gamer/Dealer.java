@@ -25,4 +25,15 @@ public class Dealer extends GameParticipant {
     public boolean shouldHit() {
         return calculateSumOfCards() <= DEALER_HIT_THRESHOLD_POINT;
     }
+
+    public void dealInitialCards(List<Player> players) {
+        for (int i = 0; i < INITIAL_DEALING_CARD_COUNT; i++) {
+            players.forEach(this::dealCard);
+            dealCard(this);
+        }
+    }
+
+    public void dealCard(GameParticipant participant) {
+        participant.drawCard(cardMachine.drawCard());
+    }
 }

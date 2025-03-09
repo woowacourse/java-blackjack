@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GameParticipantTest {
 
     @Test
-    @DisplayName("카드를 한 장씩 받을 수 있다")
-    void canAddCard() {
+    @DisplayName("카드를 한 장씩 뽑을 수 있다")
+    void canDrawCard() {
         // given
         GameParticipant player = GameParticipantFixture.createPlayer("강산");
         int initialCardCount = player.getCards().size();
 
         // when
-        player.addCard(CardFixture.createCard());
+        player.drawCard(CardFixture.createCard());
 
         // then
         assertThat(player.getCards().size() - initialCardCount).isEqualTo(1);
