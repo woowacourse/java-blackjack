@@ -1,7 +1,7 @@
 package domain.card;
 
 import constant.Suit;
-import exceptions.BlackJackArgumentException;
+import exceptions.BlackjackArgumentException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public class Deck {
 
   public TrumpCard draw() {
     if (deck.isEmpty()) {
-      throw new BlackJackArgumentException("덱에 남아있는 카드가 없습니다.");
+      throw new BlackjackArgumentException("덱에 남아있는 카드가 없습니다.");
     }
     return deck.poll();
   }

@@ -7,7 +7,7 @@ import constant.Suit;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.TrumpCard;
-import exceptions.BlackJackArgumentException;
+import exceptions.BlackjackArgumentException;
 import java.util.ArrayDeque;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -55,7 +55,7 @@ public class DeckTest {
       final var deck = new Deck(new ArrayDeque<>());
       // when&then
       assertThatThrownBy(deck::draw)
-          .isInstanceOf(BlackJackArgumentException.class)
+          .isInstanceOf(BlackjackArgumentException.class)
           .hasMessageContaining("덱에 남아있는 카드가 없습니다.");
     }
   }
