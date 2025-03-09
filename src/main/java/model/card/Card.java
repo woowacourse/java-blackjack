@@ -1,9 +1,8 @@
-package model;
+package model.card;
 
 import java.util.Objects;
 
 public class Card {
-
     private final CardNumber number;
     private final CardShape cardShape;
 

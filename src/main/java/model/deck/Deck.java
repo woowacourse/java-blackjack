@@ -1,7 +1,8 @@
-package model;
+package model.deck;
 
 import java.util.Collections;
 import java.util.List;
+import model.card.Card;
 
 public class Deck {
     private final List<Card> deck;

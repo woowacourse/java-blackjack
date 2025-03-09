@@ -1,10 +1,9 @@
-package model;
+package model.card;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-
     private static final int BUST_THRESHOLD = 21;
     private static final int INITIAL_CARDS_COUNT = 2;
 

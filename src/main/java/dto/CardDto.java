@@ -1,6 +1,6 @@
 package dto;
 
-import model.Card;
+import model.card.Card;
 
 public record CardDto(String number, String shape) {
     public static CardDto from(final Card card) {

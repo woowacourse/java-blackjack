@@ -1,4 +1,4 @@
-package model;
+package model.gameresult;
 
 import java.util.Map;
 
