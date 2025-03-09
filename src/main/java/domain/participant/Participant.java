@@ -12,7 +12,7 @@ public abstract class Participant {
     private final String name;
     private final List<Card> cards;
 
-    public Participant(String name) {
+    protected Participant(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
     }
