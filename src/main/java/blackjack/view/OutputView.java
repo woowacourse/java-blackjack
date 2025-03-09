@@ -7,6 +7,8 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +24,7 @@ public class OutputView {
         ));
         customStringBuilder.appendLine(outputPlayerCardStatus(
                 "딜러",
-                generateCardName(dealer.getReceivedCards().getFirstCard())
+                generateCardName(dealer.getInitialCard())
         ));
         participants.stream().forEach(participant -> customStringBuilder.appendLine(outputPlayerCardStatus(
                 participant.getName(),
@@ -57,11 +59,9 @@ public class OutputView {
     }
 
     public void printFinalResult(Dealer dealer, Participants participants) {
-        Map<ParticipantResult, Integer> winLoseResult = new HashMap<>(Map.of(
-                ParticipantResult.WIN, 0,
-                ParticipantResult.LOSE, 0,
-                ParticipantResult.DRAW, 0
-        ));
+        Map<ParticipantResult, Integer> winLoseResult = new EnumMap<>(ParticipantResult.class);
+        Arrays.stream(ParticipantResult.values())
+                .forEach(participantResult -> winLoseResult.put(participantResult, 0));
         CustomStringBuilder playerContents = new CustomStringBuilder();
         CustomStringBuilder dealerContents = new CustomStringBuilder();
         dealerContents.appendLine("## 최종 승패");
