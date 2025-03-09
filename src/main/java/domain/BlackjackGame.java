@@ -15,7 +15,7 @@ public class BlackjackGame {
     private static final String DUPLIACTE_NAME = "중복된 이름이 존재합니다.";
     private static final String INVALID_BLACKJACK_PLAYER_SIZE = "블랙잭은 1-7명만 이용하실 수 있습니다";
 
-    private final BlackjackParticipants<Player> blackjackParticipants;
+    private final BlackjackParticipantsManager<Player> blackjackParticipantsManager;
     private final BlackjackDeck deck;
 
     public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
@@ -28,7 +28,7 @@ public class BlackjackGame {
                 .map(Player::new)
                 .collect(Collectors.toList());
         this.deck = deck;
-        this.blackjackParticipants = new BlackjackParticipants<>(players, dealer);
+        this.blackjackParticipantsManager = new BlackjackParticipantsManager<>(players, dealer);
         initiateGame();
     }
 
@@ -40,7 +40,7 @@ public class BlackjackGame {
     }
 
     private void initiateGame() {
-        List<String> playerNames = blackjackParticipants.getPlayerNames();
+        List<String> playerNames = blackjackParticipantsManager.getPlayerNames();
         for (String name : playerNames) {
             drawCard(name);
             drawCard(name);
@@ -51,56 +51,56 @@ public class BlackjackGame {
 
     public List<BlackjackResult> currentPlayerBlackjackResult() {
         List<BlackjackResult> blackjackResults = new ArrayList<>();
-        for (String name : blackjackParticipants.getPlayerNames()) {
-            List<TrumpCard> trumpCards = blackjackParticipants.playerCards(name);
-            int sum = blackjackParticipants.calculateCardSum(name);
+        for (String name : blackjackParticipantsManager.getPlayerNames()) {
+            List<TrumpCard> trumpCards = blackjackParticipantsManager.playerCards(name);
+            int sum = blackjackParticipantsManager.calculateCardSum(name);
             blackjackResults.add(new BlackjackResult(name, trumpCards, sum));
         }
         return Collections.unmodifiableList(blackjackResults);
     }
 
     public BlackjackResult currentDealerBlackjackResult() {
-        List<TrumpCard> trumpCards = blackjackParticipants.dealerCards();
-        int sum = blackjackParticipants.calculateDealerSum();
-        String name = blackjackParticipants.dealerName();
+        List<TrumpCard> trumpCards = blackjackParticipantsManager.dealerCards();
+        int sum = blackjackParticipantsManager.calculateDealerSum();
+        String name = blackjackParticipantsManager.dealerName();
         return new BlackjackResult(name, trumpCards, sum);
     }
 
     public List<TrumpCard> playerCards(String name) {
-        return Collections.unmodifiableList(blackjackParticipants.playerCards(name));
+        return Collections.unmodifiableList(blackjackParticipantsManager.playerCards(name));
     }
 
     public TrumpCard dealerCardFirst() {
-        return blackjackParticipants.firstDealerCards();
+        return blackjackParticipantsManager.firstDealerCards();
     }
 
     public String dealerName() {
-        return blackjackParticipants.dealerName();
+        return blackjackParticipantsManager.dealerName();
     }
 
     public List<String> playerNames() {
-        return blackjackParticipants.getPlayerNames();
+        return blackjackParticipantsManager.getPlayerNames();
     }
 
     public void drawCard(String name) {
-        blackjackParticipants.addCard(name, deck.drawCard());
+        blackjackParticipantsManager.addCard(name, deck.drawCard());
     }
 
     private void drawDealerCard() {
-        blackjackParticipants.addDealerCard(deck.drawCard());
+        blackjackParticipantsManager.addDealerCard(deck.drawCard());
     }
 
     public boolean isBust(String name) {
-        return blackjackParticipants.isBust(name);
+        return blackjackParticipantsManager.isBust(name);
     }
 
     public void dealerHit() {
-        if (blackjackParticipants.dealerDrawable()) {
-            blackjackParticipants.addDealerCard(deck.drawCard());
+        if (blackjackParticipantsManager.dealerDrawable()) {
+            blackjackParticipantsManager.addDealerCard(deck.drawCard());
         }
     }
 
     public boolean dealerDrawable() {
-        return blackjackParticipants.dealerDrawable();
+        return blackjackParticipantsManager.dealerDrawable();
     }
 }
