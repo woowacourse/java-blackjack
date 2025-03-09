@@ -21,8 +21,8 @@ public abstract class Participant {
         return cards.calculateResult();
     }
 
-    public boolean isBust() {
-        return cards.calculateResult() > BUST_THRESHOLD;
+    public boolean isNotBust() {
+        return cards.calculateResult() <= BUST_THRESHOLD;
     }
 
     public Cards getCards() {

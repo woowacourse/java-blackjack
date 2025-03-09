@@ -72,7 +72,7 @@ public class BlackjackController {
     }
 
     private boolean playerCanDraw(final Player player) {
-        return !player.isBust();
+        return player.isNotBust();
     }
 
     private boolean wantsAdditionalCard(final Player player) {

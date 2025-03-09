@@ -18,7 +18,7 @@ public class Player extends Participant {
 
     @Override
     protected boolean canDrawMore() {
-        return !isBust();
+        return isNotBust();
     }
 
     public String getName() {
