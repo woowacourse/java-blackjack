@@ -1,4 +1,4 @@
-package controller;
+package controller.converter;
 
 import domain.card.Rank;
 

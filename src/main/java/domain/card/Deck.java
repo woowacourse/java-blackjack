@@ -35,7 +35,7 @@ public class Deck {
   }
 
   public Deck shuffle() {
-    var cards = new ArrayList<>(deck);
+    final var cards = new ArrayList<>(deck);
     Collections.shuffle(cards);
     return new Deck(new ArrayDeque<>(cards));
   }

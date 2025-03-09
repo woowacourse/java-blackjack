@@ -41,9 +41,9 @@ public abstract class Participant {
     return hand.calculateScore();
   }
 
-  public boolean round(Dealer dealer) {
-    var score = this.calculateScore();
-    var dealerScore = dealer.calculateScore();
+  public boolean round(final Participant dealer) {
+    final var score = this.calculateScore();
+    final var dealerScore = dealer.calculateScore();
     if (score > BLACKJACK_SCORE) {
       return false;
     }
