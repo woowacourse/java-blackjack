@@ -6,6 +6,7 @@ public class PlayerName {
 
     public PlayerName(final String name) {
         validateName(name);
+
         this.name = name;
     }
 

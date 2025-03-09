@@ -48,7 +48,7 @@ public class CardDeckTest {
         @DisplayName("초기 카드에서 1장의 카드를 뽑으면 51장의 카드가 남는다.")
         void remainCardsOf51() {
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            Card pickedCard = cardDeck.pickRandomCard();
+            cardDeck.pickRandomCard();
 
             assertThat(cardDeck.getCards()).hasSize(51);
         }

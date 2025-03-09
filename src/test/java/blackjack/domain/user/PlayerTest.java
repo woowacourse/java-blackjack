@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.Card;
 import blackjack.domain.Denomination;
 import blackjack.domain.Suit;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

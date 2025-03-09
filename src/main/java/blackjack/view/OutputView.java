@@ -41,7 +41,8 @@ public class OutputView {
         System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, sum);
     }
 
-    public void printPlayerFinalCardResult(final String name, final int sum, final List<Card> cards) {
+    public void printPlayerFinalCardResult(final String name, final int sum,
+        final List<Card> cards) {
         String cardResult = parseCardToString(cards);
         System.out.printf("%s카드: %s - 결과 %d%n", name, cardResult, sum);
     }
@@ -67,8 +68,8 @@ public class OutputView {
 
     private String parseCardToString(final List<Card> cards) {
         return cards
-                .stream()
-                .map(card -> card.denomination().getText() + card.suit().getText())
-                .collect(Collectors.joining(", "));
+            .stream()
+            .map(card -> card.denomination().getText() + card.suit().getText())
+            .collect(Collectors.joining(", "));
     }
 }

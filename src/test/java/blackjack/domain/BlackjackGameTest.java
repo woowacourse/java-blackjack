@@ -141,7 +141,8 @@ class BlackjackGameTest {
             player3.addCards(initialCards4.get(0), initialCards4.get(1));
 
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            Participants participants = new Participants(dealer, List.of(player1, player2, player3));
+            Participants participants = new Participants(dealer,
+                List.of(player1, player2, player3));
             game = new BlackjackGame(cardDeck, participants);
         }
 
