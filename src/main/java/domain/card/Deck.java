@@ -3,23 +3,24 @@ package domain.card;
 import domain.card.cardsGenerator.CardsGenerator;
 import domain.participant.Participant;
 import java.util.List;
+import java.util.Stack;
 
 public class Deck {
     private final static int INIT_COUNT = 2;
 
-    private final List<Card> cards;
+    private final Stack<Card> cards;
 
     public Deck(CardsGenerator cardsGenerator) {
-        cards = cardsGenerator.generate();
+        List<Card> generateCards = cardsGenerator.generate();
+        cards = new Stack<>();
+        cards.addAll(generateCards);
     }
 
     public Card pick() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 부족합니다.");
         }
-        Card card = cards.getLast();
-        cards.removeLast();
-        return card;
+        return cards.pop();
     }
 
     public void handoutCards(List<Participant> participants) {
