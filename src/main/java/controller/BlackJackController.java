@@ -49,8 +49,8 @@ public class BlackJackController {
 
     private void selectHitOrStand(Player player, Deck deck) {
         while (inputView.readOneMoreCardResponse(player.getNickname()).equals(HIT_COMMAND)) {
-            boolean isUnderBustStandard = player.addOneCard(deck.drawOneCard());
-            if (!isUnderBustStandard) {
+            player.addOneCard(deck.drawOneCard());
+            if (player.isBust()) {
                 outputView.printPlayerIsOverBust(player);
                 break;
             }

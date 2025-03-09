@@ -14,9 +14,8 @@ public class Cards {
         this.cards = cards;
     }
 
-    public boolean addOneCard(Card card) {
+    public void addOneCard(Card card) {
         cards.add(card);
-        return sumCardScores() <= BUST_STANDARD;
     }
 
     public int sumCardScores() {
