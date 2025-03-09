@@ -24,20 +24,22 @@ public class GameResults {
     }
 
     public int getDealerWin() {
-        return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.LOSE)
-        ).count();
+        return getGameResultCount(GameResult.LOSE);
     }
 
     public int getDealerLose() {
-        return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.WIN)
-        ).count();
+        return getGameResultCount(GameResult.WIN);
     }
 
     public int getDealerDraw() {
-        return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.DRAW)
-        ).count();
+        return getGameResultCount(GameResult.DRAW);
+    }
+
+    private int getGameResultCount(GameResult gameResult) {
+        return (int) gameResults.entrySet()
+                .stream()
+                .filter(entry ->
+                        entry.getValue().equals(gameResult)
+                ).count();
     }
 }
