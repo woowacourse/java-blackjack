@@ -28,7 +28,7 @@ public class BlackJackController {
         outputView.printInitialGameSettings(players, dealer);
 
         selectPlayersHitOrStand(players, deck);
-        checkDealerSumUnderSixteen(dealer, deck);
+        checkDealerHit(dealer, deck);
         outputView.printGameSummary(players, dealer);
         outputView.printGameResult(players.deriveResults(dealer.sumCardNumbers()));
     }
@@ -54,7 +54,7 @@ public class BlackJackController {
         }
     }
 
-    private void checkDealerSumUnderSixteen(Dealer dealer, Deck deck) {
+    private void checkDealerHit(Dealer dealer, Deck deck) {
         while (dealer.shouldDealerHit()) {
             outputView.printDealerOneMoreCardMessage();
             dealer.addOneCard(deck.drawOneCard());
