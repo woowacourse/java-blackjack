@@ -46,7 +46,7 @@ class DealerTest {
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
         dealer.addCard(cards);
         //when & then
-        org.assertj.core.api.Assertions.assertThat(cards).contains(dealer.showAnyOneCard());
+        assertThat(cards).contains(dealer.showAnyOneCard());
     }
 
     public static Stream<Arguments> showFirstCardTest() {

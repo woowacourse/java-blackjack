@@ -1,7 +1,5 @@
 package controller;
 
-import static view.Response.YES;
-
 import domain.Game;
 import domain.PlayerName;
 import java.util.List;
@@ -10,7 +8,7 @@ import view.OutputView;
 
 public class BlackJackController {
     public static final int DEFAULT_CARDS_PER_TURN = 1;
-    
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -42,7 +40,7 @@ public class BlackJackController {
     }
 
     private void askPlayer(Game game, PlayerName playerName) {
-        while (game.isPlayerDrawable(playerName) && inputView.getUserResponse(playerName.username()) == YES) {
+        while (game.isPlayerDrawable(playerName) && inputView.isYes(playerName.username())) {
             game.giveCardToPlayer(playerName, DEFAULT_CARDS_PER_TURN);
             outputView.printGamerCards(playerName.username(), game.getPlayerCards(playerName));
         }

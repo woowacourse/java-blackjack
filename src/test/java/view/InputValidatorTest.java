@@ -22,7 +22,21 @@ class InputValidatorTest {
     @ParameterizedTest
     @DisplayName("잘못된 이름 입력이면 예외를 반환힙나디.")
     @ValueSource(strings = {",,,,", "11,22", ",안녕", "", "안녕,반가워,"})
-    void validateInputFormat(String value) {
+    void validateInputFormatTest(String value) {
         Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidator.validateInputFormat(value));
+    }
+
+    @ParameterizedTest
+    @DisplayName("잘못된 유저 응답이면 예외를 반환합니다.")
+    @ValueSource(strings = {"N", "Y", "yes", "no", "", " "})
+    void validateUserResponseErrorTest(String value) {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidator.validateUserResponse(value));
+    }
+
+    @ParameterizedTest
+    @DisplayName("올바른 유저 응답이면 예외를 반환하지 않습니다ㅣ.")
+    @ValueSource(strings = {"n", "y"})
+    void validateUserResponseTest(String value) {
+        Assertions.assertDoesNotThrow(() -> InputValidator.validateUserResponse(value));
     }
 }
