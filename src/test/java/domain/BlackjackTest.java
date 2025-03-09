@@ -93,18 +93,18 @@ public class BlackjackTest {
         ));
 
         Deck deck = new Deck(new ArrayList<>(List.of(
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
 
-                new Card(CardShape.SPADE, CardNumber.EIGHT)
+                new Card(CardSuit.SPADE, CardRank.EIGHT)
         )));
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();
@@ -128,16 +128,16 @@ public class BlackjackTest {
         ));
 
         Deck deck = new Deck(new ArrayList<>(List.of(
-                new Card(CardShape.SPADE, CardNumber.FIVE),
-                new Card(CardShape.SPADE, CardNumber.FIVE),
-                new Card(CardShape.SPADE, CardNumber.THREE),
-                new Card(CardShape.SPADE, CardNumber.THREE),
-                new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.SEVEN),
-                new Card(CardShape.SPADE, CardNumber.SEVEN),
-                new Card(CardShape.SPADE, CardNumber.FIVE),
-                new Card(CardShape.SPADE, CardNumber.FIVE)
+                new Card(CardSuit.SPADE, CardRank.FIVE),
+                new Card(CardSuit.SPADE, CardRank.FIVE),
+                new Card(CardSuit.SPADE, CardRank.THREE),
+                new Card(CardSuit.SPADE, CardRank.THREE),
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.SPADE, CardRank.SEVEN),
+                new Card(CardSuit.SPADE, CardRank.SEVEN),
+                new Card(CardSuit.SPADE, CardRank.FIVE),
+                new Card(CardSuit.SPADE, CardRank.FIVE)
         )));
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();

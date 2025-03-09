@@ -11,11 +11,11 @@ public class CardsTest {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.THREE),
-                new Card(CardShape.SPADE, CardNumber.FOUR),
-                new Card(CardShape.SPADE, CardNumber.JACK))
+                new Card(CardSuit.SPADE, CardRank.ACE),
+                new Card(CardSuit.SPADE, CardRank.ACE),
+                new Card(CardSuit.SPADE, CardRank.THREE),
+                new Card(CardSuit.SPADE, CardRank.FOUR),
+                new Card(CardSuit.SPADE, CardRank.JACK))
         );
         final int expected = 19;
 
@@ -31,11 +31,11 @@ public class CardsTest {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.THREE),
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
-                new Card(CardShape.SPADE, CardNumber.JACK))
+                new Card(CardSuit.SPADE, CardRank.ACE),
+                new Card(CardSuit.SPADE, CardRank.ACE),
+                new Card(CardSuit.SPADE, CardRank.THREE),
+                new Card(CardSuit.SPADE, CardRank.QUEEN),
+                new Card(CardSuit.SPADE, CardRank.JACK))
         );
         final int expected = 25;
 
@@ -53,10 +53,10 @@ public class CardsTest {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.JACK),
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
-                new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.ACE))
+                new Card(CardSuit.SPADE, CardRank.JACK),
+                new Card(CardSuit.SPADE, CardRank.QUEEN),
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.SPADE, CardRank.ACE))
         );
 
         // when
@@ -71,9 +71,9 @@ public class CardsTest {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
-                new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.ACE))
+                new Card(CardSuit.SPADE, CardRank.QUEEN),
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.SPADE, CardRank.ACE))
         );
 
         // when

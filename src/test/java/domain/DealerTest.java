@@ -36,18 +36,18 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         Deck deck = new Deck(new ArrayList<>(List.of(
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
-                new Card(CardShape.SPADE, CardNumber.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
 
-                new Card(CardShape.SPADE, CardNumber.EIGHT)
+                new Card(CardSuit.SPADE, CardRank.EIGHT)
         )));
         dealer.drawOneCard(deck);
 

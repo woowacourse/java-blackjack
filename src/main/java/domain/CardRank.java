@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum CardNumber {
+public enum CardRank {
     ACE("A", List.of(1, 11)),
     TWO("2", 2),
     THREE("3", 3),
@@ -22,12 +22,12 @@ public enum CardNumber {
     private final String title;
     private final List<Integer> scores;
 
-    CardNumber(String title, int score) {
+    CardRank(String title, int score) {
         this.title = title;
         scores = new ArrayList<>(List.of(score));
     }
 
-    CardNumber(String title, List<Integer> scores) {
+    CardRank(String title, List<Integer> scores) {
         this.title = title;
         this.scores = scores;
     }

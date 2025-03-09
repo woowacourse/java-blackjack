@@ -3,23 +3,23 @@ package domain;
 import java.util.List;
 
 public class Card {
-    private final CardShape cardShape;
-    private final CardNumber cardNumber;
+    private final CardSuit cardSuit;
+    private final CardRank cardRank;
 
-    public Card(CardShape cardShape, CardNumber cardNumber) {
-        this.cardShape = cardShape;
-        this.cardNumber = cardNumber;
+    public Card(CardSuit cardSuit, CardRank cardRank) {
+        this.cardSuit = cardSuit;
+        this.cardRank = cardRank;
     }
 
     public List<Integer> getScores() {
-        return cardNumber.getScores();
+        return cardRank.getScores();
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public CardRank getCardNumber() {
+        return cardRank;
     }
 
-    public CardShape getCardShape() {
-        return cardShape;
+    public CardSuit getCardShape() {
+        return cardSuit;
     }
 }
