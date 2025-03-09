@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
     private static final int MAX_SIZE = 6;
@@ -66,11 +68,11 @@ public class Players {
     }
 
     public void validateUniqueNames(List<Player> players) {
-        List<String> names = players.stream()
+        Set<String> names = players.stream()
                 .map(Player::getName)
-                .toList();
+                .collect(Collectors.toSet());
 
-        if (new HashSet<>(names).size() != names.size()) {
+        if (names.size() != players.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
