@@ -18,8 +18,7 @@ public class DuelHistoryTest {
 		@DisplayName("주어진 값이 DuelResult.WIN이라면 승리에 대한 기록을, DuelResult.LOSE라면 패배에 대한 기록을 한다.")
 		@ParameterizedTest
 		@CsvSource(value = {"WIN:1:0", "LOSE:0:1"}, delimiter = ':')
-		void write(final DuelResult duelResult, final int expectedWinCount, final int expectedLoseCount) throws
-			Exception {
+		void write(final DuelResult duelResult, final int expectedWinCount, final int expectedLoseCount) {
 			// given
 			final var duelHistory = new DuelHistory();
 
