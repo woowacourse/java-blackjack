@@ -53,14 +53,18 @@ public class ParticipantWinningResult {
 
     private void calculateDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
         if (gameResult == GameResult.WIN){
-            dealerResult.merge(GameResult.LOSE, 1, Integer::sum);
+            updateDealerResult(GameResult.LOSE, dealerResult);
         }
         if (gameResult == GameResult.LOSE){
-            dealerResult.merge(GameResult.WIN, 1, Integer::sum);
+            updateDealerResult(GameResult.WIN, dealerResult);
         }
         if (gameResult == GameResult.DRAW){
-            dealerResult.merge(GameResult.DRAW, 1, Integer::sum);
+            updateDealerResult(GameResult.DRAW, dealerResult);
         }
+    }
+
+    private static void updateDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
+        dealerResult.merge(gameResult, 1, Integer::sum);
     }
 
     public Map<Player, GameResult> getResult() {

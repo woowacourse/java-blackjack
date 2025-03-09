@@ -23,7 +23,6 @@ public class Participant {
     public boolean isBurst() {
         return participantHand.checkBurst();
     }
-
     public int calculateFinalScore() {
         return participantHand.calculateFinalScore();
     }
