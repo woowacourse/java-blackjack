@@ -16,6 +16,7 @@ public class GameManger {
 
     private final List<Player> users = new ArrayList<>();
     private final Dealer dealer;
+    private final CardDeck cardDeck;
 
     public GameManger(List<String> names) {
         validate(names);
@@ -23,6 +24,7 @@ public class GameManger {
             users.add(new Player(name));
         }
         this.dealer = new Dealer();
+        this.cardDeck = new CardDeck();
     }
 
     private void validate(List<String> names) {
@@ -37,8 +39,8 @@ public class GameManger {
 
     public void firstHandOutCard() {
         for (int count = 0; count < 2; count++) {
-            users.forEach(User::drawCard);
-            dealer.drawCard();
+            users.forEach(user -> user.drawCard(cardDeck.drawCard()));
+            dealer.drawCard(cardDeck.drawCard());
         }
     }
 
@@ -53,21 +55,25 @@ public class GameManger {
         return this.dealer;
     }
 
+    public TrumpCard handOutCard() {
+        return cardDeck.drawCard();
+    }
+
     public int compare(User player) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return LOSE;
         }
-        if (dealer.getCardDeck().calculateScore() < player.getCardDeck().calculateScore()) {
+        if (dealer.getCardHand().calculateScore() < player.getCardHand().calculateScore()) {
             return WIN;
         }
-        if (dealer.getCardDeck().calculateScore() > player.getCardDeck().calculateScore()) {
+        if (dealer.getCardHand().calculateScore() > player.getCardHand().calculateScore()) {
             return LOSE;
         }
         return compareSameScore(player);
     }
 
     private int compareSameScore(User player) {
-        if (dealer.getCardDeck().isBlackjack() && !player.getCardDeck().isBlackjack()) {
+        if (dealer.getCardHand().isBlackjack() && !player.getCardHand().isBlackjack()) {
             return LOSE;
         }
         return MOO;
@@ -75,16 +81,16 @@ public class GameManger {
 
     public Map<User, Integer> createGameResult() {
         Map<User, Integer> gameResult = new LinkedHashMap<>();
-        if (dealer.isBurst()) {
-            users.forEach((user) -> putGameResultBurst(user, gameResult));
+        if (dealer.isBust()) {
+            users.forEach((user) -> putGameResultBust(user, gameResult));
             return gameResult;
         }
         users.forEach((user) -> gameResult.put(user, compare(user)));
         return gameResult;
     }
 
-    private void putGameResultBurst(User user, Map<User, Integer> gameResult) {
-        if (user.isBurst()) {
+    private void putGameResultBust(User user, Map<User, Integer> gameResult) {
+        if (user.isBust()) {
             gameResult.put(user, LOSE);
             return;
         }

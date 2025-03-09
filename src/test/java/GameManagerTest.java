@@ -1,7 +1,6 @@
 import static org.assertj.core.api.Assertions.*;
 
 import domain.CardNumber;
-import domain.CardDeck;
 import domain.CardShape;
 import domain.TrumpCard;
 import domain.user.Dealer;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,12 +18,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class GameManagerTest {
-    @BeforeEach
-    public void setUp() {
-        CardDeck.bin();
-        CardDeck.initCache();
-    }
-
     @DisplayName("유저는 최소 1명 이상 7명 이하여야 한다.")
     @ParameterizedTest
     @MethodSource("userTestCase")
@@ -88,11 +80,11 @@ public class GameManagerTest {
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
-        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.ACE));
-        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.NINE));
+        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.ACE));
+        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.NINE));
 
-        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.THREE));
-        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.TWO));
+        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.THREE));
+        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.TWO));
 
         //when
         int result = gameManger.compare(player);
@@ -111,10 +103,10 @@ public class GameManagerTest {
         User dealer = gameManger.getDealer();
 
         for (TrumpCard card : playerCards) {
-            player.getCardDeck().addTrumpCard(card);
+            player.getCardHand().addTrumpCard(card);
         }
         for (TrumpCard card : dealerCards) {
-            dealer.getCardDeck().addTrumpCard(card);
+            dealer.getCardHand().addTrumpCard(card);
         }
 
         //when
@@ -162,13 +154,13 @@ public class GameManagerTest {
         // given
         GameManger gameManger = new GameManger(List.of("유저"));
         User user = gameManger.findUserByUsername("유저");
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
 
-        gameManger.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
-        gameManger.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        gameManger.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
+        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
 
         // when
         Map<User, Integer> gameResult = gameManger.createGameResult();

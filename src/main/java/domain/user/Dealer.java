@@ -13,12 +13,12 @@ public class Dealer extends User {
 
     @Override
     public boolean isImpossibleDraw() {
-        return cardDeck.isAtLeastScore(DEALER_MAX_SCORE);
+        return cardHand.isAtLeastScore(DEALER_MAX_SCORE);
     }
 
     @Override
     public List<TrumpCard> openCard() {
-        return this.cardDeck.getFirstCard();
+        return this.cardHand.getFirstCard();
     }
 
     @Override
@@ -27,6 +27,6 @@ public class Dealer extends User {
     }
 
     public List<TrumpCard> openAllCard() {
-        return this.cardDeck.getAllCard();
+        return this.cardHand.getAllCard();
     }
 }

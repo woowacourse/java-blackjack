@@ -1,6 +1,5 @@
 package controller;
 
-import domain.CardDeck;
 import domain.GameManger;
 import domain.TrumpCard;
 import domain.user.Dealer;
@@ -36,7 +35,6 @@ public class BlackjackController {
     }
 
     private void distributionFirstCard(GameManger gameManger, List<String> playerNames) {
-        CardDeck.initCache();
         gameManger.firstHandOutCard();
 
         displayOpenCard(gameManger.getDealer().getName(), gameManger.getDealer());
@@ -46,7 +44,7 @@ public class BlackjackController {
     private void addtionalDealerCard(GameManger gameManger) {
         User dealer = gameManger.getDealer();
         while (!dealer.isImpossibleDraw()) {
-            dealer.drawCard();
+            dealer.drawCard(gameManger.handOutCard());
             outputView.displayDealerAddCard();
         }
     }
@@ -77,7 +75,7 @@ public class BlackjackController {
             if (yesOrNo.equalsIgnoreCase("N")) {
                 return;
             }
-            player.drawCard();
+            player.drawCard(gameManger.handOutCard());
             displayOpenCard(playerName, player);
         }
     }
@@ -96,7 +94,7 @@ public class BlackjackController {
     private void displayDealer(GameManger gameManger) {
         Dealer dealer = (Dealer) gameManger.getDealer();
         List<TrumpCard> dealerCards = dealer.openAllCard();
-        int score = dealer.getCardDeck().calculateScore();
+        int score = dealer.getCardHand().calculateScore();
         displayConvertCards(dealer.getName(), dealerCards, score);
     }
 
@@ -105,7 +103,7 @@ public class BlackjackController {
                 .map(gameManger::findUserByUsername)
                 .toList()
                 .forEach(player -> displayConvertCards(player.getName(), player.openCard(),
-                        player.getCardDeck().calculateScore()));
+                        player.getCardHand().calculateScore()));
     }
 
     private void displayConvertCards(String name, List<TrumpCard> dealerCards, int score) {

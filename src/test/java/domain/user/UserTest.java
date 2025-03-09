@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.CardDeck;
+import domain.GameManger;
 import domain.TrumpCard;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -10,12 +11,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class UserTest {
-    @BeforeEach
-    public void setUp() {
-        CardDeck.bin();
-        CardDeck.initCache();
-    }
-
     @Nested
     @DisplayName("카드 공개")
     public class OpenCard {
@@ -23,9 +18,10 @@ class UserTest {
         @Test
         void test() {
             // given
-            User user = new Player("수양");
-            user.drawCard();
-            user.drawCard();
+            GameManger gameManger = new GameManger(List.of("수양"));
+            User user = gameManger.findUserByUsername("수양");
+            user.drawCard(gameManger.handOutCard());
+            user.drawCard(gameManger.handOutCard());
 
             // when
             List<TrumpCard> cards = user.openCard();
@@ -38,9 +34,10 @@ class UserTest {
         @Test
         void test2() {
             // given
-            User user = new Dealer();
-            user.drawCard();
-            user.drawCard();
+            GameManger gameManger = new GameManger(List.of("수양"));
+            User user = gameManger.getDealer();
+            user.drawCard(gameManger.handOutCard());
+            user.drawCard(gameManger.handOutCard());
 
             // when
             List<TrumpCard> cards = user.openCard();
@@ -54,12 +51,15 @@ class UserTest {
     @Test
     void test3() {
         // given
-        User user = new Player("test");
+        GameManger gameManger = new GameManger(List.of("수양"));
+        User user = gameManger.findUserByUsername("수양");
+        user.drawCard(gameManger.handOutCard());
+        user.drawCard(gameManger.handOutCard());
         for (int i = 0; i < 12; i++) {
-            user.drawCard();
+            user.drawCard(gameManger.handOutCard());
         }
 
         // when && then
-        Assertions.assertThat(user.isBurst()).isEqualTo(true);
+        Assertions.assertThat(user.isBust()).isEqualTo(true);
     }
 }

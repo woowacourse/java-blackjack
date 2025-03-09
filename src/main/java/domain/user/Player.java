@@ -15,12 +15,12 @@ public class Player extends User {
 
     @Override
     public boolean isImpossibleDraw() {
-        return cardDeck.isAtLeastScore(CardHand.MAX_SCORE);
+        return cardHand.isAtLeastScore(CardHand.MAX_SCORE);
     }
 
     @Override
     public List<TrumpCard> openCard() {
-        return this.cardDeck.getAllCard();
+        return this.cardHand.getAllCard();
     }
 
     @Override

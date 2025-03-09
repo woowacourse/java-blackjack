@@ -2,6 +2,7 @@ import domain.CardHand;
 import domain.CardNumber;
 import domain.CardDeck;
 import domain.CardShape;
+import domain.GameManger;
 import domain.TrumpCard;
 import java.util.List;
 import java.util.stream.Stream;
@@ -14,34 +15,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardDeckTest {
-    @BeforeEach
-    public void setUp() {
-        CardDeck.bin();
-        CardDeck.initCache();
-    }
-
-    @DisplayName("실행 시점에 서로 다른 카드 52장을 초기화한다.")
-    @Test
-    void test() {
-        // given
-        int index = 0;
-
-        // when
-        TrumpCard card = CardDeck.getCard(index);
-
-        // then
-        Assertions.assertThat(card).isInstanceOf(TrumpCard.class);
-    }
-
     @DisplayName("카드 배부 시 52장의 카드 덱에서 카드를 뽑아서 배부한다.")
     @Test
     void test2() {
         // given
-        int originCardDeckSize = CardDeck.getCardDeck().size();
+        CardDeck cardDeck = new CardDeck();
+        int originCardDeckSize = cardDeck.getCardDeck().size();
 
         // when
-        CardDeck.drawCard();
-        int afterDrawDeckSize = CardDeck.getCardDeck().size();
+        cardDeck.drawCard();
+        int afterDrawDeckSize = cardDeck.getCardDeck().size();
 
         // then
         Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
@@ -51,14 +34,15 @@ public class CardDeckTest {
     @Test
     void test3() {
         // given
+        CardDeck cardDeck = new CardDeck();
         int count = 0;
         for (int i = 0; i < 52; i++) {
-            CardDeck.drawCard();
+            cardDeck.drawCard();
             count++;
         }
 
         // when & then
-        Assertions.assertThatThrownBy(CardDeck::drawCard)
+        Assertions.assertThatThrownBy(cardDeck::drawCard)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드가 다 떨어졌습니다");
     }
