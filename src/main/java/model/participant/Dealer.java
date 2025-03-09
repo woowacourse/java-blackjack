@@ -13,7 +13,7 @@ public final class Dealer extends Participant {
         return getParticipantHand().getCards().getFirst();
     }
 
-    public boolean checkScoreUnderSixteen() {
+    public boolean canHit() {
         return getParticipantHand().checkScoreBelow(DEALER_HIT_THRESHOLD);
     }
 }

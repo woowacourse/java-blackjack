@@ -25,7 +25,7 @@ class DealerTest {
         dealer.receiveCard(new Card(CardRank.EIGHT, CardSuit.DIAMOND));
 
         //when, then
-        assertTrue(dealer.checkScoreUnderSixteen());
+        assertTrue(dealer.canHit());
     }
 
     @DisplayName("카드의 합이 17이상의면 false를 반환한다.")
@@ -36,7 +36,7 @@ class DealerTest {
         dealer.receiveCard(new Card(CardRank.NINE, CardSuit.DIAMOND));
 
         //when, then
-        assertFalse(dealer.checkScoreUnderSixteen());
+        assertFalse(dealer.canHit());
     }
 
 }

@@ -33,8 +33,7 @@ public class BlackjackController {
     }
 
     private static void hitOrStandAtDealerTurn(final Dealer dealer, final Deck deck) {
-        boolean flag = true;
-        while (flag == dealer.checkScoreUnderSixteen()) {
+        while (dealer.canHit()) {
             OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());
         }
@@ -47,8 +46,7 @@ public class BlackjackController {
     }
 
     private void hitOrStandAtOnePlayerTurn(final Deck deck, final Player player) {
-        boolean flag = true;
-        while ((flag == InputView.readHit(player))) {
+        while (InputView.readHit(player)) {
             player.receiveCard(deck.pick());
             OutputView.printHitResult(player);
             if (player.isBurst()) {
