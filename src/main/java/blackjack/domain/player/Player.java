@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static blackjack.domain.card.CardNumber.ACE_ELEVEN_VALUE;
+
 public abstract class Player {
 
     public static final int BUST_THRESHOLD = 21;
-    public static final int ACE_PLUS_SCORE = 10;
 
     private final Name name;
     private final List<Card> cards;
@@ -52,13 +53,13 @@ public abstract class Player {
                 .mapToInt(Card::getValue)
                 .sum();
         if (canCalculateAceWithEleven(sum)) {
-            sum += ACE_PLUS_SCORE;
+            sum += ACE_ELEVEN_VALUE - 1;
         }
         return sum;
     }
 
     private boolean canCalculateAceWithEleven(int sum) {
-        return hasAce() && sum + ACE_PLUS_SCORE <= BUST_THRESHOLD;
+        return hasAce() && sum + ACE_ELEVEN_VALUE - 1 <= BUST_THRESHOLD;
     }
 
     private boolean hasAce() {
