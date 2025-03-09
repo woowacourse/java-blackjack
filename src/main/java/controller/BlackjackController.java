@@ -2,7 +2,6 @@ package controller;
 
 import dto.CardDto;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +81,7 @@ public class BlackjackController {
                 .collect(Collectors.toMap(
                         Function.identity(),
                         name -> judge.determineGameResult(dealerCards, players.findCardsByName(name)
-                )))
+                        )))
         );
     }
 
@@ -125,5 +124,4 @@ public class BlackjackController {
         names.forEach(name -> rawPlayers.put(name, PlayerCardsFactory.generate(deck)));
         return new Players(rawPlayers);
     }
-
 }
