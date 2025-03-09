@@ -3,7 +3,7 @@ package blackjack.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.model.card.initializer.CardDeckInitializer;
+import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
 import blackjack.model.game.Rule;
 import blackjack.model.player.Dealer;
@@ -16,19 +16,15 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardDeckInitializer cardDeckInitializer;
 
-    public BlackJackController(
-            final InputView inputView, final OutputView outputView, final CardDeckInitializer cardDeckInitializer
-    ) {
+    public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardDeckInitializer = cardDeckInitializer;
     }
 
     public void run() {
         Rule rule = new Rule();
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeckInitializer, rule);
+        BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer(), rule);
 
         Dealer dealer = new Dealer();
         List<User> users = makeUsers();
