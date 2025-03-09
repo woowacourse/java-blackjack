@@ -62,27 +62,8 @@ public class GameBoard {
 
     public int getScoreOf(Participant participant) {
         ParticipantCardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
-        List<Card> ownedCards = ownedCardDeck.getCards();
-
-        int totalScore = 0;
-        int aceCounts = 0;
-
-        for (Card card : ownedCards) {
-            totalScore += card.getNumber();
-            if (card.isAceCard()) {
-                aceCounts++;
-            }
-        }
-
-        while (aceCounts-- > 0) {
-            if (totalScore + 10 <= THRESHOLD) {
-                totalScore += 10;
-            }
-        }
-
-        return totalScore;
+        return participant.getScore(ownedCardDeck);
     }
-
 
     public void calculateBattleResult() {
         Entry<Participant, ParticipantCardDeck> cardDeckOfDealer = cardDeckOfParticipant.entrySet()

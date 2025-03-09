@@ -1,21 +1,14 @@
 package domain.participant;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Dealer implements Participant {
+public class Dealer extends Participant {
     private static final int STAY_THRESHOLD = 16;
 
-    private final String nickname;
-    private final Map<BattleResult, Integer> battleResult;
-
-    private Dealer(final String nickname) {
-        this.nickname = nickname;
-        this.battleResult = new HashMap<>();
+    private Dealer() {
+        super("딜러");
     }
 
     public static Dealer generate() {
-        return new Dealer("딜러");
+        return new Dealer();
     }
 
     @Override
@@ -26,21 +19,6 @@ public class Dealer implements Participant {
     @Override
     public boolean areYouDealer() {
         return true;
-    }
-
-    @Override
-    public String getNickname() {
-        return nickname;
-    }
-
-    @Override
-    public Map<BattleResult, Integer> getBattleResult() {
-        return battleResult;
-    }
-
-    @Override
-    public void updateBattleResult(final BattleResult battleResult) {
-        this.battleResult.merge(battleResult, 1, Integer::sum);
     }
 
     public static int getStayThreshold() {
