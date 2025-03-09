@@ -7,7 +7,7 @@ import domain.card.Cards;
 import java.util.*;
 
 public class Dealer extends Participant {
-    public static final int DRAW_BOUNDARY = 16;
+    private static final int DRAW_BOUNDARY = 16;
 
     private final Map<GameResult, Integer> result;
 
