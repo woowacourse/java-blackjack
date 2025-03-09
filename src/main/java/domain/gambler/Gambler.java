@@ -2,6 +2,7 @@ package domain.gambler;
 
 import domain.Card;
 import domain.Cards;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Gambler {
@@ -24,7 +25,7 @@ public class Gambler {
     }
 
     public List<Card> openCards() {
-        return cards.getCards();
+        return new ArrayList<>(cards.getCards());
     }
 
     private void validateInitialCardsSize(Cards cards) {

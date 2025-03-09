@@ -1,6 +1,7 @@
 package domain;
 
 import domain.constant.TrumpNumber;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
@@ -55,6 +56,6 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 }

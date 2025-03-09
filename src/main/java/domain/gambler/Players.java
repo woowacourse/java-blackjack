@@ -1,6 +1,7 @@
 package domain.gambler;
 
 import domain.constant.WinDrawLose;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +25,12 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
+        return new ArrayList<>(players.stream()
                 .map(Player::getNickname)
-                .toList();
+                .toList());
     }
 }
