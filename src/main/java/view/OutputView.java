@@ -16,7 +16,7 @@ public class OutputView {
 	}
 
 	public void printPlayersCard(final Map<String, List<String>> cardsByPlayerName) {
-		cardsByPlayerName.entrySet().forEach(player -> printPlayerCards(player.getKey(), player.getValue()));
+		cardsByPlayerName.forEach(this::printPlayerCards);
 	}
 
 	public void printPlayerCards(final String name, final List<String> card) {

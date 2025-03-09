@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,12 +70,10 @@ public class BlackjackController {
 
 	private Map<String, List<String>> convertPlayersToEntries(final List<Player> players) {
 		return players.stream()
-			.map(this::convertPlayerToEntry)
-			.collect(Collectors.toMap(value -> value.getKey(), value -> value.getValue()));
-	}
-
-	private Map.Entry<String, List<String>> convertPlayerToEntry(final Player player) {
-		return new AbstractMap.SimpleEntry<>(player.getName(), convertParticipantCardText(player.getParticipant()));
+			.collect(Collectors.toMap(
+				player -> player.getName(),
+				player -> convertParticipantCardText(player.getParticipant())
+			));
 	}
 
 	private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
