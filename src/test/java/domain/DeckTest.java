@@ -19,7 +19,7 @@ public class DeckTest {
 
 		@DisplayName("Deck에 동일한 카드가 들어오면, 예외가 발생한다.")
 		@Test
-		public void validateDuplicate() throws Exception {
+		public void validateDuplicate() {
 			// given
 			final Card club = new Card(Rank.TWO, Suit.CLUB);
 			final var q = new ArrayDeque<>(List.of(club, club));
@@ -36,7 +36,7 @@ public class DeckTest {
 	class pickCard {
 		@DisplayName("카드를 올바르게 뽑아온다.")
 		@Test
-		public void pickCard() throws Exception {
+		public void pickCard() {
 			// given
 			final Rank cardNumber = Rank.TWO;
 			final var d = new ArrayDeque<>(List.of(new Card(cardNumber, Suit.CLUB)));
@@ -53,7 +53,7 @@ public class DeckTest {
 
 	@DisplayName("카드를 모두뽑았다면, 예외가 발생한다.")
 	@Test
-	public void pickCardEmpty() throws Exception {
+	public void pickCardEmpty() {
 		// given
 		final var deck = new Deck(new ArrayDeque<>());
 		// when&then

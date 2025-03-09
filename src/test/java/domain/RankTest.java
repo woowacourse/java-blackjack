@@ -16,7 +16,7 @@ public class RankTest {
 		@DisplayName("점수를 올바르게 ACE 최소값으로 계산한다.")
 		@ParameterizedTest
 		@CsvSource(value = {"20:2:20", "22:0:22", "22:1:12", "44:4:14"}, delimiter = ':')
-		void ifOverThanBustScoreAceIsMIN(final int score, final int aceCount, final int expected) throws Exception {
+		void ifOverThanBustScoreAceIsMIN(final int score, final int aceCount, final int expected) {
 			// given & when
 			final var actual = Rank.ifOverThanBustScoreAceIsMIN(score, aceCount);
 

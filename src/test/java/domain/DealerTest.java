@@ -19,7 +19,7 @@ public class DealerTest {
 
 		@DisplayName("16점 이하라면, 딜러가 카드를 뽑는 여부를 올바르게 반환한다.")
 		@Test
-		public void isPickCard() throws Exception {
+		public void isPickCard() {
 			// given
 			final var dealer = new Dealer();
 
@@ -32,7 +32,7 @@ public class DealerTest {
 
 		@DisplayName("16점 초과라면, 딜러가 카드를 뽑는 여부를 올바르게 반환한다.")
 		@Test
-		public void isPickCard1() throws Exception {
+		public void isPickCard1() {
 			// given
 			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
 			final Card card2 = new Card(Rank.SEVEN, Suit.HEART);
@@ -53,7 +53,7 @@ public class DealerTest {
 
 		@DisplayName("딜러는 플레이와의 대결 결과를 올바르게, 기록한다.")
 		@Test
-		void startDuel() throws Exception {
+		void startDuel() {
 			// given
 			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
 			final Card card2 = new Card(Rank.SEVEN, Suit.HEART);
