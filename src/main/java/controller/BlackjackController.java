@@ -14,18 +14,22 @@ import view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        List<String> playerNames = InputView.readPlayerNames();
-        Players players = Players.from(playerNames);
-        Dealer dealer = new Dealer();
-        Deck deck = Deck.of();
+        try {
+            List<String> playerNames = InputView.readPlayerNames();
+            Players players = Players.from(playerNames);
+            Dealer dealer = new Dealer();
+            Deck deck = Deck.of();
 
-        dealInitially(players, deck, dealer);
+            dealInitially(players, deck, dealer);
 
-        hitOrStandAtPlayersTurn(players, deck);
-        hitOrStandAtDealerTurn(dealer, deck);
+            hitOrStandAtPlayersTurn(players, deck);
+            hitOrStandAtDealerTurn(dealer, deck);
 
-        OutputView.printFinalScore(dealer, players);
-        printWinningResult(players, dealer);
+            OutputView.printFinalScore(dealer, players);
+            printWinningResult(players, dealer);
+        } catch (RuntimeException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+        }
     }
 
     private static void hitOrStandAtDealerTurn(Dealer dealer, Deck deck) {

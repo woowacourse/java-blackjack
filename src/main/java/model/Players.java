@@ -22,9 +22,9 @@ public class Players {
     }
 
     public void dealInitialCards(Deck deck) {
-        for (Player player : players) {
-            player.dealInitialCards(deck);
-        }
+        players.forEach(player ->
+                player.dealInitialCards(deck)
+        );
     }
 
     public List<Player> getPlayers() {
@@ -34,7 +34,7 @@ public class Players {
     private static void validateDuplication(List<String> playerNames) {
         Set<String> uniqueNames = new HashSet<>(playerNames);
         if (uniqueNames.size() != playerNames.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("플레이어 이름 간 중복은 허용하지 않습니다.");
         }
     }
 }

@@ -80,4 +80,7 @@ public class OutputView {
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", String.join(JOIN_DELIMITER, playerNames));
     }
 
+    public static void printExceptionMessage(String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }
