@@ -1,50 +1,51 @@
 package domain;
 
 public class Dealer {
-    private static final int DEALER_MAX_SCORE_FOR_PICK = 16;
-    private final Participant participant;
-    private int winCount = 0;
-    private int loseCount = 0;
 
-    public Dealer() {
-        this.participant = new Participant();
-    }
+  private static final int DEALER_MAX_SCORE_FOR_PICK = 16;
+  private final Participant participant;
+  private int winCount = 0;
+  private int loseCount = 0;
 
-    public Dealer(final Hand hand) {
-        this.participant = new Participant(hand);
-    }
+  public Dealer() {
+    this.participant = new Participant();
+  }
 
-    public boolean isPickCard() {
-        return participant.calculateScore() <= DEALER_MAX_SCORE_FOR_PICK;
-    }
+  public Dealer(final Hand hand) {
+    this.participant = new Participant(hand);
+  }
 
-    public void pickCardOnFirstHandOut(final Deck deck) {
-        participant.pickCardOnFirstHandOut(deck);
-    }
+  public boolean isPickCard() {
+    return participant.calculateScore() <= DEALER_MAX_SCORE_FOR_PICK;
+  }
 
-    public void pickCard(final Deck deck) {
-        participant.pickCard(deck);
-    }
+  public void pickCardOnFirstHandOut(final Deck deck) {
+    participant.pickCardOnFirstHandOut(deck);
+  }
 
-    public void startDuel(final Player player) {
-        player.duel(participant);
-        final boolean isWinPlayerDuelResult = player.isWinDuel();
-        if (isWinPlayerDuelResult) {
-            loseCount++;
-            return;
-        }
-        winCount++;
-    }
+  public void pickCard(final Deck deck) {
+    participant.pickCard(deck);
+  }
 
-    public Participant getParticipant() {
-        return participant;
+  public void startDuel(final Player player) {
+    player.duel(participant);
+    final boolean isWinPlayerDuelResult = player.isWinDuel();
+    if (isWinPlayerDuelResult) {
+      loseCount++;
+      return;
     }
+    winCount++;
+  }
 
-    public int getWinCount() {
-        return winCount;
-    }
+  public Participant getParticipant() {
+    return participant;
+  }
 
-    public int getLoseCount() {
-        return loseCount;
-    }
+  public int getWinCount() {
+    return winCount;
+  }
+
+  public int getLoseCount() {
+    return loseCount;
+  }
 }

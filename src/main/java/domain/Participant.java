@@ -1,32 +1,33 @@
 package domain;
 
 public class Participant {
-    private final Hand hand;
 
-    public Participant() {
-        hand = new Hand();
-    }
+  private final Hand hand;
 
-    public Participant(final Hand hand) {
-        this.hand = hand;
-    }
+  public Participant() {
+    hand = new Hand();
+  }
 
-    public void pickCardOnFirstHandOut(final Deck deck) {
-        pickCard(deck);
-        pickCard(deck);
-    }
+  public Participant(final Hand hand) {
+    this.hand = hand;
+  }
 
-    public void pickCard(final Deck deck) {
-        final TrumpCard card = deck.pickCard();
-        hand.add(card);
-    }
+  public void pickCardOnFirstHandOut(final Deck deck) {
+    pickCard(deck);
+    pickCard(deck);
+  }
 
-    public int calculateScore() {
-        return hand.calculateScore();
-    }
+  public void pickCard(final Deck deck) {
+    final TrumpCard card = deck.pickCard();
+    hand.add(card);
+  }
 
-    public Hand getCards() {
-        return hand;
-    }
+  public int calculateScore() {
+    return hand.calculateScore();
+  }
+
+  public Hand getCards() {
+    return hand;
+  }
 }
 
