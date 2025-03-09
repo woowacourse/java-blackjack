@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static domain.GameResult.*;
+
 public class GameManager {
     public static final int LIMIT = 21;
     public static final int START_RECEIVE_CARD = 2;
@@ -31,7 +33,7 @@ public class GameManager {
 
     public Map<GameResult, Integer> calculateDealerGameResult() {
         final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
-        return GameResult.getAllGameResults().stream()
+        return getAllGameResults().stream()
                 .filter(playerGameResult::contains)
                 .collect(Collectors.toMap(
                         GameResult::swapGameResult,
@@ -40,20 +42,10 @@ public class GameManager {
                 ));
     }
 
-    private GameResult calculateResult(final Player player) {
-        if (dealer.isBust() && player.isBust()) {
-            return GameResult.DRAW;
-        }
-        if (dealer.isBust()) {
-            return GameResult.WIN;
-        }
-        return player.calculateGameResult(dealer.calculateScore());
-    }
-
     public Map<String, GameResult> calculatePlayerGameResult() {
         Map<String, GameResult> resultMap = new HashMap<>();
         for (Player player : players) {
-            resultMap.put(player.getName(), calculateResult(player));
+            resultMap.put(player.getName(), calculateResult(dealer,player));
         }
         return resultMap;
     }

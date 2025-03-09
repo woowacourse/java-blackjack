@@ -1,5 +1,8 @@
 package domain;
 
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +41,16 @@ public enum GameResult {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public static GameResult calculateResult(final Dealer dealer, final Player player) {
+        if (dealer.isBust() && player.isBust()) {
+            return GameResult.DRAW;
+        }
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+        return player.calculateGameResult(dealer.calculateScore());
     }
 
     public String getDescription() {
