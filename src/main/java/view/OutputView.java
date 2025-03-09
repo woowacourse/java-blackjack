@@ -5,9 +5,7 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
-import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,6 +16,14 @@ public class OutputView {
         System.out.printf("[ERROR] %s", exception.getMessage());
     }
 
+    public void printHandoutCards(List<Card> dealerCards, Set<Player> players) {
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", getPlayerNamesText(players));
+        System.out.printf("딜러카드: %s\n", getCardsText(dealerCards));
+        for (Player player : players) {
+            System.out.printf("%s카드: %s\n", player.getName(), getCardsText(player.getCards()));
+        }
+    }
+
     public void printPlayerCards(Player player) {
         System.out.printf("%s카드: %s\n", player.getName(), getCardsText(player.getCards()));
     }
@@ -26,18 +32,12 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", count);
     }
 
-    public void printPlayersCardAndSum(Players players) {
-        Set<Player> allPlayers = players.getPlayers();
-        allPlayers.forEach(this::printCardsAndResult);
+    public void printDealerCardsAndResult(Cards cards, final int score) {
+        System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(cards), score);
     }
 
-    public void printDealerCardsAndResult(Dealer dealer) {
-        System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(dealer.getCards()), dealer.getCardScore());
-    }
-
-    public void printCardsAndResult(Player player) {
-        System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), getCardsText(player.getCards()),
-                player.getCardScore());
+    public void printCardsAndResult(String name, Cards cards, final int score) {
+        System.out.printf("%s카드: %s - 결과: %d\n", name, getCardsText(cards), score);
     }
 
     public void printResult(Map<GameResult, Integer> dealerResult, Map<Player, GameResult> playerResult) {
@@ -50,9 +50,9 @@ public class OutputView {
     }
 
     private String getDealerResultText(Map<GameResult, Integer> dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder("딜러: ");
+        StringBuilder stringBuilder = new StringBuilder("딜러:");
         if (dealerResult.containsKey(GameResult.WIN)) {
-            stringBuilder.append(String.format("%d승", dealerResult.get(GameResult.WIN)));
+            stringBuilder.append(String.format(" %d승", dealerResult.get(GameResult.WIN)));
         }
         if (dealerResult.containsKey(GameResult.DRAW)) {
             stringBuilder.append(String.format(" %d무", dealerResult.get(GameResult.DRAW)));
@@ -61,6 +61,11 @@ public class OutputView {
             stringBuilder.append(String.format(" %d패", dealerResult.get(GameResult.LOSE)));
         }
         return stringBuilder.toString();
+    }
+
+    private String getPlayerNamesText(Set<Player> players) {
+        List<String> names = players.stream().map(Player::getName).toList();
+        return String.join(", ", names);
     }
 
     private String getGameResultText(GameResult gameResult) {
@@ -72,7 +77,14 @@ public class OutputView {
     }
 
     private String getCardsText(Cards cards) {
-        List<String> formatted = cards.getCards().stream()
+        List<String> formatted = cards.getValues().stream()
+                .map(this::getCardText)
+                .toList();
+        return String.join(", ", formatted);
+    }
+
+    private String getCardsText(List<Card> cards) {
+        List<String> formatted = cards.stream()
                 .map(this::getCardText)
                 .toList();
         return String.join(", ", formatted);

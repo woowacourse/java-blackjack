@@ -93,7 +93,7 @@ public class DeckTest {
         ));
 
         //when
-        int count = deck.countDealerDraw(dealer);
+        int count = deck.drawCardTo(dealer);
 
         //then
         assertThat(count).isEqualTo(2);

@@ -30,7 +30,7 @@ public class Deck {
         participant.addCard(pick());
     }
 
-    public int countDealerDraw(Dealer dealer) {
+    public int drawCardTo(Dealer dealer) {
         int count = 0;
         while (dealer.hasToDraw()) {
             giveCardTo(dealer);
