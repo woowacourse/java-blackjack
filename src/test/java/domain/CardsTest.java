@@ -11,11 +11,11 @@ public class CardsTest {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.THREE),
-                new Card(CardShape.SPADE, CardNumber.FOUR),
-                new Card(CardShape.SPADE, CardNumber.JACK))
+                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.SPADE, Rank.THREE),
+                new Card(Suit.SPADE, Rank.FOUR),
+                new Card(Suit.SPADE, Rank.JACK))
         );
         final int expected = 19;
 
@@ -31,11 +31,11 @@ public class CardsTest {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.SPADE, CardNumber.THREE),
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
-                new Card(CardShape.SPADE, CardNumber.JACK))
+                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.SPADE, Rank.THREE),
+                new Card(Suit.SPADE, Rank.QUEEN),
+                new Card(Suit.SPADE, Rank.JACK))
         );
         final int expected = 25;
 
@@ -49,14 +49,13 @@ public class CardsTest {
     @Test
     void 카드_합이_항상_21을_초과할_경우_TRUE를_반환한다() {
 
-
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.JACK),
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
-                new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.ACE))
+                new Card(Suit.SPADE, Rank.JACK),
+                new Card(Suit.SPADE, Rank.QUEEN),
+                new Card(Suit.SPADE, Rank.TWO),
+                new Card(Suit.SPADE, Rank.ACE))
         );
 
         // when
@@ -71,9 +70,9 @@ public class CardsTest {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
-                new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.ACE))
+                new Card(Suit.SPADE, Rank.QUEEN),
+                new Card(Suit.SPADE, Rank.TWO),
+                new Card(Suit.SPADE, Rank.ACE))
         );
 
         // when

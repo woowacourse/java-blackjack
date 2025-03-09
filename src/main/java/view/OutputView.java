@@ -22,8 +22,8 @@ public class OutputView {
     public static void printPlayerCards(NameAndCards player) {
         System.out.printf("%s카드: %s%n", player.name(),
                 String.join(", ", player.cards().stream()
-                        .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
-                                card.getCardShape().getTitle()))
+                        .map(card -> String.format("%s%s", card.getRank().getTitle(),
+                                card.getSuit().getTitle()))
                         .toList()));
     }
 
@@ -37,8 +37,8 @@ public class OutputView {
     private static void printPlayerCardsAndSum(Map<String, Integer> nameAndSum, NameAndCards player) {
         System.out.printf("%s카드: %s - 결과: %d%n", player.name(),
                 String.join(", ", player.cards().stream()
-                        .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
-                                card.getCardShape().getTitle()))
+                        .map(card -> String.format("%s%s", card.getRank().getTitle(),
+                                card.getSuit().getTitle()))
                         .toList()),
                 nameAndSum.get(player.name()));
     }

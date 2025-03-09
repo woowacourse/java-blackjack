@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 
 public class DeckGenerator {
     public static Deck generateDeck() {
-        List<Card> cards = Arrays.stream(CardShape.values())
-                .flatMap(cardShape ->
-                        Arrays.stream(CardNumber.values())
-                                .map(cardNumber -> new Card(cardShape, cardNumber)))
+        List<Card> cards = Arrays.stream(Suit.values())
+                .flatMap(suit ->
+                        Arrays.stream(Rank.values())
+                                .map(rank -> new Card(suit, rank)))
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
         return new Deck(cards);

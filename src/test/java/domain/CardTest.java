@@ -8,6 +8,6 @@ public class CardTest {
 
     @Test
     void 카드가_정상적으로_생성된다() {
-        assertThatNoException().isThrownBy(() -> new Card(CardShape.HEART, CardNumber.ACE));
+        assertThatNoException().isThrownBy(() -> new Card(Suit.HEART, Rank.ACE));
     }
 }

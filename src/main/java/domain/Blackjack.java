@@ -14,7 +14,7 @@ public class Blackjack {
         this.players = players;
         this.deck = deck;
     }
-    
+
     public void distributeInitialCards() {
         players.distributeInitialCards(deck);
     }
@@ -100,13 +100,13 @@ public class Blackjack {
         List<Participant> participants = getParticipants();
 
         for (Participant participant : participants) {
-            MatchResult matchResult = calculateParticipantMatchResult(dealer, participant);
+            MatchResult matchResult = computeParticipantMatchResult(dealer, participant);
             participantNameAndMatchResult.put(participant.getName(), matchResult);
         }
         return participantNameAndMatchResult;
     }
 
-    private MatchResult calculateParticipantMatchResult(Dealer dealer, Participant participant) {
+    private MatchResult computeParticipantMatchResult(Dealer dealer, Participant participant) {
         if (participant.isBurst() && dealer.isBurst() || participant.isBurst()) {
             return MatchResult.LOSE;
         }

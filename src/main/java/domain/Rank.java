@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public enum CardNumber {
+public enum Rank {
     ACE("A", List.of(1, 11)),
     TWO("2", List.of(2)),
     THREE("3", List.of(3)),
@@ -21,7 +21,7 @@ public enum CardNumber {
     private final String title;
     private final List<Integer> scores;
 
-    CardNumber(String title, List<Integer> scores) {
+    Rank(String title, List<Integer> scores) {
         this.title = title;
         this.scores = scores;
     }
