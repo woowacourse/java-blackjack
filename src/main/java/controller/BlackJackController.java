@@ -30,34 +30,29 @@ public class BlackJackController {
         final List<Player> players = getPlayers();
         final GameBoard gameBoard = GameBoard.generateOf(dealer, players);
 
-        startBlackJack(dealer, players, gameBoard);
+        startBlackJack(gameBoard);
     }
 
-    private void startBlackJack(final Dealer dealer, final List<Player> players, final GameBoard gameBoard) {
+    private void startBlackJack(final GameBoard gameBoard) {
         gameBoard.shufflePlayingCard();
-        drawTwoCards(dealer, players, gameBoard);
+        drawTwoCards(gameBoard);
 
-        for (Player player : players) {
+        for (Participant player : gameBoard.getPlayers()) {
             startTurnOf(player, gameBoard);
         }
-        startDealerTurn(dealer, gameBoard);
-
-        printBlackJackResult(dealer, players, gameBoard);
+        startDealerTurn(gameBoard);
+        printBlackJackResult(gameBoard);
     }
 
-    private void printBlackJackResult(Dealer dealer, List<Player> players, GameBoard gameBoard) {
-        printBlackJackScore(dealer, players, gameBoard);
-
-        printBattleResult(dealer, players, gameBoard);
+    private void printBlackJackResult(GameBoard gameBoard) {
+        printBlackJackScore(gameBoard);
+        printBattleResult(gameBoard);
     }
 
-    private void printBattleResult(Dealer dealer, List<Player> players, GameBoard gameBoard) {
+    private void printBattleResult(GameBoard gameBoard) {
         gameBoard.calculateBattleResult();
 
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
-
+        List<Participant> participants = gameBoard.getParticipants();
         List<BattleResultResponse> battleResultResponses = new ArrayList<>();
         for (Participant participant : participants) {
             String participantNickname = participant.getNickname();
@@ -70,18 +65,18 @@ public class BlackJackController {
         outputView.printBattleResult(battleResultResponses);
     }
 
-    private void printBlackJackScore(Dealer dealer, List<Player> players, GameBoard gameBoard) {
-        List<BlackJackResultResponse> blackJackResultResponses = getBlackJackResultResponses();
+    private void printBlackJackScore(GameBoard gameBoard) {
+        List<BlackJackResultResponse> blackJackResultResponses = new ArrayList<>();
 
-        blackJackResultResponses.add(generateResultResponseOfDealer(dealer, gameBoard));
-        for (Player player : players) {
+        blackJackResultResponses.add(generateResultResponseOfDealer(gameBoard.getDealer(), gameBoard));
+        for (Participant player : gameBoard.getPlayers()) {
             blackJackResultResponses.add(generateResultResponseOfPlayer(player, gameBoard));
         }
 
         outputView.printBlackJackResult(blackJackResultResponses);
     }
 
-    private BlackJackResultResponse generateResultResponseOfPlayer(Player player, GameBoard gameBoard) {
+    private BlackJackResultResponse generateResultResponseOfPlayer(Participant player, GameBoard gameBoard) {
         String playerNickname = player.getNickname();
         List<String> playerCardNames = gameBoard.getCardDeckOf(player)
                 .getCards().stream()
@@ -92,7 +87,7 @@ public class BlackJackController {
 
     }
 
-    private BlackJackResultResponse generateResultResponseOfDealer(Dealer dealer, GameBoard gameBoard) {
+    private BlackJackResultResponse generateResultResponseOfDealer(Participant dealer, GameBoard gameBoard) {
         String dealerNickname = dealer.getNickname();
         List<String> dealerCardNames = gameBoard.getCardDeckOf(dealer)
                 .getCards().stream()
@@ -102,19 +97,15 @@ public class BlackJackController {
         return new BlackJackResultResponse(dealerNickname, dealerCardNames, gameBoard.getScoreOf(dealer));
     }
 
-    private static List<BlackJackResultResponse> getBlackJackResultResponses() {
-        List<BlackJackResultResponse> blackJackResultResponses = new ArrayList<>();
-        return blackJackResultResponses;
-    }
-
-    private void startDealerTurn(Dealer dealer, GameBoard gameBoard) {
+    private void startDealerTurn(GameBoard gameBoard) {
+        Participant dealer = gameBoard.getDealer();
         while (gameBoard.ableToDraw(dealer)) {
             gameBoard.drawCardTo(dealer);
             outputView.printDrawSingleCardToDealerMessage(dealer.getNickname(), Dealer.STAY_THRESHOLD);
         }
     }
 
-    private void startTurnOf(Player player, GameBoard gameBoard) {
+    private void startTurnOf(Participant player, GameBoard gameBoard) {
         while (gameBoard.ableToDraw(player)) {
             Answer answer = Answer.from(inputView.askDrawOneMore(player.getNickname()));
             if (answer == Answer.NO) {
@@ -127,9 +118,9 @@ public class BlackJackController {
         }
     }
 
-    private void drawTwoCards(Dealer dealer, List<Player> players, GameBoard gameBoard) {
+    private void drawTwoCards(GameBoard gameBoard) {
         gameBoard.drawTwoCards();
-        ParticipantResponse participantResponse = ParticipantResponse.of(dealer, players);
+        ParticipantResponse participantResponse = ParticipantResponse.of(gameBoard.getDealer(), gameBoard.getPlayers());
         outputView.printDrawTwoCardsMessage(participantResponse);
         CardDeckStatusResponse cardDeckStatusResponse = CardDeckStatusResponse.from(gameBoard.getCardDeckOfParticipant());
         outputView.printCardDeckStatus(cardDeckStatusResponse);
