@@ -23,8 +23,8 @@ public enum WinningType {
     }
 
     public static WinningType parse(int playerPoint, int dealerPoint) {
-        playerPoint = GameRule.processBustPoint(playerPoint);
-        dealerPoint = GameRule.processBustPoint(dealerPoint);
+        playerPoint = GameRule.applyBustToPoint(playerPoint);
+        dealerPoint = GameRule.applyBustToPoint(dealerPoint);
 
         if (playerPoint > dealerPoint) {
             return WinningType.WIN;

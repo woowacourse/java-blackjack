@@ -16,7 +16,7 @@ class GameRuleTest {
         // given
         // when
         // then
-        assertThat(GameRule.isBurst(point)).isEqualTo(isBust);
+        assertThat(GameRule.isBust(point)).isEqualTo(isBust);
     }
 
     @ParameterizedTest

@@ -16,7 +16,7 @@ public enum GameRule {
         return point < GameRule.LIMIT_POINT_BEFORE_BUST.getValue();
     }
 
-    public static boolean isBurst(int point) {
+    public static boolean isBust(int point) {
         return point > GameRule.LIMIT_POINT_BEFORE_BUST.getValue();
     }
 
@@ -24,8 +24,8 @@ public enum GameRule {
         return point <= DEALER_LIMIT_POINT.getValue();
     }
 
-    public static int processBustPoint(int point) {
-        if (point > 21) {
+    public static int applyBustToPoint(int point) {
+        if (point > LIMIT_POINT_BEFORE_BUST.value) {
             return 0;
         }
         return point;

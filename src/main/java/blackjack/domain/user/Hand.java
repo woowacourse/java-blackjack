@@ -45,7 +45,7 @@ public class Hand {
     private int calculateTotalPoint(int sumWithoutAce, int aceCount) {
         int total = sumWithoutAce;
         for (int i = 0; i < aceCount; i++) {
-            if (GameRule.isBurst(total + GameRule.SOFT_ACE.getValue())) {
+            if (GameRule.isBust(total + GameRule.SOFT_ACE.getValue())) {
                 total += CardValue.ACE.getPoint();
                 continue;
             }
