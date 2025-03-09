@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Player implements Comparable<Player> {
+public abstract class Player {
 
     public static final int BUST_THRESHOLD = 21;
     public static final int ACE_PLUS_SCORE = 10;
@@ -24,8 +24,21 @@ public abstract class Player implements Comparable<Player> {
         cards.addAll(cardPack.getDealByCount(count));
     }
 
-    public boolean isPlayerBust() {
-        return calculateCardNumber() > BUST_THRESHOLD;
+    public int compareWithOtherPlayer(Player otherPlayer) {
+        if (this.isBust() && otherPlayer.isNotBust()) {
+            return -1;
+        }
+        if (this.isBust() && otherPlayer.isBust()) {
+            return 0;
+        }
+        if (this.isNotBust() && otherPlayer.isBust()) {
+            return 1;
+        }
+        return Integer.compare(this.calculateCardNumbers(), otherPlayer.calculateCardNumbers());
+    }
+
+    public boolean isBust() {
+        return calculateCardNumbers() > BUST_THRESHOLD;
     }
 
     public boolean isPlayerNotBust() {
@@ -40,16 +53,6 @@ public abstract class Player implements Comparable<Player> {
             sum += ACE_PLUS_SCORE;
         }
         return sum;
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    abstract public List<Card> getOpenedCards();
-
-    public List<Card> getCards() {
-        return cards;
     }
 
     private boolean canCalculateAceWithEleven(int sum) {

@@ -14,7 +14,7 @@ public class GameResults {
         gameResults = new HashMap<>();
         gamblers.forEach(
                 player -> {
-                    gameResults.put(player, GameResult.getGameResult(dealer, player));
+                    gameResults.put(player, GameResult.evaluateGameResult(dealer, player));
                 }
         );
     }

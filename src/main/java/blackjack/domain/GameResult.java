@@ -8,14 +8,13 @@ public enum GameResult {
     LOSE,
     DRAW;
 
-    public static GameResult getGameResult(Player dealer, Player player) {
-        if (dealer.compareTo(player) > 0) {
-            return GameResult.LOSE;
+    public static GameResult evaluateGameResult(Player dealer, Player gambler) {
+        if (dealer.compareWithOtherPlayer(gambler) > 0) {
+            return LOSE;
         }
-        if (dealer.compareTo(player) < 0) {
-            return GameResult.WIN;
+        if (dealer.compareWithOtherPlayer(gambler) < 0) {
+            return WIN;
         }
-        return GameResult.DRAW;
+        return DRAW;
     }
 }
-
