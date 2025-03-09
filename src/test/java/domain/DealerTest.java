@@ -42,10 +42,10 @@ class DealerTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "ACE, EIGHT, ACE, true",
-            "EIGHT, SEVEN, SIX, true",
-            "KING, KING, TWO, false",
-            "QUEEN, JACK, KING, false"
+            "ACE, EIGHT, ACE, false",
+            "EIGHT, SEVEN, SIX, false",
+            "KING, KING, TWO, true",
+            "QUEEN, JACK, KING, true"
     })
     void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
         // given
@@ -53,9 +53,10 @@ class DealerTest {
         Cards cards = new Cards(initialCards);
         Card card = new Card(number3, TrumpEmblem.SPADE);
         Dealer dealer = new Dealer(cards);
+        dealer.addOneCard(card);
 
         // when
-        boolean isOverBustStandard = dealer.addOneCard(card);
+        boolean isOverBustStandard = dealer.isBust();
 
         // then
         assertThat(isOverBustStandard).isEqualTo(expected);

@@ -41,10 +41,10 @@ class PlayerTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "ACE, EIGHT, ACE, true",
-            "EIGHT, SEVEN, SIX, true",
-            "KING, KING, TWO, false",
-            "QUEEN, JACK, KING, false"
+            "ACE, EIGHT, ACE, false",
+            "EIGHT, SEVEN, SIX, false",
+            "KING, KING, TWO, true",
+            "QUEEN, JACK, KING, true"
     })
     void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
         // given
@@ -52,9 +52,10 @@ class PlayerTest {
         Card card = new Card(number3, TrumpEmblem.SPADE);
         Cards cards = new Cards(initialCards);
         Player player = new Player(new Nickname("pobi"),cards);
+        player.addOneCard(card);
 
         // when
-        boolean isOverBustStandard = player.addOneCard(card);
+        boolean isOverBustStandard = player.isBust();
 
         // then
         assertThat(isOverBustStandard).isEqualTo(expected);

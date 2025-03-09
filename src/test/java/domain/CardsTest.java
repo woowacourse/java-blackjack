@@ -6,28 +6,23 @@ import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class CardsTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {
-            "ACE, EIGHT, ACE, true",
-            "EIGHT, SEVEN, SIX, true",
-            "KING, KING, TWO, false",
-            "QUEEN, JACK, KING, false"
-    })
-    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
+    @Test
+    void 카드를_한장_더한다() {
         // given
-        Cards cards = makeCards(number1, number2);
-        Card card = new Card(number3, TrumpEmblem.SPADE);
+        Cards cards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
+        Card card = new Card(TrumpNumber.SIX, TrumpEmblem.SPADE);
 
         // when
-        boolean isOverBustStandard = cards.addOneCard(card);
+        cards.addOneCard(card);
 
         // then
-        assertThat(isOverBustStandard).isEqualTo(expected);
+        assertThat(cards.getCards()).hasSize(3);
     }
 
     @ParameterizedTest
