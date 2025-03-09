@@ -30,8 +30,9 @@ public class Parser {
     }
 
     private static void validateCommand(final String command) {
-        if (!(command.equalsIgnoreCase(ANSWER_YES) || command.equalsIgnoreCase(ANSWER_NO))) {
-            throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
+        if (command.equalsIgnoreCase(ANSWER_YES) || command.equalsIgnoreCase(ANSWER_NO)) {
+            return;
         }
+        throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
     }
 }
