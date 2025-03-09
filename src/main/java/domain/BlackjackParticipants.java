@@ -1,6 +1,7 @@
 package domain;
 
 import except.BlackJackException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class BlackjackParticipants {
     private final Dealer dealer;
 
     public BlackjackParticipants(List<Player> players, Dealer dealer) {
-        this.players = players;
+        this.players = new ArrayList<>(players);
         this.dealer = dealer;
     }
 
