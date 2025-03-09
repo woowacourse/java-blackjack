@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class CardDeckFactoryTest {
     @Test
     @DisplayName("카드 덱 생성 테스트")
-    void createCardDeckTest(){
+    void createCardDeckTest() {
         // given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
 

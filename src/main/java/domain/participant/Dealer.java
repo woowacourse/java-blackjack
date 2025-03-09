@@ -3,14 +3,14 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardDeck;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     public Dealer() {
         super();
     }
 
-    public Card getHandExceptHidden(){
+    public Card getHandExceptHidden() {
         return hand.getCardExceptHidden();
     }
 

@@ -1,6 +1,5 @@
 package view;
 
-import domain.card.Card;
 import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;

@@ -33,8 +33,8 @@ public class CardDeck {
                 .mapToInt(Card::getScore)
                 .sum();
 
-        if(sum <= BONUS_THRESHOLD && hasA()){
-            sum+= ACE_BONUS;
+        if (sum <= BONUS_THRESHOLD && hasA()) {
+            sum += ACE_BONUS;
         }
 
         return sum;

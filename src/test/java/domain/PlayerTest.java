@@ -74,7 +74,8 @@ public class PlayerTest {
         InputView testInputView = new InputView(new Scanner(System.in));
         OutputView testOutputView = new OutputView();
 
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        CardDeck cardDeck = new CardDeck(
+                List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
         Player player = new Player("pobi");
 
         // when
@@ -89,7 +90,8 @@ public class PlayerTest {
     void calculateWinner() {
         // given
         Player player = new Player("pobi");
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE), new Card(HEART, TWO), new Card(DIAMOND, THREE)));
+        CardDeck cardDeck = new CardDeck(
+                List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE), new Card(HEART, TWO), new Card(DIAMOND, THREE)));
         Dealer dealer = new Dealer();
 
         player.hitCards(cardDeck);

@@ -24,10 +24,10 @@ class MatchResultTest {
                 25, 25, LOSE,
                 25, 27, LOSE,
                 21, 23, LOSE,
-                20,10,LOSE,
+                20, 10, LOSE,
                 25, 20, WIN,
-                10,20,WIN,
-                20,20,DRAW
+                10, 20, WIN,
+                20, 20, DRAW
         ));
     }
 }

@@ -34,7 +34,7 @@ import view.OutputView;
 public class BlackJackTest {
     @Test
     @DisplayName("카드 분배 테스트")
-    void hitCardsToParticipantTest(){
+    void hitCardsToParticipantTest() {
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Players players = Players.from(List.of("pobi", "lisa"));
@@ -53,7 +53,7 @@ public class BlackJackTest {
 
     @Test
     @DisplayName("카드 드로우 테스트")
-    void drawPlayersTest(){
+    void drawPlayersTest() {
         //given
         String input = "y\nn\ny\nn\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
@@ -79,7 +79,7 @@ public class BlackJackTest {
 
     @Test
     @DisplayName("딜러 드로우 테스트")
-    void drawDealerTest(){
+    void drawDealerTest() {
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Players players = Players.from(List.of("pobi", "lisa"));
@@ -98,7 +98,9 @@ public class BlackJackTest {
     void calculatePlayerResultTest() {
         //given
         Players players = Players.from(List.of("pobi", "lisa"));
-        CardDeck cardDeck = new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK), new Card(HEART, ACE), new Card(CLOVER, ACE)));
+        CardDeck cardDeck = new CardDeck(
+                List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK),
+                        new Card(HEART, ACE), new Card(CLOVER, ACE)));
 
         BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeck);
 

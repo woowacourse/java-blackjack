@@ -12,7 +12,7 @@ public class Players {
 
     private final List<Player> players;
 
-    public static Players from(final List<String> names){
+    public static Players from(final List<String> names) {
         validatePlayerNumbers(names);
         validateIsDuplicate(names);
         List<Player> players = names.stream()
@@ -29,7 +29,8 @@ public class Players {
         players.forEach(player -> player.hitCards(standard));
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final CardDeck standard) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
+                     final CardDeck standard) {
         for (Player player : players) {
             player.draw(answer, playerDeck, standard);
         }

@@ -15,7 +15,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -57,27 +56,29 @@ public class CardDeckTest {
     @ParameterizedTest
     @DisplayName("카드 합계 테스트")
     @MethodSource("provideCardDeckForSumWithAce")
-    void sumWithAceTest(CardDeck cardDeck, int expectedSum){
+    void sumWithAceTest(CardDeck cardDeck, int expectedSum) {
         assertThat(cardDeck.sumWithAce()).isEqualTo(expectedSum);
     }
 
-    private static Stream<Arguments> provideCardDeckForSumWithAce(){
+    private static Stream<Arguments> provideCardDeckForSumWithAce() {
         return Stream.of(Arguments.of(
                 new CardDeck(List.of(new Card(DIAMOND, ACE))), 11,
                 new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE))), 12,
                 new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE))), 13,
-                new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 14,
+                new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE),
+                        new Card(CLOVER, ACE))), 14,
                 new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE))), 21,
                 new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE), new Card(HEART, ACE))), 12,
                 new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, QUEEN), new Card(HEART, ACE))), 21,
-                new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 19,
+                new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE),
+                        new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 19,
                 new CardDeck(List.of(new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 20
         ));
     }
 
     @Test
     @DisplayName("히든 카드를 제외한 카드 반환 테스트")
-    void getCardExceptHiddenTest(){
+    void getCardExceptHiddenTest() {
         // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
 

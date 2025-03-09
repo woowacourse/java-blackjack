@@ -5,7 +5,7 @@ import domain.card.CardDeck;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Player extends Participant{
+public class Player extends Participant {
     private final String name;
 
     public Player(final String name) {

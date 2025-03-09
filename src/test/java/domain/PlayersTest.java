@@ -30,7 +30,7 @@ import view.OutputView;
 public class PlayersTest {
     @Test
     @DisplayName("카드 분배 테스트")
-    void hitCardsTest(){
+    void hitCardsTest() {
         // given
         Players players = Players.from(new ArrayList<>(
                 List.of("pobi", "lisa")
@@ -58,7 +58,7 @@ public class PlayersTest {
                 .hasMessage("[ERROR] 플레이어 인원은 1~6명 입니다.");
     }
 
-    private static Stream<Arguments> provideListForPlayers(){
+    private static Stream<Arguments> provideListForPlayers() {
         return Stream.of(Arguments.of(
                 List.of("포비", "이든", "네오", "저스틴", "링크", "말론", "리사"),
                 List.of()
@@ -72,9 +72,10 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
     }
+
     @Test
     @DisplayName("카드 드로우 테스트")
-    void drawTest(){
+    void drawTest() {
         // given
         String input = "y\nn\nn\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());

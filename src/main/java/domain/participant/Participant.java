@@ -10,11 +10,11 @@ public class Participant {
         this.hand = new CardDeck(new ArrayList<>());
     }
 
-    public void hitCards(final CardDeck standard){
+    public void hitCards(final CardDeck standard) {
         hand.hitCards(standard);
     }
 
-    public int sum(){
+    public int sum() {
         return hand.sumWithAce();
     }
 
