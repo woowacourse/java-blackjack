@@ -11,6 +11,8 @@ public class BlackjackGame {
     private final List<Participant> participants;
 
     public BlackjackGame(final CardDeck cardDeck, final List<Participant> participants) {
+        validateNumberOfDealer(participants);
+
         this.cardDeck = cardDeck;
         this.participants = participants;
     }
@@ -91,5 +93,15 @@ public class BlackjackGame {
         return findPlayers().stream()
             .map(Player::getName)
             .toList();
+    }
+
+    private void validateNumberOfDealer(List<Participant> participants) {
+        long dealerCount = participants.stream()
+            .filter(Dealer.class::isInstance)
+            .count();
+
+        if (dealerCount != 1) {
+            throw new IllegalArgumentException("딜러는 한 명이어야 합니다.");
+        }
     }
 }
