@@ -32,8 +32,6 @@ public class Players {
 
     public Player findByName(String name) {
         return players.stream()
-                .filter(participant -> participant instanceof Player)
-                .map(player -> (Player) player)
                 .filter(player -> player.getName().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("예기치 못한 에러가 발생했습니다."));
@@ -41,8 +39,6 @@ public class Players {
 
     public List<String> getPlayersName() {
         return players.stream()
-                .filter(participant -> participant instanceof Player)
-                .map(player -> (Player) player)
                 .map(Player::getName)
                 .toList();
     }
