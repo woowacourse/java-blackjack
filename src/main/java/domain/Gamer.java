@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public abstract class Gamer implements Cloneable {
+    private static final int BLACKJACK_MAX_SCORE = 21;
+
     private final List<Card> cards;
 
     protected Gamer() {
@@ -33,6 +35,11 @@ public abstract class Gamer implements Cloneable {
         return score <= standard;
     }
 
+    public boolean isBust(){
+        int score = calculateScore();
+        return score > BLACKJACK_MAX_SCORE;
+    }
+
     @Override
     public Gamer clone() {
         try {
@@ -49,11 +56,11 @@ public abstract class Gamer implements Cloneable {
 
 
     private int calculateAceValue(boolean containAce, int lowAceTotal) {
-        if (!containAce || lowAceTotal > 21) {
+        if (!containAce || lowAceTotal > BLACKJACK_MAX_SCORE) {
             return lowAceTotal;
         }
         int highAceTotal = lowAceTotal - CardRank.ACE.getValue() + CardRank.SPECIAL_ACE.getValue();
-        if (highAceTotal > 21) {
+        if (highAceTotal > BLACKJACK_MAX_SCORE) {
             return lowAceTotal;
         }
         return highAceTotal;
