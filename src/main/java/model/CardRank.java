@@ -15,13 +15,14 @@ public enum CardRank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private String name;
-    private int defaultValue;
-    private int maxValue;
+    private final String name;
+    private final int defaultValue;
+    private final int maxValue;
 
     CardRank(String cardName, int defaultValue) {
         this.name = cardName;
         this.defaultValue = defaultValue;
+        this.maxValue = 0;
     }
 
     CardRank(String name, int defaultValue, int maxValue) {

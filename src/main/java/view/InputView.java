@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import model.Player;
 
-public class InputView {
+public final class InputView {
     private static final String YES = "y";
     private static final String NO = "n";
     private static Scanner SCANNER = new Scanner(System.in);
@@ -18,14 +18,14 @@ public class InputView {
         return Arrays.stream(names).toList();
     }
 
-    public static boolean readHit(Player player) {
+    public static boolean readHit(final Player player) {
         OutputView.printHitOrStand(player);
         String hit = SCANNER.nextLine();
         validateHit(hit);
         return hit.equals(YES);
     }
 
-    private static void validateDelimeter(String[] names) {
+    private static void validateDelimeter(final String[] names) {
         String regex = "^[a-zA-Zㄱ-ㅎ가-힣]+$";
 
         for (String name : names) {
@@ -35,7 +35,7 @@ public class InputView {
         }
     }
 
-    private static void validateHit(String hit) {
+    private static void validateHit(final String hit) {
         if (!(hit.equals(YES) || hit.equals(NO))) {
             throw new IllegalArgumentException("y 또는 n을 입력해주세요. 입력값 : " + hit);
         }

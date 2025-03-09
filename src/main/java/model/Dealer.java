@@ -1,7 +1,7 @@
 package model;
 
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
     private static final int DEALER_HIT_THRESHOLD = 16;
 
     public Dealer() {

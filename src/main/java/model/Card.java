@@ -1,10 +1,10 @@
 package model;
 
-public class Card {
+public final class Card {
     private final CardRank cardRank;
     private final CardSuit cardSuit;
 
-    public Card(CardRank cardRank, CardSuit cardSuit) {
+    public Card(final CardRank cardRank, final CardSuit cardSuit) {
         this.cardRank = cardRank;
         this.cardSuit = cardSuit;
     }

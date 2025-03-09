@@ -1,10 +1,10 @@
 package model;
 
 
-public class Player extends Participant {
+public final class Player extends Participant {
     private final String name;
 
-    public Player(String name) {
+    public Player(final String name) {
         super();
         this.name = name;
     }

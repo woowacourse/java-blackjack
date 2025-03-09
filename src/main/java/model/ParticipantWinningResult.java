@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParticipantWinningResult {
+public final class ParticipantWinningResult {
     private final Map<Player, GameResult> result;
 
-    public static ParticipantWinningResult of(Players players, Dealer dealer) {
+    public static ParticipantWinningResult of(final Players players, final Dealer dealer) {
         Map<Player, GameResult> result = new HashMap<>();
         for (Player player : players.getPlayers()) {
             result.put(player, checkPlayerWin(dealer, player));
@@ -15,7 +15,7 @@ public class ParticipantWinningResult {
         return new ParticipantWinningResult(result);
     }
 
-    public ParticipantWinningResult(Map<Player, GameResult> result) {
+    public ParticipantWinningResult(final Map<Player, GameResult> result) {
         this.result = result;
     }
 
@@ -28,7 +28,7 @@ public class ParticipantWinningResult {
         return dealerResult;
     }
 
-    private static GameResult checkPlayerWin(Dealer dealer, Player player) {
+    private static GameResult checkPlayerWin(final Dealer dealer, final Player player) {
         if (player.isBurst()) {
             return GameResult.LOSE;
         }
@@ -38,7 +38,7 @@ public class ParticipantWinningResult {
         return checkResultIfNotBurst(dealer, player);
     }
 
-    private static GameResult checkResultIfNotBurst(Dealer dealer, Player player) {
+    private static GameResult checkResultIfNotBurst(final Dealer dealer, final Player player) {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = player.calculateFinalScore();
 
@@ -51,7 +51,7 @@ public class ParticipantWinningResult {
         return GameResult.DRAW;
     }
 
-    private void calculateDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
+    private void calculateDealerResult(final GameResult gameResult, final Map<GameResult, Integer> dealerResult) {
         if (gameResult == GameResult.WIN){
             updateDealerResult(GameResult.LOSE, dealerResult);
         }
@@ -63,7 +63,7 @@ public class ParticipantWinningResult {
         }
     }
 
-    private void updateDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
+    private void updateDealerResult(final GameResult gameResult, final Map<GameResult, Integer> dealerResult) {
         dealerResult.merge(gameResult, 1, Integer::sum);
     }
 

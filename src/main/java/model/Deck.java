@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
+public final class Deck {
     private final List<Card> deck;
 
     public static Deck of() {
@@ -19,7 +19,7 @@ public class Deck {
         return new Deck(deck);
     }
 
-    public Deck(List<Card> deck) {
+    public Deck(final List<Card> deck) {
         this.deck = deck;
     }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ParticipantHand {
+public final class ParticipantHand {
     private static final int BURST_SCORE_LIMIT = 21;
     private final List<Card> cards;
 
@@ -12,7 +12,7 @@ public class ParticipantHand {
         this.cards = new ArrayList<>();
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 
@@ -20,7 +20,7 @@ public class ParticipantHand {
         return calculateScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
     }
 
-    public boolean checkScoreBelow(int upperBound) {
+    public boolean checkScoreBelow(final int upperBound) {
         return calculateScoreWithAceAsMinValue() <= upperBound;
     }
 
@@ -38,7 +38,7 @@ public class ParticipantHand {
                 .sum();
     }
 
-    private boolean checkScoreExceptAceBelow(int upperBound) {
+    private boolean checkScoreExceptAceBelow(final int upperBound) {
         return cards.stream()
                 .filter(card -> card.getCardRank() != CardRank.ACE)
                 .mapToInt(Card::getCardRankDefaultValue)
@@ -63,7 +63,7 @@ public class ParticipantHand {
         return aceCount * CardRank.ACE.getDefaultValue();
     }
 
-    private int convertOneAceToMaxValueFrom(int score) {
+    private int convertOneAceToMaxValueFrom(final int score) {
         return score - CardRank.ACE.getDefaultValue() + CardRank.ACE.getMaxValue();
     }
 

@@ -12,11 +12,11 @@ public class Participant {
         this.participantHand = new ParticipantHand();
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         participantHand.add(card);
     }
 
-    public void dealInitialCards(Deck deck) {
+    public void dealInitialCards(final Deck deck) {
         IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
                 i -> receiveCard(deck.pick())
         );
