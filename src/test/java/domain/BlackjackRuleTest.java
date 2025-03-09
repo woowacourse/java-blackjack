@@ -324,4 +324,38 @@ class BlackjackRuleTest {
         //then
         assertThat(actual).isEqualTo(GameResult.LOSE);
     }
+
+    @DisplayName("플레이어가 소유한 카드에 따라서 블랙잭 여부를 판단한다.")
+    @ParameterizedTest
+    @MethodSource("createBlackJackCase")
+    void 블랙잭_검증(List<Card> inputCard, boolean expected) {
+        // given
+        Hand hand = Hand.of(inputCard);
+
+        // when
+        final boolean actual = rule.isBlackJack(hand);
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> createBlackJackCase() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.TEN, CardShape.CLOVER)
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.TEN, CardShape.CLOVER),
+                                new Card(CardNumber.A, CardShape.CLOVER)
+                        ),
+                        false
+                )
+        );
+    }
 }

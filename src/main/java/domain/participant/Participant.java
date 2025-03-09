@@ -26,6 +26,10 @@ public class Participant {
         return rule.isBurst(hand);
     }
 
+    public boolean isBlackJack() {
+        return rule.isBlackJack(hand);
+    }
+
     public Hand getCards() {
         return hand;
     }

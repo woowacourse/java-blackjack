@@ -56,7 +56,7 @@ public class BlackJackController {
     }
 
     private void askNewCardToPlayer(Player player, Deck deck) {
-        while (!player.isBurst() && inputView.readYesOrNo(player).isYes()) {
+        while (!player.isBurst() && !player.isBlackJack() && inputView.readYesOrNo(player).isYes()) {
             deck.giveCardTo(player);
             outputView.printPlayerCards(player);
         }

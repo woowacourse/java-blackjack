@@ -16,6 +16,12 @@ public class BlackjackRule implements GameRule {
     }
 
     @Override
+    public boolean isBlackJack(Hand hand) {
+        Set<Integer> coordinates = hand.getCoordinateSums();
+        return coordinates.stream().anyMatch(coordinate -> coordinate == SUM_LIMIT);
+    }
+
+    @Override
     public int getScore(Hand hand) {
         Set<Integer> coordinates = hand.getCoordinateSums();
         if (isBurst(hand)) {
