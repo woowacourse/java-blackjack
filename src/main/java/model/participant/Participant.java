@@ -20,6 +20,10 @@ public abstract class Participant {
         cards.add(card);
     }
 
+    public void receiveCards(List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
     public boolean isBust() {
         return cards.calculateScore() > PARTICIPANT_MAX_NUMBER_FOR_BUST;
     }

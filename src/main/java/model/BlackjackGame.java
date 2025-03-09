@@ -26,17 +26,12 @@ public class BlackjackGame {
     }
 
     public void startGame() {
-        for (int initialCount = 0; initialCount < INITIAL_COUNT; initialCount++) {
-            dealer.receiveCard(deck.draw());
-            players.getPlayers()
-                    .forEach(player -> player.receiveCard(deck.draw()));
-        }
+        dealer.receiveCards(deck.draws(INITIAL_COUNT));
+        players.getPlayers()
+                .forEach(player -> player.receiveCards(deck.draws(INITIAL_COUNT)));
     }
 
     public void runPlayerTurn(Player player) {
-        if (!player.canReceiveCard()) {
-            return;
-        }
         player.receiveCard(deck.draw());
     }
 
