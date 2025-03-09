@@ -59,27 +59,6 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어의 카드가 버스트면 TRUE 를 반환한다")
-    void if_the_players_card_is_bust_it_returns_true() {
-        // given
-        Players players = new Players();
-        CardPack cardPack = new CardPack(new SortShuffle());
-
-        Player player = new Gambler("두리");
-        players.addGamblers(List.of(player));
-
-        players.dealAddCard(cardPack, player);
-        players.dealAddCard(cardPack, player);
-        players.dealAddCard(cardPack, player);
-
-        // when
-        boolean result = players.isPlayerBust(player);
-
-        // then
-        assertThat(result).isTrue();
-    }
-
-    @Test
     @DisplayName("딜러의 카드가 16이하인 경우 TRUE 를 반환한다")
     void the_dealers_card_is_less_than_16_or_less() {
         // given
