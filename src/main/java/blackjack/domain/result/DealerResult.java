@@ -1,26 +1,28 @@
 package blackjack.domain.result;
 
 import java.util.Collections;
-import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class DealerResult {
 
-    private final Map<GameResultType, Integer> dealerResult;
+    private final Map<GameResultType, Integer> countsOfResultTypes;
+    private final int value;
 
-    private DealerResult() {
-        this.dealerResult = new EnumMap<>(GameResultType.class);
-    }
-
-    public static DealerResult create() {
-        return new DealerResult();
+    public DealerResult(int value) {
+        this.countsOfResultTypes = new LinkedHashMap<>();
+        this.value = value;
     }
 
     public void addCountOf(GameResultType gameResultType) {
-        dealerResult.merge(gameResultType, 1, Integer::sum);
+        countsOfResultTypes.merge(gameResultType, 1, Integer::sum);
     }
 
-    public Map<GameResultType, Integer> getDealerResult() {
-        return Collections.unmodifiableMap(dealerResult);
+    public int getValue() {
+        return value;
+    }
+
+    public Map<GameResultType, Integer> getCountsOfResultTypes() {
+        return Collections.unmodifiableMap(countsOfResultTypes);
     }
 }

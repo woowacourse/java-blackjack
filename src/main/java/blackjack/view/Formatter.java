@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.cardholder.CardHolder;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
 import java.util.Arrays;
@@ -35,10 +36,8 @@ public final class Formatter {
     }
 
     // TODO: Dealer 의 결과를 저장하는 기능을 구현한 뒤에 수정하기
-    public static String formatDealerCardResult(Dealer dealer) {
-        CardHolder cardHolder = dealer.getCardHolder();
-
-        return formatDealerCardStatus(dealer) + " - 결과: " + formatCardResultValue(cardHolder);
+    public static String formatDealerCardResult(Dealer dealer, DealerResult dealerResult) {
+        return formatDealerCardStatus(dealer) + " - 결과: " + formatCardResultValue(dealerResult);
     }
 
     private static String formatDealerCardStatus(Dealer dealer) {
@@ -55,8 +54,8 @@ public final class Formatter {
         return java.lang.String.valueOf(value);
     }
 
-    private static String formatCardResultValue(CardHolder cardHolder) {
-        int value = cardHolder.getOptimisticValue();
+    private static String formatCardResultValue(DealerResult dealerResult) {
+        int value = dealerResult.getValue();
 
         // TODO: 매직 넘버 없애기
         if (value > 21) {
@@ -72,9 +71,11 @@ public final class Formatter {
                 .collect(Collectors.joining(", "));
     }
 
-    public static String formatDealerGameResult(Map<GameResultType, Integer> dealerResult) {
+    public static String formatDealerGameResult(DealerResult dealerResult) {
+        Map<GameResultType, Integer> countsOfResultTypes = dealerResult.getCountsOfResultTypes();
+
         return Arrays.stream(GameResultType.values())
-                .map(gameResultType -> formatResultCount(dealerResult, gameResultType))
+                .map(gameResultType -> formatResultCount(countsOfResultTypes, gameResultType))
                 .collect(Collectors.joining(" "));
     }
 

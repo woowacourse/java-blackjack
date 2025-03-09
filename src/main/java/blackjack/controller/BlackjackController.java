@@ -4,7 +4,9 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.cardholder.Hand;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.PlayersResults;
 import blackjack.manager.BlackJackInitManager;
 import blackjack.manager.BlackjackProcessManager;
 import blackjack.manager.GameRuleEvaluator;
@@ -22,7 +24,8 @@ public class BlackjackController {
     public BlackjackController(GameRuleEvaluator gameRuleEvaluator, BlackJackInitManager blackJackInitManager) {
         this.gameRuleEvaluator = gameRuleEvaluator;
         this.blackJackInitManager = blackJackInitManager;
-        this.blackjackProcessManager = new BlackjackProcessManager(blackJackInitManager.generateDeck());
+        this.blackjackProcessManager = new BlackjackProcessManager(blackJackInitManager.generateDeck(),
+                PlayersResults.create());
     }
 
     public void run() {
@@ -35,8 +38,11 @@ public class BlackjackController {
         giveMoreCardFor(players);
         giveMoreCardFor(dealer);
 
-        printCardResult(players, dealer);
-        printGameResult();
+        List<PlayerResult> playerResults = getCardResultOfPlayer(players, dealer);
+        DealerResult dealerResult = getCardResultOfDealer(dealer);
+
+        OutputView.printCardResult(playerResults, dealerResult, dealer);
+        OutputView.printGameResult(dealerResult, playerResults);
     }
 
     private void giveMoreCardFor(Dealer dealer) {
@@ -82,15 +88,12 @@ public class BlackjackController {
         OutputView.printStartingCardsStatuses(dealer, players);
     }
 
-    private void printCardResult(Players players, Dealer dealer) {
+    private List<PlayerResult> getCardResultOfPlayer(Players players, Dealer dealer) {
         blackjackProcessManager.calculateCardResult(players, dealer, gameRuleEvaluator);
-
-        List<PlayerResult> playerResults = blackjackProcessManager.getPlayersResult();
-        OutputView.printCardResult(playerResults, dealer);
+        return blackjackProcessManager.getPlayersResult();
     }
 
-    private void printGameResult() {
-        OutputView.printGameResult(blackjackProcessManager.getDealerResult(),
-                blackjackProcessManager.getPlayersResult());
+    private DealerResult getCardResultOfDealer(Dealer dealer) {
+        return blackjackProcessManager.calculateDealerResult(dealer);
     }
 }

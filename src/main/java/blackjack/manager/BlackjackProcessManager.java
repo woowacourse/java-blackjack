@@ -11,7 +11,6 @@ import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayersResults;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackProcessManager {
 
@@ -20,12 +19,10 @@ public class BlackjackProcessManager {
 
     private final Deck deck;
     private final PlayersResults playersResults;
-    private final DealerResult dealerResult;
 
-    public BlackjackProcessManager(Deck deck) {
+    public BlackjackProcessManager(Deck deck, PlayersResults playersResults) {
         this.deck = deck;
-        this.playersResults = PlayersResults.create();
-        this.dealerResult = DealerResult.create();
+        this.playersResults = playersResults;
     }
 
     public void giveStartingCardsFor(Dealer dealer) {
@@ -91,18 +88,25 @@ public class BlackjackProcessManager {
     }
 
     public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer, int playerValue) {
-        GameResultType gameResultOfDealer = gameResultOfPlayer.getOppositeType();
-
         PlayerResult playerResult = new PlayerResult(player, gameResultOfPlayer, playerValue);
         playersResults.save(playerResult);
-        dealerResult.addCountOf(gameResultOfDealer);
+    }
+
+    public DealerResult calculateDealerResult(Dealer dealer) {
+        int dealerValue = dealer.getCardHolder().getOptimisticValue();
+        DealerResult dealerResult = new DealerResult(dealerValue);
+
+        for (PlayerResult playerResult : playersResults.getAllResult()) {
+            GameResultType gameResultOfPlayer = playerResult.getGameResultType();
+            GameResultType gameResultOfDealer = gameResultOfPlayer.getOppositeType();
+
+            dealerResult.addCountOf(gameResultOfDealer);
+        }
+
+        return dealerResult;
     }
 
     public List<PlayerResult> getPlayersResult() {
         return playersResults.getAllResult();
-    }
-
-    public Map<GameResultType, Integer> getDealerResult() {
-        return dealerResult.getDealerResult();
     }
 }

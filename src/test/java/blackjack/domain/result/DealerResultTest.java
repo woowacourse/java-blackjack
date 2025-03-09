@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GameResultType;
 import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -13,14 +11,14 @@ class DealerResultTest {
     @Test
     void test1() {
         // given
-        DealerResult dealerResult = DealerResult.create();
+        DealerResult dealerResult = new DealerResult(10);
 
         // when
         dealerResult.addCountOf(GameResultType.WIN);
         dealerResult.addCountOf(GameResultType.TIE);
         dealerResult.addCountOf(GameResultType.LOSE);
 
-        Map<GameResultType, Integer> result = dealerResult.getDealerResult();
+        Map<GameResultType, Integer> result = dealerResult.getCountsOfResultTypes();
 
         // then
         assertAll(

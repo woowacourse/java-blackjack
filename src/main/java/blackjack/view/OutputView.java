@@ -3,10 +3,9 @@ package blackjack.view;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class OutputView {
@@ -33,8 +32,8 @@ public final class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardResult(List<PlayerResult> playerResults, Dealer dealer) {
-        System.out.println(Formatter.formatDealerCardResult(dealer));
+    public static void printCardResult(List<PlayerResult> playerResults, DealerResult dealerResult, Dealer dealer) {
+        System.out.println(Formatter.formatDealerCardResult(dealer, dealerResult));
 
         for (PlayerResult playerResult : playerResults) {
             System.out.println(Formatter.formatPlayerCardResult(playerResult));
@@ -49,7 +48,7 @@ public final class OutputView {
         System.out.println(player.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
     }
 
-    public static void printGameResult(Map<GameResultType, Integer> dealerResult,
+    public static void printGameResult(DealerResult dealerResult,
                                        List<PlayerResult> playersResult) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%n", Formatter.formatDealerGameResult(dealerResult));
