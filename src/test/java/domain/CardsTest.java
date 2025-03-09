@@ -60,7 +60,7 @@ public class CardsTest {
         );
 
         // when
-        final boolean isBurst = cards.isBurst();
+        final boolean isBurst = cards.isBust();
 
         // then
         assertThat(isBurst).isTrue();
@@ -77,7 +77,7 @@ public class CardsTest {
         );
 
         // when
-        final boolean isBurst = cards.isBurst();
+        final boolean isBurst = cards.isBust();
 
         // then
         assertThat(isBurst).isFalse();

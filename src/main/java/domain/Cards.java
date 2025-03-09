@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int BURST_LIMIT = 21;
+    private static final int BUST_LIMIT = 21;
 
     private final List<Card> cards;
 
@@ -25,16 +25,16 @@ public class Cards {
         computeCandidates(0, 0, cards, candidates);
 
         return candidates.stream()
-                .filter(sum -> sum <= BURST_LIMIT)
+                .filter(sum -> sum <= BUST_LIMIT)
                 .max(Integer::compareTo)
                 .orElseGet(() -> candidates.stream()
-                        .filter(sum -> sum > BURST_LIMIT)
+                        .filter(sum -> sum > BUST_LIMIT)
                         .min(Integer::compareTo)
                         .orElseThrow(() -> new IllegalStateException("논리적으로 도달할 수 없는 예외입니다.")));
     }
 
-    public boolean isBurst() {
-        return computeOptimalSum() > BURST_LIMIT;
+    public boolean isBust() {
+        return computeOptimalSum() > BUST_LIMIT;
     }
 
     private void computeCandidates(int cardIndex, int sum, List<Card> cards, List<Integer> candidates) {

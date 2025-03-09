@@ -108,10 +108,10 @@ public class Blackjack {
     }
 
     private MatchResult calculatePariticipantMatchResult(Dealer dealer, Participant participant) {
-        if (participant.getCards().isBurst() && dealer.getCards().isBurst() || participant.getCards().isBurst()) {
+        if (participant.getCards().isBust() && dealer.getCards().isBust() || participant.getCards().isBust()) {
             return MatchResult.LOSE;
         }
-        if (dealer.getCards().isBurst()) {
+        if (dealer.getCards().isBust()) {
             return MatchResult.WIN;
         }
         return MatchResult.compareBySum(participant.getCards().computeOptimalSum(),
