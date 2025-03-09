@@ -11,8 +11,8 @@ public final class CardDeckGenerator {
     }
 
     public static List<Card> generateCardDeck() {
-        List<TrumpNumber> numbers = Arrays.stream(TrumpNumber.values()).toList();
-        List<TrumpShape> shapes = Arrays.stream(TrumpShape.values()).toList();
+        List<TrumpNumber> numbers = List.of(TrumpNumber.values());
+        List<TrumpShape> shapes = List.of(TrumpShape.values());
         List<Card> cards = new ArrayList<>(numbers.stream()
                 .flatMap(number -> shapes.stream().map(shape -> Card.of(number, shape)))
                 .toList());
