@@ -34,16 +34,17 @@ public class Hand {
         return totalCardNumberWithAce;
     }
 
-    public boolean isOverBustBound(int totalCardNumber) {
-        return totalCardNumber > BUST_BOUND;
+    private boolean isOverBustBound(int totalWithAce) {
+        return totalWithAce > BUST_BOUND;
+    }
+
+    public boolean isOverBustBound() {
+        return calculateTotalCardNumber() > BUST_BOUND;
     }
 
     public int calculateTotalCardNumber() {
         int aceCount = countAce();
-        if (aceCount > 0) {
-            return sumWithAcesCount(aceCount);
-        }
-        return calculateCardNumber(cards);
+        return sumWithAce(aceCount);
     }
 
     private int countAce() {
@@ -53,16 +54,16 @@ public class Hand {
                 .count();
     }
 
-    private int sumWithAcesCount(int aceCount) {
-        List<Card> removedAceHand = removeAce();
-        int totalExceptAce = calculateCardNumber(removedAceHand);
+    private int sumWithAce(int aceCount) {
+        List<Card> aceRemovedHand = removeAceFromHand();
+        int totalCardNumber = calculateCardNumber(aceRemovedHand);
         for (int i = 0; i < aceCount; i++) {
-            totalExceptAce = decideAceNumber(totalExceptAce);
+            totalCardNumber = decideAceNumber(totalCardNumber);
         }
-        return totalExceptAce;
+        return totalCardNumber;
     }
 
-    private List<Card> removeAce() {
+    private List<Card> removeAceFromHand() {
         return cards.stream()
                 .filter(card -> card.getCardNumber() != CardNumber.ACE)
                 .toList();

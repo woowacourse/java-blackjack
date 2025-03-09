@@ -29,8 +29,7 @@ public class Player {
     }
 
     public boolean isOverBustBound() {
-        int totalCardNumber = calculateTotalCardNumber();
-        return hand.isOverBustBound(totalCardNumber);
+        return hand.isOverBustBound();
     }
 
     public Hand getHand() {

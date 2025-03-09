@@ -112,8 +112,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
 
         //when & then
-        int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBustBound(totalNumber)).isTrue();
+        assertThat(hand.isOverBustBound()).isTrue();
     }
 
     @Test
@@ -126,8 +125,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
 
         //when & then
-        int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound()).isFalse();
     }
 
     @Test
@@ -139,8 +137,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
 
         //when & then
-        int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound()).isFalse();
     }
 
     @Test
@@ -153,8 +150,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
         //when & then
-        int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound()).isFalse();
     }
 
     @Test
@@ -168,8 +164,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
 
         //when & then
-        int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBustBound(totalNumber)).isTrue();
+        assertThat(hand.isOverBustBound()).isTrue();
     }
 
     @Test
@@ -183,7 +178,6 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
 
         //when & then
-        int totalNumber = hand.calculateTotalCardNumber();
-        assertThat(hand.isOverBustBound(totalNumber)).isFalse();
+        assertThat(hand.isOverBustBound()).isFalse();
     }
 }
