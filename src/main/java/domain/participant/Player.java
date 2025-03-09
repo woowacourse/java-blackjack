@@ -37,4 +37,9 @@ public class Player implements Participant {
     public Map<BattleResult, Integer> getBattleResult() {
         return battleResult;
     }
+
+    @Override
+    public void updateBattleResult(final BattleResult battleResult) {
+        this.battleResult.merge(battleResult, 1, Integer::sum);
+    }
 }

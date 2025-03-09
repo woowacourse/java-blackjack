@@ -37,4 +37,9 @@ public class Dealer implements Participant {
     public Map<BattleResult, Integer> getBattleResult() {
         return battleResult;
     }
+
+    @Override
+    public void updateBattleResult(final BattleResult battleResult) {
+        this.battleResult.merge(battleResult, 1, Integer::sum);
+    }
 }

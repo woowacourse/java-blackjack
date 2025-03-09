@@ -7,4 +7,5 @@ public interface Participant {
     boolean areYouDealer();
     String getNickname();
     Map<BattleResult, Integer> getBattleResult();
+    void updateBattleResult(final BattleResult battleResult);
 }
