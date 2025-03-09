@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 class JudgeTest {
 
-    @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과한다면 패배한다.")
+    @DisplayName("플레이어가 21을 초과하면 패배한다.")
     @Test
-    void test1() {
+    void playerBusts_ShouldLose() {
         Judge judge = new Judge();
 
         Cards dealerCards = new Cards(new ArrayList<>(List.of(
@@ -32,9 +32,9 @@ class JudgeTest {
         assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.LOSE);
     }
 
-    @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 딜러의 카드 숫자의 합이 21을 초과한다면 이긴다.")
+    @DisplayName("딜러가 21을 초과하면 플레이어가 승리한다.")
     @Test
-    void test2() {
+    void dealerBusts_PlayerShouldWin() {
         Judge judge = new Judge();
 
         Cards dealerCards = new Cards(new ArrayList<>(List.of(
@@ -50,9 +50,9 @@ class JudgeTest {
         assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.WIN);
     }
 
-    @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 딜러의 카드 숫자의 합보다 크다면 이긴다.")
+    @DisplayName("플레이어의 카드 합이 딜러보다 높으면 승리한다.")
     @Test
-    void test3() {
+    void playerHasHigherScore_ShouldWin() {
         Judge judge = new Judge();
 
         Cards dealerCards = new Cards(new ArrayList<>(List.of(
@@ -67,9 +67,9 @@ class JudgeTest {
         assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.WIN);
     }
 
-    @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 딜러의 카드 숫자의 합과 작다면 패배한다")
+    @DisplayName("딜러의 카드 합이 플레이어보다 높으면 패배한다.")
     @Test
-    void test4() {
+    void dealerHasHigherScore_ShouldLose() {
         Judge judge = new Judge();
 
         Cards dealerCards = new Cards(new ArrayList<>(List.of(
@@ -84,9 +84,9 @@ class JudgeTest {
         assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.LOSE);
     }
 
-    @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 딜러의 카드 숫자의 합과 같다면 비긴다.")
+    @DisplayName("플레이어와 딜러의 카드 합이 같으면 무승부이다.")
     @Test
-    void test5() {
+    void sameScore_ShouldBeDraw() {
         Judge judge = new Judge();
 
         Cards dealerCards = new Cards(new ArrayList<>(List.of(

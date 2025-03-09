@@ -12,7 +12,7 @@ class DeckTest {
 
     @DisplayName("덱에 카드가 남아있지 않다면 예외가 발생한다.")
     @Test
-    void test1() {
+    void noMoreCard_getCard_ShouldThrowException() {
         Deck deck = new Deck(new ArrayList<>(List.of()));
         assertThatThrownBy(deck::getCard)
                 .isInstanceOf(IllegalStateException.class);

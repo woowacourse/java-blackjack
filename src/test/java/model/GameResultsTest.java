@@ -18,7 +18,7 @@ class GameResultsTest {
             "DRAW, 1",
             "LOSE, 2"
     })
-    void test1(final GameResult gameResult, final int count) {
+    void calculateResult(final GameResult gameResult, final int count) {
         GameResults gameResults = new GameResults(Map.of(
                 "pobi", GameResult.WIN,
                 "jason", GameResult.WIN,
