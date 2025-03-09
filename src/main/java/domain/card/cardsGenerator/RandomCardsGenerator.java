@@ -24,6 +24,6 @@ public class RandomCardsGenerator implements CardsGenerator {
     @Override
     public List<Card> generate() {
         Collections.shuffle(cards);
-        return Collections.unmodifiableList(cards);
+        return new ArrayList<>(cards);
     }
 }
