@@ -7,6 +7,10 @@ public class GameParticipantFixture {
     }
 
     public static Dealer createDealer() {
-        return Dealer.create();
+        return createDealer(1);
+    }
+
+    public static Dealer createDealer(int playerCount) {
+        return Dealer.create(playerCount);
     }
 }

@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
-import blackjack.domain.GameRule;
-
 public class CardMachine {
+
+    private static final int MIN_CARD_DECK_COUNT = 6;
 
     private final Cards cards;
 
@@ -10,10 +10,10 @@ public class CardMachine {
         this.cards = cards;
     }
 
-    public static CardMachine initialize() {
+    public static CardMachine initialize(int playerCount) {
         Cards cards = Cards.empty();
 
-        for (int i = 0; i < GameRule.INITIAL_CARD_DECK_COUNT.getValue(); i++) {
+        for (int i = 0; i < Math.max(MIN_CARD_DECK_COUNT, playerCount); i++) {
             cards.add(CardDeck.initialize());
         }
 
