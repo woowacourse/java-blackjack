@@ -19,6 +19,7 @@ public class Player {
     }
 
     public void hit(Card card) {
+        validateHitPossibility();
         hand.addCard(card);
     }
 
@@ -36,5 +37,11 @@ public class Player {
 
     public String getNickname() {
         return nickname.getValue();
+    }
+
+    private void validateHitPossibility() {
+        if (!checkHitPossibility()) {
+            throw new IllegalArgumentException("히트가 불가능한 상태에서 히트를 시도하고 있습니다.");
+        }
     }
 }
