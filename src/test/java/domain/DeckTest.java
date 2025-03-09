@@ -7,60 +7,55 @@ import constant.Suit;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.TrumpCard;
+import exceptions.BlackJackArgumentException;
 import java.util.ArrayDeque;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class DeckTest {
 
   @Nested
   @DisplayName("덱 생성")
-  class CreateDeck {
+  class CreateDecks {
 
-    @DisplayName("Deck에 동일한 카드가 들어오면, 예외가 발생한다.")
-    @Test
-    public void validateDuplicate() {
+    @ParameterizedTest
+    @CsvSource({"1, 52", "2, 104"})
+    @DisplayName("요청한 수에 비례하여, 52개의 트럼프카드 덱을 생성한다.")
+    void test_createDecks(int numberOfDeck, int expected) {
       // given
-      final TrumpCard club = new TrumpCard(Rank.TWO, Suit.CLUB);
-      final var q = new ArrayDeque<>(List.of(club, club));
-
+      final var deck = Deck.createDecks(numberOfDeck);
       // when & then
-      assertThatThrownBy(() -> new Deck(q))
-          .isInstanceOf(IllegalArgumentException.class);
+      assertThat(deck.getNumberOfCards()).isEqualTo(expected);
     }
-
   }
 
   @Nested
   @DisplayName("카드를 순서대로 뽑는다.")
-  class pickTrumpCard {
+  class drawCard {
 
-    @DisplayName("카드를 올바르게 뽑아온다.")
     @Test
-    public void pickCard() {
+    @DisplayName("카드를 올바르게 뽑아온다.")
+    void test_draw() {
       // given
-      final Rank rank = Rank.TWO;
-      final var d = new ArrayDeque<>(List.of(new TrumpCard(rank, Suit.CLUB)));
-      final var deck = new Deck(d);
-      final var expected = new TrumpCard(rank, Suit.CLUB);
-
-      // when
-      final var actual = deck.draw();
-
-      // then
-      assertThat(actual).isEqualTo(expected);
+      final var expected = new TrumpCard(Rank.TWO, Suit.CLUB);
+      final var cards = new ArrayDeque<>(List.of(expected));
+      final var deck = new Deck(cards);
+      // when&then
+      assertThat(deck.draw()).isEqualTo(expected);
     }
 
-    @DisplayName("카드를 모두뽑았다면, 예외가 발생한다.")
     @Test
-    public void pickCardEmpty() {
+    @DisplayName("카드를 모두뽑았다면, 예외가 발생한다.")
+    void error_deckEmpty() {
       // given
       final var deck = new Deck(new ArrayDeque<>());
       // when&then
       assertThatThrownBy(deck::draw)
-          .isInstanceOf(NullPointerException.class)
+          .isInstanceOf(BlackJackArgumentException.class)
           .hasMessageContaining("덱에 남아있는 카드가 없습니다.");
     }
   }
