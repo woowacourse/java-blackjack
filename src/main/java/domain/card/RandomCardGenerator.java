@@ -1,9 +1,6 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class RandomCardGenerator implements CardGenerator {
     List<Card> cardTypes;
@@ -25,6 +22,10 @@ public class RandomCardGenerator implements CardGenerator {
 
     @Override
     public Card peekRandomCard() {
-        return cardTypes.removeFirst();
+        try{
+            return cardTypes.removeFirst();
+        } catch (NoSuchElementException e){
+            throw new IllegalStateException("[ERROR] 카드를 모두 소진하였습니다.");
+        }
     }
 }
