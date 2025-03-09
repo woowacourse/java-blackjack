@@ -64,4 +64,17 @@ public class PlayersTest {
         Assertions.assertThat(players.getPlayers().get(0).getCardsCount()).isEqualTo(2);
         Assertions.assertThat(players.getPlayers().get(1).getCardsCount()).isEqualTo(2);
     }
+
+    @Test
+    void 모든_플레이어의_이름을_반환한다() {
+        //given
+        List<String> playerNames = List.of("aa", "bb");
+        Players players = new Players(playerNames);
+
+        //when
+        List<String> allPlayerNames = players.getAllPlayerNames();
+
+        //then
+        Assertions.assertThat(allPlayerNames).containsExactly("aa", "bb");
+    }
 }
