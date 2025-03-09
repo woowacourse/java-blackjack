@@ -1,7 +1,5 @@
 package controller;
 
-import static factory.BlackJackCreator.createCardBundle;
-import static factory.BlackJackCreator.createCardDeck;
 import static factory.BlackJackCreator.createParticipants;
 
 import domain.card.CardDeck;
@@ -15,29 +13,31 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final CardDeck cardDeck;
+    private Participants participants;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView, CardDeck cardDeck) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.cardDeck = cardDeck;
     }
 
     public void start() {
-        Participants participants = createGameParticipants();
-        CardDeck cardDeck = createCardDeck(createCardBundle());
-        receiveCardProcessOfParticipants(participants, cardDeck);
-        receiveExtraCardProcessOfPlayer(participants, cardDeck);
-        receiveExtraCardProcessOfDealer(participants, cardDeck);
-        calculateBlackJackResultProcess(participants);
+        participants = initParticipants();
+        receiveCardProcessOfParticipants();
+        receiveExtraCardProcessOfPlayer();
+        receiveExtraCardProcessOfDealer();
+        calculateBlackJackResultProcess();
     }
 
-    private void receiveExtraCardProcessOfDealer(Participants participants, CardDeck cardDeck) {
+    private void receiveExtraCardProcessOfDealer() {
         participants.getParticipants().stream()
             .filter(participant -> !participant.isPlayer())
             .findFirst()
-            .ifPresent(participant -> receiveCardProcessOfDealer(participant, cardDeck));
+            .ifPresent(this::receiveCardProcessOfDealer);
     }
 
-    private void receiveCardProcessOfDealer(Participant participant, CardDeck cardDeck) {
+    private void receiveCardProcessOfDealer(Participant participant) {
         while (participant.canPick()) {
             participant.addCard(cardDeck.getAndRemoveFrontCard());
             outputView.printDealerPickMessage();
@@ -45,14 +45,13 @@ public class BlackJackController {
         outputView.printBlankLine();
     }
 
-    private void receiveExtraCardProcessOfPlayer(Participants participants, CardDeck cardDeck) {
+    private void receiveExtraCardProcessOfPlayer() {
         participants.getParticipants().stream()
             .filter(Participant::isPlayer)
-            .forEach(participant -> inputAskReceiveExtraCard(cardDeck, participant));
+            .forEach(this::inputAskReceiveExtraCard);
     }
 
-    private void receiveCardProcessOfParticipants(Participants participants,
-        CardDeck cardDeck) {
+    private void receiveCardProcessOfParticipants() {
         for (Participant participant : participants.getParticipants()) {
             participant.addCard(cardDeck.getAndRemoveFrontCard());
             participant.addCard(cardDeck.getAndRemoveFrontCard());
@@ -60,12 +59,12 @@ public class BlackJackController {
         outputView.printInitialParticipantHands(participants.getParticipants());
     }
 
-    private void calculateBlackJackResultProcess(Participants participants) {
+    private void calculateBlackJackResultProcess() {
         printAllParticipantsInfo(participants);
-        printAllParticipantGameResult(participants);
+        printAllParticipantGameResult();
     }
 
-    private void printAllParticipantGameResult(Participants participants) {
+    private void printAllParticipantGameResult() {
         ParticipantsResult calculateParticipantsResult = participants.calculate();
         outputView.printGameResult(calculateParticipantsResult);
     }
@@ -80,13 +79,13 @@ public class BlackJackController {
      * extraReceiveCardProcess에서 카드를 받은 후 들고 있는 카드를 출력하며 true를 반환합니다.
      *  카드를 한 번도 받지 않은 상태라면 들고 있는 카드를 출력한다.
      */
-    private void inputAskReceiveExtraCard(CardDeck cardDeck, Participant participant) {
-        if (!extraReceiveCardProcess(cardDeck, participant)) {
+    private void inputAskReceiveExtraCard(Participant participant) {
+        if (!extraReceiveCardProcess(participant)) {
             outputView.printParticipantHand(participant);
         }
     }
 
-    private boolean extraReceiveCardProcess(CardDeck cardDeck, Participant participant) {
+    private boolean extraReceiveCardProcess(Participant participant) {
         boolean isPrinted = false;
         while (participant.canPick()) {
             String playerWantMoreCard = inputView.inputPlayerWantMoreCard(participant);
@@ -100,7 +99,7 @@ public class BlackJackController {
         return isPrinted;
     }
 
-    private Participants createGameParticipants() {
+    private Participants initParticipants() {
         String inputUserNames = inputView.inputUserNames();
         return createParticipants(inputUserNames);
     }
