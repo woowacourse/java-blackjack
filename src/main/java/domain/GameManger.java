@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameManger {
+    public final static int MAX_PLAYER = 7;
     public final static int WIN = 1;
     public final static int LOSE = 2;
     public final static int MOO = 3;
@@ -27,7 +28,7 @@ public class GameManger {
 
     private void validate(List<String> names) {
         HashSet<String> distinctNames = new HashSet<>(names);
-        if (names.isEmpty() || names.size() > 7) {
+        if (names.isEmpty() || names.size() > MAX_PLAYER) {
             throw new IllegalArgumentException("유저는 1명 이상 7명 이하로 등록해야 합니다.");
         }
         if (distinctNames.size() != names.size()) {
