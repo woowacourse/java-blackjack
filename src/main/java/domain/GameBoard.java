@@ -16,7 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GameBoard {
-    private static final int THRESHOLD = 21;
+    private static final int BUST_THRESHOLD = 21;
 
     private final Map<Participant, CardDeck> cardDeckOfParticipant;
     private final CardDeck playingCard;
@@ -85,7 +85,7 @@ public class GameBoard {
         }
 
         while (aceCounts-- > 0) {
-            if (totalScore + 10 <= THRESHOLD) {
+            if (totalScore + 10 <= BUST_THRESHOLD) {
                 totalScore += 10;
             }
         }
@@ -114,8 +114,8 @@ public class GameBoard {
             return;
         }
         int score = getScoreOf(participant);
-        if (score > THRESHOLD) {
-            if (dealerScore > THRESHOLD) {
+        if (score > BUST_THRESHOLD) {
+            if (dealerScore > BUST_THRESHOLD) {
                 updateBattleResultDraw(dealer, participant);
                 return;
             }
@@ -129,7 +129,7 @@ public class GameBoard {
         }
 
         if (score < dealerScore) {
-            if (dealerScore > THRESHOLD) {
+            if (dealerScore > BUST_THRESHOLD) {
                updateBattleResult(participant, dealer);
                return;
             }
@@ -165,5 +165,18 @@ public class GameBoard {
 
     public CardDeck getPlayingCard() {
         return playingCard;
+    }
+
+    public List<Participant> getPlayers() {
+        return cardDeckOfParticipant.keySet().stream()
+                .filter(participant -> !participant.areYouDealer())
+                .toList();
+    }
+
+    public Participant getDealer() {
+        return cardDeckOfParticipant.keySet().stream()
+                .filter(Participant::areYouDealer)
+                .findFirst()
+                .orElseThrow();
     }
 }
