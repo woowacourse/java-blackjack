@@ -1,10 +1,9 @@
 package blackjack.dto;
 
-import blackjack.domain.Card;
-import blackjack.domain.Nickname;
+import blackjack.domain.card.Card;
 
 public record HiddenDealerHandState(
-        Nickname nickname,
+        String nickname,
         Card card
 ) {
 

@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,7 @@ class CardDeckTest {
     void whenInitReturn52Size() {
         // given
         // when
-        CardDeck cardDeck = CardDeck.initialize();
+        CardDeck cardDeck = new CardDeck();
 
         // then
         assertThat(cardDeck.getSize()).isEqualTo(52);
@@ -23,7 +25,7 @@ class CardDeckTest {
     @DisplayName("요청된 개수만큼 카드를 제공한다.")
     void provideCardsAsRequested() {
         //given
-        CardDeck cardDeck = CardDeck.initialize();
+        CardDeck cardDeck = new CardDeck();
         int expectedCardCount = 2;
 
         //when

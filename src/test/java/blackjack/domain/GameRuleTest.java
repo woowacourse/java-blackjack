@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.game.GameRule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,7 +26,7 @@ class GameRuleTest {
         // given
         // when
         // then
-        assertThat(GameRule.shouldDrawCardToDealer(point)).isEqualTo(shouldHit);
+        assertThat(GameRule.checkPossibilityOfDealerDrawing(point)).isEqualTo(shouldHit);
     }
 
 

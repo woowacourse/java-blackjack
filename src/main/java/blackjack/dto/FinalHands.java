@@ -2,7 +2,7 @@ package blackjack.dto;
 
 import java.util.List;
 
-public record HandsAfterDrawingCard(
+public record FinalHands(
         HandState dealerHand,
         List<HandState> playerHand
 ) {

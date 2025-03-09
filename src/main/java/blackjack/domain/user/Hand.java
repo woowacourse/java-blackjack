@@ -1,26 +1,25 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardValue;
+import blackjack.domain.game.GameRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
-    private final List<Card> cards;
+    private final List<Card> cards = new ArrayList<>();
 
-    private Cards(List<Card> cards) {
-        this.cards = cards;
+    public void addCard(Card newCard) {
+        cards.add(newCard);
     }
 
-    public static Cards initialize() {
-        return new Cards(new ArrayList<>());
+    public void addCard(List<Card> newCards) {
+        cards.addAll(newCards);
     }
 
-    public void add(List<Card> drawnCards) {
-        cards.addAll(drawnCards);
-    }
-
-    public int calculateSum() {
+    public int calculateTotalPoint() {
         int sumWithoutAce = calculatePointSumWithoutAce();
         int aceCount = calculateAceCount();
         return calculateTotalPoint(sumWithoutAce, aceCount);

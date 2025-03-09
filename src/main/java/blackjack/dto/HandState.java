@@ -1,11 +1,10 @@
 package blackjack.dto;
 
-import blackjack.domain.Card;
-import blackjack.domain.Nickname;
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public record HandState(
-        Nickname nickname,
+        String nickname,
         List<Card> cards,
         int point
 ) {
