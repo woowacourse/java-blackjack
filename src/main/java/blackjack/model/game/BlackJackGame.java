@@ -11,8 +11,8 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Turn turn;
 
-    public BlackJackGame(DeckInitializer deckInitializer, Dealer dealer, Participants participants) {
-        this.deck = deckInitializer.generateDeck();
+    public BlackJackGame(Deck deck, Dealer dealer, Participants participants) {
+        this.deck = deck;
         this.participants = participants;
         this.dealer = dealer;
         this.turn = new Turn(participants);

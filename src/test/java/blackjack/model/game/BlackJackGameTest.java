@@ -23,7 +23,7 @@ class BlackJackGameTest {
         DeckInitializer deckInitializer = new DeckInitializer();
 
         // when
-        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer.generateDeck(), dealer, participants);
         blackJackGame.initializeGame();
 
         // then
@@ -43,7 +43,7 @@ class BlackJackGameTest {
         DeckInitializer deckInitializer = new DeckInitializer();
 
         // when
-        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer.generateDeck(), dealer, participants);
         blackJackGame.receiveCard(true);
         blackJackGame.receiveCard(true);
 
@@ -61,7 +61,7 @@ class BlackJackGameTest {
         DeckInitializer deckInitializer = new DeckInitializer();
 
         // when
-        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer.generateDeck(), dealer, participants);
         blackJackGame.receiveCard(true);
         blackJackGame.receiveCard(false);
 
@@ -80,7 +80,7 @@ class BlackJackGameTest {
         DeckInitializer deckInitializer = new DeckInitializer();
 
         // when
-        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer.generateDeck(), dealer, participants);
         blackJackGame.drawDealerCards();
 
         // then
@@ -95,7 +95,7 @@ class BlackJackGameTest {
         Participant participant2 = new Participant("한스");
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
-        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer.generateDeck(), dealer, participants);
         dealer.putCard(new Card(CardShape.HEART, CardType.NORMAL_2));
         // when
 
@@ -111,7 +111,7 @@ class BlackJackGameTest {
         Participant participant2 = new Participant("한스");
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
-        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deckInitializer.generateDeck(), dealer, participants);
         dealer.putCard(new Card(CardShape.HEART, CardType.KING));
         dealer.putCard(new Card(CardShape.HEART, CardType.NORMAL_9));
         // when

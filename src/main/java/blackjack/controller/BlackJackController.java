@@ -20,8 +20,9 @@ public class BlackJackController {
     public void run() {
         Participants participants = Parser.parseParticipants(inputView.inputParticipant());
         Dealer dealer = new Dealer();
+        DeckInitializer deckInitializer = new DeckInitializer();
         BlackJackGame blackJackGame = new BlackJackGame(
-                new DeckInitializer(),
+                deckInitializer.generateDeck(),
                 dealer,
                 participants
         );
