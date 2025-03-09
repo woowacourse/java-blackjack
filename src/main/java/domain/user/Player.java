@@ -12,7 +12,7 @@ public class Player extends User {
 
     @Override
     public boolean isImpossibleDraw() {
-        return cardDeck.isImpossibleDraw(CardHand.MAX_SCORE);
+        return cardDeck.isAtLeastScore(CardHand.MAX_SCORE);
     }
 
     @Override

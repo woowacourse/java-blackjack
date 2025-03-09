@@ -13,7 +13,7 @@ public class Dealer extends User {
 
     @Override
     public boolean isImpossibleDraw() {
-        return cardDeck.isImpossibleDraw(DEALER_MAX_SCORE);
+        return cardDeck.isAtLeastScore(DEALER_MAX_SCORE);
     }
 
     @Override

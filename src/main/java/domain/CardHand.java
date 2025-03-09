@@ -41,7 +41,7 @@ public class CardHand {
                 .anyMatch((card) -> card.getCardNumberValue() == CardNumber.ACE.getValue());
     }
 
-    public boolean isImpossibleDraw(int maxScore) {
+    public boolean isAtLeastScore(int maxScore) {
         int sum = calculateScore();
         return sum >= maxScore;
     }
@@ -62,6 +62,6 @@ public class CardHand {
     }
 
     public boolean isBlackjack() {
-        return  cards.size() == 2 && calculateScore() == MAX_SCORE ;
+        return cards.size() == 2 && calculateScore() == MAX_SCORE;
     }
 }
