@@ -47,12 +47,9 @@ public class DealerTest {
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 16 이하일 경우, true를 반환한다")
     void should_return_true_when_can_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
-            new Card(Shape.CLUB, Rank.EIGHT));
         Participant dealer = new Dealer();
-        for (Card card : cards) {
-            dealer.addCard(card);
-        }
+        dealer.addCard(new Card(Shape.HEART, Rank.EIGHT));
+        dealer.addCard(new Card(Shape.CLUB, Rank.EIGHT));
 
         //when
         boolean canPick = dealer.canPick();
@@ -65,12 +62,9 @@ public class DealerTest {
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 17 이상일 경우, false를 반환한다")
     void should_return_false_when_cannot_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
-            new Card(Shape.CLUB, Rank.NINE));
         Participant dealer = new Dealer();
-        for (Card card : cards) {
-            dealer.addCard(card);
-        }
+        dealer.addCard(new Card(Shape.HEART, Rank.EIGHT));
+        dealer.addCard(new Card(Shape.CLUB, Rank.NINE));
 
         //when
         boolean canPick = dealer.canPick();
@@ -78,5 +72,4 @@ public class DealerTest {
         //then
         assertThat(canPick).isFalse();
     }
-
 }
