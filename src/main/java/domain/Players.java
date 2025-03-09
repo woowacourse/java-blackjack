@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -26,11 +25,10 @@ public class Players {
     }
 
     private void validateUniqueNames(List<Player> players) {
-        List<String> names = players.stream()
+        if (players.stream()
                 .map(Player::getName)
-                .toList();
-
-        if (new HashSet<>(names).size() != names.size()) {
+                .distinct()
+                .count() != players.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
