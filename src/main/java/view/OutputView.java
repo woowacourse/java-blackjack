@@ -83,7 +83,7 @@ public class OutputView {
 
     private String createCardsMessage(final String name, final Card... cards) {
         final String cardsMessage = Arrays.stream(cards)
-                .map(card -> String.format("%s%s", card.getScore().getSymbol(), card.getType().getType().getName()))
+                .map(card -> String.format("%s%s", card.getScore().getSymbol(), card.getType().getName()))
                 .collect(Collectors.joining(", "));
         return String.format("%s카드: %s", name, cardsMessage);
     }

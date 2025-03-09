@@ -1,20 +1,30 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class RandomCardGenerator implements CardGenerator {
-    List<CardType> cardTypes;
+    List<Card> cardTypes;
 
     public RandomCardGenerator(){
-        cardTypes = new ArrayList<>(CardType.getCardTypes());
+        cardTypes = generateRandomCardDeck();
         Collections.shuffle(cardTypes);
+    }
+
+    private List<Card> generateRandomCardDeck(){
+        List<Card> randomCardDeck = new ArrayList<>();
+        Arrays.stream(CardType.values()).forEach(card -> selectCardScore(randomCardDeck,card));
+        return randomCardDeck;
+    }
+
+    private void selectCardScore(List<? super Card> randomCardDeck, CardType type){
+        Arrays.stream(CardScore.values()).forEach(cardScore -> randomCardDeck.add(new Card(type,cardScore)));
     }
 
     @Override
     public Card peekRandomCard() {
-        final CardType cardType = cardTypes.removeFirst();
-        return new Card(cardType);
+        return cardTypes.removeFirst();
     }
 }

@@ -1,8 +1,11 @@
 package domain;
 
+import static domain.card.CardScore.*;
+import static domain.card.CardType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.CardScore;
 import domain.card.CardType;
 import domain.card.RandomCardGenerator;
 import domain.fake.AceCardGenerator;
@@ -28,7 +31,6 @@ public class RandomCardGeneratorTest {
         AceCardGenerator aceCardGenerator = new AceCardGenerator();
         final Card card = aceCardGenerator.peekRandomCard();
 
-        assertThat(card.getType()).isEqualTo(CardType.DIAMOND_ACE);
+        assertThat(card.getScore()).isEqualTo(ACE);
     }
-
 }

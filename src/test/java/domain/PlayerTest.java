@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.card.CardScore.*;
+import static domain.card.CardType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -18,7 +20,7 @@ public class PlayerTest {
     void 플레이어를_생성한다() {
         //given
         final String name = "윌슨";
-        final List<Card> cards = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
+        final List<Card> cards = List.of(new Card(DIAMOND, ACE), new Card(DIAMOND, EIGHT));
         final CardGroup cardGroup = new CardGroup(cards);
         CardGenerator randomCardGenerator = new RandomCardGenerator();
 
@@ -50,15 +52,15 @@ public class PlayerTest {
     void 플레이어의_게임_결과를_판단_한다() {
         //given
         final String name1 = "윌슨";
-        final List<Card> cards1 = List.of(new Card(CardType.DIAMOND_2), new Card(CardType.CLOVER_4));
+        final List<Card> cards1 = List.of(new Card(DIAMOND,TWO), new Card(CLOVER,FOUR));
         final CardGroup cardGroup1 = new CardGroup(cards1);
 
         final String name2 = "가이온";
-        final List<Card> cards2 = List.of(new Card(CardType.DIAMOND_10), new Card(CardType.CLOVER_5));
+        final List<Card> cards2 = List.of(new Card(DIAMOND,TEN), new Card(CLOVER,FIVE));
         final CardGroup cardGroup2 = new CardGroup(cards2);
 
         final String name3 = "포비";
-        final List<Card> cards3 = List.of(new Card(CardType.DIAMOND_3), new Card(CardType.HEART_4));
+        final List<Card> cards3 = List.of(new Card(DIAMOND,FIVE), new Card(HEART,TWO));
         final CardGroup cardGroup3 = new CardGroup(cards3);
 
         final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
