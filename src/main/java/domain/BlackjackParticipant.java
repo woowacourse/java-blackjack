@@ -1,14 +1,13 @@
 package domain;
 
-import except.BlackJackException;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BlackjackParticipant {
 
-    private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21장 이상 받을 수 없습니다";
     private static final int BUST_STANDARD = 21;
     private static final int ACE_DIFF = 10;
+    private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21점 이상 받을 수 없습니다";
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
 
     private final List<TrumpCard> trumpCards = new ArrayList<>();
@@ -21,7 +20,7 @@ public abstract class BlackjackParticipant {
 
     private void validateNickname(String name) {
         if (name == null || name.isBlank()) {
-            throw new BlackJackException(INVALID_NAME);
+            throw new IllegalArgumentException(INVALID_NAME);
         }
     }
 

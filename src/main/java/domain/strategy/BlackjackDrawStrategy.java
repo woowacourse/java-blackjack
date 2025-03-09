@@ -1,7 +1,6 @@
 package domain.strategy;
 
 import domain.TrumpCard;
-import except.BlackJackException;
 import java.util.Deque;
 
 public class BlackjackDrawStrategy implements DrawStrategy {
@@ -14,9 +13,9 @@ public class BlackjackDrawStrategy implements DrawStrategy {
         return trumpCards.pop();
     }
 
-    private void validateDraw(Deque<TrumpCard> trumpCards) {
-        if (trumpCards.isEmpty()) {
-            throw new BlackJackException(EMPTY_DECK_ERROR);
+    private void validateDraw(Deque<TrumpCard> deckCards) {
+        if (deckCards.isEmpty()) {
+            throw new IllegalStateException(EMPTY_DECK_ERROR);
         }
     }
 }

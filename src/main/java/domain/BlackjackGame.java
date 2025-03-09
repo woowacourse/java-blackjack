@@ -1,6 +1,5 @@
 package domain;
 
-import except.BlackJackException;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class BlackjackGame {
     public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
         int playerSize = names.size();
         if (playerSize < MIN_PEOPLE_WITHOUT_DEALER || playerSize > MAX_PEOPLE_WITHOUT_DEALER) {
-            throw new BlackJackException(INVALID_BLACKJACK_PLAYER_SIZE);
+            throw new IllegalArgumentException(INVALID_BLACKJACK_PLAYER_SIZE);
         }
         List<Player> players = names.stream()
                 .map(Player::new)

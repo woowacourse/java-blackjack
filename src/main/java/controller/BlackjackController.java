@@ -11,7 +11,6 @@ import domain.Player;
 import domain.TrumpCard;
 import domain.WinStatus;
 import domain.strategy.BlackjackDrawStrategy;
-import except.BlackJackException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -150,7 +149,7 @@ public class BlackjackController {
     private <T> T handleInput(Supplier<T> inputSupplier) {
         try {
             return inputSupplier.get();
-        } catch (BlackJackException e) {
+        } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return handleInput(inputSupplier);
         }

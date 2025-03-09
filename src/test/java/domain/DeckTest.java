@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.fixture.BlackjackDeckTestFixture;
-import except.BlackJackException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -36,7 +35,7 @@ class DeckTest {
         }
 
         assertThatThrownBy(deck::drawCard)
-                .isInstanceOf(BlackJackException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("덱이 비어있어 뽑을 수 없습니다.");
     }
 }

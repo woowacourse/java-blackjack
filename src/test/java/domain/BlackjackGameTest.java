@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIterable;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import except.BlackJackException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -25,7 +24,7 @@ class BlackjackGameTest {
         // when & then
         assertThatThrownBy(() -> new BlackjackGame(names,
                 blackjackDeck, new Dealer()))
-                .isInstanceOf(BlackJackException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭은 1-7명만 이용하실 수 있습니다.");
     }
 
@@ -38,7 +37,7 @@ class BlackjackGameTest {
 
         //when & then
         assertThatThrownBy(() -> new BlackjackGame(names, deck, dealer))
-                .isInstanceOf(BlackJackException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭은 1-7명만 이용하실 수 있습니다.");
     }
 

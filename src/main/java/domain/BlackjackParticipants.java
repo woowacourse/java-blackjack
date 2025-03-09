@@ -1,6 +1,5 @@
 package domain;
 
-import except.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,7 @@ public class BlackjackParticipants {
         return players.stream()
                 .filter(player -> player.name().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new BlackJackException(INVALID_PLAYER));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_PLAYER));
     }
 
     public List<BlackjackResult> calculatePlayerResults() {

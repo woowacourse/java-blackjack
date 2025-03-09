@@ -1,6 +1,5 @@
 package view;
 
-import except.BlackJackException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +25,7 @@ public class InputView {
 
     private void validateInput(String input) {
         if (input == null || input.isEmpty()) {
-            throw new BlackJackException(INVALID_INPUT);
+            throw new IllegalArgumentException(INVALID_INPUT);
         }
     }
 
@@ -42,6 +41,6 @@ public class InputView {
         if (input.equals(YES) || input.equals(NO)) {
             return;
         }
-        throw new BlackJackException(INVALID_BOOLEAN_INPUT);
+        throw new IllegalArgumentException(INVALID_BOOLEAN_INPUT);
     }
 }
