@@ -40,7 +40,7 @@ public class Dealer {
     }
 
     public int calculateTotalCardNumber() {
-        return hand.calculateTotalCardNumber();
+        return hand.calculateTotalWithAce();
     }
 
     public boolean isOverBustBound() {

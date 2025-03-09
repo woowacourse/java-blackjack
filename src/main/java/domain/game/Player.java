@@ -25,7 +25,7 @@ public class Player {
     }
 
     public int calculateTotalCardNumber() {
-        return hand.calculateTotalCardNumber();
+        return hand.calculateTotalWithAce();
     }
 
     public boolean isOverBustBound() {

@@ -4,8 +4,8 @@ import java.util.List;
 
 public enum CardNumber {
 
-    ACE(11),
-    ACE_ANOTHER(1),
+    ACE(1),
+    ACE_ANOTHER(11),
     TWO(2),
     THREE(3),
     FOUR(4),

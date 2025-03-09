@@ -48,7 +48,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
 
         //when
-        int totalNumber = hand.calculateTotalCardNumber();
+        int totalNumber = hand.calculateTotalWithAce();
 
         //then
         assertThat(totalNumber).isEqualTo(22);
@@ -63,7 +63,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
 
         //when
-        int totalNumber = hand.calculateTotalCardNumber();
+        int totalNumber = hand.calculateTotalWithAce();
 
         //then
         assertThat(totalNumber).isEqualTo(21);
@@ -79,7 +79,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TWO));
 
         //when
-        int totalNumber = hand.calculateTotalCardNumber();
+        int totalNumber = hand.calculateTotalWithAce();
 
         //then
         assertThat(totalNumber).isEqualTo(13);
@@ -96,7 +96,7 @@ public class HandTest {
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
 
         //when
-        int totalNumber = hand.calculateTotalCardNumber();
+        int totalNumber = hand.calculateTotalWithAce();
 
         //then
         assertThat(totalNumber).isEqualTo(23);
