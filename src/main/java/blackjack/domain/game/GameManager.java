@@ -71,7 +71,7 @@ public class GameManager {
     }
 
     private void processDealerTurns() {
-        int drawingCount = dealer.drawSelfCardUntil();
+        int drawingCount = dealer.drawSelfCardUntilLimit();
         gameInputOutput.executePrintDealerDrawing(drawingCount);
     }
 

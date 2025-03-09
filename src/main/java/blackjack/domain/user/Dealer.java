@@ -30,7 +30,7 @@ public class Dealer {
         return cardDeck.drawCard(1).getFirst();
     }
 
-    public int drawSelfCardUntil() {
+    public int drawSelfCardUntilLimit() {
         int count = 0;
         while (GameRule.checkPossibilityOfDealerDrawing(player.getPoint())) {
             Card drawnCard = cardDeck.drawCard(1).getFirst();

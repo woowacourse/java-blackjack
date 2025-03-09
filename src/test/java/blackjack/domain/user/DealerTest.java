@@ -51,14 +51,14 @@ class DealerTest {
     @Test
     @DisplayName("가능할 때까지 자신의 카드를 드로잉할 수 있다.")
     void canDrawSelfCardUntilLimit() {
-        dealer.drawSelfCardUntil();
+        dealer.drawSelfCardUntilLimit();
         assertThat(dealer.getHand()).hasSize(3);
     }
 
     @Test
     @DisplayName("가능할 때까지 자신의 카드를 드로잉할 때 드로잉 횟수를 알 수 있다.")
     void canCalculateSelfDrawingCount() {
-        int count = dealer.drawSelfCardUntil();
+        int count = dealer.drawSelfCardUntilLimit();
         assertThat(count).isEqualTo(3);
     }
 
