@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 public final class Formatter {
 
+    private static final int BUSTED_STANDARD_VALUE = 21;
+
     private Formatter() {
     }
 
@@ -46,8 +48,7 @@ public final class Formatter {
     private static String formatCardResultValue(PlayerResult playerResult) {
         int value = playerResult.getValue();
 
-        // TODO: 매직 넘버 없애기
-        if (value > 21) {
+        if (value > BUSTED_STANDARD_VALUE) {
             return "Busted!";
         }
 
