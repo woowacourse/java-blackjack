@@ -27,7 +27,7 @@ public class BlackJackController {
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(cardDeckInitializer);
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         List<User> users = makeUsers();
         dealInitialCards(users, dealer, blackJackGame);
         outputView.printDealInitialCardsResult(dealer, users);

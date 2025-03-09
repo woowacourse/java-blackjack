@@ -1,6 +1,8 @@
 package blackjack.model.game;
 
 import static blackjack.model.card.CardCreator.createCard;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
@@ -8,7 +10,6 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
 import java.util.List;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -39,7 +40,7 @@ class BlackJackGameTest {
         ));
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck);
         User user = new User("pobi");
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         List<Player> players = List.of(dealer, user);
 
         blackJackGame.dealInitialCards(players);

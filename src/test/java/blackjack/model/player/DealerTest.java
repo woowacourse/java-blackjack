@@ -1,11 +1,12 @@
 package blackjack.model.player;
 
 import static blackjack.model.card.CardCreator.createCard;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
 import java.util.List;
 import java.util.stream.Stream;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -55,7 +56,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer("딜러");
+        dealer = new Dealer();
     }
 
     @Test
