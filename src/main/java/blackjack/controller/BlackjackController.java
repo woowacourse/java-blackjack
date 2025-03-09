@@ -9,6 +9,7 @@ import blackjack.model.Player;
 import blackjack.model.card.RandomCardShuffler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,10 @@ public final class BlackjackController {
     private void validateGame(List<Player> players, Dealer dealer) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("게임 참가자가 없습니다.");
+        }
+        boolean isDuplicatePlayerName = new HashSet<>(players).size() != players.size();
+        if (isDuplicatePlayerName) {
+            throw new IllegalArgumentException("게임 참가자의 이름이 중복되어 게임을 시작할 수 없습니다.");
         }
         validateParticipants(players, dealer);
     }
