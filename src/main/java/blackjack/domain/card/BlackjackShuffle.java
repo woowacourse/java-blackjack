@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface BlackjackShuffle {
 
-    void shuffle(List<Card> cards);
+    void shuffle(final List<Card> cards);
 }

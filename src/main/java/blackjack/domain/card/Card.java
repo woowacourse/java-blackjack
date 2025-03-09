@@ -7,7 +7,7 @@ public class Card {
     private final CardNumber number;
     private final CardShape shape;
 
-    public Card(CardNumber number, CardShape shape) {
+    public Card(final CardNumber number, final CardShape shape) {
         this.number = number;
         this.shape = shape;
     }
@@ -29,7 +29,7 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;

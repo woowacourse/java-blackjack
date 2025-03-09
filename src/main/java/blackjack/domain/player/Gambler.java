@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Gambler extends Player {
 
-    public Gambler(String name) {
+    public Gambler(final String name) {
         super(name);
     }
 

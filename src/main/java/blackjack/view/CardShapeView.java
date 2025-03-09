@@ -11,7 +11,7 @@ public enum CardShapeView {
 
     private final String message;
 
-    CardShapeView(String message) {
+    CardShapeView(final String message) {
         this.message = message;
     }
 

@@ -27,7 +27,7 @@ public abstract class Player {
         cards.addAll(cardPack.getDealByCount(count));
     }
 
-    public int compareWithOtherPlayer(Player otherPlayer) {
+    public int compareWithOtherPlayer(final Player otherPlayer) {
         if (this.isBust() && otherPlayer.isNotBust()) {
             return -1;
         }
@@ -58,7 +58,7 @@ public abstract class Player {
         return sum;
     }
 
-    private boolean canCalculateAceWithEleven(int sum) {
+    private boolean canCalculateAceWithEleven(final int sum) {
         return hasAce() && sum + ACE_ELEVEN_VALUE - 1 <= BUST_THRESHOLD;
     }
 
@@ -76,7 +76,7 @@ public abstract class Player {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;

@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class GameResults {
 
-    Map<Player, GameResult> gameResults;
+    private final Map<Player, GameResult> gameResults;
 
-    public GameResults(Player dealer, List<Player> gamblers) {
+    public GameResults(final Player dealer, final List<Player> gamblers) {
         gameResults = new HashMap<>();
         gamblers.forEach(
                 player -> {
@@ -19,7 +19,7 @@ public class GameResults {
         );
     }
 
-    public GameResult getGameResult(Player player) {
+    public GameResult getGameResult(final Player player) {
         return gameResults.get(player);
     }
 

@@ -21,7 +21,7 @@ public class Players {
         initPlayers(cardPack);
     }
 
-    public void dealAddCardForDealer(CardPack cardPack) {
+    public void dealAddCardForDealer(final CardPack cardPack) {
         dealer.pushDealCard(cardPack, 1);
     }
 
@@ -33,14 +33,14 @@ public class Players {
         return new GameResults(dealer, gamblers);
     }
 
-    private void validateHasDuplication(List<Player> players) {
+    private void validateHasDuplication(final List<Player> players) {
         int size = new HashSet<>(players).size();
         if (players.size() != size) {
             throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
         }
     }
 
-    private void initPlayers(CardPack cardPack) {
+    private void initPlayers(final CardPack cardPack) {
         dealer.pushDealCard(cardPack, 2);
         gamblers.forEach(gambler ->
                 gambler.pushDealCard(cardPack, 2));

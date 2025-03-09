@@ -15,7 +15,7 @@ public class InputView {
         return console.nextLine();
     }
 
-    public boolean readOneMoreDealCard(Player player) {
+    public boolean readOneMoreDealCard(final Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = console.nextLine();
         validateYesOrNo(input);
@@ -23,7 +23,7 @@ public class InputView {
         return input.equals(YES);
     }
 
-    private void validateYesOrNo(String input) {
+    private void validateYesOrNo(final String input) {
         if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException("y또는 n만 입력 가능합니다.");
         }

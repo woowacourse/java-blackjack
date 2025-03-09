@@ -20,7 +20,7 @@ public enum CardNumberView {
 
     private final String message;
 
-    CardNumberView(String message) {
+    CardNumberView(final String message) {
         this.message = message;
     }
 

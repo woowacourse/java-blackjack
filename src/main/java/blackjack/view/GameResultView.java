@@ -10,7 +10,7 @@ public enum GameResultView {
 
     private final String message;
 
-    GameResultView(String message) {
+    GameResultView(final String message) {
         this.message = message;
     }
 

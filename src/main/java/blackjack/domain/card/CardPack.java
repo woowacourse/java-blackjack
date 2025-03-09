@@ -9,7 +9,7 @@ public class CardPack {
 
     private final List<Card> cards;
 
-    public CardPack(BlackjackShuffle blackjackShuffle) {
+    public CardPack(final BlackjackShuffle blackjackShuffle) {
         this.cards = initCards();
         blackjackShuffle.shuffle(cards);
     }

@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public class PlayerNameParser {
 
+    private PlayerNameParser() {
+    }
+
     private static final String PLAYER_NAME_DELIMITER = ",";
 
     public static List<Player> parseNames(String namesInput) {
