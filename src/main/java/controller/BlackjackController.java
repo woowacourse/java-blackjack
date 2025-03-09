@@ -46,11 +46,11 @@ public class BlackjackController {
             yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participantName));
             addOneCardByNameIfYes(blackjack, participantName, yesOrNo);
             OutputView.printPlayerCards(blackjack.getNameAndCardsByName(participantName));
-        } while (yesOrNo.equals(YesOrNo.YES));
+        } while (yesOrNo == YesOrNo.YES);
     }
 
     private void addOneCardByNameIfYes(Blackjack blackjack, String name, YesOrNo yesOrNo) {
-        if (yesOrNo.equals(YesOrNo.YES)) {
+        if (yesOrNo == YesOrNo.YES) {
             blackjack.addCardByName(name);
         }
     }
