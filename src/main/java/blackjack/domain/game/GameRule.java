@@ -24,14 +24,14 @@ public enum GameRule {
         return point <= DEALER_LIMIT_POINT.getValue();
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public static int processBustPoint(int point) {
         if (point > 21) {
             return 0;
         }
         return point;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
