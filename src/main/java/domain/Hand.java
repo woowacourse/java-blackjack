@@ -13,6 +13,35 @@ public class Hand {
         cards.add(card);
     }
 
+    public BlackjackMatchResult compareWith(Hand other) {
+        BlackjackMatchResult burstResult = handleBurstCases(other);
+        if (burstResult != null) {
+            return burstResult;
+        }
+
+        return compareScores(other);
+    }
+
+    private BlackjackMatchResult handleBurstCases(Hand other) {
+        if (this.isBurst() && other.isBurst()) {
+            return BlackjackMatchResult.DRAW;
+        }
+        if (this.isBurst()) {
+            return BlackjackMatchResult.LOSE;
+        }
+        if (other.isBurst()) {
+            return BlackjackMatchResult.WIN;
+        }
+        return null;
+    }
+
+    private BlackjackMatchResult compareScores(Hand other) {
+        int thisScore = this.calculateTotalPoint();
+        int otherScore = other.calculateTotalPoint();
+        return BlackjackMatchResult.judge(thisScore, otherScore);
+    }
+
+
     public int calculateTotalPoint() {
         int totalPoint = sumPointWithoutAce();
         totalPoint = sumAcePoint(totalPoint);

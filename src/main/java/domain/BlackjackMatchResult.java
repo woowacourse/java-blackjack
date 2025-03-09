@@ -11,30 +11,12 @@ public enum BlackjackMatchResult {
         this.state = state;
     }
 
-    public static BlackjackMatchResult judge(Hand dealerHand, Hand playersHand) {
-        int dealerScore = dealerHand.calculateTotalPoint();
-        int playerScore = playersHand.calculateTotalPoint();
-
-        boolean dealerBurst = dealerHand.isBurst();
-        boolean playersBurst = playersHand.isBurst();
-
-        if (dealerBurst && playersBurst) {
+    public static BlackjackMatchResult judge(int referenceHandScore, int comparedHandScore) {
+        if (referenceHandScore == comparedHandScore) {
             return DRAW;
         }
 
-        if (dealerScore == playerScore) {
-            return DRAW;
-        }
-
-        if (dealerBurst) {
-            return LOSE;
-        }
-
-        if (playersBurst) {
-            return WIN;
-        }
-
-        if (dealerScore > playerScore) {
+        if (referenceHandScore > comparedHandScore) {
             return WIN;
         }
 
