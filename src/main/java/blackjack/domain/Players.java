@@ -31,25 +31,8 @@ public class Players {
                 gambler.pushDealCard(cardPack, 2));
     }
 
-    public Player getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getGamblers() {
-        return gamblers;
-    }
-
-    public void dealAddCard(CardPack cardPack, Player addPlayer) {
-        Player player = getMatchPlayer(addPlayer);
-        player.pushDealCard(cardPack, 1);
-    }
-
     public void dealAddCardForDealer(CardPack cardPack) {
-        dealAddCard(cardPack, dealer);
-    }
-
-    public boolean isPlayerBust(final Player player) {
-        return player.isPlayerBust();
+        dealer.pushDealCard(cardPack, 1);
     }
 
     public boolean isDealerHit() {
@@ -60,15 +43,12 @@ public class Players {
         return new GameResults(dealer, gamblers);
     }
 
-    private Player getMatchPlayer(Player player) {
-        if (player.equals(dealer)) {
-            return dealer;
-        }
-        return gamblers.stream()
-                .filter(current -> current.equals(player))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("서버에 오류가 발생했습니다."));
+    public Player getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getGamblers() {
+        return gamblers;
     }
 
     private void validateHasDuplication(List<Player> gamblers) {
