@@ -26,6 +26,6 @@ public class Rule {
         Score playerScore = Score.from(playerCards);
         Score dealerScore = Score.from(dealerCards);
 
-        return GameResult.from(playerScore, dealerScore);
+        return GameResult.of(playerScore, dealerScore);
     }
 }

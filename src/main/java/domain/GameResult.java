@@ -11,7 +11,7 @@ public enum GameResult {
         this.title = title;
     }
 
-    public static GameResult from(Score playerScore, Score dealerScore) {
+    public static GameResult of(Score playerScore, Score dealerScore) {
         if (playerScore == Score.BUST || playerScore.isLowerThan(dealerScore)) {
             return LOSE;
         }

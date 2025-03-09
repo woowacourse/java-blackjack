@@ -18,7 +18,7 @@ class GameResultTest {
         @DisplayName("플레이어가 버스트이거나, 딜러보다 점수가 낮으면 LOSE를 반환한다.")
         @MethodSource("provideLoseCases")
         void playerLoses(Score playerScore, Score dealerScore) {
-            GameResult result = GameResult.from(playerScore, dealerScore);
+            GameResult result = GameResult.of(playerScore, dealerScore);
             assertThat(result).isEqualTo(GameResult.LOSE);
         }
 
@@ -36,7 +36,7 @@ class GameResultTest {
         @DisplayName("플레이어와 딜러의 점수가 같으면 DRAW를 반환한다.")
         @MethodSource("provideDrawCases")
         void gameIsDraw(Score playerScore, Score dealerScore) {
-            GameResult result = GameResult.from(playerScore, dealerScore);
+            GameResult result = GameResult.of(playerScore, dealerScore);
             assertThat(result).isEqualTo(GameResult.DRAW);
         }
 
@@ -52,7 +52,7 @@ class GameResultTest {
         @DisplayName("플레이어 점수가 더 높으면 WIN을 반환한다.")
         @MethodSource("provideWinCases")
         void playerWins(Score playerScore, Score dealerScore) {
-            GameResult result = GameResult.from(playerScore, dealerScore);
+            GameResult result = GameResult.of(playerScore, dealerScore);
             assertThat(result).isEqualTo(GameResult.WIN);
         }
 
