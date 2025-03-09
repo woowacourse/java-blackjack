@@ -31,7 +31,7 @@ public class BlackJackController {
 
         requestHit(dealer, players);
         gameManager.dealerHitUntilStand();
-        printDealerReceiveCardCount(dealer);
+        printDealerReceiveCardCount(gameManager);
 
         outputView.printGamerCardsAndScore(dealer, players);
         outputView.printGameResult(gameManager.calculateDealerGameResult(), gameManager.calculatePlayerGameResult());
@@ -64,7 +64,7 @@ public class BlackJackController {
             return;
         }
         do {
-            player.receiveCard(1);
+            player.receiveCard();
             outputView.printPlayerCards(player);
         } while (!player.isBust() && requestAnswerCommand(player) == AnswerCommand.YES);
     }
@@ -73,8 +73,8 @@ public class BlackJackController {
         return LoopTemplate.tryCatchLoop(() -> inputView.readAnswer(player.getName()));
     }
 
-    private void printDealerReceiveCardCount(Dealer dealer) {
-        int count = dealer.getReceivedCardCount();
+    private void printDealerReceiveCardCount(GameManager gameManager) {
+        int count = gameManager.getDealerHitCount();
         if (count > 0) {
             outputView.printDealerReceivedCardCount(count);
         }

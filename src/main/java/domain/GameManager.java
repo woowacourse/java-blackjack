@@ -53,4 +53,8 @@ public class GameManager {
     public void dealerHitUntilStand(){
         dealer.hitCardUntilStand();
     }
+
+    public int getDealerHitCount(){
+        return dealer.getReceivedCardCount();
+    }
 }
