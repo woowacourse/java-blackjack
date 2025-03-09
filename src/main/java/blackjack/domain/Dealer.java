@@ -27,12 +27,6 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public int calculateScore() {
-        Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
-        return Collections.max(possibleScore);
-    }
-
-    @Override
     public String getName() {
         return DEALER_NAME;
     }

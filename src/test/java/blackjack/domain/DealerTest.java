@@ -57,6 +57,23 @@ class DealerTest {
         assertThat(totalScore).isEqualTo(17);
     }
 
+    @DisplayName("Ace를 11로 계산했을 때 21이 넘으면 Ace를 1로 계산한다.")
+    @Test
+    void testDealerTotalCardSum2() {
+        // given
+        CardDeck cardDeck = new CardDeck();
+        CardDump cardDump = new CardDump();
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
+
+        Dealer dealer = new Dealer(cardDeck, cardDump);
+
+        // when
+        int totalScore = dealer.calculateScore();
+        assertThat(totalScore).isEqualTo(18);
+    }
+
     @DisplayName("딜러의 점수가 21 초과면 버스트다.")
     @Test
     void testBust_False() {
