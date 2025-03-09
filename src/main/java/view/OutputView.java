@@ -2,12 +2,12 @@ package view;
 
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.CardNumber;
 import domain.game.Dealer;
 import domain.game.GameResult;
 import domain.game.Player;
 import domain.game.Players;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -25,8 +25,7 @@ public class OutputView {
     private String formatPlayerNames(List<Player> players) {
         return players.stream()
                 .map(Player::getName)
-                .reduce((a, b) -> a + ", " + b)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 플레이어 포맷팅에 실패하였습니다."));
+                .collect(Collectors.joining(", "));
     }
 
     public void printPlayerCard(Player player) {
@@ -43,34 +42,10 @@ public class OutputView {
         System.out.println();
     }
 
-    private String formatHand(Card dealerCard) {
-        StringBuilder stringBuilder = new StringBuilder();
-        List<CardNumber> honorCards = CardNumber.getHonorCard();
-        formatSingleCard(dealerCard, honorCards, stringBuilder);
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
-        return stringBuilder.toString();
-    }
-
-    private String formatHand(List<Card> cards) {
-        StringBuilder stringBuilder = new StringBuilder();
-        List<CardNumber> honorCards = CardNumber.getHonorCard();
-        for (Card card : cards) {
-            formatSingleCard(card, honorCards, stringBuilder);
-        }
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
-        return stringBuilder.toString();
-    }
-
-    private void formatSingleCard(Card card, List<CardNumber> honorCards, StringBuilder stringBuilder) {
-        if (honorCards.contains(card.getCardNumber())) {
-            stringBuilder.append(card.getCardNumber().name().charAt(0))
-                    .append(card.getPattern().getPattern())
-                    .append(", ");
-            return;
-        }
-        stringBuilder.append(card.getCardNumber().getNumber())
-                .append(card.getPattern().getPattern())
-                .append(", ");
+    private String formatCard(List<Card> cards) {
+        return cards.stream()
+                .map(Card::formatSingleCard)
+                .collect(Collectors.joining(","));
     }
 
     public void printDealerDrawMessage() {
