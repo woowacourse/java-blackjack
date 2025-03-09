@@ -12,6 +12,10 @@ public class CardDeck {
         cards.add(card);
     }
 
+    public void addAll(List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
     public Set<Integer> calculatePossibleSum() {
         List<Integer> sums = new ArrayList<>();
         sums.add(0);

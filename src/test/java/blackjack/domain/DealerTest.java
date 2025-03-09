@@ -7,6 +7,18 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
+    @DisplayName("딜러는 카드 덱을 초기화할 수 있다.")
+    @Test
+    void testDealerInitCardDeck() {
+        CardDeck cardDeck = new CardDeck();
+        CardDump cardDump = new CardDump();
+
+        Dealer dealer = new Dealer(cardDeck, cardDump);
+        dealer.createInitialCardDeck();
+
+        assertThat(dealer.getCardDeck().size()).isEqualTo(2);
+    }
+
     @DisplayName("딜러는 카드의 합이 16 이하이면 카드를 한장 더 받아야한다.")
     @Test
     void testDealerGenerate() {

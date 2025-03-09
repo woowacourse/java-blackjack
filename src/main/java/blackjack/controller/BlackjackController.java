@@ -27,9 +27,9 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = createAndDistributeCardToPlayers();
-        Dealer dealer = createDealerWithInitialDeck();
-
+        Dealer dealer = new Dealer(new CardDeck(), cardDump);
+        dealer.createInitialCardDeck();
+        List<Player> players = createAndDistributeCardToPlayers(dealer);
         outputView.displayCardDistribution(DistributedCardDto.from(dealer), DistributedCardDto.fromPlayers(players));
 
         hitExtraCardForPlayers(players, dealer);
@@ -39,12 +39,13 @@ public class BlackjackController {
         generateGameResultAndDisplay(dealer, players);
     }
 
-    private List<Player> createAndDistributeCardToPlayers() {
+    private List<Player> createAndDistributeCardToPlayers(final Dealer dealer) {
         String[] playerNames = getPlayerNames();
-
         List<Player> players = new ArrayList<>();
+
         for (String playerName : playerNames) {
-            Player player = createPlayerWithInitialDeck(playerName);
+            Player player = new Player(playerName, new CardDeck());
+            player.receiveInitialCardDeck(dealer.giveCardsToPlayer());
             players.add(player);
         }
         return players;
@@ -52,14 +53,6 @@ public class BlackjackController {
 
     private String[] getPlayerNames() {
         return processAndReturn(inputView::readPlayerName);
-    }
-
-    private Player createPlayerWithInitialDeck(final String playerName) {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(cardDump.drawCard());
-        cardDeck.add(cardDump.drawCard());
-
-        return new Player(playerName, cardDeck);
     }
 
     private <T> T processAndReturn(Supplier<T> supplier) {
@@ -70,13 +63,6 @@ public class BlackjackController {
                 outputView.displayError(e.getMessage());
             }
         }
-    }
-
-    private Dealer createDealerWithInitialDeck() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(cardDump.drawCard());
-        cardDeck.add(cardDump.drawCard());
-        return new Dealer(cardDeck, cardDump);
     }
 
     private void hitExtraCardForPlayers(final List<Player> players, final Dealer dealer) {

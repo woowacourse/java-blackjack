@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 public class Player extends Participant {
@@ -15,6 +16,10 @@ public class Player extends Participant {
 
     public void addCard(Card card) {
         cardDeck.add(card);
+    }
+
+    public void receiveInitialCardDeck(List<Card> cards) {
+        cardDeck.addAll(cards);
     }
 
     @Override

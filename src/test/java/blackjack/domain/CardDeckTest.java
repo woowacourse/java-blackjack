@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,5 +58,14 @@ class CardDeckTest {
         Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
 
         assertThat(possibleSums).isEqualTo(Set.of(4, 14, 24, 34, 44));
+    }
+
+    @DisplayName("두 장의 주어진 카드를 카드 덱에 추가한다.")
+    @Test
+    void testAddCards() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.addAll(List.of(new Card(CardSuit.HEART, CardRank.TWO), new Card(CardSuit.CLUB, CardRank.EIGHT)));
+
+        assertThat(cardDeck.getDeckSize()).isEqualTo(2);
     }
 }
