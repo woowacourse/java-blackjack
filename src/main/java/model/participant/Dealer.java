@@ -19,7 +19,7 @@ public class Dealer extends Participant {
         this.matchResult = new HashMap<>();
     }
 
-    public static Dealer of() {
+    public static Dealer newInstance() {
         return new Dealer(DEALER_NAME);
     }
 

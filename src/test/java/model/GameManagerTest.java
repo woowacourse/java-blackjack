@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
@@ -9,6 +7,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 public class GameManagerTest {
 
@@ -21,7 +21,7 @@ public class GameManagerTest {
         "pobi",
         "hippo"
     ));
-    GameManager manager = new GameManager(Dealer.of(),players);
+    GameManager manager = new GameManager(Dealer.newInstance(),players);
     //when
     //then
     for (Player player : players.getPlayers()) {

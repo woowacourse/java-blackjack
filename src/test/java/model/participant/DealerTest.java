@@ -19,7 +19,7 @@ class DealerTest {
     void newDealer() {
 
         // given
-        final Participant dealer = Dealer.of();
+        final Participant dealer = Dealer.newInstance();
         String expected = "딜러";
 
         // when
@@ -38,7 +38,7 @@ class DealerTest {
         final List<Card> cards = new CardDeck().pickCard(2);
 
         // when
-        Participant dealer = Dealer.of();
+        Participant dealer = Dealer.newInstance();
         dealer.addCards(cards);
 
         // then
@@ -58,7 +58,7 @@ class DealerTest {
                 .mapToInt(card -> card.getRank().getScore().getFirst())
                 .sum();
 
-        Participant dealer = Dealer.of();
+        Participant dealer = Dealer.newInstance();
         dealer.addCards(divideCards);
 
         // when
@@ -78,7 +78,7 @@ class DealerTest {
                 new Card(SuitType.CLUBS, RankType.FOUR)
         );
 
-        Dealer dealer = Dealer.of();
+        Dealer dealer = Dealer.newInstance();
         dealer.addCards(divideCards);
 
         // when
@@ -96,7 +96,7 @@ class DealerTest {
                 new Card(SuitType.CLUBS, RankType.KING)
         );
 
-        Dealer dealer = Dealer.of();
+        Dealer dealer = Dealer.newInstance();
         dealer.addCards(divideCards);
 
         // when
@@ -108,7 +108,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 게임 결과 업데이트가 잘 되는 지")
     void dealerGameResult() {
-        Dealer dealer = Dealer.of();
+        Dealer dealer = Dealer.newInstance();
         dealer.updateResult(MatchType.WIN);
         Map<MatchType, Integer> matchResult = dealer.getMatchResult();
         Assertions.assertThat(matchResult.get(MatchType.WIN)).isEqualTo(1);
