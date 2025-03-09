@@ -55,12 +55,10 @@ public class BlackjackController {
     }
 
     private void drawToDealer(GameManager gameManager) {
-        while (true) {
-            boolean received = gameManager.passCardToDealer();
-            if (!received) {
-                break;
-            }
+        boolean received = gameManager.passCardToDealer();
+        while (received) {
             outputView.printDealerReceived();
+            received = gameManager.passCardToDealer();
         }
     }
 
