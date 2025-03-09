@@ -8,11 +8,11 @@ public class DealerCardsFactory {
 
     public static Cards generate(final Deck deck) {
         Cards cards = new Cards(new ArrayList<>());
-        while (true) {
+
+        while (cards.calculateResult() <= DEALER_DRAW_THRESHOLD) {
             cards.addCard(deck.getCard());
-            if (cards.calculateResult() > DEALER_DRAW_THRESHOLD) {
-                return cards;
-            }
         }
+
+        return cards;
     }
 }
