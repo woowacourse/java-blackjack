@@ -34,12 +34,9 @@ public class OutputView {
 
     public static void printInitialCards(Dealer dealer, Players players) {
         printNewLine();
-        print("딜러와 ");
-        print(String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()
                 .map(Participant::getNickname)
-                .toList())
-        );
-        println("에게 2장을 나누었습니다.");
+                .toList()));
 
         System.out.printf("딜러카드: %s%n", cardToString(dealer.getCard(1)));
         for (Player player : players.getPlayers()) {
