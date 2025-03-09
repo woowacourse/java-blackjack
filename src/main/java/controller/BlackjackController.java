@@ -28,6 +28,30 @@ public class BlackjackController {
         OutputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
     }
 
+    private Blackjack createBlackjack() {
+        String names = InputView.inputParticipantName();
+        Deck deck = DeckGenerator.generateDeck();
+        Players players = createPlayers(new Dealer(), createParticipants(names));
+        return new Blackjack(players, deck);
+    }
+
+    private Players createPlayers(Dealer dealer, List<Participant> participants) {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(participants);
+        return new Players(players);
+    }
+
+    private List<Participant> createParticipants(String names) {
+        List<String> parsed = Arrays.stream(names.split(",", -1))
+                .map(String::strip)
+                .toList();
+
+        return parsed.stream()
+                .map(Participant::new)
+                .collect(Collectors.toList());
+    }
+
     private void addMoreCards(Blackjack blackjack) {
         List<Participant> participants = blackjack.getParticipants();
         for (Participant participant : participants) {
@@ -53,31 +77,5 @@ public class BlackjackController {
         if (yesOrNo.equals(YesOrNo.YES)) {
             blackjack.addCard(participant);
         }
-    }
-
-    private Blackjack createBlackjack() {
-        String names = InputView.inputParticipantName();
-        List<Participant> participants = createParticipants(names);
-        Dealer dealer = new Dealer();
-        Deck deck = DeckGenerator.generateDeck();
-        Players players = createPlayers(dealer, participants);
-        return new Blackjack(players, deck);
-    }
-
-    private List<Participant> createParticipants(String names) {
-        List<String> parsed = Arrays.stream(names.split(",", -1))
-                .map(String::strip)
-                .toList();
-
-        return parsed.stream()
-                .map(Participant::new)
-                .collect(Collectors.toList());
-    }
-
-    private Players createPlayers(Dealer dealer, List<Participant> participants) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(participants);
-        return new Players(players);
     }
 }
