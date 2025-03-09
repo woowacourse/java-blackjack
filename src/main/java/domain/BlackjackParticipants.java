@@ -2,8 +2,8 @@ package domain;
 
 import except.BlackJackException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackParticipants {
 
@@ -24,6 +24,16 @@ public class BlackjackParticipants {
                 .orElseThrow(() -> new BlackJackException(INVALID_PLAYER));
     }
 
+    public List<BlackjackResult> calculatePlayerResults() {
+        List<BlackjackResult> blackjackResults = new ArrayList<>();
+        for (String name : getPlayerNames()) {
+            List<TrumpCard> trumpCards = playerCards(name);
+            int sum = calculateCardSum(name);
+            blackjackResults.add(new BlackjackResult(name, trumpCards, sum));
+        }
+        return Collections.unmodifiableList(blackjackResults);
+    }
+
     public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::name)
@@ -32,7 +42,14 @@ public class BlackjackParticipants {
 
     public List<TrumpCard> playerCards(String name) {
         Player player = findPlayer(name);
-        return player.trumpCards();
+        return Collections.unmodifiableList(player.trumpCards());
+    }
+
+    public BlackjackResult calculateDealerResult() {
+        int sum = dealer.calculateCardSum();
+        List<TrumpCard> trumpCards = dealerCards();
+        String name = dealerName();
+        return new BlackjackResult(name, trumpCards, sum);
     }
 
     public List<TrumpCard> dealerCards() {
@@ -42,10 +59,6 @@ public class BlackjackParticipants {
     public int calculateCardSum(String name) {
         Player player = findPlayer(name);
         return player.calculateCardSum();
-    }
-
-    public int calculateDealerSum() {
-        return dealer.calculateCardSum();
     }
 
     public String dealerName() {
