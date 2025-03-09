@@ -21,10 +21,6 @@ public class Players {
         initPlayers(cardPack);
     }
 
-    public void addGamblers(List<Player> gamblers) {
-        this.gamblers.addAll(gamblers);
-    }
-
     public void dealAddCardForDealer(CardPack cardPack) {
         dealer.pushDealCard(cardPack, 1);
     }
