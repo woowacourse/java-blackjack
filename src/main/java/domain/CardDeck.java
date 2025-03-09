@@ -31,7 +31,7 @@ public class CardDeck {
 
     public List<TrumpCard> getAllCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드가 비었습니다.햐");
+            throw new IllegalArgumentException("카드가 비었습니다.");
         }
         return new ArrayList<>(cards);
     }
