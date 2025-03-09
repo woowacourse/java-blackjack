@@ -13,7 +13,7 @@ public abstract class Player {
     public Player(String name) {
         validateName(name);
         this.name = name;
-        cards = new Cards();
+        this.cards = new Cards();
     }
 
     private void validateName(String name) {
