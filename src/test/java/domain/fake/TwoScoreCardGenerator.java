@@ -6,7 +6,7 @@ import domain.card.CardType;
 
 public class TwoScoreCardGenerator implements CardGenerator {
     @Override
-    public Card generate() {
+    public Card peekRandomCard() {
         return new Card(CardType.CLOVER_2);
     }
 }

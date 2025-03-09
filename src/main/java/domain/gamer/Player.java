@@ -22,7 +22,7 @@ public class Player {
     }
 
     public void receiveCard() {
-        cardGroup.addCard(cardGenerator.generate());
+        cardGroup.addCard(cardGenerator.peekRandomCard());
     }
 
     public void receiveCard(int count) {

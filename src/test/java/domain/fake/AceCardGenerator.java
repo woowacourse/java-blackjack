@@ -6,7 +6,7 @@ import domain.card.CardType;
 
 public class AceCardGenerator implements CardGenerator {
     @Override
-    public Card generate() {
+    public Card peekRandomCard() {
         return new Card(CardType.DIAMOND_ACE);
     }
 }

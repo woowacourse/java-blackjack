@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.CardGenerator;
 import domain.card.CardType;
 import domain.card.RandomCardGenerator;
 import domain.fake.AceCardGenerator;
@@ -17,7 +16,7 @@ public class RandomCardGeneratorTest {
         //given
         //when
         final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-        final Card card = randomCardGenerator.generate();
+        final Card card = randomCardGenerator.peekRandomCard();
 
         //then
         assertThat(card).isInstanceOf(Card.class);
@@ -27,7 +26,7 @@ public class RandomCardGeneratorTest {
     @Test
     void 다이아_에이스를_생성한다() {
         AceCardGenerator aceCardGenerator = new AceCardGenerator();
-        final Card card = aceCardGenerator.generate();
+        final Card card = aceCardGenerator.peekRandomCard();
 
         assertThat(card.getType()).isEqualTo(CardType.DIAMOND_ACE);
     }
