@@ -27,7 +27,7 @@ public class BlackJackController {
         receiveCardProcessOfParticipants(participants, cardDeck);
         receiveExtraCardProcessOfPlayer(participants, cardDeck);
         receiveExtraCardProcessOfDealer(participants, cardDeck);
-        calculateBackJackResultProcess(participants);
+        calculateBlackJackResultProcess(participants);
     }
 
     private void receiveExtraCardProcessOfDealer(Participants participants, CardDeck cardDeck) {
@@ -60,7 +60,7 @@ public class BlackJackController {
         outputView.printInitialParticipantHands(participants.getParticipants());
     }
 
-    private void calculateBackJackResultProcess(Participants participants) {
+    private void calculateBlackJackResultProcess(Participants participants) {
         printAllParticipantsInfo(participants);
         printAllParticipantGameResult(participants);
     }
