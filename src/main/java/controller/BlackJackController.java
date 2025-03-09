@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Cards;
+import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Player;
 import domain.Result;
@@ -17,23 +18,25 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Cards deck;
+    private final CardsInitializer cardsInitializer;
 
-    public BlackJackController(InputView inputView, OutputView outputView, Cards deck) {
+    public BlackJackController(InputView inputView, OutputView outputView, CardsInitializer cardsInitializer) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.deck = deck;
+        this.cardsInitializer = cardsInitializer;
     }
 
     public void run() {
+        Cards deck = cardsInitializer.initialize();
+
         List<Player> players = setPlayers();
         Dealer dealer = new Dealer();
 
-        prepareGame(dealer, players);
+        prepareGame(dealer, players, deck);
 
         outputView.printInitialCards(dealer, players);
 
-        processGame(players);
+        processGame(players, deck);
 
         if (dealer.hit(deck)) {
             outputView.printDealerHitSuccess();
@@ -50,18 +53,18 @@ public class BlackJackController {
                 .toList();
     }
 
-    private void prepareGame(Dealer dealer, List<Player> players) {
+    private void prepareGame(Dealer dealer, List<Player> players, Cards deck) {
         dealer.prepareGame(deck);
         players.forEach(player -> player.prepareGame(deck));
     }
 
-    private void processGame(List<Player> players) {
+    private void processGame(List<Player> players, Cards deck) {
         for (Player player : players) {
-            selectChoice(player);
+            selectChoice(player, deck);
         }
     }
 
-    private void selectChoice(Player player) {
+    private void selectChoice(Player player, Cards deck) {
         while (canHit(player)) {
             player.hit(deck);
             outputView.printCards(player);
