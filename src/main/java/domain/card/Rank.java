@@ -29,4 +29,20 @@ public enum Rank {
     public boolean isAce() {
         return value == A.getValue();
     }
+
+    public String formatCardRank() {
+        if (this == Rank.A) {
+            return "A";
+        }
+        if (this == Rank.KING) {
+            return "K";
+        }
+        if (this == Rank.QUEEN) {
+            return "Q";
+        }
+        if (this == Rank.JACK) {
+            return "J";
+        }
+        return this.getValue() + "";
+    }
 }

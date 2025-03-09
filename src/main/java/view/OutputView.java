@@ -1,17 +1,10 @@
 package view;
 
-import static domain.card.Shape.CLUB;
-import static domain.card.Shape.DIAMOND;
-import static domain.card.Shape.HEART;
-import static domain.card.Shape.SPADE;
-
 import domain.card.Card;
 import domain.participant.DealerResult;
 import domain.participant.Participant;
 import domain.participant.ParticipantResult;
 import domain.participant.ParticipantsResult;
-import domain.card.Rank;
-import domain.card.Shape;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,44 +36,12 @@ public class OutputView {
     }
 
     private String formatCard(Card card) {
-        return String.format(SPREAD_CARD_RESULT, formatCardRank(card.rank()),
-            formatCardShape(card.shape()));
+        return String.format(SPREAD_CARD_RESULT, card.rank().formatCardRank(),
+            card.shape().formatCardShape());
     }
 
     public void printDealerPickMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    private String formatCardRank(Rank rank) {
-        if (rank == Rank.A) {
-            return "A";
-        }
-        if (rank == Rank.KING) {
-            return "K";
-        }
-        if (rank == Rank.QUEEN) {
-            return "Q";
-        }
-        if (rank == Rank.JACK) {
-            return "J";
-        }
-        return rank.getValue() + "";
-    }
-
-    private String formatCardShape(Shape shape) {
-        if (shape == DIAMOND) {
-            return "다이아몬드";
-        }
-        if (shape == HEART) {
-            return "하트";
-        }
-        if (shape == CLUB) {
-            return "클로버";
-        }
-        if (shape == SPADE) {
-            return "스페이드";
-        }
-        return "";
     }
 
     public void printParticipantHand(Participant participant) {
