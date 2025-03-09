@@ -54,7 +54,7 @@ public class Cards {
         Card aceElevenCard = cards.stream()
                 .filter(card -> card.isSameNumber(CardNumber.ACE_ELEVEN))
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(()-> new IllegalStateException("1로 취급할 A가 없습니다."));
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
