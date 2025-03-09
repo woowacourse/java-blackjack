@@ -2,26 +2,28 @@ package blackjack.gamer;
 
 import blackjack.domain.card.Cards;
 
+import java.util.function.Function;
+
 public class Player extends GameParticipant {
 
-    private final Nickname nickname;
+    private final Function<Player, Boolean> hitDecision;
 
-    public Player(Cards cards, Nickname nickname) {
-        super(cards);
-        this.nickname = nickname;
+    public Player(Nickname nickname, Cards hand, Function<Player, Boolean> hitDecision) {
+        super(nickname, hand);
+        this.hitDecision = hitDecision;
     }
 
-    public static Player from(Nickname nickname) {
-        return new Player(Cards.empty(), nickname);
+    public static Player of(Nickname nickname, Function<Player, Boolean> hitDecision) {
+        return new Player(nickname, Cards.empty(), hitDecision);
+    }
+
+    @Override
+    public Cards showCards() {
+        return hand;
     }
 
     @Override
     public boolean shouldHit() {
-        // TODO 뷰와 관련있음
-        return false;
-    }
-
-    public Nickname getNickname() {
-        return nickname;
+        return !this.isBust() && hitDecision.apply(this);
     }
 }
