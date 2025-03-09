@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -8,11 +10,9 @@ public abstract class Participant {
     static final int TARGET_SCORE = 21;
 
     protected final CardDeck cardDeck;
-    protected final CardDump cardDump;
 
-    public Participant(CardDeck cardDeck, CardDump cardDump) {
+    public Participant(CardDeck cardDeck) {
         this.cardDeck = cardDeck;
-        this.cardDump = cardDump;
     }
 
     abstract boolean canHit();
@@ -29,13 +29,16 @@ public abstract class Participant {
         return calculateScore() > TARGET_SCORE;
     }
 
-    public void addCard() {
-        cardDeck.add(cardDump.drawCard());
+    public void receiveCard(Card card) {
+        cardDeck.add(card);
     }
 
     public List<Card> getCardDeck() {
         return cardDeck.getCards();
     }
 
+    public int getCardSize() {
+        return cardDeck.getDeckSize();
+    }
     public abstract String getName();
 }

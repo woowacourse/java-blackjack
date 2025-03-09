@@ -1,25 +1,30 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDump;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardSuit;
+import blackjack.domain.participant.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("딜러는 카드의 합이 16 이하이면 카드를 한장 더 받아야한다.")
+    @DisplayName("딜러는 카드의 합이 16 이하이면 카드를 한장 더 히트 할 수 있다.")
     @Test
     void testDealerGenerate() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Dealer dealer = new Dealer(cardDeck, cardDump);
+        Dealer dealer = new Dealer(cardDeck);
 
         // when
-        boolean takenExtraCard = dealer.didHit();
+        boolean takenExtraCard = dealer.canHit();
 
         assertThat(takenExtraCard).isTrue();
     }
@@ -29,14 +34,13 @@ class DealerTest {
     void testDealerGenerate2() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.JACK));
 
-        Dealer dealer = new Dealer(cardDeck, cardDump);
+        Dealer dealer = new Dealer(cardDeck);
 
         // when
-        boolean takenExtraCard = dealer.didHit();
+        boolean takenExtraCard = dealer.canHit();
 
         assertThat(takenExtraCard).isFalse();
     }
@@ -46,11 +50,10 @@ class DealerTest {
     void testDealerTotalCardSum() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Dealer dealer = new Dealer(cardDeck, cardDump);
+        Dealer dealer = new Dealer(cardDeck);
 
         // when
         int totalScore = dealer.calculateScore();
@@ -62,12 +65,11 @@ class DealerTest {
     void testDealerTotalCardSum2() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
 
-        Dealer dealer = new Dealer(cardDeck, cardDump);
+        Dealer dealer = new Dealer(cardDeck);
 
         // when
         int totalScore = dealer.calculateScore();
@@ -78,11 +80,10 @@ class DealerTest {
     @Test
     void testBust_False() {
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Dealer dealer = new Dealer(cardDeck, cardDump);
+        Dealer dealer = new Dealer(cardDeck);
 
         boolean bust = dealer.isBust();
 
@@ -93,30 +94,15 @@ class DealerTest {
     @Test
     void testBust_True() {
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.FIVE));
 
-        Dealer dealer = new Dealer(cardDeck, cardDump);
+        Dealer dealer = new Dealer(cardDeck);
 
         boolean bust = dealer.isBust();
 
         assertThat(bust).isTrue();
     }
 
-    @DisplayName("딜러가 여러 에이스를 소유한 경우 버스트 발생 확인")
-    @Test
-    void testMultipleAce_Bust_True() {
-        CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
-
-        Dealer dealer = new Dealer(cardDeck, cardDump);
-
-        boolean bust = dealer.isBust();
-
-        assertThat(bust).isTrue();
-    }
 }

@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 import blackjack.dto.DistributedCardDto;
 import blackjack.dto.FinalResultDto;
 import java.util.List;
@@ -86,6 +86,13 @@ public class OutputView {
 
     public void displayPlayerResult(final Player player, final GameResult playerResult) {
         System.out.println(player.getName().trim() + ": " + playerResult.getStatus());
+    }
+
+    public void displayDealerTurnResult(int numberOfHit) {
+        System.out.println();
+        for(int i=0; i<numberOfHit; i++) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
     }
 
     public void displayBustNotice() {

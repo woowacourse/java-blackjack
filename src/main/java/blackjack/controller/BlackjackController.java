@@ -1,11 +1,12 @@
 package blackjack.controller;
 
-import blackjack.domain.CardDeck;
-import blackjack.domain.CardDump;
-import blackjack.domain.Dealer;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDump;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameReport;
 import blackjack.domain.GameResult;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 import blackjack.dto.DistributedCardDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.view.InputView;
@@ -27,25 +28,33 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = createAndDistributeCardToPlayers();
-        Dealer dealer = createDealerWithInitialDeck();
+        Dealer dealer = new Dealer(new CardDeck());
+        BlackjackGame game = new BlackjackGame(createPlayers(), dealer, cardDump);
 
-        outputView.displayCardDistribution(DistributedCardDto.from(dealer), DistributedCardDto.fromPlayers(players));
+        game.distributeInitialCards();
+        outputView.displayCardDistribution(
+                DistributedCardDto.from(dealer),
+                DistributedCardDto.fromPlayers(game.getPlayers())
+        );
 
-        hitExtraCardForPlayers(players);
-        hitExtraCardForDealer(dealer);
-        outputView.displayFinalCardStatus(FinalResultDto.from(dealer), FinalResultDto.fromPlayers(players));
+        for (Player player : game.getPlayers()) {
+            processPlayerTurn(player, game);
+        }
+        processDealerTurn(game);
 
-        generateGameResultAndDisplay(dealer, players);
+        outputView.displayFinalCardStatus(
+                FinalResultDto.from(dealer),
+                FinalResultDto.fromPlayers(game.getPlayers()));
+
+        generateGameResultAndDisplay(dealer, game.getPlayers());
     }
 
-    private List<Player> createAndDistributeCardToPlayers() {
+    private List<Player> createPlayers() {
         String[] playerNames = getPlayerNames();
 
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = createPlayerWithInitialDeck(playerName);
-            players.add(player);
+            players.add(new Player(playerName, new CardDeck()));
         }
         return players;
     }
@@ -54,40 +63,28 @@ public class BlackjackController {
         return getReturnWithRetry(inputView::readPlayerName);
     }
 
-    private Player createPlayerWithInitialDeck(String playerName) {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(cardDump.drawCard());
-        cardDeck.add(cardDump.drawCard());
-
-        return new Player(playerName, cardDeck, cardDump);
-    }
-
-    private Dealer createDealerWithInitialDeck() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(cardDump.drawCard());
-        cardDeck.add(cardDump.drawCard());
-        return new Dealer(cardDeck, cardDump);
-    }
-
-    private void hitExtraCardForPlayers(final List<Player> players) {
-        for (Player player : players) {
-            processPlayerHit(player);
-        }
-    }
-
-    private void processPlayerHit(final Player player) {
-        while (true) {
-            if (!player.canHit()) {
+    private void processPlayerTurn(Player player, BlackjackGame game) {
+        while (game.canHit(player)) {
+            HitOption wantHit = getHitOption(player);
+            if (wantHit.isNo()) {
+                break;
+            }
+            game.playerHit(player);
+            outputView.displayCardInfo(DistributedCardDto.from(player));
+            if (player.isBust()) {
                 outputView.displayBustNotice();
                 break;
             }
-
-            HitOption option = getHitOption(player);
-            if (option.isNo()) break;
-
-            player.addCard();
-            outputView.displayCardInfo(DistributedCardDto.from(player));
         }
+    }
+
+    private void processDealerTurn(BlackjackGame game) {
+        int beforeDealerCardSize = game.getDealer().getCardSize();
+        game.dealerTurn();
+        int afterDealerCardSize = game.getDealer().getCardSize();
+
+        int numberOfHit =  afterDealerCardSize - beforeDealerCardSize;
+        outputView.displayDealerTurnResult(numberOfHit);
     }
 
     private HitOption getHitOption(Player player) {
@@ -95,12 +92,6 @@ public class BlackjackController {
             String answer = inputView.readOneMoreCard(player.getName());
             return HitOption.from(answer);
         });
-    }
-
-    private void hitExtraCardForDealer(final Dealer dealer) {
-        while (dealer.didHit()) {
-            outputView.displayExtraDealerCardStatus();
-        }
     }
 
     private void generateGameResultAndDisplay(final Dealer dealer, final List<Player> players) {

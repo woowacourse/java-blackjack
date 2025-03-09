@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDump;
 import java.util.Collections;
 import java.util.Set;
 
@@ -7,8 +9,8 @@ public class Player extends Participant {
 
     private final String name;
 
-    public Player(String name, CardDeck cardDeck, CardDump cardDump) {
-        super(cardDeck, cardDump);
+    public Player(String name, CardDeck cardDeck) {
+        super(cardDeck);
         this.name = name;
     }
 

@@ -1,7 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDump;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardSuit;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +18,10 @@ class PlayerTest {
     void testPlayerCanDrawCard() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("user1", cardDeck, cardDump);
+        Player player = new Player("user1", cardDeck);
 
         // when
         boolean canTakeExtraCard = player.canHit();
@@ -30,12 +35,11 @@ class PlayerTest {
     void testPlayerCanDrawCard_false() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Player player = new Player("user1", cardDeck, cardDump);
+        Player player = new Player("user1", cardDeck);
 
         // when
         boolean canTakeExtraCard = player.canHit();
@@ -49,11 +53,10 @@ class PlayerTest {
     void testPlayerTotalCardScore() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT)); //17
 
-        Player player = new Player("user1", cardDeck, cardDump);
+        Player player = new Player("user1", cardDeck);
 
         // when
         int totalScore = player.calculateScore();
@@ -65,11 +68,10 @@ class PlayerTest {
     void testPlayerTotalCardScore_hasAce_noBust() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE)); //11 -> 20
 
-        Player player = new Player("user1", cardDeck, cardDump);
+        Player player = new Player("user1", cardDeck);
 
         // when
         int totalScore = player.calculateScore();
@@ -81,12 +83,11 @@ class PlayerTest {
     void testPlayerTotalCardScore_hasAce_Bust() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE)); //1선택 -> 17
 
-        Player player = new Player("user1", cardDeck, cardDump);
+        Player player = new Player("user1", cardDeck);
 
         // when
         int totalScore = player.calculateScore();
@@ -98,12 +99,11 @@ class PlayerTest {
     void testPlayerTotalCardScore_hasMultipleAce() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
 
-        Player player = new Player("user1", cardDeck, cardDump);
+        Player player = new Player("user1", cardDeck);
 
         // when
         int totalScore = player.calculateScore();
@@ -115,11 +115,10 @@ class PlayerTest {
     void testPlayerAddCard() {
         // given
         CardDeck cardDeck = new CardDeck();
-        CardDump cardDump = new CardDump();
-        Player player = new Player("user1", cardDeck, cardDump);
+        Player player = new Player("user1", cardDeck);
 
         // when
-        player.addCard();
+        player.receiveCard(new Card(CardSuit.CLUB, CardRank.ACE));
 
         // then
         assertThat(cardDeck.getDeckSize()).isEqualTo(1);
