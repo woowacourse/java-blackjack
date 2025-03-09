@@ -1,6 +1,6 @@
 import domain.CardDeck;
 import domain.CardNumber;
-import domain.CardSetting;
+import domain.TrumpCardManager;
 import domain.CardShape;
 import domain.TrumpCard;
 import java.util.List;
@@ -16,19 +16,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class CardDeckTest {
     @BeforeEach
     public void setUp() {
-        CardSetting.bin();
-        CardSetting.initCache();
+        TrumpCardManager.bin();
+        TrumpCardManager.initCache();
     }
 
     @DisplayName("카드 배부 시 52장의 카드 덱에서 카드를 뽑아서 배부한다.")
     @Test
     void test2() {
         // given
-        int originCardDeckSize = CardSetting.getCardDeck().size();
+        int originCardDeckSize = TrumpCardManager.getCardDeck().size();
 
         // when
-        CardSetting.drawCard();
-        int afterDrawDeckSize = CardSetting.getCardDeck().size();
+        TrumpCardManager.drawCard();
+        int afterDrawDeckSize = TrumpCardManager.getCardDeck().size();
 
         // then
         Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
@@ -40,12 +40,12 @@ public class CardDeckTest {
         // given
         int count = 0;
         for (int i = 0; i < 52; i++) {
-            CardSetting.drawCard();
+            TrumpCardManager.drawCard();
             count++;
         }
 
         // when & then
-        Assertions.assertThatThrownBy(CardSetting::drawCard)
+        Assertions.assertThatThrownBy(TrumpCardManager::drawCard)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드가 다 떨어졌습니다");
     }

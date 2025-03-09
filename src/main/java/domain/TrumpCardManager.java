@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CardSetting {
+public class TrumpCardManager {
     private static final List<TrumpCard> CARD_DECK = new ArrayList<>();
 
     public static void initCache() {

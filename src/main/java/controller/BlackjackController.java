@@ -1,6 +1,6 @@
 package controller;
 
-import domain.CardSetting;
+import domain.TrumpCardManager;
 import domain.GameManger;
 import domain.TrumpCard;
 import domain.user.Dealer;
@@ -36,7 +36,7 @@ public class BlackjackController {
     }
 
     private void distributionFirstCard(GameManger gameManger, List<String> playerNames) {
-        CardSetting.initCache();
+        TrumpCardManager.initCache();
         gameManger.firstHandOutCard();
 
         displayOpenCard(gameManger.getDealer().getName(), gameManger.getDealer());

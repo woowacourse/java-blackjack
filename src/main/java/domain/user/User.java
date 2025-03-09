@@ -1,7 +1,7 @@
 package domain.user;
 
 import domain.CardDeck;
-import domain.CardSetting;
+import domain.TrumpCardManager;
 import domain.TrumpCard;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public abstract class User {
     public abstract boolean isImpossibleDraw();
 
     public void drawCard() {
-        TrumpCard trumpCard = CardSetting.drawCard();
+        TrumpCard trumpCard = TrumpCardManager.drawCard();
         cardDeck.addTrumpCard(trumpCard);
     }
 
