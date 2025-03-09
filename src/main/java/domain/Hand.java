@@ -12,8 +12,12 @@ public class Hand {
     this.cards = new ArrayList<>();
   }
 
-  public Hand(List<TrumpCard> cards) {
+  public Hand(final List<TrumpCard> cards) {
     this.cards = new ArrayList<>(cards);
+  }
+
+  public Hand(final Hand hand) {
+    this.cards = new ArrayList<>(hand.getCards());
   }
 
   public void add(final TrumpCard card) {
