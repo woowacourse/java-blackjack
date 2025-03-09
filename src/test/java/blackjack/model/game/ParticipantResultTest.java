@@ -45,6 +45,22 @@ class ParticipantResultTest {
     }
 
     @Test
+    void 참가자가_버스트가_아니고_딜러가_버스트가_아닌_경우_점수가_같으면_무승부다() {
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant = new Participant("프리");
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+
+        // when
+        ParticipantResult result = ParticipantResult.of(dealer, participant);
+
+        // then
+        assertThat(result).isEqualTo(ParticipantResult.DRAW);
+
+    }
+
+    @Test
     void 딜러가_버스트고_참가자가_버스트가_아닌_경우_참가자승리한다() {
         // given
         Dealer dealer = new Dealer();
