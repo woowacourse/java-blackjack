@@ -31,8 +31,8 @@ class CardsInitializerTest {
         CardsInitializer cardsInitializer = new CardsInitializer();
 
         //when
-        Cards cards = cardsInitializer.initialize();
-        List<Card> cardList = cards.getCards();
+        Deck deck = cardsInitializer.initialize();
+        List<Card> cardList = deck.getCards();
         Set<Card> cardSet = new HashSet<>(cardList);
 
         //then
@@ -45,8 +45,8 @@ class CardsInitializerTest {
         CardsInitializer cardsInitializer = new CardsInitializer();
 
         //when
-        Cards cards = cardsInitializer.initialize();
-        List<Card> cardList = cards.getCards();
+        Deck deck = cardsInitializer.initialize();
+        List<Card> cardList = deck.getCards();
         //then
         assertThatThrownBy(() -> cardList.add(new Card(Symbol.HEART, Rank.FIVE)))
                 .isInstanceOf(RuntimeException.class);

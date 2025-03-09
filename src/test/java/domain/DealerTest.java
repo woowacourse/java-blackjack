@@ -11,23 +11,23 @@ class DealerTest {
     @Test
     void canHit() {
         //given
-        Cards cards = new Cards();
+        Deck deck = new Deck();
         Card card1 = new Card(Symbol.COLVER, Rank.ACE);
         Card card2 = new Card(Symbol.HEART, Rank.TWO);
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
+        deck.add(card1);
+        deck.add(card2);
+        deck.add(card3);
 
         Dealer dealer = new Dealer();
-        dealer.prepareGame(cards);
+        dealer.prepareGame(deck);
 
-        int initialPoint = dealer.getCards().calculateTotalPoint();
+        int initialPoint = dealer.getDeck().calculateTotalPoint();
 
         //when
-        dealer.hit(cards);
-        int actual = dealer.getCards().calculateTotalPoint();
+        dealer.hit(deck);
+        int actual = dealer.getDeck().calculateTotalPoint();
 
         //then
         assertThat(actual).isNotEqualTo(initialPoint);
@@ -37,23 +37,23 @@ class DealerTest {
     @Test
     void cannotHit() {
         //given
-        Cards cards = new Cards();
+        Deck deck = new Deck();
         Card card1 = new Card(Symbol.COLVER, Rank.JACK);
         Card card2 = new Card(Symbol.HEART, Rank.NINE);
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
+        deck.add(card1);
+        deck.add(card2);
+        deck.add(card3);
 
         Dealer dealer = new Dealer();
-        dealer.prepareGame(cards);
+        dealer.prepareGame(deck);
 
-        int initialPoint = dealer.getCards().calculateTotalPoint();
+        int initialPoint = dealer.getDeck().calculateTotalPoint();
 
         //when
-        dealer.hit(cards);
-        int actual = dealer.getCards().calculateTotalPoint();
+        dealer.hit(deck);
+        int actual = dealer.getDeck().calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(initialPoint);

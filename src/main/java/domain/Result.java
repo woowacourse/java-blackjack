@@ -11,7 +11,7 @@ public enum Result {
         this.state = state;
     }
 
-    public static Result judge(Cards dealerCards, Cards playersCards) {
+    public static Result judge(Deck dealerCards, Deck playersCards) {
         int dealerScore = dealerCards.calculateTotalPoint();
         int playerScore = playersCards.calculateTotalPoint();
 

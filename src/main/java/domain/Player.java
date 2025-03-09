@@ -9,7 +9,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean hit(Cards totalCards) {
+    public boolean hit(Deck totalCards) {
         validateBurst();
         add(totalCards);
         return true;

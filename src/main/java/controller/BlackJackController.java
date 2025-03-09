@@ -1,8 +1,8 @@
 package controller;
 
-import domain.Cards;
 import domain.CardsInitializer;
 import domain.Dealer;
+import domain.Deck;
 import domain.Player;
 import domain.Result;
 import java.util.EnumMap;
@@ -27,7 +27,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        Cards deck = cardsInitializer.initialize();
+        Deck deck = cardsInitializer.initialize();
 
         List<Player> players = setPlayers();
         Dealer dealer = new Dealer();
@@ -53,18 +53,18 @@ public class BlackJackController {
                 .toList();
     }
 
-    private void prepareGame(Dealer dealer, List<Player> players, Cards deck) {
+    private void prepareGame(Dealer dealer, List<Player> players, Deck deck) {
         dealer.prepareGame(deck);
         players.forEach(player -> player.prepareGame(deck));
     }
 
-    private void processGame(List<Player> players, Cards deck) {
+    private void processGame(List<Player> players, Deck deck) {
         for (Player player : players) {
             selectChoice(player, deck);
         }
     }
 
-    private void selectChoice(Player player, Cards deck) {
+    private void selectChoice(Player player, Deck deck) {
         while (canHit(player)) {
             player.hit(deck);
             outputView.printCards(player);
@@ -87,9 +87,9 @@ public class BlackJackController {
         Map<Player, Result> playerResult = new HashMap<>();
 
         for (Player player : players) {
-            Result result = Result.judge(dealer.getCards(), player.getCards());
+            Result result = Result.judge(dealer.getDeck(), player.getDeck());
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, Result.judge(player.getCards(), dealer.getCards()));
+            playerResult.put(player, Result.judge(player.getDeck(), dealer.getDeck()));
         }
         outputView.printWinLoseResult(dealerResult, playerResult);
     }

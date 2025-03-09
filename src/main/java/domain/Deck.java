@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Cards {
+public class Deck {
 
     private static final int BUST_SCORE = 22;
 
     private final List<Card> cards;
 
-    public Cards() {
+    public Deck() {
         this.cards = new ArrayList<>();
     }
 
-    public Cards(List<Card> cards) {
+    public Deck(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -80,7 +80,7 @@ public class Cards {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Cards cards1 = (Cards) o;
+        Deck cards1 = (Deck) o;
         return Objects.equals(cards, cards1.cards);
     }
 

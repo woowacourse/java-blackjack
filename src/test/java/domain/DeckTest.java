@@ -12,19 +12,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class CardsTest {
+class DeckTest {
 
     @DisplayName("점수가 21점을 초과하면 버스트된다.")
     @Test
     void bust() {
         //given
-        Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Rank.KING));
-        totalCards.add(new Card(Symbol.HEART, Rank.JACK));
-        totalCards.add(new Card(Symbol.HEART, Rank.TWO));
+        Deck deck = new Deck();
+        deck.add(new Card(Symbol.HEART, Rank.KING));
+        deck.add(new Card(Symbol.HEART, Rank.JACK));
+        deck.add(new Card(Symbol.HEART, Rank.TWO));
 
         //when
-        boolean actual = totalCards.isBust();
+        boolean actual = deck.isBust();
 
         //then
         assertThat(actual).isTrue();
@@ -34,12 +34,12 @@ class CardsTest {
     @Test
     void notBust() {
         //given
-        Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Rank.KING));
-        totalCards.add(new Card(Symbol.HEART, Rank.JACK));
+        Deck deck = new Deck();
+        deck.add(new Card(Symbol.HEART, Rank.KING));
+        deck.add(new Card(Symbol.HEART, Rank.JACK));
 
         //when
-        boolean actual = totalCards.isBust();
+        boolean actual = deck.isBust();
 
         //then
         assertThat(actual).isFalse();
@@ -49,12 +49,12 @@ class CardsTest {
     @Test
     void addCard() {
         //given
-        Cards cards = new Cards();
+        Deck deck = new Deck();
         Card card = new Card(Symbol.COLVER, Rank.FIVE);
         //when
 
         //then
-        assertThatCode(() -> cards.add(card))
+        assertThatCode(() -> deck.add(card))
                 .doesNotThrowAnyException();
     }
 
@@ -63,13 +63,13 @@ class CardsTest {
     @MethodSource("provideEachCardsAndExpected")
     void calculateTotalPoint(List<Card> cardList, int expected) {
         //given
-        Cards cards = new Cards();
+        Deck deck = new Deck();
         for (Card card : cardList) {
-            cards.add(card);
+            deck.add(card);
         }
 
         //when
-        int actual = cards.calculateTotalPoint();
+        int actual = deck.calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -79,13 +79,13 @@ class CardsTest {
     @Test
     void extractCard() {
         //given
-        Cards cards = new Cards();
+        Deck deck = new Deck();
         Card card = new Card(Symbol.COLVER, Rank.FIVE);
 
-        cards.add(card);
+        deck.add(card);
 
         //when
-        Card actual = cards.extractCard();
+        Card actual = deck.extractCard();
 
         //then
         assertThat(actual).isEqualTo(card);
@@ -99,15 +99,15 @@ class CardsTest {
         @Test
         void considerAceHas11() {
             //given
-            Cards cards = new Cards();
+            Deck deck = new Deck();
             Card card1 = new Card(Symbol.COLVER, Rank.ACE);
             Card card2 = new Card(Symbol.COLVER, Rank.KING);
 
-            cards.add(card1);
-            cards.add(card2);
+            deck.add(card1);
+            deck.add(card2);
 
             //when
-            int actual = cards.calculateTotalPoint();
+            int actual = deck.calculateTotalPoint();
 
             //then
             assertThat(actual).isEqualTo(21);
@@ -117,15 +117,15 @@ class CardsTest {
         @Test
         void considerAceHas1() {
             //given
-            Cards cards = new Cards();
+            Deck deck = new Deck();
             Card card1 = new Card(Symbol.COLVER, Rank.ACE);
             Card card2 = new Card(Symbol.HEART, Rank.ACE);
 
-            cards.add(card1);
-            cards.add(card2);
+            deck.add(card1);
+            deck.add(card2);
 
             //when
-            int actual = cards.calculateTotalPoint();
+            int actual = deck.calculateTotalPoint();
 
             //then
             assertThat(actual).isEqualTo(12);

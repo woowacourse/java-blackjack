@@ -10,7 +10,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean hit(Cards totalCards) {
+    public boolean hit(Deck totalCards) {
         if (canHit()) {
             add(totalCards);
             return true;
@@ -19,7 +19,7 @@ public class Dealer extends Gamer {
     }
 
     private boolean canHit() {
-        return getCards().calculateTotalPoint() <= HIT_THRESHOLD;
+        return getDeck().calculateTotalPoint() <= HIT_THRESHOLD;
     }
 
 }
