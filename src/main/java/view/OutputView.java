@@ -28,7 +28,7 @@ public class OutputView {
         System.out.printf("%s카드: %s%n", name, cardNamesOf(cards));
     }
 
-    public void printDealerTake() {
+    public void printDealerHasTaken() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 

@@ -3,7 +3,6 @@ package controller;
 import domain.card.Card;
 import domain.card.CardPack;
 import domain.game.Gamblers;
-import domain.game.TakeMoreCardSelector;
 import domain.game.Winning;
 import domain.game.WinningCounts;
 import domain.participant.Dealer;
@@ -32,13 +31,15 @@ public class BlackjackController {
         List<Player> players = inputView.getPlayers();
         Gamblers gamblers = new Gamblers(dealer, players);
         CardPack cardPack = new CardPack(Card.allCards());
+        cardPack.shuffle();
         gamblers.distributeSetUpCards(cardPack);
         ParticipantsCardsResponse participantsCardsResponse = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(participantsCardsResponse);
 
-        gamblers.distributeExtraCards(cardPack, new TakeMoreCardViewSelector());
+        gamblers.distributeExtraCards(cardPack, new ViewExtraCardsInteract(inputView, outputView));
 
-        List<ParticipantResultResponse> participantResultResponse = createFinalResultDTOs(dealer, players);
+        List<ParticipantResultResponse> participantResultResponse = createFinalResultDTOs(dealer,
+            players);
         outputView.printFinalCardDeck(participantResultResponse);
 
         WinningCounts winningCounts = gamblers.evaluateDealerWinnings();
@@ -68,23 +69,5 @@ public class BlackjackController {
         }
 
         return participantResultRespons;
-    }
-
-    private class TakeMoreCardViewSelector implements TakeMoreCardSelector {
-
-        @Override
-        public boolean isYes(String name) {
-            return inputView.getYesOrNo(name);
-        }
-
-        @Override
-        public void takenResult(String name, List<Card> cards) {
-            outputView.printTakenMoreCards(name, cards);
-        }
-
-        @Override
-        public void dealerTakenResult() {
-            outputView.printDealerTake();
-        }
     }
 }

@@ -4,7 +4,9 @@ import static java.util.stream.Collectors.toMap;
 
 import domain.card.CardPack;
 import domain.participant.Dealer;
+import domain.participant.Gambler;
 import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -24,23 +26,16 @@ public class Gamblers {
         players.forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
     }
 
-    public void distributeExtraCards(CardPack cardPack, TakeMoreCardSelector selector) {
-        for (Player player : players) {
-            while (player.canTakeMoreCard()) {
-                if (selector.isYes(player.getName())) {
-                    player.takeCards(cardPack.poll());
-                    selector.takenResult(player.getName(), player.getCards());
-                    continue;
-                }
-                selector.takenResult(player.getName(), player.getCards());
-                break;
-            }
-        }
+    public void distributeExtraCards(CardPack cardPack, ExtraCardsInteract interact) {
+        List<Gambler> gamblers = new ArrayList<>(players);
+        gamblers.add(dealer);
 
-        if (dealer.canTakeMoreCard()) {
-            dealer.takeCards(cardPack.poll());
-            selector.dealerTakenResult();
-        }
+        gamblers.forEach(gambler -> {
+            while (gambler.canTakeMoreCard() && interact.listenReceives(gambler)) {
+                gambler.takeCards(cardPack.poll());
+                interact.notifyReceived(gambler);
+            }
+        });
     }
 
     public WinningCounts evaluateDealerWinnings() {
