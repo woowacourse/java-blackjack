@@ -8,7 +8,7 @@ public record Card(Pattern pattern, CardNumber cardNumber) {
         return formatCardNumber() + this.pattern().getPattern();
     }
 
-    public String formatCardNumber() {
+    private String formatCardNumber() {
         List<CardNumber> honorCards = CardNumber.getHonorCard();
         if (honorCards.contains(this.cardNumber())) {
             return this.cardNumber().name().substring(0, 1);
