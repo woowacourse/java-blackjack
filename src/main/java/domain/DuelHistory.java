@@ -1,6 +1,6 @@
 package domain;
 
-import constant.DuelResult;
+import domain.constant.DuelResult;
 
 public class DuelHistory {
 	private int winCount;

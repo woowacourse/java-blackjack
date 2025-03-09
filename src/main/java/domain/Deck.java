@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import constant.Suit;
+import domain.constant.Suit;
 
 public class Deck {
 	private final Queue<Card> deck;
