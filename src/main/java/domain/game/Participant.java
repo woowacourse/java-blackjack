@@ -25,21 +25,13 @@ public class Participant {
         cards.add(drawnCard);
     }
 
-    private int decideAceNumber(int totalCardNumber) {
-        int totalCardNumberWithAce = totalCardNumber + CardNumber.ACE.getNumber();
-        if (isOverBurstBound(totalCardNumberWithAce)) {
-            return totalCardNumber + CardNumber.ACE_ANOTHER.getNumber();
-        }
-        return totalCardNumberWithAce;
+    public final boolean isOverBurstBound() {
+        int totalCardNumber = calculateTotalCardNumber();
+        return isOverBurstBound(totalCardNumber);
     }
 
     private boolean isOverBurstBound(int totalCardNumber) {
         return totalCardNumber > BURST_BOUND;
-    }
-
-    public final boolean isOverBurstBound() {
-        int totalCardNumber = calculateTotalCardNumber();
-        return isOverBurstBound(totalCardNumber);
     }
 
     public final int calculateTotalCardNumber() {
@@ -76,6 +68,14 @@ public class Participant {
         return cards.stream()
                 .mapToInt(card -> card.cardNumber().getNumber())
                 .sum();
+    }
+
+    private int decideAceNumber(int totalCardNumber) {
+        int totalCardNumberWithAce = totalCardNumber + CardNumber.ACE.getNumber();
+        if (isOverBurstBound(totalCardNumberWithAce)) {
+            return totalCardNumber + CardNumber.ACE_ANOTHER.getNumber();
+        }
+        return totalCardNumberWithAce;
     }
 
     public final int getCardsCount() {
