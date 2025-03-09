@@ -7,7 +7,6 @@ import domain.CardValue;
 import domain.Suit;
 import domain.TrumpCard;
 import domain.strategy.BlackjackDrawStrategy;
-import domain.strategy.TestDrawStrategy;
 import except.BlackJackException;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -15,6 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import strategy.TestDrawStrategy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class DeckTest {

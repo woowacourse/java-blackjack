@@ -6,11 +6,11 @@ import domain.CardValue;
 import domain.Dealer;
 import domain.Suit;
 import domain.TrumpCard;
-import domain.strategy.TestDrawStrategy;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import strategy.TestDrawStrategy;
 
 public class BlackjackDeckGeneratorTest {
 
