@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dealer implements Participant {
-    public static final int STAY_THRESHOLD = 16;
+    private static final int STAY_THRESHOLD = 16;
 
     private final String nickname;
     private final Map<BattleResult, Integer> battleResult;
@@ -41,5 +41,9 @@ public class Dealer implements Participant {
     @Override
     public void updateBattleResult(final BattleResult battleResult) {
         this.battleResult.merge(battleResult, 1, Integer::sum);
+    }
+
+    public static int getStayThreshold() {
+        return STAY_THRESHOLD;
     }
 }

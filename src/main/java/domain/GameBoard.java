@@ -61,8 +61,8 @@ public class GameBoard {
     }
 
     public int getScoreOf(Participant participant) {
-        ParticipantCardDeck ownedParticipantCardDeck = cardDeckOfParticipant.get(participant);
-        List<Card> ownedCards = ownedParticipantCardDeck.getCards();
+        ParticipantCardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
+        List<Card> ownedCards = ownedCardDeck.getCards();
 
         int totalScore = 0;
         int aceCounts = 0;
@@ -82,6 +82,7 @@ public class GameBoard {
 
         return totalScore;
     }
+
 
     public void calculateBattleResult() {
         Entry<Participant, ParticipantCardDeck> cardDeckOfDealer = cardDeckOfParticipant.entrySet()

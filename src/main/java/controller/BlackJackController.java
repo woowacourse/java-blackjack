@@ -117,7 +117,7 @@ public class BlackJackController {
     private void startDealerTurn(Dealer dealer, GameBoard gameBoard) {
         while (gameBoard.ableToDraw(dealer)) {
             gameBoard.drawCardTo(dealer);
-            outputView.printDrawSingleCardToDealerMessage(dealer.getNickname(), Dealer.STAY_THRESHOLD);
+            outputView.printDrawSingleCardToDealerMessage(dealer.getNickname(), Dealer.getStayThreshold());
         }
     }
 
