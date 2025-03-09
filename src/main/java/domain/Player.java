@@ -33,11 +33,7 @@ public class Player {
 			other.writeWin(participant);
 			return;
 		}
-		if (otherScore > Rank.BUST_SCORE) {
-			participant.writeWin(other);
-			return;
-		}
-		if (score > otherScore) {
+		if (otherScore > Rank.BUST_SCORE || score > otherScore) {
 			participant.writeWin(other);
 			return;
 		}
