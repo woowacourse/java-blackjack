@@ -1,30 +1,17 @@
 package domain.gambler;
 
-import domain.Card;
 import domain.Cards;
 import domain.constant.WinDrawLose;
-import java.util.List;
 
-public class Player {
+public class Player extends Gambler {
 
     public static final int BUST_STANDARD = 21;
-    public static final int INITIAL_CARD_COUNT = 2;
 
     private final Nickname nickname;
-    private final Cards cards;
 
     public Player(Nickname nickname, Cards cards) {
-        validateInitialCardsSize(cards);
+        super(cards);
         this.nickname = nickname;
-        this.cards = cards;
-    }
-
-    public boolean addOneCard(Card card) {
-        return cards.addOneCard(card);
-    }
-
-    public int sumCardNumbers() {
-        return cards.sumCardNumbers();
     }
 
     public WinDrawLose compareTo(int dealerScore) {
@@ -50,16 +37,6 @@ public class Player {
             return WinDrawLose.WIN;
         }
         return WinDrawLose.LOSE;
-    }
-
-    public List<Card> openCards() {
-        return cards.getCards();
-    }
-
-    private void validateInitialCardsSize(Cards cards) {
-        if (cards.getSize() != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 초기 카드는 " + INITIAL_CARD_COUNT + "장을 받아야 합니다.");
-        }
     }
 
     public String getNickname() {
