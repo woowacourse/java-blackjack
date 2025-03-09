@@ -16,13 +16,15 @@ public abstract class User {
 
     public abstract boolean isImpossibleDraw();
 
+    public abstract List<TrumpCard> openCard();
+
     public void drawCard() {
         TrumpCard trumpCard = CardSetting.drawCard();
         cardDeck.addTrumpCard(trumpCard);
     }
 
-    public boolean has(String name) {
-        return getName().equals(name);
+    public boolean hasName(String name) {
+        return this.name.equals(name);
     }
 
     public String getName() {
@@ -32,8 +34,6 @@ public abstract class User {
     public int getSize() {
         return cardDeck.cardsSize();
     }
-
-    public abstract List<TrumpCard> openCard();
 
     public CardDeck getCardDeck() {
         return this.cardDeck;

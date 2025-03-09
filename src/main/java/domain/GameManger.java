@@ -44,7 +44,7 @@ public class GameManger {
 
     public User findUserByUsername(String name) {
         return users.stream()
-                .filter(user -> user.has(name))
+                .filter(user -> user.hasName(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }
