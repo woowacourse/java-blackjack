@@ -1,6 +1,6 @@
 package domain;
 
-public enum Number {
+public enum CardRank {
 
     ACE("A", 1),
     TWO("2", 2),
@@ -20,7 +20,7 @@ public enum Number {
     private final String name;
     private final Integer point;
 
-    Number(String name, Integer point) {
+    CardRank(String name, Integer point) {
         this.name = name;
         this.point = point;
     }

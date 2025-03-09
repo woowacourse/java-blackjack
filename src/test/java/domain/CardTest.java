@@ -12,7 +12,7 @@ class CardTest {
     void card() {
         //given
         final var symbol = Symbol.SPADE;
-        final var number = Number.ACE;
+        final var number = CardRank.ACE;
 
         //when //then
         assertThatCode(() -> new Card(symbol, number))

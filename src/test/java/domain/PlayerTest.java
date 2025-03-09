@@ -8,21 +8,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-    
+
 
     @DisplayName("플레이어는 카드를 뽑을 수 있다.")
     @Test
     void hit() {
         //given
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
 
         Player player = new Player("ad");
 
         //when
         player.hit(totalCards);
         Cards expected = new Cards();
-        expected.add(new Card(Symbol.HEART, Number.FIVE));
+        expected.add(new Card(Symbol.HEART, CardRank.FIVE));
 
         //then
         assertThat(player.getCards()).isEqualTo(expected);
@@ -34,9 +34,9 @@ class PlayerTest {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FOUR));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FOUR));
+        totalCards.add(new Card(Symbol.HEART, CardRank.JACK));
 
         player.hit(totalCards);
         player.hit(totalCards);
@@ -54,9 +54,9 @@ class PlayerTest {
         //given
         Player player = new Player("ad");
         Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, Number.KING));
-        totalCards.add(new Card(Symbol.HEART, Number.JACK));
-        totalCards.add(new Card(Symbol.HEART, Number.TWO));
+        totalCards.add(new Card(Symbol.HEART, CardRank.KING));
+        totalCards.add(new Card(Symbol.HEART, CardRank.JACK));
+        totalCards.add(new Card(Symbol.HEART, CardRank.TWO));
 
         player.hit(totalCards);
         player.hit(totalCards);
@@ -75,11 +75,11 @@ class PlayerTest {
         Player player = new Player("ad");
         Cards totalCards = new Cards();
 
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
-        totalCards.add(new Card(Symbol.HEART, Number.FIVE));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
+        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
 
         player.hit(totalCards);
         player.hit(totalCards);
@@ -98,10 +98,10 @@ class PlayerTest {
         Player player = new Player("ad");
 
         Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, Number.ACE);
-        Card card2 = new Card(Symbol.COLVER, Number.ACE);
-        Card card3 = new Card(Symbol.COLVER, Number.ACE);
-        Card card4 = new Card(Symbol.COLVER, Number.ACE);
+        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card2 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card3 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card4 = new Card(Symbol.COLVER, CardRank.ACE);
 
         cards.add(card1);
         cards.add(card2);

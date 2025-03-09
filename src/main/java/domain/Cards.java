@@ -37,9 +37,9 @@ public class Cards {
     }
 
     private int sumAcePoint(int totalPoint) {
-        List<Number> aces = extractAces();
+        List<CardRank> aces = extractAces();
 
-        for (Number ace : aces) {
+        for (CardRank ace : aces) {
             int acePoint = calculateAcePoint(totalPoint, ace);
             totalPoint += acePoint;
         }
@@ -47,18 +47,18 @@ public class Cards {
         return totalPoint;
     }
 
-    private List<Number> extractAces() {
+    private List<CardRank> extractAces() {
         return cards.stream()
                 .filter(Card::isAce)
                 .map(Card::getNumber)
                 .toList();
     }
 
-    private int calculateAcePoint(int totalPoint, Number ace) {
-        if (totalPoint + Number.SOFT_ACE.getPoint() > HIGHEST_SCORE) {
+    private int calculateAcePoint(int totalPoint, CardRank ace) {
+        if (totalPoint + CardRank.SOFT_ACE.getPoint() > HIGHEST_SCORE) {
             return ace.getPoint();
         }
-        return Number.SOFT_ACE.getPoint();
+        return CardRank.SOFT_ACE.getPoint();
     }
 
     public boolean isBurst() {

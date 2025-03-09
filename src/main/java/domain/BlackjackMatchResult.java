@@ -1,17 +1,17 @@
 package domain;
 
-public enum Result {
+public enum BlackjackMatchResult {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
 
     private final String state;
 
-    Result(String state) {
+    BlackjackMatchResult(String state) {
         this.state = state;
     }
 
-    public static Result judge(Cards dealerCards, Cards playersCards) {
+    public static BlackjackMatchResult judge(Cards dealerCards, Cards playersCards) {
         int dealerScore = dealerCards.calculateTotalPoint();
         int playerScore = playersCards.calculateTotalPoint();
 

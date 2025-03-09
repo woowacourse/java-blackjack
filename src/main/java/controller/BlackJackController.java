@@ -1,9 +1,9 @@
 package controller;
 
+import domain.BlackjackMatchResult;
 import domain.Cards;
 import domain.Dealer;
 import domain.Player;
-import domain.Result;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -87,13 +87,13 @@ public class BlackJackController {
     }
 
     private void showWinLoseResult(List<Player> players, Dealer dealer) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        Map<Player, Result> playerResult = new HashMap<>();
+        Map<BlackjackMatchResult, Integer> dealerResult = new EnumMap<>(BlackjackMatchResult.class);
+        Map<Player, BlackjackMatchResult> playerResult = new HashMap<>();
 
         for (Player player : players) {
-            Result result = Result.judge(dealer.getCards(), player.getCards());
+            BlackjackMatchResult result = BlackjackMatchResult.judge(dealer.getCards(), player.getCards());
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, Result.judge(player.getCards(), dealer.getCards()));
+            playerResult.put(player, BlackjackMatchResult.judge(player.getCards(), dealer.getCards()));
         }
         outputView.printWinLoseResult(dealerResult, playerResult);
     }
