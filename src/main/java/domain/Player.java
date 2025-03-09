@@ -23,11 +23,11 @@ public abstract class Player {
     }
 
     public void receiveInitialCards(Deck deck) {
-        getCards().addAll(deck.drawCards(2));
+        cards.addAll(deck.drawCards(2));
     }
 
     public void drawOneCard(Deck deck) {
-        getCards().addAll(deck.drawCards(1));
+        cards.addAll(deck.drawCards(1));
     }
 
     public abstract List<Card> openInitialCards();
