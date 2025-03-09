@@ -9,8 +9,6 @@ import java.util.stream.Stream;
 
 import domain.card.Card;
 import domain.card.CardGroup;
-import domain.card.CardScore;
-import domain.card.CardType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,8 +23,7 @@ public class CardGroupTest {
         @Test
         void 카드_그룹을_생성한다() {
             //given
-            final List<Card> cards = List.of(new Card(DIAMOND, ACE),
-                    new Card(HEART, EIGHT));
+            final List<Card> cards = List.of(new Card(DIAMOND, ACE), new Card(HEART, EIGHT));
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
@@ -74,15 +71,7 @@ public class CardGroupTest {
         }
 
         private static Stream<Arguments> numberCardsTestArguments() {
-            return Stream.of(
-                    Arguments.arguments(new Card(DIAMOND,TWO), new Card(HEART,THREE)),
-                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,TEN)),
-                    Arguments.arguments(new Card(DIAMOND,THREE), new Card(HEART,THREE)),
-                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,EIGHT)),
-                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,FIVE)),
-                    Arguments.arguments(new Card(DIAMOND,KING), new Card(HEART,FIVE)),
-                    Arguments.arguments(new Card(DIAMOND,JACK), new Card(HEART,QUEEN))
-            );
+            return Stream.of(Arguments.arguments(new Card(DIAMOND, TWO), new Card(HEART, THREE)), Arguments.arguments(new Card(DIAMOND, FOUR), new Card(HEART, TEN)), Arguments.arguments(new Card(DIAMOND, THREE), new Card(HEART, THREE)), Arguments.arguments(new Card(DIAMOND, FOUR), new Card(HEART, EIGHT)), Arguments.arguments(new Card(DIAMOND, FOUR), new Card(HEART, FIVE)), Arguments.arguments(new Card(DIAMOND, KING), new Card(HEART, FIVE)), Arguments.arguments(new Card(DIAMOND, JACK), new Card(HEART, QUEEN)));
         }
 
         @DisplayName("A가 11점이 되는 테스트")
@@ -102,15 +91,7 @@ public class CardGroupTest {
         }
 
         private static Stream<Arguments> aceUpperScoreCardsTestArguments() {
-            return Stream.of(
-                    Arguments.arguments(new Card(DIAMOND,JACK), new Card(HEART,ACE)),
-                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,ACE)),
-                    Arguments.arguments(new Card(DIAMOND,THREE), new Card(HEART,ACE)),
-                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,ACE)),
-                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,ACE)),
-                    Arguments.arguments(new Card(DIAMOND,KING), new Card(HEART,ACE)),
-                    Arguments.arguments(new Card(DIAMOND,JACK), new Card(HEART,ACE))
-            );
+            return Stream.of(Arguments.arguments(new Card(DIAMOND, JACK), new Card(HEART, ACE)), Arguments.arguments(new Card(DIAMOND, FOUR), new Card(HEART, ACE)), Arguments.arguments(new Card(DIAMOND, THREE), new Card(HEART, ACE)), Arguments.arguments(new Card(DIAMOND, FOUR), new Card(HEART, ACE)), Arguments.arguments(new Card(DIAMOND, FOUR), new Card(HEART, ACE)), Arguments.arguments(new Card(DIAMOND, KING), new Card(HEART, ACE)), Arguments.arguments(new Card(DIAMOND, JACK), new Card(HEART, ACE)));
         }
 
         @DisplayName("A가 2장인 경우 12점")
@@ -129,9 +110,7 @@ public class CardGroupTest {
         }
 
         private static Stream<Arguments> aceLowerScoreCardsTestArguments() {
-            return Stream.of(
-                    Arguments.arguments(new Card(DIAMOND,ACE), new Card(HEART,ACE))
-            );
+            return Stream.of(Arguments.arguments(new Card(DIAMOND, ACE), new Card(HEART, ACE)));
         }
 
         @DisplayName("A가 3장인 경우 13점")
@@ -150,9 +129,7 @@ public class CardGroupTest {
         }
 
         private static Stream<Arguments> aceComplexScoreCardsTestArguments() {
-            return Stream.of(
-                    Arguments.arguments(new Card(DIAMOND,ACE), new Card(HEART,ACE),new Card(SPADE,ACE))
-            );
+            return Stream.of(Arguments.arguments(new Card(DIAMOND, ACE), new Card(HEART, ACE), new Card(SPADE, ACE)));
         }
     }
 }
