@@ -9,6 +9,7 @@ public enum GameResult {
     DRAW("무");
 
     public static final int BLACK_JACK_CONDITION_COUNT = 2;
+    private static final int BLACK_JACK_NUMBER = 21;
 
     private final String result;
 
@@ -35,7 +36,7 @@ public enum GameResult {
         if (playerTotalCardNumber > dealerTotalCardNumber) {
             return GameResult.WIN;
         }
-        if (playerTotalCardNumber == Hand.BURST_BOUND) {
+        if (playerTotalCardNumber == BLACK_JACK_NUMBER) {
             return judgeBlackJack(dealer, player);
         }
         return GameResult.DRAW;
