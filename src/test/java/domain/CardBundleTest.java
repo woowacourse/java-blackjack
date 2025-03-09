@@ -10,7 +10,7 @@ import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardBundleTest {
+class CardBundleTest {
 
     @Test
     @DisplayName("카드는 52장의 서로 다른 카드를 반환한다.")

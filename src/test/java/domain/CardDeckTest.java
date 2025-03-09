@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardDeckTest {
+class CardDeckTest {
 
     @Test
     @DisplayName("덱에서 카드 한 장을 가져올 수 있어야 한다.")

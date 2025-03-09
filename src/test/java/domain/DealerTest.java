@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerTest {
+class DealerTest {
 
     @Test
     @DisplayName("카드를 받아 수중에 카드를 추가한다")
