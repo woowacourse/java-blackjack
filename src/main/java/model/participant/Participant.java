@@ -7,6 +7,7 @@ import model.card.Cards;
 
 public abstract class Participant {
 
+    public static final int PARTICIPANT_MAX_NUMBER_FOR_BUST = 21;
     private final String nickname;
     private final Cards cards;
 
@@ -20,7 +21,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return cards.calculateNearestTotal() > 21;
+        return cards.calculateNearestTotal() > PARTICIPANT_MAX_NUMBER_FOR_BUST;
     }
 
     public int score() {
