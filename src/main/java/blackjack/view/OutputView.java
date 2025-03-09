@@ -4,6 +4,8 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.PlayerResult;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -48,7 +50,7 @@ public final class OutputView {
     }
 
     public static void printGameResult(Map<GameResultType, Integer> dealerResult,
-                                       Map<Player, GameResultType> playersResult) {
+                                       List<PlayerResult> playersResult) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%n", Formatter.formatDealerGameResult(dealerResult));
         System.out.println(Formatter.formatPlayerGameResult(playersResult));

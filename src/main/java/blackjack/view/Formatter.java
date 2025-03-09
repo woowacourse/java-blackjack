@@ -8,6 +8,7 @@ import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.PlayerResult;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -65,13 +66,13 @@ public final class Formatter {
                 .collect(Collectors.joining(" "));
     }
 
-    public static String formatPlayerGameResult(Map<Player, GameResultType> playersResult) {
-        return playersResult.entrySet().stream().map(entry -> {
-            Player player = entry.getKey();
-            GameResultType resultType = entry.getValue();
-
-            return player.getName() + ": " + formatGameResult(resultType);
-        }).collect(Collectors.joining(System.lineSeparator()));
+    public static String formatPlayerGameResult(List<PlayerResult> playersResults) {
+        return playersResults.stream()
+                .map(result -> {
+                    String nameOfPlayer = result.getPlayerName();
+                    GameResultType gameResultType = result.getGameResultType();
+                    return nameOfPlayer + ": " + formatGameResult(gameResultType);
+                }).collect(Collectors.joining(System.lineSeparator()));
     }
 
     private static String formatResultCount(Map<GameResultType, Integer> results, GameResultType gameResultType) {

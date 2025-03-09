@@ -1,14 +1,15 @@
 package blackjack.manager;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.Dealer;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.card.Deck;
-import blackjack.domain.result.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.result.PlayersResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.cardholder.CardHolder;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.PlayersResults;
 import java.util.List;
 import java.util.Map;
 
@@ -18,12 +19,12 @@ public class BlackjackProcessManager {
     private static final int ADDITIONAL_CARD_SIZE = 1;
 
     private final Deck deck;
-    private final PlayersResult playersResult;
+    private final PlayersResults playersResults;
     private final DealerResult dealerResult;
 
     public BlackjackProcessManager(Deck deck) {
         this.deck = deck;
-        this.playersResult = PlayersResult.create();
+        this.playersResults = PlayersResults.create();
         this.dealerResult = DealerResult.create();
     }
 
@@ -57,27 +58,29 @@ public class BlackjackProcessManager {
         boolean isBustedDealer = gameRuleEvaluator.isBustedFor(dealer);
         boolean isBustedPlayer = gameRuleEvaluator.isBustedFor(player);
 
+        int playerValue = player.getCardHolder().getOptimisticValue();
+
         if (isBustedDealer) {
-            processWhenDealerIsBusted(player, isBustedPlayer);
+            processWhenDealerIsBusted(player, isBustedPlayer, playerValue);
             return;
         }
 
         if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.LOSE);
+            saveResultWithPlayerResult(player, GameResultType.LOSE, playerValue);
             return;
         }
 
         GameResultType resultOfPlayer = decideResultOfPlayer(player, dealer);
-        saveResultWithPlayerResult(player, resultOfPlayer);
+        saveResultWithPlayerResult(player, resultOfPlayer, playerValue);
     }
 
-    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer) {
+    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer, int playerValue) {
         if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.TIE);
+            saveResultWithPlayerResult(player, GameResultType.TIE, playerValue);
             return;
         }
 
-        saveResultWithPlayerResult(player, GameResultType.WIN);
+        saveResultWithPlayerResult(player, GameResultType.WIN, playerValue);
     }
 
     public GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
@@ -87,15 +90,16 @@ public class BlackjackProcessManager {
         return GameResultType.find(playerValue, dealerValue);
     }
 
-    public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer) {
+    public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer, int playerValue) {
         GameResultType gameResultOfDealer = gameResultOfPlayer.getOppositeType();
 
-        playersResult.save(player, gameResultOfPlayer);
+        PlayerResult playerResult = new PlayerResult(player, gameResultOfPlayer, playerValue);
+        playersResults.save(playerResult);
         dealerResult.addCountOf(gameResultOfDealer);
     }
 
-    public Map<Player, GameResultType> getPlayersResult() {
-        return playersResult.getAllResult();
+    public List<PlayerResult> getPlayersResult() {
+        return playersResults.getAllResult();
     }
 
     public Map<GameResultType, Integer> getDealerResult() {
