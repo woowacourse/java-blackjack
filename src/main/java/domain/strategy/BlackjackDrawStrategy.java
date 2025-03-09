@@ -6,7 +6,7 @@ import java.util.Deque;
 
 public class BlackjackDrawStrategy implements DrawStrategy {
 
-    private final String INVALID_DRAW_STATE = "덱이 비어있어 뽑을 수 없습니다.";
+    private static final String INVALID_DRAW_STATE = "덱이 비어있어 뽑을 수 없습니다.";
 
     @Override
     public TrumpCard draw(Deque<TrumpCard> trumpCards) {

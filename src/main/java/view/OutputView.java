@@ -7,17 +7,17 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private final String OPEN_CARD_FORMAT = "%s카드: %s\n";
-    private final String TRUMP_CARD_FORMAT = "%s%s";
-    private final String OPEN_CARD_WITH_SUM_FORMAT = "%s카드: %s - 결과: %d\n";
-    private final String INPUT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private final String SPLITTER = ", ";
-    private final String INITIATE_DRAW = "딜러와 %s에게 2장을 나누었습니다.\n";
-    private final String INPUT_ASK_DRAW_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    private final String DRAW_DEALER = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private final String PLAYER_WIN_STATUS_FORMAT = "%s: %s\n";
-    private final String DEALER_WIN_STATUS_FORMAT = "%s: %d승 %d패\n";
-    private final String RESULT_HEADER = "## 최종 승패";
+    private static final String OPEN_CARD_FORMAT = "%s카드: %s\n";
+    private static final String TRUMP_CARD_FORMAT = "%s%s";
+    private static final String OPEN_CARD_WITH_SUM_FORMAT = "%s카드: %s - 결과: %d\n";
+    private static final String INPUT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String SPLITTER = ", ";
+    private static final String INITIATE_DRAW = "딜러와 %s에게 2장을 나누었습니다.\n";
+    private static final String INPUT_ASK_DRAW_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String DRAW_DEALER = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String PLAYER_WIN_STATUS_FORMAT = "%s: %s\n";
+    private static final String DEALER_WIN_STATUS_FORMAT = "%s: %d승 %d패\n";
+    private static final String RESULT_HEADER = "## 최종 승패";
 
     public void printError(String message) {
         System.out.println(message);

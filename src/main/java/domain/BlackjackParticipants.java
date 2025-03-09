@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackParticipants<T extends BlackjackParticipant> {
 
-    private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
+    private static final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
 
     private final List<T> players;
     private final Dealer dealer;

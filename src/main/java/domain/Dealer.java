@@ -2,7 +2,7 @@ package domain;
 
 public class Dealer extends BlackjackParticipant {
 
-    private final int DEALER_STOP_HIT_STANDARD = 17;
+    private static final int DEALER_STOP_HIT_STANDARD = 17;
 
     public Dealer() {
         super(BlackjackParticipant.dealerName());

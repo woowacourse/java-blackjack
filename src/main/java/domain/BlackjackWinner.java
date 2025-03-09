@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class BlackjackWinner {
 
-    private final int BUST_STANDARD = 21;
+    private static final int BUST_STANDARD = 21;
 
     private final DealerWinStatus dealerWinStatus;
     private final Map<String, WinStatus> playerWinStatuses;
