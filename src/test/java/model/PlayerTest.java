@@ -2,6 +2,10 @@ package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.Deck.Card;
+import model.Deck.CardRank;
+import model.Deck.CardSuit;
+import model.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

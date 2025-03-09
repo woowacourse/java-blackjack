@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import model.Player;
+import model.participant.Player;
 
 public final class InputView {
     private static final String YES = "y";

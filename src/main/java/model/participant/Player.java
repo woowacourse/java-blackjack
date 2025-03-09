@@ -1,4 +1,4 @@
-package model;
+package model.participant;
 
 
 public final class Player extends Participant {

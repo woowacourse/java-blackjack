@@ -1,9 +1,10 @@
-package model;
+package model.participant;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import model.Deck.Deck;
 
 public final class Players {
     private final List<Player> players;

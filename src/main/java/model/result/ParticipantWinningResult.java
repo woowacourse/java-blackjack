@@ -1,8 +1,11 @@
-package model;
+package model.result;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import model.participant.Dealer;
+import model.participant.Player;
+import model.participant.Players;
 
 public final class ParticipantWinningResult {
     private final Map<Player, GameResult> result;

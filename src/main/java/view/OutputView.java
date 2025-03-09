@@ -2,12 +2,12 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import model.Card;
-import model.Dealer;
-import model.GameResult;
-import model.Player;
-import model.ParticipantWinningResult;
-import model.Players;
+import model.Deck.Card;
+import model.participant.Dealer;
+import model.result.GameResult;
+import model.participant.Player;
+import model.result.ParticipantWinningResult;
+import model.participant.Players;
 
 public final class OutputView {
     private static final String JOIN_DELIMITER = ", ";

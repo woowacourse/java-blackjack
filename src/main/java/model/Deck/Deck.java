@@ -1,4 +1,4 @@
-package model;
+package model.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;

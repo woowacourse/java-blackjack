@@ -1,4 +1,4 @@
-package model;
+package model.Deck;
 
 public enum CardRank {
     ACE("A", 1, 11),

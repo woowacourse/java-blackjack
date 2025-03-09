@@ -1,5 +1,6 @@
-package model;
+package model.participant;
 
+import model.Deck.Card;
 
 public final class Dealer extends Participant {
     private static final int DEALER_HIT_THRESHOLD = 16;
