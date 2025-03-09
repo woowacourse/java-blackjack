@@ -9,14 +9,10 @@ public class Player extends Gamer {
     }
 
     @Override
-    public void prepareGame(Cards totalCard) {
-        hit(totalCard);
-        hit(totalCard);
-    }
-
-    public void hit(Cards totalCards) {
+    public boolean hit(Cards totalCards) {
         validateBurst();
         add(totalCards);
+        return true;
     }
 
     private void validateBurst() {
@@ -39,8 +35,4 @@ public class Player extends Gamer {
         return Objects.hashCode(getName());
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
-    }
 }

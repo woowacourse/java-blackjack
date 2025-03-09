@@ -9,6 +9,7 @@ public class Dealer extends Gamer {
         super(NAME);
     }
 
+    @Override
     public boolean hit(Cards totalCards) {
         if (canHit()) {
             add(totalCards);

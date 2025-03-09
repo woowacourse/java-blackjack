@@ -9,9 +9,15 @@ public abstract class Gamer {
         this.name = name;
     }
 
+    public abstract boolean hit(Cards cards);
+
     public void prepareGame(Cards totalCard) {
         add(totalCard);
         add(totalCard);
+    }
+
+    public void add(Cards totalCards) {
+        cards.add(totalCards.extractCard());
     }
 
     public boolean isBust() {
@@ -22,16 +28,12 @@ public abstract class Gamer {
         return cards.calculateTotalPoint();
     }
 
-    public void add(Cards totalCards) {
-        cards.add(totalCards.extractCard());
+    public String getName() {
+        return this.name;
     }
 
     public Cards getCards() {
         return cards;
-    }
-
-    public String getName() {
-        return this.name;
     }
 }
 
