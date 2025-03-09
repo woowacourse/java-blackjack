@@ -3,7 +3,10 @@ package domain;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.BattleResult;
+import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +24,14 @@ public class GameBoard {
     public GameBoard(final List<Participant> participants) {
         this.playingCard = CardDeck.generateFullPlayingCard();
         this.cardDeckOfParticipant = initializeCardDeckOfParticipant(participants);
+    }
+
+    public static GameBoard generateOf(Dealer dealer, List<Player> players) {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players);
+
+        return new GameBoard(participants);
     }
 
     private Map<Participant, CardDeck> initializeCardDeckOfParticipant(final List<Participant> participants) {
