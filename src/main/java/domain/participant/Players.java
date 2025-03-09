@@ -1,6 +1,8 @@
 package domain.participant;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Players {
 
@@ -15,12 +17,20 @@ public class Players {
 
     public static Players of(List<Player> players) {
         validatePlayersNumber(players);
+        validateDistinctName(players);
         return new Players(players);
     }
 
     private static void validatePlayersNumber(List<Player> players) {
         if (players.size() > MAX_PLAYERS || players.size() < MIN_PLAYERS) {
             throw new IllegalArgumentException("참여 가능한 플레이어는 최소 1명, 최대 5명 입니다.");
+        }
+    }
+
+    private static void validateDistinctName(List<Player> players) {
+        Set<Player> distinct = new HashSet<>(players);
+        if (distinct.size() != players.size()) {
+            throw new IllegalArgumentException("플레이어의 이름이 중복일 수 없습니다.");
         }
     }
 

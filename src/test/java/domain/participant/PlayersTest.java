@@ -53,6 +53,20 @@ class PlayersTest {
     }
 
     @Test
+    void 플레이어의_이름이_중복이라면_예외를_발생한다() {
+        // given
+        List<Player> players = List.of(Player.of("pobi1"),
+                Player.of("pobi"),
+                Player.of("pobi2"),
+                Player.of("pobi"));
+
+        // when & then
+        assertThatThrownBy(() -> Players.of(players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름이 중복일 수 없습니다.");
+    }
+
+    @Test
     void 참여자들에게_카드를_한_장씩_나눠준다() {
         // given
         CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());

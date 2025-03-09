@@ -28,6 +28,22 @@ public class PlayerTest {
     }
 
     @Test
+    void 플레이어의_이름이_같다면_같은_객체임을_반환한다() {
+        // given
+        Player pobi1 = Player.of("pobi");
+        Player pobi2 = Player.of("pobi");
+        Player pobis = Player.of("pobis");
+
+        // when
+        boolean isEqual = pobi1.equals(pobi2);
+        boolean isNotEqual = pobi1.equals(pobis);
+
+        // then
+        assertThat(isEqual).isTrue();
+        assertThat(isNotEqual).isFalse();
+    }
+
+    @Test
     void 카드를_한_장_씩_받아_들고있는다() {
         // given
         final Player player = Player.of("pobi");
