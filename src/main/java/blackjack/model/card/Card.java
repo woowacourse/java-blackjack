@@ -10,7 +10,7 @@ public class Card {
     }
 
     public boolean isAceCard() {
-        return this.cardType.equals(CardType.ACE);
+        return this.cardType == CardType.ACE;
     }
 
     public int getPoint() {
