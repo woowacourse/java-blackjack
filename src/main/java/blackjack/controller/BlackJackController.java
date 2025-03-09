@@ -1,16 +1,14 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
-import blackjack.model.game.Rule;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackJackController {
 
@@ -27,19 +25,18 @@ public class BlackJackController {
     }
 
     public void run() {
-        Rule rule = new Rule();
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeckInitializer, rule);
+        BlackJackGame blackJackGame = new BlackJackGame(cardDeckInitializer);
 
         Dealer dealer = new Dealer("딜러");
         List<User> users = makeUsers();
         dealInitialCards(users, dealer, blackJackGame);
-        outputView.printDealInitialCardsResult(dealer, users, rule);
+        outputView.printDealInitialCardsResult(dealer, users);
 
-        usersDrawMoreCards(users, rule, blackJackGame);
+        usersDrawMoreCards(users, blackJackGame);
 
         dealerDrawMoreCards(blackJackGame, dealer);
-        outputView.printOptimalPoints(dealer, users, rule);
-        outputView.printGameResult(rule.calculateResult(dealer, users));
+        outputView.printOptimalPoints(dealer, users);
+        outputView.printGameResult(blackJackGame.calculateResult(dealer, users));
     }
 
     private List<User> makeUsers() {
@@ -49,16 +46,16 @@ public class BlackJackController {
                 .toList();
     }
 
-    private void usersDrawMoreCards(final List<User> users, final Rule rule, final BlackJackGame blackJackGame) {
+    private void usersDrawMoreCards(final List<User> users, final BlackJackGame blackJackGame) {
         for (User user : users) {
-            userDrawMoreCards(rule, blackJackGame, user);
+            userDrawMoreCards(blackJackGame, user);
         }
     }
 
-    private void userDrawMoreCards(final Rule rule, final BlackJackGame blackJackGame, final User user) {
-        while (rule.canDrawMoreCard(user) && inputView.readUserDrawMoreCard(user)) {
+    private void userDrawMoreCards(final BlackJackGame blackJackGame, final User user) {
+        while (user.canDrawMoreCard() && inputView.readUserDrawMoreCard(user)) {
             blackJackGame.drawMoreCard(user);
-            outputView.printPlayerCards(user, rule);
+            outputView.printPlayerCards(user);
         }
     }
 

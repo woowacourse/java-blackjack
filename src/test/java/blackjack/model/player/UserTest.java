@@ -4,16 +4,67 @@ import static blackjack.model.card.CardCreator.createCard;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
 import java.util.List;
+import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class UserTest {
 
     private User user;
+
+    private static Stream<Arguments> 최초로_받은_카드를_오픈한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))),
+                        new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)))
+                ),
+                Arguments.of(
+                        new Cards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
+                                createCard(CardNumber.TWO))),
+                        new Cards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
+                                createCard(CardNumber.TWO)))
+                )
+        );
+    }
+
+    private static Stream<Arguments> 자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.FIVE)
+                                )
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.FIVE),
+                                        createCard(CardNumber.SIX)
+                                )
+                        ),
+                        false
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.FIVE),
+                                        createCard(CardNumber.SIX),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        false
+                )
+        );
+    }
 
     @BeforeEach
     void setUp() {
@@ -30,24 +81,6 @@ class UserTest {
     }
 
     @Test
-    void 자신이_가진_카드의_합을_반환한다() {
-        user.receiveCards(new Cards(
-                List.of(createCard(CardNumber.ACE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
-        ));
-        List<Integer> expected = List.of(9, 19);
-
-        assertThat(user.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
-    }
-
-    @CsvSource(value = {
-            "DEALER,false", "USER,true"
-    })
-    @ParameterizedTest
-    void 자신의_역할과_같은_역할인지_확인한다(Role role, boolean expected) {
-        assertThat(user.hasRole(role)).isEqualTo(expected);
-    }
-
-    @Test
     void 자신의_최저_포인트를_계산한다() {
         user.receiveCards(new Cards(
                 List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
@@ -56,4 +89,21 @@ class UserTest {
         assertThat(user.getMinimumPoint()).isEqualTo(21);
     }
 
+    @ParameterizedTest
+    @MethodSource("최초로_받은_카드를_오픈한다_테스트_케이스")
+    void 최초로_받은_카드를_오픈한다(final Cards cards, final Cards expected) {
+
+        user.receiveCards(cards);
+
+        assertThat(user.openInitialCards()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
+    void 자신이_카드를_더_뽑을_수_있는지_반환한다(final Cards cards, final boolean expected) {
+
+        user.receiveCards(cards);
+
+        assertThat(user.canDrawMoreCard()).isEqualTo(expected);
+    }
 }

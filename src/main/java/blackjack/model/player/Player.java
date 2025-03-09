@@ -1,25 +1,19 @@
 package blackjack.model.player;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import blackjack.model.card.Cards;
+import java.util.Collections;
+import java.util.Objects;
 
 public abstract class Player {
 
+    protected static final int BLACKJACK_POINT = 21;
+
     protected final String name;
     protected final Cards cards;
-    protected final Role role;
 
-    protected Player(final String name, final Role role) {
+    protected Player(final String name) {
         this.name = name;
         this.cards = Cards.empty();
-        this.role = role;
-    }
-
-    public List<Integer> calculatePossiblePoints() {
-        return cards.calculatePossiblePoints();
     }
 
     public int getMinimumPoint() {
@@ -30,8 +24,37 @@ public abstract class Player {
         this.cards.merge(cards);
     }
 
-    public boolean hasRole(final Role role) {
-        return this.role == role;
+    public Cards openAllCards() {
+        return cards;
+    }
+
+    public boolean isDraw(final Player challenger) {
+        if (isBust() && challenger.isBust()) {
+            return true;
+        }
+        return calculateOptimalPoint() == challenger.calculateOptimalPoint();
+    }
+
+    public boolean isWin(final Player challenger) {
+        if (isBust() || challenger.isBust()) {
+            return !isBust() && challenger.isBust();
+        }
+        return calculateOptimalPoint() > challenger.calculateOptimalPoint();
+    }
+
+    public int calculateOptimalPoint() {
+        return cards.calculatePossiblePoints().stream()
+                .filter(point -> point < BLACKJACK_POINT)
+                .max(Integer::compareTo)
+                .orElse(getMinimumPoint());
+    }
+
+    public abstract Cards openInitialCards();
+
+    public abstract boolean canDrawMoreCard();
+
+    private boolean isBust() {
+        return calculateOptimalPoint() > BLACKJACK_POINT;
     }
 
     public Cards getCards() {
@@ -50,13 +73,12 @@ public abstract class Player {
         if (!(o instanceof Player player)) {
             return false;
         }
-        return Objects.equals(name, player.name) && Objects.equals(getCards(), player.getCards())
-                && role == player.role;
+        return Objects.equals(name, player.name) && Objects.equals(cards, player.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, getCards(), role);
+        return Objects.hash(name, cards);
     }
 
 }

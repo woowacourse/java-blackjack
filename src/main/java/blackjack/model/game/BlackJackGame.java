@@ -1,10 +1,13 @@
 package blackjack.model.game;
 
-import java.util.List;
-
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.CardDeckInitializer;
+import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.User;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -12,16 +15,13 @@ public class BlackJackGame {
     private static final int SINGLE_DRAW_AMOUNT = 1;
 
     private final CardDeck cardDeck;
-    private final Rule rule;
 
-    public BlackJackGame(final CardDeck cardDeck, final Rule rule) {
+    public BlackJackGame(final CardDeck cardDeck) {
         this.cardDeck = cardDeck;
-        this.rule = rule;
     }
 
-    public BlackJackGame(final CardDeckInitializer cardDeckInitializer, final Rule rule) {
+    public BlackJackGame(final CardDeckInitializer cardDeckInitializer) {
         this.cardDeck = CardDeck.initializeFrom(cardDeckInitializer);
-        this.rule = rule;
     }
 
     public void dealInitialCards(final List<Player> players) {
@@ -31,7 +31,7 @@ public class BlackJackGame {
     }
 
     public boolean drawMoreCard(final Player player) {
-        if (rule.canDrawMoreCard(player)) {
+        if (player.canDrawMoreCard()) {
             drawCard(player, SINGLE_DRAW_AMOUNT);
             return true;
         }
@@ -42,4 +42,22 @@ public class BlackJackGame {
         player.receiveCards(cardDeck.draw(amount));
     }
 
+    public Map<Player, Map<Result, Integer>> calculateResult(final Dealer dealer, final List<User> users) {
+        Map<Player, Map<Result, Integer>> results = new LinkedHashMap<>();
+        results.put(dealer, new LinkedHashMap<>(Result.getResultBoard()));
+        users.forEach(
+                user -> {
+                    results.put(user, new LinkedHashMap<>(Result.getResultBoard()));
+                    addResult(results, dealer, Result.findWinner(dealer, user));
+                    addResult(results, user, Result.findWinner(user, dealer));
+                }
+        );
+
+        return results;
+    }
+
+    private void addResult(final Map<Player, Map<Result, Integer>> results, final Player player, final Result result) {
+        Map<Result, Integer> currentResults = results.get(player);
+        currentResults.put(result, currentResults.get(result) + 1);
+    }
 }

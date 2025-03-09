@@ -19,14 +19,13 @@ class BlackJackGameTest {
             "true,true,1", "false,false,0"
     })
     @ParameterizedTest
-    void 딜러의_카드를_뽑아야_한다면_카드를_뽑는다(boolean shouldDealerDraw, boolean expected, int expectedSize) {
+    void 딜러의_카드를_뽑아야_한다면_카드를_뽑는다(boolean canDrawMoreCard, boolean expected, int expectedSize) {
         CardDeck cardDeck = new CardDeck(new Cards(
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR))
         ));
-        FakeRule fakeRule = new FakeRule(shouldDealerDraw);
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, fakeRule);
+        BlackJackGame blackJackGame = new BlackJackGame(cardDeck);
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new FakeDealer("딜러", canDrawMoreCard);
 
         assertThat(blackJackGame.drawMoreCard(dealer)).isEqualTo(expected);
         assertThat(dealer.getCards().getValues()).hasSize(expectedSize);
@@ -38,8 +37,7 @@ class BlackJackGameTest {
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
                         createCard(CardNumber.FIVE))
         ));
-        Rule rule = new Rule();
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, rule);
+        BlackJackGame blackJackGame = new BlackJackGame(cardDeck);
         User user = new User("pobi");
         Dealer dealer = new Dealer("딜러");
         List<Player> players = List.of(dealer, user);
@@ -50,19 +48,19 @@ class BlackJackGameTest {
         assertThat(user.getCards().getValues()).hasSize(2);
     }
 
-    private static class FakeRule extends Rule {
+    private static class FakeDealer extends Dealer {
 
-        private final boolean shouldDealerDraw;
+        private final boolean canDrawMoreCard;
 
-        public FakeRule(boolean shouldDealerDraw) {
-            this.shouldDealerDraw = shouldDealerDraw;
+        public FakeDealer(String name, boolean canDrawMoreCard) {
+            super(name);
+            this.canDrawMoreCard = canDrawMoreCard;
         }
 
         @Override
-        public boolean canDrawMoreCard(final Player player) {
-            return shouldDealerDraw;
+        public boolean canDrawMoreCard() {
+            return canDrawMoreCard;
         }
-
     }
 
 }

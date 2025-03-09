@@ -4,32 +4,58 @@ import static blackjack.model.card.CardCreator.createCard;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
+import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
     private Dealer dealer;
 
+    private static Stream<Arguments> 최초로_받은_카드를_오픈한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))),
+                        new Cards(List.of(createCard(CardNumber.TEN)))
+                ),
+                Arguments.of(
+                        new Cards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
+                                createCard(CardNumber.TWO))),
+                        new Cards(List.of(createCard(CardNumber.NINE)))
+                )
+        );
+    }
+
+    private static Stream<Arguments> 자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.SIX)
+                                )
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.SEVEN)
+                                )
+                        ),
+                        false
+                )
+        );
+    }
+
     @BeforeEach
     void setUp() {
         dealer = new Dealer("딜러");
-    }
-
-    @Test
-    void 자신이_가진_카드의_합을_반환한다() {
-        dealer.receiveCards(new Cards(
-                List.of(createCard(CardNumber.ACE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
-        ));
-        List<Integer> expected = List.of(9, 19);
-
-        assertThat(dealer.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @Test
@@ -41,29 +67,30 @@ class DealerTest {
         assertThat(dealer.getCards().getValues()).hasSize(3);
     }
 
-    @CsvSource(value = {
-            "DEALER,true", "USER,false"
-    })
-    @ParameterizedTest
-    void 자신의_역할과_같은_역할인지_확인한다(Role role, boolean expected) {
-        assertThat(dealer.hasRole(role)).isEqualTo(expected);
-    }
-
     @Test
     void 자신의_최저_포인트를_계산한다() {
         dealer.receiveCards(new Cards(
-                        List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
+                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
         ));
 
         assertThat(dealer.getMinimumPoint()).isEqualTo(16);
     }
 
-    @Test
-    void 첫_번째_카드를_반환한다() {
-        Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
+    @ParameterizedTest
+    @MethodSource("최초로_받은_카드를_오픈한다_테스트_케이스")
+    void 최초로_받은_카드를_오픈한다(final Cards cards, final Cards expected) {
+
         dealer.receiveCards(cards);
 
-        assertThat(dealer.getFirstCard()).isEqualTo(createCard(CardNumber.TEN));
+        assertThat(dealer.openInitialCards()).isEqualTo(expected);
     }
 
+    @ParameterizedTest
+    @MethodSource("자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
+    void 자신이_카드를_더_뽑을_수_있는지_반환한다(final Cards cards, final boolean expected) {
+
+        dealer.receiveCards(cards);
+
+        assertThat(dealer.canDrawMoreCard()).isEqualTo(expected);
+    }
 }
