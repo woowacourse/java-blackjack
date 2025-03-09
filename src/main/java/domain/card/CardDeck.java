@@ -3,7 +3,7 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CardDeck {
 
@@ -12,22 +12,30 @@ public class CardDeck {
     private final List<Card> deck;
 
     public static CardDeck createCards(CardShuffler cardShuffler) {
-        List<Card> cards = Arrays.stream(Pattern.values())
-                .flatMap(pattern -> createCardNumbers().stream()
-                        .map(cardNumber -> new Card(pattern, cardNumber)))
-                .collect(Collectors.toList());
-        List<Card> shuffleCards = cardShuffler.shuffle(cards);
-        return new CardDeck(shuffleCards);
+        List<Card> cards = generateAllCards();
+        List<Card> shuffledCards = cardShuffler.shuffle(cards);
+        return new CardDeck(shuffledCards);
     }
 
-    private static List<CardNumber> createCardNumbers() {
-        return Arrays.stream(CardNumber.values())
-                .filter(CardDeck::removeAnotherAce)
+    private static List<Card> generateAllCards() {
+        return Arrays.stream(Pattern.values())
+                .flatMap(CardDeck::generateCardsForPattern)
                 .toList();
     }
 
-    private static boolean removeAnotherAce(CardNumber createNumber) {
-        return createNumber != CardNumber.ACE_ANOTHER;
+    private static Stream<Card> generateCardsForPattern(Pattern pattern) {
+        return getCardNumbersWithoutAnotherAce().stream()
+                .map(cardNumber -> new Card(pattern, cardNumber));
+    }
+
+    private static List<CardNumber> getCardNumbersWithoutAnotherAce() {
+        return Arrays.stream(CardNumber.values())
+                .filter(CardDeck::isNotAnotherAce)
+                .toList();
+    }
+
+    private static boolean isNotAnotherAce(CardNumber cardNumber) {
+        return cardNumber != CardNumber.ACE_ANOTHER;
     }
 
     private CardDeck(List<Card> deck) {
