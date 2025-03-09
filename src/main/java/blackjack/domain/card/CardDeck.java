@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
@@ -32,9 +33,9 @@ public class CardDeck {
     private List<Card> makeShuffledCards() {
         List<Card> newCards = new ArrayList<>();
         for (CardShape shape : CardShape.values()) {
-            for (CardValue value : CardValue.values()) {
-                newCards.add(new Card(shape, value));
-            }
+            Arrays.stream(CardValue.values())
+                    .map(cardValue -> new Card(shape, cardValue))
+                    .forEach(newCards::add);
         }
         Collections.shuffle(newCards);
         return newCards;

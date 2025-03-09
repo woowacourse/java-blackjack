@@ -58,11 +58,8 @@ public class GameManager {
     }
 
     private void processPlayerTurn(Player player) {
-        while (player.checkHitPossibility()) {
-            boolean wannaHit = gameInputOutput.executeReadIngWannaHit(player.getNickname());
-            if (!wannaHit) {
-                return;
-            }
+        while (player.checkHitPossibility() &&
+                gameInputOutput.executeReadIngWannaHit(player.getNickname())) {
             Card card = dealer.distirbuteHitCard();
             player.hit(card);
             HandState hitResult = makeHandState(player);

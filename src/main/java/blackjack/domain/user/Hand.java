@@ -45,12 +45,15 @@ public class Hand {
     private int calculateTotalPoint(int sumWithoutAce, int aceCount) {
         int total = sumWithoutAce;
         for (int i = 0; i < aceCount; i++) {
-            if (GameRule.isBust(total + GameRule.SOFT_ACE.getValue())) {
-                total += CardValue.ACE.getPoint();
-                continue;
-            }
-            total += GameRule.SOFT_ACE.getValue();
+            total += decideAceCardPoint(total);
         }
         return total;
+    }
+
+    private int decideAceCardPoint(int currentTotalPoint) {
+        if (GameRule.isBust(currentTotalPoint + GameRule.SOFT_ACE.getValue())) {
+            return CardValue.ACE.getPoint();
+        }
+        return GameRule.SOFT_ACE.getValue();
     }
 }
