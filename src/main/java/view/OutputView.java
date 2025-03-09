@@ -3,6 +3,7 @@ package view;
 import static domain.participant.Dealer.THRESHOLD;
 
 import controller.dto.WinLossCountDto;
+import domain.participant.Participant;
 import domain.result.WinLossResult;
 import domain.card.Card;
 import domain.card.Hand;
@@ -23,8 +24,9 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printHandCardsNames(Player player, StringBuilder stringBuilder) {
-        openHand(player, stringBuilder);
+    public static void printHandCardsNames(Participant participant) {
+        StringBuilder stringBuilder = new StringBuilder();
+        openHand(participant, stringBuilder);
         System.out.println(stringBuilder.append("\n"));
     }
 
@@ -38,7 +40,7 @@ public class OutputView {
     }
 
     public static void printBust() {
-        System.out.println("You Die!!");
+        System.out.println("버스트가 되어 턴을 종료합니다.");
     }
 
     public static void printDealerExtraCardsCount(Dealer dealer) {
@@ -69,10 +71,10 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private static void openHand(Player player, StringBuilder stringBuilder) {
-        stringBuilder.append(player.getName())
+    private static void openHand(Participant participant, StringBuilder stringBuilder) {
+        stringBuilder.append(participant.getName())
                 .append("카드: ")
-                .append(openAllCards(player.getHand()));
+                .append(openAllCards(participant.getHand()));
     }
 
     private static String openAllCards(Hand hand) {
@@ -91,9 +93,9 @@ public class OutputView {
         }
     }
 
-    private static void openCardsWithTotal(Player player, StringBuilder stringBuilder) {
-        openHand(player, stringBuilder);
-        int totalScore = player.getHandTotal();
+    private static void openCardsWithTotal(Participant participant, StringBuilder stringBuilder) {
+        openHand(participant, stringBuilder);
+        int totalScore = participant.getHandTotal();
 
         String scoreMessage = Integer.toString(totalScore);
         if (totalScore == 0) {

@@ -6,12 +6,13 @@ import static view.InputView.getYnInput;
 import static view.OutputView.*;
 
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 
 import domain.participant.Players;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BlackJack {
 
@@ -24,13 +25,21 @@ public class BlackJack {
     public void play() {
         Players players = enterPlayer();
         prepareBlackJack(players);
-        printDistributeResult(players, dealer);
-        playersTurn(players);
 
-        dealersTurn(dealer);
+        playersTurn(players);
+        dealerTurn();
+
         printDealerExtraCardsCount(dealer);
         printEveryOneCardsNamesWithTotal(players, dealer);
         printResult(players, dealer, computeWinLoss(players, dealer));
+    }
+
+    public boolean resolveBust(Participant participant) {
+        if (participant.isHandBust() && participant.containsOriginalAce()) {
+            participant.setOriginalAceValueToOne();
+            resolveBust(participant);
+        }
+        return !participant.isHandBust();
     }
 
     private Players enterPlayer() {
@@ -45,61 +54,44 @@ public class BlackJack {
         for (Player player : players.getPlayers()) {
             drawTwoCardFromDeck(player);
         }
+        printDistributeResult(players, dealer);
     }
 
-    public void dealersTurn(Dealer dealer) {
-        boolean isAlive = resolveBust(dealer);
-        while (isAlive) {
-            if (dealer.isBelowThreshold()) {
-                isAlive = drawAdditionalCard(dealer, new StringBuilder());
-            }
-            if (isAlive && !dealer.isBelowThreshold()) {
-                return;
-            }
-        }
-        dealer.setHandTotalToZero();
-        printBust();
+    private void drawTwoCardFromDeck(Participant participant) {
+        participant.addCard(dealer.drawCard());
+        participant.addCard(dealer.drawCard());
     }
 
     private void playersTurn(Players players) {
         for (Player player : players.getPlayers()) {
-            askPlayersChoice(player);
+            playerTurn(player);
         }
     }
 
-    private void askPlayersChoice(Player player) {
-        boolean isAlive = resolveBust(player);
-        while (isAlive) {
-            String ynInput = getYnInput(player);
-            if (ynInput.equalsIgnoreCase(YES)) {
-                isAlive = drawAdditionalCard(player, new StringBuilder());
-            }
-            if (ynInput.equalsIgnoreCase(NO)) {
-                return;
-            }
-        }
-        player.setHandTotalToZero();
-        printBust();
+    private void playerTurn(Player player) {
+        playTurn(player, () -> getYnInput(player).equalsIgnoreCase(YES));
     }
 
-    public boolean resolveBust(Player player) {
-        if (player.isHandBust() && player.containsOriginalAce()) {
-            player.setOriginalAceValueToOne();
-            resolveBust(player);
-        }
-        return !player.isHandBust();
+    private void dealerTurn() {
+        playTurn(dealer, dealer::isBelowThreshold);
     }
 
-    private void drawTwoCardFromDeck(Player player) {
-        player.addCard(dealer.drawCard());
-        player.addCard(dealer.drawCard());
+    private void playTurn(Participant participant, Supplier<Boolean> shouldDrawMore) {
+        boolean isAlive = resolveBust(participant);
+        while (isAlive && shouldDrawMore.get()) {
+            isAlive = drawAdditionalCard(participant);
+        }
+        if (!isAlive) {
+            participant.setHandTotalToZero();
+            printBust();
+        }
     }
 
-    private boolean drawAdditionalCard(Player player, StringBuilder stringBuilder) {
-        player.addCard(dealer.drawCard());
-        if (player.getClass().equals(Player.class)) {
-            printHandCardsNames(player, stringBuilder);
+    private boolean drawAdditionalCard(Participant participant) {
+        participant.addCard(dealer.drawCard());
+        if (participant.getClass().equals(Player.class)) {
+            printHandCardsNames(participant);
         }
-        return resolveBust(player);
+        return resolveBust(participant);
     }
 }
