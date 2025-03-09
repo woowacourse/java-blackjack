@@ -11,8 +11,34 @@ public final class Game {
     private final List<Player> players;
 
     public Game(Dealer dealer, List<Player> players) {
+        validateDealer(dealer);
+        validatePlayers(players);
         this.dealer = dealer;
         this.players = List.copyOf(players);
+    }
+
+    private void validateDealer(Dealer dealer) {
+        if (dealer == null) {
+            throw new IllegalArgumentException("딜러가 존재하지 않습니다.");
+        }
+        if (!dealer.getHand().isEmpty()) {
+            throw new IllegalArgumentException("딜러가 이미 카드를 가지고 있습니다.");
+        }
+    }
+
+    private void validatePlayers(List<Player> players) {
+        if (players == null || players.isEmpty()) {
+            throw new IllegalArgumentException("플레이어가 존재하지 않습니다.");
+        }
+        for (Player player : players) {
+            validateAlreadyHand(player);
+        }
+    }
+
+    private void validateAlreadyHand(Participant participant) {
+        if (!participant.getHand().isEmpty()) {
+            throw new IllegalArgumentException("참가자가 이미 카드를 가지고 있습니다.");
+        }
     }
 
     public void dealInitialCards() {

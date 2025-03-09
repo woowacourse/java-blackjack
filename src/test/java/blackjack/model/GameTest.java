@@ -36,6 +36,73 @@ class GameTest {
                 .doesNotThrowAnyException();
     }
 
+    @DisplayName("딜러가 null인 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenDealerIsNull() {
+        // given
+        List<Player> players = List.of(
+                new Player(new Name("pobi"), NO_HIT_STRATEGY),
+                new Player(new Name("neo"), NO_HIT_STRATEGY));
+
+        // when, then
+        assertThatCode(() -> new Game(null, players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("딜러가 존재하지 않습니다.");
+    }
+
+    @DisplayName("딜러가 이미 카드를 가지고 있는 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenDealerHasAlreadyCard() {
+        // given
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveHand(SPADE_SIX_CARD);
+        List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
+
+        // when, then
+        assertThatCode(() -> new Game(dealer, players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("딜러가 이미 카드를 가지고 있습니다.");
+    }
+
+    @DisplayName("플레이어가 null인 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenPlayersIsNull() {
+        // given
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+
+        // when, then
+        assertThatCode(() -> new Game(dealer, null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어가 존재하지 않습니다.");
+    }
+
+    @DisplayName("플레이어가 없는 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenPlayersIsEmpty() {
+        // given
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+
+        // when, then
+        assertThatCode(() -> new Game(dealer, List.of()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어가 존재하지 않습니다.");
+    }
+
+    @DisplayName("플레이어가 이미 카드를 가지고 있는 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenPlayerHasAlreadyCard() {
+        // given
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        Player pobi = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        pobi.receiveHand(SPADE_SIX_CARD);
+        List<Player> players = List.of(pobi);
+
+        // when, then
+        assertThatCode(() -> new Game(dealer, players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자가 이미 카드를 가지고 있습니다.");
+    }
+
     @DisplayName("모든 참가자에게 2장의 패를 준다.")
     @Test
     void dealInitialCardsTest() {
@@ -78,8 +145,10 @@ class GameTest {
     @Test
     void getDealerVisibleCardTest() {
         // given
-        Dealer dealer = new Dealer(Deck.createDeckByCards(List.of(SPADE_SIX_CARD, SPADE_TEN_CARD), NO_SHUFFLER));
-        Game game = new Game(dealer, List.of());
+        List<Card> cards = List.of(SPADE_SIX_CARD, SPADE_TEN_CARD, SPADE_SIX_CARD, SPADE_TEN_CARD);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
+        List<Player> players = List.of(new Player(new Name("pobi"), NO_HIT_STRATEGY));
+        Game game = new Game(dealer, players);
         game.dealInitialCards();
 
         //when
