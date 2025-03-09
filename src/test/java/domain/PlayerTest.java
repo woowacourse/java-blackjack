@@ -26,7 +26,7 @@ class PlayerTest {
 
             // when & then
             assertThatThrownBy(() -> new Player(name, hand))
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 손패를 가져야합니다.");
         }
 
@@ -38,7 +38,7 @@ class PlayerTest {
 
             // when & then
             assertThatThrownBy(() -> new Player("머피", nullHand))
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 손패를 가져야합니다.");
         }
     }
