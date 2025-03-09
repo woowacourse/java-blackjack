@@ -47,6 +47,34 @@ public class GameBoardTest {
     }
 
     @Test
+    void 게임에_참여중인_플레이어_가져오기_테스트() {
+        // given
+        Dealer dealer = Dealer.generate();
+        List<Player> players = List.of(Player.from("우가"), Player.from("히스타"));
+        GameBoard gameBoard = GameBoard.generateOf(dealer, players);
+
+        // when
+        List<Participant> gameBoardPlayers = gameBoard.getPlayers();
+
+        // then
+        Assertions.assertThat(gameBoardPlayers).containsExactlyElementsOf(players);
+    }
+
+    @Test
+    void 게임에_참여중인_딜러_가져오기_테스트() {
+        // given
+        Dealer dealer = Dealer.generate();
+        List<Player> players = List.of(Player.from("우가"), Player.from("히스타"));
+        GameBoard gameBoard = GameBoard.generateOf(dealer, players);
+
+        // when
+        Dealer gameBoardDealer = (Dealer) gameBoard.getDealer();
+
+        // then
+        Assertions.assertThat(gameBoardDealer).isEqualTo(dealer);
+    }
+
+    @Test
     void 카드를_모두에게_2장씩_나눠준다() {
         //given
         List<Participant> participants = List.of(
