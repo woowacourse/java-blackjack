@@ -18,7 +18,7 @@ class PlayersTest {
     @DisplayName("특정 이름을 가진 플레이어에게 카드를 제공한다.")
     void giveCardToGamerTest() {
         // given
-        List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
+        List<PlayerName> usernames = Stream.of("김", "이", "박").map(PlayerName::new).toList();
         Players players = new Players(usernames);
         PlayerName username = new PlayerName("이");
         Card card = Card.HEART_JACK;

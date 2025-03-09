@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class GameTest {
 
     @BeforeEach
     void beforeEach() {
-        List<PlayerName> usernames = List.of(new PlayerName("a"), new PlayerName("b"), new PlayerName("c"));
+        List<PlayerName> usernames = Stream.of("a", "b", "c").map(PlayerName::new).toList();
         game = Game.initialize(usernames);
     }
 
