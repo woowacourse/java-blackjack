@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
+import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,8 +28,9 @@ class BlackjackGameTest {
         void createParticipantsByNames() {
             List<String> names = List.of("hula", "sana");
             BlackjackGame game = BlackjackGame.createByPlayerNames(names);
+            Participants participants = game.getParticipants();
 
-            List<String> playerNames = game.getPlayerNames();
+            List<String> playerNames = participants.getPlayerNames();
 
             assertAll(() -> {
                 assertThat(playerNames.getFirst()).isEqualTo(names.getFirst());
@@ -57,7 +60,7 @@ class BlackjackGameTest {
             BlackjackGame game = BlackjackGame.createByPlayerNames(names);
             game.initCardsToParticipants(); // 2장 배부
 
-            Player player = game.findPlayers().getFirst();
+            Player player = game.getParticipants().getPlayers().getFirst();
             game.addExtraCard(player); // 총 3장 카드 보유
 
             assertThat(player.openCards()).hasSize(3);
@@ -74,7 +77,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsUnder16.get(0), cardsUnder16.get(1));
 
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            List<Participant> participants = List.of(dealer);
+            Participants participants = new Participants(dealer, new ArrayList<>());
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
             game.addExtraCard(dealer);
 
@@ -92,7 +95,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsOver16.get(0), cardsOver16.get(1));
 
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            List<Participant> participants = List.of(dealer);
+            Participants participants = new Participants(dealer, new ArrayList<>());
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
             assertThatThrownBy(() -> game.addExtraCard(dealer))
@@ -138,7 +141,7 @@ class BlackjackGameTest {
             player3.addCards(initialCards4.get(0), initialCards4.get(1));
 
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            List<Participant> participants = List.of(dealer, player1, player2, player3);
+            Participants participants = new Participants(dealer, List.of(player1, player2, player3));
             game = new BlackjackGame(cardDeck, participants);
         }
 
@@ -146,7 +149,7 @@ class BlackjackGameTest {
         @DisplayName("플레이어의 승패 통계를 계산할 수 있다.")
         void calculatePlayerStatistics() {
             Map<Player, GameResult> playerResult = game.calculateStatisticsForPlayer();
-            List<Player> players = game.findPlayers();
+            List<Player> players = game.getParticipants().getPlayers();
             Player player1 = players.get(0);
             Player player2 = players.get(1);
             Player player3 = players.get(2);

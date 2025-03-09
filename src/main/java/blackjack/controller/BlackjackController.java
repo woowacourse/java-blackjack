@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.GameResult;
+import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -40,22 +41,25 @@ public class BlackjackController {
 
     private void distributeInitialCards(final BlackjackGame blackjackGame) {
         blackjackGame.initCardsToParticipants();
-        outputView.printStartGame(blackjackGame.getPlayerNames());
+        Participants participants = blackjackGame.getParticipants();
 
-        outputView.printDealerCardResult(blackjackGame.findDealer().openInitialCards());
-        for (Player player : blackjackGame.findPlayers()) {
+        outputView.printStartGame(participants.getPlayerNames());
+        outputView.printDealerCardResult(participants.getDealer().openInitialCards());
+        for (Player player : participants.getPlayers()) {
             outputView.printPlayerCardResult(player.getName(), player.openCards());
         }
     }
 
     private void distributeAdditionalCards(final BlackjackGame blackjackGame) {
-        for (Player player : blackjackGame.findPlayers()) {
+        Participants participants = blackjackGame.getParticipants();
+        for (Player player : participants.getPlayers()) {
             handleExtraCardError(() -> distributeAdditionalCardsToPlayer(blackjackGame, player));
         }
         distributeAdditionalCardsToDealer(blackjackGame);
     }
 
-    private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame, final Player player) {
+    private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame,
+        final Player player) {
         while (inputView.readGetOneMore(player.getName())) {
             blackjackGame.addExtraCard(player);
             outputView.printPlayerCardResult(player.getName(), player.openCards());
@@ -63,7 +67,7 @@ public class BlackjackController {
     }
 
     private void distributeAdditionalCardsToDealer(final BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.findDealer();
+        Dealer dealer = blackjackGame.getParticipants().getDealer();
         while (dealer.isPossibleToAdd()) {
             blackjackGame.addExtraCard(dealer);
             outputView.printAddExtraCardToDealer();
@@ -71,9 +75,11 @@ public class BlackjackController {
     }
 
     private void showFinalCards(final BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.findDealer();
+        Participants participants = blackjackGame.getParticipants();
+        Dealer dealer = participants.getDealer();
+
         outputView.printDealerFinalCardResult(dealer.calculateDenominations(), dealer.openCards());
-        for (Player player : blackjackGame.findPlayers()) {
+        for (Player player : participants.getPlayers()) {
             outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(),
                 player.openCards());
         }
@@ -99,7 +105,8 @@ public class BlackjackController {
         }
     }
 
-    private void handleCardDistributionError(final Runnable action, final BlackjackGame blackjackGame) {
+    private void handleCardDistributionError(final Runnable action,
+        final BlackjackGame blackjackGame) {
         try {
             action.run();
         } catch (IllegalArgumentException e) {
