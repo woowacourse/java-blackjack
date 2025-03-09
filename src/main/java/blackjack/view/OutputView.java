@@ -17,7 +17,7 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
         System.out.println();
         System.out.println(dealer.getName() + "와 " + userNames + "에게 2장을 나누었습니다.");
-        System.out.println(dealer.getName() + "카드: " + formatCards(dealer.openInitialCards()));
+        printPlayerCards(dealer);
         users.forEach(this::printPlayerCards);
         System.out.println();
     }
