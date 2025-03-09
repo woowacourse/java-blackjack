@@ -1,8 +1,6 @@
 package domain;
 
 import domain.card.CardGenerator;
-import domain.card.CardGroup;
-import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.GamerGenerator;
 import domain.gamer.Player;
