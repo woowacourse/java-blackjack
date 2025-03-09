@@ -18,10 +18,6 @@ public abstract class Player implements Comparable<Player> {
         cards = new ArrayList<>();
     }
 
-    public Player() {
-        this("딜러");
-    }
-
     public void pushDealCard(final CardPack cardPack, final int count) {
         IntStream.range(0, count)
                 .mapToObj(i -> cardPack.getDeal())

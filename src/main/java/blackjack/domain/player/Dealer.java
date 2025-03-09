@@ -6,8 +6,10 @@ import java.util.List;
 
 public class Dealer extends Player {
 
+    public static final String DEFAULT_NAME = "딜러";
+
     public Dealer() {
-        super();
+        super(DEFAULT_NAME);
     }
 
     @Override
