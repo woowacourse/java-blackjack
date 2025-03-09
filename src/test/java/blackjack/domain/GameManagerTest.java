@@ -20,7 +20,7 @@ class GameManagerTest {
         List<Gambler> names = List.of(new Gambler("비타"));
 
         GameManager gameManager = new GameManager(blackjackShuffle);
-        gameManager.addGamblers(names);
+        gameManager.addGamblersAndDealInitCards(names);
 
         assertThat(gameManager.getPlayers().getGamblers().size())
                 .isEqualTo(1);
@@ -32,7 +32,7 @@ class GameManagerTest {
         Gambler gambler = new Gambler("두리");
 
         GameManager gameManager = new GameManager(blackjackShuffle);
-        gameManager.addGamblers(List.of(gambler));
+        gameManager.addGamblersAndDealInitCards(List.of(gambler));
 
         gameManager.dealAddCard(gambler);
         assertThat(gambler.getCards().size()).isEqualTo(3);
@@ -45,7 +45,7 @@ class GameManagerTest {
         List<Gambler> names = List.of(gambler);
 
         GameManager gameManager = new GameManager(blackjackShuffle);
-        gameManager.addGamblers(names);
+        gameManager.addGamblersAndDealInitCards(names);
         gameManager.dealAddCard(gambler);
 
         boolean result = gameManager.isPlayerBust(gambler);
@@ -73,7 +73,7 @@ class GameManagerTest {
     @DisplayName("딜러의 카드가 히트가 아니면 false 를 반환한다")
     void if_the_dealer_card_is_not_hit_get_false() {
         GameManager gameManager = new GameManager(blackjackShuffle);
-        gameManager.addGamblers(List.of(new Gambler("비타")));
+        gameManager.addGamblersAndDealInitCards(List.of(new Gambler("비타")));
         boolean result = gameManager.isDealerHitThenDealAddCard();
 
         assertThat(result).isFalse();

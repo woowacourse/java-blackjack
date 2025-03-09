@@ -17,8 +17,8 @@ public class GameManager {
         players = new Players();
     }
 
-    public void addGamblers(List<Gambler> gamblerNames) {
-        players.addGamblers(gamblerNames);
+    public void addGamblersAndDealInitCards(List<Gambler> gamblers) {
+        players.addGamblers(gamblers);
         players.initPlayers(cardPack);
     }
 
@@ -27,11 +27,11 @@ public class GameManager {
     }
 
     public void dealAddCard(Player player) {
-        players.dealAddCard(cardPack, player);
+        player.pushDealCard(cardPack, 1);
     }
 
     public boolean isPlayerBust(final Player player) {
-        return players.isPlayerBust(player);
+        return player.isPlayerBust();
     }
 
     public boolean isDealerHitThenDealAddCard() {

@@ -49,7 +49,7 @@ public class BlackjackController {
     }
 
     private Players initPlayers() {
-        gameManager.addGamblers(readAndParseNames());
+        gameManager.addGamblersAndDealInitCards(readAndParseNames());
         Players players = gameManager.getPlayers();
         outputView.printInitCards(players);
         return players;
