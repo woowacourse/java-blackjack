@@ -80,6 +80,10 @@ public class BlackjackGame {
         return dealerResults;
     }
 
+    public boolean dealerCanReceiveCard() {
+        return dealer.canReceiveCard();
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

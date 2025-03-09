@@ -44,7 +44,7 @@ public class BlackjackController {
     }
 
     private void processDealerTurn(BlackjackGame game) {
-        while (game.getDealer().canReceiveCard()) {
+        while (game.dealerCanReceiveCard()) {
             game.runDealerTurn();
             OutputView.printDealerReceivedCard();
         }
