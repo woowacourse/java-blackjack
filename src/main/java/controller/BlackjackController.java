@@ -28,11 +28,11 @@ public class BlackjackController {
         distributionFirstCard(gameManger, playerNames);
 
         additionalPlayerCard(playerNames, gameManger);
-        addtionalDealerCard(gameManger);
+        additionalDealerCard(gameManger);
 
         createGameResult(gameManger, playerNames);
 
-        caculateGameResult(gameManger);
+        calculateGameResult(gameManger);
     }
 
     private void distributionFirstCard(GameManger gameManger, List<String> playerNames) {
@@ -43,7 +43,7 @@ public class BlackjackController {
         playerNames.forEach(playerName -> displayOpenCard(playerName, gameManger.findUserByUsername(playerName)));
     }
 
-    private void addtionalDealerCard(GameManger gameManger) {
+    private void additionalDealerCard(GameManger gameManger) {
         User dealer = gameManger.getDealer();
         while (!dealer.isImpossibleDraw()) {
             dealer.drawCard();
@@ -117,7 +117,7 @@ public class BlackjackController {
         outputView.displayOpenCardsResult(name, dealerPrintCards, score);
     }
 
-    private void caculateGameResult(GameManger gameManger) {
+    private void calculateGameResult(GameManger gameManger) {
         Map<User, Integer> gameResult = gameManger.createGameResult();
         calculateDealerResult(gameResult);
 
