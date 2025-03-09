@@ -2,6 +2,7 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -30,5 +31,11 @@ public class CardTest {
     @CsvSource({"SPADE_J", "DIAMOND_Q", "HEART_K"})
     void 카드의_랭크가_JQK이면_숫자가_10이다(Card card) {
         assertThat(card.getNumber()).isEqualTo(10);
+    }
+
+    @Test
+    void 모든_조합의_카드를_리스트로_얻을_수_있다() {
+        List<Card> allCards = Card.allCards();
+        assertThat(allCards).containsExactly(Card.values());
     }
 }

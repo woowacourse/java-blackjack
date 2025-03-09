@@ -1,7 +1,6 @@
 package domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,8 +8,8 @@ public class CardPack {
 
     private final List<Card> cards;
 
-    public CardPack() {
-        this.cards = new ArrayList<>(Arrays.asList(Card.values()));
+    public CardPack(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public void shuffle() {
@@ -18,10 +17,9 @@ public class CardPack {
     }
 
     public Card poll() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드를 모두 소진했습니다.");
+        }
         return cards.removeFirst();
-    }
-
-    public int size() {
-        return cards.size();
     }
 }

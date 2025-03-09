@@ -1,7 +1,9 @@
 package view;
 
 import domain.card.Card;
-import domain.game.GameResult;
+import domain.game.Winning;
+import domain.game.WinningCounts;
+import domain.participant.Player;
 import dto.ParticipantResultResponse;
 import dto.ParticipantsCardsResponse;
 import java.util.List;
@@ -13,7 +15,8 @@ public class OutputView {
 
     public void printSetUpCardDeck(ParticipantsCardsResponse participantsCardsResponse) {
         Card dealerOpenCard = participantsCardsResponse.dealerOpenCard();
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", playerNames(participantsCardsResponse.cards().keySet()));
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n",
+            playerNames(participantsCardsResponse.cards().keySet()));
 
         System.out.println("딜러카드: " + dealerOpenCard);
         Map<String, List<Card>> playerCards = participantsCardsResponse.cards();
@@ -36,26 +39,25 @@ public class OutputView {
         );
     }
 
-    public void printGameResult(GameResult gameResult) {
+    public void printGameResult(WinningCounts winningCounts, Map<Player, Winning> playerWinnings) {
         System.out.println("## 최종 승패");
-        printDealerWinnings(gameResult);
+        printDealerWinnings(winningCounts);
 
-        gameResult.getPlayerWinningResult()
-            .forEach((player, winning) ->
-                System.out.printf("%s: %s\n", player.getName(), winning.getName())
-            );
+        playerWinnings.forEach((player, winning) ->
+            System.out.printf("%s: %s\n", player.getName(), winning.getName())
+        );
     }
 
-    private static void printDealerWinnings(GameResult gameResult) {
+    private static void printDealerWinnings(WinningCounts winningCounts) {
         System.out.print("딜러: ");
-        if (gameResult.countDealerWin() > 0) {
-            System.out.print(gameResult.countDealerWin() + "승 ");
+        if (winningCounts.winCount() > 0) {
+            System.out.print(winningCounts.winCount() + "승 ");
         }
-        if (gameResult.countDealerDraw() > 0) {
-            System.out.print(gameResult.countDealerDraw() + "무 ");
+        if (winningCounts.drawCount() > 0) {
+            System.out.print(winningCounts.drawCount() + "무 ");
         }
-        if (gameResult.countDealerLose() > 0) {
-            System.out.print(gameResult.countDealerLose() + "패 ");
+        if (winningCounts.loseCount() > 0) {
+            System.out.print(winningCounts.loseCount() + "패 ");
         }
         System.out.println();
     }

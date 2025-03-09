@@ -3,7 +3,9 @@ package domain.card;
 import static domain.card.Rank.*;
 import static domain.card.Shape.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Card {
     SPADE_A(SPADE, ACE), DIAMOND_A(DIAMOND, ACE), HEART_A(HEART, ACE), CLOVER_A(CLOVER, ACE),
@@ -48,5 +50,9 @@ public enum Card {
             .filter(card -> card.rank == rank)
             .findFirst()
             .orElseThrow();
+    }
+
+    public static List<Card> allCards() {
+        return new ArrayList<>(Arrays.asList(values()));
     }
 }

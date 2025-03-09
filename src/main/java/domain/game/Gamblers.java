@@ -1,13 +1,13 @@
 package domain.game;
 
-import domain.participant.Dealer;
-import domain.participant.Gambler;
-import domain.participant.Player;
+import static java.util.stream.Collectors.toMap;
+
 import domain.card.CardPack;
-import java.util.ArrayList;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 
 public class Gamblers {
 
@@ -27,7 +27,7 @@ public class Gamblers {
     public void distributeExtraCards(CardPack cardPack, TakeMoreCardSelector selector) {
         for (Player player : players) {
             while (player.canTakeMoreCard()) {
-                if (selector.isYes(player.getName())){
+                if (selector.isYes(player.getName())) {
                     player.takeCards(cardPack.poll());
                     selector.takenResult(player.getName(), player.getCards());
                     continue;
@@ -43,12 +43,28 @@ public class Gamblers {
         }
     }
 
-    public GameResult evaluateFinalScore() {
-        int dealerScore = dealer.calculateScore();
-        Map<Player, Winning> playerWinnings = players.stream()
-            .collect(Collectors.toMap(player -> player,
-                player -> Winning.determine(player.calculateScore(), dealerScore)));
+    public WinningCounts evaluateDealerWinnings() {
+        Map<Player, Winning> playerWinnings = evaluatePlayerWinnings();
+        int winCount = 0, drawCount = 0, loseCount = 0;
 
-        return new GameResult(playerWinnings);
+        for (Winning winning : playerWinnings.values()) {
+            if (winning == Winning.WIN) {
+                loseCount++;
+            }
+            if (winning == Winning.DRAW) {
+                drawCount++;
+            }
+            if (winning == Winning.LOSE) {
+                winCount++;
+            }
+        }
+        return new WinningCounts(winCount, drawCount, loseCount);
+    }
+
+    public Map<Player, Winning> evaluatePlayerWinnings() {
+        int dealerScore = dealer.calculateScore();
+        return players.stream()
+            .collect(toMap(Function.identity(),
+                player -> Winning.determine(player.calculateScore(), dealerScore)));
     }
 }

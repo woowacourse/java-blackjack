@@ -2,13 +2,14 @@ package controller;
 
 import domain.card.Card;
 import domain.card.CardPack;
-import domain.participant.Dealer;
-import dto.ParticipantResultResponse;
 import domain.game.Gamblers;
-import domain.game.GameResult;
-import domain.participant.Player;
-import dto.ParticipantsCardsResponse;
 import domain.game.TakeMoreCardSelector;
+import domain.game.Winning;
+import domain.game.WinningCounts;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import dto.ParticipantResultResponse;
+import dto.ParticipantsCardsResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,18 +31,19 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
         Gamblers gamblers = new Gamblers(dealer, players);
-        CardPack cardPack = new CardPack();
+        CardPack cardPack = new CardPack(Card.allCards());
         gamblers.distributeSetUpCards(cardPack);
         ParticipantsCardsResponse participantsCardsResponse = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(participantsCardsResponse);
 
         gamblers.distributeExtraCards(cardPack, new TakeMoreCardViewSelector());
 
-        List<ParticipantResultResponse> participantResultRespons = createFinalResultDTOs(dealer, players);
-        outputView.printFinalCardDeck(participantResultRespons);
+        List<ParticipantResultResponse> participantResultResponse = createFinalResultDTOs(dealer, players);
+        outputView.printFinalCardDeck(participantResultResponse);
 
-        GameResult gameResult = gamblers.evaluateFinalScore();
-        outputView.printGameResult(gameResult);
+        WinningCounts winningCounts = gamblers.evaluateDealerWinnings();
+        Map<Player, Winning> playerWinnings = gamblers.evaluatePlayerWinnings();
+        outputView.printGameResult(winningCounts, playerWinnings);
     }
 
     public ParticipantsCardsResponse createSetUpCardsDTO(Dealer dealer, List<Player> players) {
@@ -53,12 +55,15 @@ public class BlackjackController {
         return new ParticipantsCardsResponse(dealerOpenCard, cards);
     }
 
-    public List<ParticipantResultResponse> createFinalResultDTOs(Dealer dealer, List<Player> players) {
+    public List<ParticipantResultResponse> createFinalResultDTOs(Dealer dealer,
+        List<Player> players) {
         List<ParticipantResultResponse> participantResultRespons = new ArrayList<>();
-        ParticipantResultResponse participantResultResponse = new ParticipantResultResponse("딜러", dealer.getCards(), dealer.calculateScore());
+        ParticipantResultResponse participantResultResponse = new ParticipantResultResponse("딜러",
+            dealer.getCards(), dealer.calculateScore());
         participantResultRespons.add(participantResultResponse);
-        for(Player player : players) {
-            ParticipantResultResponse participantResultResponse1 = new ParticipantResultResponse(player.getName(), player.getCards(), player.calculateScore());
+        for (Player player : players) {
+            ParticipantResultResponse participantResultResponse1 = new ParticipantResultResponse(
+                player.getName(), player.getCards(), player.calculateScore());
             participantResultRespons.add(participantResultResponse1);
         }
 
