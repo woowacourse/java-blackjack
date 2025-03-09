@@ -155,12 +155,11 @@ class RuleTest {
     private static Stream<Arguments> 승자를_반환하는_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        makePlayer(Role.DEALER, createCard(CardNumber.TEN), createCard(CardNumber.SEVEN)),
-                        makeBustPlayer(Role.USER
-                        )),
+                        makeDealer(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN)),
+                        makeBustPlayer(Role.USER)),
                 Arguments.of(
-                        makePlayer(Role.DEALER, createCard(CardNumber.TEN), createCard(CardNumber.EIGHT)),
-                        makePlayer(Role.USER, createCard(CardNumber.TEN), createCard(CardNumber.SEVEN)
+                        makeDealer(createCard(CardNumber.TEN), createCard(CardNumber.EIGHT)),
+                        makeUserWithName("pobi", createCard(CardNumber.TEN), createCard(CardNumber.SEVEN)
                         ))
         );
     }
@@ -168,28 +167,28 @@ class RuleTest {
     private static Stream<Arguments> 게임_결과를_반환하는_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new DealerWinRule(), makePlayerWithName(Role.DEALER, "딜러"),
-                        List.of(makePlayerWithName(Role.USER, "pobi"),
-                                makePlayerWithName(Role.USER, "json")),
-                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), makeResultMap(2, 0, 0),
-                                makePlayerWithName(Role.USER, "pobi"), makeResultMap(0, 0, 1),
-                                makePlayerWithName(Role.USER, "json"), makeResultMap(0, 0, 1)
+                        new DealerWinRule(), makeDealer(),
+                        List.of(makeUserWithName("pobi"),
+                                makeUserWithName("json")),
+                        Map.of(makeDealer(), makeResultMap(2, 0, 0),
+                                makeUserWithName("pobi"), makeResultMap(0, 0, 1),
+                                makeUserWithName("json"), makeResultMap(0, 0, 1)
                         )),
                 Arguments.of(
-                        new DealerLoseRule(), makePlayerWithName(Role.DEALER, "딜러"),
-                        List.of(makePlayerWithName(Role.USER, "pobi"),
-                                makePlayerWithName(Role.USER, "json")),
-                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), makeResultMap(0, 0, 2),
-                                makePlayerWithName(Role.USER, "pobi"), makeResultMap(1, 0, 0),
-                                makePlayerWithName(Role.USER, "json"), makeResultMap(1, 0, 0)
+                        new DealerLoseRule(), makeDealer(),
+                        List.of(makeUserWithName("pobi"),
+                                makeUserWithName("json")),
+                        Map.of(makeDealer(), makeResultMap(0, 0, 2),
+                                makeUserWithName("pobi"), makeResultMap(1, 0, 0),
+                                makeUserWithName("json"), makeResultMap(1, 0, 0)
                         )),
                 Arguments.of(
-                        new DrawRule(), makePlayerWithName(Role.DEALER, "딜러"),
-                        List.of(makePlayerWithName(Role.USER, "pobi"),
-                                makePlayerWithName(Role.USER, "json")),
-                        Map.of(makePlayerWithName(Role.DEALER, "딜러"), makeResultMap(0, 2, 0),
-                                makePlayerWithName(Role.USER, "pobi"), makeResultMap(0, 1, 0),
-                                makePlayerWithName(Role.USER, "json"), makeResultMap(0, 1, 0)
+                        new DrawRule(), makeDealer(),
+                        List.of(makeUserWithName("pobi"),
+                                makeUserWithName("json")),
+                        Map.of(makeDealer(), makeResultMap(0, 2, 0),
+                                makeUserWithName("pobi"), makeResultMap(0, 1, 0),
+                                makeUserWithName("json"), makeResultMap(0, 1, 0)
                         ))
         );
     }
@@ -197,12 +196,9 @@ class RuleTest {
     private static Stream<Arguments> 플레이어의_시작_카드들을_오픈하는_테스트_케이스() {
         Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
         return Stream.of(
-                Arguments.of(
-                        new Dealer("딜러"), cards, new Cards(createCard(CardNumber.TEN))
-                ),
-                Arguments.of(
-                        new User("pobi"), cards, new Cards(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))
-                )
+                Arguments.of(makeDealer(), cards, new Cards(createCard(CardNumber.TEN))),
+                Arguments.of(makeUserWithName("pobi"), cards,
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)))
         );
     }
 
@@ -215,26 +211,23 @@ class RuleTest {
         return result;
     }
 
-    private static Player makePlayer(final Role role, final Card... cards) {
-        Player player = new Dealer("딜러");
-        if (role == Role.USER) {
-            player = new User("pobi");
-        }
+    private static Player makeDealer(final Card... cards) {
+        Player player = new Dealer();
         player.receiveCards(new Cards(Arrays.stream(cards).toList()));
         return player;
     }
 
-    private static Player makePlayerWithName(final Role role, final String name, final Card... cards) {
-        Player player = new Dealer(name);
-        if (role == Role.USER) {
-            player = new User(name);
-        }
+    private static Player makeUserWithName(final String name, final Card... cards) {
+        Player player = new User(name);
         player.receiveCards(new Cards(Arrays.stream(cards).toList()));
         return player;
     }
 
     private static Player makeBustPlayer(final Role role) {
-        return makePlayer(role,
+        if (role == Role.DEALER) {
+            return makeDealer(createCard(CardNumber.TEN), createCard(CardNumber.NINE), createCard(CardNumber.SEVEN));
+        }
+        return makeUserWithName("pobi",
                 createCard(CardNumber.TEN), createCard(CardNumber.NINE), createCard(CardNumber.SEVEN)
         );
     }
@@ -242,7 +235,7 @@ class RuleTest {
     @ParameterizedTest
     @MethodSource("딜러가_카드를_뽑아야_하는지_반환한다_테스트_케이스")
     void 딜러가_카드를_뽑아야_하는지_반환한다(final Cards cards, final boolean expected) {
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.receiveCards(cards);
 
         assertThat(rule.canDrawMoreCard(dealer)).isEqualTo(expected);
@@ -269,7 +262,7 @@ class RuleTest {
     @MethodSource("무승부_상황인지_확인하는_테스트_케이스")
     @ParameterizedTest
     void 무승부_상황인지_확인한다(final Cards dealerCards, final Cards userCards, final boolean expected) {
-        Player dealer = new Dealer("딜러");
+        Player dealer = new Dealer();
         Player user = new User("pobi");
 
         dealer.receiveCards(dealerCards);

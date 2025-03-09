@@ -30,7 +30,7 @@ public class BlackJackController {
         Rule rule = new Rule();
         BlackJackGame blackJackGame = new BlackJackGame(cardDeckInitializer, rule);
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         List<User> users = makeUsers();
         dealInitialCards(users, dealer, blackJackGame);
         outputView.printDealInitialCardsResult(dealer, users, rule);

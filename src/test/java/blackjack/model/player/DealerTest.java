@@ -19,7 +19,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer("딜러");
+        dealer = new Dealer();
     }
 
     @Test

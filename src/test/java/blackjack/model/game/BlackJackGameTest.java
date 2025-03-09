@@ -29,7 +29,7 @@ class BlackJackGameTest {
         FakeRule fakeRule = new FakeRule(shouldDealerDraw);
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck, fakeRule);
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
 
         assertThat(blackJackGame.drawMoreCard(dealer)).isEqualTo(expected);
         assertThat(dealer.getCards().getValues()).hasSize(expectedSize);
@@ -44,7 +44,7 @@ class BlackJackGameTest {
         Rule rule = new Rule();
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck, rule);
         User user = new User("pobi");
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         List<Player> players = List.of(dealer, user);
 
         blackJackGame.dealInitialCards(players);

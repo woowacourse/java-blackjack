@@ -4,8 +4,10 @@ import blackjack.model.card.Card;
 
 public class Dealer extends Player {
 
-    public Dealer(final String name) {
-        super(name, Role.DEALER);
+    private static final String DEALER_NAME = "딜러";
+
+    public Dealer() {
+        super(DEALER_NAME, Role.DEALER);
     }
 
     public Card getFirstCard() {
