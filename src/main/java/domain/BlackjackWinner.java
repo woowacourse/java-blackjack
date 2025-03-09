@@ -8,6 +8,9 @@ import java.util.Map;
 public class BlackjackWinner {
 
     private static final int BUST_STANDARD = 21;
+    private static final int WIN_WEIGHT = 1;
+    private static final int LOSE_WEIGHT = 1;
+    private static final int ELSE_WEIGHT = 0;
 
     private final DealerWinStatus dealerWinStatus;
     private final Map<String, WinStatus> playerWinStatuses;
@@ -44,22 +47,22 @@ public class BlackjackWinner {
 
     private int calculateDealerWin(int dealerSum, int playerSum) {
         if (dealerSum > playerSum && !isBust(dealerSum)) {
-            return 1;
+            return WIN_WEIGHT;
         }
         if (!isBust(dealerSum) && isBust(playerSum)) {
-            return 1;
+            return WIN_WEIGHT;
         }
-        return 0;
+        return ELSE_WEIGHT;
     }
 
     private int calculateDealerLose(int dealerSum, int playerSum) {
         if (dealerSum < playerSum && !isBust(playerSum)) {
-            return 1;
+            return LOSE_WEIGHT;
         }
         if (!isBust(playerSum) && isBust(dealerSum)) {
-            return 1;
+            return LOSE_WEIGHT;
         }
-        return 0;
+        return ELSE_WEIGHT;
     }
 
     private boolean isBust(int sum) {
