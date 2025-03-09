@@ -1,7 +1,6 @@
 package controller;
 
 import domain.GameBoard;
-import domain.participant.BattleResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -12,6 +11,8 @@ import dto.ParticipantResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -68,7 +69,11 @@ public class BlackJackController {
         List<BattleResultResponse> battleResultResponses = new ArrayList<>();
         for (Participant participant : participants) {
             String participantNickname = participant.getNickname();
-            Map<BattleResult, Integer> battleResult = participant.getBattleResult();
+            Map<String, Integer> battleResult = participant.getBattleResult().entrySet().stream()
+                    .collect(Collectors.toMap(
+                            entry -> entry.getKey().getName(),
+                            Entry::getValue
+                    ));
 
             BattleResultResponse battleResultResponse = new BattleResultResponse(participantNickname, battleResult);
             battleResultResponses.add(battleResultResponse);
@@ -78,7 +83,7 @@ public class BlackJackController {
     }
 
     private void printBlackJackScore(Dealer dealer, List<Player> players, GameBoard gameBoard) {
-        List<BlackJackResultResponse> blackJackResultResponses = getBlackJackResultResponses();
+        List<BlackJackResultResponse> blackJackResultResponses = new ArrayList<>();
 
         blackJackResultResponses.add(generateResultResponseOfDealer(dealer, gameBoard));
         for (Player player : players) {
@@ -107,11 +112,6 @@ public class BlackJackController {
                 .toList();
 
         return new BlackJackResultResponse(dealerNickname, dealerCardNames, gameBoard.getScoreOf(dealer));
-    }
-
-    private static List<BlackJackResultResponse> getBlackJackResultResponses() {
-        List<BlackJackResultResponse> blackJackResultResponses = new ArrayList<>();
-        return blackJackResultResponses;
     }
 
     private void startDealerTurn(Dealer dealer, GameBoard gameBoard) {
