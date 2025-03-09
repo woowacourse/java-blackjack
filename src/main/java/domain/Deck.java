@@ -1,14 +1,15 @@
 package domain;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
 public class Deck {
-    private final Stack<Card> deck = new Stack<>();
+    private final Deque<Card> deck = new ArrayDeque<>();
 
     public Deck(final List<Card> cards) {
         validateDuplicate(cards);
