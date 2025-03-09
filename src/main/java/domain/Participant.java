@@ -17,7 +17,7 @@ public abstract class Participant<T extends Participant<T>> {
     }
 
     public boolean checkExceedBurst() {
-        return cards.checkBurst();
+        return cards.isBurst();
     }
 
     public int getTotalNumberSum() {

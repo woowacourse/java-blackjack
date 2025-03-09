@@ -13,7 +13,7 @@ public class Dealer extends Participant<Dealer>{
         super(DEALER_DEFAULT_NAME, cards);
     }
 
-    public boolean checkDealerNeedsMoreCard() {
+    public boolean isDealerHittable() {
         return cards.calculateTotalCardNumber() <= DEALER_DRAW_LIMIT;
     }
 

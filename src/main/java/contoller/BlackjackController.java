@@ -68,7 +68,7 @@ public class BlackjackController {
 
     private void drawDealerCards() {
         Dealer dealer = gameManager.findDealer();
-        while (dealer.checkDealerNeedsMoreCard()) {
+        while (dealer.isDealerHittable()) {
             dealer = gameManager.drawCard(dealer);
             gameManager.editDealer(dealer);
             OutputView.printDealerDrawMessage();

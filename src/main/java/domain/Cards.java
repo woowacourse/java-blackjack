@@ -42,7 +42,7 @@ public class Cards {
         return new Cards(newCards);
     }
 
-    public boolean checkBurst() {
+    public boolean isBurst() {
         return calculateTotalCardNumber() > BLACKJACK_SCORE;
     }
 

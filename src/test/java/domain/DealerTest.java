@@ -23,8 +23,8 @@ public class DealerTest {
             new Cards(List.of(new Card(Symbol.CLOVER, Number.TWO), new Card(Symbol.HEART, Number.JACK))));
 
         assertAll(
-            () -> assertThat(exceedSixteenDealer.checkDealerNeedsMoreCard()).isFalse(),
-            () -> assertThat(notExceedSixteenDealer.checkDealerNeedsMoreCard()).isTrue()
+            () -> assertThat(exceedSixteenDealer.isDealerHittable()).isFalse(),
+            () -> assertThat(notExceedSixteenDealer.isDealerHittable()).isTrue()
         );
     }
 
@@ -95,8 +95,8 @@ public class DealerTest {
         Dealer exceedDealer = new Dealer(new Cards(otherCardList));
 
         assertAll(
-            () -> assertThat(notExceedDealer.checkDealerNeedsMoreCard()).isTrue(),
-            () -> assertThat(exceedDealer.checkDealerNeedsMoreCard()).isFalse()
+            () -> assertThat(notExceedDealer.isDealerHittable()).isTrue(),
+            () -> assertThat(exceedDealer.isDealerHittable()).isFalse()
         );
     }
 }
