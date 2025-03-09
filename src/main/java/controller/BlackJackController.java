@@ -25,18 +25,10 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    private GameBoard makeGameBoard(Dealer dealer, List<Player> players) {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
-
-        return new GameBoard(participants);
-    }
-
     public void run() {
         final Dealer dealer = Dealer.generate();
         final List<Player> players = getPlayers();
-        final GameBoard gameBoard = makeGameBoard(dealer, players);
+        final GameBoard gameBoard = GameBoard.generateOf(dealer, players);
 
         startBlackJack(dealer, players, gameBoard);
     }
