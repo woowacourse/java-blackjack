@@ -65,6 +65,7 @@ public class BlackjackController {
     private void processPlayerDecision(String name, GameManager gameManager) {
         while (gameManager.getScoreOf(name) < 21) {
             String answer = inputView.askReceive(name);
+            validateBinaryQuestion(answer);
             if (answer.equals("n")) {
                 outputView.printCardsByName(gameManager.getPlayerByName(name));
                 break;
@@ -72,5 +73,12 @@ public class BlackjackController {
             gameManager.passCardToPlayer(name);
             outputView.printCardsByName(gameManager.getPlayerByName(name));
         }
+    }
+
+    private void validateBinaryQuestion(String question) {
+        if (question.equals("y") || question.equals("n")) {
+            return ;
+        }
+        throw new IllegalArgumentException("유효하지 않은 입력입니다.");
     }
 }
