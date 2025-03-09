@@ -88,7 +88,7 @@ public class Blackjack {
         Map<String, MatchResult> participantNameAndMatchResult = computeParticipantsMatchResult();
         Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
         MatchResult.sortedValues().forEach(matchResult -> matchResultCount.put(matchResult, 0));
-        
+
         participantNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
                 matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
 
@@ -101,13 +101,13 @@ public class Blackjack {
         List<Participant> participants = getParticipants();
 
         for (Participant participant : participants) {
-            MatchResult matchResult = calculatePariticipantMatchResult(dealer, participant);
+            MatchResult matchResult = calculateParticipantMatchResult(dealer, participant);
             participantNameAndMatchResult.put(participant.getName(), matchResult);
         }
         return participantNameAndMatchResult;
     }
 
-    private MatchResult calculatePariticipantMatchResult(Dealer dealer, Participant participant) {
+    private MatchResult calculateParticipantMatchResult(Dealer dealer, Participant participant) {
         if (participant.getCards().isBurst() && dealer.getCards().isBurst() || participant.getCards().isBurst()) {
             return MatchResult.LOSE;
         }
