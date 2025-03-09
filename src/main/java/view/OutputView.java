@@ -4,7 +4,7 @@ import domain.Card;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import domain.constant.WinDrawLose;
+import domain.constant.GameResult;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -42,33 +42,33 @@ public class OutputView {
         }
     }
 
-    public void printGameResult(Map<Player, WinDrawLose> playerResults) {
+    public void printGameResult(Map<Player, GameResult> playerResults) {
         System.out.println();
         System.out.println("## 최종 승패");
         printDealerResult(playerResults);
         printPlayerResults(playerResults);
     }
 
-    private void printDealerResult(Map<Player, WinDrawLose> playerWinDrawLoseMap) {
-        Map<WinDrawLose, Integer> winDrawLoseCounts = getWinDrawLoseCounts();
-        for (WinDrawLose winDrawLose : playerWinDrawLoseMap.values()) {
-            winDrawLoseCounts.put(winDrawLose, winDrawLoseCounts.get(winDrawLose) + 1);
+    private void printDealerResult(Map<Player, GameResult> playerWinDrawLoseMap) {
+        Map<GameResult, Integer> winDrawLoseCounts = getWinDrawLoseCounts();
+        for (GameResult gameResult : playerWinDrawLoseMap.values()) {
+            winDrawLoseCounts.put(gameResult, winDrawLoseCounts.get(gameResult) + 1);
         }
-        System.out.println("딜러: " + formatDealerWin(winDrawLoseCounts.get(WinDrawLose.LOSE))
-                + formatDealerDraw(winDrawLoseCounts.get(WinDrawLose.DRAW))
-                + formatDealerLose(winDrawLoseCounts.get(WinDrawLose.WIN)));
+        System.out.println("딜러: " + formatDealerWin(winDrawLoseCounts.get(GameResult.LOSE))
+                + formatDealerDraw(winDrawLoseCounts.get(GameResult.DRAW))
+                + formatDealerLose(winDrawLoseCounts.get(GameResult.WIN)));
     }
 
-    private Map<WinDrawLose, Integer> getWinDrawLoseCounts() {
-        Map<WinDrawLose, Integer> winDrawLoseCounts = new EnumMap<>(WinDrawLose.class);
-        winDrawLoseCounts.put(WinDrawLose.WIN, 0);
-        winDrawLoseCounts.put(WinDrawLose.DRAW, 0);
-        winDrawLoseCounts.put(WinDrawLose.LOSE, 0);
+    private Map<GameResult, Integer> getWinDrawLoseCounts() {
+        Map<GameResult, Integer> winDrawLoseCounts = new EnumMap<>(GameResult.class);
+        winDrawLoseCounts.put(GameResult.WIN, 0);
+        winDrawLoseCounts.put(GameResult.DRAW, 0);
+        winDrawLoseCounts.put(GameResult.LOSE, 0);
         return winDrawLoseCounts;
     }
 
-    private void printPlayerResults(Map<Player, WinDrawLose> playerResults) {
-        for (Entry<Player, WinDrawLose> entry : playerResults.entrySet()) {
+    private void printPlayerResults(Map<Player, GameResult> playerResults) {
+        for (Entry<Player, GameResult> entry : playerResults.entrySet()) {
             System.out.println(entry.getKey().getNickname() + ": " + entry.getValue().getMessage());
         }
     }

@@ -1,6 +1,6 @@
 package domain;
 
-import domain.constant.WinDrawLose;
+import domain.constant.GameResult;
 import java.util.List;
 
 public class Player {
@@ -25,7 +25,7 @@ public class Player {
         return cards.sumCardNumbers();
     }
 
-    public WinDrawLose compareTo(int dealerScore) {
+    public GameResult compareTo(int dealerScore) {
         int sum = sumCardNumbers();
         if (sum > BUST_STANDARD || dealerScore > BUST_STANDARD) {
             return getWinDrawLoseWhenOverBustStandard(sum);
@@ -33,21 +33,21 @@ public class Player {
         return getWinDrawLose(dealerScore, sum);
     }
 
-    private WinDrawLose getWinDrawLoseWhenOverBustStandard(int sum) {
+    private GameResult getWinDrawLoseWhenOverBustStandard(int sum) {
         if (sum > BUST_STANDARD) {
-            return WinDrawLose.LOSE;
+            return GameResult.LOSE;
         }
-        return WinDrawLose.WIN;
+        return GameResult.WIN;
     }
 
-    private WinDrawLose getWinDrawLose(int dealerScore, int sum) {
+    private GameResult getWinDrawLose(int dealerScore, int sum) {
         if (sum == dealerScore) {
-            return WinDrawLose.DRAW;
+            return GameResult.DRAW;
         }
         if (sum > dealerScore) {
-            return WinDrawLose.WIN;
+            return GameResult.WIN;
         }
-        return WinDrawLose.LOSE;
+        return GameResult.LOSE;
     }
 
     public List<Card> openCards() {
