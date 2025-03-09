@@ -24,4 +24,8 @@ public class PlayerResult {
     public int getValue() {
         return value;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

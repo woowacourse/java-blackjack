@@ -33,16 +33,16 @@ public final class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardResult(Players players, Dealer dealer) {
+    public static void printCardResult(List<PlayerResult> playerResults, Dealer dealer) {
         System.out.println(Formatter.formatDealerCardResult(dealer));
 
-        for (Player player : players.getPlayers()) {
-            System.out.println(Formatter.formatPlayerCardResult(player));
+        for (PlayerResult playerResult : playerResults) {
+            System.out.println(Formatter.formatPlayerCardResult(playerResult));
         }
     }
 
     public static void printCardResult(Player player) {
-        System.out.println(Formatter.formatPlayerCardResult(player));
+        System.out.println(Formatter.formatPlayerCardStatus(player));
     }
 
     public static void printBustedPlayer(Player player) {

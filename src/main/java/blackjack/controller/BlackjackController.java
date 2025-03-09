@@ -4,6 +4,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.cardholder.Hand;
+import blackjack.domain.result.PlayerResult;
 import blackjack.manager.BlackJackInitManager;
 import blackjack.manager.BlackjackProcessManager;
 import blackjack.manager.GameRuleEvaluator;
@@ -83,7 +84,9 @@ public class BlackjackController {
 
     private void printCardResult(Players players, Dealer dealer) {
         blackjackProcessManager.calculateCardResult(players, dealer, gameRuleEvaluator);
-        OutputView.printCardResult(players, dealer);
+
+        List<PlayerResult> playerResults = blackjackProcessManager.getPlayersResult();
+        OutputView.printCardResult(playerResults, dealer);
     }
 
     private void printGameResult() {

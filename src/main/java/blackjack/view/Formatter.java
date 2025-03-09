@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.common.Constants;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
@@ -19,11 +18,10 @@ public final class Formatter {
     private Formatter() {
     }
 
-    public static String formatPlayerCardResult(Player player) {
-        String message = formatPlayerCardStatus(player) + " - 결과: ";
-        CardHolder cardHolder = player.getCardHolder();
+    public static String formatPlayerCardResult(PlayerResult playerResult) {
+        String message = formatPlayerCardStatus(playerResult.getPlayer()) + " - 결과: ";
 
-        return message + formatCardResultValue(cardHolder);
+        return message + formatCardResultValue(playerResult);
     }
 
     public static String formatPlayerCardStatus(Player player) {
@@ -34,6 +32,7 @@ public final class Formatter {
         return "딜러카드: " + Formatter.formatCard(dealer.revealFirstCard());
     }
 
+    // TODO: Dealer 의 결과를 저장하는 기능을 구현한 뒤에 수정하기
     public static String formatDealerCardResult(Dealer dealer) {
         CardHolder cardHolder = dealer.getCardHolder();
 
@@ -44,10 +43,22 @@ public final class Formatter {
         return "딜러카드: " + formatStartingCardStatus(dealer.getCardHolder());
     }
 
+    private static String formatCardResultValue(PlayerResult playerResult) {
+        int value = playerResult.getValue();
+
+        // TODO: 매직 넘버 없애기
+        if (value > 21) {
+            return "Busted!";
+        }
+
+        return java.lang.String.valueOf(value);
+    }
+
     private static String formatCardResultValue(CardHolder cardHolder) {
         int value = cardHolder.getOptimisticValue();
 
-        if (value == Constants.BUSTED_VALUE) {
+        // TODO: 매직 넘버 없애기
+        if (value > 21) {
             return "Busted!";
         }
 

@@ -105,5 +105,4 @@ public class BlackjackProcessManager {
     public Map<GameResultType, Integer> getDealerResult() {
         return dealerResult.getDealerResult();
     }
-
 }
