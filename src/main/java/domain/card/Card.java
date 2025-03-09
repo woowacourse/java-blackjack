@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-import static domain.Denomination.ACE;
+import static domain.card.Denomination.ACE;
 
 public class Card {
     private final Denomination denomination;

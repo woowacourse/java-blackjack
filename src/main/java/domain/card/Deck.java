@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,20 +19,20 @@ public class Deck {
         }
     }
 
-    private void createDeckCards(Suit suit, Denomination denomination) {
-        if (denomination.equals(Denomination.ACE)) {
-            deck.add(new Ace(suit));
-            return;
-        }
-        deck.add(new Card(denomination, suit));
-    }
-
     public void shuffle() {
         Collections.shuffle(deck);
     }
 
     public Card draw() {
         return deck.pop();
+    }
+
+    private void createDeckCards(Suit suit, Denomination denomination) {
+        if (denomination.equals(Denomination.ACE)) {
+            deck.add(new Ace(suit));
+            return;
+        }
+        deck.add(new Card(denomination, suit));
     }
 
     public List<Card> getDeck() {

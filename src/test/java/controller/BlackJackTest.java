@@ -2,12 +2,12 @@ package controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Ace;
-import domain.Card;
-import domain.Dealer;
-import domain.Denomination;
-import domain.Player;
-import domain.Suit;
+import domain.card.Ace;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.card.Denomination;
+import domain.participant.Player;
+import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

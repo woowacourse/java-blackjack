@@ -1,13 +1,15 @@
 package domain;
 
-import static domain.Denomination.ACE;
-import static domain.Denomination.JACK;
-import static domain.Denomination.THREE;
-import static domain.Denomination.TWO;
-import static domain.Suit.CLUB;
+import static domain.card.Denomination.ACE;
+import static domain.card.Denomination.JACK;
+import static domain.card.Denomination.THREE;
+import static domain.card.Denomination.TWO;
+import static domain.card.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Ace;
+import domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

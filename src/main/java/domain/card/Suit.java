@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum Suit {
     CLUB("클로버"),

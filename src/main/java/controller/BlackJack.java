@@ -5,10 +5,10 @@ import static view.InputView.getPlayerNamesInput;
 import static view.InputView.getYnInput;
 import static view.OutputView.*;
 
-import domain.Dealer;
-import domain.Deck;
-import domain.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,19 +18,14 @@ public class BlackJack {
     private static final String DELIMITER = ",";
     private static final String YES = "y";
     private static final String NO = "n";
-    private static final String MAX_PLAYER_EXCEPTION = "플레이어는 5명까지만 입력해주세요.";
-    private static final int MAX_PLAYER_SIZE = 5;
 
-    private final List<Player> players = new ArrayList<>();
     private final Dealer dealer = new Dealer();
-    private final Deck deck = new Deck();
 
     public void play() {
-        String playerNamesInput = getPlayerNamesInput();
-        enterPlayer(playerNamesInput);
-        distributeCards(deck);
+        Players players = enterPlayer();
+        prepareBlackJack(players);
         printDistributeResult(players, dealer);
-        playersTurn();
+        playersTurn(players);
 
         dealersTurn(dealer);
         printDealerExtraCardsCount(dealer);
@@ -38,17 +33,52 @@ public class BlackJack {
         printResult(players, dealer, computeWinLoss(players, dealer));
     }
 
+    private Players enterPlayer() {
+        String playerNamesInput = getPlayerNamesInput();
+        List<String> playerNames = Arrays.asList(playerNamesInput.split(DELIMITER));
+        return new Players(playerNames);
+    }
+
+    private void prepareBlackJack(Players players) {
+        dealer.shuffleDeck();
+        drawTwoCardFromDeck(dealer);
+        for (Player player : players.getPlayers()) {
+            drawTwoCardFromDeck(player);
+        }
+    }
+
     public void dealersTurn(Dealer dealer) {
         boolean isAlive = resolveBust(dealer);
         while (isAlive) {
             if (dealer.isBelowThreshold()) {
-                isAlive = drawOneMoreCard(dealer, new StringBuilder());
+                isAlive = drawAdditionalCard(dealer, new StringBuilder());
             }
             if (isAlive && !dealer.isBelowThreshold()) {
                 return;
             }
         }
         dealer.setHandTotalToZero();
+        printBust();
+    }
+
+    private void playersTurn(Players players) {
+        for (Player player : players.getPlayers()) {
+            askPlayersChoice(player);
+        }
+    }
+
+    private void askPlayersChoice(Player player) {
+        boolean isAlive = resolveBust(player);
+        while (isAlive) {
+            String ynInput = getYnInput(player);
+            if (ynInput.equalsIgnoreCase(YES)) {
+                isAlive = drawAdditionalCard(player, new StringBuilder());
+            }
+            if (ynInput.equalsIgnoreCase(NO)) {
+                return;
+            }
+        }
+        player.setHandTotalToZero();
         printBust();
     }
 
@@ -60,60 +90,16 @@ public class BlackJack {
         return !player.isHandBust();
     }
 
-    private void enterPlayer(String playersInput) {
-        List<String> playerNames = Arrays.asList(playersInput.split(DELIMITER));
-        validateMaxPlayer(playerNames);
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName.trim()));
-        }
+    private void drawTwoCardFromDeck(Player player) {
+        player.addCard(dealer.drawCard());
+        player.addCard(dealer.drawCard());
     }
 
-    private void playersTurn() {
-        for (Player player : players) {
-            askPlayersChoice(player);
-        }
-    }
-
-    private void askPlayersChoice(Player player) {
-        boolean isAlive = resolveBust(player);
-        while (isAlive) {
-            String ynInput = getYnInput(player); //
-            if (ynInput.equalsIgnoreCase(YES)) {
-                isAlive = drawOneMoreCard(player, new StringBuilder());
-            }
-            if (ynInput.equalsIgnoreCase(NO)) {
-                return;
-            }
-        }
-        player.setHandTotalToZero();
-        printBust();
-    }
-
-
-    private boolean drawOneMoreCard(Player player, StringBuilder stringBuilder) {
-        player.addCard(deck.draw());
+    private boolean drawAdditionalCard(Player player, StringBuilder stringBuilder) {
+        player.addCard(dealer.drawCard());
         if (player.getClass().equals(Player.class)) {
             printHandCardsNames(player, stringBuilder);
         }
         return resolveBust(player);
-    }
-
-    private void distributeCards(Deck deck) {
-        deck.shuffle();
-        drawTwoCardFromDeck(dealer, deck);
-        for (Player player : players) {
-            drawTwoCardFromDeck(player, deck);
-        }
-    }
-
-    private void validateMaxPlayer(List<String> playerNames) {
-        if (playerNames.size() > MAX_PLAYER_SIZE) {
-            throw new IllegalArgumentException(MAX_PLAYER_EXCEPTION);
-        }
-    }
-
-    private void drawTwoCardFromDeck(Player player, Deck deck) {
-        player.addCard(deck.draw());
-        player.addCard(deck.draw());
     }
 }

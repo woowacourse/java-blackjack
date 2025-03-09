@@ -1,7 +1,10 @@
-package domain;
+package domain.participant;
+
+import domain.card.Card;
+import domain.card.Hand;
 
 public class Player {
-    public static final int LOSS = -1;
+    private static final int LOSS = -1;
 
     private final String name;
     protected Hand hand;

@@ -1,7 +1,8 @@
 package controller.dto;
 
-import domain.Dealer;
-import domain.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 
 public record WinLossCountDto(
@@ -10,16 +11,17 @@ public record WinLossCountDto(
         long drawCount
 ) {
 
-    public static WinLossCountDto computeWinLoss(List<Player> players, Dealer dealer) {
-        long winCount = players.stream()
+    public static WinLossCountDto computeWinLoss(Players players, Dealer dealer) {
+        List<Player> allPlayers = players.getPlayers();
+        long winCount = allPlayers.stream()
                 .filter(player -> player.getHandTotal() < dealer.getHandTotal())
                 .count();
 
-        long drawCount = players.stream()
+        long drawCount = allPlayers.stream()
                 .filter(player -> player.getHandTotal() == dealer.getHandTotal())
                 .count();
 
-        long lossCount = players.stream()
+        long lossCount = allPlayers.stream()
                 .filter(player -> player.getHandTotal() > dealer.getHandTotal())
                 .count();
         return new WinLossCountDto(winCount, lossCount, drawCount);
