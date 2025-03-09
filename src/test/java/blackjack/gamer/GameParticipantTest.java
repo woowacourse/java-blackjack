@@ -13,12 +13,12 @@ class GameParticipantTest {
     void canDrawCard() {
         // given
         GameParticipant player = GameParticipantFixture.createPlayer("강산");
-        int initialCardCount = player.getCards().size();
+        int initialCardCount = player.getHand().size();
 
         // when
         player.drawCard(CardFixture.createCard());
 
         // then
-        assertThat(player.getCards().size() - initialCardCount).isEqualTo(1);
+        assertThat(player.getHand().size() - initialCardCount).isEqualTo(1);
     }
 }

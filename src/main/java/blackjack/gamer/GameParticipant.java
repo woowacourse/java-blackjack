@@ -1,27 +1,40 @@
 package blackjack.gamer;
 
+import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public abstract class GameParticipant {
 
-    private final Cards cards;
+    protected final Cards hand;
+    private final Nickname nickname;
 
-    protected GameParticipant(Cards cards) {
-        this.cards = cards;
+    protected GameParticipant(Nickname nickname, Cards hand) {
+        this.nickname = nickname;
+        this.hand = hand;
     }
 
     public void drawCard(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public int calculateSumOfCards() {
-        return cards.calculateSum();
+        return hand.calculateSum();
     }
+
+    public boolean isBust() {
+        return GameRule.isBust(hand.calculateSum());
+    }
+
+    public abstract Cards showHand();
 
     public abstract boolean shouldHit();
 
-    public Cards getCards() {
-        return cards;
+    public Nickname getNickname() {
+        return nickname;
+    }
+
+    public Cards getHand() {
+        return hand;
     }
 }

@@ -18,7 +18,7 @@ public class Player extends GameParticipant {
     }
 
     @Override
-    public Cards showCards() {
+    public Cards showHand() {
         return hand;
     }
 

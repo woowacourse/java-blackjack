@@ -57,7 +57,7 @@ class PlayerTest {
         }
 
         // when
-        Cards cards = player.showCards();
+        Cards cards = player.showHand();
 
         // then
         assertThat(cards.size()).isEqualTo(GameRule.INITIAL_DEALING_CARD_COUNT.getValue());

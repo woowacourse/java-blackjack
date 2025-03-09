@@ -11,8 +11,8 @@ public class ConstantFixture {
         return getConstantIntValue(CardMachine.class, "MIN_CARD_DECK_COUNT", purpose);
     }
 
-    public static int getInitialDealingCardCount(String purpose) {
-        return getConstantIntValue(Dealer.class, "INITIAL_DEALING_CARD_COUNT", purpose);
+    public static int getDealerHitThresholdPoint(String purpose) {
+        return getConstantIntValue(Dealer.class, "DEALER_HIT_THRESHOLD_POINT", purpose);
     }
 
     private static void validate(String purpose) {

@@ -1,6 +1,6 @@
 package blackjack.gamer;
 
-import blackjack.ConstantFixture;
+import blackjack.domain.GameRule;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
@@ -8,10 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DealerTest {
 
@@ -24,7 +21,7 @@ class DealerTest {
 
         // when
         // then
-        assertThat(dealer.getCards().size()).isEqualTo(0);
+        assertThat(dealer.getHand().size()).isEqualTo(0);
     }
 
     @ParameterizedTest
@@ -49,28 +46,18 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 플레이어와 자신에게 초기 카드 딜링을 통해서 카드를 {초기 카드 개수}장씩 나눠줄 수 있다")
-    void canDealInitialCard() {
+    @DisplayName("딜러는 초기에 카드를 보여줄 때, 한 장만 보여준다.")
+    void whenAfterInitialDealingShouldShowFirstCard() {
         // given
-        int initialDealingCardCount = ConstantFixture.getInitialDealingCardCount("테스트 전용");
-
         Dealer dealer = GameParticipantFixture.createDealer();
-        List<Player> players = List.of(
-                GameParticipantFixture.createPlayer("강산"),
-                GameParticipantFixture.createPlayer("재중"),
-                GameParticipantFixture.createPlayer("파프"));
+        for (int i = 0; i < GameRule.INITIAL_DEALING_CARD_COUNT.getValue(); i++) {
+            dealer.drawCard(CardFixture.createCard());
+        }
 
         // when
-        dealer.dealInitialCards(players);
+        Cards cards = dealer.showHand();
 
         // then
-        assertAll(
-                () -> {
-                    players.forEach(player ->
-                            assertThat(player.getCards().size()).isEqualTo(initialDealingCardCount));
-
-                    assertThat(dealer.getCards().size()).isEqualTo(initialDealingCardCount);
-                }
-        );
+        assertThat(cards.size()).isEqualTo(1);
     }
 }
