@@ -43,7 +43,14 @@ public class CardDeck {
     }
 
     public Card drawCard() {
+        validateEmptyCardDeck();
         return deck.removeLast();
+    }
+
+    private void validateEmptyCardDeck() {
+        if (deck.isEmpty()) {
+            throw new IllegalArgumentException("카드 덱이 비었습니다.");
+        }
     }
 
     public List<Card> getDeck() {
