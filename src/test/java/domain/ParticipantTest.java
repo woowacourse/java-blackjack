@@ -16,7 +16,7 @@ class ParticipantTest {
 	@DisplayName("참가자 카드 뽑기")
 	class PickCard {
 
-		@DisplayName("참가자는 덱으로부터, 올바르게 카드를 뽑는다.")
+		@DisplayName("참가자는 주어진 덱으로부터, 카드를 1장 뽑는다.")
 		@Test
 		public void pickCard() {
 			// given

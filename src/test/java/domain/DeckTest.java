@@ -34,7 +34,7 @@ public class DeckTest {
 	@Nested
 	@DisplayName("카드를 순서대로 뽑는다.")
 	class pickCard {
-		@DisplayName("카드를 올바르게 뽑아온다.")
+		@DisplayName("카드를 첫 번째부터 차례대로 뽑아서 반환한다.")
 		@Test
 		public void pickCard() {
 			// given
@@ -51,7 +51,7 @@ public class DeckTest {
 		}
 	}
 
-	@DisplayName("카드를 모두뽑았다면, 예외가 발생한다.")
+	@DisplayName("덱에 카드가 존재하지 않을 때, 카드를 뽑는다면 예외가 발생한다.")
 	@Test
 	public void pickCardEmpty() {
 		// given

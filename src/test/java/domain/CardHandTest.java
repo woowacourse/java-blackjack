@@ -20,7 +20,7 @@ class CardHandTest {
 
 		@ParameterizedTest
 		@MethodSource("getCardList")
-		@DisplayName("모든 Card의 점수 합을 올바르게 계산한다.")
+		@DisplayName("주어진 모든 Card 점수 합을 계산하여 반환한다.")
 		void test_calculateAllScore(List<Card> cards, int expected) {
 			//given
 			var cardHand = new CardHand(cards);

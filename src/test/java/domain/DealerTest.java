@@ -17,7 +17,7 @@ public class DealerTest {
 	@DisplayName("딜러가 카드를 받아야 하는지 여부를 반환한다.")
 	class IsPickCard {
 
-		@DisplayName("16점 이하라면, 딜러가 카드를 뽑는 여부를 올바르게 반환한다.")
+		@DisplayName("16점 이하라면, 딜러가 카드를 뽑을 수 있는지에 대한 여부가 true이다.")
 		@Test
 		public void isPickCard() {
 			// given
@@ -30,7 +30,7 @@ public class DealerTest {
 			assertThat(actual).isTrue();
 		}
 
-		@DisplayName("16점 초과라면, 딜러가 카드를 뽑는 여부를 올바르게 반환한다.")
+		@DisplayName("딜러의 현재 점수 합이 16점 초과라면, 딜러가 카드를 뽑을 수 있는지에 대한 여부가 false이다.")
 		@Test
 		public void isPickCard1() {
 			// given
@@ -51,7 +51,7 @@ public class DealerTest {
 	@DisplayName("딜러는 플레이어와 대결한다.")
 	class StartDuel {
 
-		@DisplayName("딜러는 플레이와의 대결 결과를 올바르게, 기록한다.")
+		@DisplayName("딜러가 1승 1패라면 1승, 1패를 기록한다.")
 		@Test
 		void startDuel() {
 			// given

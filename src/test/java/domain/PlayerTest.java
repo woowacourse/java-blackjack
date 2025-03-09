@@ -21,7 +21,7 @@ public class PlayerTest {
 	@DisplayName("플레아어가 카드를 뽑을지 여부를 반환한다.")
 	class isPickCard {
 
-		@DisplayName("플레이어가 카드를 뽑을지 여부를 올바르게 반환한다.")
+		@DisplayName("점수가 21점 이하라면, 카드를 뽑을 수 있는지 여부로 true를 반환하고 초과라면, true를 반환한다.")
 		@ParameterizedTest
 		@MethodSource("providePlayerHand")
 		public void isPickCard(final List<Card> cards, final boolean expected) {
@@ -54,7 +54,7 @@ public class PlayerTest {
 	@DisplayName("결투를 진행한다.")
 	class Duel {
 
-		@DisplayName("올바르게 승자를 가려낸다.")
+		@DisplayName("21점 이하면서, 딜러보다 더 21점에 가깝다면 우승으로 기록하고, 동점 혹은 더 멀다면 패배로 기록한다.")
 		@Test
 		public void duel() {
 			// given
@@ -82,7 +82,7 @@ public class PlayerTest {
 			assertThat(loser.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
 		}
 
-		@DisplayName("21점이 넘는다면, 상대방이 승리한다.")
+		@DisplayName("player의 현재 점수가 21점이 넘는다면, 상대방이 승리한다.")
 		@Test
 		public void duelOverThan() {
 			// given
