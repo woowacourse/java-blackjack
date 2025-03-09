@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,40 +10,47 @@ public class GameManager {
     private static final int DEFAULT_DRAW_SIZE = 1;
 
     private final CardProvider provider;
-    private Players players;
-    private Dealer dealer;
+    private final Participants participants;
 
     public GameManager(List<String> playerNames, CardProvider provider) {
         this.provider = provider;
-        List<Player> playerList = playerNames.stream()
-            .map(ParticipantName::new)
-            .map(name -> new Player(name, new Cards(this.provider.provideCards(INITIAL_DRAW_SIZE))))
-            .toList();
-        this.players = new Players(playerList);
-        this.dealer = new Dealer(new Cards(this.provider.provideCards(INITIAL_DRAW_SIZE)));
+        this.participants = createParticipants(playerNames);
     }
 
-    public Dealer findDealer() {
-        return dealer;
+    private Participants createParticipants(List<String> playerNames) {
+        Participants initialParticipants = new Participants(new ArrayList<>());
+        addPlayers(playerNames, initialParticipants);
+        addDealer(initialParticipants);
+        return initialParticipants;
     }
 
-    public List<Player> findAllPlayers() {
-        return players.findAllPlayers();
+    private void addPlayers(List<String> playerNames, Participants initialParticipants) {
+        playerNames.stream()
+                .map(ParticipantName::new)
+                .forEach(name -> {
+                    Player player = new Player(name, new Cards(provider.provideCards(INITIAL_DRAW_SIZE)));
+                    initialParticipants.add(player);
+                });
     }
 
-    public Participant<?> drawCard(Participant<?> participant) {
-        if (participant instanceof Player player) {
-            Player newPlayer = player.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
-            players = players.editPlayer(player, newPlayer);
-            return newPlayer;
-        }
-
-        Dealer newDealer = (Dealer) participant;
-        dealer = newDealer.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
-        return dealer;
+    private void addDealer(Participants initialParticipants) {
+        Dealer dealer = new Dealer(new Cards(provider.provideCards(INITIAL_DRAW_SIZE)));
+        initialParticipants.add(dealer);
     }
 
-    public Map<Player, ResultStatus> findGameResult() {
-        return ResultStatus.judgeGameResult(players, dealer);
+    public Participant findDealer() {
+        return participants.findDealer();
+    }
+
+    public List<Participant> findPlayers() {
+        return participants.findPlayers();
+    }
+
+    public void drawCard(Participant participant) {
+        participant.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
+    }
+
+    public Map<Participant, ResultStatus> findGameResult() {
+        return ResultStatus.judgeGameResult(participants);
     }
 }

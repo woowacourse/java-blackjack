@@ -1,9 +1,8 @@
 package contoller;
 
-import domain.Dealer;
 import domain.Deck;
 import domain.GameManager;
-import domain.Player;
+import domain.Participant;
 import domain.ResultStatus;
 import view.InputView;
 import view.OutputView;
@@ -25,26 +24,26 @@ public class BlackjackController {
 
     private void readyGame() {
         List<String> playerNames = InputView.readPlayerNames();
-        this.gameManager = new GameManager(playerNames, new Deck());
+        gameManager = new GameManager(playerNames, new Deck());
 
-        Dealer dealer = gameManager.findDealer();
-        List<Player> allPlayers = gameManager.findAllPlayers();
-        OutputView.printInitialParticipant(dealer, allPlayers);
+        Participant dealer = gameManager.findDealer();
+        List<Participant> players = gameManager.findPlayers();
+        OutputView.printInitialParticipant(dealer, players);
     }
 
     private void drawPlayersCards() {
-        List<Player> allPlayers = gameManager.findAllPlayers();
-        for (Player player : allPlayers) {
+        List<Participant> players = gameManager.findPlayers();
+        for (Participant player : players) {
             drawCard(player);
         }
     }
 
-    private void drawCard(Player player) {
+    private void drawCard(Participant player) {
         boolean answer;
         boolean isFirstTurn = true;
         do {
             answer = InputView.askForOneMoreCard(player);
-            player = drawAndCreateNewPlayer(player, answer);
+            drawCardIfAnswerIsYes(player, answer);
 
             printCardsIfFirstTurn(player, isFirstTurn);
 
@@ -52,35 +51,34 @@ public class BlackjackController {
         } while (!player.isBurst() && answer);
     }
 
-    private Player drawAndCreateNewPlayer(Player player, boolean answer) {
+    private void drawCardIfAnswerIsYes(Participant player, boolean answer) {
         if (answer) {
-            player = (Player) gameManager.drawCard(player);
+            gameManager.drawCard(player);
         }
-        return player;
     }
 
-    private static void printCardsIfFirstTurn(Player player, boolean isFirstTurn) {
+    private static void printCardsIfFirstTurn(Participant player, boolean isFirstTurn) {
         if (isFirstTurn) {
             OutputView.printPlayerCard(player);
         }
     }
 
     private void drawDealerCards() {
-        Dealer dealer = gameManager.findDealer();
+        Participant dealer = gameManager.findDealer();
         while (dealer.shouldHit()) {
-            dealer = (Dealer) gameManager.drawCard(dealer);
+            gameManager.drawCard(dealer);
             OutputView.printDealerDrawMessage();
         }
     }
 
     private void printParticipantsCards() {
-        Dealer dealer = gameManager.findDealer();
-        List<Player> allPlayers = gameManager.findAllPlayers();
-        OutputView.printFinalParticipant(dealer, allPlayers);
+        Participant dealer = gameManager.findDealer();
+        List<Participant> players = gameManager.findPlayers();
+        OutputView.printFinalParticipant(dealer, players);
     }
 
     private void printGameResult() {
-        Map<Player, ResultStatus> result = gameManager.findGameResult();
+        Map<Participant, ResultStatus> result = gameManager.findGameResult();
         OutputView.printGameResult(result);
     }
 }

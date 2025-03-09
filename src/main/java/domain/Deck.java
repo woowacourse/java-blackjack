@@ -20,7 +20,7 @@ public class Deck implements CardProvider {
         deck.addAll(temp);
     }
 
-    private static void addAllRanks(Suit suit, List<Card> temp) {
+    private void addAllRanks(Suit suit, List<Card> temp) {
         for (Rank rank : Rank.getAllRanks()) {
             temp.add(new Card(suit, rank));
         }

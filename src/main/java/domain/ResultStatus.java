@@ -14,17 +14,17 @@ public enum ResultStatus {
         this.status = status;
     }
 
-    public static Map<Player, ResultStatus> judgeGameResult(Players players, Dealer dealer) {
-        Map<Player, ResultStatus> result = new HashMap<>();
+    public static Map<Participant, ResultStatus> judgeGameResult(Participants participants) {
+        Map<Participant, ResultStatus> result = new HashMap<>();
 
-        Map<Player, Integer> totalRankSumByPlayer = players.getTotalRankSumByPlayer();
-        for (Player player : totalRankSumByPlayer.keySet()) {
-            judgeGameResultByPlayer(dealer, player, result);
+        Map<Participant, Integer> totalRankSumByPlayer = participants.getTotalRankSumByPlayer();
+        for (Participant player : totalRankSumByPlayer.keySet()) {
+            judgeGameResultByPlayer(participants.findDealer(), player, result);
         }
         return result;
     }
 
-    private static void judgeGameResultByPlayer(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
+    private static void judgeGameResultByPlayer(Participant dealer, Participant player, Map<Participant, ResultStatus> result) {
         if (player.isBurst()) {
             result.put(player, ResultStatus.LOSE);
             return;
@@ -36,7 +36,7 @@ public enum ResultStatus {
         compareDifference(dealer, player, result);
     }
 
-    private static void compareDifference(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
+    private static void compareDifference(Participant dealer, Participant player, Map<Participant, ResultStatus> result) {
         int dealerAbs = dealer.calculateDifferenceFromBlackjackScore();
         int playerAbs = player.calculateDifferenceFromBlackjackScore();
         if (playerAbs > dealerAbs) {

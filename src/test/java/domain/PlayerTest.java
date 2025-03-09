@@ -15,42 +15,64 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class PlayerTest {
 
     @Test
-    void 플레이어가_카드를_뽑는다() {
-        Player player = new Player(new ParticipantName("drago"), new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK))));
-        Card drawCard = new Card(Suit.HEART, Rank.FOUR);
-        List<Card> providedCards = List.of(drawCard);
+    void 플레이어가_카드를_뽑으면_가지고있는_카드리스트에_추가된다() {
+        ParticipantName participantName = new ParticipantName("duei");
+        Cards cards = new Cards(
+                List.of(new Card(Suit.HEART, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.NINE))
+        );
+        Participant player = new Player(participantName, cards);
+        player.drawCard(List.of(new Card(Suit.CLOVER, Rank.TWO)));
 
-        Player newPlayer = player.drawCard(providedCards);
-        Player expectedPlayer = new Player(new ParticipantName("drago"), new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.CLOVER, Rank.JACK), drawCard)));
-        assertThat(newPlayer).isEqualTo(expectedPlayer);
+        List<Card> expected = List.of(new Card(Suit.HEART, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.NINE),
+                new Card(Suit.CLOVER, Rank.TWO));
+
+        assertThat(player.getCards()).isEqualTo(expected);
     }
 
     @Test
     void 플레이어가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
-        Player drago = new Player(new ParticipantName("drago"), new Cards(
+        ParticipantName participantName = new ParticipantName("duei");
+        Cards exceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
-                        new Card(Suit.HEART, Rank.FOUR))));
+                        new Card(Suit.HEART, Rank.FOUR)));
+        Participant exceedPlayer = new Player(participantName, exceedBlackjackScoreCards);
 
-        Player duei = new Player(new ParticipantName("duei"), new Cards(
+        Cards notExceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.JACK))));
+                        new Card(Suit.DIAMOND, Rank.JACK)));
+        Participant notExceedPlayer = new Player(participantName, notExceedBlackjackScoreCards);
 
         assertAll(
-                () -> assertThat(drago.isBurst()).isTrue(),
-                () -> assertThat(duei.isBurst()).isFalse()
+                () -> assertThat(exceedPlayer.isBurst()).isTrue(),
+                () -> assertThat(notExceedPlayer.isBurst()).isFalse()
         );
     }
 
     @Test
-    void 플레이어의_이름과_카드리스트의_총합을_반환한다() {
-        Player player = new Player(new ParticipantName("drago"), new Cards(
+    void 플레이어가_가진_카드리스트의_총합을_반환한다() {
+        ParticipantName participantName = new ParticipantName("duei");
+        Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
-                        new Card(Suit.HEART, Rank.FOUR))));
+                        new Card(Suit.HEART, Rank.FOUR)));
+        Participant player = new Player(participantName, cards);
 
         assertThat(player.getTotalRankSum()).isEqualTo(22);
+    }
+
+    @Test
+    void 플레이어는_초기카드리스트를_두장_반환한다() {
+        ParticipantName participantName = new ParticipantName("duei");
+        Cards cards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK)));
+        Participant player = new Player(participantName, cards);
+
+        List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK));
+
+        assertThat(player.getInitialCards()).isEqualTo(expected);
     }
 }

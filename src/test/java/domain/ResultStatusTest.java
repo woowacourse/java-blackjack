@@ -16,74 +16,78 @@ public class ResultStatusTest {
 
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하면_플레이어는_패배한다() {
-        Player player = new Player(new ParticipantName("drago"), new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.CLOVER, Rank.JACK),
-                new Card(Suit.HEART, Rank.TWO))));
-        Players players = new Players(List.of(player));
+        Participant player = new Player(new ParticipantName("drago"), new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.CLOVER, Rank.JACK),
+                        new Card(Suit.HEART, Rank.TWO))));
 
-        Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.HEART, Rank.JACK),
-                new Card(Suit.SPADE, Rank.ACE))));
+        Participant dealer = new Dealer(new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.HEART, Rank.JACK),
+                        new Card(Suit.SPADE, Rank.ACE))));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.LOSE);
+        Participants participants = new Participants(List.of(player, dealer));
 
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        Map<Participant, ResultStatus> result = Map.of(player, ResultStatus.LOSE);
+
+        assertThat(ResultStatus.judgeGameResult(participants)).isEqualTo(result);
     }
 
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하지않고_딜러숫자의합이_21을_초과하면_플레이어는_승리한다() {
-        Player player = new Player(new ParticipantName("drago"), new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.CLOVER, Rank.NINE),
-                new Card(Suit.HEART, Rank.TWO))));
-        Players players = new Players(List.of(player));
+        Participant player = new Player(new ParticipantName("drago"), new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.CLOVER, Rank.NINE),
+                        new Card(Suit.HEART, Rank.TWO))));
 
-        Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.HEART, Rank.JACK),
-                new Card(Suit.SPADE, Rank.TWO))));
+        Participant dealer = new Dealer(new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.HEART, Rank.JACK),
+                        new Card(Suit.SPADE, Rank.TWO))));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.WIN);
+        Participants participants = new Participants(List.of(player, dealer));
 
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        Map<Participant, ResultStatus> result = Map.of(player, ResultStatus.WIN);
+
+        assertThat(ResultStatus.judgeGameResult(participants)).isEqualTo(result);
     }
 
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않는경우_21에가까운_플레이어가_승리한다() {
-        Player player = new Player(new ParticipantName("drago"), new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.CLOVER, Rank.NINE),
-                new Card(Suit.HEART, Rank.TWO))));
-        Players players = new Players(List.of(player));
+        Participant player = new Player(new ParticipantName("drago"), new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.CLOVER, Rank.NINE),
+                        new Card(Suit.HEART, Rank.TWO))));
 
-        Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.HEART, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.TWO))));
+        Participant dealer = new Dealer(new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.HEART, Rank.EIGHT),
+                        new Card(Suit.SPADE, Rank.TWO))));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.WIN);
+        Participants participants = new Participants(List.of(player, dealer));
 
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        Map<Participant, ResultStatus> result = Map.of(player, ResultStatus.WIN);
+
+        assertThat(ResultStatus.judgeGameResult(participants)).isEqualTo(result);
     }
 
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않고_동일하면_무승부이다() {
-        Player player = new Player(new ParticipantName("drago"), new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.CLOVER, Rank.NINE),
-                new Card(Suit.HEART, Rank.TWO))));
-        Players players = new Players(List.of(player));
+        Participant player = new Player(new ParticipantName("drago"), new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.CLOVER, Rank.NINE),
+                        new Card(Suit.HEART, Rank.TWO))));
 
-        Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.HEART, Rank.NINE),
-                new Card(Suit.SPADE, Rank.TWO))));
+        Participant dealer = new Dealer(new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.HEART, Rank.NINE),
+                        new Card(Suit.SPADE, Rank.TWO))));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.PUSH);
+        Participants participants = new Participants(List.of(player, dealer));
 
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        Map<Participant, ResultStatus> result = Map.of(player, ResultStatus.PUSH);
+
+        assertThat(ResultStatus.judgeGameResult(participants)).isEqualTo(result);
     }
 
     @Test

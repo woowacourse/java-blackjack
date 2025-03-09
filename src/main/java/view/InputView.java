@@ -1,6 +1,6 @@
 package view;
 
-import domain.Player;
+import domain.Participant;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,11 +18,11 @@ public class InputView {
         InputValidator.validateNameFormat(input);
         String[] split = input.split(",");
         return Arrays.stream(split)
-            .toList();
+                .toList();
     }
 
-    public static boolean askForOneMoreCard(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
+    public static boolean askForOneMoreCard(Participant player) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getParticipantName());
         String input = scanner.nextLine();
         return Answer.selectAnswer(input);
     }

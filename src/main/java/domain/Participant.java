@@ -1,8 +1,9 @@
 package domain;
 
 import java.util.List;
+import java.util.Objects;
 
-public abstract class Participant<T extends Participant<T>> {
+public abstract class Participant {
 
     protected ParticipantName participantName;
     protected Cards cards;
@@ -12,8 +13,12 @@ public abstract class Participant<T extends Participant<T>> {
         this.cards = cards;
     }
 
-    public T drawCard(List<Card> providedCards) {
-        return createParticipant(providedCards);
+    public boolean isDealer() {
+        return participantName.getName().equals(Dealer.DEALER_DEFAULT_NAME);
+    }
+
+    public void drawCard(List<Card> providedCards) {
+        cards = cards.addCards(providedCards);
     }
 
     public boolean isBurst() {
@@ -24,17 +29,33 @@ public abstract class Participant<T extends Participant<T>> {
         return cards.calculateTotalRank();
     }
 
-    protected abstract T createParticipant(List<Card> cards);
+    public boolean shouldHit() {
+        return false;
+    }
+
+    public abstract List<Card> getInitialCards();
 
     public int calculateDifferenceFromBlackjackScore() {
         return cards.calculateDifferenceFromBlackjackScore();
     }
 
-    public String getName() {
+    public String getParticipantName() {
         return participantName.getName();
     }
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Participant that = (Participant) object;
+        return Objects.equals(participantName, that.participantName) && Objects.equals(cards, that.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(participantName, cards);
     }
 }
