@@ -1,13 +1,16 @@
 package domain;
 
+import domain.except.BlackJackStateException;
 import except.BlackJackException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackParticipants<T extends BlackjackParticipant> {
 
     private static final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
+    private static final String INVALID_HANDS_STATE = "아직 카드를 받지 않은 참여자입니다.";
 
     private final List<T> players;
     private final Dealer dealer;
@@ -31,11 +34,22 @@ public class BlackjackParticipants<T extends BlackjackParticipant> {
     }
 
     public List<TrumpCard> playerCards(String name) {
-        return findPlayer(name).trumpCards();
+        return Collections.unmodifiableList(findPlayer(name).trumpCards());
     }
 
     public List<TrumpCard> dealerCards() {
-        return dealer.trumpCards();
+        return Collections.unmodifiableList(dealer.trumpCards());
+    }
+
+    private void validateEmptyCards(List<TrumpCard> trumpCards) {
+        if (trumpCards.isEmpty()) {
+            throw new BlackJackStateException(INVALID_HANDS_STATE);
+        }
+    }
+
+    public TrumpCard firstDealerCards() {
+        validateEmptyCards(dealerCards());
+        return dealer.trumpCards().get(0);
     }
 
     public int calculateCardSum(String name) {

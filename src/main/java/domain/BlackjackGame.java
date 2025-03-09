@@ -1,6 +1,5 @@
 package domain;
 
-import domain.except.BlackJackStateException;
 import except.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +14,6 @@ public class BlackjackGame {
     private static final int MAX_PEOPLE_WITHOUT_DEALER = 7;
     private static final String DUPLIACTE_NAME = "중복된 이름이 존재합니다.";
     private static final String INVALID_BLACKJACK_PLAYER_SIZE = "블랙잭은 1-7명만 이용하실 수 있습니다";
-    private static final String INVALID_DEALER_STATE = "아직 딜러가 카드를 뽑지 않았어요!";
 
     private final BlackjackParticipants<Player> blackjackParticipants;
     private final BlackjackDeck deck;
@@ -73,19 +71,7 @@ public class BlackjackGame {
     }
 
     public TrumpCard dealerCardFirst() {
-        List<TrumpCard> trumpCards = dealerCards();
-        validateDealerCards(trumpCards);
-        return dealerCards().get(0);
-    }
-
-    private void validateDealerCards(List<TrumpCard> trumpCards) {
-        if (trumpCards.isEmpty()) {
-            throw new BlackJackStateException(INVALID_DEALER_STATE);
-        }
-    }
-
-    public List<TrumpCard> dealerCards() {
-        return Collections.unmodifiableList(blackjackParticipants.dealerCards());
+        return blackjackParticipants.firstDealerCards();
     }
 
     public String dealerName() {
