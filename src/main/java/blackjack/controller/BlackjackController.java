@@ -26,8 +26,7 @@ public class BlackjackController {
 
         handleCardDistributionError(() -> {
             distributeInitialCards(blackjackGame);
-            distributeAdditionalCardsToPlayers(blackjackGame);
-            distributeAdditionalCardsToDealer(blackjackGame);
+            distributeAdditionalCards(blackjackGame);
         }, blackjackGame);
 
         showFinalCards(blackjackGame);
@@ -49,23 +48,24 @@ public class BlackjackController {
         }
     }
 
-    private void distributeAdditionalCardsToPlayers(final BlackjackGame blackjackGame) {
+    private void distributeAdditionalCards(final BlackjackGame blackjackGame) {
         for (Player player : blackjackGame.findPlayers()) {
-            distributeAdditionalCardsToPlayer(blackjackGame, player);
+            handleExtraCardError(() -> distributeAdditionalCardsToPlayer(blackjackGame, player));
         }
+        distributeAdditionalCardsToDealer(blackjackGame);
     }
 
-    private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame,
-        final Player player) {
-        while (player.isPossibleToAdd() &&
-            inputView.readGetOneMore(player.getName())) {
+    private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame, final Player player) {
+        while (inputView.readGetOneMore(player.getName())) {
             blackjackGame.addExtraCard(player);
             outputView.printPlayerCardResult(player.getName(), player.openCards());
         }
     }
 
     private void distributeAdditionalCardsToDealer(final BlackjackGame blackjackGame) {
-        while (blackjackGame.addExtraCardToDealer()) {
+        Dealer dealer = blackjackGame.findDealer();
+        while (dealer.isPossibleToAdd()) {
+            blackjackGame.addExtraCard(dealer);
             outputView.printAddExtraCardToDealer();
         }
     }
@@ -105,6 +105,14 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
             showFinalCards(blackjackGame);
+        }
+    }
+
+    private void handleExtraCardError(final Runnable action) {
+        try {
+            action.run();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
         }
     }
 }

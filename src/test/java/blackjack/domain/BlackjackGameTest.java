@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.user.Dealer;
@@ -75,8 +76,9 @@ class BlackjackGameTest {
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
             List<Participant> participants = List.of(dealer);
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
+            game.addExtraCard(dealer);
 
-            assertThat(game.addExtraCardToDealer()).isTrue();
+            assertThat(dealer.openCards()).hasSize(3);
         }
 
         @Test
@@ -93,7 +95,9 @@ class BlackjackGameTest {
             List<Participant> participants = List.of(dealer);
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
-            assertThat(game.addExtraCardToDealer()).isFalse();
+            assertThatThrownBy(() -> game.addExtraCard(dealer))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("더 이상 카드를 추가할 수 없습니다.");
         }
     }
 

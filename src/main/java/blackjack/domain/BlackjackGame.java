@@ -45,15 +45,6 @@ public class BlackjackGame {
         participant.addCards(card);
     }
 
-    public boolean addExtraCardToDealer() {
-        Dealer dealer = findDealer();
-        if (dealer.isPossibleToAdd()) {
-            addExtraCard(dealer);
-            return true;
-        }
-        return false;
-    }
-
     public Dealer findDealer() {
         return participants.stream()
             .filter(participant -> participant instanceof Dealer)

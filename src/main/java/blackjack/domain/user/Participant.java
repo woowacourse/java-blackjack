@@ -19,6 +19,9 @@ public abstract class Participant {
     }
 
     public void addCards(final Card... cards) {
+        if(!isPossibleToAdd()) {
+            throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
+        }
         this.cards.addAll(Arrays.asList(cards));
     }
 

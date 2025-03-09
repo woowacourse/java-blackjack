@@ -26,7 +26,7 @@ public class ParticipantTest {
 
             @Override
             public boolean isPossibleToAdd() {
-                return false;
+                return true;
             }
         };
     }

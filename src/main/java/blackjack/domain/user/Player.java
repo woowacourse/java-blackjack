@@ -10,6 +10,7 @@ public class Player extends Participant {
     private final PlayerName playerName;
 
     public Player(final String name) {
+        super();
         this.playerName = new PlayerName(name);
     }
 
