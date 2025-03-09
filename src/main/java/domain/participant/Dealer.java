@@ -33,11 +33,6 @@ public class Dealer extends Participant {
         return hand.getFirstCard();
     }
 
-    public int getCardCount() {
-        Hand hand = getHand();
-        return hand.getSize();
-    }
-
     public int getExtraHandSize() {
         Hand hand = getHand();
         return hand.getExtraSize();

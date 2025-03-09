@@ -34,7 +34,7 @@ public class BlackJack {
         printResult(players, dealer, computeWinLoss(players, dealer));
     }
 
-    public boolean resolveBust(Participant participant) {
+    public boolean resolveBust(final Participant participant) {
         if (participant.isHandBust() && participant.containsOriginalAce()) {
             participant.setOriginalAceValueToOne();
             resolveBust(participant);
@@ -48,7 +48,7 @@ public class BlackJack {
         return new Players(playerNames);
     }
 
-    private void prepareBlackJack(Players players) {
+    private void prepareBlackJack(final Players players) {
         dealer.shuffleDeck();
         drawTwoCardFromDeck(dealer);
         for (Player player : players.getPlayers()) {
@@ -57,18 +57,18 @@ public class BlackJack {
         printDistributeResult(players, dealer);
     }
 
-    private void drawTwoCardFromDeck(Participant participant) {
+    private void drawTwoCardFromDeck(final Participant participant) {
         participant.addCard(dealer.drawCard());
         participant.addCard(dealer.drawCard());
     }
 
-    private void playersTurn(Players players) {
+    private void playersTurn(final Players players) {
         for (Player player : players.getPlayers()) {
             playerTurn(player);
         }
     }
 
-    private void playerTurn(Player player) {
+    private void playerTurn(final Player player) {
         playTurn(player, () -> getYnInput(player).equalsIgnoreCase(YES));
     }
 
@@ -76,7 +76,7 @@ public class BlackJack {
         playTurn(dealer, dealer::isBelowThreshold);
     }
 
-    private void playTurn(Participant participant, Supplier<Boolean> shouldDrawMore) {
+    private void playTurn(final Participant participant, final Supplier<Boolean> shouldDrawMore) {
         boolean isAlive = resolveBust(participant);
         while (isAlive && shouldDrawMore.get()) {
             isAlive = drawAdditionalCard(participant);
@@ -87,7 +87,7 @@ public class BlackJack {
         }
     }
 
-    private boolean drawAdditionalCard(Participant participant) {
+    private boolean drawAdditionalCard(final Participant participant) {
         participant.addCard(dealer.drawCard());
         if (participant.getClass().equals(Player.class)) {
             printHandCardsNames(participant);

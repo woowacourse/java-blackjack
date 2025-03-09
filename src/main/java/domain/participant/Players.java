@@ -18,7 +18,7 @@ public class Players {
         }
     }
 
-    private void validateMaxPlayer(List<String> playerNames) {
+    private void validateMaxPlayer(final List<String> playerNames) {
         if (playerNames.size() > MAX_PLAYER_SIZE) {
             throw new IllegalArgumentException(MAX_PLAYER_EXCEPTION);
         }

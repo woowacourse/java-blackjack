@@ -7,10 +7,10 @@ public class Card {
     private final Suit suit;
     protected int value;
 
-    public Card(Denomination denomination, Suit suit) {
+    public Card(final Denomination denomination, final Suit suit) {
         this.denomination = denomination;
         this.suit = suit;
-        value = Denomination.parseInt(denomination);
+        this.value = denomination.getScore();
     }
 
     public boolean isAce() {

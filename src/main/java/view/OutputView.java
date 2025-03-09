@@ -3,6 +3,7 @@ package view;
 import static domain.participant.Dealer.THRESHOLD;
 
 import controller.dto.WinLossCountDto;
+import domain.card.Denomination;
 import domain.participant.Participant;
 import domain.result.WinLossResult;
 import domain.card.Card;
@@ -24,13 +25,13 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printHandCardsNames(Participant participant) {
+    public static void printHandCardsNames(final Participant participant) {
         StringBuilder stringBuilder = new StringBuilder();
         openHand(participant, stringBuilder);
         System.out.println(stringBuilder.append("\n"));
     }
 
-    public static void printEveryOneCardsNamesWithTotal(Players players, Dealer dealer) {
+    public static void printEveryOneCardsNamesWithTotal(final Players players, final Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
         openCardsWithTotal(dealer, stringBuilder);
         for (Player player : players.getPlayers()) {
@@ -43,14 +44,14 @@ public class OutputView {
         System.out.println("버스트가 되어 턴을 종료합니다.");
     }
 
-    public static void printDealerExtraCardsCount(Dealer dealer) {
+    public static void printDealerExtraCardsCount(final Dealer dealer) {
         int dealerExtraCardsCount = dealer.getExtraHandSize();
         if (dealerExtraCardsCount > 0) {
             System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
         }
     }
 
-    public static void printResult(Players players, Dealer dealer, WinLossCountDto winLossCountResult) {
+    public static void printResult(final Players players, final Dealer dealer, final WinLossCountDto winLossCountResult) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("## 최종 승패\n");
         stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
@@ -64,14 +65,14 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static String getFormattedOpenedCard(Card card) {
+    public static String getFormattedOpenedCard(final Card card) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(card.getDenomination().getValue())
+        stringBuilder.append(mapDenominationToString(card.getDenomination()))
                 .append(card.getSuit().getShape());
         return stringBuilder.toString();
     }
 
-    private static void openHand(Participant participant, StringBuilder stringBuilder) {
+    private static void openHand(final Participant participant, final StringBuilder stringBuilder) {
         stringBuilder.append(participant.getName())
                 .append("카드: ")
                 .append(openAllCards(participant.getHand()));
@@ -79,7 +80,7 @@ public class OutputView {
 
     private static String openAllCards(Hand hand) {
         return hand.getCards().stream()
-                .map(card -> card.getDenomination().getValue() + card.getSuit().getShape())
+                .map(card -> mapDenominationToString(card.getDenomination()) + card.getSuit().getShape())
                 .collect(Collectors.joining(", "));
     }
 
@@ -93,7 +94,7 @@ public class OutputView {
         }
     }
 
-    private static void openCardsWithTotal(Participant participant, StringBuilder stringBuilder) {
+    private static void openCardsWithTotal(final Participant participant, final StringBuilder stringBuilder) {
         openHand(participant, stringBuilder);
         int totalScore = participant.getHandTotal();
 
@@ -105,4 +106,19 @@ public class OutputView {
                 .append("\n");
     }
 
+    private static String mapDenominationToString(final Denomination denomination) {
+        if (denomination == Denomination.ACE) return "A";
+        if (denomination == Denomination.TWO) return "2";
+        if (denomination == Denomination.THREE) return "3";
+        if (denomination == Denomination.FOUR) return "4";
+        if (denomination == Denomination.FIVE) return "5";
+        if (denomination == Denomination.SIX) return "6";
+        if (denomination == Denomination.SEVEN) return "7";
+        if (denomination == Denomination.EIGHT) return "8";
+        if (denomination == Denomination.NINE) return "9";
+        if (denomination == Denomination.TEN) return "10";
+        if (denomination == Denomination.JACK) return "J";
+        if (denomination == Denomination.QUEEN) return "Q";
+        return "K";
+    }
 }

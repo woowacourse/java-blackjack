@@ -3,11 +3,11 @@ package domain.participant;
 public class Player extends Participant {
     private static final int LOSS = -1;
 
-    public Player(String name) {
+    public Player(final String name) {
         super(name);
     }
 
-    public int getWinLoss(int dealerTotal) {
+    public int getWinLoss(final int dealerTotal) {
         if (isHandBust()) {
             return LOSS;
         }
