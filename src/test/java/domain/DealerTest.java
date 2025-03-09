@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,12 +52,10 @@ class DealerTest {
 
         int initialPoint = dealer.getCards().calculateTotalPoint();
 
-        //when
-        dealer.hit(cards);
-        int actual = dealer.getCards().calculateTotalPoint();
+        //when //then
+        assertThatCode(() -> dealer.hit(cards))
+                .isInstanceOf(IllegalStateException.class);
 
-        //then
-        assertThat(actual).isEqualTo(initialPoint);
     }
 
 }

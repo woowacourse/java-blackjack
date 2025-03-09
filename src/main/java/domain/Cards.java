@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Cards {
 
-    private static final int HIGHEST_SCORE = 22;
+    private static final int HIGHEST_SCORE = 21;
 
     private final List<Card> cards;
 
