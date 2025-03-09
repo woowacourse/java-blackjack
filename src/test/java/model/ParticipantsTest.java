@@ -5,12 +5,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import model.Deck.Deck;
+import model.participant.Dealer;
+import model.participant.Participant;
+import model.participant.Participants;
 import model.participant.Player;
-import model.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+public class ParticipantsTest {
 
     @Test
     @DisplayName("플레이어 이름 중 중복이 존재하면 예외가 발생한다.")
@@ -19,7 +21,7 @@ public class PlayersTest {
         List<String> names = List.of("pobi", "daro", "pobi");
 
         //when, then
-        assertThatThrownBy(() -> Players.from(names))
+        assertThatThrownBy(() -> Participants.from(names))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -28,15 +30,18 @@ public class PlayersTest {
     void 모든_플레이어에게_시작_카드들을_분배() {
         //given
         Deck deck = Deck.of();
-        Players players = new Players(List.of(
+        Participants participants = new Participants(List.of(
                 new Player("moda"),
                 new Player("daro"),
-                new Player("pobi")));
-        players.dealInitialCards(deck);
+                new Player("pobi"),
+                new Dealer()
+        ));
+        participants.dealInitialCards(deck);
 
         //when, then
-        for (Player player : players.getPlayers()) {
-            assertThat(player.getHandCards().size()).isEqualTo(2);
+        for (Participant participant : participants.getPlayers()) {
+            assertThat(participant.getHandCards().size()).isEqualTo(2);
         }
+        assertThat(participants.getDealer().getHandCards().size()).isEqualTo(2);
     }
 }
