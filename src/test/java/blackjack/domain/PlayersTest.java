@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -83,7 +84,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("플레이어의 이름은 길이가 공백이면 예외를 던진다")
-    void 플레이어의_이름은_길이가_공백이면_예외를_던진다() {
+    void throwsExceptionWhenPlayerNameIsBlank() {
         Players players = new Players();
         assertThatThrownBy(() ->
                 players.addGamblers(List.of(new Gambler("")))

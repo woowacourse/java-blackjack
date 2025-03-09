@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.GameManager;
-import blackjack.domain.Players;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

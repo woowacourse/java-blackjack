@@ -2,9 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.GameResults;
-import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +40,7 @@ public class OutputView {
         List<Player> playersList = getDealerGamblerList(players.getDealer(), players.getGamblers());
         System.out.println();
         System.out.println();
-        playersList.forEach(player -> {
-            System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.calculateCardNumber());
-        });
+        playersList.forEach(player -> System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.calculateCardNumber()));
     }
 
     public void printGameResults(Players players, GameResults gameResults) {
