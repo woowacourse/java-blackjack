@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class Participant {
-    static final int TARGET_SCORE = 21;
+    static final int BLACKJACK_GOAL_SCORE = 21;
 
     protected final CardDeck cardDeck;
 
@@ -20,13 +20,13 @@ public abstract class Participant {
     public int calculateScore() {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
         return possibleSum.stream()
-                .filter(sum -> sum <= TARGET_SCORE)
+                .filter(sum -> sum <= BLACKJACK_GOAL_SCORE)
                 .max(Integer::compareTo)
                 .orElse(Collections.min(possibleSum));
     }
 
     public boolean isBust() {
-        return calculateScore() > TARGET_SCORE;
+        return calculateScore() > BLACKJACK_GOAL_SCORE;
     }
 
     public void receiveCard(Card card) {

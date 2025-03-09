@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDump;
 import java.util.Collections;
 import java.util.Set;
 
@@ -18,7 +17,7 @@ public class Player extends Participant {
     public boolean canHit() {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
         int minScore = Collections.min(possibleSum);
-        return minScore <= TARGET_SCORE;
+        return minScore <= BLACKJACK_GOAL_SCORE;
     }
 
     @Override
