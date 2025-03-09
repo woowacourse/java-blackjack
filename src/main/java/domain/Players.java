@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Players {
 
+    private static final int MIN_SIZE = 2;
     private static final int MAX_SIZE = 6;
 
     private final List<Player> players;
@@ -19,7 +20,7 @@ public class Players {
     }
 
     private void validateSize(List<Player> players) {
-        if (players.size() < 2 || players.size() > MAX_SIZE) {
+        if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
             throw new IllegalArgumentException("참여자 수는 딜러 포함 최소 2인 이상 최대 6인 이하여야 합니다.");
         }
     }
