@@ -5,6 +5,7 @@ import static domain.card.CardType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import domain.card.Card;
 import domain.card.CardGroup;
@@ -13,6 +14,9 @@ import domain.card.CardType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardGroupTest {
 
@@ -53,84 +57,102 @@ public class CardGroupTest {
             assertThat(cardGroup.countCards()).isEqualTo(2);
         }
 
-        @DisplayName("다이아몬드2 + 하트3 = 5점이다")
-        @Test
-        void 카드_점수를_계산한다1() {
+        @DisplayName("A를 제외한 카드 점수를 계산한다")
+        @ParameterizedTest
+        @MethodSource("numberCardsTestArguments")
+        void 카드_점수를_계산한다(Card card1, Card card2) {
             //given
-            final List<Card> cards = List.of(new Card(DIAMOND, TWO),
-                    new Card(HEART, THREE));
+            final List<Card> cards = List.of(card1, card2);
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
             final int score = cardGroup.calculateScore();
+            final int scoreSum = card1.getScore().getValue() + card2.getScore().getValue();
 
             //then
-            assertThat(score).isEqualTo(5);
+            assertThat(score).isEqualTo(scoreSum);
         }
 
-        @DisplayName("다이아3 + 하트4 = 7점")
-        @Test
-        void 카드_점수를_계산한다2() {
+        private static Stream<Arguments> numberCardsTestArguments() {
+            return Stream.of(
+                    Arguments.arguments(new Card(DIAMOND,TWO), new Card(HEART,THREE)),
+                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,TEN)),
+                    Arguments.arguments(new Card(DIAMOND,THREE), new Card(HEART,THREE)),
+                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,EIGHT)),
+                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,FIVE)),
+                    Arguments.arguments(new Card(DIAMOND,KING), new Card(HEART,FIVE)),
+                    Arguments.arguments(new Card(DIAMOND,JACK), new Card(HEART,QUEEN))
+            );
+        }
+
+        @DisplayName("A가 11점이 되는 테스트")
+        @ParameterizedTest
+        @MethodSource("aceUpperScoreCardsTestArguments")
+        void 카드_점수를_계산한다2(Card card1, Card card2) {
             //given
-            final List<Card> cards = List.of(new Card(DIAMOND, THREE),
-                    new Card(HEART, FOUR));
+            final List<Card> cards = List.of(card1, card2);
 
             //when
             final CardGroup cardGroup = new CardGroup(cards);
             final int score = cardGroup.calculateScore();
+            final int scoreSum = card1.getScore().getValue() + 11;
 
             //then
-            assertThat(score).isEqualTo(7);
+            assertThat(score).isEqualTo(scoreSum);
         }
 
-        @DisplayName("다이아J + 하트A = 21점")
-        @Test
-        void 카드에_에이스가_포함되어_있을때_점수를_계산한다() {
+        private static Stream<Arguments> aceUpperScoreCardsTestArguments() {
+            return Stream.of(
+                    Arguments.arguments(new Card(DIAMOND,JACK), new Card(HEART,ACE)),
+                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,ACE)),
+                    Arguments.arguments(new Card(DIAMOND,THREE), new Card(HEART,ACE)),
+                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,ACE)),
+                    Arguments.arguments(new Card(DIAMOND,FOUR), new Card(HEART,ACE)),
+                    Arguments.arguments(new Card(DIAMOND,KING), new Card(HEART,ACE)),
+                    Arguments.arguments(new Card(DIAMOND,JACK), new Card(HEART,ACE))
+            );
+        }
+
+        @DisplayName("A가 2장인 경우 12점")
+        @ParameterizedTest
+        @MethodSource("aceLowerScoreCardsTestArguments")
+        void 카드_점수를_계산한다3(Card card1, Card card2) {
             //given
-            final List<Card> cards = List.of(
-                    new Card(DIAMOND, JACK),
-                    new Card(HEART, ACE));
+            final List<Card> cards = List.of(card1, card2);
 
             //when
-            final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScore();
-
-            //then
-            assertThat(score).isEqualTo(21);
-        }
-
-        @DisplayName("다이아J 하트J 하트A = 21점이다")
-        @Test
-        void 카드에_에이스가_포함되어_있을때_점수를_계산한다2() {
-            //given
-            final List<Card> cards = List.of(
-                    new Card(DIAMOND, JACK),
-                    new Card(HEART, JACK),
-                    new Card(HEART, ACE));
-
-            //when
-            final CardGroup cardGroup = new CardGroup(cards);
-            final int score = cardGroup.calculateScore();
-
-            //then
-            assertThat(score).isEqualTo(21);
-        }
-
-        @DisplayName("다이아J 클로버A 하트A = 12점이다")
-        @Test
-        void 카드에_에이스가_포함되어_있을때_점수를_계산한다3() {
-            //given
-            final List<Card> cards = List.of(
-                    new Card(DIAMOND, JACK),
-                    new Card(CLOVER, ACE),
-                    new Card(HEART, ACE));
-
-            //whenR
             final CardGroup cardGroup = new CardGroup(cards);
             final int score = cardGroup.calculateScore();
 
             //then
             assertThat(score).isEqualTo(12);
+        }
+
+        private static Stream<Arguments> aceLowerScoreCardsTestArguments() {
+            return Stream.of(
+                    Arguments.arguments(new Card(DIAMOND,ACE), new Card(HEART,ACE))
+            );
+        }
+
+        @DisplayName("A가 3장인 경우 13점")
+        @ParameterizedTest
+        @MethodSource("aceComplexScoreCardsTestArguments")
+        void 카드_점수를_계산한다3(Card card1, Card card2, Card card3) {
+            //given
+            final List<Card> cards = List.of(card1, card2, card3);
+
+            //when
+            final CardGroup cardGroup = new CardGroup(cards);
+            final int score = cardGroup.calculateScore();
+
+            //then
+            assertThat(score).isEqualTo(13);
+        }
+
+        private static Stream<Arguments> aceComplexScoreCardsTestArguments() {
+            return Stream.of(
+                    Arguments.arguments(new Card(DIAMOND,ACE), new Card(HEART,ACE),new Card(SPADE,ACE))
+            );
         }
     }
 }
