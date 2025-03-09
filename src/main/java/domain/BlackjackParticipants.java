@@ -53,7 +53,7 @@ public class BlackjackParticipants<T extends BlackjackParticipant> {
 
     public boolean isBust(String name) {
         T player = findPlayer(name);
-        return !player.isDrawable();
+        return !player.isBurst(player.calculateCardSum());
     }
 
     public void addCard(String name, TrumpCard trumpCard) {
