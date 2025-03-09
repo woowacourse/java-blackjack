@@ -21,7 +21,7 @@ public class CardDeck {
     }
 
     public List<Card> drawCard(int count) {
-        // TODO 카드 부족 해결하기 (예외, 규칙으로 사람 수 제한)
+        validateEmptyCardDeck(count);
         List<Card> drawnCards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             drawnCards.add(cards.poll());
@@ -38,5 +38,11 @@ public class CardDeck {
         }
         Collections.shuffle(newCards);
         return newCards;
+    }
+
+    private void validateEmptyCardDeck(int count) {
+        if (cards.size() < count) {
+            throw new IllegalArgumentException("카드의 수가 부족합니다.");
+        }
     }
 }
