@@ -20,7 +20,7 @@ public class OutputView {
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
 
         Card dealerCard = dealer.getOwnedCards().getFirst();
-        String dealerCardContent = dealerCard.getNumber().getValue() + dealerCard.getShape().getValue();
+        String dealerCardContent = dealerCard.getNumberValue() + dealerCard.getShapeValue();
         System.out.printf("딜러카드: %s\n", dealerCardContent);
 
         for (String name : playerNames) {
@@ -86,7 +86,7 @@ public class OutputView {
     private String getCardContents(List<Card> cards) {
         return cards
                 .stream()
-                .map(card -> card.getNumber().getValue() + card.getShape().getValue())
+                .map(card -> card.getNumberValue() + card.getShapeValue())
                 .reduce((a, b) -> String.join(", ", a, b))
                 .orElse("");
     }

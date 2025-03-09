@@ -21,12 +21,12 @@ public class Card {
         return number.getScore();
     }
 
-    public TrumpNumber getNumber() {
-        return number;
+    public String getNumberValue() {
+        return number.getValue();
     }
 
-    public TrumpShape getShape() {
-        return shape;
+    public String getShapeValue() {
+        return shape.getValue();
     }
 
     @Override
