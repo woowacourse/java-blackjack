@@ -32,8 +32,20 @@ public abstract class Player {
 
     public abstract List<Card> openInitialCards();
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+
+    public List<Card> getCards(int count) {
+        return cards.getCards(count);
+    }
+
+    public boolean isBurst() {
+        return cards.isBurst();
+    }
+
+    public int computeOptimalSum() {
+        return cards.computeOptimalSum();
     }
 
     public String getName() {

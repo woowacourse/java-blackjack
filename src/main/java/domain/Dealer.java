@@ -11,11 +11,11 @@ public class Dealer extends Player {
 
     @Override
     public List<Card> openInitialCards() {
-        return getCards().getCards(1);
+        return getCards(1);
     }
 
     public boolean drawOneCardIfLowScore(Deck deck) {
-        if (getCards().computeOptimalSum() <= ADD_CARD_THRESHOLD) {
+        if (computeOptimalSum() <= ADD_CARD_THRESHOLD) {
             drawOneCard(deck);
             return true;
         }
