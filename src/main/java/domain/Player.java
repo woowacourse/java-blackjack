@@ -19,29 +19,29 @@ public class Player extends Gamer {
     }
 
     public GameResult decideGameResult(Dealer dealer) {
-        int playerScore = this.calculateScore();
-        int dealerScore = dealer.calculateScore();
-        if (playerScore > BUST_THRESHOLD || dealerScore > BUST_THRESHOLD) {
-            return decideGameResultWithBust(playerScore, dealerScore);
+        if (this.isBust() || dealer.isBust()) {
+            return decideGameResultWithBust(dealer);
         }
-        return decideGameResultWithoutBust(playerScore, dealerScore);
+        return decideGameResultWithoutBust(dealer);
     }
 
     public PlayerName getPlayerName() {
         return playerName;
     }
 
-    private GameResult decideGameResultWithBust(int playerScore, int dealerScore) {
-        if (playerScore > BUST_THRESHOLD && dealerScore > BUST_THRESHOLD) {
+    private GameResult decideGameResultWithBust(Dealer dealer) {
+        if (this.isBust() && dealer.isBust()) {
             return DRAW;
         }
-        if (playerScore > BUST_THRESHOLD) {
+        if (this.isBust()) {
             return LOSE;
         }
         return WIN;
     }
 
-    private GameResult decideGameResultWithoutBust(int playerScore, int dealerScore) {
+    private GameResult decideGameResultWithoutBust(Dealer dealer) {
+        int dealerScore = dealer.calculateScore();
+        int playerScore = this.calculateScore();
         if (dealerScore == playerScore) {
             return DRAW;
         }
