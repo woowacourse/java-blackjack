@@ -19,7 +19,9 @@ public abstract class Participant {
         this.hand = new ArrayList<>(hand);
     }
 
-    public abstract boolean shouldHit();
+    public boolean canHit() {
+        return getTotal() < BLACKJACK_VALUE_TOTAL;
+    }
 
     public void receiveHand(Card card) {
         if (BLACKJACK_VALUE_TOTAL <= getTotal()) {

@@ -1,6 +1,5 @@
 package blackjack.model;
 
-import static blackjack.TestFixtures.NO_HIT_STRATEGY;
 import static blackjack.model.card.CardFixtures.NO_SHUFFLER;
 import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
 import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
@@ -22,7 +21,7 @@ class MatchResultTest {
     @Test
     void lose_WhenPlayerBust() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(SPADE_TEN_CARD);
         player.receiveHand(SPADE_TEN_CARD);
         player.receiveHand(SPADE_TEN_CARD);
@@ -40,7 +39,7 @@ class MatchResultTest {
     @Test
     void win_WhenPlayerNoBustAndDealerBust() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
         dealer.receiveHand(SPADE_TEN_CARD);
         dealer.receiveHand(SPADE_TEN_CARD);
@@ -58,7 +57,7 @@ class MatchResultTest {
     @Test
     void draw_WhenAllBlackjack() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(SPADE_ACE_CARD);
         player.receiveHand(SPADE_TEN_CARD);
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
@@ -77,7 +76,7 @@ class MatchResultTest {
     @Test
     void win_WhenOnlyPlayerBlackjack() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(SPADE_ACE_CARD);
         player.receiveHand(SPADE_TEN_CARD);
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
@@ -96,7 +95,7 @@ class MatchResultTest {
     @Test
     void lose_WhenOnlyDealerBlackjack() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(SPADE_TEN_CARD);
         player.receiveHand(SPADE_TEN_CARD);
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
@@ -122,7 +121,7 @@ class MatchResultTest {
                    CardValue dealerCardValue1, CardValue dealerCardValue2,
                    MatchResult expected) {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(createCard(Suit.SPADES, playerCardValue1));
         player.receiveHand(createCard(Suit.SPADES, playerCardValue2));
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));

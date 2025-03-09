@@ -1,7 +1,5 @@
 package blackjack.model;
 
-import static blackjack.TestFixtures.NO_HIT_STRATEGY;
-import static blackjack.TestFixtures.createHitDecisionStrategy;
 import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
 import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;
 import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
@@ -12,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,7 +25,7 @@ class PlayerTest {
         Name name = new Name("pobi");
 
         // when, then
-        assertThatCode(() -> new Player(name, NO_HIT_STRATEGY))
+        assertThatCode(() -> new Player(name))
                 .doesNotThrowAnyException();
     }
 
@@ -36,7 +33,7 @@ class PlayerTest {
     @Test
     void receiveHandTest() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -51,7 +48,7 @@ class PlayerTest {
     @Test
     void shouldThrowException_WhenReceiveCardAfterHandExceeds21() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -67,7 +64,7 @@ class PlayerTest {
     @Test
     void calculateHandTotalTest() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
 
         // when
         player.receiveHand(SPADE_TEN_CARD);
@@ -82,7 +79,7 @@ class PlayerTest {
     @Test
     void calculateHandTotalWithAceTest() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -97,7 +94,7 @@ class PlayerTest {
     @Test
     void calculateHandTotalWithAceTestOver11() {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -117,7 +114,7 @@ class PlayerTest {
     })
     void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(createCard(Suit.SPADES, value1));
         player.receiveHand(createCard(Suit.SPADES, value2));
 
@@ -137,7 +134,7 @@ class PlayerTest {
     })
     void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
         // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(createCard(Suit.SPADES, value1));
         player.receiveHand(createCard(Suit.SPADES, value2));
         player.receiveHand(createCard(Suit.SPADES, value3));
@@ -150,47 +147,19 @@ class PlayerTest {
                 .isSameAs(expected);
     }
 
-    @DisplayName("플레이어가 히트 여부를 결정한다.")
-    @Test
-    void shouldHitFalseTest() {
-        // given
-        Player player = new Player(new Name("pobi"), NO_HIT_STRATEGY);
-
-        // then
-        boolean shouldHit = player.shouldHit();
-
-        // when
-        assertThat(shouldHit)
-                .isFalse();
-    }
-
-    @DisplayName("플레이어가 히트 여부를 결정한다.")
-    @Test
-    void shouldHitTrueTest() {
-        // given
-        Player player = new Player(new Name("pobi"), createHitDecisionStrategy(List.of(true)));
-
-        // then
-        boolean shouldHit = player.shouldHit();
-
-        // when
-        assertThat(shouldHit)
-                .isTrue();
-    }
-
     @DisplayName("가진 패의 총합이 21 이상인 경우 히트할 수 없다.")
     @Test
-    void shouldHitTest() {
+    void canHitTest() {
         // given
-        Player player = new Player(new Name("pobi"), createHitDecisionStrategy(List.of(true)));
+        Player player = new Player(new Name("pobi"));
         player.receiveHand(SPADE_ACE_CARD);
         player.receiveHand(SPADE_TEN_CARD);
 
         // then
-        boolean shouldHit = player.shouldHit();
+        boolean canHit = player.canHit();
 
         // when
-        assertThat(shouldHit)
+        assertThat(canHit)
                 .isFalse();
     }
 }

@@ -6,24 +6,10 @@ import java.util.Objects;
 public final class Player extends Participant {
 
     private final Name name;
-    private final HitDecisionStrategy hitDecisionStrategy;
 
-    public Player(Name name, HitDecisionStrategy hitDecisionStrategy) {
+    public Player(Name name) {
         super(new ArrayList<>());
         this.name = name;
-        this.hitDecisionStrategy = hitDecisionStrategy;
-    }
-
-    @Override
-    public boolean shouldHit() {
-        if (!canHit()) {
-            return false;
-        }
-        return hitDecisionStrategy.decideHit(name);
-    }
-
-    private boolean canHit() {
-        return getTotal() < 21;
     }
 
     public Name getName() {

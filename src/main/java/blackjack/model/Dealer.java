@@ -15,13 +15,17 @@ public final class Dealer extends Participant {
         this.deck = deck;
     }
 
-    public Card drawCard() {
-        return deck.draw();
+    @Override
+    public boolean canHit() {
+        return getTotal() <= DEALER_HIT_THRESHOLD;
     }
 
-    @Override
-    public boolean shouldHit() {
-        return getTotal() <= DEALER_HIT_THRESHOLD;
+    public void dealCard(Participant participant) {
+        participant.receiveHand(drawCard());
+    }
+
+    private Card drawCard() {
+        return deck.draw();
     }
 
     public Card getVisibleCard() {
