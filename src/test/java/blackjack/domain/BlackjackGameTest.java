@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Participant;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
 import java.util.ArrayList;
@@ -58,11 +57,16 @@ class BlackjackGameTest {
         @Test
         @DisplayName("카드 한 장을 플레이어에게 추가로 배부할 수 있다.")
         void distributeExtraCardToPlayer() {
-            List<String> names = List.of("sana");
-            BlackjackGame game = BlackjackGame.createByPlayerNames(names);
-            game.initCardsToPlayer(); // 2장 배부
+            Player player = new Player("sana");
+            player.addCards(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING)
+            );
 
-            Player player = game.getParticipants().getPlayers().getFirst();
+            CardDeck cardDeck = CardDeck.shuffleCardDeck();
+            Participants participants = new Participants(new Dealer(), List.of(player));
+            BlackjackGame game = new BlackjackGame(cardDeck, participants);
+
             game.addExtraCard(player); // 총 3장 카드 보유
 
             assertThat(player.openCards()).hasSize(3);
@@ -72,11 +76,10 @@ class BlackjackGameTest {
         @DisplayName("카드 한 장을 딜러의 숫자가 16이하이면 추가로 배부할 수 있다.")
         void distributeExtraCardToDealer() {
             Dealer dealer = new Dealer();
-            List<Card> cardsUnder16 = List.of(
+            dealer.addCards(
                 new Card(Suit.HEART, Denomination.SIX),
                 new Card(Suit.SPADE, Denomination.KING)
             );
-            dealer.addCards(cardsUnder16.get(0), cardsUnder16.get(1));
 
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
             Participants participants = new Participants(dealer, new ArrayList<>());
@@ -90,11 +93,10 @@ class BlackjackGameTest {
         @DisplayName("카드 한 장을 딜러의 숫자가 16초과이면 추가로 배부할 수 없다.")
         void notDistributeExtraCardToDealer() {
             Dealer dealer = new Dealer();
-            List<Card> cardsOver16 = List.of(
+            dealer.addCards(
                 new Card(Suit.HEART, Denomination.SEVEN),
                 new Card(Suit.SPADE, Denomination.KING)
             );
-            dealer.addCards(cardsOver16.get(0), cardsOver16.get(1));
 
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
             Participants participants = new Participants(dealer, new ArrayList<>());
@@ -115,32 +117,28 @@ class BlackjackGameTest {
         @BeforeEach
         void initCards() {
             Dealer dealer = new Dealer();
-            List<Card> initialCards1 = List.of(
+            dealer.addCards(
                 new Card(Suit.HEART, Denomination.NINE),
                 new Card(Suit.SPADE, Denomination.KING)
             );
-            dealer.addCards(initialCards1.get(0), initialCards1.get(1));
 
             Player player1 = new Player("hula"); // 패배
-            List<Card> initialCards2 = List.of(
+            player1.addCards(
                 new Card(Suit.HEART, Denomination.SIX),
                 new Card(Suit.SPADE, Denomination.KING)
             );
-            player1.addCards(initialCards2.get(0), initialCards2.get(1));
 
             Player player2 = new Player("sana"); // 승리
-            List<Card> initialCards3 = List.of(
+            player2.addCards(
                 new Card(Suit.HEART, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)
             );
-            player2.addCards(initialCards3.get(0), initialCards3.get(1));
 
             Player player3 = new Player("jason"); // 패배
-            List<Card> initialCards4 = List.of(
+            player3.addCards(
                 new Card(Suit.HEART, Denomination.FIVE),
                 new Card(Suit.SPADE, Denomination.KING)
             );
-            player3.addCards(initialCards4.get(0), initialCards4.get(1));
 
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
             Participants participants = new Participants(dealer,

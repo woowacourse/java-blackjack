@@ -36,12 +36,11 @@ public class PlayerTest {
         void canDistributeCard_Under21() {
             Player player = new Player("sana");
 
-            List<Card> cardsUnder21 = List.of(
+            player.addCards(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.TEN),
                 new Card(Suit.CLUB, Denomination.ACE)
             );
-            player.addCards(cardsUnder21.get(0), cardsUnder21.get(1), cardsUnder21.get(2));
 
             assertThat(player.isPossibleToAdd()).isTrue();
         }
@@ -51,12 +50,11 @@ public class PlayerTest {
         void canDistributeCard_Over21() {
             Player player = new Player("sana");
 
-            List<Card> cardsOver21 = List.of(
+            player.addCards(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.TEN),
                 new Card(Suit.CLUB, Denomination.JACK)
             );
-            player.addCards(cardsOver21.get(0), cardsOver21.get(1), cardsOver21.get(2));
 
             assertThat(player.isPossibleToAdd()).isFalse();
         }

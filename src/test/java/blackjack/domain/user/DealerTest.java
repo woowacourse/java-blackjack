@@ -45,7 +45,6 @@ class DealerTest {
 
             Card card1 = new Card(Suit.HEART, Denomination.FIVE);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
-
             dealer.addCards(card1, card2);
 
             assertThat(dealer.isPossibleToAdd()).isTrue();

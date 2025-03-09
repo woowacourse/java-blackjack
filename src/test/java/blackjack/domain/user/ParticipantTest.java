@@ -40,7 +40,6 @@ public class ParticipantTest {
         void distributeTwoCards() {
             Card card1 = new Card(Suit.HEART, Denomination.ACE);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
-
             participant.addCards(card1, card2);
 
             List<Card> cards = participant.openCards();
@@ -63,7 +62,6 @@ public class ParticipantTest {
         void cardSumWithoutACE() {
             Card card1 = new Card(Suit.HEART, Denomination.TWO);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
-
             participant.addCards(card1, card2);
 
             int cardSum = participant.calculateDenominations();
@@ -76,7 +74,6 @@ public class ParticipantTest {
         void cardSumWithACE_ELEVEN() {
             Card card1 = new Card(Suit.HEART, Denomination.ACE);
             Card card2 = new Card(Suit.SPADE, Denomination.KING);
-
             participant.addCards(card1, card2);
 
             int cardSumWithAceValue11 = participant.calculateDenominations();
@@ -90,7 +87,6 @@ public class ParticipantTest {
             Card card1 = new Card(Suit.HEART, Denomination.TWO);
             Card card2 = new Card(Suit.SPADE, Denomination.TEN);
             Card card3 = new Card(Suit.CLUB, Denomination.ACE);
-
             participant.addCards(card1, card2, card3);
 
             int cardSumWithAceValue1 = participant.calculateDenominations();
