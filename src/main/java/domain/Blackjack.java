@@ -15,7 +15,6 @@ public class Blackjack {
         this.deck = deck;
     }
 
-    // 초기 카드 분배
     public void distributeInitialCards() {
         players.distributeInitialCards(deck);
     }
