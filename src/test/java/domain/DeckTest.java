@@ -38,10 +38,10 @@ public class DeckTest {
 		@Test
 		public void pickCard() {
 			// given
-			final Rank cardNumber = Rank.TWO;
-			final var d = new ArrayDeque<>(List.of(new Card(cardNumber, Suit.CLUB)));
+			final Rank rank = Rank.TWO;
+			final var d = new ArrayDeque<>(List.of(new Card(rank, Suit.CLUB)));
 			final var deck = new Deck(d);
-			final var expected = new Card(cardNumber, Suit.CLUB);
+			final var expected = new Card(rank, Suit.CLUB);
 
 			// when
 			final var actual = deck.pickCard();

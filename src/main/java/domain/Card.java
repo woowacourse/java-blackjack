@@ -8,8 +8,8 @@ public record Card(
 	Rank rank,
 	Suit suit
 ) {
-	public boolean isMatchNumber(final Rank cardNumber) {
-		return Objects.equals(rank, cardNumber);
+	public boolean isMatchNumber(final Rank rank) {
+		return Objects.equals(this.rank, rank);
 	}
 
 	public int sumNumber(final int score) {

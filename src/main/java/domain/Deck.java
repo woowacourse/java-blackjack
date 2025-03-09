@@ -29,7 +29,7 @@ public class Deck {
 
 	private static Stream<Card> makeCards(final Rank rank) {
 		return Arrays.stream(Suit.values())
-			.map(emblem -> new Card(rank, emblem));
+			.map(suit -> new Card(rank, suit));
 	}
 
 	private void validateDuplicateCard(final Queue<Card> deck) {

@@ -39,8 +39,8 @@ public class BlackjackController {
 	private void startGame(final List<Player> players, final Dealer dealer, final Deck deck) {
 		handOutCards(players, dealer, deck);
 		outputPickCard(players, dealer, deck);
-		outputHandResult(dealer, players);
-		duel(dealer, players);
+		outputHandResult(players, dealer);
+		duel(players, dealer);
 		outputDuelResult(players, dealer);
 	}
 
@@ -101,7 +101,7 @@ public class BlackjackController {
 		}
 	}
 
-	private void outputHandResult(final Dealer dealer, final List<Player> players) {
+	private void outputHandResult(final List<Player> players, final Dealer dealer) {
 		outputDealerHandResult(dealer);
 		outputPlayersHandResult(players);
 	}
@@ -120,9 +120,9 @@ public class BlackjackController {
 	}
 
 	private String convertedCardText(final Card dealerFirstCard) {
-		final String cardNumberText = RankMessage.convertRankToMessage(dealerFirstCard.rank());
-		final String cardEmblemText = dealerFirstCard.suit().getName();
-		return cardNumberText + cardEmblemText;
+		final String rankText = RankMessage.convertRankToMessage(dealerFirstCard.rank());
+		final String cardsuitText = dealerFirstCard.suit().getName();
+		return rankText + cardsuitText;
 	}
 
 	private void outputPlayersHandResult(final List<Player> players) {
@@ -134,7 +134,7 @@ public class BlackjackController {
 		}
 	}
 
-	private void duel(final Dealer dealer, final List<Player> players) {
+	private void duel(final List<Player> players, final Dealer dealer) {
 		players.forEach(dealer::startDuel);
 	}
 

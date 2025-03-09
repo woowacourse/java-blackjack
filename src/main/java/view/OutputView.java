@@ -11,12 +11,12 @@ public class OutputView {
 		System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), names);
 	}
 
-	public void printDealerHandOutResult(final String card) {
-		System.out.printf("딜러카드: %s" + System.lineSeparator(), card);
+	public void printDealerHandOutResult(final String dealerCard) {
+		System.out.printf("딜러카드: %s" + System.lineSeparator(), dealerCard);
 	}
 
-	public void printPlayersCard(final Map<String, List<String>> players) {
-		players.entrySet().forEach(player -> printPlayerCards(player.getKey(), player.getValue()));
+	public void printPlayersCard(final Map<String, List<String>> cardsByPlayerName) {
+		cardsByPlayerName.entrySet().forEach(player -> printPlayerCards(player.getKey(), player.getValue()));
 	}
 
 	public void printPlayerCards(final String name, final List<String> card) {
