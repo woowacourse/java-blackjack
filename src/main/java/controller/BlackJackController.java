@@ -12,6 +12,7 @@ import dto.ParticipantResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -144,12 +145,9 @@ public class BlackJackController {
 
     private List<Player> getPlayers() {
         final List<String> playerNames = inputView.askPlayerNames();
-        final List<Player> players = new ArrayList<>();
 
-        for (String name : playerNames) {
-            players.add(Player.from(name));
-        }
-
-        return players;
+        return playerNames.stream()
+                .map(Player::from)
+                .collect(Collectors.toList());
     }
 }
