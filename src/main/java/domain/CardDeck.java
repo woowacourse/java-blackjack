@@ -1,18 +1,13 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
     private final List<TrumpCard> CARD_DECK = new ArrayList<>();
 
     public CardDeck() {
-        Arrays.stream(CardShape.values())
-                .forEach(cardShape -> Arrays.stream(CardNumber.values())
-                        .forEach(cardNumber -> CARD_DECK.add(new TrumpCard(cardShape, cardNumber))));
-        Collections.shuffle(CARD_DECK);
+        this.CARD_DECK.addAll(TrumpCard.cardDeckCaching());
     }
 
     public TrumpCard drawCard() {
