@@ -25,7 +25,6 @@ public class TestDrawStrategy implements DrawStrategy {
         return testRemoveTrumpCard;
     }
 
-    @Override
     public void validateDraw(Deque<TrumpCard> trumpCards) {
         if (trumpCards.isEmpty()) {
             throw new BlackJackException(INVALID_DRAW_STATE);
