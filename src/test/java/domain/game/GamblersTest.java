@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
+import domain.card.CardPack;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
@@ -13,10 +14,10 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
-public class GameManagerTest {
+public class GamblersTest {
 
     @Test
-    void 딜러와_플레이어들로_카드매니저를_생성한다() {
+    void 딜러와_플레이어들로_Gamblers를_생성한다() {
         //given
         Dealer dealer = new Dealer();
         Player player1 = new Player("이름1");
@@ -24,19 +25,19 @@ public class GameManagerTest {
 
         //when
         //then
-        assertThatCode(() -> new GameManager(dealer, List.of(player1, player2)))
+        assertThatCode(() -> new Gamblers(dealer, List.of(player1, player2)))
             .doesNotThrowAnyException();
     }
 
     @Test
-    void 딜러와_플레이어들에게_초기카드를_나눠준다() {
+    void Gambler들에게_초기카드를_나눠준다() {
         //given
         Dealer dealer = new Dealer();
         Player player = new Player("이름");
 
         //when
-        GameManager gameManager = new GameManager(dealer, List.of(player));
-        gameManager.distributeSetUpCards();
+        Gamblers gamblers = new Gamblers(dealer, List.of(player));
+        gamblers.distributeSetUpCards(new CardPack());
 
         //then
         assertAll(
@@ -56,7 +57,7 @@ public class GameManagerTest {
         Player losePlayer2 = new Player("이름5");
         Player losePlayer3 = new Player("이름6");
 
-        GameManager gameManager = new GameManager(
+        Gamblers gamblers = new Gamblers(
             dealer,
             List.of(winnerPlayer1, drawPlayer1, drawPlayer2,
                 losePlayer1, losePlayer2, losePlayer3));
@@ -70,7 +71,7 @@ public class GameManagerTest {
         losePlayer3.takeCards(Card.HEART_K, Card.HEART_9);
 
         //when
-        GameResult gameResult = gameManager.evaluateFinalScore();
+        GameResult gameResult = gamblers.evaluateFinalScore();
 
         int dealerWinCount = gameResult.countDealerWin();
         int dealerDrawCount = gameResult.countDealerDraw();

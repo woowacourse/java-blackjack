@@ -1,34 +1,30 @@
 package domain.game;
 
 import domain.participant.Dealer;
+import domain.participant.Gambler;
 import domain.participant.Player;
 import domain.card.CardPack;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GameManager {
+public class Gamblers {
 
     private final Dealer dealer;
     private final List<Player> players;
-    private final CardPack cardPack;
 
-    public GameManager(Dealer dealer, List<Player> players) {
+    public Gamblers(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
-        this.cardPack = new CardPack();
     }
 
-    public void shuffle() {
-        cardPack.shuffle();
-    }
-
-    public void distributeSetUpCards() {
+    public void distributeSetUpCards(CardPack cardPack) {
         dealer.takeCards(cardPack.poll(), cardPack.poll());
         players.forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
     }
 
-    public void distributeExtraCards(TakeMoreCardSelector selector) {
+    public void distributeExtraCards(CardPack cardPack, TakeMoreCardSelector selector) {
         for (Player player : players) {
             while (player.canTakeMoreCard()) {
                 if (selector.isYes(player.getName())){

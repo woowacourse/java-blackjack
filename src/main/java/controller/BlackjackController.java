@@ -1,9 +1,10 @@
 package controller;
 
 import domain.card.Card;
+import domain.card.CardPack;
 import domain.participant.Dealer;
 import dto.ParticipantResultResponse;
-import domain.game.GameManager;
+import domain.game.Gamblers;
 import domain.game.GameResult;
 import domain.participant.Player;
 import dto.ParticipantsCardsResponse;
@@ -28,18 +29,18 @@ public class BlackjackController {
     public void play() {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
-        GameManager gameManager = new GameManager(dealer, players);
-        gameManager.shuffle();
-        gameManager.distributeSetUpCards();
+        Gamblers gamblers = new Gamblers(dealer, players);
+        CardPack cardPack = new CardPack();
+        gamblers.distributeSetUpCards(cardPack);
         ParticipantsCardsResponse participantsCardsResponse = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(participantsCardsResponse);
 
-        gameManager.distributeExtraCards(new TakeMoreCardViewSelector());
+        gamblers.distributeExtraCards(cardPack, new TakeMoreCardViewSelector());
 
         List<ParticipantResultResponse> participantResultRespons = createFinalResultDTOs(dealer, players);
         outputView.printFinalCardDeck(participantResultRespons);
 
-        GameResult gameResult = gameManager.evaluateFinalScore();
+        GameResult gameResult = gamblers.evaluateFinalScore();
         outputView.printGameResult(gameResult);
     }
 
