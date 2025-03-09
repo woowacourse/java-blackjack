@@ -25,7 +25,7 @@ public class Dealer {
         return cards.getCards();
     }
 
-    public boolean isSumUnderSixteen() {
+    public boolean shouldDealerHit() {
         return sumCardNumbers() <= DEALER_HIT_THRESHOLD;
     }
 

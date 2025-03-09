@@ -59,7 +59,7 @@ public class BlackJackController {
     }
 
     private void checkDealerSumUnderSixteen(Dealer dealer, Deck deck) {
-        while (dealer.isSumUnderSixteen()) {
+        while (dealer.shouldDealerHit()) {
             outputView.printDealerOneMoreCardMessage();
             dealer.addOneCard(deck.drawOneCard());
         }

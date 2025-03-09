@@ -94,7 +94,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cards);
 
         // when
-        boolean sumUnderSixteen = dealer.isSumUnderSixteen();
+        boolean sumUnderSixteen = dealer.shouldDealerHit();
 
         // then
         assertThat(sumUnderSixteen).isEqualTo(expected);
