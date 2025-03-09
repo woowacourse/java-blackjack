@@ -14,7 +14,7 @@ public class Players {
 
         players = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(new Player(playerName));
+            players.add(new Player(playerName.trim()));
         }
     }
 

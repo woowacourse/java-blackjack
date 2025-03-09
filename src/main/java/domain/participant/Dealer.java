@@ -2,8 +2,9 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Hand;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
 
     public static final String DEALER_NAME = "딜러";
     public static final int THRESHOLD = 16;
@@ -28,14 +29,17 @@ public class Dealer extends Player {
     }
 
     public Card openOneCard() {
+        Hand hand = getHand();
         return hand.getFirstCard();
     }
 
     public int getCardCount() {
+        Hand hand = getHand();
         return hand.getSize();
     }
 
     public int getExtraHandSize() {
+        Hand hand = getHand();
         return hand.getExtraSize();
     }
 }

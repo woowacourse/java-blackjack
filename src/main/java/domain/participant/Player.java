@@ -1,41 +1,10 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Hand;
-
-public class Player {
+public class Player extends Participant {
     private static final int LOSS = -1;
 
-    private final String name;
-    protected Hand hand;
-
     public Player(String name) {
-        this.name = name;
-        this.hand = new Hand();
-    }
-
-    public void addCard(Card card) {
-        hand.addCard(card);
-    }
-
-    public int getHandTotal() {
-        return hand.getTotal();
-    }
-
-    public boolean isHandBust() {
-        return hand.isBust();
-    }
-
-    public boolean containsOriginalAce() {
-        return hand.containsOriginalAce();
-    }
-
-    public void setOriginalAceValueToOne() {
-        hand.setOriginalAceValueToOne();
-    }
-
-    public void setHandTotalToZero() {
-        hand.setAllCardValueToZero();
+        super(name);
     }
 
     public int getWinLoss(int dealerTotal) {
@@ -44,13 +13,4 @@ public class Player {
         }
         return Integer.compare(getHandTotal(), dealerTotal);
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
 }
