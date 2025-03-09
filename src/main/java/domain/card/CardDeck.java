@@ -52,8 +52,4 @@ public class CardDeck {
             throw new IllegalArgumentException("카드 덱이 비었습니다.");
         }
     }
-
-    public List<Card> getDeck() {
-        return deck;
-    }
 }

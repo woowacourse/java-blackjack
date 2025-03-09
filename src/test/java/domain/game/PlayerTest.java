@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
 import domain.card.Pattern;
-import domain.card.TestShuffler;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class PlayerTest {
     @Test
     void 플레이어는_게임_시작_시_두_장의_카드를_받는다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        CardDeck cardDeck = CardDeck.createCards();
         String name = "pobi";
         Player player = new Player(name);
 
@@ -29,7 +28,7 @@ public class PlayerTest {
     @Test
     void 플레이어는_한_장의_카드를_받는다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        CardDeck cardDeck = CardDeck.createCards();
         String name = "pobi";
         Player player = new Player(name);
 
