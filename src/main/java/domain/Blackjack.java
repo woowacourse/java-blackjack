@@ -35,7 +35,7 @@ public class Blackjack {
         participant.drawOneCard(deck);
         return new NameAndCards(
                 participant.getName(),
-                participant.getCards().getCards()
+                participant.getCards()
         );
     }
 
@@ -47,7 +47,7 @@ public class Blackjack {
         Player player = players.getPlayerByName(name);
         return new NameAndCards(
                 player.getName(),
-                player.getCards().getCards()
+                player.getCards()
         );
     }
 
@@ -57,12 +57,12 @@ public class Blackjack {
 
     public NameAndCards getDealerNameAndCards() {
         Player dealer = getDealer();
-        return new NameAndCards(dealer.getName(), dealer.getCards().getCards());
+        return new NameAndCards(dealer.getName(), dealer.getCards());
     }
 
     public List<NameAndCards> getParticipantsNameAndCards() {
         return getParticipants().stream()
-                .map(participant -> new NameAndCards(participant.getName(), participant.getCards().getCards()))
+                .map(participant -> new NameAndCards(participant.getName(), participant.getCards()))
                 .toList();
     }
 
@@ -107,13 +107,13 @@ public class Blackjack {
     }
 
     private MatchResult calculatePariticipantMatchResult(Dealer dealer, Participant participant) {
-        if (participant.getCards().isBust() && dealer.getCards().isBust() || participant.getCards().isBust()) {
+        if (participant.isBust() && dealer.isBust() || participant.isBust()) {
             return MatchResult.LOSE;
         }
-        if (dealer.getCards().isBust()) {
+        if (dealer.isBust()) {
             return MatchResult.WIN;
         }
-        return MatchResult.compareBySum(participant.getCards().computeOptimalSum(),
-                dealer.getCards().computeOptimalSum());
+        return MatchResult.compareBySum(participant.computeOptimalSum(),
+                dealer.computeOptimalSum());
     }
 }

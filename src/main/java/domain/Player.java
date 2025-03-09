@@ -8,12 +8,12 @@ public abstract class Player {
     private static final int MAX_NAME_LENGTH = 10;
 
     private final String name;
-    private final Cards cards;
+    private final Cards handCards;
 
     public Player(String name) {
         validateName(name);
         this.name = name;
-        cards = new Cards();
+        handCards = new Cards();
     }
 
     private void validateName(String name) {
@@ -23,17 +23,33 @@ public abstract class Player {
     }
 
     public void receiveInitialCards(Deck deck) {
-        getCards().addAll(deck.drawCards(2));
+        handCards.addAll(deck.drawCards(2));
     }
 
     public void drawOneCard(Deck deck) {
-        getCards().addAll(deck.drawCards(1));
+        handCards.addAll(deck.drawCards(1));
     }
 
     public abstract List<Card> openInitialCards();
 
-    public Cards getCards() {
-        return cards;
+    public int computeOptimalSum() {
+        return handCards.computeOptimalSum();
+    }
+
+    public boolean isBust() {
+        return handCards.isBust();
+    }
+
+    public Cards getHandCards() {
+        return handCards;
+    }
+
+    public List<Card> getCards() {
+        return handCards.getCards();
+    }
+
+    public List<Card> getCards(int count) {
+        return handCards.getCards(count);
     }
 
     public String getName() {

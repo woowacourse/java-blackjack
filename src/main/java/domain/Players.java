@@ -62,7 +62,7 @@ public class Players {
     public Map<String, Integer> mapToNameAndSum() {
         Map<String, Integer> sumResult = new HashMap<>();
         for (Player player : players) {
-            sumResult.put(player.getName(), player.getCards().computeOptimalSum());
+            sumResult.put(player.getName(), player.computeOptimalSum());
         }
         return sumResult;
     }

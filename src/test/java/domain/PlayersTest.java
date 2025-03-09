@@ -58,7 +58,7 @@ class PlayersTest {
 
         // then
         Assertions.assertThat(players.getPlayers().stream()
-                .filter(player -> player.getCards().size() == 2)
+                .filter(player -> player.getHandCards().size() == 2)
                 .count()).isEqualTo(5);
     }
 

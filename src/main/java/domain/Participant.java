@@ -9,6 +9,6 @@ public class Participant extends Player {
 
     @Override
     public List<Card> openInitialCards() {
-        return getCards().getCards(2);
+        return getCards(2);
     }
 }

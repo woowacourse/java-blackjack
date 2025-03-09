@@ -14,7 +14,7 @@ public class PlayerTest {
         player.receiveInitialCards(deck);
 
         // then
-        Assertions.assertThat(player.getCards().size())
+        Assertions.assertThat(player.getHandCards().size())
                 .isEqualTo(2);
     }
 
@@ -28,7 +28,7 @@ public class PlayerTest {
         player.receiveInitialCards(deck);
 
         // then
-        Assertions.assertThat(player.getCards().size())
+        Assertions.assertThat(player.getHandCards().size())
                 .isEqualTo(2);
     }
 
