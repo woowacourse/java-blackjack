@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class BlackjackParticipant {
@@ -13,7 +14,7 @@ public abstract class BlackjackParticipant {
     private final List<TrumpCard> trumpCards = new ArrayList<>();
     private final String name;
 
-    BlackjackParticipant(String name) {
+    protected BlackjackParticipant(String name) {
         validateNickname(name);
         this.name = name;
     }
@@ -32,6 +33,10 @@ public abstract class BlackjackParticipant {
     }
 
     public int calculateCardSum() {
+        return calculateCardSum(BUST_STANDARD);
+    }
+
+    protected int calculateCardSum(int aceCalculateStandard){
         int sum = trumpCards.stream()
                 .map(TrumpCard::cardNumberValue)
                 .reduce(Integer::sum)
@@ -40,29 +45,26 @@ public abstract class BlackjackParticipant {
                 .filter(TrumpCard::isAce)
                 .count();
         if (aceCount != 0) {
-            return calculateAceIncludeSum(aceCount, sum);
+            return calculateAceIncludeSum(aceCalculateStandard, aceCount, sum);
         }
         return sum;
     }
 
-    private int calculateAceIncludeSum(int aceCount, int sum) {
-        if (isBust(sum) && aceCount != 0) {
-            return calculateAceIncludeSum(aceCount - 1, sum - ACE_DIFF);
+    private int calculateAceIncludeSum(int aceCalculateStandard, int aceCount, int sum) {
+        if (aceCalculateStandard < sum && aceCount != 0) {
+            return calculateAceIncludeSum(aceCalculateStandard, aceCount - 1, sum - ACE_DIFF);
         }
         return sum;
     }
 
-    private boolean isBust(int number) {
+    protected boolean isBust(int number) {
         return BUST_STANDARD < number;
     }
 
-    public boolean isDrawable() {
-        int sum = calculateCardSum();
-        return !isBust(sum);
-    }
+    abstract boolean isDrawable();
 
     public List<TrumpCard> trumpCards() {
-        return trumpCards;
+        return Collections.unmodifiableList(trumpCards);
     }
 
     public String name() {

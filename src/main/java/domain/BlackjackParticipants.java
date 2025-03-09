@@ -41,7 +41,7 @@ public class BlackjackParticipants {
 
     public List<TrumpCard> playerCards(String name) {
         Player player = findPlayer(name);
-        return Collections.unmodifiableList(player.trumpCards());
+        return player.trumpCards();
     }
 
     public BlackjackResult calculateDealerResult() {

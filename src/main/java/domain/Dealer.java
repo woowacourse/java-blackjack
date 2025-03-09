@@ -3,7 +3,7 @@ package domain;
 public class Dealer extends BlackjackParticipant {
 
     private static final String DEALER_NAME = "딜러";
-    private final int DEALER_STOP_HIT_STANDARD = 17;
+    private final int DEALER_STOP_HIT_STANDARD = 16;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -11,7 +11,7 @@ public class Dealer extends BlackjackParticipant {
 
     @Override
     public boolean isDrawable() {
-        int sum = calculateCardSum();
-        return sum < DEALER_STOP_HIT_STANDARD;
+        int sum = calculateCardSum(DEALER_STOP_HIT_STANDARD);
+        return sum <= DEALER_STOP_HIT_STANDARD;
     }
 }
