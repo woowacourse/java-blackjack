@@ -66,7 +66,7 @@ public class OutputView {
         CustomStringBuilder dealerContents = new CustomStringBuilder();
         dealerContents.appendLine("## 최종 승패");
         participants.stream().forEach(participant -> {
-            ParticipantResult participantResult = ParticipantResult.of(dealer, participant);
+            ParticipantResult participantResult = participant.dueWith(dealer);
             playerContents.appendLine(String.format("%s: %s", participant.getName(), participantResult.getDetail()));
             winLoseResult.merge(participantResult, 1, Integer::sum);
         });

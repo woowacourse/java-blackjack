@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.game.ParticipantResult;
 import java.util.Objects;
 
 public class Participant extends Player {
@@ -8,6 +9,24 @@ public class Participant extends Player {
     public Participant(String name) {
         validate(name);
         this.name = name;
+    }
+
+    public ParticipantResult dueWith(Dealer dealer) {
+        if (isBust()) {
+            return ParticipantResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return ParticipantResult.WIN;
+        }
+        int dealerPoint = dealer.calculatePoint();
+        int participantPoint = calculatePoint();
+        if (dealerPoint > participantPoint) {
+            return ParticipantResult.LOSE;
+        }
+        if (dealerPoint < participantPoint) {
+            return ParticipantResult.WIN;
+        }
+        return ParticipantResult.DRAW;
     }
 
     public String getName() {
