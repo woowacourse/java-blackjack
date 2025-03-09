@@ -25,10 +25,8 @@ public class BlackjackController {
     public void start() {
         BlackjackGame blackjackGame = handleInputPlayerNameError(this::enterParticipants);
 
-        handleCardDistributionError(() -> {
-            distributeInitialCards(blackjackGame);
-            distributeAdditionalCards(blackjackGame);
-        }, blackjackGame);
+        distributeInitialCards(blackjackGame);
+        distributeAdditionalCards(blackjackGame);
 
         showFinalCards(blackjackGame);
         showWinLoseResult(blackjackGame);
@@ -40,7 +38,8 @@ public class BlackjackController {
     }
 
     private void distributeInitialCards(final BlackjackGame blackjackGame) {
-        blackjackGame.initCardsToParticipants();
+        blackjackGame.initCardsToDealer();
+        blackjackGame.initCardsToPlayer();
         Participants participants = blackjackGame.getParticipants();
 
         outputView.printStartGame(participants.getPlayerNames());
@@ -55,7 +54,7 @@ public class BlackjackController {
         for (Player player : participants.getPlayers()) {
             handleExtraCardError(() -> distributeAdditionalCardsToPlayer(blackjackGame, player));
         }
-        distributeAdditionalCardsToDealer(blackjackGame);
+        handleExtraCardError(() -> distributeAdditionalCardsToDealer(blackjackGame));
     }
 
     private void distributeAdditionalCardsToPlayer(final BlackjackGame blackjackGame,
@@ -102,16 +101,6 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
             return enterParticipants();
-        }
-    }
-
-    private void handleCardDistributionError(final Runnable action,
-        final BlackjackGame blackjackGame) {
-        try {
-            action.run();
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e);
-            showFinalCards(blackjackGame);
         }
     }
 

@@ -49,8 +49,10 @@ class BlackjackGameTest {
             List<String> names = List.of("sana");
             BlackjackGame game = BlackjackGame.createByPlayerNames(names);
 
-            assertThatCode(game::initCardsToParticipants)
-                .doesNotThrowAnyException();
+            assertAll(() -> {
+                assertThatCode(game::initCardsToDealer).doesNotThrowAnyException();
+                assertThatCode(game::initCardsToPlayer).doesNotThrowAnyException();
+            });
         }
 
         @Test
@@ -58,7 +60,7 @@ class BlackjackGameTest {
         void distributeExtraCardToPlayer() {
             List<String> names = List.of("sana");
             BlackjackGame game = BlackjackGame.createByPlayerNames(names);
-            game.initCardsToParticipants(); // 2장 배부
+            game.initCardsToPlayer(); // 2장 배부
 
             Player player = game.getParticipants().getPlayers().getFirst();
             game.addExtraCard(player); // 총 3장 카드 보유

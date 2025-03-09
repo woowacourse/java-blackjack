@@ -31,7 +31,14 @@ public class BlackjackGame {
         return new BlackjackGame(cardDeck, new Participants(dealer, players));
     }
 
-    public void initCardsToParticipants() {
+    public void initCardsToDealer() {
+        Dealer dealer = participants.getDealer();
+        Card card1 = cardDeck.pickRandomCard();
+        Card card2 = cardDeck.pickRandomCard();
+        dealer.addCards(card1, card2);
+    }
+
+    public void initCardsToPlayer() {
         for (Participant participant : participants.getPlayers()) {
             Card card1 = cardDeck.pickRandomCard();
             Card card2 = cardDeck.pickRandomCard();
