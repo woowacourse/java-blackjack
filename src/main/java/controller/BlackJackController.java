@@ -1,7 +1,8 @@
 package controller;
 
 import domain.BlackjackMatchResult;
-import domain.Cards;
+import domain.CardDeck;
+import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Player;
 import java.util.EnumMap;
@@ -17,25 +18,26 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Cards deck;
+    private final CardsInitializer cardsInitializer;
 
-    public BlackJackController(InputView inputView, OutputView outputView, Cards deck) {
+    public BlackJackController(InputView inputView, OutputView outputView, CardsInitializer cardsInitializer) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.deck = deck;
+        this.cardsInitializer = cardsInitializer;
     }
 
     public void run() {
+        CardDeck deck = new CardDeck(cardsInitializer.initialize());
         List<Player> players = setPlayers();
         Dealer dealer = new Dealer();
 
-        prepareGame(dealer, players);
+        prepareGame(dealer, players, deck);
 
         outputView.printInitialCards(dealer, players);
 
-        processPlayersTurn(players);
+        processPlayersTurn(players, deck);
 
-        processDealerTurn(dealer);
+        processDealerTurn(dealer, deck);
 
         outputView.printCardResult(dealer, players);
         showWinLoseResult(players, dealer);
@@ -48,18 +50,18 @@ public class BlackJackController {
                 .toList();
     }
 
-    private void prepareGame(Dealer dealer, List<Player> players) {
+    private void prepareGame(Dealer dealer, List<Player> players, CardDeck deck) {
         dealer.prepareGame(deck);
         players.forEach(player -> player.prepareGame(deck));
     }
 
-    private void processPlayersTurn(List<Player> players) {
+    private void processPlayersTurn(List<Player> players, CardDeck deck) {
         for (Player player : players) {
-            selectChoice(player);
+            selectChoice(player, deck);
         }
     }
 
-    private void selectChoice(Player player) {
+    private void selectChoice(Player player, CardDeck deck) {
         while (canHit(player)) {
             player.hit(deck);
             outputView.printCards(player);
@@ -77,7 +79,7 @@ public class BlackJackController {
         return inputView.readYesOrNo(player);
     }
 
-    private void processDealerTurn(Dealer dealer) {
+    private void processDealerTurn(Dealer dealer, CardDeck deck) {
         try {
             dealer.hit(deck);
             outputView.printDealerHitSuccess();
@@ -91,9 +93,9 @@ public class BlackJackController {
         Map<Player, BlackjackMatchResult> playerResult = new HashMap<>();
 
         for (Player player : players) {
-            BlackjackMatchResult result = BlackjackMatchResult.judge(dealer.getCards(), player.getCards());
+            BlackjackMatchResult result = BlackjackMatchResult.judge(dealer.getHand(), player.getHand());
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, BlackjackMatchResult.judge(player.getCards(), dealer.getCards()));
+            playerResult.put(player, BlackjackMatchResult.judge(player.getHand(), dealer.getHand()));
         }
         outputView.printWinLoseResult(dealerResult, playerResult);
     }

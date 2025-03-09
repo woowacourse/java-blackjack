@@ -11,32 +11,18 @@ class BlackjackMatchResultTest {
     @Test
     void judgeBurstDraw() {
         //given
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, CardRank.THREE);
-        Card card2 = new Card(Symbol.HEART, CardRank.SIX);
-        Card card3 = new Card(Symbol.SPADE, CardRank.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, CardRank.JACK);
-        Card card5 = new Card(Symbol.COLVER, CardRank.SIX);
-        Card card6 = new Card(Symbol.HEART, CardRank.JACK);
+        Hand dealerHand = new Hand();
+        Hand playerHand = new Hand();
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
 
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        dealer.prepareGame(cards);
-        player.prepareGame(cards);
-
-        dealer.hit(cards);
-        player.hit(cards);
-
+        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(Symbol.COLVER, CardRank.THREE));
         //when
-        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealer.getCards(), player.getCards());
+        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealerHand, playerHand);
 
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.DRAW);
@@ -46,32 +32,17 @@ class BlackjackMatchResultTest {
     @Test
     void judgeNotBurstDraw() {
         //given
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, CardRank.TWO);
-        Card card2 = new Card(Symbol.HEART, CardRank.TWO);
-        Card card3 = new Card(Symbol.SPADE, CardRank.SIX);
-        Card card4 = new Card(Symbol.DIAMOND, CardRank.JACK);
-        Card card5 = new Card(Symbol.COLVER, CardRank.SIX);
-        Card card6 = new Card(Symbol.HEART, CardRank.JACK);
+        Hand dealerHand = new Hand();
+        Hand playerHand = new Hand();
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
 
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        dealer.prepareGame(cards);
-        player.prepareGame(cards);
-
-        dealer.hit(cards);
-        player.hit(cards);
+        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
 
         //when
-        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealer.getCards(), player.getCards());
+        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealerHand, playerHand);
 
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.DRAW);
@@ -81,32 +52,18 @@ class BlackjackMatchResultTest {
     @Test
     void judgeOnlyOneBurstWin() {
         //given
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, CardRank.TWO);
-        Card card2 = new Card(Symbol.HEART, CardRank.TWO);
-        Card card3 = new Card(Symbol.SPADE, CardRank.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, CardRank.JACK);
-        Card card5 = new Card(Symbol.COLVER, CardRank.SIX);
-        Card card6 = new Card(Symbol.HEART, CardRank.JACK);
+        Hand dealerHand = new Hand();
+        Hand playerHand = new Hand();
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
 
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        dealer.prepareGame(cards);
-        player.prepareGame(cards);
-
-        dealer.hit(cards);
-        player.hit(cards);
+        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(Symbol.COLVER, CardRank.THREE));
 
         //when //then
-        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealer.getCards(), player.getCards());
+        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealerHand, playerHand);
 
         assertThat(actual).isEqualTo(BlackjackMatchResult.WIN);
     }
@@ -115,32 +72,17 @@ class BlackjackMatchResultTest {
     @Test
     void judge() {
         //given
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(Symbol.HEART, CardRank.TWO);
-        Card card3 = new Card(Symbol.SPADE, CardRank.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, CardRank.JACK);
-        Card card5 = new Card(Symbol.COLVER, CardRank.SIX);
-        Card card6 = new Card(Symbol.HEART, CardRank.JACK);
+        Hand dealerHand = new Hand();
+        Hand playerHand = new Hand();
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
 
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        dealer.prepareGame(cards);
-        player.prepareGame(cards);
-
-        dealer.hit(cards);
-        player.hit(cards);
+        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(Symbol.COLVER, CardRank.THREE));
 
         //when
-        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealer.getCards(), player.getCards());
+        BlackjackMatchResult actual = BlackjackMatchResult.judge(dealerHand, playerHand);
 
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.LOSE);

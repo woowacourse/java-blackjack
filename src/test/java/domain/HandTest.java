@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -11,7 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class CardsTest {
+class HandTest {
 
     public static Stream<Arguments> provideEachCardsAndExpected() {
         return Stream.of(
@@ -30,13 +31,13 @@ class CardsTest {
     @Test
     void burst2() {
         //given
-        Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, CardRank.KING));
-        totalCards.add(new Card(Symbol.HEART, CardRank.JACK));
-        totalCards.add(new Card(Symbol.HEART, CardRank.TWO));
+        Hand hand = new Hand();
+        hand.add(new Card(Symbol.HEART, CardRank.KING));
+        hand.add(new Card(Symbol.HEART, CardRank.JACK));
+        hand.add(new Card(Symbol.HEART, CardRank.TWO));
 
         //when
-        boolean actual = totalCards.isBurst();
+        boolean actual = hand.isBurst();
 
         //then
         assertThat(actual).isTrue();
@@ -46,12 +47,12 @@ class CardsTest {
     @Test
     void notBurst() {
         //given
-        Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, CardRank.KING));
-        totalCards.add(new Card(Symbol.HEART, CardRank.JACK));
+        Hand hand = new Hand();
+        hand.add(new Card(Symbol.HEART, CardRank.KING));
+        hand.add(new Card(Symbol.HEART, CardRank.JACK));
 
         //when
-        boolean actual = totalCards.isBurst();
+        boolean actual = hand.isBurst();
 
         //then
         assertThat(actual).isFalse();
@@ -61,12 +62,12 @@ class CardsTest {
     @Test
     void addCard() {
         //given
-        Cards cards = new Cards();
+        Hand hand = new Hand();
         Card card = new Card(Symbol.COLVER, CardRank.FIVE);
         //when
 
         //then
-        assertThatCode(() -> cards.add(card))
+        assertThatCode(() -> hand.add(card))
                 .doesNotThrowAnyException();
     }
 
@@ -75,47 +76,31 @@ class CardsTest {
     @MethodSource("provideEachCardsAndExpected")
     void calculateTotalPoint(List<Card> cardList, int expected) {
         //given
-        Cards cards = new Cards();
+        Hand hand = new Hand();
         for (Card card : cardList) {
-            cards.add(card);
+            hand.add(card);
         }
 
         //when
-        int actual = cards.calculateTotalPoint();
+        int actual = hand.calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("카드뭉치의 카드를 드로우 할 수 있다.")
-    @Test
-    void extractCard() {
-        //given
-        Cards cards = new Cards();
-        Card card = new Card(Symbol.COLVER, CardRank.FIVE);
-
-        cards.add(card);
-
-        //when
-        Card actual = cards.extractCard();
-
-        //then
-        assertThat(actual).isEqualTo(card);
     }
 
     @DisplayName("Ace가 있을 때, 11로 간주해도 21을 초과하지않을 경우 11로 간주한다.")
     @Test
     void considerAceHas11() {
         //given
-        Cards cards = new Cards();
+        Hand hand = new Hand();
         Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
         Card card2 = new Card(Symbol.COLVER, CardRank.KING);
 
-        cards.add(card1);
-        cards.add(card2);
+        hand.add(card1);
+        hand.add(card2);
 
         //when
-        int actual = cards.calculateTotalPoint();
+        int actual = hand.calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(21);
@@ -125,15 +110,15 @@ class CardsTest {
     @Test
     void considerAceHas112() {
         //given
-        Cards cards = new Cards();
+        Hand hand = new Hand();
         Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
         Card card2 = new Card(Symbol.HEART, CardRank.ACE);
 
-        cards.add(card1);
-        cards.add(card2);
+        hand.add(card1);
+        hand.add(card2);
 
         //when
-        int actual = cards.calculateTotalPoint();
+        int actual = hand.calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(12);
@@ -143,21 +128,42 @@ class CardsTest {
     @Test
     void considerAceHas113() {
         //given
-        Cards cards = new Cards();
+        Hand hand = new Hand();
         Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
         Card card2 = new Card(Symbol.COLVER, CardRank.ACE);
         Card card3 = new Card(Symbol.COLVER, CardRank.ACE);
         Card card4 = new Card(Symbol.COLVER, CardRank.ACE);
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
+        hand.add(card4);
 
         //when
-        int actual = cards.calculateTotalPoint();
+        int actual = hand.calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(14);
+    }
+
+    @DisplayName("카드리스트는 불변이다")
+    @Test
+    void immutableCardList() {
+        // given
+        Hand hand = new Hand();
+        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card2 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card3 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card4 = new Card(Symbol.COLVER, CardRank.ACE);
+
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
+        hand.add(card4);
+        //when
+        List<Card> cardList = hand.getCards();
+        //then
+        assertThatThrownBy(() -> cardList.add(new Card(Symbol.HEART, CardRank.FIVE)))
+                .isInstanceOf(RuntimeException.class);
     }
 }

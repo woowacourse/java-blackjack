@@ -6,15 +6,15 @@ public class Player extends Gamer {
         super(name);
     }
 
-    public void prepareGame(Cards totalCard) {
-        hit(totalCard);
-        hit(totalCard);
+    public void prepareGame(CardDeck deck) {
+        hit(deck);
+        hit(deck);
     }
 
     @Override
-    public void hit(Cards totalCards) {
+    public void hit(CardDeck deck) {
         validateBurst();
-        add(totalCards);
+        addFrom(deck);
     }
 
     private void validateBurst() {

@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,18 +16,16 @@ class PlayerTest {
     @Test
     void hit() {
         //given
-        Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Symbol.COLVER, CardRank.EIGHT));
+        CardDeck deck = new CardDeck(cards);
 
         Player player = new Player("ad");
 
         //when
-        player.hit(totalCards);
-        Cards expected = new Cards();
-        expected.add(new Card(Symbol.HEART, CardRank.FIVE));
-
+        player.hit(deck);
         //then
-        assertThat(player.getCards()).isEqualTo(expected);
+        assertThat(player.getHand().getCards()).hasSize(1);
     }
 
     @DisplayName("플레이어의 총 점수를 구할 수 있다")
@@ -33,14 +33,20 @@ class PlayerTest {
     void calculatePlayerScore() {
         //given
         Player player = new Player("ad");
-        Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
-        totalCards.add(new Card(Symbol.HEART, CardRank.FOUR));
-        totalCards.add(new Card(Symbol.HEART, CardRank.JACK));
+        Card card1 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card2 = new Card(Symbol.HEART, CardRank.FOUR);
+        Card card3 = new Card(Symbol.HEART, CardRank.JACK);
 
-        player.hit(totalCards);
-        player.hit(totalCards);
-        player.hit(totalCards);
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+
+        CardDeck deck = new CardDeck(cards);
+
+        player.hit(deck);
+        player.hit(deck);
+        player.hit(deck);
 
         //when
         int score = player.getScore();
@@ -53,17 +59,24 @@ class PlayerTest {
     void burstIsNotHit() {
         //given
         Player player = new Player("ad");
-        Cards totalCards = new Cards();
-        totalCards.add(new Card(Symbol.HEART, CardRank.KING));
-        totalCards.add(new Card(Symbol.HEART, CardRank.JACK));
-        totalCards.add(new Card(Symbol.HEART, CardRank.TWO));
+        Card card1 = new Card(Symbol.HEART, CardRank.TWO);
+        Card card2 = new Card(Symbol.HEART, CardRank.KING);
+        Card card3 = new Card(Symbol.HEART, CardRank.JACK);
+        Card card4 = new Card(Symbol.HEART, CardRank.TWO);
 
-        player.hit(totalCards);
-        player.hit(totalCards);
-        player.hit(totalCards);
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+
+        CardDeck deck = new CardDeck(cards);
+
+        player.prepareGame(deck);
+        player.hit(deck);
 
         //when //then
-        assertThatThrownBy(() -> player.hit(totalCards))
+        assertThatThrownBy(() -> player.hit(deck))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageStartingWith("[ERROR]");
     }
@@ -73,21 +86,25 @@ class PlayerTest {
     void notBurstHit() {
         //given
         Player player = new Player("ad");
-        Cards totalCards = new Cards();
+        Card card1 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card2 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card3 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card4 = new Card(Symbol.HEART, CardRank.FIVE);
 
-        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
-        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
-        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
-        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
-        totalCards.add(new Card(Symbol.HEART, CardRank.FIVE));
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
 
-        player.hit(totalCards);
-        player.hit(totalCards);
-        player.hit(totalCards);
-        player.hit(totalCards);
+        CardDeck deck = new CardDeck(cards);
+
+        player.hit(deck);
+        player.hit(deck);
+        player.hit(deck);
 
         //when //then
-        assertThatCode(() -> player.hit(totalCards))
+        assertThatCode(() -> player.hit(deck))
                 .doesNotThrowAnyException();
     }
 
@@ -97,19 +114,21 @@ class PlayerTest {
         //given
         Player player = new Player("ad");
 
-        Cards cards = new Cards();
-        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card3 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card4 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card1 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card2 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card3 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card4 = new Card(Symbol.HEART, CardRank.FIVE);
 
+        List<Card> cards = new ArrayList<>();
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);
         cards.add(card4);
 
+        CardDeck deck = new CardDeck(cards);
+
         //when //then
-        assertThatCode(() -> player.prepareGame(cards))
+        assertThatCode(() -> player.prepareGame(deck))
                 .doesNotThrowAnyException();
     }
 

@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,25 +30,10 @@ class CardsInitializerTest {
         CardsInitializer cardsInitializer = new CardsInitializer();
 
         //when
-        Cards cards = cardsInitializer.initialize();
-        List<Card> cardList = cards.getCards();
-        Set<Card> cardSet = new HashSet<>(cardList);
+        List<Card> cards = cardsInitializer.initialize();
+        Set<Card> cardSet = new HashSet<>(cards);
 
         //then
-        assertThat(cardList.size()).isEqualTo(cardSet.size());
+        assertThat(cards.size()).isEqualTo(cardSet.size());
     }
-
-    @DisplayName("카드리스트는 불변이다")
-    @Test
-    void immutableCardList() {
-        CardsInitializer cardsInitializer = new CardsInitializer();
-
-        //when
-        Cards cards = cardsInitializer.initialize();
-        List<Card> cardList = cards.getCards();
-        //then
-        assertThatThrownBy(() -> cardList.add(new Card(Symbol.HEART, CardRank.FIVE)))
-                .isInstanceOf(RuntimeException.class);
-    }
-
 }

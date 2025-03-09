@@ -3,6 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,23 +14,25 @@ class DealerTest {
     @Test
     void canHit() {
         //given
-        Cards cards = new Cards();
         Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
         Card card2 = new Card(Symbol.HEART, CardRank.TWO);
         Card card3 = new Card(Symbol.SPADE, CardRank.KING);
 
+        List<Card> cards = new ArrayList<>();
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);
 
-        Dealer dealer = new Dealer();
-        dealer.prepareGame(cards);
+        CardDeck deck = new CardDeck(cards);
 
-        int initialPoint = dealer.getCards().calculateTotalPoint();
+        Dealer dealer = new Dealer();
+        dealer.prepareGame(deck);
+
+        int initialPoint = dealer.getHand().calculateTotalPoint();
 
         //when
-        dealer.hit(cards);
-        int actual = dealer.getCards().calculateTotalPoint();
+        dealer.hit(deck);
+        int actual = dealer.getHand().calculateTotalPoint();
 
         //then
         assertThat(actual).isNotEqualTo(initialPoint);
@@ -38,22 +42,22 @@ class DealerTest {
     @Test
     void cannotHit() {
         //given
-        Cards cards = new Cards();
         Card card1 = new Card(Symbol.COLVER, CardRank.JACK);
         Card card2 = new Card(Symbol.HEART, CardRank.NINE);
         Card card3 = new Card(Symbol.SPADE, CardRank.KING);
 
+        List<Card> cards = new ArrayList<>();
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);
 
-        Dealer dealer = new Dealer();
-        dealer.prepareGame(cards);
+        CardDeck deck = new CardDeck(cards);
 
-        int initialPoint = dealer.getCards().calculateTotalPoint();
+        Dealer dealer = new Dealer();
+        dealer.prepareGame(deck);
 
         //when //then
-        assertThatCode(() -> dealer.hit(cards))
+        assertThatCode(() -> dealer.hit(deck))
                 .isInstanceOf(IllegalStateException.class);
 
     }

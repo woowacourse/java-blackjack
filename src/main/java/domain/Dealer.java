@@ -10,13 +10,13 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public void hit(Cards totalCards) {
+    public void hit(CardDeck deck) {
         validateHitState();
-        add(totalCards);
+        addFrom(deck);
     }
 
     private void validateHitState() {
-        if (getCards().calculateTotalPoint() > HIT_THRESHOLD) {
+        if (getHand().calculateTotalPoint() > HIT_THRESHOLD) {
             throw new IllegalStateException("딜러는 카드를 뽑을 수 없는 상태입니다.");
         }
     }
