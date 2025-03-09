@@ -2,43 +2,73 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.BlackjackDeck;
-import domain.BlackjackDeckGenerator;
-import domain.CardValue;
-import domain.Dealer;
-import domain.Suit;
-import domain.TrumpCard;
-import domain.strategy.TestDrawStrategy;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class DealerTest {
+class DealerTest {
 
-    @Test
-    void 카드의_합이_16_초과면_뽑을수_없다() {
-        Deque<TrumpCard> trumpCards = new LinkedList<>(
-                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.NINE)));
-        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
+    static Stream<Arguments> createCardsUpperThan16() {
+        return Stream.of(
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
+                        new TrumpCard(Suit.CLOVER, CardValue.NINE))),
 
-        Dealer dealer = new Dealer();
-        dealer.addDraw(deck.drawCard());
-        dealer.addDraw(deck.drawCard());
-        assertThat(dealer.isDrawable()).isFalse();
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
+                        new TrumpCard(Suit.CLOVER, CardValue.SEVEN))),
+
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
+                        new TrumpCard(Suit.CLOVER, CardValue.K),
+                        new TrumpCard(Suit.HEART, CardValue.SIX)))
+        );
     }
 
-    @Test
-    void 카드의_합이_16_이하면_뽑을수_있다() {
-        Deque<TrumpCard> trumpCards = new LinkedList<>(
-                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
-                        new TrumpCard(Suit.DIAMOND, CardValue.K)));
-        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
-
+    @ParameterizedTest
+    @MethodSource("createCardsUpperThan16")
+    void 카드의_합이_16_초과면_뽑을수_없다(List<TrumpCard> hand) {
+        // given
         Dealer dealer = new Dealer();
-        assertThat(dealer.isDrawable()).isTrue();
+        for (TrumpCard drawCard : hand) {
+            dealer.addDraw(drawCard);
+        }
+
+        // when
+        boolean actual = dealer.isDrawable();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    static Stream<Arguments> createCards16OrLess() {
+        return Stream.of(
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
+                        new TrumpCard(Suit.CLOVER, CardValue.EIGHT))),
+
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
+                        new TrumpCard(Suit.CLOVER, CardValue.SIX))),
+
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
+                        new TrumpCard(Suit.CLOVER, CardValue.K)))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("createCards16OrLess")
+    void 카드의_합이_16_이하면_뽑을수_있다(List<TrumpCard> hand) {
+        // given
+        Dealer dealer = new Dealer();
+        for (TrumpCard drawCard : hand) {
+            dealer.addDraw(drawCard);
+        }
+
+        // when
+        boolean actual = dealer.isDrawable();
+
+        // then
+        assertThat(actual).isTrue();
     }
 }

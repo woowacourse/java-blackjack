@@ -2,12 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.BlackjackDeck;
-import domain.BlackjackDeckGenerator;
-import domain.CardValue;
-import domain.Player;
-import domain.Suit;
-import domain.TrumpCard;
 import domain.strategy.TestDrawStrategy;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -17,7 +11,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     void 카드의_합이_21_이하면_뽑을_수_있다() {
