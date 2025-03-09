@@ -20,17 +20,20 @@ public class Cards {
         int total = cards.stream()
                 .mapToInt(card -> card.getNumber().getNumericValue())
                 .sum();
-        
-        if (total > BLACKJACK_SCORE && isContainsAce()) {
-            return total - ACE_VALUE_DIFFERENCE;
+
+        int aceCount = countAces();
+        while (total > BLACKJACK_SCORE && aceCount > 0) {
+            total -= ACE_VALUE_DIFFERENCE;
+            aceCount--;
         }
 
         return total;
     }
 
-    private boolean isContainsAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+    private int countAces() {
+        return (int) cards.stream()
+            .filter(Card::isAce)
+            .count();
     }
 
     public Cards addCards(List<Card> providedCards) {
