@@ -67,12 +67,9 @@ public enum GameResult {
                     .filter(gameResult -> gameResult == GameResult.WIN)
                     .count();
         }
-        if (this == GameResult.DRAW) {
-            return (int) gameResults.stream()
-                    .filter(gameResult -> gameResult == GameResult.DRAW)
-                    .count();
-        }
-        throw new IllegalArgumentException("[ERROR] 대상 결과 개수 계산에 실패했습니다.");
+        return (int) gameResults.stream()
+                .filter(gameResult -> gameResult == GameResult.DRAW)
+                .count();
     }
 
     public String getResult() {
