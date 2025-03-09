@@ -23,7 +23,7 @@ public class BlackJackController {
                 .map(PlayerName::new)
                 .toList();
 
-        Game game = initializeGame(playerNames);
+        Game game = showInitialState(playerNames);
         for (PlayerName playerName : playerNames) {
             askPlayer(game, playerName);
         }
@@ -32,9 +32,8 @@ public class BlackJackController {
         outputView.printGameStatistics(game.getGameStatistics());
     }
 
-    private Game initializeGame(List<PlayerName> playerNames) {
-        Game game = new Game(playerNames);
-        game.distributeStartingHands();
+    private Game showInitialState(List<PlayerName> playerNames) {
+        Game game = Game.initialize(playerNames);
         outputView.printInitialState(game.getPlayersInfo(), game.getDealerOneCard());
         return game;
     }

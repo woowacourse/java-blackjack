@@ -10,9 +10,15 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
-    public Game(List<PlayerName> playerNames) {
+    private Game(List<PlayerName> playerNames) {
         this.dealer = new Dealer(new Deck(Card.initializeCards()));
         this.players = new Players(playerNames);
+    }
+
+    public static Game initialize(List<PlayerName> playerNames) {
+        Game game = new Game(playerNames);
+        game.distributeStartingHands();
+        return game;
     }
 
     public List<Card> getPlayerCards(PlayerName playerName) {
