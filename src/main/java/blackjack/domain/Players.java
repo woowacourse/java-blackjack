@@ -23,11 +23,10 @@ public class Players {
         this.gamblers.addAll(gamblers);
     }
 
-    private void validateHasDuplication(List<Player> gamblers) {
-        int size = new HashSet<>(gamblers).size();
-        if (gamblers.size() != size) {
-            throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
-        }
+    public void initPlayers(CardPack cardPack) {
+        dealer.pushDealCard(cardPack, 2);
+        gamblers.forEach(gambler ->
+                gambler.pushDealCard(cardPack, 2));
     }
 
     public Player getDealer() {
@@ -38,23 +37,25 @@ public class Players {
         return gamblers;
     }
 
-    public void initPlayers(CardPack cardPack) {
-        dealer.pushDealCard(cardPack, 2);
-        gamblers.forEach(gambler ->
-                gambler.pushDealCard(cardPack, 2));
+    public void dealAddCard(CardPack cardPack, Player addPlayer) {
+        Player player = getMatchPlayer(addPlayer);
+        player.pushDealCard(cardPack, 1);
     }
 
     public void dealAddCardForDealer(CardPack cardPack) {
         dealAddCard(cardPack, dealer);
     }
 
-    public void dealAddCard(CardPack cardPack, Player addPlayer) {
-        Player player = getMatchPlayer(addPlayer);
-        player.pushDealCard(cardPack, 1);
-    }
-
     public boolean isPlayerBust(final Player player) {
         return player.isPlayerBust();
+    }
+
+    public boolean isDealerHit() {
+        return dealer.calculateCardNumber() <= 16;
+    }
+
+    public GameResults getGameResult() {
+        return new GameResults(dealer, gamblers);
     }
 
     private Player getMatchPlayer(Player player) {
@@ -68,11 +69,10 @@ public class Players {
                         new IllegalArgumentException("서버에 오류가 발생했습니다."));
     }
 
-    public boolean isDealerHit() {
-        return dealer.calculateCardNumber() <= 16;
-    }
-
-    public GameResults getGameResult() {
-        return new GameResults(dealer, gamblers);
+    private void validateHasDuplication(List<Player> gamblers) {
+        int size = new HashSet<>(gamblers).size();
+        if (gamblers.size() != size) {
+            throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
+        }
     }
 }

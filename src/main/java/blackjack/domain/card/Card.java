@@ -12,6 +12,10 @@ public class Card {
         this.shape = shape;
     }
 
+    public boolean isAce() {
+        return number.equals(CardNumber.ACE);
+    }
+
     public int getValue() {
         return number.getValue();
     }
@@ -35,9 +39,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(number, shape);
-    }
-
-    public boolean isAce() {
-        return number.equals(CardNumber.ACE);
     }
 }

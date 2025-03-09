@@ -27,15 +27,16 @@ public class BlackjackController {
         displayGameResults(players);
     }
 
-    private void displayGameResults(final Players players) {
-        outputView.printTotalCardsMessage(players);
-        outputView.printGameResults(players, players.getGameResult());
+    private Players initPlayers() {
+        gameManager.addGamblers(readAndParseNames());
+        Players players = gameManager.getPlayers();
+        outputView.printInitCards(players);
+        return players;
     }
 
-    private void dealMoreDealerCards() {
-        while (gameManager.isDealerHitThenDealAddCard()) {
-            outputView.printDealerHitAndDealCard();
-        }
+    private List<Player> readAndParseNames() {
+        String playerNamesInput = inputView.readPlayerNames();
+        return PlayerNameParser.parseNames(playerNamesInput);
     }
 
     private void dealMoreCards(final Players players) {
@@ -48,15 +49,14 @@ public class BlackjackController {
         }
     }
 
-    private Players initPlayers() {
-        gameManager.addGamblers(readAndParseNames());
-        Players players = gameManager.getPlayers();
-        outputView.printInitCards(players);
-        return players;
+    private void dealMoreDealerCards() {
+        while (gameManager.isDealerHitThenDealAddCard()) {
+            outputView.printDealerHitAndDealCard();
+        }
     }
 
-    private List<Player> readAndParseNames() {
-        String playerNamesInput = inputView.readPlayerNames();
-        return PlayerNameParser.parseNames(playerNamesInput);
+    private void displayGameResults(final Players players) {
+        outputView.printTotalCardsMessage(players);
+        outputView.printGameResults(players, players.getGameResult());
     }
 }

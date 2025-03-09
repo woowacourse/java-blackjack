@@ -21,10 +21,6 @@ public class GameManager {
         players.initPlayers(cardPack);
     }
 
-    public Players getPlayers() {
-        return players;
-    }
-
     public void dealAddCard(Player player) {
         players.dealAddCard(cardPack, player);
     }
@@ -39,5 +35,9 @@ public class GameManager {
             return true;
         }
         return false;
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

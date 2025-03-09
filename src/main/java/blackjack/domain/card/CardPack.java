@@ -13,6 +13,10 @@ public class CardPack {
         blackjackShuffle.shuffle(cards);
     }
 
+    public Card getDeal() {
+        return cards.removeLast();
+    }
+
     public List<Card> getCards() {
         return cards;
     }
@@ -22,9 +26,5 @@ public class CardPack {
                 .flatMap(shape -> Arrays.stream(CardNumber.values())
                         .map(number -> new Card(number, shape)))
                 .collect(Collectors.toList());
-    }
-
-    public Card getDeal() {
-        return cards.removeLast();
     }
 }
