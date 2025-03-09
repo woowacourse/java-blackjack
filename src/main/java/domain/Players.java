@@ -1,14 +1,17 @@
 package domain;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
 
     public Players(List<PlayerName> playerNames) {
+        validateDuplicate(playerNames);
         this.players = playerNames.stream()
                 .map(Player::new)
                 .toList();
@@ -62,5 +65,12 @@ public class Players {
         return players.stream().filter(player -> player.getPlayerName().equals(playerName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
+    }
+
+    private void validateDuplicate(List<PlayerName> playerNames){
+        Set<PlayerName> playerNameSet = new HashSet<>(playerNames);
+        if(playerNameSet.size() != playerNames.size()){
+            throw new IllegalArgumentException("중복된 이름이 있습니다.");
+        }
     }
 }
