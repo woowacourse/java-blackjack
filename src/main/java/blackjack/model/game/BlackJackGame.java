@@ -42,22 +42,17 @@ public class BlackJackGame {
         player.receiveCards(cardDeck.draw(amount));
     }
 
-    public Map<Player, Map<Result, Integer>> calculateResult(final Dealer dealer, final List<User> users) {
-        Map<Player, Map<Result, Integer>> results = new LinkedHashMap<>();
-        results.put(dealer, new LinkedHashMap<>(Result.getResultBoard()));
+    public Map<Player, ResultStatistic> calculateResult(final Dealer dealer, final List<User> users) {
+        Map<Player, ResultStatistic> results = new LinkedHashMap<>();
+        results.put(dealer, new ResultStatistic());
         users.forEach(
                 user -> {
-                    results.put(user, new LinkedHashMap<>(Result.getResultBoard()));
-                    addResult(results, dealer, Result.findWinner(dealer, user));
-                    addResult(results, user, Result.findWinner(user, dealer));
+                    results.put(user, new ResultStatistic());
+                    results.get(dealer).add(Result.findWinner(dealer, user));
+                    results.get(user).add(Result.findWinner(user, dealer));
                 }
         );
 
         return results;
-    }
-
-    private void addResult(final Map<Player, Map<Result, Integer>> results, final Player player, final Result result) {
-        Map<Result, Integer> currentResults = results.get(player);
-        currentResults.put(result, currentResults.get(result) + 1);
     }
 }

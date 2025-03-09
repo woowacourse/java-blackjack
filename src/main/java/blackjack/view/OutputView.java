@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.card.Cards;
-import blackjack.model.game.Result;
+import blackjack.model.game.ResultStatistic;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
@@ -51,26 +51,24 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(final Map<Player, Map<Result, Integer>> playerListMap) {
+    public void printGameResult(final Map<Player, ResultStatistic> playerListMap) {
         System.out.println("## 최종 승패");
         playerListMap.entrySet().stream()
                 .map(entry -> entry.getKey().getName() + ": " + formatResults(entry.getValue()))
                 .forEach(System.out::println);
     }
 
-    private String formatResults(Map<Result, Integer> resultStatistics) {
-        boolean hasMultipleResults = resultStatistics.values().stream().mapToInt(integer -> integer).sum() > 1;
-        if (hasMultipleResults) {
-            return resultStatistics.entrySet().stream()
-                    .filter(entry -> entry.getValue() > 0)
-                    .map(entry -> entry.getValue() + entry.getKey().getName())
+    private String formatResults(ResultStatistic resultStatistic) {
+        if (resultStatistic.hasMultipleResult()) {
+            return resultStatistic.getStatistic().entrySet().stream()
+                    .filter(entry -> entry.getValue().hasMeaningfulValue())
+                    .map(entry -> entry.getValue().getValue() + entry.getKey().getName())
                     .collect(Collectors.joining(" "));
-        } else {
-            return resultStatistics.entrySet().stream()
-                    .filter(entry -> entry.getValue() > 0)
-                    .map(entry -> entry.getKey().getName())
-                    .collect(Collectors.joining());
         }
+        return resultStatistic.getStatistic().entrySet().stream()
+                .filter(entry -> entry.getValue().hasMeaningfulValue())
+                .map(entry -> entry.getKey().getName())
+                .collect(Collectors.joining());
     }
 
 }

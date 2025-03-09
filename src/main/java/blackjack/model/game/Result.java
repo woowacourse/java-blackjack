@@ -1,7 +1,7 @@
 package blackjack.model.game;
 
 import blackjack.model.player.Player;
-import java.util.Map;
+import java.util.List;
 
 public enum Result {
 
@@ -25,12 +25,8 @@ public enum Result {
         return LOSE;
     }
 
-    public static Map<Result, Integer> getResultBoard() {
-        return Map.of(
-                WIN, 0,
-                DRAW, 0,
-                LOSE, 0
-        );
+    public static List<Result> getSortedResult() {
+        return List.of(WIN, DRAW, LOSE);
     }
 
     public String getName() {
