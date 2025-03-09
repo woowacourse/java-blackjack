@@ -69,8 +69,10 @@ public class BlackjackController {
 		return convertedCardText(dealerFirstCard);
 	}
 
-	private List<Map.Entry<String, List<String>>> convertPlayersToEntries(final List<Player> players) {
-		return players.stream().map(this::convertPlayerToEntry).collect(Collectors.toList());
+	private Map<String, List<String>> convertPlayersToEntries(final List<Player> players) {
+		return players.stream()
+			.map(this::convertPlayerToEntry)
+			.collect(Collectors.toMap(value -> value.getKey(), value -> value.getValue()));
 	}
 
 	private Map.Entry<String, List<String>> convertPlayerToEntry(final Player player) {
