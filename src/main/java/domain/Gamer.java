@@ -14,7 +14,7 @@ public abstract class Gamer implements Cloneable {
 
     public int calculateScore() {
         boolean containAce = cards.stream()
-                .anyMatch(card -> card.getCardRank() == CardRank.ACE);
+                .anyMatch(Card::isAce);
 
         int lowAceTotal = cards.stream()
                 .mapToInt(card -> card.getCardRank().getValue())

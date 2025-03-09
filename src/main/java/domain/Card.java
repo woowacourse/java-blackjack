@@ -97,4 +97,8 @@ public enum Card {
     public String getCardName() {
         return cardRank.getName() + cardShape.getName();
     }
+
+    public boolean isAce(){
+        return cardRank == ACE;
+    }
 }
