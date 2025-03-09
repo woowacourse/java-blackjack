@@ -21,11 +21,11 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return cards.calculateNearestTotal() > PARTICIPANT_MAX_NUMBER_FOR_BUST;
+        return cards.calculateScore() > PARTICIPANT_MAX_NUMBER_FOR_BUST;
     }
 
     public int score() {
-        return cards.calculateNearestTotal();
+        return cards.calculateScore();
     }
 
     public abstract boolean canReceiveCard();

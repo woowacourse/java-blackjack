@@ -15,7 +15,7 @@ public class CardsTest {
         cards.add(new Card(CardType.DIAMOND, CardNumber.QUEEN));
 
         // when
-        int result = cards.calculateNearestTotal();
+        int result = cards.calculateScore();
 
         // then
         Assertions.assertThat(result)
@@ -31,7 +31,7 @@ public class CardsTest {
         cards.add(new Card(CardType.DIAMOND, CardNumber.ACE));
 
         // when
-        int result = cards.calculateNearestTotal();
+        int result = cards.calculateScore();
 
         // then
         Assertions.assertThat(result)
@@ -48,7 +48,7 @@ public class CardsTest {
         cards.add(new Card(CardType.CLOVER, CardNumber.ACE));
 
         // when
-        int result = cards.calculateNearestTotal();
+        int result = cards.calculateScore();
 
         // then
         Assertions.assertThat(result)
@@ -66,7 +66,7 @@ public class CardsTest {
         cards.add(new Card(CardType.CLOVER, CardNumber.THREE));
 
         // when
-        int result = cards.calculateNearestTotal();
+        int result = cards.calculateScore();
 
         // then
         Assertions.assertThat(result)

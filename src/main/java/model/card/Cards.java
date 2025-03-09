@@ -17,18 +17,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public int calculateNearestTotal() {
-        Set<Integer> candidates = new HashSet<>();
-        generateCandidates(candidates, totalWithoutAce(), 0, aceCount());
-
-        return candidates.stream()
-                .filter(candidate -> candidate <= 21)
-                .max(Integer::compareTo)
-                .orElse(candidates.stream()
-                        .min(Integer::compareTo)
-                        .get());
-    }
-
     private int totalWithoutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
@@ -42,14 +30,22 @@ public class Cards {
                 .count();
     }
 
-    private void generateCandidates(Set<Integer> candidates, int currentSum, int usedAces, int totalAces) {
-        if (usedAces == totalAces) {
-            candidates.add(currentSum);
-            return;
+    public int calculateScore() {
+        int aceScoreOne = CardNumber.ACE.getValues().get(0);
+        int aceScoreEleven = CardNumber.ACE.getValues().get(1);
+
+        int score = totalWithoutAce();
+        if (aceCount() >= 1) {
+            int scoreOneAce = (score + aceScoreOne) + (aceScoreOne * (aceCount() - 1));
+            int scoreElevenAce = (score + aceScoreEleven) + (aceScoreOne * (aceCount() - 1));
+
+            if (scoreOneAce > 21 && scoreElevenAce > 21) {
+                return Math.min(scoreOneAce, scoreElevenAce);
+            }
+            return Math.max(scoreOneAce, scoreElevenAce);
         }
 
-        generateCandidates(candidates, currentSum + 1, usedAces + 1, totalAces);
-        generateCandidates(candidates, currentSum + 11, usedAces + 1, totalAces);
+        return score;
     }
 
     public Card get(int index) {
