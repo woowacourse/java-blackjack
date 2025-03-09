@@ -16,6 +16,11 @@ public class BlackjackRule implements GameRule {
     }
 
     @Override
+    public boolean isWin(Cards cards) {
+        return getScore(cards) == SUM_LIMIT;
+    }
+
+    @Override
     public int getScore(Cards cards) {
         Set<Integer> coordinates = cards.getCoordinateSums();
         if (isBurst(cards)) {

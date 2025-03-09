@@ -28,6 +28,10 @@ public abstract class Participant {
         return rule.isBurst(cards);
     }
 
+    public boolean isWin() {
+        return rule.isWin(cards);
+    }
+
     public Cards getCards() {
         return cards;
     }
