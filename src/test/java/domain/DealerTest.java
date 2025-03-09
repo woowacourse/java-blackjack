@@ -8,7 +8,9 @@ import domain.card.CardType;
 import domain.card.RandomCardGenerator;
 import domain.fake.FaceCardGenerator;
 import domain.gamer.Dealer;
+
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {

@@ -43,7 +43,7 @@ public class Dealer {
         return player.getCards();
     }
 
-    public int getReceivedCardCount(){
+    public int getReceivedCardCount() {
         return player.getCards().size() - GameManager.START_RECEIVE_CARD;
     }
 }

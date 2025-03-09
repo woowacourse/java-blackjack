@@ -23,7 +23,6 @@ public class RandomCardGeneratorTest {
 
         //then
         assertThat(card).isInstanceOf(Card.class);
-
     }
 
     @Test

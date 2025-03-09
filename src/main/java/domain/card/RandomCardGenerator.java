@@ -8,19 +8,19 @@ import java.util.List;
 public class RandomCardGenerator implements CardGenerator {
     List<Card> cardTypes;
 
-    public RandomCardGenerator(){
+    public RandomCardGenerator() {
         cardTypes = generateRandomCardDeck();
         Collections.shuffle(cardTypes);
     }
 
-    private List<Card> generateRandomCardDeck(){
+    private List<Card> generateRandomCardDeck() {
         List<Card> randomCardDeck = new ArrayList<>();
-        Arrays.stream(CardType.values()).forEach(card -> selectCardScore(randomCardDeck,card));
+        Arrays.stream(CardType.values()).forEach(card -> selectCardScore(randomCardDeck, card));
         return randomCardDeck;
     }
 
-    private void selectCardScore(List<? super Card> randomCardDeck, CardType type){
-        Arrays.stream(CardScore.values()).forEach(cardScore -> randomCardDeck.add(new Card(type,cardScore)));
+    private void selectCardScore(List<? super Card> randomCardDeck, CardType type) {
+        Arrays.stream(CardScore.values()).forEach(cardScore -> randomCardDeck.add(new Card(type, cardScore)));
     }
 
     @Override

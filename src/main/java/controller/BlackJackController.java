@@ -27,7 +27,7 @@ public class BlackJackController {
     public void gameStart() {
         final List<String> playersNames = requestPlayerNames();
         final CardGenerator randomCardGenerator = new RandomCardGenerator();
-        final GameManager gameManager = GameManager.create(playersNames,randomCardGenerator);
+        final GameManager gameManager = GameManager.create(playersNames, randomCardGenerator);
         gameManager.initOpeningCards();
 
         requestHit(gameManager);
@@ -47,7 +47,7 @@ public class BlackJackController {
         outputView.printDealerAndPlayersCards(gameManager.getDealer(), gameManager.getPlayers());
         List<Player> isAbleToHitPlayer = gameManager.getAbleToHitPlayers();
         for (Player player : isAbleToHitPlayer) {
-            receiveCardIsAbleToGetCard(gameManager,player);
+            receiveCardIsAbleToGetCard(gameManager, player);
         }
     }
 

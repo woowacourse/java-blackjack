@@ -26,11 +26,11 @@ public class GameManager {
 
     public static GameManager create(final List<String> playerNames, CardGenerator cardGenerator) {
         Dealer dealer = GamerGenerator.generateDealer(cardGenerator);
-        List<Player> players = GamerGenerator.generatePlayer(playerNames,cardGenerator);
+        List<Player> players = GamerGenerator.generatePlayer(playerNames, cardGenerator);
         return new GameManager(dealer, players);
     }
 
-    public void initOpeningCards(){
+    public void initOpeningCards() {
         dealer.receiveCard(START_RECEIVE_CARD);
         players.forEach(player -> player.receiveCard(START_RECEIVE_CARD));
     }
@@ -49,20 +49,20 @@ public class GameManager {
     public Map<String, GameResult> calculatePlayerGameResult() {
         Map<String, GameResult> resultMap = new HashMap<>();
         for (Player player : players) {
-            resultMap.put(player.getName(), calculateResult(dealer,player));
+            resultMap.put(player.getName(), calculateResult(dealer, player));
         }
         return resultMap;
     }
 
-    public void dealerHitUntilStand(){
+    public void dealerHitUntilStand() {
         dealer.hitCardUntilStand();
     }
 
-    public void dealCardToPlayer(Player player){
+    public void dealCardToPlayer(Player player) {
         player.receiveCard();
     }
 
-    public int getDealerHitCount(){
+    public int getDealerHitCount() {
         return dealer.getReceivedCardCount();
     }
 

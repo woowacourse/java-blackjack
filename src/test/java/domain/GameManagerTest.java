@@ -8,6 +8,7 @@ import domain.fake.FaceCardGenerator;
 import domain.fake.TwoScoreCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+
 import java.util.List;
 import java.util.Map;
 

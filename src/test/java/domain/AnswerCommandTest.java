@@ -19,7 +19,6 @@ public class AnswerCommandTest {
         //then
         assertThat(byAnswer).isNotNull()
                 .isEqualTo(AnswerCommand.YES);
-
     }
 
     @Test
