@@ -39,18 +39,18 @@ public class BlackjackController {
   }
 
   private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
-    players.forEach(player -> player.pickCardOnFirstHandOut(deck));
-    dealer.pickCardOnFirstHandOut(deck);
+    players.forEach(player -> player.initialDeal(deck));
+    dealer.initialDeal(deck);
     outputHandOut(players, dealer);
   }
 
   private void outputHandOut(final List<Player> players, final Dealer dealer) {
-    outputView.printHandOutIntroduce(convertPlayersToNames(players));
+    outputView.printDealIntroduce(convertPlayersToNames(players));
 
     final Participant dealerParticipant = dealer.getParticipant();
-    outputView.printDealerHandOutResult(convertedDealerCardText(dealerParticipant));
+    outputView.printDealerHitResult(convertedDealerCardText(dealerParticipant));
 
-    outputView.printPlayersCard(convertPlayersToEntries(players));
+    outputView.printPlayersHand(convertPlayersToEntries(players));
   }
 
   private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
@@ -64,16 +64,16 @@ public class BlackjackController {
 
   private void ifCanPickCard(Deck deck, Player player) {
     final String name = player.getName();
-    while (player.isPickCard() && inputView.readPlayerAnswer(name)) {
-      player.pickCard(deck);
-      outputView.printPlayerCards(name, convertParticipantCardText(player.getParticipant()));
+    while (player.isHit() && inputView.readPlayerAnswer(name)) {
+      player.hit(deck);
+      outputView.printPlayerHand(name, convertParticipantCardText(player.getParticipant()));
     }
   }
 
   private void dealerPickCard(final Dealer dealer, final Deck deck) {
-    while (dealer.isPickCard()) {
-      dealer.pickCard(deck);
-      outputView.printDealerPickCard();
+    while (dealer.isHit()) {
+      dealer.hit(deck);
+      outputView.printDealerHit();
     }
   }
 
@@ -86,7 +86,7 @@ public class BlackjackController {
     final Participant participant = dealer.getParticipant();
     final List<String> convertedCards = convertParticipantCardText(participant);
     final int score = participant.calculateScore();
-    outputView.printDealerHandResult(convertedCards, score);
+    outputView.printDealerRoundResult(convertedCards, score);
   }
 
   private void outputPlayersHandResult(final List<Player> players) {
@@ -97,22 +97,22 @@ public class BlackjackController {
     final Participant participant = player.getParticipant();
     final List<String> convertedCards = convertParticipantCardText(participant);
     final int score = participant.calculateScore();
-    outputView.printPlayerHandResult(player.getName(), convertedCards, score);
+    outputView.printPlayerRoundResult(player.getName(), convertedCards, score);
   }
 
   private void duel(final Dealer dealer, final List<Player> players) {
-    players.forEach(dealer::startDuel);
+    players.forEach(dealer::round);
   }
 
   private void outputDuelResult(final List<Player> players, final Dealer dealer) {
-    outputView.printBlackjackDuelResultIntroduce();
-    outputView.printBlackjackDealerDuelResult(dealer.getWinCount(), dealer.getLoseCount());
+    outputView.printBlackjackRoundResultIntroduce();
+    outputView.printBlackjackResultOnDealer(dealer.getWinCount(), dealer.getLoseCount());
     players.forEach(this::outputPlayersDuelResult);
   }
 
   private void outputPlayersDuelResult(final Player player) {
     final String name = player.getName();
-    outputView.printBlackjackPlayerDuelResult(name, player.isWinDuel());
+    outputView.printBlackjackResultOnPlayer(name, player.isWinDuel());
   }
 
   private List<Player> inputPlayers() {

@@ -19,19 +19,19 @@ public class Player {
     this.name = name;
   }
 
-  public boolean isPickCard() {
+  public boolean isHit() {
     return participant.calculateScore() <= MAX_SCORE;
   }
 
-  public void pickCardOnFirstHandOut(final Deck deck) {
+  public void initialDeal(final Deck deck) {
     participant.pickCardOnFirstHandOut(deck);
   }
 
-  public void pickCard(final Deck deck) {
-    participant.pickCard(deck);
+  public void hit(final Deck deck) {
+    participant.hit(deck);
   }
 
-  public void duel(final Participant other) {
+  public void round(final Participant other) {
     final int score = participant.calculateScore();
     final int otherScore = other.calculateScore();
     if (score > MAX_SCORE) {

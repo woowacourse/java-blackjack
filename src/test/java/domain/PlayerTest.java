@@ -29,7 +29,7 @@ public class PlayerTest {
       final Player player = new Player("Player", participant);
 
       // when
-      final boolean actual = player.isPickCard();
+      final boolean actual = player.isHit();
 
       // then
       assertThat(actual).isEqualTo(expected);
@@ -59,21 +59,21 @@ public class PlayerTest {
       final Player winner = new Player("Winner");
       final List<TrumpCard> winnerCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
-      winner.pickCard(winnerDeck);
+      winner.hit(winnerDeck);
 
       final Player loser = new Player("Loser");
       final List<TrumpCard> loserCards = List.of(new TrumpCard(Rank.NINE, Suit.CLUB));
       final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
-      loser.pickCard(loserDeck);
+      loser.hit(loserDeck);
 
       final Dealer dealer = new Dealer();
       final List<TrumpCard> dealerCards = List.of(new TrumpCard(Rank.TEN, Suit.CLUB));
       final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
-      dealer.pickCard(dealerDeck);
+      dealer.hit(dealerDeck);
 
       // when
-      winner.duel(dealer.getParticipant());
-      loser.duel(dealer.getParticipant());
+      winner.round(dealer.getParticipant());
+      loser.round(dealer.getParticipant());
 
       // then
       assertThat(winner.isWinDuel()).isTrue();
@@ -89,17 +89,17 @@ public class PlayerTest {
           new TrumpCard(Rank.TEN, Suit.SPADE), new TrumpCard(Rank.TEN, Suit.CLUB),
           new TrumpCard(Rank.TWO, Suit.SPADE));
       final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
-      loser.pickCard(loserDeck);
-      loser.pickCard(loserDeck);
-      loser.pickCard(loserDeck);
+      loser.hit(loserDeck);
+      loser.hit(loserDeck);
+      loser.hit(loserDeck);
 
       final Dealer dealer = new Dealer();
       final List<TrumpCard> dealerCards = List.of(new TrumpCard(Rank.TEN, Suit.CLUB));
       final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
-      dealer.pickCard(dealerDeck);
+      dealer.hit(dealerDeck);
 
       // when
-      loser.duel(dealer.getParticipant());
+      loser.round(dealer.getParticipant());
 
       // then
       assertThat(loser.isWinDuel()).isFalse();
@@ -113,19 +113,19 @@ public class PlayerTest {
       final List<TrumpCard> loserCards = List.of(
           new TrumpCard(Rank.TEN, Suit.SPADE));
       final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
-      loser.pickCard(loserDeck);
+      loser.hit(loserDeck);
 
       final Dealer dealer = new Dealer();
       final List<TrumpCard> dealerCards = List.of(
           new TrumpCard(Rank.TEN, Suit.SPADE), new TrumpCard(Rank.TEN, Suit.CLUB),
           new TrumpCard(Rank.TWO, Suit.SPADE));
       final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
-      dealer.pickCard(dealerDeck);
-      dealer.pickCard(dealerDeck);
-      dealer.pickCard(dealerDeck);
+      dealer.hit(dealerDeck);
+      dealer.hit(dealerDeck);
+      dealer.hit(dealerDeck);
 
       // when
-      loser.duel(dealer.getParticipant());
+      loser.round(dealer.getParticipant());
 
       // then
       assertThat(loser.isWinDuel()).isTrue();

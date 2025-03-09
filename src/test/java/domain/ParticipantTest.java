@@ -24,7 +24,7 @@ class ParticipantTest {
       final Deck deck = new Deck(new ArrayDeque<>(cards));
 
       // when
-      participant.pickCard(deck);
+      participant.hit(deck);
 
       // then
       assertThat(participant.getCards().getCards()).isNotEmpty();

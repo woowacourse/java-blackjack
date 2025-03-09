@@ -13,12 +13,12 @@ public class Participant {
   }
 
   public void pickCardOnFirstHandOut(final Deck deck) {
-    pickCard(deck);
-    pickCard(deck);
+    hit(deck);
+    hit(deck);
   }
 
-  public void pickCard(final Deck deck) {
-    final TrumpCard card = deck.pickCard();
+  public void hit(final Deck deck) {
+    final TrumpCard card = deck.draw();
     hand.add(card);
   }
 

@@ -30,7 +30,7 @@ public enum Rank {
     return score;
   }
 
-  public int sum(final int score) {
+  public int add(final int score) {
     return this.score + score;
   }
 }

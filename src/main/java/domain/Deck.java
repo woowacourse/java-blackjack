@@ -21,15 +21,15 @@ public class Deck {
 
   public static Deck generateShuffledDeck() {
     final List<TrumpCard> cards = Arrays.stream(Rank.values())
-        .flatMap(Deck::makeCards)
+        .flatMap(Deck::generateCardEachSuitOnRank)
         .collect(Collectors.toList());
     Collections.shuffle(cards);
     return new Deck(new ArrayDeque<>(cards));
   }
 
-  private static Stream<TrumpCard> makeCards(Rank rank) {
+  private static Stream<TrumpCard> generateCardEachSuitOnRank(Rank rank) {
     return Arrays.stream(Suit.values())
-        .map(emblem -> new TrumpCard(rank, emblem));
+        .map(suit -> new TrumpCard(rank, suit));
   }
 
   private void validateDuplicateCard(final Queue<TrumpCard> deck) {
@@ -39,7 +39,7 @@ public class Deck {
     }
   }
 
-  public TrumpCard pickCard() {
+  public TrumpCard draw() {
     if (deck.isEmpty()) {
       throw new NullPointerException("덱에 남아있는 카드가 없습니다.");
     }

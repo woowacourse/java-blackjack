@@ -23,7 +23,7 @@ public class Hand {
   public int calculateScore() {
     int score = 0;
     for (final TrumpCard card : cards) {
-      score = card.sumScore(score);
+      score = card.add(score);
     }
 
     return Rank.ifBustAceIsMIN(score, calculateAceCount());

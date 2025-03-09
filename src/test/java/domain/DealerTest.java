@@ -22,7 +22,7 @@ public class DealerTest {
       final var dealer = new Dealer();
 
       // when
-      final var actual = dealer.isPickCard();
+      final var actual = dealer.isHit();
 
       // then
       assertThat(actual).isTrue();
@@ -38,7 +38,7 @@ public class DealerTest {
       final var dealer = new Dealer(hand);
 
       // when
-      final var actual = dealer.isPickCard();
+      final var actual = dealer.isHit();
 
       // then
       assertThat(actual).isFalse();
@@ -61,18 +61,18 @@ public class DealerTest {
       final Player player = new Player("loser");
       final List<TrumpCard> playerCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final Deck playerDeck = new Deck(new ArrayDeque<>(playerCards));
-      player.pickCard(playerDeck);
+      player.hit(playerDeck);
 
       final Player winner = new Player("w");
       final List<TrumpCard> winnerCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB),
           new TrumpCard(Rank.TEN, Suit.CLUB));
       final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
-      winner.pickCard(winnerDeck);
-      winner.pickCard(winnerDeck);
+      winner.hit(winnerDeck);
+      winner.hit(winnerDeck);
 
       // when
-      dealer.startDuel(player);
-      dealer.startDuel(winner);
+      dealer.round(player);
+      dealer.round(winner);
 
       // then
       assertThat(dealer.getWinCount()).isEqualTo(1);

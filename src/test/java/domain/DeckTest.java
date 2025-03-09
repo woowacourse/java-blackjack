@@ -44,7 +44,7 @@ public class DeckTest {
       final var expected = new TrumpCard(rank, Suit.CLUB);
 
       // when
-      final var actual = deck.pickCard();
+      final var actual = deck.draw();
 
       // then
       assertThat(actual).isEqualTo(expected);
@@ -56,7 +56,7 @@ public class DeckTest {
       // given
       final var deck = new Deck(new ArrayDeque<>());
       // when&then
-      assertThatThrownBy(deck::pickCard)
+      assertThatThrownBy(deck::draw)
           .isInstanceOf(NullPointerException.class)
           .hasMessageContaining("덱에 남아있는 카드가 없습니다.");
     }

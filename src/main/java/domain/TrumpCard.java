@@ -12,7 +12,7 @@ public record TrumpCard(
     return Objects.equals(rank, other);
   }
 
-  public int sumScore(final int score) {
-    return rank.sum(score);
+  public int add(final int score) {
+    return rank.add(score);
   }
 }
