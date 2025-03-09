@@ -1,14 +1,16 @@
 package blackjack.model.game;
 
 import blackjack.model.card.Card;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class Deck {
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck(final List<Card> cards) {
-        this.cards = new Stack<>();
+        this.cards = new ArrayDeque<>();
         this.cards.addAll(cards);
     }
 
