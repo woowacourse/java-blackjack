@@ -17,6 +17,5 @@ public class BlackjackApplication {
 
         BlackjackController blackjackController = new BlackjackController(deck, judge, inputView, outputView);
         blackjackController.start();
-
     }
 }
