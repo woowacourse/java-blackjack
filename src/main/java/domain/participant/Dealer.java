@@ -11,7 +11,7 @@ public class Dealer extends AbstractGambler {
     }
 
     public Card getOpenCard() {
-        return cardDeck.getCards().getFirst();
+        return cardDeck.getFirst();
     }
 
     @Override

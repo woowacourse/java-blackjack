@@ -36,6 +36,10 @@ public class CardDeck {
         return sum;
     }
 
+    public Card getFirst() {
+        return deck.getFirst();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(deck);
     }
