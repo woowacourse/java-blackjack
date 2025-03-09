@@ -13,6 +13,10 @@ public class Card {
         this.emblem = emblem;
     }
 
+    public boolean isAce() {
+        return number == TrumpNumber.ACE;
+    }
+
     public TrumpNumber getNumber() {
         return number;
     }

@@ -40,7 +40,7 @@ public class Cards {
 
     private int countAces() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber() == TrumpNumber.ACE)
+                .filter(Card::isAce)
                 .count();
     }
 
