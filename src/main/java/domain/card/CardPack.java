@@ -1,24 +1,16 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class CardPack {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public CardPack() {
-        initializeCardPack();
-    }
-
-    private void initializeCardPack() {
-        for (Rank rank : Rank.values()) {
-            for (Shape shape : Shape.values()) {
-                Card card = new Card(rank, shape);
-                cards.add(card);
-            }
-        }
+        this.cards = new ArrayList<>(Arrays.asList(Card.values()));
     }
 
     public void shuffle() {
@@ -29,7 +21,7 @@ public class CardPack {
         return cards.removeFirst();
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public int size() {
+        return cards.size();
     }
 }

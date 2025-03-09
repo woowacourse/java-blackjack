@@ -11,23 +11,18 @@ import org.junit.jupiter.api.Test;
 class CardDeckTest {
 
     private final CardDeck cardDeck = new CardDeck();
-    private final Card jClover = new Card(Rank.JACK, Shape.CLOVER);
-    private final Card fiveHeart = new Card(Rank.FIVE, Shape.HEART);
-    private final Card aceHeart = new Card(Rank.ACE, Shape.HEART);
-    private final Card aceClover = new Card(Rank.ACE, Shape.CLOVER);
-    private final Card twoDiamond = new Card(Rank.TWO, Shape.DIAMOND);
 
     @Test
     void 카드덱에_카드를_추가할_수_있다() {
-        cardDeck.takeCards(twoDiamond);
+        cardDeck.takeCards(Card.DIAMOND_2);
 
         List<Card> cards = cardDeck.getCards();
-        assertThat(cards).contains(twoDiamond);
+        assertThat(cards).contains(Card.DIAMOND_2);
     }
 
     @Test
     void 카드의_점수의_합을_구할수있다() {
-        cardDeck.takeCards(jClover, fiveHeart);
+        cardDeck.takeCards(Card.CLOVER_J, Card.HEART_5);
 
         var score = cardDeck.calculateScore();
 
@@ -36,7 +31,7 @@ class CardDeckTest {
 
     @Test
     void A가있을때_나머지숫자의_합이_11이상이면_1을_선택() {
-        cardDeck.takeCards(aceHeart, aceClover);
+        cardDeck.takeCards(Card.HEART_A, Card.CLOVER_A);
 
         var score = cardDeck.calculateScore();
 
@@ -45,7 +40,7 @@ class CardDeckTest {
 
     @Test
     void A가있을때_나머지숫자의_합이_10이하이면_11을_선택() {
-        cardDeck.takeCards(aceHeart, jClover);
+        cardDeck.takeCards(Card.HEART_A, Card.CLOVER_J);
 
         var score = cardDeck.calculateScore();
 

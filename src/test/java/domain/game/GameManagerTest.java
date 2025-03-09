@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Shape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -63,28 +61,13 @@ public class GameManagerTest {
             List.of(winnerPlayer1, drawPlayer1, drawPlayer2,
                 losePlayer1, losePlayer2, losePlayer3));
 
-        Card tenSpade = new Card(Rank.TEN, Shape.SPADE);
-        Card tenDiamond = new Card(Rank.TEN, Shape.DIAMOND);
-        Card aceSpade = new Card(Rank.ACE, Shape.SPADE);
-        Card tenHeart = new Card(Rank.TEN, Shape.HEART);
-        Card tenClover = new Card(Rank.TEN, Shape.CLOVER);
-        Card jackSpade = new Card(Rank.JACK, Shape.SPADE);
-        Card jackDiamond = new Card(Rank.JACK, Shape.DIAMOND);
-        Card jackHeart = new Card(Rank.JACK, Shape.HEART);
-        Card kingSpade = new Card(Rank.KING, Shape.SPADE);
-        Card nineSpade = new Card(Rank.NINE, Shape.SPADE);
-        Card kingDiamond = new Card(Rank.KING, Shape.DIAMOND);
-        Card nineDiamond = new Card(Rank.NINE, Shape.DIAMOND);
-        Card kingHeart = new Card(Rank.KING, Shape.HEART);
-        Card nineHeart = new Card(Rank.NINE, Shape.HEART);
-
-        dealer.takeCards(tenSpade, tenDiamond);
-        winnerPlayer1.takeCards(aceSpade, tenHeart);
-        drawPlayer1.takeCards(tenClover, jackSpade);
-        drawPlayer2.takeCards(jackDiamond, jackHeart);
-        losePlayer1.takeCards(kingSpade, nineSpade);
-        losePlayer2.takeCards(kingDiamond, nineDiamond);
-        losePlayer3.takeCards(kingHeart, nineHeart);
+        dealer.takeCards(Card.SPADE_10, Card.DIAMOND_10);
+        winnerPlayer1.takeCards(Card.SPADE_A, Card.HEART_10);
+        drawPlayer1.takeCards(Card.CLOVER_10, Card.SPADE_J);
+        drawPlayer2.takeCards(Card.DIAMOND_J, Card.HEART_J);
+        losePlayer1.takeCards(Card.SPADE_K, Card.SPADE_9);
+        losePlayer2.takeCards(Card.DIAMOND_K, Card.DIAMOND_9);
+        losePlayer3.takeCards(Card.HEART_K, Card.HEART_9);
 
         //when
         GameResult gameResult = gameManager.evaluateFinalScore();

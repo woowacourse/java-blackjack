@@ -15,9 +15,6 @@ class DealerTest {
 
     private Dealer dealer;
 
-    private final Card twoSpade = new Card(Rank.TWO, Shape.SPADE);
-    private final Card threeHeart = new Card(Rank.THREE, Shape.HEART);
-
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
@@ -27,27 +24,27 @@ class DealerTest {
     void 딜러는_카드를_받을_수_있다() {
         //given
         //when
-        dealer.takeCards(twoSpade, threeHeart);
+        dealer.takeCards(Card.SPADE_2, Card.HEART_3);
         //then
-        assertThat(dealer.getCards()).contains(twoSpade, threeHeart);
+        assertThat(dealer.getCards()).contains(Card.SPADE_2, Card.HEART_3);
     }
 
     @Test
     void 딜러는_오픈카드는_가장_처음_받은_카드이다() {
         //given
-        dealer.takeCards(twoSpade, threeHeart);
+        dealer.takeCards(Card.SPADE_2, Card.HEART_3);
 
         //when
         var card = dealer.getOpenCard();
 
         //then
-        assertThat(card).isEqualTo(twoSpade);
+        assertThat(card).isEqualTo(Card.SPADE_2);
     }
 
     @Test
     void 딜러의_카드의_점수_합을_구할_수_있다() {
         //given
-        dealer.takeCards(twoSpade, threeHeart);
+        dealer.takeCards(Card.SPADE_2, Card.HEART_3);
 
         //when
         int score = dealer.calculateScore();
@@ -58,9 +55,7 @@ class DealerTest {
     @Test
     void 딜러의_점수가_16점_이하일_때_카드를_더_받을수있다() {
         //given
-        Card jSpade = new Card(Rank.JACK, Shape.SPADE);
-        Card sixSpade = new Card(Rank.SIX, Shape.SPADE);
-        dealer.takeCards(jSpade, sixSpade);
+        dealer.takeCards(Card.SPADE_J, Card.SPADE_6);
 
         //when
         boolean canTakeMore = dealer.canTakeMoreCard();
@@ -72,9 +67,7 @@ class DealerTest {
     @Test
     void 딜러의_점수가_17점_이상이면_카드를_더_받을수없다() {
         //given
-        Card jSpade = new Card(Rank.JACK, Shape.SPADE);
-        Card sevenSpade = new Card(Rank.SEVEN, Shape.SPADE);
-        dealer.takeCards(jSpade, sevenSpade);
+        dealer.takeCards(Card.SPADE_J, Card.SPADE_7);
 
         //when
         boolean canTakeMore = dealer.canTakeMoreCard();
