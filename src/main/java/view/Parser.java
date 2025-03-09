@@ -7,7 +7,7 @@ public class Parser {
     private Parser() {
     }
 
-    public static List<String> parserStringToList(String names) {
+    public static List<String> parseStringToList(String names) {
         return Arrays.stream(names.split(","))
                 .toList()
                 .stream()

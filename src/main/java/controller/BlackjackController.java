@@ -22,11 +22,11 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<String> playerNames = Parser.parserStringToList(inputView.inputUsers());
+        List<String> playerNames = Parser.parseStringToList(inputView.inputUsers());
         GameManger gameManger = new GameManger(playerNames);
         distributionFirstCard(gameManger, playerNames);
 
-        additionalPlayerCard(playerNames, gameManger);
+        additionalPlayerCard(gameManger, playerNames);
         addtionalDealerCard(gameManger);
 
         createGameResult(gameManger, playerNames);
@@ -51,7 +51,7 @@ public class BlackjackController {
         }
     }
 
-    private void additionalPlayerCard(List<String> playerNames, GameManger gameManger) {
+    private void additionalPlayerCard(GameManger gameManger, List<String> playerNames) {
         playerNames.forEach(playerName ->
                 addCardAllPlayer(gameManger, playerName));
     }
