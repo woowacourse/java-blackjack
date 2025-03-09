@@ -61,9 +61,10 @@ public class BlackjackTest {
     @Test
     void 특정_참여자에게_추가_카드_한_장을_분배한다() {
         // given
+        Player player = new Participant("시소");
         Players players = new Players(List.of(
                 new Dealer(),
-                new Participant("시소"),
+                player,
                 new Participant("헤일러"),
                 new Participant("부기"),
                 new Participant("사나")
@@ -72,10 +73,10 @@ public class BlackjackTest {
         Deck deck = DeckGenerator.generateDeck();
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();
-        final int drawnCount = blackjack.getNameAndCardsByName("시소").cards().size();
+        final int drawnCount = blackjack.getNameAndCards(player).cards().size();
 
         // when & then
-        Assertions.assertThat(blackjack.addCardByName("시소").cards().size())
+        Assertions.assertThat(blackjack.addCard(player).cards().size())
                 .isEqualTo(drawnCount + 1);
 
 

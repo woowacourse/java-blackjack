@@ -30,21 +30,16 @@ public class Blackjack {
                 .toList();
     }
 
-    public NameAndCards addCardByName(String name) {
-        Player participant = players.getPlayerByName(name);
-        participant.drawOneCard(deck);
-        return new NameAndCards(
-                participant.getName(),
-                participant.getCards()
-        );
+    public NameAndCards addCard(Player player) {
+        player.drawOneCard(deck);
+        return getNameAndCards(player);
     }
 
     public boolean addCardToDealerIfLowScore() {
         return getDealer().drawOneCardIfLowScore(deck);
     }
 
-    public NameAndCards getNameAndCardsByName(String name) {
-        Player player = players.getPlayerByName(name);
+    public NameAndCards getNameAndCards(Player player) {
         return new NameAndCards(
                 player.getName(),
                 player.getCards()
@@ -66,17 +61,11 @@ public class Blackjack {
                 .toList();
     }
 
-    public List<String> getParticipantNames() {
-        return getParticipants().stream()
-                .map(Player::getName)
-                .toList();
-    }
-
     private Dealer getDealer() {
         return players.getDealer();
     }
 
-    private List<Participant> getParticipants() {
+    public List<Participant> getParticipants() {
         return players.getParticipants()
                 .stream()
                 .map(player -> (Participant) player)
