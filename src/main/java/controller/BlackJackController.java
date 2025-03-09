@@ -2,7 +2,6 @@ package controller;
 
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.CardShuffler;
 import domain.game.Dealer;
 import domain.game.GameResult;
 import domain.game.Player;
@@ -26,8 +25,8 @@ public class BlackJackController {
         Players players = new Players(playerNames);
         Dealer dealer = new Dealer();
 
-        CardShuffler cardShuffler = new CardShuffler();
-        CardDeck cardDeck = CardDeck.createCards(cardShuffler);
+        CardDeck cardDeck = CardDeck.createCards();
+        cardDeck.shuffle();
 
         startBlackJack(cardDeck, players, dealer);
         playBlackJack(cardDeck, players, dealer);

@@ -10,7 +10,7 @@ public class CardDeckTest {
     @Test
     void 카드를_1장_드로우한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        CardDeck cardDeck = CardDeck.createCards();
 
         //when
         Card actual = cardDeck.drawCard();
@@ -23,7 +23,7 @@ public class CardDeckTest {
     @Test
     void 게임_시작을_위해_카드를_2장_드로우한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        CardDeck cardDeck = CardDeck.createCards();
 
         //when
         List<Card> actual = cardDeck.drawCardWhenStart();

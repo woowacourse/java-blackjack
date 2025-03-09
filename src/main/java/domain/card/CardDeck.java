@@ -2,6 +2,7 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,13 +12,12 @@ public class CardDeck {
 
     private final List<Card> deck;
 
-    public static CardDeck createCards(CardShuffler cardShuffler) {
+    public static CardDeck createCards() {
         List<Card> cards = Arrays.stream(Pattern.values())
                 .flatMap(pattern -> createCardNumbers().stream()
                         .map(cardNumber -> new Card(pattern, cardNumber)))
                 .collect(Collectors.toList());
-        List<Card> shuffleCards = cardShuffler.shuffle(cards);
-        return new CardDeck(shuffleCards);
+        return new CardDeck(cards);
     }
 
     private static List<CardNumber> createCardNumbers() {
@@ -32,6 +32,10 @@ public class CardDeck {
 
     private CardDeck(List<Card> deck) {
         this.deck = deck;
+    }
+
+    public void shuffle() {
+        Collections.shuffle(deck);
     }
 
     public List<Card> drawCardWhenStart() {
