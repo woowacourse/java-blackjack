@@ -89,7 +89,7 @@ public class BlackjackGameTest {
         assertThatIterable(blackjackGame.currentPlayerBlackjackResult()
                 .stream()
                 .map(BlackjackResult::cardSum)
-                .collect(Collectors.toList())
+                .toList()
         ).containsExactlyInAnyOrderElementsOf(expectedPlayersCardSum);
     }
 

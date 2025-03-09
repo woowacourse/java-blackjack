@@ -22,7 +22,7 @@ public class BlackjackGame {
         }
         List<Player> players = names.stream()
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .toList();
         this.deck = deck;
         this.blackjackParticipants = new BlackjackParticipants(players, dealer);
         initiateGame();

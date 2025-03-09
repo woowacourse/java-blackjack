@@ -18,7 +18,7 @@ public class BlackjackParticipants {
 
     private Player findPlayer(String name) {
         return players.stream()
-                .filter((player) -> player.name().equals(name))
+                .filter(player -> player.name().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new BlackJackException(INVALID_PLAYER));
     }
@@ -26,7 +26,7 @@ public class BlackjackParticipants {
     public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::name)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TrumpCard> playerCards(String name) {
