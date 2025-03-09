@@ -10,6 +10,9 @@ import java.util.stream.IntStream;
 
 public abstract class Player implements Comparable<Player> {
 
+    public static final int BUST_THRESHOLD = 21;
+    public static final int ACE_PLUS_SCORE = 10;
+
     private final Name name;
     private final List<Card> cards;
 
@@ -25,7 +28,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     public boolean isPlayerBust() {
-        return calculateCardNumber() > 21;
+        return calculateCardNumber() > BUST_THRESHOLD;
     }
 
     public boolean isPlayerNotBust() {
@@ -37,7 +40,7 @@ public abstract class Player implements Comparable<Player> {
                 .mapToInt(Card::getValue)
                 .sum();
         if (canCalculateAceWithEleven(sum)) {
-            sum += 10;
+            sum += ACE_PLUS_SCORE;
         }
         return sum;
     }
@@ -53,7 +56,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     private boolean canCalculateAceWithEleven(int sum) {
-        return hasAce() && sum + 10 <= 21;
+        return hasAce() && sum + ACE_PLUS_SCORE <= BUST_THRESHOLD;
     }
 
     private boolean hasAce() {

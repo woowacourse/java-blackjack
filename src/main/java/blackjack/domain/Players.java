@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Players {
 
+    public static final int HIT_THRESHOLD = 16;
+
     private final Player dealer;
     private final List<Player> gamblers;
 
@@ -51,7 +53,7 @@ public class Players {
     }
 
     public boolean isDealerHit() {
-        return dealer.calculateCardNumber() <= 16;
+        return dealer.calculateCardNumber() <= HIT_THRESHOLD;
     }
 
     public GameResults getGameResult() {
