@@ -13,7 +13,7 @@ public abstract class Participant {
         this.cards = new Cards(new ArrayList<>());
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         cards.addCard(card);
     }
 

@@ -121,7 +121,7 @@ public class BlackjackController {
                 )));
     }
 
-    private List<CardDto> getCardDtos(Cards cards) {
+    private List<CardDto> getCardDtos(final Cards cards) {
         return cards.getCards().stream().map(CardDto::from).toList();
     }
 }

@@ -1,9 +1,9 @@
 import controller.BlackjackController;
 import java.util.List;
+import model.Judge;
 import model.card.Card;
 import model.deck.Deck;
 import model.deck.DeckFactory;
-import model.Judge;
 import view.InputView;
 import view.OutputView;
 

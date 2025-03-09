@@ -7,12 +7,12 @@ public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
     private static final int INITIAL_CARDS_COUNT = 2;
 
-    public Dealer(Deck deck) {
+    public Dealer(final Deck deck) {
         super();
         drawInitialCards(deck);
     }
 
-    private void drawInitialCards(Deck deck) {
+    private void drawInitialCards(final Deck deck) {
         receiveCard(deck.getCard());
         receiveCard(deck.getCard());
 

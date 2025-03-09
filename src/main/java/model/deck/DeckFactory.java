@@ -17,7 +17,7 @@ public class DeckFactory {
         return deck;
     }
 
-    private static void addCardIfShapeNotAceOne(CardShape shape, CardNumber number, List<Card> deck) {
+    private static void addCardIfShapeNotAceOne(final CardShape shape, final CardNumber number, final List<Card> deck) {
         if (!number.equals(CardNumber.ACE_ONE)) {
             deck.add(new Card(number, shape));
         }
