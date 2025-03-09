@@ -8,7 +8,6 @@ import domain.Participant;
 import domain.Player;
 import domain.Players;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
@@ -56,7 +55,7 @@ public class BlackjackController {
     }
 
     private Blackjack createBlackjack() {
-        String names = InputView.inputParticipantName();
+        List<String> names = InputView.inputParticipantName();
         List<Participant> participants = createParticipants(names);
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
@@ -64,12 +63,9 @@ public class BlackjackController {
         return new Blackjack(players, deck);
     }
 
-    private List<Participant> createParticipants(String names) {
-        List<String> parsed = Arrays.stream(names.split(",", -1))
+    private List<Participant> createParticipants(List<String> names) {
+        return names.stream()
                 .map(String::strip)
-                .toList();
-
-        return parsed.stream()
                 .map(Participant::new)
                 .collect(Collectors.toList());
     }
