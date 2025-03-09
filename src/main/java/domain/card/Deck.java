@@ -1,47 +1,52 @@
 package domain.card;
 
 import constant.Suit;
+import exceptions.BlackJackArgumentException;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 public class Deck {
 
   private final Queue<TrumpCard> deck;
 
   public Deck(final Queue<TrumpCard> deck) {
-    validateDuplicateCard(deck);
     this.deck = new ArrayDeque<>(deck);
   }
 
-  public static Deck generateShuffledDeck() {
-    final List<TrumpCard> cards = Arrays.stream(Rank.values())
-        .flatMap(Deck::generateCardEachSuitOnRank)
-        .collect(Collectors.toList());
+  public static Deck createDecks(final int numberOfDeck) {
+    final List<TrumpCard> deck = IntStream.range(0, numberOfDeck)
+        .boxed()
+        .flatMap(i -> createSingleDeck().stream())
+        .toList();
+
+    return new Deck(new ArrayDeque<>(deck));
+  }
+
+  private static List<TrumpCard> createSingleDeck() {
+    return Arrays.stream(Rank.values())
+        .flatMap(rank -> Arrays.stream(Suit.values())
+            .map(suit -> new TrumpCard(rank, suit)))
+        .toList();
+  }
+
+  public Deck shuffle() {
+    var cards = new ArrayList<>(deck);
     Collections.shuffle(cards);
     return new Deck(new ArrayDeque<>(cards));
   }
 
-  private static Stream<TrumpCard> generateCardEachSuitOnRank(Rank rank) {
-    return Arrays.stream(Suit.values())
-        .map(suit -> new TrumpCard(rank, suit));
-  }
-
-  private void validateDuplicateCard(final Queue<TrumpCard> deck) {
-    final HashSet<TrumpCard> notDuplicateCards = new HashSet<>(deck);
-    if (deck.size() != notDuplicateCards.size()) {
-      throw new IllegalArgumentException("덱에는 중복된 카드가 들어올 수 없습니다!");
-    }
+  public int getNumberOfCards() {
+    return deck.size();
   }
 
   public TrumpCard draw() {
     if (deck.isEmpty()) {
-      throw new NullPointerException("덱에 남아있는 카드가 없습니다.");
+      throw new BlackJackArgumentException("덱에 남아있는 카드가 없습니다.");
     }
     return deck.poll();
   }
