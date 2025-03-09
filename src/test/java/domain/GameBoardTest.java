@@ -1,7 +1,8 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.GameCardDeck;
+import domain.card.ParticipantCardDeck;
 import domain.card.CardNumber;
 import domain.card.CardSymbol;
 import domain.participant.BattleResult;
@@ -46,11 +47,11 @@ public class GameBoardTest {
         //when
         gameBoard.drawTwoCards();
 
-        Map<Participant, CardDeck> cardDeckOfParticipant = gameBoard.getCardDeckOfParticipant();
+        Map<Participant, ParticipantCardDeck> cardDeckOfParticipant = gameBoard.getCardDeckOfParticipant();
 
-        for(Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
-            CardDeck ownedCardDeck = entry.getValue();
-            Assertions.assertThat(ownedCardDeck.getCards().size()).isEqualTo(2);
+        for(Map.Entry<Participant, ParticipantCardDeck> entry : cardDeckOfParticipant.entrySet()) {
+            ParticipantCardDeck ownedParticipantCardDeck = entry.getValue();
+            Assertions.assertThat(ownedParticipantCardDeck.getCards().size()).isEqualTo(2);
         }
     }
 
@@ -86,8 +87,8 @@ public class GameBoardTest {
         gameBoard.drawCardTo(targetParticipant);
 
         //then
-        CardDeck ownedCardDeck = gameBoard.getCardDeckOfParticipant().get(targetParticipant);
-        Assertions.assertThat(ownedCardDeck.getCards().size()).isEqualTo(1);
+        ParticipantCardDeck ownedParticipantCardDeck = gameBoard.getCardDeckOfParticipant().get(targetParticipant);
+        Assertions.assertThat(ownedParticipantCardDeck.getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -102,10 +103,10 @@ public class GameBoardTest {
         GameBoard gameBoard = new GameBoard(participants);
         gameBoard.drawCardTo(targetParticipant);
         //when
-        CardDeck cardDeck = gameBoard.getCardDeckOf(targetParticipant);
+        ParticipantCardDeck participantCardDeck = gameBoard.getCardDeckOf(targetParticipant);
 
         //then
-        Assertions.assertThat(cardDeck.getCards().size()).isEqualTo(1);
+        Assertions.assertThat(participantCardDeck.getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -119,8 +120,8 @@ public class GameBoardTest {
         );
         Card card = new Card(CardNumber.TWO, CardSymbol.CLOVER);
         GameBoard gameBoard = new GameBoard(participants);
-        CardDeck cardDeck = gameBoard.getPlayingCard();
-        List<Card> cards = cardDeck.getCards();
+        GameCardDeck gameCardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = gameCardDeck.getCards();
         cards.clear();
         cards.add(card);
 
@@ -146,8 +147,8 @@ public class GameBoardTest {
         Card card1 = new Card(cardNumber1, CardSymbol.CLOVER);
         Card card2 = new Card(cardNumber2, CardSymbol.HEART);
         GameBoard gameBoard = new GameBoard(participants);
-        CardDeck cardDeck = gameBoard.getPlayingCard();
-        List<Card> cards = cardDeck.getCards();
+        GameCardDeck gameCardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = gameCardDeck.getCards();
         cards.clear();
         cards.add(card1);
         cards.add(card2);
@@ -176,8 +177,8 @@ public class GameBoardTest {
         Card card2 = new Card(cardNumber2, CardSymbol.HEART);
         Card card3 = new Card(cardNumber3, CardSymbol.DIAMOND);
         GameBoard gameBoard = new GameBoard(participants);
-        CardDeck cardDeck = gameBoard.getPlayingCard();
-        List<Card> cards = cardDeck.getCards();
+        GameCardDeck gameCardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = gameCardDeck.getCards();
         cards.clear();
         cards.add(card1);
         cards.add(card2);
@@ -210,8 +211,8 @@ public class GameBoardTest {
 
         GameBoard gameBoard = new GameBoard(participants);
 
-        CardDeck cardDeck = gameBoard.getPlayingCard();
-        List<Card> cards = cardDeck.getCards();
+        GameCardDeck gameCardDeck = gameBoard.getPlayingCard();
+        List<Card> cards = gameCardDeck.getCards();
         cards.clear();
         cards.add(card);
         cards.add(card2);
@@ -243,9 +244,9 @@ public class GameBoardTest {
         );
 
         GameBoard gameBoard = new GameBoard(participants);
-        CardDeck cardDeck = gameBoard.getPlayingCard();
+        GameCardDeck gameCardDeck = gameBoard.getPlayingCard();
 
-        List<Card> cards = cardDeck.getCards();
+        List<Card> cards = gameCardDeck.getCards();
         cards.clear();
 
         cards.add(new Card(CardNumber.ACE, CardSymbol.HEART));
@@ -288,9 +289,9 @@ public class GameBoardTest {
         );
 
         GameBoard gameBoard = new GameBoard(participants);
-        CardDeck cardDeck = gameBoard.getPlayingCard();
+        GameCardDeck gameCardDeck = gameBoard.getPlayingCard();
 
-        List<Card> cards = cardDeck.getCards();
+        List<Card> cards = gameCardDeck.getCards();
         cards.clear();
 
         cards.add(new Card(CardNumber.ACE, CardSymbol.HEART));
@@ -340,9 +341,9 @@ public class GameBoardTest {
         );
 
         GameBoard gameBoard = new GameBoard(participants);
-        CardDeck cardDeck = gameBoard.getPlayingCard();
+        GameCardDeck gameCardDeck = gameBoard.getPlayingCard();
 
-        List<Card> cards = cardDeck.getCards();
+        List<Card> cards = gameCardDeck.getCards();
         cards.clear();
 
         cards.add(new Card(CardNumber.TEN, CardSymbol.HEART));

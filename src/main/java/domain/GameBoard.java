@@ -1,7 +1,8 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.GameCardDeck;
+import domain.card.ParticipantCardDeck;
 import domain.participant.BattleResult;
 import domain.participant.Participant;
 import java.util.Collections;
@@ -15,39 +16,39 @@ import java.util.stream.Collectors;
 public class GameBoard {
     private static final int THRESHOLD = 21;
 
-    private final Map<Participant, CardDeck> cardDeckOfParticipant;
-    private final CardDeck playingCard;
+    private final Map<Participant, ParticipantCardDeck> cardDeckOfParticipant;
+    private final GameCardDeck gameCardDeck;
 
     public GameBoard(final List<Participant> participants) {
-        this.playingCard = CardDeck.generateFullPlayingCard();
+        this.gameCardDeck = GameCardDeck.generateFullPlayingCard();
         this.cardDeckOfParticipant = initializeCardDeckOfParticipant(participants);
     }
 
-    private Map<Participant, CardDeck> initializeCardDeckOfParticipant(final List<Participant> participants) {
+    private Map<Participant, ParticipantCardDeck> initializeCardDeckOfParticipant(final List<Participant> participants) {
         return participants.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        participant -> CardDeck.generateEmptySet(),
+                        participant -> ParticipantCardDeck.generateEmptySet(),
                         (existing, replacement) -> replacement,
                         LinkedHashMap::new));
 
     }
 
     public void drawTwoCards() {
-        for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
-            CardDeck cardDeck = entry.getValue();
+        for (Map.Entry<Participant, ParticipantCardDeck> entry : cardDeckOfParticipant.entrySet()) {
+            ParticipantCardDeck participantCardDeck = entry.getValue();
 
-            Card firstCard = playingCard.draw();
-            Card secondCard = playingCard.draw();
-            cardDeck.addCard(firstCard);
-            cardDeck.addCard(secondCard);
+            Card firstCard = gameCardDeck.draw();
+            Card secondCard = gameCardDeck.draw();
+            participantCardDeck.addCard(firstCard);
+            participantCardDeck.addCard(secondCard);
         }
     }
 
     public void drawCardTo(Participant participant) {
-        Card drawedCard = playingCard.draw();
-        CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
-        ownedCardDeck.addCard(drawedCard);
+        Card drawedCard = gameCardDeck.draw();
+        ParticipantCardDeck ownedParticipantCardDeck = cardDeckOfParticipant.get(participant);
+        ownedParticipantCardDeck.addCard(drawedCard);
     }
 
     public boolean ableToDraw(Participant participant) {
@@ -56,12 +57,12 @@ public class GameBoard {
     }
 
     public void shufflePlayingCard() {
-        playingCard.shuffle();
+        gameCardDeck.shuffle();
     }
 
     public int getScoreOf(Participant participant) {
-        CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
-        List<Card> ownedCards = ownedCardDeck.getCards();
+        ParticipantCardDeck ownedParticipantCardDeck = cardDeckOfParticipant.get(participant);
+        List<Card> ownedCards = ownedParticipantCardDeck.getCards();
 
         int totalScore = 0;
         int aceCounts = 0;
@@ -83,7 +84,7 @@ public class GameBoard {
     }
 
     public void calculateBattleResult() {
-        Entry<Participant, CardDeck> cardDeckOfDealer = cardDeckOfParticipant.entrySet()
+        Entry<Participant, ParticipantCardDeck> cardDeckOfDealer = cardDeckOfParticipant.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().areYouDealer())
                 .findFirst()
@@ -92,7 +93,7 @@ public class GameBoard {
         Participant dealer = cardDeckOfDealer.getKey();
         int dealerScore = getScoreOf(dealer);
 
-        for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
+        for (Map.Entry<Participant, ParticipantCardDeck> entry : cardDeckOfParticipant.entrySet()) {
             Participant participant = entry.getKey();
             updateBattleResultBetween(dealer, participant, dealerScore);
         }
@@ -139,16 +140,16 @@ public class GameBoard {
         loser.updateBattleResult(BattleResult.LOSE);
     }
 
-    public CardDeck getCardDeckOf(Participant participant) {
-        CardDeck cardDeck = cardDeckOfParticipant.get(participant);
-        return new CardDeck(cardDeck);
+    public ParticipantCardDeck getCardDeckOf(Participant participant) {
+        ParticipantCardDeck participantCardDeck = cardDeckOfParticipant.get(participant);
+        return new ParticipantCardDeck(participantCardDeck);
     }
 
-    public Map<Participant, CardDeck> getCardDeckOfParticipant() {
+    public Map<Participant, ParticipantCardDeck> getCardDeckOfParticipant() {
         return Collections.unmodifiableMap(cardDeckOfParticipant);
     }
 
-    public CardDeck getPlayingCard() {
-        return playingCard;
+    public GameCardDeck getPlayingCard() {
+        return gameCardDeck;
     }
 }
