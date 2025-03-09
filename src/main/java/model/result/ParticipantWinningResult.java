@@ -4,15 +4,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import model.participant.Dealer;
+import model.participant.Participants;
 import model.participant.Player;
 import model.participant.Players;
 
 public final class ParticipantWinningResult {
     private final Map<Player, GameResult> result;
 
-    public static ParticipantWinningResult of(final Players players, final Dealer dealer) {
+    public static ParticipantWinningResult of(final Participants participants) {
         Map<Player, GameResult> result = new HashMap<>();
-        for (Player player : players.getPlayers()) {
+        Dealer dealer = participants.getDealer();
+        for (Player player : participants.getPlayers()) {
             result.put(player, checkPlayerWin(dealer, player));
         }
         return new ParticipantWinningResult(result);

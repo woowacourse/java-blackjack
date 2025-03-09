@@ -19,7 +19,7 @@ public final class InputView {
     }
 
     public static boolean readHit(final Player player) {
-        OutputView.printHitOrStand(player);
+        OutputView.printHitOrStandQuestion(player);
         String hit = SCANNER.nextLine();
         validateHit(hit);
         return hit.equals(YES);
