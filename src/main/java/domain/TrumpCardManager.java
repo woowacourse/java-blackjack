@@ -29,6 +29,6 @@ public class TrumpCardManager {
     }
 
     public static List<TrumpCard> getCardDeck() {
-        return CARD_DECK;
+        return new ArrayList<>(CARD_DECK);
     }
 }
