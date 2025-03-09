@@ -1,12 +1,13 @@
 package domain;
 
+import domain.card.CardGenerator;
+import domain.card.CardGroup;
+import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
+import domain.gamer.GamerGenerator;
 import domain.gamer.Player;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static domain.GameResult.*;
@@ -18,17 +19,20 @@ public class GameManager {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public GameManager(final Dealer dealer, final List<Player> players) {
+    private GameManager(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static GameManager create(final Dealer dealer, final List<Player> players) {
-        dealer.receiveCard(START_RECEIVE_CARD);
-        for (Player player : players) {
-            player.receiveCard(START_RECEIVE_CARD);
-        }
+    public static GameManager create(final List<String> playerNames, CardGenerator cardGenerator) {
+        Dealer dealer = GamerGenerator.generateDealer(cardGenerator);
+        List<Player> players = GamerGenerator.generatePlayer(playerNames,cardGenerator);
         return new GameManager(dealer, players);
+    }
+
+    public void initOpeningCards(){
+        dealer.receiveCard(START_RECEIVE_CARD);
+        players.forEach(player -> player.receiveCard(START_RECEIVE_CARD));
     }
 
     public Map<GameResult, Integer> calculateDealerGameResult() {
@@ -54,7 +58,25 @@ public class GameManager {
         dealer.hitCardUntilStand();
     }
 
+    public void dealCardToPlayer(Player player){
+        player.receiveCard();
+    }
+
     public int getDealerHitCount(){
         return dealer.getReceivedCardCount();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Player> getAbleToHitPlayers() {
+        return players.stream()
+                .filter(player -> !player.isBust())
+                .toList();
     }
 }

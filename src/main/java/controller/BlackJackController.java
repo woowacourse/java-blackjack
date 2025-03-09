@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameManager;
+import domain.card.CardGenerator;
 import domain.card.CardGroup;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
@@ -24,47 +25,39 @@ public class BlackJackController {
     }
 
     public void gameStart() {
-        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-        final Dealer dealer = GamerGenerator.generateDealer(randomCardGenerator);
-        final List<Player> players = requestPlayers(randomCardGenerator);
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final List<String> playersNames = requestPlayerNames();
+        final CardGenerator randomCardGenerator = new RandomCardGenerator();
+        final GameManager gameManager = GameManager.create(playersNames,randomCardGenerator);
+        gameManager.initOpeningCards();
 
-        requestHit(dealer, players);
+        requestHit(gameManager);
         gameManager.dealerHitUntilStand();
         printDealerReceiveCardCount(gameManager);
 
-        outputView.printGamerCardsAndScore(dealer, players);
+        outputView.printGamerCardsAndScore(gameManager.getDealer(), gameManager.getPlayers());
         outputView.printGameResult(gameManager.calculateDealerGameResult(), gameManager.calculatePlayerGameResult());
     }
 
-    private List<Player> requestPlayers(RandomCardGenerator randomCardGenerator) {
+    private List<String> requestPlayerNames() {
         return LoopTemplate.tryCatchLoop(() ->
-        {
-            final List<String> playerNames = LoopTemplate.tryCatchLoop(inputView::readPlayers);
-            return GamerGenerator.generatePlayer(playerNames, randomCardGenerator);
-        });
+                LoopTemplate.tryCatchLoop(inputView::readPlayers));
     }
 
-    private void requestHit(Dealer dealer, List<Player> players) {
-        outputView.printDealerAndPlayersCards(dealer, players);
-        for (Player player : players) {
-            receiveCard(player);
+    private void requestHit(GameManager gameManager) {
+        outputView.printDealerAndPlayersCards(gameManager.getDealer(), gameManager.getPlayers());
+        List<Player> isAbleToHitPlayer = gameManager.getAbleToHitPlayers();
+        for (Player player : isAbleToHitPlayer) {
+            receiveCardIsAbleToGetCard(gameManager,player);
         }
     }
 
-    private void receiveCard(Player player) {
-        if (!player.isBust()) {
-            receiveCardIsAbleToGetCard(player);
-        }
-    }
-
-    private void receiveCardIsAbleToGetCard(Player player) {
+    private void receiveCardIsAbleToGetCard(GameManager gameManager, Player player) {
         if (requestAnswerCommand(player) == AnswerCommand.NO) {
             outputView.printPlayerCards(player);
             return;
         }
         do {
-            player.receiveCard();
+            gameManager.dealCardToPlayer(player);
             outputView.printPlayerCards(player);
         } while (!player.isBust() && requestAnswerCommand(player) == AnswerCommand.YES);
     }
