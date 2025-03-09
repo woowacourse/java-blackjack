@@ -2,7 +2,7 @@ package blackjack.view;
 
 import java.util.Scanner;
 
-public class InputVIew {
+public class InputView {
     private static final String DELIMITER = ",";
 
     private final Scanner scanner = new Scanner(System.in);
