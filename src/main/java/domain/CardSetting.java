@@ -28,10 +28,6 @@ public class CardSetting {
         return CARD_DECK.removeFirst();
     }
 
-    public static TrumpCard getCard(int index) {
-        return CARD_DECK.get(index);
-    }
-
     public static List<TrumpCard> getCardDeck() {
         return CARD_DECK;
     }
