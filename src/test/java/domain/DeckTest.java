@@ -29,11 +29,13 @@ class DeckTest {
 
     @Test
     void 덱에서_카드가_없으면_예외가_발생한다() {
+        // given
         BlackjackDeck deck = BlackjackDeckTestFixture.createRandomDeck();
         for (int i = 0; i < 52; i++) {
             deck.drawCard();
         }
 
+        // when & then
         assertThatThrownBy(deck::drawCard)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("덱이 비어있어 뽑을 수 없습니다.");

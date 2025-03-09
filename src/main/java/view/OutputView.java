@@ -43,13 +43,12 @@ public class OutputView {
     }
 
     private String formattingTrumpCards(List<TrumpCard> trumpCards) {
-        String formattedTrumpCard = trumpCards.stream()
-                .map((trumpCard) -> {
+        return trumpCards.stream()
+                .map(trumpCard -> {
                     String rank = trumpCard.getRank();
                     String suit = trumpCard.getSuit();
                     return String.format(TRUMP_CARD_FORMAT, rank, suit);
                 }).collect(Collectors.joining(SPLITTER));
-        return formattedTrumpCard;
     }
 
     public void askDraw(String name) {
