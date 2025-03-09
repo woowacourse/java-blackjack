@@ -23,7 +23,6 @@ public class BlackJackGame {
 
     public void initializeGame() {
         participants.getParticipants()
-                .stream()
                 .forEach(this::giveTwoCards);
         giveTwoCards(dealer);
     }
@@ -34,6 +33,9 @@ public class BlackJackGame {
     }
 
     public void giveCardToCurrentTurnParticipant(final boolean isPlayerWantCard) {
+        if (readyQueue.isEmpty()) {
+            return;
+        }
         if (isPlayerWantCard) {
             readyQueue.peek().putCard(deck.drawCard());
             return;
