@@ -74,7 +74,7 @@ class PlayerTest {
         player.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
-        int sumCards = player.sumCardNumbers();
+        int sumCards = player.sumCardScores();
 
         // then
         assertThat(sumCards).isEqualTo(expected);

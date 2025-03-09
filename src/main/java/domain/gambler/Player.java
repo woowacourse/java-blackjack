@@ -15,7 +15,7 @@ public class Player extends Gambler {
     }
 
     public WinDrawLose compareTo(int dealerScore) {
-        int sum = sumCardNumbers();
+        int sum = sumCardScores();
         if (sum > BUST_STANDARD || dealerScore > BUST_STANDARD) {
             return getWinDrawLoseWhenOverBustStandard(sum);
         }

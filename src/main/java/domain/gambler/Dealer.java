@@ -22,6 +22,6 @@ public class Dealer extends Gambler {
     }
 
     public boolean isSumUnderSixteen() {
-        return sumCardNumbers() <= DEALER_HIT_THRESHOLD;
+        return sumCardScores() <= DEALER_HIT_THRESHOLD;
     }
 }

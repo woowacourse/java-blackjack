@@ -35,10 +35,10 @@ public class OutputView {
     }
 
     public void printGameSummary(Players players, Dealer dealer) {
-        System.out.println("딜러카드: " + processCardsInfo(dealer.openCards()) + " - 결과: " + dealer.sumCardNumbers());
+        System.out.println("딜러카드: " + processCardsInfo(dealer.openCards()) + " - 결과: " + dealer.sumCardScores());
         for (Player player : players.getPlayers()) {
             System.out.println(player.getNickname() + "카드: " + processCardsInfo(player.openCards()) + " - 결과: "
-                    + player.sumCardNumbers());
+                    + player.sumCardScores());
         }
     }
 

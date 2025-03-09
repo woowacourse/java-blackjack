@@ -30,7 +30,7 @@ public class BlackJackController {
         selectPlayersHitOrStand(players, deck);
         checkDealerSumUnderSixteen(dealer, deck);
         outputView.printGameSummary(players, dealer);
-        outputView.printGameResult(players.deriveResults(dealer.sumCardNumbers()));
+        outputView.printGameResult(players.deriveResults(dealer.sumCardScores()));
     }
 
     private Players registerPlayers(List<String> names, Deck deck) {

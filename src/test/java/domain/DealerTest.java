@@ -75,7 +75,7 @@ class DealerTest {
         dealer.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
-        int sumCards = dealer.sumCardNumbers();
+        int sumCards = dealer.sumCardScores();
 
         // then
         assertThat(sumCards).isEqualTo(expected);

@@ -20,8 +20,8 @@ public class Gambler {
         return cards.addOneCard(card);
     }
 
-    public int sumCardNumbers() {
-        return cards.sumCardNumbers();
+    public int sumCardScores() {
+        return cards.sumCardScores();
     }
 
     public List<Card> openCards() {

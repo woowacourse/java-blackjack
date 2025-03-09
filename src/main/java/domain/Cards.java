@@ -1,6 +1,5 @@
 package domain;
 
-import domain.constant.TrumpNumber;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +16,11 @@ public class Cards {
 
     public boolean addOneCard(Card card) {
         cards.add(card);
-        return sumCardNumbers() <= BUST_STANDARD;
+        return sumCardScores() <= BUST_STANDARD;
     }
 
-    public int sumCardNumbers() {
-        int sum = calculateSum();
+    public int sumCardScores() {
+        int sum = calculateScore();
         for (int i = 0; i < countAces(); i++) {
             sum = processAce(sum);
         }
@@ -32,7 +31,7 @@ public class Cards {
         return cards.removeLast();
     }
 
-    private int calculateSum() {
+    private int calculateScore() {
         return cards.stream()
                 .mapToInt(card -> card.getNumber().getValue())
                 .sum();

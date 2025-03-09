@@ -28,7 +28,7 @@ class CardTest {
         Cards cards = new Cards(emptyCards);
 
         // when
-        int sum = cards.sumCardNumbers();
+        int sum = cards.sumCardScores();
 
         // then
         assertThat(sum).isEqualTo(20);
