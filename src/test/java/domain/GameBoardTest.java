@@ -8,6 +8,7 @@ import domain.participant.BattleResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -72,6 +73,23 @@ public class GameBoardTest {
 
         // then
         Assertions.assertThat(gameBoardDealer).isEqualTo(dealer);
+    }
+
+    @Test
+    void 게임에_참여중인_참가자_모두_가져오기_테스트() {
+        // given
+        Dealer dealer = Dealer.generate();
+        List<Player> players = List.of(Player.from("우가"), Player.from("히스타"));
+        GameBoard gameBoard = GameBoard.generateOf(dealer, players);
+
+        List<Participant> expectedParticipants = new ArrayList<>(players);
+        expectedParticipants.add(dealer);
+
+        // when
+        List<Participant> participants = gameBoard.getParticipants();
+
+        // then
+        Assertions.assertThat(participants).containsExactlyElementsOf(expectedParticipants);
     }
 
     @Test
