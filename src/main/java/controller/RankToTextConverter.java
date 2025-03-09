@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Rank;
+import domain.card.Rank;
 
 public class RankToTextConverter {
 

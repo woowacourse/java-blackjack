@@ -1,8 +1,8 @@
 package domain.participant;
 
-import domain.Deck;
-import domain.Hand;
-import domain.TrumpCard;
+import domain.card.Deck;
+import domain.card.Hand;
+import domain.card.TrumpCard;
 
 public abstract class Participant {
 

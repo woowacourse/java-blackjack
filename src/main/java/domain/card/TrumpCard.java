@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import constant.Suit;
 import java.util.Objects;

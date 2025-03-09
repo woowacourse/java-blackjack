@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import constant.Suit;
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.TrumpCard;
 import java.util.ArrayDeque;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
