@@ -43,7 +43,7 @@ class BlackJackInitManagerTest {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when & then
-        assertThatCode(() -> blackJackInitManager.saveDealer(Hand::new))
+        assertThatCode(() -> blackJackInitManager.generateDealer(Hand::new))
                 .doesNotThrowAnyException();
 
     }

@@ -20,7 +20,7 @@ public class BlackJackInitManager {
         return new Deck(cardsGenerator.generate());
     }
 
-    public Players savePlayers(List<String> names, Supplier<CardHolder> cardHolderSupplier) {
+    public Players generatePlayers(List<String> names, Supplier<CardHolder> cardHolderSupplier) {
         List<Player> players = names.stream()
                 .map(name -> new Player(name, cardHolderSupplier.get()))
                 .toList();
@@ -28,7 +28,7 @@ public class BlackJackInitManager {
         return Players.from(players);
     }
 
-    public Dealer saveDealer(Supplier<CardHolder> cardHolderSupplier) {
+    public Dealer generateDealer(Supplier<CardHolder> cardHolderSupplier) {
         return new Dealer(cardHolderSupplier.get());
     }
 }
