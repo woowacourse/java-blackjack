@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
+import blackjack.domain.user.Player;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

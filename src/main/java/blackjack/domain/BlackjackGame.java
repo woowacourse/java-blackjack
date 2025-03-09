@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
+import blackjack.domain.user.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

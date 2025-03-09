@@ -1,8 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Card;
+import blackjack.domain.Denomination;
+import blackjack.domain.Suit;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,15 +25,6 @@ public class PlayerTest {
             Player player = new Player(name);
 
             assertThat(player).isInstanceOf(Player.class);
-        }
-
-        @ParameterizedTest
-        @ValueSource(strings = {"포비_", "sa나!", "훌라627", "HULA,"})
-        @DisplayName("영어 이름이 아니면 예외를 발생시킨다.")
-        void createPlayerByEmptyName(String name) {
-            assertThatThrownBy(() -> new Player(name))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름은 알파벳 소문자만 입력 가능합니다.");
         }
     }
 

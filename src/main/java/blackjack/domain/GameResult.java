@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+
 public enum GameResult {
     WIN("승"),
     DRAW("무"),
