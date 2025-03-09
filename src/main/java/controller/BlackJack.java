@@ -1,17 +1,23 @@
 package controller;
 
-import static controller.dto.WinLossCountDto.computeWinLoss;
 import static view.InputView.getPlayerNamesInput;
 import static view.InputView.getYnInput;
-import static view.OutputView.*;
+import static view.OutputView.printAllResult;
+import static view.OutputView.printBust;
+import static view.OutputView.printDealerExtraCardsCount;
+import static view.OutputView.printDistributeResult;
+import static view.OutputView.printEveryOneCardsNamesWithTotal;
+import static view.OutputView.printHandCardsNames;
 
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-
 import domain.participant.Players;
+import domain.result.WinLossResult;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class BlackJack {
@@ -31,7 +37,7 @@ public class BlackJack {
 
         printDealerExtraCardsCount(dealer);
         printEveryOneCardsNamesWithTotal(players, dealer);
-        printResult(players, dealer, computeWinLoss(players, dealer));
+        printResult(players);
     }
 
     public boolean resolveBust(final Participant participant) {
@@ -93,5 +99,14 @@ public class BlackJack {
             printHandCardsNames(participant);
         }
         return resolveBust(participant);
+    }
+
+    private void printResult(Players players) {
+        Map<Player, WinLossResult> playerResults = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            playerResults.put(player, WinLossResult.of(player.getWinLoss(dealer.getHandTotal())));
+        }
+
+        printAllResult(playerResults, dealer);
     }
 }

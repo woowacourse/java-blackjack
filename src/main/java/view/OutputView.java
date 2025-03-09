@@ -2,15 +2,17 @@ package view;
 
 import static domain.participant.Dealer.THRESHOLD;
 
-import controller.dto.WinLossCountDto;
-import domain.card.Denomination;
-import domain.participant.Participant;
-import domain.result.WinLossResult;
 import domain.card.Card;
+import domain.card.Denomination;
 import domain.card.Hand;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.WinLossResult;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -31,15 +33,6 @@ public class OutputView {
         System.out.println(stringBuilder.append("\n"));
     }
 
-    public static void printEveryOneCardsNamesWithTotal(final Players players, final Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
-        openCardsWithTotal(dealer, stringBuilder);
-        for (Player player : players.getPlayers()) {
-            openCardsWithTotal(player, stringBuilder);
-        }
-        System.out.println(stringBuilder);
-    }
-
     public static void printBust() {
         System.out.println("버스트가 되어 턴을 종료합니다.");
     }
@@ -51,16 +44,11 @@ public class OutputView {
         }
     }
 
-    public static void printResult(final Players players, final Dealer dealer, final WinLossCountDto winLossCountResult) {
+    public static void printEveryOneCardsNamesWithTotal(final Players players, final Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패\n");
-        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
-                winLossCountResult.winCount(),
-                winLossCountResult.lossCount(),
-                winLossCountResult.drawCount()));
+        openCardsWithTotal(dealer, stringBuilder);
         for (Player player : players.getPlayers()) {
-            stringBuilder.append(String.format("%s: %s\n", player.getName(),
-                    WinLossResult.of(player.getWinLoss(dealer.getHandTotal())).getWinLossMessage()));
+            openCardsWithTotal(player, stringBuilder);
         }
         System.out.println(stringBuilder);
     }
@@ -70,6 +58,32 @@ public class OutputView {
         stringBuilder.append(mapDenominationToString(card.getDenomination()))
                 .append(card.getSuit().getShape());
         return stringBuilder.toString();
+    }
+
+    public static void printAllResult(final Map<Player, WinLossResult> playerResults, final Dealer dealer) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("## 최종 승패\n");
+
+        Map<WinLossResult, Integer> dealerWinLossResult = calculateDealerResult(playerResults);
+        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
+                dealerWinLossResult.get(WinLossResult.LOSS),
+                dealerWinLossResult.get(WinLossResult.WIN),
+                dealerWinLossResult.get(WinLossResult.DRAW)));
+        for (Entry<Player, WinLossResult> playerResult : playerResults.entrySet()) {
+            stringBuilder.append(String.format("%s: %s\n", playerResult.getKey().getName(),
+                    playerResult.getValue().getWinLossMessage()));
+        }
+        System.out.println(stringBuilder);
+    }
+
+    private static void printEveryoneCardsNames(Players players, Dealer dealer, StringBuilder stringBuilder) {
+        stringBuilder.append(String.format("%s카드: ", dealer.getName()));
+        stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()))
+                .append(", (???)\n");
+        for (Player player : players.getPlayers()) {
+            openHand(player, stringBuilder);
+            stringBuilder.append("\n");
+        }
     }
 
     private static void openHand(final Participant participant, final StringBuilder stringBuilder) {
@@ -84,16 +98,6 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private static void printEveryoneCardsNames(Players players, Dealer dealer, StringBuilder stringBuilder) {
-        stringBuilder.append(String.format("%s카드: ", dealer.getName()));
-        stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()))
-                .append(", (???)\n");
-        for (Player player : players.getPlayers()) {
-            openHand(player, stringBuilder);
-            stringBuilder.append("\n");
-        }
-    }
-
     private static void openCardsWithTotal(final Participant participant, final StringBuilder stringBuilder) {
         openHand(participant, stringBuilder);
         int totalScore = participant.getHandTotal();
@@ -106,19 +110,56 @@ public class OutputView {
                 .append("\n");
     }
 
+    private static Map<WinLossResult, Integer> calculateDealerResult(Map<Player, WinLossResult> playerResults) {
+        Map<WinLossResult, Integer> winLossCountResult = new EnumMap<>(WinLossResult.class);
+
+        for (WinLossResult value : WinLossResult.values()) {
+            winLossCountResult.put(value, 0);
+        }
+
+        for (WinLossResult result : playerResults.values()) {
+            winLossCountResult.put(result, winLossCountResult.getOrDefault(result, 0) + 1);
+        }
+        return winLossCountResult;
+    }
+
     private static String mapDenominationToString(final Denomination denomination) {
-        if (denomination == Denomination.ACE) return "A";
-        if (denomination == Denomination.TWO) return "2";
-        if (denomination == Denomination.THREE) return "3";
-        if (denomination == Denomination.FOUR) return "4";
-        if (denomination == Denomination.FIVE) return "5";
-        if (denomination == Denomination.SIX) return "6";
-        if (denomination == Denomination.SEVEN) return "7";
-        if (denomination == Denomination.EIGHT) return "8";
-        if (denomination == Denomination.NINE) return "9";
-        if (denomination == Denomination.TEN) return "10";
-        if (denomination == Denomination.JACK) return "J";
-        if (denomination == Denomination.QUEEN) return "Q";
+        if (denomination == Denomination.ACE) {
+            return "A";
+        }
+        if (denomination == Denomination.TWO) {
+            return "2";
+        }
+        if (denomination == Denomination.THREE) {
+            return "3";
+        }
+        if (denomination == Denomination.FOUR) {
+            return "4";
+        }
+        if (denomination == Denomination.FIVE) {
+            return "5";
+        }
+        if (denomination == Denomination.SIX) {
+            return "6";
+        }
+        if (denomination == Denomination.SEVEN) {
+            return "7";
+        }
+        if (denomination == Denomination.EIGHT) {
+            return "8";
+        }
+        if (denomination == Denomination.NINE) {
+            return "9";
+        }
+        if (denomination == Denomination.TEN) {
+            return "10";
+        }
+        if (denomination == Denomination.JACK) {
+            return "J";
+        }
+        if (denomination == Denomination.QUEEN) {
+            return "Q";
+        }
         return "K";
     }
 }
