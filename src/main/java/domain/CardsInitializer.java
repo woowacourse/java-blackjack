@@ -38,7 +38,7 @@ public class CardsInitializer {
 
     private List<Number> getNumbers() {
         return Arrays.stream(Number.values())
-                .filter(number -> !number.equals(Number.SOFT_ACE))
+                .filter(number -> number != Number.SOFT_ACE)
                 .toList();
     }
 }
