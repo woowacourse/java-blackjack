@@ -1,12 +1,13 @@
 package domain;
 
+import domain.constant.BlackJackRules;
+
 import java.util.Comparator;
 import java.util.List;
 
 public class Dealer {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
-    public static final int INITIAL_CARD_COUNT = 2;
 
     private final Cards cards;
 
@@ -38,8 +39,8 @@ public class Dealer {
     }
 
     private void validateInitialCardsSize(Cards cards) {
-        if (cards.getSize() != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 초기 카드는 " + INITIAL_CARD_COUNT + "장을 받아야 합니다.");
+        if (cards.getSize() != BlackJackRules.INITIAL_CARD_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 초기 카드는 " + BlackJackRules.INITIAL_CARD_COUNT + "장을 받아야 합니다.");
         }
     }
 

@@ -1,12 +1,10 @@
 package domain;
 
+import domain.constant.BlackJackRules;
 import domain.constant.GameResult;
 import java.util.List;
 
 public class Player {
-
-    public static final int BUST_STANDARD = 21;
-    public static final int INITIAL_CARD_COUNT = 2;
 
     private final Nickname nickname;
     private final Cards cards;
@@ -27,14 +25,14 @@ public class Player {
 
     public GameResult compareTo(int dealerScore) {
         int sum = sumCardNumbers();
-        if (sum > BUST_STANDARD || dealerScore > BUST_STANDARD) {
+        if (sum > BlackJackRules.BUST_STANDARD || dealerScore > BlackJackRules.BUST_STANDARD) {
             return getWinDrawLoseWhenOverBustStandard(sum);
         }
         return getWinDrawLose(dealerScore, sum);
     }
 
     private GameResult getWinDrawLoseWhenOverBustStandard(int sum) {
-        if (sum > BUST_STANDARD) {
+        if (sum > BlackJackRules.BUST_STANDARD) {
             return GameResult.LOSE;
         }
         return GameResult.WIN;
@@ -55,8 +53,8 @@ public class Player {
     }
 
     private void validateInitialCardsSize(Cards cards) {
-        if (cards.getSize() != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 초기 카드는 " + INITIAL_CARD_COUNT + "장을 받아야 합니다.");
+        if (cards.getSize() != BlackJackRules.INITIAL_CARD_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 초기 카드는 " + BlackJackRules.INITIAL_CARD_COUNT + "장을 받아야 합니다.");
         }
     }
 
