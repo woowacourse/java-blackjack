@@ -19,7 +19,7 @@ public class GameManager {
     private final Dealer dealer;
     private final List<Player> players;
 
-    private GameManager(final Dealer dealer, final List<Player> players) {
+    public GameManager(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }

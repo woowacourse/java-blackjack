@@ -10,6 +10,8 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class GameManagerTest {
@@ -25,12 +27,12 @@ public class GameManagerTest {
         Dealer dealer = new Dealer(cardGroup, randomCardGenerator);
 
         //when
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final GameManager gameManager = new GameManager(dealer, players);
         //then
         assertThat(gameManager).isInstanceOf(GameManager.class);
     }
 
-
+    @DisplayName("플레이어 20점 vs 딜러 18점")
     @Test
     void 플레이어가_버스트_하지_않고_딜러보다_점수가_높아야_승리() {
         //given
@@ -44,7 +46,9 @@ public class GameManagerTest {
         final Dealer dealer = new Dealer(cardGroup3, new TwoScoreCardGenerator());
 
         //when
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final GameManager gameManager = new GameManager(dealer, players);
+        gameManager.initOpeningCards();
+        gameManager.dealerHitUntilStand();
         final Map<String, GameResult> playerGameResult = gameManager.calculatePlayerGameResult();
 
         //then
@@ -53,6 +57,7 @@ public class GameManagerTest {
 
     }
 
+    @DisplayName("Face 카드 3장을 받아 30점의 경우 버스트하여 패배")
     @Test
     void 플레이어가_버스트_하는_경우_무조건_패배() {
         //given
@@ -66,9 +71,9 @@ public class GameManagerTest {
         final Dealer dealer = new Dealer(cardGroup3, new TwoScoreCardGenerator());
 
         //when
-        final GameManager gameManager = GameManager.create(dealer, players);
-        player1.receiveCard(1);
-        player2.receiveCard(1);
+        final GameManager gameManager = new GameManager(dealer, players);
+        player1.receiveCard(3);
+        player2.receiveCard(3);
         final Map<String, GameResult> playerGameResult = gameManager.calculatePlayerGameResult();
 
         //then
@@ -89,7 +94,7 @@ public class GameManagerTest {
         final Dealer dealer = new Dealer(cardGroup3, new FaceCardGenerator());
 
         //when
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final GameManager gameManager = new GameManager(dealer, players);
         final Map<String, GameResult> playerGameResult = gameManager.calculatePlayerGameResult();
 
         //then
@@ -110,7 +115,7 @@ public class GameManagerTest {
         final Dealer dealer = new Dealer(cardGroup3, new FaceCardGenerator());
 
         //when
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final GameManager gameManager = new GameManager(dealer, players);
         player1.receiveCard(1);
         player2.receiveCard(1);
         dealer.receiveCard(1);
@@ -134,7 +139,8 @@ public class GameManagerTest {
         final Dealer dealer = new Dealer(cardGroup3, new FaceCardGenerator());
 
         //when
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final GameManager gameManager = new GameManager(dealer, players);
+        gameManager.initOpeningCards();
         final Map<GameResult, Integer> result = gameManager.calculateDealerGameResult();
 
         //then
@@ -154,7 +160,8 @@ public class GameManagerTest {
         final Dealer dealer = new Dealer(cardGroup3, new FaceCardGenerator());
 
         //when
-        final GameManager gameManager = GameManager.create(dealer, players);
+        final GameManager gameManager = new GameManager(dealer, players);
+        gameManager.initOpeningCards();
         final Map<String, GameResult> result = gameManager.calculatePlayerGameResult();
 
         //then
