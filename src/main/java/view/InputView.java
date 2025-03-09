@@ -30,14 +30,14 @@ public class InputView {
 
         for (String name : names) {
             if (!Pattern.matches(regex, name)) {
-                throw new IllegalArgumentException("[ERROR] 잘못된 이름 형식입니다. 입력값 : " + name);
+                throw new IllegalArgumentException("잘못된 이름 형식입니다. 입력값 : " + name);
             }
         }
     }
 
     private static void validateHit(String hit) {
         if (!(hit.equals(YES) || hit.equals(NO))) {
-            throw new IllegalArgumentException("[ERROR] y 또는 n을 입력해주세요. 입력값 : " + hit);
+            throw new IllegalArgumentException("y 또는 n을 입력해주세요. 입력값 : " + hit);
         }
     }
 }

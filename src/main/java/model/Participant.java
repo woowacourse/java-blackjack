@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Participant {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
@@ -15,9 +16,9 @@ public class Participant {
     }
 
     public void dealInitialCards(Deck deck) {
-        for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
-            receiveCard(deck.pick());
-        }
+        IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
+                i -> receiveCard(deck.pick())
+        );
     }
 
     public boolean isBurst() {

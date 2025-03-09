@@ -32,7 +32,7 @@ public class Deck {
 
     private void validateDeckEmpty() {
         if (deck.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 주어진 모든 카드들을 소진하였습니다");
+            throw new IllegalStateException("주어진 모든 카드들을 소진하였습니다");
         }
     }
 }

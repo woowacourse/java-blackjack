@@ -37,9 +37,9 @@ public class BlackjackController {
     }
 
     private static void hitOrStandAtPlayersTurn(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            hitOrStandAtOnePlayerTurn(deck, player);
-        }
+        players.getPlayers().forEach(player ->
+                hitOrStandAtOnePlayerTurn(deck, player)
+        );
     }
 
     private static void hitOrStandAtOnePlayerTurn(Deck deck, Player player) {
