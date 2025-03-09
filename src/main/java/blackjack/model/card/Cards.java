@@ -2,7 +2,7 @@ package blackjack.model.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -16,16 +16,16 @@ public class Cards {
     }
 
     public Cards(final Card... cards) {
-        this.values = new ArrayList<>(Arrays.stream(cards)
-                .toList());
-    }
-
-    private Cards() {
-        this.values = new LinkedList<>();
+        this(
+                new ArrayList<>(
+                        Arrays.stream(cards)
+                                .toList()
+                )
+        );
     }
 
     public static Cards empty() {
-        return new Cards();
+        return new Cards(Collections.emptyList());
     }
 
     public List<Integer> calculatePossiblePoints() {

@@ -21,7 +21,7 @@ public class BlackJackGame {
     }
 
     public BlackJackGame(final CardDeckInitializer cardDeckInitializer) {
-        this.cardDeck = CardDeck.initializeFrom(cardDeckInitializer);
+        this(CardDeck.initializeFrom(cardDeckInitializer));
     }
 
     public void dealInitialCards(final List<Player> players) {
