@@ -62,7 +62,8 @@ public class GameBoard {
 
     public int getScoreOf(Participant participant) {
         ParticipantCardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
-        return participant.getScore(ownedCardDeck);
+        List<Card> ownedCards = ownedCardDeck.getCards();
+        return participant.getScore(ownedCards);
     }
 
     public void calculateBattleResult() {

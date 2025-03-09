@@ -20,9 +20,7 @@ public abstract class Participant {
     public abstract boolean ableToDraw(final int score);
     public abstract boolean areYouDealer();
 
-    public int getScore(ParticipantCardDeck participantCardDeck) {
-        List<Card> ownedCards = participantCardDeck.getCards();
-
+    public int getScore(List<Card> ownedCards) {
         int totalScore = 0;
         int aceCounts = 0;
 
@@ -33,12 +31,17 @@ public abstract class Participant {
             }
         }
 
+        totalScore = addAceScore(aceCounts, totalScore);
+
+        return totalScore;
+    }
+
+    private int addAceScore(int aceCounts, int totalScore) {
         while (aceCounts-- > 0) {
             if (totalScore + 10 <= BUST_THRESHOLD) {
                 totalScore += 10;
             }
         }
-
         return totalScore;
     }
 
