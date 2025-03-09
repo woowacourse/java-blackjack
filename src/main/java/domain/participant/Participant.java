@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.BlackJackRule;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +41,7 @@ public abstract class Participant {
         int candidateResult = baseValue;
         for (int oneValueCount = 0; oneValueCount <= aceCount; ++oneValueCount) {
             candidateResult = baseValue + (oneValueCount * 1) + ((aceCount - oneValueCount) * 11);
-            if (GameResult.isBurstBy(candidateResult)) {
+            if (BlackJackRule.isBurstBy(candidateResult)) {
                 continue;
             }
             return candidateResult;

@@ -2,8 +2,12 @@ package domain.card;
 
 public class BlackJackRule {
 
-    public static final int BURST_UPPER_BOUND = 21;
+    private static final int BURST_UPPER_BOUND = 21;
 
     private BlackJackRule() {
+    }
+
+    public static boolean isBurstBy(int value) {
+        return value > BURST_UPPER_BOUND;
     }
 }

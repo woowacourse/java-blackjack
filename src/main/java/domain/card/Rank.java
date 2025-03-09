@@ -25,4 +25,8 @@ public enum Rank {
     public int getValue() {
         return value;
     }
+
+    public boolean isAce() {
+        return value == A.getValue();
+    }
 }
