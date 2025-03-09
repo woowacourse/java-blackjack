@@ -57,7 +57,7 @@ public class CardDeckTest {
         @DisplayName("카드덱에 카드가 존재하지 않으면 예외가 발생한다.")
         void pickFromEmptyDeck() {
             CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            for (int i=0; i<52; i++) {
+            for (int i = 0; i < 52; i++) {
                 cardDeck.pickRandomCard();
             }
 

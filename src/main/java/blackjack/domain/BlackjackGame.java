@@ -10,11 +10,6 @@ public class BlackjackGame {
     private final CardDeck cardDeck;
     private final List<Participant> participants;
 
-    public BlackjackGame() {
-        this.cardDeck = CardDeck.shuffleCardDeck();
-        this.participants = new ArrayList<>();
-    }
-
     public BlackjackGame(final CardDeck cardDeck, final List<Participant> participants) {
         this.cardDeck = cardDeck;
         this.participants = participants;
@@ -56,17 +51,17 @@ public class BlackjackGame {
 
     public Dealer findDealer() {
         return participants.stream()
-                .filter(participant -> participant instanceof Dealer)
-                .map(participant -> (Dealer) participant)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
+            .filter(participant -> participant instanceof Dealer)
+            .map(participant -> (Dealer) participant)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
     }
 
     public List<Player> findPlayers() {
         return participants.stream()
-                .filter(participant -> participant instanceof Player)
-                .map(participant -> (Player) participant)
-                .toList();
+            .filter(participant -> participant instanceof Player)
+            .map(participant -> (Player) participant)
+            .toList();
     }
 
     public Map<Player, GameResult> calculateStatisticsForPlayer() {
@@ -94,7 +89,7 @@ public class BlackjackGame {
 
     public List<String> getPlayerNames() {
         return findPlayers().stream()
-                .map(Player::getName)
-                .toList();
+            .map(Player::getName)
+            .toList();
     }
 }

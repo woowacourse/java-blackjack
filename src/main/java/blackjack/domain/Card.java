@@ -10,9 +10,9 @@ public record Card(Suit suit, Denomination denomination) {
 
     static {
         CACHE = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(suit, denomination)))
-                .toList();
+            .flatMap(suit -> Arrays.stream(Denomination.values())
+                .map(denomination -> new Card(suit, denomination)))
+            .toList();
     }
 
     public static List<Card> values() {
