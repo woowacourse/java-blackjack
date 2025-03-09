@@ -44,9 +44,55 @@ public class BlackJackController {
         printBlackJackResult(gameBoard);
     }
 
+    private void drawTwoCards(GameBoard gameBoard) {
+        gameBoard.drawTwoCards();
+
+        ParticipantResponse participantResponse = ParticipantResponse.of(gameBoard.getDealer(), gameBoard.getPlayers());
+        outputView.printDrawTwoCardsMessage(participantResponse);
+
+        CardDeckStatusResponse cardDeckStatusResponse = CardDeckStatusResponse.from(gameBoard.getCardDeckOfParticipant());
+        outputView.printCardDeckStatus(cardDeckStatusResponse);
+    }
+
+    private void startTurnOf(Participant player, GameBoard gameBoard) {
+        while (gameBoard.ableToDraw(player)) {
+            Answer answer = Answer.from(inputView.askDrawOneMore(player.getNickname()));
+            if (answer == Answer.NO) {
+                break;
+            }
+
+            gameBoard.drawCardTo(player);
+            CardDeckStatusResponse singleCardDeckStatusResponse = CardDeckStatusResponse.from(
+                    player.getNickname(),
+                    gameBoard.getCardDeckOf(player)
+            );
+
+            outputView.printCardDeckStatus(singleCardDeckStatusResponse);
+        }
+    }
+
+    private void startDealerTurn(GameBoard gameBoard) {
+        Participant dealer = gameBoard.getDealer();
+        while (gameBoard.ableToDraw(dealer)) {
+            gameBoard.drawCardTo(dealer);
+            outputView.printDrawSingleCardToDealerMessage(dealer.getNickname(), Dealer.STAY_THRESHOLD);
+        }
+    }
+
     private void printBlackJackResult(GameBoard gameBoard) {
         printBlackJackScore(gameBoard);
         printBattleResult(gameBoard);
+    }
+
+    private void printBlackJackScore(GameBoard gameBoard) {
+        List<BlackJackResultResponse> blackJackResultResponses = new ArrayList<>();
+
+        blackJackResultResponses.add(generateResultResponseOfDealer(gameBoard.getDealer(), gameBoard));
+        for (Participant player : gameBoard.getPlayers()) {
+            blackJackResultResponses.add(generateResultResponseOfPlayer(player, gameBoard));
+        }
+
+        outputView.printBlackJackResult(blackJackResultResponses);
     }
 
     private void printBattleResult(GameBoard gameBoard) {
@@ -63,17 +109,6 @@ public class BlackJackController {
         }
 
         outputView.printBattleResult(battleResultResponses);
-    }
-
-    private void printBlackJackScore(GameBoard gameBoard) {
-        List<BlackJackResultResponse> blackJackResultResponses = new ArrayList<>();
-
-        blackJackResultResponses.add(generateResultResponseOfDealer(gameBoard.getDealer(), gameBoard));
-        for (Participant player : gameBoard.getPlayers()) {
-            blackJackResultResponses.add(generateResultResponseOfPlayer(player, gameBoard));
-        }
-
-        outputView.printBlackJackResult(blackJackResultResponses);
     }
 
     private BlackJackResultResponse generateResultResponseOfPlayer(Participant player, GameBoard gameBoard) {
@@ -95,35 +130,6 @@ public class BlackJackController {
                 .toList();
 
         return new BlackJackResultResponse(dealerNickname, dealerCardNames, gameBoard.getScoreOf(dealer));
-    }
-
-    private void startDealerTurn(GameBoard gameBoard) {
-        Participant dealer = gameBoard.getDealer();
-        while (gameBoard.ableToDraw(dealer)) {
-            gameBoard.drawCardTo(dealer);
-            outputView.printDrawSingleCardToDealerMessage(dealer.getNickname(), Dealer.STAY_THRESHOLD);
-        }
-    }
-
-    private void startTurnOf(Participant player, GameBoard gameBoard) {
-        while (gameBoard.ableToDraw(player)) {
-            Answer answer = Answer.from(inputView.askDrawOneMore(player.getNickname()));
-            if (answer == Answer.NO) {
-                break;
-            }
-            gameBoard.drawCardTo(player);
-            CardDeckStatusResponse singleCardDeckStatusResponse = CardDeckStatusResponse.from(player.getNickname(), gameBoard.getCardDeckOf(
-                    player));
-            outputView.printCardDeckStatus(singleCardDeckStatusResponse);
-        }
-    }
-
-    private void drawTwoCards(GameBoard gameBoard) {
-        gameBoard.drawTwoCards();
-        ParticipantResponse participantResponse = ParticipantResponse.of(gameBoard.getDealer(), gameBoard.getPlayers());
-        outputView.printDrawTwoCardsMessage(participantResponse);
-        CardDeckStatusResponse cardDeckStatusResponse = CardDeckStatusResponse.from(gameBoard.getCardDeckOfParticipant());
-        outputView.printCardDeckStatus(cardDeckStatusResponse);
     }
 
     private List<Player> getPlayers() {
