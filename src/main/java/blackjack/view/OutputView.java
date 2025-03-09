@@ -40,7 +40,7 @@ public class OutputView {
         List<Player> playersList = getDealerGamblerList(players.getDealer(), players.getGamblers());
         System.out.println();
         System.out.println();
-        playersList.forEach(player -> System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.calculateCardNumber()));
+        playersList.forEach(player -> System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.calculateCardNumbers()));
     }
 
     public void printGameResults(Players players, GameResults gameResults) {

@@ -27,7 +27,7 @@ public class GameManager {
     }
 
     public boolean isPlayerBust(final Player player) {
-        return player.isPlayerBust();
+        return player.isBust();
     }
 
     public boolean isDealerHitThenDealAddCard() {

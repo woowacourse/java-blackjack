@@ -20,6 +20,8 @@ public abstract class Player {
         cards = new ArrayList<>();
     }
 
+    abstract public List<Card> getOpenedCards();
+
     public void pushDealCard(final CardPack cardPack, final int count) {
         cards.addAll(cardPack.getDealByCount(count));
     }
@@ -41,11 +43,11 @@ public abstract class Player {
         return calculateCardNumbers() > BUST_THRESHOLD;
     }
 
-    public boolean isPlayerNotBust() {
-        return !isPlayerBust();
+    public boolean isNotBust() {
+        return !isBust();
     }
 
-    public int calculateCardNumber() {
+    public int calculateCardNumbers() {
         int sum = cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
@@ -64,6 +66,14 @@ public abstract class Player {
                 .anyMatch(Card::isAce);
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,19 +85,5 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public int compareTo(Player o) {
-        if (this.isPlayerBust() && o.isPlayerBust()) {
-            return 0;
-        }
-        if (this.isPlayerNotBust() && o.isPlayerNotBust()) {
-            return Integer.compare(this.calculateCardNumber(), o.calculateCardNumber());
-        }
-        if (this.isPlayerNotBust() && o.isPlayerBust()) {
-            return 1;
-        }
-        return -1;
     }
 }

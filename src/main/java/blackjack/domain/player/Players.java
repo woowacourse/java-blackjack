@@ -35,7 +35,7 @@ public class Players {
     }
 
     public boolean isDealerHit() {
-        return dealer.calculateCardNumber() <= HIT_THRESHOLD;
+        return dealer.calculateCardNumbers() <= HIT_THRESHOLD;
     }
 
     public GameResults getGameResult() {

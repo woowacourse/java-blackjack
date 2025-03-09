@@ -18,7 +18,7 @@ class PlayerTest {
         player.pushDealCard(new CardPack(new SortShuffle()), 3);
 
         // when
-        int result = player.calculateCardNumber();
+        int result = player.calculateCardNumbers();
 
         // then
         assertThat(result).isEqualTo(30);
@@ -31,7 +31,7 @@ class PlayerTest {
         player.pushDealCard(new CardPack(new ReversedSortShuffle()), 2);
 
         // when
-        int result = player.calculateCardNumber();
+        int result = player.calculateCardNumbers();
 
         // then
         assertThat(result).isEqualTo(12);
