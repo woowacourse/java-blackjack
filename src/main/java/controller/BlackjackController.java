@@ -33,7 +33,7 @@ public class BlackjackController {
 
     private void dealInitially(final Participants participants, final Deck deck) {
         participants.dealInitialCards(deck);
-        OutputView.printInitialDealResult(participants);
+        OutputView.printInitialDeal(participants);
     }
 
     private void hitOrStandAtPlayersTurn(final Participants participants, final Deck deck) {
@@ -43,20 +43,17 @@ public class BlackjackController {
     }
 
     private void hitOrStandAtOnePlayerTurn(final Deck deck, final Player player) {
-        while (InputView.readHit(player)) {
+        while (player.canHit() && InputView.readHit(player)) {
             player.receiveCard(deck.pick());
             OutputView.printDealResultOf(player);
-            if (player.isBurst()) {
-                break;
-            }
         }
     }
 
     private static void hitOrStandAtDealerTurn(final Participants participants, final Deck deck) {
         Dealer dealer = participants.getDealer();
         while (dealer.canHit()) {
-            OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());
+            OutputView.printDealerDealResult();
         }
     }
 

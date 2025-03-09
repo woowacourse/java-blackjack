@@ -7,14 +7,22 @@ import model.Deck.Deck;
 
 public abstract class Participant {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
-    private final ParticipantHand participantHand;
+    protected final ParticipantHand participantHand;
 
     public Participant() {
         this.participantHand = new ParticipantHand();
     }
 
+    public abstract List<Card> openInitialDeal();
+
+    public abstract boolean canHit();
+
     public void receiveCard(final Card card) {
         participantHand.add(card);
+    }
+
+    public boolean isBurst() {
+        return participantHand.checkBurst();
     }
 
     public void dealInitialCards(final Deck deck) {
@@ -23,18 +31,11 @@ public abstract class Participant {
         );
     }
 
-    public boolean isBurst() {
-        return participantHand.checkBurst();
-    }
     public int calculateFinalScore() {
         return participantHand.calculateFinalScore();
     }
 
     public List<Card> getHandCards() {
         return participantHand.getCards();
-    }
-
-    public ParticipantHand getParticipantHand() {
-        return participantHand;
     }
 }

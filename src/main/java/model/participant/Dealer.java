@@ -1,5 +1,6 @@
 package model.participant;
 
+import java.util.List;
 import model.Deck.Card;
 
 public final class Dealer extends Participant {
@@ -9,12 +10,14 @@ public final class Dealer extends Participant {
         super();
     }
 
-    public Card getFirstHand() {
-        return getParticipantHand().getCards().getFirst();
+    @Override
+    public boolean canHit() {
+        return participantHand.checkScoreBelow(DEALER_HIT_THRESHOLD);
     }
 
-    public boolean canHit() {
-        return getParticipantHand().checkScoreBelow(DEALER_HIT_THRESHOLD);
+    @Override
+    public List<Card> openInitialDeal() {
+        return List.of(participantHand.getCards().getFirst());
     }
 }
 

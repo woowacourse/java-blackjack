@@ -13,17 +13,14 @@ import model.result.ParticipantWinningResult;
 public final class OutputView {
     private static final String JOIN_DELIMITER = ", ";
 
-    public static void printInitialDealResult(Participants participants) {
+    public static void printInitialDeal(Participants participants) {
         printCardDivisionStart(participants.getPlayers());
-
-        Dealer dealer = participants.getDealer();
-        Card firstDealerCard = dealer.getFirstHand();
-        System.out.println("딜러카드: " + firstDealerCard.getCardName());
-
-        participants.getPlayers().forEach(OutputView::printDealResultOf);
+        printInitialDealOf(participants.getDealer());
+        participants.getPlayers().forEach(OutputView::printInitialDealOf);
     }
 
     public static void printHitOrStandQuestion(final Player player) {
+        System.out.println();
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
@@ -31,7 +28,7 @@ public final class OutputView {
         List<String> cardsName = participant.getHandCards().stream()
                 .map(Card::getCardName)
                 .toList();
-        System.out.println(getParticipantName(participant) + "카드: " + String.join(JOIN_DELIMITER, cardsName));
+        System.out.print(getParticipantName(participant) + "카드: " + String.join(JOIN_DELIMITER, cardsName));
     }
 
     public static void printDealerDealResult() {
@@ -40,6 +37,7 @@ public final class OutputView {
 
     public static void printFinalScores(final Participants participants) {
         Dealer dealer = participants.getDealer();
+        printDealResultOf(dealer);
         printScoreOf(dealer);
         participants.getPlayers().forEach(participant -> {
             printDealResultOf(participant);
@@ -67,6 +65,17 @@ public final class OutputView {
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", String.join(JOIN_DELIMITER, playerNames));
     }
 
+    private static void printInitialDealOf(final Participant participant) {
+        List<String> cardsName = participant.openInitialDeal().stream()
+                .map(Card::getCardName)
+                .toList();
+        System.out.println(getParticipantName(participant) + "카드: " + String.join(JOIN_DELIMITER, cardsName));
+    }
+
+    private static void printScoreOf(Participant participant) {
+        System.out.println(" - 결과: " + participant.calculateFinalScore());
+    }
+
     private static String getGameResultMessage(final Map<GameResult, Integer> dealerWinning) {
         String message = "";
         for (GameResult gameResult : GameResult.values()) {
@@ -75,10 +84,6 @@ public final class OutputView {
             }
         }
         return message;
-    }
-
-    private static void printScoreOf(Participant participant) {
-        System.out.println(" - 결과: " + participant.calculateFinalScore());
     }
 
     private static String getParticipantName(Participant participant) {
