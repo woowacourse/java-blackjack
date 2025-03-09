@@ -11,6 +11,7 @@ public class Participants {
     private final List<Player> players;
 
     public Participants(final Dealer dealer, final List<Player> players) {
+        validateOverOnePlayers(players);
         validateDuplicatePlayerNames(players);
 
         this.dealer = dealer;
@@ -29,6 +30,12 @@ public class Participants {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    private void validateOverOnePlayers(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("플레이어는 한 명 이상 참가해야 합니다.");
+        }
     }
 
     private void validateDuplicatePlayerNames(List<Player> players) {
