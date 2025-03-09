@@ -4,7 +4,7 @@ import domain.BlackjackDeck;
 import domain.BlackjackDeckGenerator;
 import domain.BlackjackGame;
 import domain.BlackjackResult;
-import domain.BlackjackWinner;
+import domain.BlackjackResultEvaluator;
 import domain.Dealer;
 import domain.DealerWinStatus;
 import domain.Player;
@@ -57,9 +57,9 @@ public class BlackjackController {
 
     private void blackjackWinnerResult(BlackjackGame blackjackGame, BlackjackResult dealerResult,
                                        List<BlackjackResult> playerResults) {
-        BlackjackWinner blackjackWinner = new BlackjackWinner(dealerResult, playerResults);
-        DealerWinStatus dealerWinStatus = blackjackWinner.getDealerWinStatus();
-        Map<String, WinStatus> playerWinStatuses = blackjackWinner.getPlayerWinStatuses();
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator(dealerResult, playerResults);
+        DealerWinStatus dealerWinStatus = blackjackResultEvaluator.getDealerWinStatus();
+        Map<String, WinStatus> playerWinStatuses = blackjackResultEvaluator.getPlayerWinStatuses();
 
         outputView.resultHeader();
         outputView.dealerWinStatus(dealerWinStatus.win(), dealerWinStatus.lose(), blackjackGame.dealerName());

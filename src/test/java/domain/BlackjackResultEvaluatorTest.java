@@ -6,7 +6,7 @@ import domain.fixture.BlackjackGameTestFixture;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class BlackjackWinnerTest {
+class BlackjackResultEvaluatorTest {
 
     @Test
     void 블랙잭_승패_결과를_계산한다() {
@@ -24,14 +24,14 @@ class BlackjackWinnerTest {
         // when
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
         List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
-        BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator(blackjackDealerResult, blackjackPlayerResults);
 
         // then
-        assertThat(blackjackWinner.getDealerWinStatus())
+        assertThat(blackjackResultEvaluator.getDealerWinStatus())
                 .isEqualTo(new DealerWinStatus(0, 1));
-        assertThat(blackjackWinner.getPlayerWinStatuses().get("포비"))
+        assertThat(blackjackResultEvaluator.getPlayerWinStatuses().get("포비"))
                 .isEqualTo(WinStatus.DRAW);
-        assertThat(blackjackWinner.getPlayerWinStatuses().get("루키"))
+        assertThat(blackjackResultEvaluator.getPlayerWinStatuses().get("루키"))
                 .isEqualTo(WinStatus.WIN);
     }
 
@@ -49,7 +49,7 @@ class BlackjackWinnerTest {
                 5);
 
         // when
-        BlackjackWinner winnerResult = new BlackjackWinner(dealerResult, playerResults);
+        BlackjackResultEvaluator winnerResult = new BlackjackResultEvaluator(dealerResult, playerResults);
         DealerWinStatus dealerWinStatus = winnerResult.getDealerWinStatus();
 
         // then
@@ -76,10 +76,10 @@ class BlackjackWinnerTest {
 
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
         List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
-        BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator(blackjackDealerResult, blackjackPlayerResults);
 
         // then
-        assertThat(blackjackWinner.getDealerWinStatus()).isEqualTo(new DealerWinStatus(0, 0));
+        assertThat(blackjackResultEvaluator.getDealerWinStatus()).isEqualTo(new DealerWinStatus(0, 0));
     }
 
     @Test
@@ -106,10 +106,10 @@ class BlackjackWinnerTest {
 
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
         List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
-        BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator(blackjackDealerResult, blackjackPlayerResults);
 
         //then
-        assertThat(blackjackWinner.getDealerWinStatus()).isEqualTo(new DealerWinStatus(0, 1));
+        assertThat(blackjackResultEvaluator.getDealerWinStatus()).isEqualTo(new DealerWinStatus(0, 1));
     }
 
 

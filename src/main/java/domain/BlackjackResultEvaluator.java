@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BlackjackWinner {
+public class BlackjackResultEvaluator {
 
     private final int BUST_STANDARD = 21;
     
     private final DealerWinStatus dealerWinStatus;
     private final Map<String, WinStatus> playerWinStatuses;
 
-    public BlackjackWinner(BlackjackResult blackjackDealerResult, List<BlackjackResult> blackjackPlayerResults) {
+    public BlackjackResultEvaluator(BlackjackResult blackjackDealerResult, List<BlackjackResult> blackjackPlayerResults) {
         this.dealerWinStatus = calculateDealerWinStatus(blackjackDealerResult, blackjackPlayerResults);
         this.playerWinStatuses = calculateWinStatuses(blackjackDealerResult, blackjackPlayerResults);
     }
@@ -67,7 +67,7 @@ public class BlackjackWinner {
     }
 
     private WinStatus calculatePlayerWinStatus(int dealerSum, int playerSum) {
-        if (dealerSum > BUST_STANDARD && playerSum > BUST_STANDARD) {
+        if (isBust(dealerSum) && isBust(playerSum)) {
             return WinStatus.DRAW;
         }
         if (dealerSum < playerSum) {
