@@ -12,6 +12,11 @@ public class Player extends Participant {
     }
 
     @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
+    @Override
     public List<Card> getShownCard() {
         return getCards();
     }

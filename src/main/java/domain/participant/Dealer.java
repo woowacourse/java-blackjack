@@ -13,6 +13,11 @@ public class Dealer extends Participant {
     }
 
     @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
+    @Override
     public List<Card> getShownCard() {
         return List.of(getCards().getFirst());
     }

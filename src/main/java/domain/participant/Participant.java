@@ -63,6 +63,8 @@ public abstract class Participant {
 
     public abstract boolean canPick();
 
+    public abstract boolean isPlayer();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

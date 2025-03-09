@@ -5,11 +5,9 @@ import static factory.BlackJackCreator.createCardDeck;
 import static factory.BlackJackCreator.createParticipants;
 
 import domain.card.CardDeck;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.ParticipantsResult;
-import domain.participant.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -34,7 +32,7 @@ public class BlackJackController {
 
     private void receiveExtraCardProcessOfDealer(Participants participants, CardDeck cardDeck) {
         participants.getParticipants().stream()
-            .filter(participant -> participant instanceof Dealer)
+            .filter(participant -> !participant.isPlayer())
             .findFirst()
             .ifPresent(participant -> receiveCardProcessOfDealer(participant, cardDeck));
     }
@@ -49,7 +47,7 @@ public class BlackJackController {
 
     private void receiveExtraCardProcessOfPlayer(Participants participants, CardDeck cardDeck) {
         participants.getParticipants().stream()
-            .filter(participant -> participant instanceof Player)
+            .filter(Participant::isPlayer)
             .forEach(participant -> inputAskReceiveExtraCard(cardDeck, participant));
     }
 
