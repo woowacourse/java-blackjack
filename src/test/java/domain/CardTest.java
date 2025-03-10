@@ -18,7 +18,7 @@ public class CardTest {
     @DisplayName("카드 생성 테스트")
     class CardCreateTest {
         @Test
-        @DisplayName("카드는 모양과 끗수를 가진다")
+        @DisplayName("카드는 모양과 숫자를 가진다")
         public void test1() {
             assertThat(new Card(ACE, CLUB)).isInstanceOf(Card.class);
         }

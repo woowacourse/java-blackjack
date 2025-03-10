@@ -27,12 +27,12 @@ public class InputView {
         }
     }
 
-    public static String getYnInput(Player player) {
+    public static String getContinueOrNot(Player player) {
         System.out.println(player.getName() + ASK_ONE_MORE_CARD_MESSAGE);
-        String ynInput = sc.nextLine();
-        if (!Pattern.matches(YN_REGEX, ynInput)) {
+        String continueOrNot = sc.nextLine();
+        if (!Pattern.matches(YN_REGEX, continueOrNot)) {
             throw new IllegalArgumentException(INVALID_YN_INPUT);
         }
-        return ynInput;
+        return continueOrNot;
     }
 }
