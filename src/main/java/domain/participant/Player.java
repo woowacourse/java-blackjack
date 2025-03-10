@@ -1,21 +1,27 @@
 package domain.participant;
 
-public class Player extends Participant {
-    private Player(final String nickname) {
-        super(nickname);
-    }
+import domain.game.GameRule;
 
-    public static Player from(final String nickname) {
-        return new Player(nickname);
+public class Player extends Participant {
+    private final String nickname;
+
+    public Player(final String nickname) {
+        super();
+        this.nickname = nickname;
     }
 
     @Override
-    public boolean ableToDraw(final int score) {
-        return score < BUST_THRESHOLD;
+    public boolean ableToDraw() {
+        return getScore() < GameRule.BUST_THRESHOLD.getValue();
     }
 
     @Override
     public boolean areYouDealer() {
         return false;
+    }
+
+    @Override
+    public String getNickname() {
+        return nickname;
     }
 }

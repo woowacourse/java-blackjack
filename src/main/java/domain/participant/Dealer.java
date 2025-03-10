@@ -1,19 +1,17 @@
 package domain.participant;
 
+import domain.game.GameRule;
+
 public class Dealer extends Participant {
-    private static final int STAY_THRESHOLD = 16;
+    private static final String NAME = "딜러";
 
-    private Dealer() {
-        super("딜러");
-    }
-
-    public static Dealer generate() {
-        return new Dealer();
+    public Dealer() {
+        super();
     }
 
     @Override
-    public boolean ableToDraw(final int score) {
-        return score <= STAY_THRESHOLD;
+    public boolean ableToDraw() {
+        return getScore() <= GameRule.DEALER_STAY.getValue();
     }
 
     @Override
@@ -21,7 +19,8 @@ public class Dealer extends Participant {
         return true;
     }
 
-    public static int getStayThreshold() {
-        return STAY_THRESHOLD;
+    @Override
+    public String getNickname() {
+        return NAME;
     }
 }

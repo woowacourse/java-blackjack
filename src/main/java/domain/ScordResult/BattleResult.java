@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.ScordResult;
 
 public enum BattleResult {
     WIN("승"),

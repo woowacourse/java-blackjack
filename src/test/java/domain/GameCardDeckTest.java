@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.GameCardDeck;
 import domain.card.ParticipantCardDeck;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -38,12 +39,12 @@ class GameCardDeckTest {
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
 
         //when
-        Card card = gameCardDeck.draw();
+        List<Card> cards = gameCardDeck.draw(1);
 
         //then
         assertAll(
                 () -> Assertions.assertThat(gameCardDeck.getCards().size()).isEqualTo(51),
-                () -> Assertions.assertThat(card).isInstanceOf(Card.class)
+                () -> Assertions.assertThat(cards.getFirst()).isInstanceOf(Card.class)
         );
     }
 

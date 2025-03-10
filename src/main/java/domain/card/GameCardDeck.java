@@ -29,11 +29,15 @@ public class GameCardDeck {
         Collections.shuffle(this.cards);
     }
 
-    public Card draw() {
-        return cards.removeFirst();
+    public List<Card> draw(final int count) {
+        List<Card> drawedCards = new ArrayList<>();
+        for (int i = 0; i < count; i ++) {
+            drawedCards.add(cards.removeFirst());
+        }
+        return drawedCards;
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -12,8 +12,12 @@ public class InputView {
         return List.of(input.split(","));
     }
 
-    public String askDrawOneMore(String nickname) {
+    public Answer askDrawOneMore(String nickname) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", nickname);
-        return scanner.nextLine();
+        return Answer.from(scanner.nextLine());
+    }
+
+    public void closeScanner() {
+        scanner.close();
     }
 }

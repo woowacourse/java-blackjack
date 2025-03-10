@@ -10,16 +10,17 @@ import java.util.Map;
 
 public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfParticipant) {
 
-    public static CardDeckStatusResponse from(Map<Participant, ParticipantCardDeck> cardDeckOfParticipant) {
+    public static CardDeckStatusResponse from(List<Participant> participants) {
         Map<String, List<String>> cardDeckNamesOfParticipant = new LinkedHashMap<>();
 
-        for (Map.Entry<Participant, ParticipantCardDeck> entry : cardDeckOfParticipant.entrySet()) {
-            String participantName = entry.getKey().getNickname();
-            List<Card> participantCards = entry.getValue().getCards();
+        for (Participant participant : participants) {
+            String participantName = participant.getNickname();
+            List<Card> participantCards = participant.getCardDeck().getCards();
             List<String> cardDisplayNames = participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList();
 
             cardDeckNamesOfParticipant.put(participantName, cardDisplayNames);
         }
+
         return new CardDeckStatusResponse(cardDeckNamesOfParticipant);
     }
 
