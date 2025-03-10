@@ -29,7 +29,7 @@ class BlackJackTest {
             moru.addCard(new Card(Denomination.EIGHT, Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBust(moru)).isTrue();
+            assertThat(moru.resolveBust()).isTrue();
         }
 
         @Test
@@ -44,7 +44,7 @@ class BlackJackTest {
             moru.addCard(new Card(Denomination.TEN, Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBust(moru)).isFalse();
+            assertThat(moru.resolveBust()).isFalse();
         }
 
         @Test
@@ -59,7 +59,7 @@ class BlackJackTest {
             moru.addCard(new Ace(Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBust(moru)).isTrue();
+            assertThat(moru.resolveBust()).isTrue();
         }
 
         @Test
@@ -74,7 +74,7 @@ class BlackJackTest {
             moru.addCard(new Ace(Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBust(moru)).isTrue();
+            assertThat(moru.resolveBust()).isTrue();
         }
 
         @Test
@@ -90,7 +90,7 @@ class BlackJackTest {
             moru.addCard(new Ace(Suit.CLUB));
 
             // then
-            assertThat(blackjack.resolveBust(moru)).isFalse();
+            assertThat(moru.resolveBust()).isFalse();
         }
     }
 

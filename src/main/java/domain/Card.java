@@ -10,11 +10,11 @@ public class Card {
     public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
         this.suit = suit;
-        value = Denomination.parseInt(denomination);
+        value = Denomination.parseDenominationValue(denomination);
     }
 
     public boolean isAce() {
-        return denomination.equals(ACE);
+        return denomination == ACE;
     }
 
     public void setValueToZero() {

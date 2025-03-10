@@ -25,6 +25,19 @@ public class Deck {
         deck.add(new Card(denomination, suit));
     }
 
+    public void distributeCards(Dealer dealer, Entry entry) {
+        shuffle();
+        drawTwoCardFromDeck(dealer);
+        for (Player player : entry.getPlayers()) {
+            drawTwoCardFromDeck(player);
+        }
+    }
+
+    private void drawTwoCardFromDeck(Player player) {
+        player.addCard(draw());
+        player.addCard(draw());
+    }
+
     public void shuffle() {
         Collections.shuffle(deck);
     }
