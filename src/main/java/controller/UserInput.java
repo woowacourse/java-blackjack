@@ -1,5 +1,6 @@
 package controller;
 
+import exception.IllegalBlackjackInputException;
 import java.util.Arrays;
 
 public enum UserInput {
@@ -16,6 +17,6 @@ public enum UserInput {
         return Arrays.stream(values())
                 .filter(value -> value.input.equals(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
+                .orElseThrow(() -> new IllegalBlackjackInputException("y나 n 이외의 입력입니다. 다시 입력해주세요."));
     }
 }

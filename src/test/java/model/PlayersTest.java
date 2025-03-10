@@ -3,6 +3,7 @@ package model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import exception.IllegalBlackjackStateException;
 import java.util.ArrayList;
 import java.util.Map;
 import model.cards.Cards;
@@ -33,6 +34,6 @@ class PlayersTest {
         ));
 
         assertThatThrownBy(() -> players.findCardsByName("none"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalBlackjackStateException.class);
     }
 }

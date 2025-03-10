@@ -3,6 +3,7 @@ package view;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import exception.IllegalBlackjackInputException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,6 @@ class InputConverterTest {
     @NullAndEmptySource
     void test2(final String input) {
         assertThatThrownBy(() -> InputConverter.splitByDelimiter(input))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalBlackjackInputException.class);
     }
 }

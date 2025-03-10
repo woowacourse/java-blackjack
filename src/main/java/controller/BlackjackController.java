@@ -1,6 +1,8 @@
 package controller;
 
 import dto.CardDto;
+import exception.IllegalBlackjackInputException;
+import exception.IllegalBlackjackStateException;
 import java.util.List;
 import model.BlackjackGame;
 import model.Players;
@@ -22,13 +24,25 @@ public class BlackjackController {
     }
 
     public void start() {
-        BlackjackGame blackjackGame = BlackjackGame.getBlackjackGame(inputView.readPlayerNames());
+        try {
+            BlackjackGame blackjackGame = BlackjackGame.getBlackjackGame(getPlayerNames());
+            printPlayersAndInitialCards(blackjackGame);
+            askToAllPlayersForAdditionalCard(blackjackGame);
+            printDealerDraw(blackjackGame);
+            printFinalCards(blackjackGame);
+            printGameResult(blackjackGame);
+        } catch (IllegalBlackjackStateException e) {
+            outputView.printExceptionMessage(e);
+        }
+    }
 
-        printPlayersAndInitialCards(blackjackGame);
-        askToAllPlayersForAdditionalCard(blackjackGame);
-        printDealerDraw(blackjackGame);
-        printFinalCards(blackjackGame);
-        printGameResult(blackjackGame);
+    private List<String> getPlayerNames() {
+        try {
+            return inputView.readPlayerNames();
+        } catch (IllegalBlackjackInputException e) {
+            outputView.printExceptionMessage(e);
+            return getPlayerNames();
+        }
     }
 
     private void printPlayersAndInitialCards(final BlackjackGame blackjackGame) {
@@ -53,7 +67,7 @@ public class BlackjackController {
 
     private void askForAdditionalCardByName(final String name, final BlackjackGame blackjackGame) {
         while (!blackjackGame.checkIsBustByName(name)) {
-            UserInput decision = UserInput.from(inputView.askForAdditionalCard(name));
+            UserInput decision = getUserInput(name);
             if (decision.equals(UserInput.NO)) {
                 break;
             }
@@ -61,6 +75,15 @@ public class BlackjackController {
                 blackjackGame.giveCardToPlayer(name);
                 outputView.printCardsWithName(name, getCardDtos(blackjackGame.getPlayerCardsByName(name)));
             }
+        }
+    }
+
+    private UserInput getUserInput(final String name) {
+        try {
+            return UserInput.from(inputView.askForAdditionalCard(name));
+        } catch (IllegalBlackjackInputException e) {
+            outputView.printExceptionMessage(e);
+            return getUserInput(name);
         }
     }
 

@@ -1,5 +1,6 @@
 package model.cards;
 
+import exception.IllegalBlackjackStateException;
 import java.util.Collections;
 import java.util.List;
 import model.card.Card;
@@ -17,7 +18,7 @@ public abstract class Cards {
 
     public void addCard(final Card card) {
         if (isBust()) {
-            throw new IllegalStateException("버스트일 때는 카드를 추가할 수 없습니다.");
+            throw new IllegalBlackjackStateException("버스트일 때는 카드를 추가할 수 없습니다.");
         }
         cards.add(card);
     }
@@ -59,7 +60,7 @@ public abstract class Cards {
         Card aceElevenCard = cards.stream()
                 .filter(card -> card.isSameNumber(CardNumber.ACE_ELEVEN))
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalBlackjackStateException("ACE11이 존재하지 않습니다."));
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));

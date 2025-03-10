@@ -3,6 +3,7 @@ package model.cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import exception.IllegalBlackjackStateException;
 import java.util.ArrayList;
 import java.util.List;
 import model.card.Card;
@@ -41,7 +42,8 @@ class PlayerCardsTest {
 
         Card cardToAdd = new Card(CardNumber.JACK, CardShape.SPADE);
 
-        assertThatThrownBy(() -> cards.addCard(cardToAdd));
+        assertThatThrownBy(() -> cards.addCard(cardToAdd))
+                .isInstanceOf(IllegalBlackjackStateException.class);
     }
 
     @DisplayName("카드 계산 결과가 21을 초과하면 버스트이다.")

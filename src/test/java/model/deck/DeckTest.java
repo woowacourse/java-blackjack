@@ -3,6 +3,7 @@ package model.deck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import exception.IllegalBlackjackStateException;
 import java.util.ArrayList;
 import java.util.List;
 import model.card.Card;
@@ -25,7 +26,7 @@ class DeckTest {
     void getNotExistCardTest() {
         Deck deck = new Deck(new ArrayList<>(List.of()));
         assertThatThrownBy(deck::getCard)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalBlackjackStateException.class);
     }
 
 }

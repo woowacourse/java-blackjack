@@ -1,5 +1,6 @@
 package model.deck;
 
+import exception.IllegalBlackjackStateException;
 import java.util.List;
 import model.card.Card;
 
@@ -12,7 +13,7 @@ public class Deck {
 
     public Card getCard() {
         if (deck.isEmpty()) {
-            throw new IllegalStateException();
+            throw new IllegalBlackjackStateException("덱에 카드가 존재하지 않습니다.");
         }
         return deck.removeLast();
     }

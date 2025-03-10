@@ -58,4 +58,8 @@ public class OutputView {
     public void printPlayerGameResult(final String name, final String result) {
         System.out.printf("%s: %s" + LINE, name, result);
     }
+
+    public void printExceptionMessage(final RuntimeException exception) {
+        System.out.println(exception.getMessage());
+    }
 }
