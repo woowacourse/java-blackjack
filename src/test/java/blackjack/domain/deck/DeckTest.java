@@ -16,14 +16,14 @@ import blackjack.fixture.DeckFixture;
 class DeckTest {
 
     @Test
-    @DisplayName("뽑히는 카드는 중복되지 않는다")
+    @DisplayName("뽑히는 카드는 중복되지 않는다(52장까지만)")
     void randomCardsNotDuplicatedTest() {
         // given
         Deck deck = Deck.generateFrom(new RandomCardStrategy());
         List<Card> cards = new ArrayList<>();
 
         // when
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 52; i++) {
             cards.add(deck.draw());
         }
 
