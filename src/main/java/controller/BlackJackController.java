@@ -34,8 +34,8 @@ public class BlackJackController {
         receiveCardProcessOfParticipants(participants, cardDeck);
 
         // Note: 모든 참가자들의 카드 받기 기능
-        receiveCardProcessOfPlayer(participants, cardDeck);
         receiveCardProcessOfDealer(participants, cardDeck);
+        processPlayersCardReceiving(participants, cardDeck);
 
         calculateBackJackResultProcess(participants);
     }
@@ -74,35 +74,28 @@ public class BlackJackController {
         outputView.printBlankLine();
     }
 
-    private void receiveCardProcessOfPlayer(Participants participants, CardDeck cardDeck) {
+    private void processPlayersCardReceiving(Participants participants, CardDeck cardDeck) {
         for (Participant participant : participants.getPlayerParticipants()) {
-            inputAskReceiveExtraCard(cardDeck, participant);
+            processPlayerCardReceiving(participant, cardDeck);
         }
         outputView.printBlankLine();
     }
 
-    /***
-     * extraReceiveCardProcess에서 카드를 받은 후 들고 있는 카드를 출력하며 true를 반환합니다.
-     *  카드를 한 번도 받지 않은 상태라면 들고 있는 카드를 출력한다.
-     */
-    private void inputAskReceiveExtraCard(CardDeck cardDeck, Participant participant) {
-        if (!extraReceiveCardProcess(cardDeck, participant)) {
+    private void processPlayerCardReceiving(Participant participant, CardDeck cardDeck) {
+        boolean isFinalHandsPrinted = false;
+        while (participant.canPick() && doesPlayerWantToReceiveCard(participant)) {
+            participant.addCard(cardDeck.getAndRemoveFrontCard());
+            outputView.printParticipantHand(participant);
+            isFinalHandsPrinted = true;
+        }
+        if (!isFinalHandsPrinted) {
             outputView.printParticipantHand(participant);
         }
     }
 
-    private boolean extraReceiveCardProcess(CardDeck cardDeck, Participant participant) {
-        boolean isPrinted = false;
-        while (participant.canPick()) {
-            String playerWantMoreCard = inputView.inputPlayerWantMoreCard(participant);
-            if (playerWantMoreCard.equalsIgnoreCase("n")) {
-                break;
-            }
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-            outputView.printParticipantHand(participant);
-            isPrinted = true;
-        }
-        return isPrinted;
+    private boolean doesPlayerWantToReceiveCard(Participant participant) {
+        String playerWantMoreCard = inputView.inputPlayerWantMoreCard(participant);
+        return playerWantMoreCard.equalsIgnoreCase("y");
     }
 
     private CardDeck createCardDeck(CardBundle cardBundle) {
