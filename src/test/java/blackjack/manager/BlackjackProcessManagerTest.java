@@ -2,11 +2,8 @@ package blackjack.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.StubPossibleSumCardHolder;
 import blackjack.domain.Card;
-import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResultType;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import java.util.List;
@@ -51,8 +48,6 @@ class BlackjackProcessManagerTest {
         // then
         assertThat(hand.getAllCards()).hasSize(1);
     }
-
-
 
 
 }

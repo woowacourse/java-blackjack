@@ -30,7 +30,7 @@ class BlackJackInitManagerTest {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when
-        Players players = blackJackInitManager.savePlayers(names, Hand::new);
+        Players players = blackJackInitManager.generatePlayers(names, Hand::new);
 
         // the
         assertThat(players.getPlayers()).hasSize(3);
