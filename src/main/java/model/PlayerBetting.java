@@ -17,6 +17,9 @@ public class PlayerBetting {
         if (gameResult == GameResult.WIN){
             betting.put(player, betting.get(player) * 2);
         }
+        if (gameResult == GameResult.LOSE){
+            betting.put(player, 0);
+        }
     }
 }
 
