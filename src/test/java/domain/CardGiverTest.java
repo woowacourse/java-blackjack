@@ -49,10 +49,7 @@ public class CardGiverTest {
     void test19() {
         // given
         RandomGenerator<Card> randomGenerator = new TestGenerator();
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 51; i++) {
-            cards.add(new Card(CardNumberType.ACE, CardType.DIAMOND));
-        }
+        List<Card> cards = CardFixture.createFilledCards();
         GivenCards givenCards = GivenCards.create(cards);
         CardGiver cardGiver = new CardGiver(randomGenerator, givenCards);
         //when & then
