@@ -22,10 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private static final Map<Number, String> NUMBER_SYMBOL_MAP = new HashMap<>(
+    private final Map<Number, String> NUMBER_SYMBOL_MAP = new HashMap<>(
             Map.of(ACE, "A", QUEEN, "Q", JACK, "J", KING, "K"));
-    private static final String COMMA_DELIMITER = ", ";
-
+    private final String COMMA_DELIMITER = ", ";
     private final String HIT_CARDS = "딜러와 %s에게 2장을 나누었습니다.%n";
     private final String PLAYER_CARDS = "%s카드: ";
     private final String DEALER_CARDS = "딜러카드: ";
@@ -123,7 +122,7 @@ public class OutputView {
         return String.join(COMMA_DELIMITER, cardSymbols);
     }
 
-    private static String toSymbol(final Card card) {
+    private String toSymbol(final Card card) {
         Number number = card.getNumber();
         Shape shape = card.getShape();
         return NUMBER_SYMBOL_MAP.getOrDefault(number, String.valueOf(number.getScore())) + shape.getShape();
