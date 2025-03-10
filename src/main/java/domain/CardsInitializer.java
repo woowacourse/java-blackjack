@@ -9,27 +9,24 @@ public class CardsInitializer {
 
     public List<Card> initialize() {
         List<Card> cards = createCards();
-        Collections.shuffle(cards);
-        return cards;
+        return cardsShuffle(cards);
     }
 
     private List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
-
         List<Rank> numbers = getNumbers();
         List<Symbol> symbols = getSymbols();
 
-        insertCards(numbers, symbols, cards);
-
-        return cards;
+        return symbols.stream()
+                .flatMap(symbol ->
+                        numbers.stream()
+                                .map(number -> new Card(symbol, number)))
+                .toList();
     }
 
-    private void insertCards(List<Rank> numbers, List<Symbol> symbols, List<Card> cards) {
-        for (Rank number : numbers) {
-            for (Symbol symbol : symbols) {
-                cards.add(new Card(symbol, number));
-            }
-        }
+    private List<Card> cardsShuffle(List<Card> cards) {
+        List<Card> shuffleCards = new ArrayList<>(cards);
+        Collections.shuffle(shuffleCards);
+        return shuffleCards;
     }
 
     private List<Symbol> getSymbols() {
@@ -37,8 +34,6 @@ public class CardsInitializer {
     }
 
     private List<Rank> getNumbers() {
-        return Arrays.stream(Rank.values())
-                .filter(number -> !number.equals(Rank.SOFT_ACE))
-                .toList();
+        return Arrays.stream(Rank.values()).filter(number -> !number.equals(Rank.SOFT_ACE)).toList();
     }
 }
