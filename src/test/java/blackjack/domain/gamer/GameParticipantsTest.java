@@ -28,7 +28,7 @@ class GameParticipantsTest {
         GameParticipants participants = GameParticipants.of(players, dealer);
 
         // when
-        participants.processInitialDealing();
+        participants.dealInitialCards();
 
         // then
         assertAll(
@@ -61,7 +61,7 @@ class GameParticipantsTest {
 
         GameParticipants participants = GameParticipants.of(players, dealer);
 
-        participants.processInitialDealing();
+        participants.dealInitialCards();
 
         List<Player> chickens = participants.getPlayers().stream()
                 .filter(participant -> participant.getNickname().getValue().contains("겁쟁이"))
@@ -72,7 +72,7 @@ class GameParticipantsTest {
                 .toList();
 
         // when
-        participants.processHit();
+        participants.executeHitPhase();
 
         // then
         assertAll(() -> {

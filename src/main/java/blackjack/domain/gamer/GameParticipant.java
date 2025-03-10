@@ -18,6 +18,8 @@ public abstract class GameParticipant {
         this.handDisplay = handDisplay;
     }
 
+    public abstract boolean shouldHit();
+
     public void drawCard(Card card) {
         hand.add(card);
     }
@@ -30,11 +32,17 @@ public abstract class GameParticipant {
         return GameRule.isBust(hand.calculateSum());
     }
 
+    public boolean isDealer() {
+        return this instanceof Dealer;
+    }
+
+    public boolean isPlayer() {
+        return this instanceof Player;
+    }
+
     public void showHand() {
         this.handDisplay.accept(this);
     }
-
-    public abstract boolean shouldHit();
 
     public Nickname getNickname() {
         return nickname;

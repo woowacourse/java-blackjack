@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.GameRule;
+import blackjack.domain.result.GameStatistics;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -19,7 +20,7 @@ public class GameParticipants {
         return new GameParticipants(dealer, players);
     }
 
-    public void processInitialDealing() {
+    public void dealInitialCards() {
         List<GameParticipant> gameParticipants = getGameParticipants();
 
         for (int i = 0; i < GameRule.INITIAL_DEALING_CARD_COUNT.getValue(); i++) {
@@ -29,7 +30,7 @@ public class GameParticipants {
         dealer.hideCard();
     }
 
-    public void processHit() {
+    public void executeHitPhase() {
         players.forEach(participant -> {
                     while (participant.shouldHit()) {
                         dealer.dealCard(participant);
