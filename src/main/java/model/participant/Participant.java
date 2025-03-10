@@ -1,5 +1,7 @@
 package model.participant;
 
+import static constant.BlackjackConstant.BUST_NUMBER;
+
 import java.util.Collections;
 import java.util.List;
 import model.card.Card;
@@ -20,7 +22,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return cards.calculateNearestTotal() > 21;
+        return cards.calculateNearestTotal() > BUST_NUMBER;
     }
 
     public int score() {

@@ -1,5 +1,7 @@
 package model.card;
 
+import static constant.BlackjackConstant.BUST_NUMBER;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +24,7 @@ public class Cards {
         generateCandidates(candidates, totalWithoutAce(), 0, aceCount());
 
         return candidates.stream()
-                .filter(candidate -> candidate <= 21)
+                .filter(candidate -> candidate <= BUST_NUMBER)
                 .max(Integer::compareTo)
                 .orElse(candidates.stream()
                         .min(Integer::compareTo)

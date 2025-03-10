@@ -1,5 +1,7 @@
 package model.participant;
 
+import static constant.BlackjackConstant.DEALER_CARDS_MIN_TOTAL;
+
 public class Dealer extends Participant {
 
     public Dealer() {
@@ -8,6 +10,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return score() <= 16;
+        return score() < DEALER_CARDS_MIN_TOTAL;
     }
 }
