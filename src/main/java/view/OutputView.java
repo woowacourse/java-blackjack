@@ -12,10 +12,12 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final String NEW_LINE = System.lineSeparator();
+
     private OutputView() {}
 
     public static void printInitialParticipant(Participant dealer, List<Participant> players) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getParticipantName(), findPlayerNames(players));
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getParticipantName(), findPlayerNames(players));
         printInitialDealerCard(dealer);
         printInitialPlayersCards(players);
     }
@@ -34,6 +36,7 @@ public class OutputView {
         for (Participant player : players) {
             System.out.printf("%s카드: %s%n", player.getParticipantName(), convertCardsToMessage(player.getInitialCards()));
         }
+        System.out.print(NEW_LINE);
     }
 
     public static void printDealerDrawMessage() {
@@ -53,7 +56,7 @@ public class OutputView {
     }
 
     public static void printPlayerCard(Participant player) {
-        System.out.printf("%s카드: %s%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
+        System.out.printf("%s카드: %s%n%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
     }
 
     public static void printFinalParticipant(Participant dealer, List<Participant> players) {
@@ -62,7 +65,7 @@ public class OutputView {
     }
 
     private static void printFinalDealerCard(Participant dealer) {
-        System.out.printf("%s카드: %s - 결과: %d%n",
+        System.out.printf("%n%s카드: %s - 결과: %d%n",
                 dealer.getParticipantName(),
                 convertCardsToMessage(dealer.getCards()),
                 dealer.getTotalRankSum());
@@ -79,6 +82,7 @@ public class OutputView {
 
     public static void printGameResult(Map<Participant, ResultStatus> result) {
         Map<ResultStatus, Integer> counts = countStatusResult(result);
+        System.out.print(NEW_LINE);
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패 %d무%n",
                 counts.get(ResultStatus.LOSE), counts.get(ResultStatus.WIN), counts.get(ResultStatus.PUSH));
