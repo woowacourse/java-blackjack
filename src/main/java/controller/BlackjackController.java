@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameManager;
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
@@ -64,7 +65,7 @@ public class BlackjackController {
     }
 
     private void processPlayerDecision(String name, GameManager gameManager) {
-        while (gameManager.getScoreOf(name) < 21) {
+        while (gameManager.getScoreOf(name) < Card.BLACKJACK_NUMBER) {
             String answer = inputView.askReceive(name);
             if (answer.equals("n")) {
                 outputView.printCardsByName(gameManager.getPlayerByName(name));

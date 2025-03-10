@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
@@ -49,11 +50,11 @@ public enum BlackjackResult {
     }
 
     private static boolean isBust(int score) {
-        return score > 21;
+        return score > Card.BLACKJACK_NUMBER;
     }
 
     private static boolean isBlackjack(int score, int cardCount) {
-        return score == 21 && cardCount == 2;
+        return score == Card.BLACKJACK_NUMBER && cardCount == 2;
     }
 
     public String getValue() {

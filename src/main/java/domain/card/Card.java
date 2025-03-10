@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Card {
 
+    public static final int BLACKJACK_NUMBER = 21;
+
     private final TrumpNumber number;
     private final TrumpShape shape;
 
