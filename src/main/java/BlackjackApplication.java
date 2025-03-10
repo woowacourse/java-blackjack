@@ -8,12 +8,10 @@ import view.OutputView;
 
 public class BlackjackApplication {
     public static void main(String[] args) {
-        List<Card> cards = DeckFactory.getInitializedDeck();
-        Deck deck = new Deck(cards);
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        BlackjackController blackjackController = new BlackjackController(deck, inputView, outputView);
+        BlackjackController blackjackController = new BlackjackController(inputView, outputView);
         blackjackController.start();
 
     }
