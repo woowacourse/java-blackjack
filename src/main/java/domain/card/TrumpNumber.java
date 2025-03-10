@@ -1,34 +1,31 @@
 package domain.card;
 
-import java.util.Collections;
-import java.util.List;
-
 public enum TrumpNumber {
 
-    TWO(List.of(2), "2"),
-    THREE(List.of(3), "3"),
-    FOUR(List.of(4), "4"),
-    FIVE(List.of(5), "5"),
-    SIX(List.of(6), "6"),
-    SEVEN(List.of(7), "7"),
-    EIGHT(List.of(8), "8"),
-    NINE(List.of(9), "9"),
-    TEN(List.of(10), "10"),
-    ACE(List.of(1, 11), "A"),
-    JACK(List.of(10), "J"),
-    KING(List.of(10), "K"),
-    QUEEN(List.of(10), "Q");
+    ACE(1, "A"),
+    TWO(2, "2"),
+    THREE(3, "3"),
+    FOUR(4, "4"),
+    FIVE(5, "5"),
+    SIX(6, "6"),
+    SEVEN(7, "7"),
+    EIGHT(8, "8"),
+    NINE(9, "9"),
+    TEN(10, "10"),
+    JACK(10, "J"),
+    KING(10, "K"),
+    QUEEN(10, "Q");
 
-    private final List<Integer> score;
+    private final int score;
     private final String value;
 
-    TrumpNumber(List<Integer> score, String value) {
+    TrumpNumber(int score, String value) {
         this.score = score;
         this.value = value;
     }
 
-    public List<Integer> getScore() {
-        return Collections.unmodifiableList(score);
+    public int getScore() {
+        return score;
     }
 
     public String getValue() {

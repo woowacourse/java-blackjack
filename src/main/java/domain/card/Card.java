@@ -1,6 +1,5 @@
 package domain.card;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -17,7 +16,7 @@ public class Card {
         return new Card(number, shape);
     }
 
-    public List<Integer> getScore() {
+    public int getScore() {
         return number.getScore();
     }
 

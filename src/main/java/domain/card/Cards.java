@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int ACE_ADDITIONAL_SCORE = 10; // ACE는 1 또는 11 점수가 가능하다
+
     private final List<Card> cards;
 
     private Cards() {
@@ -22,13 +24,13 @@ public class Cards {
 
     public int calculateScore() {
         int sum = cards.stream()
-                .mapToInt(card -> card.getScore().getFirst())
+                .mapToInt(Card::getScore)
                 .sum();
         long aceCount = cards.stream()
-                .filter(card -> card.getScore().size() > 1)
+                .filter(card -> card.getNumber() == TrumpNumber.ACE)
                 .count();
-        while (aceCount > 0 && sum + 10 <= 21) {
-            sum += 10;
+        while (aceCount > 0 && sum + ACE_ADDITIONAL_SCORE <= 21) {
+            sum += ACE_ADDITIONAL_SCORE;
             aceCount--;
         }
         return sum;
