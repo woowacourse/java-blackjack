@@ -21,7 +21,7 @@ public class InputView {
         String input = scanner.nextLine();
 
         validateBlank(input);
-        return YorN.fromText(input);
+        return YorN.fromText(input).toBoolean();
     }
 
     private List<String> parseStringToList(final String input) {
@@ -46,14 +46,15 @@ public class InputView {
             this.isYes = isYes;
         }
 
-        private static boolean fromText(final String input) {
-            if (YES.text.equals(input)) {
-                return YES.isYes;
-            }
-            if (NO.text.equals(input)) {
-                return NO.isYes;
-            }
-            throw new IllegalArgumentException("입력은 y/n만 가능합니다.");
+        private static YorN fromText(final String input) {
+            return Arrays.stream(values())
+                .filter(value -> value.text.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("입력은 y/n만 가능합니다."));
+        }
+
+        private boolean toBoolean() {
+            return isYes;
         }
     }
 }
