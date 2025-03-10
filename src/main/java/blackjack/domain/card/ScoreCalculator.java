@@ -17,7 +17,7 @@ public class ScoreCalculator {
         }
 
         Card card = cards.get(depth);
-        Set<Integer> scores = card.getRank().getScore();
+        Set<Integer> scores = card.getRank().getScores();
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
         for (int score : scores) {
@@ -43,7 +43,7 @@ public class ScoreCalculator {
             return totalScore;
         }
         Card card = cards.get(depth);
-        Set<Integer> scores = card.getRank().getScore();
+        Set<Integer> scores = card.getRank().getScores();
         int min = Integer.MAX_VALUE;
         for (int score : scores) {
             min = Math.min(min, minDfs(depth + 1, totalScore + score, cards));

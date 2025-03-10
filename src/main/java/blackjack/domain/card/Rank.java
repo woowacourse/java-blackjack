@@ -31,7 +31,7 @@ public enum Rank {
         this.description = descriptions;
     }
 
-    public Set<Integer> getScore() {
+    public Set<Integer> getScores() {
         return scores;
     }
 
