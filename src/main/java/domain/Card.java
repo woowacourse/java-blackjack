@@ -7,8 +7,12 @@ public record Card(
         CardType cardType
 ) {
 
-    public boolean isEqualCardNumberType(CardNumberType targetCardNumberType) {
-        return this.cardNumberType.isEqualTo(targetCardNumberType);
+    public boolean isAce() {
+        return this.cardNumberType.isEqualTo(CardNumberType.ACE);
+    }
+
+    public boolean isNotAce() {
+        return !this.cardNumberType.isEqualTo(CardNumberType.ACE);
     }
 
     public int getDefaultNumber() {

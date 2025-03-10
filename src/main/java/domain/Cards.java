@@ -35,7 +35,7 @@ public class Cards {
 
     public boolean isAceCountEqualTo(int targetCount) {
         int aceCount = (int) cards.stream()
-                .filter(card -> card.isEqualCardNumberType(ACE))
+                .filter(Card::isAce)
                 .count();
         return aceCount == targetCount;
     }
@@ -60,7 +60,7 @@ public class Cards {
 
     public int calculateSumWithoutAce() {
         return cards.stream()
-                .filter(card -> !card.isEqualCardNumberType(ACE))
+                .filter(Card::isNotAce)
                 .mapToInt(Card::getDefaultNumber)
                 .sum();
     }
@@ -82,13 +82,13 @@ public class Cards {
 
     private int calculateAceCount() {
         return (int) cards.stream()
-                .filter(card -> card.isEqualCardNumberType(ACE))
+                .filter(Card::isAce)
                 .count();
     }
 
     private boolean hasNotAce() {
         return cards.stream()
-                .noneMatch(card -> card.isEqualCardNumberType(ACE));
+                .noneMatch(Card::isAce);
     }
 
     @Override
