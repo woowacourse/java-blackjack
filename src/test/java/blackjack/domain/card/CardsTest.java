@@ -54,6 +54,20 @@ public class CardsTest {
         Assertions.assertThat(cards.isBlackjack()).isTrue();
     }
 
+    @Test
+    void 카드가_블랙잭이_아님을_계산할_수_있다() {
+        //given
+        Cards cards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.TEN),
+                        new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.DIAMOND, Rank.ONE)),
+                new ScoreCalculator()
+        );
+
+        //when & then
+        Assertions.assertThat(cards.isBlackjack()).isFalse();
+    }
+
 
     @Test
     void 한_번에_최대_2개의_카드만_뽑을_수_있다() {
