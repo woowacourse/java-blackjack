@@ -19,6 +19,10 @@ public class ParticipantHand {
         return calculateScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
     }
 
+    public boolean checkBlackjack(){
+        return cards.size() == 2 && calculateFinalScore() == 21;
+    }
+
     public boolean checkScoreBelow(int upperBound) {
         return calculateScoreWithAceAsMinValue() <= upperBound;
     }

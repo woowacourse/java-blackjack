@@ -10,7 +10,7 @@ public class ParticipantWinningResult {
     public static ParticipantWinningResult of(Players players, Dealer dealer) {
         Map<Player, GameResult> result = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            result.put(player, checkPlayerWin(dealer, player));
+            result.put(player, checkPlayerWinningResult(dealer, player));
         }
         return new ParticipantWinningResult(result);
     }
@@ -26,6 +26,13 @@ public class ParticipantWinningResult {
             calculateDealerResult(playerGameResult, dealerResult);
         }
         return dealerResult;
+    }
+
+    private static GameResult checkPlayerWinningResult(Dealer dealer, Player player){
+        if (checkPlayerWin(dealer, player) == GameResult.WIN && player.checkBlackjack()){
+            return GameResult.BLACKJACK;
+        }
+        return checkPlayerWin(dealer, player);
     }
 
     private static GameResult checkPlayerWin(Dealer dealer, Player player) {
