@@ -49,6 +49,4 @@ class BlackjackProcessManagerTest {
         // then
         assertThat(hand.getAllCards()).hasSize(1);
     }
-
-
 }

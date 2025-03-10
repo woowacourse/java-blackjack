@@ -6,6 +6,7 @@ import blackjack.domain.CardSuit;
 import blackjack.domain.Hand;
 
 public final class HandFixture {
+
     private HandFixture() {
     }
 
@@ -33,5 +34,4 @@ public final class HandFixture {
         Card card2 = new Card(CardSuit.SPADE, CardRank.FIVE);
         return Hand.of(card1, card2);
     }
-
 }

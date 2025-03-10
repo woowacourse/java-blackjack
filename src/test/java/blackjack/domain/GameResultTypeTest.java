@@ -18,5 +18,4 @@ class GameResultTypeTest {
         // then
         assertThat(result).isEqualTo(expect);
     }
-
 }

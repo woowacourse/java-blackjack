@@ -25,7 +25,6 @@ public class Deck {
         if (new HashSet<>(cards).size() != DECK_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATED_CARD_EXISTED.getMessage());
         }
-
     }
 
     private List<Card> shuffled(List<Card> cards) {

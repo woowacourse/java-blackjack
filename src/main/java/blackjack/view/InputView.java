@@ -33,5 +33,4 @@ public final class InputView {
 
         return Arrays.stream(rawNames.split(",")).toList();
     }
-
 }

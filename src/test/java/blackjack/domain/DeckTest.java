@@ -104,6 +104,4 @@ class DeckTest {
                     .hasMessage(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
         }
     }
-
-
 }

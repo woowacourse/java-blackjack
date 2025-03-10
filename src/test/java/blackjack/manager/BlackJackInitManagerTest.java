@@ -42,8 +42,7 @@ class BlackJackInitManagerTest {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when & then
-        assertThatCode(() -> blackJackInitManager.generateDealer())
+        assertThatCode(blackJackInitManager::generateDealer)
                 .doesNotThrowAnyException();
-
     }
 }

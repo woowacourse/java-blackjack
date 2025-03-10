@@ -88,5 +88,4 @@ public class Hand  {
             calculatePossibleSums(values, index + 1, sum + number);
         }
     }
-
 }

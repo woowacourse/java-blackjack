@@ -104,5 +104,4 @@ class BlackJackResultManagerTest {
         // then
         assertThat(resultDto.dealerResult()).containsEntry(GameResultType.LOSE, 5);
     }
-
 }

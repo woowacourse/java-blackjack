@@ -14,5 +14,4 @@ public class CardsGenerator {
                         .map(rank -> new Card(suit, rank)))
                 .toList();
     }
-
 }

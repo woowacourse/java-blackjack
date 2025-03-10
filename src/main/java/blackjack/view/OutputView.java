@@ -53,5 +53,4 @@ public final class OutputView {
         System.out.printf("딜러: %s%n", Formatter.parseDealerGameResult(dealerResult));
         System.out.println(Formatter.parsePlayerGameResult(playersResult));
     }
-
 }
