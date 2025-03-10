@@ -50,6 +50,17 @@ class PlayerBettingTest {
         assertEquals(expect, result);
     }
 
-
-
+    @Test
+    @DisplayName("게임결과가 블랙잭이라면 베팅한 금액의 1.5배를 받도록 테스트")
+    void 게임결과가_블랙잭일경우_수익계산(){
+        Player player = new Player("a");
+        GameResult gameResult = GameResult.BLACKJACK;
+        Map<Player, Integer> map = new HashMap<>();
+        map.put(player, 10000);
+        PlayerBetting playerBetting = new PlayerBetting(map);
+        playerBetting.calculateBettingResult(player, gameResult);
+        int expect = 25000;
+        int result = playerBetting.getBettingNet(player);
+        assertEquals(expect, result);
+    }
 }
