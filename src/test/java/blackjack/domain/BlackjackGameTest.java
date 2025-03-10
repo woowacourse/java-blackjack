@@ -57,13 +57,16 @@ class BlackjackGameTest {
         @Test
         @DisplayName("카드 한 장을 플레이어에게 추가로 배부할 수 있다.")
         void distributeExtraCardToPlayer() {
-            Player player = new Player("sana");
-            player.addCards(
+            List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
-                new Card(Suit.SPADE, Denomination.KING)
-            );
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.CLUB, Denomination.FIVE)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardDeck cardDeck = CardDeck.shuffleCardDeck();
+            Player player = new Player("sana");
+            player.addCards(cardDeck, 2);
+
             Participants participants = new Participants(new Dealer(), List.of(player));
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
@@ -75,15 +78,20 @@ class BlackjackGameTest {
         @Test
         @DisplayName("카드 한 장을 딜러의 숫자가 16이하이면 추가로 배부할 수 있다.")
         void distributeExtraCardToDealer() {
-            Dealer dealer = new Dealer();
-            dealer.addCards(
+            List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.SIX),
-                new Card(Suit.SPADE, Denomination.KING)
-            );
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.CLUB, Denomination.FIVE)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            Participants participants = new Participants(dealer, new ArrayList<>());
+            Player player = new Player("sana");
+            Dealer dealer = new Dealer();
+            dealer.addCards(cardDeck, 2);
+
+            Participants participants = new Participants(dealer, List.of(player));
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
+
             game.addExtraCard(dealer);
 
             assertThat(dealer.openCards()).hasSize(3);
@@ -92,14 +100,18 @@ class BlackjackGameTest {
         @Test
         @DisplayName("카드 한 장을 딜러의 숫자가 16초과이면 추가로 배부할 수 없다.")
         void notDistributeExtraCardToDealer() {
-            Dealer dealer = new Dealer();
-            dealer.addCards(
+            List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.SEVEN),
-                new Card(Suit.SPADE, Denomination.KING)
-            );
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.CLUB, Denomination.FIVE)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardDeck cardDeck = CardDeck.shuffleCardDeck();
-            Participants participants = new Participants(dealer, new ArrayList<>());
+            Player player = new Player("sana");
+            Dealer dealer = new Dealer();
+            dealer.addCards(cardDeck, 2);
+
+            Participants participants = new Participants(dealer, List.of(player));
             BlackjackGame game = new BlackjackGame(cardDeck, participants);
 
             assertThatThrownBy(() -> game.addExtraCard(dealer))
@@ -116,31 +128,30 @@ class BlackjackGameTest {
 
         @BeforeEach
         void initCards() {
-            Dealer dealer = new Dealer();
-            dealer.addCards(
+            List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.NINE),
-                new Card(Suit.SPADE, Denomination.KING)
-            );
-
-            Player player1 = new Player("hula"); // 패배
-            player1.addCards(
+                new Card(Suit.SPADE, Denomination.KING),
                 new Card(Suit.HEART, Denomination.SIX),
-                new Card(Suit.SPADE, Denomination.KING)
-            );
-
-            Player player2 = new Player("sana"); // 승리
-            player2.addCards(
+                new Card(Suit.SPADE, Denomination.KING),
                 new Card(Suit.HEART, Denomination.ACE),
-                new Card(Suit.SPADE, Denomination.KING)
-            );
-
-            Player player3 = new Player("jason"); // 패배
-            player3.addCards(
+                new Card(Suit.SPADE, Denomination.KING),
                 new Card(Suit.HEART, Denomination.FIVE),
                 new Card(Suit.SPADE, Denomination.KING)
-            );
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardDeck cardDeck = CardDeck.shuffleCardDeck();
+            Dealer dealer = new Dealer();
+            dealer.addCards(cardDeck, 2);
+
+            Player player1 = new Player("hula"); // 패배
+            player1.addCards(cardDeck, 2);
+
+            Player player2 = new Player("sana"); // 승리
+            player2.addCards(cardDeck, 2);
+
+            Player player3 = new Player("jason"); // 패배
+            player3.addCards(cardDeck, 2);
+
             Participants participants = new Participants(dealer,
                 List.of(player1, player2, player3));
             game = new BlackjackGame(cardDeck, participants);

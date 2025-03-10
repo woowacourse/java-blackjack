@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardDeck;
 import blackjack.domain.Denomination;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,11 +19,15 @@ public abstract class Participant {
         this.cards = new ArrayList<>();
     }
 
-    public void addCards(final Card... cards) {
+    public void addCards(final CardDeck cardDeck, final int count) {
         if (!isPossibleToAdd()) {
             throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
         }
-        this.cards.addAll(Arrays.asList(cards));
+
+        for (int i = 0; i < count; i++) {
+            Card card = cardDeck.pickRandomCard();
+            cards.add(card);
+        }
     }
 
     public boolean isBlackjack() {

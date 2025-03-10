@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class BlackjackGame {
 
+    private static final int INITIAL_CARD_NUMBER = 2;
+    private static final int EXTRA_CARD_NUMBER = 1;
+
     private final CardDeck cardDeck;
     private final Participants participants;
 
@@ -33,22 +36,17 @@ public class BlackjackGame {
 
     public void initCardsToDealer() {
         Dealer dealer = participants.getDealer();
-        Card card1 = cardDeck.pickRandomCard();
-        Card card2 = cardDeck.pickRandomCard();
-        dealer.addCards(card1, card2);
+        dealer.addCards(cardDeck, INITIAL_CARD_NUMBER);
     }
 
     public void initCardsToPlayer() {
         for (Participant participant : participants.getPlayers()) {
-            Card card1 = cardDeck.pickRandomCard();
-            Card card2 = cardDeck.pickRandomCard();
-            participant.addCards(card1, card2);
+            participant.addCards(cardDeck, INITIAL_CARD_NUMBER);
         }
     }
 
     public void addExtraCard(final Participant participant) {
-        Card card = cardDeck.pickRandomCard();
-        participant.addCards(card);
+        participant.addCards(cardDeck, EXTRA_CARD_NUMBER);
     }
 
     public Map<Player, GameResult> calculateStatisticsForPlayer() {

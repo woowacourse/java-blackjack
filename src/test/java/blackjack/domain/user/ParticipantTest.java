@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardDeck;
 import blackjack.domain.Denomination;
 import blackjack.domain.Suit;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,11 +40,15 @@ public class ParticipantTest {
         @Test
         @DisplayName("참가자는 카드를 여러장 배부 받을 수 있다.")
         void distributeTwoCards() {
-            Card card1 = new Card(Suit.HEART, Denomination.ACE);
-            Card card2 = new Card(Suit.SPADE, Denomination.KING);
-            participant.addCards(card1, card2);
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
+            participant.addCards(cardDeck, 2);
             List<Card> cards = participant.openCards();
+
             assertAll(() -> {
                 assertThat(cards).hasSize(2);
                 assertThat(cards.getFirst().suit()).isEqualTo(Suit.HEART);
@@ -60,10 +66,13 @@ public class ParticipantTest {
         @Test
         @DisplayName("에이스가 없을 시 단순 합을 계산한다.")
         void cardSumWithoutACE() {
-            Card card1 = new Card(Suit.HEART, Denomination.TWO);
-            Card card2 = new Card(Suit.SPADE, Denomination.KING);
-            participant.addCards(card1, card2);
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
+            participant.addCards(cardDeck, 2);
             int cardSum = participant.calculateDenominations();
 
             assertThat(cardSum).isEqualTo(12);
@@ -72,10 +81,13 @@ public class ParticipantTest {
         @Test
         @DisplayName("에이스를 11로 계산한다.")
         void cardSumWithACE_ELEVEN() {
-            Card card1 = new Card(Suit.HEART, Denomination.ACE);
-            Card card2 = new Card(Suit.SPADE, Denomination.KING);
-            participant.addCards(card1, card2);
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
+            participant.addCards(cardDeck, 2);
             int cardSumWithAceValue11 = participant.calculateDenominations();
 
             assertThat(cardSumWithAceValue11).isEqualTo(21);
@@ -84,11 +96,14 @@ public class ParticipantTest {
         @Test
         @DisplayName("에이스를 1로 계산한다.")
         void cardSumWithACE_ONE() {
-            Card card1 = new Card(Suit.HEART, Denomination.TWO);
-            Card card2 = new Card(Suit.SPADE, Denomination.TEN);
-            Card card3 = new Card(Suit.CLUB, Denomination.ACE);
-            participant.addCards(card1, card2, card3);
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.CLUB, Denomination.ACE)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
 
+            participant.addCards(cardDeck, 3);
             int cardSumWithAceValue1 = participant.calculateDenominations();
 
             assertThat(cardSumWithAceValue1).isEqualTo(13);

@@ -3,8 +3,11 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardDeck;
 import blackjack.domain.Denomination;
 import blackjack.domain.Suit;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -34,13 +37,15 @@ public class PlayerTest {
         @Test
         @DisplayName("보유 카드가 21 미만이면 추가 배부가 가능하다")
         void canDistributeCard_Under21() {
-            Player player = new Player("sana");
-
-            player.addCards(
+            List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.TEN),
                 new Card(Suit.CLUB, Denomination.ACE)
-            );
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Player player = new Player("sana");
+            player.addCards(cardDeck, 3);
 
             assertThat(player.isPossibleToAdd()).isTrue();
         }
@@ -48,13 +53,15 @@ public class PlayerTest {
         @Test
         @DisplayName("보유 카드가 21 이상이면 추가 배부가 불가능하다")
         void canDistributeCard_Over21() {
-            Player player = new Player("sana");
-
-            player.addCards(
+            List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.TEN),
                 new Card(Suit.CLUB, Denomination.JACK)
-            );
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Player player = new Player("sana");
+            player.addCards(cardDeck, 3);
 
             assertThat(player.isPossibleToAdd()).isFalse();
         }
