@@ -39,13 +39,9 @@ public final class BlackjackJudge {
     }
     
     private int getCountOf(final WinningStatus status) {
-        int count = 0;
-        for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
-            if (WinningStatus.determineWinningStatus(dealerBlackjackCardHand, playerBlackjackCardHand) == status) {
-                count++;
-            }
-        }
-        return count;
+        return (int) playerBlackjackCardHands.stream()
+                .filter(player -> WinningStatus.determineWinningStatus(dealerBlackjackCardHand, player) == status)
+                .count();
     }
     
     public WinningStatus getWinningStatusOf(final PlayerBlackjackCardHand playerBlackjackCardHand) {
