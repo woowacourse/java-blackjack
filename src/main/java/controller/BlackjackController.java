@@ -59,11 +59,11 @@ public class BlackjackController {
 
     public List<FinalResultDTO> createFinalResultDTOs(Dealer dealer, List<Player> players) {
         List<FinalResultDTO> finalResultDTOs = new ArrayList<>();
-        FinalResultDTO finalResultDTO = new FinalResultDTO("딜러", dealer.getCards(), dealer.calculateScore());
-        finalResultDTOs.add(finalResultDTO);
+        FinalResultDTO dealerFinalResultDTO = new FinalResultDTO("딜러", dealer.getCards(), dealer.calculateScore());
+        finalResultDTOs.add(dealerFinalResultDTO);
         for (Player player : players) {
-            FinalResultDTO finalResultDTO1 = new FinalResultDTO(player.getName(), player.getCards(), player.calculateScore());
-            finalResultDTOs.add(finalResultDTO1);
+            FinalResultDTO playerFinalResultDTO = new FinalResultDTO(player.getName(), player.getCards(), player.calculateScore());
+            finalResultDTOs.add(playerFinalResultDTO);
         }
 
         return finalResultDTOs;
