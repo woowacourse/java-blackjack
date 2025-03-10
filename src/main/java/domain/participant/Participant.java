@@ -57,5 +57,9 @@ public abstract class Participant {
   public Hand getHand() {
     return hand;
   }
+
+  public int getHandCount() {
+    return hand.getCount();
+  }
 }
 

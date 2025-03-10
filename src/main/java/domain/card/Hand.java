@@ -42,4 +42,8 @@ public class Hand {
   public List<TrumpCard> getCards() {
     return Collections.unmodifiableList(cards);
   }
+
+  public int getCount() {
+    return cards.size();
+  }
 }
