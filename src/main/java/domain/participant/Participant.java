@@ -6,8 +6,8 @@ import domain.card.TrumpCard;
 
 public abstract class Participant {
 
-  private static final int INITIAL_DEAL_CARD_COUNT = 2;
   protected static final int BLACKJACK_SCORE = 21;
+  private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
   private final Hand hand;
 
