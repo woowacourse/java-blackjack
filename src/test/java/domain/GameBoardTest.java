@@ -1,9 +1,9 @@
 package domain;
 
-import domain.ScordResult.BattleResults;
-import domain.ScordResult.ScoreBoard;
+import domain.ScoreResult.BattleResults;
+import domain.ScoreResult.ScoreBoard;
 import domain.card.ParticipantCardDeck;
-import domain.ScordResult.BattleResult;
+import domain.ScoreResult.BattleResult;
 import domain.game.GameBoard;
 import domain.participant.Dealer;
 import domain.participant.Participant;

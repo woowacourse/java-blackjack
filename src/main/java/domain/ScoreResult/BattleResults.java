@@ -1,4 +1,4 @@
-package domain.ScordResult;
+package domain.ScoreResult;
 
 import java.util.Collections;
 import java.util.EnumMap;

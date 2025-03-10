@@ -1,4 +1,4 @@
-package domain.ScordResult;
+package domain.ScoreResult;
 
 import domain.game.GameRule;
 import domain.participant.Participant;

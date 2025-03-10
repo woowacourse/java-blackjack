@@ -1,8 +1,8 @@
 package controller;
 
-import domain.ScordResult.BattleResults;
+import domain.ScoreResult.BattleResults;
 import domain.game.GameBoard;
-import domain.ScordResult.ScoreBoard;
+import domain.ScoreResult.ScoreBoard;
 import domain.game.GameRule;
 import domain.participant.Dealer;
 import domain.participant.Participant;
