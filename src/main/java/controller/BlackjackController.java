@@ -8,7 +8,6 @@ import domain.card.Hand;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -71,7 +70,7 @@ public class BlackjackController {
   private void ifCanHit(final BlackjackGame blackjack, final Participant player) {
     final var name = player.getName();
     while (player.isHit() && inputView.readPlayerAnswer(name)) {
-      final var card = blackjack.deal();
+      final var card = blackjack.getCardForDeal();
       player.hit(card);
       outputView.printPlayerHand(name, converter.participantCardToText(player));
     }
@@ -81,7 +80,7 @@ public class BlackjackController {
     final var dealer = blackjack.getDealer();
 
     while (dealer.isHit()) {
-      final var card = blackjack.deal();
+      final var card = blackjack.getCardForDeal();
       dealer.hit(card);
       outputView.printDealerHit();
     }
@@ -103,10 +102,11 @@ public class BlackjackController {
     final RoundHistory roundHistory = blackjack.writeRoundHistory();
     final var dealerRoundHistory = roundHistory.getDealerResult();
     outputView.printRoundResultOnDealer(dealerRoundHistory);
-    Map<String, Boolean> history = roundHistory.getHistory();
-    for (String name : history.keySet()) {
-      var result = PlayerResultText.convertBooleanToText(history.get(name));
-      outputView.printRoundResultOnPlayers(name, result);
-    }
+
+    roundHistory.getHistory()
+        .forEach((name, isWin) -> {
+          var result = PlayerResultText.convertBooleanToText(isWin);
+          outputView.printRoundResultOnPlayers(name, result);
+        });
   }
 }

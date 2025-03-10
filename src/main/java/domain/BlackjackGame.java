@@ -40,7 +40,7 @@ public class BlackjackGame {
     return RoundHistory.of(dealer, players);
   }
 
-  public TrumpCard deal() {
+  public TrumpCard getCardForDeal() {
     return deck.draw();
   }
 
