@@ -88,4 +88,12 @@ public class DealerTest {
 
         assertThat(dealer.getInitialCards()).isEqualTo(expected);
     }
+
+    @Test
+    void 딜러의_이름을_반환한다() {
+        Cards cards = new Cards(List.of(new Card(Suit.DIAMOND, Rank.EIGHT)));
+        Participant dealer = new Dealer(cards);
+
+        assertThat(dealer.getParticipantName()).isEqualTo("딜러");
+    }
 }

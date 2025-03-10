@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class GameManagerTest {
 
-    private class TestCardProvider implements CardProvider{
+    private class TestCardProvider implements CardProvider {
 
         private final Deque<Card> cardQueue = new ArrayDeque<>(List.of(
                 new Card(Suit.CLOVER, Rank.EIGHT),

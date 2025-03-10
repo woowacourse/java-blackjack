@@ -75,4 +75,13 @@ public class PlayerTest {
 
         assertThat(player.getInitialCards()).isEqualTo(expected);
     }
+
+    @Test
+    void 플레이어_이름을_반환한다() {
+        ParticipantName participantName = new ParticipantName("duei");
+        Cards cards = new Cards(List.of(new Card(Suit.DIAMOND, Rank.EIGHT)));
+        Participant player = new Player(participantName, cards);
+
+        assertThat(player.getParticipantName()).isEqualTo("duei");
+    }
 }

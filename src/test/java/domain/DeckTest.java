@@ -24,5 +24,4 @@ public class DeckTest {
             () -> assertThat(twoCards.get(0)).isNotEqualTo(twoCards.get(1))
         );
     }
-
 }
