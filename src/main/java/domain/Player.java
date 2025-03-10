@@ -9,6 +9,11 @@ public class Player extends Participant {
     }
 
     @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
     public List<Card> getInitialCards() {
         return cards.getCards();
     }

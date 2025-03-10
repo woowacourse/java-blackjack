@@ -13,9 +13,7 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    public boolean isDealer() {
-        return participantName.getName().equals(Dealer.DEALER_DEFAULT_NAME);
-    }
+    public abstract boolean isDealer();
 
     public void drawCard(List<Card> providedCards) {
         cards = cards.addCards(providedCards);
