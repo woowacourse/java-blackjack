@@ -28,8 +28,8 @@ public class Deck {
     }
 
     private void validateSize(List<TrumpCard> cards) {
-        if (cards.size() != 52) {
-            throw new IllegalArgumentException("덱의 크기는 52여야 합니다.");
+        if (cards.size() != TrumpCard.TOTAL_COUNT) {
+            throw new IllegalArgumentException("덱의 크기는 " + TrumpCard.TOTAL_COUNT + "여야 합니다.");
         }
     }
 

@@ -79,7 +79,7 @@ class DeckTest {
             // then
             assertThatThrownBy(() -> new Deck(cards))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("덱의 크기는 52여야 합니다.");
+                    .hasMessage("덱의 크기는 " + TrumpCard.TOTAL_COUNT + "여야 합니다.");
         }
 
         @DisplayName("덱의 카드는 중복되지 않아야한다.")

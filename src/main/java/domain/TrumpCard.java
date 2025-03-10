@@ -57,6 +57,8 @@ public enum TrumpCard {
     QUEEN_OF_CLUBS(Suit.CLUBS, Rank.QUEEN),
     KING_OF_CLUBS(Suit.CLUBS, Rank.KING);
 
+    public static final int TOTAL_COUNT = values().length;
+
     private final Suit suit;
     private final Rank rank;
 
@@ -68,7 +70,7 @@ public enum TrumpCard {
     public Suit getSuit() {
         return suit;
     }
-    
+
     public Rank getRank() {
         return rank;
     }
