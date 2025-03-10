@@ -1,6 +1,6 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.Victory;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.CardsShuffler;
 import blackjack.domain.card.Deck;
@@ -64,8 +64,8 @@ public class Dealer {
         return cards.isBlackjack();
     }
 
-    public Victory createVictory() {
-        return Victory.create(this, players);
+    public GameResult createVictory() {
+        return GameResult.create(this, players);
     }
 
     public Cards getCards() {

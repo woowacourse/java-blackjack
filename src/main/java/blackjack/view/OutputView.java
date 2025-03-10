@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Victory;
+import blackjack.domain.GameResult;
 import blackjack.domain.WinningResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participants.Dealer;
@@ -62,9 +62,9 @@ public class OutputView {
         System.out.println("더 이상 카드를 받을 수 없습니다.");
     }
 
-    public static void printVictory(Victory victory, List<Player> players) {
-        Map<WinningResult, Integer> dealerVictoryResults = victory.getDealerVictoryResults();
-        Map<Player, WinningResult> playerVictoryResults = victory.getPlayerVictoryResults();
+    public static void printVictory(GameResult gameResult, List<Player> players) {
+        Map<WinningResult, Integer> dealerVictoryResults = gameResult.getDealerVictoryResults();
+        Map<Player, WinningResult> playerVictoryResults = gameResult.getPlayerVictoryResults();
         System.out.println("## 최종 승패");
         printIfPresentWinningResult(dealerVictoryResults);
         dealerVictoryResults.getOrDefault(WinningResult.LOSE, 0);

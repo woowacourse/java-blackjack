@@ -57,10 +57,10 @@ public class VictoryTest {
         Map<WinningResult, Integer> dealerVictoryResult = Map.of(WinningResult.LOSE, 1, WinningResult.WIN, 1);
 
         //when
-        Victory victory = Victory.create(dealer, players);
+        GameResult gameResult = GameResult.create(dealer, players);
 
         //then
-        Assertions.assertThat(victory.getPlayerVictoryResults()).isEqualTo(playerVictoryResults);
-        Assertions.assertThat(victory.getDealerVictoryResults()).isEqualTo(dealerVictoryResult);
+        Assertions.assertThat(gameResult.getPlayerVictoryResults()).isEqualTo(playerVictoryResults);
+        Assertions.assertThat(gameResult.getDealerVictoryResults()).isEqualTo(dealerVictoryResult);
     }
 }
