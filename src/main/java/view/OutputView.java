@@ -1,13 +1,15 @@
 package view;
 
 import dto.CardDto;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class OutputView {
 
     public static final String LINE = System.lineSeparator();
 
-    public void printPlayers(final List<String> playerNames) {
+    public void printPlayers(final Set<String> playerNames) {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다." + LINE, joinByDelimiter(playerNames));
     }
 
@@ -30,7 +32,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private String joinByDelimiter(final List<String> values) {
+    private String joinByDelimiter(final Collection<String> values) {
         return String.join(", ", values);
     }
 
