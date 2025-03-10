@@ -39,9 +39,7 @@ public class CardGiver {
     }
 
     public void giveDefaultTo(List<Participant> participants) {
-        participants.forEach(participant -> {
-            participant.addCards(giveDefault());
-        });
+        participants.forEach(participant -> participant.addCards(giveDefault()));
     }
 
     public void giveAdditionalCard(Player player, AnswerType answerType) {
