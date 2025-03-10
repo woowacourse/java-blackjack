@@ -25,28 +25,21 @@ public class BlackJackController {
 
     public void run() {
         try {
-            final List<Nickname> nicknames = readNicknames();
-            final Players players = generatePlayers(nicknames);
+            final Players players = createPlayers();
             final Deck deck = generateDeck();
-            final List<Player> playerGroup = players.getPlayers();
-            setGame(playerGroup, deck);
-            final Dealer dealer = generateDealer();
-            dealer.receiveInitialCards(List.of(deck.drawCard(), deck.drawCard()));
-            printGameSetting(dealer, nicknames, playerGroup);
+            final Dealer dealer = setupDealer(deck);
 
-            processPlayerHit(playerGroup, deck);
-            processDealerHit(dealer, deck);
-            processFinalResult(dealer, playerGroup);
+            printInitialGameState(dealer, players);
+            playGame(dealer, players.getPlayers(), deck);
+            showResults(dealer, players.getPlayers());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private List<Nickname> readNicknames() {
-        final String inputNicknames = InputView.readPlayerName();
-        return Arrays.stream(inputNicknames.split(","))
-                .map(Nickname::new)
-                .toList();
+    private Players createPlayers() {
+        final List<Nickname> nicknames = readNicknames();
+        return generatePlayers(nicknames);
     }
 
     private Players generatePlayers(final List<Nickname> nicknames) {
@@ -57,12 +50,11 @@ public class BlackJackController {
         return new Players(players);
     }
 
-    private void setGame(final List<Player> players, final Deck deck) {
-        players.forEach(player -> {
-            final Card firstCard = deck.drawCard();
-            final Card secondCard = deck.drawCard();
-            player.receiveInitialCards(List.of(firstCard, secondCard));
-        });
+    private List<Nickname> readNicknames() {
+        final String inputNicknames = InputView.readPlayerName();
+        return Arrays.stream(inputNicknames.split(","))
+                .map(Nickname::new)
+                .toList();
     }
 
     private Deck generateDeck() {
@@ -72,15 +64,37 @@ public class BlackJackController {
         return new Deck(cards);
     }
 
+    private Dealer setupDealer(final Deck deck) {
+        final Dealer dealer = generateDealer();
+        dealer.receiveInitialCards(List.of(deck.drawCard(), deck.drawCard()));
+        return dealer;
+    }
+
     private Dealer generateDealer() {
         return new Dealer(new Nickname(DEALER_NAME));
     }
 
-    private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
-                                  final List<Player> players) {
-        OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
-        OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
-        players.forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
+    private void printInitialGameState(final Dealer dealer, final Players players) {
+        final List<Player> playerGroup = players.getPlayers();
+        final List<Nickname> nicknames = playerGroup.stream()
+                .map(player -> new Nickname(player.getDisplayName()))
+                .toList();
+
+        printGameSetting(dealer, nicknames, playerGroup);
+    }
+
+    private void playGame(final Dealer dealer, final List<Player> players, final Deck deck) {
+        setGame(players, deck);
+        processPlayerHit(players, deck);
+        processDealerHit(dealer, deck);
+    }
+
+    private void setGame(final List<Player> players, final Deck deck) {
+        players.forEach(player -> {
+            final Card firstCard = deck.drawCard();
+            final Card secondCard = deck.drawCard();
+            player.receiveInitialCards(List.of(firstCard, secondCard));
+        });
     }
 
     private void processPlayerHit(final List<Player> players, final Deck deck) {
@@ -130,6 +144,17 @@ public class BlackJackController {
         }
     }
 
+    private void showResults(final Dealer dealer, final List<Player> players) {
+        processFinalResult(dealer, players);
+    }
+
+    private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
+                                  final List<Player> players) {
+        OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
+        OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
+        players.forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
+    }
+
     private void processFinalResult(final Dealer dealer, final List<Player> players) {
         OutputView.printCardsInHandWithResults(dealer, players);
         final Map<Player, FinalResult> playerResults = FinalResult.makePlayerResult(players, dealer);
@@ -137,4 +162,3 @@ public class BlackJackController {
         OutputView.printFinalResults(dealer.getDisplayName(), resultCounts, playerResults);
     }
 }
-
