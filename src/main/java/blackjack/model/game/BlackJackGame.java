@@ -1,5 +1,6 @@
 package blackjack.model.game;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -59,7 +60,9 @@ public class BlackJackGame {
         return players.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        blackJackRule::calculateOptimalPoint
+                        blackJackRule::calculateOptimalPoint,
+                        (x, y) -> y,
+                        LinkedHashMap::new
                 ));
     }
 
