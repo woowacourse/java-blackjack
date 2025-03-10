@@ -13,6 +13,12 @@ class WinningTest {
 
     @Test
     void 플레이어가_21점을_넘으면_버스트로_패배() {
+        Winning winning = Winning.determine(22, 20);
+        assertThat(winning).isEqualTo(Winning.LOSE);
+    }
+
+    @Test
+    void 플레이어와_딜러_모두_버스트인_경우_플레이어_패배(){
         Winning winning = Winning.determine(22, 23);
         assertThat(winning).isEqualTo(Winning.LOSE);
     }
