@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
@@ -10,26 +11,41 @@ public class DeckTest {
     void 덱에서_카드를_한_장_뽑는다() {
         // given
         final int cardCount = 1;
+        final Card card1 = new Card(Suit.DIAMOND, Rank.ACE);
+        final Card card2 = new Card(Suit.CLOVER, Rank.KING);
+        final Card card3 = new Card(Suit.HEART, Rank.JACK);
+        final Card card4 = new Card(Suit.CLOVER, Rank.THREE);
+        Deck deck = new Deck(List.of(card1, card2, card3, card4));
 
         // when
-        Deck deck = DeckGenerator.generateDeck();
-        List<Card> card = deck.drawCards(cardCount);
+        List<Card> cards = deck.drawCards(cardCount);
 
         // then
-        Assertions.assertThat(card.size()).isEqualTo(cardCount);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(cards.size()).isEqualTo(cardCount);
+            softAssertions.assertThat(cards.contains(card4)).isTrue();
+        });
     }
 
     @Test
     void 덱에서_카드를_두_장_뽑는다() {
         // given
         final int cardCount = 2;
+        final Card card1 = new Card(Suit.DIAMOND, Rank.ACE);
+        final Card card2 = new Card(Suit.CLOVER, Rank.KING);
+        final Card card3 = new Card(Suit.HEART, Rank.JACK);
+        final Card card4 = new Card(Suit.CLOVER, Rank.THREE);
+        Deck deck = new Deck(List.of(card1, card2, card3, card4));
 
         // when
-        Deck deck = DeckGenerator.generateDeck();
-        List<Card> card = deck.drawCards(cardCount);
+        List<Card> cards = deck.drawCards(cardCount);
 
         // then
-        Assertions.assertThat(card.size()).isEqualTo(cardCount);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(cards.size()).isEqualTo(cardCount);
+            softAssertions.assertThat(cards.contains(card3)).isTrue();
+            softAssertions.assertThat(cards.contains(card4)).isTrue();
+        });
     }
 
     @Test
