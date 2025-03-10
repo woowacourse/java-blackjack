@@ -14,7 +14,10 @@ public class RoundHistory {
     this.history = new HashMap<>(history);
   }
 
-  public static RoundHistory of(final Participant dealer, final List<Participant> players) {
+  public static RoundHistory of(
+      final Participant dealer,
+      final List<Participant> players
+  ) {
     final Map<String, Boolean> history = players.stream()
         .collect(Collectors.toMap(
             Participant::getName,
@@ -28,7 +31,7 @@ public class RoundHistory {
     Map<Boolean, Integer> result = new HashMap<>(Map.of(true, 0, false, 0));
 
     for (Boolean value : history.values()) {
-      result.put(value, result.get(value) + 1);
+      result.put(!value, result.get(value) + 1);
     }
     return result;
   }

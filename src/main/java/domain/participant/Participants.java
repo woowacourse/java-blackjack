@@ -24,7 +24,6 @@ public class Participants {
 
 
   public void add(final List<String> participantNames) {
-
     for (String participantName : participantNames) {
       final Participant player = new Player(participantName);
       if (participants.stream().anyMatch(i -> i.getName().equals(participantName))) {
@@ -51,7 +50,6 @@ public class Participants {
     final List<Participant> players = participants.stream()
         .filter(participant -> !participant.isDealer())
         .toList();
-
     if (players.isEmpty()) {
       throw new BlackjackArgumentException("게임 참가자가 없습니다! 게임 설정을 다시 진행해주세요.");
     }

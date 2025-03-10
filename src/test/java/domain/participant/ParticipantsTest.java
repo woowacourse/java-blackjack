@@ -71,5 +71,16 @@ class ParticipantsTest {
           .isInstanceOf(BlackjackArgumentException.class)
           .hasMessageContaining("중복된 닉네임");
     }
+
+    @Test
+    @DisplayName("참가자가 없을 경우, 예외를 발생한다")
+    void error_emptyParticipant() {
+      //given
+      final var participants = new Participants();
+      //when&then
+      assertThatThrownBy(participants::getPlayers)
+          .isInstanceOf(BlackjackArgumentException.class)
+          .hasMessageContaining("게임 참가자가 없습니다! 게임 설정을 다시 진행해주세요.");
+    }
   }
 }
