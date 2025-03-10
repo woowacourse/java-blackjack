@@ -132,9 +132,12 @@ public class BlackjackTest {
 			final Player player = new Player("", participant);
 			final Blackjack blackjack = new Blackjack();
 
-			// when & then
-			assertThatNoException().isThrownBy(() -> blackjack.duelDealerVsPlayer(dealer, player));
+			// when
+			blackjack.duelDealerVsPlayer(dealer, player);
 
+			// then
+			assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+			assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
 		}
 	}
 }
