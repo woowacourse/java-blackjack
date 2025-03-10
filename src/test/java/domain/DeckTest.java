@@ -102,9 +102,7 @@ class DeckTest {
         @Test
         void nonCardTest() {
             // given
-            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
-                    .toList();
-            Deck deck = new Deck(cards);
+            Deck deck = Deck.create();
 
             // when
             for (int i = 0; i < 52; i++) {
