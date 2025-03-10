@@ -1,7 +1,6 @@
 package domain.game;
 
 import domain.card.Card;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -17,13 +16,13 @@ public class Dealer extends Participant {
     }
 
     public List<GameResult> judgeGameResult(List<Player> players) {
-        List<GameResult> gameResult = new ArrayList<>();
-        for (Player player : players) {
-            GameResult playerGameResult = judgeWin(player);
-            gameResult.add(playerGameResult);
-            calculateBettingResultFromDealer(player, playerGameResult);
-        }
-        return gameResult;
+        return players.stream()
+                .map(player -> {
+                    GameResult playerGameResult = judgeWin(player);
+                    calculateBettingResultFromDealer(player, playerGameResult);
+                    return playerGameResult;
+                })
+                .toList();
     }
 
     private void calculateBettingResultFromDealer(Player player, GameResult gameResult) {
