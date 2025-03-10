@@ -56,7 +56,7 @@ public class BlackjackController implements Controller {
         }
     }
     
-    private static List<String> extractPlayerNames(final List<PlayerBlackjackCardHand> playerHands) {
+    private List<String> extractPlayerNames(final List<PlayerBlackjackCardHand> playerHands) {
         return playerHands.stream()
                 .map(PlayerBlackjackCardHand::getPlayerName)
                 .toList();

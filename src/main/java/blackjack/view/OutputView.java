@@ -88,11 +88,11 @@ public class OutputView {
                 + card.getShape().name();
     }
 
-    private static String parseFinalSum(int sum) {
+    private String parseFinalSum(int sum) {
         return " - 결과: %d".formatted(sum);
     }
     
-    private static String parseSum(int sum) {
+    private String parseSum(int sum) {
         return " - 합계: %d".formatted(sum);
     }
 
