@@ -1,11 +1,10 @@
 package controller;
 
-import domain.Dealer;
-import domain.Deck;
-import domain.Nickname;
-import domain.Player;
-import domain.Players;
+import domain.*;
+
 import java.util.List;
+
+import domain.strategy.DeckShuffleStrategy;
 import view.InputView;
 import view.OutputView;
 
@@ -22,7 +21,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        Deck deck = Deck.initialize();
+        Deck deck = new Deck(new DeckShuffleStrategy());
         Players players = registerPlayers(inputView.readParticipantsNames(), deck);
         Dealer dealer = new Dealer(deck.drawInitialCards());
         outputView.printInitialGameSettings(players, dealer);
