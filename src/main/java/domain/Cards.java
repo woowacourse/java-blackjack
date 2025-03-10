@@ -1,7 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,7 +15,7 @@ public class Cards {
 
     public Cards() {
         this.cards = new ArrayList<>();
-        this.isOpened = new LinkedHashMap<>();
+        this.isOpened = new HashMap<>();
     }
 
     public void addAll(List<Card> cards) {
