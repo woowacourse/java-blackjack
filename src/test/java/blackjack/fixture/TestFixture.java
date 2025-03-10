@@ -1,7 +1,5 @@
 package blackjack.fixture;
 
-import static blackjack.domain.random.CardRandomGenerator.CARDS;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
@@ -20,7 +18,7 @@ public class TestFixture {
         private int callingCount = 0;
 
         @Override
-        public Card pickRandomCard() {
+        public Card pickCard() {
             callingCount += 1;
             if (callingCount == 0 || callingCount == 1) {
                 return new Card(Shape.DIAMOND, Denomination.TWO);
@@ -34,7 +32,7 @@ public class TestFixture {
     }
 
     public static Cards provideCards(final int count) {
-        return new Cards(CARDS.subList(0, count));
+        return new Cards(CardGenerator.DECKS.subList(0, count));
     }
 
     public static Players providePlayers() {

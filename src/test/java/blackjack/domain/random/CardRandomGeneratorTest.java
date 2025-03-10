@@ -15,7 +15,7 @@ class CardRandomGeneratorTest {
         final CardGenerator cardGenerator = new CardRandomGenerator();
 
         // when
-        final Card card = cardGenerator.pickRandomCard();
+        final Card card = cardGenerator.pickCard();
 
         // then
         assertThat(card).isNotNull();

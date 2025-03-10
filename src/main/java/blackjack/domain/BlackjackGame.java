@@ -20,7 +20,7 @@ public class BlackjackGame {
     }
 
     public void spreadInitialCards() {
-        int cardsCount = 2 * participants.getParticipantSize();
+        int cardsCount = participants.getInitialTotalCardsSize();
         final Cards cards = cardManager.spreadCards(cardsCount);
         participants.spreadAllTwoCards(cards);
     }
