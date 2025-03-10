@@ -29,10 +29,11 @@ public class ParticipantWinningResult {
     }
 
     private static GameResult checkPlayerWinningResult(Dealer dealer, Player player){
-        if (checkPlayerWin(dealer, player) == GameResult.WIN && player.checkBlackjack()){
+        GameResult playerWinningResult = checkPlayerWin(dealer, player);
+        if (playerWinningResult == GameResult.WIN && player.checkBlackjack()){
             return GameResult.BLACKJACK;
         }
-        return checkPlayerWin(dealer, player);
+        return playerWinningResult;
     }
 
     private static GameResult checkPlayerWin(Dealer dealer, Player player) {
