@@ -31,8 +31,8 @@ public class Participant {
 		other.duelHistory.write(DuelResult.LOSE);
 	}
 
-	public int calculateAllScore() {
-		return hand.calculateAllScore();
+	public int calculateAllScore(final int bustScore) {
+		return hand.calculateAllScore(bustScore);
 	}
 
 	public CardHand getCardHand() {

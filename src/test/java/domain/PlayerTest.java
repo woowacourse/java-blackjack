@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domain.constant.Suit;
 
 public class PlayerTest {
+	private static final int BUST_SCORE = 21;
 
 	@Nested
 	@DisplayName("플레아어가 카드를 뽑을지 여부를 반환한다.")
@@ -31,7 +32,7 @@ public class PlayerTest {
 			final Player p = new Player("", participant);
 
 			// when
-			final boolean actual = p.isPickCard();
+			final boolean actual = p.isPickCard(BUST_SCORE);
 
 			// then
 			assertThat(actual).isEqualTo(expected);
@@ -74,8 +75,8 @@ public class PlayerTest {
 			dealer.pickCard(dealerDeck);
 
 			// when
-			winner.duel(dealer.getParticipant());
-			loser.duel(dealer.getParticipant());
+			winner.duel(dealer.getParticipant(), BUST_SCORE);
+			loser.duel(dealer.getParticipant(), BUST_SCORE);
 
 			// then
 			assertThat(winner.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
@@ -101,7 +102,7 @@ public class PlayerTest {
 			dealer.pickCard(dealerDeck);
 
 			// when
-			loser.duel(dealer.getParticipant());
+			loser.duel(dealer.getParticipant(), BUST_SCORE);
 
 			// then
 			assertThat(loser.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
@@ -127,7 +128,7 @@ public class PlayerTest {
 			dealer.pickCard(dealerDeck);
 
 			// when
-			loser.duel(dealer.getParticipant());
+			loser.duel(dealer.getParticipant(), BUST_SCORE);
 
 			// then
 			assertThat(loser.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);

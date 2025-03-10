@@ -23,10 +23,11 @@ class CardHandTest {
 		@DisplayName("주어진 모든 Card 점수 합을 계산하여 반환한다.")
 		void test_calculateAllScore(List<Card> cards, int expected) {
 			//given
-			var cardHand = new CardHand(cards);
+			final var cardHand = new CardHand(cards);
+			final int bustScore = 21;
 
 			//when&then
-			Assertions.assertThat(cardHand.calculateAllScore()).isEqualTo(expected);
+			Assertions.assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(expected);
 		}
 
 		private static Stream<Arguments> getCardList() {

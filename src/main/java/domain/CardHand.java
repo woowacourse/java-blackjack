@@ -20,14 +20,14 @@ public class CardHand {
 		cards.add(card);
 	}
 
-	public int calculateAllScore() {
+	public int calculateAllScore(final int bustScore) {
 		int score = 0;
 
 		for (final Card card : cards) {
 			score = card.sumNumber(score);
 		}
 
-		return Rank.ifOverThanBustScoreAceIsMIN(score, calculateAceCount());
+		return Rank.ifOverThanBustScoreAceIsMIN(score, calculateAceCount(), bustScore);
 	}
 
 	private int calculateAceCount() {

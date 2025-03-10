@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import domain.Blackjack;
 import domain.Card;
 import domain.CardHand;
 import domain.Dealer;
@@ -17,10 +18,12 @@ import view.OutputView;
 public class BlackjackController {
 	private final InputView inputView;
 	private final OutputView outputView;
+	private final Blackjack blackjack;
 
-	public BlackjackController(final InputView inputView, final OutputView outputView) {
+	public BlackjackController(final InputView inputView, final OutputView outputView, final Blackjack blackjack) {
 		this.inputView = inputView;
 		this.outputView = outputView;
+		this.blackjack = blackjack;
 	}
 
 	public void run() {
@@ -84,7 +87,7 @@ public class BlackjackController {
 	private void playersIfCanPickCard(final List<Player> players, final Deck deck) {
 		for (final Player player : players) {
 			final String name = player.getName();
-			while (player.isPickCard() && inputView.readPlayerAnswer(name)) {
+			while (blackjack.isPickCardByPlayer(player) && inputView.readPlayerAnswer(name)) {
 				player.pickCard(deck);
 				outputView.printPlayerCards(name, convertParticipantCardText(player.getParticipant()));
 			}
@@ -92,7 +95,7 @@ public class BlackjackController {
 	}
 
 	private void dealerIfCanPickCard(final Dealer dealer, final Deck deck) {
-		while (dealer.isPickCard()) {
+		while (blackjack.isPickCardByDealer(dealer)) {
 			dealer.pickCard(deck);
 			outputView.printDealerPickCard();
 		}
@@ -106,7 +109,7 @@ public class BlackjackController {
 	private void outputDealerHandResult(final Dealer dealer) {
 		final Participant participant = dealer.getParticipant();
 		final List<String> convertedCards = convertParticipantCardText(participant);
-		final int score = participant.calculateAllScore();
+		final int score = blackjack.calculateScore(participant);
 		outputView.printDealerHandResult(convertedCards, score);
 	}
 
@@ -126,13 +129,15 @@ public class BlackjackController {
 		for (final Player player : players) {
 			final Participant participant = player.getParticipant();
 			final List<String> convertedCards = convertParticipantCardText(participant);
-			final int score = participant.calculateAllScore();
+			final int score = blackjack.calculateScore(participant);
 			outputView.printPlayerHandResult(player.getName(), convertedCards, score);
 		}
 	}
 
 	private void duel(final List<Player> players, final Dealer dealer) {
-		players.forEach(dealer::startDuel);
+		for (final Player player : players) {
+			blackjack.duelDealerVsPlayer(dealer, player);
+		}
 	}
 
 	private void outputDuelResult(final List<Player> players, final Dealer dealer) {

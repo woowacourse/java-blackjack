@@ -1,7 +1,6 @@
 package domain;
 
 public class Dealer {
-	private static final int DEALER_PICK_CARD_CONDITION_SCORE = 16;
 
 	private final Participant participant;
 
@@ -13,8 +12,8 @@ public class Dealer {
 		this.participant = new Participant(hand);
 	}
 
-	public boolean isPickCard() {
-		return participant.calculateAllScore() <= DEALER_PICK_CARD_CONDITION_SCORE;
+	public boolean isPickCard(final int bustScore, final int dealerPickCardScoreMax) {
+		return participant.calculateAllScore(bustScore) <= dealerPickCardScoreMax;
 	}
 
 	public void pickCardOnFirstHandOut(final Deck deck) {
@@ -25,8 +24,8 @@ public class Dealer {
 		participant.pickCard(deck);
 	}
 
-	public void startDuel(final Player player) {
-		player.duel(participant);
+	public void startDuel(final Player player, final int bustScore) {
+		player.duel(participant, bustScore);
 	}
 
 	public Participant getParticipant() {

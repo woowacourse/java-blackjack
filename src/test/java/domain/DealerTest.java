@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.ArrayDeque;
 import java.util.List;
@@ -13,6 +14,9 @@ import domain.constant.Suit;
 
 public class DealerTest {
 
+	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
+	private static final int BUST_SCORE = 21;
+
 	@Nested
 	@DisplayName("딜러가 카드를 받아야 하는지 여부를 반환한다.")
 	class IsPickCard {
@@ -24,7 +28,7 @@ public class DealerTest {
 			final var dealer = new Dealer();
 
 			// when
-			final var actual = dealer.isPickCard();
+			final var actual = dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX);
 
 			// then
 			assertThat(actual).isTrue();
@@ -40,7 +44,7 @@ public class DealerTest {
 			final var dealer = new Dealer(cardHand);
 
 			// when
-			final var actual = dealer.isPickCard();
+			final var actual = dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX);
 
 			// then
 			assertThat(actual).isFalse();
@@ -73,12 +77,14 @@ public class DealerTest {
 			winner.pickCard(winnerDeck);
 
 			// when
-			dealer.startDuel(player);
-			dealer.startDuel(winner);
+			dealer.startDuel(player, BUST_SCORE);
+			dealer.startDuel(winner, BUST_SCORE);
 
 			// then
-			assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-			assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+			assertSoftly(s -> {
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+			});
 		}
 
 	}

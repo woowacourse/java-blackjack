@@ -14,8 +14,8 @@ public class Player {
 		this.participant = participant;
 	}
 
-	public boolean isPickCard() {
-		return participant.calculateAllScore() <= Rank.BUST_SCORE;
+	public boolean isPickCard(final int bustScore) {
+		return participant.calculateAllScore(bustScore) <= bustScore;
 	}
 
 	public void pickCardOnFirstHandOut(final Deck deck) {
@@ -26,14 +26,14 @@ public class Player {
 		participant.pickCard(deck);
 	}
 
-	public void duel(final Participant other) {
-		final int score = participant.calculateAllScore();
-		final int otherScore = other.calculateAllScore();
-		if (score > Rank.BUST_SCORE) {
+	public void duel(final Participant other, final int bustScore) {
+		final int score = participant.calculateAllScore(bustScore);
+		final int otherScore = other.calculateAllScore(bustScore);
+		if (score > bustScore) {
 			other.writeWin(participant);
 			return;
 		}
-		if (otherScore > Rank.BUST_SCORE || score > otherScore) {
+		if (otherScore > bustScore || score > otherScore) {
 			participant.writeWin(other);
 			return;
 		}
