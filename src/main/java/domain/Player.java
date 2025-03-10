@@ -15,6 +15,10 @@ public class Player extends Participant {
         return cards.isBust();
     }
 
+    public boolean hasNotBustCards() {
+        return !cards.isBust();
+    }
+
     public String getName() {
         return name;
     }

@@ -103,6 +103,6 @@ public class BlackjackApplication {
     }
 
     private boolean isPossibleRequest(Player player, AnswerType answerType) {
-        return answerType == YES && !player.hasBustCards();
+        return answerType == YES && player.hasNotBustCards();
     }
 }
