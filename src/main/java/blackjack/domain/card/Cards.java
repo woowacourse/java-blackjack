@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.BlackjackConstants.BUST_THRESHOLD;
+import static blackjack.domain.BlackjackConstants.DEFAULT_CARD_SIZE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        if (cards.size() != 2) {
+        if (cards.size() != DEFAULT_CARD_SIZE.getSymbol()) {
             return false;
         }
         Set<Rank> ranks = cards.stream()

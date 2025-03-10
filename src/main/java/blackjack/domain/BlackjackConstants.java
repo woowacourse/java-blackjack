@@ -1,7 +1,8 @@
 package blackjack.domain;
 
 public enum BlackjackConstants {
-    BUST_THRESHOLD(21);
+    BUST_THRESHOLD(21),
+    DEFAULT_CARD_SIZE(2);
 
     private final int symbol;
 
