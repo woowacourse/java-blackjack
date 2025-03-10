@@ -46,20 +46,17 @@ public class Dealer extends Participant {
     private GameResult judgeBlackJack(Player player) {
         int playerCardCount = player.getCardsCount();
         int dealerCardCount = this.getCardsCount();
-        if (playerCardCount == dealerCardCount) {
-            return GameResult.DRAW;
-        }
-        if (playerCardCount == BLACK_JACK_CONDITION_COUNT) {
-            return GameResult.WIN;
-        }
-        if (dealerCardCount == BLACK_JACK_CONDITION_COUNT) {
+        if (playerCardCount != BLACK_JACK_CONDITION_COUNT) {
             return GameResult.LOSE;
         }
-        throw new IllegalArgumentException("[ERROR] 승패 판정에 실패하였습니다.");
+        if (dealerCardCount != BLACK_JACK_CONDITION_COUNT) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
     }
 
-    public boolean isOverDrawBound() {
-        return calculateTotalCardNumber() > DEALER_DRAW_BOUND;
+    public boolean isUnderDrawBound() {
+        return calculateTotalCardNumber() <= DEALER_DRAW_BOUND;
     }
 
     public Card openSingleCard() {

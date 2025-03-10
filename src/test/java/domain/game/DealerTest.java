@@ -228,26 +228,32 @@ public class DealerTest {
     private static Stream<Arguments> provideCard() {
         return Stream.of(
                 Arguments.of(
-                        List.of(new Card(Pattern.SPADE, CardNumber.TEN), new Card(Pattern.SPADE, CardNumber.SEVEN)),
-                        true
+                        List.of(
+                                new Card(Pattern.SPADE, CardNumber.TEN),
+                                new Card(Pattern.SPADE, CardNumber.SEVEN)
+                        ),
+                        false
                 ),
                 Arguments.of(
-                        List.of(new Card(Pattern.SPADE, CardNumber.TEN), new Card(Pattern.SPADE, CardNumber.SIX)),
-                        false
+                        List.of(
+                                new Card(Pattern.SPADE, CardNumber.TEN),
+                                new Card(Pattern.SPADE, CardNumber.SIX)
+                        ),
+                        true
                 )
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideCard")
-    void 딜러는_16_보다_큰_카드값을_가지는지_판정한다(List<Card> cards, boolean expected) {
+    void 딜러는_16_보다_작은_카드값을_가지는지_판정한다(List<Card> cards, boolean expected) {
         //given
         Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         dealerCards.addAll(cards);
 
         //when
-        boolean actual = dealer.isOverDrawBound();
+        boolean actual = dealer.isUnderDrawBound();
 
         //then
         assertThat(actual).isEqualTo(expected);
