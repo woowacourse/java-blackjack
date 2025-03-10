@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -45,8 +46,9 @@ public class CardPackTest {
         Card card = pack.poll();
 
         assertAll(
-            () -> assertThat(card).isNotNull(),
-            () -> assertThat(pack.getCards()).doesNotContain(card)
+                () -> assertThat(card).isNotNull(),
+                () -> assertThat(pack.getCards()).doesNotContain(card),
+                () -> assertThat(card).isEqualTo(new Card(Rank.ACE, Shape.SPADE))
         );
     }
 }
