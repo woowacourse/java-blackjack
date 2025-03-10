@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import model.Player;
+import model.PlayerChoice;
 
 public class InputView {
-    private static final String HIT = "Hit";
-    private static final String STAND = "Stand";
-    private static Scanner SCANNER = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     public static List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)");
@@ -22,7 +21,7 @@ public class InputView {
         OutputView.printHitOrStand(player);
         String hit = SCANNER.nextLine();
         validateHit(hit);
-        return hit.equals(HIT);
+        return hit.equals(PlayerChoice.HIT.name());
     }
 
     private static void validateDelimeter(String[] names) {
@@ -40,8 +39,8 @@ public class InputView {
     }
 
     private static void validateHit(String hit) {
-        if (!(hit.equals(HIT) || hit.equals(STAND))) {
-            throw new IllegalArgumentException("[ERROR] Hit 또는 Stand를 입력해주세요. 입력값 : " + hit);
+        if (!(hit.equals(PlayerChoice.HIT.name()) || hit.equals(PlayerChoice.STAND.name()))) {
+            throw new IllegalArgumentException("[ERROR] hit 또는 stand 를 입력해주세요. 입력값 : " + hit);
         }
     }
 }
