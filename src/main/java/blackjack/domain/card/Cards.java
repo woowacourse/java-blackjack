@@ -72,14 +72,11 @@ public class Cards {
         }
 
         Cards cards1 = (Cards) object;
-        return Objects.equals(getCards(), cards1.getCards()) && Objects.equals(scoreCalculator,
-                cards1.scoreCalculator);
+        return Objects.equals(getCards(), cards1.getCards());
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(getCards());
-        result = 31 * result + Objects.hashCode(scoreCalculator);
-        return result;
+        return Objects.hashCode(getCards());
     }
 }
