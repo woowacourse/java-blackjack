@@ -10,12 +10,28 @@ public class Dealer extends Participant {
     private static final int BLACK_JACK_CONDITION_COUNT = 2;
     private static final int BLACK_JACK_NUMBER = 21;
 
+    private int totalBettingAmount;
+
+    public Dealer() {
+        this.totalBettingAmount = 0;
+    }
+
     public List<GameResult> judgeGameResult(List<Player> players) {
         List<GameResult> gameResult = new ArrayList<>();
         for (Player player : players) {
-            gameResult.add(judgeWin(player));
+            GameResult playerGameResult = judgeWin(player);
+            gameResult.add(playerGameResult);
+            calculateBettingResultFromDealer(player, playerGameResult);
         }
         return gameResult;
+    }
+
+    private void calculateBettingResultFromDealer(Player player, GameResult gameResult) {
+        calculateBettingAmount(player.calculateBettingAmount(gameResult));
+    }
+
+    private void calculateBettingAmount(int bettingAmount) {
+        this.totalBettingAmount -= bettingAmount;
     }
 
     public GameResult judgeWin(Player player) {
@@ -61,5 +77,9 @@ public class Dealer extends Participant {
 
     public Card openSingleCard() {
         return cards.getFirst();
+    }
+
+    public int getTotalBettingAmount() {
+        return totalBettingAmount;
     }
 }
