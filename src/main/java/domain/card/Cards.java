@@ -22,16 +22,22 @@ public class Cards {
 
     public int calculateScore() {
         int sum = cards.stream()
-                .mapToInt(card -> card.getScore().getFirst())
+                .mapToInt(Card::getMinScore)
                 .sum();
-        long aceCount = cards.stream()
-                .filter(card -> card.getScore().size() > 1)
-                .count();
-        while (aceCount > 0 && sum + 10 <= 21) {
-            sum += 10;
-            aceCount--;
+
+        List<Card> scoreGapCards = cards.stream()
+                .filter(Card::hasScoreGap)
+                .toList();
+
+        return scoreGapCards.stream()
+                .reduce(sum, (acc, card) -> addScoreIfPossible(acc, card.getScoreGap()), Integer::sum);
+    }
+
+    private int addScoreIfPossible(int currentSum, int scoreGap) {
+        if (currentSum + scoreGap > 21) {
+            return currentSum;
         }
-        return sum;
+        return currentSum + scoreGap;
     }
 
     public int getSize() {

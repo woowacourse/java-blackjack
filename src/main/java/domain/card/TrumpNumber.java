@@ -1,34 +1,43 @@
 package domain.card;
 
-import java.util.Collections;
-import java.util.List;
-
 public enum TrumpNumber {
 
-    TWO(List.of(2), "2"),
-    THREE(List.of(3), "3"),
-    FOUR(List.of(4), "4"),
-    FIVE(List.of(5), "5"),
-    SIX(List.of(6), "6"),
-    SEVEN(List.of(7), "7"),
-    EIGHT(List.of(8), "8"),
-    NINE(List.of(9), "9"),
-    TEN(List.of(10), "10"),
-    ACE(List.of(1, 11), "A"),
-    JACK(List.of(10), "J"),
-    KING(List.of(10), "K"),
-    QUEEN(List.of(10), "Q");
+    TWO(2, "2"),
+    THREE(3, "3"),
+    FOUR(4, "4"),
+    FIVE(5, "5"),
+    SIX(6, "6"),
+    SEVEN(7, "7"),
+    EIGHT(8, "8"),
+    NINE(9, "9"),
+    TEN(10, "10"),
+    ACE(1, 11, "A"),
+    JACK(10, "J"),
+    KING(10, "K"),
+    QUEEN(10, "Q");
 
-    private final List<Integer> score;
+    private final int minScore;
+    private final int maxScore;
     private final String value;
 
-    TrumpNumber(List<Integer> score, String value) {
-        this.score = score;
+    TrumpNumber(int minScore, int maxScore, String value) {
+        this.minScore = minScore;
+        this.maxScore = maxScore;
         this.value = value;
     }
 
-    public List<Integer> getScore() {
-        return Collections.unmodifiableList(score);
+    TrumpNumber(int minScore, String value) {
+        this.minScore = minScore;
+        this.maxScore = minScore;
+        this.value = value;
+    }
+
+    public int getMinScore() {
+        return minScore;
+    }
+
+    public int getGapBetweenMinMax() {
+        return maxScore - minScore;
     }
 
     public String getValue() {

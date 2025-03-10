@@ -1,6 +1,5 @@
 package domain.card;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -17,8 +16,16 @@ public class Card {
         return new Card(number, shape);
     }
 
-    public List<Integer> getScore() {
-        return number.getScore();
+    public int getMinScore() {
+        return number.getMinScore();
+    }
+
+    public boolean hasScoreGap() {
+        return number.getGapBetweenMinMax() != 0;
+    }
+
+    public int getScoreGap() {
+        return number.getGapBetweenMinMax();
     }
 
     public String getNumberValue() {
