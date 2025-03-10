@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Cards {
     private final List<Card> cards;
@@ -28,20 +26,8 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        if (cards.size() != DEFAULT_CARD_SIZE.getSymbol()) {
-            return false;
-        }
-        Set<Rank> ranks = cards.stream()
-                .map(Card::getRank)
-                .collect(Collectors.toSet());
-        if (!ranks.contains(Rank.ACE)) {
-            return false;
-        }
-
-        return ranks.contains(Rank.KING) ||
-                ranks.contains(Rank.QUEEN) ||
-                ranks.contains(Rank.JACK) ||
-                ranks.contains(Rank.TEN);
+        return cards.size() == DEFAULT_CARD_SIZE.getSymbol()
+                && scoreCalculator.calculateMaxScore(cards) == BUST_THRESHOLD.getSymbol();
     }
 
     public List<Card> getCards() {
