@@ -8,78 +8,82 @@ public enum WinningStatus {
     패배,
     ;
     
-    private static final int BUST_THRESHOLD = 21;
-    
     public static WinningStatus determineWinningStatus(
             final BlackjackWinDeterminable myHand,
             final BlackjackWinDeterminable opponentHand
     ) {
-        if (isBustCondition(myHand, opponentHand)) {
-            return getBustConditionResult(myHand, opponentHand);
+        return determineWinningStatus(new BlackjackWinDetermineCondition(myHand, opponentHand));
+    }
+    
+    private static WinningStatus determineWinningStatus(
+            final BlackjackWinDetermineCondition condition
+    ) {
+        if (condition.hasBust()) {
+            return getBustConditionResult(condition);
         }
-        if (isSameScoreCondition(myHand, opponentHand)) {
-            return getSameScoreConditionResult(myHand, opponentHand);
+        if (condition.isSameScore()) {
+            return getSameScoreConditionResult(condition);
         }
-        if (myHand.getBlackjackSum() > opponentHand.getBlackjackSum()) {
+        if (condition.isMyHandLarger()) {
             return WinningStatus.승리;
         }
         return WinningStatus.패배;
     }
     
-    private static boolean isBustCondition(
-            final BlackjackWinDeterminable myHand,
-            final BlackjackWinDeterminable opponentHand
-    ) {
-        return isBust(myHand) || isBust(opponentHand);
-    }
-    
     private static WinningStatus getBustConditionResult(
-            final BlackjackWinDeterminable myHand,
-            final BlackjackWinDeterminable opponentHand
+            final BlackjackWinDetermineCondition condition
     ) {
-        final boolean isMyHandBust = isBust(myHand);
-        final boolean isOpponentHandBust = isBust(opponentHand);
-        
-        if (isMyHandBust && isOpponentHandBust) {
-            return WinningStatus.무승부;
-        }
-        if (isMyHandBust) {
+        if (condition.isMyHandOnlyBust()) {
             return WinningStatus.패배;
         }
-        if (isOpponentHandBust) {
+        if (condition.isOpponentHandOnlyBust()) {
             return WinningStatus.승리;
         }
         return WinningStatus.무승부;
-    }
-    
-    private static boolean isSameScoreCondition(
-            final BlackjackWinDeterminable myHand,
-            final BlackjackWinDeterminable opponentHand
-    ) {
-        return myHand.getBlackjackSum() == opponentHand.getBlackjackSum();
     }
     
     private static WinningStatus getSameScoreConditionResult(
-            final BlackjackWinDeterminable myHand,
-            final BlackjackWinDeterminable opponentHand
+            final BlackjackWinDetermineCondition condition
     ) {
-        final boolean isMyHandBlackjack = isBlackjack(myHand);
-        final boolean isOpponentHandBlackjack = isBlackjack(opponentHand);
-        
-        if (isMyHandBlackjack && !isOpponentHandBlackjack) {
+        if (condition.isMyHandOnlyBlackjack()) {
             return WinningStatus.승리;
         }
-        if (!isMyHandBlackjack && isOpponentHandBlackjack) {
+        if (condition.isOpponentHandOnlyBlackjack()) {
             return WinningStatus.패배;
         }
         return WinningStatus.무승부;
     }
     
-    private static boolean isBust(final BlackjackWinDeterminable cardHand) {
-        return cardHand.getBlackjackSum() > BUST_THRESHOLD;
-    }
-    
-    private static boolean isBlackjack(final BlackjackWinDeterminable cardHand) {
-        return cardHand.getBlackjackSum() == 21 && cardHand.getSize() == 2;
+    private record BlackjackWinDetermineCondition(
+            BlackjackWinDeterminable myHand,
+            BlackjackWinDeterminable opponentHand
+    ) {
+        public boolean hasBust() {
+            return myHand.isBust() || opponentHand.isBust();
+        }
+        
+        public boolean isSameScore() {
+            return myHand.getBlackjackSum() == opponentHand().getBlackjackSum();
+        }
+        
+        public boolean isMyHandLarger() {
+            return myHand.getBlackjackSum() > opponentHand().getBlackjackSum();
+        }
+        
+        public boolean isMyHandOnlyBust() {
+            return myHand.isBust() && !opponentHand.isBust();
+        }
+        
+        public boolean isOpponentHandOnlyBust() {
+            return !myHand.isBust() && opponentHand.isBust();
+        }
+        
+        public boolean isMyHandOnlyBlackjack() {
+            return myHand.isBlackjack() && !opponentHand.isBlackjack();
+        }
+        
+        public boolean isOpponentHandOnlyBlackjack() {
+            return !myHand.isBlackjack() && opponentHand.isBlackjack();
+        }
     }
 }

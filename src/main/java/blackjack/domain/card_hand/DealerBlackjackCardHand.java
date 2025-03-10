@@ -1,10 +1,10 @@
 package blackjack.domain.card_hand;
 
-import java.util.List;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.deck.CardDrawer;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
+import blackjack.domain.deck.CardDrawer;
+
+import java.util.List;
 
 public final class DealerBlackjackCardHand implements BlackjackWinDeterminable {
     
@@ -45,7 +45,12 @@ public final class DealerBlackjackCardHand implements BlackjackWinDeterminable {
     }
     
     @Override
-    public int getSize() {
-        return cardHand.getCards().size();
+    public boolean isBust() {
+        return cardHand.isBust();
+    }
+    
+    @Override
+    public boolean isBlackjack() {
+        return cardHand.isBlackjack();
     }
 }

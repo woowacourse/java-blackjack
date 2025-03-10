@@ -5,9 +5,10 @@ import blackjack.domain.deck.BlackjackCardHandInitializer;
 
 import java.util.List;
 
-public final class BlackjackCardHand {
+public final class BlackjackCardHand implements BlackjackWinDeterminable {
     
     private static final int BUST_THRESHOLD = 21;
+    private static final int BLACK_JACK_MAX_SUM = 21;
     
     private final CardHand cardHand;
     
@@ -16,6 +17,7 @@ public final class BlackjackCardHand {
         this.cardHand.addCards(initializer.handoutInitialCards());
     }
     
+    @Override
     public int getBlackjackSum() {
         List<Integer> sums = calculatePossibleSums();
         int minSum = findMinimumSum(sums);
@@ -24,6 +26,16 @@ public final class BlackjackCardHand {
             return minSum;
         }
         return findClosestToBlackjack(sums);
+    }
+    
+    @Override
+    public boolean isBust() {
+        return getBlackjackSum() > BLACK_JACK_MAX_SUM;
+    }
+    
+    @Override
+    public boolean isBlackjack() {
+        return getBlackjackSum() == BLACK_JACK_MAX_SUM && cardHand.getCards().size() == 2;
     }
     
     private List<Integer> calculatePossibleSums() {
