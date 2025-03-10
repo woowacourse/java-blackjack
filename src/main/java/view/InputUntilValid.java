@@ -8,12 +8,12 @@ import java.util.function.Supplier;
 public interface InputUntilValid<T> {
     T validate(Supplier<T> supplier);
 
-    static <T> T validatePlayerAnswer(final Player player, final Function<Player, T> function){
+    static <T> T validatePlayerAnswer(final Player player, final Function<Player, T> function) {
         {
-            while(true){
-                try{
+            while (true) {
+                try {
                     return function.apply(player);
-                }catch(IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                 }
             }

@@ -32,7 +32,9 @@ public class BlackJackController {
         blackJack.hitCardsToParticipant();
         outputView.printParticipant(players, dealer);
 
-        blackJack.drawPlayers((player) -> InputUntilValid.validatePlayerAnswer(player, inputView::askPlayerForHitOrStand), outputView::printPlayerDeck);
+        blackJack.drawPlayers(
+                (player) -> InputUntilValid.validatePlayerAnswer(player, inputView::askPlayerForHitOrStand),
+                outputView::printPlayerDeck);
 
         blackJack.drawDealer();
         outputView.printDrawDealer(dealer);

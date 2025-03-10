@@ -39,15 +39,16 @@ public class OutputView {
 
     private final String NEW_LINE = System.lineSeparator();
 
-    public void printParticipant(final Players players, final Dealer dealer){
+    public void printParticipant(final Players players, final Dealer dealer) {
         printHitNotice(players);
         printDealerDeckWithHidden(dealer);
 
-        for(Player player : players.getPlayers()){
+        for (Player player : players.getPlayers()) {
             printPlayerDeck(player);
         }
         System.out.print(NEW_LINE);
     }
+
     public void printPlayerDeck(final Player player) {
         System.out.println(resultMaker(player));
     }
@@ -62,7 +63,7 @@ public class OutputView {
     }
 
     public void printDrawDealer(final Dealer dealer) {
-        if(dealer.isUnderThreshold()){
+        if (dealer.isUnderThreshold()) {
             System.out.print(NEW_LINE);
             System.out.print(HIT_DEALER_CARD);
         }
@@ -71,22 +72,24 @@ public class OutputView {
     public void printScore(final Players players, final Dealer dealer) {
         System.out.print(NEW_LINE);
         System.out.print(printDealerDeck(dealer));
-        System.out.printf(SCORE+NEW_LINE, dealer.sum());
+        System.out.printf(SCORE + NEW_LINE, dealer.sum());
 
         for (Player player : players.getPlayers()) {
             System.out.print(resultMaker(player));
-            System.out.printf(SCORE+NEW_LINE, player.sum());
+            System.out.printf(SCORE + NEW_LINE, player.sum());
         }
     }
 
-    public void printResult(final Map<Player, MatchResult> playerMatchResult){
+    public void printResult(final Map<Player, MatchResult> playerMatchResult) {
         System.out.print(NEW_LINE);
         System.out.println(RESULT_INTRO);
         System.out.print(DEALER_RESULT);
 
         Map<MatchResult, Integer> dealerMatchResult = calculateDealerResult(playerMatchResult);
-        for(MatchResult matchResult : dealerMatchResult.keySet()) {
-            if (dealerMatchResult.get(matchResult) == INIT_COUNT) continue;
+        for (MatchResult matchResult : dealerMatchResult.keySet()) {
+            if (dealerMatchResult.get(matchResult) == INIT_COUNT) {
+                continue;
+            }
             System.out.printf(dealerMatchResult.get(matchResult) + matchResult.getValue() + " ");
         }
 
@@ -104,7 +107,7 @@ public class OutputView {
     private void printHitNotice(final Players players) {
         List<String> playersName = new ArrayList<>();
 
-        for(Player player : players.getPlayers()){
+        for (Player player : players.getPlayers()) {
             playersName.add(player.getName());
         }
         System.out.print(NEW_LINE);

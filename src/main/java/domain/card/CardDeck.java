@@ -25,7 +25,7 @@ public class CardDeck {
         int sum = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-        if(sum <= BONUS_THRESHOLD && hasA()){
+        if (sum <= BONUS_THRESHOLD && hasA()) {
             sum += ACE_BONUS;
         }
         return sum;

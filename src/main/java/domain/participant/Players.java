@@ -11,7 +11,7 @@ public class Players {
 
     private final List<Player> players;
 
-    public static Players from(final List<String> names){
+    public static Players from(final List<String> names) {
         validatePlayerNumbers(names);
         validateIsDuplicate(names);
         List<Player> players = names.stream()
