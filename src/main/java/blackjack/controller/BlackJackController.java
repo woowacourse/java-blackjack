@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.model.game.BlackJackGame;
 import blackjack.model.game.DeckInitializer;
+import blackjack.model.game.GameResult;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
@@ -32,7 +33,9 @@ public class BlackJackController {
         inputMoreCard(blackJackGame);
         giveMoreDealerCard(blackJackGame, dealer);
         outputView.outputFinalCardStatus(dealer, participants);
-        outputView.outputFinalResult(dealer, participants);
+        GameResult gameResult = new GameResult(dealer, participants);
+        outputView.outputFinalResult(gameResult.getWinLoseResult(), gameResult.getDealerWinCount(),
+                gameResult.getDealerLoseCount());
     }
 
     private void inputMoreCard(BlackJackGame blackJackGame) {
