@@ -3,6 +3,7 @@ package domain;
 import static util.ExceptionConstants.*;
 import static view.AnswerType.NO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,7 +27,7 @@ public class CardGiver {
         List<Card> cards = Stream.generate(randomGenerator::generate)
                 .filter(givenCards::addUnique)
                 .limit(DEFAULT_CARD_GIVE_COUNT)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
 
         return new Cards(cards);
     }
