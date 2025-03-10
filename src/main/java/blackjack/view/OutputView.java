@@ -1,14 +1,12 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.game.ParticipantResult;
+import blackjack.model.game.GameResult;
 import blackjack.model.game.ReceivedCards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -71,19 +69,18 @@ public class OutputView {
         System.out.println("딜러는 17이상이라 더이상 카드를 받을 수 없습니다.");
     }
 
-    public void outputFinalResult(Dealer dealer, Participants participants) {
+    public void outputFinalResult(GameResult gameResult, int dealerWin, int dealerLose) {
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
-        System.out.println("## 최종 승패");
-
-        Map<ParticipantResult, Integer> winLoseResult = new HashMap<>(
-                Map.of(ParticipantResult.WIN, 0, ParticipantResult.LOSE, 0));
-        participants.getParticipants().forEach(participant -> {
-            ParticipantResult participantResult = ParticipantResult.of(dealer, participant);
-            customStringBuilder.appendLine(String.format("%s: %s", participant.getName(), participantResult.name()));
-            winLoseResult.merge(participantResult, 1, Integer::sum);
-        });
-        System.out.println(String.format("딜러: %d승 %d패", winLoseResult.get(ParticipantResult.LOSE),
-                winLoseResult.get(ParticipantResult.WIN)));
+        customStringBuilder.appendLine("## 최종 승패");
+        customStringBuilder.appendLine(String.format("딜러: %d승 %d패", dealerWin, dealerLose));
+        gameResult.getWinLoseResult().keySet()
+                .forEach(
+                        participant -> {
+                            customStringBuilder.appendLine(
+                                    String.format("%s : %s", participant.getName(),
+                                            gameResult.getWinLoseResult().get(participant)));
+                        }
+                );
         customStringBuilder.print();
     }
 
