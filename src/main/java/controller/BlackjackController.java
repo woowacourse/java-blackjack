@@ -39,12 +39,14 @@ public class BlackjackController {
   }
 
   private void initialDael(final BlackjackGame blackjack) {
+    blackjack.initialDeal();
+    outputInitialDeal(blackjack);
+  }
+
+  private void outputInitialDeal(BlackjackGame blackjack) {
     final var players = blackjack.getPlayers();
     var playerNames = converter.playersToNames(players);
     outputView.printDealIntroduce(playerNames);
-
-    blackjack.initialDeal();
-
     outputDealerInitialDealResult(blackjack);
     final var convertedPlayers = converter.playersToEntries(players);
     outputView.printPlayersHand(convertedPlayers);
@@ -64,27 +66,36 @@ public class BlackjackController {
 
   private void hitByPlayer(final BlackjackGame blackjack) {
     final var players = blackjack.getPlayers();
-    players.forEach(player -> ifCanHit(blackjack, player));
+    players.forEach(player -> processPlayerHits(blackjack, player));
   }
 
-  private void ifCanHit(final BlackjackGame blackjack, final Participant player) {
+  private void processPlayerHits(final BlackjackGame blackjack, final Participant player) {
     final var name = player.getName();
     while (player.isHit() && inputView.readPlayerAnswer(name)) {
-      final var card = blackjack.getCardForDeal();
-      player.hit(card);
-      outputView.printPlayerHand(name, converter.participantCardToText(player));
+      hitByParticipant(blackjack, player);
+      outputPlayerHand(player);
     }
+  }
+
+  private void hitByParticipant(BlackjackGame blackjack, Participant participant) {
+    final var card = blackjack.getCardForDeal();
+    participant.hit(card);
+  }
+
+  private void outputPlayerHand(final Participant player) {
+    final var name = player.getName();
+    outputView.printPlayerHand(name, converter.participantCardToText(player));
   }
 
   private void hitByDealer(final BlackjackGame blackjack) {
     final var dealer = blackjack.getDealer();
 
     while (dealer.isHit()) {
-      final var card = blackjack.getCardForDeal();
-      dealer.hit(card);
+      hitByParticipant(blackjack, dealer);
       outputView.printDealerHit();
     }
   }
+
 
   private void openHandResult(final BlackjackGame blackjack) {
     final var participants = blackjack.getParticipants();
