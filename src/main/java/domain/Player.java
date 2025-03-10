@@ -75,8 +75,8 @@ public class Player {
         hand.setAllCardValueToZero();
     }
 
-    public int getWinLoss(int dealerTotal) {
-        return Integer.compare(getHandTotal(), dealerTotal);
+    public WinLossResult getWinLoss(int dealerTotal) {
+        return WinLossResult.of(Integer.compare(getHandTotal(), dealerTotal));
     }
 
     public String getName() {

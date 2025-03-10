@@ -55,7 +55,7 @@ public class OutputView {
                 winLossCountResult.drawCount()));
         for (Player player : entry.getPlayers()) {
             stringBuilder.append(String.format("%s: %s\n", player.getName(),
-                    WinLossResult.of(player.getWinLoss(dealer.getHandTotal())).getWinLossMessage()));
+                    player.getWinLoss(dealer.getHandTotal()).getWinLossMessage()));
         }
         System.out.println(stringBuilder);
     }
