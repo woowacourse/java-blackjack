@@ -9,13 +9,14 @@ import static view.OutputView.printDistributeResult;
 import static view.OutputView.printEveryOneCardsNamesWithTotal;
 import static view.OutputView.printHandCardsNames;
 
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.WinLossResult;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -34,7 +35,7 @@ public class BlackJack {
         playersTurn(players);
         dealerTurn();
 
-        printDealerExtraCardsCount(dealer);
+        printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
         printEveryOneCardsNamesWithTotal(players, dealer);
         printResult(players);
     }
@@ -95,17 +96,17 @@ public class BlackJack {
     private boolean drawAdditionalCard(final Participant participant) {
         participant.addCard(dealer.drawCard());
         if (participant.getClass().equals(Player.class)) {
-            printHandCardsNames(participant);
+            printHandCardsNames(participant.getName(), participant.getHand());
         }
         return resolveBust(participant);
     }
 
     private void printResult(final Players players) {
-        Map<Player, WinLossResult> playerResults = new HashMap<>();
+        Map<String, WinLossResult> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            playerResults.put(player, WinLossResult.of(player.getWinLoss(dealer.getHandTotal())));
+            playerResults.put(player.getName(), WinLossResult.of(player.getWinLoss(dealer.getHandTotal())));
         }
 
-        printAllResult(playerResults, dealer);
+        printAllResult(playerResults, dealer.getName());
     }
 }

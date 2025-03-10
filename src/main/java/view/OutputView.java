@@ -43,9 +43,9 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printHandCardsNames(final Participant participant) {
+    public static void printHandCardsNames(final String participantName, final Hand participantHand) {
         StringBuilder stringBuilder = new StringBuilder();
-        openHand(participant, stringBuilder);
+        openHand(participantName, participantHand, stringBuilder);
         System.out.println(stringBuilder.append("\n"));
     }
 
@@ -53,10 +53,9 @@ public class OutputView {
         System.out.println("버스트가 되어 턴을 종료합니다.");
     }
 
-    public static void printDealerExtraCardsCount(final Dealer dealer) {
-        int dealerExtraCardsCount = dealer.getExtraHandSize();
+    public static void printDealerExtraCardsCount(final String dealerName, final int dealerExtraCardsCount) {
         if (dealerExtraCardsCount > 0) {
-            System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
+            System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealerName, THRESHOLD, dealerExtraCardsCount);
         }
     }
 
@@ -76,17 +75,17 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    public static void printAllResult(final Map<Player, WinLossResult> playerResults, final Dealer dealer) {
+    public static void printAllResult(final Map<String, WinLossResult> playerResults, final String dealerName) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("## 최종 승패\n");
 
         Map<WinLossResult, Integer> dealerWinLossResult = calculateDealerResult(playerResults);
-        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
+        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealerName,
                 dealerWinLossResult.get(WinLossResult.LOSS),
                 dealerWinLossResult.get(WinLossResult.WIN),
                 dealerWinLossResult.get(WinLossResult.DRAW)));
-        for (Entry<Player, WinLossResult> playerResult : playerResults.entrySet()) {
-            stringBuilder.append(String.format("%s: %s\n", playerResult.getKey().getName(),
+        for (Entry<String, WinLossResult> playerResult : playerResults.entrySet()) {
+            stringBuilder.append(String.format("%s: %s\n", playerResult.getKey(),
                     playerResult.getValue().getWinLossMessage()));
         }
         System.out.println(stringBuilder);
@@ -97,15 +96,15 @@ public class OutputView {
         stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()))
                 .append(", (???)\n");
         for (Player player : players.getPlayers()) {
-            openHand(player, stringBuilder);
+            openHand(player.getName(), player.getHand(), stringBuilder);
             stringBuilder.append("\n");
         }
     }
 
-    private static void openHand(final Participant participant, final StringBuilder stringBuilder) {
-        stringBuilder.append(participant.getName())
+    private static void openHand(final String participantName, final Hand participantHand, final StringBuilder stringBuilder) {
+        stringBuilder.append(participantName)
                 .append("카드: ")
-                .append(openAllCards(participant.getHand()));
+                .append(openAllCards(participantHand));
     }
 
     private static String openAllCards(Hand hand) {
@@ -115,7 +114,7 @@ public class OutputView {
     }
 
     private static void openCardsWithTotal(final Participant participant, final StringBuilder stringBuilder) {
-        openHand(participant, stringBuilder);
+        openHand(participant.getName(), participant.getHand(), stringBuilder);
         int totalScore = participant.getHandTotal();
 
         String scoreMessage = Integer.toString(totalScore);
@@ -126,7 +125,7 @@ public class OutputView {
                 .append("\n");
     }
 
-    private static Map<WinLossResult, Integer> calculateDealerResult(Map<Player, WinLossResult> playerResults) {
+    private static Map<WinLossResult, Integer> calculateDealerResult(Map<String, WinLossResult> playerResults) {
         Map<WinLossResult, Integer> winLossCountResult = new EnumMap<>(WinLossResult.class);
 
         for (WinLossResult value : WinLossResult.values()) {
