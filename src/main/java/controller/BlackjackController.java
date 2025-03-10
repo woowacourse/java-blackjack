@@ -30,8 +30,8 @@ public class BlackjackController {
     }
 
     private void addMoreCards(Blackjack blackjack) {
-        List<Participant> participants = blackjack.getParticipants();
-        for (Participant participant : participants) {
+        List<Player> participants = blackjack.getParticipants();
+        for (Player participant : participants) {
             addMoreCardsByName(blackjack, participant);
         }
 
@@ -41,7 +41,7 @@ public class BlackjackController {
         }
     }
 
-    private void addMoreCardsByName(Blackjack blackjack, Participant participant) {
+    private void addMoreCardsByName(Blackjack blackjack, Player participant) {
         YesOrNo yesOrNo;
         do {
             yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participant.getName()));
@@ -50,7 +50,7 @@ public class BlackjackController {
         } while (yesOrNo == YesOrNo.YES);
     }
 
-    private void addOneCardByNameIfYes(Blackjack blackjack, Participant participant, YesOrNo yesOrNo) {
+    private void addOneCardByNameIfYes(Blackjack blackjack, Player participant, YesOrNo yesOrNo) {
         if (yesOrNo == YesOrNo.YES) {
             blackjack.addOneCard(participant);
         }

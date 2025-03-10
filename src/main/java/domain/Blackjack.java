@@ -19,16 +19,11 @@ public class Blackjack {
     }
 
     public void addOneCard(Player player) {
-        Player participant = players.getPlayer(player);
-        participant.drawOneCard(deck);
+        player.drawOneCard(deck);
     }
 
     public boolean addCardToDealerIfLowScore() {
         return getDealer().drawOneCardIfLowScore(deck);
-    }
-
-    public Map<String, Integer> getNameAndSumOfAllPlayers() {
-        return players.mapToNameAndSum();
     }
 
     public DealerResult computeDealerMatchResult() {
@@ -44,17 +39,17 @@ public class Blackjack {
 
     public Map<String, MatchResult> computeParticipantsMatchResult() {
         Map<String, MatchResult> participantNameAndMatchResult = new LinkedHashMap<>();
-        Dealer dealer = getDealer();
-        List<Participant> participants = getParticipants();
+        Player dealer = getDealer();
+        List<Player> participants = getParticipants();
 
-        for (Participant participant : participants) {
+        for (Player participant : participants) {
             MatchResult matchResult = computeParticipantMatchResult(dealer, participant);
             participantNameAndMatchResult.put(participant.getName(), matchResult);
         }
         return participantNameAndMatchResult;
     }
 
-    private MatchResult computeParticipantMatchResult(Dealer dealer, Participant participant) {
+    private MatchResult computeParticipantMatchResult(Player dealer, Player participant) {
         if (participant.isBust() && dealer.isBust() || participant.isBust()) {
             return MatchResult.LOSE;
         }
@@ -65,18 +60,15 @@ public class Blackjack {
                 dealer.computeOptimalSum());
     }
 
+    public Map<String, Integer> getNameAndSumOfAllPlayers() {
+        return players.mapToNameAndSum();
+    }
+
     public Dealer getDealer() {
         return players.getDealer();
     }
 
-    public List<Participant> getParticipants() {
-        return players.getParticipants()
-                .stream()
-                .map(player -> (Participant) player)
-                .toList();
-    }
-
-    public Players getPlayers() {
-        return players;
+    public List<Player> getParticipants() {
+        return players.getParticipants();
     }
 }

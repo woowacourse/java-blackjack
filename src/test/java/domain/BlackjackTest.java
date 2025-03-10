@@ -42,9 +42,9 @@ public class BlackjackTest {
         Deck deck = DeckGenerator.generateDeck();
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();
-        final int beforeDrawnCount = blackjack.getPlayers().getPlayerByName("시소").getCards().size();
+        final int beforeDrawnCount = siso.getCards().size();
         blackjack.addOneCard(siso);
-        final int afterDrawnCount = blackjack.getPlayers().getPlayerByName("시소").getCards().size();
+        final int afterDrawnCount = siso.getCards().size();
 
         // when & then
         Assertions.assertThat(afterDrawnCount)

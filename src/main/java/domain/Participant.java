@@ -10,6 +10,7 @@ public class Participant extends Player {
         openCards(2);
     }
 
+    @Override
     public boolean isDealer() {
         return false;
     }

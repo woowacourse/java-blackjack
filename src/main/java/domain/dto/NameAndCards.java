@@ -1,7 +1,6 @@
 package domain.dto;
 
 import domain.Card;
-import domain.Participant;
 import domain.Player;
 import java.util.List;
 
@@ -18,8 +17,8 @@ public record NameAndCards(
         return new NameAndCards(player.getName(), player.getOpenedCards());
     }
 
-    public static List<NameAndCards> toNameAndCards(List<Participant> participants) {
-        return participants.stream()
+    public static List<NameAndCards> toNameAndCards(List<Player> players) {
+        return players.stream()
                 .map(NameAndCards::toNameAndCards)
                 .toList();
     }

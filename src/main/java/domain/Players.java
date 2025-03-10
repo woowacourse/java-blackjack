@@ -54,18 +54,11 @@ public class Players {
         return players;
     }
 
-    public Player getPlayer(Player player) {
-        return players.stream()
-                .filter(p -> p == player)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(player + ": 존재하지 않는 플레이어입니다."));
-    }
-
     public Dealer getDealer() {
         return (Dealer) players.stream()
                 .filter(Player::isDealer)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("딜러는 항상 1명이 존재해야 합니다."));
+                .orElseThrow(() -> new IllegalStateException("딜러는 항상 1명 존재해야 합니다."));
     }
 
     public List<Player> getParticipants() {
