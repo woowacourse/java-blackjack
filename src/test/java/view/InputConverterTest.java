@@ -17,7 +17,7 @@ class InputConverterTest {
     void test1() {
         String input = "pobi,jason,danny";
         List<String> expected = List.of("pobi", "jason", "danny");
-        assertThat(InputConverter.splitByDelimiter(input))
+        assertThat(InputConverter.splitByComma(input))
                 .containsExactlyElementsOf(expected);
     }
 
@@ -25,7 +25,7 @@ class InputConverterTest {
     @ParameterizedTest
     @NullAndEmptySource
     void test2(final String input) {
-        assertThatThrownBy(() -> InputConverter.splitByDelimiter(input))
+        assertThatThrownBy(() -> InputConverter.splitByComma(input))
                 .isInstanceOf(IllegalBlackjackInputException.class);
     }
 }
