@@ -17,6 +17,10 @@ public class Card {
         return rank == TrumpRank.ACE;
     }
 
+    public int getRankScore() {
+        return rank.getValue();
+    }
+
     public TrumpRank getRank() {
         return rank;
     }

@@ -17,7 +17,7 @@ public class Dealer extends Gambler {
 
     public Card openOneCard() {
         return cards.getCards().stream()
-                .min(Comparator.comparingInt(card -> card.getRank().getValue()))
+                .min(Comparator.comparingInt(Card::getRankScore))
                 .orElse(cards.getCards().getFirst());
     }
 
