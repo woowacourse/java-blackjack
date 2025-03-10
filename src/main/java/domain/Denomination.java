@@ -23,11 +23,11 @@ public enum Denomination {
         this.value = value;
     }
 
-    public static int parseDenominationValue(Denomination input) {
-        if (Character.isDigit(input.value.charAt(0))) {
-            return Integer.parseInt(input.value);
+    public static int parseDenominationValue(String input) {
+        if (Character.isDigit(input.charAt(0))) {
+            return Integer.parseInt(input);
         }
-        if (input == ACE) {
+        if (input.equals(ACE.getValue())) {
             return ORIGINAL_ACE_VALUE;
         }
         return FACE_CARD_VALUE;
