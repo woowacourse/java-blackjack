@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.winning;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -9,8 +9,6 @@ import blackjack.domain.card.Suit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.winning.Victory;
-import blackjack.domain.winning.WinningResult;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
