@@ -64,8 +64,8 @@ public class OutputView {
         System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
         gameResult.getAllPlayers()
                 .forEach(player -> {
-                    GameResultStatus gameResultstatus = gameResult.getGameResultstatus(player);
-                    String resultMessage = outputFormatter.formatGameResult(gameResultstatus);
+                    GameResultStatus gameResultStatus = gameResult.getGameResultstatus(player);
+                    String resultMessage = outputFormatter.formatGameResult(gameResultStatus);
                     System.out.printf("%s: %s\n", player.getName(), resultMessage);
                 });
     }
