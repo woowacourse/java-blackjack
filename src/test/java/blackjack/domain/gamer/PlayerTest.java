@@ -1,6 +1,5 @@
-package blackjack.gamer;
+package blackjack.domain.gamer;
 
-import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

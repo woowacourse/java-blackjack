@@ -1,9 +1,4 @@
-package blackjack.gamer;
-
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.GameParticipant;
-import blackjack.domain.gamer.Nickname;
-import blackjack.domain.gamer.Player;
+package blackjack.domain.gamer;
 
 import java.util.function.Consumer;
 import java.util.function.Function;

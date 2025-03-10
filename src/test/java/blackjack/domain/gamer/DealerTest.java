@@ -1,10 +1,9 @@
-package blackjack.gamer;
+package blackjack.domain.gamer;
 
 import blackjack.ConstantFixture;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Cards;
-import blackjack.domain.gamer.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
