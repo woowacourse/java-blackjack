@@ -5,6 +5,7 @@ import blackjack.domain.gamer.GameParticipant;
 import blackjack.domain.gamer.GameParticipants;
 import blackjack.domain.gamer.Nickname;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.result.GameStatistics;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -23,8 +24,15 @@ public class BlackjackGame {
     public void play() {
         GameParticipants participants = initializeGameParticipants();
 
-        participants.processInitialDealing();
-        participants.processHit();
+        participants.dealInitialCards();
+        outputView.printCards(participants);
+
+        participants.executeHitPhase();
+        GameStatistics gameStatistics = participants.calculateGameStatistics();
+        outputView.printCardsWithSum(participants, gameStatistics);
+
+        outputView.printGameResults(gameStatistics);
+
     }
 
     private GameParticipants initializeGameParticipants() {
@@ -39,7 +47,7 @@ public class BlackjackGame {
     }
 
     private boolean askHit(Player player) {
-        return inputView.readShouldHit(player);
+        return RepeatUntilCorrectInput.repeat(() -> inputView.readShouldHit(player), outputView);
     }
 
     private void showHands(GameParticipant participant) {
