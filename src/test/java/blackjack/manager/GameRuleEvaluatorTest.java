@@ -2,8 +2,8 @@ package blackjack.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.common.CardRank;
-import blackjack.common.CardSuit;
+import blackjack.domain.CardRank;
+import blackjack.domain.CardSuit;
 import blackjack.StubPossibleSumCardHolder;
 import blackjack.domain.Card;
 import blackjack.domain.CardHolder;

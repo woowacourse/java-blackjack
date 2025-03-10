@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.common.CardRank;
-import blackjack.common.CardSuit;
 import blackjack.common.ErrorMessage;
 import blackjack.manager.CardsGenerator;
 import java.util.ArrayList;

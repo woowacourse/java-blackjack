@@ -10,8 +10,8 @@ public enum ErrorMessage {
     INVALID_CONFIRMATION_INPUT("y, n만 입력 가능합니다."),
     EXCEED_PLAYER_MEMBERS("7명을 초과할 수 없습니다."),
     INVALID_CARD_INDEX("해당 위치에 카드를 가지고 있지 않습니다!"),
-    USE_VALID_NAME("이름은 공백일 수 없습니다")
-    ;
+    USE_VALID_NAME("이름은 공백일 수 없습니다"),
+    INVALID_TRANSLATE("잘못된 변환입니다.");
 
     private final String message;
 
@@ -23,4 +23,4 @@ public enum ErrorMessage {
     public String getMessage() {
         return message;
     }
-    }
+}

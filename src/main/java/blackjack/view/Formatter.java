@@ -3,6 +3,8 @@ package blackjack.view;
 import blackjack.common.Constants;
 import blackjack.domain.Card;
 import blackjack.domain.CardHolder;
+import blackjack.domain.CardRank;
+import blackjack.domain.CardSuit;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResultType;
 import blackjack.domain.Player;
@@ -33,7 +35,7 @@ public final class Formatter {
     }
 
     public static String parseStartCardStatus(Dealer dealer) {
-        return "딜러카드: " + dealer.revealFirstCard().toCardName();
+        return "딜러카드: " + parseCardName(dealer.revealFirstCard());
     }
 
     private static String parseCardStatus(Dealer dealer) {
@@ -52,7 +54,7 @@ public final class Formatter {
 
     private static String parseStartingCardStatus(CardHolder cardHolder) {
         return cardHolder.getAllCards().stream()
-                .map(Card::toCardName)
+                .map(Formatter::parseCardName)
                 .collect(Collectors.joining(", "));
     }
 
@@ -92,5 +94,10 @@ public final class Formatter {
         return "무";
     }
 
+    private static String parseCardName(Card card) {
+        CardRank cardRank = card.getCardRank();
+        CardSuit cardSuit = card.getCardSuit();
 
+        return CardRankTranslator.getDescription(cardRank) + CardSuitTranslator.getDescription(cardSuit);
+    }
 }

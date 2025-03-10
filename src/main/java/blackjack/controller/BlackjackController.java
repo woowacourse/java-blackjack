@@ -29,7 +29,7 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = InputView.readNames();
-        Players players = blackJackInitManager.savePlayers(names, Hand::new);
+        Players players = blackJackInitManager.generatePlayers(names, Hand::new);
         Dealer dealer = blackJackInitManager.generateDealer(Hand::new);
 
         giveStartingCards(players, dealer);
