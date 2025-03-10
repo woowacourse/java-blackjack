@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import domain.constant.DuelResult;
 
 public class Participant {
@@ -16,9 +18,8 @@ public class Participant {
 		this.duelHistory = new DuelHistory();
 	}
 
-	public void pickCardOnFirstHandOut(final Deck deck) {
-		pickCard(deck);
-		pickCard(deck);
+	public void addCards(final List<Card> cards) {
+		hand.addCards(cards);
 	}
 
 	public void pickCard(final Deck deck) {

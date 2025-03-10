@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import domain.constant.DuelResult;
 
 public class Dealer {
@@ -18,12 +20,12 @@ public class Dealer {
 		this.participant = participant;
 	}
 
-	public boolean isPickCard(final int bustScore, final int dealerPickCardScoreMax) {
-		return participant.calculateAllScore(bustScore) <= dealerPickCardScoreMax;
+	public void addCards(final List<Card> cards) {
+		participant.addCards(cards);
 	}
 
-	public void pickCardOnFirstHandOut(final Deck deck) {
-		participant.pickCardOnFirstHandOut(deck);
+	public boolean isPickCard(final int bustScore, final int dealerPickCardScoreMax) {
+		return participant.calculateAllScore(bustScore) <= dealerPickCardScoreMax;
 	}
 
 	public void pickCard(final Deck deck) {

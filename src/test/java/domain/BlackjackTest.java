@@ -243,4 +243,31 @@ public class BlackjackTest {
 			});
 		}
 	}
+
+	@Nested
+	@DisplayName("블랙잭 규칙에 따라, 유저들에게 카드를 뽑아준다.")
+	class InitPickCardToPlayersAndDealer {
+
+		@DisplayName("플레이어들과 딜러에게 2장씩 뽑아준다.")
+		@Test
+		void initPickCardToPlayersAndDealer() {
+			// given
+			final List<Player> players = List.of(new Player(""), new Player(""), new Player(""), new Player(""));
+			final Dealer dealer = new Dealer();
+			final Blackjack blackjack = new Blackjack();
+			final Deck deck = Deck.createShuffledDeck();
+
+			// when
+			blackjack.initPickCard(dealer, players, deck);
+
+			// then
+			assertSoftly(s -> {
+				players.forEach(player -> {
+					s.assertThat(player.getParticipant().getCardHand().getCards()).hasSize(2);
+				});
+				s.assertThat(dealer.getParticipant().getCardHand().getCards()).hasSize(2);
+			});
+
+		}
+	}
 }

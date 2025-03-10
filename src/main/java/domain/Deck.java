@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import domain.constant.Suit;
@@ -44,5 +45,11 @@ public class Deck {
 			throw new NullPointerException("덱에 남아있는 카드가 없습니다.");
 		}
 		return deck.poll();
+	}
+
+	public List<Card> pickCards(final int count) {
+		return IntStream.range(0, count)
+			.mapToObj(i -> pickCard())
+			.collect(Collectors.toList());
 	}
 }

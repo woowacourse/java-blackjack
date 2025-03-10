@@ -1,10 +1,20 @@
 package domain;
 
+import java.util.List;
+
 import domain.constant.DuelResult;
 
 public class Blackjack {
 	private static final int BUST_SCORE = 21;
 	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
+	private static final int INIT_PICK_CARD_COUNT = 2;
+
+	public void initPickCard(final Dealer dealer, final List<Player> players, final Deck deck) {
+		dealer.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
+		for (final Player player : players) {
+			player.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
+		}
+	}
 
 	public boolean isPickCardByPlayer(final Player player) {
 		return player.isPickCard(BUST_SCORE);
@@ -34,5 +44,4 @@ public class Blackjack {
 		dealer.writeDuelResult(DuelResult.WIN);
 		player.writeDuelResult(DuelResult.LOSE);
 	}
-
 }

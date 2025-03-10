@@ -20,6 +20,12 @@ public class CardHand {
 		cards.add(card);
 	}
 
+	public void addCards(final List<Card> cards) {
+		for (final Card card : cards) {
+			this.cards.add(card);
+		}
+	}
+
 	public int calculateAllScore(final int bustScore) {
 		int score = 0;
 
