@@ -2,8 +2,10 @@ package view;
 
 import domain.game.Player;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class InputView {
 
@@ -16,9 +18,18 @@ public class InputView {
     public List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
-        return Arrays.stream(input.split(","))
+        List<String> playerNames = Arrays.stream(input.split(","))
                 .map(String::trim)
                 .toList();
+        validateDuplicatePlayerName(playerNames);
+        return playerNames;
+    }
+
+    private void validateDuplicatePlayerName(List<String> playerNames) {
+        Set<String> uniquePlayerNames = new HashSet<>(playerNames);
+        if (uniquePlayerNames.size() != playerNames.size()) {
+            throw new IllegalArgumentException("[ERROR] 중복된 플레이어 이름입니다.");
+        }
     }
 
     public boolean readDrawMoreCard(Player player) {
