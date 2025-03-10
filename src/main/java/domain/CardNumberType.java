@@ -32,7 +32,7 @@ public enum CardNumberType {
     }
 
     public static int determineAceNumber(int restSum) {
-        if(restSum <= ACE_HIGH_CONVERSION_THRESHOLD) {
+        if (restSum <= ACE_HIGH_CONVERSION_THRESHOLD) {
             return CardNumberType.getAceHighNumber();
         }
         return CardNumberType.getAceLowNumber();
@@ -56,7 +56,7 @@ public enum CardNumberType {
     }
 
     private static void validateIndex(int index) {
-        if(index >= CardNumberType.values().length) {
+        if (index >= CardNumberType.values().length) {
             throw new IllegalArgumentException(ERROR_HEADER + INVALID_INDEX);
         }
     }

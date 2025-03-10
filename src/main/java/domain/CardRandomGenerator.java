@@ -3,6 +3,7 @@ package domain;
 import java.util.Random;
 
 public class CardRandomGenerator implements RandomGenerator<Card> {
+
     private static final Random RANDOM = new Random();
 
     public Card generate() {

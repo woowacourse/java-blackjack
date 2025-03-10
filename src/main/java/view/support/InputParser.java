@@ -8,6 +8,7 @@ import java.util.Map;
 import view.AnswerType;
 
 public class InputParser {
+
     private static final String INVALID_ANSWER_TYPE = "응답은 y 혹은 n으로 해주세요.";
     private static final String NAME_SEPARATOR = ",";
     private static final Map<String, AnswerType> ANSWER_TYPE_PARSER = Map.of(

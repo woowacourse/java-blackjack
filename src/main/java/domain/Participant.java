@@ -1,6 +1,7 @@
 package domain;
 
 public abstract class Participant {
+
     protected final Cards cards;
 
     protected Participant(Cards cards) {

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cards {
+
     private static final int VALID_MAX_SUM_LIMIT = 21;
 
     private final List<Card> cards;

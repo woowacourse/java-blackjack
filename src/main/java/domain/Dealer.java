@@ -1,6 +1,7 @@
 package domain;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
+
     private static final int VALID_DRAW_LIMIT = 16;
     private static final int DOUBLE_ACE_COUNT = 2;
     private static final int SINGLE_ACE_COUNT = 1;

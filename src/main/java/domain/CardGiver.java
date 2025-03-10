@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import view.AnswerType;
 
 public class CardGiver {
+
     private static final int DEFAULT_CARD_GIVE_COUNT = 2;
     private static final String NO_EXIST_CARD = "카드를 모두 나눠주었습니다.";
 

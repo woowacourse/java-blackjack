@@ -26,7 +26,8 @@ public class OutputView {
         System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealer.getFirstCard()));
         players.getPlayers().forEach(
                 player ->
-                System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getCards()))
+                        System.out.printf("%s카드: %s\n", player.getName(),
+                                outputFormatter.formatCards(player.getCards()))
         );
     }
 

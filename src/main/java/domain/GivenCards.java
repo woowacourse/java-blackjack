@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GivenCards {
+
     private static final int ALL_CARD_COUNT = 52;
     private static final int DEFAULT_CARD_COUNT = 2;
     private static final String NO_ENOUGH_CARD = "카드가 2장 미만으로 남았습니다.";

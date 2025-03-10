@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameResult {
+
     private final Map<Player, GameResultStatus> gameResults;
 
     public GameResult(Map<Player, GameResultStatus> gameResults) {
