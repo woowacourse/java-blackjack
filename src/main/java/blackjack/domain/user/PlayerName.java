@@ -10,15 +10,15 @@ public class PlayerName {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     private void validateName(final String name) {
         boolean isAllLetter = name.chars().allMatch(Character::isLetter);
         if (isAllLetter) {
             return;
         }
         throw new IllegalArgumentException("이름은 영어/한글만 입력 가능합니다.");
+    }
+
+    public String getName() {
+        return name;
     }
 }
