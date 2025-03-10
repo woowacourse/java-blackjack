@@ -9,7 +9,7 @@ import view.OutputView;
 
 public class BlackjackApplication {
     public static void main(String[] args) {
-        List<Card> cards = DeckFactory.initializeDeck();
+        List<Card> cards = DeckFactory.getInitializedDeck();
         Deck deck = new Deck(cards);
         Judge judge = new Judge();
         InputView inputView = new InputView();

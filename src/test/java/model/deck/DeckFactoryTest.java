@@ -10,7 +10,7 @@ class DeckFactoryTest {
     @DisplayName("초기의 52장의 카드를 생성한다.")
     @Test
     void test1() {
-        assertThat(DeckFactory.initializeDeck())
+        assertThat(DeckFactory.getInitializedDeck())
                 .hasSize(52)
                 .doesNotHaveDuplicates();
     }

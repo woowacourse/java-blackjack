@@ -36,8 +36,6 @@ public class BlackjackController {
     }
 
     public void start() {
-        deck.shuffle();
-
         Players players = generatePlayersWithCards(inputView.readPlayerNames());
         DealerCards dealerCards = (DealerCards) new DealerCardsFactory().generate(deck);
         outputView.printNewLine();
