@@ -5,7 +5,7 @@ public enum GameResultStatus {
     DRAW,
     LOSE;
 
-    private static final int BLACKJACK_BUST_THRESHOLD = 22;
+    private static final int BLACKJACK_BUST_THRESHOLD = 21;
 
     public static GameResultStatus calculate(int dealerSum, int playerSum) {
         if (isBothBust(dealerSum, playerSum)) {
@@ -25,11 +25,11 @@ public enum GameResultStatus {
     }
 
     private static boolean isDealerBust(int dealerSum) {
-        return dealerSum >= BLACKJACK_BUST_THRESHOLD;
+        return dealerSum > BLACKJACK_BUST_THRESHOLD;
     }
 
     private static boolean isPlayerBust(int playerSum) {
-        return playerSum >= BLACKJACK_BUST_THRESHOLD;
+        return playerSum > BLACKJACK_BUST_THRESHOLD;
     }
 
     private static GameResultStatus compareHands(int dealerSum, int playerSum) {
