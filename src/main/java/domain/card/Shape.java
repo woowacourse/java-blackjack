@@ -1,7 +1,10 @@
 package domain.card;
 
 public enum Shape {
-    SPADE, HEART, DIAMOND, CLUB;
+    SPADE,
+    HEART,
+    DIAMOND,
+    CLUB;
 
     public String formatCardShape() {
         if (this == DIAMOND) {
