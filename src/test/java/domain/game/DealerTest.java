@@ -54,7 +54,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideLoseCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideWinCard(playerCards);
 
@@ -72,7 +72,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideWinCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideLoseCard(playerCards);
 
@@ -90,7 +90,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideNonBurstCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideNonBurstCard(playerCards);
 
@@ -108,7 +108,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideBurstCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideBurstCard(playerCards);
 
@@ -126,7 +126,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideBurstCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideNonBurstCard(playerCards);
 
@@ -144,7 +144,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideNonBurstCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideBurstCard(playerCards);
 
@@ -162,7 +162,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideBlackJackCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideBlackJackCard(playerCards);
 
@@ -181,7 +181,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideBlackJackCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideNonBlackJackCard(playerCards);
 
@@ -199,7 +199,7 @@ public class DealerTest {
         List<Card> dealerCards = dealer.getCards();
         provideNonBlackJackCard(dealerCards);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> playerCards = player.getCards();
         provideBlackJackCard(playerCards);
 

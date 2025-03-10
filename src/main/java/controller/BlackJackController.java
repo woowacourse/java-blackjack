@@ -22,8 +22,8 @@ public class BlackJackController {
 
     public void run() {
         List<String> playerNames = inputView.readPlayerNames();
-        Players players = new Players(playerNames);
         List<Integer> playerBettingAmount = readPlayerBettingAmount(playerNames);
+        Players players = new Players(playerNames, playerBettingAmount);
         Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.createCards();
