@@ -14,7 +14,7 @@ public class Player {
         this.cards = cards;
     }
 
-    public void send(Card... cards) {
+    public void take(Card... cards) {
         this.cards.take(cards);
     }
 
@@ -34,7 +34,7 @@ public class Player {
         return name;
     }
 
-    public boolean canSend() {
+    public boolean canTake() {
         int minScore = cards.calculateMinScore();
         return minScore < BUST_THRESHOLD.getSymbol();
     }

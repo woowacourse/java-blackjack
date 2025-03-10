@@ -39,7 +39,7 @@ public class Dealer {
     }
 
     private void handOutCard() {
-        players.sendAll((player) -> player.send(deck.draw(), deck.draw()));
+        players.sendAll((player) -> player.take(deck.draw(), deck.draw()));
     }
 
     public int calculateMaxScore() {
@@ -56,10 +56,10 @@ public class Dealer {
         if (!players.contains(player)) {
             throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
         }
-        if (!player.canSend()) {
+        if (!player.canTake()) {
             throw new IllegalArgumentException("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
         }
-        player.send(deck.draw());
+        player.take(deck.draw());
     }
 
     public boolean isBlackjack() {
