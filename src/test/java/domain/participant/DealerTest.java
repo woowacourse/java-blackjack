@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.Dealer;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

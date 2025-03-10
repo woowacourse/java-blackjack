@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static domain.MatchResult.LOSE;
 import static domain.card.Number.ACE;
@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.Player;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
