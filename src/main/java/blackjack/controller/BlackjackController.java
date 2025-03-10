@@ -55,8 +55,34 @@ public class BlackjackController {
 
     private void betPlayers(final Participants participants, final BlackjackGame blackjackGame) {
         for (Player player : participants.getPlayers()) {
-            final int betAmount = Integer.parseInt(inputView.readBetAmount(player));
+            readBetAmount(blackjackGame, player);
+        }
+    }
+
+    private void readBetAmount(final BlackjackGame blackjackGame, final Player player) {
+        try {
+            final long betAmount = getBetAmount(player);
             blackjackGame.bet(player, betAmount);
+        } catch (IllegalArgumentException e) {
+            resultView.showException(e);
+            readBetAmount(blackjackGame, player);
+        }
+    }
+
+    private int getBetAmount(final Player player) {
+        final String betAmount = inputView.readBetAmount(player);
+        if (!isNumeric(betAmount)) {
+            throw new IllegalArgumentException("베팅 금액이 잘못됐습니다.");
+        }
+        return Integer.parseInt(betAmount);
+    }
+
+    private boolean isNumeric(final String betAmount) {
+        try {
+            Integer.parseInt(betAmount);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
