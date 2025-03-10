@@ -3,7 +3,6 @@ package domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Players {
 
@@ -55,11 +54,11 @@ public class Players {
         return players;
     }
 
-    public Player getPlayerByName(String name) {
+    public Player getPlayer(Player player) {
         return players.stream()
-                .filter(player -> Objects.equals(player.getName(), name))
+                .filter(p -> p == player)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(name + ": 존재하지 않는 플레이어 이름입니다."));
+                .orElseThrow(() -> new IllegalStateException(player + ": 존재하지 않는 플레이어입니다."));
     }
 
     public Dealer getDealer() {

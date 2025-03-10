@@ -30,9 +30,10 @@ public class BlackjackTest {
     @Test
     void 특정_참여자에게_추가_카드_한_장을_분배한다() {
         // given
+        Player siso = new Participant("시소");
         Players players = new Players(List.of(
                 new Dealer(),
-                new Participant("시소"),
+                siso,
                 new Participant("헤일러"),
                 new Participant("부기"),
                 new Participant("사나")
@@ -42,7 +43,7 @@ public class BlackjackTest {
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();
         final int beforeDrawnCount = blackjack.getPlayers().getPlayerByName("시소").getCards().size();
-        blackjack.addCardByName("시소");
+        blackjack.addOneCard(siso);
         final int afterDrawnCount = blackjack.getPlayers().getPlayerByName("시소").getCards().size();
 
         // when & then

@@ -16,7 +16,6 @@ import view.OutputView;
 
 public class BlackjackController {
 
-
     public void run() {
         Blackjack blackjack = createBlackjack();
         blackjack.distributeInitialCards();
@@ -53,7 +52,7 @@ public class BlackjackController {
 
     private void addOneCardByNameIfYes(Blackjack blackjack, Participant participant, YesOrNo yesOrNo) {
         if (yesOrNo == YesOrNo.YES) {
-            blackjack.addCardByName(participant.getName());
+            blackjack.addOneCard(participant);
         }
     }
 

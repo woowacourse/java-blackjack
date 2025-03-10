@@ -18,8 +18,8 @@ public class Blackjack {
         players.distributeInitialCards(deck);
     }
 
-    public void addCardByName(String name) {
-        Player participant = players.getPlayerByName(name);
+    public void addOneCard(Player player) {
+        Player participant = players.getPlayer(player);
         participant.drawOneCard(deck);
     }
 
@@ -64,7 +64,7 @@ public class Blackjack {
         return MatchResult.compareBySum(participant.computeOptimalSum(),
                 dealer.computeOptimalSum());
     }
-    
+
     public Dealer getDealer() {
         return players.getDealer();
     }

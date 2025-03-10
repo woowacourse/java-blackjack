@@ -8,7 +8,7 @@ public abstract class Player {
     private static final int MAX_NAME_LENGTH = 10;
 
     private final String name;
-    private final Cards cards;
+    private Cards cards;
 
     public Player(String name) {
         validateName(name);
@@ -53,6 +53,10 @@ public abstract class Player {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public void initPlayer() {
+        cards = new Cards();
     }
 
     public String getName() {
