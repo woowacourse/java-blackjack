@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public abstract class Participant {
 
@@ -36,17 +37,22 @@ public abstract class Participant {
     }
 
     private int calculateTotalValue(int baseValue, int aceCount) {
-        int candidateResult = baseValue;
-        for (int oneValueCount = 0; oneValueCount <= aceCount; ++oneValueCount) {
-            candidateResult = baseValue + (oneValueCount * 1) + ((aceCount - oneValueCount) * 11);
-            if (GameResult.isBurstBy(candidateResult)) {
-                continue;
-            }
-            return candidateResult;
-        }
-        return candidateResult;
+        return IntStream.rangeClosed(0, aceCount)
+                .map(aceAsOneCount -> {
+                    final int aceAsElevenCount = aceCount - aceAsOneCount;
+                    return calculateAceValue(baseValue, aceAsOneCount, aceAsElevenCount);
+                })
+                .filter(candidateResult -> !GameResult.isBurstBy(candidateResult))
+                .max()
+                .orElse(baseValue + aceCount);
     }
 
+    private int calculateAceValue(int baseValue, int aceAsOneCount, int aceAsElevenCount) {
+        final int totalAceAsElevenValue = aceAsElevenCount * 11;
+        final int totalAceAsOneValue = aceAsOneCount * 1;
+        return baseValue + totalAceAsElevenValue + totalAceAsOneValue;
+    }
+    
     private int getAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
