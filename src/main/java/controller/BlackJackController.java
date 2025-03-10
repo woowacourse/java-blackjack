@@ -4,8 +4,10 @@ import domain.Card;
 import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Deck;
+import domain.Gamer;
 import domain.Player;
 import domain.Result;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +33,8 @@ public class BlackJackController {
         List<Card> cards = cardsInitializer.initialize();
         Deck deck = Deck.from(cards);
 
-        List<Player> players = setPlayers();
-        Dealer dealer = new Dealer();
+        List<Gamer> players = setPlayers();
+        Gamer dealer = new Dealer();
 
         prepareGame(dealer, players, deck);
 
@@ -48,25 +50,32 @@ public class BlackJackController {
         showWinLoseResult(players, dealer);
     }
 
-    private List<Player> setPlayers() {
+    private List<Gamer> setPlayers() {
         List<String> names = inputView.readNames();
-        return names.stream()
-                .map(Player::new)
-                .toList();
+        return createPlayers(names);
     }
 
-    private void prepareGame(Dealer dealer, List<Player> players, Deck deck) {
+    private List<Gamer> createPlayers(List<String> names) {
+        List<Gamer> players = new ArrayList<>();
+        for (String name : names) {
+            Gamer player = new Player(name);
+            players.add(player);
+        }
+        return players;
+    }
+
+    private void prepareGame(Gamer dealer, List<Gamer> players, Deck deck) {
         dealer.prepareGame(deck);
         players.forEach(player -> player.prepareGame(deck));
     }
 
-    private void processGame(List<Player> players, Deck deck) {
-        for (Player player : players) {
+    private void processGame(List<Gamer> players, Deck deck) {
+        for (Gamer player : players) {
             selectChoice(player, deck);
         }
     }
 
-    private void selectChoice(Player player, Deck deck) {
+    private void selectChoice(Gamer player, Deck deck) {
         while (canHit(player)) {
             player.hit(deck);
             outputView.printCards(player);
@@ -76,24 +85,23 @@ public class BlackJackController {
         }
     }
 
-    private boolean canHit(Player player) {
+    private boolean canHit(Gamer player) {
         return !player.isBust() && YES_SIGN.equals(getYesOrNo(player));
     }
 
-    private String getYesOrNo(Player player) {
+    private String getYesOrNo(Gamer player) {
         return inputView.readYesOrNo(player);
     }
 
-    private void showWinLoseResult(List<Player> players, Dealer dealer) {
+    private void showWinLoseResult(List<Gamer> players, Gamer dealer) {
         Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        Map<Player, Result> playerResult = new HashMap<>();
+        Map<Gamer, Result> playerResult = new HashMap<>();
 
-        for (Player player : players) {
+        for (Gamer player : players) {
             Result result = Result.judge(dealer.getHand(), player.getHand());
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
             playerResult.put(player, Result.judge(player.getHand(), dealer.getHand()));
         }
         outputView.printWinLoseResult(dealerResult, playerResult);
     }
-
 }
