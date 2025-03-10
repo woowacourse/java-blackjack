@@ -1,9 +1,18 @@
 package controller;
 
+import controller.converter.DomainToTextConverter;
+import domain.BlackjackGame;
+import domain.card.Hand;
+import domain.card.TrumpCard;
+import domain.participant.Participant;
+import java.util.List;
+import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
+
+  private static final DomainToTextConverter converter = DomainToTextConverter.getInstance();
 
   private final InputView inputView;
   private final OutputView outputView;
@@ -13,139 +22,84 @@ public class BlackjackController {
     this.outputView = outputView;
   }
 
-//  public void run() {
-//    final List<Player> players = inputPlayers();
-//    final Dealer dealer = new Dealer();
-//    final Deck deck = Deck.generateShuffledDeck();
-//    startGame(players, dealer, deck);
-//  }
-//  private void startGame(final List<Player> players, final Dealer dealer, final Deck deck) {
-//    handOutCards(players, dealer, deck);
-//    outputPickCard(players, dealer, deck);
-//    outputHandResult(dealer, players);
-//    duel(dealer, players);
-//    outputDuelResult(players, dealer);
-//  }
-//
-//  private void handOutCards(final List<Player> players, final Dealer dealer, final Deck deck) {
-//    players.forEach(player -> player.initialDeal(deck));
-//    dealer.initialDeal(deck);
-//    outputHandOut(players, dealer);
-//  }
-//
-//  private void outputHandOut(final List<Player> players, final Dealer dealer) {
-//    outputView.printDealIntroduce(convertPlayersToNames(players));
-//
-//    final Participant dealerParticipant = dealer.getParticipant();
-//    outputView.printDealerHitResult(convertedDealerCardText(dealerParticipant));
-//
-//    outputView.printPlayersHand(convertPlayersToEntries(players));
-//  }
-//
-//  private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
-//    playerPickCard(players, deck);
-//    dealerPickCard(dealer, deck);
-//  }
-//
-//  private void playerPickCard(final List<Player> players, final Deck deck) {
-//    players.forEach(player -> ifCanPickCard(deck, player));
-//  }
-//
-//  private void ifCanPickCard(Deck deck, Player player) {
-//    final String name = player.getName();
-//    while (player.isHit() && inputView.readPlayerAnswer(name)) {
-//      player.hit(deck);
-//      outputView.printPlayerHand(name, convertParticipantCardText(player.getParticipant()));
-//    }
-//  }
-//
-//  private void dealerPickCard(final Dealer dealer, final Deck deck) {
-//    while (dealer.isHit()) {
-//      dealer.hit(deck);
-//      outputView.printDealerHit();
-//    }
-//  }
-//
-//  private void outputHandResult(final Dealer dealer, final List<Player> players) {
-//    outputDealerHandResult(dealer);
-//    outputPlayersHandResult(players);
-//  }
-//
-//  private void outputDealerHandResult(final Dealer dealer) {
-//    final Participant participant = dealer.getParticipant();
-//    final List<String> convertedCards = convertParticipantCardText(participant);
-//    final int score = participant.calculateScore();
-//    outputView.printDealerRoundResult(convertedCards, score);
-//  }
-//
-//  private void outputPlayersHandResult(final List<Player> players) {
-//    players.forEach(this::outputPlayerHandResult);
-//  }
-//
-//  private void outputPlayerHandResult(final Player player) {
-//    final Participant participant = player.getParticipant();
-//    final List<String> convertedCards = convertParticipantCardText(participant);
-//    final int score = participant.calculateScore();
-//    outputView.printPlayerRoundResult(player.getName(), convertedCards, score);
-//  }
-//
-//  private void duel(final Dealer dealer, final List<Player> players) {
-//    players.forEach(dealer::round);
-//  }
-//
-//  private void outputDuelResult(final List<Player> players, final Dealer dealer) {
-//    outputView.printBlackjackRoundResultIntroduce();
-//    outputView.printBlackjackResultOnDealer(dealer.getWinCount(), dealer.getLoseCount());
-//    players.forEach(this::outputPlayersDuelResult);
-//  }
-//
-//  private void outputPlayersDuelResult(final Player player) {
-//    final String name = player.getName();
-//    outputView.printBlackjackResultOnPlayer(name, player.isWinDuel());
-//  }
-//
-//  private List<Player> inputPlayers() {
-//    final List<String> playerNames = inputView.readPlayerNames();
-//    return playerNames.stream()
-//        .map(Player::new)
-//        .collect(Collectors.toList());
-//  }
-//
-//  private static List<String> convertPlayersToNames(List<Player> players) {
-//    return players.stream()
-//        .map(Player::getName)
-//        .collect(Collectors.toList());
-//  }
-//
-//  private List<Map.Entry<String, List<String>>> convertPlayersToEntries(
-//      final List<Player> players) {
-//    return players.stream()
-//        .map(this::convertPlayerToEntry)
-//        .collect(Collectors.toList());
-//  }
-//
-//  private Map.Entry<String, List<String>> convertPlayerToEntry(final Player player) {
-//    return new AbstractMap.SimpleEntry<>(player.getName(),
-//        convertParticipantCardText(player.getParticipant()));
-//  }
-//
-//  private String convertedDealerCardText(final Participant dealerParticipant) {
-//    final Hand dealerHand = dealerParticipant.getHand();
-//    final TrumpCard dealerFirstCard = dealerHand.getCards().getFirst();
-//    return convertedCardText(dealerFirstCard);
-//  }
-//
-//  private String convertedCardText(final TrumpCard dealerFirstTrumpCard) {
-//    final String rankToText = RankToTextConverter.convert(dealerFirstTrumpCard.rank());
-//    final String suitToText = dealerFirstTrumpCard.suit().getValue();
-//    return rankToText + suitToText;
-//  }
-//
-//  private List<String> convertParticipantCardText(final Participant dealerParticipant) {
-//    return dealerParticipant.getHand().getCards()
-//        .stream()
-//        .map(this::convertedCardText)
-//        .toList();
-//  }
+  public void run() {
+    final BlackjackGame blackjack = BlackjackGame.generate();
+    final var names = inputView.readPlayerNames();
+    blackjack.addParticipants(names);
 
+    startGame(blackjack);
+  }
+
+  private void startGame(final BlackjackGame blackjack) {
+    initialDael(blackjack);
+    deal(blackjack);
+    openHandResult(blackjack);
+    round(blackjack);
+    result(blackjack);
+  }
+
+  private void initialDael(final BlackjackGame blackjack) {
+    final var players = blackjack.getPlayers();
+    var playerNames = converter.playersToNames(players);
+    outputView.printDealIntroduce(playerNames);
+
+    blackjack.initialDeal();
+    outputDealerInitialDealResult(blackjack);
+
+    List<Entry<String, List<String>>> convertedPlayers = converter.playersToEntries(players);
+    outputView.printPlayersHand(convertedPlayers);
+  }
+
+  private void outputDealerInitialDealResult(final BlackjackGame blackjack) {
+    final var dealer = blackjack.getDealer();
+    final Hand hand = dealer.getHand();
+    final TrumpCard firstCard = hand.getCards().getFirst();
+    outputView.printDealerHitResult(converter.cardToText(firstCard));
+  }
+
+  private void deal(final BlackjackGame blackjack) {
+    playerPickCard(blackjack);
+    dealerPickCard(blackjack);
+  }
+
+  private void playerPickCard(final BlackjackGame blackjack) {
+    final var players = blackjack.getPlayers();
+    players.forEach(player -> ifCanPickCard(blackjack, player));
+  }
+
+  private void ifCanPickCard(final BlackjackGame blackjack, Participant player) {
+    final var name = player.getName();
+    while (player.isHit() && inputView.readPlayerAnswer(name)) {
+      final var card = blackjack.deal();
+      player.hit(card);
+      outputView.printPlayerHand(name, converter.participantCardToText(player));
+    }
+  }
+
+  private void dealerPickCard(final BlackjackGame blackjack) {
+    final var dealer = blackjack.getDealer();
+
+    while (dealer.isHit()) {
+      final var card = blackjack.deal();
+      dealer.hit(card);
+      outputView.printDealerHit();
+    }
+  }
+
+  private void openHandResult(final BlackjackGame blackjack) {
+    final var participants = blackjack.getParticipants();
+    participants.forEach(this::outputPlayerHandResult);
+  }
+
+  private void outputPlayerHandResult(final Participant participants) {
+    final List<String> convertedCards = converter.participantCardToText(participants);
+    final int score = participants.calculateScore();
+    outputView.printPlayerRoundResult(participants.getName(), convertedCards, score);
+  }
+
+  private void round(final BlackjackGame blackjack) {
+  }
+
+  private void result(BlackjackGame blackjack) {
+  }
 }

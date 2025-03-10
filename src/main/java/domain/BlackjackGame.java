@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Deck;
+import domain.card.TrumpCard;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import java.util.HashMap;
@@ -57,5 +58,9 @@ public class BlackjackGame {
 
   public List<Participant> getParticipants() {
     return participants.getParticipants();
+  }
+
+  public TrumpCard deal() {
+    return deck.draw();
   }
 }
