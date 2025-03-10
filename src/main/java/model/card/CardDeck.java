@@ -6,20 +6,17 @@ import java.util.List;
 
 public final class CardDeck {
 
-    private final List<Card> deck = initDeck();
+    private final List<Card> deck = shuffledInitDeck();
 
-    private static List<Card> initDeck() {
+    private static List<Card> shuffledInitDeck() {
         ArrayList<Card> deck = new ArrayList<>();
         for (SuitType suit : SuitType.values()) {
             for (RankType rank : RankType.values()) {
                 deck.add(new Card(suit, rank));
             }
         }
-        return deck;
-    }
-
-    public void shuffle() {
         Collections.shuffle(deck);
+        return deck;
     }
 
     public List<Card> pickCard(int amount) {

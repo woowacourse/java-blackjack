@@ -16,7 +16,6 @@ public class BlackjackController {
         Players players = Players.from(values);
         Dealer dealer = Dealer.newInstance();
         GameManager gameManager = new GameManager(dealer, players);
-        gameManager.shuffle();
         gameManager.divideAllParticipant();
         OutputView.printDivisionStart(dealer, players);
 

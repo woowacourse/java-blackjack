@@ -25,10 +25,6 @@ public class GameManager {
         this.players = players;
     }
 
-    public void shuffle() {
-        deck.shuffle();
-    }
-
     public void divideAllParticipant() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
