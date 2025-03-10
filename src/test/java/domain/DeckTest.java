@@ -9,7 +9,6 @@ import domain.card.CardShape;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.cardsGenerator.RandomCardsGenerator;
-import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,28 +73,5 @@ public class DeckTest {
 
         //then
         assertThat(hand.getCards()).contains(card);
-    }
-
-    @DisplayName("딜러 카드의 합이 17 이상이 될 때까지 뽑은 횟수를 반환한다")
-    @Test
-    void 딜러가_뽑은_횟수_검증() {
-        //given
-        Card card1 = new Card(CardNumber.A, CardShape.CLOVER);
-        Card card2 = new Card(CardNumber.A, CardShape.HEART);
-        Deck deck = new Deck(() -> new ArrayList<>(List.of(card1, card2)));
-        Dealer dealer = Dealer.of(Hand.of(
-                new ArrayList<>(
-                        List.of(
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.FIVE, CardShape.CLOVER)
-                        )
-                )
-        ));
-
-        //when
-        int count = deck.countDealerDraw(dealer);
-
-        //then
-        assertThat(count).isEqualTo(2);
     }
 }

@@ -26,6 +26,10 @@ public class Hand {
         this.cards.add(card);
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public Set<Integer> getCoordinateSums() {
         return getCoordinateSumsByDfs(0, 0, new HashSet<>());
     }

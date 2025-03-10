@@ -1,7 +1,7 @@
 package controller;
 
+import domain.BlackJackGame;
 import domain.GameResult;
-import domain.card.Deck;
 import domain.card.cardsGenerator.RandomCardsGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -23,17 +23,15 @@ public class BlackJackController {
 
     public void run() {
         try {
-            Deck deck = new Deck(new RandomCardsGenerator());
-            Dealer dealer = Dealer.init();
+            Dealer dealer = Dealer.init(new RandomCardsGenerator());
             Players players = createPlayers();
+            BlackJackGame game = BlackJackGame.init(dealer, players);
+            printInitialParticipantsHand(game);
 
-            deck.handoutCards(dealer, players);
-            printInitialParticipantsHand(dealer, players);
-            askNewCardToAllPlayers(deck, players);
-            setupDealerCards(dealer, deck);
+            askNewCardToAllPlayers(game);
+            setupDealerCards(game);
 
-            showCardsResult(dealer, players);
-            showGameResult(dealer, players);
+            showGameResult(game);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);
         }
@@ -45,36 +43,42 @@ public class BlackJackController {
         return new Players(players);
     }
 
-    private void printInitialParticipantsHand(Dealer dealer, Players players) {
-        outputView.printParticipantsHand(dealer, players);
+    private void printInitialParticipantsHand(BlackJackGame game) {
+        outputView.printParticipantsHand(game);
     }
 
-    private void askNewCardToAllPlayers(Deck deck, Players players) {
+    private void askNewCardToAllPlayers(BlackJackGame game) {
+        Players players = game.getPlayers();
         for (Player player : players.getPlayers()) {
-            askNewCardToPlayer(player, deck);
+            askNewCardToPlayer(game.getDealer(), player);
         }
     }
 
-    private void askNewCardToPlayer(Player player, Deck deck) {
+    private void askNewCardToPlayer(Dealer dealer, Player player) {
         while (!player.isBurst() && !player.isBlackJack() && inputView.readYesOrNo(player).isYes()) {
-            deck.giveCardTo(player);
+            dealer.giveCards(player, 1);
             outputView.printPlayerCards(player);
         }
     }
 
-    private void setupDealerCards(Dealer dealer, Deck deck) {
-        final int count = deck.countDealerDraw(dealer);
-        outputView.printDealerDrawCount(count);
+    private void setupDealerCards(BlackJackGame game) {
+        game.setupDealerCards();
+        outputView.printDealerDrawCount(game.calculateDealerDrawCount());
     }
 
-    private void showCardsResult(Dealer dealer, Players players) {
-        outputView.printDealerCardsAndResult(dealer);
-        outputView.printPlayersCardAndSum(players);
+    private void showGameResult(BlackJackGame game) {
+        showFinalCards(game);
+        showPlayerResult(game);
     }
 
-    private void showGameResult(Dealer dealer, Players players) {
-        Map<Player, GameResult> playerResult = dealer.getGameResult(players);
-        Map<GameResult, Integer> dealerResult = dealer.getResult();
+    private void showFinalCards(BlackJackGame game) {
+        outputView.printDealerCardsAndResult(game.getDealer());
+        outputView.printPlayersCardAndSum(game.getPlayers());
+    }
+
+    private void showPlayerResult(BlackJackGame game) {
+        Map<Player, GameResult> playerResult = game.calculateGameResult();
+        Map<GameResult, Integer> dealerResult = game.calculateDealerWinCount();
         outputView.printResult(dealerResult, playerResult);
     }
 }
