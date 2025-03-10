@@ -83,4 +83,21 @@ public class CardsTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드는 한 번에 최대 두 장까지 받을 수 있습니다.");
     }
+
+    @Test
+    void 카드_합이_21이_넘으면_더_이상_카드를_받을_수_없다() {
+        //given
+        Cards cards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.TEN),
+                        new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.DIAMOND, Rank.NINE)),
+                new ScoreCalculator()
+        );
+
+        //when & then
+        Assertions.assertThatThrownBy(() -> cards.take(
+                        new Card(Suit.CLUB, Rank.FOUR)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
+    }
 }
