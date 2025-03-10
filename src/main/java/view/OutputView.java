@@ -56,7 +56,7 @@ public class OutputView {
     }
 
     private String formatSingleCard(Card card) {
-        return String.format("%s%s", card.getNumber().getName(), card.getSymbol().getName());
+        return String.format("%s%s", card.getRank().getName(), card.getSymbol().getName());
     }
 
     public void printWinLoseResult(Map<Result, Integer> dealerResult, Map<Player, Result> playerResult) {

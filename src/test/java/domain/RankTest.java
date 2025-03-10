@@ -13,7 +13,7 @@ class RankTest {
 
     @DisplayName("카드의 숫자는 1부터 k까지 14개다.")
     @Test
-    void cardNumber() {
+    void cardRank() {
         //given
 
         //when
@@ -25,7 +25,7 @@ class RankTest {
 
     @DisplayName("카드의 숫자는 1부터 10까지의 점수를 가진다.")
     @Test
-    void cardNumberPoint() {
+    void cardRankPoint() {
         //given
         Rank five = Rank.FIVE;
 
@@ -38,13 +38,13 @@ class RankTest {
     @DisplayName("J, Q, K 는 각각 10으로 계산한다.")
     @ParameterizedTest
     @MethodSource("provideJQK")
-    void cardNumberPointForJQK(Rank number) {
+    void cardRankPointForJQK(Rank Rank) {
         //given
 
         //when
 
         //then
-        assertThat(number.getPoint()).isEqualTo(10);
+        assertThat(Rank.getPoint()).isEqualTo(10);
     }
 
     public static Stream<Arguments> provideJQK() {

@@ -32,7 +32,7 @@ public class Deck {
     private int sumPointWithoutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(card -> card.getNumber().getPoint())
+                .mapToInt(card -> card.getRank().getPoint())
                 .sum();
     }
 
@@ -50,7 +50,7 @@ public class Deck {
     private List<Rank> extractAces() {
         return cards.stream()
                 .filter(Card::isAce)
-                .map(Card::getNumber)
+                .map(Card::getRank)
                 .toList();
     }
 
@@ -71,7 +71,7 @@ public class Deck {
 
     public List<Card> getCards() {
         return cards.stream()
-                .map(card -> new Card(card.getSymbol(), card.getNumber()))
+                .map(card -> new Card(card.getSymbol(), card.getRank()))
                 .toList();
     }
 

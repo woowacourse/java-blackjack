@@ -5,19 +5,19 @@ import java.util.Objects;
 public class Card {
 
     private final Symbol symbol;
-    private final Rank number;
+    private final Rank rank;
 
     public Card(Symbol symbol, Rank number) {
         this.symbol = symbol;
-        this.number = number;
+        this.rank = number;
     }
 
     public boolean isAce() {
-        return number.equals(Rank.ACE);
+        return rank.equals(Rank.ACE);
     }
 
-    public Rank getNumber() {
-        return number;
+    public Rank getRank() {
+        return rank;
     }
 
     public Symbol getSymbol() {
@@ -30,11 +30,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && getNumber() == card.getNumber();
+        return symbol == card.symbol && getRank() == card.getRank();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, getNumber());
+        return Objects.hash(symbol, getRank());
     }
 }
