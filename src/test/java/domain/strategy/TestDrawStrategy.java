@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 public class TestDrawStrategy implements DrawStrategy {
 
-    private final String EMPTY_DECK_ERROR = "덱이 비어있어 뽑을 수 없습니다.";
     private final String EMPTY_DRAW_CARD = "순서대로 뽑을 카드가 없습니다.";
 
     private final Deque<TrumpCard> drawOrder;
@@ -17,8 +16,8 @@ public class TestDrawStrategy implements DrawStrategy {
 
     @Override
     public TrumpCard draw(Deque<TrumpCard> trumpCards) {
+        validateDraw(trumpCards);
         validateDrawCard();
-        validateEmptyDeck(trumpCards);
         TrumpCard testRemoveTrumpCard = drawOrder.removeFirst();
         trumpCards.remove(testRemoveTrumpCard);
         return testRemoveTrumpCard;
@@ -27,12 +26,6 @@ public class TestDrawStrategy implements DrawStrategy {
     private void validateDrawCard() {
         if (drawOrder.isEmpty()) {
             throw new IllegalStateException(EMPTY_DRAW_CARD);
-        }
-    }
-
-    private void validateEmptyDeck(Deque<TrumpCard> deckCards) {
-        if (deckCards.isEmpty()) {
-            throw new IllegalStateException(EMPTY_DECK_ERROR);
         }
     }
 }
