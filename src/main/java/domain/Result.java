@@ -11,29 +11,27 @@ public enum Result {
         this.state = state;
     }
 
-    public static Result judge(Hand dealerCards, Hand playersCards) {
-        int dealerScore = dealerCards.calculateTotalScore();
-        int playerScore = playersCards.calculateTotalScore();
-
-        boolean dealerBust = dealerCards.isBust();
-        boolean playersBust = playersCards.isBust();
-
-        if (dealerBust && playersBust) {
+    public static Result judge(Hand dealerHand, Hand playerHand) {
+        if (bothPlayersBust(dealerHand, playerHand)) {
             return DRAW;
         }
+        if (dealerHand.isBust()) {
+            return LOSE;
+        }
+        if (playerHand.isBust()) {
+            return WIN;
+        }
+        return compareScores(dealerHand.calculateTotalScore(), playerHand.calculateTotalScore());
+    }
 
+    private static boolean bothPlayersBust(Hand dealerHand, Hand playerHand) {
+        return dealerHand.isBust() && playerHand.isBust();
+    }
+
+    private static Result compareScores(int dealerScore, int playerScore) {
         if (dealerScore == playerScore) {
             return DRAW;
         }
-
-        if (dealerBust) {
-            return LOSE;
-        }
-
-        if (playersBust) {
-            return WIN;
-        }
-
         if (dealerScore > playerScore) {
             return WIN;
         }
