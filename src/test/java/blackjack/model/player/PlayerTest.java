@@ -219,22 +219,6 @@ public class PlayerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("비겼는지_확인한다_테스트_케이스")
-    void 비겼는지_확인한다(final Cards cards, final Player challenger, final boolean expected) {
-        player.receiveCards(cards);
-
-        assertThat(player.isDraw(challenger)).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("이겼는지_확인한다_테스트_케이스")
-    void 이겼는지_확인한다(final Cards cards, final Player challenger, final boolean expected) {
-        player.receiveCards(cards);
-
-        assertThat(player.isWin(challenger)).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
     @MethodSource("최적의_포인트를_반환한다_테스트_케이스")
     void 최적의_포인트를_반환한다(final Cards cards, final int expected) {
         player.receiveCards(cards);

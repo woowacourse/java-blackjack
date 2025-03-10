@@ -15,6 +15,23 @@ public class Dealer extends Player {
         this(DEFAULT_NAME);
     }
 
+    public boolean isDraw(final User user) {
+        if (user.isBust() || isBust()) {
+            return false;
+        }
+        return calculateOptimalPoint() == user.calculateOptimalPoint();
+    }
+
+    public boolean isWin(final User user) {
+        if (user.isBust()) {
+            return true;
+        }
+        if (isBust()) {
+            return false;
+        }
+        return calculateOptimalPoint() > user.calculateOptimalPoint();
+    }
+
     @Override
     public Cards openInitialCards() {
         return new Cards(cards.getFirst());
@@ -24,4 +41,6 @@ public class Dealer extends Player {
     public boolean canDrawMoreCard() {
         return getMinimumPoint() < DRAWABLE_POINT;
     }
+
+
 }

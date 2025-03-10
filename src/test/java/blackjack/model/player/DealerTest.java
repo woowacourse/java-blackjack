@@ -54,6 +54,150 @@ class DealerTest {
         );
     }
 
+    private static Stream<Arguments> 비겼는지_확인한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.EIGHT)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new Cards(
+                                        List.of(
+                                                createCard(CardNumber.EIGHT)
+                                        )
+                                )
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT),
+                                        createCard(CardNumber.SEVEN)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new Cards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.EIGHT),
+                                                createCard(CardNumber.SIX)
+                                        )
+                                )
+                        ),
+                        false
+                )
+        );
+    }
+
+    private static Stream<Arguments> 이겼는지_확인한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.EIGHT)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new Cards(
+                                        List.of(
+                                                createCard(CardNumber.EIGHT)
+                                        )
+                                )
+                        ),
+                        false
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT),
+                                        createCard(CardNumber.SEVEN)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new Cards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.EIGHT),
+                                                createCard(CardNumber.SIX)
+                                        )
+                                )
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new Cards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.EIGHT),
+                                                createCard(CardNumber.SIX)
+                                        )
+                                )
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT),
+                                        createCard(CardNumber.SEVEN)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new Cards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.EIGHT)
+                                        )
+                                )
+                        ),
+                        false
+                ),
+                Arguments.of(
+                        new Cards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new Cards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.SIX)
+                                        )
+                                )
+                        ),
+                        true
+                )
+        );
+    }
+
+    private static User makeUser(final String name, final Cards cards) {
+        User user = new User(name);
+        user.receiveCards(cards);
+        return user;
+    }
+
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
@@ -93,5 +237,21 @@ class DealerTest {
         dealer.receiveCards(cards);
 
         assertThat(dealer.canDrawMoreCard()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("비겼는지_확인한다_테스트_케이스")
+    void 비겼는지_확인한다(final Cards cards, final User user, final boolean expected) {
+        dealer.receiveCards(cards);
+
+        assertThat(dealer.isDraw(user)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("이겼는지_확인한다_테스트_케이스")
+    void 이겼는지_확인한다(final Cards cards, final User user, final boolean expected) {
+        dealer.receiveCards(cards);
+
+        assertThat(dealer.isWin(user)).isEqualTo(expected);
     }
 }

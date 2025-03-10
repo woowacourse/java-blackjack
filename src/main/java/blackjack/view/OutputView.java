@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.card.Cards;
-import blackjack.model.game.ResultStatistic;
+import blackjack.model.game.Result;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
@@ -51,24 +51,28 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(final Map<Player, ResultStatistic> playerListMap) {
+    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<User, Result> usersResults) {
         System.out.println("## 최종 승패");
-        playerListMap.entrySet().stream()
-                .map(entry -> entry.getKey().getName() + ": " + formatResults(entry.getValue()))
-                .forEach(System.out::println);
+        printDealerResult(dealerResult);
+        printUsersResults(usersResults);
     }
 
-    private String formatResults(ResultStatistic resultStatistic) {
-        if (resultStatistic.hasMultipleResult()) {
-            return resultStatistic.getStatistic().entrySet().stream()
-                    .filter(entry -> entry.getValue().hasMeaningfulValue())
-                    .map(entry -> entry.getValue().getValue() + entry.getKey().getName())
-                    .collect(Collectors.joining(" "));
-        }
-        return resultStatistic.getStatistic().entrySet().stream()
-                .filter(entry -> entry.getValue().hasMeaningfulValue())
-                .map(entry -> entry.getKey().getName())
-                .collect(Collectors.joining());
+    private void printDealerResult(final Map<Result, Integer> dealerResult) {
+        System.out.println("딜러: " + formatDealerResult(dealerResult));
     }
 
+    private String formatDealerResult(final Map<Result, Integer> dealerResult) {
+        return dealerResult.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(entry -> entry.getValue() + entry.getKey().getName())
+                .collect(Collectors.joining(" "));
+    }
+
+    private void printUsersResults(final Map<User, Result> userResults) {
+        userResults.forEach(this::printUserResult);
+    }
+
+    private void printUserResult(final User user, final Result result) {
+        System.out.println(user.getName() + ": " + result.getName());
+    }
 }

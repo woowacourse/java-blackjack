@@ -28,20 +28,6 @@ public abstract class Player {
         return cards;
     }
 
-    public boolean isDraw(final Player challenger) {
-        if (isBust() && challenger.isBust()) {
-            return true;
-        }
-        return calculateOptimalPoint() == challenger.calculateOptimalPoint();
-    }
-
-    public boolean isWin(final Player challenger) {
-        if (isBust() || challenger.isBust()) {
-            return !isBust() && challenger.isBust();
-        }
-        return calculateOptimalPoint() > challenger.calculateOptimalPoint();
-    }
-
     public int calculateOptimalPoint() {
         return cards.calculatePossiblePoints().stream()
                 .filter(point -> point < BLACKJACK_POINT)
@@ -49,21 +35,21 @@ public abstract class Player {
                 .orElse(getMinimumPoint());
     }
 
-    public abstract Cards openInitialCards();
-
-    public abstract boolean canDrawMoreCard();
-
-    private boolean isBust() {
+    protected boolean isBust() {
         return calculateOptimalPoint() > BLACKJACK_POINT;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Cards getCards() {
         return cards;
     }
 
-    public String getName() {
-        return name;
-    }
+    public abstract Cards openInitialCards();
+
+    public abstract boolean canDrawMoreCard();
 
     @Override
     public boolean equals(final Object o) {
