@@ -67,7 +67,7 @@ public class BlackjackTest {
 			final Card card1 = new Card(Rank.SIX, Suit.CLUB);
 			final Card card2 = new Card(Rank.TEN, Suit.CLUB);
 			final CardHand cardHand = new CardHand(List.of(card1, card2));
-			final Dealer dealer = new Dealer(cardHand);
+			final Dealer dealer = new Dealer(new Participant(cardHand));
 			final Blackjack blackjack = new Blackjack();
 
 			// when
@@ -84,7 +84,7 @@ public class BlackjackTest {
 			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
 			final Card card2 = new Card(Rank.SEVEN, Suit.CLUB);
 			final CardHand cardHand = new CardHand(List.of(card1, card2));
-			final Dealer dealer = new Dealer(cardHand);
+			final Dealer dealer = new Dealer(new Participant(cardHand));
 			final Blackjack blackjack = new Blackjack();
 
 			// when
@@ -129,7 +129,7 @@ public class BlackjackTest {
 			final Card card2 = new Card(Rank.SEVEN, Suit.CLUB);
 			final CardHand cardHand = new CardHand(List.of(card1, card2));
 			final Participant participant = new Participant(cardHand);
-			final Dealer dealer = new Dealer(cardHand);
+			final Dealer dealer = new Dealer(new Participant(cardHand));
 			final Player player = new Player("", participant);
 			final Blackjack blackjack = new Blackjack();
 

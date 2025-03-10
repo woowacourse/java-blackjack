@@ -12,10 +12,6 @@ public class Dealer {
 		this.participant = new Participant();
 	}
 
-	public Dealer(final CardHand hand) {
-		this.participant = new Participant(hand);
-	}
-
 	public Dealer(final Participant participant) {
 		this.participant = participant;
 	}

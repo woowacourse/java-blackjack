@@ -38,7 +38,7 @@ public class DealerTest {
 			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
 			final Card card2 = new Card(Rank.SEVEN, Suit.HEART);
 			final CardHand cardHand = new CardHand(List.of(card1, card2));
-			final var dealer = new Dealer(cardHand);
+			final var dealer = new Dealer(new Participant(cardHand));
 
 			// when
 			final var actual = dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX);
