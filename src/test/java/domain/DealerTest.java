@@ -20,7 +20,9 @@ class DealerTest {
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
-        dealer.addCard(new Cards(cards));
+        for (Card card : cards) {
+            dealer.addCard(new Cards(List.of(card)));
+        }
 
         //when & then
         assertThat(dealer.isDrawable()).isEqualTo(expected);

@@ -37,6 +37,7 @@ class PlayersTest {
         //given
         List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
         Players players = new Players(usernames);
+        players.giveCard(new PlayerName("김"), new Cards(List.of(Card.HEART_TEN)));
         players.giveCard(new PlayerName("김"), new Cards(cards));
 
         //when & then
@@ -45,10 +46,10 @@ class PlayersTest {
 
     public static Stream<Arguments> canGetMoreCardTest() {
         return Stream.of(
-                Arguments.of(List.of(Card.HEART_TEN, Card.HEART_ACE), true),
-                Arguments.of(List.of(Card.HEART_TEN, Card.HEART_ACE, Card.CLOVER_QUEEN), true),
-                Arguments.of(List.of(Card.HEART_TEN, Card.HEART_QUEEN, Card.CLOVER_THREE), false),
-                Arguments.of(List.of(Card.HEART_TEN, Card.DIA_JACK, Card.CLOVER_TWO), false)
+                Arguments.of(List.of(Card.HEART_ACE), true),
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_QUEEN), true),
+                Arguments.of(List.of(Card.HEART_QUEEN, Card.CLOVER_THREE), false),
+                Arguments.of(List.of(Card.DIA_JACK, Card.CLOVER_TWO), false)
         );
     }
 

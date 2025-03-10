@@ -38,7 +38,10 @@ class PlayerTest {
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
         Player player = new Player(new PlayerName("코기"));
-        player.addCard(new Cards(cards));
+        for (Card card : cards) {
+            player.addCard(new Cards(List.of(card)));
+        }
+
         int playStandard = 21;
         // when
         boolean canGetMoreCard = player.isDrawable(playStandard);
@@ -62,9 +65,12 @@ class PlayerTest {
     void decideGameResultTest(List<Card> cards, GameResult expected) {
         //given
         Player player = new Player(new PlayerName("코기"));
-        player.addCard(new Cards(cards));
+        for (Card card : cards) {
+            player.addCard(new Cards(List.of(card)));
+        }
+
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
-        dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN)));
+        dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN))); // 20
 
         //when & then
         Assertions.assertEquals(expected, player.decideGameResult(dealer));
@@ -76,7 +82,7 @@ class PlayerTest {
                 Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), WIN),
                 Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), LOSE),
                 Arguments.of(List.of(Card.HEART_SEVEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW),
-                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE, Card.HEART_ACE), LOSE)
+                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.HEART_ACE, Card.SPADE_ACE), LOSE)
         );
     }
 
@@ -86,9 +92,14 @@ class PlayerTest {
     void decideGameResultBustTest(List<Card> cards, GameResult expected) {
         //given
         Player player = new Player(new PlayerName("코기"));
-        player.addCard(new Cards(cards));
+        for (Card card : cards) {
+            player.addCard(new Cards(List.of(card)));
+        }
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
-        dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN)));
+        List<Card> givenCards = List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN);
+        for (Card givenCard : givenCards) {
+            dealer.addCard(new Cards(List.of(givenCard)));
+        }
 
         //when & then
         Assertions.assertEquals(expected, player.decideGameResult(dealer));
