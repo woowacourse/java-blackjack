@@ -16,6 +16,22 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final Map<Denomination, String> DENOMINATION_NAME_MAP = Map.ofEntries(
+            Map.entry(Denomination.ACE, "A"),
+            Map.entry(Denomination.TWO, "2"),
+            Map.entry(Denomination.THREE, "3"),
+            Map.entry(Denomination.FOUR, "4"),
+            Map.entry(Denomination.FIVE, "5"),
+            Map.entry(Denomination.SIX, "6"),
+            Map.entry(Denomination.SEVEN, "7"),
+            Map.entry(Denomination.EIGHT, "8"),
+            Map.entry(Denomination.NINE, "9"),
+            Map.entry(Denomination.TEN, "10"),
+            Map.entry(Denomination.JACK, "J"),
+            Map.entry(Denomination.QUEEN, "Q"),
+            Map.entry(Denomination.KING, "K")
+    );
+
     public static void printDistributeResult(Players players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ")
@@ -124,42 +140,6 @@ public class OutputView {
     }
 
     private static String mapDenominationToString(final Denomination denomination) {
-        if (denomination == Denomination.ACE) {
-            return "A";
-        }
-        if (denomination == Denomination.TWO) {
-            return "2";
-        }
-        if (denomination == Denomination.THREE) {
-            return "3";
-        }
-        if (denomination == Denomination.FOUR) {
-            return "4";
-        }
-        if (denomination == Denomination.FIVE) {
-            return "5";
-        }
-        if (denomination == Denomination.SIX) {
-            return "6";
-        }
-        if (denomination == Denomination.SEVEN) {
-            return "7";
-        }
-        if (denomination == Denomination.EIGHT) {
-            return "8";
-        }
-        if (denomination == Denomination.NINE) {
-            return "9";
-        }
-        if (denomination == Denomination.TEN) {
-            return "10";
-        }
-        if (denomination == Denomination.JACK) {
-            return "J";
-        }
-        if (denomination == Denomination.QUEEN) {
-            return "Q";
-        }
-        return "K";
+        return DENOMINATION_NAME_MAP.get(denomination);
     }
 }
