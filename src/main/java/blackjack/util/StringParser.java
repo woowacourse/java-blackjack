@@ -8,7 +8,7 @@ public class StringParser {
 
     private static final String COMMA = ",";
 
-    public static List<String> parseComma(String input) {
+    public static List<String> parseByComma(String input) {
         try {
             return Arrays.asList(input.replace(" ", "").split(COMMA));
         } catch (PatternSyntaxException exception) {

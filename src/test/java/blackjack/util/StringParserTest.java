@@ -16,6 +16,6 @@ public class StringParserTest {
         final List<String> expected = List.of("엠제이", "밍트");
 
         // when & then
-        assertThat(StringParser.parseComma(input)).isEqualTo(expected);
+        assertThat(StringParser.parseByComma(input)).isEqualTo(expected);
     }
 }
