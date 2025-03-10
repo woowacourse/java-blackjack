@@ -18,8 +18,6 @@ import java.util.Map;
 
 public class BlackjackController {
 
-    private static final String YES = "y";
-
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -93,7 +91,7 @@ public class BlackjackController {
 
     private Players makePlayers() {
         String names = inputView.readNames();
-        List<String> parsedNames = StringParser.parseComma(names);
+        List<String> parsedNames = StringParser.parseByComma(names);
         return new Players(parsedNames.stream()
                 .map(name -> new Player(name, new Cards(new ArrayList<>())))
                 .toList());
