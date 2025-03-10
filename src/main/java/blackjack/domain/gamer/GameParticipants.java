@@ -27,7 +27,6 @@ public class GameParticipants {
         }
 
         dealer.hideCard();
-        gameParticipants.forEach(GameParticipant::showHand);
     }
 
     public void processHit() {
@@ -41,8 +40,9 @@ public class GameParticipants {
 
         while (dealer.shouldHit()) {
             dealer.dealCard(dealer);
-
         }
+
+        dealer.openHiddenCard();
     }
 
     public List<GameParticipant> getGameParticipants() {
