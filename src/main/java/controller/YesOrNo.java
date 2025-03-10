@@ -17,6 +17,6 @@ public enum YesOrNo {
         return Arrays.stream(values())
                 .filter(yesOrNo -> Objects.equals(yesOrNo.input, input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("y또는 n만 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException("y 또는 n만 입력해주세요."));
     }
 }

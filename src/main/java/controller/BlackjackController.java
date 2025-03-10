@@ -1,5 +1,9 @@
 package controller;
 
+import static controller.YesOrNo.NO;
+import static controller.YesOrNo.YES;
+import static controller.YesOrNo.from;
+
 import controller.dto.DealerMatchResultCount;
 import controller.dto.NameAndCards;
 import controller.dto.NameAndSums;
@@ -48,18 +52,20 @@ public class BlackjackController {
     }
 
     private void addMoreCards(BlackjackManager blackjackManager, Player participant) {
-        YesOrNo yesOrNo;
-        do {
-            yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participant.getName()));
-            addOneCardIfYes(blackjackManager, participant, yesOrNo);
+        YesOrNo isContinued = wantOneMoreCard(participant);
+        if (isContinued == NO) {
             OutputView.printPlayerCards(NameAndCards.toNameAndCards(participant));
-        } while (yesOrNo == YesOrNo.YES);
+            return;
+        }
+        while (isContinued == YES) {
+            blackjackManager.addOneCard(participant);
+            OutputView.printPlayerCards(NameAndCards.toNameAndCards(participant));
+            isContinued = wantOneMoreCard(participant);
+        }
     }
 
-    private void addOneCardIfYes(BlackjackManager blackjackManager, Player participant, YesOrNo yesOrNo) {
-        if (yesOrNo == YesOrNo.YES) {
-            blackjackManager.addOneCard(participant);
-        }
+    private YesOrNo wantOneMoreCard(Player participant) {
+        return from(InputView.inputWantOneMoreCard(participant.getName()));
     }
 
     private void printGameResult(BlackjackManager blackjackManager) {
