@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Dealer {
 
     private final Hand hand;
@@ -25,6 +27,14 @@ public class Dealer {
         }
 
         return hand.getCards().getFirst();
+    }
+
+    public List<TrumpCard> getCards() {
+        return hand.getCards();
+    }
+
+    public void addCard(TrumpCard drawnCard) {
+        hand.addCard(drawnCard);
     }
 
     public Hand getHand() {
