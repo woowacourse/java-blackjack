@@ -8,6 +8,10 @@ public class Player extends Participant {
         this.name = name;
     }
 
+    public boolean isUnderBurstBound() {
+        return !this.isOverBurstBound();
+    }
+
     public String getName() {
         return name;
     }
