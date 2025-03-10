@@ -48,12 +48,11 @@ public class Cards {
     }
 
     public int calculateSum() {
-        if (hasNotAce()) {
-            return calculateSumWithoutAce();
-        }
         int cardsSumWithoutAce = calculateSumWithoutAce();
+        if (hasNotAce()) {
+            return cardsSumWithoutAce;
+        }
         int aceCount = calculateAceCount();
-
         return calculateSumWithAces(aceCount, cardsSumWithoutAce);
     }
 
