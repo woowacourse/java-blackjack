@@ -6,8 +6,9 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private Scanner scanner = new Scanner(System.in);
+
     public List<String> readNames() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("게임에 참여할 사람의 이름을 영어/한글로 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
 
@@ -16,7 +17,6 @@ public class InputView {
     }
 
     public boolean readGetOneMore(final String name) {
-        Scanner scanner = new Scanner(System.in);
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         String input = scanner.nextLine();
 
