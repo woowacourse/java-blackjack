@@ -13,7 +13,7 @@ import blackjack.fixture.DeckFixture;
 
 class RoundResultTest {
 
-    private Player player= new Player("Pobi");;
+    private Player player= new Player("Pobi");
     private Dealer dealer = new Dealer();
 
     @Test

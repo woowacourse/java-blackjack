@@ -17,7 +17,7 @@ import blackjack.fixture.DeckFixture;
 
 class GamerTest {
 
-    private Gamer gamer= new Player("Pobi");;
+    private Gamer gamer= new Player("Pobi");
 
     @ParameterizedTest
     @CsvSource({
