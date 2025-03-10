@@ -13,17 +13,21 @@ public class Name {
     private final String name;
 
     public Name(final String name) {
-        this.name = validateForm(name);
+        this.name = validate(name);
     }
 
-    private String validateForm(final String name) {
+    private String validate(final String name) {
+        validateForm(name);
+        return name;
+    }
+
+    private void validateForm(final String name) {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_LENGTH.getMessage());
         }
         if (name.contains(SPACE)) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_FORMAT.getMessage());
         }
-        return name;
     }
 
     @Override

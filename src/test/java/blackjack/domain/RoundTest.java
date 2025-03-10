@@ -10,6 +10,7 @@ import blackjack.domain.card.CardType;
 import blackjack.domain.card.Shuffler;
 import blackjack.domain.fake.TestShuffler;
 import blackjack.domain.gambler.Name;
+import blackjack.domain.gambler.Names;
 import blackjack.view.WinningType;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ class RoundTest {
         CardDeck cardDeck = new CardDeck(List.of(card1, card2), shuffler);
 
         Name playerName = new Name("라젤");
-        List<Name> playerNames = List.of(playerName);
+        Names playerNames = new Names(List.of(playerName));
         Round round = new Round(cardDeck, playerNames);
 
         // when
@@ -52,7 +53,7 @@ class RoundTest {
         CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4), shuffler);
 
         Name playerName = new Name("라젤");
-        List<Name> playerNames = List.of(playerName);
+        Names playerNames = new Names(List.of(playerName));
         Round round = new Round(cardDeck, playerNames);
 
         // when
@@ -80,7 +81,7 @@ class RoundTest {
         CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4), shuffler);
 
         Name playerName = new Name("라젤");
-        List<Name> playerNames = List.of(playerName);
+        Names playerNames = new Names(List.of(playerName));
         Round round = new Round(cardDeck, playerNames);
         round.distributeInitialCards();
 

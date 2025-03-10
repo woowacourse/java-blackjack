@@ -11,6 +11,7 @@ import static blackjack.view.OutputView.printInitialDistributionPrompt;
 import static blackjack.view.OutputView.printWinning;
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.gambler.Names;
 import blackjack.domain.Round;
 import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
@@ -25,7 +26,7 @@ import java.util.List;
 public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
-        List<Name> playerNames = getPlayerNames();
+        Names playerNames = getPlayerNames();
         Round round = new Round(cardDeck, playerNames);
         round.distributeInitialCards();
         printInitialDistributionPrompt(playerNames);
@@ -43,24 +44,25 @@ public class Application {
         return new CardDeck(cards, new CardShuffler());
     }
 
-    private static List<Name> getPlayerNames() {
+    private static Names getPlayerNames() {
         try {
-            return inputPlayerName();
+            List<Name> names = inputPlayerName();
+            return new Names(names);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getPlayerNames();
         }
     }
 
-    private static void printInitialCards(final Round round, final List<Name> playerNames) {
+    private static void printInitialCards(final Round round, final Names playerNames) {
         printGamblerCards(DEALER_NAME, round.getInitialCards(DEALER_NAME));
-        for (Name playerName : playerNames) {
+        for (final Name playerName : playerNames.getNames()) {
             printGamblerCards(playerName, round.getInitialCards(playerName));
         }
     }
 
-    private static void processPlayersTurn(final List<Name> playerNames, final Round round) {
-        for (Name playerName : playerNames) {
+    private static void processPlayersTurn(final Names playerNames, final Round round) {
+        for (final Name playerName : playerNames.getNames()) {
             processPlayerTurn(round, playerName);
         }
     }
@@ -98,9 +100,9 @@ public class Application {
         }
     }
 
-    private static void printGameResult(final Round round, final List<Name> playerNames) {
+    private static void printGameResult(final Round round, final Names playerNames) {
         printGamblerResult(DEALER_NAME, round.getCards(DEALER_NAME), round.getScore(DEALER_NAME));
-        for (Name playerName : playerNames) {
+        for (final Name playerName : playerNames.getNames()) {
             List<Card> cards = round.getCards(playerName);
             int score = round.getScore(playerName);
             printGamblerResult(playerName, cards, score);

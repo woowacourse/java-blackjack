@@ -8,31 +8,33 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Gambler;
 import blackjack.domain.gambler.Name;
+import blackjack.domain.gambler.Names;
 import blackjack.domain.gambler.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Round {
+    public static final int MIN_PLAYER_COUNT = 1;
+    public static final int MAX_PLAYER_COUNT = 6;
     public static final int BLACK_JACK = 21;
     public static final int DEALER_DRAW_THRESHOLD = 16;
 
     private final CardDeck cardDeck;
-    private final List<Gambler> gamblers;
+    private final List<Gambler> gamblers = new ArrayList<>();
 
-    public Round(final CardDeck cardDeck, final List<Name> playerNames) {
+    public Round(final CardDeck cardDeck, final Names playerNames) {
         this.cardDeck = cardDeck;
-        this.gamblers = registerGamblers(playerNames);
+        registerGamblers(playerNames);
     }
 
-    private List<Gambler> registerGamblers(final List<Name> playerNames) {
-        List<Gambler> gamblers = new ArrayList<>();
+    private void registerGamblers(final Names playerNames) {
         gamblers.add(new Dealer());
-        for (final Name playerName : playerNames) {
-            Player player = new Player(playerName);
-            gamblers.add(player);
-        }
-        return gamblers;
+        List<Player> players = playerNames.getNames()
+                .stream()
+                .map(Player::new)
+                .toList();
+        gamblers.addAll(players);
     }
 
     public void distributeCards(final Name playerName, final int cardCount) {
