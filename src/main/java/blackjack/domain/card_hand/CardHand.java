@@ -1,10 +1,10 @@
 package blackjack.domain.card_hand;
 
+import blackjack.domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import blackjack.domain.card.Card;
 
 public final class CardHand {
     
@@ -20,5 +20,9 @@ public final class CardHand {
     
     public void addCards(final List<Card> cards) {
         this.cards.addAll(cards);
+    }
+    
+    public int getCardCount() {
+        return cards.size();
     }
 }

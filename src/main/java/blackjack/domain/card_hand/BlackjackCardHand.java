@@ -9,6 +9,7 @@ public final class BlackjackCardHand implements BlackjackWinDeterminable {
     
     private static final int BUST_THRESHOLD = 21;
     private static final int BLACK_JACK_MAX_SUM = 21;
+    public static final int BLACK_JACK_CARD_COUNT = 2;
     
     private final CardHand cardHand;
     
@@ -35,7 +36,7 @@ public final class BlackjackCardHand implements BlackjackWinDeterminable {
     
     @Override
     public boolean isBlackjack() {
-        return getBlackjackSum() == BLACK_JACK_MAX_SUM && cardHand.getCards().size() == 2;
+        return getBlackjackSum() == BLACK_JACK_MAX_SUM && cardHand.getCardCount() == BLACK_JACK_CARD_COUNT;
     }
     
     private List<Integer> calculatePossibleSums() {
@@ -74,5 +75,9 @@ public final class BlackjackCardHand implements BlackjackWinDeterminable {
     
     public void addCard(Card card) {
         cardHand.addCard(card);
+    }
+    
+    public int getCardCount() {
+        return cardHand.getCardCount();
     }
 }
