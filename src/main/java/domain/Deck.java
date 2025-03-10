@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Deck {
     private final List<Card> cards;
+    List<Integer> is = List.of(1, 2, 3);
 
     public Deck(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int size() {
