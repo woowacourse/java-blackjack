@@ -16,7 +16,7 @@ public abstract class Participant<T extends Participant<T>> {
         return createParticipant(providedCards);
     }
 
-    public boolean checkExceedBurst() {
+    public boolean isBurst() {
         return cards.isBurst();
     }
 

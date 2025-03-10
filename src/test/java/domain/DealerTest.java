@@ -53,8 +53,8 @@ public class DealerTest {
             List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK))));
 
         assertAll(
-            () -> assertThat(exceedDealer.checkExceedBurst()).isTrue(),
-            () -> assertThat(notExceedDealer.checkExceedBurst()).isFalse()
+            () -> assertThat(exceedDealer.isBurst()).isTrue(),
+            () -> assertThat(notExceedDealer.isBurst()).isFalse()
         );
     }
 

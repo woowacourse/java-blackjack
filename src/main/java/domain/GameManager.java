@@ -51,4 +51,12 @@ public class GameManager {
     public Map<Player, ResultStatus> findGameResult() {
         return ResultStatus.judgeGameResult(players, dealer);
     }
+
+    public boolean isPlayerBurst(Player player) {
+        return player.isBurst();
+    }
+
+    public boolean isDealerHittable(Dealer dealer) {
+        return dealer.isDealerHittable();
+    }
 }
