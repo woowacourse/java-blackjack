@@ -2,6 +2,7 @@ package view;
 
 import static domain.GameResultStatus.*;
 
+import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
 import domain.GameResultStatus;
@@ -18,12 +19,12 @@ public class OutputView {
         this.outputFormatter = outputFormatter;
     }
 
-    public void printInitialCards(Dealer dealer, Players players) {
+    public void printInitialCards(Card dealerCard, Players players) {
         List<String> playerNames = players.getAllPlayersName();
         String parsedPlayerNames = outputFormatter.formatPlayerNames(playerNames);
 
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", parsedPlayerNames);
-        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealer.getFirstCard()));
+        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealerCard));
         players.getPlayers().forEach(
                 player ->
                 System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getCards()))

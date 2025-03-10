@@ -54,7 +54,7 @@ public class BlackjackApplication {
         participants.add(dealer);
         cardGiver.giveDefaultTo(participants);
 
-        outputView.printInitialCards(dealer, players);
+        outputView.printInitialCards(dealer.getFirstCard(), players);
     }
 
     private void askForAdditionalCard(Players players) {
