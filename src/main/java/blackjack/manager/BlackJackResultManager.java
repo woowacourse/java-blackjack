@@ -6,70 +6,60 @@ import blackjack.domain.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.PlayersResult;
-import java.util.Map;
+import blackjack.dto.ResultDto;
 
 public class BlackJackResultManager {
 
-    private final PlayersResult playersResult;
-    private final DealerResult dealerResult;
+    public ResultDto calculateCardResult(Players players, Dealer dealer) {
+        PlayersResult playersResult = new PlayersResult();
+        DealerResult dealerResult = new DealerResult();
 
-    public BlackJackResultManager() {
-        this.playersResult = PlayersResult.create();
-        this.dealerResult = DealerResult.create();
-    }
-
-    public void calculateCardResult(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            saveResult(dealer, player);
+            saveResult(dealer, player, playersResult, dealerResult);
         }
+
+        return new ResultDto(playersResult.getAllResult(), dealerResult.getDealerResult());
     }
 
-    private void saveResult(Dealer dealer, Player player) {
+    private void saveResult(Dealer dealer, Player player, PlayersResult playersResult, DealerResult dealerResult) {
         boolean isBustedDealer = dealer.isBusted();
         boolean isBustedPlayer = player.isBusted();
 
         if (isBustedDealer) {
-            processWhenDealerIsBusted(player, isBustedPlayer);
+            processWhenDealerIsBusted(player, isBustedPlayer, playersResult, dealerResult);
             return;
         }
 
         if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.LOSE);
+            saveResultWithPlayerResult(player, GameResultType.LOSE, playersResult, dealerResult);
             return;
         }
 
         GameResultType resultOfPlayer = decideResultOfPlayer(player, dealer);
-        saveResultWithPlayerResult(player, resultOfPlayer);
+        saveResultWithPlayerResult(player, resultOfPlayer, playersResult, dealerResult);
     }
 
-    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer) {
+    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer, PlayersResult playersResult, DealerResult dealerResult) {
         if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.TIE);
+            saveResultWithPlayerResult(player, GameResultType.TIE, playersResult, dealerResult);
             return;
         }
 
-        saveResultWithPlayerResult(player, GameResultType.WIN);
+        saveResultWithPlayerResult(player, GameResultType.WIN, playersResult, dealerResult);
     }
 
-    public GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
-        int playerValue = player.getCardHolder().getOptimisticValue();
-        int dealerValue = dealer.getCardHolder().getOptimisticValue();
+    private GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
+        int playerValue = player.getOptimisticValue();
+        int dealerValue = dealer.getOptimisticValue();
 
         return GameResultType.find(playerValue, dealerValue);
     }
 
-    public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer) {
+    public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer,
+                                           PlayersResult playersResult, DealerResult dealerResult) {
         GameResultType gameResultOfDealer = gameResultOfPlayer.getOppositeType();
 
         playersResult.save(player, gameResultOfPlayer);
         dealerResult.addCountOf(gameResultOfDealer);
-    }
-
-    public Map<Player, GameResultType> getPlayersResult() {
-        return playersResult.getAllResult();
-    }
-
-    public Map<GameResultType, Integer> getDealerResult() {
-        return dealerResult.getDealerResult();
     }
 }
