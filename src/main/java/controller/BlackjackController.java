@@ -1,11 +1,14 @@
 package controller;
 
 import controller.converter.DomainToTextConverter;
+import controller.converter.PlayerResultText;
 import domain.BlackjackGame;
+import domain.RoundHistory;
 import domain.card.Hand;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
@@ -35,7 +38,6 @@ public class BlackjackController {
     deal(blackjack);
     openHandResult(blackjack);
     round(blackjack);
-    result(blackjack);
   }
 
   private void initialDael(final BlackjackGame blackjack) {
@@ -98,8 +100,15 @@ public class BlackjackController {
   }
 
   private void round(final BlackjackGame blackjack) {
+    outputView.printRoundResultIntroduce();
+    final RoundHistory roundHistory = blackjack.round();
+    final var dealerRoundHistory = roundHistory.getDealerResult();
+    outputView.printRoundResultOnDealer(dealerRoundHistory);
+    Map<String, Boolean> history = roundHistory.history();
+    for (String name : history.keySet()) {
+      var result = PlayerResultText.convertBooleanToText(history.get(name));
+      outputView.printRoundResultOnPlayers(name, result);
+    }
   }
 
-  private void result(BlackjackGame blackjack) {
-  }
 }

@@ -29,30 +29,21 @@ public class OutputView {
     System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
   }
 
-  public void printDealerRoundResult(final List<String> cards, final int score) {
-    final String joinedCards = String.join(PLAYER_NAME_DELIMITER, cards);
-    System.out.printf("딜러카드: %s - 결과: %d" + System.lineSeparator(), joinedCards, score);
-  }
-
   public void printPlayerRoundResult(final String name, final List<String> cards, final int score) {
     final String joinedCards = String.join(PLAYER_NAME_DELIMITER, cards);
     System.out.printf("%s카드: %s - 결과: %d" + System.lineSeparator(), name, joinedCards, score);
   }
 
-  public void printBlackjackRoundResultIntroduce() {
+  public void printRoundResultIntroduce() {
     System.out.println("## 최종 승패");
   }
 
-  public void printBlackjackResultOnDealer(final int winCount, final int loseCount) {
-    System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount, loseCount);
+  public void printRoundResultOnDealer(final Map<Boolean, Integer> result) {
+    System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), result.get(true), result.get(false));
   }
 
-  public void printBlackjackResultOnPlayer(final String name, final boolean isWin) {
-    System.out.printf("%s: ", name);
-    if (isWin) {
-      System.out.println("승");
-      return;
-    }
-    System.out.println("패");
+
+  public void printRoundResultOnPlayers(final String name, final String result) {
+    System.out.printf("%s: %s" + System.lineSeparator(), name, result);
   }
 }

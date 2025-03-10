@@ -4,9 +4,7 @@ import domain.card.Deck;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
 import domain.participant.Participants;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
@@ -36,8 +34,8 @@ public class BlackjackGame {
     participants.initialDeal(deck);
   }
 
-  public Map<String, Boolean> round() {
-    final Map<String, Boolean> roundResult = new HashMap<>();
+  public RoundHistory round() {
+    final var roundResult = new RoundHistory();
     final Participant dealer = getDealer();
     for (Participant player : getPlayers()) {
       var name = player.getName();
