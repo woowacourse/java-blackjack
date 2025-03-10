@@ -8,6 +8,9 @@ import blackjack.domain.Player;
 
 public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     
+    private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_SUM = 21;
+    
     private final BlackjackCardHand cardHand;
     private final Player player;
     
@@ -53,10 +56,10 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     }
     
     public boolean isAddedTo21() {
-        return getBlackjackSum() == 21;
+        return getBlackjackSum() == BLACKJACK_SUM;
     }
     
     public boolean isBust() {
-        return getBlackjackSum() > 21;
+        return getBlackjackSum() > BUST_THRESHOLD;
     }
 }
