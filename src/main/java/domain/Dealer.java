@@ -1,33 +1,18 @@
 package domain;
 
-public class Dealer {
+public class Dealer extends Participant {
 
-    private final Hand hand;
+    public static final int INITIAL_CARD_COUNT = 2;
 
     public Dealer(Hand hand) {
-        validate(hand);
-        this.hand = hand;
-    }
-
-    private void validate(Hand hand) {
-        validateNotNull(hand);
-    }
-
-    private void validateNotNull(Hand hand) {
-        if (hand == null) {
-            throw new IllegalArgumentException("딜러는 손패를 가져야합니다.");
-        }
+        super(hand);
     }
 
     public TrumpCard retrieveFirstCard() {
-        if (hand.getCards().size() != 2) {
-            throw new IllegalStateException("딜러는 2장의 카드를 가지고 있어야 합니다.");
+        if (hand.getCards().size() != INITIAL_CARD_COUNT) {
+            throw new IllegalStateException("딜러는 " + INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
         }
 
         return hand.getCards().getFirst();
-    }
-
-    public Hand getHand() {
-        return hand;
     }
 }

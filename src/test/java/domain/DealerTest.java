@@ -43,7 +43,7 @@ class DealerTest {
             // when & then
             assertThatThrownBy(() -> new Dealer(nullHand))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("딜러는 손패를 가져야합니다.");
+                    .hasMessage("참가자는 손패를 가져야합니다.");
         }
 
         @DisplayName("딜러의 첫번째 카드를 가져올 때 딜러는 2장의 카드를 가지고 있어야 한다.")
@@ -59,7 +59,7 @@ class DealerTest {
             // when & then
             assertThatThrownBy(dealer::retrieveFirstCard)
                     .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("딜러는 2장의 카드를 가지고 있어야 합니다.");
+                    .hasMessage("딜러는 " + Dealer.INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
         }
     }
 }

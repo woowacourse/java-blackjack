@@ -1,31 +1,26 @@
 package domain;
 
-public class Player {
+public class Player extends Participant {
 
     private final String name;
-    private final Hand hand;
 
     public Player(String name, Hand hand) {
-        validate(name, hand);
+        super(hand);
+        validate(name);
         this.name = name;
-        this.hand = hand;
     }
 
-    private void validate(String name, Hand hand) {
-        validateNotNull(name, hand);
+    private void validate(String name) {
+        validateNotNull(name);
     }
 
-    private void validateNotNull(String name, Hand hand) {
-        if (name == null || name.isBlank() || hand == null) {
-            throw new IllegalArgumentException("플레이어는 이름과 손패를 가져야합니다.");
+    private void validateNotNull(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("플레이어는 이름을 가져야합니다.");
         }
     }
 
     public String getName() {
         return name;
-    }
-
-    public Hand getHand() {
-        return hand;
     }
 }
