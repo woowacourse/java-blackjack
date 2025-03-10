@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ class GameResultTest {
 
         @BeforeEach
         void initParticipants() {
-            player = new Player("sana");
+            player = new Player(new PlayerName("sana"));
             dealer = new Dealer();
         }
 

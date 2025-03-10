@@ -1,21 +1,24 @@
 package blackjack.view;
 
+import blackjack.domain.user.PlayerName;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
 
-    private OutputView outputView = new OutputView();
-    private Scanner scanner = new Scanner(System.in);
+    private final OutputView outputView = new OutputView();
+    private final Scanner scanner = new Scanner(System.in);
 
-    public List<String> readNames() {
+    public List<PlayerName> readNames() {
         try {
             System.out.println("게임에 참여할 사람의 이름을 영어/한글로 입력하세요.(쉼표 기준으로 분리)");
             String input = scanner.nextLine();
 
             validateBlank(input);
-            return parseStringToList(input);
+            return parseStringToList(input).stream()
+                .map(PlayerName::new)
+                .toList();
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
             return readNames();

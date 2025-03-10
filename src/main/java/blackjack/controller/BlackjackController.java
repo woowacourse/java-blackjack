@@ -6,12 +6,12 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.PlayerName;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Supplier;
 
 public class BlackjackController {
 
@@ -24,7 +24,7 @@ public class BlackjackController {
     }
 
     public void start() {
-        BlackjackGame blackjackGame = handleInputPlayerNameError(this::enterParticipants);
+        BlackjackGame blackjackGame = enterParticipants();
 
         distributeInitialCards(blackjackGame);
         distributeAdditionalCards(blackjackGame);
@@ -34,7 +34,7 @@ public class BlackjackController {
     }
 
     private BlackjackGame enterParticipants() {
-        List<String> names = inputView.readNames();
+        List<PlayerName> names = inputView.readNames();
         return BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(), names);
     }
 
@@ -93,15 +93,6 @@ public class BlackjackController {
         outputView.printDealerResult(dealerResult);
         for (Entry<Player, GameResult> playerResult : playerResults.entrySet()) {
             outputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
-        }
-    }
-
-    private BlackjackGame handleInputPlayerNameError(final Supplier<BlackjackGame> action) {
-        try {
-            return action.get();
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e);
-            return enterParticipants();
         }
     }
 

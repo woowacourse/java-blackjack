@@ -19,9 +19,9 @@ public class ParticipantsTest {
         void createParticipantsWithNotDuplicate() {
             Dealer dealer = new Dealer();
             List<Player> players = List.of(
-                new Player("a"),
-                new Player("b"),
-                new Player("c")
+                new Player(new PlayerName("a")),
+                new Player(new PlayerName("b")),
+                new Player(new PlayerName("c"))
             );
 
             assertThatCode(() -> new Participants(dealer, players)).doesNotThrowAnyException();
@@ -32,9 +32,9 @@ public class ParticipantsTest {
         void createParticipantsWithDuplicate() {
             Dealer dealer = new Dealer();
             List<Player> players = List.of(
-                new Player("a"),
-                new Player("a"),
-                new Player("c")
+                new Player(new PlayerName("a")),
+                new Player(new PlayerName("a")),
+                new Player(new PlayerName("c"))
             );
 
             assertThatThrownBy(() -> new Participants(dealer, players))

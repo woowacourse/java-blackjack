@@ -24,7 +24,7 @@ public class PlayerTest {
         @ValueSource(strings = {"iiif", "pppk"})
         @DisplayName("한 명의 플레이어를 이름으로 생성할 수 있다.")
         void createPlayerByName(String name) {
-            Player player = new Player(name);
+            Player player = new Player(new PlayerName(name));
 
             assertThat(player).isInstanceOf(Player.class);
         }
@@ -44,7 +44,7 @@ public class PlayerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player("sana");
+            Player player = new Player(new PlayerName("sana"));
             player.addCards(cardDeck, 3);
 
             assertThat(player.isPossibleToAdd()).isTrue();
@@ -60,7 +60,7 @@ public class PlayerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player("sana");
+            Player player = new Player(new PlayerName("sana"));
             player.addCards(cardDeck, 3);
 
             assertThat(player.isPossibleToAdd()).isFalse();

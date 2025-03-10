@@ -9,9 +9,9 @@ public class Player extends Participant {
 
     private final PlayerName playerName;
 
-    public Player(final String name) {
+    public Player(final PlayerName playerName) {
         super();
-        this.playerName = new PlayerName(name);
+        this.playerName = playerName;
     }
 
     @Override

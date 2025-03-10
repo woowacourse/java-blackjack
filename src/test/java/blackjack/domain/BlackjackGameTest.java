@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +25,14 @@ class BlackjackGameTest {
         @Test
         @DisplayName("2명 이상의 플레이어를 입력 받을 수 있다.")
         void createParticipantsByNames() {
-            List<String> names = List.of("hula", "sana");
+            List<PlayerName> names = List.of(new PlayerName("hula"), new PlayerName("sana"));
             BlackjackGame game = BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(), names);
 
             List<String> playerNames = game.getParticipants().getPlayerNames();
 
             assertAll(() -> {
-                assertThat(playerNames.getFirst()).isEqualTo(names.getFirst());
-                assertThat(playerNames.getLast()).isEqualTo(names.getLast());
+                assertThat(playerNames.getFirst()).isEqualTo("hula");
+                assertThat(playerNames.getLast()).isEqualTo("sana");
             });
         }
     }
@@ -43,7 +44,7 @@ class BlackjackGameTest {
         @Test
         @DisplayName("딜러와 플레이어에게 카드를 2장씩 배부할 수 있다.")
         void distributeCardsToDealerAndPlayer() {
-            List<String> names = List.of("sana");
+            List<PlayerName> names = List.of(new PlayerName("sana"));
             BlackjackGame game = BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(),
                 names);
 
@@ -63,7 +64,8 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, List.of("sana"));
+            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck,
+                List.of(new PlayerName("sana")));
             Player player = game.getParticipants().getPlayers().getFirst();
 
             player.addCards(cardDeck, 2);
@@ -82,7 +84,8 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, List.of("sana"));
+            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck,
+                List.of(new PlayerName("sana")));
             Dealer dealer = game.getParticipants().getDealer();
 
             dealer.addCards(cardDeck, 2);
@@ -101,7 +104,8 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, List.of("sana"));
+            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck,
+                List.of(new PlayerName("sana")));
             Dealer dealer = game.getParticipants().getDealer();
 
             dealer.addCards(cardDeck, 2);
@@ -131,7 +135,8 @@ class BlackjackGameTest {
                 new Card(Suit.SPADE, Denomination.KING)
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
-            game = BlackjackGame.createByPlayerNames(cardDeck, List.of("hula", "sana", "jason"));
+            game = BlackjackGame.createByPlayerNames(cardDeck,
+                List.of(new PlayerName("hula"), new PlayerName("sana"), new PlayerName("jason")));
 
             Dealer dealer = game.getParticipants().getDealer();
             dealer.addCards(cardDeck, 2);
