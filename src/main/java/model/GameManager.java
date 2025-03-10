@@ -18,15 +18,12 @@ public class GameManager {
 
     private final Dealer dealer;
     private final Players players;
-    private final CardDeck deck = new CardDeck();
+    private final CardDeck deck;
 
-    public GameManager(Dealer dealer, Players players) {
+    public GameManager(Dealer dealer, Players players, CardDeck deck) {
         this.dealer = dealer;
         this.players = players;
-    }
-
-    public void shuffle() {
-        deck.shuffle();
+        this.deck = deck;
     }
 
     public void divideAllParticipant() {

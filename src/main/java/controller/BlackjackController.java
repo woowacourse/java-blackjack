@@ -1,5 +1,6 @@
 package controller;
 
+import model.card.CardDeck;
 import model.participant.Dealer;
 import model.GameManager;
 import model.participant.Player;
@@ -15,8 +16,9 @@ public class BlackjackController {
         List<String> values = InputView.readPlayerNames();
         Players players = Players.from(values);
         Dealer dealer = Dealer.of();
-        GameManager gameManager = new GameManager(dealer, players);
-        gameManager.shuffle();
+        CardDeck deck = new CardDeck();
+        deck.shuffle();
+        GameManager gameManager = new GameManager(dealer, players, deck);
         gameManager.divideAllParticipant();
         OutputView.printDivisionStart(dealer, players);
 

@@ -2,11 +2,13 @@ package model;
 
 import java.util.List;
 
+import model.card.CardDeck;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -21,7 +23,7 @@ public class GameManagerTest {
         "pobi",
         "hippo"
     ));
-    GameManager manager = new GameManager(Dealer.of(),players);
+    GameManager manager = new GameManager(Dealer.of(),players, new CardDeck());
     //when
     //then
     for (Player player : players.getPlayers()) {
@@ -30,7 +32,7 @@ public class GameManagerTest {
     }
   }
 
-  /*@Test
+  @Test
   @DisplayName("모든 참가자에게 2장씩 카드를 배부했는 지")
   void divideAllParticipant() {
     // given
@@ -39,11 +41,10 @@ public class GameManagerTest {
             "hippo",
             "kali"
     );
+    int amount = 2;
     Players players = Players.from(allPlayer);
     Dealer dealer = Dealer.of();
-
-    GameManager gameManager = new GameManager(dealer, players);
-
+    GameManager gameManager = new GameManager(dealer, players, new CardDeck());
     // when
     gameManager.divideAllParticipant();
 
@@ -52,5 +53,5 @@ public class GameManagerTest {
       Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
     }
     Assertions.assertThat(dealer.getHands().size()).isEqualTo(amount);
-  }*/
+  }
 }

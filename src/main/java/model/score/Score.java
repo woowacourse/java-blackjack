@@ -18,12 +18,12 @@ public class Score implements Comparable<Score> {
         return value - BUST_CONDITION;
     }
 
-    public Score plus(int sum) {
-        return new Score(value + sum);
+    public Score plus(int num) {
+        return new Score(value + num);
     }
 
-    public Score minus(int sum) {
-        return new Score(value - sum);
+    public Score minus(int num) {
+        return new Score(value - num);
     }
 
     public int getValue() {
