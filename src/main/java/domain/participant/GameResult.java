@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.card.BlackJackRule;
-
 public enum GameResult {
     WIN("승"), DRAW("무"), LOSE("패");
 
@@ -12,17 +10,17 @@ public enum GameResult {
     }
 
     public static GameResult calculateDealerResult(int dealerValue, int playerValue) {
-        if (BlackJackRule.isBurstBy(dealerValue) || BlackJackRule.isBurstBy(playerValue)) {
+        if (Participant.isBust(dealerValue) || Participant.isBust(playerValue)) {
             return calculateBurstResult(dealerValue, playerValue);
         }
         return calculateResult(dealerValue, playerValue);
     }
 
     private static GameResult calculateBurstResult(int dealerValue, int playerValue) {
-        if (BlackJackRule.isBurstBy(dealerValue) && BlackJackRule.isBurstBy(playerValue)) {
+        if (Participant.isBust(dealerValue) && Participant.isBust(playerValue)) {
             return DRAW;
         }
-        if (BlackJackRule.isBurstBy(playerValue)) {
+        if (Participant.isBust(playerValue)) {
             return WIN;
         }
         return LOSE;

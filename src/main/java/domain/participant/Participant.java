@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.card.BlackJackRule;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
+
+    private static final int BURST_UPPER_BOUND = 21;
 
     private final String name;
     private final List<Card> cards;
@@ -23,6 +24,10 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public static boolean isBust(int value) {
+        return value > BURST_UPPER_BOUND;
     }
 
     public abstract List<Card> getShownCard();
@@ -41,7 +46,7 @@ public abstract class Participant {
         int candidateResult = baseValue;
         for (int oneValueCount = 0; oneValueCount <= aceCount; ++oneValueCount) {
             candidateResult = baseValue + (oneValueCount * 1) + ((aceCount - oneValueCount) * 11);
-            if (BlackJackRule.isBurstBy(candidateResult)) {
+            if (Participant.isBust(candidateResult)) {
                 continue;
             }
             return candidateResult;

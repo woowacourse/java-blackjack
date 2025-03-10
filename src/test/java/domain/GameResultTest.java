@@ -6,8 +6,8 @@ import static domain.participant.GameResult.WIN;
 import static domain.participant.GameResult.calculateDealerResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.BlackJackRule;
 import domain.participant.GameResult;
+import domain.participant.Participant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -96,7 +96,7 @@ class GameResultTest {
     @CsvSource(value = {"21, false", "22,true"})
     void should_return_true_when_burst(int value, boolean expected) {
         // when
-        boolean result = BlackJackRule.isBurstBy(value);
+        boolean result = Participant.isBust(value);
 
         // then
         assertThat(result).isEqualTo(expected);
