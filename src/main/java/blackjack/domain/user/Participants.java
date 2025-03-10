@@ -13,6 +13,7 @@ public class Participants {
     public Participants(final Dealer dealer, final List<Player> players) {
         validateOverOnePlayers(players);
         validateDuplicatePlayerNames(players);
+        validatePlayerNumber(players);
 
         this.dealer = dealer;
         this.players = players;
@@ -31,6 +32,12 @@ public class Participants {
 
         if (players.size() != uniqueNames.size()) {
             throw new IllegalArgumentException("중복된 이름을 가진 플레이어가 있습니다.");
+        }
+    }
+
+    private void validatePlayerNumber(List<Player> players) {
+        if (players.size() > 25) {
+            throw new IllegalArgumentException("플레이어는 25명까지만 참가 가능합니다.");
         }
     }
 
