@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Stack;
 
 public class Deck {
@@ -25,12 +22,6 @@ public class Deck {
     }
 
     public void shuffleCards(CardsShuffler cardsShuffler) {
-        List<Card> shuffledCard = new ArrayList<>();
-        while (!cards.isEmpty()) {
-            shuffledCard.add(cards.pop());
-        }
-        cardsShuffler.shuffle(shuffledCard);
-        Collections.reverse(shuffledCard);
-        cards.addAll(shuffledCard);
+        cardsShuffler.shuffleCards(cards);
     }
 }

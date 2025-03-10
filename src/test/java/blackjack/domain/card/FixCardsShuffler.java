@@ -1,9 +1,10 @@
 package blackjack.domain.card;
 
 import java.util.List;
+import java.util.Stack;
 
 public class FixCardsShuffler implements CardsShuffler {
     @Override
-    public void shuffle(List<Card> cards) {
+    public void shuffleCards(Stack<Card> cards) {
     }
 }
