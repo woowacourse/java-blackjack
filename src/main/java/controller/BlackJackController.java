@@ -48,7 +48,11 @@ public class BlackJackController {
 
     private List<Player> createPlayers() {
         List<String> playerNames = inputView.readPlayerNames();
-        return blackJackGame.createPlayers(playerNames);
+        List<Player> players = new ArrayList<>();
+        playerNames.forEach(name -> {
+            players.add(new Player(name, blackJackGame.createStartingHands()));
+        });
+        return players;
     }
 
     private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
@@ -57,10 +61,10 @@ public class BlackJackController {
     }
 
     private void executePlayerHit(Player player) {
-        while (blackJackGame.isPlayerHitAllowed(player.getHand().getCards()) &&
+        while (blackJackGame.isPlayerHitAllowed(player.getCards()) &&
                 inputView.readProcessHit(player.getName())) {
             blackJackGame.processPlayerHit(player);
-            outputView.printPlayerCards(player.getName(), player.getHand().getCards());
+            outputView.printPlayerCards(player.getName(), player.getCards());
         }
     }
 

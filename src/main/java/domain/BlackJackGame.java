@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,16 +49,10 @@ public class BlackJackGame {
         return new Rule();
     }
 
-    public List<Player> createPlayers(List<String> names) {
-        List<Player> players = new ArrayList<>();
-
-        names.forEach(name -> {
+    public Hand createStartingHands() {
             TrumpCard firstCard = deck.draw();
             TrumpCard secondCard = deck.draw();
-            players.add(new Player(name, Hand.of(firstCard, secondCard)));
-        });
-
-        return players;
+        return Hand.of(firstCard, secondCard);
     }
 
     public boolean isPlayerHitAllowed(List<TrumpCard> playerCards) {
@@ -67,22 +60,14 @@ public class BlackJackGame {
     }
 
     public void processPlayerHit(Player player) {
-        Hand hand = player.getHand();
-        List<TrumpCard> cards = hand.getCards();
-
-        if (!isPlayerHitAllowed(cards)) {
-            throw new IllegalStateException("플레이어는 더이상 히트할 수 없습니다.");
-        }
-
-        hand.addCard(deck.draw());
+        player.addCard(deck.draw());
     }
 
     public int processDealerHit() {
         int hitCount = 0;
-        Hand hand = dealer.getHand();
 
-        while (rule.isDealerHitAllowed(hand.getCards())) {
-            hand.addCard(deck.draw());
+        while (rule.isDealerHitAllowed(dealer.getCards())) {
+            dealer.addCard(deck.draw());
             hitCount++;
         }
 
@@ -97,8 +82,8 @@ public class BlackJackGame {
         Map<String, GameResult> results = new HashMap<>();
 
         players.forEach(player -> {
-            List<TrumpCard> playerCards = player.getHand().getCards();
-            List<TrumpCard> dealerCards = dealer.getHand().getCards();
+            List<TrumpCard> playerCards = player.getCards();
+            List<TrumpCard> dealerCards = dealer.getCards();
 
             GameResult gameResult = rule.evaluateGameResult(playerCards, dealerCards);
 
