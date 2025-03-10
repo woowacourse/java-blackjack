@@ -4,15 +4,15 @@ import blackjack.common.Constants;
 import blackjack.common.ErrorMessage;
 import java.util.List;
 
-public class Player {
+public class Player implements CardHolder {
 
     private final String name;
-    private final CardHolder cardHolder;
+    private final Hand hand;
 
-    public Player(String name, CardHolder cardHolder) {
+    public Player(String name, Hand hand) {
         validName(name);
         this.name = name;
-        this.cardHolder = cardHolder;
+        this.hand = hand;
     }
 
     public void validName(String name) {
@@ -21,20 +21,24 @@ public class Player {
         }
     }
 
+    @Override
     public List<Card> getAllCards() {
-        return cardHolder.getAllCards();
+        return hand.getAllCards();
     }
 
+    @Override
     public void takeCard(Card newCard) {
-        cardHolder.takeCard(newCard);
+        hand.takeCard(newCard);
     }
 
-    public CardHolder getCardHolder() {
-        return cardHolder;
+    @Override
+    public int getOptimisticValue() {
+        return hand.getOptimisticValue();
     }
 
-    public boolean canTakeCardFor() {
-        return cardHolder.canTakeCardWithin(Constants.BUSTED_STANDARD_VALUE);
+    @Override
+    public boolean canTakeCard() {
+        return hand.canTakeCardWithin(Constants.BUSTED_STANDARD_VALUE);
     }
 
     public String getName() {
@@ -42,6 +46,6 @@ public class Player {
     }
 
     public boolean isBusted() {
-        return cardHolder.isBusted();
+        return hand.isBusted();
     }
 }

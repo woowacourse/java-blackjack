@@ -3,7 +3,6 @@ package blackjack.manager;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.Hand;
 import blackjack.domain.Players;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +29,7 @@ class BlackJackInitManagerTest {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when
-        Players players = blackJackInitManager.generatePlayers(names, Hand::new);
+        Players players = blackJackInitManager.generatePlayers(names);
 
         // the
         assertThat(players.getPlayers()).hasSize(3);
@@ -43,7 +42,7 @@ class BlackJackInitManagerTest {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when & then
-        assertThatCode(() -> blackJackInitManager.generateDealer(Hand::new))
+        assertThatCode(() -> blackJackInitManager.generateDealer())
                 .doesNotThrowAnyException();
 
     }

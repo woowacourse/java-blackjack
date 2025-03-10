@@ -2,38 +2,41 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements CardHolder {
 
     private static final int DEALER_MUST_TAKE_UNDER = 16;
     private static final int FIRST_CARD_POSITION = 0;
 
-    private final CardHolder cardHolder;
+    private final Hand hand;
 
-    public Dealer(CardHolder cardHolder) {
-        this.cardHolder = cardHolder;
+    public Dealer(Hand hand) {
+        this.hand = hand;
     }
 
+    @Override
     public void takeCard(Card newCard) {
-        cardHolder.takeCard(newCard);
+        hand.takeCard(newCard);
     }
 
+    @Override
+    public int getOptimisticValue() {
+        return hand.getOptimisticValue();
+    }
+
+    @Override
     public List<Card> getAllCards() {
-        return cardHolder.getAllCards();
+        return hand.getAllCards();
     }
 
     public Card revealFirstCard() {
-        return cardHolder.getCard(FIRST_CARD_POSITION);
-    }
-
-    public CardHolder getCardHolder() {
-        return cardHolder;
+        return hand.getCard(FIRST_CARD_POSITION);
     }
 
     public boolean isBusted() {
-        return cardHolder.isBusted();
+        return hand.isBusted();
     }
 
     public boolean canTakeCard() {
-        return cardHolder.canTakeCardWithin(DEALER_MUST_TAKE_UNDER);
+        return hand.canTakeCardWithin(DEALER_MUST_TAKE_UNDER);
     }
 }

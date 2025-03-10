@@ -2,11 +2,11 @@ package blackjack.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.StubPossibleSumCardHolder;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.utils.HandFixture;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +27,8 @@ class BlackJackResultManagerTest {
     @Test
     void test3() {
         // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
-        Player player = new Player("꾹이", new StubPossibleSumCardHolder(List.of(15, 19, 20)));
+        Dealer dealer = new Dealer(HandFixture.createHandWithOptimisticValue20());
+        Player player = new Player("꾹이", HandFixture.createHandWithOptimisticValue15());
 
         // when
         GameResultType gameResultType = blackJackResultManager.decideResultOfPlayer(player, dealer);
@@ -41,8 +41,8 @@ class BlackJackResultManagerTest {
     @Test
     void test4() {
         // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
-        Player player = new Player("꾹이", new StubPossibleSumCardHolder(List.of(15, 19, 21)));
+        Dealer dealer = new Dealer(HandFixture.createHandWithOptimisticValue20());
+        Player player = new Player("꾹이", HandFixture.createHandWithOptimisticValue20());
 
         // when
         GameResultType gameResultType = blackJackResultManager.decideResultOfPlayer(player, dealer);
@@ -54,12 +54,12 @@ class BlackJackResultManagerTest {
     @DisplayName("결과를 연산한다.")
     @Test
     void test5() {
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
+        Dealer dealer = new Dealer(HandFixture.createHandWithOptimisticValue20());
 
         ArrayList<Player> playerList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            playerList.add(new Player("꾹이", new StubPossibleSumCardHolder(List.of(15, 19, 20))));
+            playerList.add(new Player("꾹이", HandFixture.createHandWithOptimisticValue15()));
         }
 
         Players players = Players.from(playerList);
@@ -75,12 +75,12 @@ class BlackJackResultManagerTest {
     @Test
     void test6() {
 
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(22)));
+        Dealer dealer = new Dealer(HandFixture.busted());
 
         ArrayList<Player> playerList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            playerList.add(new Player("꾹이", new StubPossibleSumCardHolder(List.of(22))));
+            playerList.add(new Player("꾹이", HandFixture.busted()));
         }
 
         Players players = Players.from(playerList);
@@ -96,12 +96,12 @@ class BlackJackResultManagerTest {
     @Test
     void test7() {
         // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(21)));
+        Dealer dealer = new Dealer(HandFixture.normal());
 
         ArrayList<Player> playerList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            playerList.add(new Player("꾹이", new StubPossibleSumCardHolder(List.of(22))));
+            playerList.add(new Player("꾹이", HandFixture.busted()));
         }
 
         Players players = Players.from(playerList);
@@ -119,12 +119,12 @@ class BlackJackResultManagerTest {
     @Test
     void test8() {
         // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(22)));
+        Dealer dealer = new Dealer(HandFixture.busted());
 
         ArrayList<Player> playerList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            playerList.add(new Player("꾹이", new StubPossibleSumCardHolder(List.of(21))));
+            playerList.add(new Player("꾹이", HandFixture.normal()));
         }
 
         Players players = Players.from(playerList);
@@ -137,4 +137,5 @@ class BlackJackResultManagerTest {
         // then
         assertThat(dealerResult).containsEntry(GameResultType.LOSE, 5);
     }
+
 }

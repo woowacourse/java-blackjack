@@ -3,7 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.StubPossibleSumCardHolder;
+import blackjack.utils.HandFixture;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -112,17 +112,17 @@ class DealerTest {
 
     private static Stream<Arguments> canTakeCardArgument() {
         return Stream.of(
-                Arguments.arguments(List.of(16), true),
-                Arguments.arguments(List.of(17), false)
+                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false)
         );
     }
 
     @DisplayName("딜러의 카드가 16을 넘으면 카드를 받을 수 없다.")
     @ParameterizedTest
     @MethodSource("canTakeCardArgument")
-    void test8(List<Integer> possibleSums, boolean expect) {
+    void test8(Hand hand, boolean expect) {
         //given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(possibleSums));
+        Dealer dealer = new Dealer(hand);
 
         // when & then
         assertThat(dealer.canTakeCard()).isEqualTo(expect);

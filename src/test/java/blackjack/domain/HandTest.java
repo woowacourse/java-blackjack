@@ -85,4 +85,16 @@ class HandTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_CARD_INDEX.getMessage());
     }
+
+    @DisplayName("최적의 값을 반환한다.")
+    @Test
+    void test9() {
+        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
+        Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
+
+        Hand hand = Hand.of(card1, card2);
+
+        assertThat(hand.getOptimisticValue()).isEqualTo(16);
+
+    }
 }

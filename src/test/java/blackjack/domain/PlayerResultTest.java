@@ -12,7 +12,7 @@ class PlayerResultTest {
     @Test
     void test1() {
         // given
-        PlayersResult playersResult = PlayersResult.create();
+        PlayersResult playersResult = new PlayersResult();
 
         Player player1 = new Player("꾹이", null);
         Player player2 = new Player("히로", null);

@@ -8,12 +8,8 @@ public class DealerResult {
 
     private final Map<GameResultType, Integer> dealerResult;
 
-    private DealerResult() {
+    public DealerResult() {
         this.dealerResult = new EnumMap<>(GameResultType.class);
-    }
-
-    public static DealerResult create() {
-        return new DealerResult();
     }
 
     public void addCountOf(GameResultType gameResultType) {

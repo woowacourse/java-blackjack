@@ -8,12 +8,8 @@ public class PlayersResult {
 
     private final Map<Player, GameResultType> results;
 
-    private PlayersResult() {
+    public PlayersResult() {
         this.results = new LinkedHashMap<>();
-    }
-
-    public static PlayersResult create() {
-        return new PlayersResult();
     }
 
     public void save(Player player, GameResultType gameResultType) {

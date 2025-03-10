@@ -3,6 +3,7 @@ package blackjack.manager;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
+import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
@@ -31,7 +32,7 @@ class BlackjackProcessManagerTest {
         Player player = new Player("꾹이", hand);
 
         // when
-        blackjackProcessManager.giveStartingCardsFor(player.getCardHolder());
+        blackjackProcessManager.giveStartingCardsFor(player);
 
         // then
         assertThat(hand.getAllCards()).hasSize(2);
@@ -41,9 +42,9 @@ class BlackjackProcessManagerTest {
     @Test
     void test2() {
         Hand hand = new Hand();
-
+        Dealer dealer = new Dealer(hand);
         // when
-        blackjackProcessManager.giveCard(hand);
+        blackjackProcessManager.giveCard(dealer);
 
         // then
         assertThat(hand.getAllCards()).hasSize(1);

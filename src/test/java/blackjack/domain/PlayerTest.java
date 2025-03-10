@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.StubPossibleSumCardHolder;
 import blackjack.common.ErrorMessage;
+import blackjack.utils.HandFixture;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -93,19 +93,20 @@ class PlayerTest {
 
     private static Stream<Arguments> canTakeCardArgument() {
         return Stream.of(
-                Arguments.arguments(List.of(21), true),
-                Arguments.arguments(List.of(22), false)
+                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.busted(), false)
         );
     }
 
     @DisplayName("플레이어의 카드가 21을 넘지 않는다면 카드를 받을 수 있다.")
     @ParameterizedTest
     @MethodSource("canTakeCardArgument")
-    void test8(List<Integer> possibleSums, boolean expect) {
+    void test8(Hand hand, boolean expect) {
         //given
-        Player player = new Player("꾹이", new StubPossibleSumCardHolder(possibleSums));
+
+        Player player = new Player("꾹이", hand);
 
         // when & then
-        assertThat(player.canTakeCardFor()).isEqualTo(expect);
+        assertThat(player.canTakeCard()).isEqualTo(expect);
     }
 }

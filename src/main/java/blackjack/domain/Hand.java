@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Hand implements CardHolder {
+public class Hand  {
 
     private final List<Card> cards;
 
@@ -48,7 +48,6 @@ public class Hand implements CardHolder {
                 .orElse(Constants.BUSTED_VALUE);
     }
 
-    @Override
     public Card getCard(int position) {
         if (position < 0 || position >= cards.size()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_CARD_INDEX.getMessage());
@@ -57,7 +56,6 @@ public class Hand implements CardHolder {
         return cards.get(position);
     }
 
-    @Override
     public boolean isBusted() {
         List<Integer> possibleSums = getPossibleSums();
 
@@ -65,7 +63,6 @@ public class Hand implements CardHolder {
                 .allMatch(sum -> sum > Constants.BUSTED_STANDARD_VALUE);
     }
 
-    @Override
     public boolean canTakeCardWithin(int takeBoundary) {
         List<Integer> possibleSums = getPossibleSums();
 

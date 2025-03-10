@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.manager.BlackJackInitManager;
@@ -26,8 +25,8 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = InputView.readNames();
-        Players players = blackJackInitManager.generatePlayers(names, Hand::new);
-        Dealer dealer = blackJackInitManager.generateDealer(Hand::new);
+        Players players = blackJackInitManager.generatePlayers(names);
+        Dealer dealer = blackJackInitManager.generateDealer();
 
         giveStartingCards(players, dealer);
 
@@ -41,7 +40,7 @@ public class BlackjackController {
     private void giveMoreCardFor(Dealer dealer) {
         while (dealer.canTakeCard()) {
             OutputView.printMoreCard();
-            blackjackProcessManager.giveCard(dealer.getCardHolder());
+            blackjackProcessManager.giveCard(dealer);
         }
     }
 
@@ -58,7 +57,7 @@ public class BlackjackController {
             return;
         }
 
-        blackjackProcessManager.giveCard(player.getCardHolder());
+        blackjackProcessManager.giveCard(player);
         OutputView.printCardResult(player);
 
         if (player.isBusted()) {
@@ -66,17 +65,17 @@ public class BlackjackController {
             return;
         }
 
-        if (player.canTakeCardFor()) {
+        if (player.canTakeCard()) {
             giveMoreCardFor(player);
         }
     }
 
     private void giveStartingCards(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            blackjackProcessManager.giveStartingCardsFor(player.getCardHolder());
+            blackjackProcessManager.giveStartingCardsFor(player);
         }
 
-        blackjackProcessManager.giveStartingCardsFor(dealer.getCardHolder());
+        blackjackProcessManager.giveStartingCardsFor(dealer);
 
         OutputView.printStartingCardsStatuses(dealer, players);
     }

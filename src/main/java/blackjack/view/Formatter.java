@@ -19,19 +19,17 @@ public final class Formatter {
 
     public static String parseCardResult(Player player) {
         String message = parseCardStatus(player) + " - 결과: ";
-        CardHolder cardHolder = player.getCardHolder();
 
-        return message + parseCardResultValue(cardHolder);
+        return message + parseCardResultValue(player);
     }
 
     public static String parseCardResult(Dealer dealer) {
-        CardHolder cardHolder = dealer.getCardHolder();
 
-        return parseCardStatus(dealer) + " - 결과: " + parseCardResultValue(cardHolder);
+        return parseCardStatus(dealer) + " - 결과: " + parseCardResultValue(dealer);
     }
 
     public static String parseCardStatus(Player player) {
-        return player.getName() + "카드: " + parseStartingCardStatus(player.getCardHolder());
+        return player.getName() + "카드: " + parseStartingCardStatus(player);
     }
 
     public static String parseStartCardStatus(Dealer dealer) {
@@ -39,7 +37,7 @@ public final class Formatter {
     }
 
     private static String parseCardStatus(Dealer dealer) {
-        return "딜러카드: " + parseStartingCardStatus(dealer.getCardHolder());
+        return "딜러카드: " + parseStartingCardStatus(dealer);
     }
 
     private static String parseCardResultValue(CardHolder cardHolder) {
