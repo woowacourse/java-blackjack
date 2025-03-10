@@ -1,7 +1,7 @@
 package domain;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import domain.constant.TrumpSuit;
+import domain.constant.TrumpRank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,9 +17,9 @@ public class Deck {
     }
 
     public static Deck initialize() {
-        List<Card> cards = Arrays.stream(TrumpNumber.values())
-                .flatMap(number -> Arrays.stream(TrumpEmblem.values())
-                        .map(emblem -> new Card(number, emblem)))
+        List<Card> cards = Arrays.stream(TrumpRank.values())
+                .flatMap(rank -> Arrays.stream(TrumpSuit.values())
+                        .map(suit -> new Card(rank, suit)))
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
         return new Deck(new Cards(cards));

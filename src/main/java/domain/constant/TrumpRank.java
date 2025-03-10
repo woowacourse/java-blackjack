@@ -1,6 +1,6 @@
 package domain.constant;
 
-public enum TrumpNumber {
+public enum TrumpRank {
     ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -19,7 +19,7 @@ public enum TrumpNumber {
     private final int value;
     private final String name;
 
-    TrumpNumber(int value, String name) {
+    TrumpRank(int value, String name) {
         this.value = value;
         this.name = name;
     }

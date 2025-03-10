@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import domain.constant.TrumpSuit;
+import domain.constant.TrumpRank;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -13,11 +13,11 @@ class CardTest {
     @Test
     void 문양과_숫자로_카드를_생성한다() {
         // given
-        Card card = createCard(TrumpEmblem.DIAMOND, TrumpNumber.ACE);
+        Card card = createCard(TrumpSuit.DIAMOND, TrumpRank.ACE);
 
         // then
-        assertThat(card.getNumber()).isEqualTo(TrumpNumber.ACE);
-        assertThat(card.getEmblem()).isEqualTo(TrumpEmblem.DIAMOND);
+        assertThat(card.getRank()).isEqualTo(TrumpRank.ACE);
+        assertThat(card.getSuit()).isEqualTo(TrumpSuit.DIAMOND);
     }
 
     @Test
@@ -34,15 +34,15 @@ class CardTest {
         assertThat(sum).isEqualTo(20);
     }
 
-    private Card createCard(TrumpEmblem emblem, TrumpNumber number) {
-        return new Card(number, emblem);
+    private Card createCard(TrumpSuit suit, TrumpRank rank) {
+        return new Card(rank, suit);
     }
 
     private void addCards(List<Card> emptyCards) {
-        emptyCards.add(createCard(TrumpEmblem.DIAMOND, TrumpNumber.ACE));
-        emptyCards.add(createCard(TrumpEmblem.SPADE, TrumpNumber.TWO));
-        emptyCards.add(createCard(TrumpEmblem.CLOVER, TrumpNumber.THREE));
-        emptyCards.add(createCard(TrumpEmblem.HEART, TrumpNumber.FOUR));
+        emptyCards.add(createCard(TrumpSuit.DIAMOND, TrumpRank.ACE));
+        emptyCards.add(createCard(TrumpSuit.SPADE, TrumpRank.TWO));
+        emptyCards.add(createCard(TrumpSuit.CLOVER, TrumpRank.THREE));
+        emptyCards.add(createCard(TrumpSuit.HEART, TrumpRank.FOUR));
     }
 
 }

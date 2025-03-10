@@ -1,6 +1,6 @@
 package domain.constant;
 
-public enum TrumpEmblem {
+public enum TrumpSuit {
     SPADE("스페이드"),
     CLOVER("클로버"),
     HEART("하트"),
@@ -8,7 +8,7 @@ public enum TrumpEmblem {
 
     private final String name;
 
-    TrumpEmblem(String name) {
+    TrumpSuit(String name) {
         this.name = name;
     }
 

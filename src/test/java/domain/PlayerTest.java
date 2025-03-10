@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import domain.constant.TrumpSuit;
+import domain.constant.TrumpRank;
 import domain.constant.MatchResult;
 import domain.gambler.Nickname;
 import domain.gambler.Player;
@@ -20,7 +20,7 @@ class PlayerTest {
     @Test
     void 초기_카드_두장을_받아_플레이어를_생성한다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
+        List<Card> initialCards = makeCards(TrumpRank.ACE, TrumpRank.EIGHT);
         Cards cards = new Cards(initialCards);
 
         // when // then
@@ -30,8 +30,8 @@ class PlayerTest {
     @Test
     void 초기_카드_세장을_받으면_예외를_발생시킨다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
-        initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(TrumpRank.ACE, TrumpRank.EIGHT);
+        initialCards.add(new Card(TrumpRank.EIGHT, TrumpSuit.HEART));
         Cards cards = new Cards(initialCards);
 
         // when // then
@@ -46,10 +46,10 @@ class PlayerTest {
             "KING, KING, TWO, true",
             "QUEEN, JACK, KING, true"
     })
-    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
+    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpRank rank1, TrumpRank rank2, TrumpRank rank3, boolean expected) {
         // given
-        List<Card> initialCards = makeCards(number1, number2);
-        Card card = new Card(number3, TrumpEmblem.SPADE);
+        List<Card> initialCards = makeCards(rank1, rank2);
+        Card card = new Card(rank3, TrumpSuit.SPADE);
         Cards cards = new Cards(initialCards);
         Player player = new Player(new Nickname("pobi"),cards);
         player.addOneCard(card);
@@ -67,12 +67,12 @@ class PlayerTest {
             "ACE, THREE, FOUR, 18",
             "ACE, THREE, KING, 14",
     })
-    void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
+    void 카드들의_합을_구한다(TrumpRank rank1, TrumpRank rank2, TrumpRank rank3, int expected) {
         // given
-        List<Card> initialCards = makeCards(number1, number2);
+        List<Card> initialCards = makeCards(rank1, rank2);
         Cards cards = new Cards(initialCards);
         Player player = new Player(new Nickname("pobi"), cards);
-        player.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        player.addOneCard(new Card(rank3, TrumpSuit.HEART));
 
         // when
         int sumCards = player.sumCardScores();
@@ -92,13 +92,13 @@ class PlayerTest {
             "KING, THREE, FOUR, 18, LOSE",
             "KING, THREE, EIGHT, 21, DRAW"
     })
-    void 딜러와의_승무패를_정한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int dealerScore,
+    void 딜러와의_승무패를_정한다(TrumpRank rank1, TrumpRank rank2, TrumpRank rank3, int dealerScore,
                        MatchResult expected) {
         // given
-        List<Card> initialCards = makeCards(number1, number2);
+        List<Card> initialCards = makeCards(rank1, rank2);
         Cards cards = new Cards(initialCards);
         Player player = new Player(new Nickname("pobi"), cards);
-        player.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        player.addOneCard(new Card(rank3, TrumpSuit.HEART));
 
         // when
         MatchResult matchResult = player.compareTo(dealerScore);
@@ -107,10 +107,10 @@ class PlayerTest {
         assertThat(matchResult).isEqualTo(expected);
     }
 
-    private List<Card> makeCards(TrumpNumber number1, TrumpNumber number2) {
+    private List<Card> makeCards(TrumpRank rank1, TrumpRank rank2) {
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        initialCards.add(new Card(rank1, TrumpSuit.DIAMOND));
+        initialCards.add(new Card(rank2, TrumpSuit.HEART));
         return initialCards;
     }
 }

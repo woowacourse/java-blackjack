@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import domain.constant.TrumpSuit;
+import domain.constant.TrumpRank;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,8 @@ class CardsTest {
     @Test
     void 카드를_한장_더한다() {
         // given
-        Cards cards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
-        Card card = new Card(TrumpNumber.SIX, TrumpEmblem.SPADE);
+        Cards cards = makeCards(TrumpRank.ACE, TrumpRank.EIGHT);
+        Card card = new Card(TrumpRank.SIX, TrumpSuit.SPADE);
 
         // when
         cards.addOneCard(card);
@@ -31,10 +31,10 @@ class CardsTest {
             "ACE, THREE, FOUR, 18",
             "ACE, THREE, KING, 14",
     })
-    void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
+    void 카드들의_합을_구한다(TrumpRank rank1, TrumpRank rank2, TrumpRank rank3, int expected) {
         // given
-        Cards cards = makeCards(number1, number2);
-        cards.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        Cards cards = makeCards(rank1, rank2);
+        cards.addOneCard(new Card(rank3, TrumpSuit.HEART));
 
         // when
         int sumCards = cards.sumCardScores();
@@ -43,10 +43,10 @@ class CardsTest {
         assertThat(sumCards).isEqualTo(expected);
     }
 
-    private Cards makeCards(TrumpNumber number1, TrumpNumber number2) {
+    private Cards makeCards(TrumpRank rank1, TrumpRank rank2) {
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        initialCards.add(new Card(rank1, TrumpSuit.DIAMOND));
+        initialCards.add(new Card(rank2, TrumpSuit.HEART));
         return new Cards(initialCards);
     }
 }

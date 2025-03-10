@@ -1,27 +1,27 @@
 package domain;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import domain.constant.TrumpSuit;
+import domain.constant.TrumpRank;
 
 public class Card {
 
-    private final TrumpNumber number;
-    private final TrumpEmblem emblem;
+    private final TrumpRank rank;
+    private final TrumpSuit suit;
 
-    public Card(TrumpNumber number, TrumpEmblem emblem) {
-        this.number = number;
-        this.emblem = emblem;
+    public Card(TrumpRank rank, TrumpSuit suit) {
+        this.rank = rank;
+        this.suit = suit;
     }
 
     public boolean isAce() {
-        return number == TrumpNumber.ACE;
+        return rank == TrumpRank.ACE;
     }
 
-    public TrumpNumber getNumber() {
-        return number;
+    public TrumpRank getRank() {
+        return rank;
     }
 
-    public TrumpEmblem getEmblem() {
-        return emblem;
+    public TrumpSuit getSuit() {
+        return suit;
     }
 }

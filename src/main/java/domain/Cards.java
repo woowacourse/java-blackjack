@@ -32,7 +32,7 @@ public class Cards {
 
     private int calculateScore() {
         return cards.stream()
-                .mapToInt(card -> card.getNumber().getValue())
+                .mapToInt(card -> card.getRank().getValue())
                 .sum();
     }
 

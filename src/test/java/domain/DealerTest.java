@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import domain.constant.TrumpSuit;
+import domain.constant.TrumpRank;
 import domain.gambler.Dealer;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ class DealerTest {
     void 초기_카드_두장을_받아_딜러를_생성한다() {
         // given
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(TrumpNumber.SEVEN, TrumpEmblem.CLOVER));
-        initialCards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
+        initialCards.add(new Card(TrumpRank.SEVEN, TrumpSuit.CLOVER));
+        initialCards.add(new Card(TrumpRank.SIX, TrumpSuit.HEART));
         Cards cards = new Cards(initialCards);
 
         // when // then
@@ -30,8 +30,8 @@ class DealerTest {
     @Test
     void 초기_카드_세장을_받으면_예외를_발생시킨다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.THREE, TrumpNumber.FOUR);
-        initialCards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(TrumpRank.THREE, TrumpRank.FOUR);
+        initialCards.add(new Card(TrumpRank.FIVE, TrumpSuit.HEART));
         Cards cards = new Cards(initialCards);
 
         // when // then
@@ -47,11 +47,11 @@ class DealerTest {
             "KING, KING, TWO, true",
             "QUEEN, JACK, KING, true"
     })
-    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
+    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpRank rank1, TrumpRank rank2, TrumpRank rank3, boolean expected) {
         // given
-        List<Card> initialCards = makeCards(number1, number2);
+        List<Card> initialCards = makeCards(rank1, rank2);
         Cards cards = new Cards(initialCards);
-        Card card = new Card(number3, TrumpEmblem.SPADE);
+        Card card = new Card(rank3, TrumpSuit.SPADE);
         Dealer dealer = new Dealer(cards);
         dealer.addOneCard(card);
 
@@ -68,12 +68,12 @@ class DealerTest {
             "ACE, THREE, FOUR, 18",
             "ACE, THREE, KING, 14",
     })
-    void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
+    void 카드들의_합을_구한다(TrumpRank rank1, TrumpRank rank2, TrumpRank rank3, int expected) {
         // given
-        List<Card> initialCards = makeCards(number1, number2);
+        List<Card> initialCards = makeCards(rank1, rank2);
         Cards cards = new Cards(initialCards);
         Dealer dealer = new Dealer(cards);
-        dealer.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        dealer.addOneCard(new Card(rank3, TrumpSuit.HEART));
 
         // when
         int sumCards = dealer.sumCardScores();
@@ -89,9 +89,9 @@ class DealerTest {
             "ACE, SIX, false",
             "ACE, KING, false"
     })
-    void 딜러의_카드_총합이_16이하인지_확인한다(TrumpNumber number1, TrumpNumber number2, boolean expected) {
+    void 딜러의_카드_총합이_16이하인지_확인한다(TrumpRank rank1, TrumpRank rank2, boolean expected) {
         // given
-        List<Card> initialCards = makeCards(number1, number2);
+        List<Card> initialCards = makeCards(rank1, rank2);
         Cards cards = new Cards(initialCards);
         Dealer dealer = new Dealer(cards);
 
@@ -105,7 +105,7 @@ class DealerTest {
     @Test
     void 초기_딜러의_카드중_작은_숫자_한장을_오픈한다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.KING);
+        List<Card> initialCards = makeCards(TrumpRank.ACE, TrumpRank.KING);
         Cards cards = new Cards(initialCards);
         Dealer dealer = new Dealer(cards);
 
@@ -113,14 +113,14 @@ class DealerTest {
         Card card = dealer.openOneCard();
 
         // then
-        assertThat(card.getNumber()).isEqualTo(TrumpNumber.KING);
-        assertThat(card.getEmblem()).isEqualTo(TrumpEmblem.HEART);
+        assertThat(card.getRank()).isEqualTo(TrumpRank.KING);
+        assertThat(card.getSuit()).isEqualTo(TrumpSuit.HEART);
     }
 
-    private List<Card> makeCards(TrumpNumber number1, TrumpNumber number2) {
+    private List<Card> makeCards(TrumpRank rank1, TrumpRank rank2) {
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        initialCards.add(new Card(rank1, TrumpSuit.DIAMOND));
+        initialCards.add(new Card(rank2, TrumpSuit.HEART));
         return initialCards;
     }
 }

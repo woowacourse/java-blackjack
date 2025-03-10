@@ -25,7 +25,7 @@ class DeckTest {
         Card card = deck.drawOneCard();
 
         // then
-        assertThat(card.getNumber().getValue()).isBetween(1, 11);
+        assertThat(card.getRank().getValue()).isBetween(1, 11);
     }
 
     @Test

@@ -101,6 +101,6 @@ public class OutputView {
     }
 
     private String processCardInfo(Card card) {
-        return card.getNumber().getName() + card.getEmblem().getName();
+        return card.getRank().getName() + card.getSuit().getName();
     }
 }
