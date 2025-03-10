@@ -1,6 +1,9 @@
 package controller;
 
+import controller.dto.DealerMatchResultCount;
 import controller.dto.NameAndCards;
+import controller.dto.NameAndSums;
+import controller.dto.ParticipantsMatchResult;
 import domain.BlackjackManager;
 import domain.Dealer;
 import domain.Deck;
@@ -64,12 +67,13 @@ public class BlackjackController {
         final List<Player> participants = blackjackManager.getParticipants();
         OutputView.printPlayersCardsAndSum(NameAndCards.toNameAndCards(dealer),
                 NameAndCards.toNameAndCards(participants),
-                DtoConverter.getNameAndSumOfAllPlayers(blackjackManager.getPlayers()));
+                NameAndSums.from(blackjackManager.computePlayerSum()));
 
-        final var participantsMatchResult = DtoConverter.computeParticipantsMatchResult(dealer, participants);
-        final var dealerMathResultCount
-                = DtoConverter.computeDealerMatchResultCount(participantsMatchResult.participantMatchResult());
-        OutputView.printGameResult(blackjackManager.getDealerName(), dealerMathResultCount, participantsMatchResult);
+        final var participantsMatchResult = blackjackManager.computeParticipantsMatchResult(dealer, participants);
+        final var dealerMathResultCount = blackjackManager.computeDealerMatchResultCount(participantsMatchResult);
+        OutputView.printMatchResults(blackjackManager.getDealerName(),
+                DealerMatchResultCount.from(dealerMathResultCount),
+                ParticipantsMatchResult.from(participantsMatchResult));
     }
 
     private BlackjackManager createBlackjackManager() {

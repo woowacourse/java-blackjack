@@ -2,7 +2,8 @@ package view;
 
 import controller.dto.DealerMatchResultCount;
 import controller.dto.NameAndCards;
-import controller.dto.NameAndSum;
+import controller.dto.NameAndSums;
+import controller.dto.NameAndSums.NameAndSum;
 import controller.dto.ParticipantsMatchResult;
 import java.util.List;
 
@@ -28,10 +29,10 @@ public class OutputView {
     }
 
     public static void printPlayersCardsAndSum(NameAndCards dealer, List<NameAndCards> participants,
-                                               List<NameAndSum> nameAndSums) {
-        printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSums));
+                                               NameAndSums nameAndSums) {
+        printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSums.nameAndSums()));
         participants.forEach(player ->
-                printPlayerCardsAndSum(player, findNameAndSumByName(player.name(), nameAndSums)));
+                printPlayerCardsAndSum(player, findNameAndSumByName(player.name(), nameAndSums.nameAndSums())));
         System.out.println();
     }
 
@@ -56,10 +57,10 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 
-    public static void printGameResult(String dealerName, DealerMatchResultCount dealerResult,
-                                       ParticipantsMatchResult participantsMathResult) {
+    public static void printMatchResults(String dealerName, DealerMatchResultCount dealerResult,
+                                         ParticipantsMatchResult participantsMathResult) {
         System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResultFormat(dealerResult));
-        
+
         participantsMathResult.participantMatchResult()
                 .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
     }

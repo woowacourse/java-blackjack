@@ -8,4 +8,7 @@ public record ParticipantsMatchResult(
         Map<Player, MatchResult> participantMatchResult
 ) {
 
+    public static ParticipantsMatchResult from(Map<Player, MatchResult> results) {
+        return new ParticipantsMatchResult(results);
+    }
 }
