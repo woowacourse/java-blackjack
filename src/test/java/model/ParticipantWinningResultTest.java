@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantWinningResultTest {
-    private static String name = "pobi";
     private Dealer dealer;
     private Player player;
     private Players players;
@@ -154,5 +153,22 @@ class ParticipantWinningResultTest {
         assertEquals(loseCount, expect);
         assertEquals(drawCount, expect);
         assertEquals(winCount, winExpect);
+    }
+
+    @Test
+    @DisplayName("2장의 카드로 21을 만들어 승리할 경우 블랙잭을 반환한다")
+    void 두장의_카드로_21을_만들어_승리할_경우_블랙잭을_반환한다() {
+        //given
+        dealer.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.EIGHT, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        //when
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
+        GameResult expect = GameResult.BLACKJACK;
+
+        //then
+        assertEquals(gameResult.get(player), expect);
     }
 }
