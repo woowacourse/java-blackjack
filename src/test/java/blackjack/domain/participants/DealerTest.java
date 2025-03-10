@@ -106,4 +106,101 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.TEN)
                 ));
     }
+
+    @Test
+    void 존재하지_않는_플레이어에게_카드를_나누어_줄_수_없다() {
+        //given
+        Player foraPlayer = new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()));
+
+        Players players = new Players(
+                List.of(
+                        new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator())),
+                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                )
+        );
+        Stack<Card> cards = new Stack<>();
+        cards.addAll(
+                List.of(
+                        new Card(Suit.CLUB, Rank.ACE),
+                        new Card(Suit.CLUB, Rank.ONE),
+                        new Card(Suit.CLUB, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.FOUR),
+                        new Card(Suit.CLUB, Rank.FIVE))
+        );
+        Deck deck = new Deck(cards);
+        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+
+        //when & then
+        Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(foraPlayer))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 플레이어는 존재하지 않습니다.");
+    }
+
+    @Test
+    void 카드_합이_21이_넘는_플레이어에게_카드를_나누어_줄_수_없다() {
+        //given
+        Player pobiPlayer = new Player("pobi", new Cards((
+                List.of(
+                        new Card(Suit.CLUB, Rank.ONE),
+                        new Card(Suit.CLUB, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.FOUR),
+                        new Card(Suit.CLUB, Rank.FIVE))
+        ), new ScoreCalculator()));
+
+        Players players = new Players(
+                List.of(
+                        pobiPlayer,
+                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
+                        new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                )
+        );
+        Stack<Card> cards = new Stack<>();
+        cards.addAll(
+                List.of(
+                        new Card(Suit.CLUB, Rank.ACE),
+                        new Card(Suit.CLUB, Rank.ONE),
+                        new Card(Suit.CLUB, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.FOUR),
+                        new Card(Suit.CLUB, Rank.FIVE))
+        );
+        Deck deck = new Deck(cards);
+        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+
+        //when & then
+        Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(pobiPlayer))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
+    }
+
+    @Test
+    void 플레이어에게_카드를_나누어_줄_수_있다() {
+        //given
+        Player pobiPlayer = new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator()));
+
+        Players players = new Players(
+                List.of(
+                        pobiPlayer,
+                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
+                        new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                )
+        );
+        Stack<Card> cards = new Stack<>();
+        cards.addAll(
+                List.of(
+                        new Card(Suit.CLUB, Rank.ACE),
+                        new Card(Suit.CLUB, Rank.ONE),
+                        new Card(Suit.CLUB, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.THREE),
+                        new Card(Suit.CLUB, Rank.FOUR),
+                        new Card(Suit.CLUB, Rank.FIVE))
+        );
+        Deck deck = new Deck(cards);
+        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+
+        //when & then
+        Assertions.assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
+    }
 }
