@@ -51,7 +51,10 @@ public final class Player {
     }
     
     private static boolean hasDuplicatedName(final List<String> playerNames) {
-        return new HashSet<>(playerNames).size() != playerNames.size();
+        long noDuplicatedNamesCount = playerNames.stream()
+                .distinct()
+                .count();
+        return noDuplicatedNamesCount != playerNames.size();
     }
     
     public String getName() {
