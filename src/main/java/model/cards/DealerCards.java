@@ -3,7 +3,7 @@ package model.cards;
 import java.util.List;
 import model.card.Card;
 
-final public class DealerCards extends Cards{
+final public class DealerCards extends Cards {
 
     private static final int INITIAL_CARDS_COUNT = 2;
 

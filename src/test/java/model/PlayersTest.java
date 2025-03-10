@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import model.cards.Cards;
 import model.cards.PlayerCards;
-import model.cards.PlayerCardsFactory;
-import model.deck.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

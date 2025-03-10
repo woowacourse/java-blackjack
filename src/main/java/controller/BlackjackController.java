@@ -1,7 +1,6 @@
 package controller;
 
 import dto.CardDto;
-import java.util.ArrayList;
 import java.util.List;
 import model.BlackjackGame;
 import model.Players;
@@ -25,17 +24,17 @@ public class BlackjackController {
     public void start() {
         BlackjackGame blackjackGame = BlackjackGame.getBlackjackGame(inputView.readPlayerNames());
 
-        printPlayersAndInitialCards(blackjackGame.getPlayers(), blackjackGame.getDealerCards());
+        printPlayersAndInitialCards(blackjackGame);
         askToAllPlayersForAdditionalCard(blackjackGame);
         printDealerDraw(blackjackGame);
         printFinalCards(blackjackGame);
         printGameResult(blackjackGame);
     }
 
-    private void printPlayersAndInitialCards(final Players players, final DealerCards dealerCards) {
+    private void printPlayersAndInitialCards(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
-        outputView.printPlayers(new ArrayList<>(players.getNames()));
-        printInitialCardsWithName(dealerCards, players);
+        outputView.printPlayers(blackjackGame.getSequencedPlayerNames());
+        printInitialCardsWithName(blackjackGame.getDealerCards(), blackjackGame.getPlayers());
         outputView.printNewLine();
     }
 
