@@ -1,7 +1,7 @@
 package controller;
 
-import domain.gambler.Dealer;
 import domain.Deck;
+import domain.gambler.Dealer;
 import domain.gambler.Nickname;
 import domain.gambler.Player;
 import domain.gambler.Players;
@@ -48,14 +48,17 @@ public class BlackJackController {
     }
 
     private void selectHitOrStand(Player player, Deck deck) {
-        while (inputView.readOneMoreCardResponse(player.getNickname()).equals(HIT_COMMAND)) {
+        while (playerCanHit(player)) {
             player.addOneCard(deck.drawOneCard());
-            if (player.isBust()) {
-                outputView.printPlayerIsOverBust(player);
-                break;
-            }
             outputView.printPlayerCards(player);
         }
+        if (player.isBust()) {
+            outputView.printPlayerIsOverBust(player);
+        }
+    }
+
+    private boolean playerCanHit(Player player) {
+        return inputView.readOneMoreCardResponse(player.getNickname()).equals(HIT_COMMAND) & !player.isBust();
     }
 
     private void checkDealerSumUnderSixteen(Dealer dealer, Deck deck) {
