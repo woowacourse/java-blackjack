@@ -62,7 +62,7 @@ public class BlackjackController {
 
     private void drawToDealer(Dealer dealer) {
         while (true) {
-            boolean received = dealer.passCardToDealer();
+            boolean received = dealer.passCardToSelf();
             if (!received) {
                 break;
             }

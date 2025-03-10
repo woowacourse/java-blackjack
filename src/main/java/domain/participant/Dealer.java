@@ -21,7 +21,7 @@ public class Dealer extends Participant {
         return cardDeck.popCard();
     }
 
-    public boolean passCardToDealer() {
+    public boolean passCardToSelf() {
         if (getScore() > DEALER_HIT_MIN_THRESHOLD) {
             return false;
         }
