@@ -94,10 +94,8 @@ public class BlackjackController implements Controller {
     }
     
     private void processDealerAddCards(final DealerBlackjackCardHand dealerHand, final BlackjackDeck deck) {
-        final int beforeCount = dealerHand.getCards().size();
-        dealerHand.startAdding(deck);
-        final int afterCount = dealerHand.getCards().size();
-        outputView.outputDealerAddedCards(afterCount - beforeCount);
+        final int addedSize = dealerHand.startAddingAndGetAddedSize(deck);
+        outputView.outputDealerAddedCards(addedSize);
     }
     
     private void openCards(final BlackjackGame game) {

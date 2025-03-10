@@ -33,7 +33,7 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(List::of);
 
         // when
-        DealerBlackjackCardHand.startAdding(new BlackjackDeck());
+        DealerBlackjackCardHand.startAddingAndGetAddedSize(new BlackjackDeck());
 
         // then
         assertThat(DealerBlackjackCardHand.getCards().size()).isGreaterThanOrEqualTo(1);
@@ -50,10 +50,23 @@ public class DealerBlackjackCardHandTest {
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> initCards);
 
         // when
-        DealerBlackjackCardHand.startAdding(new CardDrawerStub(deckCards));
+        DealerBlackjackCardHand.startAddingAndGetAddedSize(new CardDrawerStub(deckCards));
 
         // then
         assertThat(DealerBlackjackCardHand.getBlackjackSum()).isEqualTo(expectedSum);
+    }
+    
+    @Test
+    void 딜러_손패가_추가_카드를_뽑으면_뽑은_개수를_반환한다() {
+        // given
+        DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_9, DIAMOND_5));
+        final List<Card> addedCards = List.of(HEART_1, HEART_2, HEART_3);
+        
+        // when
+        final int result = DealerBlackjackCardHand.startAddingAndGetAddedSize(new CardDrawerStub(addedCards));
+        
+        // then
+        assertThat(result).isEqualTo(2);
     }
 
     private static Stream<Arguments> provideInitCardsAndDeckCardsAndExpectedSum() {

@@ -27,10 +27,12 @@ public final class DealerBlackjackCardHand implements BlackjackWinDeterminable {
         return cardHand.getCards().getFirst();
     }
     
-    public void startAdding(final CardDrawer cardDrawer) {
+    public int startAddingAndGetAddedSize(final CardDrawer cardDrawer) {
+        final int beforeCount = cardHand.getCards().size();
         while (cardHand.getBlackjackSum() <= DEALER_DRAW_THRESHOLD) {
             cardHand.addCard(cardDrawer.draw());
         }
+        return cardHand.getCards().size() - beforeCount;
     }
     
     public List<Card> getCards() {
