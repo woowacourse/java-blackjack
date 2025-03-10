@@ -24,9 +24,9 @@ public class Players {
         }
     }
 
-    public void sendAll(Consumer<Player> consumer) {
+    public void sendAll(Consumer<Player> playerAction) {
         for (Player player : players) {
-            consumer.accept(player);
+            playerAction.accept(player);
         }
     }
 
