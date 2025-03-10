@@ -48,7 +48,7 @@ class GameManagerTest {
         gameManager.addGamblersAndDealInitCards(names);
         gameManager.dealAddCard(gambler);
 
-        boolean result = gameManager.isPlayerBust(gambler);
+        boolean result = gambler.isPlayerBust();
 
         assertThat(result).isTrue();
     }
