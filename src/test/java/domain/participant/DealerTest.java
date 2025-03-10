@@ -21,18 +21,28 @@ public class DealerTest {
     }
 
     @Test
-    void shuffleDeck() {
+    @DisplayName("딜러는 카드를 받으면 첫번째 카드를 공개할 수 있다.")
+    void test2() {
+        Dealer dealer = new Dealer();
+
+        dealer.addCard(new Card(Denomination.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Denomination.TWO, Suit.SPADE));
+
+        assertThat(dealer.openOneCard()).isEqualTo(new Card(Denomination.TEN, Suit.SPADE));
     }
 
     @Test
-    void drawCard() {
-    }
+    @DisplayName("딜러는 카드를 추가로 받은 장 수를 공개할 수 있다. (시작할 때 2장을 받고, 게임 진행에서 추가로 받은 장 수)")
+    void test3() {
+        Dealer dealer = new Dealer();
 
-    @Test
-    void openOneCard() {
-    }
+        //기본 2장
+        dealer.addCard(new Card(Denomination.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Denomination.JACK, Suit.SPADE));
 
-    @Test
-    void getExtraHandSize() {
+        dealer.addCard(new Card(Denomination.ACE, Suit.CLUB));
+        dealer.addCard(new Card(Denomination.TWO, Suit.CLUB));
+
+        assertThat(dealer.getExtraHandSize()).isEqualTo(2);
     }
 }
