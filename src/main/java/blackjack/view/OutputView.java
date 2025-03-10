@@ -1,11 +1,13 @@
 package blackjack.view;
 
+import blackjack.domain.WinningStatus;
+import blackjack.domain.card.Card;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.view.writer.Writer;
+
 import java.util.List;
 import java.util.StringJoiner;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.WinningStatus;
-import blackjack.view.writer.Writer;
 
 public class OutputView {
     
@@ -31,8 +33,8 @@ public class OutputView {
         writer.write(message);
     }
     
-    public void outputPlayerCards(String name, List<Card> cards) {
-        String message = parseNameAndCards(name, cards);
+    public void outputPlayerCards(PlayerBlackjackCardHand playerHand) {
+        String message = parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards());
         writer.write(message);
     }
     
@@ -49,8 +51,8 @@ public class OutputView {
         writer.write("버스트이기 때문에 더 받을 수 없습니다.");
     }
     
-    public void outputCardsAndSum(List<Card> cards, int sum) {
-        final String message = parseCards(cards) + parseSum(sum);
+    public void outputCardsAndSum(PlayerBlackjackCardHand playerHand) {
+        final String message = parseCards(playerHand.getCards()) + parseSum(playerHand.getBlackjackSum());
         writer.write(message);
     }
     
@@ -61,13 +63,14 @@ public class OutputView {
         }
     }
     
-    public void outputDealerCardsAndResult(List<Card> cards, int sum) {
-        String message = parseNameAndCards("딜러", cards) + parseFinalSum(sum);
+    public void outputDealerCardsAndResult(DealerBlackjackCardHand dealerHand) {
+        String message = parseNameAndCards("딜러", dealerHand.getCards()) + parseFinalSum(dealerHand.getBlackjackSum());
         writer.write(message);
     }
     
-    public void outputPlayerCardsAndResult(String name, List<Card> cards, int sum) {
-        String message = parseNameAndCards(name, cards) + parseFinalSum(sum);
+    public void outputPlayerCardsAndResult(PlayerBlackjackCardHand playerHand) {
+        String message = parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards())
+                + parseFinalSum(playerHand.getBlackjackSum());
         writer.write(message);
     }
     

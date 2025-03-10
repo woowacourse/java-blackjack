@@ -1,15 +1,14 @@
 package blackjack.controller;
 
-import java.util.List;
-
 import blackjack.domain.BlackjackJudge;
-import blackjack.domain.deck.BlackjackDeck;
-import blackjack.domain.player.Player;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.domain.deck.BlackjackDeck;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.List;
 
 public class BlackjackController implements Controller {
     
@@ -51,7 +50,7 @@ public class BlackjackController implements Controller {
         outputView.outputInitialCardOpeningMessage(playerNames);
         outputView.outputDealerCards(List.of(dealerHand.getInitialCard()));
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerHands) {
-            outputView.outputPlayerCards(playerBlackjackCardHand.getPlayerName(), playerBlackjackCardHand.getInitialCards());
+            outputView.outputPlayerCards(playerBlackjackCardHand);
         }
     }
     
@@ -76,7 +75,7 @@ public class BlackjackController implements Controller {
         
         while (shouldAddCard(playerHand)) {
             playerHand.addCard(deck.draw());
-            outputView.outputCardsAndSum(playerHand.getCards(), playerHand.getBlackjackSum());
+            outputView.outputCardsAndSum(playerHand);
         }
     }
     
@@ -98,13 +97,9 @@ public class BlackjackController implements Controller {
     }
     
     private void openCards(final BlackjackGame game) {
-        outputView.outputDealerCardsAndResult(game.dealerHand.getCards(), game.dealerHand.getBlackjackSum());
+        outputView.outputDealerCardsAndResult(game.dealerHand);
         for (PlayerBlackjackCardHand playerHand : game.playerHands) {
-            outputView.outputPlayerCardsAndResult(
-                    playerHand.getPlayerName(),
-                    playerHand.getCards(),
-                    playerHand.getBlackjackSum()
-            );
+            outputView.outputPlayerCardsAndResult(playerHand);
         }
     }
     
