@@ -1,7 +1,9 @@
 package domain.participant;
 
 public enum GameResult {
-    WIN("승"), DRAW("무"), LOSE("패");
+    WIN("승"),
+    DRAW("무"),
+    LOSE("패");
 
     private final String koreanName;
 
