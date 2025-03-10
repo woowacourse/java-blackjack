@@ -18,13 +18,21 @@ public class Hands {
     }
 
     public int calculateScore() {
-        int sum = cards.stream()
+        int sum = calculateSum();
+        long aceCount = calculateAceCount();
+        return Rule.adjustSumByAce(sum, (int) aceCount);
+    }
+
+    private int calculateSum() {
+        return cards.stream()
                 .mapToInt(Card::getTypeValue)
                 .sum();
-        long aceCount = cards.stream()
+    }
+
+    private long calculateAceCount() {
+        return cards.stream()
                 .filter(Card::isAce)
                 .count();
-        return Rule.adjustSumByAce(sum, (int) aceCount);
     }
 
     public boolean isScoreBelow(final int criteria) {
