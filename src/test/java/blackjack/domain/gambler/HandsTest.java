@@ -7,12 +7,11 @@ import static blackjack.domain.card.CardType.SIX;
 import static blackjack.domain.card.CardType.TEN;
 import static blackjack.domain.card.CardType.THREE;
 import static blackjack.domain.card.CardType.TWO;
+import static blackjack.domain.fixture.CardFixture.createCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.card.CardType;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -84,15 +83,5 @@ class HandsTest {
         Arguments arguments3 = Arguments.arguments(createCards(FIVE, ACE, ACE), 17);
         Arguments arguments4 = Arguments.arguments(createCards(ACE, ACE, ACE), 13);
         return Stream.of(arguments1, arguments2, arguments3, arguments4);
-    }
-
-    private static List<Card> createCards(CardType... types) {
-        return Arrays.stream(types)
-                .map(HandsTest::createCard)
-                .toList();
-    }
-
-    private static Card createCard(final CardType type) {
-        return new Card(CardShape.DIAMOND, type);
     }
 }
