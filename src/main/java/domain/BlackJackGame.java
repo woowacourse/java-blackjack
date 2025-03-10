@@ -53,6 +53,7 @@ public class BlackJackGame {
     }
 
     public List<Player> createPlayers(List<String> names) {
+        validateNotDuplicate(names);
         List<Player> players = new ArrayList<>();
 
         names.forEach(name -> {
@@ -60,6 +61,12 @@ public class BlackJackGame {
         });
 
         return players;
+    }
+
+    private void validateNotDuplicate(List<String> names) {
+        if (names.stream().distinct().count() != names.size()) {
+            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
+        }
     }
 
     public TrumpCard retrieveDealerFirstCard() {

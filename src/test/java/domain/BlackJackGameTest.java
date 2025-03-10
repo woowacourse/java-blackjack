@@ -162,6 +162,19 @@ class BlackJackGameTest {
     @Nested
     class InvalidCases {
 
+        @DisplayName("플레이어의 이름은 중복될 수 없다.")
+        @Test
+        void createPlayers() {
+            // given
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            List<String> playerNames = List.of("머피", "머피");
+
+            // when & then
+            assertThatThrownBy(() -> blackJackGame.createPlayers(playerNames))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
+        }
+
         @DisplayName("딜러의 첫번째 카드를 가져올 때 딜러는 2장의 카드를 가지고 있어야 한다.")
         @Test
         void retrieveFirstCard() {
