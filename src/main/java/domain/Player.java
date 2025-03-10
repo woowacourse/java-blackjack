@@ -4,7 +4,7 @@ import java.util.List;
 
 import domain.constant.DuelResult;
 
-public class Player {
+public class Player implements PickableCard {
 	private final String name;
 	private final Participant participant;
 

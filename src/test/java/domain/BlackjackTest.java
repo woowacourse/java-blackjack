@@ -284,7 +284,7 @@ public class BlackjackTest {
 			final Deck deck = Deck.createShuffledDeck();
 
 			// when
-			blackjack.pickCardToPlayer(player, deck);
+			blackjack.pickCard(player, deck);
 
 			// then
 			assertThat(player.getParticipant().getCardHand().getCards()).hasSize(1);
@@ -299,7 +299,7 @@ public class BlackjackTest {
 			final Deck deck = Deck.createShuffledDeck();
 
 			// when
-			blackjack.pickCardToDealer(dealer, deck);
+			blackjack.pickCard(dealer, deck);
 
 			// then
 			assertThat(dealer.getParticipant().getCardHand().getCards()).hasSize(1);

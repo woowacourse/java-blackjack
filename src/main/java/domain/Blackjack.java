@@ -20,16 +20,12 @@ public class Blackjack {
 		return player.isPickCard(BUST_SCORE);
 	}
 
-	public void pickCardToPlayer(final Player player, final Deck deck) {
-		player.addCards(deck.pickCards(1));
+	public void pickCard(final PickableCard picker, final Deck deck) {
+		picker.addCards(deck.pickCards(1));
 	}
 
 	public boolean isPickCardByDealer(final Dealer dealer) {
 		return dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX);
-	}
-
-	public void pickCardToDealer(final Dealer dealer, final Deck deck) {
-		dealer.addCards(deck.pickCards(1));
 	}
 
 	public int calculateScore(final Participant participant) {
