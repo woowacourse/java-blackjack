@@ -21,7 +21,7 @@ public class Dealer extends Gambler {
                 .orElse(cards.getCards().getFirst());
     }
 
-    public boolean isSumUnderSixteen() {
+    public boolean isSumUnderThreshold() {
         return sumCardScores() <= DEALER_HIT_THRESHOLD;
     }
 }
