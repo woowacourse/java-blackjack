@@ -24,18 +24,22 @@ public class BlackJackController {
     public static final int BUST_NUMBER = 21;
 
     public void run() {
-        final List<Nickname> nicknames = readNicknames();
-        final Players players = generatePlayers(nicknames);
-        final Deck deck = generateDeck();
-        final List<Player> playerGroup = players.getPlayers();
-        setGame(playerGroup, deck);
-        final Dealer dealer = generateDealer();
-        dealer.receiveInitialCards(List.of(deck.drawCard(), deck.drawCard()));
-        printGameSetting(dealer, nicknames, playerGroup);
+        try {
+            final List<Nickname> nicknames = readNicknames();
+            final Players players = generatePlayers(nicknames);
+            final Deck deck = generateDeck();
+            final List<Player> playerGroup = players.getPlayers();
+            setGame(playerGroup, deck);
+            final Dealer dealer = generateDealer();
+            dealer.receiveInitialCards(List.of(deck.drawCard(), deck.drawCard()));
+            printGameSetting(dealer, nicknames, playerGroup);
 
-        processPlayerHit(playerGroup, deck);
-        processDealerHit(dealer, deck);
-        processFinalResult(dealer, playerGroup);
+            processPlayerHit(playerGroup, deck);
+            processDealerHit(dealer, deck);
+            processFinalResult(dealer, playerGroup);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private List<Nickname> readNicknames() {

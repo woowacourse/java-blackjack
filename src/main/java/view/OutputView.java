@@ -86,7 +86,12 @@ public final class OutputView {
         });
     }
 
+    public static void printErrorMessage(final String message) {
+        print(message);
+    }
+
     private static void print(final String message) {
         System.out.println(message);
     }
+
 }
