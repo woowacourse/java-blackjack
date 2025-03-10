@@ -31,6 +31,9 @@ public class BlackJackController {
         startBlackJack(cardDeck, players, dealer);
         playBlackJack(cardDeck, players, dealer);
         judgeGameResult(players, dealer);
+        calculateTotalBettingAmount(players, dealer);
+    }
+
     private List<Integer> readPlayerBettingAmount(List<String> playerNames) {
         return playerNames.stream()
                 .map(inputView::readPlayerBettingAmount)
@@ -77,5 +80,9 @@ public class BlackJackController {
 
         outputView.printDealerWinningResult(winCount, drawCount, loseCount);
         outputView.printWinningResult(playerNames, gameResults);
+    }
+
+    private void calculateTotalBettingAmount(Players players, Dealer dealer) {
+        outputView.printBettingAmount(players.getPlayers(), dealer);
     }
 }

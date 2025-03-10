@@ -63,4 +63,10 @@ public class OutputView {
             System.out.printf("%s: %s%n", playerNames.get(i), gameResults.get(i).getResult());
         }
     }
+
+    public void printBettingAmount(List<Player> players, Dealer dealer) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d%n", dealer.getTotalBettingAmount());
+        players.forEach(player -> System.out.printf("%s: %d%n", player.getName(), player.getBettingAmount()));
+    }
 }
