@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Hand;
 import domain.rule.BlackjackRule;
 import domain.rule.GameRule;
+import java.util.Objects;
 
 public class Participant {
     private final Hand hand;
@@ -32,5 +33,22 @@ public class Participant {
 
     public Hand getCards() {
         return hand;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant that = (Participant) o;
+        return Objects.equals(hand, that.hand) && Objects.equals(rule, that.rule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hand, rule);
     }
 }
