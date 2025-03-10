@@ -1,8 +1,7 @@
 package domain.result;
 
 import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.Participant;
 
 public enum BlackjackResult {
 
@@ -11,50 +10,41 @@ public enum BlackjackResult {
     LOSE("패"),
     ;
 
+    private static final int BLACKJACK_MIN_CARD_COUNT = 2; // 블랙잭일 때 최소한의 카드 개수
+
     private final String value;
 
     BlackjackResult(String value) {
         this.value = value;
     }
 
-    public static BlackjackResult getPlayerResult(Dealer dealer, Player player) {
-        if (isPlayerLose(player, dealer)) {
+    public static BlackjackResult getPlayerResult(Participant dealer, Participant player) {
+        boolean isPlayerBust = isBust(player);
+        boolean isDealerBust = isBust(dealer);
+        boolean isPlayerBlackjack = isBlackjack(player);
+        boolean isDealerBlackjack = isBlackjack(dealer);
+
+        if (isPlayerBust || (!isPlayerBlackjack && isDealerBlackjack)
+                || (!isDealerBust && isPlayerScoreLowerThenDealer(dealer, player))) {
             return LOSE;
         }
-        if (isPlayerWin(player, dealer)) {
+        if (isDealerBust || (isPlayerBlackjack && !isDealerBlackjack)
+                || !isPlayerScoreLowerThenDealer(dealer, player)) {
             return WIN;
         }
         return DRAW;
     }
 
-    private static boolean isPlayerLose(Player player, Dealer dealer) {
-        if (isBust(player.getScore())) {
-            return true;
-        }
-        if (isBlackjack(dealer.getScore(), dealer.getCardCount()) &&
-                !isBlackjack(player.getScore(), player.getCardCount())) {
-            return true;
-        }
-        return !isBust(dealer.getScore()) && player.getScore() < dealer.getScore();
+    private static boolean isPlayerScoreLowerThenDealer(Participant dealer, Participant player) {
+        return player.getScore() < dealer.getScore();
     }
 
-    private static boolean isPlayerWin(Player player, Dealer dealer) {
-        if (isBust(dealer.getScore())) {
-            return true;
-        }
-        if (isBlackjack(player.getScore(), player.getCardCount()) &&
-                !isBlackjack(dealer.getScore(), dealer.getCardCount())) {
-            return true;
-        }
-        return player.getScore() > dealer.getScore();
+    private static boolean isBust(Participant participant) {
+        return participant.getScore() > Card.BLACKJACK_SCORE;
     }
 
-    private static boolean isBust(int score) {
-        return score > Card.BLACKJACK_SCORE;
-    }
-
-    private static boolean isBlackjack(int score, int cardCount) {
-        return score == Card.BLACKJACK_SCORE && cardCount == 2;
+    private static boolean isBlackjack(Participant participant) {
+        return participant.getScore() == Card.BLACKJACK_SCORE && participant.getCardCount() == BLACKJACK_MIN_CARD_COUNT;
     }
 
     public String getValue() {
