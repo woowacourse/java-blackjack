@@ -36,6 +36,12 @@ public class Players {
         }
     }
 
+    public void openInitialCards() {
+        for (Player player : players) {
+            player.openInitialCards();
+        }
+    }
+
     public int size() {
         return players.size();
     }

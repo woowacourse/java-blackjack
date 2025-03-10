@@ -15,6 +15,10 @@ public class BlackjackManager {
         players.distributeInitialCards(deck);
     }
 
+    public void openInitialCards() {
+        players.openInitialCards();
+    }
+
     public void addOneCard(Player player) {
         player.drawOneCard(deck);
     }

@@ -26,9 +26,10 @@ public class BlackjackController {
 
     private void distributeInitialCards(BlackjackManager blackjackManager) {
         blackjackManager.distributeInitialCards();
+        blackjackManager.openInitialCards();
         OutputView.printInitialCards(
                 NameAndCards.toNameAndOpenedCards(blackjackManager.getDealer()),
-                NameAndCards.toNameAndCards(blackjackManager.getParticipants())
+                NameAndCards.toNameAndOpenedCards(blackjackManager.getParticipants())
         );
     }
 
