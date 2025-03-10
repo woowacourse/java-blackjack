@@ -35,6 +35,9 @@ public class Cards {
     }
 
     public void take(Card... cards) {
+        if (Arrays.stream(cards).count() > DEFAULT_CARD_SIZE.getSymbol()) {
+            throw new IllegalArgumentException("카드는 한 번에 최대 두 장까지 받을 수 있습니다.");
+        }
         int minScore = scoreCalculator.calculateMaxScore(this.cards);
         if (minScore >= BUST_THRESHOLD.getSymbol()) {
             throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
