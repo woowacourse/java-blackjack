@@ -25,18 +25,14 @@ public enum BlackjackResult {
         boolean isDealerBlackjack = isBlackjack(dealer);
 
         if (isPlayerBust || (!isPlayerBlackjack && isDealerBlackjack)
-                || (!isDealerBust && isPlayerScoreLowerThenDealer(dealer, player))) {
+                || (!isDealerBust && player.getScore() < dealer.getScore())) {
             return LOSE;
         }
         if (isDealerBust || (isPlayerBlackjack && !isDealerBlackjack)
-                || !isPlayerScoreLowerThenDealer(dealer, player)) {
+                || player.getScore() > dealer.getScore()) {
             return WIN;
         }
         return DRAW;
-    }
-
-    private static boolean isPlayerScoreLowerThenDealer(Participant dealer, Participant player) {
-        return player.getScore() < dealer.getScore();
     }
 
     private static boolean isBust(Participant participant) {
