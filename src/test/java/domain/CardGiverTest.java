@@ -49,8 +49,7 @@ public class CardGiverTest {
     void test19() {
         // given
         RandomGenerator<Card> randomGenerator = new TestGenerator();
-        List<Card> cards = CardFixture.createFilledCards();
-        GivenCards givenCards = GivenCards.create(cards);
+        GivenCards givenCards = CardFixture.createFilledGivenCards();
         CardGiver cardGiver = new CardGiver(randomGenerator, givenCards);
         //when & then
         assertThatThrownBy(

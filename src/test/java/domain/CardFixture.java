@@ -5,11 +5,11 @@ import java.util.List;
 
 public class CardFixture {
 
-    public static List<Card> createFilledCards() {
+    public static GivenCards createFilledGivenCards() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < 52; i++) {
             cards.add(new Card(CardNumberType.ACE, CardType.DIAMOND));
         }
-        return cards;
+        return GivenCards.create(cards);
     }
 }

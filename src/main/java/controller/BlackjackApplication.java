@@ -58,8 +58,7 @@ public class BlackjackApplication {
     }
 
     private void askForAdditionalCard(Players players) {
-        players.getPlayers()
-                .forEach(this::processPlayerCardRequest);
+        players.getPlayers().forEach(this::processPlayerCardRequest);
     }
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
