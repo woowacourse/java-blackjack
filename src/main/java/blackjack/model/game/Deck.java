@@ -1,15 +1,15 @@
 package blackjack.model.game;
 
 import blackjack.model.card.Card;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class Deck {
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck(List<Card> cards) {
-        this.cards = new Stack<>();
-        this.cards.addAll(cards);
+        this.cards = new ArrayDeque<>(cards);
     }
 
 
@@ -18,6 +18,6 @@ public class Deck {
     }
 
     public Card drawCard() {
-        return cards.pop();
+        return cards.pollLast();
     }
 }
