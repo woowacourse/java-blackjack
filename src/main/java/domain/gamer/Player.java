@@ -4,7 +4,6 @@ import static controller.BlackJackController.BUST_NUMBER;
 
 import domain.deck.Card;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,24 +20,21 @@ public class Player extends Gamer {
     @Override
     public int calculateSumOfRank() {
         if (hasAce()) {
-            final List<Card> cards = getCards();
-            final List<Integer> sumOfRanks = calculateAllSums(cards);
-
-            return sumOfRanks.stream()
-                    .filter(sum -> sum <= BUST_NUMBER)
-                    .max(Integer::compareTo)
-                    .orElseGet(() -> sumOfRanks.stream().min(Integer::compareTo).orElse(0));
+            return calculateOptimalSumWithAce();
         }
-
         return getSumOfRank();
+    }
+
+    private int calculateOptimalSumWithAce() {
+        final List<Card> cards = getCards();
+        final List<Integer> sumOfRanks = calculateAllSums(cards);
+        return findMaxSum(sumOfRanks);
     }
 
     private List<Integer> calculateAllSums(final List<Card> cards) {
         final Set<Integer> resultSet = new HashSet<>();
         calculateAllSums(cards, 0, 0, resultSet);
-        final List<Integer> resultList = new ArrayList<>(resultSet);
-        Collections.sort(resultList);
-        return resultList;
+        return new ArrayList<>(resultSet);
     }
 
     private void calculateAllSums(final List<Card> cards,
@@ -57,5 +53,16 @@ public class Player extends Gamer {
             return;
         }
         calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);
+    }
+
+    private int findMaxSum(List<Integer> sums) {
+        return sums.stream()
+                .filter(sum -> sum <= BUST_NUMBER)
+                .max(Integer::compareTo)
+                .orElseGet(() -> findMinSum(sums));
+    }
+
+    private int findMinSum(List<Integer> sums) {
+        return sums.stream().min(Integer::compareTo).orElse(0);
     }
 }
