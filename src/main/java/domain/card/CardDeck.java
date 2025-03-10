@@ -16,7 +16,9 @@ public class CardDeck {
     }
 
     public static CardDeck of() {
-        Deque<Card> deck = new ArrayDeque<>(generateCardDeck());
+        List<Card> cards = generateCardDeck();
+        Collections.shuffle(cards);
+        Deque<Card> deck = new ArrayDeque<>(cards);
         return new CardDeck(deck);
     }
 
@@ -31,10 +33,8 @@ public class CardDeck {
     private static List<Card> generateCardDeck() {
         List<TrumpNumber> numbers = Arrays.stream(TrumpNumber.values()).toList();
         List<TrumpShape> shapes = Arrays.stream(TrumpShape.values()).toList();
-        List<Card> cards = new ArrayList<>(numbers.stream()
+        return new ArrayList<>(numbers.stream()
                 .flatMap(number -> shapes.stream().map(shape -> Card.of(number, shape)))
                 .toList());
-        Collections.shuffle(cards);
-        return cards;
     }
 }
