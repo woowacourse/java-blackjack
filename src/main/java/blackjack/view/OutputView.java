@@ -33,14 +33,13 @@ public class OutputView {
                 .map(card -> String.format("%s%s", card.getRank().getDescription(), card.getSuit().getDescription()))
                 .collect(Collectors.joining(", "));
     }
+
+    public void printDealerHit() {
+        System.out.println();
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 }
 
-//    public void printDealerHit(int count) {
-//        for (int i = 0; i < count; i++) {
-//            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-//        }
-//        System.out.println();
-//    }
 //
 //    public void printDrawnCardResults(List<DrawnCardResult> drawnCardResults) {
 //        for (DrawnCardResult drawnCardResult : drawnCardResults) {

@@ -25,7 +25,6 @@ public class BlackjackGame {
 
         participants.processInitialDealing();
         participants.processHit();
-
     }
 
     private GameParticipants initializeGameParticipants() {
@@ -34,7 +33,7 @@ public class BlackjackGame {
                 .map(nickname -> Player.of(nickname, this::askHit, this::showHands))
                 .toList();
 
-        Dealer dealer = Dealer.create(players.size(), this::showHands);
+        Dealer dealer = Dealer.create(players.size(), this::showHands, this::displayHitDecision);
 
         return GameParticipants.of(players, dealer);
     }
@@ -45,5 +44,9 @@ public class BlackjackGame {
 
     private void showHands(GameParticipant participant) {
         outputView.printParticipantCards(participant);
+    }
+
+    private void displayHitDecision() {
+        outputView.printDealerHit();
     }
 }

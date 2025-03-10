@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DealerTest {
 
@@ -19,7 +20,7 @@ class DealerTest {
     @DisplayName("딜러 생성 시점에 플레이어의 수와 무관하게 0장의 카드 패를 가진다")
     void initializedDealerShouldHave0Card(int playerCount) {
         // given
-        Dealer dealer = Dealer.create(playerCount, null);
+        Dealer dealer = GameParticipantFixture.createDealer(playerCount);
 
         // when
         // then
@@ -59,11 +60,38 @@ class DealerTest {
         dealer.hideCard();
 
         // then
-        long hideCount = dealer.hand.getCards().stream()
+        long hideCount = dealer.getHand().getCards().stream()
                 .filter(Card::isHidden)
                 .count();
 
         assertThat(hideCount).isEqualTo(ConstantFixture.getInitialHideCardCount("테스트 전용"));
     }
 
+    @Test
+    @DisplayName("딜러는 히든 카드를 오픈할 수 있다")
+    void canOpenHiddenCard() {
+        // given
+        Dealer dealer = GameParticipantFixture.createDealer();
+        dealer.drawCard(CardFixture.createCard());
+        dealer.drawCard(CardFixture.createCard());
+        dealer.hideCard();
+        long HideCountAfterHide = dealer.getHand().getCards().stream()
+                .filter(Card::isHidden)
+                .count();
+
+        // when
+        dealer.openHiddenCard();
+
+        // then
+        long HideCountAfterOpen = dealer.getHand().getCards().stream()
+                .filter(Card::isHidden)
+                .count();
+
+        assertAll(
+                () -> {
+                    assertThat(HideCountAfterHide).isEqualTo(ConstantFixture.getInitialHideCardCount("테스트 전용"));
+                    assertThat(HideCountAfterOpen).isEqualTo(0);
+                }
+        );
+    }
 }
