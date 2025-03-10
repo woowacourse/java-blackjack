@@ -1,8 +1,5 @@
 package blackjack.gamer;
 
-import blackjack.domain.GameRule;
-import blackjack.domain.card.CardFixture;
-import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,21 +42,5 @@ class PlayerTest {
         // when
         // then
         assertThat(player.shouldHit()).isFalse();
-    }
-
-    @Test
-    @DisplayName("플레이어는 초기에 카드를 보여줄 때, 모두 보여준다.")
-    void whenAfterInitialDealingShouldShowFirstCard() {
-        // given
-        Player player = GameParticipantFixture.createPlayer("강산");
-        for (int i = 0; i < GameRule.INITIAL_DEALING_CARD_COUNT.getValue(); i++) {
-            player.drawCard(CardFixture.createCard());
-        }
-
-        // when
-        Cards cards = player.showHand();
-
-        // then
-        assertThat(cards.size()).isEqualTo(GameRule.INITIAL_DEALING_CARD_COUNT.getValue());
     }
 }

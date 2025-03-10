@@ -4,14 +4,18 @@ import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
+import java.util.function.Consumer;
+
 public abstract class GameParticipant {
 
     protected final Cards hand;
     private final Nickname nickname;
+    private final Consumer<GameParticipant> handDisplay;
 
-    protected GameParticipant(Nickname nickname, Cards hand) {
+    protected GameParticipant(Nickname nickname, Cards hand, Consumer<GameParticipant> handDisplay) {
         this.nickname = nickname;
         this.hand = hand;
+        this.handDisplay = handDisplay;
     }
 
     public void drawCard(Card card) {
@@ -26,7 +30,9 @@ public abstract class GameParticipant {
         return GameRule.isBust(hand.calculateSum());
     }
 
-    public abstract Cards showHand();
+    public void showHand() {
+        this.handDisplay.accept(this);
+    }
 
     public abstract boolean shouldHit();
 

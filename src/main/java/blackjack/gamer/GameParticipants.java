@@ -20,18 +20,27 @@ public class GameParticipants {
     }
 
     public void processInitialDealing() {
+        List<GameParticipant> gameParticipants = getGameParticipants();
+
         for (int i = 0; i < GameRule.INITIAL_DEALING_CARD_COUNT.getValue(); i++) {
-            getGameParticipants().forEach(dealer::dealCard);
+            gameParticipants.forEach(dealer::dealCard);
         }
+        gameParticipants.forEach(GameParticipant::showHand);
     }
 
     public void processHit() {
-        getGameParticipants().forEach(participant -> {
+        players.forEach(participant -> {
                     while (participant.shouldHit()) {
                         dealer.dealCard(participant);
+                        participant.showHand();
                     }
                 }
         );
+
+        while (dealer.shouldHit()) {
+            dealer.dealCard(dealer);
+
+        }
     }
 
     public List<GameParticipant> getGameParticipants() {
