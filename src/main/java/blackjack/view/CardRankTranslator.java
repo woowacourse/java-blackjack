@@ -1,14 +1,13 @@
 package blackjack.view;
 
-
 import blackjack.common.ErrorMessage;
 import blackjack.domain.CardRank;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public final class CardRankTranslator {
 
-    private static final Map<CardRank, String> rankDescriptions = new HashMap<>();
+    private static final Map<CardRank, String> rankDescriptions = new EnumMap<>(CardRank.class);
 
     static {
         rankDescriptions.put(CardRank.TWO, "2");

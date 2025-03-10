@@ -23,10 +23,13 @@ public class Players {
     }
 
     private void validate(List<Player> players) {
-        if (players.size() > PLAYERS_VALID_SIZE) {
+        if (players.isEmpty()){
+            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
+        }
+
+        if (players.size() > PLAYERS_VALID_SIZE ) {
             throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
         }
     }
-
 
 }

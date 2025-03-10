@@ -9,6 +9,7 @@ public enum ErrorMessage {
     CAN_NOT_NULL("null일 수 는 없습니다."),
     INVALID_CONFIRMATION_INPUT("y, n만 입력 가능합니다."),
     EXCEED_PLAYER_MEMBERS("7명을 초과할 수 없습니다."),
+    NEED_PLAYER_MEMBERS("플레이어가 존재해야 합니다."),
     INVALID_CARD_INDEX("해당 위치에 카드를 가지고 있지 않습니다!"),
     USE_VALID_NAME("이름은 공백일 수 없습니다"),
     INVALID_TRANSLATE("잘못된 변환입니다.");

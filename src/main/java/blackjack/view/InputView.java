@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.common.ErrorMessage;
 import blackjack.domain.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,7 @@ public final class InputView {
 
     private static List<String> parseNames(String rawNames) {
         if (rawNames == null || rawNames.isBlank()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
         }
 
         return Arrays.stream(rawNames.split(",")).toList();
