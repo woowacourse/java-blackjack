@@ -6,13 +6,15 @@ import java.util.Stack;
 
 public class Deck {
 
+    public static final int DECK_SIZE = 52;
+
     private final Stack<Card> deck;
 
     public Deck() {
         deck = new Stack<>();
 
         int denominationLength = Denomination.values().length;
-        for (int i = 0; i < 52; i++) {
+        for (int i = 0; i < DECK_SIZE; i++) {
             Suit suit = Suit.values()[i / denominationLength];
             Denomination denomination = Denomination.values()[i % denominationLength];
             createDeckCards(suit, denomination);

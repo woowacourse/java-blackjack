@@ -2,7 +2,7 @@ package domain.card;
 
 public class Ace extends Card {
 
-    public Ace(Suit suit) {
+    public Ace(final Suit suit) {
         super(Denomination.ACE, suit);
     }
 

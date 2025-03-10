@@ -21,7 +21,7 @@ public class InputView {
         return playerNamesInput;
     }
 
-    private static void validatePlayerNames(String playerNamesInput) {
+    private static void validatePlayerNames(final String playerNamesInput) {
         if (!Pattern.matches(PLAYER_NAMES_INPUT_REGEX, playerNamesInput)) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAMES_INPUT);
         }

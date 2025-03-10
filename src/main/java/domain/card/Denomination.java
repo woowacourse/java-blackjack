@@ -17,9 +17,6 @@ public enum Denomination {
     QUEEN(10),
     KING(10);
 
-    private static final int ORIGINAL_ACE_VALUE = 11;
-    private static final int FACE_CARD_VALUE = 10;
-
     private final int score;
 
     Denomination(final int score) {

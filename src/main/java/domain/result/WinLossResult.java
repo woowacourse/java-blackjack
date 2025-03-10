@@ -9,11 +9,11 @@ public enum WinLossResult {
 
     private final String winLossMessage;
 
-    WinLossResult(String winLossMessage) {
+    WinLossResult(final String winLossMessage) {
         this.winLossMessage = winLossMessage;
     }
 
-    public static WinLossResult of(int winLossOption) {
+    public static WinLossResult of(final int winLossOption) {
         if (winLossOption == 1) {
             return WIN;
         }

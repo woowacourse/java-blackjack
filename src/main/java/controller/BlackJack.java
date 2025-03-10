@@ -24,7 +24,6 @@ public class BlackJack {
 
     private static final String DELIMITER = ",";
     private static final String YES = "y";
-    private static final String NO = "n";
 
     private final Dealer dealer = new Dealer();
 
@@ -101,7 +100,7 @@ public class BlackJack {
         return resolveBust(participant);
     }
 
-    private void printResult(Players players) {
+    private void printResult(final Players players) {
         Map<Player, WinLossResult> playerResults = new HashMap<>();
         for (Player player : players.getPlayers()) {
             playerResults.put(player, WinLossResult.of(player.getWinLoss(dealer.getHandTotal())));
