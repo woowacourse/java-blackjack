@@ -2,20 +2,17 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 import static util.ExceptionConstants.*;
-import static view.AnswerType.NO;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.ExceptionConstants;
 import view.AnswerType;
 
 public class CardGiverTest {
 
-    static class TestRandomGenerator implements RandomGenerator<Card> {
+    static class TestGenerator implements RandomGenerator<Card> {
         Card expectedCard1 = new Card(CardNumberType.FIVE, CardType.SPACE);
         Card expectedCard2 = new Card(CardNumberType.FIVE, CardType.SPACE);
         Card expectedCard3 = new Card(CardNumberType.SIX, CardType.CLOVER);
@@ -34,7 +31,7 @@ public class CardGiverTest {
     @Test
     void test1() {
         // given
-        RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
+        RandomGenerator<Card> randomGenerator = new TestGenerator();
         CardGiver cardGiver = new CardGiver(randomGenerator, GivenCards.createEmpty());
 
         Card expectedCard1 = new Card(CardNumberType.FIVE, CardType.SPACE);
@@ -51,7 +48,7 @@ public class CardGiverTest {
     @Test
     void test19() {
         // given
-        RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
+        RandomGenerator<Card> randomGenerator = new TestGenerator();
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < 51; i++) {
             cards.add(new Card(CardNumberType.ACE, CardType.DIAMOND));
@@ -69,7 +66,7 @@ public class CardGiverTest {
     @Test
     void test4() {
         //given
-        RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
+        RandomGenerator<Card> randomGenerator = new TestGenerator();
         GivenCards testGivenCards = GivenCards.createEmpty();
         testGivenCards.addUnique(new Card(CardNumberType.FIVE, CardType.SPACE));
         CardGiver cardGiver = new CardGiver(randomGenerator, testGivenCards);
@@ -83,7 +80,7 @@ public class CardGiverTest {
     @Test
     void test33() {
         //given
-        CardGiver cardGiver = new CardGiver(new TestRandomGenerator(), GivenCards.createEmpty());
+        CardGiver cardGiver = new CardGiver(new TestGenerator(), GivenCards.createEmpty());
         Dealer dealer = Dealer.createEmpty();
         Player player = new Player("mimi", Cards.createEmpty());
 
@@ -111,7 +108,7 @@ public class CardGiverTest {
         Player player = new Player("mimi", Cards.createEmpty());
         AnswerType answerType = AnswerType.YES;
 
-        CardGiver cardGiver = new CardGiver(new TestRandomGenerator(), GivenCards.createEmpty());
+        CardGiver cardGiver = new CardGiver(new TestGenerator(), GivenCards.createEmpty());
         //when
         cardGiver.giveAdditionalCard(player, answerType);
         //then
@@ -127,7 +124,7 @@ public class CardGiverTest {
         Player player = new Player("mimi", Cards.createEmpty());
         AnswerType answerType = AnswerType.NO;
 
-        CardGiver cardGiver = new CardGiver(new TestRandomGenerator(), GivenCards.createEmpty());
+        CardGiver cardGiver = new CardGiver(new TestGenerator(), GivenCards.createEmpty());
         //when
         cardGiver.giveAdditionalCard(player, answerType);
         //then
