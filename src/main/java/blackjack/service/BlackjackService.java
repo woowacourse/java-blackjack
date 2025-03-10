@@ -1,8 +1,5 @@
 package blackjack.service;
 
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
 import blackjack.domain.gamer.Dealer;
@@ -10,7 +7,6 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.dto.GamerDto;
 import blackjack.dto.request.NamesRequestDto;
-import blackjack.dto.request.SelectionRequestDto;
 import blackjack.dto.response.FinalResultResponseDto;
 import blackjack.dto.response.RoundResultsResponseDto;
 import blackjack.dto.response.StartingCardsResponseDto;
@@ -33,28 +29,27 @@ public class BlackjackService {
         return StartingCardsResponseDto.of(dealer, players);
     }
 
-    public void drawCards(
-        Function<String, SelectionRequestDto> readSelection,
-        Consumer<GamerDto> printAdditionalCard,
-        Consumer<String> printBustNotice
-    ) {
-        while(players.hasNext()) {
-            drawCardsForCurrentPlayer(readSelection, printAdditionalCard, printBustNotice);
-            players.next();
-        }
+    public boolean hasMorePlayer() {
+        return players.hasNext();
     }
 
-    private void drawCardsForCurrentPlayer(Function<String, SelectionRequestDto> readSelection, Consumer<GamerDto> printAdditionalCard,
-        Consumer<String> printBustNotice) {
-        Player currentPlayer = players.getCurrentPlayer();
-        while (readSelection.apply(currentPlayer.getName()).selection()) {
-            currentPlayer.drawCard(deck);
-            printAdditionalCard.accept(GamerDto.from(currentPlayer));
-            if (!currentPlayer.canReceiveAdditionalCards()) {
-                printBustNotice.accept(currentPlayer.getName());
-                break;
-            }
-        }
+    public String nextPlayerName() {
+        return players.next().getName();
+    }
+
+    public void drawCardFor(String playerName) {
+        Player player = players.findByName(playerName);
+        player.drawCard(deck);
+    }
+
+    public GamerDto getPlayerCards(String playerName) {
+        Player player = players.findByName(playerName);
+        return GamerDto.from(player);
+    }
+
+    public boolean canReceiveAdditionalCards(String playerName) {
+        Player player = players.findByName(playerName);
+        return player.canReceiveAdditionalCards();
     }
 
     public boolean dealerCanReceiveAdditionalCards() {

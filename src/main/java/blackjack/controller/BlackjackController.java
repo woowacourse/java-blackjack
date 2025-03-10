@@ -21,10 +21,21 @@ public class BlackjackController {
     }
 
     private void drawPlayerCards() {
-        blackjackService.drawCards(
-            InputView::readAdditionalCardSelection,
-            OutputView::printAdditionalCard,
-            OutputView::printBustNotice);
+        while (blackjackService.hasMorePlayer()) {
+            String nowPlayerName = blackjackService.nextPlayerName();
+            drawCardsFor(nowPlayerName);
+        }
+    }
+
+    private void drawCardsFor(String nowPlayerName) {
+        while (blackjackService.canReceiveAdditionalCards(nowPlayerName)
+            && InputView.readAdditionalCardSelection(nowPlayerName).selection()) {
+            blackjackService.drawCardFor(nowPlayerName);
+            OutputView.printAdditionalCard(blackjackService.getPlayerCards(nowPlayerName));
+        }
+        if (!blackjackService.canReceiveAdditionalCards(nowPlayerName)) {
+            OutputView.printBustNotice(nowPlayerName);
+        }
     }
 
     private void drawDealerCards() {
