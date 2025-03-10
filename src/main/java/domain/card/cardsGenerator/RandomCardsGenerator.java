@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RandomCardsGenerator implements CardsGenerator {
 
-    private static final List<Card> cards = createCards();
+    private static final List<Card> CARDS = createCards();
 
     private static List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
@@ -23,7 +23,7 @@ public class RandomCardsGenerator implements CardsGenerator {
 
     @Override
     public List<Card> generate() {
-        Collections.shuffle(cards);
-        return new ArrayList<>(cards);
+        Collections.shuffle(CARDS);
+        return new ArrayList<>(CARDS);
     }
 }
