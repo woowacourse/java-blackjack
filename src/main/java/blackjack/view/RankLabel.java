@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Rank;
 
-public enum KoreaRank {
+public enum RankLabel {
     ACE("A"),
     ONE("1"),
     TWO("2"),
@@ -20,12 +20,12 @@ public enum KoreaRank {
 
     private final String displayName;
 
-    KoreaRank(String displayName) {
+    RankLabel(String displayName) {
         this.displayName = displayName;
     }
 
-    public static KoreaRank fromRank(Rank rank) {
-        return KoreaRank.valueOf(rank.name());
+    public static RankLabel fromRank(Rank rank) {
+        return RankLabel.valueOf(rank.name());
     }
 
     public String getDisplayName() {

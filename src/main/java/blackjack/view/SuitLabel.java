@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Suit;
 
-public enum KoreaSuit {
+public enum SuitLabel {
     SPADE("스페이드"),
     CLUB("클로버"),
     HEART("하트"),
@@ -10,12 +10,12 @@ public enum KoreaSuit {
 
     private final String displayName;
 
-    KoreaSuit(String displayName) {
+    SuitLabel(String displayName) {
         this.displayName = displayName;
     }
 
-    public static KoreaSuit fromSuit(Suit suit) {
-        return KoreaSuit.valueOf(suit.name()); // Suit enum과 동일한 이름을 가정
+    public static SuitLabel fromSuit(Suit suit) {
+        return SuitLabel.valueOf(suit.name()); // Suit enum과 동일한 이름을 가정
     }
 
     public String getDisplayName() {

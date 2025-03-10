@@ -104,10 +104,10 @@ public class OutputView {
     }
 
     private static String toKoreaSuit(Suit suit) {
-        return KoreaSuit.fromSuit(suit).getDisplayName();
+        return SuitLabel.fromSuit(suit).getDisplayName();
     }
 
     private static String toKoreaRank(Rank rank) {
-        return KoreaRank.fromRank(rank).getDisplayName();
+        return RankLabel.fromRank(rank).getDisplayName();
     }
 }
