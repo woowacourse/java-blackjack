@@ -9,7 +9,7 @@ import java.util.List;
 public class GameManager {
 
     private static final int INITIAL_CARDS = 2;
-    public static final int DEALER_MIN_SCORE = 16;
+    public static final int DEALER_HIT_MIN_THRESHOLD = 16;
 
     private final Dealer dealer;
     private final Players players;
@@ -36,7 +36,7 @@ public class GameManager {
     }
 
     public boolean passCardToDealer() {
-        if (dealer.getScore() > DEALER_MIN_SCORE) {
+        if (dealer.getScore() > DEALER_HIT_MIN_THRESHOLD) {
             return false;
         }
         dealer.receive();
