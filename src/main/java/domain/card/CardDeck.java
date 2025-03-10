@@ -50,7 +50,7 @@ public class CardDeck {
 
     private void validateEmptyCardDeck() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException("카드 덱이 비었습니다.");
+            throw new IllegalArgumentException("[ERROR] 카드 덱이 비었습니다.");
         }
     }
 }
