@@ -25,11 +25,15 @@ public class GivenCards {
     }
 
     public boolean addUnique(Card randomCard) {
-        if (givenCards.contains(randomCard)) {
+        if (contains(randomCard)) {
             return false;
         }
         givenCards.add(randomCard);
         return true;
+    }
+
+    public boolean contains(Card randomCard) {
+        return givenCards.contains(randomCard);
     }
 
     public void checkEnoughUnique() {

@@ -1,16 +1,13 @@
 package domain;
 
-import static util.ExceptionConstants.*;
 import static view.AnswerType.NO;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import view.AnswerType;
 
 public class CardGiver {
     private static final int DEFAULT_CARD_GIVE_COUNT = 2;
-    private static final String NO_EXIST_CARD = "카드를 모두 나눠주었습니다.";
 
     private final RandomGenerator<Card> randomGenerator;
     private final GivenCards givenCards;
@@ -22,19 +19,28 @@ public class CardGiver {
 
     public Cards giveDefault() {
         givenCards.checkEnoughUnique();
-        List<Card> cards = Stream.generate(randomGenerator::generate)
-                .filter(givenCards::addUnique)
-                .limit(DEFAULT_CARD_GIVE_COUNT)
-                .collect(Collectors.toList());
-
+        List<Card> cards = new ArrayList<>();
+        while (cards.size() < DEFAULT_CARD_GIVE_COUNT) {
+            Card randomCard = randomGenerator.generate();
+            if (!givenCards.contains(randomCard)) {
+                cards.add(randomCard);
+                givenCards.addUnique(randomCard);
+            }
+        }
         return new Cards(cards);
     }
 
     public Card giveOne() {
-        return Stream.generate(randomGenerator::generate)
-                .filter(givenCards::addUnique)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(ERROR_HEADER + NO_EXIST_CARD));
+        givenCards.checkEnoughUnique();
+        Card card = null;
+        while (card == null) {
+            Card randomCard = randomGenerator.generate();
+            if (!givenCards.contains(randomCard)) {
+                givenCards.addUnique(randomCard);
+                card = randomCard;
+            }
+        }
+        return card;
     }
 
     public void giveDefaultTo(List<Participant> participants) {
