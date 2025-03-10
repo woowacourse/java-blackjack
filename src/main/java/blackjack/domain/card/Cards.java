@@ -24,11 +24,18 @@ public class Cards {
         int sum = cards.stream()
             .mapToInt(card -> card.number().getNumber())
             .sum();
-        if (hasAceCard()
-            && sum + ACE_NUMBER_DIFFERENCE <= MAX_SUM_OF_CARDS) {
-            return sum + ACE_NUMBER_DIFFERENCE;
+        if (hasAceCard() && canAceBeEleven(sum)) {
+            return sumWithAceAsEleven(sum);
         }
         return sum;
+    }
+
+    private static int sumWithAceAsEleven(int sum) {
+        return sum + ACE_NUMBER_DIFFERENCE;
+    }
+
+    private static boolean canAceBeEleven(int sum) {
+        return sumWithAceAsEleven(sum) <= MAX_SUM_OF_CARDS;
     }
 
     private boolean hasAceCard() {
