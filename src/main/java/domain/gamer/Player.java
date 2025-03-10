@@ -20,10 +20,8 @@ public class Player extends Gamer {
 
     @Override
     public int calculateSumOfRank() {
-        final Hand hand = getHand();
-
-        if (hand.hasAce()) {
-            final List<Card> cards = hand.getCards();
+        if (hasAce()) {
+            final List<Card> cards = getCards();
             final List<Integer> sumOfRanks = calculateAllSums(cards);
 
             return sumOfRanks.stream()
@@ -32,7 +30,7 @@ public class Player extends Gamer {
                     .orElseGet(() -> sumOfRanks.stream().min(Integer::compareTo).orElse(0));
         }
 
-        return hand.getSumOfRank();
+        return getSumOfRank();
     }
 
     private List<Integer> calculateAllSums(final List<Card> cards) {

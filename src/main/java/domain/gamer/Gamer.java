@@ -28,16 +28,20 @@ public abstract class Gamer {
         hand.add(card);
     }
 
+    public boolean hasAce() {
+        return hand.hasAce();
+    }
+
+    public int getSumOfRank() {
+        return hand.getSumOfRank();
+    }
+
     public String getDisplayName() {
         return nickname.getDisplayName();
     }
 
     public List<Card> getCards() {
         return hand.getCards();
-    }
-
-    protected Hand getHand() {
-        return hand;
     }
 
     @Override
