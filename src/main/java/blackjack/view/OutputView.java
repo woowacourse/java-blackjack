@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.WinningStatus;
+import blackjack.domain.BlackjackJudge;
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
@@ -19,23 +19,28 @@ public class OutputView {
         this.writer = writer;
     }
     
-    public void outputInitialCardOpeningMessage(List<String> names) {
+    public void outputInitialCards(final DealerBlackjackCardHand dealerHand, final List<PlayerBlackjackCardHand> playerHands) {
+        StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
+        sj.add(outputInitialCardOpeningMessage(extractPlayerNames(playerHands)));
+        sj.add(parseNameAndCards("딜러", dealerHand.getCards()));
+        for (PlayerBlackjackCardHand playerHand : playerHands) {
+            sj.add(parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards()));
+        }
+        writer.write(sj.toString());
+    }
+    
+    private List<String> extractPlayerNames(final List<PlayerBlackjackCardHand> playerHands) {
+        return playerHands.stream()
+                .map(PlayerBlackjackCardHand::getPlayerName)
+                .toList();
+    }
+    
+    private String outputInitialCardOpeningMessage(List<String> names) {
         StringJoiner sj = new StringJoiner(", ");
         for (String name : names) {
             sj.add(name);
         }
-        final String message = LINE_SEPARATOR + "딜러와 %s에게 2장을 나누었습니다.".formatted(sj.toString());
-        writer.write(message);
-    }
-    
-    public void outputDealerCards(List<Card> cards) {
-        String message = parseNameAndCards("딜러", cards);
-        writer.write(message);
-    }
-    
-    public void outputPlayerCards(PlayerBlackjackCardHand playerHand) {
-        String message = parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards());
-        writer.write(message);
+        return LINE_SEPARATOR + "딜러와 %s에게 2장을 나누었습니다.".formatted(sj.toString());
     }
     
     public void outputAddingMessage(String name) {
@@ -43,7 +48,7 @@ public class OutputView {
         writer.write(message);
     }
     
-    public void is21Warning() {
+    public void addTo21Warning() {
         writer.write("카드 총합이 21이기 때문에 더 받을 수 없습니다.");
     }
     
@@ -63,15 +68,16 @@ public class OutputView {
         }
     }
     
-    public void outputDealerCardsAndResult(DealerBlackjackCardHand dealerHand) {
-        String message = parseNameAndCards("딜러", dealerHand.getCards()) + parseFinalSum(dealerHand.getBlackjackSum());
-        writer.write(message);
-    }
-    
-    public void outputPlayerCardsAndResult(PlayerBlackjackCardHand playerHand) {
-        String message = parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards())
-                + parseFinalSum(playerHand.getBlackjackSum());
-        writer.write(message);
+    public void outputOpenCards(
+            final DealerBlackjackCardHand dealerHand,
+            final List<PlayerBlackjackCardHand> playerHands
+    ) {
+        StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
+        sj.add(parseNameAndCards("딜러", dealerHand.getCards()) + parseFinalSum(dealerHand.getBlackjackSum()));
+        for (PlayerBlackjackCardHand playerHand : playerHands) {
+            sj.add(parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards()) + parseFinalSum(playerHand.getBlackjackSum()));
+        }
+        writer.write(sj.toString());
     }
     
     private String parseNameAndCards(String name, List<Card> cards) {
@@ -99,19 +105,20 @@ public class OutputView {
         return " - 합계: %d".formatted(sum);
     }
 
-    public void outputFinalWinOrLossMessage() {
-        writer.write(LINE_SEPARATOR + "<최종 승패>");
-    }
-    
-    public void outputDealerFinalWinOrLoss(
-            int dealerWinningCount,
-            int dealerDrawingCount,
-            int dealerLosingCount
+    public void outputFinalWinOrLoss(
+            final BlackjackJudge judge,
+            final List<PlayerBlackjackCardHand> playerHands
     ) {
-        writer.write("딜러: %d승 %d무 %d패".formatted(dealerWinningCount, dealerDrawingCount, dealerLosingCount));
-    }
-    
-    public void outputPlayerFinalWinOrLoss(String name, WinningStatus winningStatus) {
-        writer.write("%s: %s".formatted(name, winningStatus.name()));
+        StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
+        sj.add(LINE_SEPARATOR + "<최종 승패>");
+        sj.add("딜러: %d승 %d무 %d패".formatted(
+                judge.getDealerWinningCount(),
+                judge.getDealerDrawingCount(),
+                judge.getDealerLosingCount()
+        ));
+        for (PlayerBlackjackCardHand playerHand : playerHands) {
+            sj.add("%s: %s".formatted(playerHand.getPlayerName(), judge.getWinningStatusOf(playerHand)));
+        }
+        writer.write(sj.toString());
     }
 }
