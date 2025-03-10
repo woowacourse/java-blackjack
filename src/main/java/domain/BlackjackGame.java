@@ -34,16 +34,14 @@ public class BlackjackGame {
     participants.initialDeal(deck);
   }
 
-  public RoundHistory round() {
-    final var roundResult = new RoundHistory();
+  public RoundHistory writeRoundHistory() {
     final Participant dealer = getDealer();
-    for (Participant player : getPlayers()) {
-      var name = player.getName();
-      var result = player.round(dealer);
-      roundResult.put(name, result);
-    }
+    final List<Participant> players = getPlayers();
+    return RoundHistory.of(dealer, players);
+  }
 
-    return roundResult;
+  public TrumpCard deal() {
+    return deck.draw();
   }
 
   public Participant getDealer() {
@@ -56,9 +54,5 @@ public class BlackjackGame {
 
   public List<Participant> getParticipants() {
     return participants.getParticipants();
-  }
-
-  public TrumpCard deal() {
-    return deck.draw();
   }
 }

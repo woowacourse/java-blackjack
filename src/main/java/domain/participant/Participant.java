@@ -53,7 +53,6 @@ public abstract class Participant {
     return score > dealerScore;
   }
 
-
   public Hand getHand() {
     return hand;
   }

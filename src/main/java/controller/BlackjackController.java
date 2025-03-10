@@ -100,14 +100,13 @@ public class BlackjackController {
 
   private void round(final BlackjackGame blackjack) {
     outputView.printRoundResultIntroduce();
-    final RoundHistory roundHistory = blackjack.round();
+    final RoundHistory roundHistory = blackjack.writeRoundHistory();
     final var dealerRoundHistory = roundHistory.getDealerResult();
     outputView.printRoundResultOnDealer(dealerRoundHistory);
-    Map<String, Boolean> history = roundHistory.history();
+    Map<String, Boolean> history = roundHistory.getHistory();
     for (String name : history.keySet()) {
       var result = PlayerResultText.convertBooleanToText(history.get(name));
       outputView.printRoundResultOnPlayers(name, result);
     }
   }
-
 }

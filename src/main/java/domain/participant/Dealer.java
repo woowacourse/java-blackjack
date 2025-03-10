@@ -31,4 +31,3 @@ public class Dealer extends Participant {
     return DEFAULT_NAME;
   }
 }
-

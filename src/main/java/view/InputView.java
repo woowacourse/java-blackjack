@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class InputView {
 
   private static final String NAME_DELIMITER = ",";
-
   private final Scanner sc;
 
   public InputView() {
