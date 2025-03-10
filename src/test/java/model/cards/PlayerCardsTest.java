@@ -44,9 +44,31 @@ class PlayerCardsTest {
         assertThatThrownBy(() -> cards.addCard(cardToAdd));
     }
 
+    @DisplayName("카드 계산 결과가 21을 초과하면 버스트이다.")
+    @Test
+    void bustTest() {
+        Cards cards = new PlayerCards(List.of(
+                new Card(CardNumber.THREE, CardShape.DIAMOND),
+                new Card(CardNumber.NINE, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.DIAMOND)
+        ));
+        assertThat(cards.isBust()).isTrue();
+    }
+
+    @DisplayName("카드 계산 결과가 21을 초과하지 않는다면 버스트가 아니다.")
+    @Test
+    void notBustTest() {
+        Cards cards = new PlayerCards(List.of(
+                new Card(CardNumber.THREE, CardShape.DIAMOND),
+                new Card(CardNumber.NINE, CardShape.CLOVER),
+                new Card(CardNumber.NINE, CardShape.DIAMOND)
+        ));
+        assertThat(cards.isBust()).isFalse();
+    }
+
     @DisplayName("카드의 숫자 계산은 카드 문양이 아닌 카드 숫자로 한다.")
     @Test
-    void test1() {
+    void calculateResultTest() {
         Cards cards = new PlayerCards(List.of(
                 new Card(CardNumber.THREE, CardShape.DIAMOND),
                 new Card(CardNumber.NINE, CardShape.CLOVER),
@@ -57,7 +79,7 @@ class PlayerCardsTest {
 
     @DisplayName("Ace는 카드의 합이 21을 초과하기 전까지는 11로 계산한다.")
     @Test
-    void test2() {
+    void calculateResultWithAceEleven() {
         Cards cards = new PlayerCards(List.of(
                 new Card(CardNumber.ACE_ELEVEN, CardShape.DIAMOND),
                 new Card(CardNumber.NINE, CardShape.CLOVER)
@@ -68,7 +90,7 @@ class PlayerCardsTest {
 
     @DisplayName("예외로 Ace는 카드의 합이 21을 초과하면 1로 계산한다.")
     @Test
-    void test3() {
+    void calculateResultWithAceOne() {
         Cards cards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.ACE_ELEVEN, CardShape.DIAMOND),
                 new Card(CardNumber.NINE, CardShape.CLOVER),
@@ -80,7 +102,7 @@ class PlayerCardsTest {
 
     @DisplayName("예외로 Ace는 카드의 합이 21을 초과하면 1로 계산한다.")
     @Test
-    void test4() {
+    void calculateResultWithAceOneOver21() {
         Cards cards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.ACE_ELEVEN, CardShape.DIAMOND),
                 new Card(CardNumber.ACE_ELEVEN, CardShape.SPADE),
