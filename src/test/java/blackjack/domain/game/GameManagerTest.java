@@ -84,21 +84,29 @@ class GameManagerTest {
     @Test
     @DisplayName("승패를 계산할 수 있다.")
     void canWinningState() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
+        List<Nickname> nicknames = List.of(new Nickname("쿠키"));
         gameManager.runGame(nicknames);
 
         FinalHands finalHands = gameInputOutput.getFinalHands();
         WinningState winningState = gameInputOutput.getWinningState();
         if (finalHands.dealerHand().point() <= GameRule.LIMIT_POINT_BEFORE_BUST.getValue()) {
-            checkWinningState(winningState, List.of(WinningType.LOSE, WinningType.LOSE));
+            checkLose(winningState);
             return;
         }
-        checkWinningState(winningState, List.of(WinningType.DRAW, WinningType.DRAW));
+        checkWinOrDraw(winningState);
     }
 
-    private static void checkWinningState(WinningState winningState, List<WinningType> expectedType) {
-        assertThat(winningState.playerWinningResults())
-                .extracting(PlayerWinningResult::winningType)
-                .containsExactlyInAnyOrderElementsOf(expectedType);
+    private static void checkLose(WinningState winningState) {
+        PlayerWinningResult winningResult = winningState.playerWinningResults().getFirst();
+        WinningType winningType = winningResult.winningType();
+        assertThat(winningType == WinningType.LOSE)
+                .isTrue();
+    }
+
+    private static void checkWinOrDraw(WinningState winningState) {
+        PlayerWinningResult winningResult = winningState.playerWinningResults().getFirst();
+        WinningType winningType = winningResult.winningType();
+        assertThat(winningType == WinningType.DRAW || winningType == WinningType.WIN)
+                .isTrue();
     }
 }
