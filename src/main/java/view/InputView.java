@@ -4,11 +4,17 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    public String getPlayerNames() {
+    private static final String NAME_DELIMITER = ",";
+
+    public InputView(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public String[] getPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)");
-        return scanner.nextLine();
+        return scanner.nextLine().split(NAME_DELIMITER);
     }
 
     public String askReceive(String name) {

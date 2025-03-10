@@ -39,8 +39,7 @@ public class BlackjackController {
     }
 
     private Players initParticipants() {
-        String rawNames = inputView.getPlayerNames();
-        List<Player> players = Arrays.stream(rawNames.split(","))
+        List<Player> players = Arrays.stream(inputView.getPlayerNames())
                 .map(String::trim)
                 .map(Player::of)
                 .toList();
