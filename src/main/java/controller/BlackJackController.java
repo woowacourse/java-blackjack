@@ -28,7 +28,7 @@ public class BlackJackController {
             final Players players = createPlayers();
             final Deck deck = generateDeck();
             final Dealer dealer = setupDealer(deck);
-
+            setGame(players.getPlayers(), deck);
             printInitialGameState(dealer, players);
             playGame(dealer, players.getPlayers(), deck);
             showResults(dealer, players.getPlayers());
@@ -73,6 +73,14 @@ public class BlackJackController {
     private Dealer generateDealer() {
         return new Dealer(new Nickname(DEALER_NAME));
     }
+    
+    private void setGame(final List<Player> players, final Deck deck) {
+        players.forEach(player -> {
+            final Card firstCard = deck.drawCard();
+            final Card secondCard = deck.drawCard();
+            player.receiveInitialCards(List.of(firstCard, secondCard));
+        });
+    }
 
     private void printInitialGameState(final Dealer dealer, final Players players) {
         final List<Player> playerGroup = players.getPlayers();
@@ -84,17 +92,8 @@ public class BlackJackController {
     }
 
     private void playGame(final Dealer dealer, final List<Player> players, final Deck deck) {
-        setGame(players, deck);
         processPlayerHit(players, deck);
         processDealerHit(dealer, deck);
-    }
-
-    private void setGame(final List<Player> players, final Deck deck) {
-        players.forEach(player -> {
-            final Card firstCard = deck.drawCard();
-            final Card secondCard = deck.drawCard();
-            player.receiveInitialCards(List.of(firstCard, secondCard));
-        });
     }
 
     private void processPlayerHit(final List<Player> players, final Deck deck) {
@@ -108,7 +107,7 @@ public class BlackJackController {
 
     private static boolean isNotMoreCard(final Deck deck, final Player player) {
         final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
-        if (Command.isYes(input)) {
+        if (Command.find(input).equals(Command.YES)) {
             final Card card = deck.drawCard();
             player.hit(card);
         }
@@ -119,11 +118,12 @@ public class BlackJackController {
             return true;
         }
 
-        return Command.isNo(input);
+        return Command.find(input).equals(Command.NO);
     }
 
     private static void processAdditionalHit(final Deck deck, final Player player) {
-        while (Command.isYes(InputView.readQuestOneMoreCard(player.getDisplayName()))) {
+        String input = InputView.readQuestOneMoreCard(player.getDisplayName());
+        while (Command.find(input).equals(Command.YES)) {
             final Card card = deck.drawCard();
             player.hit(card);
             OutputView.printCardsInHand(player.getDisplayName(), player.getCards());

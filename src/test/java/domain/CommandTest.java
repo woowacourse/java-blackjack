@@ -31,7 +31,7 @@ class CommandTest {
         // given
 
         //when & then
-        assertThat(Command.isYes(input)).isEqualTo(expected);
+        assertThat(Command.find(input).equals(Command.YES)).isEqualTo(expected);
     }
 
     @DisplayName("N이 입력되면 true 아니면 false를 반환한다.")
@@ -44,7 +44,7 @@ class CommandTest {
         // given
 
         //when & then
-        assertThat(Command.isNo(input)).isEqualTo(expected);
+        assertThat(Command.find(input).equals(Command.NO)).isEqualTo(expected);
     }
 }
 

@@ -14,23 +14,9 @@ public enum Command {
 
     public static Command find(final String input) {
         return Arrays.stream(Command.values())
-                .filter(command -> command.getDisplayCommand().equals(input))
+                .filter(command -> command.getDisplayCommand().equals(input.toUpperCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
-    }
-
-    public static boolean isYes(final String input) {
-        return Command
-                .YES
-                .getDisplayCommand()
-                .equals(input.toUpperCase());
-    }
-
-    public static boolean isNo(final String input) {
-        return Command
-                .NO
-                .getDisplayCommand()
-                .equals(input.toUpperCase());
     }
 
     public String getDisplayCommand() {
