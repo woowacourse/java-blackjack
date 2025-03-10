@@ -4,15 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum ResultStatus {
-    WIN("승"),
-    LOSE("패"),
-    PUSH("무승부");
-
-    private final String status;
-
-    ResultStatus(String status) {
-        this.status = status;
-    }
+    WIN,
+    LOSE,
+    PUSH;
 
     public static Map<Participant, ResultStatus> judgeGameResult(Participants participants) {
         Map<Participant, ResultStatus> result = new HashMap<>();
