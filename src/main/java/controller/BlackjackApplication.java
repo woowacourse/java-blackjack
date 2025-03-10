@@ -32,7 +32,7 @@ public class BlackjackApplication {
     }
 
     public void execute() {
-        final Dealer dealer = Dealer.createEmpty();;
+        final Dealer dealer = Dealer.createEmpty();
         final Players players = initializePlayers();
 
         initializeParticipantCards(dealer, players);
