@@ -46,11 +46,11 @@ class BlackJackGameTest {
             // then
             assertSoftly(softly -> {
                 softly.assertThat(players.getFirst().getName()).isEqualTo("Alice");
-                softly.assertThat(players.getFirst().getHand()).isEqualTo(
-                        new Hand(List.of(originalDeck.draw(), originalDeck.draw())));
+                softly.assertThat(players.getFirst().retrieveCards()).isEqualTo(
+                        List.of(originalDeck.draw(), originalDeck.draw()));
                 softly.assertThat(players.getLast().getName()).isEqualTo("Bob");
-                softly.assertThat(players.getLast().getHand()).isEqualTo(
-                        new Hand(List.of(originalDeck.draw(), originalDeck.draw())));
+                softly.assertThat(players.getLast().retrieveCards()).isEqualTo(
+                        List.of(originalDeck.draw(), originalDeck.draw()));
             });
         }
 
@@ -63,7 +63,7 @@ class BlackJackGameTest {
             Player player = new Player("Alice", new Hand(cards));
 
             // when
-            boolean result = blackJackGame.isPlayerHitAllowed(player.getHand().getCards());
+            boolean result = blackJackGame.isPlayerHitAllowed(player.retrieveCards());
 
             // then
             assertThat(result).isTrue();
@@ -89,7 +89,7 @@ class BlackJackGameTest {
             blackJackGame.processPlayerHit(player);
 
             // then
-            assertThat(player.getHand().getCards()).hasSize(3);
+            assertThat(player.retrieveCards()).hasSize(3);
         }
 
         @Test
@@ -97,13 +97,13 @@ class BlackJackGameTest {
         void processDealerHit() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            int initialCards = dealer.getHand().getCards().size();
+            int initialCards = dealer.retrieveCards().size();
 
             // when
             int hitCount = blackJackGame.processDealerHit();
 
             // then
-            assertThat(dealer.getHand().getCards()).hasSize(initialCards + hitCount);
+            assertThat(dealer.retrieveCards()).hasSize(initialCards + hitCount);
         }
 
         @Test

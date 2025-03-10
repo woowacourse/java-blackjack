@@ -67,22 +67,20 @@ public class BlackJackGame {
     }
 
     public void processPlayerHit(Player player) {
-        Hand hand = player.getHand();
-        List<TrumpCard> cards = hand.getCards();
+        List<TrumpCard> cards = player.retrieveCards();
 
         if (!isPlayerHitAllowed(cards)) {
             throw new IllegalStateException("플레이어는 더이상 히트할 수 없습니다.");
         }
 
-        hand.addCard(deck.draw());
+        player.receiveCard(deck.draw());
     }
 
     public int processDealerHit() {
         int hitCount = 0;
-        Hand hand = dealer.getHand();
 
-        while (rule.isDealerHitAllowed(hand.getCards())) {
-            hand.addCard(deck.draw());
+        while (rule.isDealerHitAllowed(dealer.retrieveCards())) {
+            dealer.receiveCard(deck.draw());
             hitCount++;
         }
 
@@ -97,8 +95,8 @@ public class BlackJackGame {
         Map<String, GameResult> results = new HashMap<>();
 
         players.forEach(player -> {
-            List<TrumpCard> playerCards = player.getHand().getCards();
-            List<TrumpCard> dealerCards = dealer.getHand().getCards();
+            List<TrumpCard> playerCards = player.retrieveCards();
+            List<TrumpCard> dealerCards = dealer.retrieveCards();
 
             GameResult gameResult = rule.evaluateGameResult(playerCards, dealerCards);
 

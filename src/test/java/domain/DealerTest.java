@@ -22,12 +22,49 @@ class DealerTest {
                     TrumpCard.TWO_OF_SPADES
             );
             Hand hand = new Hand(cards);
-
-            // when
             Dealer dealer = new Dealer(hand);
 
+            // when
+            TrumpCard firstCard = dealer.retrieveFirstCard();
+
             // then
-            assertThat(dealer.retrieveFirstCard()).isEqualTo(TrumpCard.ACE_OF_SPADES);
+            assertThat(firstCard).isEqualTo(TrumpCard.ACE_OF_SPADES);
+        }
+
+        @DisplayName("딜러의 손패에서 카드를 가져온다.")
+        @Test
+        void retrieveCards() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES,
+                    TrumpCard.TWO_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+            Dealer dealer = new Dealer(hand);
+
+            // when
+            List<TrumpCard> retrievedCards = dealer.retrieveCards();
+
+            // then
+            assertThat(retrievedCards).isEqualTo(cards);
+        }
+
+        @DisplayName("딜러는 카드를 받아 손패에 추가한다.")
+        @Test
+        void receiveCard() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+            Dealer dealer = new Dealer(hand);
+
+            // when
+            dealer.receiveCard(TrumpCard.TWO_OF_SPADES);
+
+            // then
+            assertThat(dealer.retrieveCards()).isEqualTo(
+                    List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_SPADES));
         }
     }
 

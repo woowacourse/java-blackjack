@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Participant {
 
     protected final Hand hand;
@@ -19,7 +21,11 @@ public abstract class Participant {
         }
     }
 
-    public Hand getHand() {
-        return hand;
+    public void receiveCard(TrumpCard card) {
+        hand.addCard(card);
+    }
+
+    public List<TrumpCard> retrieveCards() {
+        return hand.getCards();
     }
 }

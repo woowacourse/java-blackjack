@@ -1,5 +1,6 @@
 package domain;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
@@ -12,7 +13,47 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PlayerTest {
 
     @Nested
-    class InvalidCase {
+    class ValidCases {
+
+        @DisplayName("플레이어의 손패에서 카드를 가져온다.")
+        @Test
+        void retrieveCards() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES,
+                    TrumpCard.TWO_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+            Player player = new Player("머피", hand);
+
+            // when
+            List<TrumpCard> retrievedCards = player.retrieveCards();
+
+            // then
+            assertThat(retrievedCards).isEqualTo(cards);
+        }
+
+        @DisplayName("플레이어는 카드를 받아 손패에 추가한다.")
+        @Test
+        void receiveCard() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+            Player player = new Player("머피", hand);
+
+            // when
+            player.receiveCard(TrumpCard.TWO_OF_SPADES);
+
+            // then
+            assertThat(player.retrieveCards()).isEqualTo(
+                    List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_SPADES));
+        }
+    }
+
+    @Nested
+    class InvalidCases {
 
         @ParameterizedTest
         @CsvSource(value = {

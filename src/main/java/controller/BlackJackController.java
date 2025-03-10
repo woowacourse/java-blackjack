@@ -4,6 +4,7 @@ import controller.dto.CardScoreDto;
 import domain.BlackJackGame;
 import domain.Dealer;
 import domain.GameResult;
+import domain.Participant;
 import domain.Player;
 import domain.Score;
 import domain.TrumpCard;
@@ -53,14 +54,14 @@ public class BlackJackController {
 
     private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
         return players.stream()
-                .collect(Collectors.toMap(Player::getName, player -> player.getHand().getCards()));
+                .collect(Collectors.toMap(Player::getName, Participant::retrieveCards));
     }
 
     private void executePlayerHit(Player player) {
-        while (blackJackGame.isPlayerHitAllowed(player.getHand().getCards()) &&
+        while (blackJackGame.isPlayerHitAllowed(player.retrieveCards()) &&
                 inputView.readProcessHit(player.getName())) {
             blackJackGame.processPlayerHit(player);
-            outputView.printPlayerCards(player.getName(), player.getHand().getCards());
+            outputView.printPlayerCards(player.getName(), player.retrieveCards());
         }
     }
 
@@ -78,7 +79,7 @@ public class BlackJackController {
     private Map<String, CardScoreDto> convertPlayerCardScoreDto(List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, player -> {
-                    List<TrumpCard> playerCards = player.getHand().getCards();
+                    List<TrumpCard> playerCards = player.retrieveCards();
                     Score score = blackJackGame.caculateScore(playerCards);
 
                     return new CardScoreDto(
@@ -88,7 +89,7 @@ public class BlackJackController {
     }
 
     private CardScoreDto convertDealerCardScoreDto(Dealer dealer) {
-        List<TrumpCard> dealerCards = dealer.getHand().getCards();
+        List<TrumpCard> dealerCards = dealer.retrieveCards();
         Score score = blackJackGame.caculateScore(dealerCards);
 
         return new CardScoreDto(dealerCards, score);
