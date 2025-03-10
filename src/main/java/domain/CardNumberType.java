@@ -31,7 +31,7 @@ public enum CardNumberType {
                 .toList();
     }
 
-    public static int getAceNumber(int restSum) {
+    public static int determineAceNumber(int restSum) {
         if(restSum <= ACE_HIGH_CONVERSION_THRESHOLD) {
             return CardNumberType.getAceHighNumber();
         }

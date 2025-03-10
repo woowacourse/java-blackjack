@@ -67,7 +67,7 @@ public class Cards {
     private int calculateSumWithAces(int aceCount, int cardsWithoutAceSum) {
         int result = cardsWithoutAceSum;
         for (int count = 0; count < aceCount; count++) {
-            result += getAceNumber(result);
+            result += determineAceNumber(result);
         }
         return result;
     }
