@@ -24,6 +24,10 @@ public class Card {
         return shape;
     }
 
+    public boolean isAce() {
+        return number.equals(CardNumber.ACE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,9 +39,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(number, shape);
-    }
-
-    public boolean isAce() {
-        return number.equals(CardNumber.ACE);
     }
 }
