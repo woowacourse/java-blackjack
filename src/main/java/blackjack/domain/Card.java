@@ -18,4 +18,8 @@ public record Card(Suit suit, Denomination denomination) {
     public static List<Card> values() {
         return new ArrayList<>(CACHE);
     }
+
+    public List<Integer> getDenominationNumber() {
+        return denomination.getValues();
+    }
 }

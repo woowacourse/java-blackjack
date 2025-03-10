@@ -41,8 +41,7 @@ public abstract class Participant {
 
     public int calculateDenominations() {
         int sum = cards.stream()
-            .map(Card::denomination)
-            .map(Denomination::getValues)
+            .map(Card::getDenominationNumber)
             .map(List::getFirst)
             .reduce(0, Integer::sum);
         if (hasACE()) {
