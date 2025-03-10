@@ -29,8 +29,6 @@ public abstract class Participant {
         return cards.calculateNearestTotal();
     }
 
-    public abstract boolean canReceiveCard();
-
     public String getNickname() {
         return nickname;
     }
@@ -42,4 +40,6 @@ public abstract class Participant {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
+
+    public abstract boolean canReceiveCard();
 }
