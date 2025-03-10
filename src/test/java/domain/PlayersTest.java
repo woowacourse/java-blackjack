@@ -41,6 +41,7 @@ public class PlayersTest {
 
         // when
         players.hitCard(cardDeck);
+        players.hitCard(cardDeck);
 
         // then
         assertSoftly(softly -> {

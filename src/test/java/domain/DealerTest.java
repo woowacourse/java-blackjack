@@ -35,7 +35,7 @@ public class DealerTest {
         // when
         dealer.hitCard(cardDeck);
         // then
-        assertThat(dealer.getHand().getCards().size()).isEqualTo(2);
+        assertThat(dealer.getHand().getCards().size()).isEqualTo(1);
     }
 
 
@@ -43,13 +43,13 @@ public class DealerTest {
     @DisplayName("카드 합계 테스트")
     void sumTest() {
         // given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO), new Card(HEART, TWO)));
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO)));
         Dealer dealer = new Dealer();
         dealer.hitCard(cardDeck);
         dealer.draw(cardDeck);
 
         // when-then
-        assertThat(dealer.sum()).isEqualTo(6);
+        assertThat(dealer.sum()).isEqualTo(4);
     }
 
     @Test
@@ -70,6 +70,7 @@ public class DealerTest {
     void drawTest(CardDeck cardDeck, int size) {
         // given
         Dealer dealer = new Dealer();
+        dealer.hitCard(cardDeck);
         dealer.hitCard(cardDeck);
 
         // when

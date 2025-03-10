@@ -32,21 +32,6 @@ import view.OutputView;
 
 public class PlayerTest {
     @Test
-    @DisplayName("카드 두 장 뽑기 테스트")
-    void hitCardsTest() {
-        // given
-        Player player = new Player("pobi");
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-
-        // when
-        player.hitCard(cardDeck);
-
-        // then
-        assertThat(player.getHand().getCards().size()).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("카드 합계 테스트")
     void sumTest() {
         // given
@@ -54,6 +39,7 @@ public class PlayerTest {
         Player player = new Player("pobi");
 
         // when
+        player.hitCard(cardDeck);
         player.hitCard(cardDeck);
 
         // then
@@ -95,6 +81,9 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
 
         player.hitCard(cardDeck);
+        player.hitCard(cardDeck);
+
+        dealer.hitCard(cardDeck);
         dealer.hitCard(cardDeck);
 
         // when-then
