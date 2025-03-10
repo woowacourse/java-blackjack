@@ -11,6 +11,8 @@ import blackjack.domain.deck.Deck;
 
 public abstract class Gamer {
 
+    public static int STARTING_CARDS_SIZE = 2;
+
     private final String name;
     protected final Cards cards = new Cards();
 
@@ -39,7 +41,7 @@ public abstract class Gamer {
     }
 
     public void initialize(Deck deck) {
-        drawCard(deck, 2);
+        drawCard(deck, STARTING_CARDS_SIZE);
     }
 
     public void drawCard(Deck deck) {

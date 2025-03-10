@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Players;
 import blackjack.dto.GamerDto;
 
@@ -15,7 +16,7 @@ public record StartingCardsResponseDto(
 
     public static StartingCardsResponseDto of(Dealer dealer, Players players) {
         return new StartingCardsResponseDto(
-            players.getPlayers().getFirst().getCardCount(),
+            Gamer.STARTING_CARDS_SIZE,
             GamerDto.dealerFrom(dealer),
             players.getPlayers().stream()
                 .map(GamerDto::from)
