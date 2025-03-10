@@ -26,6 +26,9 @@ public class CardPack {
     }
 
     public Card poll() {
+        if(cards.isEmpty()) {
+            initializeCardPack();
+        }
         return cards.removeFirst();
     }
 
