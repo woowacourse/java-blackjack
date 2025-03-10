@@ -2,7 +2,6 @@ package controller;
 
 import domain.BlackJackManager;
 import domain.BlackJackResultCalculator;
-import domain.Card;
 import domain.CardBundle;
 import domain.CardDeck;
 import domain.Dealer;
@@ -11,7 +10,6 @@ import domain.Participants;
 import domain.ParticipantsResult;
 import domain.Player;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import utils.InputSplitter;
 import view.InputView;
@@ -39,6 +37,7 @@ public class BlackJackController {
 
     private void giveStartingCardsToParticipants(BlackJackManager blackJackManager) {
         blackJackManager.giveStartingCardsToParticipants();
+        outputView.printInitialParticipantHandsMessage(blackJackManager.getPlayerNames());
         outputView.printInitialParticipantHands(blackJackManager.getParticipants());
     }
 
@@ -53,15 +52,13 @@ public class BlackJackController {
     }
 
     private void printAllParticipantsInfo(Participants participants) {
-        for (Participant participant : participants.getParticipants()) {
-            outputView.printFullParticipantInfo(participant);
-        }
+        outputView.printParticipantsFullInfo(participants.getParticipants());
     }
 
     private void processDealerCardReceiving(BlackJackManager blackJackManager) {
         while(blackJackManager.canDealerPick()) {
             blackJackManager.giveCardToDealer();
-            outputView.printDealerPickMessage();
+            outputView.printDealerReceivingCardMessage();
         }
         outputView.printBlankLine();
     }

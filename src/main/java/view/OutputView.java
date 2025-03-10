@@ -21,37 +21,39 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String SPREAD_NAME_RESULT = "%s카드: ";
-    private static final String SPREAD_CARD_RESULT = "%s%s";
-    private static final String SPREAD_PLAYER_MESSAGE = "%s에게 2장을 나누었습니다.";
-    private static final String RESULT_MESSAGE = "## 최종 승패";
+    public void printInitialParticipantHandsMessage(List<String> playerNames) {
+        System.out.println();
+        String joinedPlayerNames = String.join(", ", playerNames);
+        String result = String.format("딜러와 %s에게 2장을 나누었습니다.", joinedPlayerNames);
+        System.out.println(result);
+    }
 
     public void printInitialParticipantHands(List<Participant> participants) {
-        System.out.println();
-        System.out.print("딜러와 ");
-        String result = participants.stream().skip(1).map(Participant::getName)
-            .collect(Collectors.joining(", "));
-        System.out.print(SPREAD_PLAYER_MESSAGE.formatted(result));
-        System.out.println();
-
         for (Participant participant : participants) {
-            System.out.print(SPREAD_NAME_RESULT.formatted(participant.getName()));
-
-            List<Card> shownCard = participant.getShownCard();
-            String cardMessage = shownCard.stream().map(this::formatCard)
-                .collect(Collectors.joining(", "));
-            System.out.println(cardMessage);
+            String playerNameAndShownCards = formatInitialParticipantHands(participant);
+            System.out.println(playerNameAndShownCards);
         }
         System.out.println();
     }
 
-    private String formatCard(Card card) {
-        return String.format(SPREAD_CARD_RESULT, formatCardRank(card.rank()),
-            formatCardShape(card.shape()));
+    private String formatInitialParticipantHands(Participant participant) {
+        String playerName = participant.getName();
+        List<Card> cards = participant.getShownCard();
+        String cardMessage = cards.stream()
+                .map(this::formatCard)
+                .collect(Collectors.joining(", "));
+        return String.format("%s카드: %s", playerName, cardMessage);
     }
 
-    public void printDealerPickMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    private String formatCards(List<Card> cards) {
+        return cards.stream()
+                .map(this::formatCard)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String formatCard(Card card) {
+        return String.format("%s%s", formatCardRank(card.rank()),
+                formatCardShape(card.shape()));
     }
 
     private String formatCardRank(Rank rank) {
@@ -86,46 +88,56 @@ public class OutputView {
         return "";
     }
 
+    public void printDealerReceivingCardMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
     public void printParticipantHand(String playerName, List<Card> cards) {
-        System.out.print(SPREAD_NAME_RESULT.formatted(playerName));
+        String playerNameAndCards = formatParticipantHand(playerName, cards);
+        System.out.println(playerNameAndCards);
+    }
+
+    private String formatParticipantHand(String playerName, List<Card> cards) {
         String cardMessage = formatCards(cards);
-        System.out.println(cardMessage);
+        return String.format("%s카드: %s", playerName, cardMessage);
     }
 
-    public void printFullParticipantInfo(Participant participant) {
-        System.out.println(formatFullParticipantInfo(participant));
+    public void printParticipantsFullInfo(List<Participant> participants) {
+        for (Participant participant : participants) {
+            printParticipantFullInfo(participant);
+        }
+        System.out.println();
     }
 
-    private String formatFullParticipantInfo(Participant participant) {
+    public void printParticipantFullInfo(Participant participant) {
+        String playerNameAndCardsAndTotalValue = formatParticipantFullInfo(participant);
+        System.out.println(playerNameAndCardsAndTotalValue);
+    }
+
+    private String formatParticipantFullInfo(Participant participant) {
         String name = participant.getName();
         String cardsMessage = formatCards(participant.getCards());
         int totalValue = participant.getTotalValue();
         return String.format("%s카드: %s - 결과: %d", name, cardsMessage, totalValue);
     }
 
-    private String formatCards(List<Card> cards) {
-        return cards.stream().map(this::formatCard).collect(Collectors.joining(", "));
+    public void printGameResult(ParticipantsResult participantsResult) {
+        System.out.println("## 최종 승패");
+        String dealerResultMessage = formatDealerResultMessage(participantsResult.dealerResult()
+                .getDealerResult());
+        System.out.println(dealerResultMessage);
+
+        for (PlayerResult playerResult : participantsResult.playerResults()) {
+            String playerGameResult = formatPlayerGameResult(playerResult);
+            System.out.println(playerGameResult);
+        }
     }
 
-    public void printGameResult(ParticipantsResult participantsResult) {
-        System.out.println();
-        System.out.println(RESULT_MESSAGE);
-        Map<GameResult, Integer> dealerResult = participantsResult.dealerResult().getDealerResult();
-        String dealerName = "딜러: ";
-        System.out.print(dealerName);
-        String dealerWinMessage = formatDealerWinMessage(dealerResult.get(WIN));
-        System.out.print(dealerWinMessage);
-        String dealerLoseMessage = formatDealerLoseMessage(dealerResult.get(LOSE));
-        System.out.print(dealerLoseMessage);
-        String dealerDrawMessage = formatDealerDrawMessage(dealerResult.get(DRAW));
-        System.out.print(dealerDrawMessage);
-        System.out.println();
-
-        List<PlayerResult> playerResults = participantsResult.playerResults();
-        for (PlayerResult playerResult : playerResults) {
-            System.out.printf("%s: %s%n", playerResult.getPlayerName(),
-                formatGameResult(playerResult.getGameResult()));
-        }
+    private String formatDealerResultMessage(Map<GameResult, Integer> dealerResult) {
+        return String.format("딜러: %s%s%s",
+                formatDealerWinMessage(dealerResult.get(WIN)),
+                formatDealerLoseMessage(dealerResult.get(LOSE)),
+                formatDealerDrawMessage(dealerResult.get(DRAW)));
     }
 
     private String formatDealerWinMessage(Integer integer) {
@@ -147,6 +159,11 @@ public class OutputView {
             return "";
         }
         return String.format("%d무 ", integer);
+    }
+
+    private String formatPlayerGameResult(PlayerResult playerResult) {
+        return String.format("%s: %s", playerResult.getPlayerName(),
+                formatGameResult(playerResult.getGameResult()));
     }
 
     private String formatGameResult(GameResult gameResult) {
