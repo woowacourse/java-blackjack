@@ -4,7 +4,6 @@ import domain.BlackjackManager;
 import domain.Dealer;
 import domain.Deck;
 import domain.DeckGenerator;
-import domain.MatchResult;
 import domain.MatchResultCalculator;
 import domain.Participant;
 import domain.Player;
@@ -12,7 +11,6 @@ import domain.Players;
 import domain.dto.NameAndCards;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
@@ -29,32 +27,33 @@ public class BlackjackController {
 
     private void distributeInitialCards(BlackjackManager blackjackManager) {
         blackjackManager.distributeInitialCards();
-        OutputView.printInitialCards(NameAndCards.toNameAndOpenedCards(blackjackManager.getDealer()),
-                NameAndCards.toNameAndCards(blackjackManager.getParticipants()));
+        OutputView.printInitialCards(
+                NameAndCards.toNameAndOpenedCards(blackjackManager.getDealer()),
+                NameAndCards.toNameAndCards(blackjackManager.getParticipants())
+        );
     }
 
     private void addMoreCards(BlackjackManager blackjackManager) {
         List<Player> participants = blackjackManager.getParticipants();
         for (Player participant : participants) {
-            addMoreCardsByName(blackjackManager, participant);
+            addMoreCards(blackjackManager, participant);
         }
 
-        boolean isAdded = blackjackManager.addCardToDealerIfLowScore();
-        if (isAdded) {
+        if (blackjackManager.addCardToDealerIfLowScore()) {
             OutputView.printAddCardToDealer();
         }
     }
 
-    private void addMoreCardsByName(BlackjackManager blackjackManager, Player participant) {
+    private void addMoreCards(BlackjackManager blackjackManager, Player participant) {
         YesOrNo yesOrNo;
         do {
             yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participant.getName()));
-            addOneCardByNameIfYes(blackjackManager, participant, yesOrNo);
+            addOneCardIfYes(blackjackManager, participant, yesOrNo);
             OutputView.printPlayerCards(NameAndCards.toNameAndCards(participant));
         } while (yesOrNo == YesOrNo.YES);
     }
 
-    private void addOneCardByNameIfYes(BlackjackManager blackjackManager, Player participant, YesOrNo yesOrNo) {
+    private void addOneCardIfYes(BlackjackManager blackjackManager, Player participant, YesOrNo yesOrNo) {
         if (yesOrNo == YesOrNo.YES) {
             blackjackManager.addOneCard(participant);
         }
@@ -63,14 +62,11 @@ public class BlackjackController {
     private void printGameResult(BlackjackManager blackjackManager) {
         final Dealer dealer = blackjackManager.getDealer();
         final List<Player> participants = blackjackManager.getParticipants();
-
         OutputView.printPlayersCardsAndSum(NameAndCards.toNameAndCards(dealer),
                 NameAndCards.toNameAndCards(participants), blackjackManager.getNameAndSumOfAllPlayers());
 
-        Map<Player, MatchResult> participantsMatchResult
-                = MatchResultCalculator.computeParticipantsMatchResult(dealer, participants);
-        Map<MatchResult, Integer> dealerMathResultCount
-                = MatchResultCalculator.computeDealerMatchResultCount(participantsMatchResult);
+        final var participantsMatchResult = MatchResultCalculator.computeParticipantsMatchResult(dealer, participants);
+        final var dealerMathResultCount = MatchResultCalculator.computeDealerMatchResultCount(participantsMatchResult);
         OutputView.printGameResult(blackjackManager.getDealerName(),
                 dealerMathResultCount, participantsMatchResult);
     }
