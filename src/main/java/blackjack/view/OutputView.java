@@ -2,6 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 import blackjack.domain.card.WinningResult;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
@@ -18,8 +20,8 @@ public class OutputView {
         System.out.println();
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
         System.out.println("딜러카드: " +
-                dealerCards.getCards().getFirst().getRank().getDescription() +
-                dealerCards.getCards().getFirst().getSuit().getDescription()
+                toKoreanRank(dealerCards.getCards().getFirst().getRank()) +
+                toKoreanSuit(dealerCards.getCards().getFirst().getSuit())
         );
         for (Player player : players) {
             printPlayerCards(player);
@@ -53,8 +55,8 @@ public class OutputView {
 
     private static String toKoreanCards(Cards dealerCards) {
         return dealerCards.getCards().stream()
-                .map(card -> card.getRank().getDescription() +
-                        card.getSuit().getDescription())
+                .map(card ->
+                        toKoreanRank(card.getRank()) + toKoreanSuit(card.getSuit()))
                 .collect(Collectors.joining(", "));
     }
 
@@ -85,6 +87,14 @@ public class OutputView {
             System.out.printf(" %d패", dealerVictoryResults.get(WinningResult.LOSE));
         }
         System.out.println();
+    }
+
+    private static String toKoreanRank(Rank rank) {
+        return RankDescription.from(rank).getDescription();
+    }
+
+    private static String toKoreanSuit(Suit suit) {
+        return SuitDescription.from(suit).getDescription();
     }
 
     private static String toKoreanWinningResult(WinningResult winningResult) {
