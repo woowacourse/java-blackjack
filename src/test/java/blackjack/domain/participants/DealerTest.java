@@ -117,7 +117,7 @@ public class DealerTest {
         //given
         Player pobi = new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator()));
         Player neo = new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator()));
-        Player surf = new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Player surf = new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator()));
         Players players = new Players(List.of(pobi, surf));
         Deque<Card> cards = new ArrayDeque<>(List.of(
                 new Card(Suit.CLUB, Rank.FIVE),

@@ -36,7 +36,7 @@ class PlayerTest {
 
         //when & then
         assertThatThrownBy(() -> player.send(card))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
     }
 
