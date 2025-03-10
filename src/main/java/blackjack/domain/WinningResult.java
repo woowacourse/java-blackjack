@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import static blackjack.domain.BlackjackConstants.BUST_THRESHOLD;
+
+import static blackjack.domain.BlackjackRules.BUST_THRESHOLD;
 
 import blackjack.domain.card.Cards;
 import java.util.Arrays;

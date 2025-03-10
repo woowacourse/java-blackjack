@@ -8,7 +8,8 @@ import blackjack.domain.card.ScoreCalculator;
 import java.util.ArrayList;
 
 public class Dealer {
-
+    public final int BUST_THRESHOLD = 21;
+    public final int DEFAULT_CARD_SIZE = 2;
     private final Players players;
     private final Deck deck;
     private final Cards cards;

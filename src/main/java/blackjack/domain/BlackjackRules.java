@@ -1,12 +1,12 @@
 package blackjack.domain;
 
-public enum BlackjackConstants {
+public enum BlackjackRules {
     BUST_THRESHOLD(21),
     DEFAULT_CARD_SIZE(2);
 
     private final int symbol;
 
-    BlackjackConstants(int symbol) {
+    BlackjackRules(int symbol) {
         this.symbol = symbol;
     }
 
