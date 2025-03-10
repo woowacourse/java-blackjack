@@ -1,5 +1,10 @@
 package blackjack.model.participant;
 
+import static blackjack.model.RuleConstants.BLACKJACK_HAND_COUNT;
+import static blackjack.model.RuleConstants.BLACKJACK_VALUE_TOTAL;
+import static blackjack.model.RuleConstants.SOFT_ACE_VALUE;
+import static blackjack.model.RuleConstants.SOFT_HAND_AVAILABLE_THRESHOLD;
+
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import java.util.ArrayList;
@@ -7,11 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-
-    private static final int BLACKJACK_HAND_COUNT = 2;
-    private static final int BLACKJACK_VALUE_TOTAL = 21;
-    private static final int SOFT_ACE_VALUE = 11;
-    private static final int SOFT_HAND_AVAILABLE_THRESHOLD = 10;
 
     protected final List<Card> hand;
 

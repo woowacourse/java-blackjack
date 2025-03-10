@@ -3,7 +3,6 @@ package blackjack.model.participant;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.TestFixtures;
-import blackjack.model.Players;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

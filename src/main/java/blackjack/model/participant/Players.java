@@ -1,6 +1,5 @@
-package blackjack.model;
+package blackjack.model.participant;
 
-import blackjack.model.participant.Player;
 import java.util.List;
 import java.util.Set;
 

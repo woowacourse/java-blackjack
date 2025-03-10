@@ -1,12 +1,12 @@
 package blackjack.model.participant;
 
+import static blackjack.model.RuleConstants.DEALER_HIT_THRESHOLD;
+
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
 import java.util.ArrayList;
 
 public class Dealer extends Participant {
-
-    public static final int DEALER_HIT_THRESHOLD = 16;
 
     private final Deck deck;
 
