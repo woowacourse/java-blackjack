@@ -19,9 +19,9 @@ class HandTest {
     @ParameterizedTest
     @MethodSource("getCardList")
     @DisplayName("모든 Card의 점수 합을 올바르게 계산한다.")
-    void test_calculateAllScore(List<TrumpCard> cards, int expected) {
+    void test_calculateAllScore(final List<TrumpCard> cards, final int expected) {
       //given
-      var cardHand = new Hand(cards);
+      final var cardHand = new Hand(cards);
 
       //when&then
       Assertions.assertThat(cardHand.calculateScore()).isEqualTo(expected);

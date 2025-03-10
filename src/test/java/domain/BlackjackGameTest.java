@@ -44,7 +44,7 @@ class BlackjackGameTest {
       //when
       blackjack.initialDeal();
       //then
-      var participants = blackjack.getParticipants();
+      final var participants = blackjack.getParticipants();
       var counts = participants.stream()
           .map(Participant::getHandCount)
           .distinct()

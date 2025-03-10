@@ -22,7 +22,7 @@ public class DeckTest {
     @ParameterizedTest
     @CsvSource({"1, 52", "2, 104"})
     @DisplayName("요청한 수에 비례하여, 52개의 트럼프카드 덱을 생성한다.")
-    void test_createDecks(int numberOfDeck, int expected) {
+    void test_createDecks(final int numberOfDeck, final int expected) {
       // given
       final var deck = Deck.createDecks(numberOfDeck);
       // when & then

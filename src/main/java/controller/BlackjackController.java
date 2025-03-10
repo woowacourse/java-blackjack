@@ -9,7 +9,6 @@ import domain.card.TrumpCard;
 import domain.participant.Participant;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -46,9 +45,9 @@ public class BlackjackController {
     outputView.printDealIntroduce(playerNames);
 
     blackjack.initialDeal();
-    outputDealerInitialDealResult(blackjack);
 
-    List<Entry<String, List<String>>> convertedPlayers = converter.playersToEntries(players);
+    outputDealerInitialDealResult(blackjack);
+    final var convertedPlayers = converter.playersToEntries(players);
     outputView.printPlayersHand(convertedPlayers);
   }
 
@@ -60,16 +59,16 @@ public class BlackjackController {
   }
 
   private void deal(final BlackjackGame blackjack) {
-    playerPickCard(blackjack);
-    dealerPickCard(blackjack);
+    hitByPlayer(blackjack);
+    hitByDealer(blackjack);
   }
 
-  private void playerPickCard(final BlackjackGame blackjack) {
+  private void hitByPlayer(final BlackjackGame blackjack) {
     final var players = blackjack.getPlayers();
-    players.forEach(player -> ifCanPickCard(blackjack, player));
+    players.forEach(player -> ifCanHit(blackjack, player));
   }
 
-  private void ifCanPickCard(final BlackjackGame blackjack, Participant player) {
+  private void ifCanHit(final BlackjackGame blackjack, final Participant player) {
     final var name = player.getName();
     while (player.isHit() && inputView.readPlayerAnswer(name)) {
       final var card = blackjack.deal();
@@ -78,7 +77,7 @@ public class BlackjackController {
     }
   }
 
-  private void dealerPickCard(final BlackjackGame blackjack) {
+  private void hitByDealer(final BlackjackGame blackjack) {
     final var dealer = blackjack.getDealer();
 
     while (dealer.isHit()) {
