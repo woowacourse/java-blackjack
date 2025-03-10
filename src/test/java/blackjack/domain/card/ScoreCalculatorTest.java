@@ -17,7 +17,6 @@ public class ScoreCalculatorTest {
                 new Card(Suit.DIAMOND, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
 
@@ -25,7 +24,7 @@ public class ScoreCalculatorTest {
         int score = scoreCalculator.calculateMaxScore(cards);
 
         //then
-        Assertions.assertThat(score).isEqualTo(21);
+        Assertions.assertThat(score).isEqualTo(20);
     }
 
     @Test
@@ -35,9 +34,7 @@ public class ScoreCalculatorTest {
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.TEN),
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
