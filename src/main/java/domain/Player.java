@@ -8,7 +8,7 @@ public abstract class Player {
     private static final int MAX_NAME_LENGTH = 10;
 
     private final String name;
-    private Cards cards;
+    private final Cards cards;
 
     public Player(String name) {
         validateName(name);
