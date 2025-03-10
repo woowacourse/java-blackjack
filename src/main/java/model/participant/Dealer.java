@@ -3,7 +3,7 @@ package model.participant;
 import model.score.MatchType;
 import model.score.ResultType;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -16,7 +16,10 @@ public class Dealer extends Participant {
 
     private Dealer(String nickname) {
         this.nickname = nickname;
-        this.matchResult = new HashMap<>();
+        this.matchResult = new EnumMap<>(MatchType.class);
+        for (MatchType type : MatchType.values()) {
+            matchResult.put(type, 0);
+        }
     }
 
     public static Dealer newInstance() {
@@ -38,7 +41,6 @@ public class Dealer extends Participant {
     }
 
     public void updateResult(MatchType type) {
-        matchResult.computeIfAbsent(type, k -> 0);
         matchResult.put(type, matchResult.get(type) + 1);
     }
 
