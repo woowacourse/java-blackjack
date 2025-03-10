@@ -1,6 +1,7 @@
 package domain.participant;
 
-import domain.MatchResult;
+import domain.blackJack.MatchResult;
+import domain.blackJack.Result;
 import domain.card.CardDeck;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Players {
         validatePlayerNumbers(names);
         validateIsDuplicate(names);
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, new Result()))
                 .toList();
         return new Players(players);
     }

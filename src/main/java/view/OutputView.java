@@ -1,14 +1,14 @@
 package view;
 
-import static domain.MatchResult.DRAW;
-import static domain.MatchResult.LOSE;
-import static domain.MatchResult.WIN;
+import static domain.blackJack.MatchResult.DRAW;
+import static domain.blackJack.MatchResult.LOSE;
+import static domain.blackJack.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
 
-import domain.MatchResult;
+import domain.blackJack.MatchResult;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;

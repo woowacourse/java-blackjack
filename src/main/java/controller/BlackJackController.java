@@ -1,7 +1,7 @@
 package controller;
 
 import config.CardDeckFactory;
-import domain.BlackJack;
+import domain.blackJack.BlackJack;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Players;

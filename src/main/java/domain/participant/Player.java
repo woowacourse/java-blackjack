@@ -1,16 +1,19 @@
 package domain.participant;
 
-import domain.MatchResult;
+import domain.blackJack.MatchResult;
+import domain.blackJack.Result;
 import domain.card.CardDeck;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Player extends Participant {
     private final String name;
+    private final Result result;
 
-    public Player(final String name) {
+    public Player(final String name, final Result result) {
         super();
         this.name = name;
+        this.result = result;
     }
 
     public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
@@ -22,11 +25,11 @@ public class Player extends Participant {
     }
 
     public MatchResult calculateWinner(final int dealerSum) {
-        return MatchResult.calculateResultOfPlayer(dealerSum, this.sum());
+        return result.calculateResultOfPlayer(dealerSum, this.sum());
     }
 
     private boolean isBust() {
-        return MatchResult.isBust(sum());
+        return result.isBust(sum());
     }
 
     public String getName() {

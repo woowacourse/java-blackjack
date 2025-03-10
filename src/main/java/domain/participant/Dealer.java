@@ -15,7 +15,7 @@ public class Dealer extends Participant {
     }
 
     public void draw(final CardDeck standard) {
-        if (isUnderThreshold()) {
+        while (isUnderThreshold()) {
             hand.addCard(standard.hitCard());
         }
     }
