@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.user.Nickname;
+import blackjack.domain.user.PlayerStorage;
 import blackjack.dto.FinalHands;
 import blackjack.dto.HandState;
 import blackjack.dto.InitialHands;
@@ -17,12 +18,14 @@ import org.junit.jupiter.api.Test;
 class GameManagerTest {
 
     GameInputOutputMock gameInputOutput;
+    PlayerStorage playerStorage;
     GameManager gameManager;
 
     @BeforeEach
     void beforeEach() {
+        playerStorage = new PlayerStorage();
+        gameManager = new GameManager(playerStorage);
         gameInputOutput = new GameInputOutputMock();
-        gameManager = new GameManager();
         gameManager.setUpInputOutput(gameInputOutput);
     }
 

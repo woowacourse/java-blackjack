@@ -4,7 +4,8 @@ public enum GameRule {
     INITIAL_CARD_COUNT(2),
     LIMIT_POINT_BEFORE_BUST(21),
     DEALER_LIMIT_POINT(16),
-    SOFT_ACE(11);
+    SOFT_ACE(11),
+    MAX_PLAYER_COUNT(10);
 
     private final int value;
 
