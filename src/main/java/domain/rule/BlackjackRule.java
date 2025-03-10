@@ -8,6 +8,11 @@ import java.util.Set;
 
 public class BlackjackRule implements GameRule {
     private static final int SUM_LIMIT = 21;
+    private static final BlackjackRule INSTANCE = new BlackjackRule();  // 캐싱된 인스턴스
+
+    public static BlackjackRule getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public boolean isBurst(Hand hand) {

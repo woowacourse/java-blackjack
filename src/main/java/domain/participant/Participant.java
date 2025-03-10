@@ -12,7 +12,7 @@ public class Participant {
 
     protected Participant(Hand hand) {
         this.hand = hand;
-        this.rule = new BlackjackRule();
+        this.rule = BlackjackRule.getInstance();
     }
 
     public void addCard(Card card) {
