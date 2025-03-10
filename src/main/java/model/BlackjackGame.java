@@ -25,7 +25,7 @@ public class BlackjackGame {
         this.deck = new Deck(new ShuffledDeckCreator());
     }
 
-    public void startGame() {
+    public void distributeTwoCardsToParticipants() {
         for (int initialCount = 0; initialCount < INITIAL_COUNT; initialCount++) {
             dealer.receiveCard(deck.draw());
             players.getPlayers()

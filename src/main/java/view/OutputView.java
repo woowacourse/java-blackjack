@@ -32,7 +32,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitialCards(Dealer dealer, Players players) {
+    public static void printDistributionCards(Dealer dealer, Players players) {
         printNewLine();
         print("딜러와 ");
         print(String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()

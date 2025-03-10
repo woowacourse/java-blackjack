@@ -11,18 +11,18 @@ import view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        BlackjackGame game = initialize();
+        BlackjackGame game = processDistributionCards();
         processPlayersTurn(game);
         processDealerTurn(game);
         processGameResult(game);
     }
 
-    private BlackjackGame initialize() {
+    private BlackjackGame processDistributionCards() {
         List<String> playerNames = InputView.readNicknames();
         BlackjackGame game = new BlackjackGame(playerNames);
 
-        game.startGame();
-        OutputView.printInitialCards(game.getDealer(), game.getPlayers());
+        game.distributeTwoCardsToParticipants();
+        OutputView.printDistributionCards(game.getDealer(), game.getPlayers());
         return game;
     }
 
