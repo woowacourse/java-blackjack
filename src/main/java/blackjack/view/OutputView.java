@@ -46,7 +46,7 @@ public class OutputView {
 
     public void printOptimalPoints(final Map<Player, Integer> optimalPoints) {
         optimalPoints.forEach((player, value) -> System.out.printf(
-                "%s카드: %s - 결과: %d%n", player, formatCards(player.getCards()), value
+                "%s카드: %s - 결과: %d%n", player.getName(), formatCards(player.getCards()), value
         ));
         System.out.println();
     }

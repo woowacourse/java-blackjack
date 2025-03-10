@@ -43,8 +43,9 @@ public class BlackJackController {
     private List<Player> makePlayers() {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
-        inputView.readUserNames()
-                .forEach(username -> players.add(new User(username)));
+        for (String username : inputView.readUserNames()) {
+            players.add(new User(username));
+        }
         return players;
     }
 
