@@ -1,5 +1,7 @@
 package model;
 
+import model.cards.Cards;
+
 public class Judge {
     public GameResult determineGameResult(final Cards dealerCards, final Cards playerCards) {
         if (playerCards.isBust()) {

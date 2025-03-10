@@ -1,7 +1,10 @@
-package model;
+package model.deck;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.card.Card;
+import model.card.CardNumber;
+import model.card.CardShape;
 
 public class DeckFactory {
 

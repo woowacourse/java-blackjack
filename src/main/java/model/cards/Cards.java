@@ -1,7 +1,9 @@
-package model;
+package model.cards;
 
 import java.util.Collections;
 import java.util.List;
+import model.card.Card;
+import model.card.CardNumber;
 
 public class Cards {
 

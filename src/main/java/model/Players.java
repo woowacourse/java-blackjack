@@ -2,6 +2,8 @@ package model;
 
 import java.util.Map;
 import java.util.Set;
+import model.card.Card;
+import model.cards.Cards;
 
 public class Players {
 

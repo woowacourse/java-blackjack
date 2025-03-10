@@ -4,6 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.card.Card;
+import model.card.CardNumber;
+import model.card.CardShape;
+import model.cards.Cards;
+import model.cards.DealerCardsFactory;
+import model.deck.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
