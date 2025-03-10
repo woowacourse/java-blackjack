@@ -99,7 +99,4 @@ public class OutputView {
         System.out.println("버스트이기 때문에 카드를 더 받을 수 없습니다.");
     }
 
-    public void displayError(final String message) {
-        System.out.println("[ERROR] " + message);
-    }
 }

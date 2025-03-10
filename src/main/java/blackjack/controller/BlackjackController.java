@@ -9,12 +9,12 @@ import blackjack.domain.GameResult;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DistributedCardDto;
 import blackjack.dto.FinalResultDto;
+import blackjack.util.RetryUtil;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -50,17 +50,13 @@ public class BlackjackController {
     }
 
     private List<Player> createPlayers() {
-        String[] playerNames = getPlayerNames();
+        String[] playerNames = inputView.readPlayerName();
 
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
             players.add(new Player(playerName, new CardDeck()));
         }
         return players;
-    }
-
-    private String[] getPlayerNames() {
-        return getReturnWithRetry(inputView::readPlayerName);
     }
 
     private void processPlayerTurn(Player player, BlackjackGame game) {
@@ -88,7 +84,7 @@ public class BlackjackController {
     }
 
     private HitOption getHitOption(Player player) {
-        return getReturnWithRetry(() -> {
+        return RetryUtil.getReturnWithRetry(() -> {
             String answer = inputView.readOneMoreCard(player.getName());
             return HitOption.from(answer);
         });
@@ -101,16 +97,6 @@ public class BlackjackController {
         for (Player player : players) {
             GameResult playerResult = gameReport.getPlayerResult(player, dealer);
             outputView.displayPlayerResult(player, playerResult);
-        }
-    }
-
-    private <T> T getReturnWithRetry(Supplier<T> supplier) {
-        while (true) {
-            try {
-                return supplier.get();
-            } catch (Exception e) {
-                outputView.displayError(e.getMessage());
-            }
         }
     }
 }
