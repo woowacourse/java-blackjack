@@ -26,7 +26,7 @@ class BlackJackGameTest {
         CardDeck cardDeck = new CardDeck(new Cards(
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR))
         ));
-        FakeRule fakeRule = new FakeRule(shouldDealerDraw);
+        FakeBlackJackRule fakeRule = new FakeBlackJackRule(shouldDealerDraw);
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck, fakeRule);
 
         Dealer dealer = new Dealer();
@@ -41,8 +41,8 @@ class BlackJackGameTest {
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
                         createCard(CardNumber.FIVE))
         ));
-        Rule rule = new Rule();
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, rule);
+        BlackJackRule blackJackRule = new BlackJackRule();
+        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, blackJackRule);
         User user = new User("pobi");
         Dealer dealer = new Dealer();
         List<Player> players = List.of(dealer, user);
@@ -53,11 +53,11 @@ class BlackJackGameTest {
         assertThat(user.getCards().getValues()).hasSize(2);
     }
 
-    private static class FakeRule extends Rule {
+    private static class FakeBlackJackRule extends BlackJackRule {
 
         private final boolean shouldDealerDraw;
 
-        public FakeRule(boolean shouldDealerDraw) {
+        public FakeBlackJackRule(boolean shouldDealerDraw) {
             this.shouldDealerDraw = shouldDealerDraw;
         }
 

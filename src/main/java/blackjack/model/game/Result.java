@@ -16,11 +16,11 @@ public enum Result {
         this.name = name;
     }
 
-    public static Result findWinner(final Player player, final Player challenger, final Rule rule) {
-        if (rule.isDraw(player, challenger)) {
+    public static Result findWinner(final Player player, final Player challenger, final BlackJackRule blackJackRule) {
+        if (blackJackRule.isDraw(player, challenger)) {
             return DRAW;
         }
-        if (rule.getWinner(player, challenger).equals(player)) {
+        if (blackJackRule.getWinner(player, challenger).equals(player)) {
             return WIN;
         }
         return LOSE;

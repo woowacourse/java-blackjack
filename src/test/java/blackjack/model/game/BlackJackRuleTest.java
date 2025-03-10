@@ -22,9 +22,9 @@ import blackjack.model.player.Player;
 import blackjack.model.player.Role;
 import blackjack.model.player.User;
 
-class RuleTest {
+class BlackJackRuleTest {
 
-    private final Rule rule = new Rule();
+    private final BlackJackRule blackJackRule = new BlackJackRule();
 
     private static Stream<Arguments> 딜러가_카드를_뽑아야_하는지_반환한다_테스트_케이스() {
         return Stream.of(
@@ -167,7 +167,7 @@ class RuleTest {
     private static Stream<Arguments> 게임_결과를_반환하는_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new DealerWinRule(), makeDealer(),
+                        new DealerWinBlackJackRule(), makeDealer(),
                         List.of(makeUserWithName("pobi"),
                                 makeUserWithName("json")),
                         Map.of(makeDealer(), makeResultMap(2, 0, 0),
@@ -175,7 +175,7 @@ class RuleTest {
                                 makeUserWithName("json"), makeResultMap(0, 0, 1)
                         )),
                 Arguments.of(
-                        new DealerLoseRule(), makeDealer(),
+                        new DealerLoseBlackJackRule(), makeDealer(),
                         List.of(makeUserWithName("pobi"),
                                 makeUserWithName("json")),
                         Map.of(makeDealer(), makeResultMap(0, 0, 2),
@@ -183,7 +183,7 @@ class RuleTest {
                                 makeUserWithName("json"), makeResultMap(1, 0, 0)
                         )),
                 Arguments.of(
-                        new DrawRule(), makeDealer(),
+                        new DrawBlackJackRule(), makeDealer(),
                         List.of(makeUserWithName("pobi"),
                                 makeUserWithName("json")),
                         Map.of(makeDealer(), makeResultMap(0, 2, 0),
@@ -238,7 +238,7 @@ class RuleTest {
         Dealer dealer = new Dealer();
         dealer.receiveCards(cards);
 
-        assertThat(rule.canDrawMoreCard(dealer)).isEqualTo(expected);
+        assertThat(blackJackRule.canDrawMoreCard(dealer)).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -247,7 +247,7 @@ class RuleTest {
         User user = new User("pobi");
         user.receiveCards(cards);
 
-        assertThat(rule.canDrawMoreCard(user)).isEqualTo(expected);
+        assertThat(blackJackRule.canDrawMoreCard(user)).isEqualTo(expected);
     }
 
     @MethodSource("플레이어의_점수를_계산하는_테스트_케이스")
@@ -256,7 +256,7 @@ class RuleTest {
         Player user = new User("pobi");
         user.receiveCards(cards);
 
-        assertThat(rule.calculateOptimalPoint(user)).isEqualTo(expected);
+        assertThat(blackJackRule.calculateOptimalPoint(user)).isEqualTo(expected);
     }
 
     @MethodSource("무승부_상황인지_확인하는_테스트_케이스")
@@ -268,21 +268,21 @@ class RuleTest {
         dealer.receiveCards(dealerCards);
         user.receiveCards(userCards);
 
-        assertThat(rule.isDraw(dealer, user)).isEqualTo(expected);
+        assertThat(blackJackRule.isDraw(dealer, user)).isEqualTo(expected);
     }
 
     @MethodSource("승자를_반환하는_테스트_케이스")
     @ParameterizedTest
     void 승자를_반환한다(final Player winner, final Player loser) {
-        assertThat(rule.getWinner(winner, loser)).isEqualTo(winner);
-        assertThat(rule.getWinner(loser, winner)).isEqualTo(winner);
+        assertThat(blackJackRule.getWinner(winner, loser)).isEqualTo(winner);
+        assertThat(blackJackRule.getWinner(loser, winner)).isEqualTo(winner);
     }
 
     @MethodSource("게임_결과를_반환하는_테스트_케이스")
     @ParameterizedTest
-    void 게임_결과를_반환한다(final Rule rule, final Dealer dealer, final List<User> users,
+    void 게임_결과를_반환한다(final BlackJackRule blackJackRule, final Dealer dealer, final List<User> users,
                      final Map<Player, Map<Result, Integer>> expected) {
-        Map<Player, Map<Result, Integer>> results = rule.calculateResult(dealer, users);
+        Map<Player, Map<Result, Integer>> results = blackJackRule.calculateResult(dealer, users);
 
         assertThat(results).containsAllEntriesOf(expected);
     }
@@ -292,7 +292,7 @@ class RuleTest {
     void 플레이어의_시작_카드들을_오픈한다(final Player player, final Cards cards, final Cards expected) {
         player.receiveCards(cards);
 
-        assertThat(rule.openInitialCards(player).getValues())
+        assertThat(blackJackRule.openInitialCards(player).getValues())
                 .containsAll(expected.getValues());
     }
 
@@ -302,11 +302,11 @@ class RuleTest {
         Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
         player.receiveCards(cards);
 
-        assertThat(rule.openAllCards(player)).isEqualTo(
+        assertThat(blackJackRule.openAllCards(player)).isEqualTo(
                 new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))));
     }
 
-    private static class DealerWinRule extends Rule {
+    private static class DealerWinBlackJackRule extends BlackJackRule {
 
         @Override
         public boolean isDraw(final Player player, final Player challenger) {
@@ -326,7 +326,7 @@ class RuleTest {
 
     }
 
-    private static class DealerLoseRule extends Rule {
+    private static class DealerLoseBlackJackRule extends BlackJackRule {
 
         @Override
         public boolean isDraw(final Player player, final Player challenger) {
@@ -346,7 +346,7 @@ class RuleTest {
 
     }
 
-    private static class DrawRule extends Rule {
+    private static class DrawBlackJackRule extends BlackJackRule {
 
         @Override
         public boolean isDraw(final Player player, final Player challenger) {

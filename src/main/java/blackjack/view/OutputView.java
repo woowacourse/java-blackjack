@@ -5,27 +5,28 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.model.card.Cards;
+import blackjack.model.game.BlackJackRule;
 import blackjack.model.game.Result;
-import blackjack.model.game.Rule;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
 
 public class OutputView {
 
-    public void printDealInitialCardsResult(final Dealer dealer, final List<User> users, final Rule rule) {
+    public void printDealInitialCardsResult(final Dealer dealer, final List<User> users,
+                                            final BlackJackRule blackJackRule) {
         String userNames = users.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.println();
         System.out.println(dealer.getName() + "와 " + userNames + "에게 2장을 나누었습니다.");
-        System.out.println(dealer.getName() + "카드: " + formatCards(rule.openInitialCards(dealer)));
-        users.forEach(user -> printPlayerCards(user, rule));
+        System.out.println(dealer.getName() + "카드: " + formatCards(blackJackRule.openInitialCards(dealer)));
+        users.forEach(user -> printPlayerCards(user, blackJackRule));
         System.out.println();
     }
 
-    public void printPlayerCards(final Player player, final Rule rule) {
-        System.out.println(player.getName() + "카드: " + formatCards(rule.openInitialCards(player)));
+    public void printPlayerCards(final Player player, final BlackJackRule blackJackRule) {
+        System.out.println(player.getName() + "카드: " + formatCards(blackJackRule.openInitialCards(player)));
     }
 
     private String formatCards(final Cards cards) {
@@ -44,13 +45,14 @@ public class OutputView {
         System.out.println("딜러는 한장의 카드를 더 받지 않았습니다." + System.lineSeparator());
     }
 
-    public void printOptimalPoints(final Dealer dealer, final List<User> users, final Rule rule) {
+    public void printOptimalPoints(final Dealer dealer, final List<User> users, final BlackJackRule blackJackRule) {
         System.out.println(
-                dealer.getName() + "카드: " + formatCards(rule.openAllCards(dealer)) + " - 결과: "
-                        + rule.calculateOptimalPoint(
+                dealer.getName() + "카드: " + formatCards(blackJackRule.openAllCards(dealer)) + " - 결과: "
+                        + blackJackRule.calculateOptimalPoint(
                         dealer));
         users.forEach(user -> System.out.println(
-                user.getName() + "카드: " + formatCards(rule.openAllCards(user)) + " - 결과: " + rule.calculateOptimalPoint(
+                user.getName() + "카드: " + formatCards(blackJackRule.openAllCards(user)) + " - 결과: "
+                        + blackJackRule.calculateOptimalPoint(
                         user)));
         System.out.println();
     }
@@ -69,12 +71,11 @@ public class OutputView {
                     .filter(entry -> entry.getValue() > 0)
                     .map(entry -> entry.getValue() + entry.getKey().getName())
                     .collect(Collectors.joining(" "));
-        } else {
-            return resultStatistics.entrySet().stream()
-                    .filter(entry -> entry.getValue() > 0)
-                    .map(entry -> entry.getKey().getName())
-                    .collect(Collectors.joining());
         }
+        return resultStatistics.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(entry -> entry.getKey().getName())
+                .collect(Collectors.joining());
     }
 
 }

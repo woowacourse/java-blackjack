@@ -11,7 +11,7 @@ import blackjack.model.player.Player;
 import blackjack.model.player.Role;
 import blackjack.model.player.User;
 
-public class Rule {
+public class BlackJackRule {
 
     public static final int BLACK_JACK_POINT = 21;
     private static final Predicate<Player> DEALER_DRAW_PREDICATE = dealer ->

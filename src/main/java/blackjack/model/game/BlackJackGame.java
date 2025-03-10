@@ -12,16 +12,16 @@ public class BlackJackGame {
     private static final int SINGLE_DRAW_AMOUNT = 1;
 
     private final CardDeck cardDeck;
-    private final Rule rule;
+    private final BlackJackRule blackJackRule;
 
-    public BlackJackGame(final CardDeck cardDeck, final Rule rule) {
+    public BlackJackGame(final CardDeck cardDeck, final BlackJackRule blackJackRule) {
         this.cardDeck = cardDeck;
-        this.rule = rule;
+        this.blackJackRule = blackJackRule;
     }
 
-    public BlackJackGame(final CardDeckInitializer cardDeckInitializer, final Rule rule) {
+    public BlackJackGame(final CardDeckInitializer cardDeckInitializer, final BlackJackRule blackJackRule) {
         this.cardDeck = CardDeck.initializeFrom(cardDeckInitializer);
-        this.rule = rule;
+        this.blackJackRule = blackJackRule;
     }
 
     public void dealInitialCards(final List<Player> players) {
@@ -31,7 +31,7 @@ public class BlackJackGame {
     }
 
     public boolean drawMoreCard(final Player player) {
-        if (rule.canDrawMoreCard(player)) {
+        if (blackJackRule.canDrawMoreCard(player)) {
             drawCard(player, SINGLE_DRAW_AMOUNT);
             return true;
         }
