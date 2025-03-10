@@ -1,11 +1,10 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.BlackjackRules.BUST_THRESHOLD;
-
 import java.util.List;
 import java.util.Set;
 
 public class ScoreCalculator {
+    private static final int BUST_THRESHOLD = 21;
 
     public int calculateMaxScore(List<Card> cards) {
         return maxDfs(0, 0, cards);
@@ -22,7 +21,7 @@ public class ScoreCalculator {
         int min = Integer.MAX_VALUE;
         for (int score : scores) {
             int sum = maxDfs(depth + 1, totalScore + score, cards);
-            if (sum > BUST_THRESHOLD.getSymbol()) {
+            if (sum > BUST_THRESHOLD) {
                 min = Math.min(min, sum);
                 continue;
             }

@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.BlackjackRules.BUST_THRESHOLD;
-import static blackjack.domain.BlackjackRules.DEFAULT_CARD_SIZE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cards {
+    private static final int DEFAULT_CARD_SIZE = 2;
+    public static final int BUST_THRESHOLD = 21;
     private final List<Card> cards;
     private final ScoreCalculator scoreCalculator;
 
@@ -26,8 +26,8 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == DEFAULT_CARD_SIZE.getSymbol()
-                && scoreCalculator.calculateMaxScore(cards) == BUST_THRESHOLD.getSymbol();
+        return cards.size() == DEFAULT_CARD_SIZE
+                && scoreCalculator.calculateMaxScore(cards) == BUST_THRESHOLD;
     }
 
     public List<Card> getCards() {
@@ -35,11 +35,11 @@ public class Cards {
     }
 
     public void take(Card... cards) {
-        if (Arrays.stream(cards).count() > DEFAULT_CARD_SIZE.getSymbol()) {
+        if (Arrays.stream(cards).count() > DEFAULT_CARD_SIZE) {
             throw new IllegalArgumentException("카드는 한 번에 최대 두 장까지 받을 수 있습니다.");
         }
         int minScore = scoreCalculator.calculateMaxScore(this.cards);
-        if (minScore >= BUST_THRESHOLD.getSymbol()) {
+        if (minScore >= BUST_THRESHOLD) {
             throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
         }
         this.cards.addAll(Arrays.asList(cards));

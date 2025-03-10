@@ -1,9 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import static blackjack.domain.card.Cards.BUST_THRESHOLD;
 
-import static blackjack.domain.BlackjackRules.BUST_THRESHOLD;
-
-import blackjack.domain.card.Cards;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
@@ -12,7 +10,7 @@ public enum WinningResult {
         int mainScore = mainCards.calculateMaxScore();
         int subScore = subCards.calculateMaxScore();
 
-        if (mainScore > BUST_THRESHOLD.getSymbol() && subScore > BUST_THRESHOLD.getSymbol()) {
+        if (mainScore > BUST_THRESHOLD && subScore > BUST_THRESHOLD) {
             return true;
         }
         if (mainCards.isBlackjack() && !subCards.isBlackjack()) {
@@ -30,7 +28,7 @@ public enum WinningResult {
         int mainScore = mainCards.calculateMaxScore();
         int subScore = subCards.calculateMaxScore();
 
-        if (mainScore <= BUST_THRESHOLD.getSymbol() && subScore > BUST_THRESHOLD.getSymbol()) {
+        if (mainScore <= BUST_THRESHOLD && subScore > BUST_THRESHOLD) {
             return true;
         }
 
@@ -38,7 +36,7 @@ public enum WinningResult {
             return true;
         }
 
-        if (mainScore <= BUST_THRESHOLD.getSymbol()) {
+        if (mainScore <= BUST_THRESHOLD) {
             return mainScore > subScore;
         }
 
@@ -48,7 +46,7 @@ public enum WinningResult {
         int mainScore = mainCards.calculateMaxScore();
         int subScore = subCards.calculateMaxScore();
 
-        if (mainScore > BUST_THRESHOLD.getSymbol() && subScore <= BUST_THRESHOLD.getSymbol()) {
+        if (mainScore > BUST_THRESHOLD && subScore <= BUST_THRESHOLD) {
             return true;
         }
 
@@ -56,7 +54,7 @@ public enum WinningResult {
             return true;
         }
 
-        if (mainScore <= BUST_THRESHOLD.getSymbol()) {
+        if (mainScore <= BUST_THRESHOLD) {
             return mainScore < subScore;
         }
 
