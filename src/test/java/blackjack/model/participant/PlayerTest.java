@@ -22,10 +22,10 @@ class PlayerTest {
     @Test
     void createPlayerTest() {
         // given
-        Name name = new Name("pobi");
+        Name pobiName = new Name("포비");
 
         // when, then
-        assertThatCode(() -> new Player(name))
+        assertThatCode(() -> new Player(pobiName))
                 .doesNotThrowAnyException();
     }
 
@@ -33,7 +33,7 @@ class PlayerTest {
     @Test
     void receiveHandTest() {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -48,7 +48,7 @@ class PlayerTest {
     @Test
     void shouldThrowException_WhenReceiveCardAfterHandExceeds21() {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -64,7 +64,7 @@ class PlayerTest {
     @Test
     void calculateHandTotalTest() {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
 
         // when
         player.receiveHand(SPADE_TEN_CARD);
@@ -79,7 +79,7 @@ class PlayerTest {
     @Test
     void calculateHandTotalWithAceTest() {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -94,7 +94,7 @@ class PlayerTest {
     @Test
     void calculateHandTotalWithAceTestOver11() {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
 
         // when
         player.receiveHand(SPADE_ACE_CARD);
@@ -114,7 +114,7 @@ class PlayerTest {
     })
     void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
         player.receiveHand(createCard(Suit.SPADES, value1));
         player.receiveHand(createCard(Suit.SPADES, value2));
 
@@ -134,7 +134,7 @@ class PlayerTest {
     })
     void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
         player.receiveHand(createCard(Suit.SPADES, value1));
         player.receiveHand(createCard(Suit.SPADES, value2));
         player.receiveHand(createCard(Suit.SPADES, value3));
@@ -151,7 +151,7 @@ class PlayerTest {
     @Test
     void canHitTest() {
         // given
-        Player player = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
         player.receiveHand(SPADE_ACE_CARD);
         player.receiveHand(SPADE_TEN_CARD);
 

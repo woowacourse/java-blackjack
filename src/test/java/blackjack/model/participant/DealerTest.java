@@ -29,15 +29,15 @@ class DealerTest {
         List<Card> cards = List.of(SPADE_ACE_CARD);
         Deck deck = Deck.createDeckByCards(cards, NO_SHUFFLER);
         Dealer dealer = new Dealer(deck);
-        Player pobi = new Player(new Name("pobi"));
+        Player player = new Player(new Name("포비"));
 
         // when
-        dealer.dealCard(pobi);
+        dealer.dealCard(player);
 
         // then
-        assertThat(pobi.getHand())
+        assertThat(player.getHand())
                 .contains(SPADE_ACE_CARD);
-        assertThat(pobi.getHand())
+        assertThat(player.getHand())
                 .hasSize(1);
     }
 

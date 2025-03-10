@@ -7,6 +7,7 @@ import java.util.HashSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -67,6 +68,16 @@ class NameTest {
         // then
         assertThat(names)
                 .hasSize(1);
+    }
+
+    @DisplayName("한글 이름이 아닌 경우 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"me", "neo", "pobi", "bello"})
+    void shouldThrowException_WhenNotKoreanName(String englishName) {
+        // when, then
+        assertThatCode(() -> new Name(englishName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 한글로만 입력 가능합니다. 입력: %s".formatted(englishName));
     }
 
     @DisplayName("이름을 확인할 수 있다.")
