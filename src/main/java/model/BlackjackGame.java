@@ -58,15 +58,7 @@ public class BlackjackGame {
         Map<GameResult, Integer> dealerResults = initializeDealerResults();
 
         for (GameResult gameResult : playerGameResults.values()) {
-            if (gameResult.equals(GameResult.WIN)) {
-                dealerResults.put(GameResult.LOSE, dealerResults.get(GameResult.LOSE) + 1);
-                continue;
-            }
-            if (gameResult.equals(GameResult.LOSE)) {
-                dealerResults.put(GameResult.WIN, dealerResults.get(GameResult.WIN) + 1);
-                continue;
-            }
-            dealerResults.put(GameResult.DRAW, dealerResults.get(GameResult.DRAW) + 1);
+            dealerResults.put(gameResult.inverse(), dealerResults.get(gameResult.inverse()) + 1);
         }
         return dealerResults;
     }

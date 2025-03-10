@@ -19,4 +19,14 @@ public enum GameResult {
         }
         return DRAW;
     }
+
+    public GameResult inverse() {
+        if (this == GameResult.WIN) {
+            return GameResult.LOSE;
+        }
+        if (this == GameResult.LOSE) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
 }
