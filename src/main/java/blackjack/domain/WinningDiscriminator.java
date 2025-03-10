@@ -1,15 +1,15 @@
 package blackjack.domain;
 
 import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.view.WinningType.DEFEAT;
-import static blackjack.view.WinningType.DRAW;
-import static blackjack.view.WinningType.WIN;
-import static blackjack.view.WinningType.createWinningResult;
+import static blackjack.domain.WinningType.DEFEAT;
+import static blackjack.domain.WinningType.DRAW;
+import static blackjack.domain.WinningType.WIN;
+import static blackjack.domain.WinningType.createWinningResult;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.gambler.Name;
-import blackjack.view.WinningType;
+
 import java.util.Map;
 
 public class WinningDiscriminator {

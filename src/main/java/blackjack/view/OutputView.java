@@ -2,12 +2,13 @@ package blackjack.view;
 
 import static blackjack.domain.Rule.BLACK_JACK;
 import static blackjack.domain.Rule.DEALER_DRAW_THRESHOLD;
-import static blackjack.view.WinningType.DEFEAT;
-import static blackjack.view.WinningType.DRAW;
-import static blackjack.view.WinningType.WIN;
+import static blackjack.domain.WinningType.DEFEAT;
+import static blackjack.domain.WinningType.DRAW;
+import static blackjack.domain.WinningType.WIN;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.WinningDiscriminator;
+import blackjack.domain.WinningType;
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Name;
 import java.util.List;

@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.domain;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;

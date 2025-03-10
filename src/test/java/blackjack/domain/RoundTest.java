@@ -10,7 +10,7 @@ import blackjack.domain.card.CardType;
 import blackjack.domain.card.Shuffler;
 import blackjack.domain.fake.TestShuffler;
 import blackjack.domain.gambler.Name;
-import blackjack.view.WinningType;
+
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
