@@ -27,16 +27,12 @@ public class BlackjackProcessManager {
 
     public void giveStartingCardsFor(Dealer dealer) {
         List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
-
-        CardHolder cardHolder = dealer.getCardHolder();
-        cards.forEach(cardHolder::takeCard);
+        cards.forEach(dealer::takeCard);
     }
 
     public void giveStartingCardsFor(Player player) {
         List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
-
-        CardHolder cardHolder = player.getCardHolder();
-        cards.forEach(cardHolder::takeCard);
+        cards.forEach(player::takeCard);
     }
 
     public void giveCard(CardHolder cardHolder) {
