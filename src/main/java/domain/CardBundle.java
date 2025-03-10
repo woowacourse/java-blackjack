@@ -18,6 +18,12 @@ public class CardBundle {
         return Collections.unmodifiableList(cards);
     }
 
+    public List<Card> getShuffledAllCards() {
+        List<Card> shuffledCards = new ArrayList<>(cards);
+        Collections.shuffle(shuffledCards);
+        return Collections.unmodifiableList(shuffledCards);
+    }
+
     private void initCards() {
         Arrays.stream(Shape.values()).forEachOrdered(this::pickRank);
     }

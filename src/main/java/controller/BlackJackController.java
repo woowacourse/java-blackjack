@@ -29,7 +29,7 @@ public class BlackJackController {
 
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
-        CardDeck cardDeck = createCardDeck(cardBundle);
+        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
         BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
         giveStartingCardsToParticipants(blackJackManager);
         processPlayersCardReceiving(blackJackManager);
@@ -88,17 +88,6 @@ public class BlackJackController {
     private boolean doesPlayerWantToReceiveCard(String playerName) {
         String playerWantMoreCard = inputView.inputPlayerWantMoreCard(playerName);
         return playerWantMoreCard.equalsIgnoreCase("y");
-    }
-
-    private CardDeck createCardDeck(CardBundle cardBundle) {
-        return new CardDeck(getShuffledAllCards(cardBundle));
-    }
-
-    private List<Card> getShuffledAllCards(CardBundle cardBundle) {
-        List<Card> allCards = cardBundle.getAllCards();
-        List<Card> shuffledAllCards = new ArrayList<>(allCards);
-        Collections.shuffle(shuffledAllCards);
-        return shuffledAllCards;
     }
 
     private Participants createGameParticipants() {
