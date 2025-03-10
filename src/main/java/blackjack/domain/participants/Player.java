@@ -1,6 +1,6 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.BlackjackRules.BUST_THRESHOLD;
+import static blackjack.domain.card.Cards.BUST_THRESHOLD;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -18,6 +18,11 @@ public class Player {
         this.cards.take(cards);
     }
 
+    public boolean canTake() {
+        int minScore = cards.calculateMinScore();
+        return minScore < BUST_THRESHOLD;
+    }
+
     public int calculateMaxScore() {
         return cards.calculateMaxScore();
     }
@@ -32,10 +37,5 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public boolean canTake() {
-        int minScore = cards.calculateMinScore();
-        return minScore < BUST_THRESHOLD.getSymbol();
     }
 }
