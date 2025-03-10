@@ -52,35 +52,40 @@ public class OutputView {
     public void printResult(Dealer dealer, Players players) {
         System.out.println("## 최종 승패");
 
-        int dealerWinCount = 0;
-        int dealerLoseCount = 0;
-        int dealerDrawCount = 0;
+        Map<String, BlackjackResult> playerResults = calculatePlayerResults(dealer, players);
+        printDealerResult(playerResults);
+        printPlayerResults(playerResults);
+    }
 
-        List<String> playersName = players.getPlayersName();
+    private Map<String, BlackjackResult> calculatePlayerResults(Dealer dealer, Players players) {
         Map<String, BlackjackResult> playerResults = new LinkedHashMap<>();
 
-        for (String name : playersName) {
+        for (String name : players.getPlayersName()) {
             Player player = players.findByName(name);
-            BlackjackResult playerResult = player.getBlackjackResult(dealer);
-
-            playerResults.put(name, playerResult);
-
-            if (playerResult == BlackjackResult.LOSE) {
-                dealerWinCount++;
-            }
-            if (playerResult == BlackjackResult.WIN) {
-                dealerLoseCount++;
-            }
-            if (playerResult == BlackjackResult.DRAW) {
-                dealerDrawCount++;
-            }
+            BlackjackResult result = player.getBlackjackResult(dealer);
+            playerResults.put(name, result);
         }
+
+        return playerResults;
+    }
+
+    private void printDealerResult(Map<String, BlackjackResult> playerResults) {
+        int dealerWinCount = (int) playerResults.values().stream()
+                .filter(result -> result == BlackjackResult.LOSE)
+                .count();
+        int dealerLoseCount = (int) playerResults.values().stream()
+                .filter(result -> result == BlackjackResult.WIN)
+                .count();
+        int dealerDrawCount = (int) playerResults.values().stream()
+                .filter(result -> result == BlackjackResult.DRAW)
+                .count();
 
         System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + dealerDrawCount + "무");
+    }
 
-        for (String name : playerResults.keySet()) {
-            System.out.println(name + ": " + playerResults.get(name).getValue());
-        }
+    private void printPlayerResults(Map<String, BlackjackResult> playerResults) {
+        playerResults.forEach((name, result) ->
+                System.out.println(name + ": " + result.getValue()));
     }
 
     private String getCardContents(List<Card> cards) {
