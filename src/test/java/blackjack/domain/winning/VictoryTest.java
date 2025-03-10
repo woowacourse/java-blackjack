@@ -1,5 +1,8 @@
 package blackjack.domain.winning;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -14,7 +17,6 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class VictoryTest {
@@ -52,16 +54,18 @@ public class VictoryTest {
                 new Cards(dealerCards, new ScoreCalculator())
         );
 
-        Map<Player, WinningResult> playerVictoryResults =
-                Map.of(pobi, WinningResult.LOSE,
-                        surf, WinningResult.WIN);
-        Map<WinningResult, Integer> dealerVictoryResult = Map.of(WinningResult.LOSE, 1, WinningResult.WIN, 1);
-
         //when
         Victory victory = Victory.create(dealer, players);
 
         //then
-        Assertions.assertThat(victory.getPlayerVictoryResults()).isEqualTo(playerVictoryResults);
-        Assertions.assertThat(victory.getDealerVictoryResults()).isEqualTo(dealerVictoryResult);
+        assertAll(
+                () -> assertThat(victory.getPlayerVictoryResults())
+                        .isEqualTo(Map.of(pobi, WinningResult.LOSE, surf, WinningResult.WIN)),
+                () -> assertThat(victory.getDealerVictoryResults())
+                        .isEqualTo(Map.of(
+                                WinningResult.LOSE, 1,
+                                WinningResult.WIN, 1)
+                        )
+        );
     }
 }
