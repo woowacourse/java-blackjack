@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    
+
     @DisplayName("플레이어들의 승패를 결정한다")
     @Test
     void test() {
@@ -52,5 +52,38 @@ class DealerTest {
 
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("플레이어에게 카드를 분배한다")
+    @Test
+    void test2() {
+        //given
+        Dealer dealer = Dealer.init(() -> new ArrayList<>(List.of(
+                new Card(CardNumber.A, CardShape.CLOVER),
+                new Card(CardNumber.FOUR, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        )));
+        Hand dealerHand = Hand.of(
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.FOUR, CardShape.CLOVER)
+                )
+        );
+        Dealer expectedDealer = Dealer.of(dealerHand, ArrayList::new);
+        Player player = Player.init("플레이어1");
+        Players players = new Players(List.of(player));
+        Player expectedPlayer = Player.from("플레이어1", Hand.of(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER)
+        )));
+        Players expectedPlayers = new Players(List.of(expectedPlayer));
+
+        //when
+        dealer.handoutCards(players);
+
+        //then
+        assertThat(dealer).isEqualTo(expectedDealer);
+        assertThat(players).isEqualTo(expectedPlayers);
     }
 }

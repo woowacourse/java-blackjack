@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Dealer extends Participant {
@@ -72,5 +73,22 @@ public class Dealer extends Participant {
 
     public Map<GameResult, Integer> getResult() {
         return Collections.unmodifiableMap(result);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Dealer dealer = (Dealer) o;
+        return Objects.equals(result, dealer.result) && Objects.equals(deck, dealer.deck);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result, deck);
     }
 }
