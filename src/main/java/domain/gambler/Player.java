@@ -1,7 +1,7 @@
 package domain.gambler;
 
 import domain.Cards;
-import domain.constant.WinDrawLose;
+import domain.constant.MatchResult;
 
 public class Player extends Gambler {
 
@@ -14,29 +14,29 @@ public class Player extends Gambler {
         this.nickname = nickname;
     }
 
-    public WinDrawLose compareTo(int dealerScore) {
+    public MatchResult compareTo(int dealerScore) {
         int sum = sumCardScores();
         if (sum > BUST_STANDARD || dealerScore > BUST_STANDARD) {
-            return getWinDrawLoseWhenOverBustStandard(sum);
+            return getMatchResultWhenOverBustStandard(sum);
         }
-        return getWinDrawLose(dealerScore, sum);
+        return getMatchResult(dealerScore, sum);
     }
 
-    private WinDrawLose getWinDrawLoseWhenOverBustStandard(int sum) {
+    private MatchResult getMatchResultWhenOverBustStandard(int sum) {
         if (sum > BUST_STANDARD) {
-            return WinDrawLose.LOSE;
+            return MatchResult.LOSE;
         }
-        return WinDrawLose.WIN;
+        return MatchResult.WIN;
     }
 
-    private WinDrawLose getWinDrawLose(int dealerScore, int sum) {
+    private MatchResult getMatchResult(int dealerScore, int sum) {
         if (sum == dealerScore) {
-            return WinDrawLose.DRAW;
+            return MatchResult.DRAW;
         }
         if (sum > dealerScore) {
-            return WinDrawLose.WIN;
+            return MatchResult.WIN;
         }
-        return WinDrawLose.LOSE;
+        return MatchResult.LOSE;
     }
 
     public String getNickname() {

@@ -1,6 +1,6 @@
 package domain.gambler;
 
-import domain.constant.WinDrawLose;
+import domain.constant.MatchResult;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,7 +15,7 @@ public class Players {
         this.players = players;
     }
 
-    public Map<Player, WinDrawLose> deriveResults(int dealerScore) {
+    public Map<Player, MatchResult> deriveResults(int dealerScore) {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,

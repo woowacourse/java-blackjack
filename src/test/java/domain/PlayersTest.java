@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
-import domain.constant.WinDrawLose;
+import domain.constant.MatchResult;
 import domain.gambler.Nickname;
 import domain.gambler.Player;
 import domain.gambler.Players;
@@ -26,12 +26,12 @@ class PlayersTest {
         Players players = new Players(List.of(player1, player2, player3));
 
         // when
-        Map<Player, WinDrawLose> playerWinDrawLoseMap = players.deriveResults(18);
+        Map<Player, MatchResult> playerMatchResultMap = players.deriveResults(18);
 
         // then
-        assertThat(playerWinDrawLoseMap.get(player1)).isEqualTo(WinDrawLose.WIN);
-        assertThat(playerWinDrawLoseMap.get(player2)).isEqualTo(WinDrawLose.LOSE);
-        assertThat(playerWinDrawLoseMap.get(player3)).isEqualTo(WinDrawLose.DRAW);
+        assertThat(playerMatchResultMap.get(player1)).isEqualTo(MatchResult.WIN);
+        assertThat(playerMatchResultMap.get(player2)).isEqualTo(MatchResult.LOSE);
+        assertThat(playerMatchResultMap.get(player3)).isEqualTo(MatchResult.DRAW);
     }
 
     private Cards makeCards(TrumpNumber number1, TrumpNumber number2) {

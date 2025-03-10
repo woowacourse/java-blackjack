@@ -1,12 +1,12 @@
 package domain.constant;
 
-public enum WinDrawLose {
+public enum MatchResult {
     WIN("승"), DRAW("무"), LOSE("패"),
     ;
 
     private final String message;
 
-    WinDrawLose(String message) {
+    MatchResult(String message) {
         this.message = message;
     }
 
