@@ -25,7 +25,9 @@ public class Hand {
     }
 
     private void validateNotDuplicate(List<TrumpCard> cards) {
-        if (cards.stream().distinct().count() != cards.size()) {
+        int distinctCount = (int) cards.stream().distinct().count();
+        int originalCount = cards.size();
+        if (distinctCount != originalCount) {
             throw new IllegalArgumentException("손패에 중복된 카드가 있습니다.");
         }
     }
