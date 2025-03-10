@@ -60,6 +60,6 @@ public class OutputView {
     }
 
     public void printExceptionMessage(final RuntimeException exception) {
-        System.out.println(exception.getMessage());
+        System.out.println(exception.getMessage() + LINE);
     }
 }
