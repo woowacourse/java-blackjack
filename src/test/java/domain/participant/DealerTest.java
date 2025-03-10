@@ -24,7 +24,7 @@ class DealerTest {
         Dealer dealer = Dealer.of(CardDeck.of(CardDeckGenerator.generateCardDeck()));
 
         // when
-        dealer.receive();
+        dealer.receive(dealer.drawCard());
 
         // then
         assertThat(dealer.getOwnedCards()).hasSize(1);

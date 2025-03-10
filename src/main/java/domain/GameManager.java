@@ -26,7 +26,7 @@ public class GameManager {
     public void distributeCards() {
         for (int count = 0; count < INITIAL_CARDS; count++) {
             players.receiveCards(dealer);
-            dealer.receive();
+            dealer.receive(dealer.drawCard());
         }
     }
 
@@ -39,7 +39,7 @@ public class GameManager {
         if (dealer.getScore() > DEALER_HIT_MIN_THRESHOLD) {
             return false;
         }
-        dealer.receive();
+        dealer.receive(dealer.drawCard());
         return true;
     }
 

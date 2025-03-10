@@ -132,8 +132,8 @@ class GameManagerTest {
         );
         CardDeck cardDeck = CardDeck.of(cards);
         Dealer dealer = Dealer.of(cardDeck);
-        dealer.receive();
-        dealer.receive();
+        dealer.receive(dealer.drawCard());
+        dealer.receive(dealer.drawCard());
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),
@@ -159,8 +159,8 @@ class GameManagerTest {
         );
         CardDeck cardDeck = CardDeck.of(cards);
         Dealer dealer = Dealer.of(cardDeck);
-        dealer.receive();
-        dealer.receive();
+        dealer.receive(dealer.drawCard());
+        dealer.receive(dealer.drawCard());
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),

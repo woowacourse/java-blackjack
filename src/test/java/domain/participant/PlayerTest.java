@@ -65,8 +65,8 @@ public class PlayerTest {
                 Card.of(TrumpNumber.SIX, TrumpShape.CLUB)
         );
         final Dealer dealer = Dealer.of(CardDeck.of(cards));
-        dealer.receive();
-        dealer.receive();
+        dealer.receive(dealer.drawCard());
+        dealer.receive(dealer.drawCard());
 
         // when
         BlackjackResult blackjackResult = player.getBlackjackResult(dealer);
