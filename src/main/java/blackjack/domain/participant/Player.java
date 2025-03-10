@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
 
 import blackjack.domain.card.Cards;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player extends Gamer {
@@ -12,6 +13,10 @@ public class Player extends Gamer {
     public Player(final String nickname, final Cards cards) {
         super(cards);
         this.nickname = nickname;
+    }
+
+    public static Player createEmpty(final String nickname) {
+        return new Player(nickname, new Cards(new ArrayList<>()));
     }
 
     @Override

@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.ResultStatus;
 import blackjack.domain.card.CardManager;
-import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -12,7 +11,6 @@ import blackjack.domain.random.CardRandomGenerator;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +72,7 @@ public class BlackjackController {
     }
 
     private Participants makeParticipants() {
-        final Dealer dealer = new Dealer(new Cards(new ArrayList<>()));
+        final Dealer dealer = Dealer.createEmpty();
         final Players players = makePlayers();
         return new Participants(dealer, players);
     }
@@ -93,7 +91,7 @@ public class BlackjackController {
         String names = inputView.readNames();
         List<String> parsedNames = StringParser.parseByComma(names);
         return new Players(parsedNames.stream()
-                .map(name -> new Player(name, new Cards(new ArrayList<>())))
+                .map(Player::createEmpty)
                 .toList());
     }
 }

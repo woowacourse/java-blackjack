@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,10 @@ public class Dealer extends Gamer {
 
     public Dealer(final Cards cards) {
         super(cards);
+    }
+
+    public static Dealer createEmpty() {
+        return new Dealer(new Cards(new ArrayList<>()));
     }
 
     @Override
