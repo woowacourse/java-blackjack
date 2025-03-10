@@ -13,5 +13,4 @@ public interface CardHolder {
     int getOptimisticValue();
 
     Card getCard(int position);
-
 }
