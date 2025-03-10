@@ -1,8 +1,8 @@
-package domain;
+package domain.blackJack;
 
-import static domain.MatchResult.DRAW;
-import static domain.MatchResult.LOSE;
-import static domain.MatchResult.WIN;
+import static domain.blackJack.MatchResult.DRAW;
+import static domain.blackJack.MatchResult.LOSE;
+import static domain.blackJack.MatchResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
@@ -11,12 +11,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class MatchResultTest {
+class ResultTest {
     @ParameterizedTest
     @DisplayName("결과 산출 테스트")
     @MethodSource("provideSumForCalculateResultOfPlayer")
     void calculateResultOfPlayerTest(int dealerSum, int playerSum, MatchResult matchResult) {
-        assertThat(MatchResult.calculateResultOfPlayer(dealerSum, playerSum)).isEqualTo(matchResult);
+        // given
+        Result result = new Result();
+
+        // when-then
+        assertThat(result.calculateResultOfPlayer(dealerSum, playerSum)).isEqualTo(matchResult);
     }
 
     private static Stream<Arguments> provideSumForCalculateResultOfPlayer() {

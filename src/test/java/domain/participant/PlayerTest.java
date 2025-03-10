@@ -1,6 +1,6 @@
-package domain;
+package domain.participant;
 
-import static domain.MatchResult.WIN;
+import static domain.blackJack.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
@@ -12,11 +12,9 @@ import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import config.CardDeckFactory;
+import domain.blackJack.Result;
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.Player;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -36,7 +34,7 @@ public class PlayerTest {
     void sumTest() {
         // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Result());
 
         // when
         player.hitCard(cardDeck);
@@ -62,7 +60,7 @@ public class PlayerTest {
 
         CardDeck cardDeck = new CardDeck(
                 List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Result());
 
         // when
         player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck);
@@ -75,7 +73,7 @@ public class PlayerTest {
     @DisplayName("승패 결정 테스트")
     void calculateWinner() {
         // given
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Result());
         CardDeck cardDeck = new CardDeck(
                 List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE), new Card(HEART, TWO), new Card(DIAMOND, THREE)));
         Dealer dealer = new Dealer();

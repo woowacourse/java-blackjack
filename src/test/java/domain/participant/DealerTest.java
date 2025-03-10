@@ -1,11 +1,11 @@
-package domain;
+package domain.participant;
 
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
-import static domain.card.Number.TWO;
+import static domain.card.Number.QUEEN;
+import static domain.card.Number.THREE;
 import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
-import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -13,7 +13,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.Dealer;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -43,13 +42,13 @@ public class DealerTest {
     @DisplayName("카드 합계 테스트")
     void sumTest() {
         // given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO)));
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, QUEEN)));
         Dealer dealer = new Dealer();
         dealer.hitCard(cardDeck);
         dealer.draw(cardDeck);
 
         // when-then
-        assertThat(dealer.sum()).isEqualTo(4);
+        assertThat(dealer.sum()).isEqualTo(20);
     }
 
     @Test
@@ -70,8 +69,6 @@ public class DealerTest {
     void drawTest(CardDeck cardDeck, int size) {
         // given
         Dealer dealer = new Dealer();
-        dealer.hitCard(cardDeck);
-        dealer.hitCard(cardDeck);
 
         // when
         dealer.draw(cardDeck);
@@ -82,7 +79,7 @@ public class DealerTest {
 
     private static Stream<Arguments> provideCardDeckForDrawTest() {
         return Stream.of(Arguments.of(
-                new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))), 3,
+                new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, THREE), new Card(DIAMOND, QUEEN))), 3,
                 new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 2
         ));
     }

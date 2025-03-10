@@ -1,4 +1,4 @@
-package domain;
+package domain.blackJack;
 
 import domain.card.CardDeck;
 import domain.participant.Dealer;

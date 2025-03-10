@@ -1,10 +1,12 @@
-package domain;
+package domain.blackJack;
 
-import static domain.MatchResult.WIN;
+import static domain.blackJack.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.FIVE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.QUEEN;
+import static domain.card.Number.THREE;
+import static domain.card.Number.TWO;
 import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
@@ -81,16 +83,18 @@ public class BlackJackTest {
     @DisplayName("딜러 드로우 테스트")
     void drawDealerTest() {
         //given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
+        CardDeck cardDeck = new CardDeck(
+                List.of(new Card(SPADE, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FIVE), new Card(SPADE, JACK)));
+
         Players players = Players.from(List.of("pobi", "lisa"));
         Dealer dealer = new Dealer();
 
         //when
-        BlackJack blackJack = new BlackJack(players, dealer, cardDeckFactory.create());
+        BlackJack blackJack = new BlackJack(players, dealer, cardDeck);
         blackJack.drawDealer();
 
         //then
-        assertThat(dealer.getHand().getCards().size()).isEqualTo(1);
+        assertThat(dealer.getHand().getCards().size()).isEqualTo(4);
     }
 
     @Test

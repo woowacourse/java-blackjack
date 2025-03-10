@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static domain.card.Number.JACK;
 import static domain.card.Number.QUEEN;
@@ -10,7 +10,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.Players;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
