@@ -1,6 +1,6 @@
 package model.deck;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
@@ -9,15 +9,9 @@ import model.card.CardShape;
 public class DeckFactory {
 
     public static List<Card> initializeDeck() {
-        List<Card> deck = new ArrayList<>(52);
-        for (CardShape shape : CardShape.values()) {
-            for (CardNumber number : CardNumber.values()) {
-                if (number.equals(CardNumber.ACE_ONE)) {
-                    continue;
-                }
-                deck.add(new Card(number, shape));
-            }
-        }
-        return deck;
+        return Arrays.stream(CardNumber.values())
+                .filter(number -> number != CardNumber.ACE_ONE)
+                .flatMap(number -> Arrays.stream(CardShape.values()).map(shape -> new Card(number, shape)))
+                .toList();
     }
 }
