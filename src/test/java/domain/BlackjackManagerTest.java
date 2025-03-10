@@ -2,12 +2,10 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-public class BlackjackTest {
+public class BlackjackManagerTest {
 
     @Test
     void 블랙잭_객체를_생성한다() {
@@ -23,7 +21,7 @@ public class BlackjackTest {
         Deck deck = DeckGenerator.generateDeck();
 
         // when & then
-        Assertions.assertThatCode(() -> new Blackjack(players, deck))
+        Assertions.assertThatCode(() -> new BlackjackManager(players, deck))
                 .doesNotThrowAnyException();
     }
 
@@ -40,10 +38,10 @@ public class BlackjackTest {
         ));
 
         Deck deck = DeckGenerator.generateDeck();
-        Blackjack blackjack = new Blackjack(players, deck);
-        blackjack.distributeInitialCards();
+        BlackjackManager blackjackManager = new BlackjackManager(players, deck);
+        blackjackManager.distributeInitialCards();
         final int beforeDrawnCount = siso.getCards().size();
-        blackjack.addOneCard(siso);
+        blackjackManager.addOneCard(siso);
         final int afterDrawnCount = siso.getCards().size();
 
         // when & then
@@ -76,51 +74,13 @@ public class BlackjackTest {
 
                 new Card(Suit.SPADE, Rank.EIGHT)
         )));
-        Blackjack blackjack = new Blackjack(players, deck);
-        blackjack.distributeInitialCards();
+        BlackjackManager blackjackManager = new BlackjackManager(players, deck);
+        blackjackManager.distributeInitialCards();
 
         // when
-        boolean actual = blackjack.addCardToDealerIfLowScore();
+        boolean actual = blackjackManager.addCardToDealerIfLowScore();
 
         // then
         Assertions.assertThat(actual).isTrue();
-    }
-
-    @Test
-    void 참여자들의_승패_결과를_반환한다() {
-        // given
-        Players players = new Players(List.of(
-                new Dealer(),
-                new Participant("시소"),
-                new Participant("헤일러"),
-                new Participant("부기"),
-                new Participant("사나")
-        ));
-
-        Deck deck = new Deck(new ArrayList<>(List.of(
-                new Card(Suit.SPADE, Rank.FIVE),
-                new Card(Suit.SPADE, Rank.FIVE),
-                new Card(Suit.SPADE, Rank.THREE),
-                new Card(Suit.SPADE, Rank.THREE),
-                new Card(Suit.SPADE, Rank.TWO),
-                new Card(Suit.SPADE, Rank.TWO),
-                new Card(Suit.SPADE, Rank.SEVEN),
-                new Card(Suit.SPADE, Rank.SEVEN),
-                new Card(Suit.SPADE, Rank.FIVE),
-                new Card(Suit.SPADE, Rank.FIVE)
-        )));
-        Blackjack blackjack = new Blackjack(players, deck);
-        blackjack.distributeInitialCards();
-
-        // when
-        Map<String, MatchResult> results = blackjack.computeParticipantsMatchResult();
-
-        // then
-        SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(results.get("시소")).isEqualTo(MatchResult.WIN);
-            softly.assertThat(results.get("헤일러")).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(results.get("부기")).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(results.get("사나")).isEqualTo(MatchResult.DRAW);
-        });
     }
 }

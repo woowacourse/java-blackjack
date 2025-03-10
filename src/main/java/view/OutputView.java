@@ -1,7 +1,7 @@
 package view;
 
 import domain.MatchResult;
-import domain.dto.DealerResult;
+import domain.Player;
 import domain.dto.NameAndCards;
 import java.util.List;
 import java.util.Map;
@@ -47,17 +47,18 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 
-    public static void printMatchResult(DealerResult dealerResult, Map<String, MatchResult> participantsResult) {
-        System.out.printf("%s: %s%n", dealerResult.name(), convertToDealerMatchResultFormat(dealerResult));
+    public static void printGameResult(String dealerName, Map<MatchResult, Integer> dealerResult,
+                                       Map<Player, MatchResult> participantsMathResult) {
+        System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResultFormat(dealerResult));
 
-        participantsResult.forEach((key, value) -> System.out.printf("%s: %s%n", key, value.getTitle()));
+        participantsMathResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
     }
 
-    private static String convertToDealerMatchResultFormat(DealerResult dealerResult) {
+    private static String convertToDealerMatchResultFormat(Map<MatchResult, Integer> dealerResult) {
         StringBuilder sb = new StringBuilder();
-        dealerResult.matchResultCount().forEach((key, value) -> {
-            sb.append(String.format("%d%s ", value, key.getTitle()));
-        });
+        dealerResult.forEach((key, value) ->
+                sb.append(String.format("%d%s ", value, key.getTitle()))
+        );
         return sb.toString();
     }
 }

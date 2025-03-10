@@ -1,15 +1,18 @@
 package controller;
 
-import domain.Blackjack;
+import domain.BlackjackManager;
 import domain.Dealer;
 import domain.Deck;
 import domain.DeckGenerator;
+import domain.MatchResult;
+import domain.MatchResultPolicy;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.dto.NameAndCards;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
@@ -17,52 +20,68 @@ import view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        Blackjack blackjack = createBlackjack();
-        blackjack.distributeInitialCards();
-        OutputView.printInitialCards(NameAndCards.toNameAndOpenedCards(blackjack.getDealer()),
-                NameAndCards.toNameAndCards(blackjack.getParticipants()));
+        BlackjackManager blackjackManager = createBlackjackManager();
 
-        addMoreCards(blackjack);
-
-        OutputView.printPlayersCardsAndSum(NameAndCards.toNameAndCards(blackjack.getDealer()),
-                NameAndCards.toNameAndCards(blackjack.getParticipants()), blackjack.getNameAndSumOfAllPlayers());
-        OutputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
+        distributeInitialCards(blackjackManager);
+        addMoreCards(blackjackManager);
+        printGameResult(blackjackManager);
     }
 
-    private void addMoreCards(Blackjack blackjack) {
-        List<Player> participants = blackjack.getParticipants();
+    private void distributeInitialCards(BlackjackManager blackjackManager) {
+        blackjackManager.distributeInitialCards();
+        OutputView.printInitialCards(NameAndCards.toNameAndOpenedCards(blackjackManager.getDealer()),
+                NameAndCards.toNameAndCards(blackjackManager.getParticipants()));
+    }
+
+    private void addMoreCards(BlackjackManager blackjackManager) {
+        List<Player> participants = blackjackManager.getParticipants();
         for (Player participant : participants) {
-            addMoreCardsByName(blackjack, participant);
+            addMoreCardsByName(blackjackManager, participant);
         }
 
-        boolean isAdded = blackjack.addCardToDealerIfLowScore();
+        boolean isAdded = blackjackManager.addCardToDealerIfLowScore();
         if (isAdded) {
             OutputView.printAddCardToDealer();
         }
     }
 
-    private void addMoreCardsByName(Blackjack blackjack, Player participant) {
+    private void addMoreCardsByName(BlackjackManager blackjackManager, Player participant) {
         YesOrNo yesOrNo;
         do {
             yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participant.getName()));
-            addOneCardByNameIfYes(blackjack, participant, yesOrNo);
+            addOneCardByNameIfYes(blackjackManager, participant, yesOrNo);
             OutputView.printPlayerCards(NameAndCards.toNameAndCards(participant));
         } while (yesOrNo == YesOrNo.YES);
     }
 
-    private void addOneCardByNameIfYes(Blackjack blackjack, Player participant, YesOrNo yesOrNo) {
+    private void addOneCardByNameIfYes(BlackjackManager blackjackManager, Player participant, YesOrNo yesOrNo) {
         if (yesOrNo == YesOrNo.YES) {
-            blackjack.addOneCard(participant);
+            blackjackManager.addOneCard(participant);
         }
     }
 
-    private Blackjack createBlackjack() {
+    private void printGameResult(BlackjackManager blackjackManager) {
+        final Dealer dealer = blackjackManager.getDealer();
+        final List<Player> participants = blackjackManager.getParticipants();
+        OutputView.printPlayersCardsAndSum(NameAndCards.toNameAndCards(dealer),
+                NameAndCards.toNameAndCards(participants), blackjackManager.getNameAndSumOfAllPlayers());
+
+        Map<Player, MatchResult> participantsMatchResult
+                = MatchResultPolicy.computeParticipantsMatchResult(dealer, participants);
+        Map<MatchResult, Integer> dealerMathResultCount
+                = MatchResultPolicy.computeDealerMatchResultCount(participantsMatchResult);
+        OutputView.printGameResult(blackjackManager.getDealerName(),
+                dealerMathResultCount,
+                participantsMatchResult);
+    }
+
+    private BlackjackManager createBlackjackManager() {
         List<String> names = InputView.inputParticipantName();
         List<Participant> participants = createParticipants(names);
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
         Players players = createPlayers(dealer, participants);
-        return new Blackjack(players, deck);
+        return new BlackjackManager(players, deck);
     }
 
     private List<Participant> createParticipants(List<String> names) {
