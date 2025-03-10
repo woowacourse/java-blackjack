@@ -4,5 +4,6 @@ public enum ResultStatus {
 
     WIN,
     LOSE,
-    DRAW;
+    DRAW,
+    BLACKJACK;
 }

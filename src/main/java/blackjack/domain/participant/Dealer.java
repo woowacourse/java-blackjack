@@ -41,4 +41,8 @@ public class Dealer extends Gamer {
     public String getNickname() {
         return NICKNAME;
     }
+
+    public void setEarnedMoney(final long money) {
+        this.betAmount.setEarnedMoney(money);
+    }
 }

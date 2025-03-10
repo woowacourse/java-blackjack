@@ -14,6 +14,26 @@ public class Player extends Gamer {
         this.nickname = nickname;
     }
 
+    public void lose() {
+        this.betAmount.loseAll();
+    }
+
+    public void win() {
+        this.betAmount.getDouble();
+    }
+
+    public void draw() {
+        this.betAmount.getOnce();
+    }
+
+    public void blackjack() {
+        this.betAmount.getHalfTimes();
+    }
+
+    public boolean isBlackjack() {
+        return cards.getSize() == 2 && calculateMaxSum() == BLACKJACK_NUMBER;
+    }
+
     @Override
     public boolean canGetMoreCard() {
         int sum = cards.calculateMinSum();

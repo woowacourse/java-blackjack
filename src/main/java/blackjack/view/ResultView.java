@@ -8,7 +8,6 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -30,9 +29,8 @@ public class ResultView {
     private static final String CARD_FORMAT = "%s카드: %s";
     private static final String TITLE_DEALER_EXTRA_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_SUM_FORMAT = "%s카드: %s - 결과: %d";
-    private static final String TITLE_WINNING_RESULT = "## 최종 승패";
-    private static final String WINNING_DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
-    private static final String WINNING_PLAYER_RESULT_FORMAT = "%s: %s";
+    private static final String TITLE_FINAL_EARNING = "## 최종 수익";
+    private static final String EARNING_FORMAT = "%s: %d";
 
     public void printParticipantTotalCards(final Gamer gamer) {
         System.out.println(makeParticipantsMessage(gamer));
@@ -72,26 +70,8 @@ public class ResultView {
         System.out.println(message);
     }
 
-    public void showWinningResult(final Map<String, ResultStatus> result) {
-        System.out.println(LINE + TITLE_WINNING_RESULT);
-        int winCount = countResultStatus(result, ResultStatus.LOSE);
-        int drawCount = countResultStatus(result, ResultStatus.DRAW);
-        int loseCount = countResultStatus(result, ResultStatus.WIN);
-        System.out.printf(WINNING_DEALER_RESULT_FORMAT + LINE, winCount, drawCount, loseCount);
-        for (Entry<String, ResultStatus> entry : result.entrySet()) {
-            System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey(),
-                    getResultStatusName(entry.getValue()));
-        }
-    }
-
     public void showException(final RuntimeException exception) {
         System.out.println(exception.getMessage());
-    }
-
-    private int countResultStatus(final Map<String, ResultStatus> result, final ResultStatus input) {
-        return (int) result.values().stream()
-                .filter(resultStatus -> resultStatus == input)
-                .count();
     }
 
     private String getShapeName(final Shape shape) {
@@ -100,5 +80,13 @@ public class ResultView {
 
     private String getResultStatusName(final ResultStatus resultStatus) {
         return RESULT_STATUS_KOREAN.get(resultStatus);
+    }
+
+    public void printEarningTitle() {
+        System.out.println(LINE + TITLE_FINAL_EARNING);
+    }
+
+    public void printEarning(final Gamer gamer) {
+        System.out.println(String.format(EARNING_FORMAT, gamer.getNickname(), gamer.getEarnedMoney()));
     }
 }

@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.Answer;
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.ResultStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
@@ -16,7 +15,6 @@ import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -40,16 +38,19 @@ public class BlackjackController {
         // 초기 분배하기
         showInitialCards(blackjackGame, participants);
 
-        // 플레이어들과 딜러에게 추가 카드 나눠주기
-        spreadPlayersExtraCards(blackjackGame);
-        spreadDealerExtraCards(blackjackGame);
+        // 블랙잭 체크하기
+        boolean isPush = blackjackGame.checkBlackjack();
+        if (!isPush) {
+            // 플레이어들과 딜러에게 추가 카드 나눠주기
+            spreadPlayersExtraCards(blackjackGame);
+            spreadDealerExtraCards(blackjackGame);
+        }
 
         // 딜러와 플레이어가 가진 카드와 합 보여주기
         showAllCards(participants);
 
-        // 딜러와 플레이어의 승패 보여주기
-        final Map<String, ResultStatus> result = blackjackGame.calculateWinningResult();
-        resultView.showWinningResult(result);
+        // 베팅 결과 보여주기
+        showBetResult(blackjackGame, isPush, participants);
     }
 
     private void betPlayers(final Participants participants, final BlackjackGame blackjackGame) {
@@ -127,5 +128,15 @@ public class BlackjackController {
         String names = inputView.readNames();
         List<String> parsedNames = StringParser.parseComma(names);
         return Players.from(parsedNames);
+    }
+
+    private void showBetResult(final BlackjackGame blackjackGame, final boolean isPush,
+                               final Participants participants) {
+        blackjackGame.calculateWinningResult(isPush);
+        resultView.printEarningTitle();
+        resultView.printEarning(participants.getDealer());
+        for (Player player : participants.getPlayers()) {
+            resultView.printEarning(player);
+        }
     }
 }

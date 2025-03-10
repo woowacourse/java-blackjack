@@ -9,6 +9,7 @@ import blackjack.domain.participant.Player;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackjackGame {
 
@@ -54,6 +55,77 @@ public class BlackjackGame {
         return Collections.unmodifiableMap(result);
     }
 
+    public void calculateWinningResult(boolean isPush) {
+        if (isPush) {
+            calculatePushPlayersEarnings();
+        }
+
+        if (!isPush) {
+            Map<Player, ResultStatus> playersResultStatus = makePlayersResultStatus();
+            calculatePlayersEarnings(playersResultStatus);
+        }
+
+        long playersBetAmountSum = participants.getPlayers().stream()
+                .mapToLong(Player::getEarnedMoney)
+                .sum();
+        participants.getDealer().setEarnedMoney(-1 * playersBetAmountSum);
+    }
+
+    private void calculatePushPlayersEarnings() {
+        for (Player player : participants.getPlayers()) {
+            calculatePushPlayerEarnings(player);
+        }
+    }
+
+    private static void calculatePushPlayerEarnings(final Player player) {
+        if (player.calculateMaxSum() == BLACKJACK_NUMBER) {
+            player.draw();
+        }
+        if (player.calculateMaxSum() != BLACKJACK_NUMBER) {
+            player.lose();
+        }
+    }
+
+    private Map<Player, ResultStatus> makePlayersResultStatus() {
+        Map<Player, ResultStatus> playersResultStatus = new HashMap<>();
+        int dealerSum = participants.calculateDealerMaxSum();
+        for (Player player : participants.getPlayers()) {
+            int playerSum = player.calculateMaxSum();
+            ResultStatus resultStatus = calculateResultStatus(playerSum, dealerSum);
+            resultStatus = calculateIfBlackjack(player, resultStatus);
+            playersResultStatus.put(player, resultStatus);
+        }
+        return playersResultStatus;
+    }
+
+    private static ResultStatus calculateIfBlackjack(final Player player, ResultStatus resultStatus) {
+        if (resultStatus == ResultStatus.WIN && player.isBlackjack()) {
+            resultStatus = ResultStatus.BLACKJACK;
+        }
+        return resultStatus;
+    }
+
+    private void calculatePlayersEarnings(final Map<Player, ResultStatus> playersResultStatus) {
+        for (Entry<Player, ResultStatus> playerResultStatusEntry : playersResultStatus.entrySet()) {
+            calculatePlayerEarnings(playerResultStatusEntry);
+        }
+    }
+
+    private void calculatePlayerEarnings(final Entry<Player, ResultStatus> playerResultStatusEntry) {
+        if (playerResultStatusEntry.getValue() == ResultStatus.WIN) {
+            playerResultStatusEntry.getKey().win();
+        }
+        if (playerResultStatusEntry.getValue() == ResultStatus.LOSE) {
+            playerResultStatusEntry.getKey().lose();
+        }
+        if (playerResultStatusEntry.getValue() == ResultStatus.DRAW) {
+            playerResultStatusEntry.getKey().lose();
+        }
+        if (playerResultStatusEntry.getValue() == ResultStatus.BLACKJACK) {
+            playerResultStatusEntry.getKey().blackjack();
+        }
+    }
+
     public ResultStatus calculateResultStatus(final int sum, final int comparedSum) {
         if (sum <= BLACKJACK_NUMBER) {
             return calculateResultStatusUnder21(sum, comparedSum);
@@ -86,7 +158,16 @@ public class BlackjackGame {
         return participants.getPlayers().size();
     }
 
-    public void bet(final Player player, final int betAmount) {
+    public void bet(final Player player, final long betAmount) {
         player.bet(betAmount);
+    }
+
+    public boolean checkBlackjack() {
+        int dealerSum = participants.calculateDealerMaxSum();
+        Map<Player, Integer> playerSum = new HashMap<>();
+        for (Player player : participants.getPlayers()) {
+            playerSum.put(player, player.calculateMaxSum());
+        }
+        return (dealerSum == BLACKJACK_NUMBER && playerSum.containsValue(BLACKJACK_NUMBER));
     }
 }

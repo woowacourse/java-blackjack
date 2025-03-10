@@ -31,7 +31,11 @@ public abstract class Gamer {
         return cards.calculateResult();
     }
 
-    public void bet(final int betAmount) {
-        this.betAmount.setMoney(betAmount);
+    public void bet(final long betAmount) {
+        this.betAmount.setBetMoney(betAmount);
+    }
+
+    public long getEarnedMoney() {
+        return betAmount.getEarnedMoney();
     }
 }
