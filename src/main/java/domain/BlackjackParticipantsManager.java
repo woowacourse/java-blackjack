@@ -7,15 +7,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackjackParticipantsManager<E extends BlackjackParticipant> {
+public class BlackjackParticipantsManager<E extends BlackjackParticipant, V extends BlackjackParticipant> {
 
     private static final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
     private static final String INVALID_HANDS_STATE = "아직 카드를 받지 않은 참여자입니다.";
 
     private final List<E> players;
-    private final Dealer dealer;
+    private final V dealer;
 
-    public BlackjackParticipantsManager(List<E> players, Dealer dealer) {
+    public BlackjackParticipantsManager(List<E> players, V dealer) {
         this.players = new ArrayList<>(players);
         this.dealer = dealer;
     }
