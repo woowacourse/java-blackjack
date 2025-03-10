@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import blackjack.domain.random.CardGenerator;
-import blackjack.domain.random.CardRandomGenerator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -18,7 +17,7 @@ public class CardManager {
 
     private static Map<Card, Boolean> initializeCardsUsageStatus() {
         final Map<Card, Boolean> cardsUsageStatus = new HashMap<>();
-        for (Card card : CardRandomGenerator.CARDS) {
+        for (Card card : CardGenerator.DECK) {
             cardsUsageStatus.put(card, false);
         }
         return cardsUsageStatus;
