@@ -17,7 +17,7 @@ class GameResultTest {
         players.addGamblers(List.of(gambler));
         CardPack cardPack = new CardPack(new ReversedSortShuffle());
         players.initPlayers(cardPack);
-        players.dealAddCard(cardPack, gambler);
+        gambler.pushDealCard(cardPack, 1);
         Assertions.assertThat(GameResult.getGameResult(players.getDealer(), gambler)).isEqualTo(GameResult.WIN);
     }
 
@@ -29,7 +29,7 @@ class GameResultTest {
         players.addGamblers(List.of(gambler));
         CardPack cardPack = new CardPack(new ReversedSortShuffle());
         players.initPlayers(cardPack);
-        players.dealAddCard(cardPack, players.getDealer());
+        players.getDealer().pushDealCard(cardPack, 1);
         Assertions.assertThat(GameResult.getGameResult(players.getDealer(), gambler)).isEqualTo(GameResult.LOSE);
     }
 
@@ -52,8 +52,8 @@ class GameResultTest {
         players.addGamblers(List.of(gambler));
         CardPack cardPack = new CardPack(new SortShuffle());
         players.initPlayers(cardPack);
-        players.dealAddCard(cardPack, gambler);
-        players.dealAddCard(cardPack, players.getDealer());
+        gambler.pushDealCard(cardPack, 1);
+        players.getDealer().pushDealCard(cardPack, 1);
 
         Assertions.assertThat(GameResult.getGameResult(players.getDealer(), gambler)).isEqualTo(GameResult.DRAW);
     }
@@ -66,8 +66,7 @@ class GameResultTest {
         players.addGamblers(List.of(gambler));
         CardPack cardPack = new CardPack(new SortShuffle());
         players.initPlayers(cardPack);
-        players.dealAddCard(cardPack, gambler);
-
+        gambler.pushDealCard(cardPack, 1);
         Assertions.assertThat(GameResult.getGameResult(players.getDealer(), gambler)).isEqualTo(GameResult.LOSE);
     }
 
@@ -79,7 +78,7 @@ class GameResultTest {
         players.addGamblers(List.of(gambler));
         CardPack cardPack = new CardPack(new SortShuffle());
         players.initPlayers(cardPack);
-        players.dealAddCard(cardPack, players.getDealer());
+        players.getDealer().pushDealCard(cardPack, 1);
 
         Assertions.assertThat(GameResult.getGameResult(players.getDealer(), gambler)).isEqualTo(GameResult.WIN);
     }

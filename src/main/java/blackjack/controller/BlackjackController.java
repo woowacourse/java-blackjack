@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.GameManager;
 import blackjack.domain.Players;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -23,7 +24,7 @@ public class BlackjackController {
     public void start() {
         Players players = initPlayers();
         dealMoreCards(players);
-        dealMoreDealerCards();
+        dealMoreDealerCards(players);
         displayGameResults(players);
     }
 
@@ -37,8 +38,9 @@ public class BlackjackController {
         }
     }
 
-    private void dealMoreDealerCards() {
-        while (gameManager.isDealerHitThenDealAddCard()) {
+    private void dealMoreDealerCards(Players players) {
+        Dealer dealer = players.getDealer();
+        while (gameManager.isDealerHitThenDealAddCard(dealer)) {
             outputView.printDealerHitAndDealCard();
         }
     }

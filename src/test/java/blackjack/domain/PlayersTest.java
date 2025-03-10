@@ -68,12 +68,12 @@ class PlayersTest {
         Gambler gambler = new Gambler("두리");
         players.addGamblers(List.of(gambler));
 
-        players.dealAddCard(cardPack, gambler);
-        players.dealAddCard(cardPack, gambler);
-        players.dealAddCard(cardPack, gambler);
+        gambler.pushDealCard(cardPack, 1);
+        gambler.pushDealCard(cardPack, 1);
+        gambler.pushDealCard(cardPack, 1);
 
         // when
-        boolean result = players.isPlayerBust(gambler);
+        boolean result = gambler.isPlayerBust();
 
         // then
         assertThat(result).isTrue();
@@ -86,7 +86,7 @@ class PlayersTest {
         Players players = new Players();
 
         // when
-        boolean result = players.isDealerHit();
+        boolean result = players.getDealer().isDealerHit();
 
         // then
         assertThat(result)

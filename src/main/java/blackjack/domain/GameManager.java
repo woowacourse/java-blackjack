@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.BlackjackShuffle;
 import blackjack.domain.card.CardPack;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
@@ -34,9 +35,9 @@ public class GameManager {
         return player.isPlayerBust();
     }
 
-    public boolean isDealerHitThenDealAddCard() {
-        if (players.isDealerHit()) {
-            players.dealAddCardForDealer(cardPack);
+    public boolean isDealerHitThenDealAddCard(Dealer dealer) {
+        if (dealer.isDealerHit()) {
+            dealer.pushDealCard(cardPack, 1);
             return true;
         }
         return false;

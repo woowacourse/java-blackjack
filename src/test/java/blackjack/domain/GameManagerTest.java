@@ -58,9 +58,9 @@ class GameManagerTest {
     void ifTheDealerS_CardIsHitAddACard() {
         // given
         GameManager gameManager = new GameManager(blackjackShuffle);
-
+        Players players = gameManager.getPlayers();
         // when
-        boolean result = gameManager.isDealerHitThenDealAddCard();
+        boolean result = gameManager.isDealerHitThenDealAddCard(players.getDealer());
 
         // then
         assertAll(
@@ -74,7 +74,7 @@ class GameManagerTest {
     void if_the_dealer_card_is_not_hit_get_false() {
         GameManager gameManager = new GameManager(blackjackShuffle);
         gameManager.addGamblersAndDealInitCards(List.of(new Gambler("비타")));
-        boolean result = gameManager.isDealerHitThenDealAddCard();
+        boolean result = gameManager.getPlayers().getDealer().isDealerHit();
 
         assertThat(result).isFalse();
     }
