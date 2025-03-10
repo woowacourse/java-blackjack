@@ -1,5 +1,7 @@
-package blackjack.model;
+package blackjack.model.participant;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.CardValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

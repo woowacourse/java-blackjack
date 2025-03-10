@@ -1,5 +1,9 @@
 package blackjack.model;
 
+import blackjack.model.card.Card;
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Participant;
+import blackjack.model.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,15 +11,15 @@ import java.util.Map;
 public class Game {
 
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
     public Game(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
-        this.players = List.copyOf(players);
+        this.players = new Players(players);
     }
 
     public void dealInitialCards() {
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             dealCard(player);
             dealCard(player);
         }
@@ -29,7 +33,7 @@ public class Game {
     }
 
     public void askHitForAllPlayer(PlayerHandVisualizer playerHandVisualizer) {
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             askHit(player, playerHandVisualizer);
         }
     }
@@ -63,7 +67,7 @@ public class Game {
 
     public Map<Player, MatchResult> judgeMatchResults() {
         Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             results.put(player, MatchResult.judge(dealer, player));
         }
         return results;
@@ -74,7 +78,7 @@ public class Game {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return players.getPlayers();
     }
 
     public List<Card> getDealerHand() {

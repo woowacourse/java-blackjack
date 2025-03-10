@@ -14,7 +14,7 @@ public class Players {
 
     private void validate(List<Player> players) {
         int playerSize = players.size();
-        if(playerSize != Set.copyOf(players).size()) {
+        if (playerSize != Set.copyOf(players).size()) {
             throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
         }
         if (playerSize > 6 || playerSize < 1) {

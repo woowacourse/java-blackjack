@@ -6,6 +6,13 @@ import static blackjack.TestFixtures.createHitDecisionStrategy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.CardValue;
+import blackjack.model.card.Deck;
+import blackjack.model.card.FixedCardShuffler;
+import blackjack.model.card.Suit;
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Player;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -70,9 +77,9 @@ class GameTest {
         // given
         Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Deck deck = Deck.createShuffledDeck(List.of(spadeFive, spadeTen), new FixedCardShuffler());
+        Deck deck = Deck.createShuffledDeck(List.of(spadeFive, spadeTen, spadeFive, spadeTen), new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        Game game = new Game(dealer, List.of());
+        Game game = new Game(dealer, List.of(new Player("pobi", NO_HIT_STRATEGY)));
         game.dealInitialCards();
 
         //when

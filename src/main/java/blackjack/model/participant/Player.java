@@ -1,5 +1,6 @@
-package blackjack.model;
+package blackjack.model.participant;
 
+import blackjack.model.HitDecisionStrategy;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -10,8 +11,15 @@ public class Player extends Participant {
 
     public Player(String name, HitDecisionStrategy hitDecisionStrategy) {
         super(new ArrayList<>());
+        validateName(name);
         this.name = name;
         this.hitDecisionStrategy = hitDecisionStrategy;
+    }
+
+    private void validateName(String name) {
+        if (name.isBlank() || name == null) {
+            throw new IllegalArgumentException("이름은 한글자 이상이어야합니다.");
+        }
     }
 
     @Override
