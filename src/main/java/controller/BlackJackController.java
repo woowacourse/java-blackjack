@@ -26,7 +26,6 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.createCards();
-        cardDeck.shuffle();
 
         startBlackJack(cardDeck, players, dealer);
         playBlackJack(cardDeck, players, dealer);

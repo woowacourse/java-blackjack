@@ -17,6 +17,7 @@ public class CardDeck {
                 .flatMap(pattern -> createCardNumbers().stream()
                         .map(cardNumber -> new Card(pattern, cardNumber)))
                 .collect(Collectors.toList());
+        Collections.shuffle(cards);
         return new CardDeck(cards);
     }
 
@@ -32,10 +33,6 @@ public class CardDeck {
 
     private CardDeck(List<Card> deck) {
         this.deck = deck;
-    }
-
-    public void shuffle() {
-        Collections.shuffle(deck);
     }
 
     public List<Card> drawCardWhenStart() {
