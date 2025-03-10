@@ -1,5 +1,6 @@
 package controller;
 
+import constant.Answer;
 import domain.GameManager;
 import domain.card.Card;
 import domain.card.CardDeck;
@@ -72,7 +73,7 @@ public class BlackjackController {
     private void processPlayerDecision(String name, GameManager gameManager) {
         while (gameManager.getScoreOf(name) < Card.BLACKJACK_NUMBER) {
             String answer = inputView.askReceive(name);
-            if (answer.equals("n")) {
+            if (Answer.getAnswer(answer) == Answer.NO) {
                 outputView.printCardsByName(gameManager.getPlayerByName(name));
                 break;
             }
