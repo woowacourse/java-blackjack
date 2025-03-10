@@ -28,6 +28,8 @@ public class Deck {
     public void shuffle() {
         ArrayList<Card> deckCards = new ArrayList<>(deck);
         Collections.shuffle(deckCards);
+
+        deck.clear();
         deck.addAll(deckCards);
     }
 
