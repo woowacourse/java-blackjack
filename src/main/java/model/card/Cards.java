@@ -2,10 +2,13 @@ package model.card;
 
 import static constant.BlackjackConstant.BUST_NUMBER;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 public class Cards {
 
@@ -21,7 +24,7 @@ public class Cards {
 
     public int calculateNearestTotal() {
         Set<Integer> candidates = new HashSet<>();
-        generateCandidates(candidates, totalWithoutAce(), 0, aceCount());
+        generateCandidates(candidates, totalWithoutAce(), aceCount());
 
         return candidates.stream()
                 .filter(candidate -> candidate <= BUST_NUMBER)
@@ -44,15 +47,25 @@ public class Cards {
                 .count();
     }
 
-    private void generateCandidates(Set<Integer> candidates, int currentSum, int usedAces, int totalAces) {
-        if (usedAces == totalAces) {
-            candidates.add(currentSum);
-            return;
-        }
+    private void generateCandidates(Set<Integer> candidates, int initialSum, int totalAces) {
+        Deque<List<Integer>> deque = new ArrayDeque<>();
+        deque.push(new ArrayList<>(List.of(initialSum, 0)));
 
-        generateCandidates(candidates, currentSum + 1, usedAces + 1, totalAces);
-        generateCandidates(candidates, currentSum + 11, usedAces + 1, totalAces);
+        while (!deque.isEmpty()) {
+            List<Integer> state = deque.pop();
+            Integer currentSum = state.get(0);
+            Integer usedAces = state.get(1);
+
+            if (usedAces == totalAces) {
+                candidates.add(currentSum);
+                continue;
+            }
+
+            deque.push(new ArrayList<>(List.of(currentSum + 1, usedAces + 1)));
+            deque.push(new ArrayList<>(List.of(currentSum + 11, usedAces + 1)));
+        }
     }
+
 
     public Card get(int index) {
         return cards.get(index);

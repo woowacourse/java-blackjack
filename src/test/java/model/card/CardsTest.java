@@ -51,8 +51,7 @@ public class CardsTest {
         int result = cards.calculateNearestTotal();
 
         // then
-        Assertions.assertThat(result)
-                .isEqualTo(20);
+        Assertions.assertThat(result).isEqualTo(20);
     }
 
     @Test
@@ -69,7 +68,6 @@ public class CardsTest {
         int result = cards.calculateNearestTotal();
 
         // then
-        Assertions.assertThat(result)
-                .isEqualTo(24);
+        Assertions.assertThat(result).isEqualTo(24);
     }
 }
