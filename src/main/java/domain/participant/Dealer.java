@@ -41,9 +41,7 @@ public class Dealer extends Participant {
     }
 
     public void giveCards(Participant participant, int count) {
-        for (int i = 0; i < count; i++) {
-            deck.giveCardTo(participant, count);
-        }
+        deck.giveCardTo(participant, count);
     }
 
     public void drawUntilLimit() {
