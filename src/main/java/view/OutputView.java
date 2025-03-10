@@ -2,7 +2,7 @@ package view;
 
 import domain.Card;
 import domain.Gamer;
-import domain.Result;
+import domain.MatchResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -57,7 +57,7 @@ public class OutputView {
         return String.format("%s%s", card.getRank().getName(), card.getSymbol().getName());
     }
 
-    public void printWinLoseResult(Map<Result, Integer> dealerResult, Map<Gamer, Result> playerResult) {
+    public void printMatchResult(Map<MatchResult, Integer> dealerResult, Map<Gamer, MatchResult> playerResult) {
         System.out.println(NEXT_LINE + "## 최종승패");
 
         printDealerResult(dealerResult);
@@ -65,20 +65,20 @@ public class OutputView {
         printPlayerResult(playerResult);
     }
 
-    private void printPlayerResult(Map<Gamer, Result> playerResult) {
+    private void printPlayerResult(Map<Gamer, MatchResult> playerResult) {
         for (Gamer player : playerResult.keySet()) {
             System.out.printf("%s: %s%n", player.getName(), playerResult.get(player).getState());
         }
     }
 
-    private void printDealerResult(Map<Result, Integer> dealerResult) {
+    private void printDealerResult(Map<MatchResult, Integer> dealerResult) {
         System.out.print("딜러: ");
-        for (Result result : Result.values()) {
+        for (MatchResult result : MatchResult.values()) {
             printEachResult(dealerResult, result);
         }
     }
 
-    private void printEachResult(Map<Result, Integer> dealerResult, Result result) {
+    private void printEachResult(Map<MatchResult, Integer> dealerResult, MatchResult result) {
         if (dealerResult.containsKey(result)) {
             System.out.printf("%d%s ", dealerResult.get(result), result.getState());
         }

@@ -1,17 +1,17 @@
 package domain;
 
-public enum Result {
+public enum MatchResult {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
 
     private final String state;
 
-    Result(String state) {
+    MatchResult(String state) {
         this.state = state;
     }
 
-    public static Result judge(Hand dealerHand, Hand playerHand) {
+    public static MatchResult judge(Hand dealerHand, Hand playerHand) {
         if (bothPlayersBust(dealerHand, playerHand)) {
             return DRAW;
         }
@@ -28,7 +28,7 @@ public enum Result {
         return dealerHand.isBust() && playerHand.isBust();
     }
 
-    private static Result compareScores(int dealerScore, int playerScore) {
+    private static MatchResult compareScores(int dealerScore, int playerScore) {
         if (dealerScore == playerScore) {
             return DRAW;
         }

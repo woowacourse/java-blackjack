@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ResultTest {
+class MatchResultTest {
 
     @DisplayName("플레이어와 딜러 모두 버스트라면 무승부다")
     @Test
@@ -41,10 +41,10 @@ class ResultTest {
         player.hit(deck);
 
         //when
-        Result actual = Result.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
 
         //then
-        assertThat(actual).isEqualTo(Result.DRAW);
+        assertThat(actual).isEqualTo(MatchResult.DRAW);
     }
 
     @DisplayName("플레이어와 딜러 모두 버스트가 아닐때 점수가 같다면 무승부다.")
@@ -79,10 +79,10 @@ class ResultTest {
         player.hit(deck);
 
         //when
-        Result actual = Result.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
 
         //then
-        assertThat(actual).isEqualTo(Result.DRAW);
+        assertThat(actual).isEqualTo(MatchResult.DRAW);
     }
 
     @DisplayName("플레이어와 딜러 중 한쪽만 버스트라면 점수에 상관없이 버스트가 아닌 쪽이 승리한다.")
@@ -117,9 +117,9 @@ class ResultTest {
         player.hit(deck);
 
         //when //then
-        Result actual = Result.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
 
-        assertThat(actual).isEqualTo(Result.WIN);
+        assertThat(actual).isEqualTo(MatchResult.WIN);
     }
 
     @DisplayName("플레이어와 딜러 중 둘다 버스트가 아니고, 점수가 서로 다를경우 점수가 21에 가까운쪽이 승리한다.")
@@ -154,10 +154,10 @@ class ResultTest {
         player.hit(deck);
 
         //when
-        Result actual = Result.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
 
         //then
-        assertThat(actual).isEqualTo(Result.LOSE);
+        assertThat(actual).isEqualTo(MatchResult.LOSE);
     }
 
 }

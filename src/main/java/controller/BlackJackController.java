@@ -5,8 +5,8 @@ import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Deck;
 import domain.Gamer;
+import domain.MatchResult;
 import domain.Player;
-import domain.Result;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class BlackJackController {
         }
 
         outputView.printCardResult(dealer, players);
-        showWinLoseResult(players, dealer);
+        showMatchResult(players, dealer);
     }
 
     private List<Gamer> setPlayers() {
@@ -93,15 +93,15 @@ public class BlackJackController {
         return inputView.readYesOrNo(player);
     }
 
-    private void showWinLoseResult(List<Gamer> players, Gamer dealer) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        Map<Gamer, Result> playerResult = new HashMap<>();
+    private void showMatchResult(List<Gamer> players, Gamer dealer) {
+        Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
+        Map<Gamer, MatchResult> playerResult = new HashMap<>();
 
         for (Gamer player : players) {
-            Result result = Result.judge(dealer.getHand(), player.getHand());
+            MatchResult result = MatchResult.judge(dealer.getHand(), player.getHand());
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, Result.judge(player.getHand(), dealer.getHand()));
+            playerResult.put(player, MatchResult.judge(player.getHand(), dealer.getHand()));
         }
-        outputView.printWinLoseResult(dealerResult, playerResult);
+        outputView.printMatchResult(dealerResult, playerResult);
     }
 }

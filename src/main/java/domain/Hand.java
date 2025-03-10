@@ -21,7 +21,9 @@ public class Hand {
     }
 
     private int sumPointWithoutAce() {
-        return cards.stream().filter(card -> !card.isAce()).mapToInt(card -> card.getRank().getPoint()).sum();
+        return cards.stream().filter(card -> !card.isAce())
+                .mapToInt(card -> card.getRank().getPoint())
+                .sum();
     }
 
     private int sumAcePoint(int totalPoint) {
@@ -43,9 +45,11 @@ public class Hand {
     }
 
     private List<Rank> extractAces() {
-        return cards.stream().filter(Card::isAce).map(Card::getRank).toList();
+        return cards.stream()
+                .filter(Card::isAce)
+                .map(Card::getRank)
+                .toList();
     }
-
 
     public boolean isBust() {
         return calculateTotalScore() > MAX_SCORE;
