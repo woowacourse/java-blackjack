@@ -16,7 +16,7 @@ class CardDumpTest {
     @DisplayName("카드 덤프에서 카드를 뽑아 반환한다.")
     @Test
     void testDrawRandomCardFromCardDump() {
-        CardDump cardDump = new CardDump();
+        CardDump cardDump = CardDump.shuffledDump();
         Card card = cardDump.drawCard();
 
         assertThat(card).isNotNull();
@@ -25,7 +25,7 @@ class CardDumpTest {
     @DisplayName("52장의 카드가 중복이 없다는 것을 확인한다.")
     @Test
     void testCardDumpSize() {
-        CardDump cardDump = new CardDump();
+        CardDump cardDump = CardDump.shuffledDump();
 
         Set<Card> cardSet = new HashSet<>();
         for (int i = 0; i < 52; i++) {
@@ -38,7 +38,7 @@ class CardDumpTest {
     @DisplayName("카드 덤프가 빈 경우 예외가 발생하는 것을 확인한다.")
     @Test
     void testCardDumpError() {
-        CardDump cardDump = new CardDump();
+        CardDump cardDump = CardDump.shuffledDump();
         for (int i = 0; i < 52; i++) {
             cardDump.drawCard();
         }

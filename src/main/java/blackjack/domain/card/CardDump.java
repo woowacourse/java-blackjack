@@ -9,16 +9,17 @@ public class CardDump {
 
     private final List<Card> cardDump;
 
-    public CardDump() {
-        cardDump = initializeCardDump();
-        shuffle();
+    public CardDump(List<Card> cardDump) {
+        this.cardDump = cardDump;
     }
 
-    private void shuffle() {
-        Collections.shuffle(cardDump);
+    public static CardDump shuffledDump() {
+        List<Card> cards = initializeCardDump();
+        Collections.shuffle(cards);
+        return new CardDump(cards);
     }
 
-    private List<Card> initializeCardDump() {
+    private static List<Card> initializeCardDump() {
         List<Card> cards = new ArrayList<>();
         for (CardSuit suit : CardSuit.values()) {
             for (CardRank rank : CardRank.values()) {

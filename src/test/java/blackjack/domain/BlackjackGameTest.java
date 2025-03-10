@@ -22,7 +22,7 @@ class BlackjackGameTest {
         Player player = new Player("player", new CardDeck());
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardDeck());
-        BlackjackGame game = new BlackjackGame(players, dealer, new CardDump());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
 
         // when
         game.distributeInitialCards();
@@ -39,7 +39,7 @@ class BlackjackGameTest {
         Player player = new Player("player", new CardDeck());
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardDeck());
-        BlackjackGame game = new BlackjackGame(players, dealer, new CardDump());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
 
         // when
         game.dealerTurn();
