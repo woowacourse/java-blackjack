@@ -14,11 +14,15 @@ public class PlayerBetting {
     }
 
     public void calculateBettingResult(Player player, GameResult gameResult) {
+        int bettingPrice = betting.get(player);
         if (gameResult == GameResult.WIN){
-            betting.put(player, betting.get(player) * 2);
+            betting.put(player, bettingPrice * 2);
         }
         if (gameResult == GameResult.LOSE){
             betting.put(player, 0);
+        }
+        if (gameResult == GameResult.BLACKJACK){
+            betting.put(player, bettingPrice + bettingPrice * 3/2);
         }
     }
 }
