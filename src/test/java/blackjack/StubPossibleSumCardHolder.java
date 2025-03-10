@@ -25,7 +25,7 @@ public class StubPossibleSumCardHolder implements CardHolder {
     }
 
     @Override
-    public List<Integer> getPossibleSums() {
+    public List<Integer> calculatePossibleSums() {
         return integers;
     }
 

@@ -13,7 +13,7 @@ public class Dealer {
     }
 
     public List<Integer> getPossibleSums() {
-        return cardHolder.getPossibleSums();
+        return cardHolder.calculatePossibleSums();
     }
 
     public void takeCard(Card newCard) {

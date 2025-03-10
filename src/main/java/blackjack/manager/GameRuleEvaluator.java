@@ -31,7 +31,7 @@ public class GameRuleEvaluator {
     }
 
     private boolean isBustedFor(CardHolder cardHolder) {
-        List<Integer> possibleSums = cardHolder.getPossibleSums();
+        List<Integer> possibleSums = cardHolder.calculatePossibleSums();
 
         return possibleSums.stream()
                 .allMatch(sum -> sum > BUSTED_STANDARD_VALUE);

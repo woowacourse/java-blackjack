@@ -40,7 +40,7 @@ class HandTest {
         hand.takeCard(card2);
 
         // when
-        List<Integer> totalValues = hand.getPossibleSums();
+        List<Integer> totalValues = hand.calculatePossibleSums();
 
         // then
         assertThat(totalValues).containsExactlyInAnyOrder(2, 12, 22);

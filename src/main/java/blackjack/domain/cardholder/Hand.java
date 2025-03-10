@@ -30,7 +30,7 @@ public class Hand implements CardHolder {
         cards.add(newCard);
     }
 
-    public List<Integer> getPossibleSums() {
+    public List<Integer> calculatePossibleSums() {
         Set<Integer> possibleSums = new HashSet<>();
 
         calculatePossibleSums(possibleSums, 0, 0);
@@ -50,7 +50,7 @@ public class Hand implements CardHolder {
     }
 
     public int getOptimisticValue() {
-        return getPossibleSums().stream()
+        return calculatePossibleSums().stream()
                 .filter(sum -> sum <= BUSTED_STANDARD_VALUE)
                 .max(Comparator.naturalOrder())
                 .orElse(0);

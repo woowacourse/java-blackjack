@@ -9,7 +9,7 @@ public interface CardHolder {
 
     void takeCard(Card newCard);
 
-    List<Integer> getPossibleSums();
+    List<Integer> calculatePossibleSums();
 
     int getOptimisticValue();
 }

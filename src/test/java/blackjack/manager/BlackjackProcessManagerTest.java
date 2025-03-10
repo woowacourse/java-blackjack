@@ -102,7 +102,7 @@ class BlackjackProcessManagerTest {
             }
 
             @Override
-            public List<Integer> getPossibleSums() {
+            public List<Integer> calculatePossibleSums() {
                 return List.of();
             }
 
@@ -124,7 +124,7 @@ class BlackjackProcessManagerTest {
             }
 
             @Override
-            public List<Integer> getPossibleSums() {
+            public List<Integer> calculatePossibleSums() {
                 return List.of();
             }
 

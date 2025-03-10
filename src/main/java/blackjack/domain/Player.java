@@ -15,7 +15,7 @@ public class Player {
     }
 
     public List<Integer> getPossibleSums() {
-        return cardHolder.getPossibleSums();
+        return cardHolder.calculatePossibleSums();
     }
 
     public List<Card> getAllCards() {
