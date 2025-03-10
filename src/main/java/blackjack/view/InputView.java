@@ -6,22 +6,33 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private OutputView outputView = new OutputView();
     private Scanner scanner = new Scanner(System.in);
 
     public List<String> readNames() {
-        System.out.println("게임에 참여할 사람의 이름을 영어/한글로 입력하세요.(쉼표 기준으로 분리)");
-        String input = scanner.nextLine();
+        try {
+            System.out.println("게임에 참여할 사람의 이름을 영어/한글로 입력하세요.(쉼표 기준으로 분리)");
+            String input = scanner.nextLine();
 
-        validateBlank(input);
-        return parseStringToList(input);
+            validateBlank(input);
+            return parseStringToList(input);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            return readNames();
+        }
     }
 
     public boolean readGetOneMore(final String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
-        String input = scanner.nextLine();
+        try {
+            System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+            String input = scanner.nextLine();
 
-        validateBlank(input);
-        return YorN.fromText(input).toBoolean();
+            validateBlank(input);
+            return YorN.fromText(input).toBoolean();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            return readGetOneMore(name);
+        }
     }
 
     private List<String> parseStringToList(final String input) {
