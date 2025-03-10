@@ -4,6 +4,7 @@ import static constant.BlackjackConstant.BUST_NUMBER;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
@@ -72,6 +73,6 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
