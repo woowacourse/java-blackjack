@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameManger {
+public class GameManager {
     public final static int MAX_PLAYER = 7;
     public final static int WIN = 1;
     public final static int LOSE = 2;
@@ -18,7 +18,7 @@ public class GameManger {
     private final List<User> users = new ArrayList<>();
     private final User dealer;
 
-    public GameManger(List<String> names) {
+    public GameManager(List<String> names) {
         validate(names);
         for (String name : names) {
             users.add(new Player(name));

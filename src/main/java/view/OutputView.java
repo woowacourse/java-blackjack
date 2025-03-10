@@ -1,6 +1,6 @@
 package view;
 
-import domain.GameManger;
+import domain.GameManager;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +32,10 @@ public class OutputView {
     }
 
     private String convertGameResult(Integer value) {
-        if (value.equals(GameManger.WIN)) {
+        if (value.equals(GameManager.WIN)) {
             return "승";
         }
-        if (value.equals(GameManger.LOSE)) {
+        if (value.equals(GameManager.LOSE)) {
             return "패";
         }
         return "무승부";

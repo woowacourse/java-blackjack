@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.GameManger;
+import domain.GameManager;
 import domain.TrumpCardManager;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -20,8 +20,8 @@ public class DealerTest {
     @Test
     void test() {
         //given
-        GameManger gameManger = new GameManger(List.of("레몬"));
-        Dealer dealer = (Dealer) gameManger.getDealer();
+        GameManager gameManager = new GameManager(List.of("레몬"));
+        Dealer dealer = (Dealer) gameManager.getDealer();
         //when
         for (int i = 0; i < 5; i++) {
             dealer.drawCard();
@@ -34,8 +34,8 @@ public class DealerTest {
     @Test
     void test1() {
         //given
-        GameManger gameManger = new GameManger(List.of("레몬"));
-        Dealer dealer = (Dealer) gameManger.getDealer();
+        GameManager gameManager = new GameManager(List.of("레몬"));
+        Dealer dealer = (Dealer) gameManager.getDealer();
 
         //when
         while (!dealer.isImpossibleDraw()) {
