@@ -1,6 +1,7 @@
 package controller;
 
 import domain.CardDeck;
+import domain.CardDeckGenerator;
 import domain.Dealer;
 import domain.Game;
 import domain.GameResult;
@@ -24,7 +25,7 @@ public class GameController {
 
     public GameController() {
         this.game = new Game();
-        this.cardDeck = new CardDeck();
+        this.cardDeck = CardDeckGenerator.generate();
     }
 
     public void run() {

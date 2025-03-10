@@ -1,28 +1,23 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
+import exception.ErrorException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CardDeck {
 
-    private final Cards cards;
+    private static final int DECK_SIZE = 52;
 
-    public CardDeck() {
-        this.cards = initialize();
+    private final List<Card> cards;
+
+    public CardDeck(List<Card> cards) {
+        validateSize(cards);
+        this.cards = new ArrayList<>(cards);
     }
 
-    private Cards initialize() {
-        Cards cards = new Cards();
-        Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(Suit.values())
-                        .map(suit -> new Card(rank, suit)))
-                .forEach(cards::addCard);
-        cards.shuffle();
-        return cards;
+    public Card pickCard() {
+        return cards.removeFirst();
     }
 
     public List<List<Card>> pickInitialCardsStack(int stackSize) {
@@ -34,15 +29,17 @@ public class CardDeck {
         return cardsStack;
     }
 
-    public Card pickCard() {
-        return cards.pickCard();
-    }
-
     private List<Card> pickInitialCards(int stackSize) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < stackSize; i++) {
             cards.add(pickCard());
         }
         return cards;
+    }
+
+    private void validateSize(List<Card> cards) {
+        if (cards.size() != DECK_SIZE) {
+            throw new ErrorException("카드는 총 " + DECK_SIZE + "장이어야 합니다.");
+        }
     }
 }
