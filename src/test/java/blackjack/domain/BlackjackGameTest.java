@@ -10,6 +10,7 @@ import static blackjack.fixture.TestFixture.provideTwoPlayersWithCards;
 import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
@@ -25,7 +26,6 @@ import blackjack.domain.random.CardRandomGenerator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,7 +42,7 @@ class BlackjackGameTest {
                 provideParticipants());
 
         // when & then
-        Assertions.assertThatCode(blackjackGame::spreadInitialCards)
+        assertThatCode(blackjackGame::spreadInitialCards)
                 .doesNotThrowAnyException();
     }
 
@@ -162,5 +162,20 @@ class BlackjackGameTest {
         final String pobi = "포비";
         assertThat(blackjackGame.calculateWinningResult()).isEqualTo(
                 Map.of(mj, ResultStatus.WIN, mint, ResultStatus.LOSE, pobi, ResultStatus.DRAW));
+    }
+
+    @DisplayName("플레이어들이 베팅한다.")
+    @Test
+    void betPlayers() {
+        // given
+        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+                new Participants(new Dealer(provideEmptyCards()),
+                        new Players(provideTwoPlayersWithCards(provideEmptyCards(), provideEmptyCards()))));
+
+        // when
+        final Player player1 = blackjackGame.getPlayer(0);
+
+        // then
+        assertThatCode(() -> player1.bet(10000)).doesNotThrowAnyException();
     }
 }

@@ -9,7 +9,7 @@ class BetAmountTest {
 
     @DisplayName("베팅 금액을 생성한다.")
     @Test
-    void createBetAmount() {
+    void createSetMoneyAmount() {
         // given
         long money = 10_000;
 

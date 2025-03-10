@@ -8,6 +8,7 @@ public class InputView {
     private static final String LINE = System.lineSeparator();
     private static final String TITLE_ASK_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)";
     private static final String TITLE_INPUT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String TITLE_BET_AMOUNT = "%s의 배팅 금액은?";
 
     private final Scanner scanner;
 
@@ -27,5 +28,10 @@ public class InputView {
 
     private String readLine() {
         return scanner.nextLine();
+    }
+
+    public String readBetAmount(Player player) {
+        System.out.println(String.format(TITLE_BET_AMOUNT, player.getNickname()));
+        return readLine();
     }
 }

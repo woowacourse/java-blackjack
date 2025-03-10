@@ -85,4 +85,8 @@ public class BlackjackGame {
     public int getPlayerSize() {
         return participants.getPlayers().size();
     }
+
+    public void bet(final Player player, final int betAmount) {
+        player.bet(betAmount);
+    }
 }

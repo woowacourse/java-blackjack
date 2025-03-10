@@ -34,6 +34,9 @@ public class BlackjackController {
         final Participants participants = makeParticipants();
         final BlackjackGame blackjackGame = new BlackjackGame(cardManager, participants);
 
+        // 베팅 금액 입력 받기
+        betPlayers(participants, blackjackGame);
+
         // 초기 분배하기
         showInitialCards(blackjackGame, participants);
 
@@ -47,6 +50,13 @@ public class BlackjackController {
         // 딜러와 플레이어의 승패 보여주기
         final Map<String, ResultStatus> result = blackjackGame.calculateWinningResult();
         resultView.showWinningResult(result);
+    }
+
+    private void betPlayers(final Participants participants, final BlackjackGame blackjackGame) {
+        for (Player player : participants.getPlayers()) {
+            final int betAmount = Integer.parseInt(inputView.readBetAmount(player));
+            blackjackGame.bet(player, betAmount);
+        }
     }
 
     private void showInitialCards(final BlackjackGame blackjackGame, final Participants participants) {

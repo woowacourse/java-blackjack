@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.BetAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 public abstract class Gamer {
 
     protected final Cards cards;
+    protected final BetAmount betAmount;
 
     public Gamer(final Cards cards) {
         this.cards = cards;
+        this.betAmount = new BetAmount(0);
     }
 
     abstract public boolean canGetMoreCard();
@@ -26,5 +29,9 @@ public abstract class Gamer {
 
     public int calculateMaxSum() {
         return cards.calculateResult();
+    }
+
+    public void bet(final int betAmount) {
+        this.betAmount.setMoney(betAmount);
     }
 }
