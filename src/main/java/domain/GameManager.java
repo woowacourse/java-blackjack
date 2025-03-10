@@ -9,7 +9,8 @@ import java.util.List;
 public class GameManager {
 
     private static final int INITIAL_CARDS = 2;
-    public static final int DEALER_MIN_SCORE = 16;
+    private static final int DEALER_MIN_SCORE = 16;
+    public static final int BLACKJACK_SCORE = 21;
 
     private final Dealer dealer;
     private final Players players;

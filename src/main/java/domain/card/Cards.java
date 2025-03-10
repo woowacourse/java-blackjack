@@ -1,5 +1,8 @@
 package domain.card;
 
+import static domain.GameManager.*;
+
+import domain.GameManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +37,7 @@ public class Cards {
     }
 
     private int addScoreIfPossible(int currentSum, int scoreGap) {
-        if (currentSum + scoreGap > 21) {
+        if (currentSum + scoreGap > BLACKJACK_SCORE) {
             return currentSum;
         }
         return currentSum + scoreGap;

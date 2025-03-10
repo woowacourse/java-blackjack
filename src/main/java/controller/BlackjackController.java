@@ -1,5 +1,7 @@
 package controller;
 
+import static domain.GameManager.BLACKJACK_SCORE;
+
 import domain.GameManager;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
@@ -63,7 +65,7 @@ public class BlackjackController {
     }
 
     private void processPlayerDecision(String name, GameManager gameManager) {
-        while (gameManager.getScoreOf(name) < 21) {
+        while (gameManager.getScoreOf(name) < BLACKJACK_SCORE) {
             String answer = inputView.askReceive(name);
             validateBinaryQuestion(answer);
             if (answer.equals("n")) {

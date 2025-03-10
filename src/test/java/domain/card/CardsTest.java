@@ -1,5 +1,6 @@
 package domain.card;
 
+import static domain.GameManager.BLACKJACK_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
@@ -57,7 +58,7 @@ class CardsTest {
                 Arguments.of(createCards(
                         Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
                         Card.of(TrumpNumber.KING, TrumpShape.CLUB)
-                ), 21),
+                ), BLACKJACK_SCORE),
                 Arguments.of(createCards(
                         Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
                         Card.of(TrumpNumber.EIGHT, TrumpShape.CLUB),
