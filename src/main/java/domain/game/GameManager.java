@@ -32,20 +32,19 @@ public class GameManager {
 
     public void distributeExtraCards(TakeMoreCardSelector selector) {
         for (Player player : players) {
-            while (player.canTakeMoreCard()) {
-                if (selector.isYes(player.getName())) {
-                    player.takeMoreCard(cardPack.poll());
-                    selector.takenResult(player.getName(), player.getCards());
-                    continue;
-                }
-                selector.takenResult(player.getName(), player.getCards());
-                break;
-            }
+            distributeExtraCardToPlayer(player, selector);
         }
 
         if (dealer.canTakeMoreCard()) {
             dealer.takeMoreCard(cardPack.poll());
             selector.dealerTakenResult();
+        }
+    }
+
+    public void distributeExtraCardToPlayer(Player player, TakeMoreCardSelector selector) {
+        while (player.canTakeMoreCard() && selector.isYes(player.getName())) {
+            player.takeMoreCard(cardPack.poll());
+            selector.takenResult(player.getName(), player.getCards());
         }
     }
 
