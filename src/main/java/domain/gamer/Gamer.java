@@ -57,4 +57,3 @@ public abstract class Gamer {
         return Objects.hashCode(nickname);
     }
 }
-
