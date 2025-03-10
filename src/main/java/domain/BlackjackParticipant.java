@@ -16,7 +16,7 @@ public abstract class BlackjackParticipant {
     private final List<TrumpCard> trumpCards = new ArrayList<>();
     private final String name;
 
-    public BlackjackParticipant(String name) {
+    protected BlackjackParticipant(String name) {
         this.name = name;
         validateNickname();
     }
