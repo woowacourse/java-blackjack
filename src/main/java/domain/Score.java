@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 public enum Score {
     BLACKJACK("블랙잭", (total, cardCount) -> total == 21 && cardCount == 2, 1),
@@ -31,10 +31,10 @@ public enum Score {
     ONE("1", (total, cardCount) -> total == 1, 22);
 
     private final String title;
-    private final BiFunction<Integer, Integer, Boolean> condition;
+    private final BiPredicate<Integer, Integer> condition;
     private final int rank;
 
-    Score(String title, BiFunction<Integer, Integer, Boolean> condition, int rank) {
+    Score(String title, BiPredicate<Integer, Integer> condition, int rank) {
         this.title = title;
         this.condition = condition;
         this.rank = rank;
@@ -45,7 +45,7 @@ public enum Score {
         int cardCount = cards.size();
 
         return Arrays.stream(Score.values())
-                .filter(score -> score.condition.apply(totalScore, cardCount))
+                .filter(score -> score.condition.test(totalScore, cardCount))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 점수입니다."));
     }
