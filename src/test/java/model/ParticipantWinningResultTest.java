@@ -171,4 +171,21 @@ class ParticipantWinningResultTest {
         //then
         assertEquals(gameResult.get(player), expect);
     }
+
+    @Test
+    @DisplayName("딜러와 플레이어 모두 블랙잭일 경우 무승부 반환")
+    void 딜러와_플레이어_모두_블랙잭일_경우_무승부를_반환() {
+        //given
+        dealer.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        //when
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
+        GameResult expect = GameResult.DRAW;
+
+        //then
+        assertEquals(gameResult.get(player), expect);
+    }
 }
