@@ -3,9 +3,9 @@ package blackjack.domain;
 import blackjack.domain.card_hand.BlackjackWinDeterminable;
 
 public enum WinningStatus {
-    승리,
-    무승부,
-    패배,
+    WIN,
+    DRAW,
+    LOSE,
     ;
     
     private static final int BUST_THRESHOLD = 21;
@@ -25,9 +25,9 @@ public enum WinningStatus {
         }
         
         if (isMyHandGreater(myHand, opponentHand)) {
-            return WinningStatus.승리;
+            return WinningStatus.WIN;
         }
-        return WinningStatus.패배;
+        return WinningStatus.LOSE;
     }
     
     private static boolean isBustOccurred(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
@@ -36,12 +36,12 @@ public enum WinningStatus {
     
     private static WinningStatus determineWinningStatusWhenBustOccurred(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
         if (isBust(myHand) && isBust(opponentHand)) {
-            return WinningStatus.무승부;
+            return WinningStatus.DRAW;
         }
         if (isBust(myHand)) {
-            return WinningStatus.패배;
+            return WinningStatus.LOSE;
         }
-        return WinningStatus.승리;
+        return WinningStatus.WIN;
     }
     
     private static boolean isSumEquals(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
@@ -50,12 +50,12 @@ public enum WinningStatus {
     
     private static WinningStatus determineWinningStatusWhenSumEquals(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
         if (isBlackjack(myHand) && !isBlackjack(opponentHand)) {
-            return WinningStatus.승리;
+            return WinningStatus.WIN;
         }
         if (!isBlackjack(myHand) && isBlackjack(opponentHand)) {
-            return WinningStatus.패배;
+            return WinningStatus.LOSE;
         }
-        return WinningStatus.무승부;
+        return WinningStatus.DRAW;
     }
     
     private static boolean isMyHandGreater(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {

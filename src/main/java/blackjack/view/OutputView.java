@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.card.CardShape;
+
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -85,7 +87,7 @@ public class OutputView {
     
     private String parseCard(Card card) {
         return card.getNumber().name().replace("NUMBER_", "")
-                + card.getShape().name();
+                + parseCardShape(card.getShape());
     }
 
     private static String parseFinalSum(int sum) {
@@ -109,6 +111,29 @@ public class OutputView {
     }
     
     public void outputPlayerFinalWinOrLoss(String name, WinningStatus winningStatus) {
-        writer.write("%s: %s".formatted(name, winningStatus.name()));
+        writer.write("%s: %s".formatted(name, parseWinningStatus(winningStatus)));
+    }
+    
+    private String parseCardShape(CardShape cardShape) {
+        if (cardShape.equals(CardShape.HEART)) {
+            return "하트";
+        }
+        if (cardShape.equals(CardShape.DIAMOND)) {
+            return "다이아몬드";
+        }
+        if (cardShape.equals(CardShape.SPADE)) {
+            return "스페이드";
+        }
+        return "클로버";
+    }
+    
+    private String parseWinningStatus(WinningStatus winningStatus) {
+        if (winningStatus.equals(WinningStatus.WIN)) {
+            return "승리";
+        }
+        if (winningStatus.equals(WinningStatus.DRAW)) {
+            return "무승부";
+        }
+        return "패배";
     }
 }

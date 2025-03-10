@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.test_util.TestConstants;
-
 import java.util.EnumMap;
 import java.util.List;
 
@@ -17,13 +15,10 @@ import blackjack.domain.card.CardShape;
 
 import java.util.stream.Stream;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class CardTest {
 
@@ -65,7 +60,7 @@ public class CardTest {
         // then
         assertAll(
                 () -> assertThat(card.getNumber()).isEqualTo(CardNumber.NUMBER_A),
-                () -> assertThat(card.getShape()).isEqualTo(CardShape.다이아몬드)
+                () -> assertThat(card.getShape()).isEqualTo(CardShape.DIAMOND)
         );
     }
     

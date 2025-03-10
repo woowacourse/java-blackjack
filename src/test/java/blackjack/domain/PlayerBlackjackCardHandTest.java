@@ -3,8 +3,8 @@ package blackjack.domain;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static blackjack.domain.card.CardShape.다이아몬드;
-import static blackjack.domain.card.CardShape.하트;
+import static blackjack.domain.card.CardShape.DIAMOND;
+import static blackjack.domain.card.CardShape.HEART;
 import static blackjack.test_util.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -81,8 +81,8 @@ public class PlayerBlackjackCardHandTest {
         assertThat(result).extracting(
                 "number", "shape"
         ).containsExactlyInAnyOrder(
-                Tuple.tuple(CardNumber.NUMBER_A, 다이아몬드),
-                Tuple.tuple(CardNumber.NUMBER_2, 하트)
+                Tuple.tuple(CardNumber.NUMBER_A, DIAMOND),
+                Tuple.tuple(CardNumber.NUMBER_2, HEART)
         );
     }
 
