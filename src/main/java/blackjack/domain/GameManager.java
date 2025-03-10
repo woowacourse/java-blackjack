@@ -31,10 +31,6 @@ public class GameManager {
         player.pushDealCard(cardPack, 1);
     }
 
-    public boolean isPlayerBust(final Player player) {
-        return player.isPlayerBust();
-    }
-
     public boolean isDealerHitThenDealAddCard(Dealer dealer) {
         if (dealer.isDealerHit()) {
             dealer.pushDealCard(cardPack, 1);
