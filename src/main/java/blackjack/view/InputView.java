@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import static blackjack.domain.Round.DEALER_NAME;
+import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static blackjack.view.ErrorMessage.INVALID_HIT_RESPONSE;
 import static blackjack.view.ErrorMessage.INVALID_PLAYER_COUNT;
 import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_DUPLICATED;

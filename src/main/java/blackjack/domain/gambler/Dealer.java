@@ -4,8 +4,10 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Gambler {
-    public Dealer(final Name name) {
-        super(name);
+    public static final Name DEALER_NAME = new Name("딜러");
+
+    public Dealer() {
+        super(DEALER_NAME);
     }
 
     @Override

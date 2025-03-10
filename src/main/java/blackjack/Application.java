@@ -1,6 +1,6 @@
 package blackjack;
 
-import static blackjack.domain.Round.DEALER_NAME;
+import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static blackjack.view.InputView.inputPlayerHit;
 import static blackjack.view.InputView.inputPlayerName;
 import static blackjack.view.OutputView.printBusted;

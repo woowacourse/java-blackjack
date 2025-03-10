@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Round {
-    public static final Name DEALER_NAME = new Name("딜러");
     public static final int BLACK_JACK = 21;
     public static final int DEALER_DRAW_THRESHOLD = 16;
 
@@ -27,7 +27,7 @@ public class Round {
 
     private List<Gambler> registerGamblers(final List<Name> playerNames) {
         List<Gambler> gamblers = new ArrayList<>();
-        gamblers.add(new Dealer(DEALER_NAME));
+        gamblers.add(new Dealer());
         for (final Name playerName : playerNames) {
             Player player = new Player(playerName);
             gamblers.add(player);

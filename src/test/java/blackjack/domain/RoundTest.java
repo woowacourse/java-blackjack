@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Round.DEALER_NAME;
+import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
