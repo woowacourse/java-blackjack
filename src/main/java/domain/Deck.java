@@ -10,7 +10,7 @@ public class Deck extends Cards {
 
     public Deck(final List<Card> cards) {
         super(cards);
-        List<Card> copiedCards = new ArrayList<>(cards);
+        List<Card> copiedCards = new ArrayList<>(this.cards);
         Collections.shuffle(copiedCards);
         copiedCards.forEach(deck::push);
     }

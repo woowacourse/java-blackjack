@@ -1,7 +1,7 @@
 package domain;
 
 public class Dealer extends Gamer {
-    public static final int BUST_THRESHOLD = 16;
+    public static final int DEALER_DRAWABLE_THRESHOLD = 16;
 
     private final Deck deck;
 
@@ -11,7 +11,7 @@ public class Dealer extends Gamer {
     }
 
     public boolean isDrawable() {
-        return this.isDrawable(BUST_THRESHOLD);
+        return this.isDrawable(DEALER_DRAWABLE_THRESHOLD);
     }
 
     public Card drawCard() {

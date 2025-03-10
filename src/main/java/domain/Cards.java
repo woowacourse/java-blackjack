@@ -21,15 +21,6 @@ public class Cards {
         }
     }
 
-    public boolean hasCommonCard(Cards ohterCards) {
-        return cards.stream()
-                .anyMatch(ohterCards.cards::contains);
-    }
-
-    public void addCards(Cards otherCards) {
-        cards.addAll(otherCards.cards);
-    }
-
     public int calculateScore() {
         boolean containAce = cards.stream()
                 .anyMatch(Card::isAce);
@@ -37,15 +28,36 @@ public class Cards {
         int lowAceTotal = cards.stream()
                 .mapToInt(card -> card.getCardRank().getValue())
                 .sum();
-
         return calculateAceValue(containAce, lowAceTotal);
+    }
+
+    public boolean hasCommonCard(Cards ohterCards) {
+        return cards.stream()
+                .anyMatch(ohterCards.cards::contains);
+    }
+
+    public void addCards(Cards otherCards) {
+        validateBust(otherCards);
+        cards.addAll(otherCards.cards);
+    }
+
+    public void validateBust(Cards cards) {
+        if (isBust(cards)) {
+            throw new IllegalArgumentException("버스트입니다.");
+        }
+    }
+
+    public boolean isBust(Cards cards) {
+        return cards.calculateScore() > GAMER_BUST_THRESHOLD;
     }
 
     private int calculateAceValue(boolean containAce, int lowAceTotal) {
         if (!containAce || lowAceTotal > GAMER_BUST_THRESHOLD) {
             return lowAceTotal;
         }
+
         int highAceTotal = lowAceTotal - CardRank.ACE.getValue() + CardRank.SPECIAL_ACE.getValue();
+
         if (highAceTotal > GAMER_BUST_THRESHOLD) {
             return lowAceTotal;
         }

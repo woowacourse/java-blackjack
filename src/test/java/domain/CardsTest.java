@@ -51,9 +51,8 @@ class CardsTest {
     @DisplayName("카드 숫자의 전체 합을 계산합니다.")
     void calculateCardScoreTest(List<Card> cards, int expected) {
         //given
-        Player player = new Player(new PlayerName("코기"));
         Cards newCards = new Cards(cards);
-        player.addCard(newCards);
+
         //when
         final int cardScore = newCards.calculateScore();
 
@@ -65,7 +64,20 @@ class CardsTest {
         return Stream.of(
                 Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_THREE), 14),
                 Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), 21),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), 12),
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), 12)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("카드가 21 초과(버스트) 라면 예외가 발생합니다.")
+    void validateBustTest(List<Card> cards) {
+        Cards originalCards = new Cards(List.of());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> originalCards.addCards(new Cards(cards)));
+    }
+
+    public static Stream<Arguments> validateBustTest() {
+        return Stream.of(
                 Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_THREE), 23),
                 Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE, Card.HEART_ACE), 22)
         );

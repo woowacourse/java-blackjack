@@ -1,6 +1,6 @@
 package view;
 
-import static domain.Dealer.BUST_THRESHOLD;
+import static domain.Dealer.DEALER_DRAWABLE_THRESHOLD;
 import static domain.GameResult.DRAW;
 import static domain.GameResult.LOSE;
 import static domain.GameResult.WIN;
@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     public void printDealerDrawMoreCard() {
-        System.out.printf("\n딜러는 %s이하라 카드를 더 받았습니다.\n", BUST_THRESHOLD);
+        System.out.printf("\n딜러는 %s이하라 카드를 더 받았습니다.\n", DEALER_DRAWABLE_THRESHOLD);
     }
 
     public void printFinalState(Map<PlayerName, Player> playersInfo, Gamer dealer) {

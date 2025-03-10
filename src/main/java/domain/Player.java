@@ -6,32 +6,30 @@ import static domain.GameResult.WIN;
 
 public class Player extends Gamer {
     private final PlayerName playerName;
-
-    private static final int BUST_THRESHOLD = 21;
-
+    
     public Player(PlayerName playerName) {
         super();
         this.playerName = playerName;
     }
 
     public boolean isDrawable() {
-        return this.isDrawable(BUST_THRESHOLD);
+        return this.isDrawable(GAMER_BUST_THRESHOLD);
     }
 
     public GameResult decideGameResult(Dealer dealer) {
         int playerScore = this.getScore();
         int dealerScore = dealer.getScore();
-        if (playerScore > BUST_THRESHOLD || dealerScore > BUST_THRESHOLD) {
+        if (playerScore > GAMER_BUST_THRESHOLD || dealerScore > GAMER_BUST_THRESHOLD) {
             return decideGameResultWithBust(playerScore, dealerScore);
         }
         return decideGameResultWithoutBust(playerScore, dealerScore);
     }
 
     private GameResult decideGameResultWithBust(int playerScore, int dealerScore) {
-        if (playerScore > BUST_THRESHOLD && dealerScore > BUST_THRESHOLD) {
+        if (playerScore > GAMER_BUST_THRESHOLD && dealerScore > GAMER_BUST_THRESHOLD) {
             return DRAW;
         }
-        if (playerScore > BUST_THRESHOLD) {
+        if (playerScore > GAMER_BUST_THRESHOLD) {
             return LOSE;
         }
         return WIN;
@@ -45,9 +43,5 @@ public class Player extends Gamer {
             return LOSE;
         }
         return WIN;
-    }
-
-    public PlayerName getPlayerName() {
-        return playerName;
     }
 }
