@@ -7,10 +7,10 @@ import java.util.List;
 
 public class CardsInitializer {
 
-    public Deck initialize() {
+    public List<Card> initialize() {
         List<Card> cards = createCards();
         Collections.shuffle(cards);
-        return new Deck(cards);
+        return cards;
     }
 
     private List<Card> createCards() {

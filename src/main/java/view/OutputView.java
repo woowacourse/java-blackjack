@@ -17,7 +17,7 @@ public class OutputView {
         System.out.printf(NEXT_LINE + "%s와 %s에게 2장을 나누었습니다.%s", "딜러", playerNames, NEXT_LINE);
 
         System.out.printf("%s카드: %s%n", dealer.getName(),
-                formatSingleCard(dealer.getDeck().getCards().getFirst()));
+                formatSingleCard(dealer.getHand().getCards().getFirst()));
 
         players.forEach(this::printCards);
         System.out.println();
@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     private void cardFormat(Gamer player) {
-        String cards = player.getDeck().getCards().stream()
+        String cards = player.getHand().getCards().stream()
                 .map(this::formatSingleCard)
                 .collect(Collectors.joining(", "));
         System.out.printf("%s카드: %s", player.getName(), cards);

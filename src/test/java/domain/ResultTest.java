@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,8 @@ class ResultTest {
     @Test
     void judgeBustDraw() {
         //given
-        Deck deck = new Deck();
+        List<Card> cards = new ArrayList<>();
+
         Card card1 = new Card(Symbol.COLVER, Rank.THREE);
         Card card2 = new Card(Symbol.HEART, Rank.SIX);
         Card card3 = new Card(Symbol.SPADE, Rank.JACK);
@@ -19,12 +22,14 @@ class ResultTest {
         Card card5 = new Card(Symbol.COLVER, Rank.SIX);
         Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
-        deck.add(card1);
-        deck.add(card2);
-        deck.add(card3);
-        deck.add(card4);
-        deck.add(card5);
-        deck.add(card6);
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+        cards.add(card5);
+        cards.add(card6);
+
+        Deck deck = Deck.from(cards);
 
         Dealer dealer = new Dealer();
         Player player = new Player("ad");
@@ -36,7 +41,7 @@ class ResultTest {
         player.hit(deck);
 
         //when
-        Result actual = Result.judge(dealer.getDeck(), player.getDeck());
+        Result actual = Result.judge(dealer.getHand(), player.getHand());
 
         //then
         assertThat(actual).isEqualTo(Result.DRAW);
@@ -46,7 +51,8 @@ class ResultTest {
     @Test
     void judgeNotBustDraw() {
         //given
-        Deck deck = new Deck();
+        List<Card> cards = new ArrayList<>();
+
         Card card1 = new Card(Symbol.COLVER, Rank.TWO);
         Card card2 = new Card(Symbol.HEART, Rank.TWO);
         Card card3 = new Card(Symbol.SPADE, Rank.SIX);
@@ -54,12 +60,14 @@ class ResultTest {
         Card card5 = new Card(Symbol.COLVER, Rank.SIX);
         Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
-        deck.add(card1);
-        deck.add(card2);
-        deck.add(card3);
-        deck.add(card4);
-        deck.add(card5);
-        deck.add(card6);
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+        cards.add(card5);
+        cards.add(card6);
+
+        Deck deck = Deck.from(cards);
 
         Dealer dealer = new Dealer();
         Player player = new Player("ad");
@@ -71,7 +79,7 @@ class ResultTest {
         player.hit(deck);
 
         //when
-        Result actual = Result.judge(dealer.getDeck(), player.getDeck());
+        Result actual = Result.judge(dealer.getHand(), player.getHand());
 
         //then
         assertThat(actual).isEqualTo(Result.DRAW);
@@ -81,7 +89,8 @@ class ResultTest {
     @Test
     void judgeOnlyOneBustWin() {
         //given
-        Deck deck = new Deck();
+        List<Card> cards = new ArrayList<>();
+
         Card card1 = new Card(Symbol.COLVER, Rank.TWO);
         Card card2 = new Card(Symbol.HEART, Rank.TWO);
         Card card3 = new Card(Symbol.SPADE, Rank.JACK);
@@ -89,15 +98,17 @@ class ResultTest {
         Card card5 = new Card(Symbol.COLVER, Rank.SIX);
         Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
-        deck.add(card1);
-        deck.add(card2);
-        deck.add(card3);
-        deck.add(card4);
-        deck.add(card5);
-        deck.add(card6);
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+        cards.add(card5);
+        cards.add(card6);
 
         Dealer dealer = new Dealer();
         Player player = new Player("ad");
+
+        Deck deck = Deck.from(cards);
 
         dealer.prepareGame(deck);
         player.prepareGame(deck);
@@ -106,7 +117,7 @@ class ResultTest {
         player.hit(deck);
 
         //when //then
-        Result actual = Result.judge(dealer.getDeck(), player.getDeck());
+        Result actual = Result.judge(dealer.getHand(), player.getHand());
 
         assertThat(actual).isEqualTo(Result.WIN);
     }
@@ -115,7 +126,8 @@ class ResultTest {
     @Test
     void judge() {
         //given
-        Deck deck = new Deck();
+        List<Card> cards = new ArrayList<>();
+
         Card card1 = new Card(Symbol.COLVER, Rank.ACE);
         Card card2 = new Card(Symbol.HEART, Rank.TWO);
         Card card3 = new Card(Symbol.SPADE, Rank.JACK);
@@ -123,12 +135,14 @@ class ResultTest {
         Card card5 = new Card(Symbol.COLVER, Rank.SIX);
         Card card6 = new Card(Symbol.HEART, Rank.JACK);
 
-        deck.add(card1);
-        deck.add(card2);
-        deck.add(card3);
-        deck.add(card4);
-        deck.add(card5);
-        deck.add(card6);
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+        cards.add(card5);
+        cards.add(card6);
+
+        Deck deck = Deck.from(cards);
 
         Dealer dealer = new Dealer();
         Player player = new Player("ad");
@@ -140,7 +154,7 @@ class ResultTest {
         player.hit(deck);
 
         //when
-        Result actual = Result.judge(dealer.getDeck(), player.getDeck());
+        Result actual = Result.judge(dealer.getHand(), player.getHand());
 
         //then
         assertThat(actual).isEqualTo(Result.LOSE);

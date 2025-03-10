@@ -31,7 +31,8 @@ class CardsInitializerTest {
         CardsInitializer cardsInitializer = new CardsInitializer();
 
         //when
-        Deck deck = cardsInitializer.initialize();
+        List<Card> cards = cardsInitializer.initialize();
+        Deck deck = Deck.from(cards);
         List<Card> cardList = deck.getCards();
         Set<Card> cardSet = new HashSet<>(cardList);
 
@@ -45,7 +46,9 @@ class CardsInitializerTest {
         CardsInitializer cardsInitializer = new CardsInitializer();
 
         //when
-        Deck deck = cardsInitializer.initialize();
+        List<Card> cards = cardsInitializer.initialize();
+        Deck deck = Deck.from(cards);
+
         List<Card> cardList = deck.getCards();
         //then
         assertThatThrownBy(() -> cardList.add(new Card(Symbol.HEART, Rank.FIVE)))

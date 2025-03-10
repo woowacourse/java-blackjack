@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,23 +13,22 @@ class DealerTest {
     @Test
     void canHit() {
         //given
-        Deck deck = new Deck();
-        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
-        Card card2 = new Card(Symbol.HEART, Rank.TWO);
-        Card card3 = new Card(Symbol.SPADE, Rank.KING);
+        List<Card> cards = new ArrayList<>();
 
-        deck.add(card1);
-        deck.add(card2);
-        deck.add(card3);
+        cards.add(new Card(Symbol.COLVER, Rank.ACE));
+        cards.add(new Card(Symbol.HEART, Rank.TWO));
+        cards.add(new Card(Symbol.SPADE, Rank.KING));
+
+        Deck deck = Deck.from(cards);
 
         Dealer dealer = new Dealer();
         dealer.prepareGame(deck);
 
-        int initialPoint = dealer.getDeck().calculateTotalPoint();
+        int initialPoint = dealer.getHand().calculateTotalScore();
 
         //when
         dealer.hit(deck);
-        int actual = dealer.getDeck().calculateTotalPoint();
+        int actual = dealer.getHand().calculateTotalScore();
 
         //then
         assertThat(actual).isNotEqualTo(initialPoint);
@@ -37,23 +38,22 @@ class DealerTest {
     @Test
     void cannotHit() {
         //given
-        Deck deck = new Deck();
-        Card card1 = new Card(Symbol.COLVER, Rank.JACK);
-        Card card2 = new Card(Symbol.HEART, Rank.NINE);
-        Card card3 = new Card(Symbol.SPADE, Rank.KING);
+        List<Card> cards = new ArrayList<>();
 
-        deck.add(card1);
-        deck.add(card2);
-        deck.add(card3);
+        cards.add(new Card(Symbol.COLVER, Rank.JACK));
+        cards.add(new Card(Symbol.HEART, Rank.NINE));
+        cards.add(new Card(Symbol.SPADE, Rank.KING));
+
+        Deck deck = Deck.from(cards);
 
         Dealer dealer = new Dealer();
         dealer.prepareGame(deck);
 
-        int initialPoint = dealer.getDeck().calculateTotalPoint();
+        int initialPoint = dealer.getHand().calculateTotalScore();
 
         //when
         dealer.hit(deck);
-        int actual = dealer.getDeck().calculateTotalPoint();
+        int actual = dealer.getHand().calculateTotalScore();
 
         //then
         assertThat(actual).isEqualTo(initialPoint);

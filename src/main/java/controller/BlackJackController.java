@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Card;
 import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Deck;
@@ -27,7 +28,8 @@ public class BlackJackController {
     }
 
     public void run() {
-        Deck deck = cardsInitializer.initialize();
+        List<Card> cards = cardsInitializer.initialize();
+        Deck deck = Deck.from(cards);
 
         List<Player> players = setPlayers();
         Dealer dealer = new Dealer();
@@ -87,9 +89,9 @@ public class BlackJackController {
         Map<Player, Result> playerResult = new HashMap<>();
 
         for (Player player : players) {
-            Result result = Result.judge(dealer.getDeck(), player.getDeck());
+            Result result = Result.judge(dealer.getHand(), player.getHand());
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, Result.judge(player.getDeck(), dealer.getDeck()));
+            playerResult.put(player, Result.judge(player.getHand(), dealer.getHand()));
         }
         outputView.printWinLoseResult(dealerResult, playerResult);
     }

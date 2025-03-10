@@ -3,7 +3,7 @@ package domain;
 public abstract class Gamer {
 
     private final String name;
-    private final Deck deck = new Deck();
+    private final Hand hand = new Hand();
 
     protected Gamer(String name) {
         this.name = name;
@@ -11,29 +11,30 @@ public abstract class Gamer {
 
     public abstract boolean hit(Deck cards);
 
-    public void prepareGame(Deck totalCard) {
-        add(totalCard);
-        add(totalCard);
+    public void prepareGame(Deck deck) {
+        add(deck);
+        add(deck);
     }
 
-    public void add(Deck totalCards) {
-        deck.add(totalCards.extractCard());
+    public void add(Deck deck) {
+        hand.hit(deck.extractCard());
     }
 
     public boolean isBust() {
-        return deck.isBust();
+        return hand.isBust();
     }
 
     public int getScore() {
-        return deck.calculateTotalPoint();
+        return hand.calculateTotalScore();
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public Deck getDeck() {
-        return deck;
+    public Hand getHand() {
+        return hand;
     }
 }
+
 

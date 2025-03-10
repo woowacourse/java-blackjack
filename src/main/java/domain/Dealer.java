@@ -19,7 +19,7 @@ public class Dealer extends Gamer {
     }
 
     private boolean canHit() {
-        return getDeck().calculateTotalPoint() <= HIT_THRESHOLD;
+        return getHand().calculateTotalScore() <= HIT_THRESHOLD;
     }
 
 }
