@@ -7,9 +7,13 @@ public final class Nickname {
 
     private final String value;
 
-    public Nickname(String value) {
-        validateBlank(value);
-        this.value = value;
+    public Nickname(String nickname) {
+        validateBlank(nickname);
+        this.value = removeSideSpace(nickname);
+    }
+
+    private String removeSideSpace(String nickname) {
+        return nickname.strip();
     }
 
     private void validateBlank(String nickname) {
