@@ -32,7 +32,6 @@ public class BlackjackGame {
         outputView.printCardsWithSum(participants, gameStatistics);
 
         outputView.printGameResults(gameStatistics);
-
     }
 
     private GameParticipants initializeGameParticipants() {
