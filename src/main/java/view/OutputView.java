@@ -3,7 +3,6 @@ package view;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.game.Dealer;
-import domain.game.GameResult;
 import domain.game.Player;
 import domain.game.Players;
 import java.util.List;
@@ -51,17 +50,6 @@ public class OutputView {
 
     public void printDealerDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public void printDealerWinningResult(int winCount, int drawCount, int loseCount) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, drawCount, loseCount);
-    }
-
-    public void printWinningResult(List<String> playerNames, List<GameResult> gameResults) {
-        for (int i = 0; i < playerNames.size(); i++) {
-            System.out.printf("%s: %s%n", playerNames.get(i), gameResults.get(i).getResult());
-        }
     }
 
     public void printBettingAmount(List<Player> players, Dealer dealer) {

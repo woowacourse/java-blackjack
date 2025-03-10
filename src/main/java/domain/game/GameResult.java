@@ -4,16 +4,10 @@ import java.util.List;
 
 public enum GameResult {
 
-    WIN("승"),
-    BLACKJACK_WIN("승"),
-    LOSE("패"),
-    DRAW("무");
-
-    private final String result;
-
-    GameResult(String result) {
-        this.result = result;
-    }
+    WIN,
+    BLACKJACK_WIN,
+    LOSE,
+    DRAW;
 
     public int countGameResultFromDealer(List<GameResult> gameResults) {
         if (this == GameResult.WIN || this == GameResult.BLACKJACK_WIN) {
@@ -29,9 +23,5 @@ public enum GameResult {
         return (int) gameResults.stream()
                 .filter(gameResult -> gameResult == GameResult.DRAW)
                 .count();
-    }
-
-    public String getResult() {
-        return result;
     }
 }

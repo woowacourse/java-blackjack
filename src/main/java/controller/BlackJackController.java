@@ -3,7 +3,6 @@ package controller;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.game.Dealer;
-import domain.game.GameResult;
 import domain.game.Player;
 import domain.game.Players;
 import java.util.List;
@@ -71,15 +70,7 @@ public class BlackJackController {
     }
 
     private void judgeGameResult(Players players, Dealer dealer) {
-        List<GameResult> gameResults = dealer.judgeGameResult(players.getPlayers());
-        List<String> playerNames = players.getAllPlayerNames();
-
-        int winCount = GameResult.WIN.countGameResultFromDealer(gameResults);
-        int loseCount = GameResult.LOSE.countGameResultFromDealer(gameResults);
-        int drawCount = GameResult.DRAW.countGameResultFromDealer(gameResults);
-
-        outputView.printDealerWinningResult(winCount, drawCount, loseCount);
-        outputView.printWinningResult(playerNames, gameResults);
+        dealer.judgeGameResult(players.getPlayers());
     }
 
     private void calculateTotalBettingAmount(Players players, Dealer dealer) {
