@@ -97,12 +97,12 @@ public class BlackjackApplication {
     }
 
     private void showCurrentCardIfNo(Player player, AnswerType answerType) {
-        if (answerType.isEqualTo(NO)) {
+        if (answerType == NO) {
             outputView.printCurrentCard(player);
         }
     }
 
     private boolean isPossibleRequest(Player player, AnswerType answerType) {
-        return answerType.isEqualTo(YES) && !player.hasBustCards();
+        return answerType == YES && !player.hasBustCards();
     }
 }

@@ -45,7 +45,7 @@ public class CardGiver {
     }
 
     public void giveAdditionalCard(Player player, AnswerType answerType) {
-        if (answerType.isEqualTo(NO)) {
+        if (answerType == NO) {
             return;
         }
         player.addCard(giveOne());
