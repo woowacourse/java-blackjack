@@ -14,11 +14,6 @@ public class BlackJackGame {
     private final CardDeck cardDeck;
     private final BlackJackRule blackJackRule;
 
-    public BlackJackGame(final CardDeck cardDeck, final BlackJackRule blackJackRule) {
-        this.cardDeck = cardDeck;
-        this.blackJackRule = blackJackRule;
-    }
-
     public BlackJackGame(final CardDeckInitializer cardDeckInitializer, final BlackJackRule blackJackRule) {
         this.cardDeck = CardDeck.initializeFrom(cardDeckInitializer);
         this.blackJackRule = blackJackRule;
