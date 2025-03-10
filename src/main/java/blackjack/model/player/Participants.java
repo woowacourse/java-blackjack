@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public class Participants {
     private static final int MIN_PARTICIPANT = 2;
@@ -33,10 +32,6 @@ public class Participants {
         if (uniqueParticipants.size() != participants.size()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
-    }
-
-    public Stream<Participant> stream() {
-        return participants.stream();
     }
 
     public List<Participant> getParticipants() {

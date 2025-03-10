@@ -17,7 +17,7 @@ public class OutputView {
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         customStringBuilder.appendLine(String.format(
                 "딜러와 %s에게 2장을 나누었습니다.",
-                participants.stream()
+                participants.getParticipants().stream()
                         .map(Participant::getName)
                         .collect(Collectors.joining(", "))
         ));
@@ -25,10 +25,11 @@ public class OutputView {
                 "딜러",
                 generateCardName(dealer.getReceivedCards().getFirstCard()))
         );
-        participants.stream().forEach(participant -> customStringBuilder.appendLine(outputPlayerCardStatus(
-                participant.getName(),
-                generateCardNames(participant.getReceivedCards())
-        )));
+        participants.getParticipants().stream()
+                .forEach(participant -> customStringBuilder.appendLine(outputPlayerCardStatus(
+                        participant.getName(),
+                        generateCardNames(participant.getReceivedCards())
+                )));
         customStringBuilder.print();
     }
 
@@ -54,7 +55,7 @@ public class OutputView {
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         customStringBuilder.appendLine(String.format("%s - 결과 : %d",
                 outputPlayerCardStatus("딜러", generateCardNames(dealer.getReceivedCards())), dealer.calculatePoint()));
-        participants.stream()
+        participants.getParticipants()
                 .forEach(participant -> customStringBuilder.appendLine(String.format("%s - 결과 : %d",
                         outputPlayerCardStatus(participant.getName(),
                                 generateCardNames(participant.getReceivedCards())),
@@ -76,7 +77,7 @@ public class OutputView {
 
         Map<ParticipantResult, Integer> winLoseResult = new HashMap<>(
                 Map.of(ParticipantResult.WIN, 0, ParticipantResult.LOSE, 0));
-        participants.stream().forEach(participant -> {
+        participants.getParticipants().forEach(participant -> {
             ParticipantResult participantResult = ParticipantResult.of(dealer, participant);
             customStringBuilder.appendLine(String.format("%s: %s", participant.getName(), participantResult.name()));
             winLoseResult.merge(participantResult, 1, Integer::sum);
