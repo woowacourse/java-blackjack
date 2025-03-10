@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class BlackJackGame {
 
+    public static final int INITIAL_CARD_COUNT = 2;
+
     private final Deck deck;
     private final Dealer dealer;
     private final Rule rule;
@@ -43,7 +45,7 @@ public class BlackJackGame {
     }
 
     private static Dealer initializeDealer(Deck deck) {
-        return new Dealer(Hand.of(deck.draw(), deck.draw()));
+        return new Dealer(new Hand(deck.drawMultiple(INITIAL_CARD_COUNT)));
     }
 
     private static Rule initializeRule() {
@@ -54,12 +56,20 @@ public class BlackJackGame {
         List<Player> players = new ArrayList<>();
 
         names.forEach(name -> {
-            TrumpCard firstCard = deck.draw();
-            TrumpCard secondCard = deck.draw();
-            players.add(new Player(name, Hand.of(firstCard, secondCard)));
+            players.add(new Player(name, new Hand(deck.drawMultiple(INITIAL_CARD_COUNT))));
         });
 
         return players;
+    }
+
+    public TrumpCard retrieveDealerFirstCard() {
+        List<TrumpCard> cards = dealer.retrieveCards();
+
+        if (cards.size() != INITIAL_CARD_COUNT) {
+            throw new IllegalStateException("딜러는 " + INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
+        }
+
+        return cards.getFirst();
     }
 
     public boolean isPlayerHitAllowed(List<TrumpCard> playerCards) {
@@ -87,6 +97,10 @@ public class BlackJackGame {
         return hitCount;
     }
 
+    public List<TrumpCard> retrieveDealerCards() {
+        return dealer.retrieveCards();
+    }
+
     public Score caculateScore(List<TrumpCard> cards) {
         return rule.evaluateScore(cards);
     }
@@ -104,9 +118,5 @@ public class BlackJackGame {
         });
 
         return results;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 }

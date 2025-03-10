@@ -2,7 +2,6 @@ package controller;
 
 import controller.dto.CardScoreDto;
 import domain.BlackJackGame;
-import domain.Dealer;
 import domain.GameResult;
 import domain.Participant;
 import domain.Player;
@@ -40,7 +39,7 @@ public class BlackJackController {
     private List<Player> executeInitializeCards() {
         List<Player> players = createPlayers();
         Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
-        TrumpCard dealerFirstCard = blackJackGame.getDealer().retrieveFirstCard();
+        TrumpCard dealerFirstCard = blackJackGame.retrieveDealerFirstCard();
 
         outputView.printInitialCards(playerCards, dealerFirstCard);
 
@@ -72,7 +71,7 @@ public class BlackJackController {
 
     private void displayCardResult(List<Player> players) {
         Map<String, CardScoreDto> playerCardScoreDto = convertPlayerCardScoreDto(players);
-        CardScoreDto dealerCardScoreDto = convertDealerCardScoreDto(blackJackGame.getDealer());
+        CardScoreDto dealerCardScoreDto = convertDealerCardScoreDto(blackJackGame.retrieveDealerCards());
         outputView.printCardsResult(playerCardScoreDto, dealerCardScoreDto);
     }
 
@@ -88,8 +87,7 @@ public class BlackJackController {
                 }));
     }
 
-    private CardScoreDto convertDealerCardScoreDto(Dealer dealer) {
-        List<TrumpCard> dealerCards = dealer.retrieveCards();
+    private CardScoreDto convertDealerCardScoreDto(List<TrumpCard> dealerCards) {
         Score score = blackJackGame.caculateScore(dealerCards);
 
         return new CardScoreDto(dealerCards, score);

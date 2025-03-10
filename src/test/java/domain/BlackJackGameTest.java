@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -47,11 +48,31 @@ class BlackJackGameTest {
             assertSoftly(softly -> {
                 softly.assertThat(players.getFirst().getName()).isEqualTo("Alice");
                 softly.assertThat(players.getFirst().retrieveCards()).isEqualTo(
-                        List.of(originalDeck.draw(), originalDeck.draw()));
+                        originalDeck.drawMultiple(2));
                 softly.assertThat(players.getLast().getName()).isEqualTo("Bob");
                 softly.assertThat(players.getLast().retrieveCards()).isEqualTo(
-                        List.of(originalDeck.draw(), originalDeck.draw()));
+                        originalDeck.drawMultiple(2));
             });
+        }
+
+        @DisplayName("딜러의 첫번째 카드를 가져온다.")
+        @Test
+        void retrieveFirstCard() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES,
+                    TrumpCard.TWO_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+            Dealer dealer = new Dealer(hand);
+
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+
+            // when
+            TrumpCard dealerFirstCard = blackJackGame.retrieveDealerFirstCard();
+
+            // then
+            AssertionsForClassTypes.assertThat(dealerFirstCard).isEqualTo(TrumpCard.ACE_OF_SPADES);
         }
 
         @ParameterizedTest
@@ -83,7 +104,7 @@ class BlackJackGameTest {
         void processPlayerHit() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", Hand.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES));
+            Player player = new Player("Alice", new Hand(List.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES)));
 
             // when
             blackJackGame.processPlayerHit(player);
@@ -125,8 +146,9 @@ class BlackJackGameTest {
         void calculateGameResults() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player1 = new Player("Alice", Hand.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS));
-            Player player2 = new Player("Bob", Hand.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS));
+            Player player1 = new Player("Alice",
+                    new Hand(List.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS)));
+            Player player2 = new Player("Bob", new Hand(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS)));
             List<Player> players = List.of(player1, player2);
 
             // when
@@ -139,6 +161,24 @@ class BlackJackGameTest {
 
     @Nested
     class InvalidCases {
+
+        @DisplayName("딜러의 첫번째 카드를 가져올 때 딜러는 2장의 카드를 가지고 있어야 한다.")
+        @Test
+        void retrieveFirstCard() {
+            // given
+            List<TrumpCard> cards = List.of(
+                    TrumpCard.ACE_OF_SPADES
+            );
+            Hand hand = new Hand(cards);
+            Dealer dealer = new Dealer(hand);
+
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+
+            // when & then
+            assertThatThrownBy(blackJackGame::retrieveDealerFirstCard)
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("딜러는 " + BlackJackGame.INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
+        }
 
         @ParameterizedTest
         @DisplayName("플레이어가 히트 할 수 없다면 히트를 할 수 없다.")

@@ -46,7 +46,17 @@ public class Deck {
     }
 
     private static ArrayList<TrumpCard> initializeCards() {
-        return new ArrayList<>(Arrays.asList(TrumpCard.values()));
+        return new ArrayList<>(Arrays.asList(domain.TrumpCard.values()));
+    }
+
+    public List<TrumpCard> drawMultiple(int count) {
+        List<TrumpCard> cards = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            cards.add(draw());
+        }
+
+        return cards;
     }
 
     public TrumpCard draw() {

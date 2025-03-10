@@ -16,9 +16,24 @@ class DeckTest {
     @Nested
     class ValidCase {
 
+        @DisplayName("덱에서 여러장의 카드를 줘야한다")
+        @Test
+        void drawMultiple() {
+            // given
+            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
+                    .toList();
+            Deck deck = new Deck(cards);
+
+            // when
+            List<TrumpCard> drawnCards = deck.drawMultiple(5);
+
+            // when & then
+            assertThat(drawnCards.size()).isEqualTo(5);
+        }
+
         @DisplayName("덱은 마지막 카드를 줘야한다")
         @Test
-        void drawCard() {
+        void draw() {
             // given
             List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
                     .toList();
@@ -27,6 +42,7 @@ class DeckTest {
             // when & then
             assertThat(deck.draw()).isEqualTo(cards.getLast());
         }
+
 
         @DisplayName("덱은 카드를 섞을 수 있다")
         @Test
@@ -107,9 +123,7 @@ class DeckTest {
             Deck deck = new Deck(cards);
 
             // when
-            for (int i = 0; i < 52; i++) {
-                deck.draw();
-            }
+            deck.drawMultiple(52);
 
             // then
             assertThatThrownBy(deck::draw)
