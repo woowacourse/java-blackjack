@@ -59,7 +59,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("카드 합계 테스트")
-    void sumTest() {
+    void calculateSumTest() {
         //given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer(cardDeck);
@@ -69,7 +69,7 @@ public class PlayerTest {
         player.hitCards(dealer);
 
         //then
-        assertThat(player.sum()).isEqualTo(12);
+        assertThat(player.calculateSum()).isEqualTo(12);
     }
 
     @ParameterizedTest

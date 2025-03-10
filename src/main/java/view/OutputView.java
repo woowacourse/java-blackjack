@@ -76,7 +76,7 @@ public class OutputView {
 
         for (Player player : players.getPlayers()) {
             System.out.print(resultMaker(player));
-            System.out.printf(SCORE + NEW_LINE, player.sum());
+            System.out.printf(SCORE + NEW_LINE, player.calculateSum());
         }
     }
 

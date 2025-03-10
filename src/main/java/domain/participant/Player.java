@@ -28,7 +28,7 @@ public class Player {
         hand.addCard(dealer.hitCard());
     }
 
-    public int sum() {
+    public int calculateSum() {
         return hand.sum();
     }
 
@@ -40,11 +40,11 @@ public class Player {
     }
 
     public MatchResult calculateWinner(final int dealerSum) {
-        return MatchResult.calculateWinner(dealerSum, this.sum());
+        return MatchResult.calculateWinner(dealerSum, this.calculateSum());
     }
 
     private boolean isBust() {
-        return sum() > BLACKJACK_NUMBER;
+        return calculateSum() > BLACKJACK_NUMBER;
     }
 
     public String getName() {
