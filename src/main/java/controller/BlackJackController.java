@@ -28,20 +28,15 @@ public class BlackJackController {
 
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
-
         CardDeck cardDeck = createCardDeck(cardBundle);
-
-        receiveCardProcessOfParticipants(participants, cardDeck);
-
-        // Note: 모든 참가자들의 카드 받기 기능
-        receiveCardProcessOfDealer(participants, cardDeck);
+        giveStartingCardsToParticipants(participants, cardDeck);
         processPlayersCardReceiving(participants, cardDeck);
-
+        processDealerCardReceiving(participants, cardDeck);
         calculateBackJackResultProcess(participants);
     }
 
-    private void receiveCardProcessOfParticipants(Participants participants,
-        CardDeck cardDeck) {
+    private void giveStartingCardsToParticipants(Participants participants,
+                                                 CardDeck cardDeck) {
         for (Participant participant : participants.getParticipants()) {
             participant.addCard(cardDeck.getAndRemoveFrontCard());
             participant.addCard(cardDeck.getAndRemoveFrontCard());
@@ -65,7 +60,7 @@ public class BlackJackController {
         }
     }
 
-    private void receiveCardProcessOfDealer(Participants participants, CardDeck cardDeck) {
+    private void processDealerCardReceiving(Participants participants, CardDeck cardDeck) {
         Participant dealer = participants.getDealer();
         while (dealer.canPick()) {
             dealer.addCard(cardDeck.getAndRemoveFrontCard());
