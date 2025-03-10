@@ -16,6 +16,8 @@ import java.util.Map;
 
 public class BlackjackController {
 
+    private static final String YES = "y";
+    private static final String NO = "n";
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -78,13 +80,12 @@ public class BlackjackController {
     }
 
     private boolean isMoreCard(final Player player) {
-        try {
-            final Answer answer = Answer.from(inputView.askMoreCard(player));
-            return answer.isYes();
-        } catch (IllegalArgumentException exception) {
-            resultView.showException(exception);
-            return isMoreCard(player);
+        String answer = inputView.askMoreCard(player);
+        if (isValidAnswer(answer)) {
+            return answer.equals(YES);
         }
+        resultView.showln("잘못된 응답입니다. 다시 입력해주세요.");
+        return isMoreCard(player);
     }
 
     private Players makePlayers() {
@@ -93,5 +94,9 @@ public class BlackjackController {
         return new Players(parsedNames.stream()
                 .map(Player::createEmpty)
                 .toList());
+    }
+
+    private boolean isValidAnswer(final String answer) {
+        return answer.equals(YES) || answer.equals(NO);
     }
 }

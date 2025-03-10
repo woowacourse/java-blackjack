@@ -105,8 +105,8 @@ public class ResultView {
         }
     }
 
-    public void showException(final RuntimeException exception) {
-        System.out.println(exception.getMessage());
+    public void showln(final String line) {
+        System.out.println(line);
     }
 
     private int countResultStatus(final Map<String, ResultStatus> result, final ResultStatus input) {
