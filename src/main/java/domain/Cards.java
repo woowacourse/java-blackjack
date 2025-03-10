@@ -12,11 +12,9 @@ public class Cards {
     private static final int ACE_VALUE_DIFFERENCE = 10;
 
     private final List<Card> cards;
-    private final int totalRankSum;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
-        this.totalRankSum = calculateTotalRank();
     }
 
     public int calculateTotalRank() {
@@ -50,11 +48,15 @@ public class Cards {
     }
 
     public boolean isBlackjackScoreExceeded() {
-        return totalRankSum > BLACKJACK_SCORE;
+        return calculateTotalRank() > BLACKJACK_SCORE;
     }
 
     public boolean isDealerDrawLimitExceeded() {
-        return totalRankSum > DEALER_DRAW_LIMIT;
+        return calculateTotalRank() > DEALER_DRAW_LIMIT;
+    }
+
+    public int calculateDifferenceFromBlackjackScore() {
+        return Math.abs(calculateTotalRank() - BLACKJACK_SCORE);
     }
 
     public Card getInitialCard() {
@@ -65,19 +67,15 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public int calculateDifferenceFromBlackjackScore() {
-        return Math.abs(totalRankSum - BLACKJACK_SCORE);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Cards cards1 = (Cards) o;
-        return totalRankSum == cards1.totalRankSum && Objects.equals(cards, cards1.cards);
+        return Objects.equals(cards, cards1.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards, totalRankSum);
+        return Objects.hash(cards);
     }
 }
