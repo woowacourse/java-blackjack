@@ -6,10 +6,8 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import blackjack.model.card.Cards;
-import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Role;
-import blackjack.model.player.User;
 
 public class BlackJackRule {
 
@@ -45,7 +43,7 @@ public class BlackJackRule {
                 .orElse(player.getMinimumPoint());
     }
 
-    public Map<Player, Map<Result, Integer>> calculateResult(final Dealer dealer, final List<User> users) {
+    public Map<Player, Map<Result, Integer>> calculateResult(final Player dealer, final List<Player> users) {
         Map<Player, Map<Result, Integer>> results = new LinkedHashMap<>();
         results.put(dealer, new LinkedHashMap<>(Result.getResultBoard()));
         users.forEach(

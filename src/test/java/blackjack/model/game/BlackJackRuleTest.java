@@ -280,7 +280,7 @@ class BlackJackRuleTest {
 
     @MethodSource("게임_결과를_반환하는_테스트_케이스")
     @ParameterizedTest
-    void 게임_결과를_반환한다(final BlackJackRule blackJackRule, final Dealer dealer, final List<User> users,
+    void 게임_결과를_반환한다(final BlackJackRule blackJackRule, final Player dealer, final List<Player> users,
                      final Map<Player, Map<Result, Integer>> expected) {
         Map<Player, Map<Result, Integer>> results = blackJackRule.calculateResult(dealer, users);
 

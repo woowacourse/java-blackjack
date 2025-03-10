@@ -3,11 +3,12 @@ package blackjack.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
-import blackjack.model.game.BlackJackRule;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.Role;
 import blackjack.model.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -23,52 +24,49 @@ public class BlackJackController {
     }
 
     public void run() {
-        BlackJackRule blackJackRule = new BlackJackRule();
-        BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer(), blackJackRule);
+        BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer());
 
-        Dealer dealer = new Dealer();
-        List<User> users = makeUsers();
-        dealInitialCards(users, dealer, blackJackGame);
-        outputView.printDealInitialCardsResult(dealer, users, blackJackRule);
-
-        usersDrawMoreCards(users, blackJackRule, blackJackGame);
-
-        dealerDrawMoreCards(blackJackGame, dealer);
-        outputView.printOptimalPoints(dealer, users, blackJackRule);
-        outputView.printGameResult(blackJackRule.calculateResult(dealer, users));
-    }
-
-    private List<User> makeUsers() {
-        return inputView.readUserNames()
-                .stream()
-                .map(User::new)
+        List<Player> players = makePlayers();
+        blackJackGame.dealInitialCards(players);
+        List<Cards> openCards = players.stream()
+                .map(blackJackGame::openInitialCards)
                 .toList();
+        outputView.printDealInitialCardsResult(players, openCards);
+
+        usersDrawMoreCards(players, blackJackGame);
+
+        dealerDrawMoreCards(blackJackGame, players.getFirst());
+        outputView.printOptimalPoints(blackJackGame.calculateOptimalPoints(players));
+        outputView.printGameResult(blackJackGame.calculateResult(players));
     }
 
-    private void usersDrawMoreCards(final List<User> users, final BlackJackRule blackJackRule,
-                                    final BlackJackGame blackJackGame) {
-        for (User user : users) {
-            userDrawMoreCards(blackJackRule, blackJackGame, user);
+    private List<Player> makePlayers() {
+        List<Player> players = new ArrayList<>();
+        players.add(new Dealer());
+        inputView.readUserNames()
+                .forEach(username -> players.add(new User(username)));
+        return players;
+    }
+
+    private void usersDrawMoreCards(final List<Player> players, final BlackJackGame blackJackGame) {
+        for (Player player : players) {
+            userDrawMoreCards(blackJackGame, player);
         }
     }
 
-    private void userDrawMoreCards(final BlackJackRule blackJackRule, final BlackJackGame blackJackGame,
-                                   final User user) {
-        while (blackJackRule.canDrawMoreCard(user) && inputView.readUserDrawMoreCard(user)) {
-            blackJackGame.drawMoreCard(user);
-            outputView.printPlayerCards(user, blackJackRule);
+    private void userDrawMoreCards(final BlackJackGame blackJackGame, final Player player) {
+        if (player.hasRole(Role.DEALER)) {
+            return;
+        }
+        while (blackJackGame.canDrawMoreCard(player) && inputView.readUserDrawMoreCard(player)) {
+            blackJackGame.canDrawMoreCard(player);
+            outputView.printPlayerCards(player, player.getCards());
         }
     }
 
-    private void dealerDrawMoreCards(final BlackJackGame blackJackGame, final Dealer dealer) {
-        boolean isDrawn = blackJackGame.drawMoreCard(dealer);
+    private void dealerDrawMoreCards(final BlackJackGame blackJackGame, final Player dealer) {
+        boolean isDrawn = blackJackGame.canDrawMoreCard(dealer);
         outputView.printDealerDrawnMoreCards(isDrawn);
-    }
-
-    private void dealInitialCards(final List<User> users, final Player dealer, final BlackJackGame blackJackGame) {
-        List<Player> allPlayers = new ArrayList<>(users);
-        allPlayers.add(dealer);
-        blackJackGame.dealInitialCards(allPlayers);
     }
 
 }

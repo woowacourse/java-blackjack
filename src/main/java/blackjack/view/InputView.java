@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import blackjack.model.player.User;
+import blackjack.model.player.Player;
 
 public class InputView {
 
@@ -17,8 +17,8 @@ public class InputView {
         ).toList();
     }
 
-    public boolean readUserDrawMoreCard(final User user) {
-        System.out.println(user.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public boolean readUserDrawMoreCard(final Player player) {
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String choice = scanner.nextLine();
         validateChoice(choice);
         return choice.equals("y");
