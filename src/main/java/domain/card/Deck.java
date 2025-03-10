@@ -1,17 +1,21 @@
 package domain.card;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
+import java.util.SequencedCollection;
 import java.util.Stack;
 
 public class Deck {
 
     public static final int DECK_SIZE = 52;
 
-    private final Stack<Card> deck;
+    private final Deque<Card> deck;
 
     public Deck() {
-        deck = new Stack<>();
+        deck = new ArrayDeque<>();
 
         int denominationLength = Denomination.values().length;
         for (int i = 0; i < DECK_SIZE; i++) {
@@ -22,7 +26,9 @@ public class Deck {
     }
 
     public void shuffle() {
-        Collections.shuffle(deck);
+        ArrayList<Card> deckCards = new ArrayList<>(deck);
+        Collections.shuffle(deckCards);
+        deck.addAll(deckCards);
     }
 
     public Card draw() {
@@ -37,7 +43,7 @@ public class Deck {
         deck.add(new Card(denomination, suit));
     }
 
-    public List<Card> getDeck() {
-        return Collections.unmodifiableList(deck);
+    public Deque<Card> getDeck() {
+        return deck;
     }
 }
