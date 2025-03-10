@@ -1,7 +1,6 @@
 import controller.BlackjackApplication;
 import domain.CardGiver;
 import domain.CardRandomGenerator;
-import domain.GivenCards;
 import view.InputView;
 import view.OutputView;
 import view.support.InputParser;
@@ -26,6 +25,6 @@ public class BlackjackConfig {
     }
 
     private CardGiver cardGiver() {
-        return new CardGiver(new CardRandomGenerator(), GivenCards.createEmpty());
+        return new CardGiver(new CardRandomGenerator());
     }
 }
