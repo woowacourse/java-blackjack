@@ -21,7 +21,7 @@ public class BlackJackController {
     public void start() {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
-        Players players = Players.from(inputView.readPlayersName());
+        Players players = createPlayersUntilValidate();
         Dealer dealer = new Dealer(cardDeck);
 
         playBlackJack(players, dealer);
@@ -40,5 +40,14 @@ public class BlackJackController {
         outputView.printDrawDealer(dealer);
         outputView.printScore(players, dealer);
         outputView.printResult(blackJack.calculatePlayerResult());
+    }
+
+    private Players createPlayersUntilValidate() {
+        try {
+            return Players.from(inputView.readPlayersName());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return createPlayersUntilValidate();
+        }
     }
 }
