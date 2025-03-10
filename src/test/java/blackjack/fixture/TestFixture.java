@@ -1,6 +1,6 @@
 package blackjack.fixture;
 
-import static blackjack.domain.random.CardRandomGenerator.CARDS;
+import static blackjack.domain.random.CardGenerator.DECK;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TestFixture {
 
-    public static class TestCardGeneratorGenerator implements CardGenerator {
+    public static class TestCardGenerator implements CardGenerator {
         private int callingCount = 0;
 
         @Override
@@ -34,7 +34,7 @@ public class TestFixture {
     }
 
     public static Cards provideCards(final int count) {
-        return new Cards(CARDS.subList(0, count));
+        return new Cards(DECK.subList(0, count));
     }
 
     public static Players providePlayers() {

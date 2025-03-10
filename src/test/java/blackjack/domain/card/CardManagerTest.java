@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.random.CardGenerator;
 import blackjack.domain.random.CardRandomGenerator;
-import blackjack.fixture.TestFixture.TestCardGeneratorGenerator;
+import blackjack.fixture.TestFixture.TestCardGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class CardManagerTest {
     @Test
     void spreadAgain() {
         // given
-        final CardGenerator cardGenerator = new TestCardGeneratorGenerator();
+        final CardGenerator cardGenerator = new TestCardGenerator();
         final CardManager cardManager = new CardManager(cardGenerator);
 
         // when
