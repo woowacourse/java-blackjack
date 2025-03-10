@@ -71,7 +71,7 @@ class BlackjackResultEvaluatorTest {
                 pobiDrawCards, dealerDrawCards);
 
         // when
-        blackjackGame.drawCard("포비");
+        blackjackGame.dealCard("포비");
         blackjackGame.dealerHit();
 
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
@@ -100,8 +100,8 @@ class BlackjackResultEvaluatorTest {
                 dealerInitCards, pobiDrawCards, tudaDrawCards, dealerDrawCards);
 
         // when
-        blackjackGame.drawCard("포비");
-        blackjackGame.drawCard("투다");
+        blackjackGame.dealCard("포비");
+        blackjackGame.dealCard("투다");
         blackjackGame.dealerHit();
 
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();

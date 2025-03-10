@@ -27,8 +27,8 @@ public class BlackjackGame {
 
     private void initiateGame() {
         for (String name : blackjackParticipants.getPlayerNames()) {
-            drawCard(name);
-            drawCard(name);
+            dealCard(name);
+            dealCard(name);
         }
         drawDealerCard();
         drawDealerCard();
@@ -54,7 +54,7 @@ public class BlackjackGame {
         return blackjackParticipants.getPlayerNames();
     }
 
-    public void drawCard(String name) {
+    public void dealCard(String name) {
         blackjackParticipants.addCard(name, deck.drawCard());
     }
 

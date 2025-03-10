@@ -95,7 +95,7 @@ public class BlackjackController {
         if (!isDraw) {
             return;
         }
-        blackjackGame.drawCard(name);
+        blackjackGame.dealCard(name);
         openPlayerCards(name, blackjackGame);
         if (blackjackGame.isBust(name)) {
             return;
