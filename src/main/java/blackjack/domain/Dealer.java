@@ -4,16 +4,13 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final int DEALER_MUST_TAKE_UNDER = 16;
     private static final int FIRST_CARD_POSITION = 0;
 
     private final CardHolder cardHolder;
 
     public Dealer(CardHolder cardHolder) {
         this.cardHolder = cardHolder;
-    }
-
-    public List<Integer> getPossibleSums() {
-        return cardHolder.getPossibleSums();
     }
 
     public void takeCard(Card newCard) {
@@ -30,5 +27,13 @@ public class Dealer {
 
     public CardHolder getCardHolder() {
         return cardHolder;
+    }
+
+    public boolean isBusted() {
+        return cardHolder.isBusted();
+    }
+
+    public boolean canTakeCard() {
+        return cardHolder.canTakeCardWithin(DEALER_MUST_TAKE_UNDER);
     }
 }

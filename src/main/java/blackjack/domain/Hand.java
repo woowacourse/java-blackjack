@@ -41,7 +41,39 @@ public class Hand implements CardHolder {
         cards.add(newCard);
     }
 
-    public List<Integer> getPossibleSums() {
+    public int getOptimisticValue() {
+        return getPossibleSums().stream()
+                .filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
+                .max(Comparator.naturalOrder())
+                .orElse(Constants.BUSTED_VALUE);
+    }
+
+    @Override
+    public Card getCard(int position) {
+        if (position < 0 || position >= cards.size()) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_CARD_INDEX.getMessage());
+        }
+
+        return cards.get(position);
+    }
+
+    @Override
+    public boolean isBusted() {
+        List<Integer> possibleSums = getPossibleSums();
+
+        return possibleSums.stream()
+                .allMatch(sum -> sum > Constants.BUSTED_STANDARD_VALUE);
+    }
+
+    @Override
+    public boolean canTakeCardWithin(int takeBoundary) {
+        List<Integer> possibleSums = getPossibleSums();
+
+        return possibleSums.stream()
+                .anyMatch(sum -> sum <= takeBoundary);
+    }
+
+    private List<Integer> getPossibleSums() {
         Set<Integer> possibleSums = new HashSet<>();
 
         calculatePossibleSums(possibleSums, 0, 0);
@@ -58,22 +90,6 @@ public class Hand implements CardHolder {
         for (int number : card.getValue()) {
             calculatePossibleSums(values, index + 1, sum + number);
         }
-    }
-
-    public int getOptimisticValue() {
-        return getPossibleSums().stream()
-                .filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
-                .max(Comparator.naturalOrder())
-                .orElse(Constants.BUSTED_VALUE);
-    }
-
-    @Override
-    public Card getCard(int position) {
-        if (position < 0 || position >= cards.size()) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_CARD_INDEX.getMessage());
-        }
-
-        return cards.get(position);
     }
 
 }

@@ -18,15 +18,15 @@ public class BlackJackResultManager {
         this.dealerResult = DealerResult.create();
     }
 
-    public void calculateCardResult(Players players, Dealer dealer, GameRuleEvaluator gameRuleEvaluator) {
+    public void calculateCardResult(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            saveResult(dealer, gameRuleEvaluator, player);
+            saveResult(dealer, player);
         }
     }
 
-    private void saveResult(Dealer dealer, GameRuleEvaluator gameRuleEvaluator, Player player) {
-        boolean isBustedDealer = gameRuleEvaluator.isBustedFor(dealer.getCardHolder());
-        boolean isBustedPlayer = gameRuleEvaluator.isBustedFor(player.getCardHolder());
+    private void saveResult(Dealer dealer, Player player) {
+        boolean isBustedDealer = dealer.isBusted();
+        boolean isBustedPlayer = player.isBusted();
 
         if (isBustedDealer) {
             processWhenDealerIsBusted(player, isBustedPlayer);

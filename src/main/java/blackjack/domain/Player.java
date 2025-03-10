@@ -1,9 +1,10 @@
 package blackjack.domain;
 
+import blackjack.common.Constants;
 import blackjack.common.ErrorMessage;
 import java.util.List;
 
-public class Player{
+public class Player {
 
     private final String name;
     private final CardHolder cardHolder;
@@ -14,14 +15,10 @@ public class Player{
         this.cardHolder = cardHolder;
     }
 
-    public void validName(String name){
-        if (name == null || name.isBlank()){
+    public void validName(String name) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.USE_VALID_NAME.getMessage());
         }
-    }
-
-    public List<Integer> getPossibleSums() {
-        return cardHolder.getPossibleSums();
     }
 
     public List<Card> getAllCards() {
@@ -36,7 +33,15 @@ public class Player{
         return cardHolder;
     }
 
+    public boolean canTakeCardFor() {
+        return cardHolder.canTakeCardWithin(Constants.BUSTED_STANDARD_VALUE);
+    }
+
     public String getName() {
         return name;
+    }
+
+    public boolean isBusted() {
+        return cardHolder.isBusted();
     }
 }

@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.common.Constants;
 import blackjack.domain.Card;
 import blackjack.domain.CardHolder;
 import java.util.Comparator;
@@ -15,17 +16,12 @@ public class StubPossibleSumCardHolder implements CardHolder {
 
     @Override
     public List<Card> getAllCards() {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void takeCard(Card newCard) {
-        throw new RuntimeException();
-    }
-
-    @Override
-    public List<Integer> getPossibleSums() {
-        return integers;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -37,6 +33,18 @@ public class StubPossibleSumCardHolder implements CardHolder {
 
     @Override
     public Card getCard(int position) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isBusted() {
+        return integers.stream()
+                .allMatch(sum -> sum > Constants.BUSTED_STANDARD_VALUE);
+    }
+
+    @Override
+    public boolean canTakeCardWithin(int takeBoundary) {
+        return integers.stream()
+                .anyMatch(sum -> sum <= takeBoundary);
     }
 }

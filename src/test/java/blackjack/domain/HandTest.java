@@ -39,21 +39,6 @@ class HandTest {
         assertThat(hand.getAllCards()).containsExactly(card1, card2, newCard);
     }
 
-    @DisplayName("가능한 카드의 모든 합을 반환한다")
-    @Test
-    void test3() {
-        // given
-        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.ACE);
-        Hand hand = Hand.of(card1, card2);
-
-        // when
-        List<Integer> totalValues = hand.getPossibleSums();
-
-        // then
-        assertThat(totalValues).containsExactlyInAnyOrder(2, 12, 22);
-    }
-
     @DisplayName("모든 카드를 반환한다.")
     @Test
     void test5() {

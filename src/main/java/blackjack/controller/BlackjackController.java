@@ -7,7 +7,6 @@ import blackjack.domain.Players;
 import blackjack.manager.BlackJackInitManager;
 import blackjack.manager.BlackJackResultManager;
 import blackjack.manager.BlackjackProcessManager;
-import blackjack.manager.GameRuleEvaluator;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -15,13 +14,11 @@ import java.util.List;
 
 public class BlackjackController {
 
-    private final GameRuleEvaluator gameRuleEvaluator;
     private final BlackJackInitManager blackJackInitManager;
     private final BlackjackProcessManager blackjackProcessManager;
     private final BlackJackResultManager blackJackResultManager;
 
-    public BlackjackController(GameRuleEvaluator gameRuleEvaluator, BlackJackInitManager blackJackInitManager) {
-        this.gameRuleEvaluator = gameRuleEvaluator;
+    public BlackjackController(BlackJackInitManager blackJackInitManager) {
         this.blackJackInitManager = blackJackInitManager;
         this.blackjackProcessManager = new BlackjackProcessManager(blackJackInitManager.generateDeck());
         this.blackJackResultManager = new BlackJackResultManager();
@@ -42,7 +39,7 @@ public class BlackjackController {
     }
 
     private void giveMoreCardFor(Dealer dealer) {
-        while (gameRuleEvaluator.canTakeCardFor(dealer)) {
+        while (dealer.canTakeCard()) {
             OutputView.printMoreCard();
             blackjackProcessManager.giveCard(dealer.getCardHolder());
         }
@@ -64,12 +61,12 @@ public class BlackjackController {
         blackjackProcessManager.giveCard(player.getCardHolder());
         OutputView.printCardResult(player);
 
-        if (gameRuleEvaluator.isBustedFor(player.getCardHolder())) {
+        if (player.isBusted()) {
             OutputView.printBustedPlayer(player);
             return;
         }
 
-        if (gameRuleEvaluator.canTakeCardFor(player)) {
+        if (player.canTakeCardFor()) {
             giveMoreCardFor(player);
         }
     }
@@ -85,7 +82,7 @@ public class BlackjackController {
     }
 
     private void printCardResult(Players players, Dealer dealer) {
-        blackJackResultManager.calculateCardResult(players, dealer, gameRuleEvaluator);
+        blackJackResultManager.calculateCardResult(players, dealer);
         OutputView.printCardResult(players, dealer);
     }
 

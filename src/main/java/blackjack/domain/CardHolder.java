@@ -8,9 +8,11 @@ public interface CardHolder {
 
     void takeCard(Card newCard);
 
-    List<Integer> getPossibleSums();
-
     int getOptimisticValue();
 
     Card getCard(int position);
+
+    boolean isBusted();
+
+    boolean canTakeCardWithin(int takeBoundary);
 }

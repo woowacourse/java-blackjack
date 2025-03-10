@@ -54,8 +54,6 @@ class BlackJackResultManagerTest {
     @DisplayName("결과를 연산한다.")
     @Test
     void test5() {
-        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-
         Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
 
         ArrayList<Player> playerList = new ArrayList<>();
@@ -66,7 +64,7 @@ class BlackJackResultManagerTest {
 
         Players players = Players.from(playerList);
 
-        blackJackResultManager.calculateCardResult(players, dealer, gameRuleEvaluator);
+        blackJackResultManager.calculateCardResult(players, dealer);
 
         Map<GameResultType, Integer> dealerResult = blackJackResultManager.getDealerResult();
 
@@ -76,7 +74,6 @@ class BlackJackResultManagerTest {
     @DisplayName("플레이어와 딜러가 busted 라면 무를 반환한다.")
     @Test
     void test6() {
-        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
 
         Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(22)));
 
@@ -88,7 +85,7 @@ class BlackJackResultManagerTest {
 
         Players players = Players.from(playerList);
 
-        blackJackResultManager.calculateCardResult(players, dealer, gameRuleEvaluator);
+        blackJackResultManager.calculateCardResult(players, dealer);
 
         Map<GameResultType, Integer> dealerResult = blackJackResultManager.getDealerResult();
 
@@ -98,8 +95,7 @@ class BlackJackResultManagerTest {
     @DisplayName("플레이어만 busted라면 딜러가 승리한다.")
     @Test
     void test7() {
-        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-
+        // given
         Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(21)));
 
         ArrayList<Player> playerList = new ArrayList<>();
@@ -110,18 +106,19 @@ class BlackJackResultManagerTest {
 
         Players players = Players.from(playerList);
 
-        blackJackResultManager.calculateCardResult(players, dealer, gameRuleEvaluator);
+        blackJackResultManager.calculateCardResult(players, dealer);
 
+        // when
         Map<GameResultType, Integer> dealerResult = blackJackResultManager.getDealerResult();
 
+        // then
         assertThat(dealerResult).containsEntry(GameResultType.WIN, 5);
     }
 
     @DisplayName("딜러만 busted라면 플레이어가 승리한다.")
     @Test
     void test8() {
-        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-
+        // given
         Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(22)));
 
         ArrayList<Player> playerList = new ArrayList<>();
@@ -132,10 +129,12 @@ class BlackJackResultManagerTest {
 
         Players players = Players.from(playerList);
 
-        blackJackResultManager.calculateCardResult(players, dealer, gameRuleEvaluator);
+        blackJackResultManager.calculateCardResult(players, dealer);
 
+        // when
         Map<GameResultType, Integer> dealerResult = blackJackResultManager.getDealerResult();
 
+        // then
         assertThat(dealerResult).containsEntry(GameResultType.LOSE, 5);
     }
 }

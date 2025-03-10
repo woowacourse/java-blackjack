@@ -3,9 +3,14 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.StubPossibleSumCardHolder;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
@@ -70,5 +75,56 @@ class DealerTest {
 
         // then
         assertThat(revealedCard).isEqualTo(card1);
+    }
+
+    @DisplayName("딜러의 카드의 총합이 21을 넘으면 busted 여부의 결과가 true 가 된다")
+    @Test
+    void test6() {
+        // given
+        Hand hand = new Hand();
+        Dealer dealer = new Dealer(hand);
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.KING));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.QUEEN));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.JACK));
+
+        // when
+        boolean actual = dealer.isBusted();
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("딜러의 카드가 21을 넘지 않는다면 busted 여부 결과가 false가 된다")
+    @Test
+    void test7() {
+        Hand hand = new Hand();
+        Dealer dealer = new Dealer(hand);
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.KING));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.QUEEN));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.ACE));
+
+        // when
+        boolean actual = dealer.isBusted();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    private static Stream<Arguments> canTakeCardArgument() {
+        return Stream.of(
+                Arguments.arguments(List.of(16), true),
+                Arguments.arguments(List.of(17), false)
+        );
+    }
+
+    @DisplayName("딜러의 카드가 16을 넘으면 카드를 받을 수 없다.")
+    @ParameterizedTest
+    @MethodSource("canTakeCardArgument")
+    void test8(List<Integer> possibleSums, boolean expect) {
+        //given
+        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(possibleSums));
+
+        // when & then
+        assertThat(dealer.canTakeCard()).isEqualTo(expect);
     }
 }
