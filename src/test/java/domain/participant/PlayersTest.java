@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -96,5 +97,13 @@ public class PlayersTest {
 
         //when-then
         assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
+    }
+
+    @Test
+    @DisplayName("0명 플레이어 참가 테스트")
+    void validateZeroPlayerTest() {
+        assertThatThrownBy(() -> Players.from(Collections.emptyList()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 플레이어 인원은 1~6명 입니다.");
     }
 }
