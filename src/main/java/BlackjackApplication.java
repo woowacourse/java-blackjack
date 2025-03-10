@@ -11,6 +11,6 @@ public class BlackjackApplication {
 
         final BlackjackController controller = new BlackjackController(inputView, outputView);
 
-        controller.gameStart();
+        controller.run();
     }
 }

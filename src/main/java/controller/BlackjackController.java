@@ -21,7 +21,15 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void gameStart() {
+    public void run() {
+        try {
+            gameStart();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            outputView.printError(e.getMessage());
+        }
+    }
+
+    private void gameStart() {
         Dealer dealer = Dealer.of(CardDeck.of());
         Players players = initParticipants();
         GameManager gameManager = GameManager.of(dealer, players);

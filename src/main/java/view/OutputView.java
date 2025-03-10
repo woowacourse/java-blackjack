@@ -90,4 +90,8 @@ public class OutputView {
                 .reduce((a, b) -> String.join(", ", a, b))
                 .orElse("");
     }
+
+    public void printError(String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }
