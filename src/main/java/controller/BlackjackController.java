@@ -13,8 +13,8 @@ import model.cards.DealerCards;
 import model.cards.DealerCardsFactory;
 import model.deck.Deck;
 import model.result.GameResult;
+import model.result.GameResultPolicy;
 import model.result.GameResults;
-import model.result.Judge;
 import model.cards.PlayerCardsFactory;
 import model.Players;
 import view.InputView;
@@ -23,14 +23,12 @@ import view.OutputView;
 public class BlackjackController {
 
     private final Deck deck;
-    private final Judge judge;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(final Deck deck, final Judge judge, final InputView inputView,
+    public BlackjackController(final Deck deck, final InputView inputView,
                                final OutputView outputView) {
         this.deck = deck;
-        this.judge = judge;
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -79,7 +77,7 @@ public class BlackjackController {
         return new GameResults(players.getNames().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        name -> judge.determineGameResult(dealerCards, players.findCardsByName(name)
+                        name -> GameResultPolicy.determineGameResult(dealerCards, players.findCardsByName(name)
                 )))
         );
     }
