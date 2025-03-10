@@ -57,7 +57,7 @@ public class Cards {
         return cards.getFirst();
     }
 
-    private void validateEmpty() {
+    protected void validateEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 없습니다.");
         }

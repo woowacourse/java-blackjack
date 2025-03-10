@@ -52,7 +52,7 @@ public class Game {
         return new Cards(cards);
     }
 
-    public Map<PlayerName, Gamer> getPlayersInfo() {
+    public Map<PlayerName, Player> getPlayersInfo() {
         return players.getPlayersInfo();
     }
 

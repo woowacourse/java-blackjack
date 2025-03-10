@@ -40,7 +40,6 @@ public abstract class Gamer implements Cloneable {
         }
     }
 
-    //TODO: Cards를 리턴하게 해야함.
     public Cards getCards() {
         return cards;
     }

@@ -19,10 +19,4 @@ public class Deck extends Cards {
         validateEmpty();
         return deck.pop();
     }
-
-    private void validateEmpty() {
-        if (deck.isEmpty()) {
-            throw new IllegalStateException("카드가 없습니다.");
-        }
-    }
 }

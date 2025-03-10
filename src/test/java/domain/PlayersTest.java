@@ -59,7 +59,7 @@ class PlayersTest {
         List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
         Players players = new Players(usernames);
         // when
-        Map<PlayerName, Gamer> playerInfo = players.getPlayersInfo();
+        Map<PlayerName, Player> playerInfo = players.getPlayersInfo();
 
         // then
         assertTrue(

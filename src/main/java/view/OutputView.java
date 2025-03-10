@@ -10,6 +10,7 @@ import domain.Cards;
 import domain.GameResult;
 import domain.GameStatistics;
 import domain.Gamer;
+import domain.Player;
 import domain.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class OutputView {
             DRAW, "무",
             LOSE, "패");
 
-    public void printInitialState(Map<PlayerName, Gamer> playersInfo, Card dealerCard) {
+    public void printInitialState(Map<PlayerName, Player> playersInfo, Card dealerCard) {
         List<PlayerName> playerNames = new ArrayList<>(playersInfo.keySet());
         List<String> usernames = playerNames.stream()
                 .map(PlayerName::username)
@@ -51,7 +52,7 @@ public class OutputView {
         System.out.printf("\n딜러는 %s이하라 카드를 더 받았습니다.\n", BUST_THRESHOLD);
     }
 
-    public void printFinalState(Map<PlayerName, Gamer> playersInfo, Gamer dealer) {
+    public void printFinalState(Map<PlayerName, Player> playersInfo, Gamer dealer) {
         System.out.println();
         printGamerCards("딜러", dealer.getCards());
         printGamerScore(dealer);

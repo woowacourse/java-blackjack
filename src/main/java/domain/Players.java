@@ -1,17 +1,23 @@
 package domain;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
+    private final Map<PlayerName, Player> players;
 
     public Players(List<PlayerName> playerNames) {
         this.players = playerNames.stream()
-                .map(Player::new)
-                .toList();
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        Player::new,
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
     }
 
     public void giveCard(PlayerName playerName, Cards cards) {
@@ -28,9 +34,7 @@ public class Players {
     }
 
     private Player selectPlayer(PlayerName playerName) {
-        return players.stream().filter(player -> player.getPlayerName().equals(playerName))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
+        return players.get(playerName);
     }
 
     public Cards getPlayerCard(PlayerName playerName) {
@@ -39,30 +43,20 @@ public class Players {
     }
 
     public GameStatistics calculateGameStatistics(Dealer dealer) {
-        Map<PlayerName, GameResult> gameResults = players.stream()
+        Map<PlayerName, GameResult> gameResults = players.entrySet().stream()
                 .collect(Collectors.toMap(
-                        Player::getPlayerName,
-                        player -> player.decideGameResult(dealer),
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().decideGameResult(dealer)
                 ));
 
         return new GameStatistics(gameResults);
     }
 
     public List<PlayerName> getUsernames() {
-        return players.stream()
-                .map(Player::getPlayerName)
-                .toList();
+        return players.keySet().stream().toList();
     }
 
-    public Map<PlayerName, Gamer> getPlayersInfo() {
-        return players.stream()
-                .collect(Collectors.toMap(
-                        Player::getPlayerName,
-                        Gamer::clone,
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                ));
+    public Map<PlayerName, Player> getPlayersInfo() {
+        return Collections.unmodifiableMap(players);
     }
 }
