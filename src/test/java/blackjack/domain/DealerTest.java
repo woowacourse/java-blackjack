@@ -11,7 +11,7 @@ public class DealerTest {
     @DisplayName("딜러는 한장의 카드만 공개한다")
     void test() {
         Players players = new Players();
-        players.initPlayers(new CardPack(new SortShuffle()));
+        players.dealInitCardsToPlayers(new CardPack(new HighCardFirstShuffle()));
         int openedCardsSize = players.getDealer().getOpenedCards().size();
         Assertions.assertThat(openedCardsSize).isEqualTo(1);
     }

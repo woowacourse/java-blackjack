@@ -20,7 +20,7 @@ public class GameManager {
 
     public void addGamblersAndDealInitCards(List<Gambler> gamblers) {
         players.addGamblers(gamblers);
-        players.initPlayers(cardPack);
+        players.dealInitCardsToPlayers(cardPack);
     }
 
     public Players getPlayers() {

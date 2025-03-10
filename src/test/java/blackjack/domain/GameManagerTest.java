@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameManagerTest {
 
-    private static final BlackjackShuffle blackjackShuffle = new SortShuffle();
+    private static final BlackjackShuffle blackjackShuffle = new HighCardFirstShuffle();
 
     @Test
     @DisplayName("참가자를 추가한다")

@@ -15,7 +15,7 @@ public class GamblerTest {
     void test() {
         Players players = new Players();
         players.addGamblers(List.of(new Gambler("비타"), new Gambler("두리")));
-        players.initPlayers(new CardPack(new SortShuffle()));
+        players.dealInitCardsToPlayers(new CardPack(new HighCardFirstShuffle()));
         int openedCardsSize = players.getGamblers().getFirst().getOpenedCards().size();
         int totalCardsSize = players.getGamblers().getFirst().getCards().size();
 

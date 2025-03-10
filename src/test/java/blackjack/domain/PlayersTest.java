@@ -34,7 +34,7 @@ class PlayersTest {
         CardPack cardPack = new CardPack(new SortShuffle());
         players.addGamblers(List.of(new Gambler("두리")));
 
-        players.initPlayers(cardPack);
+        players.dealInitCardsToPlayers(cardPack);
         List<Card> result = players.getGamblers().getFirst().getCards();
 
         assertThat(result.size()).isEqualTo(2);
@@ -51,7 +51,7 @@ class PlayersTest {
     @DisplayName("딜러에게 카드 2장을 발급한다")
     void deal_card_to_dealer() {
         Players players = new Players();
-        players.initPlayers(new CardPack(new SortShuffle()));
+        players.dealInitCardsToPlayers(new CardPack(new SortShuffle()));
 
         Player dealer = players.getDealer();
 

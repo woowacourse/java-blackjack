@@ -39,7 +39,7 @@ public class Players {
         return gamblers;
     }
 
-    public void initPlayers(CardPack cardPack) {
+    public void dealInitCardsToPlayers(CardPack cardPack) {
         dealer.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT);
         gamblers.forEach(gambler ->
                 gambler.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT));
