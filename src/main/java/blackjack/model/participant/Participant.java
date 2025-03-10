@@ -1,9 +1,9 @@
 package blackjack.model.participant;
 
-import static blackjack.model.RuleConstants.BLACKJACK_HAND_COUNT;
-import static blackjack.model.RuleConstants.BLACKJACK_VALUE_TOTAL;
-import static blackjack.model.RuleConstants.SOFT_ACE_VALUE;
-import static blackjack.model.RuleConstants.SOFT_HAND_AVAILABLE_THRESHOLD;
+import static blackjack.model.constants.RuleConstants.BLACKJACK_HAND_COUNT;
+import static blackjack.model.constants.RuleConstants.BLACKJACK_VALUE_TOTAL;
+import static blackjack.model.constants.RuleConstants.SOFT_ACE_VALUE;
+import static blackjack.model.constants.RuleConstants.SOFT_HAND_AVAILABLE_THRESHOLD;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
@@ -18,8 +18,6 @@ public abstract class Participant {
     protected Participant(List<Card> hand) {
         this.hand = new ArrayList<>(hand);
     }
-
-    public abstract boolean shouldHit();
 
     public void receiveHand(Card card) {
         hand.add(card);

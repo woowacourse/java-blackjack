@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import static blackjack.model.RuleConstants.DEALER_HIT_THRESHOLD;
+import static blackjack.model.constants.RuleConstants.DEALER_HIT_THRESHOLD;
 
 import blackjack.model.MatchResult;
 import blackjack.model.card.Card;

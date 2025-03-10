@@ -1,6 +1,6 @@
 package blackjack.model.participant;
 
-import static blackjack.model.RuleConstants.DEALER_HIT_THRESHOLD;
+import static blackjack.model.constants.RuleConstants.DEALER_HIT_THRESHOLD;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
@@ -19,7 +19,6 @@ public class Dealer extends Participant {
         return deck.draw();
     }
 
-    @Override
     public boolean shouldHit() {
         return calculateHandTotal() <= DEALER_HIT_THRESHOLD;
     }

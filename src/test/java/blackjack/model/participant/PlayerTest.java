@@ -25,7 +25,7 @@ class PlayerTest {
         String name = "pobi";
 
         // when, then
-        assertThatCode(() -> new Player(name, NO_HIT_STRATEGY))
+        assertThatCode(() -> new Player(name))
                 .doesNotThrowAnyException();
     }
 
@@ -33,7 +33,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {" ", ""})
     void createPlayerValidateTest(String name) {
-        assertThatCode(() -> new Player(name, NO_HIT_STRATEGY))
+        assertThatCode(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 한글자 이상이어야합니다.");
     }
@@ -43,7 +43,7 @@ class PlayerTest {
     void receiveHandTest() {
         // given
         Card card = new Card(Suit.SPADES, CardValue.ACE);
-        Player player = new Player("pobi", NO_HIT_STRATEGY);
+        Player player = new Player("pobi");
 
         // when
         player.receiveHand(card);
@@ -60,7 +60,7 @@ class PlayerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
         Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
-        Player player = new Player("pobi", NO_HIT_STRATEGY);
+        Player player = new Player("pobi");
 
         // when
         player.receiveHand(spadeTen);
@@ -77,7 +77,7 @@ class PlayerTest {
         // given
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Player player = new Player("pobi", NO_HIT_STRATEGY);
+        Player player = new Player("pobi");
 
         // when
         player.receiveHand(spadeAce);
@@ -95,7 +95,7 @@ class PlayerTest {
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTwo = new Card(Suit.SPADES, CardValue.TWO);
         Card spadeNine = new Card(Suit.SPADES, CardValue.NINE);
-        Player player = new Player("pobi", NO_HIT_STRATEGY);
+        Player player = new Player("pobi");
 
         // when
         player.receiveHand(spadeAce);
@@ -117,7 +117,7 @@ class PlayerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, value1);
         Card spadeAce = new Card(Suit.SPADES, value2);
-        Player player = new Player("pobi", NO_HIT_STRATEGY);
+        Player player = new Player("pobi");
         player.receiveHand(spadeTen);
         player.receiveHand(spadeAce);
 
@@ -140,7 +140,7 @@ class PlayerTest {
         Card card1 = new Card(Suit.SPADES, value1);
         Card card2 = new Card(Suit.SPADES, value2);
         Card card3 = new Card(Suit.SPADES, value3);
-        Player player = new Player("pobi", NO_HIT_STRATEGY);
+        Player player = new Player("pobi");
         player.receiveHand(card1);
         player.receiveHand(card2);
         player.receiveHand(card3);
@@ -157,10 +157,10 @@ class PlayerTest {
     @Test
     void shouldHitFalseTest() {
         // given
-        Player player = new Player("pobi", NO_HIT_STRATEGY);
+        Player player = new Player("pobi");
 
         // then
-        boolean shouldHit = player.shouldHit();
+        boolean shouldHit = player.shouldHit(NO_HIT_STRATEGY);
 
         // when
         assertThat(shouldHit)
@@ -171,10 +171,10 @@ class PlayerTest {
     @Test
     void shouldHitTrueTest() {
         // given
-        Player player = new Player("pobi", createHitDecisionStrategy(List.of(true)));
+        Player player = new Player("pobi");
 
         // then
-        boolean shouldHit = player.shouldHit();
+        boolean shouldHit = player.shouldHit(createHitDecisionStrategy(List.of(true)));
 
         // when
         assertThat(shouldHit)

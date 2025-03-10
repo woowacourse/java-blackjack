@@ -7,13 +7,11 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private final String name;
-    private final HitDecisionStrategy hitDecisionStrategy;
 
-    public Player(String name, HitDecisionStrategy hitDecisionStrategy) {
+    public Player(String name) {
         super(new ArrayList<>());
         validateName(name);
         this.name = name;
-        this.hitDecisionStrategy = hitDecisionStrategy;
     }
 
     private void validateName(String name) {
@@ -22,8 +20,7 @@ public class Player extends Participant {
         }
     }
 
-    @Override
-    public boolean shouldHit() {
+    public boolean shouldHit(HitDecisionStrategy hitDecisionStrategy) {
         return hitDecisionStrategy.decideHit(name);
     }
 

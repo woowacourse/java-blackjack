@@ -33,22 +33,18 @@ public class Game {
         participant.receiveHand(card);
     }
 
-    public void askHitForAllPlayer(PlayerHandVisualizer playerHandVisualizer) {
+    public void askHitForAllPlayer(HitDecisionStrategy hitDecisionStrategy, PlayerHandVisualizer playerHandVisualizer) {
         for (Player player : players.getPlayers()) {
-            askHit(player, playerHandVisualizer);
+            askHit(player, hitDecisionStrategy, playerHandVisualizer);
         }
     }
 
-    private void askHit(Player player, PlayerHandVisualizer playerHandVisualizer) {
+    private void askHit(Player player, HitDecisionStrategy hitDecisionStrategy, PlayerHandVisualizer playerHandVisualizer) {
         if (player.isBlackjack()) {
             return;
         }
-        playTurn(player, playerHandVisualizer);
-    }
-
-    private void playTurn(Player player, PlayerHandVisualizer playerHandVisualizer) {
         boolean isFirstTurn = true;
-        while (!player.isBust() && player.shouldHit()) {
+        while (!player.isBust() && player.shouldHit(hitDecisionStrategy)) {
             dealCard(player);
             playerHandVisualizer.accept(player);
             isFirstTurn = false;
