@@ -16,6 +16,8 @@ public enum TrumpNumber {
     KING(10, "K"),
     QUEEN(10, "Q");
 
+    public static final int ACE_ADDITIONAL_SCORE = 10; // ACE는 1 또는 11 점수가 가능하다
+
     private final int score;
     private final String value;
 

@@ -1,12 +1,12 @@
 package domain.card;
 
+import static domain.card.TrumpNumber.ACE_ADDITIONAL_SCORE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-
-    private static final int ACE_ADDITIONAL_SCORE = 10; // ACE는 1 또는 11 점수가 가능하다
 
     private final List<Card> cards;
 
