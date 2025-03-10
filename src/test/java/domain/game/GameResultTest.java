@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class GameResultTest {
 
     private static List<GameResult> provideGameResult() {
-        return List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW);
+        return List.of(GameResult.BLACKJACK_WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW);
     }
 
     @Test

@@ -23,7 +23,7 @@ public enum GameResult {
         }
         if (this == GameResult.LOSE) {
             return (int) gameResults.stream()
-                    .filter(gameResult -> gameResult == GameResult.WIN)
+                    .filter(gameResult -> gameResult == GameResult.WIN || gameResult == GameResult.BLACKJACK_WIN)
                     .count();
         }
         return (int) gameResults.stream()
