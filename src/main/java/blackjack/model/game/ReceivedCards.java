@@ -9,6 +9,9 @@ import java.util.stream.Stream;
 
 public class ReceivedCards {
 
+    public static final int ACE_BONUS_POINT = 10;
+    public static final int BUST_POINT = 21;
+
     private final List<Card> cards = new ArrayList<>();
 
     public void receive(Card card) {
@@ -42,8 +45,8 @@ public class ReceivedCards {
     }
 
     private int plusTenPoint(int currentPoint) {
-        if (!isBust(currentPoint + 10)) {
-            currentPoint += 10;
+        if (!isBust(currentPoint + ACE_BONUS_POINT)) {
+            currentPoint += ACE_BONUS_POINT;
         }
         return currentPoint;
     }
@@ -53,7 +56,7 @@ public class ReceivedCards {
     }
 
     private boolean isBust(int point) {
-        return point > 21;
+        return point > BUST_POINT;
     }
 
     public Card getFirstCard() {

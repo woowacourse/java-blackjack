@@ -7,6 +7,9 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 public class Participants {
+    private static final int MIN_PARTICIPANT = 2;
+    private static final int MAX_PARTICIPANT = 8;
+
     private final List<Participant> participants;
 
     public Participants(List<Participant> participants) {
@@ -20,7 +23,7 @@ public class Participants {
     }
 
     private void validateParticipantCount(List<Participant> participants) {
-        if (participants.size() < 2 || participants.size() > 8) {
+        if (participants.size() < MIN_PARTICIPANT || participants.size() > MAX_PARTICIPANT) {
             throw new IllegalArgumentException("참여자는 2~8명 이여야 합니다.");
         }
     }
@@ -37,6 +40,6 @@ public class Participants {
     }
 
     public List<Participant> getParticipants() {
-        return participants;
+        return new ArrayList<>(participants);
     }
 }
