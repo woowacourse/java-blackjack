@@ -59,8 +59,7 @@ public class Game {
     public Card getDealerOneCard() {
         return dealer.showAnyOneCard();
     }
-
-
+    
     public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }

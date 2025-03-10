@@ -34,7 +34,14 @@ public class Players {
     }
 
     private Player selectPlayer(PlayerName playerName) {
+        validatePlayerExist(playerName);
         return players.get(playerName);
+    }
+
+    private void validatePlayerExist(PlayerName playerName) {
+        if (!players.containsKey(playerName)) {
+            throw new IllegalArgumentException("플레이어가 존재하지 않습니다.");
+        }
     }
 
     public Cards getPlayerCard(PlayerName playerName) {
