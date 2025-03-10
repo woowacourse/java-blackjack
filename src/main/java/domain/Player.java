@@ -43,8 +43,8 @@ public abstract class Player {
         return cards.computeOptimalSum();
     }
 
-    public boolean isBurst() {
-        return cards.isBurst();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public List<Card> getOpenedCards() {
@@ -53,10 +53,6 @@ public abstract class Player {
 
     public List<Card> getCards() {
         return cards.getCards();
-    }
-
-    public void initPlayer() {
-        cards = new Cards();
     }
 
     public String getName() {
