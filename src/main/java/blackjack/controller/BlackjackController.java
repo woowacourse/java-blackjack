@@ -23,7 +23,7 @@ public class BlackjackController {
             dealerAdditionalCard(dealer);
             printBlackjackResult(dealer, players);
             printVictory(dealer, players);
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             OutputView.printErrorMessage(e);
         }
     }
@@ -59,7 +59,7 @@ public class BlackjackController {
         try {
             dealer.sendCardToPlayer(player);
             return true;
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             OutputView.printCannotAdditionalCard();
             return false;
         }

@@ -10,6 +10,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cards {
+
+    private final static int BLACKJACK_MAX_CARD_SIZE = 2;
+
     private final List<Card> cards;
     private final ScoreCalculator scoreCalculator;
 
@@ -27,7 +30,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        if (cards.size() != 2) {
+        if (cards.size() != BLACKJACK_MAX_CARD_SIZE) {
             return false;
         }
         Set<Rank> ranks = cards.stream()
@@ -45,7 +48,7 @@ public class Cards {
 
     public void take(Card... cards) {
         if (isBust()) {
-            throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
+            throw new IllegalStateException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
         }
         this.cards.addAll(Arrays.asList(cards));
     }

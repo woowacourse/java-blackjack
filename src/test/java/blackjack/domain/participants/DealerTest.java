@@ -88,4 +88,49 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.TEN)
                 ));
     }
+
+    @Test
+    void 특정_플레이어에게_카드를_한장_나누어준다() {
+        //given
+        Player pobi = new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Player neo = new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Players players = new Players(List.of(pobi, neo));
+        Deque<Card> cards = new ArrayDeque<>(List.of(
+                new Card(Suit.CLUB, Rank.FIVE),
+                new Card(Suit.CLUB, Rank.FOUR),
+                new Card(Suit.CLUB, Rank.THREE),
+                new Card(Suit.CLUB, Rank.TEN)
+        ));
+        Deck deck = new Deck(cards);
+        Dealer dealer = new Dealer(players, deck, new ScoreCalculator());
+
+        //when
+        dealer.sendCardToPlayer(pobi);
+
+        //then
+        Assertions.assertThat(pobi.getCards())
+                .isEqualTo(new Cards(List.of(new Card(Suit.CLUB, Rank.FIVE)), new ScoreCalculator()));
+    }
+
+    @Test
+    void 특정_플레이어에게_카드를_한장_나누어줄떄_존재하지_않는_플레이어일_경우_예외를_발생시킨다() {
+        //given
+        Player pobi = new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Player neo = new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Player surf = new Player("neo", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Players players = new Players(List.of(pobi, surf));
+        Deque<Card> cards = new ArrayDeque<>(List.of(
+                new Card(Suit.CLUB, Rank.FIVE),
+                new Card(Suit.CLUB, Rank.FOUR),
+                new Card(Suit.CLUB, Rank.THREE),
+                new Card(Suit.CLUB, Rank.TEN)
+        ));
+        Deck deck = new Deck(cards);
+        Dealer dealer = new Dealer(players, deck, new ScoreCalculator());
+
+        //when & then
+        Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(neo))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 플레이어는 존재하지 않습니다.");
+    }
 }

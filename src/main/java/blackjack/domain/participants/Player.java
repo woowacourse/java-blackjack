@@ -2,6 +2,7 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.Objects;
 
 public class Player {
     private final String name;
@@ -26,5 +27,25 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        Player player = (Player) object;
+        return getName().equals(player.getName()) && Objects.equals(getCards(), player.getCards());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + Objects.hashCode(getCards());
+        return result;
     }
 }

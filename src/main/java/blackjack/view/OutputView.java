@@ -99,7 +99,7 @@ public class OutputView {
         return "무";
     }
 
-    public static void printErrorMessage(IllegalArgumentException e) {
+    public static void printErrorMessage(RuntimeException e) {
         System.out.println("[ERROR] " + e.getMessage());
     }
 

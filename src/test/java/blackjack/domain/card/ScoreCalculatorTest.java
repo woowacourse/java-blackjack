@@ -45,4 +45,22 @@ public class ScoreCalculatorTest {
         //then
         Assertions.assertThat(score).isEqualTo(22);
     }
+
+    @Test
+    void 가능한_최소_점수를_계산한다() {
+        //given
+        List<Card> cards = List.of(
+                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.EIGHT)
+        );
+
+        //when
+        int score = scoreCalculator.calculateMinScore(cards);
+
+        //then
+        Assertions.assertThat(score).isEqualTo(12);
+    }
 }
