@@ -46,7 +46,7 @@ public class BlackjackController {
     }
 
     private boolean satisfiedConditionByPlayer(Player player) {
-        return player.isNotEnoughScoreCondition() && agreeIntent(player);
+        return player.canHit() && agreeIntent(player);
     }
 
     private boolean satisfiedConditionByDealer(Dealer dealer) {

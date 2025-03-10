@@ -1,5 +1,7 @@
 package model.card;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public enum RankType {
@@ -19,16 +21,38 @@ public enum RankType {
     ACE(List.of(11, 1));
 
     private final List<Integer> score;
+    private int scoreIdx;
 
     RankType(int score) {
         this.score = List.of(score);
+        this.scoreIdx = 0;
     }
 
     RankType(List<Integer> score) {
         this.score = score;
     }
 
-    public List<Integer> getScore() {
-        return score;
+    public int adjustRankScore() {
+        final List<Integer> sorted = sorted();
+        sorted.sort(Collections.reverseOrder());
+        if (!isLastValue()) {
+            scoreIdx++;
+            return sorted.get(scoreIdx);
+        }
+        return -1;
+    }
+
+    private List<Integer> sorted() {
+        List<Integer> sorted = new ArrayList<>(score);
+        sorted.sort(Collections.reverseOrder());
+        return sorted;
+    }
+
+    public boolean isLastValue() {
+        return scoreIdx + 1 >= score.size();
+    }
+
+    public int getRankScore() {
+        return score.get(scoreIdx);
     }
 }

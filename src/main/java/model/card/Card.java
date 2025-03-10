@@ -10,6 +10,14 @@ public class Card {
         this.rank = rank;
     }
 
+    public int adjustRank() {
+        return rank.adjustRankScore();
+    }
+
+    public int getRankScore() {
+        return rank.getRankScore();
+    }
+
     public SuitType getSuit() {
         return suit;
     }

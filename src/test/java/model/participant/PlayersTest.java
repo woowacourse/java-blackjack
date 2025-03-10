@@ -1,10 +1,5 @@
 package model.participant;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-import java.util.stream.Stream;
-
 import model.card.Card;
 import model.card.RankType;
 import model.card.SuitType;
@@ -14,6 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class PlayersTest {
 
@@ -26,7 +26,7 @@ public class PlayersTest {
                 Player.from("hippo")
         );
         // when
-        Players players = Players.from(List.of("pobi","hippo"));
+        Players players = Players.from(List.of("pobi", "hippo"));
         // then
         assertAll(
                 () -> Assertions.assertThat(players.getPlayers().size()).isEqualTo(2),
@@ -44,7 +44,7 @@ public class PlayersTest {
                 new Card(SuitType.CLUBS, RankType.FOUR)
         );
         int expected = divideCards.stream()
-                .mapToInt(card -> card.getRank().getScore().getFirst())
+                .mapToInt(Card::getRankScore)
                 .sum();
 
         String nickname = "pobi";
@@ -93,7 +93,7 @@ public class PlayersTest {
                         List.of("Adam", "Alan", "Alex", "Andy", "Brad", "Carl", "Cody", "Dale",
                                 "Drew", "Eric", "Evan", "Gary", "Glen", "Hank", "Jack", "Jake",
                                 "Jeff", "Joel", "John", "Josh", "Kirk", "Leon", "Mark", "Matt",
-                                "Mike", "Nick", "Paul", "Rick", "Sean", "Wade","hippo")
+                                "Mike", "Nick", "Paul", "Rick", "Sean", "Wade", "hippo")
                 )
         );
     }

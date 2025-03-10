@@ -1,8 +1,5 @@
 package model.participant;
 
-import java.util.List;
-import java.util.Map;
-
 import model.card.Card;
 import model.card.CardDeck;
 import model.card.RankType;
@@ -11,6 +8,9 @@ import model.score.MatchType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
 
 class DealerTest {
 
@@ -55,7 +55,7 @@ class DealerTest {
                 new Card(SuitType.CLUBS, RankType.FOUR)
         );
         int expected = divideCards.stream()
-                .mapToInt(card -> card.getRank().getScore().getFirst())
+                .mapToInt(Card::getRankScore)
                 .sum();
 
         Participant dealer = Dealer.newInstance();

@@ -10,11 +10,19 @@ public class Score implements Comparable<Score> {
         this.value = score;
     }
 
-    public boolean isBust() {
-        return compareScoreCondition() > 0;
+    public static Score newInstance() {
+        return new Score(0);
     }
 
-    public int compareScoreCondition() {
+    public boolean isBust() {
+        return compareBustCondition() > 0;
+    }
+
+    public boolean canHit() {
+        return compareBustCondition() < 0;
+    }
+
+    private int compareBustCondition() {
         return value - BUST_CONDITION;
     }
 

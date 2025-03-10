@@ -52,7 +52,7 @@ public class PlayerTest {
         player.addCards(cards);
         //when
         //then
-        Assertions.assertThat(player.isNotEnoughScoreCondition()).isTrue();
+        Assertions.assertThat(player.canHit()).isTrue();
     }
 
     private static Stream<Arguments> createNotBustCards() {
@@ -86,6 +86,6 @@ public class PlayerTest {
         player.addCards(cards);
         //when
         //then
-        Assertions.assertThat(player.isNotEnoughScoreCondition()).isFalse();
+        Assertions.assertThat(player.canHit()).isFalse();
     }
 }
