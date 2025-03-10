@@ -26,7 +26,7 @@ public class OutputView {
     }
 
     public static void printHitOrStand(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 Hit, 아니오는 Stand)");
     }
 
     public static void printHitResult(Player player) {

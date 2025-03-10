@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 import model.Player;
 
 public class InputView {
-    private static final String YES = "y";
-    private static final String NO = "n";
+    private static final String HIT = "Hit";
+    private static final String STAND = "Stand";
     private static Scanner SCANNER = new Scanner(System.in);
 
     public static List<String> readPlayerNames() {
@@ -22,7 +22,7 @@ public class InputView {
         OutputView.printHitOrStand(player);
         String hit = SCANNER.nextLine();
         validateHit(hit);
-        return hit.equals(YES);
+        return hit.equals(HIT);
     }
 
     private static void validateDelimeter(String[] names) {
@@ -40,8 +40,8 @@ public class InputView {
     }
 
     private static void validateHit(String hit) {
-        if (!(hit.equals(YES) || hit.equals(NO))) {
-            throw new IllegalArgumentException("[ERROR] y 또는 n을 입력해주세요. 입력값 : " + hit);
+        if (!(hit.equals(HIT) || hit.equals(STAND))) {
+            throw new IllegalArgumentException("[ERROR] Hit 또는 Stand를 입력해주세요. 입력값 : " + hit);
         }
     }
 }
