@@ -11,6 +11,16 @@ public enum GameResult {
         this.name = name;
     }
 
+    public static GameResult getOppositeResult(final GameResult gameResult) {
+        if (WIN.equals(gameResult)) {
+            return LOSE;
+        }
+        if (LOSE.equals(gameResult)) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
     public String getName() {
         return name;
     }

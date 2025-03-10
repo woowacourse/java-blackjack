@@ -15,17 +15,7 @@ public class GameResults {
 
     public int calculateDealerResultCount(final GameResult gameResult) {
         return (int) gameResults.values().stream()
-                .filter(value -> getOppositeResult(value).equals(gameResult))
+                .filter(value -> GameResult.getOppositeResult(value).equals(gameResult))
                 .count();
-    }
-
-    private GameResult getOppositeResult(final GameResult gameResult) {
-        if (GameResult.WIN.equals(gameResult)) {
-            return GameResult.LOSE;
-        }
-        if (GameResult.LOSE.equals(gameResult)) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
     }
 }
