@@ -25,7 +25,6 @@ public class Gamer {
     public void receiveCard(int count) {
         for (int i = 0; i < count; i++) {
             receiveCard();
-            ;
         }
     }
 
