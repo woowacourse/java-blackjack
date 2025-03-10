@@ -4,7 +4,6 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDump;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.GameReport;
 import blackjack.domain.GameResult;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DistributedCardDto;
@@ -46,7 +45,7 @@ public class BlackjackController {
                 FinalResultDto.from(dealer),
                 FinalResultDto.fromPlayers(game.getPlayers()));
 
-        generateGameResultAndDisplay(dealer, game.getPlayers());
+        generateGameResultAndDisplay(game, dealer, game.getPlayers());
     }
 
     private List<Player> createPlayers() {
@@ -90,12 +89,11 @@ public class BlackjackController {
         });
     }
 
-    private void generateGameResultAndDisplay(final Dealer dealer, final List<Player> players) {
-        GameReport gameReport = new GameReport();
-        Map<GameResult, Integer> dealerResult = gameReport.getDealerResult(dealer, players);
+    private void generateGameResultAndDisplay(BlackjackGame game, Dealer dealer, List<Player> players) {
+        Map<GameResult, Integer> dealerResult = game.getDealerResult(dealer, players);
         outputView.displayDealerResult(dealerResult);
         for (Player player : players) {
-            GameResult playerResult = gameReport.getPlayerResult(player, dealer);
+            GameResult playerResult = game.getPlayerResult(player, dealer);
             outputView.displayPlayerResult(player, playerResult);
         }
     }
