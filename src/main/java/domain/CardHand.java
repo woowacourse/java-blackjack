@@ -16,10 +16,6 @@ public class CardHand {
 		this.cards = new ArrayList<>(cards);
 	}
 
-	public void add(final Card card) {
-		cards.add(card);
-	}
-
 	public void addCards(final List<Card> cards) {
 		for (final Card card : cards) {
 			this.cards.add(card);

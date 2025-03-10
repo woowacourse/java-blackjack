@@ -87,7 +87,7 @@ public class BlackjackController {
 		for (final Player player : players) {
 			final String name = player.getName();
 			while (blackjack.isPickCardByPlayer(player) && inputView.readPlayerAnswer(name)) {
-				player.pickCard(deck);
+				blackjack.pickCardToPlayer(player, deck);
 				outputView.printPlayerCards(name, convertParticipantCardText(player.getParticipant()));
 			}
 		}
@@ -95,7 +95,7 @@ public class BlackjackController {
 
 	private void dealerIfCanPickCard(final Dealer dealer, final Deck deck) {
 		while (blackjack.isPickCardByDealer(dealer)) {
-			dealer.pickCard(deck);
+			blackjack.pickCardToDealer(dealer, deck);
 			outputView.printDealerPickCard();
 		}
 	}

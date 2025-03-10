@@ -22,11 +22,6 @@ public class Participant {
 		hand.addCards(cards);
 	}
 
-	public void pickCard(final Deck deck) {
-		final Card card = deck.pickCard();
-		hand.add(card);
-	}
-
 	public void writeDuelResult(final DuelResult duelResult) {
 		duelHistory.write(duelResult);
 	}

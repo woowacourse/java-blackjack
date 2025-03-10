@@ -26,10 +26,6 @@ public class Player {
 		return participant.calculateAllScore(bustScore) <= bustScore;
 	}
 
-	public void pickCard(final Deck deck) {
-		participant.pickCard(deck);
-	}
-
 	public int calculateAllScore(final int bustScore) {
 		return participant.calculateAllScore(bustScore);
 	}
