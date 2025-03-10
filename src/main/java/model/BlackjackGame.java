@@ -41,6 +41,9 @@ public class BlackjackGame {
     }
 
     public void runDealerTurn() {
+        if (!dealer.canReceiveCard()) {
+            return;
+        }
         dealer.receiveCard(deck.draw());
     }
 
