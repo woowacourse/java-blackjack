@@ -30,23 +30,31 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<Card> cards = cardsInitializer.initialize();
-        Deck deck = Deck.from(cards);
+        Deck deck = prepareDeck();
 
         List<Gamer> players = setPlayers();
         Gamer dealer = new Dealer();
 
         prepareGame(dealer, players, deck);
-
         outputView.printInitialCards(dealer, players);
 
         processGame(players, deck);
 
-        dealer.hit(deck);
-        outputView.printDealerHitSuccess();
+        dealerHit(dealer, deck);
 
         outputView.printCardResult(dealer, players);
+
         showMatchResult(players, dealer);
+    }
+
+    private void dealerHit(Gamer dealer, Deck deck) {
+        dealer.hit(deck);
+        outputView.printDealerHitSuccess();
+    }
+
+    private Deck prepareDeck() {
+        List<Card> cards = cardsInitializer.initialize();
+        return Deck.from(cards);
     }
 
     private List<Gamer> setPlayers() {
