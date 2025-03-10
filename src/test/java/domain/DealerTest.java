@@ -1,6 +1,7 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,8 @@ class DealerTest {
         //given
         List<Card> cards = new ArrayList<>();
 
-        cards.add(new Card(Symbol.COLVER, Rank.ACE));
         cards.add(new Card(Symbol.HEART, Rank.TWO));
+        cards.add(new Card(Symbol.HEART, Rank.SIX));
         cards.add(new Card(Symbol.SPADE, Rank.KING));
 
         Deck deck = Deck.from(cards);
@@ -24,23 +25,17 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.prepareGame(deck);
 
-        int initialPoint = dealer.getHand().calculateTotalScore();
-
-        //when
-        dealer.hit(deck);
-        int actual = dealer.getHand().calculateTotalScore();
-
-        //then
-        assertThat(actual).isNotEqualTo(initialPoint);
+        //when //then
+        assertThatCode(() -> dealer.hit(deck))
+                .doesNotThrowAnyException();
     }
 
-    @DisplayName("딜러는 처음 받은 2장의 카드의 합이 17 이상이라면 카드를 뽑지 않는다")
+    @DisplayName("딜러는 처음 받은 2장의 카드의 합이 17 이상이라면 카드를 뽑지 않고 예외를 던진다.")
     @Test
     void cannotHit() {
         //given
         List<Card> cards = new ArrayList<>();
 
-        cards.add(new Card(Symbol.COLVER, Rank.JACK));
         cards.add(new Card(Symbol.HEART, Rank.NINE));
         cards.add(new Card(Symbol.SPADE, Rank.KING));
 
@@ -49,14 +44,10 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.prepareGame(deck);
 
-        int initialPoint = dealer.getHand().calculateTotalScore();
-
-        //when
-        dealer.hit(deck);
-        int actual = dealer.getHand().calculateTotalScore();
-
-        //then
-        assertThat(actual).isEqualTo(initialPoint);
+        //when //then
+        assertThatThrownBy(() -> dealer.hit(deck))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageStartingWith("[ERROR]");
     }
 
 }

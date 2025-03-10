@@ -42,9 +42,8 @@ public class BlackJackController {
 
         processGame(players, deck);
 
-        if (dealer.hit(deck)) {
-            outputView.printDealerHitSuccess();
-        }
+        dealer.hit(deck);
+        outputView.printDealerHitSuccess();
 
         outputView.printCardResult(dealer, players);
         showMatchResult(players, dealer);

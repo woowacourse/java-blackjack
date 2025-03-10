@@ -10,16 +10,15 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean hit(Deck totalCards) {
-        if (canHit()) {
-            add(totalCards);
-            return true;
-        }
-        return false;
+    public void hit(Deck totalCards) {
+        validateCanHit();
+        add(totalCards);
     }
 
-    private boolean canHit() {
-        return getHand().calculateTotalScore() <= HIT_THRESHOLD;
+    private void validateCanHit() {
+        if (getHand().calculateTotalScore() > HIT_THRESHOLD) {
+            throw new IllegalStateException("[ERROR] 딜러의 점수가 16점을 초과하므로 카드를 뽑을 수 없습니다.");
+        }
     }
 
 }

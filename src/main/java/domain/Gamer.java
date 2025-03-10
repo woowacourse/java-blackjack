@@ -9,7 +9,7 @@ public abstract class Gamer {
         this.name = name;
     }
 
-    public abstract boolean hit(Deck cards);
+    public abstract void hit(Deck cards);
 
     public void prepareGame(Deck deck) {
         add(deck);
