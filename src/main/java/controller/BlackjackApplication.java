@@ -2,11 +2,12 @@ package controller;
 
 import static view.AnswerType.*;
 
+import domain.GameResultCalculator;
 import domain.Players;
 import domain.Referee;
 import domain.CardGiver;
 import domain.Dealer;
-import domain.GameResult;
+import domain.GameResults;
 import domain.Participant;
 import domain.Player;
 import java.util.ArrayList;
@@ -71,11 +72,11 @@ public class BlackjackApplication {
     }
 
     private void calculateResult(Dealer dealer, Players players) {
-        final Referee referee = new Referee();
+        final Referee referee = new Referee(new GameResultCalculator());
 
         outputView.printCardsResult(dealer, players);
-        GameResult gameResult = referee.judge(dealer, players);
-        outputView.printGameResults(gameResult);
+        GameResults gameResults = referee.judge(dealer, players);
+        outputView.printGameResults(gameResults);
     }
 
     private void processPlayerCardRequest(Player player) {

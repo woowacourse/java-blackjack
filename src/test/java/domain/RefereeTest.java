@@ -33,16 +33,16 @@ public class RefereeTest {
         Player loser = new Player("pobi", loseCards);
         Players players = Players.create(List.of(winner, drawer, loser));
 
-        Referee referee = new Referee();
+        Referee referee = new Referee(new GameResultCalculator());
 
         //when
-        GameResult gameResult = referee.judge(dealer, players);
+        GameResults gameResults = referee.judge(dealer, players);
 
         //then
         assertSoftly(softly -> {
-            softly.assertThat(gameResult.getGameResultstatus(winner)).isEqualTo(GameResultStatus.WIN);
-            softly.assertThat(gameResult.getGameResultstatus(drawer)).isEqualTo(GameResultStatus.DRAW);
-            softly.assertThat(gameResult.getGameResultstatus(loser)).isEqualTo(GameResultStatus.LOSE);
+            softly.assertThat(gameResults.getGameResultstatus(winner)).isEqualTo(GameResultStatus.WIN);
+            softly.assertThat(gameResults.getGameResultstatus(drawer)).isEqualTo(GameResultStatus.DRAW);
+            softly.assertThat(gameResults.getGameResultstatus(loser)).isEqualTo(GameResultStatus.LOSE);
         });
     }
 }

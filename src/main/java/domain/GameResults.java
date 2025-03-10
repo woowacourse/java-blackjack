@@ -3,11 +3,11 @@ package domain;
 import java.util.Map;
 import java.util.Set;
 
-public class GameResult {
+public class GameResults {
 
     private final Map<Player, GameResultStatus> gameResults;
 
-    public GameResult(Map<Player, GameResultStatus> gameResults) {
+    public GameResults(Map<Player, GameResultStatus> gameResults) {
         this.gameResults = gameResults;
     }
 

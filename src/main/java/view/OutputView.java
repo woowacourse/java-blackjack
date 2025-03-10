@@ -3,7 +3,7 @@ package view;
 import static domain.GameResultStatus.*;
 
 import domain.Dealer;
-import domain.GameResult;
+import domain.GameResults;
 import domain.GameResultStatus;
 import domain.Player;
 import domain.Players;
@@ -56,15 +56,15 @@ public class OutputView {
         });
     }
 
-    public void printGameResults(GameResult gameResult) {
-        int winCount = gameResult.calculateStatusCount(WIN);
-        int loseCount = gameResult.calculateStatusCount(LOSE);
-        int drawCount = gameResult.calculateStatusCount(DRAW);
+    public void printGameResults(GameResults gameResults) {
+        int winCount = gameResults.calculateStatusCount(WIN);
+        int loseCount = gameResults.calculateStatusCount(LOSE);
+        int drawCount = gameResults.calculateStatusCount(DRAW);
         System.out.println("\n## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
-        gameResult.getAllPlayers()
+        gameResults.getAllPlayers()
                 .forEach(player -> {
-                    GameResultStatus gameResultstatus = gameResult.getGameResultstatus(player);
+                    GameResultStatus gameResultstatus = gameResults.getGameResultstatus(player);
                     String resultMessage = outputFormatter.formatGameResult(gameResultstatus);
                     System.out.printf("%s: %s\n", player.getName(), resultMessage);
                 });

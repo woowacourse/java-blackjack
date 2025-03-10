@@ -1,10 +1,13 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameResultStatusTest {
+class GameResultsCalculatorTest {
+
+    private GameResultCalculator gameResultCalculator = new GameResultCalculator();
 
     @DisplayName("딜러와 플레이어가 모두 버스트일 경우 무승부이다")
     @Test
@@ -14,7 +17,7 @@ class GameResultStatusTest {
         int playerSum = 23;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = gameResultCalculator.calculate(dealerSum, playerSum);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);
@@ -28,7 +31,7 @@ class GameResultStatusTest {
         int playerSum = 20;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = gameResultCalculator.calculate(dealerSum, playerSum);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -42,7 +45,7 @@ class GameResultStatusTest {
         int playerSum = 23;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = gameResultCalculator.calculate(dealerSum, playerSum);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -56,7 +59,7 @@ class GameResultStatusTest {
         int playerSum = 21;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = gameResultCalculator.calculate(dealerSum, playerSum);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -70,7 +73,7 @@ class GameResultStatusTest {
         int playerSum = 20;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = gameResultCalculator.calculate(dealerSum, playerSum);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -84,7 +87,7 @@ class GameResultStatusTest {
         int playerSum = 20;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = gameResultCalculator.calculate(dealerSum, playerSum);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);

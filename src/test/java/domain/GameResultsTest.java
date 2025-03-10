@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameResultTest {
+class GameResultsTest {
 
     Map<Player, GameResultStatus> gameResults = Map.of(
             new Player("mimi", Cards.createEmpty()), GameResultStatus.WIN,
@@ -21,10 +21,10 @@ class GameResultTest {
     @Test
     void test1() {
         //given
-        GameResult gameResult = new GameResult(gameResults);
+        GameResults gameResults = new GameResults(this.gameResults);
 
         //when
-        int winCount = gameResult.calculateStatusCount(GameResultStatus.WIN);
+        int winCount = gameResults.calculateStatusCount(GameResultStatus.WIN);
 
         //then
         assertThat(winCount).isEqualTo(1);
@@ -34,10 +34,10 @@ class GameResultTest {
     @Test
     void test2() {
         //given
-        GameResult gameResult = new GameResult(gameResults);
+        GameResults gameResults = new GameResults(this.gameResults);
 
         //when
-        int drawCount = gameResult.calculateStatusCount(GameResultStatus.DRAW);
+        int drawCount = gameResults.calculateStatusCount(GameResultStatus.DRAW);
 
         //then
         assertThat(drawCount).isEqualTo(2);
@@ -47,10 +47,10 @@ class GameResultTest {
     @Test
     void test3() {
         //given
-        GameResult gameResult = new GameResult(gameResults);
+        GameResults gameResults = new GameResults(this.gameResults);
 
         //when
-        int loseCount = gameResult.calculateStatusCount(GameResultStatus.LOSE);
+        int loseCount = gameResults.calculateStatusCount(GameResultStatus.LOSE);
 
         //then
         assertThat(loseCount).isEqualTo(3);
