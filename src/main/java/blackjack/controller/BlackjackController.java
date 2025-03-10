@@ -1,11 +1,11 @@
 package blackjack.controller;
 
-import blackjack.model.Dealer;
+import blackjack.model.participant.Dealer;
 import blackjack.model.MatchResult;
-import blackjack.model.Participant;
+import blackjack.model.participant.Participant;
 import blackjack.model.card.Deck;
-import blackjack.model.Name;
-import blackjack.model.Player;
+import blackjack.model.participant.Name;
+import blackjack.model.participant.Player;
 import blackjack.model.card.RandomCardShuffler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -25,14 +25,18 @@ public final class BlackjackController {
     }
 
     public void run() {
+        Dealer dealer = getDealer();
         List<Player> players = getPlayers();
-        Dealer dealer = new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
         validateGame(players, dealer);
         initializeHand(dealer, players);
         outputView.printInitialCards(dealer.getVisibleCard(), players);
         askHitForAllPlayer(dealer, players);
         askHitForDealer(dealer);
         displayResult(dealer, players);
+    }
+
+    private Dealer getDealer() {
+        return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
     }
 
     private List<Player> getPlayers() {

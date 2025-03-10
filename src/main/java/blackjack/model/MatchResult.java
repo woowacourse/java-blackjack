@@ -1,5 +1,8 @@
 package blackjack.model;
 
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Player;
+
 public enum MatchResult {
 
     WIN("승"),

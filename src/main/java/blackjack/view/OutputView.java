@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.Dealer;
+import blackjack.model.participant.Dealer;
 import blackjack.model.MatchResult;
-import blackjack.model.Player;
+import blackjack.model.participant.Player;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

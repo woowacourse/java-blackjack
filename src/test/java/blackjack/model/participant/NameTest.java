@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;

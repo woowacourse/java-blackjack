@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
 import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;

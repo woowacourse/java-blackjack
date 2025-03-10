@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.Name;
+import blackjack.model.participant.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
