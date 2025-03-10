@@ -203,4 +203,34 @@ public class DealerTest {
         //when & then
         Assertions.assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
     }
+
+    @Test
+    void 카드가_블랙잭임을_확인할_수_있다() {
+        //given
+        List<Card> dealerCards = List.of(
+                new Card(Suit.CLUB, Rank.ACE),
+                new Card(Suit.CLUB, Rank.TEN)
+        );
+        Players players = new Players(List.of(
+                new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
+                new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
+        ));
+        Stack<Card> cards = new Stack<>();
+        cards.addAll(List.of(
+                new Card(Suit.CLUB, Rank.FOUR),
+                new Card(Suit.CLUB, Rank.FIVE),
+                new Card(Suit.CLUB, Rank.ONE),
+                new Card(Suit.DIAMOND, Rank.ONE),
+                new Card(Suit.HEART, Rank.ONE),
+                new Card(Suit.SPADE, Rank.ONE)
+        ));
+        Dealer dealer = new Dealer(
+                players,
+                new Deck(cards),
+                new Cards(dealerCards, new ScoreCalculator())
+        );
+
+        //when & then
+        Assertions.assertThat(dealer.isBlackjack()).isTrue();
+    }
 }
