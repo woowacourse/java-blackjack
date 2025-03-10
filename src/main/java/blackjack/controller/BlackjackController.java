@@ -22,18 +22,13 @@ public class BlackjackController implements Controller {
     
     @Override
     public void run() {
-        final BlackjackGame game = initializeGame();
-        addCards(game);
-        openCards(game);
-        showFinalWinningStatus(game);
-    }
-    
-    private BlackjackGame initializeGame() {
         BlackjackDeck deck = new BlackjackDeck();
         List<PlayerBlackjackCardHand> playerHands = createPlayerHands(deck);
         DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(deck);
-        showInitialCards(dealerHand, playerHands);
-        return new BlackjackGame(deck, dealerHand, playerHands);
+        openInitialCards(dealerHand, playerHands);
+        addCards(dealerHand, playerHands, deck);
+        openCards(dealerHand, playerHands);
+        showFinalWinningStatus(dealerHand, playerHands);
     }
     
     private List<PlayerBlackjackCardHand> createPlayerHands(final BlackjackDeck deck) {
@@ -42,7 +37,7 @@ public class BlackjackController implements Controller {
         return players.toBlackjackCardHand(deck);
     }
     
-    private void showInitialCards(
+    private void openInitialCards(
             final DealerBlackjackCardHand dealerHand,
             final List<PlayerBlackjackCardHand> playerHands
     ) {
@@ -60,11 +55,15 @@ public class BlackjackController implements Controller {
                 .toList();
     }
     
-    private void addCards(final BlackjackGame game) {
-        for (PlayerBlackjackCardHand playerHand : game.playerHands) {
-            processPlayerAddCards(playerHand, game.deck);
+    private void addCards(
+            final DealerBlackjackCardHand dealerHand,
+            final List<PlayerBlackjackCardHand> playerHands,
+            final BlackjackDeck deck
+    ) {
+        for (PlayerBlackjackCardHand playerHand : playerHands) {
+            processPlayerAddCards(playerHand, deck);
         }
-        processDealerAddCards(game.dealerHand, game.deck);
+        processDealerAddCards(dealerHand, deck);
     }
     
     private void processPlayerAddCards(
@@ -91,35 +90,37 @@ public class BlackjackController implements Controller {
         return inputView.getAddingCardDecision(playerHand.getPlayerName());
     }
     
-    private void processDealerAddCards(final DealerBlackjackCardHand dealerHand, final BlackjackDeck deck) {
+    private void processDealerAddCards(
+            final DealerBlackjackCardHand dealerHand,
+            final BlackjackDeck deck
+    ) {
         final int addedSize = dealerHand.startAddingAndGetAddedSize(deck);
         outputView.outputDealerAddedCards(addedSize);
     }
     
-    private void openCards(final BlackjackGame game) {
-        outputView.outputDealerCardsAndResult(game.dealerHand);
-        for (PlayerBlackjackCardHand playerHand : game.playerHands) {
+    private void openCards(
+            final DealerBlackjackCardHand dealerHand,
+            final List<PlayerBlackjackCardHand> playerHands
+    ) {
+        outputView.outputDealerCardsAndResult(dealerHand);
+        for (PlayerBlackjackCardHand playerHand : playerHands) {
             outputView.outputPlayerCardsAndResult(playerHand);
         }
     }
     
-    private void showFinalWinningStatus(final BlackjackGame game) {
+    private void showFinalWinningStatus(
+            final DealerBlackjackCardHand dealerHand,
+            final List<PlayerBlackjackCardHand> playerHands
+    ) {
         outputView.outputFinalWinOrLossMessage();
-        final BlackjackJudge judge = new BlackjackJudge(game.dealerHand, game.playerHands);
+        final BlackjackJudge judge = new BlackjackJudge(dealerHand, playerHands);
         outputView.outputDealerFinalWinOrLoss(
                 judge.getDealerWinningCount(),
                 judge.getDealerDrawingCount(),
                 judge.getDealerLosingCount()
         );
-        for (PlayerBlackjackCardHand playerHand : game.playerHands) {
+        for (PlayerBlackjackCardHand playerHand : playerHands) {
             outputView.outputPlayerFinalWinOrLoss(playerHand.getPlayerName(), judge.getWinningStatusOf(playerHand));
         }
-    }
-    
-    private record BlackjackGame(
-            BlackjackDeck deck,
-            DealerBlackjackCardHand dealerHand,
-            List<PlayerBlackjackCardHand> playerHands
-    ) {
     }
 }
