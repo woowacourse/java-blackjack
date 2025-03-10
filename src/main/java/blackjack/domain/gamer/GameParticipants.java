@@ -45,6 +45,10 @@ public class GameParticipants {
         dealer.openHiddenCard();
     }
 
+    public GameStatistics calculateGameStatistics() {
+        return GameStatistics.from(this);
+    }
+
     public List<GameParticipant> getGameParticipants() {
         return Stream.concat(Stream.of(dealer), players.stream())
                 .toList();
