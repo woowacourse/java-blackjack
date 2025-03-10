@@ -41,27 +41,28 @@ public enum Score {
     }
 
     public static Score from(List<TrumpCard> cards) {
-        int totalScore = calculateTotalScore(cards);
-        int cardCount = cards.size();
 
         return Arrays.stream(Score.values())
-                .filter(score -> score.condition.apply(totalScore, cardCount))
+                .filter(score -> score.condition.apply(calculateTotalScore(cards), cards.size()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 점수입니다."));
     }
 
     private static int calculateTotalScore(List<TrumpCard> cards) {
-        int aceCount = (int) cards.stream().filter(c -> c.getRank() == Rank.ACE).count();
         int totalScore = cards.stream().mapToInt(c -> c.getRank().getValue()).sum();
-
-        return calculateAceBonus(totalScore, aceCount);
+        totalScore+= calculateAceBonusScore(totalScore,getAceCount(cards));
+        return totalScore;
     }
 
-    private static int calculateAceBonus(int totalScore, int aceCount) {
-        while (aceCount-- > 0 && totalScore + 10 <= 21) {
-            totalScore += 10;
+    private static int getAceCount(List<TrumpCard> cards) {
+        return (int) cards.stream().filter(c -> c.getRank() == Rank.ACE).count();
+    }
+
+    private static int calculateAceBonusScore(int totalScore, int aceCount) {
+        if (aceCount > 0 && totalScore + 10 <= 21) {
+            return 10;
         }
-        return totalScore;
+        return 0;
     }
 
     public boolean isLowerThan(Score o) {
