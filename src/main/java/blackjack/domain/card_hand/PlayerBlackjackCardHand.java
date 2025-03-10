@@ -4,7 +4,7 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
-import blackjack.domain.Player;
+import blackjack.domain.player.Player;
 
 public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     

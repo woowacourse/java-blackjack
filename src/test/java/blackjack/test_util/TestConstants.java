@@ -3,7 +3,7 @@ package blackjack.test_util;
 import static blackjack.domain.card.CardShape.*;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.Player;
+import blackjack.domain.player.Player;
 
 public class TestConstants {
     

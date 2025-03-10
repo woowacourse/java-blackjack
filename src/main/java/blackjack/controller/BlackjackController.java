@@ -4,9 +4,10 @@ import java.util.List;
 
 import blackjack.domain.BlackjackJudge;
 import blackjack.domain.deck.BlackjackDeck;
-import blackjack.domain.Player;
+import blackjack.domain.player.Player;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -38,10 +39,8 @@ public class BlackjackController implements Controller {
     
     private List<PlayerBlackjackCardHand> createPlayerHands(final BlackjackDeck deck) {
         final List<String> playerNames = inputView.getPlayerNames();
-        final List<Player> players = Player.createPlayers(playerNames);
-        return players.stream()
-                .map(player -> new PlayerBlackjackCardHand(player, deck))
-                .toList();
+        final Players players = Players.from(playerNames);
+        return players.toBlackjackCardHand(deck);
     }
     
     private void showInitialCards(
