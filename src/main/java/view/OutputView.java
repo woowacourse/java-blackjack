@@ -44,17 +44,18 @@ public class OutputView {
 
     public void displayParticipantAndCards(GameParticipant gameParticipant) {
         String name = gameParticipant.getName();
-        List<String> cardNotations = gameParticipant.getCards().stream()
-                .map(Card::getNotation)
-                .toList();
+        List<String> cardNotations = getCardNotations(gameParticipant.getCards());
+        System.out.printf("%s카드: %s", name, String.join(DELIMITER, cardNotations));
+    }
+
+    public void displayNameAndCards(String name, List<Card> cards) {
+        List<String> cardNotations = getCardNotations(cards);
         System.out.printf("%s카드: %s", name, String.join(DELIMITER, cardNotations));
     }
 
     public void displayAllParticipantsAndCards(List<? extends GameParticipant> gameParticipants) {
         gameParticipants.forEach((participant) -> {
-            List<String> cardNotations = participant.getCards().stream()
-                    .map(Card::getNotation)
-                    .toList();
+            getCardNotations(participant.getCards());
             displayParticipantAndCards(participant);
             displayEmptyLine();
         });
@@ -62,6 +63,12 @@ public class OutputView {
 
     public void displayEmptyLine() {
         System.out.println();
+    }
+
+    private List<String> getCardNotations(List<Card> cards) {
+        return cards.stream()
+                .map(Card::getNotation)
+                .toList();
     }
 
     private void displayPlayerGameResult(Game game) {

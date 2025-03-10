@@ -27,6 +27,10 @@ public class GameParticipant {
         return cardHand.isBlackJack();
     }
 
+    public boolean canHit() {
+        return !isBlackJack() && !isBust();
+    }
+
     public String getName() {
         return name;
     }

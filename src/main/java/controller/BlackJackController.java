@@ -1,8 +1,8 @@
 package controller;
 
+import domain.Card;
 import domain.Deck;
 import domain.Game;
-import domain.Player;
 import java.util.List;
 import java.util.function.Supplier;
 import view.Answer;
@@ -16,7 +16,7 @@ public class BlackJackController {
     public void run() {
         Game game = retryUntilSuccess(this::startGame);
         outputView.displayInitialDeal(game);
-        retryUntilSuccess(() -> giveAdditionalCards(game));
+        retryUntilSuccess(() -> giveAdditionalCardsForPlayer(game));
         giveAdditionalCardsForDealer(game);
         displayScores(game);
         displayGameResult(game);
@@ -27,9 +27,9 @@ public class BlackJackController {
         return new Game(playerNames, new Deck());
     }
 
-    private void giveAdditionalCards(Game game) {
-        game.getPlayers()
-                .forEach((player) -> hitOrStay(game, player));
+    private void giveAdditionalCardsForPlayer(Game game) {
+        game.getPlayerNames()
+                .forEach((name) -> hitOrStay(game, name));
     }
 
     private void giveAdditionalCardsForDealer(Game game) {
@@ -50,20 +50,22 @@ public class BlackJackController {
         outputView.displayGameResult(game);
     }
 
-    private void hitOrStay(Game game, Player player) {
-        Answer answer = Answer.YES;
-        while (!player.isBlackJack() && !player.isBust() && answer == Answer.YES) {
-            answer = inputView.readHitOrStay(player);
-            playerHitByAnswer(game, player, answer);
-            outputView.displayParticipantAndCards(player);
-            outputView.displayEmptyLine();
+    private void hitOrStay(Game game, String playerName) {
+        Answer answer = inputView.readHitOrStay(playerName);
+        while (game.canHit(playerName) && answer == Answer.YES) {
+            game.playerHit(playerName);
+            displayPlayerCards(game, playerName);
+            answer = inputView.readHitOrStay(playerName);
+        }
+        if (answer == Answer.NO) {
+            displayPlayerCards(game, playerName);
         }
     }
 
-    private void playerHitByAnswer(Game game, Player player, Answer answer) {
-        if (answer == Answer.YES) {
-            game.playerHit(player);
-        }
+    private void displayPlayerCards(Game game, String playerName) {
+        List<Card> cards = game.getPlayerCards(playerName);
+        outputView.displayNameAndCards(playerName, cards);
+        outputView.displayEmptyLine();
     }
 
     private void retryUntilSuccess(Runnable runnable) {

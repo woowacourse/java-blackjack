@@ -47,7 +47,7 @@ class GameTest {
         List<Player> players = game.getPlayers();
         Player player = players.getFirst();
         // when
-        game.playerHit(player);
+        game.playerHit(player.getName());
         // then
         assertThat(player.getCards().size()).isEqualTo(3);
     }

@@ -19,9 +19,9 @@ public class Game {
         playerNames.forEach(this::registerPlayer);
     }
 
-    public void playerHit(Player player) {
+    public void playerHit(String playerName) {
         Card card = dealer.pickCard();
-        player.hit(card);
+        findPlayerByName(playerName).hit(card);
     }
 
     public void dealerHit() {
@@ -39,6 +39,10 @@ public class Game {
 
     public boolean doesDealerNeedCard() {
         return dealer.doesNeedCard();
+    }
+
+    public boolean canHit(String playerName) {
+        return findPlayerByName(playerName).canHit();
     }
 
     public List<GameParticipant> getParticipants() {
@@ -64,6 +68,16 @@ public class Game {
         return dealer.getGameResultCount(result);
     }
 
+    public List<Card> getPlayerCards(String playerName) {
+        return findPlayerByName(playerName).getCards();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.keySet().stream()
+                .map(GameParticipant::getName)
+                .toList();
+    }
+
     private void registerPlayer(String playerName) {
         CardHand initialDeal = dealer.pickInitialDeal();
         Player player = new Player(playerName, initialDeal);
@@ -80,5 +94,12 @@ public class Game {
         if (playerNames.size() != Set.copyOf(playerNames).size()) {
             throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
         }
+    }
+
+    private GameParticipant findPlayerByName(String playerName) {
+        return players.keySet().stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 플레이어가 없습니다."));
     }
 }
