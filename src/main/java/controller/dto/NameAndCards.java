@@ -1,4 +1,4 @@
-package domain.dto;
+package controller.dto;
 
 import domain.Card;
 import domain.Player;

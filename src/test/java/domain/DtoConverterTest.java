@@ -1,12 +1,14 @@
 package domain;
 
+import controller.DtoConverter;
+import controller.dto.DealerMatchResultCount;
+import controller.dto.ParticipantsMatchResult;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-class MatchResultCalculatorTest {
+class DtoConverterTest {
 
     @Test
     void 참여자들의_승패_결과를_반환한다() {
@@ -39,15 +41,15 @@ class MatchResultCalculatorTest {
         blackjackManager.distributeInitialCards();
 
         // when
-        Map<Player, MatchResult> participantsMatchResult = MatchResultCalculator.computeParticipantsMatchResult(dealer,
-                participants);
+        ParticipantsMatchResult participantsMatchResult
+                = DtoConverter.computeParticipantsMatchResult(dealer, participants);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(participantsMatchResult.get(siso)).isEqualTo(MatchResult.WIN);
-            softly.assertThat(participantsMatchResult.get(heiler)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(participantsMatchResult.get(boogie)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(participantsMatchResult.get(sana)).isEqualTo(MatchResult.DRAW);
+            softly.assertThat(participantsMatchResult.participantMatchResult().get(siso)).isEqualTo(MatchResult.WIN);
+            softly.assertThat(participantsMatchResult.participantMatchResult().get(heiler)).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(participantsMatchResult.participantMatchResult().get(boogie)).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(participantsMatchResult.participantMatchResult().get(sana)).isEqualTo(MatchResult.DRAW);
         });
     }
 
@@ -80,18 +82,18 @@ class MatchResultCalculatorTest {
         )));
         BlackjackManager blackjackManager = new BlackjackManager(players, deck);
         blackjackManager.distributeInitialCards();
-        Map<Player, MatchResult> participantsMatchResult
-                = MatchResultCalculator.computeParticipantsMatchResult(dealer, participants);
+        ParticipantsMatchResult participantsMatchResult
+                = DtoConverter.computeParticipantsMatchResult(dealer, participants);
 
         // when
-        Map<MatchResult, Integer> dealerMatchResultCount
-                = MatchResultCalculator.computeDealerMatchResultCount(participantsMatchResult);
+        DealerMatchResultCount dealerMatchResultCount
+                = DtoConverter.computeDealerMatchResultCount(participantsMatchResult.participantMatchResult());
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealerMatchResultCount.get(MatchResult.WIN)).isEqualTo(2);
-            softly.assertThat(dealerMatchResultCount.get(MatchResult.LOSE)).isEqualTo(1);
-            softly.assertThat(dealerMatchResultCount.get(MatchResult.DRAW)).isEqualTo(1);
+            softly.assertThat(dealerMatchResultCount.matchResultCount().get(MatchResult.WIN)).isEqualTo(2);
+            softly.assertThat(dealerMatchResultCount.matchResultCount().get(MatchResult.LOSE)).isEqualTo(1);
+            softly.assertThat(dealerMatchResultCount.matchResultCount().get(MatchResult.DRAW)).isEqualTo(1);
         });
     }
 }

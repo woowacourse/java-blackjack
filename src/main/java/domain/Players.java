@@ -1,8 +1,6 @@
 package domain;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Players {
 
@@ -36,14 +34,6 @@ public class Players {
         for (Player player : players) {
             player.receiveInitialCards(deck);
         }
-    }
-
-    public Map<String, Integer> mapToNameAndSum() {
-        Map<String, Integer> sumResult = new HashMap<>();
-        for (Player player : players) {
-            sumResult.put(player.getName(), player.computeOptimalSum());
-        }
-        return sumResult;
     }
 
     public int size() {

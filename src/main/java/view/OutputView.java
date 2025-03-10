@@ -1,10 +1,10 @@
 package view;
 
-import domain.MatchResult;
-import domain.Player;
-import domain.dto.NameAndCards;
+import controller.dto.DealerMatchResultCount;
+import controller.dto.NameAndCards;
+import controller.dto.NameAndSum;
+import controller.dto.ParticipantsMatchResult;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     public static void printInitialCards(NameAndCards dealer, List<NameAndCards> participants) {
@@ -28,35 +28,45 @@ public class OutputView {
     }
 
     public static void printPlayersCardsAndSum(NameAndCards dealer, List<NameAndCards> participants,
-                                               Map<String, Integer> nameAndSum) {
-        printPlayerCardsAndSum(nameAndSum, dealer);
-        participants.forEach(player -> printPlayerCardsAndSum(nameAndSum, player));
+                                               List<NameAndSum> nameAndSums) {
+        printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSums));
+        participants.forEach(player ->
+                printPlayerCardsAndSum(player, findNameAndSumByName(player.name(), nameAndSums)));
         System.out.println();
     }
 
-    private static void printPlayerCardsAndSum(Map<String, Integer> nameAndSum, NameAndCards player) {
+    private static NameAndSum findNameAndSumByName(String name, List<NameAndSum> nameAndSums) {
+        return nameAndSums.stream()
+                .filter(nameAndSum -> nameAndSum.name().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(name + "존재하지 않는 플레이어입니다."));
+    }
+
+    private static void printPlayerCardsAndSum(NameAndCards player, NameAndSum nameAndSum) {
         System.out.printf("%s카드: %s - 결과: %d%n", player.name(),
-                String.join(", ", player.cards().stream()
-                        .map(card -> String.format("%s%s", card.getRank().getTitle(),
-                                card.getSuit().getTitle()))
-                        .toList()),
-                nameAndSum.get(player.name()));
+                String.join(", ",
+                        player.cards().stream()
+                                .map(card -> String.format("%s%s", card.getRank().getTitle(),
+                                        card.getSuit().getTitle()))
+                                .toList()),
+                nameAndSum.sum());
     }
 
     public static void printAddCardToDealer() {
         System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 
-    public static void printGameResult(String dealerName, Map<MatchResult, Integer> dealerResult,
-                                       Map<Player, MatchResult> participantsMathResult) {
+    public static void printGameResult(String dealerName, DealerMatchResultCount dealerResult,
+                                       ParticipantsMatchResult participantsMathResult) {
         System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResultFormat(dealerResult));
-
-        participantsMathResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
+        
+        participantsMathResult.participantMatchResult()
+                .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
     }
 
-    private static String convertToDealerMatchResultFormat(Map<MatchResult, Integer> dealerResult) {
+    private static String convertToDealerMatchResultFormat(DealerMatchResultCount dealerResult) {
         StringBuilder sb = new StringBuilder();
-        dealerResult.forEach((key, value) ->
+        dealerResult.matchResultCount().forEach((key, value) ->
                 sb.append(String.format("%d%s ", value, key.getTitle()))
         );
         return sb.toString();

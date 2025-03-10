@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackManager {
     private final Players players;
@@ -24,10 +23,6 @@ public class BlackjackManager {
         return getDealer().drawOneCardIfLowScore(deck);
     }
 
-    public Map<String, Integer> getNameAndSumOfAllPlayers() {
-        return players.mapToNameAndSum();
-    }
-
     public String getDealerName() {
         return getDealer().getName();
     }
@@ -38,5 +33,9 @@ public class BlackjackManager {
 
     public List<Player> getParticipants() {
         return players.getParticipants();
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }
