@@ -5,7 +5,7 @@ import domain.Dealer;
 import domain.Deck;
 import domain.DeckGenerator;
 import domain.MatchResult;
-import domain.MatchResultPolicy;
+import domain.MatchResultCalculator;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
@@ -63,16 +63,16 @@ public class BlackjackController {
     private void printGameResult(BlackjackManager blackjackManager) {
         final Dealer dealer = blackjackManager.getDealer();
         final List<Player> participants = blackjackManager.getParticipants();
+
         OutputView.printPlayersCardsAndSum(NameAndCards.toNameAndCards(dealer),
                 NameAndCards.toNameAndCards(participants), blackjackManager.getNameAndSumOfAllPlayers());
 
         Map<Player, MatchResult> participantsMatchResult
-                = MatchResultPolicy.computeParticipantsMatchResult(dealer, participants);
+                = MatchResultCalculator.computeParticipantsMatchResult(dealer, participants);
         Map<MatchResult, Integer> dealerMathResultCount
-                = MatchResultPolicy.computeDealerMatchResultCount(participantsMatchResult);
+                = MatchResultCalculator.computeDealerMatchResultCount(participantsMatchResult);
         OutputView.printGameResult(blackjackManager.getDealerName(),
-                dealerMathResultCount,
-                participantsMatchResult);
+                dealerMathResultCount, participantsMatchResult);
     }
 
     private BlackjackManager createBlackjackManager() {

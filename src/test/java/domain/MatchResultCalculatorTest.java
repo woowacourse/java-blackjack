@@ -6,7 +6,7 @@ import java.util.Map;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-class MatchResultPolicyTest {
+class MatchResultCalculatorTest {
 
     @Test
     void 참여자들의_승패_결과를_반환한다() {
@@ -39,7 +39,7 @@ class MatchResultPolicyTest {
         blackjackManager.distributeInitialCards();
 
         // when
-        Map<Player, MatchResult> participantsMatchResult = MatchResultPolicy.computeParticipantsMatchResult(dealer,
+        Map<Player, MatchResult> participantsMatchResult = MatchResultCalculator.computeParticipantsMatchResult(dealer,
                 participants);
 
         // then
@@ -80,12 +80,12 @@ class MatchResultPolicyTest {
         )));
         BlackjackManager blackjackManager = new BlackjackManager(players, deck);
         blackjackManager.distributeInitialCards();
-        Map<Player, MatchResult> participantsMatchResult = MatchResultPolicy.computeParticipantsMatchResult(dealer,
-                participants);
+        Map<Player, MatchResult> participantsMatchResult
+                = MatchResultCalculator.computeParticipantsMatchResult(dealer, participants);
 
         // when
-        Map<MatchResult, Integer> dealerMatchResultCount = MatchResultPolicy.computeDealerMatchResultCount(
-                participantsMatchResult);
+        Map<MatchResult, Integer> dealerMatchResultCount
+                = MatchResultCalculator.computeDealerMatchResultCount(participantsMatchResult);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
