@@ -16,7 +16,7 @@ public enum Rank {
     KING(10),
     ;
 
-    public static final int ACE_HIGH_NUMBER = 11;
+    private static final int ACE_HIGH_NUMBER = 11;
     public static final int ACE_LOW_HIGH_GAP = ACE_HIGH_NUMBER - ACE.number();
 
     private final int number;
