@@ -14,9 +14,17 @@ public class Players {
                 .toList();
     }
 
-    public void giveCard(PlayerName playerName, List<Card> cards) {
+    public void giveCard(PlayerName playerName, Cards cards) {
         Player selectedPlayer = selectPlayer(playerName);
+        if (!isDrawable(playerName)) {
+            throw new IllegalArgumentException("카드를 뽑을 수 없습니다.");
+        }
         selectedPlayer.addCard(cards);
+    }
+
+    public boolean isDrawable(PlayerName playerName) {
+        Player player = selectPlayer(playerName);
+        return player.isDrawable();
     }
 
     private Player selectPlayer(PlayerName playerName) {
@@ -25,15 +33,9 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
     }
 
-    public List<Card> getPlayerCard(PlayerName playerName) {
+    public Cards getPlayerCard(PlayerName playerName) {
         Player selectedPlayer = selectPlayer(playerName);
-
         return selectedPlayer.getCards();
-    }
-
-    public boolean isDrawable(PlayerName playerName) {
-        Player player = selectPlayer(playerName);
-        return player.isDrawable();
     }
 
     public GameStatistics calculateGameStatistics(Dealer dealer) {

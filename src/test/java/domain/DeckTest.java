@@ -27,7 +27,7 @@ class DeckTest {
         // when & then
         assertThatThrownBy(() -> new Deck(List.of(Card.CLOVER_ACE, Card.CLOVER_ACE)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("중복된 카드로 덱을 생성할 수 없습니다.");
+                .hasMessage("카드에 중복이 있습니다.");
 
     }
 }

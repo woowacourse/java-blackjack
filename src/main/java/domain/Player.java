@@ -19,8 +19,8 @@ public class Player extends Gamer {
     }
 
     public GameResult decideGameResult(Dealer dealer) {
-        int playerScore = this.calculateScore();
-        int dealerScore = dealer.calculateScore();
+        int playerScore = this.getScore();
+        int dealerScore = dealer.getScore();
         if (playerScore > BUST_THRESHOLD || dealerScore > BUST_THRESHOLD) {
             return decideGameResultWithBust(playerScore, dealerScore);
         }

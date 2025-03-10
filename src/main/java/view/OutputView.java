@@ -6,6 +6,7 @@ import static domain.GameResult.LOSE;
 import static domain.GameResult.WIN;
 
 import domain.Card;
+import domain.Cards;
 import domain.GameResult;
 import domain.GameStatistics;
 import domain.Gamer;
@@ -33,21 +34,21 @@ public class OutputView {
 
         for (PlayerName playerName : playerNames) {
             Gamer player = playersInfo.get(playerName);
-            List<Card> cards = player.getCards();
+            Cards cards = player.getCards();
             printGamerCards(playerName.username(), cards);
             System.out.println();
         }
     }
 
-    public void printGamerCards(String username, List<Card> cards) {
-        String userCards = String.join(", ", cards.stream()
+    public void printGamerCards(String username, Cards cards) {
+        String userCards = String.join(", ", cards.getCards().stream()
                 .map(Card::getCardName)
                 .toList());
         System.out.printf("%s카드: %s", username, userCards);
     }
 
     public void printDealerDrawMoreCard() {
-        System.out.printf("딜러는 %s이하라 카드를 더 받았습니다.\n", BUST_THRESHOLD);
+        System.out.printf("\n딜러는 %s이하라 카드를 더 받았습니다.\n", BUST_THRESHOLD);
     }
 
     public void printFinalState(Map<PlayerName, Gamer> playersInfo, Gamer dealer) {
@@ -62,7 +63,7 @@ public class OutputView {
     }
 
     private void printGamerScore(Gamer gamer) {
-        System.out.printf(" - 결과: %d\n", gamer.calculateScore());
+        System.out.printf(" - 결과: %d\n", gamer.getScore());
     }
 
     public void printGameStatistics(GameStatistics gameStatistics) {

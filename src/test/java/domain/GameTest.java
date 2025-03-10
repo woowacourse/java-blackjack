@@ -25,7 +25,7 @@ class GameTest {
     void giveCardToDealerTest() {
         // when
         // then
-        List<Card> dealerCards = game.getDealer().getCards();
+        Cards dealerCards = game.getDealer().getCards();
         assertThat(dealerCards.size()).isEqualTo(2);
     }
 
@@ -36,7 +36,7 @@ class GameTest {
         PlayerName username = new PlayerName("a");
         // when
         // then
-        List<Card> playerCards = game.getPlayerCards(username);
+        Cards playerCards = game.getPlayerCards(username);
         assertThat(playerCards.size()).isEqualTo(2);
     }
 

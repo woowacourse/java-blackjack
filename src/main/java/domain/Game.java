@@ -21,7 +21,7 @@ public class Game {
         return game;
     }
 
-    public List<Card> getPlayerCards(PlayerName playerName) {
+    public Cards getPlayerCards(PlayerName playerName) {
         return players.getPlayerCard(playerName);
     }
 
@@ -39,13 +39,17 @@ public class Game {
         players.giveCard(playerName, drawCards(count));
     }
 
-    private List<Card> drawCards(int count) {
+    public boolean isPlayerDrawable(PlayerName playerName) {
+        return players.isDrawable(playerName);
+    }
+
+    private Cards drawCards(int count) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Card newCard = dealer.drawCard();
             cards.add(newCard);
         }
-        return cards;
+        return new Cards(cards);
     }
 
     public Map<PlayerName, Gamer> getPlayersInfo() {
@@ -56,9 +60,6 @@ public class Game {
         return dealer.showAnyOneCard();
     }
 
-    public boolean isPlayerDrawable(PlayerName playerName) {
-        return players.isDrawable(playerName);
-    }
 
     public boolean isDealerDrawable() {
         return dealer.isDrawable();

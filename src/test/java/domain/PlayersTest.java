@@ -22,11 +22,12 @@ class PlayersTest {
         Players players = new Players(usernames);
         PlayerName username = new PlayerName("이");
         Card card = Card.HEART_JACK;
+        Cards newCards = new Cards(List.of(card));
         // when
-        players.giveCard(username, List.of(card));
+        players.giveCard(username, newCards);
         // then
-        List<Card> cards = players.getPlayerCard(username);
-        Assertions.assertThat(cards).contains(card);
+        Cards cards = players.getPlayerCard(username);
+        assertTrue(cards.hasCommonCard(newCards));
     }
 
     @ParameterizedTest
@@ -36,7 +37,7 @@ class PlayersTest {
         //given
         List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
         Players players = new Players(usernames);
-        players.giveCard(new PlayerName("김"), cards);
+        players.giveCard(new PlayerName("김"), new Cards(cards));
 
         //when & then
         Assertions.assertThat(players.isDrawable(new PlayerName("김"))).isEqualTo(expected);

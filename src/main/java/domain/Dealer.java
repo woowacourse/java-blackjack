@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Dealer extends Gamer {
     public static final int BUST_THRESHOLD = 16;
 
@@ -21,10 +19,7 @@ public class Dealer extends Gamer {
     }
 
     public Card showAnyOneCard() {
-        List<Card> dealerCard = getCards();
-        if (dealerCard.isEmpty()) {
-            throw new IllegalStateException("카드가 없습니다.");
-        }
+        Cards dealerCard = getCards();
         return dealerCard.getFirst();
     }
 }

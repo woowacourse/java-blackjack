@@ -20,7 +20,7 @@ class DealerTest {
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
-        dealer.addCard(cards);
+        dealer.addCard(new Cards(cards));
 
         //when & then
         assertThat(dealer.isDrawable()).isEqualTo(expected);
@@ -44,7 +44,7 @@ class DealerTest {
     void showFirstCardTest(List<Card> cards) {
         //given
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
-        dealer.addCard(cards);
+        dealer.addCard(new Cards(cards));
         //when & then
         assertThat(cards).contains(dealer.showAnyOneCard());
     }

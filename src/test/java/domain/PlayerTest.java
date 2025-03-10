@@ -23,35 +23,13 @@ class PlayerTest {
         Card card = Card.CLOVER_EIGHT;
         Player player = new Player(new PlayerName("코기"));
 
+        Cards newCards = new Cards(List.of(card));
+
         //when
-        player.addCard(List.of(card));
+        player.addCard(newCards);
 
         //then
-        Assertions.assertTrue(player.getCards().contains(card));
-    }
-
-    @ParameterizedTest
-    @MethodSource
-    @DisplayName("카드 숫자의 전체 합을 계산합니다.")
-    void calculateCardScoreTest(List<Card> cards, int expected) {
-        //given
-        Player player = new Player(new PlayerName("코기"));
-        player.addCard(cards);
-        //when
-        final int cardScore = player.calculateScore();
-
-        //then
-        Assertions.assertEquals(cardScore, expected);
-    }
-
-    public static Stream<Arguments> calculateCardScoreTest() {
-        return Stream.of(
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_THREE), 14),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), 21),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), 12),
-                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_THREE), 23),
-                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE, Card.HEART_ACE), 22)
-        );
+        Assertions.assertTrue(player.getCards().hasCommonCard(newCards));
     }
 
     @ParameterizedTest
@@ -60,7 +38,7 @@ class PlayerTest {
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
         Player player = new Player(new PlayerName("코기"));
-        player.addCard(cards);
+        player.addCard(new Cards(cards));
         int playStandard = 21;
         // when
         boolean canGetMoreCard = player.isDrawable(playStandard);
@@ -84,9 +62,9 @@ class PlayerTest {
     void decideGameResultTest(List<Card> cards, GameResult expected) {
         //given
         Player player = new Player(new PlayerName("코기"));
-        player.addCard(cards);
+        player.addCard(new Cards(cards));
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
-        dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN));
+        dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN)));
 
         //when & then
         Assertions.assertEquals(expected, player.decideGameResult(dealer));
@@ -108,9 +86,9 @@ class PlayerTest {
     void decideGameResultBustTest(List<Card> cards, GameResult expected) {
         //given
         Player player = new Player(new PlayerName("코기"));
-        player.addCard(cards);
+        player.addCard(new Cards(cards));
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
-        dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN));
+        dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN)));
 
         //when & then
         Assertions.assertEquals(expected, player.decideGameResult(dealer));
