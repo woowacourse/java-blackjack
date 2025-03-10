@@ -40,14 +40,6 @@ public class BlackJack {
         printResult(players);
     }
 
-    public boolean resolveBust(final Participant participant) {
-        if (participant.isHandBust() && participant.containsOriginalAce()) {
-            participant.setOriginalAceValueToOne();
-            resolveBust(participant);
-        }
-        return !participant.isHandBust();
-    }
-
     private Players enterPlayer() {
         String playerNamesInput = getPlayerNamesInput();
         List<String> playerNames = Arrays.asList(playerNamesInput.split(DELIMITER));
@@ -83,7 +75,7 @@ public class BlackJack {
     }
 
     private void playTurn(final Participant participant, final Supplier<Boolean> shouldDrawMore) {
-        boolean isAlive = resolveBust(participant);
+        boolean isAlive = participant.resolveBust();
         while (isAlive && shouldDrawMore.get()) {
             isAlive = drawAdditionalCard(participant);
         }
@@ -98,7 +90,7 @@ public class BlackJack {
         if (participant.getClass().equals(Player.class)) {
             printHandCardsNames(participant.getName(), participant.getHand());
         }
-        return resolveBust(participant);
+        return participant.resolveBust();
     }
 
     private void printResult(final Players players) {

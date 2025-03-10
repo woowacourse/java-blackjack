@@ -21,6 +21,14 @@ public abstract class Participant {
         return hand.getTotal();
     }
 
+    public boolean resolveBust() {
+        if (isHandBust() && containsOriginalAce()) {
+            setOriginalAceValueToOne();
+            resolveBust();
+        }
+        return !isHandBust();
+    }
+
     public boolean isHandBust() {
         return hand.isBust();
     }
