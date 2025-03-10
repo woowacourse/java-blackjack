@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BlackJackManager;
 import domain.BlackJackResultCalculator;
 import domain.Card;
 import domain.CardBundle;
@@ -29,19 +30,16 @@ public class BlackJackController {
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
         CardDeck cardDeck = createCardDeck(cardBundle);
-        giveStartingCardsToParticipants(participants, cardDeck);
-        processPlayersCardReceiving(participants, cardDeck);
-        processDealerCardReceiving(participants, cardDeck);
+        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        giveStartingCardsToParticipants(blackJackManager);
+        processPlayersCardReceiving(blackJackManager);
+        processDealerCardReceiving(blackJackManager);
         calculateBackJackResultProcess(participants);
     }
 
-    private void giveStartingCardsToParticipants(Participants participants,
-                                                 CardDeck cardDeck) {
-        for (Participant participant : participants.getParticipants()) {
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-        }
-        outputView.printInitialParticipantHands(participants.getParticipants());
+    private void giveStartingCardsToParticipants(BlackJackManager blackJackManager) {
+        blackJackManager.giveStartingCardsToParticipants();
+        outputView.printInitialParticipantHands(blackJackManager.getParticipants());
     }
 
     private void calculateBackJackResultProcess(Participants participants) {
@@ -60,36 +58,35 @@ public class BlackJackController {
         }
     }
 
-    private void processDealerCardReceiving(Participants participants, CardDeck cardDeck) {
-        Participant dealer = participants.getDealer();
-        while (dealer.canPick()) {
-            dealer.addCard(cardDeck.getAndRemoveFrontCard());
+    private void processDealerCardReceiving(BlackJackManager blackJackManager) {
+        while(blackJackManager.canDealerPick()) {
+            blackJackManager.giveCardToDealer();
             outputView.printDealerPickMessage();
         }
         outputView.printBlankLine();
     }
 
-    private void processPlayersCardReceiving(Participants participants, CardDeck cardDeck) {
-        for (Participant participant : participants.getPlayerParticipants()) {
-            processPlayerCardReceiving(participant, cardDeck);
+    private void processPlayersCardReceiving(BlackJackManager blackJackManager) {
+        for (String playerName : blackJackManager.getPlayerNames()) {
+            processPlayerCardReceiving(blackJackManager, playerName);
         }
         outputView.printBlankLine();
     }
 
-    private void processPlayerCardReceiving(Participant participant, CardDeck cardDeck) {
+    private void processPlayerCardReceiving(BlackJackManager blackJackManager, String playerName) {
         boolean isFinalHandsPrinted = false;
-        while (participant.canPick() && doesPlayerWantToReceiveCard(participant)) {
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-            outputView.printParticipantHand(participant);
+        while (blackJackManager.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
+            blackJackManager.giveCardToPlayer(playerName);
+            outputView.printParticipantHand(playerName, blackJackManager.getPlayerShownCards(playerName));
             isFinalHandsPrinted = true;
         }
         if (!isFinalHandsPrinted) {
-            outputView.printParticipantHand(participant);
+            outputView.printParticipantHand(playerName, blackJackManager.getPlayerShownCards(playerName));
         }
     }
 
-    private boolean doesPlayerWantToReceiveCard(Participant participant) {
-        String playerWantMoreCard = inputView.inputPlayerWantMoreCard(participant);
+    private boolean doesPlayerWantToReceiveCard(String playerName) {
+        String playerWantMoreCard = inputView.inputPlayerWantMoreCard(playerName);
         return playerWantMoreCard.equalsIgnoreCase("y");
     }
 

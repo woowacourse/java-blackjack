@@ -22,6 +22,12 @@ public class Participants {
         }
     }
 
+    public Participant findByName(String name) {
+        return participants.stream()
+            .filter(participant -> participant.getName().equals(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당하는 참가자가 존재하지 않습니다."));
+    }
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
@@ -29,6 +35,13 @@ public class Participants {
     public List<Participant> getPlayerParticipants() {
         return participants.stream()
             .filter(participant -> participant.getClass() == Player.class)
+            .toList();
+    }
+
+    public List<String> getPlayerNames() {
+        return participants.stream()
+            .filter(participant -> participant.getClass() == Player.class)
+            .map(Participant::getName)
             .toList();
     }
 

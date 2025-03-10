@@ -86,11 +86,9 @@ public class OutputView {
         return "";
     }
 
-    public void printParticipantHand(Participant participant) {
-        System.out.print(SPREAD_NAME_RESULT.formatted(participant.getName()));
-
-        List<Card> shownCard = participant.getShownCard();
-        String cardMessage = formatCards(shownCard);
+    public void printParticipantHand(String playerName, List<Card> cards) {
+        System.out.print(SPREAD_NAME_RESULT.formatted(playerName));
+        String cardMessage = formatCards(cards);
         System.out.println(cardMessage);
     }
 
