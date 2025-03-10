@@ -20,7 +20,6 @@ public class BlackjackGame {
 
     private final Deck deck;
     private final Players players;
-
     private final DealerCards dealerCards;
 
     private BlackjackGame(final Deck deck, final Players players, final DealerCards dealerCards) {

@@ -1,6 +1,7 @@
 package model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,9 @@ class CardTest {
     @Test
     void sameCardTest() {
         Card card = new Card(CardNumber.TWO, CardShape.SPADE);
-        assertThat(card.isSameNumber(CardNumber.TWO)).isTrue();
+        assertAll(
+                () -> assertThat(card.isSameNumber(CardNumber.TWO)).isTrue(),
+                () -> assertThat(card.isSameNumber(CardNumber.KING)).isFalse()
+        );
     }
 }
