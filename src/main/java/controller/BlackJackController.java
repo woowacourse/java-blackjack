@@ -31,23 +31,16 @@ public class BlackJackController {
             setGame(players.getPlayers(), deck);
             printInitialGameState(dealer, players);
             playGame(dealer, players.getPlayers(), deck);
-            showResults(dealer, players.getPlayers());
+            processFinalResult(dealer, players.getPlayers());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
     private Players createPlayers() {
-        final List<Nickname> nicknames = readNicknames();
-        return generatePlayers(nicknames);
-    }
-
-    private Players generatePlayers(final List<Nickname> nicknames) {
-        final List<Player> players = nicknames.stream()
+        return new Players(readNicknames().stream()
                 .map(Player::new)
-                .toList();
-
-        return new Players(players);
+                .toList());
     }
 
     private List<Nickname> readNicknames() {
@@ -65,15 +58,11 @@ public class BlackJackController {
     }
 
     private Dealer setupDealer(final Deck deck) {
-        final Dealer dealer = generateDealer();
+        final Dealer dealer = new Dealer(new Nickname(DEALER_NAME));
         dealer.receiveInitialCards(List.of(deck.drawCard(), deck.drawCard()));
         return dealer;
     }
 
-    private Dealer generateDealer() {
-        return new Dealer(new Nickname(DEALER_NAME));
-    }
-    
     private void setGame(final List<Player> players, final Deck deck) {
         players.forEach(player -> {
             final Card firstCard = deck.drawCard();
@@ -105,7 +94,7 @@ public class BlackJackController {
         }
     }
 
-    private static boolean isNotMoreCard(final Deck deck, final Player player) {
+    private boolean isNotMoreCard(final Deck deck, final Player player) {
         final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
         if (Command.find(input).equals(Command.YES)) {
             final Card card = deck.drawCard();
@@ -121,7 +110,7 @@ public class BlackJackController {
         return Command.find(input).equals(Command.NO);
     }
 
-    private static void processAdditionalHit(final Deck deck, final Player player) {
+    private void processAdditionalHit(final Deck deck, final Player player) {
         String input = InputView.readQuestOneMoreCard(player.getDisplayName());
         while (Command.find(input).equals(Command.YES)) {
             final Card card = deck.drawCard();
@@ -143,11 +132,7 @@ public class BlackJackController {
             OutputView.printDealerHit(THRESHOLD, dealer.getDisplayName());
         }
     }
-
-    private void showResults(final Dealer dealer, final List<Player> players) {
-        processFinalResult(dealer, players);
-    }
-
+    
     private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
                                   final List<Player> players) {
         OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
