@@ -36,8 +36,6 @@ public class OutputView {
     private final int INIT_COUNT = 0;
     private final int ONE_MORE_COUNT = 1;
 
-    private final String NEW_LINE = System.lineSeparator();
-
     public void printParticipant(final Players players, final Dealer dealer) {
         printHitNotice(players);
         printDealerDeckWithHidden(dealer);
@@ -45,7 +43,7 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             printPlayerDeck(player);
         }
-        System.out.print(NEW_LINE);
+        printNewLine();
     }
 
     public void printPlayerDeck(final Player player) {
@@ -63,24 +61,26 @@ public class OutputView {
 
     public void printDrawDealer(final Dealer dealer) {
         if (dealer.isUnderThreshold()) {
-            System.out.print(NEW_LINE);
+            printNewLine();
             System.out.print(HIT_DEALER_CARD);
         }
     }
 
     public void printScore(final Players players, final Dealer dealer) {
-        System.out.print(NEW_LINE);
+        printNewLine();
         System.out.print(printDealerDeck(dealer));
-        System.out.printf(SCORE + NEW_LINE, dealer.sum());
+        System.out.printf(SCORE, dealer.sum());
+        printNewLine();
 
         for (Player player : players.getPlayers()) {
             System.out.print(resultMaker(player));
-            System.out.printf(SCORE + NEW_LINE, player.calculateSum());
+            System.out.printf(SCORE, player.calculateSum());
+            printNewLine();
         }
     }
 
     public void printResult(final Map<Player, MatchResult> playerMatchResult) {
-        System.out.print(NEW_LINE);
+        printNewLine();
         System.out.println(RESULT_INTRO);
         System.out.print(DEALER_RESULT);
 
@@ -92,10 +92,10 @@ public class OutputView {
             System.out.printf(dealerMatchResult.get(matchResult) + matchResult.getValue() + " ");
         }
 
-        System.out.print(NEW_LINE);
+        printNewLine();
         playerMatchResult.forEach((player, matchResult) -> {
             System.out.printf(PLAYER_RESULT, player.getName(), matchResult.getValue());
-            System.out.print(NEW_LINE);
+            printNewLine();
         });
     }
 
@@ -109,7 +109,7 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             playersName.add(player.getName());
         }
-        System.out.print(NEW_LINE);
+        printNewLine();
         System.out.printf(HIT_CARDS, String.join(COMMA_DELIMITER, playersName));
     }
 
@@ -152,6 +152,10 @@ public class OutputView {
         dealerMatchResult.put(DRAW, INIT_COUNT);
         dealerMatchResult.put(LOSE, INIT_COUNT);
         return dealerMatchResult;
+    }
+
+    private void printNewLine() {
+        System.out.print(System.lineSeparator());
     }
 
 }
