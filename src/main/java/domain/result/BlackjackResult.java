@@ -50,11 +50,11 @@ public enum BlackjackResult {
     }
 
     private static boolean isBust(int score) {
-        return score > Card.BLACKJACK_NUMBER;
+        return score > Card.BLACKJACK_SCORE;
     }
 
     private static boolean isBlackjack(int score, int cardCount) {
-        return score == Card.BLACKJACK_NUMBER && cardCount == 2;
+        return score == Card.BLACKJACK_SCORE && cardCount == 2;
     }
 
     public String getValue() {

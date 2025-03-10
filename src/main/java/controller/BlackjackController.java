@@ -71,7 +71,7 @@ public class BlackjackController {
     }
 
     private void processPlayerDecision(String name, GameManager gameManager) {
-        while (gameManager.getScoreOf(name) < Card.BLACKJACK_NUMBER) {
+        while (gameManager.getScoreOf(name) < Card.BLACKJACK_SCORE) {
             String answer = inputView.askReceive(name);
             if (Answer.getAnswer(answer) == Answer.NO) {
                 outputView.printCardsByName(gameManager.getPlayerByName(name));

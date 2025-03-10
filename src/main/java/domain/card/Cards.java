@@ -29,7 +29,7 @@ public class Cards {
         long aceCount = cards.stream()
                 .filter(card -> card.getNumber() == TrumpNumber.ACE)
                 .count();
-        while (aceCount > 0 && sum + ACE_ADDITIONAL_SCORE <= Card.BLACKJACK_NUMBER) {
+        while (aceCount > 0 && sum + ACE_ADDITIONAL_SCORE <= Card.BLACKJACK_SCORE) {
             sum += ACE_ADDITIONAL_SCORE;
             aceCount--;
         }
