@@ -24,7 +24,7 @@ class DealerTest {
 
     @DisplayName("플레이어에게 카드를 한장 준다.")
     @Test
-    void drawCardTest() {
+    void drawFromDeckTest() {
         // given
         List<Card> cards = List.of(SPADE_ACE_CARD);
         Deck deck = Deck.createDeckByCards(cards, NO_SHUFFLER);
@@ -209,10 +209,10 @@ class DealerTest {
     @DisplayName("가진 패의 총합이 16이하인 경우 히트한다.")
     @ParameterizedTest
     @CsvSource({
-            "TEN, SIX, true",
-            "TEN, SEVEN, false"
+            "TEN, SIX, HIT",
+            "TEN, SEVEN, STAND"
     })
-    void canHitTrueTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
+    void canHitTrueTest(CardValue cardValue1, CardValue cardValue2, ParticipantAction expected) {
         // given
         Card card1 = createCard(Suit.SPADES, cardValue1);
         Card card2 = createCard(Suit.SPADES, cardValue2);
@@ -222,10 +222,32 @@ class DealerTest {
         dealer.dealCard(dealer);
 
         // when
-        boolean shouldHit = dealer.canHit();
+        ParticipantAction dealerAction = dealer.decideHit();
 
         // then
-        assertThat(shouldHit)
+        assertThat(dealerAction)
                 .isSameAs(expected);
+    }
+
+    @DisplayName("딜러는 카드가 2장일 때만 히트를 결정한다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, THREE, THREE",
+    })
+    void canHitTrueTest(CardValue cardValue1, CardValue cardValue2, CardValue cardValue3) {
+        // given
+        Card card1 = createCard(Suit.SPADES, cardValue1);
+        Card card2 = createCard(Suit.SPADES, cardValue2);
+        Card card3 = createCard(Suit.SPADES, cardValue3);
+        List<Card> cards = List.of(card1, card2, card3);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
+        dealer.dealCard(dealer);
+        dealer.dealCard(dealer);
+        dealer.dealCard(dealer);
+
+        // when, then
+        assertThatCode(dealer::decideHit)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("딜러가 가진 패가 2장이 아니어서 히트 여부를 결정할 수 없습니다.");
     }
 }

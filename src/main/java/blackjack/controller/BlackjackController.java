@@ -7,6 +7,7 @@ import blackjack.model.card.Deck;
 import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.card.RandomCardShuffler;
+import blackjack.model.participant.ParticipantAction;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashSet;
@@ -86,14 +87,16 @@ public final class BlackjackController {
     }
 
     private void askHit(Dealer dealer, Player player) {
-        while (player.canHit() && inputView.readHitOrNot(player.getName())) {
+        ParticipantAction playerAction = inputView.readHitOrNot(player.getName());
+        while (player.canHit() && playerAction.isHit()) {
             dealer.dealCard(player);
             outputView.printPlayerHand(player);
         }
     }
 
     private void askHitForDealer(Dealer dealer) {
-        if (dealer.canHit()) {
+        ParticipantAction dealerAction = dealer.decideHit();
+        if (dealer.canHit() && dealerAction.isHit()) {
             dealer.dealCard(dealer);
             outputView.printDealerHit(true);
         }

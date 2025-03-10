@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.participant.Name;
+import blackjack.model.participant.ParticipantAction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,19 +20,19 @@ public class InputView {
                 .toList();
     }
 
-    public boolean readHitOrNot(Name playerName) {
+    public ParticipantAction readHitOrNot(Name playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName.value());
-        return parseYesOrNo(trim(scanner.nextLine()));
+        return parseParticipantAction(trim(scanner.nextLine()));
     }
 
-    private boolean parseYesOrNo(String input) {
+    private ParticipantAction parseParticipantAction(String input) {
         if (input.equals("y")) {
-            return true;
+            return ParticipantAction.HIT;
         }
         if (input.equals("n")) {
-            return false;
+            return ParticipantAction.STAND;
         }
-        throw new IllegalArgumentException("y 또는 n을 입력해주세요.");
+        throw new IllegalArgumentException("올바른 입력이 아닙니다. 입력: %s".formatted(input));
     }
 
     private String trim(String input) {
