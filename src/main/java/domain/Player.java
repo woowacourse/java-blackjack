@@ -1,5 +1,7 @@
 package domain;
 
+import domain.constant.DuelResult;
+
 public class Player {
 	private final String name;
 	private final Participant participant;
@@ -26,19 +28,16 @@ public class Player {
 		participant.pickCard(deck);
 	}
 
-	public void duel(final Participant other, final int bustScore) {
-		final int score = participant.calculateAllScore(bustScore);
-		final int otherScore = other.calculateAllScore(bustScore);
-		if (score > bustScore) {
-			other.writeWin(participant);
-			return;
-		}
-		if (otherScore > bustScore || score > otherScore) {
-			participant.writeWin(other);
-			return;
-		}
+	public int calculateAllScore(final int bustScore) {
+		return participant.calculateAllScore(bustScore);
+	}
 
-		other.writeWin(participant);
+	public boolean isBust(final int bustScore) {
+		return calculateAllScore(bustScore) > bustScore;
+	}
+
+	public void writeDuelResult(final DuelResult duelResult) {
+		participant.writeDuelResult(duelResult);
 	}
 
 	public String getName() {

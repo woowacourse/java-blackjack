@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
 
@@ -136,8 +137,110 @@ public class BlackjackTest {
 			blackjack.duelDealerVsPlayer(dealer, player);
 
 			// then
-			assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-			assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+			assertSoftly(s -> {
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+			});
+		}
+
+		@DisplayName("플레이어가 BUST가 아니면서 딜러보다 더 BUST_SCORE에 가깝다면 플레이어는 우승으로, 딜러는 패배로 기록한다.")
+		@Test
+		void duel() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.ACE, Suit.CLUB));
+			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Suit.CLUB));
+			final Participant playerParticipant = new Participant(new CardHand(playerCards));
+			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
+			final Player player = new Player(" ", playerParticipant);
+			final Dealer dealer = new Dealer(dealerParticipant);
+			final Blackjack blackjack = new Blackjack();
+
+			// when
+			blackjack.duelDealerVsPlayer(dealer, player);
+
+			// then
+			assertSoftly(s -> {
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
+			});
+		}
+
+		@DisplayName("player의 점수가 BUST_SCORE 초과라면, 딜러가 우승한다.")
+		@Test
+		void duel1() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.TEN, Suit.CLUB), new Card(Rank.TEN, Suit.SPADE),
+				new Card(Rank.TEN, Suit.HEART));
+			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Suit.CLUB));
+			final Participant playerParticipant = new Participant(new CardHand(playerCards));
+			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
+			final Player player = new Player(" ", playerParticipant);
+			final Dealer dealer = new Dealer(dealerParticipant);
+			final Blackjack blackjack = new Blackjack();
+
+			// when
+			blackjack.duelDealerVsPlayer(dealer, player);
+
+			// then
+			assertSoftly(s -> {
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+			});
+		}
+
+		@DisplayName("딜러의 점수가 bust이고, 플레이어가 BUST_SCORE 이하라면, 플레이어가 우승한다.")
+		@Test
+		void duel2() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.TEN, Suit.CLUB));
+			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Suit.CLUB), new Card(Rank.TEN, Suit.SPADE),
+				new Card(Rank.TEN, Suit.HEART));
+			final Participant playerParticipant = new Participant(new CardHand(playerCards));
+			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
+			final Player player = new Player(" ", playerParticipant);
+			final Dealer dealer = new Dealer(dealerParticipant);
+			final Blackjack blackjack = new Blackjack();
+
+			// when
+			blackjack.duelDealerVsPlayer(dealer, player);
+
+			// then
+			assertSoftly(s -> {
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
+			});
+		}
+
+		@DisplayName("동점이라면, 딜러가 우승한다.")
+		@Test
+		void duel3() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.TEN, Suit.CLUB));
+			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Suit.CLUB));
+			final Participant playerParticipant = new Participant(new CardHand(playerCards));
+			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
+			final Player player = new Player(" ", playerParticipant);
+			final Dealer dealer = new Dealer(dealerParticipant);
+			final Blackjack blackjack = new Blackjack();
+
+			// when
+			blackjack.duelDealerVsPlayer(dealer, player);
+
+			// then
+			assertSoftly(s -> {
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+			});
 		}
 	}
 }

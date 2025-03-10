@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayDeque;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -48,90 +47,62 @@ public class PlayerTest {
 						new Card(Rank.TEN, Suit.CLUB), new Card(Rank.TWO, Suit.CLUB)), false)
 			);
 		}
-
 	}
 
 	@Nested
-	@DisplayName("결투를 진행한다.")
-	class Duel {
+	@DisplayName("플레이어의 Bust 여부 체크")
+	class IsBust {
 
-		@DisplayName("21점 이하면서, 딜러보다 더 21점에 가깝다면 우승으로 기록하고, 동점 혹은 더 멀다면 패배로 기록한다.")
+		@DisplayName("플레이어의 현재 점수가 bustScore 초과라면 true를 반환한다.")
 		@Test
-		public void duel() {
+		void isBust() {
 			// given
-			final Player winner = new Player("Winner");
-			final List<Card> winnerCards = List.of(new Card(Rank.ACE, Suit.CLUB));
-			final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
-			winner.pickCard(winnerDeck);
-
-			final Player loser = new Player("Loser");
-			final List<Card> loserCards = List.of(new Card(Rank.NINE, Suit.CLUB));
-			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
-			loser.pickCard(loserDeck);
-
-			final Dealer dealer = new Dealer();
-			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Suit.CLUB));
-			final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
-			dealer.pickCard(dealerDeck);
+			final List<Card> playerCards = List.of(new Card(Rank.TEN, Suit.CLUB), new Card(Rank.TEN, Suit.SPADE),
+				new Card(Rank.TEN, Suit.HEART));
+			final Participant participant = new Participant(new CardHand(playerCards));
+			final Player bustedPlayer = new Player("", participant);
 
 			// when
-			winner.duel(dealer.getParticipant(), BUST_SCORE);
-			loser.duel(dealer.getParticipant(), BUST_SCORE);
+			boolean actual = bustedPlayer.isBust(BUST_SCORE);
 
 			// then
-			assertThat(winner.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-			assertThat(loser.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+			assertThat(actual).isTrue();
 		}
 
-		@DisplayName("player의 현재 점수가 21점이 넘는다면, 상대방이 승리한다.")
+		@DisplayName("플레이어의 현재 점수가 bustScore 이하려면 false를 반환한다.")
 		@Test
-		public void duelOverThan() {
+		void isBust1() {
 			// given
-			final Player loser = new Player("Loser");
-			final List<Card> loserCards = List.of(
-				new Card(Rank.TEN, Suit.SPADE), new Card(Rank.TEN, Suit.CLUB),
-				new Card(Rank.TWO, Suit.SPADE));
-			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
-			loser.pickCard(loserDeck);
-			loser.pickCard(loserDeck);
-			loser.pickCard(loserDeck);
-
-			final Dealer dealer = new Dealer();
-			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Suit.CLUB));
-			final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
-			dealer.pickCard(dealerDeck);
+			final List<Card> playerCards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.TEN, Suit.HEART));
+			final Participant participant = new Participant(new CardHand(playerCards));
+			final Player noBustedPlayer = new Player("", participant);
 
 			// when
-			loser.duel(dealer.getParticipant(), BUST_SCORE);
+			boolean actual = noBustedPlayer.isBust(BUST_SCORE);
 
 			// then
-			assertThat(loser.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
-		}
-
-		@DisplayName("상대방이 21점이 넘고 내가 21점 이하라면, 내가 승리한다.")
-		@Test
-		public void duelOverThanX() {
-			// given
-			final Player loser = new Player("Loser");
-			final List<Card> loserCards = List.of(
-				new Card(Rank.TEN, Suit.SPADE));
-			final Deck loserDeck = new Deck(new ArrayDeque<>(loserCards));
-			loser.pickCard(loserDeck);
-
-			final Dealer dealer = new Dealer();
-			final List<Card> dealerCards = List.of(
-				new Card(Rank.TEN, Suit.SPADE), new Card(Rank.TEN, Suit.CLUB),
-				new Card(Rank.TWO, Suit.SPADE));
-			final Deck dealerDeck = new Deck(new ArrayDeque<>(dealerCards));
-			dealer.pickCard(dealerDeck);
-			dealer.pickCard(dealerDeck);
-			dealer.pickCard(dealerDeck);
-
-			// when
-			loser.duel(dealer.getParticipant(), BUST_SCORE);
-
-			// then
-			assertThat(loser.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+			assertThat(actual).isFalse();
 		}
 	}
+
+	@Nested
+	@DisplayName("player의 점수를 계산한다.")
+	class CalculateAllScore {
+
+		@DisplayName("player의 현재 점수를 계산한다.")
+		@Test
+		void calculateAllScore() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.TEN, Suit.HEART));
+			final Participant participant = new Participant(new CardHand(playerCards));
+			final Player player = new Player("", participant);
+
+			// when
+			final int actual = player.calculateAllScore(BUST_SCORE);
+
+			// then
+			assertThat(actual).isEqualTo(21);
+		}
+	}
+
 }

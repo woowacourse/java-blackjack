@@ -26,9 +26,8 @@ public class Participant {
 		hand.add(card);
 	}
 
-	public void writeWin(final Participant other) {
-		duelHistory.write(DuelResult.WIN);
-		other.duelHistory.write(DuelResult.LOSE);
+	public void writeDuelResult(final DuelResult duelResult) {
+		duelHistory.write(duelResult);
 	}
 
 	public int calculateAllScore(final int bustScore) {

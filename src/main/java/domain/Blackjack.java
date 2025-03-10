@@ -1,5 +1,7 @@
 package domain;
 
+import domain.constant.DuelResult;
+
 public class Blackjack {
 	private static final int BUST_SCORE = 21;
 	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
@@ -17,7 +19,20 @@ public class Blackjack {
 	}
 
 	public void duelDealerVsPlayer(final Dealer dealer, final Player player) {
-		dealer.startDuel(player, BUST_SCORE);
+		if (player.isBust(BUST_SCORE)) {
+			dealer.writeDuelResult(DuelResult.WIN);
+			player.writeDuelResult(DuelResult.LOSE);
+			return;
+		}
+		if (dealer.isBust(BUST_SCORE)
+			|| player.calculateAllScore(BUST_SCORE) > dealer.calculateAllScore(BUST_SCORE)) {
+			dealer.writeDuelResult(DuelResult.LOSE);
+			player.writeDuelResult(DuelResult.WIN);
+			return;
+		}
+
+		dealer.writeDuelResult(DuelResult.WIN);
+		player.writeDuelResult(DuelResult.LOSE);
 	}
 
 }

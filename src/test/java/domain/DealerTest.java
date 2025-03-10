@@ -1,9 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.SoftAssertions.*;
 
-import java.util.ArrayDeque;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import domain.constant.Suit;
 
 public class DealerTest {
-
 	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
 	private static final int BUST_SCORE = 21;
 
@@ -52,40 +49,58 @@ public class DealerTest {
 	}
 
 	@Nested
-	@DisplayName("딜러는 플레이어와 대결한다.")
-	class StartDuel {
+	@DisplayName("딜러의 Bust 여부 체크")
+	class IsBust {
 
-		@DisplayName("딜러가 1승 1패라면 1승, 1패를 기록한다.")
+		@DisplayName("딜러의 현재 점수가 bustScore 초과라면 true를 반환한다.")
 		@Test
-		void startDuel() {
+		void isBust() {
 			// given
-			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
-			final Card card2 = new Card(Rank.SEVEN, Suit.HEART);
-			final CardHand cardHand = new CardHand(List.of(card1, card2));
-			final var dealer = new Dealer(cardHand);
-
-			final Player player = new Player("loser");
-			final List<Card> playerCards = List.of(new Card(Rank.ACE, Suit.CLUB));
-			final Deck playerDeck = new Deck(new ArrayDeque<>(playerCards));
-			player.pickCard(playerDeck);
-
-			final Player winner = new Player("w");
-			final List<Card> winnerCards = List.of(new Card(Rank.ACE, Suit.CLUB),
-				new Card(Rank.TEN, Suit.CLUB));
-			final Deck winnerDeck = new Deck(new ArrayDeque<>(winnerCards));
-			winner.pickCard(winnerDeck);
-			winner.pickCard(winnerDeck);
+			final List<Card> playerCards = List.of(new Card(Rank.TEN, Suit.CLUB), new Card(Rank.TEN, Suit.SPADE),
+				new Card(Rank.TEN, Suit.HEART));
+			final Participant participant = new Participant(new CardHand(playerCards));
+			final Dealer bustedDealer = new Dealer(participant);
 
 			// when
-			dealer.startDuel(player, BUST_SCORE);
-			dealer.startDuel(winner, BUST_SCORE);
+			boolean actual = bustedDealer.isBust(BUST_SCORE);
 
 			// then
-			assertSoftly(s -> {
-				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
-			});
+			assertThat(actual).isTrue();
 		}
 
+		@DisplayName("딜러의 현재 점수가 bustScore 이하려면 false를 반환한다.")
+		@Test
+		void isBust1() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.TEN, Suit.HEART));
+			final Participant participant = new Participant(new CardHand(playerCards));
+			final Dealer noBustedDealer = new Dealer(participant);
+
+			// when
+			boolean actual = noBustedDealer.isBust(BUST_SCORE);
+
+			// then
+			assertThat(actual).isFalse();
+		}
+	}
+
+	@Nested
+	@DisplayName("딜러의 점수를 계산한다.")
+	class CalculateAllScore {
+
+		@DisplayName("딜러의 현재 점수를 계산한다.")
+		@Test
+		void calculateAllScore() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.TEN, Suit.HEART));
+			final Participant participant = new Participant(new CardHand(playerCards));
+			final Dealer dealer = new Dealer(participant);
+
+			// when
+			final int actual = dealer.calculateAllScore(BUST_SCORE);
+
+			// then
+			assertThat(actual).isEqualTo(21);
+		}
 	}
 }
