@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.exception.ExceptionMessage;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class CardDeck {
 
     private void validateEmptyCardDeck(int count) {
         if (cards.size() < count) {
-            throw new IllegalArgumentException("카드의 수가 부족합니다.");
+            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARD_DECK.getContent());
         }
     }
 }

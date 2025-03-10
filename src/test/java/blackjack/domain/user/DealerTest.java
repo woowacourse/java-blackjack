@@ -8,6 +8,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.game.GameRule;
+import blackjack.exception.ExceptionMessage;
 import blackjack.mock.CardDeckMock;
 import java.util.ArrayDeque;
 import java.util.List;
@@ -76,6 +77,6 @@ class DealerTest {
     void cannotFindFirstCardBeforeDistributionInitialCards() {
         assertThatCode(() -> dealer.findFirstCard())
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("초기 카드 분배를 먼저 수행해야합니다.");
+                .hasMessage(ExceptionMessage.BEFORE_CARD_DISTRIBUTION.getContent());
     }
 }

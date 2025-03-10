@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.exception.ExceptionMessage;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,6 @@ class CardDeckTest {
 
         assertThatCode(() -> cardDeck.drawCard(tooManyCardCount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드의 수가 부족합니다.");
+                .hasMessage(ExceptionMessage.EMPTY_CARD_DECK.getContent());
     }
 }

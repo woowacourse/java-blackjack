@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.GameRule;
+import blackjack.exception.ExceptionMessage;
 import java.util.List;
 
 public class Dealer {
@@ -60,7 +61,7 @@ public class Dealer {
 
     private void validateBeforeDrawInitialCards() {
         if (player.getHand().isEmpty()) {
-            throw new IllegalArgumentException("초기 카드 분배를 먼저 수행해야합니다.");
+            throw new IllegalArgumentException(ExceptionMessage.BEFORE_CARD_DISTRIBUTION.getContent());
         }
     }
 }

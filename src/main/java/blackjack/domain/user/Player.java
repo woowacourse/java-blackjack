@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.GameRule;
+import blackjack.exception.ExceptionMessage;
 import java.util.List;
 
 public class Player {
@@ -41,7 +42,7 @@ public class Player {
 
     private void validateHitPossibility() {
         if (!checkHitPossibility()) {
-            throw new IllegalArgumentException("히트가 불가능한 상태에서 히트를 시도하고 있습니다.");
+            throw new IllegalArgumentException(ExceptionMessage.CANNOT_HIT.getContent());
         }
     }
 }

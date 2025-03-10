@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.exception.ExceptionMessage;
 import java.util.Objects;
 
 public final class Nickname {
@@ -13,7 +14,7 @@ public final class Nickname {
 
     private void validateBlank(String nickname) {
         if (nickname == null || nickname.isBlank()) {
-            throw new IllegalArgumentException("닉네임은 공백을 허용하지 않습니다.");
+            throw new IllegalArgumentException(ExceptionMessage.NOT_ALLOWED_EMPTY_NICKNAME.getContent());
         }
     }
 

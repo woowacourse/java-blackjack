@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.exception.ExceptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -14,6 +15,6 @@ class NicknameTest {
     void nicknameIsShouldNotBlank(String input) {
         assertThatThrownBy(() -> new Nickname(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("닉네임은 공백을 허용하지 않습니다.");
+                .hasMessage(ExceptionMessage.NOT_ALLOWED_EMPTY_NICKNAME.getContent());
     }
 }

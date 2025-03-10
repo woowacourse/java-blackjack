@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
+import blackjack.exception.ExceptionMessage;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +51,7 @@ class PlayerTest {
 
         assertThatCode(() -> player.hit(make(CardValue.ACE)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("히트가 불가능한 상태에서 히트를 시도하고 있습니다.");
+                .hasMessage(ExceptionMessage.CANNOT_HIT.getContent());
     }
 
     @ParameterizedTest
