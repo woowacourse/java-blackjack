@@ -4,6 +4,7 @@ import static domain.CardNumberType.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,14 +30,11 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateSumWithLowAce() > VALID_MAX_SUM_LIMIT;
-    }
-
-    public boolean isAceCountEqualTo(int targetCount) {
-        int aceCount = (int) cards.stream()
-                .filter(card -> card.isEqualCardNumberType(ACE))
-                .count();
-        return aceCount == targetCount;
+        int sumWithLowAce = cards.stream()
+                .map(Card::cardNumberType)
+                .mapToInt(CardNumberType::getDefaultNumber)
+                .sum();
+        return sumWithLowAce > VALID_MAX_SUM_LIMIT;
     }
 
     public void add(Card card) {
@@ -48,45 +46,22 @@ public class Cards {
     }
 
     public int calculateSum() {
-        int cardsSumWithoutAce = calculateSumWithoutAce();
-        if (hasNotAce()) {
-            return cardsSumWithoutAce;
+        int sum = 0;
+        List<Card> sortedCards = getSortedCards();
+        for (Card card : sortedCards) {
+            if(card.cardNumberType() != ACE) {
+                sum += card.getDefaultNumber();
+                continue;
+            }
+            sum += getAceNumber(sum);
         }
-        int aceCount = calculateAceCount();
-        return calculateSumWithAces(aceCount, cardsSumWithoutAce);
+        return sum;
     }
 
-    public int calculateSumWithoutAce() {
+    private List<Card> getSortedCards() {
         return cards.stream()
-                .filter(card -> !card.isEqualCardNumberType(ACE))
-                .mapToInt(Card::getDefaultNumber)
-                .sum();
-    }
-
-    private int calculateSumWithAces(int aceCount, int cardsWithoutAceSum) {
-        int result = cardsWithoutAceSum;
-        for (int count = 0; count < aceCount; count++) {
-            result += getAceNumber(result);
-        }
-        return result;
-    }
-
-    private int calculateSumWithLowAce() {
-        return cards.stream()
-                .map(Card::cardNumberType)
-                .mapToInt(CardNumberType::getDefaultNumber)
-                .sum();
-    }
-
-    private int calculateAceCount() {
-        return (int) cards.stream()
-                .filter(card -> card.isEqualCardNumberType(ACE))
-                .count();
-    }
-
-    private boolean hasNotAce() {
-        return cards.stream()
-                .noneMatch(card -> card.isEqualCardNumberType(ACE));
+                .sorted(Comparator.comparing(Card::getDefaultNumber).reversed())
+                .toList();
     }
 
     @Override
