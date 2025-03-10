@@ -31,11 +31,9 @@ public final class Player {
     
     public static List<Player> createPlayers(final List<String> playerNames) {
         validatePlayers(playerNames);
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName));
-        }
-        return players;
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
     }
     
     private static void validatePlayers(final List<String> playerNames) {
