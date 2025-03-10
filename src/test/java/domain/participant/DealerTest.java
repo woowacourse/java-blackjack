@@ -2,6 +2,7 @@ package domain.participant;
 
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
+import static domain.card.Number.QUEEN;
 import static domain.card.Number.TWO;
 import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
@@ -71,6 +72,19 @@ public class DealerTest {
         assertThat(dealer.isUnderThreshold()).isTrue();
     }
 
+    @Test
+    @DisplayName("딜러 추가 카드 뽑기 테스트 (false) 리턴")
+    void checkIsNotUnderThresholdTest() {
+        //given
+        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, QUEEN)));
+        Dealer dealer = new Dealer(cardDeck);
+        dealer.addCards();
+        dealer.addCards();
+
+        //when-then
+        assertThat(dealer.isUnderThreshold()).isFalse();
+    }
+
     @ParameterizedTest
     @DisplayName("드로우 테스트")
     @MethodSource("provideCardDeckForDrawTest")
@@ -87,7 +101,8 @@ public class DealerTest {
     private static Stream<Arguments> provideCardDeckForDrawTest() {
         return Stream.of(Arguments.of(
                 new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))),
-                new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK)))
+                new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))),
+                new CardDeck(List.of(new Card(CLOVER, TWO)))
         ));
     }
 }
