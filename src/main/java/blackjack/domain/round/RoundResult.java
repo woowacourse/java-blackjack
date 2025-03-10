@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.round;
 
 import java.util.List;
 import java.util.function.BiFunction;

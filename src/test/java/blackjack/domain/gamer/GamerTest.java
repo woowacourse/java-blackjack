@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.RoundResult;
+import blackjack.domain.round.RoundResult;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.deck.Deck;
 import blackjack.fixture.DeckFixture;

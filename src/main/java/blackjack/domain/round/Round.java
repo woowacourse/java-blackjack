@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.round;
 
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
