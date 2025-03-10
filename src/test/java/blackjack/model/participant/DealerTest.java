@@ -64,7 +64,7 @@ class DealerTest {
         dealer.receiveHand(spadeFive);
 
         // when
-        int total = dealer.getTotal();
+        int total = dealer.calculateHandTotal();
 
         // then
         assertThat(total)
@@ -83,7 +83,7 @@ class DealerTest {
         dealer.receiveHand(spadeAce);
 
         // when
-        int total = dealer.getTotal();
+        int total = dealer.calculateHandTotal();
 
         // then
         assertThat(total)
@@ -104,7 +104,7 @@ class DealerTest {
         dealer.receiveHand(spadeNine);
 
         // when
-        int total = dealer.getTotal();
+        int total = dealer.calculateHandTotal();
 
         // then
         assertThat(total)

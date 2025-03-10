@@ -32,7 +32,7 @@ public enum MatchResult {
         if (dealer.isBlackjack()) {
             return LOSE;
         }
-        return determineByCompareTotal(player.getTotal(), dealer.getTotal());
+        return determineByCompareTotal(player.calculateHandTotal(), dealer.calculateHandTotal());
     }
 
     private static boolean isBothBlackjack(Player player, Dealer dealer) {

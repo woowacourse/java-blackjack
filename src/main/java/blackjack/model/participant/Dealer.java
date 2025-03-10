@@ -21,7 +21,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean shouldHit() {
-        return getTotal() <= DEALER_HIT_THRESHOLD;
+        return calculateHandTotal() <= DEALER_HIT_THRESHOLD;
     }
 
     public Card getVisibleCard() {

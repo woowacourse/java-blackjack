@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("플레이어 테스트")
 class PlayerTest {
@@ -26,6 +27,15 @@ class PlayerTest {
         // when, then
         assertThatCode(() -> new Player(name, NO_HIT_STRATEGY))
                 .doesNotThrowAnyException();
+    }
+
+    @DisplayName("이름이 비었거나, null이면 예외를 발생시킨다.")
+    @ParameterizedTest
+    @ValueSource(strings = {" ", ""})
+    void createPlayerValidateTest(String name) {
+        assertThatCode(() -> new Player(name, NO_HIT_STRATEGY))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 한글자 이상이어야합니다.");
     }
 
     @DisplayName("카드를 받을 수 있다.")
@@ -57,7 +67,7 @@ class PlayerTest {
         player.receiveHand(spadeFive);
 
         // then
-        assertThat(player.getTotal())
+        assertThat(player.calculateHandTotal())
                 .isEqualTo(15);
     }
 
@@ -74,7 +84,7 @@ class PlayerTest {
         player.receiveHand(spadeTen);
 
         // then
-        assertThat(player.getTotal())
+        assertThat(player.calculateHandTotal())
                 .isEqualTo(21);
     }
 
@@ -93,7 +103,7 @@ class PlayerTest {
         player.receiveHand(spadeNine);
 
         // then
-        assertThat(player.getTotal())
+        assertThat(player.calculateHandTotal())
                 .isEqualTo(12);
     }
 

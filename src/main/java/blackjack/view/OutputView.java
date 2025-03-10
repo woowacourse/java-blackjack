@@ -88,7 +88,7 @@ public class OutputView {
 
     public void printPlayerHandAndTotal(List<Player> players) {
         for (Player player : players) {
-            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player), player.getTotal());
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player), player.calculateHandTotal());
         }
         System.out.println();
     }

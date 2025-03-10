@@ -25,7 +25,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public int getTotal() {
+    public int calculateHandTotal() {
         int total = sumHandWithoutAce();
         if (hasAce()) {
             return total + calculateAceValue(total);
@@ -70,11 +70,11 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.size() == BLACKJACK_HAND_COUNT && getTotal() == BLACKJACK_VALUE_TOTAL;
+        return hand.size() == BLACKJACK_HAND_COUNT && calculateHandTotal() == BLACKJACK_VALUE_TOTAL;
     }
 
     public boolean isBust() {
-        return BLACKJACK_VALUE_TOTAL < getTotal();
+        return BLACKJACK_VALUE_TOTAL < calculateHandTotal();
     }
 
     public List<Card> getHand() {

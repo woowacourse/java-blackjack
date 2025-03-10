@@ -87,6 +87,6 @@ public class Game {
     }
 
     public int getDealerTotal() {
-        return dealer.getTotal();
+        return dealer.calculateHandTotal();
     }
 }
