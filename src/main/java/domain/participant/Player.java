@@ -31,6 +31,9 @@ public class Player extends Participant {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        if (!super.equals(o)) {
+            return false;
+        }
         Player player = (Player) o;
         return Objects.equals(name, player.name);
     }

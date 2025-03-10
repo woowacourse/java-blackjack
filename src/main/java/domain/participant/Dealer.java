@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class Dealer extends Participant {
 
-    public static final int DRAW_BOUNDARY = 16;
+    private static final int DRAW_BOUNDARY = 16;
     private static final int INIT_COUNT = 2;
 
     private final Map<GameResult, Integer> result;
@@ -81,6 +81,9 @@ public class Dealer extends Participant {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
             return false;
         }
         Dealer dealer = (Dealer) o;
