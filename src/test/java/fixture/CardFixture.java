@@ -10,11 +10,11 @@ import java.util.List;
 public class CardFixture {
     private static final int SUIT_COUNT = 4;
     public static List<Card> deckFixture = new ArrayList<>();
-    private static final Deck deck = new Deck();
+    private static final Deck deck = new Deck(new TestShuffler());
 
     static {
         for (int i = 0; i < 52; i++) {
-            deckFixture.add(deck.random(new TestNumberGenerator()));
+            deckFixture.add(deck.drawCard());
         }
     }
 

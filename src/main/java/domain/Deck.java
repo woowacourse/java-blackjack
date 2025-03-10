@@ -1,31 +1,30 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 public class Deck {
-    private final List<Card> deck = new ArrayList<>();
+    private final Stack<Card> deck = new Stack<>();
 
-    public Deck() {
+    public Deck(Shuffler shuffler) {
         for (Rank rank : Rank.values()) {
             for (Suit suit : Suit.values()) {
                 deck.add(new Card(rank, suit));
             }
         }
+        shuffler.shuffle(deck);
     }
 
-    public Card random(NumberGenerator generator) {
+    public Card drawCard() {
         if (deck.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 카드를 생성할 수 없습니다.");
+            throw new IllegalStateException("[ERROR] 뽑을 수 있는 카드가 없습니다.");
         }
-        int index = generator.generate(deck.size());
-        return deck.remove(index);
+        return deck.pop();
     }
 
     public CardHand getInitialDeal() {
-        Card firstCard = random(new RandomNumberGenerator());
-        Card secondCard = random(new RandomNumberGenerator());
+        Card firstCard = drawCard();
+        Card secondCard = drawCard();
         return new CardHand(Set.of(firstCard, secondCard));
     }
 }

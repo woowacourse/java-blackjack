@@ -14,6 +14,7 @@ import static domain.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.CardFixture;
+import fixture.TestShuffler;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultTest {
-    private final Deck deck = new Deck();
+    private final Deck deck = new Deck(new TestShuffler());
     private final CardHand bustCardHand = new CardHand(
             Set.of(CardFixture.of(TEN, CLOVER), CardFixture.of(TEN, HEART), CardFixture.of(TEN, DIAMOND)));
     private final CardHand bustCardHand2 = new CardHand(

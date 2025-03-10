@@ -3,6 +3,7 @@ package controller;
 import domain.Card;
 import domain.Deck;
 import domain.Game;
+import domain.RandomShuffler;
 import java.util.List;
 import java.util.function.Supplier;
 import view.Answer;
@@ -24,7 +25,7 @@ public class BlackJackController {
 
     public Game startGame() {
         List<String> playerNames = inputView.readPlayerNames();
-        return new Game(playerNames, new Deck());
+        return new Game(playerNames, new Deck(new RandomShuffler()));
     }
 
     private void giveAdditionalCardsForPlayer(Game game) {
