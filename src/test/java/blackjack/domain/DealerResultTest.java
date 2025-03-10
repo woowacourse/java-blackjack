@@ -12,7 +12,7 @@ class DealerResultTest {
     @Test
     void test1() {
         // given
-        DealerResult dealerResult = DealerResult.create();
+        DealerResult dealerResult = new DealerResult();
 
         // when
         dealerResult.addCountOf(GameResultType.WIN);
