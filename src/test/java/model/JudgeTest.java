@@ -8,6 +8,8 @@ import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 import model.cards.Cards;
+import model.cards.DealerCards;
+import model.cards.PlayerCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,12 +20,12 @@ class JudgeTest {
     void test1() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new ArrayList<>(List.of(
+        Cards dealerCards = new DealerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.EIGHT, CardShape.SPADE),
                 new Card(CardNumber.NINE, CardShape.SPADE)
         )));
 
-        Cards playerCards = new Cards(new ArrayList<>(List.of(
+        Cards playerCards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.TWO, CardShape.SPADE)
@@ -36,12 +38,12 @@ class JudgeTest {
     void test2() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new ArrayList<>(List.of(
+        Cards dealerCards = new DealerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.TWO, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new ArrayList<>(List.of(
+        Cards playerCards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.EIGHT, CardShape.SPADE),
                 new Card(CardNumber.NINE, CardShape.SPADE)
         )));
@@ -54,11 +56,11 @@ class JudgeTest {
     void test3() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new ArrayList<>(List.of(
+        Cards dealerCards = new DealerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.SEVEN, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new ArrayList<>(List.of(
+        Cards playerCards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));
@@ -71,11 +73,11 @@ class JudgeTest {
     void test4() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new ArrayList<>(List.of(
+        Cards dealerCards = new DealerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new ArrayList<>(List.of(
+        Cards playerCards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.SEVEN, CardShape.SPADE)
         )));
@@ -88,11 +90,11 @@ class JudgeTest {
     void test5() {
         Judge judge = new Judge();
 
-        Cards dealerCards = new Cards(new ArrayList<>(List.of(
+        Cards dealerCards = new DealerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));
-        Cards playerCards = new Cards(new ArrayList<>(List.of(
+        Cards playerCards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.QUEEN, CardShape.SPADE),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         )));

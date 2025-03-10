@@ -1,17 +1,19 @@
 package model.cards;
 
-import java.util.ArrayList;
+import java.util.List;
+import model.card.Card;
 import model.deck.Deck;
 
-public class DealerCardsFactory {
+final public class DealerCardsFactory extends CardsFactory {
 
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
-    public static Cards generate(final Deck deck) {
-        Cards cards = new Cards(new ArrayList<>());
-        while (cards.calculateResult() <= DEALER_DRAW_THRESHOLD) {
-            cards.addCard(deck.getCard());
+    @Override
+    DealerCards createCards(final Deck deck, final List<Card> cards) {
+        DealerCards dealerCards = new DealerCards(cards);
+        while (dealerCards.calculateResult() <= DEALER_DRAW_THRESHOLD) {
+            dealerCards.addCard(deck.getCard());
         }
-        return cards;
+        return dealerCards;
     }
 }

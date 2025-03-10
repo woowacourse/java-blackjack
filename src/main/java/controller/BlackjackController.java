@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import model.cards.Cards;
+import model.cards.CardsFactory;
+import model.cards.DealerCards;
 import model.cards.DealerCardsFactory;
 import model.deck.Deck;
 import model.GameResult;
@@ -37,7 +39,7 @@ public class BlackjackController {
         deck.shuffle();
 
         Players players = generatePlayersWithCards(inputView.readPlayerNames());
-        Cards dealerCards = DealerCardsFactory.generate(deck);
+        DealerCards dealerCards = (DealerCards) new DealerCardsFactory().generate(deck);
         outputView.printNewLine();
 
         printPlayersAndInitialCards(players, dealerCards);
@@ -84,7 +86,7 @@ public class BlackjackController {
         );
     }
 
-    private void printPlayersAndInitialCards(final Players players, final Cards dealerCards) {
+    private void printPlayersAndInitialCards(final Players players, final DealerCards dealerCards) {
         outputView.printPlayers(new ArrayList<>(players.getNames()));
         printInitialCardsWithName(dealerCards, players);
         outputView.printNewLine();
@@ -104,7 +106,7 @@ public class BlackjackController {
         }
     }
 
-    private void printInitialCardsWithName(final Cards dealerCards, final Players players) {
+    private void printInitialCardsWithName(final DealerCards dealerCards, final Players players) {
         outputView.printDealerFirstCard(CardDto.from(dealerCards.getFirstCard()));
         for (String name : players.getNames()) {
             List<CardDto> playerCardDtos = getCardDtos(players.findCardsByName(name));
@@ -119,8 +121,9 @@ public class BlackjackController {
     }
 
     private Players generatePlayersWithCards(final List<String> names) {
+        CardsFactory playerCardsFactory = new PlayerCardsFactory();
         Map<String, Cards> rawPlayers = new LinkedHashMap<>(names.size());
-        names.forEach(name -> rawPlayers.put(name, PlayerCardsFactory.generate(deck)));
+        names.forEach(name -> rawPlayers.put(name, playerCardsFactory.generate(deck)));
         return new Players(rawPlayers);
     }
 

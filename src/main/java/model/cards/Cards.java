@@ -5,20 +5,34 @@ import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
 
-public class Cards {
+public abstract class Cards {
 
     private static final int BUST_THRESHOLD = 21;
-    private static final int INITIAL_CARDS_COUNT = 2;
 
-    private final List<Card> cards;
+    protected final List<Card> cards;
 
-    public Cards(final List<Card> cards) {
+    protected Cards(final List<Card> cards) {
         this.cards = cards;
+    }
+
+    public void addCard(final Card card) {
+        if (isBust()) {
+            throw new IllegalStateException("버스트일 때는 카드를 추가할 수 없습니다.");
+        }
+        cards.add(card);
+    }
+
+    public boolean isBust() {
+        return calculateSum() > BUST_THRESHOLD;
     }
 
     public int calculateResult() {
         changeAceElevenToOneUntilNotBust();
         return calculateSum();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     private void changeAceElevenToOneUntilNotBust() {
@@ -35,17 +49,6 @@ public class Cards {
                 .sum();
     }
 
-    public void addCard(final Card card) {
-        if (isBust()) {
-            throw new IllegalStateException("버스트일 때는 카드를 추가할 수 없습니다.");
-        }
-        cards.add(card);
-    }
-
-    public boolean isBust() {
-        return calculateSum() > BUST_THRESHOLD;
-    }
-
     private int findAceElevenCount() {
         return (int) cards.stream()
                 .filter(card -> card.isSameNumber(CardNumber.ACE_ELEVEN))
@@ -60,17 +63,5 @@ public class Cards {
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
-    }
-
-    public int getAdditionalDrawCount() {
-        return cards.size() - INITIAL_CARDS_COUNT;
-    }
-
-    public Card getFirstCard() {
-        return cards.getFirst();
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
     }
 }

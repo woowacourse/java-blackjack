@@ -1,14 +1,13 @@
 package model.cards;
 
-import java.util.ArrayList;
+import java.util.List;
+import model.card.Card;
 import model.deck.Deck;
 
-public class PlayerCardsFactory {
+final public class PlayerCardsFactory extends CardsFactory {
 
-    public static Cards generate(final Deck deck) {
-        Cards cards = new Cards(new ArrayList<>());
-        cards.addCard(deck.getCard());
-        cards.addCard(deck.getCard());
-        return cards;
+    @Override
+    PlayerCards createCards(final Deck deck, final List<Card> cards) {
+        return new PlayerCards(cards);
     }
 }
