@@ -25,6 +25,8 @@ public class GameParticipants {
         for (int i = 0; i < GameRule.INITIAL_DEALING_CARD_COUNT.getValue(); i++) {
             gameParticipants.forEach(dealer::dealCard);
         }
+
+        dealer.hideCard();
         gameParticipants.forEach(GameParticipant::showHand);
     }
 
@@ -44,7 +46,7 @@ public class GameParticipants {
     }
 
     public List<GameParticipant> getGameParticipants() {
-        return Stream.concat(players.stream(), Stream.of(dealer))
+        return Stream.concat(Stream.of(dealer), players.stream())
                 .toList();
     }
 

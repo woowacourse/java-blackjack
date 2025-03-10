@@ -8,7 +8,8 @@ import java.util.function.Consumer;
 public class Dealer extends GameParticipant {
 
     private static final String NICKNAME = "딜러";
-    private static final int DEALER_HIT_THRESHOLD_POINT = 16;
+    private static final int HIT_THRESHOLD_POINT = 16;
+    private static final int INITIAL_HIDE_CARD_COUNT = 1;
 
     private final CardMachine cardMachine;
 
@@ -28,10 +29,16 @@ public class Dealer extends GameParticipant {
 
     @Override
     public boolean shouldHit() {
-        return calculateSumOfCards() <= DEALER_HIT_THRESHOLD_POINT;
+        return calculateSumOfCards() <= HIT_THRESHOLD_POINT;
     }
 
     public void dealCard(GameParticipant participant) {
         participant.drawCard(cardMachine.drawCard());
+    }
+
+    public void hideCard() {
+        for (int cardIndex = 0; cardIndex < Math.min(INITIAL_HIDE_CARD_COUNT, hand.size()); cardIndex++) {
+            hand.reverse(cardIndex);
+        }
     }
 }

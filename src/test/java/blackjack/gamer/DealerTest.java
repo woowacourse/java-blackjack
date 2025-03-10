@@ -1,8 +1,11 @@
 package blackjack.gamer;
 
+import blackjack.ConstantFixture;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -42,4 +45,24 @@ class DealerTest {
         // then
         assertThat(dealer.shouldHit()).isEqualTo(expectedShouldHit);
     }
+
+    @Test
+    @DisplayName("딜러는 카드를 규칙에 정해진 개수만큼 숨길 수 있다")
+    void canHideCard() {
+        // given
+        Dealer dealer = GameParticipantFixture.createDealer();
+        dealer.drawCard(CardFixture.createCard());
+        dealer.drawCard(CardFixture.createCard());
+
+        // when
+        dealer.hideCard();
+
+        // then
+        long hideCount = dealer.hand.getCards().stream()
+                .filter(Card::isHidden)
+                .count();
+
+        assertThat(hideCount).isEqualTo(ConstantFixture.getInitialHideCardCount("테스트 전용"));
+    }
+
 }

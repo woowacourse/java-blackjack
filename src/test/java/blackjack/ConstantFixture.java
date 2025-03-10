@@ -12,7 +12,11 @@ public class ConstantFixture {
     }
 
     public static int getDealerHitThresholdPoint(String purpose) {
-        return getConstantIntValue(Dealer.class, "DEALER_HIT_THRESHOLD_POINT", purpose);
+        return getConstantIntValue(Dealer.class, "HIT_THRESHOLD_POINT", purpose);
+    }
+
+    public static int getInitialHideCardCount(String purpose) {
+        return getConstantIntValue(Dealer.class, "INITIAL_HIDE_CARD_COUNT", purpose);
     }
 
     private static void validate(String purpose) {

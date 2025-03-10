@@ -49,6 +49,10 @@ public class Cards {
         return calculateTotalSum(sumWithoutAce, aces);
     }
 
+    public void reverse(int cardIndex) {
+        cards.get(cardIndex).reverse();
+    }
+
     public int size() {
         return cards.size();
     }
