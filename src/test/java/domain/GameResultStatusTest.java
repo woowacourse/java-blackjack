@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class GameResultStatusTest {
 
-    @DisplayName("딜러와 플레이어가 모두 버스트일 경우 무승부이다")
+    @DisplayName("딜러와 플레이어가 모두 버스트일 경우 플레이어 버스트가 우선이기 때문에, 플레이어의 패배이다")
     @Test
     void test1() {
         //given
@@ -17,10 +17,10 @@ class GameResultStatusTest {
         GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
 
         //then
-        assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);
+        assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
     }
 
-    @DisplayName("딜러만 버스트일 경우 승리이다")
+    @DisplayName("딜러만 버스트일 경우 플레이어의 승리이다")
     @Test
     void test2() {
         //given
@@ -34,7 +34,7 @@ class GameResultStatusTest {
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
     }
 
-    @DisplayName("플레이어만 버스트일 경우 패배이다")
+    @DisplayName("플레이어만 버스트일 경우 플레이어의 패배이다")
     @Test
     void test3() {
         //given
@@ -48,7 +48,7 @@ class GameResultStatusTest {
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
     }
 
-    @DisplayName("딜러와 플레이어가 모두 버스트가 아니고, 플레이어의 합이 더 높다면 승리이다")
+    @DisplayName("딜러와 플레이어가 모두 버스트가 아니고, 플레이어의 합이 더 높다면 플레이어의 승리이다")
     @Test
     void test4() {
         //given
@@ -62,7 +62,7 @@ class GameResultStatusTest {
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
     }
 
-    @DisplayName("딜러와 플레이어가 모두 버스트가 아니고, 딜러의 합이 더 높다면 패배이다")
+    @DisplayName("딜러와 플레이어가 모두 버스트가 아니고, 딜러의 합이 더 높다면 플레이어의 패배이다")
     @Test
     void test5() {
         //given

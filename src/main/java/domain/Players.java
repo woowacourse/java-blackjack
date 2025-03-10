@@ -2,6 +2,8 @@ package domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -29,5 +31,15 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public GameResult judgeAgainstDealer(Dealer dealer) {
+        int dealerSum = dealer.calculateCardsSum();
+        Map<Player, GameResultStatus> gameResult = players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> GameResultStatus.calculate(dealerSum, player.calculateCardsSum())
+                ));
+        return new GameResult(gameResult);
     }
 }

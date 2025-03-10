@@ -8,20 +8,13 @@ public enum GameResultStatus {
     private static final int BLACKJACK_BUST_THRESHOLD = 22;
 
     public static GameResultStatus calculate(int dealerSum, int playerSum) {
-        if (isBothBust(dealerSum, playerSum)) {
-            return DRAW;
+        if (isPlayerBust(playerSum)) {
+            return LOSE;
         }
         if (isDealerBust(dealerSum)) {
             return WIN;
         }
-        if (isPlayerBust(playerSum)) {
-            return LOSE;
-        }
         return compareHands(dealerSum, playerSum);
-    }
-
-    private static boolean isBothBust(int dealerSum, int playerSum) {
-        return isDealerBust(dealerSum) && isPlayerBust(playerSum);
     }
 
     private static boolean isDealerBust(int dealerSum) {

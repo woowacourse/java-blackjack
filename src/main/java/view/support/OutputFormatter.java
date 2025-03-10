@@ -2,7 +2,6 @@ package view.support;
 
 import static domain.CardNumberType.*;
 import static domain.CardType.*;
-import static domain.GameResultStatus.DRAW;
 import static domain.GameResultStatus.LOSE;
 import static domain.GameResultStatus.WIN;
 
@@ -47,7 +46,6 @@ public class OutputFormatter {
 
     private static final Map<GameResultStatus, String> GAME_RESULT_FORMATTER = Map.of(
             WIN, "승",
-            DRAW, "무",
             LOSE, "패"
     );
 

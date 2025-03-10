@@ -10,8 +10,6 @@ class GameResultTest {
 
     Map<Player, GameResultStatus> gameResults = Map.of(
             new Player("mimi", Cards.createEmpty()), GameResultStatus.WIN,
-            new Player("wade", Cards.createEmpty()), GameResultStatus.DRAW,
-            new Player("pobi", Cards.createEmpty()), GameResultStatus.DRAW,
             new Player("hiro", Cards.createEmpty()), GameResultStatus.LOSE,
             new Player("hipo", Cards.createEmpty()), GameResultStatus.LOSE,
             new Player("july", Cards.createEmpty()), GameResultStatus.LOSE
@@ -28,19 +26,6 @@ class GameResultTest {
 
         //then
         assertThat(winCount).isEqualTo(1);
-    }
-
-    @DisplayName("무의 개수를 정상적으로 반환한다")
-    @Test
-    void test2() {
-        //given
-        GameResult gameResult = new GameResult(gameResults);
-
-        //when
-        int drawCount = gameResult.calculateStatusCount(GameResultStatus.DRAW);
-
-        //then
-        assertThat(drawCount).isEqualTo(2);
     }
 
     @DisplayName("패의 개수를 정상적으로 반환한다")
