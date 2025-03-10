@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +25,9 @@ class BlackjackGameTest {
         @DisplayName("2명 이상의 플레이어를 입력 받을 수 있다.")
         void createParticipantsByNames() {
             List<String> names = List.of("hula", "sana");
-            BlackjackGame game = BlackjackGame.createByPlayerNames(names);
-            Participants participants = game.getParticipants();
+            BlackjackGame game = BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(), names);
 
-            List<String> playerNames = participants.getPlayerNames();
+            List<String> playerNames = game.getParticipants().getPlayerNames();
 
             assertAll(() -> {
                 assertThat(playerNames.getFirst()).isEqualTo(names.getFirst());
@@ -46,7 +44,8 @@ class BlackjackGameTest {
         @DisplayName("딜러와 플레이어에게 카드를 2장씩 배부할 수 있다.")
         void distributeCardsToDealerAndPlayer() {
             List<String> names = List.of("sana");
-            BlackjackGame game = BlackjackGame.createByPlayerNames(names);
+            BlackjackGame game = BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(),
+                names);
 
             assertAll(() -> {
                 assertThatCode(game::initCardsToDealer).doesNotThrowAnyException();
@@ -64,12 +63,10 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player("sana");
+            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, List.of("sana"));
+            Player player = game.getParticipants().getPlayers().getFirst();
+
             player.addCards(cardDeck, 2);
-
-            Participants participants = new Participants(new Dealer(), List.of(player));
-            BlackjackGame game = new BlackjackGame(cardDeck, participants);
-
             game.addExtraCard(player); // 총 3장 카드 보유
 
             assertThat(player.openCards()).hasSize(3);
@@ -85,13 +82,10 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player("sana");
-            Dealer dealer = new Dealer();
+            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, List.of("sana"));
+            Dealer dealer = game.getParticipants().getDealer();
+
             dealer.addCards(cardDeck, 2);
-
-            Participants participants = new Participants(dealer, List.of(player));
-            BlackjackGame game = new BlackjackGame(cardDeck, participants);
-
             game.addExtraCard(dealer);
 
             assertThat(dealer.openCards()).hasSize(3);
@@ -107,12 +101,10 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player("sana");
-            Dealer dealer = new Dealer();
-            dealer.addCards(cardDeck, 2);
+            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, List.of("sana"));
+            Dealer dealer = game.getParticipants().getDealer();
 
-            Participants participants = new Participants(dealer, List.of(player));
-            BlackjackGame game = new BlackjackGame(cardDeck, participants);
+            dealer.addCards(cardDeck, 2);
 
             assertThatThrownBy(() -> game.addExtraCard(dealer))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -139,22 +131,15 @@ class BlackjackGameTest {
                 new Card(Suit.SPADE, Denomination.KING)
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
+            game = BlackjackGame.createByPlayerNames(cardDeck, List.of("hula", "sana", "jason"));
 
-            Dealer dealer = new Dealer();
+            Dealer dealer = game.getParticipants().getDealer();
             dealer.addCards(cardDeck, 2);
 
-            Player player1 = new Player("hula"); // 패배
-            player1.addCards(cardDeck, 2);
-
-            Player player2 = new Player("sana"); // 승리
-            player2.addCards(cardDeck, 2);
-
-            Player player3 = new Player("jason"); // 패배
-            player3.addCards(cardDeck, 2);
-
-            Participants participants = new Participants(dealer,
-                List.of(player1, player2, player3));
-            game = new BlackjackGame(cardDeck, participants);
+            List<Player> players = game.getParticipants().getPlayers();
+            for (Player player : players) {
+                player.addCards(cardDeck, 2);
+            }
         }
 
         @Test

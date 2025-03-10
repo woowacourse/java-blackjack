@@ -17,15 +17,14 @@ public class BlackjackGame {
     private final CardDeck cardDeck;
     private final Participants participants;
 
-    public BlackjackGame(final CardDeck cardDeck, final Participants participants) {
+    private BlackjackGame(final CardDeck cardDeck, final Participants participants) {
         this.cardDeck = cardDeck;
         this.participants = participants;
     }
 
-    public static BlackjackGame createByPlayerNames(final List<String> names) {
-        CardDeck cardDeck = CardDeck.shuffleCardDeck();
-
+    public static BlackjackGame createByPlayerNames(final CardDeck cardDeck, final List<String> names) {
         Dealer dealer = new Dealer();
+
         List<Player> players = new ArrayList<>();
         for (String name : names) {
             players.add(new Player(name));
