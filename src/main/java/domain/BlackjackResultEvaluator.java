@@ -1,89 +1,75 @@
 package domain;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BlackjackResultEvaluator {
-
-    private final int BUST_STANDARD = 21;
-    
-    private final DealerWinStatus dealerWinStatus;
-    private final Map<String, WinStatus> playerWinStatuses;
-
-    public BlackjackResultEvaluator(BlackjackResult blackjackDealerResult, List<BlackjackResult> blackjackPlayerResults) {
-        this.dealerWinStatus = calculateDealerWinStatus(blackjackDealerResult, blackjackPlayerResults);
-        this.playerWinStatuses = calculateWinStatuses(blackjackDealerResult, blackjackPlayerResults);
-    }
-
-    private Map<String, WinStatus> calculateWinStatuses(BlackjackResult blackjackDealerResult,
-                                                        List<BlackjackResult> blackjackPlayerResults) {
+    public static Map<String, WinStatus> calculateWinStatuses(BlackjackParticipants participants) {
         Map<String, WinStatus> winStatuses = new HashMap<>();
-        int dealerSum = blackjackDealerResult.cardSum();
-        for (BlackjackResult blackjackResult : blackjackPlayerResults) {
-            String playerName = blackjackResult.name();
-            int playerSum = blackjackResult.cardSum();
-            winStatuses.put(playerName, calculatePlayerWinStatus(dealerSum, playerSum));
+        String dealerName = participants.dealerName();
+        for (String playerName : participants.getPlayerNames()) {
+            ScoreInfo scoreInfo = new ScoreInfo(playerName, dealerName, participants);
+            winStatuses.put(playerName, calculatePlayerWinStatus(scoreInfo));
         }
+
         return winStatuses;
     }
 
-    private DealerWinStatus calculateDealerWinStatus(BlackjackResult blackjackDealerResult,
-                                                     List<BlackjackResult> blackjackPlayerResults) {
+    public static DealerWinStatus calculateDealerWinStatus(BlackjackParticipants participants) {
         int win = 0;
         int lose = 0;
-        int dealerSum = blackjackDealerResult.cardSum();
-        for (BlackjackResult playerBlackjackResult : blackjackPlayerResults) {
-            int cardSum = playerBlackjackResult.cardSum();
-            win += calculateDealerWin(dealerSum, cardSum);
-            lose += calculateDealerLose(dealerSum, cardSum);
+        String dealerName = participants.dealerName();
+        for (String playerName : participants.getPlayerNames()) {
+            ScoreInfo scoreInfo = new ScoreInfo(dealerName, playerName, participants);
+            win += calculateDealerWin(scoreInfo);
+            lose += calculateDealerLose(scoreInfo);
         }
+
         return new DealerWinStatus(win, lose);
     }
 
-    private int calculateDealerWin(int dealerSum, int playerSum) {
-        if (dealerSum > playerSum && !isBust(dealerSum)) {
+    private static int calculateDealerWin(ScoreInfo scoreInfo) {
+        if (scoreInfo.dealerSum > scoreInfo.playerSum && !scoreInfo.isDealerBust) {
             return 1;
         }
-        if (!isBust(dealerSum) && isBust(playerSum)) {
-            return 1;
-        }
-        return 0;
-    }
-
-    private int calculateDealerLose(int dealerSum, int playerSum) {
-        if (dealerSum < playerSum && !isBust(playerSum)) {
-            return 1;
-        }
-        if (!isBust(playerSum) && isBust(dealerSum)) {
+        if (!scoreInfo.isDealerBust && scoreInfo.isPlayerBust) {
             return 1;
         }
         return 0;
     }
 
-    private boolean isBust(int sum) {
-        return sum > BUST_STANDARD;
+    private static int calculateDealerLose(ScoreInfo scoreInfo) {
+        if (scoreInfo.dealerSum < scoreInfo.playerSum && !scoreInfo.isPlayerBust) {
+            return 1;
+        }
+        if (!scoreInfo.isPlayerBust && scoreInfo.isDealerBust) {
+            return 1;
+        }
+        return 0;
     }
 
-    private WinStatus calculatePlayerWinStatus(int dealerSum, int playerSum) {
-        if (isBust(dealerSum) && isBust(playerSum)) {
+    private static WinStatus calculatePlayerWinStatus(ScoreInfo scoreInfo) {
+        if (scoreInfo.isDealerBust && scoreInfo.isPlayerBust) {
             return WinStatus.DRAW;
         }
-        if (dealerSum < playerSum) {
+        if (scoreInfo.dealerSum < scoreInfo.playerSum) {
             return WinStatus.WIN;
         }
-        if (dealerSum > playerSum) {
+        if (scoreInfo.dealerSum > scoreInfo.playerSum) {
             return WinStatus.LOSE;
         }
         return WinStatus.DRAW;
     }
 
-    public DealerWinStatus getDealerWinStatus() {
-        return dealerWinStatus;
-    }
+    private static class ScoreInfo {
+        int dealerSum, playerSum;
+        boolean isDealerBust, isPlayerBust;
 
-    public Map<String, WinStatus> getPlayerWinStatuses() {
-        return Collections.unmodifiableMap(playerWinStatuses);
+        public ScoreInfo(String playerName, String dealerName, BlackjackParticipants participants) {
+            this.dealerSum = participants.calculateCardSum(dealerName);
+            this.playerSum = participants.calculateCardSum(playerName);
+            this.isDealerBust = participants.isBust(dealerName);
+            this.isPlayerBust = participants.isBust(playerName);
+        }
     }
 }

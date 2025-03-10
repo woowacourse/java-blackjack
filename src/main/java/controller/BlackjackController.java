@@ -4,8 +4,6 @@ import domain.BlackjackDeck;
 import domain.BlackjackDeckGenerator;
 import domain.BlackjackGame;
 import domain.BlackjackResult;
-import domain.BlackjackResultEvaluator;
-import domain.Dealer;
 import domain.DealerWinStatus;
 import domain.Player;
 import domain.TrumpCard;
@@ -27,14 +25,10 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void startBlackjack() {
+    public void run() {
         List<String> names = handleInput(this::handleNames);
-        startBlackjack(names);
-    }
-
-    private void startBlackjack(List<String> names) {
         BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, new Dealer());
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);
@@ -44,6 +38,12 @@ public class BlackjackController {
     }
 
     private void blackjackGameResult(BlackjackGame blackjackGame) {
+        blackjackCardResult(blackjackGame);
+
+        blackjackWinnerResult(blackjackGame);
+    }
+
+    private void blackjackCardResult(BlackjackGame blackjackGame) {
         BlackjackResult dealerResult = blackjackGame.currentDealerBlackjackResult();
         openPlayerResultCards(dealerResult);
 
@@ -51,15 +51,11 @@ public class BlackjackController {
         for (BlackjackResult result : playerResults) {
             openPlayerResultCards(result);
         }
-
-        blackjackWinnerResult(blackjackGame, dealerResult, playerResults);
     }
 
-    private void blackjackWinnerResult(BlackjackGame blackjackGame, BlackjackResult dealerResult,
-                                       List<BlackjackResult> playerResults) {
-        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator(dealerResult, playerResults);
-        DealerWinStatus dealerWinStatus = blackjackResultEvaluator.getDealerWinStatus();
-        Map<String, WinStatus> playerWinStatuses = blackjackResultEvaluator.getPlayerWinStatuses();
+    private void blackjackWinnerResult(BlackjackGame blackjackGame) {
+        DealerWinStatus dealerWinStatus = blackjackGame.getDealerWinStatus();
+        Map<String, WinStatus> playerWinStatuses = blackjackGame.getPlayerWinStatuses();
 
         outputView.resultHeader();
         outputView.dealerWinStatus(dealerWinStatus.win(), dealerWinStatus.lose(), blackjackGame.dealerName());

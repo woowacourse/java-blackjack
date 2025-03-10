@@ -88,4 +88,13 @@ public class BlackjackGame {
         String dealerName = participants.dealerName();
         return participants.calculateResult(dealerName);
     }
+
+    public DealerWinStatus getDealerWinStatus() {
+        return BlackjackResultEvaluator.calculateDealerWinStatus(participants);
+    }
+
+    public Map<String, WinStatus> getPlayerWinStatuses() {
+        return BlackjackResultEvaluator.calculateWinStatuses(participants);
+    }
+
 }
