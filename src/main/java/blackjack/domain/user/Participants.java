@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -39,10 +40,9 @@ public class Participants {
     }
 
     private void validateDuplicatePlayerNames(List<Player> players) {
-        Set<String> uniqueNames = new HashSet<>();
-        for (Player player : players) {
-            uniqueNames.add(player.getName());
-        }
+        Set<String> uniqueNames = players.stream()
+            .map(Player::getName)
+            .collect(Collectors.toSet());
 
         if (players.size() != uniqueNames.size()) {
             throw new IllegalArgumentException("중복된 이름을 가진 플레이어가 있습니다.");
