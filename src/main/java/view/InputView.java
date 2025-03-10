@@ -43,4 +43,22 @@ public class InputView {
         }
         throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
     }
+
+    public int readPlayerBettingAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        try {
+            String input = scanner.nextLine();
+            int inputBettingPrice = Integer.parseInt(input);
+            validateBettingPrice(inputBettingPrice);
+            return inputBettingPrice;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 배팅 금액 입니다.");
+        }
+    }
+
+    private void validateBettingPrice(int inputBettingPrice) {
+        if (inputBettingPrice <= 0) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 0보다 커야 합니다.");
+        }
+    }
 }

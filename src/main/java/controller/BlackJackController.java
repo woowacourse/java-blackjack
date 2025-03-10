@@ -23,6 +23,7 @@ public class BlackJackController {
     public void run() {
         List<String> playerNames = inputView.readPlayerNames();
         Players players = new Players(playerNames);
+        List<Integer> playerBettingAmount = readPlayerBettingAmount(playerNames);
         Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.createCards();
@@ -30,6 +31,10 @@ public class BlackJackController {
         startBlackJack(cardDeck, players, dealer);
         playBlackJack(cardDeck, players, dealer);
         judgeGameResult(players, dealer);
+    private List<Integer> readPlayerBettingAmount(List<String> playerNames) {
+        return playerNames.stream()
+                .map(inputView::readPlayerBettingAmount)
+                .toList();
     }
 
     private void startBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
