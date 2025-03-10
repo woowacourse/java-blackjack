@@ -81,8 +81,8 @@ public class PlayerBlackjackCardHandTest {
         assertThat(result).extracting(
                 "number", "shape"
         ).containsExactlyInAnyOrder(
-                Tuple.tuple(CardNumber.NUMBER_A, DIAMOND),
-                Tuple.tuple(CardNumber.NUMBER_2, HEART)
+                Tuple.tuple(CardNumber.ACE, DIAMOND),
+                Tuple.tuple(CardNumber.TWO, HEART)
         );
     }
 

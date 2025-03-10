@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 
 import java.util.List;
@@ -86,8 +87,7 @@ public class OutputView {
     }
     
     private String parseCard(Card card) {
-        return card.getNumber().name().replace("NUMBER_", "")
-                + parseCardShape(card.getShape());
+        return parseCardNumber(card.getNumber()) + parseCardShape(card.getShape());
     }
 
     private static String parseFinalSum(int sum) {
@@ -135,5 +135,45 @@ public class OutputView {
             return "무승부";
         }
         return "패배";
+    }
+    
+    private String parseCardNumber(CardNumber cardNumber) {
+        if (cardNumber.equals(CardNumber.ACE)) {
+            return "A";
+        }
+        if (cardNumber.equals(CardNumber.TWO)) {
+            return "2";
+        }
+        if (cardNumber.equals(CardNumber.THREE)) {
+            return "3";
+        }
+        if (cardNumber.equals(CardNumber.FOUR)) {
+            return "4";
+        }
+        if (cardNumber.equals(CardNumber.FIVE)) {
+            return "5";
+        }
+        if (cardNumber.equals(CardNumber.SIX)) {
+            return "6";
+        }
+        if (cardNumber.equals(CardNumber.SEVEN)) {
+            return "7";
+        }
+        if (cardNumber.equals(CardNumber.EIGHT)) {
+            return "8";
+        }
+        if (cardNumber.equals(CardNumber.NINE)) {
+            return "9";
+        }
+        if (cardNumber.equals(CardNumber.TEN)) {
+            return "10";
+        }
+        if (cardNumber.equals(CardNumber.JACK)) {
+            return "J";
+        }
+        if (cardNumber.equals(CardNumber.QUEEN)) {
+            return "Q";
+        }
+        return "K";
     }
 }

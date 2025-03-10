@@ -59,7 +59,7 @@ public class CardTest {
         
         // then
         assertAll(
-                () -> assertThat(card.getNumber()).isEqualTo(CardNumber.NUMBER_A),
+                () -> assertThat(card.getNumber()).isEqualTo(CardNumber.ACE),
                 () -> assertThat(card.getShape()).isEqualTo(CardShape.DIAMOND)
         );
     }
