@@ -4,7 +4,6 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +23,9 @@ public class BlackjackGame {
 
     public static BlackjackGame createByPlayerNames(final CardDeck cardDeck, final List<String> names) {
         Dealer dealer = new Dealer();
-
-        List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            players.add(new Player(name));
-        }
+        List<Player> players = names.stream()
+            .map(Player::new)
+            .toList();
 
         return new BlackjackGame(cardDeck, new Participants(dealer, players));
     }
