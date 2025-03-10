@@ -124,6 +124,4 @@ class HandTest {
         // when & then
         assertThat(hand.hasAce()).isFalse();
     }
-
-
 }

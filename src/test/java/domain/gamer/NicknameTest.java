@@ -30,6 +30,4 @@ class NicknameTest {
         Assertions.assertThatCode(() -> new Nickname(input))
                 .doesNotThrowAnyException();
     }
-
-
 }

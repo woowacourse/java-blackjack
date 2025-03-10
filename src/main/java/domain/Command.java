@@ -37,4 +37,3 @@ public enum Command {
         return displayCommand;
     }
 }
-

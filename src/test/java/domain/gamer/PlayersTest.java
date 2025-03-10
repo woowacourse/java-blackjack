@@ -24,8 +24,6 @@ class PlayersTest {
         // when & then
         assertThatCode(() -> new Players(playerGroup))
                 .doesNotThrowAnyException();
-
-
     }
 
     @DisplayName("플레이어는 1명 이상 4명 이하가 아니라면 예외가 발생한다.")
@@ -52,7 +50,6 @@ class PlayersTest {
         // when & then
         assertThatCode(() -> new Players(playerGroup))
                 .doesNotThrowAnyException();
-
     }
 
     @DisplayName("플레이어의 이름은 중복될 경우 예외가 발생한다.")
@@ -66,7 +63,6 @@ class PlayersTest {
         // when & then
         assertThatThrownBy(() -> new Players(playerGroup))
                 .isInstanceOf(IllegalArgumentException.class);
-
     }
 
     private static Stream<Arguments> methodSources() {
