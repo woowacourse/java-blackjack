@@ -33,10 +33,6 @@ public abstract class Participant {
         return nickname;
     }
 
-    public Card getCard(int index) {
-        return cards.get(index);
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }

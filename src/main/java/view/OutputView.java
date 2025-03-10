@@ -41,7 +41,7 @@ public class OutputView {
         );
         println("에게 2장을 나누었습니다.");
 
-        System.out.printf("딜러카드: %s%n", cardToString(dealer.getCard(1)));
+        System.out.printf("딜러카드: %s%n", cardToString(dealer.getLastCard()));
         for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }

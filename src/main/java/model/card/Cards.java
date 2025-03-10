@@ -9,7 +9,6 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
 public class Cards {
 
@@ -65,11 +64,6 @@ public class Cards {
             deque.push(new ArrayList<>(List.of(currentSum + 1, usedAces + 1)));
             deque.push(new ArrayList<>(List.of(currentSum + 11, usedAces + 1)));
         }
-    }
-
-
-    public Card get(int index) {
-        return cards.get(index);
     }
 
     public List<Card> getCards() {
