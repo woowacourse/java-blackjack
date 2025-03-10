@@ -1,24 +1,24 @@
 package domain.participant;
 
 import domain.card.CardDeck;
-import java.util.ArrayList;
+import domain.card.Hand;
 
 public class Participant {
-    protected final CardDeck hand;
+    protected final Hand hand;
 
     public Participant() {
-        this.hand = new CardDeck(new ArrayList<>());
+        this.hand = new Hand();
     }
 
-    public void hitCards(final CardDeck standard) {
-        hand.hitCards(standard);
+    public void hitCard(final CardDeck standard) {
+        hand.addCard(standard.hitCard());
     }
 
     public int sum() {
         return hand.sumWithAce();
     }
 
-    public CardDeck getHand() {
+    public Hand getHand() {
         return hand;
     }
 }

@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BlackJack {
+    private final int INITIAL_HIT_COUNT = 2;
+
     private final Players players;
     private final Dealer dealer;
 
@@ -21,8 +23,10 @@ public class BlackJack {
     }
 
     public void hitCardsToParticipant() {
-        players.hitCards(standard);
-        dealer.hitCards(standard);
+        for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
+            players.hitCard(standard);
+            dealer.hitCard(standard);
+        }
     }
 
     public void drawPlayers(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck) {

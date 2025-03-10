@@ -40,7 +40,7 @@ public class PlayerTest {
         CardDeck cardDeck = cardDeckFactory.create();
 
         // when
-        player.hitCards(cardDeck);
+        player.hitCard(cardDeck);
 
         // then
         assertThat(player.getHand().getCards().size()).isEqualTo(2);
@@ -54,7 +54,7 @@ public class PlayerTest {
         Player player = new Player("pobi");
 
         // when
-        player.hitCards(cardDeck);
+        player.hitCard(cardDeck);
 
         // then
         assertThat(player.sum()).isEqualTo(12);
@@ -94,8 +94,8 @@ public class PlayerTest {
                 List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE), new Card(HEART, TWO), new Card(DIAMOND, THREE)));
         Dealer dealer = new Dealer();
 
-        player.hitCards(cardDeck);
-        dealer.hitCards(cardDeck);
+        player.hitCard(cardDeck);
+        dealer.hitCard(cardDeck);
 
         // when-then
         assertThat(player.calculateWinner(dealer.sum())).isEqualTo(WIN);

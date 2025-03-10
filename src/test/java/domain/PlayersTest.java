@@ -30,7 +30,7 @@ import view.OutputView;
 public class PlayersTest {
     @Test
     @DisplayName("카드 분배 테스트")
-    void hitCardsTest() {
+    void hitCardTest() {
         // given
         Players players = Players.from(new ArrayList<>(
                 List.of("pobi", "lisa")
@@ -40,7 +40,7 @@ public class PlayersTest {
         CardDeck cardDeck = cardDeckFactory.create();
 
         // when
-        players.hitCards(cardDeck);
+        players.hitCard(cardDeck);
 
         // then
         assertSoftly(softly -> {

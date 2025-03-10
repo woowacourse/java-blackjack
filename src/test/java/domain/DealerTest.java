@@ -33,7 +33,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         // when
-        dealer.hitCards(cardDeck);
+        dealer.hitCard(cardDeck);
         // then
         assertThat(dealer.getHand().getCards().size()).isEqualTo(2);
     }
@@ -45,7 +45,7 @@ public class DealerTest {
         // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO), new Card(HEART, TWO)));
         Dealer dealer = new Dealer();
-        dealer.hitCards(cardDeck);
+        dealer.hitCard(cardDeck);
         dealer.draw(cardDeck);
 
         // when-then
@@ -58,7 +58,7 @@ public class DealerTest {
         //given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer();
-        dealer.hitCards(cardDeck);
+        dealer.hitCard(cardDeck);
 
         //when-then
         assertThat(dealer.isUnderThreshold()).isTrue();
@@ -70,7 +70,7 @@ public class DealerTest {
     void drawTest(CardDeck cardDeck, int size) {
         // given
         Dealer dealer = new Dealer();
-        dealer.hitCards(cardDeck);
+        dealer.hitCard(cardDeck);
 
         // when
         dealer.draw(cardDeck);
@@ -92,7 +92,7 @@ public class DealerTest {
         // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer();
-        dealer.hitCards(cardDeck);
+        dealer.hitCard(cardDeck);
 
         // when
         Card card = dealer.getHandExceptHidden();

@@ -25,8 +25,8 @@ public class Players {
         this.players = players;
     }
 
-    public void hitCards(final CardDeck standard) {
-        players.forEach(player -> player.hitCards(standard));
+    public void hitCard(final CardDeck standard) {
+        players.forEach(player -> player.hitCard(standard));
     }
 
     public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
