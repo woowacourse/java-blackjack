@@ -1,9 +1,6 @@
-package domain;
+package domain.card;
 
 import constant.Suit;
-import domain.card.Hand;
-import domain.card.Rank;
-import domain.card.TrumpCard;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

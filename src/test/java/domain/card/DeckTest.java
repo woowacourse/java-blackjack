@@ -1,12 +1,9 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import constant.Suit;
-import domain.card.Deck;
-import domain.card.Rank;
-import domain.card.TrumpCard;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayDeque;
 import java.util.List;

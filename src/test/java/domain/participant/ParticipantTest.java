@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,7 +7,6 @@ import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.TrumpCard;
-import domain.participant.Participant;
 import java.util.ArrayDeque;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
