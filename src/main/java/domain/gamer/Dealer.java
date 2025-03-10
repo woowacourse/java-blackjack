@@ -8,42 +8,40 @@ import domain.card.CardGroup;
 import java.util.List;
 
 public class Dealer {
-    private static final String DEALER_NAME = "NEO";
     private final int DEALER_HIT_ROLE = 16;
-
-    private final Player player;
+    private final Gamer gamer;
 
     public Dealer(CardGroup cardGroup, CardGenerator cardGenerator) {
-        player = new Player(DEALER_NAME, cardGroup, cardGenerator);
+        this.gamer = new Gamer(cardGroup, cardGenerator);
     }
 
     public int calculateScore() {
-        return player.calculateScore();
+        return gamer.calculateScore();
     }
 
     public void receiveCard(int count) {
-        player.receiveCard(count);
+        gamer.receiveCard(count);
     }
 
     public void hitCardUntilStand() {
         while (isLessThen(DEALER_HIT_ROLE)) {
-            player.receiveCard();
+            gamer.receiveCard();
         }
     }
 
     private boolean isLessThen(int score) {
-        return player.calculateScore() <= score;
+        return gamer.calculateScore() <= score;
     }
 
     public boolean isBust() {
-        return player.isBust();
+        return gamer.isBust();
     }
 
     public List<Card> getCards() {
-        return player.getCards();
+        return gamer.getCards();
     }
 
     public int getReceivedCardCount() {
-        return player.getCards().size() - GameManager.START_RECEIVE_CARD;
+        return gamer.getCards().size() - GameManager.START_RECEIVE_CARD;
     }
 }

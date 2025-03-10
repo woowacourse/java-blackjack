@@ -11,46 +11,39 @@ import static domain.GameManager.LIMIT;
 
 public class Player {
 
-    protected final CardGroup cardGroup;
-    protected final CardGenerator cardGenerator;
     private final String name;
+    private final Gamer gamer;
 
     public Player(String name, CardGroup cardGroup, CardGenerator cardGenerator) {
         this.name = name;
-        this.cardGroup = cardGroup;
-        this.cardGenerator = cardGenerator;
+        this.gamer = new Gamer(cardGroup, cardGenerator);
     }
 
     public void receiveCard() {
-        cardGroup.addCard(cardGenerator.peekRandomCard());
+        gamer.receiveCard();
     }
 
     public void receiveCard(int count) {
-        while (count-- > 0) {
-            receiveCard();
-        }
+        gamer.receiveCard(count);
     }
 
     public boolean isBust() {
-        return this.cardGroup.calculateScore() > LIMIT;
+        return gamer.isBust();
     }
 
     public GameResult calculateGameResult(final int compareScore) {
-        if (isBust()) {
-            return GameResult.LOSE;
-        }
-        return GameResult.findByScores(cardGroup.calculateScore(), compareScore);
+        return gamer.calculateGameResult(compareScore);
     }
 
     public int calculateScore() {
-        return cardGroup.calculateScore();
+        return gamer.calculateScore();
     }
 
     public List<Card> getCards() {
-        return cardGroup.getCards();
+        return gamer.getCards();
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 }
