@@ -4,20 +4,32 @@ import domain.except.BlackJackStateException;
 import except.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BlackjackParticipantsManager<E extends BlackjackParticipant, V extends BlackjackParticipant> {
 
     private static final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
     private static final String INVALID_HANDS_STATE = "아직 카드를 받지 않은 참여자입니다.";
+    private static final String DUPLICATE_NAME = "중복된 이름이 존재합니다.";
 
     private final List<E> players;
     private final V dealer;
-
+    
     public BlackjackParticipantsManager(List<E> players, V dealer) {
         this.players = new ArrayList<>(players);
         this.dealer = dealer;
+        validateDuplicateName();
+    }
+
+    private void validateDuplicateName() {
+        List<String> playerNames = getPlayerNames();
+        Set<String> duplicateNames = new HashSet<>(playerNames);
+        if (duplicateNames.size() != playerNames.size()) {
+            throw new BlackJackException(DUPLICATE_NAME);
+        }
     }
 
     private E findPlayer(String name) {
