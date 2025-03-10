@@ -65,8 +65,8 @@ public class BlackJackController {
     }
 
     private void printAllParticipantGameResult() {
-        ParticipantsResult calculateParticipantsResult = participants.calculate();
-        outputView.printGameResult(calculateParticipantsResult);
+        ParticipantsResult participantsResult = participants.calculate();
+        outputView.printGameResult(participantsResult);
     }
 
     private void printAllParticipantsInfo(Participants participants) {

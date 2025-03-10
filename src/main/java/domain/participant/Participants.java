@@ -1,9 +1,9 @@
 package domain.participant;
 
 import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public class Participants {
 
@@ -29,28 +29,28 @@ public class Participants {
     }
 
     public ParticipantsResult calculate() {
+        int dealerValue = getDealerValue();
+        Map<Player, GameResult> playersResult = new HashMap<>();
+        Map<GameResult, Integer> dealerResult = new HashMap<>();
+        for (Participant participant : participants) {
+            if (participant.isPlayer()) {
+                GameResult gameResult = GameResult.calculateDealerResult(dealerValue,
+                    participant.getTotalValue());
+                dealerResult.put(gameResult, dealerResult.getOrDefault(gameResult, 0) + 1);
+                playersResult.put((Player) participant, gameResult.reverse());
+            }
+        }
+        return new ParticipantsResult(playersResult, dealerResult);
+    }
+
+    private int getDealerValue() {
         int dealerValue = 0;
         for (Participant participant : participants) {
-            if (participant instanceof Dealer) {
+            if (!participant.isPlayer()) {
                 dealerValue = participant.getTotalValue();
                 break;
             }
         }
-
-        Set<ParticipantResult> tmpResult = new LinkedHashSet<>();
-        ParticipantResult dealerResult = new DealerResult();
-        tmpResult.add(dealerResult);
-
-        for (Participant participant : participants) {
-            if (participant instanceof Player) {
-                GameResult gameResult = GameResult.calculateDealerResult(dealerValue,
-                    participant.getTotalValue());
-                ParticipantResult playerResult = new PlayerResult(participant.getName(),
-                    gameResult.reverse());
-                dealerResult.add(gameResult);
-                tmpResult.add(playerResult);
-            }
-        }
-        return new ParticipantsResult(tmpResult);
+        return dealerValue;
     }
 }
