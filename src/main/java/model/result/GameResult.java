@@ -1,4 +1,4 @@
-package model;
+package model.result;
 
 public enum GameResult {
     WIN("승"),

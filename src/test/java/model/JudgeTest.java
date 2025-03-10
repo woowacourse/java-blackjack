@@ -10,6 +10,8 @@ import model.card.CardShape;
 import model.cards.Cards;
 import model.cards.DealerCards;
 import model.cards.PlayerCards;
+import model.result.GameResult;
+import model.result.Judge;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
