@@ -1,7 +1,6 @@
 package model.deck;
 
 import java.util.List;
-import model.card.Card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,12 +11,7 @@ class DeckTest {
     @DisplayName("덱이 없을 때 드로우하면 안된다.")
     void test1() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
-            @Override
-            public List<Card> createAllCards() {
-                return List.of();
-            }
-        });
+        Deck deck = new Deck(List::of);
 
         // when
         // then
