@@ -76,7 +76,7 @@ public class Round {
         Gambler dealer = findGambler(DEALER_NAME);
         int dealerScore = dealer.calculateScore();
         Map<Name, Integer> playerScores = gamblers.stream()
-                .filter(gambler -> gambler instanceof Player)
+                .filter(Gambler::isPlayer)
                 .collect(toMap(Gambler::getName, Gambler::calculateScore));
         return new WinningDiscriminator(dealerScore, playerScores);
     }

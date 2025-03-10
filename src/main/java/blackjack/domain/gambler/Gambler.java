@@ -36,5 +36,7 @@ public abstract class Gambler {
         return name;
     }
 
+    public abstract boolean isPlayer();
+
     public abstract List<Card> getInitialCards();
 }

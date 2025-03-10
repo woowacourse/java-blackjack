@@ -9,6 +9,11 @@ public class Player extends Gambler {
     }
 
     @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
+    @Override
     public List<Card> getInitialCards() {
         return getCards();
     }

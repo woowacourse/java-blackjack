@@ -11,6 +11,11 @@ public class Dealer extends Gambler {
     }
 
     @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
+    @Override
     public List<Card> getInitialCards() {
         List<Card> cards = getCards();
         Card firstCard = cards.getFirst();
