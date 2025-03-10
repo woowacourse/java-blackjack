@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.CardDeck;
-import domain.card.CardDeckGenerator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +54,7 @@ class PlayersTest {
     @Test
     void 참여자들에게_카드를_한_장씩_나눠준다() {
         // given
-        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
+        CardDeck cardDeck = CardDeck.of();
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),

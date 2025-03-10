@@ -3,7 +3,6 @@ package controller;
 import domain.GameManager;
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -23,9 +22,7 @@ public class BlackjackController {
     }
 
     public void gameStart() {
-        Dealer dealer = Dealer.of(
-                CardDeck.of(CardDeckGenerator.generateCardDeck())
-        );
+        Dealer dealer = Dealer.of(CardDeck.of());
         Players players = initParticipants();
         GameManager gameManager = GameManager.of(dealer, players);
 
@@ -33,7 +30,7 @@ public class BlackjackController {
         outputView.printInitCards(dealer, players);
 
         drawToPlayers(gameManager);
-        drawToDealer(gameManager);
+        drawToDealer(dealer);
 
         outputView.printFinalCardsContent(dealer, players);
         outputView.printResult(dealer, players);
@@ -54,9 +51,9 @@ public class BlackjackController {
         }
     }
 
-    private void drawToDealer(GameManager gameManager) {
+    private void drawToDealer(Dealer dealer) {
         while (true) {
-            boolean received = gameManager.passCardToDealer();
+            boolean received = dealer.passCardToDealer();
             if (!received) {
                 break;
             }

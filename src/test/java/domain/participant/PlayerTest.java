@@ -8,7 +8,6 @@ import domain.card.CardDeck;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
 import domain.result.BlackjackResult;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -60,13 +59,9 @@ public class PlayerTest {
     @ParameterizedTest
     void 플레이어가_딜러와의_게임_결과를_반환한다(Player player, BlackjackResult result) {
         // given
-        List<Card> cards = List.of(
-                Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
-                Card.of(TrumpNumber.SIX, TrumpShape.CLUB)
-        );
-        final Dealer dealer = Dealer.of(CardDeck.of(cards));
-        dealer.receive(dealer.drawCard());
-        dealer.receive(dealer.drawCard());
+        final Dealer dealer = Dealer.of(CardDeck.of());
+        dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        dealer.receive(Card.of(TrumpNumber.SIX, TrumpShape.CLUB));
 
         // when
         BlackjackResult blackjackResult = player.getBlackjackResult(dealer);
