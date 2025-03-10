@@ -20,7 +20,9 @@ public class Deck {
         return cards.pop();
     }
 
-    public void giveCardTo(Participant participant) {
-        participant.addCard(pick());
+    public void giveCardTo(Participant participant, int count) {
+        for (int i = 0; i < count; i++) {
+            participant.addCard(pick());
+        }
     }
 }

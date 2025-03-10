@@ -42,13 +42,13 @@ public class Dealer extends Participant {
 
     public void giveCards(Participant participant, int count) {
         for (int i = 0; i < count; i++) {
-            deck.giveCardTo(participant);
+            deck.giveCardTo(participant, count);
         }
     }
 
     public void drawUntilLimit() {
         while (hasToDraw()) {
-            deck.giveCardTo(this);
+            deck.giveCardTo(this, 1);
         }
     }
 

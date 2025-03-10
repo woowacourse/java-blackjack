@@ -68,7 +68,7 @@ public class DeckTest {
         Player player = Player.init("플레이어");
 
         //when
-        deck.giveCardTo(player);
+        deck.giveCardTo(player, 1);
         Hand hand = player.getCards();
 
         //then
