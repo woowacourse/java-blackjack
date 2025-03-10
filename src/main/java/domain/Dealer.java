@@ -14,4 +14,9 @@ public class Dealer extends BlackjackParticipant {
         int sum = hand.calculateCardSum(DEALER_STOP_HIT_STANDARD);
         return sum <= DEALER_STOP_HIT_STANDARD;
     }
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
 }

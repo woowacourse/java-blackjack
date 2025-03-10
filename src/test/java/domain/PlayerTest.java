@@ -50,7 +50,8 @@ class PlayerTest {
         }
 
         // then
-        assertThat(player.isDrawable()).isTrue();
+        boolean result = player.isDrawable();
+        assertThat(result).isTrue();
     }
 
     static Stream<Arguments> createBustCards() {

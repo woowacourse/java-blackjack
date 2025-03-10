@@ -8,7 +8,6 @@ public class Player extends BlackjackParticipant {
 
     @Override
     boolean isDrawable() {
-        int sum = calculateCardSum();
-        return hand.isBust(sum);
+        return !hand.isBust();
     }
 }

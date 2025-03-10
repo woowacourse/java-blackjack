@@ -23,7 +23,7 @@ class BlackjackGameTest {
 
         // when & then
         assertThatThrownBy(() -> new BlackjackGame(names,
-                blackjackDeck, new Dealer()))
+                blackjackDeck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭은 1-7명만 이용하실 수 있습니다.");
     }
@@ -33,10 +33,9 @@ class BlackjackGameTest {
         // given
         List<String> names = List.of("포비1", "포비2", "포비3", "포비4", "포비5", "포비6", "포비7", "포비8", "포비9");
         BlackjackDeck deck = createRandomDeck();
-        Dealer dealer = new Dealer();
 
         //when & then
-        assertThatThrownBy(() -> new BlackjackGame(names, deck, dealer))
+        assertThatThrownBy(() -> new BlackjackGame(names, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭은 1-7명만 이용하실 수 있습니다.");
     }

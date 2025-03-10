@@ -1,7 +1,7 @@
 package domain;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
 
@@ -9,33 +9,33 @@ public class BlackjackGame {
     private final int MAX_PEOPLE_WITHOUT_DEALER = 7;
     private final String INVALID_BLACKJACK_PLAYER_SIZE = "블랙잭은 1-7명만 이용하실 수 있습니다.";
 
-    private final BlackjackParticipants blackjackParticipants;
+    private final BlackjackParticipants participants;
     private final BlackjackDeck deck;
 
-    public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
-        int playerSize = names.size();
-        if (playerSize < MIN_PEOPLE_WITHOUT_DEALER || playerSize > MAX_PEOPLE_WITHOUT_DEALER) {
-            throw new IllegalArgumentException(INVALID_BLACKJACK_PLAYER_SIZE);
-        }
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
+    public BlackjackGame(List<String> names, BlackjackDeck deck) {
+        validatePlayerSize(names.size());
         this.deck = deck;
-        this.blackjackParticipants = new BlackjackParticipants(players, dealer);
+        this.participants = new BlackjackParticipants(names, new Dealer());
         initiateGame();
     }
 
+    private void validatePlayerSize(int playerSize) {
+        if (playerSize < MIN_PEOPLE_WITHOUT_DEALER || playerSize > MAX_PEOPLE_WITHOUT_DEALER) {
+            throw new IllegalArgumentException(INVALID_BLACKJACK_PLAYER_SIZE);
+        }
+    }
+
     private void initiateGame() {
-        for (String name : blackjackParticipants.getPlayerNames()) {
+        for (String name : participants.getPlayerNames()) {
             dealCard(name);
             dealCard(name);
         }
-        drawDealerCard();
-        drawDealerCard();
+        dealDealerCard();
+        dealDealerCard();
     }
 
     public List<TrumpCard> playerCards(String name) {
-        return blackjackParticipants.playerCards(name);
+        return participants.participantCards(name);
     }
 
     public TrumpCard dealerCardFirst() {
@@ -43,44 +43,49 @@ public class BlackjackGame {
     }
 
     public List<TrumpCard> dealerCards() {
-        return Collections.unmodifiableList(blackjackParticipants.dealerCards());
+        String dealerName = participants.dealerName();
+        return participants.participantCards(dealerName);
     }
 
     public String dealerName() {
-        return blackjackParticipants.dealerName();
+        return participants.dealerName();
     }
 
     public List<String> playerNames() {
-        return blackjackParticipants.getPlayerNames();
+        return participants.getPlayerNames();
     }
 
     public void dealCard(String name) {
-        blackjackParticipants.addCard(name, deck.drawCard());
+        participants.addCard(name, deck.drawCard());
     }
 
-    private void drawDealerCard() {
-        blackjackParticipants.addDealerCard(deck.drawCard());
+    private void dealDealerCard() {
+        String dealerName = participants.dealerName();
+        participants.addCard(dealerName, deck.drawCard());
     }
 
     public boolean isBust(String name) {
-        return blackjackParticipants.isBust(name);
+        return participants.isBust(name);
     }
 
     public void dealerHit() {
-        if (blackjackParticipants.dealerDrawable()) {
-            blackjackParticipants.addDealerCard(deck.drawCard());
+        if (dealerDrawable()) {
+            String dealerName = participants.dealerName();
+            participants.addCard(dealerName, deck.drawCard());
         }
     }
 
     public boolean dealerDrawable() {
-        return blackjackParticipants.dealerDrawable();
+        String dealerName = participants.dealerName();
+        return participants.isDrawable(dealerName);
     }
 
     public List<BlackjackResult> currentPlayerBlackjackResult() {
-        return blackjackParticipants.calculatePlayerResults();
+        return participants.calculatePlayerResults();
     }
 
     public BlackjackResult currentDealerBlackjackResult() {
-        return blackjackParticipants.calculateDealerResult();
+        String dealerName = participants.dealerName();
+        return participants.calculateResult(dealerName);
     }
 }

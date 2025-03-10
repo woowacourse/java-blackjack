@@ -17,22 +17,23 @@ public class ParticipantHand {
     }
 
 
-    public void addCard(TrumpCard card){
-        if (isBust(calculateCardSum())) {
+    public void addCard(TrumpCard card) {
+        if (isBust()) {
             throw new IllegalStateException(INVALID_CARD_STATE);
         }
         handCards.add(card);
     }
 
-    public boolean isBust(int number) {
-        return BUST_STANDARD < number;
+    public boolean isBust() {
+        int sum = calculateCardSum();
+        return BUST_STANDARD < sum;
     }
 
-    public int calculateCardSum(){
+    public int calculateCardSum() {
         return calculateCardSum(BUST_STANDARD);
     }
 
-    public int calculateCardSum(int aceCalculateStandard){
+    public int calculateCardSum(int aceCalculateStandard) {
         int sum = handCards.stream()
                 .map(TrumpCard::cardNumberValue)
                 .reduce(Integer::sum)

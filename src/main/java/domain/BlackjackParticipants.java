@@ -7,17 +7,22 @@ import java.util.List;
 public class BlackjackParticipants {
 
     private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
+    private final String DEALER_NOT_EXIST = "딜러가 존재하지 않습니다.";
 
-    private final List<Player> players;
-    private final Dealer dealer;
+    private final List<BlackjackParticipant> participants;
 
-    public BlackjackParticipants(List<Player> players, Dealer dealer) {
-        this.players = new ArrayList<>(players);
-        this.dealer = dealer;
+    public BlackjackParticipants(List<String> names, Dealer dealer) {
+        List<Player> players = names.stream()
+                .map(Player::new)
+                .toList();
+
+        participants = new ArrayList<>();
+        participants.addAll(players);
+        participants.add(dealer);
     }
 
-    private Player findPlayer(String name) {
-        return players.stream()
+    private BlackjackParticipant findParticipant(String name) {
+        return participants.stream()
                 .filter(player -> player.name().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_PLAYER));
@@ -26,7 +31,7 @@ public class BlackjackParticipants {
     public List<BlackjackResult> calculatePlayerResults() {
         List<BlackjackResult> blackjackResults = new ArrayList<>();
         for (String name : getPlayerNames()) {
-            List<TrumpCard> trumpCards = playerCards(name);
+            List<TrumpCard> trumpCards = participantCards(name);
             int sum = calculateCardSum(name);
             blackjackResults.add(new BlackjackResult(name, trumpCards, sum));
         }
@@ -34,51 +39,50 @@ public class BlackjackParticipants {
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::name)
+        return participants.stream()
+                .filter(participants -> !participants.isDealer())
+                .map(BlackjackParticipant::name)
                 .toList();
     }
 
-    public List<TrumpCard> playerCards(String name) {
-        Player player = findPlayer(name);
-        return player.trumpCards();
-    }
-
-    public BlackjackResult calculateDealerResult() {
-        int sum = dealer.calculateCardSum();
-        List<TrumpCard> trumpCards = dealerCards();
-        String name = dealerName();
+    public BlackjackResult calculateResult(String name) {
+        BlackjackParticipant participant = findParticipant(name);
+        ParticipantHand hand = participant.hand;
+        int sum = hand.calculateCardSum();
+        List<TrumpCard> trumpCards = hand.getCards();
         return new BlackjackResult(name, trumpCards, sum);
     }
 
-    public List<TrumpCard> dealerCards() {
-        return dealer.trumpCards();
+    public List<TrumpCard> participantCards(String name) {
+        BlackjackParticipant participant = findParticipant(name);
+        return participant.trumpCards();
     }
 
     public int calculateCardSum(String name) {
-        Player player = findPlayer(name);
-        return player.calculateCardSum();
+        BlackjackParticipant participant = findParticipant(name);
+        return participant.calculateCardSum();
     }
 
     public String dealerName() {
-        return dealer.name();
+        return participants.stream()
+                .filter(BlackjackParticipant::isDealer)
+                .map(BlackjackParticipant::name)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(DEALER_NOT_EXIST));
     }
 
     public boolean isBust(String name) {
-        Player player = findPlayer(name);
-        return !player.isDrawable();
+        BlackjackParticipant participant = findParticipant(name);
+        return participant.isBust();
+    }
+
+    public boolean isDrawable(String name) {
+        BlackjackParticipant participant = findParticipant(name);
+        return participant.isDrawable();
     }
 
     public void addCard(String name, TrumpCard trumpCard) {
-        Player findPlayer = findPlayer(name);
-        findPlayer.addDraw(trumpCard);
-    }
-
-    public void addDealerCard(TrumpCard trumpCard) {
-        dealer.addDraw(trumpCard);
-    }
-
-    public boolean dealerDrawable() {
-        return dealer.isDrawable();
+        BlackjackParticipant participant = findParticipant(name);
+        participant.addDraw(trumpCard);
     }
 }

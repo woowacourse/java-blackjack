@@ -30,11 +30,19 @@ public abstract class BlackjackParticipant {
 
     abstract boolean isDrawable();
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
     public List<TrumpCard> trumpCards() {
         return hand.getCards();
     }
 
     public String name() {
         return name;
+    }
+
+    public boolean isDealer() {
+        return false;
     }
 }
