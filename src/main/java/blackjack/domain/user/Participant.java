@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public abstract class Participant {
 
@@ -20,14 +21,13 @@ public abstract class Participant {
     }
 
     public void addCards(final CardDeck cardDeck, final int count) {
-        if (!isPossibleToAdd()) {
-            throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
+        if (isPossibleToAdd()) {
+            IntStream.range(0, count)
+                .mapToObj(i -> cardDeck.pickRandomCard())
+                .forEach(cards::add);
+            return;
         }
-
-        for (int i = 0; i < count; i++) {
-            Card card = cardDeck.pickRandomCard();
-            cards.add(card);
-        }
+        throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
     }
 
     public boolean isBlackjack() {
