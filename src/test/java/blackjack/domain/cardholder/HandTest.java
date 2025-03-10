@@ -3,26 +3,12 @@ package blackjack.domain.cardholder;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.cardholder.Hand;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
-    @DisplayName("Hand 생성 시에 카드는 두 장을 넣을 수 있다")
-    @Test
-    void test1() {
-        // given
-        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-
-        // when & then
-        assertThatCode(() -> Hand.of(card1, card2))
-                .doesNotThrowAnyException();
-    }
 
     @DisplayName("카드를 추가한다")
     @Test
@@ -30,7 +16,9 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = Hand.of(card1, card2);
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
 
@@ -47,7 +35,9 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.ACE);
-        Hand hand = Hand.of(card1, card2);
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
 
         // when
         List<Integer> totalValues = hand.getPossibleSums();
@@ -62,20 +52,14 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = Hand.of(card1, card2);
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
 
         // when
         List<Card> cards = hand.getAllCards();
 
         // then
         assertThat(cards).containsExactly(card1, card2);
-    }
-
-    @DisplayName("Hand 생성 시에 card 가 null 이 존재하면 예외를 던진다.")
-    @Test
-    void test6() {
-        // give & when & then
-        assertThatThrownBy(() -> Hand.of(null, null))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 }

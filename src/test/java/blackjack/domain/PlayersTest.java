@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.common.ErrorMessage;
 import blackjack.domain.cardholder.Hand;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,7 +38,7 @@ class PlayersTest {
         // when & then
         assertThatThrownBy(() -> new Players(playersToBeSaved))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
+                .hasMessage("7명을 초과할 수 없습니다.");
 
     }
 }

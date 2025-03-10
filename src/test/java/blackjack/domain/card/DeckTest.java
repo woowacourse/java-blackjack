@@ -1,10 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.common.ErrorMessage;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
-import blackjack.domain.card.Deck;
 import blackjack.manager.CardsGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +37,7 @@ class DeckTest {
         // when & then
         assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.INVALID_DECK_SIZE.getMessage());
+                .hasMessage("카드 개수는 52개여야 합니다.");
     }
 
     @DisplayName("중복되는 카드가 존재하면 예외를 던진다.")
@@ -60,7 +55,7 @@ class DeckTest {
         // when & then
         assertThatThrownBy(() -> new Deck(copiedCards))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.DUPLICATED_CARD_EXISTED.getMessage());
+                .hasMessage("중복된 카드가 존재합니다.");
     }
 
     @DisplayName("카드는 섞일 수 있다.")
@@ -104,7 +99,7 @@ class DeckTest {
 
             assertThatThrownBy(() -> deck.takeCards(53))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
+                    .hasMessage("모든 카드를 소진하였습니다.");
         }
     }
 

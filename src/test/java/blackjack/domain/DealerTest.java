@@ -18,7 +18,9 @@ class DealerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = Hand.of(card1, card2);
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
 
         // when & then
         assertThatCode(() -> new Dealer(hand))
@@ -31,7 +33,9 @@ class DealerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = Hand.of(card1, card2);
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
         Dealer dealer = new Dealer(hand);
 
         List<Card> expect = List.of(card1, card2);
@@ -46,7 +50,9 @@ class DealerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = Hand.of(card1, card2);
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
         Dealer dealer = new Dealer(hand);
 
@@ -65,7 +71,9 @@ class DealerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = Hand.of(card1, card2);
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
         Dealer dealer = new Dealer(hand);
 
         // when

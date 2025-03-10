@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.common.ErrorMessage;
 import blackjack.view.Confirmation;
 import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,6 +35,6 @@ class ConfirmationTest {
     void test2(String input) {
         assertThatThrownBy(() -> Confirmation.find(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.INVALID_CONFIRMATION_INPUT.getMessage());
+                .hasMessage("y, n만 입력 가능합니다.");
     }
 }

@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.common.ErrorMessage;
 import java.util.Arrays;
 
 public enum Confirmation {
@@ -17,6 +16,6 @@ public enum Confirmation {
         return Arrays.stream(values())
                 .filter(confirmation -> confirmation.sign.equals(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_CONFIRMATION_INPUT.getMessage()));
+                .orElseThrow(() -> new IllegalArgumentException("y, n만 입력 가능합니다."));
     }
 }

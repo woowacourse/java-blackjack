@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.common.ErrorMessage;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class Players {
 
     private void validate(List<Player> players) {
         if (players.size() > PLAYERS_VALID_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
+            throw new IllegalArgumentException("7명을 초과할 수 없습니다.");
         }
     }
 

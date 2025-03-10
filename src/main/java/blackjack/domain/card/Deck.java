@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.common.ErrorMessage;
-import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,11 +18,11 @@ public class Deck {
 
     private void validate(List<Card> cards) {
         if (cards.size() != DECK_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DECK_SIZE.getMessage());
+            throw new IllegalArgumentException("카드 개수는 52개여야 합니다.");
         }
 
         if (new HashSet<>(cards).size() != DECK_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_CARD_EXISTED.getMessage());
+            throw new IllegalArgumentException("중복된 카드가 존재합니다.");
         }
 
     }
@@ -50,7 +48,7 @@ public class Deck {
 
     private void validateEmpty(int size) {
         if (cards.size() < size) {
-            throw new IllegalArgumentException(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
+            throw new IllegalArgumentException("모든 카드를 소진하였습니다.");
         }
     }
 }

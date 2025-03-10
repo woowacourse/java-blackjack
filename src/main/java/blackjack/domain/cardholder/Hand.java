@@ -1,7 +1,5 @@
 package blackjack.domain.cardholder;
 
-import blackjack.common.Constants;
-import blackjack.common.ErrorMessage;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +10,8 @@ import java.util.Set;
 
 public class Hand implements CardHolder {
 
+    public static final int BUSTED_STANDARD_VALUE = 21;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -20,18 +20,6 @@ public class Hand implements CardHolder {
 
     private Hand(List<Card> cards) {
         this.cards = cards;
-    }
-
-    public static Hand of(Card card1, Card card2) {
-        validate(card1, card2);
-        List<Card> cards = new ArrayList<>(List.of(card1, card2));
-        return new Hand(cards);
-    }
-
-    private static void validate(Card card1, Card card2) {
-        if (card1 == null || card2 == null) {
-            throw new IllegalArgumentException(ErrorMessage.CAN_NOT_NULL.getMessage());
-        }
     }
 
     public List<Card> getAllCards() {
@@ -63,8 +51,8 @@ public class Hand implements CardHolder {
 
     public int getOptimisticValue() {
         return getPossibleSums().stream()
-                .filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
+                .filter(sum -> sum <= BUSTED_STANDARD_VALUE)
                 .max(Comparator.naturalOrder())
-                .orElse(Constants.BUSTED_VALUE);
+                .orElse(0);
     }
 }
