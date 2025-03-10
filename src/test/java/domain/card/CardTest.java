@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static domain.card.Denomination.ACE;
 import static domain.card.Denomination.JACK;
@@ -8,8 +8,6 @@ import static domain.card.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.card.Ace;
-import domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
