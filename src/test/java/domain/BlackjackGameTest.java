@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Hand;
 import domain.participant.Participant;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -47,8 +46,7 @@ class BlackjackGameTest {
       //then
       var participants = blackjack.getParticipants();
       var counts = participants.stream()
-          .map(Participant::getHand)
-          .map(Hand::getCount)
+          .map(Participant::getHandCount)
           .distinct()
           .toList();
 

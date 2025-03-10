@@ -13,10 +13,6 @@ public class Participants {
     this.participants = new ArrayList<>();
   }
 
-  public Participants(final List<Participant> participants) {
-    this.participants = participants;
-  }
-
   public void addDealer() {
     if (participants.stream().anyMatch(Participant::isDealer)) {
       throw new BlackjackArgumentException("하나의 게임에 복수의 딜러는 존재할 수 없습니다.");
