@@ -28,7 +28,7 @@ public class Player {
         if (sum > BlackJackRules.BUST_STANDARD || dealerScore > BlackJackRules.BUST_STANDARD) {
             return getWinDrawLoseWhenOverBustStandard(sum);
         }
-        return getWinDrawLose(dealerScore, sum);
+        return determineGameResult(dealerScore, sum);
     }
 
     private GameResult getWinDrawLoseWhenOverBustStandard(int sum) {
@@ -38,7 +38,7 @@ public class Player {
         return GameResult.WIN;
     }
 
-    private GameResult getWinDrawLose(int dealerScore, int sum) {
+    private GameResult determineGameResult(int dealerScore, int sum) {
         if (sum == dealerScore) {
             return GameResult.DRAW;
         }
