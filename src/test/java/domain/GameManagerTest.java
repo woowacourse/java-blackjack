@@ -22,9 +22,9 @@ class GameManagerTest {
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi1", Money.of(1000)),
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
 
@@ -40,9 +40,9 @@ class GameManagerTest {
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi1", Money.of(1000)),
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
         GameManager gameManager = GameManager.of(dealer, players);
@@ -61,9 +61,9 @@ class GameManagerTest {
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi1", Money.of(1000)),
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
         GameManager gameManager = GameManager.of(dealer, players);
@@ -79,13 +79,13 @@ class GameManagerTest {
     void 이름을_받아_해당_플레이어에게_카드를_준다() {
         // given
         CardDeck cardDeck = CardDeck.of();
-        Player target = Player.of("pobi1");
+        Player target = Player.of("pobi1", Money.of(1000));
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
                         target,
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
         GameManager gameManager = GameManager.of(dealer, players);
@@ -101,15 +101,15 @@ class GameManagerTest {
     void 플레이어의_현재_카드_점수를_계산한다() {
         // given
         CardDeck cardDeck = CardDeck.of();
-        Player target = Player.of("pobi1");
+        Player target = Player.of("pobi1", Money.of(1000));
         target.receive(Card.of(TrumpNumber.NINE, TrumpShape.CLUB));
 
         Dealer dealer = Dealer.of(cardDeck);
         Players players = Players.of(
                 List.of(
                         target,
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
         GameManager gameManager = GameManager.of(dealer, players);
@@ -130,9 +130,9 @@ class GameManagerTest {
         dealer.receive(Card.of(TrumpNumber.FIVE, TrumpShape.CLUB));
         Players players = Players.of(
                 List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi1", Money.of(1000)),
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
         GameManager gameManager = GameManager.of(dealer, players);
@@ -153,9 +153,9 @@ class GameManagerTest {
         dealer.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
         Players players = Players.of(
                 List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi1", Money.of(1000)),
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
         GameManager gameManager = GameManager.of(dealer, players);

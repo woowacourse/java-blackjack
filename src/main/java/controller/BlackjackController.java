@@ -2,12 +2,12 @@ package controller;
 
 import constant.Answer;
 import domain.GameManager;
+import domain.Money;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.Arrays;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -46,9 +46,10 @@ public class BlackjackController {
     }
 
     private Players initParticipants() {
-        List<Player> players = Arrays.stream(inputView.getPlayerNames())
-                .map(String::trim)
-                .map(Player::of)
+        List<String> playerNames = inputView.getPlayerNames();
+        List<Player> players = playerNames
+                .stream()
+                .map(name -> Player.of(name, Money.of(inputView.getBetAmount(name))))
                 .toList();
         return Players.of(players);
     }

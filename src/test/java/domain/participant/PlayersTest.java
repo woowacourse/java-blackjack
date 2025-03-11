@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.Money;
 import domain.card.CardDeck;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,11 @@ class PlayersTest {
     @Test
     void 게임_참가자들을_관리하는_모델을_생성한다() {
         // given
-        List<Player> players = List.of(Player.of("pobi1"),
-                Player.of("pobi2"),
-                Player.of("pobi3"),
-                Player.of("pobi4"),
-                Player.of("pobi5"));
+        List<Player> players = List.of(Player.of("pobi1", Money.of(1000)),
+                Player.of("pobi2", Money.of(1000)),
+                Player.of("pobi3", Money.of(1000)),
+                Player.of("pobi4", Money.of(1000)),
+                Player.of("pobi5", Money.of(1000)));
 
         // when & then
         assertThatCode(() -> Players.of(players))
@@ -38,12 +39,12 @@ class PlayersTest {
     @Test
     void 게임_참가자_최대_인원_초과_시_예외가_발생한다() {
         // given
-        List<Player> players = List.of(Player.of("pobi1"),
-                Player.of("pobi2"),
-                Player.of("pobi3"),
-                Player.of("pobi4"),
-                Player.of("pobi5"),
-                Player.of("pobi6"));
+        List<Player> players = List.of(Player.of("pobi1", Money.of(1000)),
+                Player.of("pobi2", Money.of(1000)),
+                Player.of("pobi3", Money.of(1000)),
+                Player.of("pobi4", Money.of(1000)),
+                Player.of("pobi5", Money.of(1000)),
+                Player.of("pobi6", Money.of(1000)));
 
         // when & then
         assertThatThrownBy(() -> Players.of(players))
@@ -57,9 +58,9 @@ class PlayersTest {
         CardDeck cardDeck = CardDeck.of();
         Players players = Players.of(
                 List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi1", Money.of(1000)),
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
         Dealer dealer = Dealer.of(cardDeck);
@@ -76,9 +77,9 @@ class PlayersTest {
         // given
         Players players = Players.of(
                 List.of(
-                        Player.of("pobi1"),
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
+                        Player.of("pobi1", Money.of(1000)),
+                        Player.of("pobi2", Money.of(1000)),
+                        Player.of("pobi3", Money.of(1000))
                 )
         );
 

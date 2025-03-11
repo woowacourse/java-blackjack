@@ -2,6 +2,7 @@ package domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.Money;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.TrumpNumber;
@@ -18,7 +19,7 @@ class BlackjackResultTest {
         Dealer dealer = Dealer.of(CardDeck.of());
         dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
-        Player player = Player.of("pobi1");
+        Player player = Player.of("pobi1", Money.of(1000));
         player.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         player.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
 

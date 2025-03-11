@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Money {
 
+    public static final int DEFAULT_AMOUNT = 0;
+
     private int amount;
 
     private Money(int amount) {
