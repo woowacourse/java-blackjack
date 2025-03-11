@@ -86,15 +86,12 @@ public class BlackJackController {
     }
 
     private void processPlayerHit(final List<Player> players, final Deck deck) {
-        for (final Player player : players) {
-            if (isNotMoreCard(deck, player)) {
-                continue;
-            }
-            processAdditionalHit(deck, player);
-        }
+        players.stream()
+                .filter(player -> isMoreCard(deck, player))
+                .forEach(player -> processAdditionalHit(deck, player));
     }
 
-    private boolean isNotMoreCard(final Deck deck, final Player player) {
+    private boolean isMoreCard(final Deck deck, final Player player) {
         final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
         if (Command.find(input).equals(Command.YES)) {
             final Card card = deck.drawCard();
@@ -104,10 +101,10 @@ public class BlackJackController {
 
         if (player.isBust()) {
             OutputView.printBustMessage(player.getDisplayName());
-            return true;
+            return false;
         }
 
-        return Command.find(input).equals(Command.NO);
+        return Command.find(input).equals(Command.YES);
     }
 
     private void processAdditionalHit(final Deck deck, final Player player) {
@@ -132,7 +129,7 @@ public class BlackJackController {
             OutputView.printDealerHit(THRESHOLD, dealer.getDisplayName());
         }
     }
-    
+
     private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
                                   final List<Player> players) {
         OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
