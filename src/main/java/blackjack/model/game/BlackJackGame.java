@@ -10,7 +10,6 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.model.player.Player;
-import blackjack.model.player.Role;
 
 public class BlackJackGame {
 
@@ -32,11 +31,7 @@ public class BlackJackGame {
     }
 
     public Cards openInitialCards(final Player player) {
-        Cards playerCards = player.getCards();
-        if (player.hasRole(Role.DEALER)) {
-            return new Cards(playerCards.getFirst());
-        }
-        return playerCards;
+        return blackJackRule.openInitialCards(player);
     }
 
     public boolean canDrawMoreCard(final Player player) {
@@ -53,7 +48,10 @@ public class BlackJackGame {
 
     public Map<Player, Map<Result, Integer>> calculateResult(final List<Player> players) {
         Player dealer = players.getFirst();
-        return blackJackRule.calculateResult(dealer, players.stream().skip(1L).toList());
+        List<Player> users = players.stream()
+                .skip(1L)
+                .toList();
+        return blackJackRule.calculateResult(dealer, users);
     }
 
     public Map<Player, Integer> calculateOptimalPoints(final List<Player> players) {

@@ -50,13 +50,12 @@ public abstract class Player {
         if (!(o instanceof Player player)) {
             return false;
         }
-        return Objects.equals(name, player.name) && Objects.equals(getCards(), player.getCards())
-                && role == player.role;
+        return Objects.equals(getName(), player.getName()) && role == player.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, getCards(), role);
+        return Objects.hash(getName(), role);
     }
 
 }

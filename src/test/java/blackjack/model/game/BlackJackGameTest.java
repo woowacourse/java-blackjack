@@ -4,6 +4,7 @@ import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,49 @@ class BlackJackGameTest {
 
         assertThat(dealer.getCards().getValues()).hasSize(2);
         assertThat(user.getCards().getValues()).hasSize(2);
+    }
+
+    @MethodSource("플레이어가_시작_카드를_오픈한다_테스트_케이스")
+    @ParameterizedTest
+    void 플레이어가_시작_카드를_오픈한다(Player player, Cards expectedCards) {
+        BlackJackGame blackJackGame = new BlackJackGame(Cards::empty);
+        player.receiveCards(new Cards(
+                List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE)))
+        );
+
+        assertThat(blackJackGame.openInitialCards(player)).isEqualTo(expectedCards);
+    }
+
+    private static Stream<Arguments> 플레이어가_시작_카드를_오픈한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(new Dealer(), new Cards(createCard(CardNumber.TWO))),
+                Arguments.of(new User("pobi"), new Cards(createCard(CardNumber.TWO), createCard(CardNumber.THREE)))
+        );
+    }
+
+    @MethodSource("플레이어들의_승패_결과를_계산한다_테스트_케이스")
+    @ParameterizedTest
+    void 플레이어들의_승패_결과를_계산한다(Cards dealerCards, Cards userCards, Map<Player, Map<Result, Integer>> expected) {
+        Player dealer = new Dealer();
+        Player user = new User("pobi");
+        dealer.receiveCards(dealerCards);
+        user.receiveCards(userCards);
+        BlackJackGame blackJackGame = new BlackJackGame(Cards::empty);
+
+        assertThat(blackJackGame.calculateResult(List.of(dealer, user))).containsExactlyInAnyOrderEntriesOf(expected);
+    }
+
+    private static Stream<Arguments> 플레이어들의_승패_결과를_계산한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(new Cards(createCard(CardNumber.THREE)), new Cards(createCard(CardNumber.TWO)),
+                        Map.of(new Dealer(), Map.of(Result.WIN, 1, Result.DRAW, 0, Result.LOSE, 0),
+                                new User("pobi"), Map.of(Result.WIN, 0, Result.DRAW, 0, Result.LOSE, 1)
+                        )),
+                Arguments.of(new Cards(createCard(CardNumber.THREE)), new Cards(createCard(CardNumber.THREE)),
+                        Map.of(new Dealer(), Map.of(Result.WIN, 0, Result.DRAW, 1, Result.LOSE, 0),
+                                new User("pobi"), Map.of(Result.WIN, 0, Result.DRAW, 1, Result.LOSE, 0)
+                        ))
+        );
     }
 
 }
