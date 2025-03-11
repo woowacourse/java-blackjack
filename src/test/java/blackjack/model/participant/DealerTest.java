@@ -9,12 +9,14 @@ import static blackjack.model.card.CardFixtures.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.model.MatchResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Deck;
 import blackjack.model.card.Suit;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -249,5 +251,129 @@ class DealerTest {
         assertThatCode(dealer::decideHit)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러가 가진 패가 2장이 아니어서 히트 여부를 결정할 수 없습니다.");
+    }
+
+    @DisplayName("딜러는 참가자와 비교하여 승부를 낼 수 있다.")
+    @Nested
+    class CompareWithTest {
+
+        @DisplayName("참가자가 버스트인 경우 딜러가 이긴다.")
+        @Test
+        void win_WhenPlayerBust() {
+            // given
+            Player player = new Player(new Name("포비"));
+            player.receiveHand(SPADE_TEN_CARD);
+            player.receiveHand(SPADE_TEN_CARD);
+            player.receiveHand(SPADE_TEN_CARD);
+            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+
+            // when
+            MatchResult matchResult = dealer.compareWith(player);
+
+            // then
+            assertThat(matchResult)
+                    .isSameAs(MatchResult.WIN);
+        }
+
+        @DisplayName("참가자는 버스트가 아니면서 딜러가 버스트인 경우 딜러가 진다.")
+        @Test
+        void lose_WhenDealerBust() {
+            // given
+            Player player = new Player(new Name("포비"));
+            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveHand(SPADE_TEN_CARD);
+
+            // when
+            MatchResult matchResult = dealer.compareWith(player);
+
+            // then
+            assertThat(matchResult)
+                    .isSameAs(MatchResult.LOSE);
+        }
+
+        @DisplayName("둘 다 블랙잭인 경우 무승부이다.")
+        @Test
+        void draw_WhenAllBlackjack() {
+            // given
+            Player player = new Player(new Name("포비"));
+            player.receiveHand(SPADE_ACE_CARD);
+            player.receiveHand(SPADE_TEN_CARD);
+            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+            dealer.receiveHand(SPADE_ACE_CARD);
+            dealer.receiveHand(SPADE_TEN_CARD);
+
+            // when
+            MatchResult matchResult = dealer.compareWith(player);
+
+            // then
+            assertThat(matchResult)
+                    .isSameAs(MatchResult.DRAW);
+        }
+
+        @DisplayName("참가자만 블랙잭이면 딜러는 진다.")
+        @Test
+        void lose_WhenOnlyPlayerBlackjack() {
+            // given
+            Player player = new Player(new Name("포비"));
+            player.receiveHand(SPADE_ACE_CARD);
+            player.receiveHand(SPADE_TEN_CARD);
+            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveHand(SPADE_TEN_CARD);
+
+            // when
+            MatchResult matchResult = dealer.compareWith(player);
+
+            // then
+            assertThat(matchResult)
+                    .isSameAs(MatchResult.LOSE);
+        }
+
+        @DisplayName("딜러만 블랙잭이면 이긴다.")
+        @Test
+        void win_WhenOnlyDealerBlackjack() {
+            // given
+            Player player = new Player(new Name("포비"));
+            player.receiveHand(SPADE_TEN_CARD);
+            player.receiveHand(SPADE_TEN_CARD);
+            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+            dealer.receiveHand(SPADE_ACE_CARD);
+            dealer.receiveHand(SPADE_TEN_CARD);
+
+            // when
+            MatchResult matchResult = dealer.compareWith(player);
+
+            // then
+            assertThat(matchResult)
+                    .isSameAs(MatchResult.WIN);
+        }
+
+        @DisplayName("모두 블랙잭이나 버스트가 아닌 경우 숫자로 승부를 낸다.")
+        @ParameterizedTest
+        @CsvSource({
+                "KING, EIGHT, KING, KING, WIN",
+                "KING, NINE, KING, NINE, DRAW",
+                "KING, KING, KING, EIGHT, LOSE"
+        })
+        void compareWithTest(CardValue playerCardValue1, CardValue playerCardValue2,
+                       CardValue dealerCardValue1, CardValue dealerCardValue2,
+                       MatchResult expected) {
+            // given
+            Player player = new Player(new Name("포비"));
+            player.receiveHand(createCard(Suit.SPADES, playerCardValue1));
+            player.receiveHand(createCard(Suit.SPADES, playerCardValue2));
+            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+            dealer.receiveHand(createCard(Suit.SPADES, dealerCardValue1));
+            dealer.receiveHand(createCard(Suit.SPADES, dealerCardValue2));
+
+            // when
+            MatchResult matchResult = dealer.compareWith(player);
+
+            // then
+            assertThat(matchResult)
+                    .isSameAs(expected);
+        }
     }
 }

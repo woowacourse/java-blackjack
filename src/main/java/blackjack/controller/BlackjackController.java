@@ -87,11 +87,14 @@ public final class BlackjackController {
     }
 
     private void askHit(Dealer dealer, Player player) {
-        ParticipantAction playerAction = inputView.readHitOrNot(player.getName());
-        while (player.canHit() && playerAction.isHit()) {
+        while (player.canHit() && wantsToHit(player)) {
             dealer.dealCard(player);
             outputView.printPlayerHand(player);
         }
+    }
+
+    private boolean wantsToHit(Player player) {
+        return inputView.readHitOrNot(player.getName()).isHit();
     }
 
     private void askHitForDealer(Dealer dealer) {
@@ -102,17 +105,17 @@ public final class BlackjackController {
         }
     }
 
-    private Map<Player, MatchResult> judgeMatchResults(Dealer dealer, List<Player> players) {
-        Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player player : players) {
-            results.put(player, MatchResult.judge(dealer, player));
-        }
-        return results;
-    }
-
     private void displayResult(Dealer dealer, List<Player> players) {
         outputView.printDealerHandAndTotal(dealer.getHand(), dealer.getTotal());
         outputView.printPlayerHandAndTotal(players);
         outputView.printMatchResult(judgeMatchResults(dealer, players));
+    }
+
+    private Map<Player, MatchResult> judgeMatchResults(Dealer dealer, List<Player> players) {
+        Map<Player, MatchResult> results = new LinkedHashMap<>();
+        for (Player player : players) {
+            results.put(player, dealer.compareWith(player).getReversed());
+        }
+        return results;
     }
 }

@@ -72,7 +72,7 @@ public class OutputView {
             Map<Player, MatchResult> playerMatchResults) {
         EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap<>(MatchResult.class);
         for (MatchResult matchResult : playerMatchResults.values()) {
-            dealerMatchResult.merge(MatchResult.reverse(matchResult), 1, Integer::sum);
+            dealerMatchResult.merge(matchResult.getReversed(), 1, Integer::sum);
         }
         return dealerMatchResult;
     }
