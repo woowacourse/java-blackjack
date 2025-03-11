@@ -46,14 +46,10 @@ public class OutputView {
     }
 
     public void printGameResultHeader() {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
-    public void printDealerGameResult(final int winCount, final int drawCount, final int loseCount) {
-        System.out.printf("딜러: %d승 %d무 %d패" + LINE, winCount, drawCount, loseCount);
-    }
-
-    public void printPlayerGameResult(final String name, final String result) {
-        System.out.printf("%s: %s" + LINE, name, result);
+    public void printProfitWithName(final String name, final int profit) {
+        System.out.printf("%s: %d" + LINE, name, profit);
     }
 }
