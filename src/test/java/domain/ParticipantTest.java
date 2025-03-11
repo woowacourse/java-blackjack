@@ -29,8 +29,7 @@ public class ParticipantTest {
 
             player.addCard(new Card(Shape.HEART, Rank.TEN));
             dealer.addCard(new Card(Shape.HEART, Rank.EIGHT));
-            GameResult gameResult = GameResult.calculateResultOfDealer(dealer, player)
-                .convertByPlayerResult();
+            GameResult gameResult = GameResult.calculateResultOfPlayer(dealer, player);
 
             int expectedValue = 10_000;
             double calculateValue = gameResult.getCalculateValue(bettingAmount);
@@ -48,8 +47,7 @@ public class ParticipantTest {
             player.addCard(new Card(Shape.HEART, Rank.EIGHT));
             dealer.addCard(new Card(Shape.HEART, Rank.TEN));
 
-            GameResult gameResult = GameResult.calculateResultOfDealer(dealer, player)
-                .convertByPlayerResult();
+            GameResult gameResult = GameResult.calculateResultOfPlayer(dealer, player);
 
             int expectedValue = -10_000;
             double calculateValue = gameResult.getCalculateValue(bettingAmount);
@@ -66,8 +64,7 @@ public class ParticipantTest {
 
             player.addCard(new Card(Shape.HEART, Rank.EIGHT));
             dealer.addCard(new Card(Shape.SPADE, Rank.EIGHT));
-            GameResult gameResult = GameResult.calculateResultOfDealer(dealer, player)
-                .convertByPlayerResult();
+            GameResult gameResult = GameResult.calculateResultOfPlayer(dealer, player);
 
             int expectedValue = 0;
             double calculateValue = gameResult.getCalculateValue(bettingAmount);
@@ -85,8 +82,7 @@ public class ParticipantTest {
             player.addCard(new Card(Shape.HEART, Rank.A));
             player.addCard(new Card(Shape.HEART, Rank.KING));
             dealer.addCard(new Card(Shape.HEART, Rank.TEN));
-            GameResult gameResult = GameResult.calculateResultOfDealer(dealer, player)
-                .convertByPlayerResult();
+            GameResult gameResult = GameResult.calculateResultOfPlayer(dealer, player);
 
             System.out.println(gameResult.getKoreanName());
             int expectedValue = 15_000;
@@ -94,5 +90,4 @@ public class ParticipantTest {
             assertThat(calculateValue).isEqualTo(expectedValue);
         }
     }
-
 }

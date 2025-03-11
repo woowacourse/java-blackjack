@@ -14,7 +14,7 @@ public enum GameResult {
         this.calculateValue = calculateValue;
     }
 
-    public static GameResult calculateResultOfDealer(Participant dealer, Participant player) {
+    public static GameResult calculateResultOfPlayer(Participant dealer, Participant player) {
         int dealerValue = dealer.getTotalValue();
         int playerValue = player.getTotalValue();
 
@@ -43,7 +43,7 @@ public enum GameResult {
         if (Participant.isBust(dealerValue) && Participant.isBust(playerValue)) {
             return DRAW;
         }
-        if (Participant.isBust(playerValue)) {
+        if (Participant.isBust(dealerValue)) {
             return WIN;
         }
         return LOSE;
@@ -51,20 +51,21 @@ public enum GameResult {
 
     private static GameResult calculateResult(int dealerValue, int playerValue) {
         if (dealerValue > playerValue) {
-            return WIN;
+            return LOSE;
         }
         if (dealerValue < playerValue) {
-            return LOSE;
+            return WIN;
         }
         return DRAW;
     }
 
-    public GameResult convertByPlayerResult() {
+    public GameResult convertOfDealer() {
         if (this == DRAW) {
             return DRAW;
         }
+        // 플레어어가 블랙잭인 경우, 딜러는 패배한다.
         if (this == BLACKJACK) {
-            return BLACKJACK;
+            return LOSE;
         }
         if (this == WIN) {
             return LOSE;

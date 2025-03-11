@@ -72,9 +72,10 @@ class ParticipantsTest {
         void when_dealer_one_win_one_lose() {
             //given
             dealer.addCard(new Card(Shape.HEART, Rank.KING));
-            dealer.addCard(new Card(Shape.HEART, Rank.JACK));
+            dealer.addCard(new Card(Shape.HEART, Rank.NINE));
             player1.addCard(new Card(Shape.HEART, Rank.QUEEN));
-            player1.addCard(new Card(Shape.HEART, Rank.A));
+            player1.addCard(new Card(Shape.HEART, Rank.EIGHT));
+            player1.addCard(new Card(Shape.HEART, Rank.THREE));
             player2.addCard(new Card(Shape.SPADE, Rank.FIVE));
 
             //when
