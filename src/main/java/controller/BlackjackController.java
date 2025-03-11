@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.BettingResult;
+import model.BlackjackGame;
 import model.participant.Dealer;
 import model.card.Deck;
 import model.participant.Player;
@@ -19,47 +20,18 @@ public class BlackjackController {
         Map<Player, Integer> startBetting = InputView.inputBettingPrice(players);
         BettingResult bettingResult = new BettingResult(startBetting);
         Dealer dealer = new Dealer();
-        Deck deck = Deck.of();
+        BlackjackGame blackjackGame = new BlackjackGame();
 
-        dealInitially(players, deck, dealer);
+        blackjackGame.dealInitially(players, dealer);
         OutputView.printInitialDealResult(dealer, players);
 
-        hitOrStandAtPlayersTurn(players, deck);
-        hitOrStandAtDealerTurn(dealer, deck);
+        blackjackGame.runPlayerTurn(players);
+        blackjackGame.runDealerTurn(dealer);
         OutputView.printFinalScore(dealer, players);
 
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
         printFinalGameResult(bettingResult);
-    }
-
-    private void dealInitially(Players players, Deck deck, Dealer dealer) {
-        players.dealInitialCards(deck);
-        dealer.dealInitialCards(deck);
-    }
-
-    private void hitOrStandAtPlayersTurn(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            hitOrStandAtOnePlayerTurn(deck, player);
-        }
-    }
-
-    private void hitOrStandAtOnePlayerTurn(Deck deck, Player player) {
-        boolean flag = true;
-        while (flag == InputView.readHit(player)) {
-            player.receiveCard(deck.pick());
-            OutputView.printHitResult(player);
-            if (player.isBust()) {
-                break;
-            }
-        }
-    }
-
-    private void hitOrStandAtDealerTurn(Dealer dealer, Deck deck) {
-        while (dealer.checkScoreUnderSixteen()) {
-            OutputView.printDealerDealResult();
-            dealer.receiveCard(deck.pick());
-        }
     }
 
     private void printFinalGameResult(BettingResult bettingResult) {
