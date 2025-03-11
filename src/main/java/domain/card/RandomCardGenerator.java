@@ -1,7 +1,6 @@
 package domain.card;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RandomCardGenerator implements CardGenerator {
     List<Card> cardTypes;

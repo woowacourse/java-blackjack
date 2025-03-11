@@ -2,7 +2,6 @@ package domain.gamer;
 
 import domain.GameManager;
 import domain.card.Card;
-import domain.card.CardGenerator;
 import domain.card.CardGroup;
 
 import java.util.List;
