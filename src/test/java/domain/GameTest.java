@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-    private final Deck deck = new Deck();
+    private final Deck deck = DeckGenerator.generateTestDeck();
     private final List<String> playerNames = List.of("pobi", "norang", "haru");
     private final Game game = new Game(playerNames, deck);
 

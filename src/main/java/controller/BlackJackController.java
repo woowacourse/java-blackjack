@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Deck;
+import domain.DeckGenerator;
 import domain.Game;
 import domain.Player;
 import java.util.List;
@@ -24,7 +24,7 @@ public class BlackJackController {
 
     public Game startGame() {
         List<String> playerNames = inputView.readPlayerNames();
-        return new Game(playerNames, new Deck());
+        return new Game(playerNames, DeckGenerator.generateRandomDeck());
     }
 
     private void giveAdditionalCards(Game game) {

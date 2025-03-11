@@ -2,6 +2,7 @@ package fixture;
 
 import domain.Card;
 import domain.Deck;
+import domain.DeckGenerator;
 import domain.Rank;
 import domain.Suit;
 import java.util.ArrayList;
@@ -11,11 +12,11 @@ public class CardFixture {
     private static final int SUIT_COUNT = 4;
 
     private static final List<Card> deckFixture = new ArrayList<>();
-    private static final Deck deck = new Deck();
+    private static final Deck deck = DeckGenerator.generateTestDeck();
 
     static {
         for (int i = 0; i < 52; i++) {
-            deckFixture.add(deck.draw(new TestNumberGenerator()));
+            deckFixture.add(deck.drawNewCard());
         }
     }
 
