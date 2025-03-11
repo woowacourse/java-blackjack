@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import org.junit.jupiter.api.Test;
 
@@ -11,87 +13,127 @@ import static org.assertj.core.api.Assertions.assertThat;
 class WinningStatusTest {
     
     @Test
-    void 손패_두_개가_주어졌을_때_두_손패_모두_버스트가_아니라면_21에_근접한_손패가_이긴다() {
-        final PlayerBlackjackCardHand winner = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        winner.addCard(HEART_10);
-        winner.addCard(HEART_1);
-        
-        final PlayerBlackjackCardHand looser = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        looser.addCard(HEART_9);
-        looser.addCard(HEART_1);
-        
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.플레이어_승리);
+    void 플레이어가_21에_더_근접하면_플레이어가_이긴다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_9, DIAMOND_10);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_5, DIAMOND_1);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.플레이어_승리);
+    }
+
+    @Test
+    void 딜러가_21에_더_근접하면_플레이어가_패배한다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_5, DIAMOND_1);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_9, DIAMOND_10);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.플레이어_패배);
+    }
+
+    @Test
+    void 플레이어와_딜러가_같은_합이면_무승부이다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_5, DIAMOND_1);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_5, DIAMOND_1);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.무승부);
+    }
+
+    @Test
+    void 플레이어만_버스트라면_플레이어가_패배한다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_9, DIAMOND_10, HEART_3);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_5, DIAMOND_1);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.플레이어_패배);
+    }
+
+    @Test
+    void 플레이어와_딜러가_버스트라면_플레이어가_패배한다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_9, DIAMOND_10, HEART_3);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_9, DIAMOND_10, HEART_3);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.플레이어_패배);
+    }
+
+    @Test
+    void 딜러만_버스트라면_플레이어가_승리한다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_5, DIAMOND_1);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_9, DIAMOND_10, HEART_3);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.플레이어_승리);
+    }
+
+    @Test
+    void 플레이어만_블랙잭이라면_플레이어가_승리한다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_1, DIAMOND_10);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_5, DIAMOND_1);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.플레이어_승리);
     }
     
     @Test
-    void 손패_두_개가_주어졌을_때_한_손패가_버스트라면_버스트가_아닌_손패가_이긴다() {
-        final PlayerBlackjackCardHand winner = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        winner.addCard(DIAMOND_10);
-        winner.addCard(HEART_10);
-        winner.addCard(CLOVER_10);
-        
-        final PlayerBlackjackCardHand looser = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        looser.addCard(DIAMOND_9);
-        looser.addCard(HEART_1);
-        
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.플레이어_패배);
+    void 플레이어와_딜러_모두_블랙잭이라면_무승부이다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_1, DIAMOND_10);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_1, DIAMOND_10);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.무승부);
     }
-    
+
     @Test
-    void 손패_두_개가_주어졌을_때_두_손패가_버스트라면_무승부이다() {
-        final PlayerBlackjackCardHand winner = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        winner.addCard(DIAMOND_10);
-        winner.addCard(HEART_10);
-        winner.addCard(CLOVER_10);
-        
-        final PlayerBlackjackCardHand looser = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        looser.addCard(DIAMOND_9);
-        looser.addCard(HEART_8);
-        looser.addCard(HEART_7);
-        
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
+    void 딜러만_블랙잭이라면_플레이어가_패배한다() {
+        // given
+        final PlayerBlackjackCardHand player = playerWith(DIAMOND_5, DIAMOND_1);
+        final DealerBlackjackCardHand dealer = dealerWith(DIAMOND_1, DIAMOND_10);
+
+        // when
+        final WinningStatus result = WinningStatus.determineWinningStatus(player, dealer);
+
+        // then
+        assertThat(result).isEqualTo(WinningStatus.플레이어_패배);
     }
-    
-    @Test
-    void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_한쪽만_블랙잭이라면_블랙잭이_이긴다() {
-        final PlayerBlackjackCardHand winner = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        winner.addCard(DIAMOND_10);
-        winner.addCard(DIAMOND_1);
-        
-        final PlayerBlackjackCardHand looser = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        looser.addCard(DIAMOND_9);
-        looser.addCard(HEART_9);
-        looser.addCard(HEART_3);
-        
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.플레이어_승리);
+
+    private static PlayerBlackjackCardHand playerWith(Card... cards) {
+        return new PlayerBlackjackCardHand(DEFAULT_PLAYER, () -> List.of(cards));
     }
-    
-    @Test
-    void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_둘다_블랙잭이라면_무승부이다() {
-        final PlayerBlackjackCardHand winner = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        winner.addCard(DIAMOND_10);
-        winner.addCard(DIAMOND_1);
-        
-        final PlayerBlackjackCardHand looser = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        looser.addCard(HEART_10);
-        looser.addCard(HEART_1);
-        
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
+
+    private static DealerBlackjackCardHand dealerWith(Card... cards) {
+        return new DealerBlackjackCardHand(() -> List.of(cards));
     }
-    
-    @Test
-    void 손패_두_개가_주어졌을_때_두_손패가_모두_21이고_둘다_블랙잭이_아니라면_무승부이다() {
-        final PlayerBlackjackCardHand winner = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        winner.addCard(DIAMOND_5);
-        winner.addCard(DIAMOND_5);
-        winner.addCard(DIAMOND_1);
-        
-        final PlayerBlackjackCardHand looser = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
-        looser.addCard(HEART_5);
-        looser.addCard(HEART_5);
-        looser.addCard(HEART_1);
-        
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.무승부);
-    }
-    
 }
