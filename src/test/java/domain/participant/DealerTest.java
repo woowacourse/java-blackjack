@@ -3,6 +3,7 @@ package domain.participant;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.QUEEN;
+import static domain.card.Number.SEVEN;
 import static domain.card.Number.TWO;
 import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
@@ -102,7 +103,7 @@ public class DealerTest {
         return Stream.of(Arguments.of(
                 new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))),
                 new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))),
-                new CardDeck(List.of(new Card(CLOVER, TWO)))
+                new CardDeck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN)))
         ));
     }
 }
