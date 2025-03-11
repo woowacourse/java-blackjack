@@ -5,7 +5,7 @@ import domain.constant.MatchResult;
 
 public class Player extends Gambler {
 
-    public static final int BUST_STANDARD = 21;
+    public static final int MAX_SCORE = 21;
 
     private final Nickname nickname;
 
@@ -16,14 +16,14 @@ public class Player extends Gambler {
 
     public MatchResult compareTo(int dealerScore) {
         int sum = sumCardScores();
-        if (sum > BUST_STANDARD || dealerScore > BUST_STANDARD) {
+        if (sum > MAX_SCORE || dealerScore > MAX_SCORE) {
             return getMatchResultWhenOverBustStandard(sum);
         }
         return getMatchResult(dealerScore, sum);
     }
 
     private MatchResult getMatchResultWhenOverBustStandard(int sum) {
-        if (sum > BUST_STANDARD) {
+        if (sum > MAX_SCORE) {
             return MatchResult.LOSE;
         }
         return MatchResult.WIN;

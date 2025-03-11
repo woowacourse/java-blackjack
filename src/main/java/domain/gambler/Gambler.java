@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Gambler {
 
-    public static final int BUST_STANDARD = 21;
+    public static final int MAX_SCORE = 21;
     public static final int INITIAL_CARD_COUNT = 2;
 
     private final Cards cards;
@@ -26,7 +26,7 @@ public class Gambler {
     }
 
     public boolean isBust() {
-        return sumCardScores() > BUST_STANDARD;
+        return sumCardScores() > MAX_SCORE;
     }
 
     public List<Card> openCards() {

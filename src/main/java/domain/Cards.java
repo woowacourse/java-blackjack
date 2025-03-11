@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Cards {
 
-    public static final int BUST_STANDARD = 21;
+    public static final int MAX_SCORE = 21;
     public static final int SOFT_ACE_DIFFERENCE = 10;
 
     private final List<Card> cards;
@@ -44,7 +44,7 @@ public class Cards {
     }
 
     private int processAce(int sum) {
-        if (sum > BUST_STANDARD) {
+        if (sum > MAX_SCORE) {
             sum -= SOFT_ACE_DIFFERENCE;
         }
         return sum;
