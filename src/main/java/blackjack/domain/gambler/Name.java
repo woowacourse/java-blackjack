@@ -26,10 +26,6 @@ public class Name {
         return name;
     }
 
-    public static boolean isDealerName(final Name name) {
-        return name.equals(DEALER_NAME);
-    }
-
     public static Name createDealer() {
         return DEALER_NAME;
     }

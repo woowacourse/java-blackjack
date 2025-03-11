@@ -80,7 +80,7 @@ public class Round {
 
     private Map<Name, Integer> createPlayerScores() {
         return gamblers.stream()
-                .filter(gambler -> !Name.isDealerName(gambler.getName()))
+                .filter(gambler -> !gambler.isNameEquals(Name.createDealer()))
                 .collect(toMap(Gambler::getName, Gambler::calculateScore));
     }
 
