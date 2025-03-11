@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class GameManger {
     public final static int WIN = 1;
@@ -18,17 +19,17 @@ public class GameManger {
     private final Dealer dealer;
     private final CardDeck cardDeck;
 
-    public GameManger(List<String> names) {
+    public GameManger(List<String> names, Dealer dealer, CardDeck cardDeck) {
         validate(names);
         for (String name : names) {
             users.add(new Player(name));
         }
-        this.dealer = new Dealer();
-        this.cardDeck = new CardDeck();
+        this.dealer = dealer;
+        this.cardDeck = cardDeck;
     }
 
     private void validate(List<String> names) {
-        HashSet<String> distinctNames = new HashSet<>(names);
+        Set<String> distinctNames = new HashSet<>(names);
         if (names.isEmpty() || names.size() > 7) {
             throw new IllegalArgumentException("유저는 1명 이상 7명 이하로 등록해야 합니다.");
         }
