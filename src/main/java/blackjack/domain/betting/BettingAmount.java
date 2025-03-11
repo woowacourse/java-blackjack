@@ -19,6 +19,14 @@ public class BettingAmount {
         }
     }
 
+    public int multiply(final double winningRate) {
+        return (int) (amount * winningRate);
+    }
+
+    public int calculateProfit(final int winningAmount) {
+        return winningAmount - amount;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
@@ -31,13 +39,5 @@ public class BettingAmount {
     @Override
     public int hashCode() {
         return Objects.hashCode(amount);
-    }
-
-    public int multiplyRate(final double profitRate) {
-        return (int) (amount * profitRate);
-    }
-
-    public int calculateProfit(final int winningAmount) {
-        return winningAmount - amount;
     }
 }

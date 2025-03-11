@@ -23,7 +23,7 @@ public enum WinningType {
     }
 
     public int calculateWinningAmount(final BettingAmount amount) {
-        return amount.multiplyRate(winningRate);
+        return amount.multiply(winningRate);
     }
 
     public String getDisplayName() {
