@@ -35,7 +35,7 @@ public class DealerTest {
         dealer.prepareBlackjack();
 
         //then
-        Assertions.assertThat(dealer.getCards().getCards())
+        Assertions.assertThat(dealer.retrieveCards())
                 .isEqualTo(List.of(
                         new Card(Suit.SPADE, Rank.ONE),
                         new Card(Suit.HEART, Rank.ONE)
@@ -48,7 +48,6 @@ public class DealerTest {
                 .isEqualTo(List.of(
                         new Card(Suit.CLUB, Rank.FIVE),
                         new Card(Suit.CLUB, Rank.FOUR)));
-
     }
 
     @Test
