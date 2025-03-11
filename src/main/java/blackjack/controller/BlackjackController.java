@@ -11,11 +11,11 @@ import java.util.List;
 
 public class BlackjackController {
 
-    private final BlackJackInitManager blackJackInitManager;
+    private final BlackjackInitManager blackJackInitManager;
     private final BlackjackProcessManager blackjackProcessManager;
     private final BlackJackResultManager blackJackResultManager;
 
-    public BlackjackController(BlackJackInitManager blackJackInitManager) {
+    public BlackjackController(BlackjackInitManager blackJackInitManager) {
         this.blackJackInitManager = blackJackInitManager;
         this.blackjackProcessManager = new BlackjackProcessManager(blackJackInitManager.generateDeck());
         this.blackJackResultManager = new BlackJackResultManager();

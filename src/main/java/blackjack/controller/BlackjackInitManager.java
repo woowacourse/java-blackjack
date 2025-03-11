@@ -8,11 +8,11 @@ import blackjack.domain.Players;
 import blackjack.factory.DeckGenerator;
 import java.util.List;
 
-public class BlackJackInitManager {
+public class BlackjackInitManager {
 
     private final DeckGenerator deckGenerator;
 
-    public BlackJackInitManager(DeckGenerator deckGenerator) {
+    public BlackjackInitManager(DeckGenerator deckGenerator) {
         this.deckGenerator = deckGenerator;
     }
 

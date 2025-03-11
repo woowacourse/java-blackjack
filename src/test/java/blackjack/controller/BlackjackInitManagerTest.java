@@ -9,13 +9,13 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackInitManagerTest {
+class BlackjackInitManagerTest {
 
     @DisplayName("덱을 설정한다.")
     @Test
     void test1() {
         // given
-        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new SingDeckGenerator());
+        BlackjackInitManager blackJackInitManager = new BlackjackInitManager(new SingDeckGenerator());
 
         // when & then
         assertThatCode(blackJackInitManager::generateDeck)
@@ -27,7 +27,7 @@ class BlackJackInitManagerTest {
     void test2() {
         // given
         List<String> names = List.of("꾹이", "히로", "비타");
-        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new SingDeckGenerator());
+        BlackjackInitManager blackJackInitManager = new BlackjackInitManager(new SingDeckGenerator());
 
         // when
         Players players = blackJackInitManager.generatePlayers(names);
@@ -40,7 +40,7 @@ class BlackJackInitManagerTest {
     @Test
     void test3() {
         // given
-        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new SingDeckGenerator());
+        BlackjackInitManager blackJackInitManager = new BlackjackInitManager(new SingDeckGenerator());
 
         // when & then
         assertThatCode(blackJackInitManager::generateDealer)
