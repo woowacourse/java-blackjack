@@ -5,6 +5,7 @@ import domain.GameResult;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -47,6 +48,8 @@ public class OutputView {
     }
 
     public void displayOpenCardsResult(String name, List<String> printCards, int score) {
-        System.out.print(name + "카드: " + String.join(", ", printCards + (" - 결과: " + score)) +"\n");
+        String str = printCards.stream()
+                .collect(Collectors.joining(", "));
+        System.out.println(name + "카드: " +  str + " - 결과: " + score);
     }
 }
