@@ -1,5 +1,8 @@
 package blackjack.domain.participants;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -35,19 +38,26 @@ public class DealerTest {
         dealer.prepareBlackjack();
 
         //then
-        Assertions.assertThat(dealer.retrieveCards())
-                .isEqualTo(List.of(
-                        new Card(Suit.SPADE, Rank.ONE),
-                        new Card(Suit.HEART, Rank.ONE)
-                ));
-        Assertions.assertThat(players.getPlayers().get(0).retrieveCards())
-                .isEqualTo(List.of(
-                        new Card(Suit.DIAMOND, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.ONE)));
-        Assertions.assertThat(players.getPlayers().get(1).retrieveCards())
-                .isEqualTo(List.of(
-                        new Card(Suit.CLUB, Rank.FIVE),
-                        new Card(Suit.CLUB, Rank.FOUR)));
+        assertAll(
+                () -> assertEquals(dealer.retrieveCards(),
+                        List.of(
+                                new Card(Suit.SPADE, Rank.ONE),
+                                new Card(Suit.HEART, Rank.ONE)
+                        )
+                ),
+                () -> assertEquals(players.getPlayers().get(0).retrieveCards(),
+                        List.of(
+                                new Card(Suit.DIAMOND, Rank.ONE),
+                                new Card(Suit.CLUB, Rank.ONE)
+                        )
+                ),
+                () -> assertEquals(players.getPlayers().get(1).retrieveCards(),
+                        List.of(
+                                new Card(Suit.CLUB, Rank.FIVE),
+                                new Card(Suit.CLUB, Rank.FOUR)
+                        )
+                )
+        );
     }
 
     @Test
