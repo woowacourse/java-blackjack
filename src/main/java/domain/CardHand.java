@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import domain.card.Card;
+import domain.card.Rank;
+
 public class CardHand {
 
 	private final List<Card> cards;

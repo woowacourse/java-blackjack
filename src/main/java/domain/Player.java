@@ -2,6 +2,8 @@ package domain;
 
 import java.util.List;
 
+import domain.card.Card;
+
 public class Player implements PickableCard {
 	private final String name;
 	private final Participant participant;

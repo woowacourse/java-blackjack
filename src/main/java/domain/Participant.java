@@ -2,6 +2,8 @@ package domain;
 
 import java.util.List;
 
+import domain.card.Card;
+
 public class Participant {
 	private final CardHand hand;
 	private final DuelHistory duelHistory;

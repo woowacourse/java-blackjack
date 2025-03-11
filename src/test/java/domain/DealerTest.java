@@ -8,6 +8,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
+
 public class DealerTest {
 	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
 	private static final int BUST_SCORE = 21;

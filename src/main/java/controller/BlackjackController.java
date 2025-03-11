@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.Blackjack;
-import domain.Card;
 import domain.CardHand;
 import domain.Dealer;
 import domain.Deck;
 import domain.DuelHistory;
 import domain.Participant;
 import domain.Player;
+import domain.card.Card;
 import view.InputView;
 import view.OutputView;
 

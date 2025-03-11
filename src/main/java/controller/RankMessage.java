@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Arrays;
 
-import domain.Rank;
+import domain.card.Rank;
 
 public enum RankMessage {
 	ACE(Rank.ACE, "A"),
