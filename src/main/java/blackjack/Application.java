@@ -20,6 +20,8 @@ import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class Application {
     public static void main(String[] args) {
@@ -36,10 +38,14 @@ public class Application {
 
     private static CardDeck createCardDeck() {
         List<Card> cards = Arrays.stream(CardShape.values())
-                .flatMap(shape -> Arrays.stream(CardType.values())
-                        .map(type -> new Card(shape, type)))
+                .flatMap(createCard())
                 .collect(toList());
         return new CardDeck(cards, new CardShuffler());
+    }
+
+    private static Function<CardShape, Stream<? extends Card>> createCard() {
+        return shape -> Arrays.stream(CardType.values())
+                .map(type -> new Card(shape, type));
     }
 
     private static List<Name> getPlayerNames() {
