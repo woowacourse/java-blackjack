@@ -3,7 +3,9 @@ package domain.gamer;
 import domain.card.CardGenerator;
 import domain.card.CardGroup;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GamerGenerator {
 
@@ -35,8 +37,6 @@ public class GamerGenerator {
     }
 
     private static boolean isDuplicate(final List<String> playerNames) {
-        return playerNames.stream()
-                .distinct()
-                .count() != playerNames.size();
+        return new HashSet<>(playerNames).size() != playerNames.size();
     }
 }
