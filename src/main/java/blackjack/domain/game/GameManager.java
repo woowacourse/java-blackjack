@@ -2,17 +2,11 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.io.GameInputOutput;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.user.Nickname;
 import blackjack.domain.user.Player;
-import blackjack.dto.FinalHands;
-import blackjack.dto.HandState;
-import blackjack.dto.HiddenDealerHandState;
-import blackjack.dto.InitialHands;
-import blackjack.dto.PlayerWinningResult;
-import blackjack.dto.WinningState;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
@@ -47,7 +41,7 @@ public class GameManager {
         for (Player player : users.getPlayers()) {
             distributeInitialCardToPlayer(player);
         }
-        outputInitialCard();
+        gameInputOutput.printInitialHands(users.getDealer(), users.getPlayers());
     }
 
     private void distributeInitialCardToDealer() {
@@ -68,11 +62,10 @@ public class GameManager {
 
     private void processPlayerTurn(Player player) {
         while (player.checkHitPossibility() &&
-                gameInputOutput.executeReadIngWannaHit(player.getNickname())) {
+                gameInputOutput.readIngWannaHit(player.getNickname())) {
             Card card = cardDeck.drawCard(1).getFirst();
             player.hit(card);
-            HandState hitResult = makeHandState(player);
-            gameInputOutput.executePrintingHitResult(hitResult);
+            gameInputOutput.printingHitResult(player);
         }
     }
 
@@ -84,48 +77,13 @@ public class GameManager {
             Card card = cardDeck.drawCard(1).getFirst();
             dealer.addCardUntilLimit(card);
         }
-        gameInputOutput.executePrintDealerDrawing(drawingCount);
-    }
-
-    private void outputInitialCard() {
-        Dealer dealer = users.getDealer();
-        HiddenDealerHandState dealerHand = new HiddenDealerHandState(dealer.getDealerName(), dealer.findFirstCard());
-        List<HandState> playerHands = users.getPlayers().stream()
-                .map(player -> new HandState(player.getNickname(), player.getHand(), player.getPoint()))
-                .toList();
-        InitialHands initialHands = new InitialHands(dealerHand, playerHands);
-        gameInputOutput.executePrintInitialHands(initialHands);
+        gameInputOutput.printDealerDrawing(drawingCount);
     }
 
     private void outputGameResult() {
-        outputFinalHands();
-        outputWinningResult();
-    }
-
-    private void outputFinalHands() {
-        Dealer dealer = users.getDealer();
-        HandState dealerHand = new HandState(dealer.getDealerName(), dealer.getHand(), dealer.getPoint());
-        List<HandState> playerHands = users.getPlayers().stream()
-                .map(player -> new HandState(player.getNickname(), player.getHand(), player.getPoint()))
-                .toList();
-        FinalHands finalHands = new FinalHands(dealerHand, playerHands);
-        gameInputOutput.executePrintFinalHands(finalHands);
-    }
-
-    private void outputWinningResult() {
-        Dealer dealer = users.getDealer();
-        List<PlayerWinningResult> winningResults = new ArrayList<>();
-        for (Player player : users.getPlayers()) {
-            WinningType winningType = WinningType.parse(player.getPoint(), dealer.getPoint());
-            PlayerWinningResult winningResult = new PlayerWinningResult(player.getNickname(), winningType);
-            winningResults.add(winningResult);
-        }
-        WinningState winningState = new WinningState(winningResults);
-        gameInputOutput.executePrintGameResult(winningState);
-    }
-
-    private HandState makeHandState(Player player) {
-        return new HandState(player.getNickname(), player.getHand(), player.getPoint());
+        gameInputOutput.printFinalHands(users.getDealer(), users.getPlayers());
+        GameResult gameResult = new GameResult(users.getDealer(), users.getPlayers());
+        gameInputOutput.printGameResult(gameResult);
     }
 }
 

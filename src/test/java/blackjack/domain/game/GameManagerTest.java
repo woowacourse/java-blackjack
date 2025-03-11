@@ -2,17 +2,17 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardGenerator;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.CardValue;
 import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.user.Nickname;
-import blackjack.dto.FinalHands;
-import blackjack.dto.HandState;
-import blackjack.dto.InitialHands;
-import blackjack.dto.PlayerWinningResult;
-import blackjack.dto.WinningState;
+import blackjack.domain.user.Player;
 import blackjack.mock.GameInputOutputMock;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class GameManagerTest {
 
     @BeforeEach
     void beforeEach() {
-        cardGenerator = new CardGenerator();
+        cardGenerator = new CardGeneratorMock();
         cardDeck = new CardDeck(cardGenerator);
         gameUserStorage = new GameUserStorage();
         gameManager = new GameManager(gameUserStorage, cardDeck);
@@ -41,21 +41,32 @@ class GameManagerTest {
         List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         gameManager.runGame(nicknames);
 
-        InitialHands initialHands = gameInputOutput.getInitialHands();
-        assertThat(initialHands.playerHand())
-                .extracting(HandState::nickname)
+        assertThat(gameUserStorage.getPlayers())
+                .extracting(Player::getNickname)
                 .containsExactlyInAnyOrder("쿠키", "빙봉");
     }
 
     @Test
     @DisplayName("플레이어에게 초기카드를 분배할 수 있다.")
-    void canDistributeInitialCard() {
+    void canDistributeInitialCardToPlayer() {
         List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         gameManager.runGame(nicknames);
 
-        InitialHands initialHands = gameInputOutput.getInitialHands();
-        assertThat(initialHands.playerHand())
-                .hasSize(GameRule.INITIAL_CARD_COUNT.getValue());
+        Map<String, List<Card>> initialPlayerHands = gameInputOutput.getInitialPlayerHands();
+        assertThat(initialPlayerHands.keySet())
+                .containsExactlyInAnyOrder("쿠키", "빙봉");
+        assertThat(initialPlayerHands.values())
+                .allMatch(hand -> hand.size() == GameRule.INITIAL_CARD_COUNT.getValue());
+    }
+
+    @Test
+    @DisplayName("딜러에게 초기카드를 분배할 수 있다.")
+    void canDistributeInitialCardToDealer() {
+        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
+        gameManager.runGame(nicknames);
+
+        List<Card> initialDealerHand = gameInputOutput.getInitialDealerHand();
+        assertThat(initialDealerHand).hasSize(GameRule.INITIAL_CARD_COUNT.getValue());
     }
 
     @Test
@@ -64,14 +75,11 @@ class GameManagerTest {
         List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         gameManager.runGame(nicknames);
 
-        FinalHands finalHands = gameInputOutput.getFinalHands();
-        assertThat(finalHands.playerHand())
-                .extracting(HandState::cards)
-                .hasSizeGreaterThanOrEqualTo(GameRule.INITIAL_CARD_COUNT.getValue());
-        assertThat(finalHands.playerHand())
-                .extracting(HandState::point)
-                .filteredOn(point -> point >= GameRule.LIMIT_POINT_BEFORE_BUST.getValue())
-                .hasSize(nicknames.size());
+        Map<String, List<Card>> finalPlayerHands = gameInputOutput.getFinalPlayerHands();
+        assertThat(finalPlayerHands.keySet())
+                .containsExactlyInAnyOrder("쿠키", "빙봉");
+        assertThat(finalPlayerHands.values())
+                .allMatch(hand -> hand.size() == 3);
     }
 
     @Test
@@ -80,39 +88,39 @@ class GameManagerTest {
         List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         gameManager.runGame(nicknames);
 
-        FinalHands finalHands = gameInputOutput.getFinalHands();
-        assertThat(finalHands.dealerHand().cards())
-                .hasSizeGreaterThanOrEqualTo(GameRule.INITIAL_CARD_COUNT.getValue());
-        assertThat(finalHands.dealerHand().point())
-                .isGreaterThanOrEqualTo(GameRule.DEALER_LIMIT_POINT.getValue());
+        List<Card> finalDealerHand = gameInputOutput.getFinalDealerHand();
+        assertThat(finalDealerHand).hasSize(3);
     }
 
     @Test
     @DisplayName("승패를 계산할 수 있다.")
     void canWinningState() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"));
+        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         gameManager.runGame(nicknames);
 
-        FinalHands finalHands = gameInputOutput.getFinalHands();
-        WinningState winningState = gameInputOutput.getWinningState();
-        if (finalHands.dealerHand().point() <= GameRule.LIMIT_POINT_BEFORE_BUST.getValue()) {
-            checkLose(winningState);
-            return;
+        GameResult gameResult = gameInputOutput.getGameResult();
+        assertThat(gameResult.getDealerWinningState(WinningType.DRAW))
+                .isEqualTo(2);
+        assertThat(gameResult.getDealerWinningState(WinningType.WIN))
+                .isEqualTo(0);
+        assertThat(gameResult.getDealerWinningState(WinningType.LOSE))
+                .isEqualTo(0);
+    }
+
+    static class CardGeneratorMock extends CardGenerator {
+
+        @Override
+        public List<Card> makeShuffled() {
+            return List.of(
+                    new Card(CardShape.HEART, CardValue.JACK),
+                    new Card(CardShape.HEART, CardValue.SIX),
+                    new Card(CardShape.HEART, CardValue.JACK),
+                    new Card(CardShape.HEART, CardValue.SIX),
+                    new Card(CardShape.HEART, CardValue.JACK),
+                    new Card(CardShape.HEART, CardValue.SIX),
+                    new Card(CardShape.HEART, CardValue.FIVE),
+                    new Card(CardShape.HEART, CardValue.FIVE),
+                    new Card(CardShape.HEART, CardValue.FIVE));
         }
-        checkWinOrDraw(winningState);
-    }
-
-    private static void checkLose(WinningState winningState) {
-        PlayerWinningResult winningResult = winningState.playerWinningResults().getFirst();
-        WinningType winningType = winningResult.winningType();
-        assertThat(winningType == WinningType.LOSE)
-                .isTrue();
-    }
-
-    private static void checkWinOrDraw(WinningState winningState) {
-        PlayerWinningResult winningResult = winningState.playerWinningResults().getFirst();
-        WinningType winningType = winningResult.winningType();
-        assertThat(winningType == WinningType.DRAW || winningType == WinningType.WIN)
-                .isTrue();
     }
 }

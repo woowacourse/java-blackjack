@@ -1,18 +1,21 @@
 package blackjack.mock;
 
-import blackjack.domain.game.GameInputOutput;
-import blackjack.dto.FinalHands;
-import blackjack.dto.HandState;
-import blackjack.dto.InitialHands;
-import blackjack.dto.WinningState;
+import blackjack.domain.card.Card;
+import blackjack.domain.game.GameResult;
+import blackjack.domain.io.GameInputOutput;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameInputOutputMock extends GameInputOutput {
 
-    private InitialHands initialHands;
-    private HandState handState;
-    private int dealerDrawingCount;
-    private FinalHands finalHands;
-    private WinningState winningState;
+    private List<Card> initialDealerHand;
+    private Map<String, List<Card>> initialPlayerHands;
+    private List<Card> finalDealerHand;
+    private Map<String, List<Card>> finalPlayerHands;
+    private GameResult gameResult;
 
     public GameInputOutputMock() {
         super(null, null, null,
@@ -20,52 +23,56 @@ public class GameInputOutputMock extends GameInputOutput {
     }
 
     @Override
-    public void executePrintInitialHands(InitialHands initialHands) {
-        this.initialHands = initialHands;
+    public void printInitialHands(Dealer dealer, List<Player> players) {
+        initialDealerHand = dealer.getHand().stream().toList();
+        initialPlayerHands = new HashMap<>();
+        players.forEach(
+                player -> initialPlayerHands.put(player.getNickname(), player.getHand().stream().toList()));
     }
 
     @Override
-    public boolean executeReadIngWannaHit(String nickname) {
+    public boolean readIngWannaHit(String nickname) {
         return true;
     }
 
     @Override
-    public void executePrintingHitResult(HandState state) {
-        this.handState = state;
+    public void printingHitResult(Player player) {
     }
 
     @Override
-    public void executePrintDealerDrawing(int count) {
-        this.dealerDrawingCount = count;
+    public void printDealerDrawing(int count) {
     }
 
     @Override
-    public void executePrintFinalHands(FinalHands finalHands) {
-        this.finalHands = finalHands;
+    public void printFinalHands(Dealer dealer, List<Player> players) {
+        finalDealerHand = dealer.getHand().stream().toList();
+        finalPlayerHands = new HashMap<>();
+        players.forEach(
+                player -> finalPlayerHands.put(player.getNickname(), player.getHand().stream().toList()));
     }
 
     @Override
-    public void executePrintGameResult(WinningState winningState) {
-        this.winningState = winningState;
+    public void printGameResult(GameResult gameResult) {
+        this.gameResult = gameResult;
     }
 
-    public InitialHands getInitialHands() {
-        return initialHands;
+    public List<Card> getInitialDealerHand() {
+        return initialDealerHand;
     }
 
-    public HandState getHandState() {
-        return handState;
+    public Map<String, List<Card>> getInitialPlayerHands() {
+        return initialPlayerHands;
     }
 
-    public int getDealerDrawingCount() {
-        return dealerDrawingCount;
+    public List<Card> getFinalDealerHand() {
+        return finalDealerHand;
     }
 
-    public FinalHands getFinalHands() {
-        return finalHands;
+    public Map<String, List<Card>> getFinalPlayerHands() {
+        return finalPlayerHands;
     }
 
-    public WinningState getWinningState() {
-        return winningState;
+    public GameResult getGameResult() {
+        return gameResult;
     }
 }

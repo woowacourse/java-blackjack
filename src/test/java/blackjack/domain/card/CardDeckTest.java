@@ -4,14 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.exception.ExceptionMessage;
-import blackjack.mock.CardGeneratorMock;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
 
-    CardGenerator cardGenerator = new CardGeneratorMock();
+    CardGenerator cardGenerator = new CardGenerator();
     CardDeck cardDeck = new CardDeck(cardGenerator);
 
     @Test
