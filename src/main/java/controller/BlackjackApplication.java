@@ -31,7 +31,8 @@ public class BlackjackApplication {
     }
 
     public void execute() {
-        final Dealer dealer = Dealer.createEmpty();;
+        final Dealer dealer = Dealer.createEmpty();
+
         final Players players = initializePlayers();
 
         initializeParticipantCards(dealer, players);
@@ -62,7 +63,7 @@ public class BlackjackApplication {
     }
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
-        if(!dealer.isPossibleDraw()) {
+        if (!dealer.isPossibleDraw()) {
             dealer.addCard(cardGiver.giveOne());
             outputView.printDealerDraw();
             return;
@@ -79,7 +80,7 @@ public class BlackjackApplication {
     private void processPlayerCardRequest(Player player) {
         AnswerType answerType = inputView.requestAdditionalCard(player);
         while (isPossibleRequest(player, answerType)) {
-            cardGiver.giveAdditionalCard(player, answerType);
+            cardGiver.giveAdditionalCard(player);
             outputView.printCurrentCard(player);
             answerType = inputView.requestAdditionalCard(player);
         }

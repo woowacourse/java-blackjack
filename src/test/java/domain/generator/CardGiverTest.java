@@ -74,7 +74,7 @@ public class CardGiverTest {
         });
     }
 
-    @DisplayName("사용자 답변이 YES이면 추가 카드를 받는다.")
+    @DisplayName("추가 카드를 받는다.")
     @Test
     void test34() {
         //given
@@ -83,24 +83,24 @@ public class CardGiverTest {
 
         CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
         //when
-        cardGiver.giveAdditionalCard(player, answerType);
+        cardGiver.giveAdditionalCard(player);
         //then
         assertThat(player.getCards()).isEqualTo(new Cards(List.of(
                 new Card(CardNumberType.FIVE, CardType.SPACE)
         )));
     }
 
-    @DisplayName("사용자 답변이 NO이면 추가 카드를 받지 않는다.")
-    @Test
-    void test35() {
-        //given
-        Player player = new Player("mimi", Cards.createEmpty());
-        AnswerType answerType = AnswerType.NO;
-
-        CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
-        //when
-        cardGiver.giveAdditionalCard(player, answerType);
-        //then
-        assertThat(player.getCards()).isEqualTo(Cards.createEmpty());
-    }
+//    @DisplayName("사용자 답변이 NO이면 추가 카드를 받지 않는다.")
+//    @Test
+//    void test35() {
+//        //given
+//        Player player = new Player("mimi", Cards.createEmpty());
+//        AnswerType answerType = AnswerType.NO;
+//
+//        CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
+//        //when
+//        cardGiver.giveAdditionalCard(player, answerType);
+//        //then
+//        assertThat(player.getCards()).isEqualTo(Cards.createEmpty());
+//    }
 }
