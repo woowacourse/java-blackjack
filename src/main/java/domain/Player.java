@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Objects;
-
 public class Player extends Gamer {
 
     public Player(String name) {
@@ -20,18 +18,5 @@ public class Player extends Gamer {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(getName(), player.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getName());
-    }
-
 }
+
