@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +56,12 @@ public class Players {
     }
 
     public Map<PlayerName, Player> getPlayersInfo() {
-        return Collections.unmodifiableMap(players);
+        return players.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> Player.copyOf(entry.getValue()),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
     }
 }

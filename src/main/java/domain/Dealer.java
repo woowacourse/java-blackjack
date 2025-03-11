@@ -10,6 +10,15 @@ public class Dealer extends Gamer {
         this.deck = deck;
     }
 
+    public Dealer(Dealer dealer) {
+        super(dealer);
+        this.deck = new Deck(dealer.deck);
+    }
+
+    public static Dealer copyOf(Dealer dealer) {
+        return new Dealer(dealer);
+    }
+
     public boolean isDrawable() {
         return this.isDrawable(DEALER_DRAWABLE_THRESHOLD);
     }

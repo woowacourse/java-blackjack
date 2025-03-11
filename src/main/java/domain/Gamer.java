@@ -10,6 +10,10 @@ public abstract class Gamer {
         this.cards = new Cards(new ArrayList<>());
     }
 
+    public Gamer(Gamer gamer) {
+        this.cards = gamer.getCards();
+    }
+
     public int getScore() {
         return cards.calculateScore();
     }

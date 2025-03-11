@@ -64,7 +64,7 @@ public class Game {
     }
 
     public Gamer getDealer() {
-        return dealer;
+        return Dealer.copyOf(dealer);
     }
 
     public GameStatistics getGameStatistics() {

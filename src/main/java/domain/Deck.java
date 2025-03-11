@@ -15,6 +15,10 @@ public class Deck {
         copiedCards.forEach(deck::push);
     }
 
+    public Deck(Deck otherDeck) {
+        this.deck.addAll(new ArrayList<>(otherDeck.deck));
+    }
+
     public Card draw() {
         validateEmpty();
         return deck.pop();

@@ -14,6 +14,15 @@ public class Player extends Gamer {
         this.playerName = playerName;
     }
 
+    public Player(Player player) {
+        super(player);
+        this.playerName = new PlayerName(player.playerName.username());
+    }
+
+    public static Player copyOf(Player player) {
+        return new Player(player);
+    }
+
     public boolean isDrawable() {
         return this.isDrawable(PLAYER_DRAWABLE_THRESHOLD);
     }
