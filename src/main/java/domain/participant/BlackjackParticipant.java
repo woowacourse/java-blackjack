@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.blackjackgame.BlackjackCardSum;
 import domain.blackjackgame.TrumpCard;
 import exception.BlackJackException;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package domain.blackjackgame;
+package domain.participant;
 
+import domain.blackjackgame.TrumpCard;
 import java.util.ArrayList;
 import java.util.List;
 
