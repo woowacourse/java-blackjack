@@ -2,8 +2,6 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.CardDeck;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Dealer {
 
@@ -17,18 +15,6 @@ public class Dealer {
 
     public void drawCard(int drawCount) {
         hand.drawCard(drawCount);
-    }
-
-    public List<GameResult> judgeGameResult(List<Player> players) {
-        List<GameResult> gameResult = new ArrayList<>();
-        for (Player player : players) {
-            gameResult.add(judgeWin(player));
-        }
-        return gameResult;
-    }
-
-    private GameResult judgeWin(Player player) {
-        return GameResult.of(this, player);
     }
 
     public Hand getHand() {

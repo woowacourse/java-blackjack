@@ -1,5 +1,7 @@
 package domain.game;
 
+import static domain.card.CardNumber.VALUE_TO_SOFT_ACE;
+
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    
+
     public static final int BUST_BOUND = 21;
 
     private final List<Card> cards;
@@ -29,9 +31,10 @@ public class Hand {
 
     public int calculateTotalWithAce() {
         int totalCardNumber = calculateTotalCardNumber();
-        int aceCount = countAce();
-
-        return decideAceValue(totalCardNumber, aceCount);
+        if (hasAce()) {
+            return calculateWithAce(totalCardNumber);
+        }
+        return totalCardNumber;
     }
 
     private int calculateTotalCardNumber() {
@@ -40,26 +43,17 @@ public class Hand {
                 .sum();
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-                .map(Card::getCardNumber)
-                .filter(number -> number == CardNumber.ACE)
-                .count();
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
     }
 
-    private int decideAceValue(int totalWithAce, int aceCount) {
-        for (int i = 0; i < aceCount; i++) {
-            int totalWithAnotherAce = changeAceNumber(totalWithAce);
-            if (totalWithAnotherAce <= BUST_BOUND) {
-                totalWithAce = totalWithAnotherAce;
-                break;
-            }
+    private int calculateWithAce(int totalCardNumber) {
+        int totalWithAce = totalCardNumber + VALUE_TO_SOFT_ACE;
+        if (totalWithAce <= BUST_BOUND) {
+            return totalWithAce;
         }
-        return totalWithAce;
-    }
-
-    private static int changeAceNumber(int totalWithAce) {
-        return (totalWithAce - CardNumber.ACE.getNumber()) + CardNumber.ACE_ANOTHER.getNumber();
+        return totalCardNumber;
     }
 
     public int getCardsCount() {

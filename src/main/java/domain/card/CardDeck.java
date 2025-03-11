@@ -25,18 +25,13 @@ public class CardDeck {
     }
 
     private static Stream<Card> generateCardsForPattern(Pattern pattern) {
-        return getCardNumbersWithoutAnotherAce().stream()
+        return getCardNumbers().stream()
                 .map(cardNumber -> new Card(pattern, cardNumber));
     }
 
-    private static List<CardNumber> getCardNumbersWithoutAnotherAce() {
+    private static List<CardNumber> getCardNumbers() {
         return Arrays.stream(CardNumber.values())
-                .filter(CardDeck::isNotAnotherAce)
                 .toList();
-    }
-
-    private static boolean isNotAnotherAce(CardNumber cardNumber) {
-        return cardNumber != CardNumber.ACE_ANOTHER;
     }
 
     private CardDeck(List<Card> deck) {
