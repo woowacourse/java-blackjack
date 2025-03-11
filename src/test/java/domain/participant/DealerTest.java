@@ -106,4 +106,16 @@ public class DealerTest {
                 new CardDeck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN)))
         ));
     }
+
+    @Test
+    @DisplayName("딜러 드로우 안 터지는 테스트")
+    void notDrawTest() {
+        // given
+        CardDeck cardDeck = new CardDeck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN)));
+        Dealer dealer = new Dealer(cardDeck);
+        dealer.addCards();
+        dealer.addCards();
+
+        assertDoesNotThrow(dealer::draw);
+    }
 }
