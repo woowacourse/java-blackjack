@@ -37,8 +37,9 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public void printPlayerCards(final Player player) {
-        final String playerCardsMessage = createCardsMessage(player.getName(), player.getCards().toArray(new Card[0]));
+
+    public void printPlayerCards(final String playerName, final List<Card> cards) {
+        final String playerCardsMessage = createCardsMessage(playerName, cards.toArray(new Card[0]));
         System.out.println(playerCardsMessage);
 
     }
@@ -82,7 +83,7 @@ public class OutputView {
 
     private String createCardsMessage(final String name, final Card... cards) {
         final String cardsMessage = Arrays.stream(cards)
-                .map(card -> String.format("%s%s", card.getScore().getSymbol(), card.getType().getType().getName()))
+                .map(card -> String.format("%s%s", card.getScore().getSymbol(), card.getType().getName()))
                 .collect(Collectors.joining(", "));
         return String.format("%s카드: %s", name, cardsMessage);
     }
