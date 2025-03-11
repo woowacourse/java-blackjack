@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import model.card.Card;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Suit;
+import model.card.NormalRank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,19 +40,21 @@ public class PlayersTest {
         // given
         // 총 합이 9
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.FIVE),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+                new Card(Suit.HEARTS, NormalRank.FIVE),
+                new Card(Suit.CLUBS, NormalRank.FOUR)
         );
         int expected = divideCards.stream()
-                .mapToInt(card -> card.getRank().getScore().getFirst())
+                .mapToInt(card -> card.getRank().getScore())
                 .sum();
 
         String nickname = "pobi";
         Player player = Player.from(nickname);
-        player.addCards(divideCards);
+        for (Card card : divideCards) {
+            player.addCard(card);
+        }
 
         // when
-        int sum = player.getSum();
+        int sum = player.getScore();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);

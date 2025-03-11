@@ -9,7 +9,7 @@ import java.util.Map;
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
-    private static final int STANDING_CONDITION = 17;
+    private static final int HIT_CONDITION = 17;
 
     private final String nickname;
     private final Map<MatchType, Integer> matchResult;
@@ -30,11 +30,12 @@ public class Dealer extends Participant {
         if (isBust()) {
             return ResultType.LOSE_WIN;
         }
-        return ResultType.of(score.compareTo(player.score));
+        return ResultType.of(cards.calculateScore().compareTo(player.cards.calculateScore()));
     }
 
-    public boolean isNotUp() {
-        return score.getValue() < STANDING_CONDITION;
+    @Override
+    public boolean isHit() {
+        return cards.isHit(HIT_CONDITION);
     }
 
     public void updateResult(MatchType type) {

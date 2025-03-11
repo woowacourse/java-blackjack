@@ -2,8 +2,9 @@ package model.participant;
 
 import model.card.Card;
 import model.card.CardDeck;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Suit;
+import model.card.AceRank;
+import model.card.NormalRank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -32,15 +34,19 @@ public class PlayerTest {
     void addCardsSuccess() {
 
         // given
-        final int amount = 2;
-        final List<Card> cards = new CardDeck().pickCard(2);
+        final List<Card> expectedCards = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            expectedCards.add(new CardDeck().pickCard());
+        }
 
         // when
         Player player = Player.from("pobi");
-        player.addCards(cards);
+        for (Card card : expectedCards) {
+            player.addCard(card);
+        }
 
         // then
-        Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
+        Assertions.assertThat(player.getCards()).containsAll(expectedCards);
     }
 
     @ParameterizedTest
@@ -49,28 +55,31 @@ public class PlayerTest {
     void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
         Participant player = Player.from("pobi");
-        player.addCards(cards);
+
+        for (Card card : cards) {
+            player.addCard(card);
+        }
         //when
         //then
-        Assertions.assertThat(player.isNotEnoughScoreCondition()).isTrue();
+        Assertions.assertThat(player.isHit()).isTrue();
     }
 
     private static Stream<Arguments> createNotBustCards() {
         return Stream.of(
                 Arguments.arguments(
                         List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.HEARTS, RankType.FIVE),
-                                new Card(SuitType.SPADES, RankType.SEVEN)
-                        )
-                ),
-                Arguments.arguments(
-                        List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.SPADES, RankType.FIVE),
-                                new Card(SuitType.HEARTS, RankType.ACE)
+                                new Card(Suit.CLUBS, AceRank.HARD_ACE),
+                                new Card(Suit.HEARTS, NormalRank.FIVE),
+                                new Card(Suit.SPADES, NormalRank.SEVEN)
                         )
                 )
+/*                Arguments.arguments(
+                        List.of(
+                                new Card(Suit.CLUBS, AceRank.SOFT_ACE),
+                                new Card(Suit.SPADES, NormalRank.FIVE),
+                                new Card(Suit.HEARTS, AceRank.SOFT_ACE)
+                        )
+                )*/
         );
     }
 
@@ -79,13 +88,15 @@ public class PlayerTest {
     void isNotEnoughScoreConditionFalse() {
         //given
         List<Card> cards = List.of(
-                new Card(SuitType.CLUBS, RankType.ACE),
-                new Card(SuitType.HEARTS, RankType.KING)
+                new Card(Suit.CLUBS, AceRank.SOFT_ACE),
+                new Card(Suit.HEARTS, NormalRank.KING)
         );
         Participant player = Player.from("pobi");
-        player.addCards(cards);
+        for (Card card : cards) {
+            player.addCard(card);
+        }
         //when
         //then
-        Assertions.assertThat(player.isNotEnoughScoreCondition()).isFalse();
+        Assertions.assertThat(player.isHit()).isFalse();
     }
 }

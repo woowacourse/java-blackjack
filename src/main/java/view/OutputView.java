@@ -1,8 +1,8 @@
 package view;
 
 import model.card.Card;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Suit;
+import model.card.Rank;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
@@ -33,7 +33,8 @@ public class OutputView {
             Map.entry("KING", "K"),
             Map.entry("JACK", "J"),
             Map.entry("QUEEN", "Q"),
-            Map.entry("ACE", "A")
+            Map.entry("SOFT_ACE", "A"),
+            Map.entry("HARD_ACE", "A")
     );
 
     private static final Map<String, String> SUIT_FORMAT = Map.of(
@@ -47,7 +48,7 @@ public class OutputView {
         String dealerNickname = dealer.getNickname();
         List<String> playerNicknames = values.getNicknames();
         System.out.println(formatDivideCommentByNickname(dealerNickname, playerNicknames));
-        Card card = dealer.getHands().getFirst();
+        Card card = dealer.getCards().getFirst();
         String formattedDealerCard = getCardFormat(card);
         String handsHeader = formatHandsHeader(dealerNickname);
         System.out.println(formatBasicForm(handsHeader, formattedDealerCard));
@@ -77,7 +78,7 @@ public class OutputView {
     }
 
     private static void printScore(Participant participant) {
-        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getSum());
+        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
     }
 
     public static void printResult(Dealer dealer, Players players) {
@@ -113,14 +114,14 @@ public class OutputView {
     }
 
     public static String getCardFormat(Card card) {
-        RankType rankType = card.getRank();
-        SuitType suitType = card.getSuit();
-        return RANK_FORMAT.get(rankType.name()) + SUIT_FORMAT.get(suitType.name());
+        Rank rank = card.getRank();
+        Suit suit = card.getSuit();
+        return RANK_FORMAT.get(rank.toString()) + SUIT_FORMAT.get(suit.name());
     }
 
     private static String formatHands(Participant participant) {
         String nickname = participant.getNickname();
-        List<String> joinedCards = participant.getHands().stream().map(
+        List<String> joinedCards = participant.getCards().stream().map(
                 OutputView::getCardFormat
         ).toList();
         String joinedHands = String.join(", ", joinedCards);

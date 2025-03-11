@@ -1,19 +1,18 @@
 package model.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public final class CardDeck {
 
     private final List<Card> deck = initDeck();
 
-    private static List<Card> initDeck() {
+    private List<Card> initDeck() {
         ArrayList<Card> deck = new ArrayList<>();
-        for (SuitType suit : SuitType.values()) {
-            for (RankType rank : RankType.values()) {
+        for (Suit suit : Suit.values()) {
+            for (NormalRank rank : NormalRank.values()) {
                 deck.add(new Card(suit, rank));
             }
+            deck.add(new Card(suit, AceRank.SOFT_ACE));
         }
         return deck;
     }
@@ -22,13 +21,8 @@ public final class CardDeck {
         Collections.shuffle(deck);
     }
 
-    public List<Card> pickCard(int amount) {
-        final List<Card> findCards = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            final Card card = deck.removeFirst();
-            findCards.add(card);
-        }
-        return findCards;
+    public Card pickCard() {
+        return deck.removeFirst();
     }
 
     public List<Card> getDeck() {

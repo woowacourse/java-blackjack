@@ -19,7 +19,7 @@ public class BlackjackController {
         CardDeck deck = new CardDeck();
         deck.shuffle();
         GameManager gameManager = new GameManager(dealer, players, deck);
-        gameManager.divideAllParticipant();
+        gameManager.divideInitialCardToParticipant();
         OutputView.printDivisionStart(dealer, players);
 
         for (Player player : players.getPlayers()) {
@@ -34,25 +34,19 @@ public class BlackjackController {
     }
 
     private void receiveAdditionalCard(Player player, GameManager gameManager) {
-        while (satisfiedConditionByPlayer(player)) {
-            gameManager.divideCardByParticipant(player, 1);
+        while (player.isHit() && agreeIntent(player)) {
+            gameManager.divideCardByParticipant(player);
+            player.applyAceRule();
             OutputView.printCurrentHands(player);
         }
     }
 
     private void receiveAdditionalCard(Dealer dealer, GameManager gameManager) {
-        while (satisfiedConditionByDealer(dealer)) {
-            gameManager.divideCardByParticipant(dealer, 1);
+        while (dealer.isHit()) {
+            gameManager.divideCardByParticipant(dealer);
+            dealer.applyAceRule();
             OutputView.printStandingDealer(dealer);
         }
-    }
-
-    private boolean satisfiedConditionByPlayer(Player player) {
-        return player.isNotEnoughScoreCondition() && agreeIntent(player);
-    }
-
-    private boolean satisfiedConditionByDealer(Dealer dealer) {
-        return dealer.isNotUp();
     }
 
     private boolean agreeIntent(Player player) {

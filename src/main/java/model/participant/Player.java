@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
+    private static final int HIT_CONDITION = 21;
+
     private final Nickname nickname;
     private MatchType matchType;
 
@@ -23,6 +25,11 @@ public class Player extends Participant {
 
     public MatchType getMatchType() {
         return matchType;
+    }
+
+    @Override
+    public boolean isHit() {
+        return cards.isHit(HIT_CONDITION);
     }
 
     @Override

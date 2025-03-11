@@ -11,19 +11,11 @@ public class Score implements Comparable<Score> {
     }
 
     public boolean isBust() {
-        return compareScoreCondition() > 0;
+        return value > BUST_CONDITION;
     }
 
-    public int compareScoreCondition() {
-        return value - BUST_CONDITION;
-    }
-
-    public Score plus(int num) {
-        return new Score(value + num);
-    }
-
-    public Score minus(int num) {
-        return new Score(value - num);
+    public boolean isOver(int hitCondition) {
+        return value < hitCondition;
     }
 
     public int getValue() {
@@ -34,4 +26,5 @@ public class Score implements Comparable<Score> {
     public int compareTo(Score o) {
         return Integer.compare(value, o.value);
     }
+
 }

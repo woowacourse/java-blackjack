@@ -27,14 +27,14 @@ public class GameManagerTest {
     //when
     //then
     for (Player player : players.getPlayers()) {
-      manager.divideCardByParticipant(player, amount);
-      Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
+      manager.divideCardsByParticipant(player, amount);
+      Assertions.assertThat(player.getCards().size()).isEqualTo(amount);
     }
   }
 
   @Test
   @DisplayName("모든 참가자에게 2장씩 카드를 배부했는 지")
-  void divideAllParticipant() {
+  void divideInitialCardToParticipant() {
     // given
     List<String> allPlayer = List.of(
             "pobi",
@@ -46,12 +46,12 @@ public class GameManagerTest {
     Dealer dealer = Dealer.of();
     GameManager gameManager = new GameManager(dealer, players, new CardDeck());
     // when
-    gameManager.divideAllParticipant();
+    gameManager.divideInitialCardToParticipant();
 
     // then
     for (Player player : players.getPlayers()) {
-      Assertions.assertThat(player.getHands().size()).isEqualTo(amount);
+      Assertions.assertThat(player.getCards().size()).isEqualTo(amount);
     }
-    Assertions.assertThat(dealer.getHands().size()).isEqualTo(amount);
+    Assertions.assertThat(dealer.getCards().size()).isEqualTo(amount);
   }
 }

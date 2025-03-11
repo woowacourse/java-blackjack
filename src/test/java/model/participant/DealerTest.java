@@ -5,8 +5,8 @@ import java.util.Map;
 
 import model.card.Card;
 import model.card.CardDeck;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Suit;
+import model.card.NormalRank;
 import model.score.MatchType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -34,15 +34,14 @@ class DealerTest {
     void addCardsSuccess() {
 
         // given
-        final int amount = 2;
-        final List<Card> cards = new CardDeck().pickCard(2);
+        final Card card = new CardDeck().pickCard();
 
         // when
         Participant dealer = Dealer.of();
-        dealer.addCards(cards);
+        dealer.addCard(card);
 
         // then
-        Assertions.assertThat(dealer.getHands().size()).isEqualTo(amount);
+        Assertions.assertThat(dealer.getCards()).contains(card);
     }
 
     @Test
@@ -51,18 +50,20 @@ class DealerTest {
         // given
         // 총 합이 9
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.FIVE),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+                new Card(Suit.HEARTS, NormalRank.FIVE),
+                new Card(Suit.CLUBS, NormalRank.FOUR)
         );
         int expected = divideCards.stream()
-                .mapToInt(card -> card.getRank().getScore().getFirst())
+                .mapToInt(card -> card.getRank().getScore())
                 .sum();
 
         Participant dealer = Dealer.of();
-        dealer.addCards(divideCards);
+        for (Card divideCard : divideCards) {
+            dealer.addCard(divideCard);
+        }
 
         // when
-        int sum = dealer.getSum();
+        int sum = dealer.getScore();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);
@@ -74,16 +75,17 @@ class DealerTest {
 
         // given
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.JACK),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+                new Card(Suit.HEARTS, NormalRank.JACK),
+                new Card(Suit.CLUBS, NormalRank.FOUR)
         );
 
         Dealer dealer = Dealer.of();
-        dealer.addCards(divideCards);
-
+        for (Card divideCard : divideCards) {
+            dealer.addCard(divideCard);
+        }
         // when
         // then
-        Assertions.assertThat(dealer.isNotUp()).isTrue();
+        Assertions.assertThat(dealer.isHit()).isTrue();
     }
 
     @Test
@@ -92,17 +94,18 @@ class DealerTest {
 
         // given
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.JACK),
-                new Card(SuitType.CLUBS, RankType.KING)
+                new Card(Suit.HEARTS, NormalRank.JACK),
+                new Card(Suit.CLUBS, NormalRank.KING)
         );
 
         Dealer dealer = Dealer.of();
-        dealer.addCards(divideCards);
-
+        for (Card divideCard : divideCards) {
+            dealer.addCard(divideCard);
+        }
         // when
         // then
-        System.out.println(dealer.getSum());
-        Assertions.assertThat(dealer.isNotUp()).isFalse();
+        System.out.println(dealer.getScore());
+        Assertions.assertThat(dealer.isHit()).isFalse();
     }
 
     @Test

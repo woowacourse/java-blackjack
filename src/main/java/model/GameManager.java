@@ -1,6 +1,5 @@
 package model;
 
-import model.card.Card;
 import model.card.CardDeck;
 import model.participant.Dealer;
 import model.participant.Participant;
@@ -26,18 +25,22 @@ public class GameManager {
         this.deck = deck;
     }
 
-    public void divideAllParticipant() {
+    public void divideInitialCardToParticipant() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getPlayers());
         for (Participant participant : participants) {
-            divideCardByParticipant(participant, INITIAL_DEAL_COUNT);
+            divideCardsByParticipant(participant, INITIAL_DEAL_COUNT);
         }
     }
 
-    public void divideCardByParticipant(Participant participant, int amount) {
-        List<Card> pickCards = deck.pickCard(amount);
-        participant.addCards(pickCards);
+    public void divideCardsByParticipant(Participant participant, int amount) {
+        for (int i = 0; i < amount; i++) {
+            divideCardByParticipant(participant);
+        }
+    }
+    public void divideCardByParticipant(Participant participant) {
+        participant.addCard(deck.pickCard());
     }
 
     public void calculateVictory() {
