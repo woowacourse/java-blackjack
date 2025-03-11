@@ -33,12 +33,17 @@ public class CardGroup {
 
     private int availableUpperAceScoreCount(int sum, int aceCount) {
         sum += aceCount * ACE_LOW_SCORE;
+        int aceAdditionScore = ACE_HIGH_SCORE - ACE_LOW_SCORE;
         int count = 0;
-        while (sum + (ACE_HIGH_SCORE - ACE_LOW_SCORE) <= LIMIT && count < aceCount) {
+        while (!isOverHitRule(sum + aceAdditionScore) && count < aceCount) {
             count++;
-            sum += (ACE_HIGH_SCORE - ACE_LOW_SCORE);
+            sum += aceAdditionScore;
         }
         return count;
+    }
+
+    private boolean isOverHitRule(int score){
+        return score > LIMIT;
     }
 
     public int calculateScore() {
