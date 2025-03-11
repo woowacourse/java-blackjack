@@ -5,16 +5,15 @@ import static domain.Dealer.THRESHOLD;
 import controller.dto.WinLossCountDto;
 import domain.Card;
 import domain.Dealer;
-import domain.Entry;
 import domain.Hand;
 import domain.Player;
-import domain.WinLossResult;
+import domain.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printDistributeResult(Entry entryObject, Dealer dealer) {
-        List<Player> players = entryObject.getPlayers();
+    public static void printDistributeResult(Players playersObject, Dealer dealer) {
+        List<Player> players = playersObject.getPlayers();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ")
                 .append(players.stream().map(Player::getName).collect(Collectors.joining(",")))
@@ -31,10 +30,10 @@ public class OutputView {
         System.out.println(stringBuilder.append("\n"));
     }
 
-    public static void printEveryOneCardsNamesWithTotal(Entry entry, Dealer dealer) {
+    public static void printEveryOneCardsNamesWithTotal(Players players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
         openCardsWithTotal(dealer, stringBuilder);
-        for (Player player : entry.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             openCardsWithTotal(player, stringBuilder);
         }
         System.out.println(stringBuilder);
@@ -46,16 +45,16 @@ public class OutputView {
             System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
     }
 
-    public static void printWinLossResult(Entry entry, Dealer dealer, WinLossCountDto winLossCountResult) {
+    public static void printWinLossResult(Players players, Dealer dealer, WinLossCountDto winLossCountResult) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("## 최종 승패\n");
         stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
                 winLossCountResult.winCount(),
                 winLossCountResult.lossCount(),
                 winLossCountResult.drawCount()));
-        for (Player player : entry.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             stringBuilder.append(String.format("%s: %s\n", player.getName(),
-                    WinLossResult.of(player.getWinLoss(dealer.getHandTotal())).getWinLossMessage()));
+                    player.getWinLoss(dealer.getHandTotal()).getWinLossMessage()));
         }
         System.out.println(stringBuilder);
     }
