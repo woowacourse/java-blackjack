@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
@@ -68,6 +69,154 @@ public class PlayerTest {
             player.addCards(cardsOver21.get(0), cardsOver21.get(1), cardsOver21.get(2));
 
             assertThat(player.isPossibleToAdd()).isFalse();
+        }
+    }
+
+    @Nested
+    @DisplayName("베팅 테스트")
+    class betTest {
+
+        @Test
+        @DisplayName("베팅 금액을 저장한다")
+        void saveBetAmount() {
+            Player player = new Player("hula");
+
+            assertThatCode(() -> player.bet(1000)).doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("플레이어가 패배했다면 베팅 금액을 모두 잃는다")
+        void lossAllBetAmountWhenPlayerLose() {
+            Player player = new Player("hula");
+            player.bet(1000);
+            player.addCards(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.SEVEN)
+            );
+
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.EIGHT),
+                    new Card(Suit.SPADE, Denomination.ACE)
+            );
+
+            assertThat(player.calculatePayout(dealer)).isEqualTo(-1000);
+        }
+
+        @Test
+        @DisplayName("플레이어가 승리했다면 베팅 금액만큼 받는다")
+        void betAmountWhenPlayerWin() {
+            Player player = new Player("hula");
+            player.bet(1000);
+            player.addCards(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.NINE)
+            );
+
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.EIGHT),
+                    new Card(Suit.SPADE, Denomination.JACK)
+            );
+
+            assertThat(player.calculatePayout(dealer)).isEqualTo(1000);
+        }
+
+        @Test
+        @DisplayName("플레이어가 버스트라면 베팅 금액을 모두 잃는다")
+        void lossAllBetAmount() {
+            Player player = new Player("hula");
+            player.bet(1000);
+            player.addCards(
+                    new Card(Suit.HEART, Denomination.TWO),
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.JACK)
+            );
+
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.ACE)
+            );
+
+            assertThat(player.isBust()).isTrue();
+            assertThat(player.calculatePayout(dealer)).isEqualTo(-1000);
+        }
+
+        @Test
+        @DisplayName("플레이어가 승리하면 베팅 금액을 돌려받는다")
+        void winPlayerBetAmount() {
+            Player player = new Player("hula");
+            player.bet(1000);
+            player.addCards(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.JACK)
+            );
+
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.SEVEN)
+            );
+
+            assertThat(player.calculatePayout(dealer)).isEqualTo(1000);
+        }
+
+        @Test
+        @DisplayName("무승부일 시. 베팅 금액을 돌려받는다")
+        void drawBetAmount() {
+            Player player = new Player("hula");
+            player.bet(1000);
+            player.addCards(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.JACK)
+            );
+
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.QUEEN)
+            );
+
+            assertThat(player.calculatePayout(dealer)).isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("플레이어가 블랙잭이라면, 베팅 금액의 1.5배를 받는다")
+        void playerBlackjackBetAmount() {
+            Player player = new Player("hula");
+            player.bet(1000);
+            player.addCards(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.ACE)
+            );
+
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.FIVE),
+                    new Card(Suit.SPADE, Denomination.ACE)
+            );
+
+            assertThat(player.calculatePayout(dealer)).isEqualTo(1500);
+        }
+
+        @Test
+        @DisplayName("플레이어와 딜러 모두 블랙잭이라면, 베팅 금액만큼만 돌려받는다")
+        void playerAndDealerBothBlackjackBetAmount() {
+            Player player = new Player("hula");
+            player.bet(1000);
+            player.addCards(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.ACE)
+            );
+
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.ACE)
+            );
+
+            assertThat(player.calculatePayout(dealer)).isEqualTo(1000);
         }
     }
 }
