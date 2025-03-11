@@ -43,11 +43,11 @@ public class GameManager {
     }
 
     public Map<String, GameResult> calculatePlayerGameResult() {
-        Map<String, GameResult> resultMap = new HashMap<>();
-        for (Player player : players) {
-            resultMap.put(player.getName(), calculateResult(dealer, player));
-        }
-        return resultMap;
+        return players.stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> calculateResult(dealer, player)
+                ));
     }
 
     public void dealerHitUntilStand() {
