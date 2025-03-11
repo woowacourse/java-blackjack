@@ -4,7 +4,6 @@ import domain.FinalResult;
 import domain.deck.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.gamer.Nickname;
 import domain.gamer.Player;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +14,12 @@ public final class OutputView {
     }
 
     public static void printInitialSettingMessage(final String dealerName,
-                                                  final List<Nickname> playerNames,
+                                                  final List<String> playerNames,
                                                   final int cardAmount) {
-
-        final List<String> nicknames = playerNames.stream()
-                .map(Nickname::getDisplayName)
-                .toList();
         final String message = String.format(
                 "%s와 %s에게 %d장을 나누었습니다.",
                 dealerName,
-                String.join(", ", nicknames),
+                String.join(", ", playerNames),
                 cardAmount
         );
         print(message);

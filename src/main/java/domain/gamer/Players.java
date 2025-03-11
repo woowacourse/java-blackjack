@@ -34,4 +34,10 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public List<String> getPlayersDisplayNicknames() {
+        return players.stream()
+                .map(Gamer::getDisplayName)
+                .toList();
+    }
 }

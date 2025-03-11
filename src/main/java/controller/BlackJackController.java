@@ -29,7 +29,7 @@ public class BlackJackController {
             final Deck deck = generateDeck();
             final Dealer dealer = setupDealer(deck);
             setGame(players.getPlayers(), deck);
-            printInitialGameState(dealer, players);
+            printGameSetting(dealer, players);
             playGame(dealer, players.getPlayers(), deck);
             processFinalResult(dealer, players.getPlayers());
         } catch (IllegalArgumentException e) {
@@ -71,20 +71,12 @@ public class BlackJackController {
         });
     }
 
-    private void printInitialGameState(final Dealer dealer, final Players players) {
-        final List<Player> playerGroup = players.getPlayers();
-        final List<Nickname> nicknames = playerGroup.stream()
-                .map(player -> new Nickname(player.getDisplayName()))
-                .toList();
-
-        printGameSetting(dealer, nicknames, playerGroup);
-    }
-
-    private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
-                                  final List<Player> players) {
-        OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
+    private void printGameSetting(final Dealer dealer,
+                                  final Players players) {
+        final List<String> playerNicknames = players.getPlayersDisplayNicknames();
+        OutputView.printInitialSettingMessage(dealer.getDisplayName(), playerNicknames, INITIAL_CARD_AMOUNT);
         OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
-        players.forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
+        players.getPlayers().forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
     }
 
     private void playGame(final Dealer dealer, final List<Player> players, final Deck deck) {
