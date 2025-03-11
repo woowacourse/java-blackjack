@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.game.GameResult;
+import domain.participants.BettingAmount;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.PlayerName;
@@ -128,5 +129,28 @@ class PlayerTest {
                 Arguments.of(List.of(Card.HEART_THREE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), DRAW),
                 Arguments.of(List.of(Card.HEART_TWO, Card.CLOVER_JACK, Card.CLOVER_TEN), DRAW)
         );
+    }
+
+    @Test
+    @DisplayName("초기 배팅 금액은 0원이다.")
+    void initializedBettingAmountTest() {
+        // given
+        Player player = new Player(new PlayerName("a"));
+        // when
+        BettingAmount bettingAmount = player.getBettingAmount();
+        // then
+        assertThat(bettingAmount.getMoney()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("초기 설정 테스트")
+    void setBettingAmountTest() {
+        // given
+        Player player = new Player(new PlayerName("a"));
+        // when
+        player.setBettingAmount(new BettingAmount(10000));
+        BettingAmount bettingAmount = player.getBettingAmount();
+        // then
+        assertThat(bettingAmount.getMoney()).isEqualTo(10000);
     }
 }

@@ -37,6 +37,10 @@ public class Player extends Gamer {
         return bettingAmount;
     }
 
+    public void setBettingAmount(BettingAmount bettingAmount) {
+        this.bettingAmount = bettingAmount;
+    }
+
     private GameResult decideGameResultWithBust(Dealer dealer) {
         if (this.isBust() && dealer.isBust()) {
             return DRAW;
