@@ -12,7 +12,7 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<Player> players) {
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     public Map<Player, MatchResult> deriveResults(int dealerScore) {
