@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public class GameView {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 

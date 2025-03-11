@@ -8,7 +8,7 @@ import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerName;
 import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.view.GameView;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,11 +16,11 @@ import java.util.Map.Entry;
 public class BlackjackController {
 
     private final InputView inputView;
-    private final OutputView outputView;
+    private final GameView gameView;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView) {
+    public BlackjackController(final InputView inputView, final GameView gameView) {
         this.inputView = inputView;
-        this.outputView = outputView;
+        this.gameView = gameView;
     }
 
     public void start() {
@@ -43,10 +43,10 @@ public class BlackjackController {
         blackjackGame.initCardsToPlayer();
         Participants participants = blackjackGame.getParticipants();
 
-        outputView.printStartGame(participants.getPlayerNames());
-        outputView.printDealerCardResult(participants.getDealer().openInitialCards());
+        gameView.printStartGame(participants.getPlayerNames());
+        gameView.printDealerCardResult(participants.getDealer().openInitialCards());
         for (Player player : participants.getPlayers()) {
-            outputView.printPlayerCardResult(player.getName(), player.openCards());
+            gameView.printPlayerCardResult(player.getName(), player.openCards());
         }
     }
 
@@ -62,7 +62,7 @@ public class BlackjackController {
         final Player player) {
         while (inputView.readGetOneMore(player.getName())) {
             blackjackGame.addExtraCard(player);
-            outputView.printPlayerCardResult(player.getName(), player.openCards());
+            gameView.printPlayerCardResult(player.getName(), player.openCards());
         }
     }
 
@@ -70,7 +70,7 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getParticipants().getDealer();
         while (dealer.isPossibleToAdd()) {
             blackjackGame.addExtraCard(dealer);
-            outputView.printAddExtraCardToDealer();
+            gameView.printAddExtraCardToDealer();
         }
     }
 
@@ -78,9 +78,9 @@ public class BlackjackController {
         Participants participants = blackjackGame.getParticipants();
         Dealer dealer = participants.getDealer();
 
-        outputView.printDealerFinalCardResult(dealer.calculateDenominations(), dealer.openCards());
+        gameView.printDealerFinalCardResult(dealer.calculateDenominations(), dealer.openCards());
         for (Player player : participants.getPlayers()) {
-            outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(),
+            gameView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(),
                 player.openCards());
         }
     }
@@ -89,10 +89,10 @@ public class BlackjackController {
         Map<GameResult, Integer> dealerResult = blackjackGame.calculateStatisticsForDealer();
         Map<Player, GameResult> playerResults = blackjackGame.calculateStatisticsForPlayer();
 
-        outputView.printResultTitle();
-        outputView.printDealerResult(dealerResult);
+        gameView.printResultTitle();
+        gameView.printDealerResult(dealerResult);
         for (Entry<Player, GameResult> playerResult : playerResults.entrySet()) {
-            outputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
+            gameView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
         }
     }
 
@@ -100,7 +100,7 @@ public class BlackjackController {
         try {
             action.run();
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e);
+            gameView.printErrorMessage(e);
         }
     }
 }

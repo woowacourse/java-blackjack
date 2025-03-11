@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private final OutputView outputView = new OutputView();
+    private final GameView gameView = new GameView();
     private final Scanner scanner = new Scanner(System.in);
 
     public List<PlayerName> readNames() {
@@ -20,7 +20,7 @@ public class InputView {
                 .map(PlayerName::new)
                 .toList();
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e);
+            gameView.printErrorMessage(e);
             return readNames();
         }
     }
@@ -33,7 +33,7 @@ public class InputView {
             validateBlank(input);
             return YorN.fromText(input).toBoolean();
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e);
+            gameView.printErrorMessage(e);
             return readGetOneMore(name);
         }
     }
