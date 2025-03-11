@@ -88,10 +88,10 @@ public class GameManagerTest {
         dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.TWO));
 
         //when
-        int result = gameManger.compareScore(player);
+        Map<User, Integer> gameResult = gameManger.createGameResult();
 
         //then
-        Assertions.assertThat(result).isEqualTo(GameManger.WIN);
+        Assertions.assertThat(gameResult.get(player)).isEqualTo(GameManger.WIN);
     }
 
     @DisplayName("딜러와 유저의 총합이 같을 때 딜러가 블랙잭이라면 무승부 혹은 패배이다.")
@@ -111,10 +111,10 @@ public class GameManagerTest {
         }
 
         //when
-        int result = gameManger.compareScore(player);
+        Map<User, Integer> gameResult = gameManger.createGameResult();
 
         //then
-        Assertions.assertThat(result).isEqualTo(expectStatus);
+        Assertions.assertThat(gameResult.get(player)).isEqualTo(expectStatus);
     }
 
     private static Stream<Arguments> addCardDeck() {

@@ -60,7 +60,7 @@ public class GameManger {
         return cardDeck.drawCard();
     }
 
-    public int compareScore(User player) {
+    private int compareScore(User player) {
         if (player.isBust()) {
             return LOSE;
         }
