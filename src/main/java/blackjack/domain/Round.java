@@ -24,7 +24,7 @@ public class Round {
 
     private List<Gambler> registerGamblers(final List<Name> playerNames) {
         List<Gambler> gamblers = new ArrayList<>();
-        gamblers.add(new Dealer(Name.createDealer()));
+        gamblers.add(new Dealer(Name.getDealerName()));
         for (final Name playerName : playerNames) {
             Player player = new Player(playerName);
             gamblers.add(player);
@@ -65,7 +65,7 @@ public class Round {
     }
 
     public WinningDiscriminator getWinningDiscriminator() {
-        Gambler dealer = findGambler(Name.createDealer());
+        Gambler dealer = findGambler(Name.getDealerName());
         int dealerScore = dealer.calculateScore();
         Map<Name, Integer> playerScores = createPlayerScores();
         return new WinningDiscriminator(dealerScore, playerScores); 
@@ -80,7 +80,7 @@ public class Round {
 
     private Map<Name, Integer> createPlayerScores() {
         return gamblers.stream()
-                .filter(gambler -> !gambler.isNameEquals(Name.createDealer()))
+                .filter(gambler -> !gambler.isNameEquals(Name.getDealerName()))
                 .collect(toMap(Gambler::getName, Gambler::calculateScore));
     }
 

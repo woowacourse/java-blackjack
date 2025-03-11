@@ -35,7 +35,7 @@ public class InputView {
 
     private static void validateNameEqualsDealerName(final String[] parsedName) {
         List<String> playerNames = List.of(parsedName);
-        if (playerNames.contains(Name.createDealer().toString())) {
+        if (playerNames.contains(Name.getDealerName().toString())) {
             throw new IllegalArgumentException(NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
         }
     }

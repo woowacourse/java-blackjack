@@ -59,9 +59,9 @@ class RoundTest {
 
         // then
         assertThat(round.getScore(playerName)).isNotZero();
-        assertThat(round.getCards(Name.createDealer())).size().isEqualTo(2);
-        assertThat(round.getCards(Name.createDealer())).contains(card1, card2);
-        assertThat(round.getScore(Name.createDealer())).isEqualTo(16);
+        assertThat(round.getCards(Name.getDealerName())).size().isEqualTo(2);
+        assertThat(round.getCards(Name.getDealerName())).contains(card1, card2);
+        assertThat(round.getScore(Name.getDealerName())).isEqualTo(16);
         assertThat(round.getCards(playerName)).size().isEqualTo(2);
         assertThat(round.getCards(playerName)).contains(card3, card4);
         assertThat(round.getScore(playerName)).isEqualTo(20);
@@ -132,7 +132,7 @@ class RoundTest {
         round.distributeInitialCards();
 
         // when
-        boolean result = round.isGamblerCanReceiveCard(Name.createDealer(), Round.DEALER_RECEIVE_CRITERIA); // 딜러의 점수 15
+        boolean result = round.isGamblerCanReceiveCard(Name.getDealerName(), Round.DEALER_RECEIVE_CRITERIA); // 딜러의 점수 15
 
         // then
         assertThat(result).isTrue();

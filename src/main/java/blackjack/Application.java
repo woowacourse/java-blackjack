@@ -52,7 +52,7 @@ public class Application {
     }
 
     private static void printInitialCards(final Round round, final List<Name> playerNames) {
-        printGamblerCards(Name.createDealer(), round.getInitialCards(Name.createDealer()));
+        printGamblerCards(Name.getDealerName(), round.getInitialCards(Name.getDealerName()));
         for (Name playerName : playerNames) {
             printGamblerCards(playerName, round.getInitialCards(playerName));
         }
@@ -65,8 +65,8 @@ public class Application {
     }
 
     private static void processDealerTurn(final Round round) {
-        if (round.isGamblerCanReceiveCard(Name.createDealer(), Round.DEALER_RECEIVE_CRITERIA)) {
-            round.distributeCards(Name.createDealer(), 1);
+        if (round.isGamblerCanReceiveCard(Name.getDealerName(), Round.DEALER_RECEIVE_CRITERIA)) {
+            round.distributeCards(Name.getDealerName(), 1);
             printDealerReceiveCard();
         }
     }
@@ -96,7 +96,7 @@ public class Application {
     }
 
     private static void printGameResult(final Round round, final List<Name> playerNames) {
-        printGamblerResult(Name.createDealer(), round.getCards(Name.createDealer()), round.getScore(Name.createDealer()));
+        printGamblerResult(Name.getDealerName(), round.getCards(Name.getDealerName()), round.getScore(Name.getDealerName()));
         for (Name playerName : playerNames) {
             List<Card> cards = round.getCards(playerName);
             int score = round.getScore(playerName);
