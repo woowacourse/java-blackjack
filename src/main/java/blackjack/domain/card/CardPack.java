@@ -1,20 +1,19 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CardPack {
 
     private final List<Card> cards;
 
-    public CardPack(BlackjackShuffle blackjackShuffle) {
+    public CardPack() {
         this.cards = initCards();
-        blackjackShuffle.shuffle(cards);
-    }
-
-    public List<Card> getCards() {
-        return cards;
+        Collections.shuffle(this.cards);
     }
 
     private List<Card> initCards() {
@@ -24,7 +23,10 @@ public class CardPack {
                 .collect(Collectors.toList());
     }
 
-    public Card getDeal() {
-        return cards.removeLast();
+    public List<Card> getDealCards(int count) {
+        List<Card> dealCards = new ArrayList<>();
+        IntStream.range(0, count).forEach(i ->
+                dealCards.add(cards.removeLast()));
+        return dealCards;
     }
 }

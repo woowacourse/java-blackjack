@@ -4,7 +4,6 @@ import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -14,14 +13,10 @@ public class Players {
     private final List<Gambler> gamblers;
     private static final int PLAYERS_INIT_CARD_COUNT = 2;
 
-    protected Players() {
-        dealer = new Dealer();
-        gamblers = new ArrayList<>();
-    }
-
-    public void addGamblers(List<Gambler> gamblers) {
+    public Players(List<Gambler> gamblers) {
+        this.dealer = new Dealer();
         validateHasDuplication(gamblers);
-        this.gamblers.addAll(gamblers);
+        this.gamblers = gamblers;
     }
 
     private void validateHasDuplication(List<Gambler> gamblers) {
@@ -40,9 +35,9 @@ public class Players {
     }
 
     public void dealInitCardsToPlayers(CardPack cardPack) {
-        dealer.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT);
+        dealer.pushDealCards(cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT));
         gamblers.forEach(gambler ->
-                gambler.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT));
+                gambler.pushDealCards(cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT)));
     }
 
     public GameResults getGameResult() {

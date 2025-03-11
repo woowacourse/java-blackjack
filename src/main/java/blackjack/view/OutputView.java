@@ -85,7 +85,7 @@ public class OutputView {
                 CardShapeView.getShapeMessage(card.getShape());
     }
 
-    private List<Player> getDealerGamblerList(Player dealer, List<Gambler> gamblers) {
+    private List<Player> getDealerGamblerList(Dealer dealer, List<Gambler> gamblers) {
         List<Player> allPlayers = new ArrayList<>();
         allPlayers.add(dealer);
         allPlayers.addAll(gamblers);

@@ -1,10 +1,14 @@
 package blackjack.domain;
 
-import blackjack.domain.card.CardPack;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +19,11 @@ class PlayerTest {
     void calculate_calculation_check_rot() {
         // given
         Player player = new Gambler("두리");
-        player.pushDealCard(new CardPack(new HighCardFirstShuffle()), 3);
+        player.pushDealCards(List.of(
+                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                new Card(CardNumber.KING, CardShape.CLOVER),
+                new Card(CardNumber.JACK, CardShape.CLOVER)
+        ));
 
         // when
         int result = player.calculateCardNumber();
@@ -28,12 +36,15 @@ class PlayerTest {
     @Test
     void ace_test() {
         Player player = new Gambler("두리");
-        player.pushDealCard(new CardPack(new LowCardFirstShuffle()), 2);
+        player.pushDealCards(List.of(
+                        new Card(CardNumber.ACE, CardShape.CLOVER),
+                        new Card(CardNumber.ACE, CardShape.DIAMOND)
+                )
 
-        // when
+        );
+
         int result = player.calculateCardNumber();
 
-        // then
         assertThat(result).isEqualTo(12);
     }
 }

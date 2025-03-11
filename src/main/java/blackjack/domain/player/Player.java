@@ -1,12 +1,10 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public abstract class Player {
 
@@ -20,10 +18,8 @@ public abstract class Player {
         cards = new ArrayList<>();
     }
 
-    public void pushDealCard(final CardPack cardPack, final int count) {
-        IntStream.range(0, count)
-                .mapToObj(i -> cardPack.getDeal())
-                .forEach(cards::add);
+    public void pushDealCards(final List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
     public boolean isPlayerBust() {

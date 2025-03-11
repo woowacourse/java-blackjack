@@ -13,22 +13,23 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final GameManager gameManager;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView, final GameManager gameManager) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-        this.gameManager = gameManager;
+    public BlackjackController() {
+        inputView = new InputView();
+        outputView = new OutputView();
     }
 
     public void start() {
-        Players players = initPlayers();
-        dealMoreCards(players);
-        dealMoreDealerCards(players);
-        displayGameResults(players);
+        List<Gambler> gamblers = readAndParseNames();
+        GameManager gameManager = new GameManager(gamblers);
+        initPlayers(gameManager);
+        dealMoreCards(gameManager);
+        dealMoreDealerCards(gameManager);
+        displayGameResults(gameManager);
     }
 
-    private void dealMoreCards(final Players players) {
+    private void dealMoreCards(final GameManager gameManager) {
+        Players players = gameManager.getPlayers();
         List<Gambler> gamblers = players.getGamblers();
         for (Gambler gambler : gamblers) {
             while (gambler.isPlayerNotBust() && inputView.readOneMoreDealCard(gambler)) {
@@ -38,23 +39,24 @@ public class BlackjackController {
         }
     }
 
-    private void dealMoreDealerCards(Players players) {
+    private void dealMoreDealerCards(GameManager gameManager) {
+        Players players = gameManager.getPlayers();
         Dealer dealer = players.getDealer();
         while (gameManager.isDealerHitThenDealAddCard(dealer)) {
             outputView.printDealerHitAndDealCard();
         }
     }
 
-    private void displayGameResults(final Players players) {
+    private void displayGameResults(GameManager gameManager) {
+        Players players = gameManager.getPlayers();
         outputView.printTotalCardsMessage(players);
         outputView.printGameResults(players, players.getGameResult());
     }
 
-    private Players initPlayers() {
-        gameManager.addGamblersAndDealInitCards(readAndParseNames());
+    private void initPlayers(GameManager gameManager) {
+        gameManager.dealInitCards();
         Players players = gameManager.getPlayers();
         outputView.printInitCards(players);
-        return players;
     }
 
     private List<Gambler> readAndParseNames() {
