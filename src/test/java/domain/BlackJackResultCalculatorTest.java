@@ -59,4 +59,106 @@ public class BlackJackResultCalculatorTest {
                 }
         );
     }
+
+    @Test
+    @DisplayName("딜러가 승리하는 경우의 딜러와 플레이어간의 승패를 계산한다")
+    void should_return_result_of_dealer_between_player_dealer_win() {
+        // given
+        Participant dealer = new Dealer();
+        Card heartFive = new Card(Shape.HEART, Rank.FIVE);
+        dealer.addCard(heartFive);
+
+        Participant player1 = new Player("player");
+        Card heartTwo = new Card(Shape.HEART, Rank.TWO);
+        player1.addCard(heartTwo);
+
+        List<Participant> players = List.of(dealer, player1);
+        Participants participants = new Participants(players);
+
+        // when
+        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
+
+        // then
+        assertAll(
+                () -> {
+                    DealerResult dealerResult = participantsResult.dealerResult();
+                    int dealerWinCount = dealerResult.getDealerResult().get(GameResult.WIN);
+                    assertThat(dealerWinCount).isEqualTo(1);
+                },
+                () -> {
+                    List<PlayerResult> playerResults = participantsResult.playerResults();
+                    PlayerResult playerResult = playerResults.get(0);
+                    GameResult playerGameResult  = playerResult.getGameResult();
+                    assertThat(playerGameResult).isEqualTo(GameResult.LOSE);
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("딜러가 비기는 경우의 딜러와 플레이어간의 승패를 계산한다")
+    void should_return_result_of_dealer_between_player_dealer_draw() {
+        // given
+        Participant dealer = new Dealer();
+        Card heartFive = new Card(Shape.HEART, Rank.FIVE);
+        dealer.addCard(heartFive);
+
+        Participant player1 = new Player("player");
+        Card spaceFive = new Card(Shape.SPADE, Rank.FIVE);
+        player1.addCard(spaceFive);
+
+        List<Participant> players = List.of(dealer, player1);
+        Participants participants = new Participants(players);
+
+        // when
+        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
+
+        // then
+        assertAll(
+                () -> {
+                    DealerResult dealerResult = participantsResult.dealerResult();
+                    int dealerWinCount = dealerResult.getDealerResult().get(GameResult.DRAW);
+                    assertThat(dealerWinCount).isEqualTo(1);
+                },
+                () -> {
+                    List<PlayerResult> playerResults = participantsResult.playerResults();
+                    PlayerResult playerResult = playerResults.get(0);
+                    GameResult playerGameResult  = playerResult.getGameResult();
+                    assertThat(playerGameResult).isEqualTo(GameResult.DRAW);
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("딜러가 패배하는 경우의 딜러와 플레이어간의 승패를 계산한다")
+    void should_return_result_of_dealer_between_player_dealer_lose() {
+        // given
+        Participant dealer = new Dealer();
+        Card heartFive = new Card(Shape.HEART, Rank.FIVE);
+        dealer.addCard(heartFive);
+
+        Participant player1 = new Player("player");
+        Card heartSix = new Card(Shape.HEART, Rank.SIX);
+        player1.addCard(heartSix);
+
+        List<Participant> players = List.of(dealer, player1);
+        Participants participants = new Participants(players);
+
+        // when
+        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
+
+        // then
+        assertAll(
+                () -> {
+                    DealerResult dealerResult = participantsResult.dealerResult();
+                    int dealerWinCount = dealerResult.getDealerResult().get(GameResult.LOSE);
+                    assertThat(dealerWinCount).isEqualTo(1);
+                },
+                () -> {
+                    List<PlayerResult> playerResults = participantsResult.playerResults();
+                    PlayerResult playerResult = playerResults.get(0);
+                    GameResult playerGameResult  = playerResult.getGameResult();
+                    assertThat(playerGameResult).isEqualTo(GameResult.WIN);
+                }
+        );
+    }
 }
