@@ -24,7 +24,7 @@ public class Dealer extends Participant {
     }
 
     public static Dealer from(CardDeck deck) {
-        return new Dealer(DEALER_NAME,deck);
+        return new Dealer(DEALER_NAME, deck);
     }
 
     public void divideInitialCardToParticipant(Players players) {
@@ -41,18 +41,9 @@ public class Dealer extends Participant {
             divideCardByParticipant(participant);
         }
     }
+
     public void divideCardByParticipant(Participant participant) {
         participant.addCard(deck.pickCard());
-    }
-
-    public ResultType createGameResult(Player player) {
-        if (player.isBust()) {
-            return ResultType.WIN_LOSE;
-        }
-        if (isBust()) {
-            return ResultType.LOSE_WIN;
-        }
-        return ResultType.of(cards.calculateScore().compareTo(player.cards.calculateScore()));
     }
 
     public Map<MatchType, Integer> calculateVictory(Players players) {
@@ -60,19 +51,27 @@ public class Dealer extends Participant {
         for (Player player : players.getPlayers()) {
             ResultType resultType = createGameResult(player);
             List<MatchType> matches = resultType.getMatches();
-            updateResult(matches.getFirst(), matchResult);
-            updatePlayerResult(player, matches);
+            MatchType dealerMatchType = matches.getFirst();
+            MatchType playerMatchType = matches.getLast();
+            updateDealerMatchResult(matchResult, dealerMatchType);
+            player.updateResult(playerMatchType);
         }
         return matchResult;
     }
 
-    private static void updatePlayerResult(Player player, List<MatchType> matches) {
-        player.updateResult(matches.getLast());
+    private static void updateDealerMatchResult(Map<MatchType, Integer> matchResult, MatchType dealerMatchType) {
+        matchResult.computeIfAbsent(dealerMatchType, k -> 0);
+        matchResult.put(dealerMatchType, matchResult.get(dealerMatchType) + 1);
     }
 
-    public void updateResult(MatchType type, Map<MatchType, Integer> matchResult) {
-        matchResult.computeIfAbsent(type, k -> 0);
-        matchResult.put(type, matchResult.get(type) + 1);
+    private ResultType createGameResult(Player player) {
+        if (player.isBust()) {
+            return ResultType.WIN_LOSE;
+        }
+        if (isBust()) {
+            return ResultType.LOSE_WIN;
+        }
+        return ResultType.of(cards.calculateScore().compareTo(player.cards.calculateScore()));
     }
 
     @Override
