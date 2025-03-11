@@ -1,6 +1,10 @@
-package domain.blackjackgame;
+package domain.strategy;
 
-import domain.strategy.DrawStrategy;
+import domain.blackjackgame.BlackjackDeck;
+import domain.blackjackgame.CardValue;
+import domain.blackjackgame.Suit;
+import domain.blackjackgame.TrumpCard;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,21 +13,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BlackjackDeckGenerator {
+public class BlackjackDeckGenerateStrategy implements DeckGenerateStrategy {
 
-    public static BlackjackDeck generateDeck(DrawStrategy drawStrategy) {
+    @Override
+    public BlackjackDeck generateDeck(DrawStrategy drawStrategy) {
         List<Suit> suits = Arrays.stream(Suit.values()).toList();
         Set<TrumpCard> trumpCards = new HashSet<>();
         for (Suit suit : suits) {
             trumpCards.addAll(trumpCards(suit));
         }
-        LinkedList<TrumpCard> generatedDeck = new LinkedList<>(trumpCards);
-        Collections.shuffle(generatedDeck);
-
+        LinkedList<TrumpCard> deckBeforeShuffle = new LinkedList<>(trumpCards);
+        Collections.shuffle(deckBeforeShuffle);
+        ArrayDeque<TrumpCard> generatedDeck = new ArrayDeque<>(trumpCards);
         return new BlackjackDeck(generatedDeck, drawStrategy);
     }
 
-    private static Set<TrumpCard> trumpCards(Suit suit) {
+    private Set<TrumpCard> trumpCards(Suit suit) {
         List<CardValue> cardValues = CardValue.cardValues();
         return cardValues.stream().map(cardValue -> new TrumpCard(suit, cardValue))
                 .collect(Collectors.toSet());

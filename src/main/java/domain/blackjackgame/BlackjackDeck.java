@@ -18,7 +18,6 @@ public class BlackjackDeck {
 
     public TrumpCard drawCard() {
         validateDrawCard();
-
         return drawStrategy.draw(deck);
     }
 
