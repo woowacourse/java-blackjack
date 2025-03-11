@@ -8,18 +8,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PlayerStorage {
+public class GameUserStorage {
 
     private final List<Player> players = new ArrayList<>();
+    private Dealer dealer;
 
     public void initialize(List<Nickname> nicknames) {
         validatePlayerCount(nicknames);
         validateDuplicatedPlayer(nicknames);
         addPlayers(nicknames);
+        addDealer();
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 
     private void validatePlayerCount(List<Nickname> nicknames) {
@@ -40,5 +46,9 @@ public class PlayerStorage {
         nicknames.stream()
                 .map(Player::new)
                 .forEach(players::add);
+    }
+
+    private void addDealer() {
+        dealer = new Dealer();
     }
 }

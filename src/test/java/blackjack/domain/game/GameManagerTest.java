@@ -3,8 +3,8 @@ package blackjack.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.user.Nickname;
-import blackjack.domain.user.PlayerStorage;
 import blackjack.dto.FinalHands;
 import blackjack.dto.HandState;
 import blackjack.dto.InitialHands;
@@ -20,14 +20,14 @@ class GameManagerTest {
 
     CardDeck cardDeck;
     GameInputOutputMock gameInputOutput;
-    PlayerStorage playerStorage;
+    GameUserStorage gameUserStorage;
     GameManager gameManager;
 
     @BeforeEach
     void beforeEach() {
         cardDeck = new CardDeck();
-        playerStorage = new PlayerStorage();
-        gameManager = new GameManager(playerStorage, cardDeck);
+        gameUserStorage = new GameUserStorage();
+        gameManager = new GameManager(gameUserStorage, cardDeck);
         gameInputOutput = new GameInputOutputMock();
         gameManager.setUpInputOutput(gameInputOutput);
     }
