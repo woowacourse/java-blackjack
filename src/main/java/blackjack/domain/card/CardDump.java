@@ -9,7 +9,7 @@ public class CardDump {
 
     private final List<Card> cardDump;
 
-    public CardDump(List<Card> cardDump) {
+    private CardDump(List<Card> cardDump) {
         this.cardDump = cardDump;
     }
 

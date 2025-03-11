@@ -1,8 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-
 public enum GameResult {
     WIN("승"),
     LOSE("패"),
@@ -14,28 +11,26 @@ public enum GameResult {
         this.status = status;
     }
 
-    public static GameResult checkDealerWin(final Player player, final Dealer dealer) {
-        int playerScore = player.calculateScore();
-        int dealerScore = dealer.calculateScore();
+    public static GameResult checkDealerWin(final Score playerScore, final Score dealerScore) {
 
-        if (player.isBust()) {
+        if (playerScore.isBust()) {
             return GameResult.WIN;
         }
-        if (dealer.isBust()) {
+        if (dealerScore.isBust()) {
             return GameResult.LOSE;
         }
 
-        if (dealerScore > playerScore) {
+        if (dealerScore.isHigherThan(playerScore)) {
             return GameResult.WIN;
         }
-        if (dealerScore < playerScore) {
+        if (playerScore.isHigherThan(dealerScore)) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
     }
 
-    public static GameResult checkPlayerWin(final Player player, final Dealer dealer) {
-        GameResult gameResult = checkDealerWin(player, dealer);
+    public static GameResult checkPlayerWin(final Score score, final Score dealer) {
+        GameResult gameResult = checkDealerWin(score, dealer);
 
         if (gameResult == GameResult.WIN) {
             return GameResult.LOSE;

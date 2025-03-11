@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DistributedCardDto;
 import blackjack.dto.FinalResultDto;
@@ -84,8 +85,8 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public void displayPlayerResult(final Player player, final GameResult playerResult) {
-        System.out.println(player.getName().trim() + ": " + playerResult.getStatus());
+    public void displayPlayerResult(final Player score, final GameResult playerResult) {
+        System.out.println(score.getName().trim() + ": " + playerResult.getStatus());
     }
 
     public void displayDealerTurnResult(int numberOfHit) {

@@ -47,14 +47,14 @@ public class BlackjackGame {
     public Map<GameResult, Integer> getDealerResult(final Dealer dealer, final List<Player> players) {
         Map<GameResult, Integer> gameFinalResult = new HashMap<>();
         for (Player player : players) {
-            GameResult result = GameResult.checkDealerWin(player, dealer);
+            GameResult result = GameResult.checkDealerWin(player.getScore(), dealer.getScore());
             gameFinalResult.put(result, gameFinalResult.getOrDefault(result, 0) + 1);
         }
         return gameFinalResult;
     }
 
     public GameResult getPlayerResult(final Player player, final Dealer dealer) {
-        return GameResult.checkPlayerWin(player, dealer);
+        return GameResult.checkPlayerWin(player.getScore(), dealer.getScore());
     }
 
     public List<Player> getPlayers() {

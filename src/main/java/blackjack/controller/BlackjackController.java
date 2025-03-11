@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardDump;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
@@ -27,7 +27,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Dealer dealer = new Dealer(new CardDeck());
+        Dealer dealer = new Dealer(new CardHand());
         BlackjackGame game = new BlackjackGame(createPlayers(), dealer, cardDump);
 
         game.distributeInitialCards();
@@ -53,7 +53,7 @@ public class BlackjackController {
 
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(new Player(playerName, new CardDeck()));
+            players.add(new Player(playerName, new CardHand()));
         }
         return players;
     }

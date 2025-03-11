@@ -1,108 +1,66 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDump;
+import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.participant.Dealer;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("딜러는 카드의 합이 16 이하이면 카드를 한장 더 히트 할 수 있다.")
+    @DisplayName("카드가 16이하면 카드를 더 뽑을 수 있다.")
     @Test
-    void testDealerGenerate() {
+    void testPlayerCanDrawCard() {
         // given
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.JACK));
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.SIX));
 
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer dealer = new Dealer(cardHand);
 
         // when
-        boolean takenExtraCard = dealer.canHit();
+        boolean canHit = dealer.canHit();
 
-        assertThat(takenExtraCard).isTrue();
+        // then
+        assertThat(canHit).isTrue();
     }
 
-    @DisplayName("딜러는 카드의 합이 17 이상이면 카드를 더 받지 않는다.")
+    @DisplayName("카드가 16이 초과한다면 카드를 더 뽑을 수 없다.")
     @Test
-    void testDealerGenerate2() {
+    void testPlayerCanDrawCard_false() {
         // given
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.JACK));
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.JACK));
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer dealer = new Dealer(cardHand);
 
         // when
-        boolean takenExtraCard = dealer.canHit();
+        boolean canHit = dealer.canHit();
 
-        assertThat(takenExtraCard).isFalse();
+        // then
+        assertThat(canHit).isFalse();
     }
 
-    @DisplayName("딜러는 자신이 가진 카드 덱의 합을 계산할 수 있다")
+    @DisplayName("딜러는 받은 카드 중 1장의 카드만을 보여준다.")
     @Test
-    void testDealerTotalCardSum() {
+    void test_showStartCards() {
         // given
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer score = new Dealer(cardHand);
 
         // when
-        int totalScore = dealer.calculateScore();
-        assertThat(totalScore).isEqualTo(17);
-    }
+        List<Card> startCards = score.showStartCards();
 
-    @DisplayName("Ace를 11로 계산했을 때 21이 넘으면 Ace를 1로 계산한다.")
-    @Test
-    void testDealerTotalCardSum2() {
-        // given
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
-
-        Dealer dealer = new Dealer(cardDeck);
-
-        // when
-        int totalScore = dealer.calculateScore();
-        assertThat(totalScore).isEqualTo(18);
-    }
-
-    @DisplayName("딜러의 점수가 21 초과면 버스트다.")
-    @Test
-    void testBust_False() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
-
-        Dealer dealer = new Dealer(cardDeck);
-
-        boolean bust = dealer.isBust();
-
-        assertThat(bust).isFalse();
-    }
-
-    @DisplayName("딜러의 점수가 21 이하이면 버스트가 아니다.")
-    @Test
-    void testBust_True() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.FIVE));
-
-        Dealer dealer = new Dealer(cardDeck);
-
-        boolean bust = dealer.isBust();
-
-        assertThat(bust).isTrue();
+        // then
+        assertThat(startCards).hasSize(1);
     }
 
 }
