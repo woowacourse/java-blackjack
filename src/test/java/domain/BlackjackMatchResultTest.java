@@ -14,13 +14,13 @@ class BlackjackMatchResultTest {
         Hand dealerHand = new Hand();
         Hand playerHand = new Hand();
 
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
 
-        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(Symbol.COLVER, CardRank.THREE));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
         //when
 
         BlackjackMatchResult actual = dealerHand.compareWith(playerHand);
@@ -35,11 +35,11 @@ class BlackjackMatchResultTest {
         Hand dealerHand = new Hand();
         Hand playerHand = new Hand();
 
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
 
-        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
 
         //when
         BlackjackMatchResult actual = dealerHand.compareWith(playerHand);
@@ -55,12 +55,12 @@ class BlackjackMatchResultTest {
         Hand dealerHand = new Hand();
         Hand playerHand = new Hand();
 
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
 
-        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(Symbol.COLVER, CardRank.THREE));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
 
         //when //then
         BlackjackMatchResult actual = dealerHand.compareWith(playerHand);
@@ -75,11 +75,11 @@ class BlackjackMatchResultTest {
         Hand dealerHand = new Hand();
         Hand playerHand = new Hand();
 
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(Symbol.COLVER, CardRank.TWO));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
 
-        playerHand.add(new Card(Symbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(Symbol.COLVER, CardRank.THREE));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
+        playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
 
         //when
         BlackjackMatchResult actual = dealerHand.compareWith(playerHand);

@@ -18,23 +18,23 @@ public class StandardCardsInitializer implements CardsInitializer {
         List<Card> cards = new ArrayList<>();
 
         List<CardRank> cardRanks = getNumbers();
-        List<Symbol> symbols = getSymbols();
+        List<CardSymbol> cardSymbols = getSymbols();
 
-        insertCards(cardRanks, symbols, cards);
+        insertCards(cardRanks, cardSymbols, cards);
 
         return cards;
     }
 
-    private void insertCards(List<CardRank> cardRanks, List<Symbol> symbols, List<Card> cards) {
+    private void insertCards(List<CardRank> cardRanks, List<CardSymbol> cardSymbols, List<Card> cards) {
         for (CardRank cardRank : cardRanks) {
-            for (Symbol symbol : symbols) {
-                cards.add(new Card(symbol, cardRank));
+            for (CardSymbol cardSymbol : cardSymbols) {
+                cards.add(new Card(cardSymbol, cardRank));
             }
         }
     }
 
-    private List<Symbol> getSymbols() {
-        return Arrays.stream(Symbol.values()).toList();
+    private List<CardSymbol> getSymbols() {
+        return Arrays.stream(CardSymbol.values()).toList();
     }
 
     private List<CardRank> getNumbers() {

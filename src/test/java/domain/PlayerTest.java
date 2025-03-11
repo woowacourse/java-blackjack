@@ -17,7 +17,7 @@ class PlayerTest {
     void hit() {
         //given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Symbol.COLVER, CardRank.EIGHT));
+        cards.add(new Card(CardSymbol.COLVER, CardRank.EIGHT));
         CardDeck deck = new CardDeck(cards);
 
         Player player = new Player("ad");
@@ -33,9 +33,9 @@ class PlayerTest {
     void calculatePlayerScore() {
         //given
         Player player = new Player("ad");
-        Card card1 = new Card(Symbol.HEART, CardRank.FIVE);
-        Card card2 = new Card(Symbol.HEART, CardRank.FOUR);
-        Card card3 = new Card(Symbol.HEART, CardRank.JACK);
+        Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.FOUR);
+        Card card3 = new Card(CardSymbol.HEART, CardRank.JACK);
 
         List<Card> cards = new ArrayList<>();
         cards.add(card1);
@@ -59,10 +59,10 @@ class PlayerTest {
     void burstIsNotHit() {
         //given
         Player player = new Player("ad");
-        Card card1 = new Card(Symbol.HEART, CardRank.TWO);
-        Card card2 = new Card(Symbol.HEART, CardRank.KING);
-        Card card3 = new Card(Symbol.HEART, CardRank.JACK);
-        Card card4 = new Card(Symbol.HEART, CardRank.TWO);
+        Card card1 = new Card(CardSymbol.HEART, CardRank.TWO);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.KING);
+        Card card3 = new Card(CardSymbol.HEART, CardRank.JACK);
+        Card card4 = new Card(CardSymbol.HEART, CardRank.TWO);
 
         List<Card> cards = new ArrayList<>();
         cards.add(card1);
@@ -86,10 +86,10 @@ class PlayerTest {
     void notBurstHit() {
         //given
         Player player = new Player("ad");
-        Card card1 = new Card(Symbol.HEART, CardRank.FIVE);
-        Card card2 = new Card(Symbol.HEART, CardRank.FIVE);
-        Card card3 = new Card(Symbol.HEART, CardRank.FIVE);
-        Card card4 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Card card3 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Card card4 = new Card(CardSymbol.HEART, CardRank.FIVE);
 
         List<Card> cards = new ArrayList<>();
         cards.add(card1);
@@ -114,10 +114,10 @@ class PlayerTest {
         //given
         Player player = new Player("ad");
 
-        Card card1 = new Card(Symbol.HEART, CardRank.FIVE);
-        Card card2 = new Card(Symbol.HEART, CardRank.FIVE);
-        Card card3 = new Card(Symbol.HEART, CardRank.FIVE);
-        Card card4 = new Card(Symbol.HEART, CardRank.FIVE);
+        Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Card card3 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Card card4 = new Card(CardSymbol.HEART, CardRank.FIVE);
 
         List<Card> cards = new ArrayList<>();
         cards.add(card1);

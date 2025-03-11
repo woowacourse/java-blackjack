@@ -14,9 +14,9 @@ class DealerTest {
     @Test
     void canHit() {
         //given
-        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(Symbol.HEART, CardRank.TWO);
-        Card card3 = new Card(Symbol.SPADE, CardRank.KING);
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.TWO);
+        Card card3 = new Card(CardSymbol.SPADE, CardRank.KING);
 
         List<Card> cards = new ArrayList<>();
         cards.add(card1);
@@ -42,9 +42,9 @@ class DealerTest {
     @Test
     void cannotHit() {
         //given
-        Card card1 = new Card(Symbol.COLVER, CardRank.JACK);
-        Card card2 = new Card(Symbol.HEART, CardRank.NINE);
-        Card card3 = new Card(Symbol.SPADE, CardRank.KING);
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.JACK);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.NINE);
+        Card card3 = new Card(CardSymbol.SPADE, CardRank.KING);
 
         List<Card> cards = new ArrayList<>();
         cards.add(card1);

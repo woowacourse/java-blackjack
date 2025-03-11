@@ -40,7 +40,7 @@ public class Hand {
         int otherScore = other.calculateTotalPoint();
         return BlackjackMatchResult.judge(thisScore, otherScore);
     }
-    
+
     public int calculateTotalPoint() {
         int totalPoint = sumPointWithoutAce();
         totalPoint = sumAcePoint(totalPoint);
@@ -85,7 +85,7 @@ public class Hand {
 
     public List<Card> getCards() {
         return cards.stream()
-                .map(card -> new Card(card.getSymbol(), card.getCardRank()))
+                .map(card -> new Card(card.getCardSymbol(), card.getCardRank()))
                 .toList();
     }
 }

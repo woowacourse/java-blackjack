@@ -60,7 +60,7 @@ public class OutputView {
     }
 
     private String formatSingleCard(Card card) {
-        return String.format("%s%s", card.getCardRank().getName(), card.getSymbol().getName());
+        return String.format("%s%s", card.getCardRank().getName(), card.getCardSymbol().getName());
     }
 
     public void printWinLoseResult(Map<BlackjackMatchResult, Integer> dealerResult,

@@ -11,7 +11,7 @@ class CardTest {
     @Test
     void card() {
         //given
-        final var symbol = Symbol.SPADE;
+        final var symbol = CardSymbol.SPADE;
         final var number = CardRank.ACE;
 
         //when //then

@@ -17,12 +17,12 @@ class HandTest {
     public static Stream<Arguments> provideEachCardsAndExpected() {
         return Stream.of(
                 Arguments.of(List.of(
-                                new Card(Symbol.COLVER, CardRank.JACK),
-                                new Card(Symbol.HEART, CardRank.FIVE)),
+                                new Card(CardSymbol.COLVER, CardRank.JACK),
+                                new Card(CardSymbol.HEART, CardRank.FIVE)),
                         15),
                 Arguments.of(List.of(
-                                new Card(Symbol.COLVER, CardRank.SEVEN),
-                                new Card(Symbol.HEART, CardRank.TEN)),
+                                new Card(CardSymbol.COLVER, CardRank.SEVEN),
+                                new Card(CardSymbol.HEART, CardRank.TEN)),
                         17)
         );
     }
@@ -32,9 +32,9 @@ class HandTest {
     void burst2() {
         //given
         Hand hand = new Hand();
-        hand.add(new Card(Symbol.HEART, CardRank.KING));
-        hand.add(new Card(Symbol.HEART, CardRank.JACK));
-        hand.add(new Card(Symbol.HEART, CardRank.TWO));
+        hand.add(new Card(CardSymbol.HEART, CardRank.KING));
+        hand.add(new Card(CardSymbol.HEART, CardRank.JACK));
+        hand.add(new Card(CardSymbol.HEART, CardRank.TWO));
 
         //when
         boolean actual = hand.isBurst();
@@ -48,8 +48,8 @@ class HandTest {
     void notBurst() {
         //given
         Hand hand = new Hand();
-        hand.add(new Card(Symbol.HEART, CardRank.KING));
-        hand.add(new Card(Symbol.HEART, CardRank.JACK));
+        hand.add(new Card(CardSymbol.HEART, CardRank.KING));
+        hand.add(new Card(CardSymbol.HEART, CardRank.JACK));
 
         //when
         boolean actual = hand.isBurst();
@@ -63,7 +63,7 @@ class HandTest {
     void addCard() {
         //given
         Hand hand = new Hand();
-        Card card = new Card(Symbol.COLVER, CardRank.FIVE);
+        Card card = new Card(CardSymbol.COLVER, CardRank.FIVE);
         //when
 
         //then
@@ -93,8 +93,8 @@ class HandTest {
     void considerAceHas11() {
         //given
         Hand hand = new Hand();
-        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(Symbol.COLVER, CardRank.KING);
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.COLVER, CardRank.KING);
 
         hand.add(card1);
         hand.add(card2);
@@ -111,8 +111,8 @@ class HandTest {
     void considerAceHas112() {
         //given
         Hand hand = new Hand();
-        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(Symbol.HEART, CardRank.ACE);
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.ACE);
 
         hand.add(card1);
         hand.add(card2);
@@ -129,10 +129,10 @@ class HandTest {
     void considerAceHas113() {
         //given
         Hand hand = new Hand();
-        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card3 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card4 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card3 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card4 = new Card(CardSymbol.COLVER, CardRank.ACE);
 
         hand.add(card1);
         hand.add(card2);
@@ -151,10 +151,10 @@ class HandTest {
     void immutableCardList() {
         // given
         Hand hand = new Hand();
-        Card card1 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card3 = new Card(Symbol.COLVER, CardRank.ACE);
-        Card card4 = new Card(Symbol.COLVER, CardRank.ACE);
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card3 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card4 = new Card(CardSymbol.COLVER, CardRank.ACE);
 
         hand.add(card1);
         hand.add(card2);
@@ -163,7 +163,7 @@ class HandTest {
         //when
         List<Card> cardList = hand.getCards();
         //then
-        assertThatThrownBy(() -> cardList.add(new Card(Symbol.HEART, CardRank.FIVE)))
+        assertThatThrownBy(() -> cardList.add(new Card(CardSymbol.HEART, CardRank.FIVE)))
                 .isInstanceOf(RuntimeException.class);
     }
 }

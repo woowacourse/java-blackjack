@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Symbol symbol;
+    private final CardSymbol cardSymbol;
     private final CardRank cardRank;
 
-    public Card(Symbol symbol, CardRank cardRank) {
-        this.symbol = symbol;
+    public Card(CardSymbol cardSymbol, CardRank cardRank) {
+        this.cardSymbol = cardSymbol;
         this.cardRank = cardRank;
     }
 
@@ -24,8 +24,8 @@ public class Card {
         return cardRank.getPoint();
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public CardSymbol getCardSymbol() {
+        return cardSymbol;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && cardRank == card.cardRank;
+        return cardSymbol == card.cardSymbol && cardRank == card.cardRank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, cardRank);
+        return Objects.hash(cardSymbol, cardRank);
     }
 }
