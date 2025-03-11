@@ -57,10 +57,19 @@ public class Application {
     private static Map<Name, Integer> getBettingAmounts(final Names playerNames) {
         Map<Name, Integer> bettingAmounts = new HashMap<>();
         for (final Name playerName : playerNames.getNames()) {
-            int bettingAmount = inputView.inputBettingAmount(playerName);
+            int bettingAmount = getBettingAmount(playerName);
             bettingAmounts.put(playerName, bettingAmount);
         }
         return bettingAmounts;
+    }
+
+    private static int getBettingAmount(final Name playerName) {
+        try {
+            return inputView.inputBettingAmount(playerName);
+        } catch (final IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getBettingAmount(playerName);
+        }
     }
 
     private static void printInitialCards(final Round round, final Names playerNames) {
