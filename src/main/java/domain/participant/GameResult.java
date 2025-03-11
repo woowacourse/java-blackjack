@@ -14,7 +14,7 @@ public enum GameResult {
         this.calculateValue = calculateValue;
     }
 
-    public static GameResult calculateDealerResult(Participant dealer, Participant player) {
+    public static GameResult calculateResultOfDealer(Participant dealer, Participant player) {
         int dealerValue = dealer.getTotalValue();
         int playerValue = player.getTotalValue();
 
@@ -59,7 +59,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public GameResult reverse() {
+    public GameResult convertByPlayerResult() {
         if (this == DRAW) {
             return DRAW;
         }
