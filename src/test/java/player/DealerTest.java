@@ -37,21 +37,21 @@ class DealerTest {
     }
 
     @Test
-    void 점수합이_16이하면_true를_반환한다() {
+    void 점수합이_16이하면_TRUE를_반환한다() {
         // given
         Dealer dealer = new Dealer();
         Deck deck = new Deck(new ArrayList<>(List.of(
                 new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
-                new Card(CardSuit.SPADE, CardRank.EIGHT),
 
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
                 new Card(CardSuit.SPADE, CardRank.EIGHT)
         )));
         dealer.drawOneCard(deck);
@@ -59,5 +59,57 @@ class DealerTest {
         // when & then
         Assertions.assertThat(dealer.drawOneCardIfLowScore(deck))
                 .isTrue();
+    }
+
+    @Test
+    void 점수합이_16이면_TRUE를_반환한다() {
+        // given
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck(new ArrayList<>(List.of(
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT)
+        )));
+        dealer.drawOneCard(deck);
+        dealer.drawOneCard(deck);
+
+        // when & then
+        Assertions.assertThat(dealer.drawOneCardIfLowScore(deck))
+                .isTrue();
+    }
+
+    @Test
+    void 점수합이_16초과면_FALSE를_반환한다() {
+        // given
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck(new ArrayList<>(List.of(
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.EIGHT),
+                new Card(CardSuit.SPADE, CardRank.TEN)
+        )));
+        dealer.drawOneCard(deck);
+        dealer.drawOneCard(deck);
+
+        // when & then
+        Assertions.assertThat(dealer.drawOneCardIfLowScore(deck))
+                .isFalse();
     }
 }

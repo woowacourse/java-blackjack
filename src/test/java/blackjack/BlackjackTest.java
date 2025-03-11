@@ -139,6 +139,43 @@ public class BlackjackTest {
     }
 
     @Test
+    void 딜러의_승패_결과를_반환한다() {
+        // given
+        Players players = new Players(List.of(
+                new Dealer(),
+                new Participant("시소"),
+                new Participant("헤일러"),
+                new Participant("부기"),
+                new Participant("사나")
+        ));
+
+        Deck deck = new Deck(new ArrayList<>(List.of(
+                new Card(CardSuit.SPADE, CardRank.FIVE),
+                new Card(CardSuit.SPADE, CardRank.FIVE),
+                new Card(CardSuit.SPADE, CardRank.THREE),
+                new Card(CardSuit.SPADE, CardRank.THREE),
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.SPADE, CardRank.SEVEN),
+                new Card(CardSuit.SPADE, CardRank.SEVEN),
+                new Card(CardSuit.SPADE, CardRank.FIVE),
+                new Card(CardSuit.SPADE, CardRank.FIVE)
+        )));
+        Blackjack blackjack = new Blackjack(players, deck);
+        blackjack.distributeInitialCards();
+
+        // when
+        Map<MatchResult, Integer> results = blackjack.computeDealerMatchResult();
+
+        // then
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(results.get(MatchResult.WIN)).isEqualTo(2);
+            softly.assertThat(results.get(MatchResult.LOSE)).isEqualTo(1);
+            softly.assertThat(results.get(MatchResult.DRAW)).isEqualTo(1);
+        });
+    }
+
+    @Test
     void 참여자들의_승패_결과를_반환한다() {
         // given
         Players players = new Players(List.of(
