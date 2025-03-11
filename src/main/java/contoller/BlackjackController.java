@@ -1,8 +1,8 @@
 package contoller;
 
-import domain.Deck;
+import domain.card.Deck;
 import domain.GameManager;
-import domain.Participant;
+import domain.participant.Participant;
 import domain.ResultStatus;
 import view.InputView;
 import view.OutputView;

@@ -1,5 +1,8 @@
 package domain;
 
+import domain.participant.Participant;
+import domain.participant.Participants;
+
 import java.util.HashMap;
 import java.util.Map;
 

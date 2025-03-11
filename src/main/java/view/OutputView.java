@@ -1,10 +1,10 @@
 package view;
 
-import domain.Card;
-import domain.Participant;
-import domain.Rank;
+import domain.card.Card;
+import domain.participant.Participant;
+import domain.card.Rank;
 import domain.ResultStatus;
-import domain.Suit;
+import domain.card.Suit;
 
 import java.util.List;
 import java.util.Map;
