@@ -43,23 +43,23 @@ public class BlackJackRule {
                 .orElse(player.getMinimumPoint());
     }
 
-    public Map<Player, Map<Result, Integer>> calculateResult(final Player dealer, final List<Player> users) {
-        Map<Player, Map<Result, Integer>> results = new LinkedHashMap<>();
-        results.put(dealer, new LinkedHashMap<>(Result.getResultBoard()));
+    public Map<Player, Map<GameResult, Integer>> calculateResult(final Player dealer, final List<Player> users) {
+        Map<Player, Map<GameResult, Integer>> results = new LinkedHashMap<>();
+        results.put(dealer, new LinkedHashMap<>(GameResult.getResultBoard()));
         users.forEach(
                 user -> {
-                    results.put(user, new LinkedHashMap<>(Result.getResultBoard()));
-                    addResult(results, dealer, Result.findWinner(dealer, user, this));
-                    addResult(results, user, Result.findWinner(user, dealer, this));
+                    results.put(user, new LinkedHashMap<>(GameResult.getResultBoard()));
+                    addResult(results, dealer, GameResult.calculateResult(dealer, user, this));
+                    addResult(results, user, GameResult.calculateResult(user, dealer, this));
                 }
         );
 
         return results;
     }
 
-    private void addResult(final Map<Player, Map<Result, Integer>> results, final Player player, final Result result) {
-        Map<Result, Integer> currentResults = results.get(player);
-        currentResults.put(result, currentResults.get(result) + 1);
+    private void addResult(final Map<Player, Map<GameResult, Integer>> results, final Player player, final GameResult gameResult) {
+        Map<GameResult, Integer> currentResults = results.get(player);
+        currentResults.put(gameResult, currentResults.get(gameResult) + 1);
     }
 
     public boolean isDraw(final Player player, final Player challenger) {

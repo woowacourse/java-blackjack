@@ -80,7 +80,7 @@ class BlackJackGameTest {
 
     @MethodSource("플레이어들의_승패_결과를_계산한다_테스트_케이스")
     @ParameterizedTest
-    void 플레이어들의_승패_결과를_계산한다(Cards dealerCards, Cards userCards, Map<Player, Map<Result, Integer>> expected) {
+    void 플레이어들의_승패_결과를_계산한다(Cards dealerCards, Cards userCards, Map<Player, Map<GameResult, Integer>> expected) {
         Player dealer = new Dealer();
         Player user = new User("pobi");
         dealer.receiveCards(dealerCards);
@@ -93,12 +93,12 @@ class BlackJackGameTest {
     private static Stream<Arguments> 플레이어들의_승패_결과를_계산한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(new Cards(createCard(CardNumber.THREE)), new Cards(createCard(CardNumber.TWO)),
-                        Map.of(new Dealer(), Map.of(Result.WIN, 1, Result.DRAW, 0, Result.LOSE, 0),
-                                new User("pobi"), Map.of(Result.WIN, 0, Result.DRAW, 0, Result.LOSE, 1)
+                        Map.of(new Dealer(), Map.of(GameResult.WIN, 1, GameResult.DRAW, 0, GameResult.LOSE, 0),
+                                new User("pobi"), Map.of(GameResult.WIN, 0, GameResult.DRAW, 0, GameResult.LOSE, 1)
                         )),
                 Arguments.of(new Cards(createCard(CardNumber.THREE)), new Cards(createCard(CardNumber.THREE)),
-                        Map.of(new Dealer(), Map.of(Result.WIN, 0, Result.DRAW, 1, Result.LOSE, 0),
-                                new User("pobi"), Map.of(Result.WIN, 0, Result.DRAW, 1, Result.LOSE, 0)
+                        Map.of(new Dealer(), Map.of(GameResult.WIN, 0, GameResult.DRAW, 1, GameResult.LOSE, 0),
+                                new User("pobi"), Map.of(GameResult.WIN, 0, GameResult.DRAW, 1, GameResult.LOSE, 0)
                         ))
         );
     }

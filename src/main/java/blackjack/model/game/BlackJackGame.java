@@ -46,7 +46,7 @@ public class BlackJackGame {
         player.receiveCards(cardDeck.draw(amount));
     }
 
-    public Map<Player, Map<Result, Integer>> calculateResult(final List<Player> players) {
+    public Map<Player, Map<GameResult, Integer>> calculateResult(final List<Player> players) {
         Player dealer = players.getFirst();
         List<Player> users = players.stream()
                 .skip(1L)

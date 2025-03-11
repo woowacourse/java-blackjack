@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import blackjack.model.card.Cards;
-import blackjack.model.game.Result;
+import blackjack.model.game.GameResult;
 import blackjack.model.player.Player;
 
 public class OutputView {
@@ -51,14 +51,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(final Map<Player, Map<Result, Integer>> gameResults) {
+    public void printGameResult(final Map<Player, Map<GameResult, Integer>> gameResults) {
         System.out.println("## 최종 승패");
         gameResults.entrySet().stream()
                 .map(entry -> entry.getKey().getName() + ": " + formatResults(entry.getValue()))
                 .forEach(System.out::println);
     }
 
-    private String formatResults(Map<Result, Integer> resultStatistics) {
+    private String formatResults(Map<GameResult, Integer> resultStatistics) {
         boolean hasMultipleResults = resultStatistics.values().stream().mapToInt(integer -> integer).sum() > 1;
         if (hasMultipleResults) {
             return resultStatistics.entrySet().stream()

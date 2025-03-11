@@ -202,11 +202,11 @@ class BlackJackRuleTest {
         );
     }
 
-    private static Map<Result, Integer> makeResultMap(final int winCount, final int drawCount, final int loseCount) {
-        Map<Result, Integer> result = new LinkedHashMap<>(Result.getResultBoard());
-        result.put(Result.WIN, winCount);
-        result.put(Result.DRAW, drawCount);
-        result.put(Result.LOSE, loseCount);
+    private static Map<GameResult, Integer> makeResultMap(final int winCount, final int drawCount, final int loseCount) {
+        Map<GameResult, Integer> result = new LinkedHashMap<>(GameResult.getResultBoard());
+        result.put(GameResult.WIN, winCount);
+        result.put(GameResult.DRAW, drawCount);
+        result.put(GameResult.LOSE, loseCount);
 
         return result;
     }
@@ -281,8 +281,8 @@ class BlackJackRuleTest {
     @MethodSource("게임_결과를_반환하는_테스트_케이스")
     @ParameterizedTest
     void 게임_결과를_반환한다(final BlackJackRule blackJackRule, final Player dealer, final List<Player> users,
-                     final Map<Player, Map<Result, Integer>> expected) {
-        Map<Player, Map<Result, Integer>> results = blackJackRule.calculateResult(dealer, users);
+                     final Map<Player, Map<GameResult, Integer>> expected) {
+        Map<Player, Map<GameResult, Integer>> results = blackJackRule.calculateResult(dealer, users);
 
         assertThat(results).containsAllEntriesOf(expected);
     }

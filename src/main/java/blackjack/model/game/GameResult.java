@@ -4,7 +4,7 @@ import java.util.Map;
 
 import blackjack.model.player.Player;
 
-public enum Result {
+public enum GameResult {
 
     WIN("승"),
     DRAW("무"),
@@ -12,11 +12,13 @@ public enum Result {
 
     private final String name;
 
-    Result(final String name) {
+    GameResult(final String name) {
         this.name = name;
     }
 
-    public static Result findWinner(final Player player, final Player challenger, final BlackJackRule blackJackRule) {
+    public static GameResult calculateResult(final Player player, final Player challenger,
+                                             final BlackJackRule blackJackRule
+    ) {
         if (blackJackRule.isDraw(player, challenger)) {
             return DRAW;
         }
@@ -26,7 +28,7 @@ public enum Result {
         return LOSE;
     }
 
-    public static Map<Result, Integer> getResultBoard() {
+    public static Map<GameResult, Integer> getResultBoard() {
         return Map.of(
                 WIN, 0,
                 DRAW, 0,
