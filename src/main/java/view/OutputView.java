@@ -6,7 +6,6 @@ import domain.Dealer;
 import domain.Number;
 import domain.Participant;
 import domain.Player;
-import domain.ResultStatus;
 import domain.Symbol;
 
 import java.util.List;
@@ -79,35 +78,18 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(Map<Player, ResultStatus> result) {
-        Map<ResultStatus, Integer> counts = countStatusResult(result);
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패 %d무%n",
-            counts.get(ResultStatus.LOSE), counts.get(ResultStatus.WIN), counts.get(ResultStatus.PUSH));
-        for (Player player : result.keySet()) {
-            printPlayerGameResult(result, player);
+    public static void printGameResult(Map<Player, Integer> incomes) {
+        int dealerIncome = calculateDealerIncome(incomes);
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d%n", dealerIncome);
+        for (Player player : incomes.keySet()) {
+            System.out.printf("%s: %d%n", player.getName(), incomes.get(player));
         }
     }
 
-    private static void printPlayerGameResult(Map<Player, ResultStatus> result, Player player) {
-        ResultStatus resultStatus = result.get(player);
-        if (resultStatus == ResultStatus.WIN) {
-            System.out.printf("%s: 1승%n", player.getName());
-            return;
-        }
-        if (resultStatus == ResultStatus.LOSE) {
-            System.out.printf("%s: 1패%n", player.getName());
-            return;
-        }
-        System.out.printf("%s: 1무%n", player.getName());
-    }
-
-    private static Map<ResultStatus, Integer> countStatusResult(Map<Player, ResultStatus> result) {
-        Map<ResultStatus, Integer> counts = ResultStatus.initMap();
-        for (Player player : result.keySet()) {
-            ResultStatus resultStatus = result.get(player);
-            counts.put(resultStatus, counts.get(resultStatus) + 1);
-        }
-        return counts;
+    private static int calculateDealerIncome(Map<Player, Integer> incomes) {
+        return - incomes.values().stream()
+            .mapToInt(Integer::valueOf)
+            .sum();
     }
 }
