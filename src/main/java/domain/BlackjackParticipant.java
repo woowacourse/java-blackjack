@@ -4,19 +4,11 @@ import java.util.List;
 
 public abstract class BlackjackParticipant {
 
-    private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
     protected final ParticipantHand hand;
-    private final String name;
+    private final ParticipantName name;
     protected BlackjackParticipant(String name) {
+        this.name = new ParticipantName(name);
         hand = new ParticipantHand();
-        validateNickname(name);
-        this.name = name;
-    }
-
-    private void validateNickname(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException(INVALID_NAME);
-        }
     }
 
     public void addDraw(TrumpCard trumpCard) {
@@ -33,11 +25,15 @@ public abstract class BlackjackParticipant {
         return hand.isBust();
     }
 
+    public boolean isNameMatch(ParticipantName name) {
+        return this.name.isMatch(name);
+    }
+
     public List<TrumpCard> trumpCards() {
         return hand.getCards();
     }
 
-    public String name() {
+    public ParticipantName name() {
         return name;
     }
 

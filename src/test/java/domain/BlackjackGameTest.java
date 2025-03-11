@@ -52,7 +52,7 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = createTestGame(names, drawOrder);
 
         // when
-        List<TrumpCard> cards = blackjackGame.playerCards("포비1");
+        List<TrumpCard> cards = blackjackGame.playerCards(new ParticipantName("포비1"));
 
         //then
         List<TrumpCard> expectedCards = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),

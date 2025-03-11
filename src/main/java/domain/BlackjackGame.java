@@ -26,7 +26,7 @@ public class BlackjackGame {
     }
 
     private void initiateGame() {
-        for (String name : participants.getPlayerNames()) {
+        for (ParticipantName name : participants.getPlayerNames()) {
             dealCard(name);
             dealCard(name);
         }
@@ -34,7 +34,7 @@ public class BlackjackGame {
         dealDealerCard();
     }
 
-    public List<TrumpCard> playerCards(String name) {
+    public List<TrumpCard> playerCards(ParticipantName name) {
         return participants.participantCards(name);
     }
 
@@ -43,40 +43,40 @@ public class BlackjackGame {
     }
 
     public List<TrumpCard> dealerCards() {
-        String dealerName = participants.dealerName();
+        ParticipantName dealerName = participants.dealerName();
         return participants.participantCards(dealerName);
     }
 
-    public String dealerName() {
+    public ParticipantName dealerName() {
         return participants.dealerName();
     }
 
-    public List<String> playerNames() {
+    public List<ParticipantName> playerNames() {
         return participants.getPlayerNames();
     }
 
-    public void dealCard(String name) {
+    public void dealCard(ParticipantName name) {
         participants.addCard(name, deck.drawCard());
     }
 
     private void dealDealerCard() {
-        String dealerName = participants.dealerName();
+        ParticipantName dealerName = participants.dealerName();
         participants.addCard(dealerName, deck.drawCard());
     }
 
-    public boolean isBust(String name) {
+    public boolean isBust(ParticipantName name) {
         return participants.isBust(name);
     }
 
     public void dealerHit() {
         if (dealerDrawable()) {
-            String dealerName = participants.dealerName();
+            ParticipantName dealerName = participants.dealerName();
             participants.addCard(dealerName, deck.drawCard());
         }
     }
 
     public boolean dealerDrawable() {
-        String dealerName = participants.dealerName();
+        ParticipantName dealerName = participants.dealerName();
         return participants.isDrawable(dealerName);
     }
 
@@ -85,7 +85,7 @@ public class BlackjackGame {
     }
 
     public BlackjackResult currentDealerBlackjackResult() {
-        String dealerName = participants.dealerName();
+        ParticipantName dealerName = participants.dealerName();
         return participants.calculateResult(dealerName);
     }
 
@@ -93,7 +93,7 @@ public class BlackjackGame {
         return BlackjackResultEvaluator.calculateDealerWinStatus(participants);
     }
 
-    public Map<String, WinStatus> getPlayerWinStatuses() {
+    public Map<ParticipantName, WinStatus> getPlayerWinStatuses() {
         return BlackjackResultEvaluator.calculateWinStatus(participants);
     }
 

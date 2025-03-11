@@ -5,6 +5,7 @@ import domain.BlackjackDeckGenerator;
 import domain.BlackjackGame;
 import domain.BlackjackResult;
 import domain.DealerWinStatus;
+import domain.ParticipantName;
 import domain.Player;
 import domain.Score;
 import domain.TrumpCard;
@@ -56,17 +57,17 @@ public class BlackjackController {
 
     private void blackjackWinnerResult(BlackjackGame blackjackGame) {
         DealerWinStatus dealerWinStatus = blackjackGame.getDealerWinStatus();
-        Map<String, WinStatus> playerWinStatuses = blackjackGame.getPlayerWinStatuses();
+        Map<ParticipantName, WinStatus> playerWinStatuses = blackjackGame.getPlayerWinStatuses();
 
         outputView.resultHeader();
         outputView.dealerWinStatus(dealerWinStatus.win(), dealerWinStatus.lose(), blackjackGame.dealerName());
-        for (String name : playerWinStatuses.keySet()) {
+        for (ParticipantName name : playerWinStatuses.keySet()) {
             outputView.playerWinStatus(name, playerWinStatuses.get(name));
         }
     }
 
     private void openPlayerResultCards(BlackjackResult blackjackResult) {
-        String name = blackjackResult.name();
+        ParticipantName name = blackjackResult.name();
         List<TrumpCard> trumpCards = blackjackResult.trumpCards();
         Score totalScore = blackjackResult.cardSum();
 
@@ -81,13 +82,13 @@ public class BlackjackController {
     }
 
     private void askPlayerDraw(BlackjackGame blackjackGame) {
-        List<String> names = blackjackGame.playerNames();
-        for (String name : names) {
+        List<ParticipantName> names = blackjackGame.playerNames();
+        for (ParticipantName name : names) {
             handleAskDraw(name, blackjackGame);
         }
     }
 
-    private void handleAskDraw(String name, BlackjackGame blackjackGame) {
+    private void handleAskDraw(ParticipantName name, BlackjackGame blackjackGame) {
         boolean isDraw = handleAskDraw(name);
         if (!isDraw) {
             return;
@@ -100,12 +101,12 @@ public class BlackjackController {
         handleAskDraw(name, blackjackGame);
     }
 
-    private void openPlayerCards(String name, BlackjackGame blackjackGame) {
+    private void openPlayerCards(ParticipantName name, BlackjackGame blackjackGame) {
         List<TrumpCard> trumpCards = blackjackGame.playerCards(name);
         openPlayerCard(trumpCards, name);
     }
 
-    private boolean handleAskDraw(String name) {
+    private boolean handleAskDraw(ParticipantName name) {
         return handleInput(() -> {
             outputView.askDraw(name);
             return inputView.askDraw();
@@ -115,17 +116,17 @@ public class BlackjackController {
     private void openPlayerCards(BlackjackGame blackjackGame) {
         List<BlackjackResult> blackjackResults = blackjackGame.currentPlayerBlackjackResult();
         for (BlackjackResult blackjackResult : blackjackResults) {
-            String name = blackjackResult.name();
+            ParticipantName name = blackjackResult.name();
             openPlayerCard(blackjackResult.trumpCards(), name);
         }
     }
 
-    private void openPlayerCard(List<TrumpCard> trumpCards, String name) {
+    private void openPlayerCard(List<TrumpCard> trumpCards, ParticipantName name) {
         outputView.openCards(name, trumpCards);
     }
 
     private void openFirstDealerCard(BlackjackGame blackjackGame) {
-        String name = blackjackGame.dealerName();
+        ParticipantName name = blackjackGame.dealerName();
         TrumpCard trumpCard = blackjackGame.dealerCardFirst();
         outputView.openCards(name, List.of(trumpCard));
     }

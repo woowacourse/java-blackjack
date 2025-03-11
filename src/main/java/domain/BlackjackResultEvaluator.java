@@ -4,10 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackjackResultEvaluator {
-    public static Map<String, WinStatus> calculateWinStatus(BlackjackParticipants participants) {
-        Map<String, WinStatus> winStatuses = new HashMap<>();
-        String dealerName = participants.dealerName();
-        for (String playerName : participants.getPlayerNames()) {
+
+    private BlackjackResultEvaluator() {
+
+    }
+
+    public static Map<ParticipantName, WinStatus> calculateWinStatus(BlackjackParticipants participants) {
+        Map<ParticipantName, WinStatus> winStatuses = new HashMap<>();
+        ParticipantName dealerName = participants.dealerName();
+        for (ParticipantName playerName : participants.getPlayerNames()) {
             ScoreInfo scoreInfo = new ScoreInfo(playerName, dealerName, participants);
             winStatuses.put(playerName, calculatePlayerWinStatus(scoreInfo));
         }
@@ -18,8 +23,8 @@ public class BlackjackResultEvaluator {
     public static DealerWinStatus calculateDealerWinStatus(BlackjackParticipants participants) {
         int win = 0;
         int lose = 0;
-        String dealerName = participants.dealerName();
-        for (String playerName : participants.getPlayerNames()) {
+        ParticipantName dealerName = participants.dealerName();
+        for (ParticipantName playerName : participants.getPlayerNames()) {
             ScoreInfo scoreInfo = new ScoreInfo(playerName, dealerName, participants);
             win += calculateDealerWin(scoreInfo);
             lose += calculateDealerLose(scoreInfo);
@@ -68,7 +73,7 @@ public class BlackjackResultEvaluator {
         boolean isDealerBust;
         boolean isPlayerBust;
 
-        public ScoreInfo(String playerName, String dealerName, BlackjackParticipants participants) {
+        public ScoreInfo(ParticipantName playerName, ParticipantName dealerName, BlackjackParticipants participants) {
             this.dealerSum = participants.calculateCardSum(dealerName);
             this.playerSum = participants.calculateCardSum(playerName);
             this.isDealerBust = participants.isBust(dealerName);

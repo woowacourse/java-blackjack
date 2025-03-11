@@ -21,25 +21,25 @@ class BlackjackResultEvaluatorTest {
         List<String> names = List.of("포비", "루키");
         BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
 
-        for (int i = 0; i < pobiCards.size(); i++) {
-            participants.addCard("포비", pobiCards.get(i));
+        for (TrumpCard pobiCard : pobiCards) {
+            participants.addCard(new ParticipantName("포비"), pobiCard);
         }
 
-        for (int i = 0; i < rookieCards.size(); i++) {
-            participants.addCard("루키", rookieCards.get(i));
+        for (TrumpCard rookieCard : rookieCards) {
+            participants.addCard(new ParticipantName("루키"), rookieCard);
         }
 
-        for (int i = 0; i < dealerCards.size(); i++) {
-            participants.addCard(participants.dealerName(), dealerCards.get(i));
+        for (TrumpCard dealerCard : dealerCards) {
+            participants.addCard(participants.dealerName(), dealerCard);
         }
 
         // when
-        Map<String, WinStatus> winStatuses = BlackjackResultEvaluator.calculateWinStatus(participants);
+        Map<ParticipantName, WinStatus> winStatuses = BlackjackResultEvaluator.calculateWinStatus(participants);
 
         // then
-        assertThat(winStatuses.get("포비"))
+        assertThat(winStatuses.get(new ParticipantName("포비")))
                 .isEqualTo(WinStatus.DRAW);
-        assertThat(winStatuses.get("루키"))
+        assertThat(winStatuses.get(new ParticipantName("루키")))
                 .isEqualTo(WinStatus.WIN);
     }
 
@@ -56,16 +56,16 @@ class BlackjackResultEvaluatorTest {
         List<String> names = List.of("포비", "루키");
         BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
 
-        for (int i = 0; i < pobiCards.size(); i++) {
-            participants.addCard("포비", pobiCards.get(i));
+        for (TrumpCard pobiCard : pobiCards) {
+            participants.addCard(new ParticipantName("포비"), pobiCard);
         }
 
-        for (int i = 0; i < rookieCards.size(); i++) {
-            participants.addCard("루키", rookieCards.get(i));
+        for (TrumpCard rookieCard : rookieCards) {
+            participants.addCard(new ParticipantName("루키"), rookieCard);
         }
 
-        for (int i = 0; i < dealerCards.size(); i++) {
-            participants.addCard(participants.dealerName(), dealerCards.get(i));
+        for (TrumpCard dealerCard : dealerCards) {
+            participants.addCard(participants.dealerName(), dealerCard);
         }
 
         // when
@@ -89,12 +89,12 @@ class BlackjackResultEvaluatorTest {
 
         BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
 
-        for (int i = 0; i < pobiCards.size(); i++) {
-            participants.addCard("포비", pobiCards.get(i));
+        for (TrumpCard pobiCard : pobiCards) {
+            participants.addCard(new ParticipantName("포비"), pobiCard);
         }
 
-        for (int i = 0; i < dealerCards.size(); i++) {
-            participants.addCard(participants.dealerName(), dealerCards.get(i));
+        for (TrumpCard dealerCard : dealerCards) {
+            participants.addCard(participants.dealerName(), dealerCard);
         }
         // when
         DealerWinStatus dealerWinStatus = BlackjackResultEvaluator.calculateDealerWinStatus(participants);
@@ -116,16 +116,16 @@ class BlackjackResultEvaluatorTest {
 
         BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
 
-        for (int i = 0; i < pobiCards.size(); i++) {
-            participants.addCard("포비", pobiCards.get(i));
+        for (TrumpCard pobiCard : pobiCards) {
+            participants.addCard(new ParticipantName("포비"), pobiCard);
         }
 
-        for (int i = 0; i < tudaCards.size(); i++) {
-            participants.addCard("투다", tudaCards.get(i));
+        for (TrumpCard tudaCard : tudaCards) {
+            participants.addCard(new ParticipantName("투다"), tudaCard);
         }
 
-        for (int i = 0; i < pobiCards.size(); i++) {
-            participants.addCard(participants.dealerName(), dealerCards.get(i));
+        for (TrumpCard dealerCard : dealerCards) {
+            participants.addCard(participants.dealerName(), dealerCard);
         }
 
         // when

@@ -1,5 +1,6 @@
 package view;
 
+import domain.ParticipantName;
 import domain.Score;
 import domain.TrumpCard;
 import domain.WinStatus;
@@ -33,14 +34,14 @@ public class OutputView {
         System.out.printf(INITIATE_DRAW, nicknames);
     }
 
-    public void openCards(String name, List<TrumpCard> trumpCards) {
+    public void openCards(ParticipantName name, List<TrumpCard> trumpCards) {
         String formattedTrumpCard = formattingTrumpCards(trumpCards);
-        System.out.printf(OPEN_CARD_FORMAT, name, formattedTrumpCard);
+        System.out.printf(OPEN_CARD_FORMAT, name.name(), formattedTrumpCard);
     }
 
-    public void openCardsWithSum(String name, List<TrumpCard> trumpCards, Score sum) {
+    public void openCardsWithSum(ParticipantName name, List<TrumpCard> trumpCards, Score sum) {
         String formattedTrumpCard = formattingTrumpCards(trumpCards);
-        System.out.printf(OPEN_CARD_WITH_SUM_FORMAT, name, formattedTrumpCard, sum.value());
+        System.out.printf(OPEN_CARD_WITH_SUM_FORMAT, name.name(), formattedTrumpCard, sum.value());
     }
 
     private String formattingTrumpCards(List<TrumpCard> trumpCards) {
@@ -52,8 +53,8 @@ public class OutputView {
                 }).collect(Collectors.joining(SPLITTER));
     }
 
-    public void askDraw(String name) {
-        System.out.printf(INPUT_ASK_DRAW_FORMAT, name);
+    public void askDraw(ParticipantName name) {
+        System.out.printf(INPUT_ASK_DRAW_FORMAT, name.name());
     }
 
     public void resultHeader() {
@@ -64,11 +65,11 @@ public class OutputView {
         System.out.println(DRAW_DEALER);
     }
 
-    public void dealerWinStatus(int win, int lose, String name) {
+    public void dealerWinStatus(int win, int lose, ParticipantName name) {
         System.out.printf(DEALER_WIN_STATUS_FORMAT, name, win, lose);
     }
 
-    public void playerWinStatus(String name, WinStatus status) {
+    public void playerWinStatus(ParticipantName name, WinStatus status) {
         System.out.printf(PLAYER_WIN_STATUS_FORMAT, name, status.getStatus());
     }
 }
