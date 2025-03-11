@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static blackjack.domain.Rule.DEALER_NAME;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -90,5 +91,52 @@ class RoundTest {
 
         // then
         assertThat(dealerWinning.get(type)).isEqualTo(expected);
+    }
+
+    @DisplayName("플레이어 버스트 테스트")
+    @Test
+    void isPlayerBustedTest() {
+        // given
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.FIVE);
+        Card card3 = new Card(CardShape.CLOVER, CardType.SIX);
+        Card card4 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card5 = new Card(CardShape.CLOVER, CardType.EIGHT);
+        CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5), shuffler);
+
+        Name playerName = new Name("라젤");
+        List<Name> playerNames = List.of(playerName);
+        Round round = new Round(cardDeck, playerNames);
+        round.distributeInitialCards();
+        round.distributeCards(playerName, 1);
+
+        // when
+        boolean result = round.isPlayerBusted(playerName);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @DisplayName("ss")
+    @Test
+    void dealerMustReceiveCardTest() {
+        // given
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.FIVE);
+        Card card3 = new Card(CardShape.CLOVER, CardType.SIX);
+        Card card4 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card5 = new Card(CardShape.HEART, CardType.EIGHT);
+        CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4, card5), shuffler);
+
+        Name playerName = new Name("라젤");
+        List<Name> playerNames = List.of(playerName);
+        Round round = new Round(cardDeck, playerNames);
+        round.distributeInitialCards();
+
+        // when
+        boolean result = round.dealerMustReceiveCard(); // 딜러의 점수 15
+
+        // then
+        assertThat(result).isTrue();
     }
 }
