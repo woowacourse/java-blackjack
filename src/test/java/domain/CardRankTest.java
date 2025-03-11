@@ -15,7 +15,7 @@ class CardRankTest {
         return Stream.of(Arguments.of(CardRank.JACK, CardRank.QUEEN, CardRank.KING));
     }
 
-    @DisplayName("카드의 숫자는 1부터 k까지 14개다.")
+    @DisplayName("카드의 숫자는 1부터 k까지 13개다.")
     @Test
     void cardNumber() {
         //given
@@ -24,7 +24,7 @@ class CardRankTest {
         CardRank[] values = CardRank.values();
 
         //then
-        assertThat(values).hasSize(14);
+        assertThat(values).hasSize(13);
     }
 
     @DisplayName("카드의 숫자는 1부터 10까지의 점수를 가진다.")
@@ -34,19 +34,18 @@ class CardRankTest {
         CardRank five = CardRank.FIVE;
 
         //when
+        int actual = five.getPoint();
 
         //then
-        assertThat(five.getPoint()).isEqualTo(5);
+        assertThat(actual).isEqualTo(5);
     }
 
     @DisplayName("J, Q, K 는 각각 10으로 계산한다.")
     @ParameterizedTest
     @MethodSource("provideJQK")
     void cardNumberPointForJQK(CardRank cardRank) {
-        //given
-
-        //when
-
+        //given //when
+        int actual = cardRank.getPoint();
         //then
         assertThat(cardRank.getPoint()).isEqualTo(10);
     }

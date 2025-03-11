@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import fixture.CardsInitializerFixture;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ class DealerTest {
         cards.add(card2);
         cards.add(card3);
 
-        CardDeck deck = new CardDeck(cards);
+        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
         Dealer dealer = new Dealer();
         dealer.prepareGame(deck);
@@ -51,7 +52,7 @@ class DealerTest {
         cards.add(card2);
         cards.add(card3);
 
-        CardDeck deck = new CardDeck(cards);
+        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
         Dealer dealer = new Dealer();
         dealer.prepareGame(deck);

@@ -9,7 +9,7 @@ import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardsInitializerTest {
+class StandardCardsInitializerTest {
 
     @DisplayName("초기 카드 뭉치를 생성한다.")
     @Test
@@ -17,7 +17,7 @@ class CardsInitializerTest {
         //given
         StandardCardsInitializer cardsInitializer = new StandardCardsInitializer();
 
-        //when
+        //when //then
         assertThatCode(cardsInitializer::initialize)
                 .doesNotThrowAnyException();
 
@@ -33,7 +33,10 @@ class CardsInitializerTest {
         List<Card> cards = cardsInitializer.initialize();
         Set<Card> cardSet = new HashSet<>(cards);
 
+        int actual = cardSet.size();
+        int expected = cards.size();
+
         //then
-        assertThat(cards.size()).isEqualTo(cardSet.size());
+        assertThat(actual).isEqualTo(expected);
     }
 }

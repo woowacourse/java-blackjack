@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import fixture.CardsInitializerFixture;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ class PlayerTest {
         //given
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardSymbol.COLVER, CardRank.EIGHT));
-        CardDeck deck = new CardDeck(cards);
+        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
         Player player = new Player("ad");
 
@@ -42,7 +43,7 @@ class PlayerTest {
         cards.add(card2);
         cards.add(card3);
 
-        CardDeck deck = new CardDeck(cards);
+        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
         player.hit(deck);
         player.hit(deck);
@@ -70,7 +71,7 @@ class PlayerTest {
         cards.add(card3);
         cards.add(card4);
 
-        CardDeck deck = new CardDeck(cards);
+        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
         player.prepareGame(deck);
         player.hit(deck);
@@ -97,7 +98,7 @@ class PlayerTest {
         cards.add(card3);
         cards.add(card4);
 
-        CardDeck deck = new CardDeck(cards);
+        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
         player.hit(deck);
         player.hit(deck);
@@ -125,7 +126,7 @@ class PlayerTest {
         cards.add(card3);
         cards.add(card4);
 
-        CardDeck deck = new CardDeck(cards);
+        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
         //when //then
         assertThatCode(() -> player.prepareGame(deck))

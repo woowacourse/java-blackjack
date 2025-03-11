@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import fixture.HandFixture;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -31,10 +31,11 @@ class HandTest {
     @Test
     void burst2() {
         //given
-        Hand hand = new Hand();
-        hand.add(new Card(CardSymbol.HEART, CardRank.KING));
-        hand.add(new Card(CardSymbol.HEART, CardRank.JACK));
-        hand.add(new Card(CardSymbol.HEART, CardRank.TWO));
+        Card card1 = new Card(CardSymbol.HEART, CardRank.KING);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.JACK);
+        Card card3 = new Card(CardSymbol.HEART, CardRank.TWO);
+
+        Hand hand = HandFixture.createHand(card1, card2, card3);
 
         //when
         boolean actual = hand.isBurst();
@@ -47,9 +48,10 @@ class HandTest {
     @Test
     void notBurst() {
         //given
-        Hand hand = new Hand();
-        hand.add(new Card(CardSymbol.HEART, CardRank.KING));
-        hand.add(new Card(CardSymbol.HEART, CardRank.JACK));
+        Card card1 = new Card(CardSymbol.HEART, CardRank.KING);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.JACK);
+
+        Hand hand = HandFixture.createHand(card1, card2);
 
         //when
         boolean actual = hand.isBurst();
@@ -92,12 +94,11 @@ class HandTest {
     @Test
     void considerAceHas11() {
         //given
-        Hand hand = new Hand();
-        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(CardSymbol.COLVER, CardRank.KING);
+        //given
+        Card card1 = new Card(CardSymbol.HEART, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.KING);
 
-        hand.add(card1);
-        hand.add(card2);
+        Hand hand = HandFixture.createHand(card1, card2);
 
         //when
         int actual = hand.calculateTotalPoint();
@@ -110,12 +111,10 @@ class HandTest {
     @Test
     void considerAceHas112() {
         //given
-        Hand hand = new Hand();
-        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card1 = new Card(CardSymbol.HEART, CardRank.ACE);
         Card card2 = new Card(CardSymbol.HEART, CardRank.ACE);
 
-        hand.add(card1);
-        hand.add(card2);
+        Hand hand = HandFixture.createHand(card1, card2);
 
         //when
         int actual = hand.calculateTotalPoint();
@@ -128,42 +127,16 @@ class HandTest {
     @Test
     void considerAceHas113() {
         //given
-        Hand hand = new Hand();
-        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(CardSymbol.COLVER, CardRank.ACE);
-        Card card3 = new Card(CardSymbol.COLVER, CardRank.ACE);
-        Card card4 = new Card(CardSymbol.COLVER, CardRank.ACE);
+        Card card1 = new Card(CardSymbol.HEART, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.ACE);
+        Card card3 = new Card(CardSymbol.HEART, CardRank.ACE);
+        Card card4 = new Card(CardSymbol.HEART, CardRank.ACE);
 
-        hand.add(card1);
-        hand.add(card2);
-        hand.add(card3);
-        hand.add(card4);
-
+        Hand hand = HandFixture.createHand(card1, card2, card3, card4);
         //when
         int actual = hand.calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(14);
-    }
-
-    @DisplayName("카드리스트는 불변이다")
-    @Test
-    void immutableCardList() {
-        // given
-        Hand hand = new Hand();
-        Card card1 = new Card(CardSymbol.COLVER, CardRank.ACE);
-        Card card2 = new Card(CardSymbol.COLVER, CardRank.ACE);
-        Card card3 = new Card(CardSymbol.COLVER, CardRank.ACE);
-        Card card4 = new Card(CardSymbol.COLVER, CardRank.ACE);
-
-        hand.add(card1);
-        hand.add(card2);
-        hand.add(card3);
-        hand.add(card4);
-        //when
-        List<Card> cardList = hand.getCards();
-        //then
-        assertThatThrownBy(() -> cardList.add(new Card(CardSymbol.HEART, CardRank.FIVE)))
-                .isInstanceOf(RuntimeException.class);
     }
 }

@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,19 +12,16 @@ class BlackjackMatchResultTest {
     @Test
     void judgeBurstDraw() {
         //given
-        Hand dealerHand = new Hand();
-        Hand playerHand = new Hand();
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.KING);
+        Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
+        Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
+        Hand dealerHand = HandFixture.createHand(card1, card1, card2);
+        Hand playerHand = HandFixture.createHand(card1, card1, card3);
 
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
         //when
-
         BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
+
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.DRAW);
     }
@@ -32,14 +30,11 @@ class BlackjackMatchResultTest {
     @Test
     void judgeNotBurstDraw() {
         //given
-        Hand dealerHand = new Hand();
-        Hand playerHand = new Hand();
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.KING);
+        Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
 
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
-
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
+        Hand dealerHand = HandFixture.createHand(card1, card1);
+        Hand playerHand = HandFixture.createHand(card1, card1);
 
         //when
         BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
@@ -52,15 +47,12 @@ class BlackjackMatchResultTest {
     @Test
     void judgeOnlyOneBurstWin() {
         //given
-        Hand dealerHand = new Hand();
-        Hand playerHand = new Hand();
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.KING);
+        Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
+        Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
-
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
+        Hand dealerHand = HandFixture.createHand(card1, card2);
+        Hand playerHand = HandFixture.createHand(card1, card1, card3);
 
         //when //then
         BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
@@ -72,14 +64,12 @@ class BlackjackMatchResultTest {
     @Test
     void judge() {
         //given
-        Hand dealerHand = new Hand();
-        Hand playerHand = new Hand();
+        Card card1 = new Card(CardSymbol.COLVER, CardRank.KING);
+        Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
+        Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        dealerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
-
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.KING));
-        playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
+        Hand dealerHand = HandFixture.createHand(card1, card3);
+        Hand playerHand = HandFixture.createHand(card1, card2);
 
         //when
         BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
