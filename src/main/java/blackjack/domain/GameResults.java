@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
 import java.util.HashMap;
@@ -10,8 +12,8 @@ public class GameResults {
 
     private final Map<Player, GameResult> gameResults;
 
-    public GameResults(final Player dealer, final List<Player> gamblers) {
-        gameResults = new HashMap<>();
+    public GameResults(final Dealer dealer, final List<Gambler> gamblers) {
+        gameResults = new HashMap<>(); // todo : 종단 안티 패턴
         gamblers.forEach(
                 player -> {
                     gameResults.put(player, GameResult.evaluateGameResult(dealer, player));

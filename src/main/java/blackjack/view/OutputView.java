@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.GameResult;
 import blackjack.domain.GameResults;
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -44,7 +45,7 @@ public class OutputView {
     }
 
     public void printGameResults(final Players players, final GameResults gameResults) {
-        List<Player> gamblers = players.getGamblers();
+        List<Gambler> gamblers = players.getGamblers();
         Player dealer = players.getDealer();
         System.out.println("## 최종 승패");
         System.out.printf("%s: %s\n", dealer.getName(), getDealerWinLoseMessage(gameResults));
@@ -81,7 +82,7 @@ public class OutputView {
                 CardShapeView.getShapeMessage(card.getShape());
     }
 
-    private List<Player> getDealerGamblerList(Player dealer, List<Player> gamblers) {
+    private List<Player> getDealerGamblerList(Player dealer, List<Gambler> gamblers) {
         List<Player> allPlayers = new ArrayList<>();
         allPlayers.add(dealer);
         allPlayers.addAll(gamblers);

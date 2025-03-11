@@ -10,10 +10,10 @@ public class Players {
 
     private static final int HIT_THRESHOLD = 16;
 
-    private final Player dealer;
-    private final List<Player> gamblers;
+    private final Dealer dealer;
+    private final List<Gambler> gamblers;
 
-    public Players(final List<Player> gamblers, final CardPack cardPack) {
+    public Players(final List<Gambler> gamblers, final CardPack cardPack) {
         dealer = new Dealer();
 
         validateHasDuplication(gamblers);
@@ -33,7 +33,7 @@ public class Players {
         return new GameResults(dealer, gamblers);
     }
 
-    private void validateHasDuplication(final List<Player> players) {
+    private void validateHasDuplication(final List<Gambler> players) {
         int size = new HashSet<>(players).size();
         if (players.size() != size) {
             throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
@@ -50,7 +50,7 @@ public class Players {
         return dealer;
     }
 
-    public List<Player> getGamblers() {
+    public List<Gambler> getGamblers() {
         return gamblers;
     }
 }
