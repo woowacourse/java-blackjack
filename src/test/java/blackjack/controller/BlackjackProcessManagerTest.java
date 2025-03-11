@@ -1,4 +1,4 @@
-package blackjack.manager;
+package blackjack.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,6 +7,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
+import blackjack.factory.SingDeckGenerator;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

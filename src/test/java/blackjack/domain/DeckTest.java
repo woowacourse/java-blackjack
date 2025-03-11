@@ -6,8 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.common.ErrorMessage;
-import blackjack.manager.SingDeckGenerator;
-import java.util.ArrayList;
+import blackjack.factory.SingDeckGenerator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

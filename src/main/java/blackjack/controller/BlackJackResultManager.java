@@ -1,4 +1,4 @@
-package blackjack.manager;
+package blackjack.controller;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.DealerResult;

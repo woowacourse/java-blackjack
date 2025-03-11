@@ -1,8 +1,8 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.manager.BlackJackInitManager;
-import blackjack.manager.SingDeckGenerator;
+import blackjack.controller.BlackJackInitManager;
+import blackjack.factory.SingDeckGenerator;
 
 public class Application {
 

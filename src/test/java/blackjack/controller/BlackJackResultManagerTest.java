@@ -1,4 +1,4 @@
-package blackjack.manager;
+package blackjack.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

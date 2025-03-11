@@ -1,4 +1,4 @@
-package blackjack.manager;
+package blackjack.factory;
 
 import blackjack.common.ErrorMessage;
 import blackjack.domain.Card;

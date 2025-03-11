@@ -1,4 +1,4 @@
-package blackjack.manager;
+package blackjack.factory;
 
 import blackjack.domain.Card;
 import java.util.List;

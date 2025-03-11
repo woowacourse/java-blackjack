@@ -1,10 +1,11 @@
-package blackjack.manager;
+package blackjack.controller;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.factory.DeckGenerator;
 import java.util.List;
 
 public class BlackJackInitManager {

@@ -1,9 +1,8 @@
-package blackjack;
+package blackjack.factory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
-import blackjack.manager.SingDeckGenerator;
 import java.util.HashSet;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
