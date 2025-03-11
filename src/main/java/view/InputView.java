@@ -34,7 +34,7 @@ public class InputView {
         OutputView.printHitOrStand(player);
         String hit = SCANNER.nextLine();
         validateHit(hit);
-        return hit.equals(PlayerChoice.HIT.name());
+        return hit.equals(PlayerChoice.HIT.getChoiceName());
     }
 
     private static int validateInteger(String inputPrice) {
@@ -58,9 +58,9 @@ public class InputView {
         }
     }
 
-    private static void validateHit(String hit) {
-        if (!(hit.equals(PlayerChoice.HIT.name()) || hit.equals(PlayerChoice.STAND.name()))) {
-            throw new IllegalArgumentException("[ERROR] hit 또는 stand 를 입력해주세요. 입력값 : " + hit);
+    private static void validateHit(String choice) {
+        if (!(choice.equals(PlayerChoice.HIT.getChoiceName()) || choice.equals(PlayerChoice.STAND.getChoiceName()))) {
+            throw new IllegalArgumentException("[ERROR] hit 또는 stand 를 입력해주세요. 입력값 : " + choice);
         }
     }
 }

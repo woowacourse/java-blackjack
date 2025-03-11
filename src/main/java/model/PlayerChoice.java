@@ -9,4 +9,8 @@ public enum PlayerChoice {
     PlayerChoice(String choiceName) {
         this.choiceName = choiceName;
     }
+
+    public String getChoiceName() {
+        return choiceName;
+    }
 }
