@@ -35,6 +35,12 @@ public class BlackjackController {
         calculateGameResult(gameManager);
     }
 
+    private void displayOpenCard(String playerName, User player) {
+        List<String> cards = player.openCard().stream()
+            .map(card -> CardConverter.createTrumpCard(card.getCardShape(), card.getCardNumber())).toList();
+        outputView.displayOpenCards(playerName, cards);
+    }
+
     private void distributionFirstCard(GameManager gameManager, List<String> playerNames) {
         TrumpCardManager.initCache();
         gameManager.firstHandOutCard();
@@ -80,12 +86,6 @@ public class BlackjackController {
             player.drawCard();
             displayOpenCard(playerName, player);
         }
-    }
-
-    private void displayOpenCard(String playerName, User player) {
-        List<String> cards = player.openCard().stream()
-                .map(card -> CardConverter.createTrumpCard(card.getCardShape(), card.getCardNumber())).toList();
-        outputView.displayOpenCards(playerName, cards);
     }
 
     private void createGameResult(GameManager gameManager, List<String> playerNames) {
