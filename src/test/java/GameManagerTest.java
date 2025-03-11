@@ -88,7 +88,7 @@ public class GameManagerTest {
         dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.TWO));
 
         //when
-        int result = gameManger.compare(player);
+        int result = gameManger.compareScore(player);
 
         //then
         Assertions.assertThat(result).isEqualTo(GameManger.WIN);
@@ -111,7 +111,7 @@ public class GameManagerTest {
         }
 
         //when
-        int result = gameManger.compare(player);
+        int result = gameManger.compareScore(player);
 
         //then
         Assertions.assertThat(result).isEqualTo(expectStatus);
