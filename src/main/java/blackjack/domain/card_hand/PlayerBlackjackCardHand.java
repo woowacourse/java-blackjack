@@ -6,7 +6,7 @@ import blackjack.domain.player.Player;
 
 import java.util.List;
 
-public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
+public final class PlayerBlackjackCardHand {
     
     private final BlackjackCardHand cardHand;
     private final Player player;
@@ -42,17 +42,14 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
         return cardHand.getCards();
     }
     
-    @Override
     public int getBlackjackSum() {
         return cardHand.getBlackjackSum();
     }
     
-    @Override
     public boolean isBlackjack() {
         return cardHand.isBlackjack();
     }
     
-    @Override
     public boolean isBust() {
         return cardHand.isBust();
     }

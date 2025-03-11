@@ -6,7 +6,7 @@ import blackjack.domain.deck.CardDrawer;
 
 import java.util.List;
 
-public final class DealerBlackjackCardHand implements BlackjackWinDeterminable {
+public final class DealerBlackjackCardHand {
     
     private static final int DEALER_DRAW_THRESHOLD = 16;
     
@@ -39,17 +39,14 @@ public final class DealerBlackjackCardHand implements BlackjackWinDeterminable {
         return cardHand.getCards();
     }
     
-    @Override
     public int getBlackjackSum() {
         return cardHand.getBlackjackSum();
     }
     
-    @Override
     public boolean isBust() {
         return cardHand.isBust();
     }
     
-    @Override
     public boolean isBlackjack() {
         return cardHand.isBlackjack();
     }
