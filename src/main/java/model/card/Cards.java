@@ -23,8 +23,7 @@ public class Cards {
     }
 
     public int calculateNearestTotal() {
-        Set<Integer> candidates = new HashSet<>();
-        generateCandidates(candidates, totalWithoutAce(), aceCount());
+        Set<Integer> candidates = generateCandidates(totalWithoutAce(), aceCount());
 
         return candidates.stream()
                 .filter(candidate -> candidate <= BUST_NUMBER)
@@ -47,9 +46,10 @@ public class Cards {
                 .count();
     }
 
-    private void generateCandidates(Set<Integer> candidates, int initialSum, int totalAces) {
+    private Set<Integer> generateCandidates(int initialSum, int totalAces) {
         record State(int sum, int usedAces) {}
 
+        Set<Integer> candidates = new HashSet<>();
         Deque<State> deque = new ArrayDeque<>();
         deque.push(new State(initialSum, 0));
 
@@ -66,6 +66,8 @@ public class Cards {
             deque.push(new State(currentSum + 1, usedAces + 1));
             deque.push(new State(currentSum + 11, usedAces + 1));
         }
+
+        return candidates;
     }
 
     public List<Card> getCards() {
