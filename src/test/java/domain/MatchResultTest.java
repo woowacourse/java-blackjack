@@ -25,8 +25,20 @@ class MatchResultTest {
         return Stream.of(Arguments.of(
                 10,20,WIN,
                 20,20,DRAW,
-                20,10,LOSE
+                20,10,LOSE,
+                20,25,LOSE
         ));
     }
 
+    @Test
+    @DisplayName("플레이어가 21 점을 넘어서 패배 처리 테스트")
+    void calculateWinnerTestPlayerOver21() {
+        assertThat(MatchResult.calculateWinner(20, 24)).isEqualTo(LOSE);
+    }
+
+    @Test
+    @DisplayName("무승부 테스트")
+    void calculateDrawTest() {
+        assertThat(MatchResult.calculateWinner(17, 17)).isEqualTo(DRAW);
+    }
 }
