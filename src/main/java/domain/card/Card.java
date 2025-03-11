@@ -18,15 +18,6 @@ public class Card {
         return getScore() == CardScore.ACE;
     }
 
-    public int calculateAceScore(final int score, final int limit) {
-        final int result = limit - score;
-        int aceScore = ACE_LOW_SCORE;
-        if (result >= ACE_HIGH_SCORE) {
-            aceScore = ACE_HIGH_SCORE;
-        }
-        return aceScore;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

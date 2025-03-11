@@ -20,33 +20,5 @@ class CardTest {
             assertThat(card).isInstanceOf(Card.class);
             assertThat(card).isEqualTo(new Card(CLOVER, ACE));
         }
-
-        @Test
-        void 에이스의_점수를_계산한다1() {
-            //given
-            final int limit = 21;
-            final int score = 20;
-
-            //when
-            final Card card = new Card(CLOVER, ACE);
-            final int aceScore = card.calculateAceScore(score, limit);
-
-            //then
-            assertThat(aceScore).isEqualTo(1);
-        }
-
-        @Test
-        void 에이스의_점수를_계산한다2() {
-            //given
-            final int limit = 21;
-            final int score = 10;
-
-            //when
-            final Card card = new Card(CLOVER, ACE);
-            final int aceScore = card.calculateAceScore(score, limit);
-
-            //then
-            assertThat(aceScore).isEqualTo(11);
-        }
     }
 }
