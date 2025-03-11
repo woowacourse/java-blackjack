@@ -22,7 +22,7 @@ class BettingResultTest {
         map.put(player, 10000);
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
-        int expect = 20000;
+        int expect = 10000;
         int result = bettingResult.getBettingNet(player);
         assertEquals(expect, result);
     }
@@ -37,7 +37,7 @@ class BettingResultTest {
         map.put(player, 10000);
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
-        int expect = 0;
+        int expect = -10000;
         int result = bettingResult.getBettingNet(player);
         assertEquals(expect, result);
     }
@@ -52,7 +52,7 @@ class BettingResultTest {
         map.put(player, 10000);
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
-        int expect = 10000;
+        int expect = 0;
         int result = bettingResult.getBettingNet(player);
         assertEquals(expect, result);
     }
@@ -67,8 +67,20 @@ class BettingResultTest {
         map.put(player, 10000);
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
-        int expect = 25000;
+        int expect = 15000;
         int result = bettingResult.getBettingNet(player);
+        assertEquals(expect, result);
+    }
+
+    @Test
+    @DisplayName("딜러의 최종 수익 계산 테스트")
+    void 딜러의_최종_수익_계산_테스트(){
+        BettingResult bettingResult = new BettingResult(Map.of(
+                new Player("a"), 10000,
+                new Player("b"), 20000)
+        );
+        int expect = -30000;
+        int result = bettingResult.calculateDealerFinalResult();
         assertEquals(expect, result);
     }
 }
