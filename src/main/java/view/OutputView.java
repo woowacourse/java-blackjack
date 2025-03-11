@@ -1,16 +1,16 @@
 package view;
 
-import controller.dto.DealerMatchResultCount;
-import controller.dto.NameAndCards;
-import controller.dto.NameAndSums;
-import controller.dto.NameAndSums.NameAndSum;
-import controller.dto.ParticipantsMatchResult;
+import controller.dto.DealerMatchResultCountDto;
+import controller.dto.NameAndCardsDto;
+import controller.dto.NameAndSumsDto;
+import controller.dto.NameAndSumsDto.NameAndSumDto;
+import controller.dto.ParticipantsMatchResultDto;
 import java.util.List;
 
 public class OutputView {
-    public static void printInitialCards(NameAndCards dealer, List<NameAndCards> participants) {
+    public static void printInitialCards(NameAndCardsDto dealer, List<NameAndCardsDto> participants) {
         List<String> names = participants.stream()
-                .map(NameAndCards::name)
+                .map(NameAndCardsDto::name)
                 .toList();
 
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), String.join(", ", names));
@@ -20,7 +20,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printPlayerCards(NameAndCards player) {
+    public static void printPlayerCards(NameAndCardsDto player) {
         System.out.printf("%s카드: %s%n", player.name(),
                 String.join(", ", player.cards().stream()
                         .map(card -> String.format("%s%s", card.getRank().getTitle(),
@@ -28,22 +28,22 @@ public class OutputView {
                         .toList()));
     }
 
-    public static void printPlayersCardsAndSum(NameAndCards dealer, List<NameAndCards> participants,
-                                               NameAndSums nameAndSums) {
-        printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSums.nameAndSums()));
+    public static void printPlayersCardsAndSum(NameAndCardsDto dealer, List<NameAndCardsDto> participants,
+                                               NameAndSumsDto nameAndSumsDto) {
+        printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSumsDto.nameAndSums()));
         participants.forEach(player ->
-                printPlayerCardsAndSum(player, findNameAndSumByName(player.name(), nameAndSums.nameAndSums())));
+                printPlayerCardsAndSum(player, findNameAndSumByName(player.name(), nameAndSumsDto.nameAndSums())));
         System.out.println();
     }
 
-    private static NameAndSum findNameAndSumByName(String name, List<NameAndSum> nameAndSums) {
+    private static NameAndSumDto findNameAndSumByName(String name, List<NameAndSumDto> nameAndSums) {
         return nameAndSums.stream()
                 .filter(nameAndSum -> nameAndSum.name().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException(name + "존재하지 않는 플레이어입니다."));
     }
 
-    private static void printPlayerCardsAndSum(NameAndCards player, NameAndSum nameAndSum) {
+    private static void printPlayerCardsAndSum(NameAndCardsDto player, NameAndSumDto nameAndSum) {
         System.out.printf("%s카드: %s - 결과: %d%n", player.name(),
                 String.join(", ",
                         player.cards().stream()
@@ -57,15 +57,15 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 
-    public static void printMatchResults(String dealerName, DealerMatchResultCount dealerResult,
-                                         ParticipantsMatchResult participantsMathResult) {
+    public static void printMatchResults(String dealerName, DealerMatchResultCountDto dealerResult,
+                                         ParticipantsMatchResultDto participantsMathResult) {
         System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResultFormat(dealerResult));
 
         participantsMathResult.participantMatchResult()
                 .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
     }
 
-    private static String convertToDealerMatchResultFormat(DealerMatchResultCount dealerResult) {
+    private static String convertToDealerMatchResultFormat(DealerMatchResultCountDto dealerResult) {
         StringBuilder sb = new StringBuilder();
         dealerResult.matchResultCount().forEach((key, value) ->
                 sb.append(String.format("%d%s ", value, key.getTitle()))
