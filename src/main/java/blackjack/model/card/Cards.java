@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Cards {
 
@@ -55,15 +54,9 @@ public class Cards {
 
     public List<Card> pick(final int size) {
         validatePickSize(size);
-        List<Card> cards = new ArrayList<>(size);
-        IntStream.range(0, size)
-                .forEach(index -> {
-                            cards.add(values.getLast());
-                            values.removeLast();
-                        }
-                );
-
-        return cards;
+        List<Card> pickedCards = List.copyOf(values.subList(0, size));
+        values.removeAll(pickedCards);
+        return pickedCards;
     }
 
     private void validatePickSize(final int size) {
