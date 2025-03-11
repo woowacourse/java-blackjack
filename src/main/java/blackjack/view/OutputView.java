@@ -67,6 +67,10 @@ public class OutputView {
         return dealerWinLoseRate.toString();
     }
 
+    public void printErrorMessage(String message) {
+        System.out.println(message);
+    }
+
     private String getGamblerWinLoseMessage(final Player gambler, final GameResults gameResults) {
         GameResult result = gameResults.getGameResult(gambler);
         return GameResultView.getShapeMessage(result);
