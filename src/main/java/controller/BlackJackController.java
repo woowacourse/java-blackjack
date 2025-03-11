@@ -1,5 +1,8 @@
 package controller;
 
+import static domain.BlackJackConstants.INITIAL_CARD_AMOUNT;
+import static domain.BlackJackConstants.THRESHOLD;
+
 import domain.Command;
 import domain.FinalResult;
 import domain.deck.Card;
@@ -18,10 +21,7 @@ import view.OutputView;
 
 public class BlackJackController {
 
-    private static final int INITIAL_CARD_AMOUNT = 2;
     private static final String DEALER_NAME = "딜러";
-    public static final int THRESHOLD = 16;
-    public static final int BUST_NUMBER = 21;
 
     public void run() {
         try {
@@ -80,6 +80,13 @@ public class BlackJackController {
         printGameSetting(dealer, nicknames, playerGroup);
     }
 
+    private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
+                                  final List<Player> players) {
+        OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
+        OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
+        players.forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
+    }
+
     private void playGame(final Dealer dealer, final List<Player> players, final Deck deck) {
         processPlayerHit(players, deck);
         processDealerHit(dealer, deck);
@@ -122,19 +129,12 @@ public class BlackJackController {
     }
 
     private void processDealerHit(final Dealer dealer, final Deck deck) {
-        while (dealer.canHit(THRESHOLD)) {
+        while (dealer.canHit()) {
             final Card card = deck.drawCard();
             dealer.hit(card);
 
             OutputView.printDealerHit(THRESHOLD, dealer.getDisplayName());
         }
-    }
-
-    private void printGameSetting(final Dealer dealer, final List<Nickname> nicknames,
-                                  final List<Player> players) {
-        OutputView.printInitialSettingMessage(dealer.getDisplayName(), nicknames, INITIAL_CARD_AMOUNT);
-        OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
-        players.forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
     }
 
     private void processFinalResult(final Dealer dealer, final List<Player> players) {

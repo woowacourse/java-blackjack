@@ -1,6 +1,6 @@
 package domain;
 
-import static controller.BlackJackController.BUST_NUMBER;
+import static domain.BlackJackConstants.BUST_NUMBER;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;

@@ -1,5 +1,7 @@
 package domain.gamer;
 
+import static domain.BlackJackConstants.THRESHOLD;
+
 import domain.deck.Card;
 import java.util.List;
 
@@ -11,12 +13,12 @@ public class Dealer extends Gamer {
         super(nickname);
     }
 
-    public boolean canHit(final int threshold) {
+    public boolean canHit() {
         final int sumOfRank = getSumOfRank();
         if (hasAce()) {
-            return sumOfRank + ACE_ADDITIONAL_NUMBER <= threshold;
+            return sumOfRank + ACE_ADDITIONAL_NUMBER <= THRESHOLD;
         }
-        return sumOfRank <= threshold;
+        return sumOfRank <= THRESHOLD;
     }
 
     @Override
