@@ -1,7 +1,5 @@
 package domain.card;
 
-import static util.ExceptionConstants.*;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,7 +18,6 @@ public enum CardNumberType {
     QUEEN(10),
     KING(10);
 
-    private static final String INVALID_INDEX = "해당하는 카드 숫자의 인덱스가 존재하지 않습니다.";
     private static final int ACE_HIGH_CONVERSION_THRESHOLD = 10;
 
     private final List<Integer> cardNumbers;
@@ -32,33 +29,18 @@ public enum CardNumberType {
     }
 
     public static int getAceNumber(int restSum) {
-        if(restSum <= ACE_HIGH_CONVERSION_THRESHOLD) {
+        if (restSum <= ACE_HIGH_CONVERSION_THRESHOLD) {
             return CardNumberType.getAceHighNumber();
         }
         return CardNumberType.getAceLowNumber();
-    }
-
-    public static int getAceHighNumber() {
-        return ACE.cardNumbers.getLast();
-    }
-
-    public static CardNumberType findByRandomIndex(int randomIndex) {
-        validateIndex(randomIndex);
-        return CardNumberType.values()[randomIndex];
     }
 
     public int getDefaultNumber() {
         return cardNumbers.getFirst();
     }
 
-    public boolean isEqualTo(CardNumberType targetCardNumberType) {
-        return this == targetCardNumberType;
-    }
-
-    private static void validateIndex(int index) {
-        if(index >= CardNumberType.values().length) {
-            throw new IllegalArgumentException(ERROR_HEADER + INVALID_INDEX);
-        }
+    private static int getAceHighNumber() {
+        return ACE.cardNumbers.getLast();
     }
 
     private static int getAceLowNumber() {
