@@ -19,4 +19,9 @@ public enum AnswerCommand {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 커멘드 입니다."));
     }
+
+    public boolean isYes() {
+        return Objects.equals(AnswerCommand.YES, this);
+
+    }
 }

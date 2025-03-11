@@ -63,14 +63,14 @@ public class BlackJackController {
 
     private void receiveCardIsAbleToGetCard(final String playerName, final PlayerGroup playerGroup,
                                             final GameManager gameManager) {
-        if (requestAnswerCommand(playerName) == AnswerCommand.NO) {
+        if (!requestAnswerCommand(playerName).isYes()) {
             outputView.printPlayerCards(playerName, playerGroup.getCardsByName(playerName));
             return;
         }
         do {
             gameManager.giveOneCardToPlayerByName(playerName);
             outputView.printPlayerCards(playerName, playerGroup.getCardsByName(playerName));
-        } while (playerGroup.isBustByPlayerName(playerName) && requestAnswerCommand(playerName) == AnswerCommand.YES);
+        } while (playerGroup.isBustByPlayerName(playerName) && requestAnswerCommand(playerName).isYes());
     }
 
     private AnswerCommand requestAnswerCommand(final String playerName) {
