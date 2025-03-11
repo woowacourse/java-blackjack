@@ -71,6 +71,8 @@ public class GameManager {
     }
 
     public List<Player> getAbleToHitPlayers() {
-        return players.stream().filter(player -> !player.isBust()).toList();
+        return players.stream()
+                .filter(player -> !player.isBust())
+                .toList();
     }
 }
