@@ -53,7 +53,7 @@ public class BlackjackController {
         boolean isFirstTurn = true;
         do {
             answer = InputView.askForOneMoreCard(player);
-            player = drawAndCreateNewPlayer(player, answer);
+            drawAndCreateNewPlayer(player, answer);
 
             printCardsIfFirstTurn(player, isFirstTurn, answer);
 
@@ -61,11 +61,10 @@ public class BlackjackController {
         } while (!gameManager.isPlayerBurst(player) && answer);
     }
 
-    private Player drawAndCreateNewPlayer(Player player, boolean answer) {
+    private void drawAndCreateNewPlayer(Player player, boolean answer) {
         if (answer) {
             gameManager.drawCard(player);
         }
-        return player;
     }
 
     private static void printCardsIfFirstTurn(Player player, boolean isFirstTurn, boolean answer) {
