@@ -11,7 +11,7 @@ public class GameParticipant {
         this.cardHand = cardHand;
     }
 
-    public void hit(Card newCard) {
+    public void receiveCard(Card newCard) {
         cardHand.add(newCard);
     }
 

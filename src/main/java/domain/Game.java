@@ -20,13 +20,13 @@ public class Game {
     }
 
     public void hitPlayerCard(Player player) {
-        Card card = dealer.pickCard();
-        player.hit(card);
+        Card card = dealer.hitCard();
+        player.receiveCard(card);
     }
 
     public void hitDealerCard() {
-        Card card = dealer.pickCard();
-        dealer.hit(card);
+        Card card = dealer.hitCard();
+        dealer.receiveCard(card);
     }
 
     public void calculateGameResult() {

@@ -17,7 +17,7 @@ public class Dealer extends GameParticipant {
         this.deck = deck;
     }
 
-    public Card pickCard() {
+    public Card hitCard() {
         return deck.drawNewCard();
     }
 
