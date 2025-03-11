@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,11 +48,11 @@ public class OutputView {
         System.out.println("## 최종 수익");
     }
 
-    public void printBetResultByDealer(int winnings) {
+    public void printBetResultByDealer(final int winnings) {
         System.out.printf("딜러: %d%n", winnings);
     }
 
-    public void printBetResultByPlayer(String name, int winnings) {
+    public void printBetResultByPlayer(final String name, final int winnings) {
         System.out.printf("%s: %d%n", name, winnings);
     }
 

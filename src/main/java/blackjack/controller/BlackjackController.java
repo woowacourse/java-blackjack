@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -86,7 +86,7 @@ public class BlackjackController {
         }
     }
 
-    private void showBetResult(BlackjackGame blackjackGame) {
+    private void showBetResult(final BlackjackGame blackjackGame) {
         outputView.printBetResultTitle();
         outputView.printBetResultByDealer(blackjackGame.calculateDealerWinnings());
         Dealer dealer = blackjackGame.getDealer();

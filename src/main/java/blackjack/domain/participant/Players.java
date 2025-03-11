@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
+import blackjack.domain.card.CardDeck;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +28,7 @@ public class Players {
         return playerResult;
     }
 
-    public int calculateTotalPayout(Dealer dealer) {
+    public int calculateTotalPayout(final Dealer dealer) {
         int totalPayout = 0;
         for (Player player : players) {
             totalPayout += player.calculatePayout(dealer);

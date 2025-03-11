@@ -1,5 +1,11 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,7 +63,7 @@ public class BlackjackGame {
         return Collections.unmodifiableList(players.getPlayers());
     }
 
-    private int convertToOppositeSign(int number) {
+    private int convertToOppositeSign(final int number) {
         return -number;
     }
 }

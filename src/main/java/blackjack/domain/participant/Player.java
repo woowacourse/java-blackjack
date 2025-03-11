@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player extends Participant {
@@ -17,11 +19,11 @@ public class Player extends Participant {
         this.payout = 0;
     }
 
-    public void bet(int amount) {
+    public void bet(final int amount) {
         this.payout += amount;
     }
 
-    public int calculatePayout(Dealer dealer) {
+    public int calculatePayout(final Dealer dealer) {
         GameResult result = GameResult.getPlayerGameResultFrom(dealer, this);
         if (result == GameResult.LOSE) {
             return convertToNegativeSign(payout);
@@ -35,14 +37,14 @@ public class Player extends Participant {
         return payout;
     }
 
-    private int calculatePayoutWithBlackjack(Dealer dealer) {
+    private int calculatePayoutWithBlackjack(final Dealer dealer) {
         if (dealer.isBlackjack()) {
             return payout;
         }
         return (int) Math.floor(payout * BLACKJACK_BONUS_RATE);
     }
 
-    private int convertToNegativeSign(int value) {
+    private int convertToNegativeSign(final int value) {
         return -value;
     }
 
