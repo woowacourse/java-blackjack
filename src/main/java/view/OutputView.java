@@ -43,8 +43,10 @@ public class OutputView {
             card.shape().formatCardShape());
     }
 
-    public void printDealerPickMessage() {
-        System.out.println(DEALER_EXTRA_CARD_MESSAGE);
+    public void printDealerPickMessageBy(int count) {
+        for (int i = 0; i < count; i++) {
+            System.out.println(DEALER_EXTRA_CARD_MESSAGE);
+        }
     }
 
     public void printParticipantHand(Participant participant) {
@@ -56,6 +58,12 @@ public class OutputView {
 
     public void printFullParticipantInfo(Participant participant) {
         System.out.println(formatFullParticipantInfo(participant));
+    }
+
+    public void printCardMessageTest(Participant participant) {
+        String cardResult = formatCards(participant.getCards());
+        System.out.print(SPREAD_NAME_RESULT.formatted(participant.getName()));
+        System.out.println(cardResult);
     }
 
     private String formatFullParticipantInfo(Participant participant) {
