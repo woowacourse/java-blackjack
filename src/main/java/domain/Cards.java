@@ -33,7 +33,7 @@ public class Cards {
 
     public List<Card> getOpenedCards() {
         return cards.stream()
-                .filter(card -> !card.isOpened())
+                .filter(Card::isOpened)
                 .toList();
     }
 
