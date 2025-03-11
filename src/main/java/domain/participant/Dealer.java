@@ -11,12 +11,10 @@ public class Dealer extends Participant {
     private static final int DRAW_BOUNDARY = 16;
 
     private final Deck deck;
-    private final Map<GameResult, Integer> result;
 
     public Dealer(Cards cards, Deck deck) {
         super(cards);
         this.deck = deck;
-        this.result = new EnumMap<>(GameResult.class);
     }
 
     @Override
@@ -35,15 +33,24 @@ public class Dealer extends Participant {
         participant.addCard(deck.pick());
     }
 
-    public Map<Player, GameResult> getGameResult(Players players) {
+    public Map<Player, GameResult> getPlayerResult(Players players) {
         Map<Player, GameResult> gameResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
             GameResult playerResult = getRule().getResult(player, this);
             gameResult.put(player, playerResult);
-            GameResult dealerResult = playerResult.getReverse();
-            result.put(dealerResult, result.getOrDefault(dealerResult, 0) + 1);
         }
         return gameResult;
+    }
+
+    public Map<GameResult, Integer> getDealerResult(Players players) {
+        Map<GameResult, Integer> result = new HashMap<>();
+        Map<Player, GameResult> gameResult = getPlayerResult(players);
+        for (GameResult playerResult : gameResult.values()) {
+            GameResult dealerResult = playerResult.getReverse();
+            final int updated = result.getOrDefault(dealerResult, 0) + 1;
+            result.put(dealerResult, updated);
+        }
+        return result;
     }
 
     public int drawCards() {
@@ -57,9 +64,5 @@ public class Dealer extends Participant {
 
     private boolean hasToDraw() {
         return this.getCardScore() <= DRAW_BOUNDARY;
-    }
-
-    public Map<GameResult, Integer> getResult() {
-        return Collections.unmodifiableMap(result);
     }
 }

@@ -53,11 +53,11 @@ public class BlackJack {
     }
 
     public Map<Player, GameResult> getPlayersResult() {
-        return dealer.getGameResult(players);
+        return dealer.getPlayerResult(players);
     }
 
     public Map<GameResult, Integer> getDealerResult() {
-        return dealer.getResult();
+        return dealer.getDealerResult(players);
     }
 
     public Set<Player> getPlayers() {
