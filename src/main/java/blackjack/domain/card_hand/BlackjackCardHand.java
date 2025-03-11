@@ -9,7 +9,7 @@ public final class BlackjackCardHand {
     
     private static final int BUST_THRESHOLD = 21;
     private static final int BLACK_JACK_MAX_SUM = 21;
-    public static final int BLACK_JACK_CARD_COUNT = 2;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
     
     private final CardHand cardHand;
     
