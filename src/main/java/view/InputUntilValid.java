@@ -2,7 +2,6 @@ package view;
 
 import domain.participant.Player;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public interface InputUntilValid<T> {
 
