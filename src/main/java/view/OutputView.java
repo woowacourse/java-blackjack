@@ -11,7 +11,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -43,7 +42,7 @@ public class OutputView {
     }
 
     public void printPlayersCardAndSum(Players players) {
-        Set<Player> allPlayers = players.getPlayers();
+        List<Player> allPlayers = players.getPlayers();
         allPlayers.forEach(this::printCardsAndResult);
     }
 

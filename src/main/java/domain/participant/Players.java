@@ -1,21 +1,19 @@
 package domain.participant;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class Players {
 
     public static final int MAX_SIZE = 5;
 
-    private final Set<Player> players;
+    private final List<Player> players;
 
     public Players(List<Player> players) {
         validateDuplicate(players);
         validateSize(players);
-        this.players = new HashSet<>(players);
+        this.players = players;
     }
 
     private void validateDuplicate(List<Player> players) {
@@ -30,8 +28,12 @@ public class Players {
         }
     }
 
-    public Set<Player> getPlayers() {
-        return Collections.unmodifiableSet(players);
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public Player getPlayer(int index) {
+        return players.get(index);
     }
 
     @Override

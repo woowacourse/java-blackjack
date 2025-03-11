@@ -5,9 +5,9 @@ import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.cardsGenerator.CardsGenerator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 public class Dealer extends Participant {
 
@@ -31,7 +31,7 @@ public class Dealer extends Participant {
 
     public void handoutCards(Players players) {
         giveCards(this, INIT_COUNT);
-        Set<Player> participants = players.getPlayers();
+        List<Player> participants = players.getPlayers();
         for (Participant participant : participants) {
             giveCards(participant, INIT_COUNT);
         }
