@@ -22,9 +22,9 @@ public class BlackjackDeckGenerateStrategy implements DeckGenerateStrategy {
         for (Suit suit : suits) {
             trumpCards.addAll(trumpCards(suit));
         }
-        LinkedList<TrumpCard> deckBeforeShuffle = new LinkedList<>(trumpCards);
+        List<TrumpCard> deckBeforeShuffle = new LinkedList<>(trumpCards);
         Collections.shuffle(deckBeforeShuffle);
-        ArrayDeque<TrumpCard> generatedDeck = new ArrayDeque<>(trumpCards);
+        ArrayDeque<TrumpCard> generatedDeck = new ArrayDeque<>(deckBeforeShuffle);
         return new BlackjackDeck(generatedDeck, drawStrategy);
     }
 
