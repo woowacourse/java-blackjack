@@ -6,15 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
-import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-
-    private ScoreCalculator scoreCalculator = new ScoreCalculator();
 
     @Test
     void 카드_합이_21이_넘는_경우_카드를_더_받지_못한다() {
@@ -28,8 +25,7 @@ class PlayerTest {
                         new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.TWO)
-                ),
-                scoreCalculator
+                )
         ));
 
         Card card = new Card(Suit.HEART, Rank.TWO);
@@ -48,8 +44,8 @@ class PlayerTest {
                 new Cards(
                         new ArrayList<>(Arrays.asList(
                                 new Card(Suit.DIAMOND, Rank.ACE),
-                                new Card(Suit.DIAMOND, Rank.TWO))),
-                        scoreCalculator));
+                                new Card(Suit.DIAMOND, Rank.TWO)))
+                ));
 
         Card card = new Card(Suit.HEART, Rank.THREE);
 

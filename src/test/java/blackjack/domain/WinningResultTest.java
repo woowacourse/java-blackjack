@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
-import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.WinningResult;
 import java.util.List;
@@ -20,16 +19,14 @@ public class WinningResultTest {
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.TEN),
                         new Card(Suit.HEART, Rank.TEN)
-                ),
-                new ScoreCalculator()
+                )
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.NINE),
                         new Card(Suit.DIAMOND, Rank.NINE),
                         new Card(Suit.HEART, Rank.NINE)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when
@@ -46,16 +43,14 @@ public class WinningResultTest {
                 List.of(
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.TEN)
-                ),
-                new ScoreCalculator()
+                )
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.NINE),
                         new Card(Suit.DIAMOND, Rank.NINE),
                         new Card(Suit.HEART, Rank.NINE)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when
@@ -72,15 +67,13 @@ public class WinningResultTest {
                 List.of(
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.TEN)
-                ),
-                new ScoreCalculator()
+                )
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.NINE),
                         new Card(Suit.DIAMOND, Rank.NINE)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when
@@ -97,16 +90,14 @@ public class WinningResultTest {
                 List.of(
                         new Card(Suit.CLUB, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.TEN)
-                ),
-                new ScoreCalculator()
+                )
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.NINE),
                         new Card(Suit.CLUB, Rank.THREE),
                         new Card(Suit.DIAMOND, Rank.NINE)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when
@@ -123,16 +114,14 @@ public class WinningResultTest {
                 List.of(
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.TEN)
-                ),
-                new ScoreCalculator()
+                )
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.NINE),
                         new Card(Suit.CLUB, Rank.TWO),
                         new Card(Suit.DIAMOND, Rank.NINE)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when
@@ -148,15 +137,13 @@ public class WinningResultTest {
         Cards mainCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.NINE),
-                        new Card(Suit.CLUB, Rank.TWO)),
-                new ScoreCalculator()
+                        new Card(Suit.CLUB, Rank.TWO))
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.HEART, Rank.TEN)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when
@@ -174,15 +161,13 @@ public class WinningResultTest {
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.HEART, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.TWO)
-                ),
-                new ScoreCalculator()
+                )
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.KING),
                         new Card(Suit.CLUB, Rank.ACE)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when
@@ -200,15 +185,13 @@ public class WinningResultTest {
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.HEART, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.ONE)
-                ),
-                new ScoreCalculator()
+                )
         );
         Cards subCards = new Cards(
                 List.of(
                         new Card(Suit.CLUB, Rank.KING),
                         new Card(Suit.CLUB, Rank.ACE)
-                ),
-                new ScoreCalculator()
+                )
         );
 
         //when

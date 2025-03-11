@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.List;
 import java.util.Stack;
 
 public class FixCardsShuffler implements CardsShuffler {

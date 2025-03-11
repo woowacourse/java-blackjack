@@ -1,11 +1,11 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.card.Cards.BUST_THRESHOLD;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Player {
+    private static final int BUST_THRESHOLD = 21;
     private final String name;
     private final Cards cards;
 

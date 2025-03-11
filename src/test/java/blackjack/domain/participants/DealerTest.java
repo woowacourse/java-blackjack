@@ -5,36 +5,21 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.FixCardsShuffler;
 import blackjack.domain.card.Rank;
-import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
-    private Stack<Card> deck;
-    private ScoreCalculator scoreCalculator;
-
-    @BeforeEach
-    public void setUp() {
-        deck = new Stack<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                deck.add(new Card(suit, rank));
-            }
-        }
-        scoreCalculator = new ScoreCalculator();
-    }
 
     @Test
     void 블랙잭_게임을_준비한다() {
         //given
         Players players = new Players(
-                List.of(new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator())),
-                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                List.of(new Player("pobi", new Cards(new ArrayList<>())),
+                        new Player("surf", new Cards(new ArrayList<>()))
                 ));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
@@ -48,8 +33,7 @@ public class DealerTest {
 
         Dealer dealer = new Dealer(
                 players,
-                new Deck(cards),
-                scoreCalculator);
+                new Deck(cards));
 
         //when
         dealer.prepareBlackjack(new FixCardsShuffler());
@@ -76,9 +60,9 @@ public class DealerTest {
         //given
         Players players = new Players(
                 List.of(
-                        new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator())),
-                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
-                        new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                        new Player("pobi", new Cards(new ArrayList<>())),
+                        new Player("surf", new Cards(new ArrayList<>())),
+                        new Player("fora", new Cards(new ArrayList<>()))
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -92,7 +76,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FIVE))
         );
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+        Dealer dealer = new Dealer(players, deck);
 
         //when
         dealer.pickAdditionalCard();
@@ -110,12 +94,12 @@ public class DealerTest {
     @Test
     void 존재하지_않는_플레이어에게_카드를_나누어_줄_수_없다() {
         //given
-        Player foraPlayer = new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Player foraPlayer = new Player("fora", new Cards(new ArrayList<>()));
 
         Players players = new Players(
                 List.of(
-                        new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator())),
-                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                        new Player("pobi", new Cards(new ArrayList<>())),
+                        new Player("surf", new Cards(new ArrayList<>()))
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -129,7 +113,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FIVE))
         );
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+        Dealer dealer = new Dealer(players, deck);
 
         //when & then
         Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(foraPlayer))
@@ -147,13 +131,13 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.THREE),
                         new Card(Suit.CLUB, Rank.FOUR),
                         new Card(Suit.CLUB, Rank.FIVE))
-        ), new ScoreCalculator()));
+        )));
 
         Players players = new Players(
                 List.of(
                         pobiPlayer,
-                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
-                        new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                        new Player("surf", new Cards(new ArrayList<>())),
+                        new Player("fora", new Cards(new ArrayList<>()))
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -167,7 +151,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FIVE))
         );
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+        Dealer dealer = new Dealer(players, deck);
 
         //when & then
         Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(pobiPlayer))
@@ -178,13 +162,13 @@ public class DealerTest {
     @Test
     void 플레이어에게_카드를_나누어_줄_수_있다() {
         //given
-        Player pobiPlayer = new Player("pobi", new Cards(new ArrayList<>(), new ScoreCalculator()));
+        Player pobiPlayer = new Player("pobi", new Cards(new ArrayList<>()));
 
         Players players = new Players(
                 List.of(
                         pobiPlayer,
-                        new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
-                        new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                        new Player("surf", new Cards(new ArrayList<>())),
+                        new Player("fora", new Cards(new ArrayList<>()))
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -198,7 +182,7 @@ public class DealerTest {
                         new Card(Suit.CLUB, Rank.FIVE))
         );
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(players, deck, scoreCalculator);
+        Dealer dealer = new Dealer(players, deck);
 
         //when & then
         Assertions.assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
@@ -212,8 +196,8 @@ public class DealerTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
         Players players = new Players(List.of(
-                new Player("surf", new Cards(new ArrayList<>(), new ScoreCalculator())),
-                new Player("fora", new Cards(new ArrayList<>(), new ScoreCalculator()))
+                new Player("surf", new Cards(new ArrayList<>())),
+                new Player("fora", new Cards(new ArrayList<>()))
         ));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
@@ -227,7 +211,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(
                 players,
                 new Deck(cards),
-                new Cards(dealerCards, new ScoreCalculator())
+                new Cards(dealerCards)
         );
 
         //when & then

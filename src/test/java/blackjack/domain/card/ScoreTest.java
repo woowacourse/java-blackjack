@@ -4,9 +4,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ScoreCalculatorTest {
-
-    private ScoreCalculator scoreCalculator = new ScoreCalculator();
+public class ScoreTest {
 
     @Test
     void 카드_합이_21을_초과하지_않는_경우가_존재한다면_21보다_작은_수_중_최대값을_반환한다() {
@@ -20,12 +18,13 @@ public class ScoreCalculatorTest {
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
+        Score score = new Score(cards);
 
         //when
-        int score = scoreCalculator.calculateMaxScore(cards);
+        int scoreResult = score.calculateMaxScore();
 
         //then
-        Assertions.assertThat(score).isEqualTo(21);
+        Assertions.assertThat(scoreResult).isEqualTo(21);
     }
 
     @Test
@@ -41,11 +40,12 @@ public class ScoreCalculatorTest {
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
+        Score score = new Score(cards);
 
         //when
-        int score = scoreCalculator.calculateMaxScore(cards);
+        int scoreResult = score.calculateMaxScore();
 
         //then
-        Assertions.assertThat(score).isEqualTo(22);
+        Assertions.assertThat(scoreResult).isEqualTo(22);
     }
 }

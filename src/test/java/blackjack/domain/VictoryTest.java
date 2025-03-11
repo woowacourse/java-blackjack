@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
-import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.WinningResult;
 import blackjack.domain.participants.Dealer;
@@ -24,14 +23,14 @@ public class VictoryTest {
                 new Cards(List.of(
                         new Card(Suit.CLUB, Rank.THREE),
                         new Card(Suit.CLUB, Rank.TEN)
-                ), new ScoreCalculator()));
+                )));
         Player surf = new Player("surf",
                 new Cards(List.of(
                         new Card(Suit.CLUB, Rank.THREE),
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.CLUB, Rank.FIVE),
                         new Card(Suit.HEART, Rank.THREE)
-                ), new ScoreCalculator()));
+                )));
         List<Card> dealerCards = List.of(
                 new Card(Suit.CLUB, Rank.ACE),
                 new Card(Suit.CLUB, Rank.NINE)
@@ -49,7 +48,7 @@ public class VictoryTest {
         Dealer dealer = new Dealer(
                 players,
                 new Deck(cards),
-                new Cards(dealerCards, new ScoreCalculator())
+                new Cards(dealerCards)
         );
 
         Map<Player, WinningResult> playerVictoryResults =

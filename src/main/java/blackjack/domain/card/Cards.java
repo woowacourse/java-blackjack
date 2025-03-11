@@ -7,27 +7,25 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cards {
-    private static final int DEFAULT_CARD_SIZE = 2;
-    public static final int BUST_THRESHOLD = 21;
+    private static final int BUST_THRESHOLD = 21;
     private final List<Card> cards;
-    private final ScoreCalculator scoreCalculator;
+    private final Score score;
 
-    public Cards(List<Card> cards, ScoreCalculator scoreCalculator) {
+    public Cards(List<Card> cards) {
         this.cards = cards;
-        this.scoreCalculator = scoreCalculator;
+        this.score = new Score(cards);
     }
 
     public int calculateMaxScore() {
-        return scoreCalculator.calculateMaxScore(cards);
+        return score.calculateMaxScore();
     }
 
     public int calculateMinScore() {
-        return scoreCalculator.calculateMinScore(cards);
+        return score.calculateMinScore();
     }
 
     public boolean isBlackjack() {
-        return cards.size() == DEFAULT_CARD_SIZE
-                && scoreCalculator.calculateMaxScore(cards) == BUST_THRESHOLD;
+        return score.isBlackjack();
     }
 
     public List<Card> getCards() {
@@ -39,7 +37,7 @@ public class Cards {
     }
 
     public void additionalTake(Card card) {
-        int minScore = scoreCalculator.calculateMaxScore(this.cards);
+        int minScore = score.calculateMaxScore();
         if (minScore >= BUST_THRESHOLD) {
             throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
         }
@@ -60,14 +58,14 @@ public class Cards {
         }
 
         Cards cards1 = (Cards) object;
-        return Objects.equals(getCards(), cards1.getCards()) && Objects.equals(scoreCalculator,
-                cards1.scoreCalculator);
+        return Objects.equals(getCards(), cards1.getCards()) && Objects.equals(score,
+                cards1.score);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hashCode(getCards());
-        result = 31 * result + Objects.hashCode(scoreCalculator);
+        result = 31 * result + Objects.hashCode(score);
         return result;
     }
 }

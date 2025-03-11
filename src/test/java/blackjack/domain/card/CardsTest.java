@@ -13,8 +13,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.ACE)),
-                new ScoreCalculator()
+                        new Card(Suit.DIAMOND, Rank.ACE))
         );
 
         //when
@@ -29,8 +28,7 @@ public class CardsTest {
         //given
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.KING)),
-                new ScoreCalculator()
+                        new Card(Suit.DIAMOND, Rank.KING))
         );
 
         //when
@@ -45,8 +43,7 @@ public class CardsTest {
         //given
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.KING)),
-                new ScoreCalculator()
+                        new Card(Suit.DIAMOND, Rank.KING))
         );
 
         //when & then
@@ -59,8 +56,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.KING),
-                        new Card(Suit.DIAMOND, Rank.ONE)),
-                new ScoreCalculator()
+                        new Card(Suit.DIAMOND, Rank.ONE))
         );
 
         //when & then
@@ -73,8 +69,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.KING),
-                        new Card(Suit.DIAMOND, Rank.NINE)),
-                new ScoreCalculator()
+                        new Card(Suit.DIAMOND, Rank.NINE))
         );
 
         //when & then

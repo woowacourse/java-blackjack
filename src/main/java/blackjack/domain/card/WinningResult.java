@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Cards.BUST_THRESHOLD;
+import static blackjack.domain.card.Score.BUST_THRESHOLD;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;

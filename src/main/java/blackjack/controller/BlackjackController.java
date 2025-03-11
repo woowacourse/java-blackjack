@@ -4,7 +4,6 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.RandomCardsShuffler;
-import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -19,7 +18,7 @@ public class BlackjackController {
         try {
 
             Players players = createPlayers();
-            Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck(), new ScoreCalculator());
+            Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck());
             handOutCards(dealer, players);
             additionalCard(dealer, players);
             dealerAdditionalCard(dealer);
@@ -37,7 +36,7 @@ public class BlackjackController {
 
     private static List<Player> toPlayers(String[] playerNames) {
         return Arrays.stream(playerNames)
-                .map(name -> new Player(name.trim(), new Cards(new ArrayList<>(), new ScoreCalculator())))
+                .map(name -> new Player(name.trim(), new Cards(new ArrayList<>())))
                 .toList();
     }
 
