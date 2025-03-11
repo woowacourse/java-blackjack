@@ -1,13 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-import java.util.stream.Stream;
-
-import static blackjack.test_util.TestConstants.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
@@ -17,6 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static blackjack.test_util.TestConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class BlackjackJudgeTest {
     
@@ -94,23 +95,6 @@ public class BlackjackJudgeTest {
         assertThat(blackjackJudge.getDealerDrawingCount()).isEqualTo(1);
     }
     
-    @Test
-    void 한_플레이어의_승패여부를_확인할_때_존재하지_않는_플레이어라면_예외가_발생한다() {
-        // given
-        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> List.of(HEART_10, HEART_6));
-        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), () -> List.of(HEART_2, HEART_3));
-        final List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
-        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_1, HEART_5));
-        
-        final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
-        
-        final PlayerBlackjackCardHand lisaCardHand = new PlayerBlackjackCardHand(new Player("lisa"), List::of);
-        // expected
-        assertThatThrownBy(() -> blackjackJudge.getWinningStatusOf(lisaCardHand))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 플레이어 손패입니다.");
-    }
-    
     @ParameterizedTest
     @MethodSource("provideCardsAndWinningStatus")
     void 블랙잭심판은_한_플레이어의_승패_여부를_확인할_수_있다(List<Card> cards, WinningStatus winningStatus) {
@@ -122,7 +106,7 @@ public class BlackjackJudgeTest {
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
 
         // expected
-        assertThat(blackjackJudge.getWinningStatusOf(dompooCardHand)).isEqualTo(winningStatus);
+        assertThat(blackjackJudge.getWinningStatus().get("dompoo")).isEqualTo(winningStatus);
     }
     
     private static Stream<Arguments> provideCardsAndWinningStatus() {
