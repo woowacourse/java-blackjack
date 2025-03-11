@@ -12,7 +12,6 @@ import domain.player.Players;
 import domain.player.User;
 import domain.player.Users;
 import java.util.List;
-import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -20,7 +19,7 @@ public class BlackjackController {
 
     public void run() {
         BlackjackManager blackjackManager = createBlackjackManager();
-
+        
         distributeInitialCards(blackjackManager);
         addMoreCards(blackjackManager);
         printGameResult(blackjackManager);
@@ -67,7 +66,7 @@ public class BlackjackController {
                 names.stream()
                         .map(String::strip)
                         .map(User::new)
-                        .collect(Collectors.toList())
+                        .toList()
         );
     }
 

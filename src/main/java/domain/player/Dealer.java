@@ -14,11 +14,6 @@ public class Dealer extends Player {
         openCards(1);
     }
 
-    @Override
-    public boolean isDealer() {
-        return true;
-    }
-
     public boolean drawOneCardIfLowScore(Deck deck) {
         if (computeOptimalSum() <= ADD_CARD_THRESHOLD) {
             drawOneCard(deck);

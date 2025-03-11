@@ -15,6 +15,9 @@ public class Players {
         this.users = users;
     }
 
+    public static Players of(Dealer dealer, Users users) {
+        return new Players(dealer, users);
+    }
 
     public void distributeInitialCards(Deck deck) {
         dealer.receiveInitialCards(deck);

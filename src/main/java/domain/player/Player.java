@@ -27,8 +27,6 @@ public abstract class Player {
 
     public abstract void openInitialCards();
 
-    public abstract boolean isDealer();
-
 
     public void receiveInitialCards(Deck deck) {
         cards.addAll(deck.drawCards(2));

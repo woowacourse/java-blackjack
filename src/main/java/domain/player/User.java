@@ -9,9 +9,4 @@ public class User extends Player {
     public void openInitialCards() {
         openCards(2);
     }
-
-    @Override
-    public boolean isDealer() {
-        return false;
-    }
 }
