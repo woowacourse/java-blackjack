@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.Participant;
-import blackjack.domain.Player;
+import blackjack.domain.Players;
 import java.util.List;
 
 public record DistributedCardDto(String name, List<String> cardInfos) {
@@ -15,7 +15,7 @@ public record DistributedCardDto(String name, List<String> cardInfos) {
         return new DistributedCardDto(name, cardInfos);
     }
 
-    public static List<DistributedCardDto> fromPlayers(final List<Player> players) {
-        return players.stream().map(DistributedCardDto::from).toList();
+    public static List<DistributedCardDto> fromPlayers(final Players players) {
+        return players.getPlayers().stream().map(DistributedCardDto::from).toList();
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.Participant;
-import blackjack.domain.Player;
+import blackjack.domain.Players;
 import java.util.List;
 
 public record FinalResultDto(
@@ -21,7 +21,7 @@ public record FinalResultDto(
         return new FinalResultDto(name, cardInfos, score, isBust);
     }
 
-    public static List<FinalResultDto> fromPlayers(final List<Player> players) {
-        return players.stream().map(FinalResultDto::from).toList();
+    public static List<FinalResultDto> fromPlayers(final Players players) {
+        return players.getPlayers().stream().map(FinalResultDto::from).toList();
     }
 }

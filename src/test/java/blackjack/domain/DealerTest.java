@@ -14,7 +14,7 @@ class DealerTest {
         CardDump cardDump = new CardDump();
 
         Dealer dealer = new Dealer(cardDeck, cardDump);
-        dealer.createInitialCardDeck();
+        dealer.initCardDeck();
 
         assertThat(dealer.getCardDeck().size()).isEqualTo(2);
     }

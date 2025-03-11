@@ -20,7 +20,7 @@ public enum HitOption {
                 .orElseThrow(() -> new IllegalStateException(INVALID_OPTION));
     }
 
-    public boolean isNo() {
-        return this == NO;
+    public boolean isYes() {
+        return this == YES;
     }
 }

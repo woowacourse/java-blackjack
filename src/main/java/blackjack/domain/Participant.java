@@ -7,7 +7,7 @@ public abstract class Participant {
 
     protected final CardDeck cardDeck;
 
-    public Participant(CardDeck cardDeck) {
+    protected Participant(CardDeck cardDeck) {
         this.cardDeck = cardDeck;
     }
 
