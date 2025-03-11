@@ -1,10 +1,12 @@
 package blackjack.controller;
 
+import blackjack.domain.BattingMoney;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardDump;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
+import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import blackjack.dto.CardInfoDto;
 import blackjack.dto.FinalResultDto;
@@ -28,7 +30,10 @@ public class BlackjackController {
 
     public void run() {
         Dealer dealer = new Dealer(new CardHand());
-        BlackjackGame game = new BlackjackGame(createPlayers(), dealer, cardDump);
+        List<ParticipantName> playerNames = createPlayerNames();
+        List<Player> players = createPlayers(playerNames);
+
+        BlackjackGame game = new BlackjackGame(players, dealer, cardDump);
 
         game.distributeInitialCards();
         displayParticipantStartCards(game, dealer);
@@ -42,20 +47,30 @@ public class BlackjackController {
         generateGameResultAndDisplay(game, dealer, game.getPlayers());
     }
 
+    private List<Player> createPlayers(List<ParticipantName> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (ParticipantName playerName : playerNames) {
+            int money = inputView.readBattingMoney(playerName.getValue());
+            BattingMoney battingMoney = new BattingMoney(money);
+            players.add(new Player(playerName, new CardHand(), battingMoney));
+        }
+        return players;
+    }
+
     private void displayFinalCardsInfo(Dealer dealer, BlackjackGame game) {
         outputView.displayFinalCardStatus(
                 FinalResultDto.from(dealer),
                 FinalResultDto.fromPlayers(game.getPlayers()));
     }
 
-    private List<Player> createPlayers() {
+    private List<ParticipantName> createPlayerNames() {
         String[] playerNames = inputView.readPlayerName();
 
-        List<Player> players = new ArrayList<>();
+        List<ParticipantName> participantNames = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(new Player(playerName, new CardHand()));
+            participantNames.add(new ParticipantName(playerName));
         }
-        return players;
+        return participantNames;
     }
 
     private void displayParticipantStartCards(BlackjackGame game, Dealer dealer) {

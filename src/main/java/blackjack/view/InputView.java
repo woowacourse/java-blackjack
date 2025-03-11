@@ -24,7 +24,22 @@ public class InputView {
     }
 
     public String readOneMoreCard(final String playerName) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName.trim());
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName);
         return scanner.nextLine();
+    }
+
+    public int readBattingMoney(final String playerName) {
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
+        String moneyInput = scanner.nextLine();
+        validateNumeric(moneyInput);
+        return Integer.parseInt(moneyInput);
+    }
+
+    private void validateNumeric(final String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("배팅 금액에는 숫자만 입력할 수 있습니다.");
+        }
     }
 }

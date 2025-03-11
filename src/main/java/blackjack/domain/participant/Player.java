@@ -1,15 +1,18 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.BattingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.List;
 
 public class Player extends Participant {
-    private final String name;
+    private final ParticipantName name;
+    private final BattingMoney battingMoney;
 
-    public Player(String name, CardHand cardHand) {
+    public Player(ParticipantName name, CardHand cardHand, BattingMoney battingMoney) {
         super(cardHand);
         this.name = name;
+        this.battingMoney = battingMoney;
     }
 
     @Override
@@ -25,6 +28,6 @@ public class Player extends Participant {
 
     @Override
     public String getName() {
-        return name;
+        return name.getValue();
     }
 }
