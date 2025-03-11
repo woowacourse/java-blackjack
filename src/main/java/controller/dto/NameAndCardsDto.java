@@ -2,6 +2,7 @@ package controller.dto;
 
 import domain.Card;
 import domain.Player;
+import domain.User;
 import java.util.List;
 
 public record NameAndCardsDto(
@@ -13,8 +14,8 @@ public record NameAndCardsDto(
         return new NameAndCardsDto(player.getName(), player.getOpenedCards());
     }
 
-    public static List<NameAndCardsDto> toNameAndOpenedCards(List<Player> players) {
-        return players.stream()
+    public static List<NameAndCardsDto> toNameAndOpenedCards(List<User> users) {
+        return users.stream()
                 .map(NameAndCardsDto::toNameAndOpenedCards)
                 .toList();
     }
@@ -23,8 +24,8 @@ public record NameAndCardsDto(
         return new NameAndCardsDto(player.getName(), player.getCards());
     }
 
-    public static List<NameAndCardsDto> toNameAndCards(List<Player> players) {
-        return players.stream()
+    public static List<NameAndCardsDto> toNameAndCards(List<User> users) {
+        return users.stream()
                 .map(NameAndCardsDto::toNameAndCards)
                 .toList();
     }

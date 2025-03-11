@@ -21,7 +21,7 @@ public class PlayerTest {
     @Test
     void 참여자는_초기에_카드를_2장씩_받는다() {
         // given
-        Player player = new Participant("훌라");
+        Player player = new User("훌라");
         Deck deck = DeckGenerator.generateDeck();
 
         // when
@@ -36,10 +36,10 @@ public class PlayerTest {
     void 이름이_같다면_같은_참여자다() {
         // given
         final String targetName = "훌라";
-        Player player = new Participant(targetName);
+        Player player = new User(targetName);
 
         // when & then
         Assertions.assertThat(player)
-                .isEqualTo(new Participant(targetName));
+                .isEqualTo(new User(targetName));
     }
 }

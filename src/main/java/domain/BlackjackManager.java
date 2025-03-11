@@ -23,24 +23,24 @@ public class BlackjackManager {
         players.openInitialCards();
     }
 
-    public void addMoreCardsToPlayers(Function<String, Boolean> wantMoreCard,
-                                      BiConsumer<String, List<Card>> callback) {
-        for (Player participant : getParticipants()) {
-            addMorCardsToPlayer(participant, wantMoreCard, callback);
+    public void addMoreCardsToUsers(Function<String, Boolean> wantMoreCard,
+                                    BiConsumer<String, List<Card>> callback) {
+        for (Player user : getUsers()) {
+            addMorCardsToUser(user, wantMoreCard, callback);
         }
     }
 
-    private void addMorCardsToPlayer(Player participant,
-                                     Function<String, Boolean> wantMoreCard,
-                                     BiConsumer<String, List<Card>> callback) {
-        boolean isContinued = wantMoreCard.apply(participant.getName());
-        while (!participant.isBust() && isContinued) {
-            participant.drawOneCard(deck);
-            callback.accept(participant.getName(), participant.getCards());
-            isContinued = wantMoreCard.apply(participant.getName());
+    private void addMorCardsToUser(Player user,
+                                   Function<String, Boolean> wantMoreCard,
+                                   BiConsumer<String, List<Card>> callback) {
+        boolean isContinued = wantMoreCard.apply(user.getName());
+        while (!user.isBust() && isContinued) {
+            user.drawOneCard(deck);
+            callback.accept(user.getName(), user.getCards());
+            isContinued = wantMoreCard.apply(user.getName());
         }
-        if (!participant.isBust() && !isContinued) {
-            callback.accept(participant.getName(), participant.getCards());
+        if (!user.isBust() && !isContinued) {
+            callback.accept(user.getName(), user.getCards());
         }
     }
 
@@ -57,33 +57,33 @@ public class BlackjackManager {
     }
 
     public Map<MatchResult, Integer> computeDealerMatchResultCount(
-            Map<Player, MatchResult> participantNameAndMatchResult) {
+            Map<Player, MatchResult> userNameAndMatchResult) {
         Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
         MatchResult.sortedValues().forEach(matchResult -> matchResultCount.put(matchResult, 0));
 
-        participantNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
+        userNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
                 matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
         return matchResultCount;
     }
 
-    public Map<Player, MatchResult> computeParticipantsMatchResult(Dealer dealer,
-                                                                   List<Player> participants) {
+    public Map<Player, MatchResult> computeUsersMatchResult(Dealer dealer,
+                                                            List<User> users) {
         Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player participant : participants) {
-            MatchResult matchResult = computeParticipantMatchResult(dealer, participant);
-            results.put(participant, matchResult);
+        for (Player user : users) {
+            MatchResult matchResult = computeUserMatchResult(dealer, user);
+            results.put(user, matchResult);
         }
         return results;
     }
 
-    private MatchResult computeParticipantMatchResult(Dealer dealer, Player participant) {
-        if (participant.isBust()) {
+    private MatchResult computeUserMatchResult(Dealer dealer, Player user) {
+        if (user.isBust()) {
             return MatchResult.LOSE;
         }
         if (dealer.isBust()) {
             return MatchResult.WIN;
         }
-        return MatchResult.compareBySum(participant.computeOptimalSum(),
+        return MatchResult.compareBySum(user.computeOptimalSum(),
                 dealer.computeOptimalSum());
     }
 
@@ -95,7 +95,7 @@ public class BlackjackManager {
         return players.getDealer();
     }
 
-    public List<Player> getParticipants() {
-        return players.getParticipants();
+    public List<User> getUsers() {
+        return players.getUsers();
     }
 }

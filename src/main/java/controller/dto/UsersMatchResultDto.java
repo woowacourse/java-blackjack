@@ -5,12 +5,12 @@ import domain.Player;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public record ParticipantsMatchResultDto(
+public record UsersMatchResultDto(
         Map<String, MatchResult> nameMatchResult
 ) {
 
-    public static ParticipantsMatchResultDto from(Map<Player, MatchResult> results) {
-        return new ParticipantsMatchResultDto(
+    public static UsersMatchResultDto from(Map<Player, MatchResult> results) {
+        return new UsersMatchResultDto(
                 results.entrySet()
                         .stream()
                         .collect(Collectors.toMap(

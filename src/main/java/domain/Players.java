@@ -1,65 +1,67 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
+    
+    private static final int MAX_SIZE = 5;
 
-    private static final int MIN_SIZE = 2;
-    private static final int MAX_SIZE = 6;
+    private final Dealer dealer;
+    private final List<User> users;
 
-    private final List<Player> players;
 
-    public Players(List<Player> players) {
-        validateSize(players);
-        validateUniqueNames(players);
-        this.players = players;
+    public Players(Dealer dealer, List<User> users) {
+        validateSize(users);
+        validateUniqueNames(users);
+        this.dealer = dealer;
+        this.users = users;
     }
 
-    private void validateSize(List<Player> players) {
-        if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
-            throw new IllegalArgumentException("참여자 수는 딜러 포함 최소 2인 이상 최대 6인 이하여야 합니다.");
+    private void validateSize(List<User> users) {
+        if (users.isEmpty() || users.size() > MAX_SIZE) {
+            throw new IllegalArgumentException(users.size() + ": 유저 수는 1인 이상 5인 이하여야 합니다.");
         }
     }
 
-    private void validateUniqueNames(List<Player> players) {
-        if (players.stream()
+    private void validateUniqueNames(List<User> users) {
+        if (users.stream()
                 .map(Player::getName)
                 .distinct()
-                .count() != players.size()) {
+                .count() != users.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 
     public void distributeInitialCards(Deck deck) {
-        for (Player player : players) {
-            player.receiveInitialCards(deck);
+        dealer.receiveInitialCards(deck);
+        for (User user : users) {
+            user.receiveInitialCards(deck);
         }
     }
 
     public void openInitialCards() {
-        for (Player player : players) {
-            player.openInitialCards();
+        dealer.openInitialCards();
+        for (User user : users) {
+            user.openInitialCards();
         }
     }
 
     public int size() {
-        return players.size();
+        return 1 + users.size();
     }
 
     public List<Player> getPlayers() {
+        List<Player> players = new ArrayList<>(List.of(dealer));
+        players.addAll(users);
         return players;
     }
 
     public Dealer getDealer() {
-        return (Dealer) players.stream()
-                .filter(Player::isDealer)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("딜러는 항상 1명 존재해야 합니다."));
+        return dealer;
     }
 
-    public List<Player> getParticipants() {
-        return players.stream()
-                .filter(player -> !player.isDealer())
-                .toList();
+    public List<User> getUsers() {
+        return users;
     }
 }

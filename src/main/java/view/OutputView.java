@@ -4,20 +4,20 @@ import controller.dto.DealerMatchResultCountDto;
 import controller.dto.NameAndCardsDto;
 import controller.dto.NameAndSumsDto;
 import controller.dto.NameAndSumsDto.NameAndSumDto;
-import controller.dto.ParticipantsMatchResultDto;
+import controller.dto.UsersMatchResultDto;
 import domain.Card;
 import java.util.List;
 
 public class OutputView {
-    public static void printInitialCards(NameAndCardsDto dealer, List<NameAndCardsDto> participants) {
-        List<String> names = participants.stream()
+    public static void printInitialCards(NameAndCardsDto dealer, List<NameAndCardsDto> users) {
+        List<String> names = users.stream()
                 .map(NameAndCardsDto::name)
                 .toList();
 
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), String.join(", ", names));
 
         printPlayerCards(dealer.name(), dealer.cards());
-        participants.forEach(participant -> printPlayerCards(participant.name(), participant.cards()));
+        users.forEach(user -> printPlayerCards(user.name(), user.cards()));
         System.out.println();
     }
 
@@ -30,10 +30,10 @@ public class OutputView {
     }
 
     public static void printPlayersCardsAndSum(NameAndCardsDto dealer,
-                                               List<NameAndCardsDto> participants,
+                                               List<NameAndCardsDto> users,
                                                NameAndSumsDto nameAndSumsDto) {
         printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSumsDto.nameAndSums()));
-        participants.forEach(player ->
+        users.forEach(player ->
                 printPlayerCardsAndSum(player, findNameAndSumByName(player.name(), nameAndSumsDto.nameAndSums())));
         System.out.println();
     }
@@ -60,10 +60,10 @@ public class OutputView {
     }
 
     public static void printMatchResults(String dealerName, DealerMatchResultCountDto dealerResult,
-                                         ParticipantsMatchResultDto participantsMathResult) {
+                                         UsersMatchResultDto usersMathResult) {
         System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResult(dealerResult));
 
-        participantsMathResult.nameMatchResult()
+        usersMathResult.nameMatchResult()
                 .forEach((key, value) -> System.out.printf("%s: %s%n", key, value.getTitle()));
     }
 

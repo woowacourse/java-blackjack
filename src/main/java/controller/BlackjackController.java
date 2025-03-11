@@ -3,15 +3,13 @@ package controller;
 import controller.dto.DealerMatchResultCountDto;
 import controller.dto.NameAndCardsDto;
 import controller.dto.NameAndSumsDto;
-import controller.dto.ParticipantsMatchResultDto;
+import controller.dto.UsersMatchResultDto;
 import domain.BlackjackManager;
 import domain.Dealer;
 import domain.Deck;
 import domain.DeckGenerator;
-import domain.Participant;
-import domain.Player;
 import domain.Players;
-import java.util.ArrayList;
+import domain.User;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
@@ -32,12 +30,12 @@ public class BlackjackController {
         blackjackManager.openInitialCards();
         OutputView.printInitialCards(
                 NameAndCardsDto.toNameAndOpenedCards(blackjackManager.getDealer()),
-                NameAndCardsDto.toNameAndOpenedCards(blackjackManager.getParticipants())
+                NameAndCardsDto.toNameAndOpenedCards(blackjackManager.getUsers())
         );
     }
 
     private void addMoreCards(BlackjackManager blackjackManager) {
-        blackjackManager.addMoreCardsToPlayers(InputView::inputWantOneMoreCard, OutputView::printPlayerCards);
+        blackjackManager.addMoreCardsToUsers(InputView::inputWantOneMoreCard, OutputView::printPlayerCards);
 
         if (blackjackManager.addCardToDealerIfLowSum()) {
             OutputView.printAddCardToDealer();
@@ -46,38 +44,35 @@ public class BlackjackController {
 
     private void printGameResult(BlackjackManager blackjackManager) {
         final Dealer dealer = blackjackManager.getDealer();
-        final List<Player> participants = blackjackManager.getParticipants();
+        final List<User> users = blackjackManager.getUsers();
         OutputView.printPlayersCardsAndSum(NameAndCardsDto.toNameAndCards(dealer),
-                NameAndCardsDto.toNameAndCards(participants),
+                NameAndCardsDto.toNameAndCards(users),
                 NameAndSumsDto.from(blackjackManager.computePlayerSum()));
 
-        final var participantsMatchResult = blackjackManager.computeParticipantsMatchResult(dealer, participants);
-        final var dealerMathResultCount = blackjackManager.computeDealerMatchResultCount(participantsMatchResult);
+        final var usersMatchResult = blackjackManager.computeUsersMatchResult(dealer, users);
+        final var dealerMathResultCount = blackjackManager.computeDealerMatchResultCount(usersMatchResult);
         OutputView.printMatchResults(blackjackManager.getDealerName(),
                 DealerMatchResultCountDto.from(dealerMathResultCount),
-                ParticipantsMatchResultDto.from(participantsMatchResult));
+                UsersMatchResultDto.from(usersMatchResult));
     }
 
     private BlackjackManager createBlackjackManager() {
-        List<String> names = InputView.inputParticipantName();
-        List<Participant> participants = createParticipants(names);
+        List<String> names = InputView.inputUserName();
+        List<User> users = createUsers(names);
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
-        Players players = createPlayers(dealer, participants);
+        Players players = createPlayers(dealer, users);
         return new BlackjackManager(players, deck);
     }
 
-    private List<Participant> createParticipants(List<String> names) {
+    private List<User> createUsers(List<String> names) {
         return names.stream()
                 .map(String::strip)
-                .map(Participant::new)
+                .map(User::new)
                 .collect(Collectors.toList());
     }
 
-    private Players createPlayers(Dealer dealer, List<Participant> participants) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(participants);
-        return new Players(players);
+    private Players createPlayers(Dealer dealer, List<User> users) {
+        return new Players(dealer, users);
     }
 }

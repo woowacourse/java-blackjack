@@ -1,7 +1,7 @@
 package domain;
 
-public class Participant extends Player {
-    public Participant(String name) {
+public class User extends Player {
+    public User(String name) {
         super(name);
     }
 

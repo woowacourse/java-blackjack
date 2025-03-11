@@ -12,13 +12,15 @@ public class BlackjackManagerTest {
     @Test
     void 블랙잭_객체를_생성한다() {
         // given
-        Players players = new Players(List.of(
-                new Dealer(),
-                new Participant("시소"),
-                new Participant("헤일러"),
-                new Participant("부기"),
-                new Participant("사나")
-        ));
+        Dealer dealer = new Dealer();
+        Players players = new Players(
+                dealer,
+                List.of(
+                        new User("시소"),
+                        new User("헤일러"),
+                        new User("부기"),
+                        new User("사나")
+                ));
 
         Deck deck = DeckGenerator.generateDeck();
 
@@ -31,13 +33,14 @@ public class BlackjackManagerTest {
     void 딜러의_카드_합이_16이하면_카드를_한장_추가한다() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(
+        Players players = new Players(
                 dealer,
-                new Participant("시소"),
-                new Participant("헤일러"),
-                new Participant("부기"),
-                new Participant("사나")
-        ));
+                List.of(
+                        new User("시소"),
+                        new User("헤일러"),
+                        new User("부기"),
+                        new User("사나")
+                ));
 
         Deck deck = new Deck(new ArrayList<>(List.of(
                 new Card(Suit.SPADE, Rank.EIGHT),
@@ -70,15 +73,13 @@ public class BlackjackManagerTest {
         // given
         Dealer dealer = new Dealer();
 
-        Player siso = new Participant("시소");
-        Player heiler = new Participant("헤일러");
-        Player boogie = new Participant("부기");
-        Player sana = new Participant("사나");
+        User siso = new User("시소");
+        User heiler = new User("헤일러");
+        User boogie = new User("부기");
+        User sana = new User("사나");
 
-        List<Player> participants = List.of(siso, heiler, boogie, sana);
-        List<Player> playersList = new ArrayList<>(List.of(dealer));
-        playersList.addAll(participants);
-        Players players = new Players(playersList);
+        List<User> users = List.of(siso, heiler, boogie, sana);
+        Players players = new Players(dealer, users);
 
         Deck deck = new Deck(new ArrayList<>(List.of(
                 new Card(Suit.SPADE, Rank.FIVE),
@@ -96,15 +97,15 @@ public class BlackjackManagerTest {
         blackjackManager.distributeInitialCards();
 
         // when
-        Map<Player, MatchResult> participantsMatchResult
-                = blackjackManager.computeParticipantsMatchResult(dealer, participants);
+        Map<Player, MatchResult> usersMatchResult
+                = blackjackManager.computeUsersMatchResult(dealer, users);
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(participantsMatchResult.get(siso)).isEqualTo(MatchResult.WIN);
-            softly.assertThat(participantsMatchResult.get(heiler)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(participantsMatchResult.get(boogie)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(participantsMatchResult.get(sana)).isEqualTo(MatchResult.DRAW);
+            softly.assertThat(usersMatchResult.get(siso)).isEqualTo(MatchResult.WIN);
+            softly.assertThat(usersMatchResult.get(heiler)).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(usersMatchResult.get(boogie)).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(usersMatchResult.get(sana)).isEqualTo(MatchResult.DRAW);
         });
     }
 
@@ -113,15 +114,13 @@ public class BlackjackManagerTest {
         // given
         Dealer dealer = new Dealer();
 
-        Player siso = new Participant("시소");
-        Player heiler = new Participant("헤일러");
-        Player boogie = new Participant("부기");
-        Player sana = new Participant("사나");
+        User siso = new User("시소");
+        User heiler = new User("헤일러");
+        User boogie = new User("부기");
+        User sana = new User("사나");
 
-        List<Player> participants = List.of(siso, heiler, boogie, sana);
-        List<Player> playersList = new ArrayList<>(List.of(dealer));
-        playersList.addAll(participants);
-        Players players = new Players(playersList);
+        List<User> users = List.of(siso, heiler, boogie, sana);
+        Players players = new Players(dealer, users);
 
         Deck deck = new Deck(new ArrayList<>(List.of(
                 new Card(Suit.SPADE, Rank.FIVE),
@@ -137,12 +136,12 @@ public class BlackjackManagerTest {
         )));
         BlackjackManager blackjackManager = new BlackjackManager(players, deck);
         blackjackManager.distributeInitialCards();
-        Map<Player, MatchResult> participantsMatchResult
-                = blackjackManager.computeParticipantsMatchResult(dealer, participants);
+        Map<Player, MatchResult> usersMatchResult
+                = blackjackManager.computeUsersMatchResult(dealer, users);
 
         // when
         Map<MatchResult, Integer> dealerMatchResultCount
-                = blackjackManager.computeDealerMatchResultCount(participantsMatchResult);
+                = blackjackManager.computeDealerMatchResultCount(usersMatchResult);
 
         // then
         SoftAssertions.assertSoftly(softly -> {

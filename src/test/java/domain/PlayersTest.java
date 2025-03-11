@@ -1,56 +1,69 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
     @Test
-    void 참여자_인원이_6인_초과인_경우_예외가_발생한다() {
+    void 참여자_인원이_0명인_경우_예외가_발생한다() {
         // given
-        List<Player> players = List.of(
-                new Dealer(),
-                new Participant("시소"),
-                new Participant("헤일러"),
-                new Participant("부기"),
-                new Participant("사나"),
-                new Participant("수양"),
-                new Participant("포스티")
+        Dealer dealer = new Dealer();
+        List<User> users = new ArrayList<>();
+
+        // when & then
+        Assertions.assertThatThrownBy(() -> new Players(dealer, users))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 참여자_인원이_5인_초과인_경우_예외가_발생한다() {
+        // given
+        Dealer dealer = new Dealer();
+        List<User> users = List.of(
+                new User("시소"),
+                new User("헤일러"),
+                new User("부기"),
+                new User("사나"),
+                new User("수양"),
+                new User("포스티")
         );
 
         // when & then
-        Assertions.assertThatThrownBy(() -> new Players(players))
+        Assertions.assertThatThrownBy(() -> new Players(dealer, users))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 플레이어_이름이_중복될_경우_예외가_발생한다() {
         // given
-        List<Player> players = List.of(
-                new Dealer(),
-                new Participant("시소"),
-                new Participant("헤일러"),
-                new Participant("사나"),
-                new Participant("사나"),
-                new Participant("히스타"),
-                new Participant("포스티")
+        Dealer dealer = new Dealer();
+        List<User> users = List.of(
+                new User("시소"),
+                new User("헤일러"),
+                new User("사나"),
+                new User("사나"),
+                new User("히스타"),
+                new User("포스티")
         );
 
         // when & then
-        Assertions.assertThatThrownBy(() -> new Players(players))
+        Assertions.assertThatThrownBy(() -> new Players(dealer, users))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 참여자_모두에게_카드를_2장씩_분배한다() {
         // given
-        Players players = new Players(List.of(
-                new Dealer(),
-                new Participant("시소"),
-                new Participant("헤일러"),
-                new Participant("부기"),
-                new Participant("사나")
-        ));
+        Dealer dealer = new Dealer();
+        List<User> users = List.of(
+                new User("시소"),
+                new User("헤일러"),
+                new User("부기"),
+                new User("사나")
+        );
+        Players players = new Players(dealer, users);
         Deck deck = DeckGenerator.generateDeck();
 
         // when
