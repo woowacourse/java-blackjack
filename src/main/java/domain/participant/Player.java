@@ -1,9 +1,11 @@
 package domain.participant;
 
+import domain.card.CardHand;
+
 public class Player extends AbstractGambler {
 
-    public Player(String name) {
-        super(name);
+    public Player(String name, CardHand cardHand) {
+        super(name, cardHand);
         validateNotBlank(name);
         validateLength(name);
     }

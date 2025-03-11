@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -24,7 +25,7 @@ public class PlayerTest {
         //when
         //then
         assertThatCode(
-            () -> new Player(name)
+            () -> new Player(name, new CardHand())
         ).doesNotThrowAnyException();
     }
 
@@ -33,7 +34,7 @@ public class PlayerTest {
         //given
         //when
         //then
-        assertThatThrownBy(() -> new Player("asdfghjjklz"))
+        assertThatThrownBy(() -> new Player("asdfghjjklz", new CardHand()))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -45,7 +46,7 @@ public class PlayerTest {
         //given
         //when
         //then
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, new CardHand()))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,7 +54,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("player");
+        player = new Player("player", new CardHand());
     }
 
     @Test

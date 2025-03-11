@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.card.CardPack;
 import domain.participant.Dealer;
 import domain.participant.Gambler;
@@ -20,14 +21,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public class GamblersTest {
 
-    private final Dealer dealer = new Dealer();
-    private final Player player = new Player("이름");
+    private final Dealer dealer = new Dealer(new CardHand());
+    private final Player player = new Player("이름", new CardHand());
 
     @Test
     void 딜러와_플레이어들로_Gamblers를_생성한다() {
         //given
-        Player player1 = new Player("이름1");
-        Player player2 = new Player("이름2");
+        Player player1 = new Player("이름1", new CardHand());
+        Player player2 = new Player("이름2", new CardHand());
 
         //when
         //then
@@ -164,12 +165,12 @@ public class GamblersTest {
     @Test
     void 딜러의_승무패_횟수를_계산한다() {
         //given
-        Player winnerPlayer1 = new Player("이름1");
-        Player drawPlayer1 = new Player("이름2");
-        Player drawPlayer2 = new Player("이름3");
-        Player losePlayer1 = new Player("이름4");
-        Player losePlayer2 = new Player("이름5");
-        Player losePlayer3 = new Player("이름6");
+        Player winnerPlayer1 = new Player("이름1", new CardHand());
+        Player drawPlayer1 = new Player("이름2", new CardHand());
+        Player drawPlayer2 = new Player("이름3", new CardHand());
+        Player losePlayer1 = new Player("이름4", new CardHand());
+        Player losePlayer2 = new Player("이름5", new CardHand());
+        Player losePlayer3 = new Player("이름6", new CardHand());
 
         Gamblers gamblers = new Gamblers(
             dealer,

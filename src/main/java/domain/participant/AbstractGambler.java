@@ -9,9 +9,9 @@ public abstract class AbstractGambler implements Gambler {
     protected final String name;
     protected final CardHand cardHand;
 
-    protected AbstractGambler(String name) {
+    protected AbstractGambler(String name, CardHand cardHand) {
         this.name = name;
-        this.cardHand = new CardHand();
+        this.cardHand = cardHand;
     }
 
     public abstract boolean canTakeMoreCard();

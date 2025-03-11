@@ -3,6 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.card.Rank;
 import domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer();
+        dealer = new Dealer(new CardHand());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.card.CardPack;
 import domain.game.Gamblers;
 import domain.game.Winning;
@@ -27,8 +28,11 @@ public class BlackjackController {
     }
 
     public void play() {
-        Dealer dealer = new Dealer();
-        List<Player> players = inputView.getPlayers();
+        Dealer dealer = new Dealer(new CardHand());
+        List<Player> players = inputView.getPlayerNames()
+            .stream()
+            .map(name -> new Player(name, new CardHand()))
+            .toList();
         Gamblers gamblers = new Gamblers(dealer, players);
         CardPack cardPack = new CardPack(Card.allCards());
         cardPack.shuffle();
