@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BlackjackParticipants {
 
-    private final String INVALID_PLAYER = "존재하지 않는 플레이어입니다.";
+    private final String PLAYER_NOT_EXIST = "존재하지 않는 플레이어입니다.";
     private final String DEALER_NOT_EXIST = "딜러가 존재하지 않습니다.";
 
     private final List<BlackjackParticipant> participants;
@@ -25,14 +25,14 @@ public class BlackjackParticipants {
         return participants.stream()
                 .filter(player -> player.name().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_PLAYER));
+                .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_EXIST));
     }
 
     public List<BlackjackResult> calculatePlayerResults() {
         List<BlackjackResult> blackjackResults = new ArrayList<>();
         for (String name : getPlayerNames()) {
             List<TrumpCard> trumpCards = participantCards(name);
-            int sum = calculateCardSum(name);
+            Score sum = calculateCardSum(name);
             blackjackResults.add(new BlackjackResult(name, trumpCards, sum));
         }
         return Collections.unmodifiableList(blackjackResults);
@@ -48,7 +48,7 @@ public class BlackjackParticipants {
     public BlackjackResult calculateResult(String name) {
         BlackjackParticipant participant = findParticipant(name);
         ParticipantHand hand = participant.hand;
-        int sum = hand.calculateCardSum();
+        Score sum = hand.calculateCardSum();
         List<TrumpCard> trumpCards = hand.getCards();
         return new BlackjackResult(name, trumpCards, sum);
     }
@@ -58,7 +58,7 @@ public class BlackjackParticipants {
         return participant.trumpCards();
     }
 
-    public int calculateCardSum(String name) {
+    public Score calculateCardSum(String name) {
         BlackjackParticipant participant = findParticipant(name);
         return participant.calculateCardSum();
     }

@@ -7,7 +7,6 @@ public abstract class BlackjackParticipant {
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
     protected final ParticipantHand hand;
     private final String name;
-
     protected BlackjackParticipant(String name) {
         hand = new ParticipantHand();
         validateNickname(name);
@@ -24,7 +23,7 @@ public abstract class BlackjackParticipant {
         hand.addCard(trumpCard);
     }
 
-    public int calculateCardSum() {
+    public Score calculateCardSum() {
         return hand.calculateCardSum();
     }
 

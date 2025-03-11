@@ -6,6 +6,7 @@ import domain.BlackjackGame;
 import domain.BlackjackResult;
 import domain.DealerWinStatus;
 import domain.Player;
+import domain.Score;
 import domain.TrumpCard;
 import domain.WinStatus;
 import domain.strategy.BlackjackDrawStrategy;
@@ -67,9 +68,9 @@ public class BlackjackController {
     private void openPlayerResultCards(BlackjackResult blackjackResult) {
         String name = blackjackResult.name();
         List<TrumpCard> trumpCards = blackjackResult.trumpCards();
-        int sum = blackjackResult.cardSum();
+        Score totalScore = blackjackResult.cardSum();
 
-        outputView.openCardsWithSum(name, trumpCards, sum);
+        outputView.openCardsWithSum(name, trumpCards, totalScore);
     }
 
     private void dealerHit(BlackjackGame blackjackGame) {

@@ -29,7 +29,7 @@ public class BlackjackResultEvaluator {
     }
 
     private static int calculateDealerWin(ScoreInfo scoreInfo) {
-        if (scoreInfo.dealerSum > scoreInfo.playerSum && !scoreInfo.isDealerBust) {
+        if (scoreInfo.dealerSum.isGreaterThan(scoreInfo.playerSum) && !scoreInfo.isDealerBust) {
             return 1;
         }
         if (!scoreInfo.isDealerBust && scoreInfo.isPlayerBust) {
@@ -39,8 +39,9 @@ public class BlackjackResultEvaluator {
     }
 
     private static int calculateDealerLose(ScoreInfo scoreInfo) {
-        if (scoreInfo.dealerSum < scoreInfo.playerSum && !scoreInfo.isPlayerBust) {
+        if (scoreInfo.dealerSum.isLessThan(scoreInfo.playerSum) && !scoreInfo.isPlayerBust) {
             return 1;
+
         }
         if (!scoreInfo.isPlayerBust && scoreInfo.isDealerBust) {
             return 1;
@@ -52,18 +53,18 @@ public class BlackjackResultEvaluator {
         if (scoreInfo.isDealerBust && scoreInfo.isPlayerBust) {
             return WinStatus.DRAW;
         }
-        if (scoreInfo.dealerSum < scoreInfo.playerSum) {
+        if (scoreInfo.dealerSum.isLessThan(scoreInfo.playerSum)) {
             return WinStatus.WIN;
         }
-        if (scoreInfo.dealerSum > scoreInfo.playerSum) {
+        if (scoreInfo.dealerSum.isGreaterThan(scoreInfo.playerSum)) {
             return WinStatus.LOSE;
         }
         return WinStatus.DRAW;
     }
 
     private static class ScoreInfo {
-        int dealerSum;
-        int playerSum;
+        Score dealerSum;
+        Score playerSum;
         boolean isDealerBust;
         boolean isPlayerBust;
 

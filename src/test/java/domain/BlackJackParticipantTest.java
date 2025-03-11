@@ -16,26 +16,26 @@ class BlackJackParticipantTest {
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
                                 new TrumpCard(Suit.CLOVER, CardValue.K)
                         ),
-                        21
+                        Score.from(21)
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
                                 new TrumpCard(Suit.CLOVER, CardValue.A),
                                 new TrumpCard(Suit.DIAMOND, CardValue.NINE)
                         ),
-                        21
+                        Score.from(21)
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
                                 new TrumpCard(Suit.CLOVER, CardValue.A)),
-                        12
+                        Score.from(12)
                 )
         );
     }
 
     @ParameterizedTest
     @MethodSource("createAceCardHand")
-    void 에이스가_포함된_경우에_에이스를_최적의_값으로_계산한다(List<TrumpCard> hand, int expected) {
+    void 에이스가_포함된_경우에_에이스를_최적의_값으로_계산한다(List<TrumpCard> hand, Score expected) {
         // given
         BlackjackDeck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
         Player player = new Player("루키");
@@ -45,7 +45,7 @@ class BlackJackParticipantTest {
         for (int i = 0; i < cardCount; i++) {
             player.addDraw(deck.drawCard());
         }
-        int score = player.calculateCardSum();
+        Score score = player.calculateCardSum();
 
         // then
         assertThat(score).isEqualTo(expected);

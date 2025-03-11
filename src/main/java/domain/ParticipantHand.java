@@ -5,13 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class ParticipantHand {
-
-    private static final int BUST_STANDARD = 21;
-    private static final int ACE_DIFF = 10;
-    private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21점 이상 받을 수 없습니다";
+    private static final Score BUST_STANDARD_SCORE = Score.from(21);
+    private static final Score ACE_DIFF_SCORE = Score.from(10);
+    private static final String BUST_HAND_FORMAT = "비정상적인 카드 추가입니다. 플레이어는 %d점 이상 받을 수 없습니다";
 
     private final List<TrumpCard> handCards;
-
     public ParticipantHand() {
         this.handCards = new ArrayList<>();
     }
@@ -19,39 +17,46 @@ public class ParticipantHand {
 
     public void addCard(TrumpCard card) {
         if (isBust()) {
-            throw new IllegalStateException(INVALID_CARD_STATE);
+            throw new IllegalStateException(String.format(BUST_HAND_FORMAT, BUST_STANDARD_SCORE.toInt()));
         }
         handCards.add(card);
     }
 
     public boolean isBust() {
-        int sum = calculateCardSum();
-        return BUST_STANDARD < sum;
+        return calculateCardSum().isGreaterThan(BUST_STANDARD_SCORE);
     }
 
-    public int calculateCardSum() {
-        return calculateCardSum(BUST_STANDARD);
+    public Score calculateCardSum() {
+        return calculateCardSum(BUST_STANDARD_SCORE);
     }
 
-    public int calculateCardSum(int aceCalculateStandard) {
-        int sum = handCards.stream()
+    public Score calculateCardSum(Score aceCalculateStandard) {
+        Score totalScore = totalScore();
+        int aceCount = aceCount();
+        return calculateAceIncludeSum(aceCalculateStandard, aceCount, totalScore);
+    }
+
+    private Score totalScore() {
+        return handCards.stream()
                 .map(TrumpCard::cardNumberValue)
                 .reduce(Integer::sum)
-                .orElse(0);
-        int aceCount = (int) handCards.stream()
-                .filter(TrumpCard::isAce)
-                .count();
-        if (aceCount != 0) {
-            return calculateAceIncludeSum(aceCalculateStandard, aceCount, sum);
-        }
-        return sum;
+                .map(Score::new)
+                .orElse(Score.zero());
     }
 
-    private int calculateAceIncludeSum(int aceCalculateStandard, int aceCount, int sum) {
-        if (aceCalculateStandard < sum && aceCount != 0) {
-            return calculateAceIncludeSum(aceCalculateStandard, aceCount - 1, sum - ACE_DIFF);
+    private int aceCount(){
+        return (int) handCards.stream()
+                .filter(TrumpCard::isAce)
+                .count();
+    }
+
+    private Score calculateAceIncludeSum(Score aceStandard, int aceCount, Score totalScore) {
+        while(totalScore.isGreaterThan(aceStandard) && aceCount > 0) {
+            totalScore = totalScore.minus(ACE_DIFF_SCORE);
+            aceCount --;
         }
-        return sum;
+
+        return totalScore;
     }
 
     public List<TrumpCard> getCards(){

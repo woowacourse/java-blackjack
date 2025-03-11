@@ -59,27 +59,27 @@ class ParticipantHandTest {
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
                                 new TrumpCard(Suit.CLOVER, CardValue.NINE)
                         ),
-                        17
+                        Score.from(17)
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
                                 new TrumpCard(Suit.CLOVER, CardValue.SEVEN)
                         ),
-                        17
+                        Score.from(17)
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
                                 new TrumpCard(Suit.CLOVER, CardValue.SEVEN),
                                 new TrumpCard(Suit.CLOVER, CardValue.FOUR)
                         ),
-                        21
+                        Score.from(21)
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.FIVE),
                                 new TrumpCard(Suit.CLOVER, CardValue.K),
                                 new TrumpCard(Suit.HEART, CardValue.A)
                         ),
-                        16
+                        Score.from(16)
                 )
         );
     }
@@ -89,23 +89,23 @@ class ParticipantHandTest {
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
                                 new TrumpCard(Suit.CLOVER, CardValue.A)
                         ),
-                        11,
-                        2
+                        Score.from(11),
+                        Score.from(2)
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
                                 new TrumpCard(Suit.CLOVER, CardValue.A)
                         ),
-                        11,
-                        11
+                        Score.from(11),
+                        Score.from(11)
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
                                 new TrumpCard(Suit.CLOVER, CardValue.A),
                                 new TrumpCard(Suit.CLOVER, CardValue.A)
                         ),
-                        21,
-                        12
+                        Score.from(21),
+                        Score.from(12)
                 )
         );
     }
@@ -157,7 +157,7 @@ class ParticipantHandTest {
 
     @ParameterizedTest
     @MethodSource("createCalculateSumCards")
-    void 카드의_합을_계산한다(List<TrumpCard> cards, int expected) {
+    void 카드의_합을_계산한다(List<TrumpCard> cards, Score expected) {
         // given
         ParticipantHand hand = new ParticipantHand();
         for (int i = 0; i < cards.size(); i++) {
@@ -165,15 +165,15 @@ class ParticipantHandTest {
         }
 
         // when
-        int sum = hand.calculateCardSum();
+        Score totalScore = hand.calculateCardSum();
 
         // then
-        assertThat(sum).isEqualTo(expected);
+        assertThat(totalScore).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("createCalculateAceSumCards")
-    void 에이스를_최적의해로_카드의_합을_구한다(List<TrumpCard> cards, int standard, int expected) {
+    void 에이스를_최적의해로_카드의_합을_구한다(List<TrumpCard> cards, Score aceStandard, Score expected) {
         // given
         ParticipantHand hand = new ParticipantHand();
         for (int i = 0; i < cards.size(); i++) {
@@ -181,9 +181,9 @@ class ParticipantHandTest {
         }
 
         // when
-        int sum = hand.calculateCardSum(standard);
+        Score totalScore = hand.calculateCardSum(aceStandard);
 
         // then
-        assertThat(sum).isEqualTo(expected);
+        assertThat(totalScore).isEqualTo(expected);
     }
 }

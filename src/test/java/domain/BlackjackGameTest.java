@@ -93,7 +93,7 @@ class BlackjackGameTest {
         List<BlackjackResult> blackjackResults = blackjackGame.currentPlayerBlackjackResult();
 
         // then
-        List<Integer> expectedPlayersCardSum = List.of(18, 19);
+        List<Score> expectedPlayersCardSum = List.of(Score.from(18), Score.from(19));
 
         assertThatIterable(blackjackResults.stream()
                 .map(BlackjackResult::cardSum)
@@ -114,7 +114,7 @@ class BlackjackGameTest {
         BlackjackResult blackjackResult = blackjackGame.currentDealerBlackjackResult();
 
         // then
-        int expectedDealerCardSum = 5;
+        Score expectedDealerCardSum = Score.from(5);
         assertThat(blackjackResult.cardSum())
                 .isEqualTo(expectedDealerCardSum);
     }

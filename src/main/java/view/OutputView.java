@@ -1,5 +1,6 @@
 package view;
 
+import domain.Score;
 import domain.TrumpCard;
 import domain.WinStatus;
 import java.util.List;
@@ -37,9 +38,9 @@ public class OutputView {
         System.out.printf(OPEN_CARD_FORMAT, name, formattedTrumpCard);
     }
 
-    public void openCardsWithSum(String name, List<TrumpCard> trumpCards, int sum) {
+    public void openCardsWithSum(String name, List<TrumpCard> trumpCards, Score sum) {
         String formattedTrumpCard = formattingTrumpCards(trumpCards);
-        System.out.printf(OPEN_CARD_WITH_SUM_FORMAT, name, formattedTrumpCard, sum);
+        System.out.printf(OPEN_CARD_WITH_SUM_FORMAT, name, formattedTrumpCard, sum.value());
     }
 
     private String formattingTrumpCards(List<TrumpCard> trumpCards) {
