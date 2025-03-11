@@ -1,7 +1,7 @@
 package blackjack.service;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -14,9 +14,9 @@ public class BlackjackService {
             final Runnable reached21Notifier,
             final Runnable bustNotifier,
             final Function<String, Boolean> addCardDecision,
-            final Consumer<PlayerBlackjackCardHand> playerHandNotifier
+            final Consumer<PlayerBettingBlackjackCardHand> playerHandNotifier
     ) {
-        for (PlayerBlackjackCardHand playerHand : blackjackGame.getPlayerHands()) {
+        for (PlayerBettingBlackjackCardHand playerHand : blackjackGame.getPlayerHands()) {
             playerTurnNotifier.accept(playerHand.getPlayerName());
             if (playerHand.isAddedTo21()) {
                 reached21Notifier.run();

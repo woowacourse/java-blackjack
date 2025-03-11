@@ -1,11 +1,12 @@
 package blackjack.view;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import blackjack.view.reader.Reader;
 import blackjack.view.writer.Writer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class InputView {
     
@@ -39,5 +40,15 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("y나 n을 입력하세요.");
+    }
+    
+    public List<Integer> getBettingAmounts(List<String> names) {
+        final List<Integer> bettingAmounts = new ArrayList<>();
+        for (String name : names) {
+            writer.write("%s의 배팅 금액은?".formatted(name));
+            String input = reader.readLine();
+            bettingAmounts.add(Integer.parseInt(input));
+        }
+        return bettingAmounts;
     }
 }

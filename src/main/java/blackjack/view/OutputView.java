@@ -1,15 +1,14 @@
 package blackjack.view;
 
-import blackjack.domain.BlackjackJudge;
-import blackjack.domain.WinningStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
-import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 import blackjack.view.writer.Writer;
 
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class OutputView {
     
@@ -21,19 +20,19 @@ public class OutputView {
         this.writer = writer;
     }
     
-    public void outputInitialCards(final DealerBlackjackCardHand dealerHand, final List<PlayerBlackjackCardHand> playerHands) {
+    public void outputInitialCards(final DealerBlackjackCardHand dealerHand, final List<PlayerBettingBlackjackCardHand> playerHands) {
         StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
         sj.add(outputInitialCardOpeningMessage(extractPlayerNames(playerHands)));
-        sj.add(parseNameAndCards("딜러", dealerHand.getCards()));
-        for (PlayerBlackjackCardHand playerHand : playerHands) {
+        sj.add(parseNameAndCards("딜러", List.of(dealerHand.getInitialCard())));
+        for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             sj.add(parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards()));
         }
         writer.write(sj.toString());
     }
     
-    private List<String> extractPlayerNames(final List<PlayerBlackjackCardHand> playerHands) {
+    private List<String> extractPlayerNames(final List<PlayerBettingBlackjackCardHand> playerHands) {
         return playerHands.stream()
-                .map(PlayerBlackjackCardHand::getPlayerName)
+                .map(PlayerBettingBlackjackCardHand::getPlayerName)
                 .toList();
     }
     
@@ -58,7 +57,7 @@ public class OutputView {
         writer.write("버스트이기 때문에 더 받을 수 없습니다.");
     }
     
-    public void outputCardsAndSum(PlayerBlackjackCardHand playerHand) {
+    public void outputCardsAndSum(PlayerBettingBlackjackCardHand playerHand) {
         final String message = parseCards(playerHand.getCards()) + parseSum(playerHand.getBlackjackSum());
         writer.write(message);
     }
@@ -72,11 +71,11 @@ public class OutputView {
     
     public void outputOpenCards(
             final DealerBlackjackCardHand dealerHand,
-            final List<PlayerBlackjackCardHand> playerHands
+            final List<PlayerBettingBlackjackCardHand> playerHands
     ) {
         StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
         sj.add(parseNameAndCards("딜러", dealerHand.getCards()) + parseFinalSum(dealerHand.getBlackjackSum()));
-        for (PlayerBlackjackCardHand playerHand : playerHands) {
+        for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             sj.add(parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards()) + parseFinalSum(playerHand.getBlackjackSum()));
         }
         writer.write(sj.toString());
@@ -107,17 +106,29 @@ public class OutputView {
         return " - 합계: %d".formatted(sum);
     }
 
-    public void outputFinalWinOrLoss(final BlackjackJudge judge) {
+    public void outputFinalProfit(
+            final DealerBlackjackCardHand dealerHand,
+            final List<PlayerBettingBlackjackCardHand> playerHands
+    ) {
         StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
-        sj.add(LINE_SEPARATOR + "<최종 승패>");
-        sj.add("딜러: %d승 %d무 %d패".formatted(
-                judge.getDealerWinningCount(),
-                judge.getDealerDrawingCount(),
-                judge.getDealerLosingCount()
-        ));
-        for (Map.Entry<String, WinningStatus> entry : judge.getWinningStatus().entrySet()) {
-            sj.add("%s: %s".formatted(entry.getKey(), entry.getValue()));
+        sj.add("## 최종 수익");
+        sj.add("딜러: %d".formatted((int) getTotalProfitOfDealer(dealerHand, playerHands)));
+        for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
+            sj.add("%s: %d".formatted(
+                    playerHand.getPlayerName(),
+                    (int) playerHand.compareHand(dealerHand)
+            ));
         }
         writer.write(sj.toString());
+    }
+
+    private static double getTotalProfitOfDealer(final DealerBlackjackCardHand dealerHand, final List<PlayerBettingBlackjackCardHand> playerHands) {
+        final Map<String, Double> profits = playerHands.stream()
+                .collect(Collectors.toMap(
+                        PlayerBettingBlackjackCardHand::getPlayerName,
+                        hand -> hand.compareHand(dealerHand)
+                ));
+
+        return -profits.values().stream().mapToDouble(Double::doubleValue).sum();
     }
 }

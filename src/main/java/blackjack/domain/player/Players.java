@@ -1,8 +1,10 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -43,10 +45,12 @@ public class Players {
                 .count();
         return noDuplicatedNamesCount != playerNames.size();
     }
-    
-    public List<PlayerBlackjackCardHand> toBlackjackCardHand(final BlackjackDeck deck) {
-        return players.stream()
-                .map(player -> new PlayerBlackjackCardHand(player, deck))
-                .toList();
+
+    public List<PlayerBettingBlackjackCardHand> toBlackjackBettingCardHand(final BlackjackDeck deck, final List<Integer> bettingAmounts) {
+        final List<PlayerBettingBlackjackCardHand> bettingBlackjackCardHands = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            bettingBlackjackCardHands.add(PlayerBettingBlackjackCardHand.from(players.get(i), bettingAmounts.get(i), deck));
+        }
+        return Collections.unmodifiableList(bettingBlackjackCardHands);
     }
 }

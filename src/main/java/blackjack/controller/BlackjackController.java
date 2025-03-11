@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.BlackjackJudge;
+import blackjack.domain.player.Players;
 import blackjack.service.BlackjackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -23,7 +23,9 @@ public class BlackjackController implements Controller {
     @Override
     public void run() {
         final List<String> playerNames = inputView.getPlayerNames();
-        final BlackjackGame game = BlackjackGame.from(playerNames);
+        final Players players = Players.from(playerNames);
+        final List<Integer> bettingAmounts = inputView.getBettingAmounts(playerNames);
+        final BlackjackGame game = BlackjackGame.from(players, bettingAmounts);
         outputView.outputInitialCards(game.getDealerHand(), game.getPlayerHands());
         blackjackService.addPlayerCards(
                 game,
@@ -35,6 +37,6 @@ public class BlackjackController implements Controller {
         );
         blackjackService.addDealerCards(game, outputView::outputDealerAddedCards);
         outputView.outputOpenCards(game.getDealerHand(), game.getPlayerHands());
-        outputView.outputFinalWinOrLoss(BlackjackJudge.from(game));
+        outputView.outputFinalProfit(game.getDealerHand(), game.getPlayerHands());
     }
 }

@@ -1,8 +1,11 @@
 package blackjack.domain.card_hand;
 
 import blackjack.domain.WinningStatus;
+import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
 import blackjack.domain.player.Player;
+
+import java.util.List;
 
 public final class PlayerBettingBlackjackCardHand {
     
@@ -38,5 +41,29 @@ public final class PlayerBettingBlackjackCardHand {
     
     private boolean isBlackjackWinning(final WinningStatus winningStatus) {
         return winningStatus == WinningStatus.플레이어_승리 && hand.isBlackjack();
+    }
+    
+    public String getPlayerName() {
+        return hand.getPlayerName();
+    }
+    
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
+    
+    public int getBlackjackSum() {
+        return hand.getBlackjackSum();
+    }
+    
+    public boolean isAddedTo21() {
+        return hand.isAddedTo21();
+    }
+    
+    public boolean isBust() {
+        return hand.isBust();
+    }
+    
+    public void addCard(final Card card) {
+        hand.addCard(card);
     }
 }
