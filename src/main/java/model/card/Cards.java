@@ -71,6 +71,6 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return getCardsSize() == 2 && calculateResult() == 21;
+        return getCardsSize() == 2 && calculateResult() == BUST_THRESHOLD;
     }
 }

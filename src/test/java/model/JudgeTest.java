@@ -92,6 +92,7 @@ class JudgeTest {
 
         assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.DRAW);
     }
+
     @DisplayName("플레이어가 블랙잭이고 딜러도 블랙잭이면 무승부이다.")
     @Test
     void bothBlackjack_ShouldBeDraw() {
