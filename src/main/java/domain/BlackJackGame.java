@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,23 +32,11 @@ public class BlackJackGame {
     }
 
     public static BlackJackGame create() {
-        Deck deck = initializeDeck();
-        Dealer dealer = initializeDealer(deck);
-        Rule rule = initializeRule();
+        Deck deck = new Deck(Arrays.asList(TrumpCard.values()), new DefaultShuffle());
+        Dealer dealer = new Dealer(new Hand(deck.drawMultiple(INITIAL_CARD_COUNT)));
+        Rule rule = new Rule();
 
         return new BlackJackGame(deck, dealer, rule);
-    }
-
-    private static Deck initializeDeck() {
-        return Deck.create();
-    }
-
-    private static Dealer initializeDealer(Deck deck) {
-        return new Dealer(new Hand(deck.drawMultiple(INITIAL_CARD_COUNT)));
-    }
-
-    private static Rule initializeRule() {
-        return new Rule();
     }
 
     public List<Player> createPlayers(List<String> names) {
