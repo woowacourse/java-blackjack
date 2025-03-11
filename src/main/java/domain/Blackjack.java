@@ -95,14 +95,4 @@ public class Blackjack {
         return participantNameAndMatchResult;
     }
 
-    private MatchResult calculatePariticipantMatchResult(Dealer dealer, Participant participant) {
-        if (participant.isBust() && dealer.isBust() || participant.isBust()) {
-            return MatchResult.LOSE;
-        }
-        if (dealer.isBust()) {
-            return MatchResult.WIN;
-        }
-        return MatchResult.compareBySum(participant.computeOptimalSum(),
-                dealer.computeOptimalSum());
-    }
 }

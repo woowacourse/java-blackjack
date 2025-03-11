@@ -1,21 +1,12 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 class MatchResultTest {
-
-    @Test
-    void 두_플레이어의_카드_합을_받아_승패_결과를_반환한다() {
-        SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(MatchResult.compareBySum(20, 10))
-                    .isEqualTo(MatchResult.WIN);
-            softAssertions.assertThat(MatchResult.compareBySum(10, 20))
-                    .isEqualTo(MatchResult.LOSE);
-            softAssertions.assertThat(MatchResult.compareBySum(15, 15))
-                    .isEqualTo(MatchResult.DRAW);
-        });
-    }
 
     @Test
     void 승패_결과를_받아_반전한_승패_결과를_반환한다() {
@@ -28,4 +19,25 @@ class MatchResultTest {
                     .isEqualTo(MatchResult.DRAW);
         });
     }
+
+    @Test
+    void 두_플레이어의_승패_결과를_반환한다() {
+        // when
+        Player dealer = new Dealer();
+        Player participant = new Participant("시소");
+
+        Players players = new Players(List.of(dealer, participant));
+
+        Deck deck = new Deck(new ArrayList<>(List.of(
+                new Card(CardSuit.SPADE, CardRank.SEVEN),
+                new Card(CardSuit.SPADE, CardRank.SEVEN),
+                new Card(CardSuit.SPADE, CardRank.FIVE),
+                new Card(CardSuit.SPADE, CardRank.FIVE)
+        )));
+        Blackjack blackjack = new Blackjack(players, deck);
+        blackjack.distributeInitialCards();
+
+        assertThat(MatchResult.calculateParticipantMatchResult(dealer, participant)).isEqualTo(MatchResult.WIN);
+    }
+
 }

@@ -14,7 +14,7 @@ public enum MatchResult {
         this.title = title;
     }
 
-    public static MatchResult compareBySum(int sum1, int sum2) {
+    private static MatchResult compareBySum(int sum1, int sum2) {
         if (sum1 > sum2) {
             return WIN;
         }
@@ -32,6 +32,17 @@ public enum MatchResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public static MatchResult calculateParticipantMatchResult(Player dealer, Player participant) {
+        if (participant.isBust() && dealer.isBust() || participant.isBust()) {
+            return MatchResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return MatchResult.WIN;
+        }
+        return compareBySum(participant.computeOptimalSum(),
+                dealer.computeOptimalSum());
     }
 
     public static List<MatchResult> sortedValues() {
