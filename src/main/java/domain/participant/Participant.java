@@ -16,7 +16,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public int getCardScore() {
+    public int calculateScore() {
         return hand.calculateFinalScore();
     }
 

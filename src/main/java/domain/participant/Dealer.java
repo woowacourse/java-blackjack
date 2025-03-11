@@ -48,7 +48,7 @@ public class Dealer extends Participant {
     }
 
     private boolean hasToDraw() {
-        return this.getCardScore() <= DRAW_BOUNDARY;
+        return this.calculateScore() <= DRAW_BOUNDARY;
     }
 
 

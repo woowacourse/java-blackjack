@@ -40,7 +40,7 @@ public class PlayerTest {
         Player player = Player.from("플레이어1", hand);
 
         // when
-        final int result = player.getCardScore();
+        final int result = player.calculateScore();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -82,7 +82,7 @@ public class PlayerTest {
         Player player = Player.from("플레이어1", hand);
 
         //when
-        int actual = player.getCardScore();
+        int actual = player.calculateScore();
 
         //then
         assertThat(actual).isEqualTo(expected);

@@ -48,12 +48,12 @@ public class OutputView {
     }
 
     public void printDealerCardsAndResult(Dealer dealer) {
-        System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(dealer.getHand()), dealer.getCardScore());
+        System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(dealer.getHand()), dealer.calculateScore());
     }
 
     public void printCardsAndResult(Player player) {
         System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), getCardsText(player.getHand()),
-                player.getCardScore());
+                player.calculateScore());
     }
 
     public void printResult(Map<GameResult, Integer> dealerResult, Map<Player, GameResult> playerResult) {

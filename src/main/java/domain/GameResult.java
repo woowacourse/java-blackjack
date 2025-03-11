@@ -20,10 +20,10 @@ public enum GameResult {
         if (player.isBurst()) {
             return GameResult.LOSE;
         }
-        if (dealer.isBurst() || player.getCardScore() > dealer.getCardScore()) {
+        if (dealer.isBurst() || player.calculateScore() > dealer.calculateScore()) {
             return GameResult.WIN;
         }
-        if (player.getCardScore() < dealer.getCardScore()) {
+        if (player.calculateScore() < dealer.calculateScore()) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
