@@ -13,7 +13,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public BlackjackMatchResult compareWith(Hand other) {
+    public BlackjackMatchResult determineMatchResultAgainst(Hand other) {
         BlackjackMatchResult burstResult = handleBurstCases(other);
         if (burstResult != null) {
             return burstResult;

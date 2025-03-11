@@ -89,9 +89,9 @@ public class BlackJackController {
         Map<Player, BlackjackMatchResult> playerResult = new HashMap<>();
 
         for (Player player : players) {
-            BlackjackMatchResult result = dealer.getHand().compareWith(player.getHand());
+            BlackjackMatchResult result = dealer.determineMatchResultAgainst(player);
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, player.getHand().compareWith(dealer.getHand()));
+            playerResult.put(player, result.reverse());
         }
         outputView.printWinLoseResult(dealerResult, playerResult);
     }

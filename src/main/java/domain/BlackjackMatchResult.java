@@ -26,4 +26,16 @@ public enum BlackjackMatchResult {
     public String getState() {
         return state;
     }
+
+    public BlackjackMatchResult reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+
+        if (this == LOSE) {
+            return WIN;
+        }
+
+        return DRAW;
+    }
 }

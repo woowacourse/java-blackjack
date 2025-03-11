@@ -23,7 +23,7 @@ class BlackjackMatchResultTest {
         playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
         //when
 
-        BlackjackMatchResult actual = dealerHand.compareWith(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.DRAW);
     }
@@ -42,7 +42,7 @@ class BlackjackMatchResultTest {
         playerHand.add(new Card(CardSymbol.COLVER, CardRank.TWO));
 
         //when
-        BlackjackMatchResult actual = dealerHand.compareWith(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
 
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.DRAW);
@@ -63,7 +63,7 @@ class BlackjackMatchResultTest {
         playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
 
         //when //then
-        BlackjackMatchResult actual = dealerHand.compareWith(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
 
         assertThat(actual).isEqualTo(BlackjackMatchResult.WIN);
     }
@@ -82,7 +82,7 @@ class BlackjackMatchResultTest {
         playerHand.add(new Card(CardSymbol.COLVER, CardRank.THREE));
 
         //when
-        BlackjackMatchResult actual = dealerHand.compareWith(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
 
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.LOSE);

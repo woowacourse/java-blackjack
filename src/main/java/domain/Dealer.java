@@ -9,6 +9,10 @@ public class Dealer extends Gamer {
         super(NAME);
     }
 
+    public BlackjackMatchResult determineMatchResultAgainst(Player player) {
+        return getHand().determineMatchResultAgainst(player.getHand());
+    }
+
     @Override
     public boolean canHit() {
         return getHand().calculateTotalPoint() <= HIT_THRESHOLD && !isBurst();
