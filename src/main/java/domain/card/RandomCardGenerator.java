@@ -7,12 +7,12 @@ public class RandomCardGenerator implements CardGenerator {
 
     public RandomCardGenerator() {
         cardTypes = generateRandomCardDeck();
-        Collections.shuffle(cardTypes);
     }
 
     private List<Card> generateRandomCardDeck() {
         List<Card> randomCardDeck = new ArrayList<>();
         Arrays.stream(CardType.values()).forEach(card -> selectCardScore(randomCardDeck, card));
+        Collections.shuffle(randomCardDeck);
         return randomCardDeck;
     }
 
