@@ -10,7 +10,6 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.rule.BlackjackRule;
 import domain.rule.GameRule;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -143,7 +142,7 @@ class BlackjackRuleTest {
         Hand playerHand = Hand.of(self);
         Hand dealerHand = Hand.of(other);
         Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, ArrayList::new);
+        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -225,7 +224,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, ArrayList::new);
+        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -248,7 +247,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, ArrayList::new);
+        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -271,7 +270,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, ArrayList::new);
+        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -293,7 +292,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, ArrayList::new);
+        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
         GameResult actual = rule.getResult(player, dealer);
@@ -317,7 +316,7 @@ class BlackjackRuleTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
         Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, ArrayList::new);
+        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
         GameResult actual = rule.getResult(player, dealer);

@@ -21,13 +21,15 @@ public class DeckTest {
     @Test
     void test() {
         // given
-        Deck deck = new Deck(new RandomCardsGenerator());
+        Card card1 = new Card(CardNumber.A, CardShape.CLOVER);
+        Card card2 = new Card(CardNumber.TWO, CardShape.CLOVER);
+        Deck deck = new Deck(new StaticCardGenerator(List.of(card1, card2)));
 
         // when
-        Card card = deck.pick();
+        Card actual = deck.pick();
 
         // then
-        assertThat(card).isInstanceOf(Card.class);
+        assertThat(actual).isEqualTo(card2);
     }
 
     @DisplayName("덱은 항상 다른 카드를 반환한다.")
@@ -64,14 +66,15 @@ public class DeckTest {
     void 플레이어에게_카드_할당() {
         //given
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
-        Deck deck = new Deck(() -> new ArrayList<>(List.of(card)));
+        Deck deck = new Deck(new StaticCardGenerator(List.of(card)));
         Player player = Player.init("플레이어");
+
+        Player expected = Player.from("플레이어", Hand.of(List.of(card)));
 
         //when
         deck.giveCardTo(player, 1);
-        Hand hand = player.getCards();
 
         //then
-        assertThat(hand.getCards()).contains(card);
+        assertThat(player).isEqualTo(expected);
     }
 }

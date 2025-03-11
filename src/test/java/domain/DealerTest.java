@@ -9,7 +9,6 @@ import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -21,27 +20,29 @@ class DealerTest {
     @Test
     void test() {
         //given
-        Hand hand1 = Hand.of(
+        Hand dealerHand = Hand.of(
                 List.of(
                         new Card(CardNumber.TEN, CardShape.CLOVER),
                         new Card(CardNumber.THREE, CardShape.CLOVER)
                 )
         );
-        Hand hand2 = Hand.of(
+        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
+
+        Hand hand1 = Hand.of(
                 List.of(
                         new Card(CardNumber.TEN, CardShape.CLOVER),
                         new Card(CardNumber.TWO, CardShape.CLOVER)
                 )
         );
-        Hand hand3 = Hand.of(
+        Player player1 = Player.from("플레이어", hand1);
+
+        Hand hand2 = Hand.of(
                 List.of(
                         new Card(CardNumber.A, CardShape.CLOVER),
                         new Card(CardNumber.FOUR, CardShape.CLOVER)
                 )
         );
-        Dealer dealer = Dealer.of(hand1, ArrayList::new);
-        Player player1 = Player.from("플레이어", hand2);
-        Player player2 = Player.from("플레이어2", hand3);
+        Player player2 = Player.from("플레이어2", hand2);
         Map<Player, GameResult> expected = Map.of(
                 player1, GameResult.LOSE,
                 player2, GameResult.WIN
@@ -58,21 +59,22 @@ class DealerTest {
     @Test
     void test2() {
         //given
-        Dealer dealer = Dealer.init(() -> new ArrayList<>(List.of(
+        Dealer dealer = Dealer.init(new StaticCardGenerator(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.A, CardShape.CLOVER),
                 new Card(CardNumber.FOUR, CardShape.CLOVER)
         )));
+        Player player = Player.init("플레이어1");
+        Players players = new Players(List.of(player));
+
         Hand dealerHand = Hand.of(
                 List.of(
                         new Card(CardNumber.FOUR, CardShape.CLOVER),
                         new Card(CardNumber.A, CardShape.CLOVER)
                 )
         );
-        Dealer expectedDealer = Dealer.of(dealerHand, ArrayList::new);
-        Player player = Player.init("플레이어1");
-        Players players = new Players(List.of(player));
+        Dealer expectedDealer = Dealer.of(dealerHand, new StaticCardGenerator());
         Player expectedPlayer = Player.from("플레이어1", Hand.of(List.of(
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
@@ -90,7 +92,7 @@ class DealerTest {
     @Test
     void test3() {
         //given
-        Dealer dealer = Dealer.init(() -> new ArrayList<>(List.of(
+        Dealer dealer = Dealer.init(new StaticCardGenerator(List.of(
                 new Card(CardNumber.A, CardShape.CLOVER)
         )));
         Player player = Player.init("플레이어1");
@@ -107,14 +109,14 @@ class DealerTest {
     @Test
     void test4() {
         //given
-        Dealer dealer = Dealer.init(() -> new ArrayList<>(List.of(
+        Dealer dealer = Dealer.init(new StaticCardGenerator(List.of(
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.SEVEN, CardShape.CLOVER)
         )));
         Dealer expectedDealer = Dealer.of(Hand.of(List.of(
                 new Card(CardNumber.SEVEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
-        )), ArrayList::new);
+        )), new StaticCardGenerator());
         //when
         dealer.drawUntilLimit();
         //then
