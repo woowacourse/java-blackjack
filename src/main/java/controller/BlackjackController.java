@@ -20,7 +20,7 @@ public class BlackjackController {
         deck.shuffle();
         GameManager gameManager = new GameManager(dealer, players, deck);
         gameManager.divideInitialCardToParticipant();
-        OutputView.printDivisionStart(dealer, players);
+        OutputView.printDivisionStart(dealer, players.getPlayers());
 
         for (Player player : players.getPlayers()) {
             receiveAdditionalCard(player, gameManager);

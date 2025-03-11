@@ -44,15 +44,19 @@ public class OutputView {
             "CLUBS", "클로버"
     );
 
-    public static void printDivisionStart(Dealer dealer, Players values) {
+    public static void printDivisionStart(Dealer dealer, List<Player> players) {
         String dealerNickname = dealer.getNickname();
-        List<String> playerNicknames = values.getNicknames();
+        List<String> playerNicknames = players.stream()
+                .map(Player::getNickname)
+                .toList();
+
         System.out.println(formatDivideCommentByNickname(dealerNickname, playerNicknames));
+
         Card card = dealer.getCards().getFirst();
         String formattedDealerCard = getCardFormat(card);
         String handsHeader = formatHandsHeader(dealerNickname);
         System.out.println(formatBasicForm(handsHeader, formattedDealerCard));
-        List<Player> players = values.getPlayers();
+
         for (Player player : players) {
             System.out.println(formatHands(player));
         }

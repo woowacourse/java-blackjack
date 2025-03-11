@@ -35,9 +35,4 @@ public class Players {
         return values;
     }
 
-    public List<String> getNicknames() {
-        return values.stream()
-                .map(Participant::getNickname)
-                .toList();
-    }
 }
