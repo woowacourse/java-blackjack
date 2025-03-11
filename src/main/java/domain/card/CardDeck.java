@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class CardDeck {
+    private static final int BUST_THRESHOLD = 21;
+
     private final List<Card> cards;
 
     private CardDeck(final List<Card> cards) {
@@ -34,6 +36,26 @@ public class CardDeck {
             }
         }
         return initCard;
+    }
+
+    public int getScore() {
+        int totalScore = 0;
+        int aceCounts = 0;
+
+        for (Card card : cards) {
+            totalScore += card.getNumber();
+            if (card.isAceCard()) {
+                aceCounts++;
+            }
+        }
+
+        while (aceCounts-- > 0) {
+            if (totalScore + 10 <= BUST_THRESHOLD) {
+                totalScore += 10;
+            }
+        }
+
+        return totalScore;
     }
 
     public void shuffle() {
