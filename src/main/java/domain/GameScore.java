@@ -6,10 +6,11 @@ public record GameScore(int value) {
     private static final GameScore DEALER_STAY_THRESHOLD = new GameScore(17);
 
     public GameScore withAce() {
-        if (this.add(ADDITIONAL_ACE_SCORE).isGreaterThan(BLACKJACK_SCORE)) {
+        GameScore maximumScore = this.add(ADDITIONAL_ACE_SCORE);
+        if (maximumScore.isGreaterThan(BLACKJACK_SCORE)) {
             return this;
         }
-        return this.add(ADDITIONAL_ACE_SCORE);
+        return maximumScore;
     }
 
     public boolean isBust() {
