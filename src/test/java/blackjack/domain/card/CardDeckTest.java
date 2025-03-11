@@ -18,18 +18,17 @@ class CardDeckTest {
     }
 
     @Test
-    @DisplayName("요청된 개수만큼 카드를 제공한다.")
-    void canDrawCard() {
+    @DisplayName("원하는 횟수만큼의 카드를 제공한다.")
+    void canDrawCardForHit() {
         CardDeck cardDeck = new CardDeck();
-        int expectedCardCount = 2;
 
-        List<Card> drawnCards = cardDeck.drawCard(expectedCardCount);
+        List<Card> drawnCards = cardDeck.drawCard(5);
 
-        assertThat(drawnCards).hasSize(expectedCardCount);
+        assertThat(drawnCards).hasSize(5);
     }
 
     @Test
-    @DisplayName("남은 카드보다 많은 카드를 요청할 경우 예외를 발생시킨다.")
+    @DisplayName("남은 카드가 없을 경우 예외를 발생시킨다.")
     void cannotDrawCard() {
         CardDeck cardDeck = new CardDeck();
         int tooManyCardCount = 100;

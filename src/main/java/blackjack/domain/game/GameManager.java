@@ -19,10 +19,12 @@ public class GameManager {
 
     private PlayerStorage players;
     private Dealer dealer;
+    private CardDeck cardDeck;
     private GameInputOutput gameInputOutput;
 
-    public GameManager(PlayerStorage players) {
+    public GameManager(PlayerStorage players, CardDeck cardDeck) {
         this.players = players;
+        this.cardDeck = cardDeck;
     }
 
     public void setUpInputOutput(GameInputOutput gameInputOutput) {
@@ -39,14 +41,15 @@ public class GameManager {
 
     private void registerPlayer(List<Nickname> nicknames) {
         players.initialize(nicknames);
-        dealer = new Dealer(new CardDeck());
+        dealer = new Dealer();
     }
 
     private void distributeInitialCard() {
-        dealer.drawSelfInitialCard();
+        List<Card> initialDealerCards = cardDeck.drawCard(GameRule.INITIAL_CARD_COUNT.getValue());
+        dealer.addInitialCards(initialDealerCards);
         for (Player player : players.getPlayers()) {
-            List<Card> initialCards = dealer.distributePlayerInitialCard();
-            player.addInitialCards(initialCards);
+            List<Card> initialPlayerCards = cardDeck.drawCard(GameRule.INITIAL_CARD_COUNT.getValue());
+            player.addInitialCards(initialPlayerCards);
         }
         outputInitialCard();
     }
@@ -59,7 +62,7 @@ public class GameManager {
     private void processPlayerTurn(Player player) {
         while (player.checkHitPossibility() &&
                 gameInputOutput.executeReadIngWannaHit(player.getNickname())) {
-            Card card = dealer.distirbuteHitCard();
+            Card card = cardDeck.drawCard(1).getFirst();
             player.hit(card);
             HandState hitResult = makeHandState(player);
             gameInputOutput.executePrintingHitResult(hitResult);
@@ -67,7 +70,12 @@ public class GameManager {
     }
 
     private void processDealerTurns() {
-        int drawingCount = dealer.drawSelfCardUntilLimit();
+        int drawingCount = 0;
+        while (dealer.checkPossibilityOfDrawing()) {
+            drawingCount++;
+            Card card = cardDeck.drawCard(1).getFirst();
+            dealer.addCardUntilLimit(card);
+        }
         gameInputOutput.executePrintDealerDrawing(drawingCount);
     }
 
