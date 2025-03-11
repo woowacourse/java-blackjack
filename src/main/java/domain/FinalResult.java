@@ -34,16 +34,16 @@ public enum FinalResult {
     }
 
     public static Map<Player, FinalResult> makePlayerResult(final List<Player> players, final Dealer dealer) {
+        final int dealerSum = dealer.calculateSumOfRank();
         return players.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> calculatePlayerFinalResult(player, dealer)
+                        player -> calculatePlayerFinalResult(player, dealerSum)
                 ));
     }
 
-    private static FinalResult calculatePlayerFinalResult(final Player player, final Dealer dealer) {
+    private static FinalResult calculatePlayerFinalResult(final Player player, final int dealerSum) {
         final int playerSum = player.calculateSumOfRank();
-        final int dealerSum = dealer.calculateSumOfRank();
         return Optional.of(playerSum)
                 .map(sum -> getIntegerFinalResultFunction(sum, dealerSum))
                 .orElse(LOSE);
