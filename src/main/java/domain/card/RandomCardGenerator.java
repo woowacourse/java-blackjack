@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class RandomCardGenerator implements CardGenerator {
     List<Card> cardTypes;
@@ -10,14 +11,12 @@ public class RandomCardGenerator implements CardGenerator {
     }
 
     private List<Card> generateRandomCardDeck() {
-        List<Card> randomCardDeck = new ArrayList<>();
-        Arrays.stream(CardType.values()).forEach(card -> selectCardScore(randomCardDeck, card));
-        Collections.shuffle(randomCardDeck);
-        return randomCardDeck;
-    }
-
-    private void selectCardScore(List<? super Card> randomCardDeck, CardType type) {
-        Arrays.stream(CardScore.values()).forEach(cardScore -> randomCardDeck.add(new Card(type, cardScore)));
+        List<Card> cards = new ArrayList<>(Arrays.stream(CardType.values())
+                .flatMap(cardType -> Arrays.stream(CardScore.values())
+                        .map(cardScore -> new Card(cardType, cardScore)))
+                .toList());
+        Collections.shuffle(cards);
+        return cards;
     }
 
     @Override
