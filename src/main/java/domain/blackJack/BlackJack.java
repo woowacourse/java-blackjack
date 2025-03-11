@@ -37,7 +37,7 @@ public class BlackJack {
         dealer.draw(standard);
     }
 
-    public Map<Player, Double> calculatePlayerResult() {
+    public Map<Player, Integer> calculatePlayerResult() {
         return players.calculateWinner(dealer);
     }
 }

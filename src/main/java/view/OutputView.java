@@ -80,25 +80,25 @@ public class OutputView {
         }
     }
 
-    public void printResult(final Map<Player, MatchResult> playerMatchResult) {
-        System.out.print(NEW_LINE);
-        System.out.println(RESULT_INTRO);
-        System.out.print(DEALER_RESULT);
-
-        Map<MatchResult, Integer> dealerMatchResult = calculateDealerResult(playerMatchResult);
-        for (MatchResult matchResult : dealerMatchResult.keySet()) {
-            if (dealerMatchResult.get(matchResult) == INIT_COUNT) {
-                continue;
-            }
-            System.out.printf(dealerMatchResult.get(matchResult) + matchResult.getValue() + " ");
-        }
-
-        System.out.print(NEW_LINE);
-        playerMatchResult.forEach((player, matchResult) -> {
-            System.out.printf(PLAYER_RESULT, player.getName(), matchResult.getValue());
-            System.out.print(NEW_LINE);
-        });
-    }
+//    public void printResult(final Map<Player, MatchResult> playerMatchResult) {
+//        System.out.print(NEW_LINE);
+//        System.out.println(RESULT_INTRO);
+//        System.out.print(DEALER_RESULT);
+//
+//        Map<MatchResult, Integer> dealerMatchResult = calculateDealerResult(playerMatchResult);
+//        for (MatchResult matchResult : dealerMatchResult.keySet()) {
+//            if (dealerMatchResult.get(matchResult) == INIT_COUNT) {
+//                continue;
+//            }
+//            System.out.printf(dealerMatchResult.get(matchResult) + matchResult.getValue() + " ");
+//        }
+//
+//        System.out.print(NEW_LINE);
+//        playerMatchResult.forEach((player, matchResult) -> {
+//            System.out.printf(PLAYER_RESULT, player.getName(), matchResult.getValue());
+//            System.out.print(NEW_LINE);
+//        });
+//    }
 
     private void printDealerDeckWithHidden(final Dealer dealer) {
         System.out.println(DEALER_CARDS + toSymbol(dealer.getHandExceptHidden()));
@@ -129,16 +129,16 @@ public class OutputView {
         return NUMBER_SYMBOL_MAP.getOrDefault(number, String.valueOf(number.getScore())) + shape.getShape();
     }
 
-    private Map<MatchResult, Integer> calculateDealerResult(final Map<Player, MatchResult> playerMatchResult) {
-        Map<MatchResult, Integer> dealerMatchResult = initDealerMatchResult();
-
-        for (MatchResult matchResult : playerMatchResult.values()) {
-            dealerMatchResult.merge(matchResult, ONE_MORE_COUNT, Integer::sum);
-        }
-
-        swap(dealerMatchResult);
-        return dealerMatchResult;
-    }
+//    private Map<MatchResult, Integer> calculateDealerResult(final Map<Player, MatchResult> playerMatchResult) {
+//        Map<MatchResult, Integer> dealerMatchResult = initDealerMatchResult();
+//
+//        for (MatchResult matchResult : playerMatchResult.values()) {
+//            dealerMatchResult.merge(matchResult, ONE_MORE_COUNT, Integer::sum);
+//        }
+//
+//        swap(dealerMatchResult);
+//        return dealerMatchResult;
+//    }
 
     private void swap(final Map<MatchResult, Integer> dealerMatchResult) {
         int winningCount = dealerMatchResult.get(WIN);
@@ -147,15 +147,15 @@ public class OutputView {
         dealerMatchResult.put(LOSE, winningCount);
     }
 
-    private Map<MatchResult, Integer> initDealerMatchResult() {
-        Map<MatchResult, Integer> dealerMatchResult = new LinkedHashMap<>();
-        dealerMatchResult.put(WIN, INIT_COUNT);
-        dealerMatchResult.put(DRAW, INIT_COUNT);
-        dealerMatchResult.put(LOSE, INIT_COUNT);
-        return dealerMatchResult;
-    }
+//    private Map<MatchResult, Integer> initDealerMatchResult() {
+//        Map<MatchResult, Integer> dealerMatchResult = new LinkedHashMap<>();
+//        dealerMatchResult.put(WIN, INIT_COUNT);
+//        dealerMatchResult.put(DRAW, INIT_COUNT);
+//        dealerMatchResult.put(LOSE, INIT_COUNT);
+//        return dealerMatchResult;
+//    }
 
-    public void printProfit(Map<Player, Double> playerProfit) {
+    public void printProfit(Map<Player, Integer> playerProfit) {
         playerProfit.forEach(((player, money) ->{
             System.out.println(player.getName());
             System.out.println(money);

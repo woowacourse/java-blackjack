@@ -20,7 +20,7 @@ public class Money {
         return new Money(money);
     }
 
-    public double calculateProfit(double rate) {
-        return money*rate;
+    public int calculateProfit(double rate) {
+        return (int) Math.floor(money*rate) - money;
     }
 }

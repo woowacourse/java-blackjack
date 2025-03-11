@@ -34,7 +34,7 @@ public class Player extends Participant {
         return name;
     }
 
-    public double calculateProfit(MatchResult matchResult) {
+    public int calculateProfit(MatchResult matchResult) {
         return money.calculateProfit(matchResult.getRate());
     }
 }
