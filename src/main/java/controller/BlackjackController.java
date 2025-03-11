@@ -32,7 +32,6 @@ public class BlackjackController {
     }
 
     public void start() {
-        deck.shuffle();
         List<String> names = inputView.readPlayerNames();
         BettingAmounts bettingAmounts = initializeBettingAmounts(names);
         outputView.printNewLine();

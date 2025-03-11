@@ -9,9 +9,10 @@ public class Deck {
 
     public Deck(final List<Card> deck) {
         this.deck = deck;
+        shuffle();
     }
 
-    public void shuffle() {
+    private void shuffle() {
         Collections.shuffle(deck);
     }
 

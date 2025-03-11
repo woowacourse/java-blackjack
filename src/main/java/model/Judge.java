@@ -22,7 +22,7 @@ public class Judge {
             return GameResult.DRAW;
         }
         if (playerBlackjack) {
-            return GameResult.WIN;
+            return GameResult.BLACKJACK_WIN;
         }
         if (dealerBlackjack) {
             return GameResult.LOSE;

@@ -108,7 +108,7 @@ class JudgeTest {
         assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.DRAW);
     }
 
-    @DisplayName("플레이어가 블랙잭이면 승리한다.")
+    @DisplayName("플레이어가 블랙잭이면 블랙잭 승리한다.")
     @Test
     void playerHasBlackjack_ShouldWin() {
         Cards dealerCards = new Cards(List.of(
@@ -121,7 +121,7 @@ class JudgeTest {
                 new Card(CardNumber.KING, CardShape.SPADE)
         ));
 
-        assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.WIN);
+        assertThat(judge.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.BLACKJACK_WIN);
     }
 
     @DisplayName("딜러가 블랙잭이면 패배한다.")
