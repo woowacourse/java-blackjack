@@ -1,5 +1,11 @@
-package domain;
+package domain.game;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.participants.Dealer;
+import domain.participants.Gamer;
+import domain.participants.PlayerName;
+import domain.participants.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

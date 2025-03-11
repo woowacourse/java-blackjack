@@ -1,8 +1,10 @@
-package domain;
+package domain.participants;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
+
+import domain.game.GameResult;
 
 public class Player extends Gamer {
     private final PlayerName playerName;
@@ -15,7 +17,7 @@ public class Player extends Gamer {
     }
 
     public boolean isDrawable() {
-        return this.isDrawable(BUST_THRESHOLD);
+        return super.isDrawable(BUST_THRESHOLD);
     }
 
     public GameResult decideGameResult(Dealer dealer) {

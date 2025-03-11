@@ -3,6 +3,9 @@ package domain;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import domain.game.GameResult;
+import domain.game.GameStatistics;
+import domain.participants.PlayerName;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,15 +1,15 @@
 package view;
 
-import static domain.Dealer.BUST_THRESHOLD;
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
+import static domain.participants.Dealer.BUST_THRESHOLD;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
 
-import domain.Card;
-import domain.GameResult;
-import domain.GameStatistics;
-import domain.Gamer;
-import domain.PlayerName;
+import domain.card.Card;
+import domain.game.GameResult;
+import domain.game.GameStatistics;
+import domain.participants.Gamer;
+import domain.participants.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

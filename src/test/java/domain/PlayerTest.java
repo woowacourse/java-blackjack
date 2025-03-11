@@ -1,10 +1,16 @@
 package domain;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.game.GameResult;
+import domain.participants.Dealer;
+import domain.participants.Player;
+import domain.participants.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -63,7 +69,7 @@ class PlayerTest {
         player.addCard(cards);
         int playStandard = 21;
         // when
-        boolean canGetMoreCard = player.isDrawable(playStandard);
+        boolean canGetMoreCard = player.isDrawable();
         // then
         assertThat(canGetMoreCard).isEqualTo(expected);
     }

@@ -1,5 +1,8 @@
-package domain;
+package domain.participants;
 
+import domain.game.GameResult;
+import domain.game.GameStatistics;
+import domain.card.Card;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;

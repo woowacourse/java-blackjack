@@ -2,8 +2,8 @@ package controller;
 
 import static view.Response.YES;
 
-import domain.Game;
-import domain.PlayerName;
+import domain.game.Game;
+import domain.participants.PlayerName;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

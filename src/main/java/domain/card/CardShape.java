@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum CardShape {
     DIA("다이아몬드"),

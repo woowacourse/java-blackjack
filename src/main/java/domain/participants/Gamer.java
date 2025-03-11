@@ -1,5 +1,7 @@
-package domain;
+package domain.participants;
 
+import domain.card.Card;
+import domain.card.CardRank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,11 +32,6 @@ public abstract class Gamer implements Cloneable {
         cards.addAll(addedCards);
     }
 
-    public boolean isDrawable(int standard) {
-        int score = calculateScore();
-        return score <= standard;
-    }
-
     public boolean isBust(){
         int score = calculateScore();
         return score > BLACKJACK_MAX_SCORE;
@@ -54,6 +51,10 @@ public abstract class Gamer implements Cloneable {
         return Collections.unmodifiableList(cards);
     }
 
+    protected boolean isDrawable(int standard) {
+        int score = calculateScore();
+        return score <= standard;
+    }
 
     private int calculateAceValue(boolean containAce, int lowAceTotal) {
         if (!containAce || lowAceTotal > BLACKJACK_MAX_SCORE) {
