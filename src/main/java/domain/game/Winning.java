@@ -18,15 +18,11 @@ public enum Winning {
         return name;
     }
 
-    public static boolean isBust(int score) {
-        return (score > BLACK_JACK);
-    }
-
-    public static Winning determine(int playerScore, int dealerScore) {
-        if(isBust(playerScore)){
+    public static Winning determineForPlayer(int playerScore, int dealerScore) {
+        if (playerScore > BLACK_JACK) {
             return LOSE;
         }
-        if(isBust(dealerScore)){
+        if (dealerScore > BLACK_JACK) {
             return WIN;
         }
 
@@ -34,10 +30,10 @@ public enum Winning {
     }
 
     private static Winning determinePlayerWinning(int playerScore, int dealerScore) {
-        if(playerScore > dealerScore){
+        if (playerScore > dealerScore) {
             return WIN;
         }
-        if(playerScore < dealerScore){
+        if (playerScore < dealerScore) {
             return LOSE;
         }
         return DRAW;

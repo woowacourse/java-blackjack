@@ -32,6 +32,27 @@ public class GamblerAnswersForTest {
         };
     }
 
+    static GamblerAnswer onlyOnceOKPerGambler() {
+        return new GamblerAnswer() {
+
+            private Gambler previous = null;
+
+            @Override
+            public boolean isAnswerOK(Gambler gambler) {
+                if (gambler == previous) {
+                    return false;
+                }
+                previous = gambler;
+                return true;
+            }
+
+            @Override
+            public void notifyResult(Gambler gambler) {
+                // do Nothing
+            }
+        };
+    }
+
     static GamblerAnswer neverOK() {
         return new GamblerAnswer() {
             @Override

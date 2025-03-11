@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.CardHand;
+import domain.game.Winning;
 
 public class Dealer extends AbstractGambler {
 
@@ -18,5 +19,12 @@ public class Dealer extends AbstractGambler {
     @Override
     public boolean canTakeMoreCard() {
         return (calculateScore() <= 16);
+    }
+
+    public Winning judgeWinningForPlayer(Player playerToCompare) {
+        int dealerScore = calculateScore();
+        int playerScore = playerToCompare.calculateScore();
+
+        return Winning.determineForPlayer(playerScore, dealerScore);
     }
 }

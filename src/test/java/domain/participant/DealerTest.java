@@ -4,20 +4,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.CardHand;
-import domain.card.Rank;
-import domain.card.Shape;
+import domain.game.Winning;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class DealerTest {
 
     private Dealer dealer;
+    private Player player;
 
     @BeforeEach
     void setUp() {
+        player = new Player("이름", new CardHand());
         dealer = new Dealer(new CardHand());
     }
 
@@ -75,5 +82,27 @@ class DealerTest {
 
         //then
         assertThat(canTakeMore).isFalse();
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePlayerCards")
+    void 딜러에게_비교할_플레이어를_주고_플레이어의_승무패를_알_수_있다(List<Card> playerCards, Winning expectedPlayerWinning) {
+        //given
+        dealer.takeCards(Card.SPADE_10, Card.DIAMOND_10);
+        player.takeCards(playerCards.toArray(Card[]::new));
+
+        //when
+        Winning winning = dealer.judgeWinningForPlayer(player);
+
+        //then
+        assertThat(winning).isEqualTo(expectedPlayerWinning);
+    }
+
+    public static Stream<Arguments> providePlayerCards() {
+        return Stream.of(
+            Arguments.of(List.of(Card.HEART_10, Card.HEART_9), Winning.LOSE),
+            Arguments.of(List.of(Card.HEART_10, Card.DIAMOND_10), Winning.DRAW),
+            Arguments.of(List.of(Card.HEART_10, Card.DIAMOND_A), Winning.WIN)
+        );
     }
 }

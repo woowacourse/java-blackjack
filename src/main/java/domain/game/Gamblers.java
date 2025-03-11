@@ -6,7 +6,6 @@ import domain.card.CardPack;
 import domain.participant.Dealer;
 import domain.participant.Gambler;
 import domain.participant.Player;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -63,6 +62,6 @@ public class Gamblers {
         int dealerScore = dealer.calculateScore();
         return players.stream()
             .collect(toMap(Function.identity(),
-                player -> Winning.determine(player.calculateScore(), dealerScore)));
+                player -> Winning.determineForPlayer(player.calculateScore(), dealerScore)));
     }
 }
