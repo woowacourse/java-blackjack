@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -9,10 +9,6 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 
 public class Deck {
 	private final Queue<Card> deck;

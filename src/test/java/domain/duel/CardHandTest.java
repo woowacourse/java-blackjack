@@ -1,4 +1,4 @@
-package domain;
+package domain.duel;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.card.Rank;
 import domain.card.Suit;
 

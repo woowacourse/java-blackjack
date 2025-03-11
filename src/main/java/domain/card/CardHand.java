@@ -1,11 +1,8 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import domain.card.Card;
-import domain.card.Rank;
 
 public class CardHand {
 

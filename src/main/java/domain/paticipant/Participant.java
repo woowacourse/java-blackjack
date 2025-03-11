@@ -2,8 +2,8 @@ package domain.paticipant;
 
 import java.util.List;
 
-import domain.CardHand;
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.duel.DuelHistory;
 import domain.duel.DuelResult;
 

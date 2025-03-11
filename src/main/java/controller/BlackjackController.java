@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.Blackjack;
-import domain.CardHand;
-import domain.Deck;
 import domain.card.Card;
+import domain.card.CardHand;
+import domain.card.Deck;
 import domain.duel.DuelHistory;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;

@@ -1,4 +1,4 @@
-package domain;
+package domain.duel;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
 

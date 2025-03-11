@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import domain.CardHand;
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.paticipant.Dealer;
