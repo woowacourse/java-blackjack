@@ -90,4 +90,8 @@ public class Round {
                 .filter(gambler -> gambler instanceof Player)
                 .collect(toMap(Gambler::getName, Gambler::calculateScore));
     }
+
+    public boolean isPlayerOwnsCardExceptInitialCards(final Name name) {
+        return findGambler(name).getCards().size() > 2;
+    }
 }

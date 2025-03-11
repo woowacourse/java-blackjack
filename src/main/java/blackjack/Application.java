@@ -73,7 +73,6 @@ public class Application {
     }
 
     private static void processPlayerTurn(final Round round, final Name playerName) {
-        boolean flag = false;
         while (isHit(playerName)) {
             round.distributeCards(playerName, 1);
             printGamblerCards(playerName, round.getCards(playerName));
@@ -82,9 +81,8 @@ public class Application {
                 printBusted(playerName);
                 break;
             }
-            flag = true;
         }
-        if (!flag) {
+        if (!round.isPlayerOwnsCardExceptInitialCards(playerName)) { // 첫 카드를 받은 이후로 카드를 받지 않은 경우
             printGamblerCards(playerName, round.getCards(playerName));
         }
     }
