@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
     private final Map<Number, String> numberSymbolMap = new HashMap<>(
@@ -32,7 +33,6 @@ public class OutputView {
     private final String resultIntro = "## 최종 승패";
     private final String playerResult = "%s: %s";
     private final String dealerResult = "딜러: ";
-    private final int zeroCount = 0;
 
     public void printParticipant(final Players players, final Dealer dealer) {
         printHitNotice(players);
@@ -120,24 +120,22 @@ public class OutputView {
     }
 
     private void printDealerResult(Map<Player, MatchResult> playerMatchResult) {
-        long winningCount = playerMatchResult.values().stream().filter(matchResult -> matchResult == LOSE).count();
-        long losingCount = playerMatchResult.values().stream().filter(matchResult -> matchResult == WIN).count();
-        long drawingCount = playerMatchResult.values().stream().filter(matchResult -> matchResult == DRAW).count();
         StringBuilder stringBuilder = new StringBuilder(dealerResult);
-        System.out.print(appendMatchResult(stringBuilder, winningCount, drawingCount, losingCount));
+        System.out.print(appendMatchResult(stringBuilder, MatchResult.calculateDealerResult(playerMatchResult)));
     }
 
-    private StringBuilder appendMatchResult(StringBuilder stringBuilder, long winningCount, long drawingCount, long losingCount) {
-        if (winningCount != zeroCount) {
-            stringBuilder.append(winningCount).append("승");
-        }
-        if (drawingCount != zeroCount) {
-            stringBuilder.append(drawingCount).append("무");
-        }
-        if (losingCount != zeroCount) {
-            stringBuilder.append(losingCount).append("패");
+    private StringBuilder appendMatchResult(StringBuilder stringBuilder, Map<MatchResult, Integer> dealerResult) {
+        for (Entry<MatchResult, Integer> map : dealerResult.entrySet()) {
+            appendMatchResultIfNotZero(stringBuilder, map);
         }
         return stringBuilder;
+    }
+
+    private static void appendMatchResultIfNotZero(StringBuilder stringBuilder, Entry<MatchResult, Integer> map) {
+        if (map.getValue() == 0) {
+            return;
+        }
+        stringBuilder.append(map.getValue()).append(map.getKey().getValue()).append(" ");
     }
 
     private void printNewLine() {
