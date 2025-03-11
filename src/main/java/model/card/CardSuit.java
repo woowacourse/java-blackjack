@@ -6,7 +6,7 @@ public enum CardSuit {
     DIAMOND("다이아몬드"),
     CLOVER("클로버");
 
-    private String shapeMeaning;
+    private final String shapeMeaning;
 
     CardSuit(String shapeMeaning) {
         this.shapeMeaning = shapeMeaning;

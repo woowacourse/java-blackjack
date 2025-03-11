@@ -22,8 +22,8 @@ public class Participant {
         }
     }
 
-    public boolean isBurst() {
-        return participantHand.checkBurst();
+    public boolean isBust() {
+        return participantHand.checkBust();
     }
 
     public int calculateFinalScore() {

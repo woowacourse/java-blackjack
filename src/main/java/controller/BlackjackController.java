@@ -47,7 +47,7 @@ public class BlackjackController {
         while (flag == InputView.readHit(player)) {
             player.receiveCard(deck.pick());
             OutputView.printHitResult(player);
-            if (player.isBurst()) {
+            if (player.isBust()) {
                 break;
             }
         }

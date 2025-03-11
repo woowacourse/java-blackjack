@@ -6,7 +6,7 @@ import model.card.Card;
 import model.card.CardRank;
 
 public class ParticipantHand {
-    private static final int BURST_SCORE_LIMIT = 21;
+    private static final int BUST_SCORE_LIMIT = 21;
     private static final int BLACKJACK_CONDITION_CARD_COUNT = 2;
 
     private final List<Card> cards;
@@ -19,12 +19,12 @@ public class ParticipantHand {
         cards.add(card);
     }
 
-    public boolean checkBurst() {
-        return calculateScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
+    public boolean checkBust() {
+        return calculateScoreWithAceAsMinValue() > BUST_SCORE_LIMIT;
     }
 
     public boolean checkBlackjack(){
-        return cards.size() == BLACKJACK_CONDITION_CARD_COUNT && calculateFinalScore() == BURST_SCORE_LIMIT;
+        return cards.size() == BLACKJACK_CONDITION_CARD_COUNT && calculateFinalScore() == BUST_SCORE_LIMIT;
     }
 
     public boolean checkScoreBelow(int upperBound) {
@@ -59,7 +59,7 @@ public class ParticipantHand {
             return false;
         }
         int maxScoreOfAce = convertOneAceToMaxValueFrom(scoreOfAceAsMinValue);
-        int scoreExceptAceUpperBound = BURST_SCORE_LIMIT - maxScoreOfAce;
+        int scoreExceptAceUpperBound = BUST_SCORE_LIMIT - maxScoreOfAce;
         return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
     }
 

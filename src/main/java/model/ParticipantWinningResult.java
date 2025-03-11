@@ -40,16 +40,16 @@ public class ParticipantWinningResult {
     }
 
     private static GameResult checkPlayerWin(Dealer dealer, Player player) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return GameResult.LOSE;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        return checkResultIfNotBurst(dealer, player);
+        return checkResultIfNotBust(dealer, player);
     }
 
-    private static GameResult checkResultIfNotBurst(Dealer dealer, Player player) {
+    private static GameResult checkResultIfNotBust(Dealer dealer, Player player) {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = player.calculateFinalScore();
 

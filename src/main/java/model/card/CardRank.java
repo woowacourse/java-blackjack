@@ -15,8 +15,8 @@ public enum CardRank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private String name;
-    private int defaultValue;
+    private final String name;
+    private final int defaultValue;
     private int maxValue;
 
     CardRank(String cardName, int defaultValue) {

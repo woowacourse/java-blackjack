@@ -25,7 +25,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.EIGHT, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         assertFalse(burst);
@@ -40,7 +40,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         Assertions.assertTrue(burst);
@@ -55,7 +55,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         assertFalse(burst);
@@ -71,7 +71,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         Assertions.assertTrue(burst);
