@@ -1,10 +1,11 @@
 package blackjack.domain.gambler;
 
-import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static blackjack.domain.Rule.*;
 
 public class Hands {
     private final List<Card> cards;
@@ -20,7 +21,7 @@ public class Hands {
     public int calculateScore() {
         int sum = calculateSum();
         long aceCount = calculateAceCount();
-        return Rule.adjustSumByAce(sum, (int) aceCount);
+        return adjustSumByAce(sum, (int) aceCount);
     }
 
     private int calculateSum() {
@@ -33,6 +34,17 @@ public class Hands {
         return cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    protected int adjustSumByAce(int sum, int aceCount) {
+        if (sum <= BLACK_JACK) {
+            return sum;
+        }
+        while (aceCount > 0 && sum > BLACK_JACK) {
+            sum -= (MAX_ACE_VALUE - MIN_ACE_VALUE);
+            aceCount--;
+        }
+        return sum;
     }
 
     public boolean isScoreBelow(final int criteria) {
