@@ -1,7 +1,7 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import java.util.List;
 
 public class Dealer {
 
@@ -9,12 +9,12 @@ public class Dealer {
 
     private final Hand hand;
 
-    public Dealer(CardDeck cardDeck) {
-        this.hand = new Hand(cardDeck);
+    public Dealer() {
+        this.hand = new Hand();
     }
 
-    public void drawCard(int drawCount) {
-        hand.drawCard(drawCount);
+    public void drawCard(List<Card> cards) {
+        hand.drawCard(cards);
     }
 
     public Hand getHand() {

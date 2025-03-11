@@ -39,9 +39,9 @@ public class CardDeck {
     }
 
     public List<Card> drawCard(int drawCount) {
-        validateEmptyDeck();
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < drawCount; i++) {
+            validateEmptyDeck();
             cards.add(deck.removeLast());
         }
         return cards;

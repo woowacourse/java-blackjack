@@ -1,5 +1,7 @@
 package domain.game;
 
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_START;
+
 import domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,11 +14,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames, CardDeck cardDeck) {
+    public Players(List<String> playerNames) {
         validatePlayerCount(playerNames);
         validateDuplicatePlayerName(playerNames);
         this.players = playerNames.stream()
-                .map(playerName -> new Player(playerName, cardDeck))
+                .map(playerName -> new Player(playerName))
                 .toList();
     }
 
@@ -41,8 +43,8 @@ public class Players {
         return gameResults;
     }
 
-    public void drawCard(int drawCount) {
-        players.forEach(player -> player.drawCard(drawCount));
+    public void drawCard(CardDeck cardDeck) {
+        players.forEach(player -> player.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_START)));
     }
 
     public List<Player> getPlayers() {

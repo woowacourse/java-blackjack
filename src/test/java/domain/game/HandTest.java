@@ -18,10 +18,10 @@ public class HandTest {
     void 카드_덱에서_카드_두_장을_받아온다() {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
 
         //when
-        hand.drawCard(DRAW_COUNT_WHEN_START);
+        hand.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
 
         //then
         assertThat(hand.getCards()).hasSize(2);
@@ -31,10 +31,10 @@ public class HandTest {
     void 카드_덱에서_카드_한_장을_받아온다() {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
 
         //when
-        hand.drawCard(DRAW_COUNT_WHEN_HIT);
+        hand.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
 
         //then
         assertThat(hand.getCards()).hasSize(1);
@@ -43,28 +43,25 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계를_계산한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.QUEEN)));
 
         //when
         int totalNumber = hand.calculateTotalWithAce();
 
         //then
-        assertThat(totalNumber).isEqualTo(22);
+        assertThat(totalNumber).isEqualTo(20);
     }
 
     @Test
     void 보유한_카드의_합계를_계산한다_ace를_11로_판단() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when
         int totalNumber = hand.calculateTotalWithAce();
@@ -76,30 +73,28 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계를_계산한다_ace를_1로_판단() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TWO));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.QUEEN),
+                new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when
         int totalNumber = hand.calculateTotalWithAce();
 
         //then
-        assertThat(totalNumber).isEqualTo(13);
+        assertThat(totalNumber).isEqualTo(21);
     }
 
     @Test
     void 보유한_카드의_합계를_계산한다_21초과해도_ace를_1로_판단() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.QUEEN),
+                new Card(Pattern.SPADE, CardNumber.TWO),
+                new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when
         int totalNumber = hand.calculateTotalWithAce();
@@ -111,12 +106,11 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21초과_케이스() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.QUEEN),
+                new Card(Pattern.SPADE, CardNumber.TWO)));
 
         //when & then
         assertThat(hand.isOverBustBound()).isTrue();
@@ -125,12 +119,10 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21이하_케이스() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.NINE));
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.QUEEN)));
 
         //when & then
         assertThat(hand.isOverBustBound()).isFalse();
@@ -139,11 +131,10 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_11로_처리() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when & then
         assertThat(hand.isOverBustBound()).isFalse();
@@ -152,12 +143,11 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_1로_처리하면_통과() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.QUEEN),
+                new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when & then
         assertThat(hand.isOverBustBound()).isFalse();
@@ -166,13 +156,13 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_1로_처리해도_버스트() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.TEN),
+                new Card(Pattern.SPADE, CardNumber.NINE),
+                new Card(Pattern.SPADE, CardNumber.TWO),
+                new Card(Pattern.SPADE, CardNumber.ACE)
+        ));
 
         //when & then
         assertThat(hand.isOverBustBound()).isTrue();
@@ -181,13 +171,13 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace_4개_케이스() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand(cardDeck);
-        List<Card> drawnCards = hand.getCards();
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
-        drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
-        drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
+        Hand hand = new Hand();
+        hand.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.ACE),
+                new Card(Pattern.DIAMOND, CardNumber.ACE),
+                new Card(Pattern.HEART, CardNumber.ACE),
+                new Card(Pattern.CLOVER, CardNumber.ACE)
+        ));
 
         //when & then
         assertThat(hand.isOverBustBound()).isFalse();

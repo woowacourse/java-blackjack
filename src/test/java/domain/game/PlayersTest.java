@@ -6,7 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
-import domain.card.CardShuffler;
 import domain.card.Pattern;
 import domain.card.TestShuffler;
 import java.util.List;
@@ -21,7 +20,7 @@ public class PlayersTest {
         List<String> playerNames = List.of("aa", "bb", "cc", "dd", "ee");
 
         //when & then
-        assertThatCode(() -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
+        assertThatCode(() -> new Players(playerNames))
                 .doesNotThrowAnyException();
     }
 
@@ -32,7 +31,7 @@ public class PlayersTest {
 
         //when & then
         assertThatThrownBy(
-                () -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
+                () -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -42,7 +41,7 @@ public class PlayersTest {
         List<String> playerNames = List.of();
 
         //when & then
-        assertThatThrownBy(() -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
+        assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -52,18 +51,19 @@ public class PlayersTest {
         List<String> playerNames = List.of("aa", "aa");
 
         //when & then
-        assertThatThrownBy(() -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
+        assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 모든_플레이어는_게임_시작_시_카드를_드로우한다() {
         //given
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         List<String> playerNames = List.of("aa", "bb");
-        Players players = new Players(playerNames, CardDeck.createCards(new CardShuffler()));
+        Players players = new Players(playerNames);
 
         //when
-        players.drawCard(2);
+        players.drawCard(cardDeck);
 
         //when
         Assertions.assertThat(players.getPlayers().get(0).getCardsCount()).isEqualTo(2);
@@ -74,7 +74,7 @@ public class PlayersTest {
     void 모든_플레이어의_이름을_반환한다() {
         //given
         List<String> playerNames = List.of("aa", "bb");
-        Players players = new Players(playerNames, CardDeck.createCards(new CardShuffler()));
+        Players players = new Players(playerNames);
 
         //when
         List<String> allPlayerNames = players.getAllPlayerNames();
@@ -86,18 +86,15 @@ public class PlayersTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer(cardDeck);
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
-        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.SEVEN));
+        Dealer dealer = new Dealer();
+        dealer.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.TEN),
+                new Card(Pattern.CLOVER, CardNumber.TEN)));
 
-        Players players = new Players(List.of("pobi"), cardDeck);
-        Hand playerHand = players.getPlayers().getFirst().getHand();
-        List<Card> playerCards = playerHand.getCards();
-        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        playerCards.add(new Card(Pattern.CLOVER, CardNumber.SIX));
+        Players players = new Players(List.of("pobi"));
+        players.getPlayers().getFirst().drawCard(List.of(
+                new Card(Pattern.HEART, CardNumber.TEN),
+                new Card(Pattern.CLOVER, CardNumber.NINE)));
 
         //when
         List<GameResult> gameResult = players.judgeGameResult(dealer);
@@ -109,20 +106,17 @@ public class PlayersTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer(cardDeck);
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
-        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        dealerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
+        Dealer dealer = new Dealer();
+        dealer.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.TEN),
+                new Card(Pattern.CLOVER, CardNumber.TEN),
+                new Card(Pattern.DIAMOND, CardNumber.TWO)));
 
-        Players players = new Players(List.of("pobi"), cardDeck);
-        Hand playerHand = players.getPlayers().getFirst().getHand();
-        List<Card> playerCards = playerHand.getCards();
-        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        playerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        playerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
+        Players players = new Players(List.of("pobi"));
+        players.getPlayers().getFirst().drawCard(List.of(
+                new Card(Pattern.CLOVER, CardNumber.KING),
+                new Card(Pattern.SPADE, CardNumber.JACK),
+                new Card(Pattern.HEART, CardNumber.TWO)));
 
         //when
         List<GameResult> gameResult = players.judgeGameResult(dealer);
@@ -134,19 +128,16 @@ public class PlayersTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer(cardDeck);
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
-        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        dealerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
+        Dealer dealer = new Dealer();
+        dealer.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.TEN),
+                new Card(Pattern.CLOVER, CardNumber.TEN),
+                new Card(Pattern.DIAMOND, CardNumber.TWO)));
 
-        Players players = new Players(List.of("pobi"), cardDeck);
-        Hand playerHand = players.getPlayers().getFirst().getHand();
-        List<Card> playerCards = playerHand.getCards();
-        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        playerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+        Players players = new Players(List.of("pobi"));
+        players.getPlayers().getFirst().drawCard(List.of(
+                new Card(Pattern.HEART, CardNumber.TEN),
+                new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
         //when
         List<GameResult> gameResult = players.judgeGameResult(dealer);
@@ -158,18 +149,15 @@ public class PlayersTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer(cardDeck);
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
-        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        Dealer dealer = new Dealer();
+        dealer.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.TEN),
+                new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
-        Players players = new Players(List.of("pobi"), cardDeck);
-        Hand playerHand = players.getPlayers().getFirst().getHand();
-        List<Card> playerCards = playerHand.getCards();
-        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        Players players = new Players(List.of("pobi"));
+        players.getPlayers().getFirst().drawCard(List.of(
+                new Card(Pattern.HEART, CardNumber.TEN),
+                new Card(Pattern.CLOVER, CardNumber.ACE)));
 
         //when
         List<GameResult> gameResult = players.judgeGameResult(dealer);
@@ -181,19 +169,15 @@ public class PlayersTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer(cardDeck);
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
-        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        Dealer dealer = new Dealer();
+        dealer.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.TEN),
+                new Card(Pattern.CLOVER, CardNumber.ACE)));
 
-        Players players = new Players(List.of("pobi"), cardDeck);
-        Hand playerHand = players.getPlayers().getFirst().getHand();
-        List<Card> playerCards = playerHand.getCards();
-        playerCards.add(new Card(Pattern.SPADE, CardNumber.EIGHT));
-        playerCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
-        playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        Players players = new Players(List.of("pobi"));
+        players.getPlayers().getFirst().drawCard(List.of(
+                new Card(Pattern.HEART, CardNumber.TEN),
+                new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
         //when
         List<GameResult> gameResult = players.judgeGameResult(dealer);
@@ -205,19 +189,15 @@ public class PlayersTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer(cardDeck);
-        Hand dealerHand = dealer.getHand();
-        List<Card> dealerCards = dealerHand.getCards();
-        dealerCards.add(new Card(Pattern.SPADE, CardNumber.EIGHT));
-        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
-        dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        Dealer dealer = new Dealer();
+        dealer.drawCard(List.of(
+                new Card(Pattern.SPADE, CardNumber.TEN),
+                new Card(Pattern.CLOVER, CardNumber.TEN)));
 
-        Players players = new Players(List.of("pobi"), cardDeck);
-        Hand playerHand = players.getPlayers().getFirst().getHand();
-        List<Card> playerCards = playerHand.getCards();
-        playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        playerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        Players players = new Players(List.of("pobi"));
+        players.getPlayers().getFirst().drawCard(List.of(
+                new Card(Pattern.HEART, CardNumber.TEN),
+                new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
         //when
         List<GameResult> gameResult = players.judgeGameResult(dealer);

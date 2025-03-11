@@ -1,19 +1,20 @@
 package domain.game;
 
-import domain.card.CardDeck;
+import domain.card.Card;
+import java.util.List;
 
 public class Player {
 
     private final String name;
     private final Hand hand;
 
-    public Player(String name, CardDeck cardDeck) {
+    public Player(String name) {
         this.name = name;
-        this.hand = new Hand(cardDeck);
+        this.hand = new Hand();
     }
 
-    public void drawCard(int drawCount) {
-        hand.drawCard(drawCount);
+    public void drawCard(List<Card> cards) {
+        hand.drawCard(cards);
     }
 
     public int getCardsCount() {
