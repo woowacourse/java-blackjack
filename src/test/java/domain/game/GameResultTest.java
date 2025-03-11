@@ -195,7 +195,7 @@ public class GameResultTest {
     @Test
     void 딜러의_승리_횟수를_계산한다() {
         //when
-        int winCount = GameResult.WIN.countGameResult(
+        int winCount = GameResult.WIN.countReversedGameResult(
                 List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
 
         //then
@@ -206,7 +206,7 @@ public class GameResultTest {
     @Test
     void 딜러의_패배_횟수를_계산한다() {
         //when
-        int winCount = GameResult.LOSE.countGameResult(
+        int winCount = GameResult.LOSE.countReversedGameResult(
                 List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
 
         //then
@@ -217,7 +217,7 @@ public class GameResultTest {
     @Test
     void 딜러의_무승부_횟수를_계산한다() {
         //when
-        int winCount = GameResult.DRAW.countGameResult(
+        int winCount = GameResult.DRAW.countReversedGameResult(
                 List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
 
         //then

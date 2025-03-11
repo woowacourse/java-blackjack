@@ -71,9 +71,9 @@ public class BlackJackController {
         List<GameResult> gameResults = players.judgeGameResult(dealer);
         List<String> playerNames = players.getAllPlayerNames();
 
-        int winCount = GameResult.WIN.countGameResult(gameResults);
-        int loseCount = GameResult.LOSE.countGameResult(gameResults);
-        int drawCount = GameResult.DRAW.countGameResult(gameResults);
+        int winCount = GameResult.WIN.countReversedGameResult(gameResults);
+        int loseCount = GameResult.LOSE.countReversedGameResult(gameResults);
+        int drawCount = GameResult.DRAW.countReversedGameResult(gameResults);
 
         outputView.printDealerWinningResult(winCount, drawCount, loseCount);
         outputView.printWinningResult(playerNames, gameResults);

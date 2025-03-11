@@ -56,7 +56,7 @@ public enum GameResult {
         throw new IllegalArgumentException("[ERROR] 승패 판정에 실패하였습니다.");
     }
 
-    public int countGameResult(List<GameResult> gameResults) {
+    public int countReversedGameResult(List<GameResult> gameResults) {
         if (this == GameResult.WIN) {
             return (int) gameResults.stream()
                     .filter(gameResult -> gameResult == GameResult.LOSE)
