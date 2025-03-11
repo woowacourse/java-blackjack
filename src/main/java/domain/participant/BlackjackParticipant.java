@@ -39,9 +39,8 @@ public abstract class BlackjackParticipant {
     }
 
     public int calculateCardSum() {
-        int sum = cardHands.stream().map(TrumpCard::cardNumberValue)
-                .reduce(Integer::sum)
-                .orElse(0);
+        int sum = cardHands.stream().mapToInt(TrumpCard::cardNumberValue)
+                .sum();
         int aceCount = (int) cardHands.stream()
                 .filter(TrumpCard::isAce)
                 .count();
