@@ -22,9 +22,6 @@ public class Players {
 
     public void giveCard(PlayerName playerName, Cards cards) {
         Player selectedPlayer = selectPlayer(playerName);
-        if (!isDrawable(playerName)) {
-            throw new IllegalArgumentException("카드를 뽑을 수 없습니다.");
-        }
         selectedPlayer.addCard(cards);
     }
 
@@ -57,10 +54,6 @@ public class Players {
                 ));
 
         return new GameStatistics(gameResults);
-    }
-
-    public List<PlayerName> getUsernames() {
-        return players.keySet().stream().toList();
     }
 
     public Map<PlayerName, Player> getPlayersInfo() {
