@@ -14,8 +14,12 @@ public class Player {
         this.cards = cards;
     }
 
-    public void take(Card... cards) {
-        this.cards.take(cards);
+    public void take(Card card1, Card card2) {
+        this.cards.take(card1, card2);
+    }
+
+    public void additionalTake(Card card) {
+        this.cards.additionalTake(card);
     }
 
     public boolean canTake() {

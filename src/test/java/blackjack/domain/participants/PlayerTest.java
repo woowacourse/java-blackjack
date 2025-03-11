@@ -35,7 +35,7 @@ class PlayerTest {
         Card card = new Card(Suit.HEART, Rank.TWO);
 
         //when & then
-        assertThatThrownBy(() -> player.take(card))
+        assertThatThrownBy(() -> player.additionalTake(card))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
     }
@@ -54,7 +54,7 @@ class PlayerTest {
         Card card = new Card(Suit.HEART, Rank.THREE);
 
         //when
-        player.take(card);
+        player.additionalTake(card);
 
         //then
         assertThat(player.getCards().getCards()).isEqualTo(

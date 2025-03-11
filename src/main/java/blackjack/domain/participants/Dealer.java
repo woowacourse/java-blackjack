@@ -46,7 +46,7 @@ public class Dealer {
 
     public void pickAdditionalCard() {
         while (calculateMaxScore() <= 16) {
-            cards.take(deck.draw());
+            cards.additionalTake(deck.draw());
         }
     }
 
@@ -57,7 +57,7 @@ public class Dealer {
         if (!player.canTake()) {
             throw new IllegalArgumentException("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
         }
-        player.take(deck.draw());
+        player.additionalTake(deck.draw());
     }
 
     public boolean isBlackjack() {

@@ -34,15 +34,16 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public void take(Card... cards) {
-        if (Arrays.stream(cards).count() > DEFAULT_CARD_SIZE) {
-            throw new IllegalArgumentException("카드는 한 번에 최대 두 장까지 받을 수 있습니다.");
-        }
+    public void take(Card card1, Card card2) {
+        this.cards.addAll(Arrays.asList(card1, card2));
+    }
+
+    public void additionalTake(Card card) {
         int minScore = scoreCalculator.calculateMaxScore(this.cards);
         if (minScore >= BUST_THRESHOLD) {
             throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
         }
-        this.cards.addAll(Arrays.asList(cards));
+        this.cards.add(card);
     }
 
     public int getSize() {

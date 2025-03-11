@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -68,22 +67,6 @@ public class CardsTest {
         Assertions.assertThat(cards.isBlackjack()).isFalse();
     }
 
-
-    @Test
-    void 한_번에_최대_2개의_카드만_뽑을_수_있다() {
-        //given
-        Stack<Card> cards = new Stack<>();
-        Cards cardDeck = new Cards(cards, new ScoreCalculator());
-
-        //when & then
-        Assertions.assertThatThrownBy(() -> cardDeck.take(
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE),
-                        new Card(Suit.CLUB, Rank.ONE)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드는 한 번에 최대 두 장까지 받을 수 있습니다.");
-    }
-
     @Test
     void 카드_합이_21이_넘으면_더_이상_카드를_받을_수_없다() {
         //given
@@ -95,7 +78,7 @@ public class CardsTest {
         );
 
         //when & then
-        Assertions.assertThatThrownBy(() -> cards.take(
+        Assertions.assertThatThrownBy(() -> cards.additionalTake(
                         new Card(Suit.CLUB, Rank.FOUR)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
