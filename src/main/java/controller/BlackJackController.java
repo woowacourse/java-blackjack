@@ -9,6 +9,7 @@ import domain.deck.Card;
 import domain.deck.CardSetGenerator;
 import domain.deck.Deck;
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Nickname;
 import domain.gamer.Player;
 import domain.gamer.Players;
@@ -26,9 +27,9 @@ public class BlackJackController {
     public void run() {
         try {
             final Players players = createPlayers();
+            final Dealer dealer = createDealer();
             final Deck deck = generateDeck();
-            final Dealer dealer = setupDealer(deck);
-            setGame(players.getPlayers(), deck);
+            setGame(players.getPlayers(), dealer, deck);
             printGameSetting(dealer, players);
             playGame(dealer, players.getPlayers(), deck);
             processFinalResult(dealer, players.getPlayers());
@@ -57,18 +58,20 @@ public class BlackJackController {
         return new Deck(cards);
     }
 
-    private Dealer setupDealer(final Deck deck) {
-        final Dealer dealer = new Dealer(new Nickname(DEALER_NAME));
-        dealer.receiveInitialCards(List.of(deck.drawCard(), deck.drawCard()));
-        return dealer;
+    private Dealer createDealer() {
+        return new Dealer(new Nickname(DEALER_NAME));
     }
 
-    private void setGame(final List<Player> players, final Deck deck) {
-        players.forEach(player -> {
-            final Card firstCard = deck.drawCard();
-            final Card secondCard = deck.drawCard();
-            player.receiveInitialCards(List.of(firstCard, secondCard));
-        });
+    private void setGame(final List<Player> players, Dealer dealer, final Deck deck) {
+        players.forEach(player -> receiveInitialCards(player, deck));
+        receiveInitialCards(dealer, deck);
+
+    }
+
+    private void receiveInitialCards(Gamer gamer, Deck deck) {
+        final Card firstCard = deck.drawCard();
+        final Card secondCard = deck.drawCard();
+        gamer.receiveInitialCards(List.of(firstCard, secondCard));
     }
 
     private void printGameSetting(final Dealer dealer,
