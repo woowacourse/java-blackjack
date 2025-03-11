@@ -57,7 +57,7 @@ public class WinningDiscriminator {
         winningResult.computeIfPresent(DRAW, plusCount);
     }
 
-    private WinningType judgePlayerResult(final Name name) {
+    public WinningType judgePlayerResult(final Name name) {
         int playerScore = playerScores.get(name);
         if (playerScore > BLACK_JACK) {
             return DEFEAT;

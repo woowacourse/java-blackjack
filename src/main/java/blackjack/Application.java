@@ -5,6 +5,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.ProfitCalculator;
 import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.gambler.Names;
 import blackjack.domain.Round;
@@ -17,13 +18,16 @@ import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.WinningType;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Application {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
+    private static final ProfitCalculator profitCalculator = new ProfitCalculator();
 
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
@@ -36,6 +40,7 @@ public class Application {
         processPlayersTurn(playerNames, round);
         processDealerTurn(round);
         printGameResult(round, playerNames);
+        printProfits(round, playerNames, bettingAmounts);
     }
 
     private static CardDeck createCardDeck() {
@@ -125,7 +130,25 @@ public class Application {
             int score = round.getScore(playerName);
             outputView.printGamblerResult(playerName, cards, score);
         }
-        WinningDiscriminator discriminator = round.getWinningDiscriminator();
-        outputView.printWinning(discriminator);
     }
+
+    /**
+     * 리팩터링 TODO
+     */
+    private static void printProfits(final Round round, final Names names, final Map<Name, BettingAmount> bettingAmounts) {
+        WinningDiscriminator discriminator = round.getWinningDiscriminator();
+        Map<Name, Integer> playersProfit = new HashMap<>();
+        for (Name playerName : names.getNames()) {
+            WinningType winningType = discriminator.judgePlayerResult(playerName);
+            BettingAmount bettingAmount = bettingAmounts.get(playerName);
+            int profit = profitCalculator.calculatePlayerProfit(winningType, bettingAmount);
+            playersProfit.put(playerName, profit);
+        }
+        List<Integer> listplayersProfit = playersProfit.values()
+                .stream()
+                .toList();
+        int dealerProfit = profitCalculator.calculateDealerProfit(listplayersProfit);
+        outputView.printProfit(dealerProfit, playersProfit);
+    }
+
 }

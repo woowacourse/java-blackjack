@@ -2,6 +2,7 @@ package blackjack.view;
 
 import static blackjack.domain.Round.BLACK_JACK;
 import static blackjack.domain.Round.DEALER_DRAW_THRESHOLD;
+import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static blackjack.view.WinningType.DEFEAT;
 import static blackjack.view.WinningType.DRAW;
 import static blackjack.view.WinningType.WIN;
@@ -65,6 +66,22 @@ public class OutputView {
         Map<Name, WinningType> playerWinning = winningDiscriminator.judgePlayersResult();
         for (final Entry<Name, WinningType> entry : playerWinning.entrySet()) {
             System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getDisplayName());
+        }
+    }
+
+    public void printProfit(final int dealerProfit, final Map<Name, Integer> playersProfit) {
+        System.out.println("## 최종 수익");
+        printDealerProfit(dealerProfit);
+        printPlayersProfit(playersProfit);
+    }
+
+    private void printDealerProfit(final int dealerProfit) {
+        System.out.printf("%s: %d\n", DEALER_NAME, dealerProfit);
+    }
+
+    private void printPlayersProfit(final Map<Name, Integer> playersProfit) {
+        for (Entry<Name, Integer> entry : playersProfit.entrySet()) {
+            System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
         }
     }
 }
