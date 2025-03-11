@@ -19,16 +19,7 @@ public class ParticipantWinningResult {
     }
 
     public ParticipantWinningResult(Map<Player, GameResult> result) {
-        this.result = result; //TODO 나중에 리팩토링 끝나면 private 해도 될 듯 딜러 최종 승패 테스트에만 쓰이는데 이거는 이제 딜러 최종 베팅으로 넘어감
-    }
-
-    public Map<GameResult, Integer> decideDealerWinning() {
-        Map<GameResult, Integer> dealerResult = new HashMap<>();
-        for (Player player : result.keySet()) {
-            GameResult playerGameResult = result.get(player);
-            calculateDealerResult(playerGameResult, dealerResult);
-        }
-        return dealerResult;
+        this.result = result;
     }
 
     private static GameResult checkPlayerWinningResult(Dealer dealer, Player player) {
@@ -60,18 +51,6 @@ public class ParticipantWinningResult {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
-    }
-
-    private void calculateDealerResult(GameResult gameResult, Map<GameResult, Integer> dealerResult) {
-        if (gameResult == GameResult.WIN) {
-            dealerResult.merge(GameResult.LOSE, 1, Integer::sum);
-        }
-        if (gameResult == GameResult.LOSE) {
-            dealerResult.merge(GameResult.WIN, 1, Integer::sum);
-        }
-        if (gameResult == GameResult.DRAW) {
-            dealerResult.merge(GameResult.DRAW, 1, Integer::sum);
-        }
     }
 
     public Map<Player, GameResult> getResult() {

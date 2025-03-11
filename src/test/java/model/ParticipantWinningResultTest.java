@@ -138,30 +138,6 @@ class ParticipantWinningResultTest {
     }
 
     @Test
-    @DisplayName("딜러의 최종 승패를 결정한다.")
-    void 딜러의_최종_승패를_결정한다() {
-        //given
-        GameResult playerResult1 = GameResult.WIN;
-        GameResult playerResult2 = GameResult.DRAW;
-        Map<Player, GameResult> playerGameResult =
-                Map.of(new Player("a"), playerResult1, new Player("b"), playerResult2);
-        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(playerGameResult);
-
-        //when
-        Map<GameResult, Integer> dealerResults = participantWinningResult.decideDealerWinning();
-        int expect = 1;
-        int winExpect = 0;
-        int loseCount = dealerResults.getOrDefault(GameResult.LOSE, 0);
-        int drawCount = dealerResults.getOrDefault(GameResult.DRAW, 0);
-        int winCount = dealerResults.getOrDefault(GameResult.WIN, 0);
-
-        //then
-        assertEquals(loseCount, expect);
-        assertEquals(drawCount, expect);
-        assertEquals(winCount, winExpect);
-    }
-
-    @Test
     @DisplayName("2장의 카드로 21을 만들어 승리할 경우 블랙잭을 반환한다")
     void 두장의_카드로_21을_만들어_승리할_경우_블랙잭을_반환한다() {
         //given
