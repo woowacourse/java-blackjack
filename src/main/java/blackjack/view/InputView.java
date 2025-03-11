@@ -34,4 +34,11 @@ public class InputView {
         }
         throw new IllegalArgumentException(INVALID_HIT_RESPONSE.getMessage());
     }
+
+    public int inputBettingAmount(final Name name) {
+        System.out.printf("%s의 배팅 금액은?\n", name);
+        int bettingAmount = scanner.nextInt();
+        scanner.nextLine();
+        return bettingAmount;
+    }
 }

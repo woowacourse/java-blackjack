@@ -15,7 +15,9 @@ import blackjack.domain.gambler.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Application {
     private static final InputView inputView = new InputView();
@@ -25,6 +27,7 @@ public class Application {
         CardDeck cardDeck = createCardDeck();
         Names playerNames = getPlayerNames();
         Round round = new Round(cardDeck, playerNames);
+        Map<Name, Integer> bettingAmounts = getBettingAmounts(playerNames);
         round.distributeInitialCards();
         outputView.printInitialDistributionPrompt(playerNames);
         printInitialCards(round, playerNames);
@@ -49,6 +52,15 @@ public class Application {
             System.out.println(e.getMessage());
             return getPlayerNames();
         }
+    }
+
+    private static Map<Name, Integer> getBettingAmounts(final Names playerNames) {
+        Map<Name, Integer> bettingAmounts = new HashMap<>();
+        for (final Name playerName : playerNames.getNames()) {
+            int bettingAmount = inputView.inputBettingAmount(playerName);
+            bettingAmounts.put(playerName, bettingAmount);
+        }
+        return bettingAmounts;
     }
 
     private static void printInitialCards(final Round round, final Names playerNames) {
