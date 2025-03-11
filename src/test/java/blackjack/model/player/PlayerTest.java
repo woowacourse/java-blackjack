@@ -13,104 +13,32 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerTest {
+class PlayerTest {
 
     private Player player;
 
-    private static Stream<Arguments> 비겼는지_확인한다_테스트_케이스() {
+    private static Stream<Arguments> 최초로_받은_카드를_오픈한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(
-                                List.of(
-                                        createCard(CardNumber.EIGHT)
-                                )
-                        ),
-                        RawPlayer.withCards(
-                                "challenger",
-                                new Cards(
-                                        List.of(
-                                                createCard(CardNumber.EIGHT)
-                                        )
-                                )
-                        ),
-                        true
+                        new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))),
+                        new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)))
                 ),
                 Arguments.of(
-                        new Cards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT),
-                                        createCard(CardNumber.SEVEN)
-                                )
-                        ),
-                        RawPlayer.withCards(
-                                "challenger",
-                                new Cards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.EIGHT),
-                                                createCard(CardNumber.SIX)
-                                        )
-                                )
-                        ),
-                        true
+                        new Cards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
+                                createCard(CardNumber.TWO))),
+                        new Cards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
+                                createCard(CardNumber.TWO)))
                 )
         );
     }
 
-    private static Stream<Arguments> 이겼는지_확인한다_테스트_케이스() {
+    private static Stream<Arguments> 자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
                         new Cards(
                                 List.of(
-                                        createCard(CardNumber.EIGHT)
-                                )
-                        ),
-                        RawPlayer.withCards(
-                                "challenger",
-                                new Cards(
-                                        List.of(
-                                                createCard(CardNumber.EIGHT)
-                                        )
-                                )
-                        ),
-                        false
-                ),
-                Arguments.of(
-                        new Cards(
-                                List.of(
                                         createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT),
-                                        createCard(CardNumber.SEVEN)
-                                )
-                        ),
-                        RawPlayer.withCards(
-                                "challenger",
-                                new Cards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.EIGHT),
-                                                createCard(CardNumber.SIX)
-                                        )
-                                )
-                        ),
-                        false
-                ),
-                Arguments.of(
-                        new Cards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT)
-                                )
-                        ),
-                        RawPlayer.withCards(
-                                "challenger",
-                                new Cards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.EIGHT),
-                                                createCard(CardNumber.SIX)
-                                        )
+                                        createCard(CardNumber.FIVE)
                                 )
                         ),
                         true
@@ -119,17 +47,8 @@ public class PlayerTest {
                         new Cards(
                                 List.of(
                                         createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT),
-                                        createCard(CardNumber.SEVEN)
-                                )
-                        ),
-                        RawPlayer.withCards(
-                                "challenger",
-                                new Cards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.EIGHT)
-                                        )
+                                        createCard(CardNumber.FIVE),
+                                        createCard(CardNumber.SIX)
                                 )
                         ),
                         false
@@ -138,55 +57,28 @@ public class PlayerTest {
                         new Cards(
                                 List.of(
                                         createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT)
+                                        createCard(CardNumber.FIVE),
+                                        createCard(CardNumber.SIX),
+                                        createCard(CardNumber.ACE)
                                 )
                         ),
-                        RawPlayer.withCards(
-                                "challenger",
-                                new Cards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.SIX)
-                                        )
-                                )
-                        ),
-                        true
-                )
-        );
-    }
-
-    private static Stream<Arguments> 최적의_포인트를_반환한다_테스트_케이스() {
-        return Stream.of(
-                Arguments.of(
-                        new Cards(
-                                createCard(CardNumber.EIGHT),
-                                createCard(CardNumber.ACE)
-                        ),
-                        19
-                ),
-                Arguments.of(
-                        new Cards(
-                                createCard(CardNumber.EIGHT),
-                                createCard(CardNumber.ACE),
-                                createCard(CardNumber.NINE)
-                        ),
-                        18
-                ),
-                Arguments.of(
-                        new Cards(
-                                createCard(CardNumber.EIGHT),
-                                createCard(CardNumber.ACE),
-                                createCard(CardNumber.NINE),
-                                createCard(CardNumber.SIX)
-                        ),
-                        24
+                        false
                 )
         );
     }
 
     @BeforeEach
     void setUp() {
-        player = new RawPlayer("pobi");
+        player = new Player("pobi");
+    }
+
+    @Test
+    void 카드를_받으면_자신의_카드에_추가한다() {
+        player.receiveCards(new Cards(
+                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
+        ));
+
+        assertThat(player.getCards().getValues()).hasSize(3);
     }
 
     @Test
@@ -198,55 +90,21 @@ public class PlayerTest {
         assertThat(player.getMinimumPoint()).isEqualTo(21);
     }
 
-    @Test
-    void 카드를_받으면_자신의_카드에_추가한다() {
-        Cards cards = new Cards(
-                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
-        );
+    @ParameterizedTest
+    @MethodSource("최초로_받은_카드를_오픈한다_테스트_케이스")
+    void 최초로_받은_카드를_오픈한다(final Cards cards, final Cards expected) {
+
         player.receiveCards(cards);
 
-        assertThat(player.getCards().getValues()).hasSize(3);
-    }
-
-    @Test
-    void 자신의_모든_카드를_오픈한다() {
-        Cards cards = new Cards(
-                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
-        );
-        player.receiveCards(cards);
-
-        assertThat(player.openAllCards()).isEqualTo(cards);
+        assertThat(player.openInitialCards()).isEqualTo(expected);
     }
 
     @ParameterizedTest
-    @MethodSource("최적의_포인트를_반환한다_테스트_케이스")
-    void 최적의_포인트를_반환한다(final Cards cards, final int expected) {
+    @MethodSource("자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
+    void 자신이_카드를_더_뽑을_수_있는지_반환한다(final Cards cards, final boolean expected) {
+
         player.receiveCards(cards);
 
-        assertThat(player.calculateOptimalPoint()).isEqualTo(expected);
-    }
-
-    private static class RawPlayer extends Player {
-
-        RawPlayer(String name) {
-            super(name);
-        }
-
-        static RawPlayer withCards(final String name, final Cards cards) {
-            RawPlayer rawPlayer = new RawPlayer(name);
-            rawPlayer.receiveCards(cards);
-
-            return rawPlayer;
-        }
-
-        @Override
-        public Cards openInitialCards() {
-            throw new IllegalStateException("이 메서드는 Player 에서 테스트할 수 없습니다.");
-        }
-
-        @Override
-        public boolean canDrawMoreCard() {
-            throw new IllegalStateException("이 메서드는 Player 에서 테스트할 수 없습니다.");
-        }
+        assertThat(player.canDrawMoreCard()).isEqualTo(expected);
     }
 }

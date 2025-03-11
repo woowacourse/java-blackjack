@@ -1,7 +1,7 @@
 package blackjack.model.game;
 
 import blackjack.model.player.Dealer;
-import blackjack.model.player.User;
+import blackjack.model.player.Player;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,31 +19,31 @@ public enum Result {
         this.name = name;
     }
 
-    public static Map<Result, Integer> evaluateDealerResults(final Dealer dealer, final List<User> users) {
+    public static Map<Result, Integer> evaluateDealerResults(final Dealer dealer, final List<Player> players) {
         HashMap<Result, Integer> results = new LinkedHashMap<>(values().length);
         results.put(WIN, 0);
         results.put(DRAW, 0);
         results.put(LOSE, 0);
 
-        users.forEach(user -> results.merge(evaluateDealerResult(dealer, user), 1, Integer::sum));
+        players.forEach(user -> results.merge(evaluateDealerResult(dealer, user), 1, Integer::sum));
         return results;
     }
 
-    private static Result evaluateDealerResult(final Dealer dealer, final User user) {
-        if (dealer.isDraw(user)) {
+    private static Result evaluateDealerResult(final Dealer dealer, final Player player) {
+        if (dealer.isDraw(player)) {
             return DRAW;
         }
-        if (dealer.isWin(user)) {
+        if (dealer.isWin(player)) {
             return WIN;
         }
         return LOSE;
     }
 
-    public static Result evaluateUserResult(final Dealer dealer, final User user) {
-        if (dealer.isDraw(user)) {
+    public static Result evaluateUserResult(final Dealer dealer, final Player player) {
+        if (dealer.isDraw(player)) {
             return DRAW;
         }
-        if (dealer.isWin(user)) {
+        if (dealer.isWin(player)) {
             return LOSE;
         }
         return WIN;

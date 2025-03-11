@@ -2,7 +2,7 @@ package blackjack.model.player;
 
 import blackjack.model.card.Cards;
 
-public class Dealer extends Player {
+public class Dealer extends BlackJackPlayer {
 
     private static final int DRAWABLE_POINT = 17;
     private static final String DEFAULT_NAME = "딜러";
@@ -15,21 +15,21 @@ public class Dealer extends Player {
         this(DEFAULT_NAME);
     }
 
-    public boolean isDraw(final User user) {
-        if (user.isBust() || isBust()) {
+    public boolean isDraw(final Player player) {
+        if (player.isBust() || isBust()) {
             return false;
         }
-        return calculateOptimalPoint() == user.calculateOptimalPoint();
+        return calculateOptimalPoint() == player.calculateOptimalPoint();
     }
 
-    public boolean isWin(final User user) {
-        if (user.isBust()) {
+    public boolean isWin(final Player player) {
+        if (player.isBust()) {
             return true;
         }
         if (isBust()) {
             return false;
         }
-        return calculateOptimalPoint() > user.calculateOptimalPoint();
+        return calculateOptimalPoint() > player.calculateOptimalPoint();
     }
 
     @Override

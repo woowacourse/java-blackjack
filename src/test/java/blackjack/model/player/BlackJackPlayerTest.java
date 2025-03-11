@@ -13,46 +13,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DealerTest {
+public class BlackJackPlayerTest {
 
-    private Dealer dealer;
-
-    private static Stream<Arguments> 최초로_받은_카드를_오픈한다_테스트_케이스() {
-        return Stream.of(
-                Arguments.of(
-                        new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))),
-                        new Cards(List.of(createCard(CardNumber.TEN)))
-                ),
-                Arguments.of(
-                        new Cards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
-                                createCard(CardNumber.TWO))),
-                        new Cards(List.of(createCard(CardNumber.NINE)))
-                )
-        );
-    }
-
-    private static Stream<Arguments> 자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
-        return Stream.of(
-                Arguments.of(
-                        new Cards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.SIX)
-                                )
-                        ),
-                        true
-                ),
-                Arguments.of(
-                        new Cards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.SEVEN)
-                                )
-                        ),
-                        false
-                )
-        );
-    }
+    private BlackJackPlayer blackJackPlayer;
 
     private static Stream<Arguments> 비겼는지_확인한다_테스트_케이스() {
         return Stream.of(
@@ -62,8 +25,8 @@ class DealerTest {
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
-                        makeUser(
-                                "user",
+                        RawBlackJackPlayer.withCards(
+                                "challenger",
                                 new Cards(
                                         List.of(
                                                 createCard(CardNumber.EIGHT)
@@ -80,8 +43,8 @@ class DealerTest {
                                         createCard(CardNumber.SEVEN)
                                 )
                         ),
-                        makeUser(
-                                "user",
+                        RawBlackJackPlayer.withCards(
+                                "challenger",
                                 new Cards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
@@ -90,7 +53,7 @@ class DealerTest {
                                         )
                                 )
                         ),
-                        false
+                        true
                 )
         );
     }
@@ -103,8 +66,8 @@ class DealerTest {
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
-                        makeUser(
-                                "user",
+                        RawBlackJackPlayer.withCards(
+                                "challenger",
                                 new Cards(
                                         List.of(
                                                 createCard(CardNumber.EIGHT)
@@ -121,8 +84,8 @@ class DealerTest {
                                         createCard(CardNumber.SEVEN)
                                 )
                         ),
-                        makeUser(
-                                "user",
+                        RawBlackJackPlayer.withCards(
+                                "challenger",
                                 new Cards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
@@ -131,7 +94,7 @@ class DealerTest {
                                         )
                                 )
                         ),
-                        true
+                        false
                 ),
                 Arguments.of(
                         new Cards(
@@ -140,8 +103,8 @@ class DealerTest {
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
-                        makeUser(
-                                "user",
+                        RawBlackJackPlayer.withCards(
+                                "challenger",
                                 new Cards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
@@ -160,8 +123,8 @@ class DealerTest {
                                         createCard(CardNumber.SEVEN)
                                 )
                         ),
-                        makeUser(
-                                "user",
+                        RawBlackJackPlayer.withCards(
+                                "challenger",
                                 new Cards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
@@ -178,8 +141,8 @@ class DealerTest {
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
-                        makeUser(
-                                "user",
+                        RawBlackJackPlayer.withCards(
+                                "challenger",
                                 new Cards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
@@ -192,66 +155,98 @@ class DealerTest {
         );
     }
 
-    private static Player makeUser(final String name, final Cards cards) {
-        Player player = new Player(name);
-        player.receiveCards(cards);
-        return player;
+    private static Stream<Arguments> 최적의_포인트를_반환한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(
+                                createCard(CardNumber.EIGHT),
+                                createCard(CardNumber.ACE)
+                        ),
+                        19
+                ),
+                Arguments.of(
+                        new Cards(
+                                createCard(CardNumber.EIGHT),
+                                createCard(CardNumber.ACE),
+                                createCard(CardNumber.NINE)
+                        ),
+                        18
+                ),
+                Arguments.of(
+                        new Cards(
+                                createCard(CardNumber.EIGHT),
+                                createCard(CardNumber.ACE),
+                                createCard(CardNumber.NINE),
+                                createCard(CardNumber.SIX)
+                        ),
+                        24
+                )
+        );
     }
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer();
-    }
-
-    @Test
-    void 카드를_받으면_자신의_카드에_추가한다() {
-        dealer.receiveCards(new Cards(
-                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
-        ));
-
-        assertThat(dealer.getCards().getValues()).hasSize(3);
+        blackJackPlayer = new RawBlackJackPlayer("pobi");
     }
 
     @Test
     void 자신의_최저_포인트를_계산한다() {
-        dealer.receiveCards(new Cards(
-                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
+        blackJackPlayer.receiveCards(new Cards(
+                List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
         ));
 
-        assertThat(dealer.getMinimumPoint()).isEqualTo(16);
+        assertThat(blackJackPlayer.getMinimumPoint()).isEqualTo(21);
+    }
+
+    @Test
+    void 카드를_받으면_자신의_카드에_추가한다() {
+        Cards cards = new Cards(
+                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
+        );
+        blackJackPlayer.receiveCards(cards);
+
+        assertThat(blackJackPlayer.getCards().getValues()).hasSize(3);
+    }
+
+    @Test
+    void 자신의_모든_카드를_오픈한다() {
+        Cards cards = new Cards(
+                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
+        );
+        blackJackPlayer.receiveCards(cards);
+
+        assertThat(blackJackPlayer.openAllCards()).isEqualTo(cards);
     }
 
     @ParameterizedTest
-    @MethodSource("최초로_받은_카드를_오픈한다_테스트_케이스")
-    void 최초로_받은_카드를_오픈한다(final Cards cards, final Cards expected) {
+    @MethodSource("최적의_포인트를_반환한다_테스트_케이스")
+    void 최적의_포인트를_반환한다(final Cards cards, final int expected) {
+        blackJackPlayer.receiveCards(cards);
 
-        dealer.receiveCards(cards);
-
-        assertThat(dealer.openInitialCards()).isEqualTo(expected);
+        assertThat(blackJackPlayer.calculateOptimalPoint()).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @MethodSource("자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
-    void 자신이_카드를_더_뽑을_수_있는지_반환한다(final Cards cards, final boolean expected) {
+    private static class RawBlackJackPlayer extends BlackJackPlayer {
 
-        dealer.receiveCards(cards);
+        RawBlackJackPlayer(String name) {
+            super(name);
+        }
 
-        assertThat(dealer.canDrawMoreCard()).isEqualTo(expected);
-    }
+        static RawBlackJackPlayer withCards(final String name, final Cards cards) {
+            RawBlackJackPlayer rawPlayer = new RawBlackJackPlayer(name);
+            rawPlayer.receiveCards(cards);
 
-    @ParameterizedTest
-    @MethodSource("비겼는지_확인한다_테스트_케이스")
-    void 비겼는지_확인한다(final Cards cards, final Player player, final boolean expected) {
-        dealer.receiveCards(cards);
+            return rawPlayer;
+        }
 
-        assertThat(dealer.isDraw(player)).isEqualTo(expected);
-    }
+        @Override
+        public Cards openInitialCards() {
+            throw new IllegalStateException("이 메서드는 Player 에서 테스트할 수 없습니다.");
+        }
 
-    @ParameterizedTest
-    @MethodSource("이겼는지_확인한다_테스트_케이스")
-    void 이겼는지_확인한다(final Cards cards, final Player player, final boolean expected) {
-        dealer.receiveCards(cards);
-
-        assertThat(dealer.isWin(player)).isEqualTo(expected);
+        @Override
+        public boolean canDrawMoreCard() {
+            throw new IllegalStateException("이 메서드는 Player 에서 테스트할 수 없습니다.");
+        }
     }
 }

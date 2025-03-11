@@ -2,28 +2,28 @@ package blackjack.view;
 
 import blackjack.model.card.Cards;
 import blackjack.model.game.Result;
+import blackjack.model.player.BlackJackPlayer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
-import blackjack.model.player.User;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printDealInitialCardsResult(final Dealer dealer, final List<User> users) {
-        String userNames = users.stream()
-                .map(Player::getName)
+    public void printDealInitialCardsResult(final Dealer dealer, final List<Player> players) {
+        String userNames = players.stream()
+                .map(BlackJackPlayer::getName)
                 .collect(Collectors.joining(", "));
         System.out.println();
         System.out.println(dealer.getName() + "와 " + userNames + "에게 2장을 나누었습니다.");
         printPlayerCards(dealer);
-        users.forEach(this::printPlayerCards);
+        players.forEach(this::printPlayerCards);
         System.out.println();
     }
 
-    public void printPlayerCards(final Player player) {
-        System.out.println(player.getName() + "카드: " + formatCards(player.openInitialCards()));
+    public void printPlayerCards(final BlackJackPlayer blackJackPlayer) {
+        System.out.println(blackJackPlayer.getName() + "카드: " + formatCards(blackJackPlayer.openInitialCards()));
     }
 
     private String formatCards(final Cards cards) {
@@ -42,16 +42,16 @@ public class OutputView {
         System.out.println("딜러는 한장의 카드를 더 받지 않았습니다." + System.lineSeparator());
     }
 
-    public void printOptimalPoints(final Dealer dealer, final List<User> users) {
+    public void printOptimalPoints(final Dealer dealer, final List<Player> players) {
         System.out.println(
                 dealer.getName() + "카드: " + formatCards(dealer.openAllCards()) + " - 결과: "
                         + dealer.calculateOptimalPoint());
-        users.forEach(user -> System.out.println(
+        players.forEach(user -> System.out.println(
                 user.getName() + "카드: " + formatCards(user.openAllCards()) + " - 결과: " + user.calculateOptimalPoint()));
         System.out.println();
     }
 
-    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<User, Result> usersResults) {
+    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> usersResults) {
         System.out.println("## 최종 승패");
         printDealerResult(dealerResult);
         printUsersResults(usersResults);
@@ -68,11 +68,11 @@ public class OutputView {
                 .collect(Collectors.joining(" "));
     }
 
-    private void printUsersResults(final Map<User, Result> userResults) {
+    private void printUsersResults(final Map<Player, Result> userResults) {
         userResults.forEach(this::printUserResult);
     }
 
-    private void printUserResult(final User user, final Result result) {
-        System.out.println(user.getName() + ": " + result.getName());
+    private void printUserResult(final Player player, final Result result) {
+        System.out.println(player.getName() + ": " + result.getName());
     }
 }

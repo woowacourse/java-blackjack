@@ -2,7 +2,7 @@ package blackjack.model.game;
 
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.CardDeckInitializer;
-import blackjack.model.player.Player;
+import blackjack.model.player.BlackJackPlayer;
 import java.util.List;
 
 public class BlackJackGame {
@@ -20,21 +20,21 @@ public class BlackJackGame {
         this(CardDeck.initializeFrom(cardDeckInitializer));
     }
 
-    public void dealInitialCards(final List<Player> players) {
-        players.forEach(player -> {
+    public void dealInitialCards(final List<BlackJackPlayer> blackJackPlayers) {
+        blackJackPlayers.forEach(player -> {
             drawCard(player, INITIAL_DRAW_AMOUNT);
         });
     }
 
-    public boolean drawMoreCard(final Player player) {
-        if (player.canDrawMoreCard()) {
-            drawCard(player, SINGLE_DRAW_AMOUNT);
+    public boolean drawMoreCard(final BlackJackPlayer blackJackPlayer) {
+        if (blackJackPlayer.canDrawMoreCard()) {
+            drawCard(blackJackPlayer, SINGLE_DRAW_AMOUNT);
             return true;
         }
         return false;
     }
 
-    private void drawCard(final Player player, final int amount) {
-        player.receiveCards(cardDeck.draw(amount));
+    private void drawCard(final BlackJackPlayer blackJackPlayer, final int amount) {
+        blackJackPlayer.receiveCards(cardDeck.draw(amount));
     }
 }

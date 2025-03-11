@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
 import blackjack.model.player.Dealer;
-import blackjack.model.player.User;
+import blackjack.model.player.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -56,10 +56,10 @@ class ResultTest {
         return dealer;
     }
 
-    private static User makeUser(final String name, final Cards cards) {
-        User user = new User(name);
-        user.receiveCards(cards);
-        return user;
+    private static Player makeUser(final String name, final Cards cards) {
+        Player player = new Player(name);
+        player.receiveCards(cards);
+        return player;
     }
 
     private static Map<Result, Integer> makeEvaluations(final int win, final int draw, final int lose) {
@@ -94,14 +94,14 @@ class ResultTest {
 
     @ParameterizedTest
     @MethodSource("딜러의_승패들을_계산한다_테스트_케이스")
-    void 딜러의_승패들을_계산한다(final Dealer dealer, final List<User> users, final Map<Result, Integer> expected) {
+    void 딜러의_승패들을_계산한다(final Dealer dealer, final List<Player> players, final Map<Result, Integer> expected) {
 
-        assertThat(Result.evaluateDealerResults(dealer, users)).isEqualTo(expected);
+        assertThat(Result.evaluateDealerResults(dealer, players)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("유저의_승패를_계산한다_테스트_케이스")
-    void 유저의_승패를_계산한다(final Dealer dealer, final User user, final Result expected) {
-        assertThat(Result.evaluateUserResult(dealer, user)).isEqualTo(expected);
+    void 유저의_승패를_계산한다(final Dealer dealer, final Player player, final Result expected) {
+        assertThat(Result.evaluateUserResult(dealer, player)).isEqualTo(expected);
     }
 }
