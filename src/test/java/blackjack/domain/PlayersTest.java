@@ -36,6 +36,7 @@ class PlayersTest {
         List<Card> result = players
                 .getGamblers()
                 .getFirst()
+                .getCards()
                 .getCards();
 
         assertThat(result.size())
@@ -49,6 +50,7 @@ class PlayersTest {
 
         List<Card> result = players
                 .getDealer()
+                .getCards()
                 .getCards();
 
         assertThat(result.size())

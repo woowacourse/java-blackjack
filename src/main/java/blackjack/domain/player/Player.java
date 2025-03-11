@@ -3,28 +3,26 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static blackjack.domain.card.CardNumber.ACE_ELEVEN_VALUE;
 
 public abstract class Player {
 
     private static final int BUST_THRESHOLD = 21;
+    private static final int HIT_THRESHOLD = 16;
 
     private final Name name;
-    private final List<Card> cards;
+    private final Hand hand;
 
     public Player(final String name) {
         this.name = new Name(name);
-        cards = new ArrayList<>();
+        this.hand = new Hand();
     }
 
     abstract public List<Card> getOpenedCards();
 
     public void pushDealCard(final CardPack cardPack, final int count) {
-        cards.addAll(cardPack.getDealByCount(count));
+        hand.addCards(cardPack.getDealByCount(count));
     }
 
     public int compareWithOtherPlayer(final Player otherPlayer) {
@@ -37,42 +35,31 @@ public abstract class Player {
         if (this.isNotBust() && otherPlayer.isBust()) {
             return 1;
         }
-        return Integer.compare(this.calculateCardNumbers(), otherPlayer.calculateCardNumbers());
+        return Integer.compare(this.getCardScore(), otherPlayer.getCardScore());
     }
 
     public boolean isBust() {
-        return calculateCardNumbers() > BUST_THRESHOLD;
+        return getCardScore() > BUST_THRESHOLD;
     }
 
     public boolean isNotBust() {
         return !isBust();
     }
 
-    public int calculateCardNumbers() {
-        int sum = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-        if (canCalculateAceWithEleven(sum)) {
-            sum += ACE_ELEVEN_VALUE - 1;
-        }
-        return sum;
+    public boolean isHit() {
+        return hand.calculateCardScore() <= HIT_THRESHOLD;
     }
 
-    private boolean canCalculateAceWithEleven(final int sum) {
-        return hasAce() && sum + ACE_ELEVEN_VALUE - 1 <= BUST_THRESHOLD;
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+    public int getCardScore() {
+        return hand.calculateCardScore();
     }
 
     public String getName() {
         return name.getName();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 
     @Override

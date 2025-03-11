@@ -20,7 +20,7 @@ public class GamblerTest {
 
         gambler.pushDealCard(cardPack, 2);
         List<Card> openCards = gambler.getOpenedCards();
-        List<Card> allCards = gambler.getCards();
+        List<Card> allCards = gambler.getCards().getCards();
 
         assertThat(openCards.size())
                 .isEqualTo(allCards.size());

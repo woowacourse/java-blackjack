@@ -18,7 +18,7 @@ class PlayerTest {
         player.pushDealCard(new CardPack(new SortedBlackjackShuffle()), 3);
 
         // when
-        int result = player.calculateCardNumbers();
+        int result = player.getCardScore();
 
         // then
         assertThat(result).isEqualTo(30);
@@ -31,7 +31,7 @@ class PlayerTest {
         player.pushDealCard(new CardPack(new ReversedBlackjackShuffle()), 2);
 
         // when
-        int result = player.calculateCardNumbers();
+        int result = player.getCardScore();
 
         // then
         assertThat(result).isEqualTo(12);

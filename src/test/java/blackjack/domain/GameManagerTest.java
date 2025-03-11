@@ -35,7 +35,7 @@ class GameManagerTest {
 
         gameManager.dealAddCard(gambler);
 
-        assertThat(gambler.getCards().size()).isEqualTo(3);
+        assertThat(gambler.getCards().getCards().size()).isEqualTo(3);
     }
 
     @Test
@@ -62,7 +62,7 @@ class GameManagerTest {
 
         assertAll(
                 () -> assertThat(result).isTrue(),
-                () -> assertThat(gameManager.getPlayers().getDealer().getCards().size()).isEqualTo(3)
+                () -> assertThat(gameManager.getPlayers().getDealer().getCards().getCards().size()).isEqualTo(3)
         );
     }
 
