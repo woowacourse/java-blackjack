@@ -45,7 +45,7 @@ public class InputView {
     public List<Integer> getBettingAmounts(List<String> names) {
         final List<Integer> bettingAmounts = new ArrayList<>();
         for (String name : names) {
-            writer.write("%s의 배팅 금액은?".formatted(name));
+            writer.write("\n%s의 배팅 금액은?".formatted(name));
             String input = reader.readLine();
             bettingAmounts.add(Integer.parseInt(input));
         }

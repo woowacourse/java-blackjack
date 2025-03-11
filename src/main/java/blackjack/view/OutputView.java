@@ -111,7 +111,7 @@ public class OutputView {
             final List<PlayerBettingBlackjackCardHand> playerHands
     ) {
         StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
-        sj.add("## 최종 수익");
+        sj.add(LINE_SEPARATOR + "## 최종 수익");
         sj.add("딜러: %d".formatted((int) getTotalProfitOfDealer(dealerHand, playerHands)));
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             sj.add("%s: %d".formatted(
