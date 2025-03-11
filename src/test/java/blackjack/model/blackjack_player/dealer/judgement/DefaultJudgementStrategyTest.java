@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.blackjack_player.dealer.Dealer;
 import blackjack.model.blackjack_player.player.Player;
+import blackjack.model.card.BlackJackCard;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardNumber;
+import blackjack.model.card.CardType;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import java.util.List;
 import java.util.stream.Stream;
@@ -55,6 +57,24 @@ class DefaultJudgementStrategyTest {
                                 )
                         ),
                         false
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new BlackJackCards(
+                                        List.of(
+                                                createCard(CardNumber.JACK),
+                                                new BlackJackCard(CardType.DIAMOND, CardNumber.ACE)
+                                        )
+                                )
+                        ),
+                        true
                 )
         );
     }

@@ -9,8 +9,11 @@ public final class DefaultJudgementStrategy implements JudgementStrategy {
 
     @Override
     public boolean isDraw(final Dealer dealer, final Player player) {
-        if (player.isBust() || dealer.isBust() || player.isBlackjack() || dealer.isBlackjack()) {
+        if (player.isBust() || dealer.isBust()) {
             return false;
+        }
+        if (dealer.isBlackjack()) {
+            return player.isBlackjack();
         }
         return dealer.getOptimalPoint() == player.getOptimalPoint();
     }
