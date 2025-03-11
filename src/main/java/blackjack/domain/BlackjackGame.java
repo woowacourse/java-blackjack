@@ -51,7 +51,7 @@ public class BlackjackGame {
         Dealer dealer = participants.getDealer();
 
         for (Player player : participants.getPlayers()) {
-            GameResult gameResult = GameResult.playerResultFrom(dealer, player);
+            GameResult gameResult = dealer.judgePlayerResult(player);
             playerResult.put(player, gameResult);
         }
         return playerResult;
@@ -62,7 +62,7 @@ public class BlackjackGame {
         Dealer dealer = participants.getDealer();
 
         for (Player player : participants.getPlayers()) {
-            GameResult playerResult = GameResult.playerResultFrom(dealer, player);
+            GameResult playerResult = dealer.judgePlayerResult(player);
             GameResult dealerResult = playerResult.changeStatusOpposite();
             result.put(dealerResult, result.getOrDefault(dealerResult, 0) + 1);
         }

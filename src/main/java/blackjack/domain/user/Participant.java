@@ -29,7 +29,7 @@ public abstract class Participant {
             .forEach(i -> {
                 Card card = cardDeck.pickRandomCard();
                 cards.add(card);
-        });
+            });
     }
 
     public boolean isBlackjack() {

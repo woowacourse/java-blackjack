@@ -12,13 +12,14 @@ public class PlayerName {
     }
 
     private void validateNameSize(final String name) {
-        if(name.length() <= 0) {
+        if (name.isEmpty()) {
             throw new IllegalArgumentException("이름은 한 글자 이상 입력해야 합니다.");
         }
     }
 
     private void validateCharacter(final String name) {
-        boolean isNotAllLetter = name.chars().anyMatch(ch -> !Character.isLetter(ch));;
+        boolean isNotAllLetter = name.chars().anyMatch(ch -> !Character.isLetter(ch));
+
         if (isNotAllLetter) {
             throw new IllegalArgumentException("이름은 영어/한글만 입력 가능합니다.");
         }
