@@ -50,7 +50,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> openInitialCards() {
-        return super.cards;
+        return super.handCards.getCards();
     }
 
     @Override

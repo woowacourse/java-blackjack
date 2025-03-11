@@ -13,7 +13,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> openInitialCards() {
-        return List.of(super.cards.getFirst());
+        return List.of(super.handCards.getCards().getFirst());
     }
 
     @Override

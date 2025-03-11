@@ -2,66 +2,47 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Denomination;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import blackjack.domain.card.HandCards;
 import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BLACKJACK_VALUE = 21;
-    private static final int BLACKJACK_CARDS_SIZE = 2;
-
-    protected final List<Card> cards;
+    protected final HandCards handCards;
 
     public Participant() {
-        this.cards = new ArrayList<>();
+        this.handCards = new HandCards();
     }
 
     public void addInitialCards(final CardDeck cardDeck) {
-        Card card1 = cardDeck.pickRandomCard();
-        Card card2 = cardDeck.pickRandomCard();
-        addCards(card1, card2);
+        addCards(
+                cardDeck.pickRandomCard(),
+                cardDeck.pickRandomCard()
+        );
     }
 
     public void addCards(final Card... cards) {
-        this.cards.addAll(Arrays.asList(cards));
+        for (Card card : cards) {
+            this.handCards.addCard(card);
+        }
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARDS_SIZE
-                && calculateDenominations() == BLACKJACK_VALUE;
+        return handCards.isBlackjack();
     }
 
     public boolean isBust() {
-        return calculateDenominations() > BLACKJACK_VALUE;
+        return handCards.isBust();
     }
 
     public int calculateDenominations() {
-        int sum = cards.stream()
-                .map(Card::denomination)
-                .map(Denomination::getMinValue)
-                .reduce(0, Integer::sum);
-
-        if (hasACE()) {
-            return Denomination.convertAceValue(sum, BLACKJACK_VALUE);
-        }
-
-        return sum;
+        return handCards.calculateDenominations();
     }
 
     public List<Card> openCards() {
-        return Collections.unmodifiableList(cards);
+        return handCards.getCards();
     }
 
     public abstract List<Card> openInitialCards();
 
     public abstract boolean isPossibleToAdd();
-
-    private boolean hasACE() {
-        return cards.stream()
-                .map(Card::denomination)
-                .anyMatch(denomination -> denomination == Denomination.ACE);
-    }
 }
