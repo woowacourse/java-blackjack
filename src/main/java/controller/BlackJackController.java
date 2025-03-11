@@ -28,7 +28,7 @@ public class BlackJackController {
         outputView.printInitialGameSettings(players, dealer);
 
         selectPlayersHitOrStand(players, deck);
-        checkDealerSumUnderThreshold(dealer, deck);
+        determineDealerAdditionalCard(dealer, deck);
         outputView.printGameSummary(players, dealer);
         outputView.printGameResult(players.deriveResults(dealer.sumCardScores()));
     }
@@ -61,7 +61,7 @@ public class BlackJackController {
         return inputView.readOneMoreCardResponse(player.getNickname()).equals(HIT_COMMAND) & !player.isBust();
     }
 
-    private void checkDealerSumUnderThreshold(Dealer dealer, Deck deck) {
+    private void determineDealerAdditionalCard(Dealer dealer, Deck deck) {
         while (dealer.isSumUnderThreshold()) {
             outputView.printDealerOneMoreCardMessage();
             dealer.addOneCard(deck.drawOneCard());
