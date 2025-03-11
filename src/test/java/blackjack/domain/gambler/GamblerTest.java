@@ -14,18 +14,18 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class HandsTest {
+class GamblerTest {
     @DisplayName("카드의 합이 특정 값 이하인 지 여부를 반환한다")
     @CsvSource(value = {"21:True", "18:True", "17:False"}, delimiterString = ":")
     @ParameterizedTest
     void isScoreBelowTest(int score, boolean expected) {
         // given
-        Hands hands = new Hands();
-        hands.addCard(new Card(CardShape.CLOVER, CardType.TEN));
-        hands.addCard(new Card(CardShape.HEART, CardType.EIGHT));
+        Player player = new Player(new Name("라젤"));
+        player.addCard(new Card(CardShape.CLOVER, CardType.TEN));
+        player.addCard(new Card(CardShape.HEART, CardType.EIGHT));
 
         // when
-        boolean result = hands.isScoreBelow(score);
+        boolean result = player.isScoreBelow(score);
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -35,12 +35,12 @@ class HandsTest {
     @Test
     void calculateScoreTest() {
         // given
-        Hands hands = new Hands();
-        hands.addCard(new Card(CardShape.CLOVER, CardType.TEN));
-        hands.addCard(new Card(CardShape.HEART, CardType.EIGHT));
+        Player player = new Player(new Name("라젤"));
+        player.addCard(new Card(CardShape.CLOVER, CardType.TEN));
+        player.addCard(new Card(CardShape.HEART, CardType.EIGHT));
 
         // when
-        int result = hands.calculateScore();
+        int result = player.calculateScore();
 
         // then
         assertThat(result).isEqualTo(18);
@@ -51,13 +51,13 @@ class HandsTest {
     @ParameterizedTest
     void calculateScoreConsiderAceTest(List<Card> cards, int sum) {
         // given
-        Hands hands = new Hands();
+        Player player = new Player(new Name("라젤"));
         for (Card card : cards) {
-            hands.addCard(card);
+            player.addCard(card);
         }
 
         // when
-        int result = hands.calculateScore();
+        int result = player.calculateScore();
 
         // then
         assertThat(result).isEqualTo(sum);
@@ -98,7 +98,7 @@ class HandsTest {
     @CsvSource(value = {"18,0,18", "23,1,13", "21,1,21", "18,1,18", "24,2,14", "22,2,12"})
     @ParameterizedTest
     void adjustSumByAceTest(int sum, int aceCount, int expected) {
-        Hands hands = new Hands();
-        assertThat(hands.adjustSumByAce(sum, aceCount)).isEqualTo(expected);
+        Player player = new Player(new Name("라젤"));
+        assertThat(player.adjustSumByAce(sum, aceCount)).isEqualTo(expected);
     }
 }
