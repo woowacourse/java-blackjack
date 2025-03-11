@@ -40,5 +40,7 @@ public abstract class Participant {
     public int getCardSize() {
         return cardDeck.getDeckSize();
     }
+
+    public abstract List<Card> showStartCard();
     public abstract String getName();
 }

@@ -8,7 +8,7 @@ public record DistributedCardDto(String name, List<String> cardInfos) {
 
     public static DistributedCardDto from(final Participant participant) {
         String name = participant.getName().trim();
-        List<String> cardInfos = participant.getCardDeck().stream()
+        List<String> cardInfos = participant.showStartCards().stream()
                 .map(card -> card.getRank().getName() + card.getSuit().getName())
                 .toList();
 

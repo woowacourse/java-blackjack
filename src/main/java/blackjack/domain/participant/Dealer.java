@@ -1,9 +1,8 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDump;
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class Dealer extends Participant {
     private final static String DEALER_NAME = "딜러";
@@ -15,9 +14,14 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
-        int hitScore = Collections.max(possibleScore);
+        int hitScore = calculateScore();
         return hitScore <= DEALER_HIT_THRESHOLD;
+    }
+
+    @Override
+    public List<Card> showStartCards() {
+        Card firstCard = cardDeck.getCards().getFirst();
+        return List.of(firstCard);
     }
 
     @Override

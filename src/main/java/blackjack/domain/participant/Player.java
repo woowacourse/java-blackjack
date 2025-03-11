@@ -1,7 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 public class Player extends Participant {
@@ -18,6 +20,12 @@ public class Player extends Participant {
         Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
         int minScore = Collections.min(possibleSum);
         return minScore <= BLACKJACK_GOAL_SCORE;
+    }
+
+    @Override
+    public List<Card> showStartCards() {
+        List<Card> cards = cardDeck.getCards();
+        return cards.subList(0,2);
     }
 
     @Override
