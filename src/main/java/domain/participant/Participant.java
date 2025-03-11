@@ -20,11 +20,15 @@ public abstract class Participant {
         return hand.calculateFinalScore();
     }
 
+    public boolean canDraw() {
+        return !isBurst() && !isBlackJack();
+    }
+
     public boolean isBurst() {
         return hand.isBust();
     }
 
-    public boolean isBlackJack() {
+    private boolean isBlackJack() {
         return hand.isBlackJack();
     }
 
