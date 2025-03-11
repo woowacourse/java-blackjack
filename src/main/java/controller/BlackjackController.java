@@ -1,5 +1,6 @@
 package controller;
 
+import domain.CardDeck;
 import domain.GameManger;
 import domain.TrumpCard;
 import domain.user.Dealer;
@@ -22,7 +23,7 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = Parser.parseStringToList(inputView.inputUsers());
-        GameManger gameManger = new GameManger(playerNames);
+        GameManger gameManger = new GameManger(playerNames, new Dealer(), new CardDeck());
         distributionFirstCard(gameManger, playerNames);
 
         additionalPlayerCard(gameManger, playerNames);

@@ -1,5 +1,6 @@
 import static org.assertj.core.api.Assertions.*;
 
+import domain.CardDeck;
 import domain.CardNumber;
 import domain.CardShape;
 import domain.TrumpCard;
@@ -22,7 +23,7 @@ public class GameManagerTest {
     @ParameterizedTest
     @MethodSource("userTestCase")
     void test(List<String> names) {
-        assertThatCode(() -> new GameManger(names)).doesNotThrowAnyException();
+        assertThatCode(() -> new GameManger(names, new Dealer(), new CardDeck())).doesNotThrowAnyException();
     }
 
     private static Stream<Arguments> userTestCase() {
@@ -36,7 +37,7 @@ public class GameManagerTest {
     @ParameterizedTest
     @MethodSource("userExceptionTestCase")
     void test2(List<String> names) {
-        assertThatThrownBy(() -> new GameManger(names))
+        assertThatThrownBy(() -> new GameManger(names, new Dealer(), new CardDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 1명 이상 7명 이하로 등록해야 합니다.");
     }
@@ -52,7 +53,7 @@ public class GameManagerTest {
     @DisplayName("유저는 중복될 수 없다.")
     void test3() {
         List<String> names = List.of("수양", "레몬", "수양", "레몬", "부부", "롸롸", "뫄뫄");
-        assertThatThrownBy(() -> new GameManger(names))
+        assertThatThrownBy(() -> new GameManger(names, new Dealer(), new CardDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 중복될 수 없습니다.");
     }
@@ -61,7 +62,7 @@ public class GameManagerTest {
     @Test
     void test4() {
         // given
-        GameManger gameManger = new GameManger(List.of("수양", "레몬"));
+        GameManger gameManger = new GameManger(List.of("수양", "레몬"), new Dealer(), new CardDeck());
 
         // when
         gameManger.firstHandOutCard();
@@ -76,7 +77,7 @@ public class GameManagerTest {
     @Test
     void test7() {
         //given
-        GameManger gameManger = new GameManger(List.of("수양"));
+        GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
@@ -98,7 +99,7 @@ public class GameManagerTest {
     @MethodSource("addCardDeck")
     void test8(List<TrumpCard> playerCards, List<TrumpCard> dealerCards, int expectStatus) {
         //given
-        GameManger gameManger = new GameManger(List.of("수양"));
+        GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
@@ -152,7 +153,7 @@ public class GameManagerTest {
     @Test
     void test9() {
         // given
-        GameManger gameManger = new GameManger(List.of("유저"));
+        GameManger gameManger = new GameManger(List.of("유저"), new Dealer(), new CardDeck());
         User user = gameManger.findUserByUsername("유저");
         user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
         user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));

@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.CardDeck;
 import domain.GameManger;
 import domain.TrumpCard;
 import java.util.List;
@@ -16,7 +17,7 @@ class UserTest {
         @Test
         void test() {
             // given
-            GameManger gameManger = new GameManger(List.of("수양"));
+            GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
             User user = gameManger.findUserByUsername("수양");
             user.drawCard(gameManger.handOutCard());
             user.drawCard(gameManger.handOutCard());
@@ -32,7 +33,7 @@ class UserTest {
         @Test
         void test2() {
             // given
-            GameManger gameManger = new GameManger(List.of("수양"));
+            GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
             User user = gameManger.getDealer();
             user.drawCard(gameManger.handOutCard());
             user.drawCard(gameManger.handOutCard());
@@ -49,7 +50,7 @@ class UserTest {
     @Test
     void test3() {
         // given
-        GameManger gameManger = new GameManger(List.of("수양"));
+        GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
         User user = gameManger.findUserByUsername("수양");
         user.drawCard(gameManger.handOutCard());
         user.drawCard(gameManger.handOutCard());
