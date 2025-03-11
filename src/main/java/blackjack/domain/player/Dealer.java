@@ -9,7 +9,7 @@ public class Dealer extends Player {
     private static final String DEFAULT_NAME = "딜러";
 
     public Dealer() {
-        super(new Name(DEFAULT_NAME));
+        super(DEFAULT_NAME);
     }
 
     @Override

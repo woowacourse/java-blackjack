@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ class PlayerTest {
     @DisplayName("카드의 합을 계산해 반환한다")
     void calculate_calculation_check_rot() {
         // given
-        Player player = new Gambler(new Name("두리"));
+        Player player = new Gambler("두리");
         player.pushDealCard(new CardPack(new SortShuffle()), 3);
 
         // when
@@ -28,7 +27,7 @@ class PlayerTest {
     @DisplayName("에이스가 2장이면 12로 계산한다")
     @Test
     void ace_test() {
-        Player player = new Gambler(new Name("두리"));
+        Player player = new Gambler("두리");
         player.pushDealCard(new CardPack(new ReversedSortShuffle()), 2);
 
         // when

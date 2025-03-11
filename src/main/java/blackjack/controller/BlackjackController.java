@@ -4,7 +4,6 @@ import blackjack.domain.GameManager;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.card.RandomBlackjackShuffle;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -51,7 +50,6 @@ public class BlackjackController {
     public List<Gambler> parsePlayerByName(String namesInput) {
         List<String> playerNames = List.of(namesInput.split(PLAYER_NAME_DELIMITER));
         return playerNames.stream()
-                .map(Name::new)
                 .map(Gambler::new)
                 .collect(Collectors.toList());
     }

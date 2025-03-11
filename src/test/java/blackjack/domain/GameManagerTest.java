@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ class GameManagerTest {
     @Test
     @DisplayName("참가자를 추가한다")
     void addParticipants() {
-        Players players = new Players(List.of(new Gambler(new Name("비타"))), SORT_CARD_PACK);
+        Players players = new Players(List.of(new Gambler("비타")), SORT_CARD_PACK);
         GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
 
         assertThat(gameManager.getPlayers().getGamblers().size())
@@ -30,7 +29,7 @@ class GameManagerTest {
     @DisplayName("참가자에게 카드를 한장 추가 발급한다")
     @Test
     void deal_card_to_gambler_test() {
-        Gambler gambler = new Gambler(new Name("비타"));
+        Gambler gambler = new Gambler("비타");
         Players players = new Players(List.of(gambler), SORT_CARD_PACK);
         GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
 
@@ -42,7 +41,7 @@ class GameManagerTest {
     @Test
     @DisplayName("플레이어의 카드가 버스트면 TRUE를 반환한다")
     void ifThePlayerS_CardIsBurstItReturns_True() {
-        Gambler gambler = new Gambler(new Name("비타"));
+        Gambler gambler = new Gambler("비타");
 
         Players players = new Players(List.of(gambler), SORT_CARD_PACK);
         GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
@@ -56,7 +55,7 @@ class GameManagerTest {
     @Test
     @DisplayName("딜러의 카드가 히트면 카드를 한장 추가한다")
     void ifTheDealerS_CardIsHitAddACard() {
-        Players players = new Players(List.of(new Gambler(new Name("비타"))), REVERSE_SORT_CARD_PACK);
+        Players players = new Players(List.of(new Gambler("비타")), REVERSE_SORT_CARD_PACK);
         GameManager gameManager = new GameManager(REVERSE_SORT_CARD_PACK, players);
 
         boolean result = gameManager.isDealerHitThenDealAddCard();
@@ -70,7 +69,7 @@ class GameManagerTest {
     @Test
     @DisplayName("딜러의 카드가 히트가 아니면 false 를 반환한다")
     void if_the_dealer_card_is_not_hit_get_false() {
-        Players players = new Players(List.of(new Gambler(new Name("비타"))), SORT_CARD_PACK);
+        Players players = new Players(List.of(new Gambler("비타")), SORT_CARD_PACK);
         GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
 
         boolean result = gameManager.isDealerHitThenDealAddCard();

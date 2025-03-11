@@ -16,8 +16,8 @@ public abstract class Player {
     private final Name name;
     private final List<Card> cards;
 
-    public Player(final Name name) {
-        this.name = name;
+    public Player(final String name) {
+        this.name = new Name(name);
         cards = new ArrayList<>();
     }
 
