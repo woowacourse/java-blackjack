@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-
+    
     public static final int BUST_BOUND = 21;
 
     private final List<Card> cards;
@@ -18,14 +18,9 @@ public class Hand {
         this.cardDeck = cardDeck;
     }
 
-    public void drawCardWhenStart() {
-        List<Card> drawnCard = cardDeck.drawCardWhenStart();
+    public void drawCard(int drawCount) {
+        List<Card> drawnCard = cardDeck.drawCard(drawCount);
         cards.addAll(drawnCard);
-    }
-
-    public void drawCard() {
-        Card drawnCard = cardDeck.drawCard();
-        cards.add(drawnCard);
     }
 
     public boolean isOverBustBound() {

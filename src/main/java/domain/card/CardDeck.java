@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 public class CardDeck {
 
     public static final int DRAW_COUNT_WHEN_START = 2;
+    public static final int DRAW_COUNT_WHEN_HIT = 1;
 
     private final List<Card> deck;
 
@@ -42,17 +43,13 @@ public class CardDeck {
         this.deck = deck;
     }
 
-    public List<Card> drawCardWhenStart() {
+    public List<Card> drawCard(int drawCount) {
+        validateEmptyDeck();
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < DRAW_COUNT_WHEN_START; i++) {
-            cards.add(drawCard());
+        for (int i = 0; i < drawCount; i++) {
+            cards.add(deck.removeLast());
         }
         return cards;
-    }
-
-    public Card drawCard() {
-        validateEmptyDeck();
-        return deck.removeLast();
     }
 
     private void validateEmptyDeck() {

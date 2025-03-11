@@ -1,5 +1,7 @@
 package domain.game;
 
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_HIT;
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_START;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
@@ -20,7 +22,7 @@ public class PlayerTest {
         Player player = new Player(name, cardDeck);
 
         //when
-        player.drawCardWhenStart();
+        player.drawCard(DRAW_COUNT_WHEN_START);
 
         //then
         assertThat(player.getHand().getCards()).hasSize(2);
@@ -34,7 +36,7 @@ public class PlayerTest {
         Player player = new Player(name, cardDeck);
 
         //when
-        player.drawCard();
+        player.drawCard(DRAW_COUNT_WHEN_HIT);
 
         //then
         assertThat(player.getHand().getCards()).hasSize(1);

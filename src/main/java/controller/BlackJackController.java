@@ -1,5 +1,8 @@
 package controller;
 
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_HIT;
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_START;
+
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardShuffler;
@@ -35,8 +38,8 @@ public class BlackJackController {
     }
 
     private void startBlackJack(Players players, Dealer dealer) {
-        players.drawCardWhenStart();
-        dealer.drawCardWhenStart();
+        players.drawCard(DRAW_COUNT_WHEN_START);
+        dealer.drawCard(DRAW_COUNT_WHEN_START);
         Card dealerCard = dealer.getSingleCard();
 
         outputView.printInitialGame(dealerCard, players.getPlayers());
@@ -52,14 +55,14 @@ public class BlackJackController {
 
     private void decidePlayerHitOrStand(Player player) {
         while (!player.isOverBustBound() && inputView.readDrawMoreCard(player)) {
-            player.drawCard();
+            player.drawCard(DRAW_COUNT_WHEN_HIT);
             outputView.printPlayerCard(player);
         }
     }
 
     private void decideDealerHitOrStand(Dealer dealer) {
         while (!dealer.isOverBustBound() && !dealer.isOverDrawBound()) {
-            dealer.drawCard();
+            dealer.drawCard(DRAW_COUNT_WHEN_HIT);
             outputView.printDealerDrawMessage();
         }
     }

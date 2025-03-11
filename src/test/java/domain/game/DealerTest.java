@@ -1,5 +1,7 @@
 package domain.game;
 
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_HIT;
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_START;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
@@ -20,7 +22,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(cardDeck);
 
         //when
-        dealer.drawCardWhenStart();
+        dealer.drawCard(DRAW_COUNT_WHEN_START);
 
         //then
         assertThat(dealer.getHand().getCards()).hasSize(2);
@@ -49,7 +51,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(cardDeck);
 
         //when
-        dealer.drawCard();
+        dealer.drawCard(DRAW_COUNT_WHEN_HIT);
 
         //then
         assertThat(dealer.getHand().getCards()).hasSize(1);

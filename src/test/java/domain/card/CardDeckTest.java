@@ -1,5 +1,6 @@
 package domain.card;
 
+import static domain.card.CardDeck.DRAW_COUNT_WHEN_HIT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -23,11 +24,11 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when
-        Card actual = cardDeck.drawCard();
+        List<Card> actual = cardDeck.drawCard(DRAW_COUNT_WHEN_HIT);
 
         //then
         Card expected = new Card(Pattern.SPADE, CardNumber.KING);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).contains(expected);
     }
 
     @Test
@@ -36,7 +37,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when
-        cardDeck.drawCard();
+        cardDeck.drawCard(DRAW_COUNT_WHEN_HIT);
 
         //then
         assertThat(cardDeck.getDeck()).hasSize(51);
@@ -48,7 +49,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
 
         //when
-        List<Card> actual = cardDeck.drawCardWhenStart();
+        List<Card> actual = cardDeck.drawCard(CardDeck.DRAW_COUNT_WHEN_START);
 
         //then
         List<Card> expected = List.of(
@@ -63,11 +64,11 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         int deckSize = cardDeck.getDeck().size();
         for (int i = 0; i < deckSize; i++) {
-            cardDeck.drawCard();
+            cardDeck.drawCard(DRAW_COUNT_WHEN_HIT);
         }
 
         //when & then
-        assertThatThrownBy(cardDeck::drawCard)
+        assertThatThrownBy(() -> cardDeck.drawCard(DRAW_COUNT_WHEN_HIT))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

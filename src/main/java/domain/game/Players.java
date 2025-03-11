@@ -31,9 +31,9 @@ public class Players {
             throw new IllegalArgumentException("[ERROR] 중복된 플레이어 이름입니다.");
         }
     }
-    
-    public void drawCardWhenStart() {
-        players.forEach(Player::drawCardWhenStart);
+
+    public void drawCard(int drawCount) {
+        players.forEach(player -> player.drawCard(drawCount));
     }
 
     public List<Player> getPlayers() {

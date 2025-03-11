@@ -15,12 +15,8 @@ public class Dealer {
         this.hand = new Hand(cardDeck);
     }
 
-    public void drawCardWhenStart() {
-        hand.drawCardWhenStart();
-    }
-
-    public void drawCard() {
-        hand.drawCard();
+    public void drawCard(int drawCount) {
+        hand.drawCard(drawCount);
     }
 
     public List<GameResult> judgeGameResult(List<Player> players) {

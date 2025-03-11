@@ -59,7 +59,7 @@ public class PlayersTest {
         Players players = new Players(playerNames, CardDeck.createCards(new CardShuffler()));
 
         //when
-        players.drawCardWhenStart();
+        players.drawCard(2);
 
         //when
         Assertions.assertThat(players.getPlayers().get(0).getCardsCount()).isEqualTo(2);

@@ -12,12 +12,8 @@ public class Player {
         this.hand = new Hand(cardDeck);
     }
 
-    public void drawCardWhenStart() {
-        hand.drawCardWhenStart();
-    }
-
-    public void drawCard() {
-        hand.drawCard();
+    public void drawCard(int cardCount) {
+        hand.drawCard(cardCount);
     }
 
     public int getCardsCount() {
