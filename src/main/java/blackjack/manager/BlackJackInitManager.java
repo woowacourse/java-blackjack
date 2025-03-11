@@ -9,14 +9,14 @@ import java.util.List;
 
 public class BlackJackInitManager {
 
-    private final CardsGenerator cardsGenerator;
+    private final DeckGenerator deckGenerator;
 
-    public BlackJackInitManager(CardsGenerator cardsGenerator) {
-        this.cardsGenerator = cardsGenerator;
+    public BlackJackInitManager(DeckGenerator deckGenerator) {
+        this.deckGenerator = deckGenerator;
     }
 
     public Deck generateDeck() {
-        return new Deck(cardsGenerator.generate());
+        return new Deck(deckGenerator.generate());
     }
 
     public Players generatePlayers(List<String> names) {

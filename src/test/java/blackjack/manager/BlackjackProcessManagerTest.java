@@ -18,8 +18,8 @@ class BlackjackProcessManagerTest {
 
     @BeforeEach
     void init() {
-        CardsGenerator cardsGenerator = new CardsGenerator();
-        List<Card> cards = cardsGenerator.generate();
+        SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
+        List<Card> cards = singDeckGenerator.generate();
         Deck deck = new Deck(cards);
         blackjackProcessManager = new BlackjackProcessManager(deck);
     }

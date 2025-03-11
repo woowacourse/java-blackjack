@@ -14,7 +14,7 @@ class BlackJackInitManagerTest {
     @Test
     void test1() {
         // given
-        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
+        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new SingDeckGenerator());
 
         // when & then
         assertThatCode(blackJackInitManager::generateDeck)
@@ -26,7 +26,7 @@ class BlackJackInitManagerTest {
     void test2() {
         // given
         List<String> names = List.of("꾹이", "히로", "비타");
-        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
+        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new SingDeckGenerator());
 
         // when
         Players players = blackJackInitManager.generatePlayers(names);
@@ -39,7 +39,7 @@ class BlackJackInitManagerTest {
     @Test
     void test3() {
         // given
-        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
+        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new SingDeckGenerator());
 
         // when & then
         assertThatCode(blackJackInitManager::generateDealer)

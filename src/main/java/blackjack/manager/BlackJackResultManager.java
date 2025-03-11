@@ -39,7 +39,8 @@ public class BlackJackResultManager {
         saveResultWithPlayerResult(player, resultOfPlayer, playersResult, dealerResult);
     }
 
-    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer, PlayersResult playersResult, DealerResult dealerResult) {
+    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer, PlayersResult playersResult,
+                                           DealerResult dealerResult) {
         if (isBustedPlayer) {
             saveResultWithPlayerResult(player, GameResultType.TIE, playersResult, dealerResult);
             return;

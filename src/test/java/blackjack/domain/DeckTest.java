@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.common.ErrorMessage;
-import blackjack.manager.CardsGenerator;
+import blackjack.manager.SingDeckGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +19,8 @@ class DeckTest {
     @Test
     void test6() {
         // given
-        CardsGenerator cardsGenerator = new CardsGenerator();
-        List<Card> cards = cardsGenerator.generate();
+        SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
+        List<Card> cards = singDeckGenerator.generate();
 
         // when & then
         assertAll(
@@ -30,42 +30,12 @@ class DeckTest {
         );
     }
 
-    @DisplayName("생성되는 시점에 카드의 개수가 52장이 아니면 예외를 던진다.")
-    @Test
-    void test1() {
-        // given
-        List<Card> cards = List.of(new Card(CardSuit.CLUB, CardRank.ACE));
-
-        // when & then
-        assertThatThrownBy(() -> new Deck(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.INVALID_DECK_SIZE.getMessage());
-    }
-
-    @DisplayName("중복되는 카드가 존재하면 예외를 던진다.")
-    @Test
-    void test2() {
-        // given
-        CardsGenerator cardsGenerator = new CardsGenerator();
-        List<Card> cards = cardsGenerator.generate();
-
-        ArrayList<Card> copiedCards = new ArrayList<>(cards);
-        copiedCards.removeLast();
-        Card card = copiedCards.getLast();
-        copiedCards.add(card);
-
-        // when & then
-        assertThatThrownBy(() -> new Deck(copiedCards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.DUPLICATED_CARD_EXISTED.getMessage());
-    }
-
     @DisplayName("카드는 섞일 수 있다.")
     @Test
     void test3() {
         // given
-        CardsGenerator cardsGenerator = new CardsGenerator();
-        List<Card> cards = cardsGenerator.generate();
+        SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
+        List<Card> cards = singDeckGenerator.generate();
         Deck deck = new Deck(cards);
 
         // then
@@ -80,8 +50,8 @@ class DeckTest {
         @Test
         void test4() {
             // given
-            CardsGenerator cardsGenerator = new CardsGenerator();
-            List<Card> cards = cardsGenerator.generate();
+            SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
+            List<Card> cards = singDeckGenerator.generate();
             Deck deck = new Deck(cards);
             int expect = 2;
 
@@ -95,8 +65,8 @@ class DeckTest {
         @DisplayName("카드가 소진되면 예외를 던진다.")
         @Test
         void test5() {
-            CardsGenerator cardsGenerator = new CardsGenerator();
-            List<Card> cards = cardsGenerator.generate();
+            SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
+            List<Card> cards = singDeckGenerator.generate();
             Deck deck = new Deck(cards);
 
             assertThatThrownBy(() -> deck.takeCards(53))
