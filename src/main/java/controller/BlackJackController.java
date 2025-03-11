@@ -52,7 +52,7 @@ public class BlackJackController {
 
     private void hitOrStay(Game game, Player player) {
         Answer answer = Answer.YES;
-        while (!player.isBlackJack() && !player.isBust() && answer == Answer.YES) {
+        while (!player.isBlackJack() && !player.isBust() && answer.isYes()) {
             answer = inputView.readHitOrStay(player);
             playerHitByAnswer(game, player, answer);
             outputView.displayParticipantAndCards(player);
@@ -61,7 +61,7 @@ public class BlackJackController {
     }
 
     private void playerHitByAnswer(Game game, Player player, Answer answer) {
-        if (answer == Answer.YES) {
+        if (answer.isYes()) {
             game.hitPlayerCard(player);
         }
     }
