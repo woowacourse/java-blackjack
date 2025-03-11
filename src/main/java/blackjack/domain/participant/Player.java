@@ -20,8 +20,7 @@ public class Player extends Participant {
     }
 
     public Payout calculatePayout(final Dealer dealer) {
-        this.payout = payout.calculatePayout(dealer, this);
-        return this.payout;
+        return payout.calculatePayout(dealer, this);
     }
 
     @Override
