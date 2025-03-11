@@ -47,6 +47,10 @@ class BlackjackGameTest {
     @DisplayName("카드 배부 테스트")
     class DistributeCardTest {
 
+        Players defaultPlayers = new Players(
+                List.of(new Player("hula"), new Player("sana"))
+        );
+
         @Test
         @DisplayName("딜러와 플레이어에게 카드를 2장씩 배부할 수 있다.")
         void distributeCardsToDealerAndPlayer() {
@@ -81,7 +85,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsUnder16.get(0), cardsUnder16.get(1));
 
             CardDeck cardDeck = CardDeck.createCardDeck();
-            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new Players(List.of()));
+            BlackjackGame game = new BlackjackGame(cardDeck, dealer, defaultPlayers);
 
             assertThat(game.addExtraCardToDealer()).isTrue();
         }
@@ -97,7 +101,7 @@ class BlackjackGameTest {
             dealer.addCards(cardsOver16.get(0), cardsOver16.get(1));
 
             CardDeck cardDeck = CardDeck.createCardDeck();
-            BlackjackGame game = new BlackjackGame(cardDeck, dealer, new Players(List.of()));
+            BlackjackGame game = new BlackjackGame(cardDeck, dealer, defaultPlayers);
 
             assertThat(game.addExtraCardToDealer()).isFalse();
         }
@@ -190,5 +194,4 @@ class BlackjackGameTest {
             assertThat(game.calculateDealerWinnings()).isEqualTo(1000);
         }
     }
-
 }

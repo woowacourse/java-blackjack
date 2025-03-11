@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -12,6 +14,55 @@ import org.junit.jupiter.api.Test;
 
 @Nested
 public class PlayersTest {
+
+    @Nested
+    @DisplayName("일급 컬렉션 생성 테스트")
+    class GenerateTest {
+
+        @Test
+        @DisplayName("8명 이상이면 생성 불가능하다")
+        void cantGenerateOver8Players() {
+            List<Player> over8Players = List.of(
+                    new Player("hula"),
+                    new Player("sana"),
+                    new Player("pppk"),
+                    new Player("iiif"),
+                    new Player("wilson"),
+                    new Player("hans"),
+                    new Player("duri"),
+                    new Player("hoddeok")
+            );
+
+            assertThatThrownBy(() -> new Players(over8Players))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("플레이어가 없다면 생성 불가능하다")
+        void cantGenerateEmpty() {
+            List<Player> emptyPlayer = List.of();
+
+            assertThatThrownBy(() -> new Players(emptyPlayer))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("2명에서 7명 이내면 정상적으로 생성한다")
+        void generateBetween2to7Players() {
+            List<Player> sevenPlayers = List.of(
+                    new Player("hula"),
+                    new Player("sana"),
+                    new Player("pppk"),
+                    new Player("iiif"),
+                    new Player("wilson"),
+                    new Player("hans"),
+                    new Player("duri")
+            );
+
+            assertThatCode(() -> new Players(sevenPlayers))
+                    .doesNotThrowAnyException();
+        }
+    }
 
     @Nested
     @DisplayName("플레이어들의 베팅 금액 통계 테스트")
