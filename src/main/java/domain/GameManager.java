@@ -3,6 +3,7 @@ package domain;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
+import domain.user.Users;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,15 +13,15 @@ import java.util.stream.Collectors;
 public class GameManager {
     public final static int MAX_PLAYER = 7;
 
-    private final List<User> users;
+    private final Users users;
     private final User dealer;
     private final TrumpCardManager trumpCardManager;
 
-    public GameManager(List<String> names,TrumpCardManager trumpCardManager) {
+    public GameManager(List<String> names, TrumpCardManager trumpCardManager) {
         validate(names);
-        users = names.stream()
+        this.users = new Users(names.stream()
             .map(Player::new)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
         this.dealer = new Dealer("딜러");
         this.trumpCardManager = trumpCardManager;
     }
@@ -37,22 +38,18 @@ public class GameManager {
 
     public void firstHandOutCard() {
         for (int count = 0; count < 2; count++) {
-            users.forEach(user -> {
-                user.receiveCard(trumpCardManager.drawCard());
-            });
+            users.userCardDraw(trumpCardManager);
             dealer.receiveCard(trumpCardManager.drawCard());
         }
     }
+
 
     public void drawMoreCard(final User user) {
         user.receiveCard(trumpCardManager.drawCard());
     }
 
     public User findUserByUsername(String name) {
-        return users.stream()
-                .filter(user -> user.hasName(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        return users.findByUserName(name);
     }
 
     public User getDealer() {
@@ -82,10 +79,10 @@ public class GameManager {
     public Map<User, GameResult> createGameResult() {
         Map<User, GameResult> gameResult = new LinkedHashMap<>();
         if (dealer.isBurst()) {
-            users.forEach((user) -> putGameResultBurst(user, gameResult));
+            users.getUsers().forEach((user) -> putGameResultBurst(user, gameResult));
             return gameResult;
         }
-        users.forEach((user) -> gameResult.put(user, compare(user)));
+        users.getUsers().forEach((user) -> gameResult.put(user, compare(user)));
         return gameResult;
     }
 
@@ -96,4 +93,5 @@ public class GameManager {
         }
         gameResult.put(user, GameResult.WIN);
     }
+
 }
