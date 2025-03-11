@@ -2,12 +2,10 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -30,7 +28,6 @@ public class BlackjackController {
 
             showFinalCards(blackjackGame);
             showBetResult(blackjackGame);
-//            showWinLoseResult(blackjackGame);
         });
     }
 
@@ -87,15 +84,6 @@ public class BlackjackController {
             outputView.printPlayerFinalCardResult(player.getName(), player.calculateDenominations(),
                     player.openCards());
         }
-    }
-
-    private void showWinLoseResult(final BlackjackGame blackjackGame) {
-        Map<GameResult, Integer> dealerResult = blackjackGame.calculateStatisticsForDealer();
-        Map<Player, GameResult> playerResults = blackjackGame.calculateStatisticsForPlayer();
-
-        outputView.printResultTitle();
-        outputView.printDealerResult(dealerResult);
-        playerResults.forEach((player, result) -> outputView.printPlayerResult(player.getName(), result));
     }
 
     private void showBetResult(BlackjackGame blackjackGame) {

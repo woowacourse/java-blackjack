@@ -3,9 +3,6 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -46,21 +43,6 @@ public class BlackjackGame {
             return true;
         }
         return false;
-    }
-
-    public Map<Player, GameResult> calculateStatisticsForPlayer() {
-        return players.calculateStatistics(dealer);
-    }
-
-    public Map<GameResult, Integer> calculateStatisticsForDealer() {
-        return calculateStatisticsForPlayer().values()
-                .stream()
-                .map(GameResult::changeStatusOpposite)
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        value -> 1,
-                        Integer::sum
-                ));
     }
 
     public int calculateDealerWinnings() {

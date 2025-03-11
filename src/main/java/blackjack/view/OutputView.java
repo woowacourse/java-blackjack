@@ -1,9 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
-import blackjack.domain.GameResult;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -44,25 +42,6 @@ public class OutputView {
     public void printPlayerFinalCardResult(final String name, final int sum, final List<Card> cards) {
         String cardResult = parseCardToString(cards);
         System.out.printf("%s카드: %s - 결과 %d%n", name, cardResult, sum);
-    }
-
-    public void printResultTitle() {
-        System.out.println();
-        System.out.println("## 최종 승패");
-    }
-
-    public void printDealerResult(final Map<GameResult, Integer> dealerGameResult) {
-        StringBuilder sb = new StringBuilder();
-        for (GameResult gameResult : GameResult.values()) {
-            sb.append(dealerGameResult.getOrDefault(gameResult, 0));
-            sb.append(gameResult.getText());
-        }
-
-        System.out.printf("딜러: %s%n", sb);
-    }
-
-    public void printPlayerResult(final String name, final GameResult gameResult) {
-        System.out.printf("%s: %s%n", name, gameResult.getText());
     }
 
     public void printBetResultTitle() {

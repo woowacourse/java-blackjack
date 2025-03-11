@@ -5,7 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -136,32 +135,6 @@ class BlackjackGameTest {
             CardDeck cardDeck = CardDeck.createCardDeck();
             List<Player> players = List.of(player1, player2, player3);
             game = new BlackjackGame(cardDeck, dealer, new Players(players));
-        }
-
-        @Test
-        @DisplayName("플레이어의 승패 통계를 계산할 수 있다.")
-        void calculatePlayerStatistics() {
-            Map<Player, GameResult> playerResult = game.calculateStatisticsForPlayer();
-            List<Player> players = game.getPlayers();
-            Player player1 = players.get(0);
-            Player player2 = players.get(1);
-            Player player3 = players.get(2);
-
-            assertAll(() -> {
-                assertThat(playerResult.get(player1)).isEqualTo(GameResult.LOSE);
-                assertThat(playerResult.get(player2)).isEqualTo(GameResult.WIN);
-                assertThat(playerResult.get(player3)).isEqualTo(GameResult.LOSE);
-            });
-        }
-
-        @Test
-        @DisplayName("딜러의 승패 통계를 계산할 수 있다.")
-        void calculateDealerStatistics() {
-            Map<GameResult, Integer> result = game.calculateStatisticsForDealer();
-            assertAll(() -> {
-                assertThat(result.get(GameResult.WIN)).isEqualTo(2);
-                assertThat(result.get(GameResult.LOSE)).isEqualTo(1);
-            });
         }
     }
 
