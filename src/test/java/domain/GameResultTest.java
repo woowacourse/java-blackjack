@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultTest {
-    private final Deck deck = DeckGenerator.generateTestDeck();
+    private final Deck deck = DeckGenerator.generateRandomDeck();
     private final CardHand bustCardHand = new CardHand(
             Set.of(CardFixture.of(TEN, CLOVER), CardFixture.of(TEN, HEART), CardFixture.of(TEN, DIAMOND)));
     private final CardHand bustCardHand2 = new CardHand(

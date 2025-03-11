@@ -19,8 +19,12 @@ public class Card {
         return rank == Rank.ACE;
     }
 
-    public String getNotation() {
-        return rank.getName() + suit.getName();
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
     }
 
     @Override

@@ -11,7 +11,7 @@ class CardTest {
     @RepeatedTest(52)
     @DisplayName("랜덤으로 카드를 선택할 때 최대 카드 갯수 이내이면 예외가 발생하지 않는다.")
     void testRandomCreation() {
-        Deck deck = DeckGenerator.generateTestDeck();
+        Deck deck = DeckGenerator.generateRandomDeck();
         assertThatCode(deck::drawNewCard).doesNotThrowAnyException();
     }
 
@@ -19,7 +19,7 @@ class CardTest {
     @DisplayName("랜덤으로 카드를 선택할 때 카드를 모두 사용하면 예외가 발생한다.")
     void testRandomCreationException() {
         // given
-        Deck deck = DeckGenerator.generateTestDeck();
+        Deck deck = DeckGenerator.generateRandomDeck();
         for (int i = 0; i < 52; i++) {
             deck.drawNewCard();
         }

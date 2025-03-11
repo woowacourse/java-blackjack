@@ -15,7 +15,7 @@ public class OutputView {
         List<Player> players = game.getPlayers();
         List<String> playerNames = players.stream().map(Player::getName).toList();
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", String.join(DELIMITER, playerNames));
-        System.out.printf("딜러카드: %s", game.getDealerCards().getFirst().getNotation());
+        System.out.printf("딜러카드: %s", getNotation(game.getDealerCards().getFirst()));
         displayEmptyLine();
         displayAllParticipantsAndCards(players);
         displayEmptyLine();
@@ -45,7 +45,7 @@ public class OutputView {
     public void displayParticipantAndCards(GameParticipant gameParticipant) {
         String name = gameParticipant.getName();
         List<String> cardNotations = gameParticipant.getCards().stream()
-                .map(Card::getNotation)
+                .map(this::getNotation)
                 .toList();
         System.out.printf("%s카드: %s", name, String.join(DELIMITER, cardNotations));
     }
@@ -72,5 +72,9 @@ public class OutputView {
                 .filter((gameResult) -> game.getDealerGameResultCount(gameResult) != 0)
                 .forEach((gameResult) -> System.out.printf("%d%s ", game.getDealerGameResultCount(gameResult),
                         gameResult.getName()));
+    }
+
+    private String getNotation(Card card) {
+        return card.getRank().getName() + card.getSuit().getName();
     }
 }

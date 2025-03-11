@@ -18,7 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    private final Deck deck = DeckGenerator.generateTestDeck();
+    private final Deck deck = DeckGenerator.generateRandomDeck();
 
     @Test
     @DisplayName("자기 점수를 계산한다.")
