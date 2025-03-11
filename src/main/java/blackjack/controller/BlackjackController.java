@@ -16,9 +16,8 @@ import java.util.List;
 public class BlackjackController {
     public void run() {
         try {
-
             Players players = createPlayers();
-            Dealer dealer = new Dealer(players, DeckFactory.createDefaultDeck());
+            Dealer dealer = new Dealer(players, DeckFactory.createShuffledDeck(new RandomCardsShuffler()));
             handOutCards(dealer, players);
             additionalCard(dealer, players);
             dealerAdditionalCard(dealer);
@@ -41,7 +40,7 @@ public class BlackjackController {
     }
 
     private void handOutCards(Dealer dealer, Players players) {
-        dealer.prepareBlackjack(new RandomCardsShuffler());
+        dealer.prepareBlackjack();
         OutputView.printDealerAndPlayerCards(dealer.getCards(), players.getPlayers());
     }
 

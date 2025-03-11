@@ -3,7 +3,6 @@ package blackjack.domain.participants;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.FixCardsShuffler;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class DealerTest {
                 new Deck(cards));
 
         //when
-        dealer.prepareBlackjack(new FixCardsShuffler());
+        dealer.prepareBlackjack();
 
         //then
         Assertions.assertThat(dealer.getCards().getCards())

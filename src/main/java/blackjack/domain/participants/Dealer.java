@@ -2,7 +2,6 @@ package blackjack.domain.participants;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.CardsShuffler;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 
@@ -21,14 +20,9 @@ public class Dealer {
         this.cards = cards;
     }
 
-    public void prepareBlackjack(CardsShuffler cardsShuffler) {
-        shuffleDeck(cardsShuffler);
+    public void prepareBlackjack() {
         pickCards();
         handOutCard();
-    }
-
-    private void shuffleDeck(CardsShuffler cardsShuffler) {
-        deck.shuffleCards(cardsShuffler);
     }
 
     private void pickCards() {
