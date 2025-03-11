@@ -6,7 +6,8 @@ import domain.rule.BlackjackRule;
 import domain.rule.GameRule;
 import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
+
     private final Hand hand;
     protected final GameRule rule;
 
