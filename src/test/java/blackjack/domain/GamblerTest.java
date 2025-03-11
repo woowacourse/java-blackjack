@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class GamblerTest {
     @DisplayName("게임 참가자는 모든 카드를 공개한다")
     void test() {
         CardPack cardPack = new CardPack(new SortShuffle());
-        Gambler gambler = new Gambler("비타");
+        Gambler gambler = new Gambler(new Name("두리"));
 
         gambler.pushDealCard(cardPack, 2);
         List<Card> openCards = gambler.getOpenedCards();
