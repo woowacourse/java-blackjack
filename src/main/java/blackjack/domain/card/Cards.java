@@ -39,6 +39,10 @@ public class Cards {
         score.additionalTake(card);
     }
 
+    public boolean canTake() {
+        return score.canTake();
+    }
+
     public int getSize() {
         return cards.size();
     }

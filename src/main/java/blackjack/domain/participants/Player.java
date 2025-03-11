@@ -3,17 +3,14 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Score;
 
 public class Player {
     private final String name;
     private final Cards cards;
-    private final Score score;
 
     public Player(String name, Cards cards) {
         this.name = name.trim();
         this.cards = cards;
-        this.score = new Score(cards);
     }
 
     public void take(Card card1, Card card2) {
@@ -25,7 +22,7 @@ public class Player {
     }
 
     public boolean canTake() {
-        return score.canTake();
+        return cards.canTake();
     }
 
     public int calculateMaxScore() {
