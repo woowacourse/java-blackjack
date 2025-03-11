@@ -28,7 +28,7 @@ public abstract class Participant {
         return hand.isBlackJack();
     }
 
-    public Hand getCards() {
+    public Hand getHand() {
         return hand;
     }
 

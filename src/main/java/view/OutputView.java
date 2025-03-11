@@ -22,8 +22,8 @@ public class OutputView {
 
     public void printParticipantsHand(BlackJackGame game) {
         System.out.printf("%n딜러와 %s에게 %d장을 나누었습니다.%n", createPlayerNames(game.getPlayers()),
-                game.getDealer().getCards().getCards().size());
-        System.out.printf("딜러카드: %s%n", getCardText(game.getDealer().getCards().getCards().getFirst()));
+                game.getDealer().getHand().getCards().size());
+        System.out.printf("딜러카드: %s%n", getCardText(game.getDealer().getHand().getCards().getFirst()));
         game.getPlayers().getPlayers().forEach(this::printPlayerCards);
         printEmptyLine();
     }
@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     public void printPlayerCards(Player player) {
-        System.out.printf("%s카드: %s%n", player.getName(), getCardsText(player.getCards()));
+        System.out.printf("%s카드: %s%n", player.getName(), getCardsText(player.getHand()));
     }
 
     public void printDealerDrawCount(int count) {
@@ -48,11 +48,11 @@ public class OutputView {
     }
 
     public void printDealerCardsAndResult(Dealer dealer) {
-        System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(dealer.getCards()), dealer.getCardScore());
+        System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(dealer.getHand()), dealer.getCardScore());
     }
 
     public void printCardsAndResult(Player player) {
-        System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), getCardsText(player.getCards()),
+        System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), getCardsText(player.getHand()),
                 player.getCardScore());
     }
 

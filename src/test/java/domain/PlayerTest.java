@@ -25,7 +25,7 @@ public class PlayerTest {
         player.addCard(card);
 
         // when
-        Hand hand = player.getCards();
+        Hand hand = player.getHand();
 
         // then
         assertThat(hand.getCards()).contains(card);

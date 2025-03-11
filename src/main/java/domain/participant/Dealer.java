@@ -62,7 +62,7 @@ public class Dealer extends Participant {
     }
 
     public int getNewCardCount() {
-        return super.getCards().getCards().size() - INIT_COUNT;
+        return super.getHand().getCards().size() - INIT_COUNT;
     }
 
     @Override
