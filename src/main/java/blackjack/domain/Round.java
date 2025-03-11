@@ -74,10 +74,8 @@ public class Round {
     public WinningDiscriminator getWinningDiscriminator() {
         Gambler dealer = findGambler(DEALER_NAME);
         int dealerScore = dealer.calculateScore();
-        Map<Name, Integer> playerScores = gamblers.stream()
-                .filter(gambler -> gambler instanceof Player)
-                .collect(toMap(Gambler::getName, Gambler::calculateScore));
-        return new WinningDiscriminator(dealerScore, playerScores);
+        Map<Name, Integer> playerScores = createPlayerScores();
+        return new WinningDiscriminator(dealerScore, playerScores); 
     }
 
     private Gambler findGambler(final Name name) {
@@ -85,5 +83,11 @@ public class Round {
                 .filter(gambler -> gambler.isNameEquals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다:" + name));
+    }
+
+    private Map<Name, Integer> createPlayerScores() {
+        return gamblers.stream()
+                .filter(gambler -> gambler instanceof Player)
+                .collect(toMap(Gambler::getName, Gambler::calculateScore));
     }
 }
