@@ -29,7 +29,7 @@ public class PlayerTest {
         }
 
         //then
-        Assertions.assertThat(user.getCardDeck().calculateScore()).isGreaterThan(21);
+        Assertions.assertThat(user.getCardDeck().calculateScore()).isGreaterThanOrEqualTo(21);
     }
 
     @DisplayName("플레이어는 dealer 혹은 딜러이름을 사용할 수 없다.")

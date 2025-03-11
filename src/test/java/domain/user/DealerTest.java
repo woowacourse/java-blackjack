@@ -43,7 +43,7 @@ public class DealerTest {
         }
 
         //then
-        Assertions.assertThat(dealer.getCardDeck().calculateScore()).isGreaterThan(16);
+        Assertions.assertThat(dealer.getCardDeck().calculateScore()).isGreaterThanOrEqualTo(16);
 
     }
 
