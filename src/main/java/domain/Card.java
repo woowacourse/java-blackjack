@@ -16,8 +16,12 @@ public class Card {
         return cardRank == CardRank.ACE;
     }
 
-    public CardRank getNumber() {
+    public CardRank getCardRank() {
         return cardRank;
+    }
+
+    public int getPoint() {
+        return cardRank.getPoint();
     }
 
     public Symbol getSymbol() {
@@ -30,11 +34,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && getNumber() == card.getNumber();
+        return symbol == card.symbol && cardRank == card.cardRank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, getNumber());
+        return Objects.hash(symbol, cardRank);
     }
 }

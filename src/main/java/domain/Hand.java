@@ -52,7 +52,7 @@ public class Hand {
     private int sumPointWithoutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(card -> card.getNumber().getPoint())
+                .mapToInt(Card::getPoint)
                 .sum();
     }
 
@@ -70,7 +70,7 @@ public class Hand {
     private List<CardRank> extractAces() {
         return cards.stream()
                 .filter(Card::isAce)
-                .map(Card::getNumber)
+                .map(Card::getCardRank)
                 .toList();
     }
 
@@ -87,7 +87,7 @@ public class Hand {
 
     public List<Card> getCards() {
         return cards.stream()
-                .map(card -> new Card(card.getSymbol(), card.getNumber()))
+                .map(card -> new Card(card.getSymbol(), card.getCardRank()))
                 .toList();
     }
 }
