@@ -23,7 +23,7 @@ public class PlayersTest {
 			final List<String> names = List.of("부기", "구구", "파랑");
 
 			// when
-			final var players = new Players(names);
+			final var players = Players.from(names);
 
 			// then
 			assertThat(players.getPlayers()).hasSize(3);
