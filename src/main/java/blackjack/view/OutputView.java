@@ -65,8 +65,8 @@ public class OutputView {
     }
 
     public static void printVictory(GameResult gameResult, List<Player> players) {
-        Map<WinningResult, Integer> dealerVictoryResults = gameResult.getDealerVictoryResults();
-        Map<Player, WinningResult> playerVictoryResults = gameResult.getPlayerVictoryResults();
+        Map<WinningResult, Integer> dealerVictoryResults = gameResult.getDealerGameResults();
+        Map<Player, WinningResult> playerVictoryResults = gameResult.getPlayerGameResults();
         System.out.println("## 최종 승패");
         printIfPresentWinningResult(dealerVictoryResults);
         dealerVictoryResults.getOrDefault(WinningResult.LOSE, 0);

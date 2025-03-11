@@ -8,36 +8,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, WinningResult> playerVictoryResults;
-    private final Map<WinningResult, Integer> dealerVictoryResults;
+    private final Map<Player, WinningResult> playerGameResults;
+    private final Map<WinningResult, Integer> dealerGameResults;
 
-    public GameResult(Map<Player, WinningResult> playerVictoryResults,
-                      Map<WinningResult, Integer> dealerVictoryResults) {
-        this.playerVictoryResults = playerVictoryResults;
-        this.dealerVictoryResults = dealerVictoryResults;
+    public GameResult(Map<Player, WinningResult> playerGameResults,
+                      Map<WinningResult, Integer> dealerGameResults) {
+        this.playerGameResults = playerGameResults;
+        this.dealerGameResults = dealerGameResults;
     }
 
     public static GameResult create(Dealer dealer, Players players) {
-        Map<Player, WinningResult> playerVictoryResults = new HashMap<>();
-        Map<WinningResult, Integer> dealerVictoryResults = new HashMap<>();
+        Map<Player, WinningResult> playerGameResults = createPlayerGameResult(dealer, players);
+        Map<WinningResult, Integer> dealerGameResults = createDealerGameResults(dealer, players);
+        return new GameResult(playerGameResults, dealerGameResults);
+    }
 
+    private static Map<Player, WinningResult> createPlayerGameResult(Dealer dealer, Players players) {
+        Map<Player, WinningResult> playerGameResults = new HashMap<>();
         players.sendAll((player -> {
             WinningResult playerWinningResult = WinningResult.decide(player.getCards(), dealer.getCards());
-            playerVictoryResults.put(player, playerWinningResult);
-
-            WinningResult dealerWinningResult = WinningResult.decide(dealer.getCards(), player.getCards());
-            dealerVictoryResults.put(
-                    dealerWinningResult,
-                    dealerVictoryResults.getOrDefault(dealerWinningResult, 0) + 1);
+            playerGameResults.put(player, playerWinningResult);
         }));
-        return new GameResult(playerVictoryResults, dealerVictoryResults);
+        return playerGameResults;
     }
 
-    public Map<Player, WinningResult> getPlayerVictoryResults() {
-        return playerVictoryResults;
+    private static Map<WinningResult, Integer> createDealerGameResults(Dealer dealer, Players players) {
+        Map<WinningResult, Integer> dealerGameResults = new HashMap<>();
+        players.sendAll((player -> {
+            WinningResult dealerWinningResult = WinningResult.decide(dealer.getCards(), player.getCards());
+            dealerGameResults.put(
+                    dealerWinningResult,
+                    dealerGameResults.getOrDefault(dealerWinningResult, 0) + 1);
+        }));
+        return dealerGameResults;
     }
 
-    public Map<WinningResult, Integer> getDealerVictoryResults() {
-        return dealerVictoryResults;
+    public Map<Player, WinningResult> getPlayerGameResults() {
+        return playerGameResults;
+    }
+
+    public Map<WinningResult, Integer> getDealerGameResults() {
+        return dealerGameResults;
     }
 }
