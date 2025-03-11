@@ -13,19 +13,22 @@ public class Result {
     private static final int BLACKJACK_NUMBER = 21;
 
     public MatchResult calculateResultOfPlayer(Player player, Dealer dealer) {
-        int dealerSum = dealer.sum();
         int playerSum = player.sum();
-        if ((!isBust(dealerSum) && dealerSum > playerSum) || isBust(playerSum)) {
-            return LOSE;
-        }
-        if (dealerSum < playerSum || isBust(dealerSum)) {
-            return WIN;
-        }
+        int dealerSum = dealer.sum();
+
         if (isBlackjack(player)){
             if(isBlackjack(dealer)){
                 return DRAW;
             }
             return BLACKJACK;
+        }
+
+        if ((!isBust(dealerSum) && dealerSum > playerSum) || isBust(playerSum)) {
+            return LOSE;
+        }
+
+        if (dealerSum < playerSum || isBust(dealerSum)) {
+            return WIN;
         }
         return DRAW;
     }
