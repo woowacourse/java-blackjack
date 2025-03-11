@@ -32,8 +32,8 @@ public enum GameResult {
         return calculateResult(dealerValue, playerValue);
     }
 
-    public double getCalculateValue(int amount) {
-        return amount * this.calculateValue;
+    public int getCalculateValue(int amount) {
+        return (int) (amount * this.calculateValue);
     }
 
     private static GameResult calculateBurstResult(Participant dealer, Participant player) {
