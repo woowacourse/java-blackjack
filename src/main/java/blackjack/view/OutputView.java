@@ -19,14 +19,17 @@ public class OutputView {
                 .collect(Collectors.joining(","));
         System.out.println();
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
-        System.out.println("딜러카드: " +
-                toKoreanRank(dealerCards.getCards().getFirst().getRank()) +
-                toKoreanSuit(dealerCards.getCards().getFirst().getSuit())
-        );
+        printDealerCard(dealerCards);
         for (Player player : players) {
             printPlayerCards(player);
         }
         System.out.println();
+    }
+
+    private static void printDealerCard(Cards dealerCards) {
+        System.out.print("딜러카드: ");
+        String cards = toKoreanCards(dealerCards);
+        System.out.println(cards);
     }
 
     public static void printPlayerCards(Player player) {

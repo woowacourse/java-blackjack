@@ -41,6 +41,7 @@ public class BlackjackController {
     private void handOutCards(Dealer dealer, Players players) {
         dealer.prepareBlackjack();
         OutputView.printDealerAndPlayerCards(dealer.getCards(), players.getPlayers());
+        dealer.pickOneCards();
     }
 
     private void additionalCard(Dealer dealer, Players players) {

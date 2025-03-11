@@ -23,12 +23,12 @@ public class Dealer {
     }
 
     public void prepareBlackjack() {
-        pickCards();
+        pickOneCards();
         handOutCard();
     }
 
-    private void pickCards() {
-        cards.take(deck.draw(), deck.draw());
+    public void pickOneCards() {
+        cards.additionalTake(deck.draw());
     }
 
     private void handOutCard() {
@@ -39,12 +39,6 @@ public class Dealer {
         return cards.calculateMaxScore();
     }
 
-    public void pickAdditionalCard() {
-        while (calculateMaxScore() <= 16) {
-            cards.additionalTake(deck.draw());
-        }
-    }
-
     public void sendCardToPlayer(Player player) {
         if (!players.contains(player)) {
             throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
@@ -53,6 +47,12 @@ public class Dealer {
             throw new IllegalArgumentException("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
         }
         player.additionalTake(deck.draw());
+    }
+
+    public void pickAdditionalCard() {
+        while (calculateMaxScore() <= 16) {
+            cards.additionalTake(deck.draw());
+        }
     }
 
     public boolean isBlackjack() {
