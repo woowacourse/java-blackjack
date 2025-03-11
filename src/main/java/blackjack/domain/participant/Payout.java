@@ -16,6 +16,9 @@ public record Payout(
     }
 
     public Payout bet(final int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("베팅 금액은 0원 이상 입력해주세요.");
+        }
         return new Payout(this.value + amount);
     }
 
