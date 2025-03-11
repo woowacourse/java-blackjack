@@ -2,11 +2,12 @@ package model;
 
 import java.util.Map;
 import model.participant.Player;
+import model.participant.Players;
 
-public class PlayerBetting {
+public class BettingResult {
     private final Map<Player, Integer> betting;
 
-    public PlayerBetting(Map<Player, Integer> betting) {
+    public BettingResult(Map<Player, Integer> betting) {
         this.betting = betting;
     }
 
@@ -14,7 +15,13 @@ public class PlayerBetting {
         return betting.get(player);
     }
 
-    public void calculateBettingResult(Player player, GameResult gameResult) {
+    public void calculatePlayerBettingResult(Players players, ParticipantWinningResult participantWinningResult) {
+        for (Player player : players.getPlayers()){
+            computeResultByWinningStatus(player, participantWinningResult.getPlayerGameResult(player));
+        }
+    }
+
+    private void computeResultByWinningStatus(Player player, GameResult gameResult) {
         int bettingPrice = betting.get(player);
         if (gameResult == GameResult.WIN){
             betting.put(player, bettingPrice * 2);
