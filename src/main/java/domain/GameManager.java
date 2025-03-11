@@ -5,10 +5,14 @@ import domain.gamer.Dealer;
 import domain.gamer.GamerGenerator;
 import domain.gamer.Player;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.GameResult.*;
+import static domain.GameResult.calculateResult;
+import static domain.GameResult.getAllGameResults;
 
 public class GameManager {
     public static final int LIMIT = 21;
@@ -35,13 +39,7 @@ public class GameManager {
 
     public Map<GameResult, Integer> calculateDealerGameResult() {
         final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
-        return getAllGameResults().stream()
-                .filter(playerGameResult::contains)
-                .collect(Collectors.toMap(
-                        GameResult::swapGameResult,
-                        result -> Collections.frequency(playerGameResult, result),
-                        (newResult, oldResult) -> oldResult
-                ));
+        return getAllGameResults().stream().filter(playerGameResult::contains).collect(Collectors.toMap(GameResult::swapGameResult, result -> Collections.frequency(playerGameResult, result), (newResult, oldResult) -> oldResult));
     }
 
     public Map<String, GameResult> calculatePlayerGameResult() {
@@ -73,8 +71,6 @@ public class GameManager {
     }
 
     public List<Player> getAbleToHitPlayers() {
-        return players.stream()
-                .filter(player -> !player.isBust())
-                .toList();
+        return players.stream().filter(player -> !player.isBust()).toList();
     }
 }

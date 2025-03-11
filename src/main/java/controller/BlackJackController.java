@@ -2,17 +2,13 @@ package controller;
 
 import domain.GameManager;
 import domain.card.CardGenerator;
-import domain.card.CardGroup;
 import domain.card.RandomCardGenerator;
-import domain.gamer.Dealer;
-import domain.gamer.GamerGenerator;
-
-import java.util.List;
-
 import domain.gamer.Player;
 import util.LoopTemplate;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
 
 public class BlackJackController {
 

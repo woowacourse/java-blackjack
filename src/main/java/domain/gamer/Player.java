@@ -7,8 +7,6 @@ import domain.card.CardGroup;
 
 import java.util.List;
 
-import static domain.GameManager.LIMIT;
-
 public class Player {
 
     private final String name;

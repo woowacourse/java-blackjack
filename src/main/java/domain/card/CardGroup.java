@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static domain.GameManager.LIMIT;
-import static domain.card.Card.*;
+import static domain.card.Card.ACE_HIGH_SCORE;
+import static domain.card.Card.ACE_LOW_SCORE;
 
 public class CardGroup {
 
