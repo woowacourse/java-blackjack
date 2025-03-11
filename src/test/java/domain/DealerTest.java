@@ -59,31 +59,65 @@ class DealerTest {
     void test2() {
         //given
         Dealer dealer = Dealer.init(() -> new ArrayList<>(List.of(
-                new Card(CardNumber.A, CardShape.CLOVER),
-                new Card(CardNumber.FOUR, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.A, CardShape.CLOVER),
+                new Card(CardNumber.FOUR, CardShape.CLOVER)
         )));
         Hand dealerHand = Hand.of(
                 List.of(
-                        new Card(CardNumber.A, CardShape.CLOVER),
-                        new Card(CardNumber.FOUR, CardShape.CLOVER)
+                        new Card(CardNumber.FOUR, CardShape.CLOVER),
+                        new Card(CardNumber.A, CardShape.CLOVER)
                 )
         );
         Dealer expectedDealer = Dealer.of(dealerHand, ArrayList::new);
         Player player = Player.init("플레이어1");
         Players players = new Players(List.of(player));
         Player expectedPlayer = Player.from("플레이어1", Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
         )));
         Players expectedPlayers = new Players(List.of(expectedPlayer));
-
         //when
         dealer.handoutCards(players);
 
         //then
         assertThat(dealer).isEqualTo(expectedDealer);
         assertThat(players).isEqualTo(expectedPlayers);
+    }
+
+    @DisplayName("딜러가 플레이어에게 카드 1장은 준다")
+    @Test
+    void test3() {
+        //given
+        Dealer dealer = Dealer.init(() -> new ArrayList<>(List.of(
+                new Card(CardNumber.A, CardShape.CLOVER)
+        )));
+        Player player = Player.init("플레이어1");
+        Player expectedPlayer = Player.from("플레이어1", Hand.of(List.of(
+                new Card(CardNumber.A, CardShape.CLOVER)
+        )));
+        //when
+        dealer.giveCards(player, 1);
+        //then
+        assertThat(player).isEqualTo(expectedPlayer);
+    }
+
+    @DisplayName("딜러는 합이 17 이상이 될 때까지 카드를 뽑는다")
+    @Test
+    void test4() {
+        //given
+        Dealer dealer = Dealer.init(() -> new ArrayList<>(List.of(
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.SEVEN, CardShape.CLOVER)
+        )));
+        Dealer expectedDealer = Dealer.of(Hand.of(List.of(
+                new Card(CardNumber.SEVEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        )), ArrayList::new);
+        //when
+        dealer.drawUntilLimit();
+        //then
+        assertThat(dealer).isEqualTo(expectedDealer);
     }
 }
