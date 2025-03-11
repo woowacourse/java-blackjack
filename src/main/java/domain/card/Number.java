@@ -22,7 +22,7 @@ public enum Number {
     }
 
     public boolean isA() {
-        return score == ACE.score;
+        return this == ACE;
     }
 
     public int getScore() {

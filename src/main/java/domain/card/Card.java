@@ -1,5 +1,7 @@
 package domain.card;
 
+import static domain.card.Number.ACE;
+
 public class Card {
     private final Shape shape;
     private final Number number;
