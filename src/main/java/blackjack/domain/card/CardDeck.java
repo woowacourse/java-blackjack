@@ -3,23 +3,18 @@ package blackjack.domain.card;
 import blackjack.exception.ExceptionMessage;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
 public class CardDeck {
 
-    private Queue<Card> cards;
+    private CardGenerator cardGenerator;
+    private Queue<Card> cards = new ArrayDeque<>();
 
-    public CardDeck() {
-        List<Card> shuffledCards = makeShuffledCards();
-        this.cards = new ArrayDeque<>();
+    public CardDeck(CardGenerator cardGenerator) {
+        this.cardGenerator = cardGenerator;
+        List<Card> shuffledCards = cardGenerator.makeShuffled();
         this.cards.addAll(shuffledCards);
-    }
-
-    public int getSize() {
-        return cards.size();
     }
 
     public List<Card> drawCard(int count) {
@@ -31,15 +26,8 @@ public class CardDeck {
         return drawnCards;
     }
 
-    private List<Card> makeShuffledCards() {
-        List<Card> newCards = new ArrayList<>();
-        for (CardShape shape : CardShape.values()) {
-            Arrays.stream(CardValue.values())
-                    .map(cardValue -> new Card(shape, cardValue))
-                    .forEach(newCards::add);
-        }
-        Collections.shuffle(newCards);
-        return newCards;
+    public int getSize() {
+        return cards.size();
     }
 
     private void validateEmptyCardDeck(int count) {
