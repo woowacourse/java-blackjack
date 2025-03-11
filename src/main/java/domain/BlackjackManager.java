@@ -44,10 +44,6 @@ public class BlackjackManager {
         }
     }
 
-    public void addOneCard(Player player) {
-        player.drawOneCard(deck);
-    }
-
     public boolean addCardToDealerIfLowScore() {
         return getDealer().drawOneCardIfLowScore(deck);
     }

@@ -28,30 +28,6 @@ public class BlackjackManagerTest {
     }
 
     @Test
-    void 특정_참여자에게_추가_카드_한_장을_분배한다() {
-        // given
-        Player siso = new Participant("시소");
-        Players players = new Players(List.of(
-                new Dealer(),
-                siso,
-                new Participant("헤일러"),
-                new Participant("부기"),
-                new Participant("사나")
-        ));
-
-        Deck deck = DeckGenerator.generateDeck();
-        BlackjackManager blackjackManager = new BlackjackManager(players, deck);
-        blackjackManager.distributeInitialCards();
-        final int beforeDrawnCount = siso.getCards().size();
-        blackjackManager.addOneCard(siso);
-        final int afterDrawnCount = siso.getCards().size();
-
-        // when & then
-        Assertions.assertThat(afterDrawnCount)
-                .isEqualTo(beforeDrawnCount + 1);
-    }
-
-    @Test
     void 딜러의_카드_합이_16이하면_카드를_한장_추가한다() {
         // given
         Dealer dealer = new Dealer();
