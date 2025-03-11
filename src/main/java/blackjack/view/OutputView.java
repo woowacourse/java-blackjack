@@ -65,6 +65,18 @@ public class OutputView {
         System.out.printf("%s: %s%n", name, gameResult.getText());
     }
 
+    public void printBetResultTitle() {
+        System.out.println("## 최종 수익");
+    }
+
+    public void printBetResultByDealer(int winnings) {
+        System.out.printf("딜러: %d%n", winnings);
+    }
+
+    public void printBetResultByPlayer(String name, int winnings) {
+        System.out.printf("%s: %d%n", name, winnings);
+    }
+
     private String parseCardToString(final List<Card> cards) {
         return cards
                 .stream()

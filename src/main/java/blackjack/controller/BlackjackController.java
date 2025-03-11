@@ -22,19 +22,28 @@ public class BlackjackController {
     public void start() {
         handleException(() -> {
             BlackjackGame blackjackGame = enterParticipants();
+            betPlayers(blackjackGame);
             distributeInitialCards(blackjackGame);
 
             distributeAdditionalCardsToPlayers(blackjackGame);
             distributeAdditionalCardsToDealer(blackjackGame);
 
             showFinalCards(blackjackGame);
-            showWinLoseResult(blackjackGame);
+            showBetResult(blackjackGame);
+//            showWinLoseResult(blackjackGame);
         });
     }
 
     private BlackjackGame enterParticipants() {
         List<String> names = inputView.readNames();
         return BlackjackGame.createByPlayerNames(names);
+    }
+
+    private void betPlayers(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
+            int betAmount = inputView.readBetAmount(player.getName());
+            player.bet(betAmount);
+        }
     }
 
     private void distributeInitialCards(final BlackjackGame blackjackGame) {
@@ -87,6 +96,15 @@ public class BlackjackController {
         outputView.printResultTitle();
         outputView.printDealerResult(dealerResult);
         playerResults.forEach((player, result) -> outputView.printPlayerResult(player.getName(), result));
+    }
+
+    private void showBetResult(BlackjackGame blackjackGame) {
+        outputView.printBetResultTitle();
+        outputView.printBetResultByDealer(blackjackGame.calculateDealerWinnings());
+        Dealer dealer = blackjackGame.getDealer();
+        for (Player player : blackjackGame.getPlayers()) {
+            outputView.printBetResultByPlayer(player.getName(), player.calculatePayout(dealer));
+        }
     }
 
     private void handleException(final Runnable action) {
