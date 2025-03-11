@@ -14,7 +14,7 @@ public abstract class BlackjackParticipant {
     private static final String DEALER_NAME = "딜러";
     private static final String INVALID_PLAYER_NAME = "일반 플레이어는 딜러일 수 없습니다.";
 
-    private final List<TrumpCard> trumpCards = new ArrayList<>();
+    private final List<TrumpCard> cardHands = new ArrayList<>();
     private final String name;
 
     protected BlackjackParticipant(String name) {
@@ -36,14 +36,14 @@ public abstract class BlackjackParticipant {
         if (isBurst(calculateCardSum())) {
             throw new IllegalStateException(INVALID_CARD_STATE);
         }
-        trumpCards.add(trumpCard);
+        cardHands.add(trumpCard);
     }
 
     public int calculateCardSum() {
-        int sum = trumpCards.stream().map(TrumpCard::cardNumberValue)
+        int sum = cardHands.stream().map(TrumpCard::cardNumberValue)
                 .reduce(Integer::sum)
                 .orElse(0);
-        int aceCount = (int) trumpCards.stream()
+        int aceCount = (int) cardHands.stream()
                 .filter(TrumpCard::isAce)
                 .count();
         if (aceCount != 0) {
@@ -71,8 +71,8 @@ public abstract class BlackjackParticipant {
 
     abstract public boolean isDrawable();
 
-    public List<TrumpCard> trumpCards() {
-        return trumpCards;
+    public List<TrumpCard> cardHands() {
+        return cardHands;
     }
 
     public String name() {

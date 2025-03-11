@@ -71,10 +71,10 @@ public class BlackjackController {
 
     private void openPlayerResultCards(BlackjackResult blackjackResult) {
         String name = blackjackResult.name();
-        List<TrumpCard> trumpCards = blackjackResult.trumpCards();
+        List<TrumpCard> cardHands = blackjackResult.cardHands();
         int sum = blackjackResult.cardSum();
 
-        outputView.openCardsWithSum(name, trumpCards, sum);
+        outputView.openCardsWithSum(name, cardHands, sum);
     }
 
     private void dealerHit(BlackjackGame blackjackGame) {
@@ -105,8 +105,8 @@ public class BlackjackController {
     }
 
     private void openPlayerCards(String name, BlackjackGame blackjackGame) {
-        List<TrumpCard> trumpCards = blackjackGame.playerCards(name);
-        openPlayerCard(trumpCards, name);
+        List<TrumpCard> cardHands = blackjackGame.playerCards(name);
+        openPlayerCard(cardHands, name);
     }
 
     private boolean handleAskDraw(String name) {
@@ -120,12 +120,12 @@ public class BlackjackController {
         List<BlackjackResult> blackjackResults = blackjackGame.currentPlayerBlackjackResult();
         for (BlackjackResult blackjackResult : blackjackResults) {
             String name = blackjackResult.name();
-            openPlayerCard(blackjackResult.trumpCards(), name);
+            openPlayerCard(blackjackResult.cardHands(), name);
         }
     }
 
-    private void openPlayerCard(List<TrumpCard> trumpCards, String name) {
-        outputView.openCards(name, trumpCards);
+    private void openPlayerCard(List<TrumpCard> cardHands, String name) {
+        outputView.openCards(name, cardHands);
     }
 
     private void openFirstDealerCard(BlackjackGame blackjackGame) {

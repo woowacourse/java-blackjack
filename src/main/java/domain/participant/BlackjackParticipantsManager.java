@@ -47,11 +47,11 @@ public class BlackjackParticipantsManager {
     }
 
     public List<TrumpCard> playerCards(String name) {
-        return Collections.unmodifiableList(findPlayer(name).trumpCards());
+        return Collections.unmodifiableList(findPlayer(name).cardHands());
     }
 
     public List<TrumpCard> dealerCards() {
-        return Collections.unmodifiableList(dealer.trumpCards());
+        return Collections.unmodifiableList(dealer.cardHands());
     }
 
     private void validateEmptyCards(List<TrumpCard> trumpCards) {
@@ -62,7 +62,7 @@ public class BlackjackParticipantsManager {
 
     public TrumpCard firstDealerCards() {
         validateEmptyCards(dealerCards());
-        return dealer.trumpCards().get(0);
+        return dealer.cardHands().get(0);
     }
 
     public int calculateCardSum(String name) {
