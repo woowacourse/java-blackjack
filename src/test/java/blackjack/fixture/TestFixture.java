@@ -15,6 +15,7 @@ import java.util.List;
 public class TestFixture {
 
     public static class TestCardGeneratorGenerator implements CardGenerator {
+
         private int callingCount = 0;
 
         @Override
