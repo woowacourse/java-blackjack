@@ -57,8 +57,10 @@ public class HandTest {
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Hand hand = new Hand(testCards);
+
         //when
         int sum = hand.calculateSum();
+
         //then
         assertThat(sum).isEqualTo(16);
     }
@@ -72,8 +74,10 @@ public class HandTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
+
         //when
         int sum = hand.calculateSum();
+
         //then
         assertThat(sum).isEqualTo(12);
     }
@@ -85,10 +89,12 @@ public class HandTest {
         List<Card> testCards = List.of(new Card(CardNumberType.FIVE, CardType.CLOVER),
                 new Card(CardNumberType.FIVE, CardType.DIAMOND),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
-                );
+        );
         Hand hand = new Hand(testCards);
+
         //when
         int sum = hand.calculateSum();
+
         //then
         assertThat(sum).isEqualTo(21);
     }
@@ -102,8 +108,10 @@ public class HandTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
+
         //when
         int sum = hand.calculateSum();
+
         //then
         assertThat(sum).isEqualTo(13);
     }
@@ -122,7 +130,7 @@ public class HandTest {
         //when
         emptyHand.addAll(hand);
 
-        //thens
+        //then
         assertThat(emptyHand.getCards()).hasSize(2);
         assertThat(emptyHand.getCards()).containsExactlyInAnyOrderElementsOf(testCards);
     }

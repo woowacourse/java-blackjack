@@ -58,11 +58,12 @@ public class CardGiverTest {
         Player player = new Player("mimi", Hand.createEmpty());
 
         List<Participant> participants = List.of(dealer, player);
+
         //when
         cardGiver.giveDefaultTo(participants);
 
         //then
-        SoftAssertions.assertSoftly(softly ->{
+        SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(dealer.getCards()).isEqualTo(new Hand(List.of(
                     new Card(CardNumberType.FIVE, CardType.SPACE),
                     new Card(CardNumberType.SIX, CardType.CLOVER)
@@ -82,8 +83,10 @@ public class CardGiverTest {
         AnswerType answerType = AnswerType.YES;
 
         CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
+
         //when
         cardGiver.giveAdditionalCard(player);
+
         //then
         assertThat(player.getCards()).isEqualTo(new Hand(List.of(
                 new Card(CardNumberType.FIVE, CardType.SPACE)

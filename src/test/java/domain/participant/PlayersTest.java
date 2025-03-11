@@ -27,9 +27,9 @@ class PlayersTest {
         //then
         Assertions.assertThat(players.getPlayers()).containsExactlyInAnyOrderElementsOf(
                 List.of(
-                new Player("mimi", Hand.createEmpty()),
-                new Player("wade", Hand.createEmpty()),
-                new Player("pobi", Hand.createEmpty())
+                        new Player("mimi", Hand.createEmpty()),
+                        new Player("wade", Hand.createEmpty()),
+                        new Player("pobi", Hand.createEmpty())
                 )
         );
     }
