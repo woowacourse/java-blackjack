@@ -9,14 +9,23 @@ import java.util.List;
 
 public final class PlayerBettingBlackjackCardHand {
     
+    private static final int MIN_BETTING_AMOUNT = 1000;
+    private static final int MAX_BETTING_AMOUNT = 100000;
     private static final double BLACK_JACK_PROFIT_RATIO = 1.5;
     
     private final PlayerBlackjackCardHand hand;
     private final int bettingAmount;
     
     private PlayerBettingBlackjackCardHand(final PlayerBlackjackCardHand hand, final int bettingAmount) {
+        validateBettingAmount(bettingAmount);
         this.hand = hand;
         this.bettingAmount = bettingAmount;
+    }
+    
+    private void validateBettingAmount(final int bettingAmount) {
+        if (bettingAmount < MIN_BETTING_AMOUNT || bettingAmount > MAX_BETTING_AMOUNT) {
+            throw new IllegalArgumentException("베팅 금액은 %d원 이상, %d원 이하여야 합니다.".formatted(MIN_BETTING_AMOUNT, MAX_BETTING_AMOUNT));
+        }
     }
     
     public static PlayerBettingBlackjackCardHand from(

@@ -2,8 +2,10 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,7 +15,29 @@ import java.util.stream.Stream;
 
 import static blackjack.test_util.TestConstants.*;
 
-public class PlayerBettingBlackjackCardHand {
+public class PlayerBettingBlackjackCardHandTest {
+    
+    @Test
+    void 베팅_금액이_1000원보다_적으면_예외가_발생한다() {
+        // given
+        final int bettingAmount = 999;
+        
+        // expected
+        Assertions.assertThatThrownBy(() -> PlayerBettingBlackjackCardHand.from(DEFAULT_PLAYER, bettingAmount, List::of))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 1000원 이상, 100000원 이하여야 합니다.");
+    }
+    
+    @Test
+    void 베팅_금액이_100000원보다_크면_예외가_발생한다() {
+        // given
+        final int bettingAmount = 100001;
+        
+        // expected
+        Assertions.assertThatThrownBy(() -> PlayerBettingBlackjackCardHand.from(DEFAULT_PLAYER, bettingAmount, List::of))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 1000원 이상, 100000원 이하여야 합니다.");
+    }
     
     @ParameterizedTest
     @MethodSource("provideLess16Cards")
