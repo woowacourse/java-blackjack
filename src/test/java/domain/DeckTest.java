@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,7 @@ class DeckTest {
             // given
             List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
                     .toList();
-            Deck deck = new Deck(cards);
+            Deck deck = new Deck(cards, new NoShuffle());
 
             // when
             List<TrumpCard> drawnCards = deck.drawMultiple(5);
@@ -37,34 +36,10 @@ class DeckTest {
             // given
             List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
                     .toList();
-            Deck deck = new Deck(cards);
+            Deck deck = new Deck(cards, new NoShuffle());
 
             // when & then
             assertThat(deck.draw()).isEqualTo(cards.getLast());
-        }
-
-
-        @DisplayName("덱은 카드를 섞을 수 있다")
-        @Test
-        void shuffle() {
-            // given
-            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
-                    .toList();
-            Deck originalDeck = new Deck(cards);
-            Deck firstShuffledDeck = new Deck(cards);
-            Deck secondShuffledDeck = new Deck(cards);
-
-            // when
-            firstShuffledDeck.shuffle();
-            secondShuffledDeck.shuffle();
-
-            // then
-            assertSoftly(softly -> {
-                softly.assertThat(firstShuffledDeck)
-                        .isNotEqualTo(originalDeck);
-                softly.assertThat(secondShuffledDeck)
-                        .isNotEqualTo(firstShuffledDeck);
-            });
         }
     }
 
@@ -73,14 +48,26 @@ class DeckTest {
 
         @DisplayName("덱은 카드를 가지고 있어야한다.")
         @Test
-        void validateNotNull() {
+        void validateCardsNotNull() {
             // given
             List<TrumpCard> nullCards = null;
 
             // when & then
-            assertThatThrownBy(() -> new Deck(nullCards))
+            assertThatThrownBy(() -> new Deck(nullCards, new NoShuffle()))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("덱은 카드를 가지고 있어야합니다.");
+                    .hasMessage("덱은 카드와 섞기 전략 가지고 있어야합니다.");
+        }
+
+        @DisplayName("덱은 섞기 전략을 가지고 있어야한다.")
+        @Test
+        void validateShuffleStrategyNotNull() {
+            // given
+            ShuffleStrategy nullStrategy = null;
+
+            // when & then
+            assertThatThrownBy(() -> new Deck(Arrays.asList(TrumpCard.values()), nullStrategy))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("덱은 카드와 섞기 전략 가지고 있어야합니다.");
         }
 
         @DisplayName("덱의 카드는 52장 이어야한다.")
@@ -93,7 +80,7 @@ class DeckTest {
             cards.add(TrumpCard.ACE_OF_CLUBS);
 
             // then
-            assertThatThrownBy(() -> new Deck(cards))
+            assertThatThrownBy(() -> new Deck(cards, new NoShuffle()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("덱의 크기는 " + TrumpCard.TOTAL_COUNT + "여야 합니다.");
         }
@@ -109,7 +96,7 @@ class DeckTest {
                 cards.add(TrumpCard.ACE_OF_CLUBS);
             }
             //then
-            assertThatThrownBy(() -> new Deck(cards))
+            assertThatThrownBy(() -> new Deck(cards, new NoShuffle()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("덱에 중복된 카드가 있습니다.");
         }
@@ -120,7 +107,7 @@ class DeckTest {
             // given
             List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
                     .toList();
-            Deck deck = new Deck(cards);
+            Deck deck = new Deck(cards, new NoShuffle());
 
             // when
             deck.drawMultiple(52);

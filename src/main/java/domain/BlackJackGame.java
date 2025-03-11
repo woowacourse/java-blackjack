@@ -39,10 +39,7 @@ public class BlackJackGame {
     }
 
     private static Deck initializeDeck() {
-        Deck deck = Deck.create();
-        deck.shuffle();
-
-        return deck;
+        return Deck.create();
     }
 
     private static Dealer initializeDealer(Deck deck) {

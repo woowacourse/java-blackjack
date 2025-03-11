@@ -10,20 +10,22 @@ public class Deck {
 
     private final List<TrumpCard> cards;
 
-    public Deck(List<TrumpCard> cards) {
-        validate(cards);
-        this.cards = new ArrayList<>(cards);
+    public Deck(List<TrumpCard> cards, ShuffleStrategy shuffleStrategy) {
+        validate(cards, shuffleStrategy);
+        cards = new ArrayList<>(cards);
+        shuffleStrategy.shuffle(cards);
+        this.cards = cards;
     }
 
-    private void validate(List<TrumpCard> cards) {
-        validateNotNull(cards);
+    private void validate(List<TrumpCard> cards, ShuffleStrategy shuffleStrategy) {
+        validateNotNull(cards, shuffleStrategy);
         validateSize(cards);
         validateNotDuplicate(cards);
     }
 
-    private void validateNotNull(List<TrumpCard> cards) {
-        if (cards == null) {
-            throw new IllegalArgumentException("덱은 카드를 가지고 있어야합니다.");
+    private void validateNotNull(List<TrumpCard> cards, ShuffleStrategy shuffleStrategy) {
+        if (cards == null || shuffleStrategy == null) {
+            throw new IllegalArgumentException("덱은 카드와 섞기 전략 가지고 있어야합니다.");
         }
     }
 
@@ -42,11 +44,11 @@ public class Deck {
     public static Deck create() {
         List<TrumpCard> cards = initializeCards();
 
-        return new Deck(cards);
+        return new Deck(cards, new DefaultShuffle());
     }
 
     private static ArrayList<TrumpCard> initializeCards() {
-        return new ArrayList<>(Arrays.asList(domain.TrumpCard.values()));
+        return new ArrayList<>(Arrays.asList(TrumpCard.values()));
     }
 
     public List<TrumpCard> drawMultiple(int count) {

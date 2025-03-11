@@ -24,7 +24,7 @@ class BlackJackGameTest {
 
     @BeforeEach
     void setUp() {
-        blackJackDeck = new Deck(Arrays.stream(TrumpCard.values()).toList());
+        blackJackDeck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
         dealer = new Dealer(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_HEARTS)));
         rule = new Rule();
     }
@@ -38,7 +38,7 @@ class BlackJackGameTest {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
             List<String> playerNames = List.of("Alice", "Bob");
-            Deck originalDeck = new Deck(Arrays.stream(TrumpCard.values()).toList());
+            Deck originalDeck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
 
             // when
             List<Player> players = blackJackGame.createPlayers(playerNames);
