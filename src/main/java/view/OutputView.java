@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Map;
+import model.BettingResult;
 import model.card.Card;
 import model.participant.Dealer;
 import model.GameResult;
@@ -50,27 +51,16 @@ public class OutputView {
         }
     }
 
-    public static void printDealerFinalResult(Map<GameResult, Integer> dealerWinning) {
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + getGameResultMessage(dealerWinning));
+    public static void printDealerFinalResult(BettingResult bettingResult) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + bettingResult.calculateDealerFinalResult());
     }
 
-    public static void printPlayerFinalResult(ParticipantWinningResult participantWinningResult) {
-        Map<Player, GameResult> playerResults = participantWinningResult.getResult();
+    public static void printPlayerFinalResult(BettingResult bettingResult) {
+        Map<Player, Integer> playerResults = bettingResult.getBetting();
         for (Player player : playerResults.keySet()) {
-            GameResult playerResult = participantWinningResult.getResult().get(player);
-            System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
+            System.out.println(player.getName() + ": " + playerResults.get(player));
         }
-    }
-
-    private static String getGameResultMessage(Map<GameResult, Integer> dealerWinning) {
-        String message = "";
-        for (GameResult gameResult : GameResult.values()) {
-            if (dealerWinning.containsKey(gameResult)) {
-                message += (dealerWinning.get(gameResult) + gameResult.getResultMeaning() + " ");
-            }
-        }
-        return message;
     }
 
     private static void printCardDivision(Players players) {

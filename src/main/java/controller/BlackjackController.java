@@ -2,9 +2,9 @@ package controller;
 
 import java.util.List;
 import java.util.Map;
+import model.BettingResult;
 import model.participant.Dealer;
 import model.card.Deck;
-import model.GameResult;
 import model.participant.Player;
 import model.ParticipantWinningResult;
 import model.participant.Players;
@@ -16,6 +16,8 @@ public class BlackjackController {
     public void run() {
         List<String> playerNames = InputView.readPlayerNames();
         Players players = Players.from(playerNames);
+        Map<Player, Integer> startBetting = InputView.inputBettingPrice(players);
+        BettingResult bettingResult = new BettingResult(startBetting);
         Dealer dealer = new Dealer();
         Deck deck = Deck.of();
 
@@ -27,8 +29,8 @@ public class BlackjackController {
         OutputView.printFinalScore(dealer, players);
 
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
-        printFinalGameResult(dealerWinningResult, participantWinningResult);
+        bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
+        printFinalGameResult(bettingResult);
     }
 
     private void dealInitially(Players players, Deck deck, Dealer dealer) {
@@ -60,9 +62,8 @@ public class BlackjackController {
         }
     }
 
-    private void printFinalGameResult(Map<GameResult, Integer> dealerWinningResult,
-                                      ParticipantWinningResult participantWinningResult) {
-        OutputView.printDealerFinalResult(dealerWinningResult);
-        OutputView.printPlayerFinalResult(participantWinningResult);
+    private void printFinalGameResult(BettingResult bettingResult) {
+        OutputView.printDealerFinalResult(bettingResult);
+        OutputView.printPlayerFinalResult(bettingResult);
     }
 }
