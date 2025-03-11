@@ -1,57 +1,44 @@
 package domain;
 
+import domain.card.Deck;
 import domain.gamer.Dealer;
-import domain.gamer.Player;
-import java.util.Collections;
-import java.util.HashMap;
+import domain.gamer.PlayerGroup;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameManager {
 
     private final Dealer dealer;
-    private final List<Player> players;
+    private final PlayerGroup playerGroup;
+    private final Deck deck;
 
-    public GameManager(final Dealer dealer, final List<Player> players) {
+    public GameManager(final Dealer dealer, final PlayerGroup playerGroup, final Deck deck) {
         this.dealer = dealer;
-        this.players = players;
+        this.playerGroup = playerGroup;
+        this.deck = deck;
     }
 
-    public static GameManager create(final Dealer dealer, final List<Player> players) {
-        dealer.receiveCard(2);
-        for (Player player : players) {
-            player.receiveCard(2);
-        }
-        return new GameManager(dealer, players);
+    public void shuffleCards() {
+        deck.shuffleCards();
     }
 
-    public Map<GameResult, Integer> calculateDealerGameResult() {
-        final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
-        return GameResult.getAllGameResults().stream()
-                .filter(playerGameResult::contains)
-                .collect(Collectors.toMap(
-                        GameResult::swapGameResult,
-                        result -> Collections.frequency(playerGameResult, result),
-                        (newResult, oldResult) -> oldResult
-                ));
+    public void giveOneCardToPlayerByName(final String playerName) {
+        playerGroup.giveCardByName(playerName, deck.pollCard());
     }
 
-    public Map<String, GameResult> calculatePlayerGameResult() {
-        Map<String, GameResult> resultMap = new HashMap<>();
-        for (Player player : players) {
-            resultMap.put(player.getName(), calculateResult(player));
+    public void giveCardsToPlayers(final List<String> playerNames) {
+        for (String playerName : playerNames) {
+            playerGroup.giveCardByName(playerName, deck.pollCard());
+            playerGroup.giveCardByName(playerName, deck.pollCard());
         }
-        return resultMap;
     }
 
-    private GameResult calculateResult(final Player player) {
-        if (dealer.isBust() && player.isBust()) {
-            return GameResult.DRAW;
+    public int giveCardsToDealer() {
+        int count = 0;
+        while (dealer.isLessThen(16)) {
+            dealer.giveCard(deck.pollCard());
+            count++;
         }
-        if (dealer.isBust()) {
-            return GameResult.WIN;
-        }
-        return player.calculateGameResult(dealer.calculateScore());
+        return count;
     }
+
 }
