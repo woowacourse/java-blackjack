@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.domain.Rule.DEALER_DRAW_THRESHOLD;
+import static blackjack.domain.Rule.DEALER_RECEIVE_CRITERIA;
 import static blackjack.domain.WinningType.DEFEAT;
 import static blackjack.domain.WinningType.DRAW;
 import static blackjack.domain.WinningType.WIN;
@@ -32,8 +32,8 @@ public class OutputView {
         System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, BLACK_JACK);
     }
 
-    public static void printDealerDraw() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_DRAW_THRESHOLD);
+    public static void printDealerReceiveCard() {
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_RECEIVE_CRITERIA);
     }
 
     public static void printGamblerResult(final Name name, final List<Card> cards, final int score) {

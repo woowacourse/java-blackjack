@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.domain.Rule.DEALER_DRAW_THRESHOLD;
+import static blackjack.domain.Rule.DEALER_RECEIVE_CRITERIA;
 import static blackjack.domain.Rule.DEALER_NAME;
 import static java.util.stream.Collectors.toMap;
 
@@ -62,9 +62,9 @@ public class Round {
         return gambler.getInitialCards();
     }
 
-    public boolean dealerMustDraw() {
+    public boolean dealerMustReceiveCard() {
         Gambler dealer = findGambler(DEALER_NAME);
-        return dealer.isScoreBelow(DEALER_DRAW_THRESHOLD);
+        return dealer.isScoreBelow(DEALER_RECEIVE_CRITERIA);
     }
 
     public boolean isPlayerBusted(final Name name) {

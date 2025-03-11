@@ -4,7 +4,7 @@ import static blackjack.domain.Rule.DEALER_NAME;
 import static blackjack.view.InputView.inputPlayerHit;
 import static blackjack.view.InputView.inputPlayerName;
 import static blackjack.view.OutputView.printBusted;
-import static blackjack.view.OutputView.printDealerDraw;
+import static blackjack.view.OutputView.printDealerReceiveCard;
 import static blackjack.view.OutputView.printGamblerCards;
 import static blackjack.view.OutputView.printGamblerResult;
 import static blackjack.view.OutputView.printInitialDistributionPrompt;
@@ -66,9 +66,9 @@ public class Application {
     }
 
     private static void processDealerTurn(final Round round) {
-        if (round.dealerMustDraw()) {
+        if (round.dealerMustReceiveCard()) {
             round.distributeCards(DEALER_NAME, 1);
-            printDealerDraw();
+            printDealerReceiveCard();
         }
     }
 
