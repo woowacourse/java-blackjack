@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -8,9 +8,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import domain.CardHand;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.paticipant.Dealer;
+import domain.paticipant.Participant;
 
 public class DealerTest {
 	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;

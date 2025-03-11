@@ -1,7 +1,10 @@
-package domain;
+package domain.paticipant;
 
 import java.util.List;
 
+import domain.CardHand;
+import domain.DuelHistory;
+import domain.DuelResult;
 import domain.card.Card;
 
 public class Participant {

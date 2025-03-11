@@ -1,7 +1,8 @@
-package domain;
+package domain.paticipant;
 
 import java.util.List;
 
+import domain.DuelResult;
 import domain.card.Card;
 
 public class Dealer implements PickableCard {

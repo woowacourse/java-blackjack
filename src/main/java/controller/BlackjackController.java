@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import domain.Blackjack;
 import domain.CardHand;
-import domain.Dealer;
 import domain.Deck;
 import domain.DuelHistory;
-import domain.Participant;
-import domain.Player;
 import domain.card.Card;
+import domain.paticipant.Dealer;
+import domain.paticipant.Participant;
+import domain.paticipant.Player;
 import view.InputView;
 import view.OutputView;
 

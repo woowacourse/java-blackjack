@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -12,9 +12,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import domain.CardHand;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.paticipant.Participant;
+import domain.paticipant.Player;
 
 public class PlayerTest {
 	private static final int BUST_SCORE = 21;
