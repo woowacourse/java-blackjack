@@ -1,12 +1,12 @@
 package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.card.CardDeck;
 import domain.card.CardShuffler;
 import java.util.List;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
@@ -17,7 +17,7 @@ public class PlayersTest {
         List<String> playerNames = List.of("aa", "bb", "cc", "dd", "ee");
 
         //when & then
-        assertThatCode(() -> new Players(playerNames))
+        assertThatCode(() -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
                 .doesNotThrowAnyException();
     }
 
@@ -27,7 +27,8 @@ public class PlayersTest {
         List<String> playerNames = List.of("aa", "bb", "cc", "dd", "ee", "ff");
 
         //when & then
-        AssertionsForClassTypes.assertThatThrownBy(() -> new Players(playerNames))
+        assertThatThrownBy(
+                () -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -37,7 +38,7 @@ public class PlayersTest {
         List<String> playerNames = List.of();
 
         //when & then
-        AssertionsForClassTypes.assertThatThrownBy(() -> new Players(playerNames))
+        assertThatThrownBy(() -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -47,7 +48,7 @@ public class PlayersTest {
         List<String> playerNames = List.of("aa", "aa");
 
         //when & then
-        AssertionsForClassTypes.assertThatThrownBy(() -> new Players(playerNames))
+        assertThatThrownBy(() -> new Players(playerNames, CardDeck.createCards(new CardShuffler())))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -55,10 +56,10 @@ public class PlayersTest {
     void 모든_플레이어는_게임_시작_시_카드를_드로우한다() {
         //given
         List<String> playerNames = List.of("aa", "bb");
-        Players players = new Players(playerNames);
+        Players players = new Players(playerNames, CardDeck.createCards(new CardShuffler()));
 
         //when
-        players.drawCardWhenStart(CardDeck.createCards(new CardShuffler()));
+        players.drawCardWhenStart();
 
         //when
         Assertions.assertThat(players.getPlayers().get(0).getCardsCount()).isEqualTo(2);
@@ -69,7 +70,7 @@ public class PlayersTest {
     void 모든_플레이어의_이름을_반환한다() {
         //given
         List<String> playerNames = List.of("aa", "bb");
-        Players players = new Players(playerNames);
+        Players players = new Players(playerNames, CardDeck.createCards(new CardShuffler()));
 
         //when
         List<String> allPlayerNames = players.getAllPlayerNames();

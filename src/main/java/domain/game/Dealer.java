@@ -11,16 +11,16 @@ public class Dealer {
 
     private final Hand hand;
 
-    public Dealer() {
-        this.hand = new Hand();
+    public Dealer(CardDeck cardDeck) {
+        this.hand = new Hand(cardDeck);
     }
 
-    public void drawCardWhenStart(CardDeck cardDeck) {
-        hand.drawCardWhenStart(cardDeck);
+    public void drawCardWhenStart() {
+        hand.drawCardWhenStart();
     }
 
-    public void drawCard(CardDeck cardDeck) {
-        hand.drawCard(cardDeck);
+    public void drawCard() {
+        hand.drawCard();
     }
 
     public List<GameResult> judgeGameResult(List<Player> players) {

@@ -17,10 +17,10 @@ public class PlayerTest {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         String name = "pobi";
-        Player player = new Player(name);
+        Player player = new Player(name, cardDeck);
 
         //when
-        player.drawCardWhenStart(cardDeck);
+        player.drawCardWhenStart();
 
         //then
         assertThat(player.getHand().getCards()).hasSize(2);
@@ -31,10 +31,10 @@ public class PlayerTest {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         String name = "pobi";
-        Player player = new Player(name);
+        Player player = new Player(name, cardDeck);
 
         //when
-        player.drawCard(cardDeck);
+        player.drawCard();
 
         //then
         assertThat(player.getHand().getCards()).hasSize(1);
@@ -43,7 +43,7 @@ public class PlayerTest {
     @Test
     void 플레이어가_보유한_카드의_합계를_구한다() {
         //given
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", CardDeck.createCards(new TestShuffler()));
         Hand hand = player.getHand();
         List<Card> cards = hand.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -56,7 +56,7 @@ public class PlayerTest {
     @Test
     void 플레이어가_보유한_카드의_합계가_21을_넘었는지_판정한다() {
         //given
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", CardDeck.createCards(new TestShuffler()));
         Hand hand = player.getHand();
         List<Card> cards = hand.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));

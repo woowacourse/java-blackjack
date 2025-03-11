@@ -16,10 +16,10 @@ public class HandTest {
     void 카드_덱에서_카드_두_장을_받아온다() {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand();
+        Hand hand = new Hand(cardDeck);
 
         //when
-        hand.drawCardWhenStart(cardDeck);
+        hand.drawCardWhenStart();
 
         //then
         assertThat(hand.getCards()).hasSize(2);
@@ -29,10 +29,10 @@ public class HandTest {
     void 카드_덱에서_카드_한_장을_받아온다() {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Hand hand = new Hand();
+        Hand hand = new Hand(cardDeck);
 
         //when
-        hand.drawCard(cardDeck);
+        hand.drawCard();
 
         //then
         assertThat(hand.getCards()).hasSize(1);
@@ -41,7 +41,8 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계를_계산한다() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -57,7 +58,8 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계를_계산한다_ace를_11로_판단() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -72,7 +74,8 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계를_계산한다_ace를_1로_판단() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -88,7 +91,8 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계를_계산한다_21초과해도_ace를_1로_판단() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -105,7 +109,8 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21초과_케이스() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -118,7 +123,8 @@ public class HandTest {
     @Test
     void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21이하_케이스() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.NINE));
@@ -131,7 +137,8 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_11로_처리() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -143,7 +150,8 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_1로_처리하면_통과() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -156,7 +164,8 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_1로_처리해도_버스트() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -170,7 +179,8 @@ public class HandTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace_4개_케이스() {
         //given
-        Hand hand = new Hand();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Hand hand = new Hand(cardDeck);
         List<Card> drawnCards = hand.getCards();
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));

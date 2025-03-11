@@ -17,10 +17,10 @@ public class DealerTest {
     void 딜러는_게임_시작_시_두_장의_카드를_받는다() {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(cardDeck);
 
         //when
-        dealer.drawCardWhenStart(cardDeck);
+        dealer.drawCardWhenStart();
 
         //then
         assertThat(dealer.getHand().getCards()).hasSize(2);
@@ -29,7 +29,8 @@ public class DealerTest {
     @Test
     void 딜러는_게임_시작_시_한_장의_카드를_공개한다() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand hand = dealer.getHand();
         List<Card> cards = hand.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -45,10 +46,10 @@ public class DealerTest {
     void 딜러는_한_장의_카드를_받는다() {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(cardDeck);
 
         //when
-        dealer.drawCard(cardDeck);
+        dealer.drawCard();
 
         //then
         assertThat(dealer.getHand().getCards()).hasSize(1);
@@ -57,7 +58,8 @@ public class DealerTest {
     @Test
     void 딜러가_보유한_카드의_합계를_구한다() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand hand = dealer.getHand();
         List<Card> cards = hand.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -70,7 +72,8 @@ public class DealerTest {
     @Test
     void 딜러가_보유한_카드의_합계가_21을_넘었는지_판정한다() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand hand = dealer.getHand();
         List<Card> cards = hand.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -83,7 +86,8 @@ public class DealerTest {
     @Test
     void 딜러가_보유한_카드의_합계가_16을_넘었는지_판정한다() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand hand = dealer.getHand();
         List<Card> cards = hand.getCards();
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -96,13 +100,14 @@ public class DealerTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand dealerHand = dealer.getHand();
         List<Card> dealerCards = dealerHand.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.SEVEN));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", cardDeck);
         Hand playerHand = player.getHand();
         List<Card> playerCards = playerHand.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -118,14 +123,15 @@ public class DealerTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand dealerHand = dealer.getHand();
         List<Card> dealerCards = dealerHand.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", cardDeck);
         Hand playerHand = player.getHand();
         List<Card> playerCards = playerHand.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -142,14 +148,15 @@ public class DealerTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand dealerHand = dealer.getHand();
         List<Card> dealerCards = dealerHand.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.HEART, CardNumber.TEN));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", cardDeck);
         Hand playerHand = player.getHand();
         List<Card> playerCards = playerHand.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -165,13 +172,14 @@ public class DealerTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand dealerHand = dealer.getHand();
         List<Card> dealerCards = dealerHand.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", cardDeck);
         Hand playerHand = player.getHand();
         List<Card> playerCards = playerHand.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -187,13 +195,14 @@ public class DealerTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand dealerHand = dealer.getHand();
         List<Card> dealerCards = dealerHand.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", cardDeck);
         Hand playerHand = player.getHand();
         List<Card> playerCards = playerHand.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.EIGHT));
@@ -210,14 +219,15 @@ public class DealerTest {
     @Test
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
         //given
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        Dealer dealer = new Dealer(cardDeck);
         Hand dealerHand = dealer.getHand();
         List<Card> dealerCards = dealerHand.getCards();
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.EIGHT));
         dealerCards.add(new Card(Pattern.SPADE, CardNumber.TWO));
         dealerCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", cardDeck);
         Hand playerHand = player.getHand();
         List<Card> playerCards = playerHand.getCards();
         playerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));

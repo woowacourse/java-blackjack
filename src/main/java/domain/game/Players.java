@@ -11,11 +11,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
+    public Players(List<String> playerNames, CardDeck cardDeck) {
         validatePlayerCount(playerNames);
         validateDuplicatePlayerName(playerNames);
         this.players = playerNames.stream()
-                .map(Player::new)
+                .map(playerName -> new Player(playerName, cardDeck))
                 .toList();
     }
 
@@ -31,9 +31,9 @@ public class Players {
             throw new IllegalArgumentException("[ERROR] 중복된 플레이어 이름입니다.");
         }
     }
-
-    public void drawCardWhenStart(CardDeck cardDeck) {
-        players.forEach(player -> player.drawCardWhenStart(cardDeck));
+    
+    public void drawCardWhenStart() {
+        players.forEach(Player::drawCardWhenStart);
     }
 
     public List<Player> getPlayers() {

@@ -7,17 +7,17 @@ public class Player {
     private final String name;
     private final Hand hand;
 
-    public Player(String name) {
+    public Player(String name, CardDeck cardDeck) {
         this.name = name;
-        this.hand = new Hand();
+        this.hand = new Hand(cardDeck);
     }
 
-    public void drawCardWhenStart(CardDeck cardDeck) {
-        hand.drawCardWhenStart(cardDeck);
+    public void drawCardWhenStart() {
+        hand.drawCardWhenStart();
     }
 
-    public void drawCard(CardDeck cardDeck) {
-        hand.drawCard(cardDeck);
+    public void drawCard() {
+        hand.drawCard();
     }
 
     public int getCardsCount() {

@@ -22,44 +22,44 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<String> playerNames = inputView.readPlayerNames();
-        Players players = new Players(playerNames);
-        Dealer dealer = new Dealer();
-
         CardShuffler cardShuffler = new CardShuffler();
         CardDeck cardDeck = CardDeck.createCards(cardShuffler);
 
-        startBlackJack(cardDeck, players, dealer);
-        playBlackJack(cardDeck, players, dealer);
+        List<String> playerNames = inputView.readPlayerNames();
+        Players players = new Players(playerNames, cardDeck);
+        Dealer dealer = new Dealer(cardDeck);
+
+        startBlackJack(players, dealer);
+        playBlackJack(players, dealer);
         judgeGameResult(players, dealer);
     }
 
-    private void startBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
-        players.drawCardWhenStart(cardDeck);
-        dealer.drawCardWhenStart(cardDeck);
+    private void startBlackJack(Players players, Dealer dealer) {
+        players.drawCardWhenStart();
+        dealer.drawCardWhenStart();
         Card dealerCard = dealer.getSingleCard();
 
         outputView.printInitialGame(dealerCard, players.getPlayers());
     }
 
-    private void playBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
+    private void playBlackJack(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            decidePlayerHitOrStand(cardDeck, player);
+            decidePlayerHitOrStand(player);
         }
-        decideDealerHitOrStand(cardDeck, dealer);
+        decideDealerHitOrStand(dealer);
         outputView.printGameResult(dealer, players);
     }
 
-    private void decidePlayerHitOrStand(CardDeck cardDeck, Player player) {
+    private void decidePlayerHitOrStand(Player player) {
         while (!player.isOverBustBound() && inputView.readDrawMoreCard(player)) {
-            player.drawCard(cardDeck);
+            player.drawCard();
             outputView.printPlayerCard(player);
         }
     }
 
-    private void decideDealerHitOrStand(CardDeck cardDeck, Dealer dealer) {
+    private void decideDealerHitOrStand(Dealer dealer) {
         while (!dealer.isOverBustBound() && !dealer.isOverDrawBound()) {
-            dealer.drawCard(cardDeck);
+            dealer.drawCard();
             outputView.printDealerDrawMessage();
         }
     }

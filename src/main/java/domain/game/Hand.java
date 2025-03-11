@@ -11,17 +11,19 @@ public class Hand {
     public static final int BUST_BOUND = 21;
 
     private final List<Card> cards;
+    private final CardDeck cardDeck;
 
-    public Hand() {
+    public Hand(CardDeck cardDeck) {
         this.cards = new ArrayList<>();
+        this.cardDeck = cardDeck;
     }
 
-    public void drawCardWhenStart(CardDeck cardDeck) {
+    public void drawCardWhenStart() {
         List<Card> drawnCard = cardDeck.drawCardWhenStart();
         cards.addAll(drawnCard);
     }
 
-    public void drawCard(CardDeck cardDeck) {
+    public void drawCard() {
         Card drawnCard = cardDeck.drawCard();
         cards.add(drawnCard);
     }
