@@ -40,13 +40,8 @@ public class BlackjackManager {
     private void addMorCardsToUser(Player user,
                                    Function<String, Boolean> wantMoreCard,
                                    BiConsumer<String, List<Card>> callback) {
-        boolean isContinued = wantMoreCard.apply(user.getName());
-        while (!user.isBust() && isContinued) {
+        while (!user.isBust() && wantMoreCard.apply(user.getName())) {
             user.drawOneCard(deck);
-            callback.accept(user.getName(), user.getCards());
-            isContinued = wantMoreCard.apply(user.getName());
-        }
-        if (!user.isBust() && !isContinued) {
             callback.accept(user.getName(), user.getCards());
         }
     }
