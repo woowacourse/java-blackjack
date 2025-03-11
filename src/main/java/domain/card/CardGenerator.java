@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.List;
+
 public interface CardGenerator {
-    Card generate();
+    List<Card> generate();
 }
