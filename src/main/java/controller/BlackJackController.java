@@ -68,7 +68,7 @@ public class BlackJackController {
     }
 
     private void judgeGameResult(Players players, Dealer dealer) {
-        List<GameResult> gameResults = dealer.judgeGameResult(players.getPlayers());
+        List<GameResult> gameResults = players.judgeGameResult(dealer);
         List<String> playerNames = players.getAllPlayerNames();
 
         int winCount = GameResult.WIN.countGameResult(gameResults);

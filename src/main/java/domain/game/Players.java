@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.card.CardDeck;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,14 @@ public class Players {
         }
     }
 
+    public List<GameResult> judgeGameResult(Dealer dealer) {
+        List<GameResult> gameResults = new ArrayList<>();
+        for (Player player : players) {
+            gameResults.add(GameResult.of(dealer, player));
+        }
+        return gameResults;
+    }
+
     public void drawCard(int drawCount) {
         players.forEach(player -> player.drawCard(drawCount));
     }
@@ -45,4 +54,5 @@ public class Players {
                 .map(Player::getName)
                 .toList();
     }
+
 }
