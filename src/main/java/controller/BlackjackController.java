@@ -2,12 +2,11 @@ package controller;
 
 import java.util.List;
 import java.util.Map;
-import model.BettingResult;
+import model.result.BettingResult;
 import model.BlackjackGame;
 import model.participant.Dealer;
-import model.card.Deck;
 import model.participant.Player;
-import model.ParticipantWinningResult;
+import model.result.ParticipantWinningResult;
 import model.participant.Players;
 import view.InputView;
 import view.OutputView;

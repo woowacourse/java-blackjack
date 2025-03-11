@@ -1,7 +1,6 @@
-package model;
+package model.result;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import model.participant.Player;
 import model.participant.Players;
 

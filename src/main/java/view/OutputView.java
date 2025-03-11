@@ -2,12 +2,10 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import model.BettingResult;
+import model.result.BettingResult;
 import model.card.Card;
 import model.participant.Dealer;
-import model.GameResult;
 import model.participant.Player;
-import model.ParticipantWinningResult;
 import model.participant.Players;
 
 public class OutputView {
