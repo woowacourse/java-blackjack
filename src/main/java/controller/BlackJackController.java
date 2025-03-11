@@ -58,7 +58,11 @@ public class BlackJackController {
     }
 
     private boolean playerCanHit(Player player) {
-        return inputView.readOneMoreCardResponse(player.getNickname()).equals(HIT_COMMAND) & !player.isBust();
+        String playerResponse = inputView.readOneMoreCardResponse(player.getNickname());
+        boolean wantsToHit = playerResponse.equals(HIT_COMMAND);
+        boolean notBust = !player.isBust();
+
+        return wantsToHit & notBust;
     }
 
     private void determineDealerAdditionalCard(Dealer dealer, Deck deck) {
