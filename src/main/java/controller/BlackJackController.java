@@ -56,6 +56,7 @@ public class BlackJackController {
         game.determineNextTurnPlayer();
         while (game.isInProgress()) {
             if (inputView.readYesOrNo(game.getThisTurnPlayer()).isNo()) {
+                outputView.printPlayerCards(game.getThisTurnPlayer());
                 game.skipThisTurn();
                 continue;
             }
