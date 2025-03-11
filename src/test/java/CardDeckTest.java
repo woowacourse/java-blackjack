@@ -1,5 +1,5 @@
 import domain.CardHand;
-import domain.CardNumber;
+import domain.CardRank;
 import domain.CardDeck;
 import domain.CardShape;
 import domain.TrumpCard;
@@ -49,9 +49,9 @@ public class CardDeckTest {
     @Test
     void test4() {
         //given
-        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardNumber.K);
-        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardNumber.J);
-        TrumpCard trumpCard3 = new TrumpCard(CardShape.CLOVER, CardNumber.FIVE);
+        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardRank.K);
+        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardRank.J);
+        TrumpCard trumpCard3 = new TrumpCard(CardShape.CLOVER, CardRank.FIVE);
         CardHand cardDeck = new CardHand();
 
         cardDeck.addTrumpCard(trumpCard1);
@@ -83,16 +83,16 @@ public class CardDeckTest {
     private static Stream<Arguments> hasAce() {
         return Stream.of(
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
-                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), false),
+                        new TrumpCard(CardShape.DIA, CardRank.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardRank.ACE),
+                        new TrumpCard(CardShape.HEART, CardRank.ACE)), false),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardNumber.K),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.J),
-                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), false),
+                        new TrumpCard(CardShape.DIA, CardRank.K),
+                        new TrumpCard(CardShape.CLOVER, CardRank.J),
+                        new TrumpCard(CardShape.HEART, CardRank.ACE)), false),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), false)
+                        new TrumpCard(CardShape.DIA, CardRank.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), false)
         );
     }
 
@@ -116,23 +116,23 @@ public class CardDeckTest {
     private static Stream<Arguments> cardDeck() {
         return Stream.of(
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
-                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), 13),
+                        new TrumpCard(CardShape.DIA, CardRank.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardRank.ACE),
+                        new TrumpCard(CardShape.HEART, CardRank.ACE)), 13),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardNumber.K),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.J),
-                        new TrumpCard(CardShape.HEART, CardNumber.ACE)), 21),
+                        new TrumpCard(CardShape.DIA, CardRank.K),
+                        new TrumpCard(CardShape.CLOVER, CardRank.J),
+                        new TrumpCard(CardShape.HEART, CardRank.ACE)), 21),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.HEART, CardNumber.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), 21),
+                        new TrumpCard(CardShape.HEART, CardRank.ACE),
+                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), 21),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardNumber.J),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), 20),
+                        new TrumpCard(CardShape.DIA, CardRank.J),
+                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), 20),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.SPADE, CardNumber.K),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.J),
-                        new TrumpCard(CardShape.CLOVER, CardNumber.Q)), 30)
+                        new TrumpCard(CardShape.SPADE, CardRank.K),
+                        new TrumpCard(CardShape.CLOVER, CardRank.J),
+                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), 30)
         );
     }
 
@@ -140,8 +140,8 @@ public class CardDeckTest {
     @Test
     void test7() {
         // given
-        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardNumber.ACE);
-        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardNumber.J);
+        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardRank.ACE);
+        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardRank.J);
         CardHand cardDeck = new CardHand();
 
         cardDeck.addTrumpCard(trumpCard1);

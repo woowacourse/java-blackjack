@@ -1,7 +1,7 @@
 import static org.assertj.core.api.Assertions.*;
 
 import domain.CardDeck;
-import domain.CardNumber;
+import domain.CardRank;
 import domain.CardShape;
 import domain.GameResult;
 import domain.TrumpCard;
@@ -82,11 +82,11 @@ public class GameManagerTest {
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
-        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.ACE));
-        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.NINE));
+        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardRank.ACE));
+        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardRank.NINE));
 
-        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.THREE));
-        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.TWO));
+        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardRank.THREE));
+        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardRank.TWO));
 
         //when
         Map<User, GameResult> gameResult = gameManger.createGameResult();
@@ -122,30 +122,30 @@ public class GameManagerTest {
         return Stream.of(
                 Arguments.arguments(
                         List.of(
-                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                                new TrumpCard(CardShape.DIA, CardRank.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J)),
                         List.of(
-                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                                new TrumpCard(CardShape.DIA, CardRank.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J)),
                         GameResult.DRAW),
                 Arguments.arguments(
                         List.of(
-                                new TrumpCard(CardShape.DIA, CardNumber.FIVE),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.SIX),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                                new TrumpCard(CardShape.DIA, CardRank.FIVE),
+                                new TrumpCard(CardShape.CLOVER, CardRank.SIX),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J)),
                         List.of(
-                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                                new TrumpCard(CardShape.DIA, CardRank.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J)),
                         GameResult.LOSE),
                 Arguments.arguments(
                         List.of(
-                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                                new TrumpCard(CardShape.DIA, CardRank.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J)),
                         List.of(
-                                new TrumpCard(CardShape.DIA, CardNumber.ACE),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J),
-                                new TrumpCard(CardShape.CLOVER, CardNumber.J)),
+                                new TrumpCard(CardShape.DIA, CardRank.ACE),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J),
+                                new TrumpCard(CardShape.CLOVER, CardRank.J)),
                         GameResult.DRAW)
         );
     }
@@ -156,13 +156,13 @@ public class GameManagerTest {
         // given
         GameManger gameManger = new GameManger(List.of("유저"), new Dealer(), new CardDeck());
         User user = gameManger.findUserByUsername("유저");
-        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
+        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
+        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
 
-        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
-        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.K));
+        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
+        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.Q));
 
         // when
         Map<User, GameResult> gameResult = gameManger.createGameResult();

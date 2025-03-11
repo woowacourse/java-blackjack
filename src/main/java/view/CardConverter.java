@@ -1,13 +1,13 @@
 package view;
 
-import domain.CardNumber;
+import domain.CardRank;
 import domain.CardShape;
 
 public class CardConverter {
     private CardConverter() {
     }
 
-    public static String createTrumpCard(CardShape cardShape, CardNumber cardNumber) {
+    public static String createTrumpCard(CardShape cardShape, CardRank cardNumber) {
         return numberToText(cardNumber) + shapeToText(cardShape);
     }
 
@@ -24,7 +24,7 @@ public class CardConverter {
         return "하트";
     }
 
-    private static String numberToText(CardNumber cardNumber) {
+    private static String numberToText(CardRank cardNumber) {
         return cardNumber.getDisplayName();
     }
 }
