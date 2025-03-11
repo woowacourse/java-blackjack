@@ -23,7 +23,7 @@ public abstract class Gamer {
     }
 
     public void addFrom(CardDeck deck) {
-        hand.add(deck.extractCard());
+        hand.add(deck.drawCard());
     }
 
     public Hand getHand() {

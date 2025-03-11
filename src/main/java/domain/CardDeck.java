@@ -9,7 +9,7 @@ public class CardDeck {
         this.cards = cardsInitializer.initialize();
     }
 
-    public Card extractCard() {
+    public Card drawCard() {
         return cards.removeLast();
     }
 

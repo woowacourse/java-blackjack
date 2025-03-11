@@ -6,11 +6,6 @@ public class Player extends Gamer {
         super(name);
     }
 
-    public void prepareGame(CardDeck deck) {
-        hit(deck);
-        hit(deck);
-    }
-
     @Override
     public boolean canHit() {
         return !isBurst();
