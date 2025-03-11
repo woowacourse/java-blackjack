@@ -94,16 +94,10 @@ public class BlackjackController {
     }
 
     private void handleAskDraw(String name, BlackjackGame blackjackGame) {
-        boolean isDraw = handleAskDraw(name);
-        if (!isDraw) {
-            return;
+        while (!blackjackGame.isBust(name) && handleAskDrawToUser(name)) {
+            blackjackGame.drawCard(name);
+            openPlayerCards(name, blackjackGame);
         }
-        blackjackGame.drawCard(name);
-        openPlayerCards(name, blackjackGame);
-        if (blackjackGame.isBust(name)) {
-            return;
-        }
-        handleAskDraw(name, blackjackGame);
     }
 
     private void openPlayerCards(String name, BlackjackGame blackjackGame) {
@@ -111,7 +105,7 @@ public class BlackjackController {
         openPlayerCard(cardHands, name);
     }
 
-    private boolean handleAskDraw(String name) {
+    private boolean handleAskDrawToUser(String name) {
         return handleInput(() -> {
             outputView.askDraw(name);
             return inputView.askDraw();
