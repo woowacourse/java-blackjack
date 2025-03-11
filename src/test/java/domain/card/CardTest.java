@@ -74,4 +74,14 @@ public class CardTest {
             assertThat(clubAce.getValue()).isEqualTo(1);
         }
     }
+
+    @Test
+    @DisplayName("카드의 고유 숫자값을 0으로 바꿀 수 있다.")
+    public void test3() {
+        Card clubAce = new Card(ACE, CLUB);
+
+        clubAce.setValueToZero();
+
+        assertThat(clubAce.getValue()).isEqualTo(0);
+    }
 }
