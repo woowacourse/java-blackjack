@@ -18,6 +18,7 @@ public class BlackjackController {
 
     private static final String YES = "y";
     private static final String NO = "n";
+
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -37,14 +38,18 @@ public class BlackjackController {
         showWinningResult(blackjackGame);
     }
 
-    private void showWinningResult(final BlackjackGame blackjackGame) {
-        final Map<String, ResultStatus> result = blackjackGame.calculateWinningResult();
-        resultView.showWinningResult(result);
+    private Participants makeParticipants() {
+        final Dealer dealer = Dealer.createEmpty();
+        final Players players = makePlayers();
+        return new Participants(dealer, players);
     }
 
-    private void spreadExtraCards(final BlackjackGame blackjackGame) {
-        spreadPlayersExtraCards(blackjackGame);
-        spreadDealerExtraCards(blackjackGame);
+    private Players makePlayers() {
+        String names = inputView.readNames();
+        List<String> parsedNames = StringParser.parseByComma(names);
+        return new Players(parsedNames.stream()
+                .map(Player::createEmpty)
+                .toList());
     }
 
     private void spreadInitialCards(final BlackjackGame blackjackGame, final Participants participants) {
@@ -52,11 +57,9 @@ public class BlackjackController {
         resultView.printSpreadCard(participants);
     }
 
-    private void spreadDealerExtraCards(final BlackjackGame blackjackGame) {
-        while (blackjackGame.canDealerMoreCard()) {
-            blackjackGame.spreadOneCardToDealer();
-            resultView.printDealerExtraCard();
-        }
+    private void spreadExtraCards(final BlackjackGame blackjackGame) {
+        spreadPlayersExtraCards(blackjackGame);
+        spreadDealerExtraCards(blackjackGame);
     }
 
     private void spreadPlayersExtraCards(final BlackjackGame blackjackGame) {
@@ -73,12 +76,6 @@ public class BlackjackController {
         }
     }
 
-    private Participants makeParticipants() {
-        final Dealer dealer = Dealer.createEmpty();
-        final Players players = makePlayers();
-        return new Participants(dealer, players);
-    }
-
     private boolean isMoreCard(final Player player) {
         String answer = inputView.askMoreCard(player);
         if (isValidAnswer(answer)) {
@@ -88,15 +85,19 @@ public class BlackjackController {
         return isMoreCard(player);
     }
 
-    private Players makePlayers() {
-        String names = inputView.readNames();
-        List<String> parsedNames = StringParser.parseByComma(names);
-        return new Players(parsedNames.stream()
-                .map(Player::createEmpty)
-                .toList());
-    }
-
     private boolean isValidAnswer(final String answer) {
         return answer.equals(YES) || answer.equals(NO);
+    }
+
+    private void spreadDealerExtraCards(final BlackjackGame blackjackGame) {
+        while (blackjackGame.canDealerMoreCard()) {
+            blackjackGame.spreadOneCardToDealer();
+            resultView.printDealerExtraCard();
+        }
+    }
+
+    private void showWinningResult(final BlackjackGame blackjackGame) {
+        final Map<String, ResultStatus> result = blackjackGame.calculateWinningResult();
+        resultView.showWinningResult(result);
     }
 }

@@ -2,11 +2,13 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.Collections;
 import java.util.List;
 
 public class Participants {
 
     private static final int DEALER_COUNT = 1;
+    private static final int SPREAD_MULTIPLY_SIZE = 2;
 
     private final Dealer dealer;
     private final Players players;
@@ -17,7 +19,7 @@ public class Participants {
     }
 
     public void spreadAllTwoCards(final Cards cards) {
-        final int size = 2;
+        final int size = SPREAD_MULTIPLY_SIZE;
         dealer.receiveCards(cards.getPartialCards(0, size));
         players.receiveCards(cards.getPartialCards(size, cards.getSize()), size);
     }
@@ -36,24 +38,24 @@ public class Participants {
         spreadOneCard(dealer, card);
     }
 
-    private void spreadOneCard(final Gamer gamer, final Card card) {
-        gamer.receiveCards(new Cards(List.of(card)));
-    }
-
     public boolean canDealerGetMoreCard() {
         return dealer.canGetMoreCard();
-    }
-
-    public int getParticipantSize() {
-        return DEALER_COUNT + players.getSize();
     }
 
     public int calculateDealerMaxSum() {
         return dealer.calculateMaxSum();
     }
 
+    private void spreadOneCard(final Gamer gamer, final Card card) {
+        gamer.receiveCards(new Cards(List.of(card)));
+    }
+
+    public int getInitialTotalCardsSize() {
+        return (DEALER_COUNT + players.getSize()) * SPREAD_MULTIPLY_SIZE;
+    }
+
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return Collections.unmodifiableList(players.getPlayers());
     }
 
     public Dealer getDealer() {

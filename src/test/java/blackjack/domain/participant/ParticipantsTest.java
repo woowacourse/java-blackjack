@@ -44,13 +44,13 @@ class ParticipantsTest {
         );
     }
 
-    @DisplayName("참가자 수를 계산한다.")
+    @DisplayName("초기에 나눠주는 카드 수를 계산한다.")
     @Test
     void calculateParticipantsSize() {
         // given
 
         // when & then
-        assertThat(participants.getParticipantSize()).isEqualTo(3);
+        assertThat(participants.getInitialTotalCardsSize()).isEqualTo(6);
     }
 
     @DisplayName("플레이어가 카드를 더 얻을 수 있으면 true를 반환한다.")

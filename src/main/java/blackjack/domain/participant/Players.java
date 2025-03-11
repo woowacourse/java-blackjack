@@ -15,23 +15,23 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
+    public void receiveCards(final Cards cards, final int count) {
+        for (int i = 0; i < players.size(); i++) {
+            final Player player = players.get(i);
+            player.receiveCards(cards.getPartialCards(i * count, (i + 1) * count));
+        }
+    }
+
     private void validate(List<Player> players) {
         if (isDuplicate(players)) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름을 입력했습니다.");
         }
     }
 
-    private static boolean isDuplicate(List<Player> players) {
+    private boolean isDuplicate(List<Player> players) {
         return players.size() != players.stream()
                 .distinct()
                 .count();
-    }
-
-    public void receiveCards(final Cards cards, final int count) {
-        for (int i = 0; i < players.size(); i++) {
-            final Player player = players.get(i);
-            player.receiveCards(cards.getPartialCards(i * count, (i + 1) * count));
-        }
     }
 
     @Override

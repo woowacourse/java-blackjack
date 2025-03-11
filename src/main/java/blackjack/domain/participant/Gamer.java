@@ -16,15 +16,15 @@ public abstract class Gamer {
 
     public abstract String getNickname();
 
-    public List<Card> showAllCard() {
-        return cards.getCards();
-    }
-
     public void receiveCards(final Cards givenCards) {
         cards.addAll(givenCards);
     }
 
     public int calculateMaxSum() {
         return cards.calculateResult();
+    }
+
+    public List<Card> showAllCard() {
+        return cards.getCards();
     }
 }

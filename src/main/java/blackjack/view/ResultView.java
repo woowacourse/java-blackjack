@@ -98,15 +98,15 @@ public class ResultView {
         showResultStatus(result);
     }
 
+    public void showln(final String line) {
+        System.out.println(line);
+    }
+
     private void showResultStatus(final Map<String, ResultStatus> result) {
         for (Entry<String, ResultStatus> entry : result.entrySet()) {
             System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey(),
                     getResultStatusName(entry.getValue()));
         }
-    }
-
-    public void showln(final String line) {
-        System.out.println(line);
     }
 
     private int countResultStatus(final Map<String, ResultStatus> result, final ResultStatus input) {

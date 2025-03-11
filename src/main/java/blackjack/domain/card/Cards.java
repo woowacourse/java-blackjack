@@ -24,14 +24,6 @@ public class Cards {
         return subtractAce(sum);
     }
 
-    private int subtractAce(int sum) {
-        int aceCount = countAce(cards);
-        while (!isUnderThreshold(sum) && aceCount-- > 0) {
-            sum -= ACE_SUBTRACT;
-        }
-        return sum;
-    }
-
     public int calculateMinSum() {
         return cards.stream()
                 .mapToInt(Card::getCardMinNumber)
@@ -42,20 +34,28 @@ public class Cards {
         cards.addAll(givenCards.getCards());
     }
 
+    private int calculateMaxSum(final List<Card> cards) {
+        return cards.stream()
+                .mapToInt(Card::getCardMaxNumber)
+                .sum();
+    }
+
     private boolean isUnderThreshold(final int sum) {
         return sum <= BLACKJACK_NUMBER;
+    }
+
+    private int subtractAce(int sum) {
+        int aceCount = countAce(cards);
+        while (!isUnderThreshold(sum) && aceCount-- > 0) {
+            sum -= ACE_SUBTRACT;
+        }
+        return sum;
     }
 
     private int countAce(final List<Card> cards) {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    private int calculateMaxSum(final List<Card> cards) {
-        return cards.stream()
-                .mapToInt(Card::getCardMaxNumber)
-                .sum();
     }
 
     @Override
@@ -71,19 +71,19 @@ public class Cards {
         return Objects.hashCode(cards);
     }
 
-    public Card getFirstCard() {
-        return cards.getFirst();
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public Cards getPartialCards(int start, int end) {
         return new Cards(cards.subList(start, end));
     }
 
-    public int getSize() {
-        return cards.size();
+    public Card getFirstCard() {
+        return cards.getFirst();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public int getSize() {
+        return cards.size();
     }
 }
