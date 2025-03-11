@@ -12,6 +12,7 @@ import blackjack.view.GameView;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Supplier;
 
 public class BlackjackController {
 
@@ -24,7 +25,7 @@ public class BlackjackController {
     }
 
     public void start() {
-        BlackjackGame blackjackGame = enterParticipants();
+        BlackjackGame blackjackGame = handleCreateBlackjackGameError(this::enterParticipants);
 
         distributeInitialCards(blackjackGame);
         distributeAdditionalCards(blackjackGame);
@@ -93,6 +94,15 @@ public class BlackjackController {
         gameView.printDealerResult(dealerResult);
         for (Entry<Player, GameResult> playerResult : playerResults.entrySet()) {
             gameView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
+        }
+    }
+
+    private BlackjackGame handleCreateBlackjackGameError(final Supplier<BlackjackGame> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            gameView.printErrorMessage(e);
+            return enterParticipants();
         }
     }
 
