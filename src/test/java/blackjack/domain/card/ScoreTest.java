@@ -18,7 +18,7 @@ public class ScoreTest {
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
-        Score score = new Score(cards);
+        Score score = new Score(new Cards(cards));
 
         //when
         int scoreResult = score.calculateMaxScore();
@@ -40,7 +40,7 @@ public class ScoreTest {
                 new Card(Suit.DIAMOND, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
-        Score score = new Score(cards);
+        Score score = new Score(new Cards(cards));
 
         //when
         int scoreResult = score.calculateMaxScore();

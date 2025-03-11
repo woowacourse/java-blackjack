@@ -7,13 +7,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cards {
-    private static final int BUST_THRESHOLD = 21;
     private final List<Card> cards;
     private final Score score;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
-        this.score = new Score(cards);
+        this.score = new Score(this);
     }
 
     public int calculateMaxScore() {
@@ -37,15 +36,19 @@ public class Cards {
     }
 
     public void additionalTake(Card card) {
-        int minScore = score.calculateMaxScore();
-        if (minScore >= BUST_THRESHOLD) {
-            throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
-        }
-        this.cards.add(card);
+        score.additionalTake(card);
     }
 
     public int getSize() {
         return cards.size();
+    }
+
+    public Card getCard(int index) {
+        return cards.get(index);
+    }
+
+    public void add(Card card) {
+        cards.add(card);
     }
 
     @Override
