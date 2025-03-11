@@ -20,7 +20,7 @@ public class RandomCardGenerator implements CardGenerator {
     }
 
     @Override
-    public Card peekRandomCard() {
+    public Card peekCard() {
         try {
             return cardTypes.removeFirst();
         } catch (NoSuchElementException e) {
