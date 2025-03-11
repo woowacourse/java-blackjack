@@ -4,9 +4,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.List;
-import java.util.SequencedCollection;
-import java.util.Stack;
 
 public class Deck {
 
@@ -38,10 +35,6 @@ public class Deck {
     }
 
     private void createDeckCards(Suit suit, Denomination denomination) {
-        if (denomination.equals(Denomination.ACE)) {
-            deck.add(new Ace(suit));
-            return;
-        }
         deck.add(new Card(denomination, suit));
     }
 

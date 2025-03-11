@@ -25,21 +25,21 @@ public class Hand {
     }
 
     public void setOriginalAceValueToOne() {
-        Ace originalAce = (Ace) cards.stream()
+        Card originalAce = cards.stream()
                 .filter(originalAcePredicate())
                 .findFirst()
                 .orElseThrow();
         originalAce.setValueToOne();
     }
 
+    public boolean isBust() {
+        return getTotal() > BUST_THRESHOLD;
+    }
+
     public void setAllCardValueToZero() {
         for (Card card : cards) {
             card.setValueToZero();
         }
-    }
-
-    public boolean isBust() {
-        return getTotal() > BUST_THRESHOLD;
     }
 
     private Predicate<Card> originalAcePredicate() {

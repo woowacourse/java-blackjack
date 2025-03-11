@@ -1,15 +1,13 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
-import domain.card.Ace;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
 
@@ -54,7 +52,7 @@ class ParticipantTest {
             // when
             player.addCard(new Card(Denomination.TEN, Suit.CLUB));
             player.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            player.addCard(new Ace(Suit.CLUB));
+            player.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -68,8 +66,8 @@ class ParticipantTest {
 
             // when
             player.addCard(new Card(Denomination.TEN, Suit.CLUB));
-            player.addCard(new Ace(Suit.DIAMOND));
-            player.addCard(new Ace(Suit.CLUB));
+            player.addCard(new Card(Denomination.ACE, Suit.DIAMOND));
+            player.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -84,8 +82,8 @@ class ParticipantTest {
             // when
             player.addCard(new Card(Denomination.TEN, Suit.CLUB));
             player.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
-            player.addCard(new Ace(Suit.DIAMOND));
-            player.addCard(new Ace(Suit.CLUB));
+            player.addCard(new Card(Denomination.ACE, Suit.DIAMOND));
+            player.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
             // then
             assertThat(player.resolveBust()).isFalse();

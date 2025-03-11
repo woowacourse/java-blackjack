@@ -65,7 +65,7 @@ public class CardTest {
         @DisplayName("ACE는 고유의 숫자값을 1로 바꿀 수 있다.")
         public void test2() {
             // given
-            Ace clubAce = new Ace(CLUB);
+            Card clubAce = new Card(ACE, CLUB);
 
             // when
             clubAce.setValueToOne();

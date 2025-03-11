@@ -1,11 +1,11 @@
 package domain.card;
 
-import static domain.card.Denomination.ACE;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static domain.card.Denomination.ACE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
 
@@ -41,7 +41,7 @@ public class HandTest {
 
             hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
             hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
-            hand.addCard(new Ace(Suit.CLUB));
+            hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
             assertThat(hand.containsOriginalAce()).isTrue();
         }
@@ -63,7 +63,7 @@ public class HandTest {
             Hand hand = new Hand();
 
             hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            hand.addCard(new Ace(Suit.CLUB));
+            hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
             hand.setOriginalAceValueToOne();
 
@@ -77,7 +77,7 @@ public class HandTest {
         Hand hand = new Hand();
 
         hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-        hand.addCard(new Ace(Suit.CLUB));
+        hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
         assertThat(hand.isBust()).isFalse();
     }
