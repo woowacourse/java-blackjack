@@ -23,7 +23,7 @@ class UserTest {
             user.drawCard(gameManger.handOutCard());
 
             // when
-            List<TrumpCard> cards = user.openCard();
+            List<TrumpCard> cards = user.openInitialCard();
 
             // then
             Assertions.assertThat(cards).hasSize(2);
@@ -39,7 +39,7 @@ class UserTest {
             user.drawCard(gameManger.handOutCard());
 
             // when
-            List<TrumpCard> cards = user.openCard();
+            List<TrumpCard> cards = user.openInitialCard();
 
             // then
             Assertions.assertThat(cards).hasSize(1);

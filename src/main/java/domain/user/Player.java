@@ -19,7 +19,7 @@ public class Player extends User {
     }
 
     @Override
-    public List<TrumpCard> openCard() {
+    public List<TrumpCard> openInitialCard() {
         return this.cardHand.getAllCard();
     }
 

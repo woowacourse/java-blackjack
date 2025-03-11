@@ -82,7 +82,7 @@ public class BlackjackController {
     }
 
     private void displayOpenCard(String playerName, User player) {
-        List<String> cards = player.openCard().stream()
+        List<String> cards = player.openInitialCard().stream()
                 .map(card -> CardConverter.createTrumpCard(card.cardShape(), card.cardNumber())).toList();
         outputView.displayOpenCards(playerName, cards);
     }
@@ -103,7 +103,7 @@ public class BlackjackController {
         playerNames.stream()
                 .map(gameManger::findUserByUsername)
                 .toList()
-                .forEach(player -> displayConvertCards(player.getName(), player.openCard(),
+                .forEach(player -> displayConvertCards(player.getName(), player.openInitialCard(),
                         player.getCardHand().calculateScore()));
     }
 

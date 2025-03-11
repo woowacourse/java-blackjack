@@ -13,7 +13,7 @@ public abstract class User {
 
     public abstract boolean isImpossibleDraw();
 
-    public abstract List<TrumpCard> openCard();
+    public abstract List<TrumpCard> openInitialCard();
 
     public abstract String getName();
 
