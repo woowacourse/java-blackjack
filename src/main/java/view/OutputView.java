@@ -52,9 +52,6 @@ public class OutputView {
 
     public void displayAllParticipantsAndCards(List<? extends GameParticipant> gameParticipants) {
         gameParticipants.forEach((participant) -> {
-            List<String> cardNotations = participant.getCards().stream()
-                    .map(Card::getNotation)
-                    .toList();
             displayParticipantAndCards(participant);
             displayEmptyLine();
         });

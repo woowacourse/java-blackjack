@@ -1,14 +1,9 @@
 package domain;
 
-import static domain.Rank.ACE;
-import static domain.Rank.TWO;
-import static domain.Suit.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import fixture.CardFixture;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +11,6 @@ class GameTest {
     private final Deck deck = new Deck();
     private final List<String> playerNames = List.of("pobi", "norang", "haru");
     private final Game game = new Game(playerNames, deck);
-    private final CardHand cardHand = new CardHand(Set.of(CardFixture.of(ACE, CLOVER), CardFixture.of(TWO, CLOVER)));
 
     @Test
     @DisplayName("참여자가 5명이 넘어갈 경우 예외가 발생한다.")
@@ -42,21 +36,21 @@ class GameTest {
 
     @Test
     @DisplayName("참가자에게 카드를 지급할 수 있다.")
-    void testPlayerHit() {
+    void testHitPlayerCard() {
         // given
         List<Player> players = game.getPlayers();
         Player player = players.getFirst();
         // when
-        game.playerHit(player);
+        game.hitPlayerCard(player);
         // then
         assertThat(player.getCards().size()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("딜러에게 카드를 지급할 수 있다.")
-    void testDealerHit() {
+    void testHitDealerCard() {
         // given && when
-        game.dealerHit();
+        game.hitDealerCard();
         // then
         assertThat(game.getDealerCards().size()).isEqualTo(3);
     }

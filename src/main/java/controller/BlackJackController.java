@@ -35,7 +35,7 @@ public class BlackJackController {
     private void giveAdditionalCardsForDealer(Game game) {
         outputView.displayEmptyLine();
         while (game.doesDealerNeedCard()) {
-            game.dealerHit();
+            game.hitDealerCard();
             outputView.displayDealerHitResult();
         }
         outputView.displayEmptyLine();
@@ -62,7 +62,7 @@ public class BlackJackController {
 
     private void playerHitByAnswer(Game game, Player player, Answer answer) {
         if (answer == Answer.YES) {
-            game.playerHit(player);
+            game.hitPlayerCard(player);
         }
     }
 

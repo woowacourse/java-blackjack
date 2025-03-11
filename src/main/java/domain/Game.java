@@ -19,12 +19,12 @@ public class Game {
         playerNames.forEach(this::registerPlayer);
     }
 
-    public void playerHit(Player player) {
+    public void hitPlayerCard(Player player) {
         Card card = dealer.pickCard();
         player.hit(card);
     }
 
-    public void dealerHit() {
+    public void hitDealerCard() {
         Card card = dealer.pickCard();
         dealer.hit(card);
     }
