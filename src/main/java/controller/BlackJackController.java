@@ -67,20 +67,27 @@ public class BlackJackController {
     }
 
     private void retryUntilSuccess(Runnable runnable) {
-        try {
-            runnable.run();
-        } catch (IllegalArgumentException e) {
-            System.out.printf("%s%n", e.getMessage());
-            retryUntilSuccess(runnable);
+        for (int failCount = 1; failCount <= 5; failCount++) {
+            try {
+                runnable.run();
+            } catch (IllegalArgumentException e) {
+                System.out.printf("%s%n", e.getMessage());
+                System.out.printf("%d번 실패했습니다. %d번 실패시 종료됩니다.%n", failCount, 5);
+            }
         }
+        System.exit(1);
     }
 
     private Game retryUntilSuccess(Supplier<Game> supplier) {
-        try {
-            return supplier.get();
-        } catch (IllegalArgumentException e) {
-            System.out.printf("%s%n", e.getMessage());
-            return retryUntilSuccess(supplier);
+        for (int failCount = 1; failCount <= 5; failCount++) {
+            try {
+                return supplier.get();
+            } catch (IllegalArgumentException e) {
+                System.out.printf("%s%n", e.getMessage());
+                System.out.printf("%d번 실패했습니다. %d번 실패시 종료됩니다.%n", failCount, 5);
+            }
         }
+        System.exit(1);
+        return null;
     }
 }
