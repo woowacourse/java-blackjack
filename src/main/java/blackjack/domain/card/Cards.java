@@ -1,16 +1,13 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.BlackjackConstants.BUST_THRESHOLD;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Cards {
 
+    private final static int BUST_THRESHOLD = 21;
     private final static int BLACKJACK_MAX_CARD_SIZE = 2;
 
     private final List<Card> cards;
@@ -33,17 +30,7 @@ public class Cards {
         if (cards.size() != BLACKJACK_MAX_CARD_SIZE) {
             return false;
         }
-        Set<Rank> ranks = cards.stream()
-                .map(Card::getRank)
-                .collect(Collectors.toSet());
-        if (!ranks.contains(Rank.ACE)) {
-            return false;
-        }
-
-        return ranks.contains(Rank.KING) ||
-                ranks.contains(Rank.QUEEN) ||
-                ranks.contains(Rank.JACK) ||
-                ranks.contains(Rank.TEN);
+        return calculateMaxScore() == BUST_THRESHOLD;
     }
 
     public void take(Card... cards) {
@@ -54,7 +41,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return scoreCalculator.calculateMinScore(cards) > BUST_THRESHOLD.getSymbol();
+        return scoreCalculator.calculateMinScore(cards) > BUST_THRESHOLD;
     }
 
     public int getSize() {
