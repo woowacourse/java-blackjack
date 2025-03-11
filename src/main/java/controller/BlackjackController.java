@@ -5,11 +5,12 @@ import controller.dto.NameAndCardsDto;
 import controller.dto.NameAndSumsDto;
 import controller.dto.UsersMatchResultDto;
 import domain.BlackjackManager;
-import domain.player.Dealer;
 import domain.card.Deck;
 import domain.card.DeckGenerator;
+import domain.player.Dealer;
 import domain.player.Players;
 import domain.player.User;
+import domain.player.Users;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
@@ -58,21 +59,23 @@ public class BlackjackController {
 
     private BlackjackManager createBlackjackManager() {
         List<String> names = InputView.inputUserName();
-        List<User> users = createUsers(names);
+        Users users = createUsers(names);
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
         Players players = createPlayers(dealer, users);
         return new BlackjackManager(players, deck);
     }
 
-    private List<User> createUsers(List<String> names) {
-        return names.stream()
-                .map(String::strip)
-                .map(User::new)
-                .collect(Collectors.toList());
+    private Users createUsers(List<String> names) {
+        return new Users(
+                names.stream()
+                        .map(String::strip)
+                        .map(User::new)
+                        .collect(Collectors.toList())
+        );
     }
 
-    private Players createPlayers(Dealer dealer, List<User> users) {
+    private Players createPlayers(Dealer dealer, Users users) {
         return new Players(dealer, users);
     }
 }

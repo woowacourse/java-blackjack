@@ -6,44 +6,26 @@ import java.util.List;
 
 public class Players {
 
-    private static final int MAX_SIZE = 5;
-
     private final Dealer dealer;
-    private final List<User> users;
+    private final Users users;
 
 
-    public Players(Dealer dealer, List<User> users) {
-        validateSize(users);
-        validateUniqueNames(users);
+    public Players(Dealer dealer, Users users) {
         this.dealer = dealer;
         this.users = users;
     }
 
-    private void validateSize(List<User> users) {
-        if (users.isEmpty() || users.size() > MAX_SIZE) {
-            throw new IllegalArgumentException(users.size() + ": 유저 수는 1인 이상 5인 이하여야 합니다.");
-        }
-    }
-
-    private void validateUniqueNames(List<User> users) {
-        if (users.stream()
-                .map(Player::getName)
-                .distinct()
-                .count() != users.size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
-        }
-    }
 
     public void distributeInitialCards(Deck deck) {
         dealer.receiveInitialCards(deck);
-        for (User user : users) {
+        for (User user : users.getUsers()) {
             user.receiveInitialCards(deck);
         }
     }
 
     public void openInitialCards() {
         dealer.openInitialCards();
-        for (User user : users) {
+        for (User user : users.getUsers()) {
             user.openInitialCards();
         }
     }
@@ -54,7 +36,7 @@ public class Players {
 
     public List<Player> getPlayers() {
         List<Player> players = new ArrayList<>(List.of(dealer));
-        players.addAll(users);
+        players.addAll(users.getUsers());
         return players;
     }
 
@@ -63,6 +45,6 @@ public class Players {
     }
 
     public List<User> getUsers() {
-        return users;
+        return users.getUsers();
     }
 }
