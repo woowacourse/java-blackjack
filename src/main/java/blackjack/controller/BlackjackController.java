@@ -9,7 +9,6 @@ import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class BlackjackController {
 
     private static List<Player> toPlayers(String[] playerNames) {
         return Arrays.stream(playerNames)
-                .map(name -> new Player(name.trim(), new Cards(new ArrayList<>())))
+                .map(name -> new Player(name.trim(), new Cards()))
                 .toList();
     }
 

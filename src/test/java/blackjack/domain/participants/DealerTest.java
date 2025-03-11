@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import org.assertj.core.api.Assertions;
@@ -17,8 +16,8 @@ public class DealerTest {
     void 블랙잭_게임을_준비한다() {
         //given
         Players players = new Players(
-                List.of(new Player("pobi", new Cards(new ArrayList<>())),
-                        new Player("surf", new Cards(new ArrayList<>()))
+                List.of(new Player("pobi", new Cards()),
+                        new Player("surf", new Cards())
                 ));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
@@ -57,9 +56,9 @@ public class DealerTest {
         //given
         Players players = new Players(
                 List.of(
-                        new Player("pobi", new Cards(new ArrayList<>())),
-                        new Player("surf", new Cards(new ArrayList<>())),
-                        new Player("fora", new Cards(new ArrayList<>()))
+                        new Player("pobi", new Cards()),
+                        new Player("surf", new Cards()),
+                        new Player("fora", new Cards())
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -91,12 +90,12 @@ public class DealerTest {
     @Test
     void 존재하지_않는_플레이어에게_카드를_나누어_줄_수_없다() {
         //given
-        Player foraPlayer = new Player("fora", new Cards(new ArrayList<>()));
+        Player foraPlayer = new Player("fora", new Cards());
 
         Players players = new Players(
                 List.of(
-                        new Player("pobi", new Cards(new ArrayList<>())),
-                        new Player("surf", new Cards(new ArrayList<>()))
+                        new Player("pobi", new Cards()),
+                        new Player("surf", new Cards())
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -133,8 +132,8 @@ public class DealerTest {
         Players players = new Players(
                 List.of(
                         pobiPlayer,
-                        new Player("surf", new Cards(new ArrayList<>())),
-                        new Player("fora", new Cards(new ArrayList<>()))
+                        new Player("surf", new Cards()),
+                        new Player("fora", new Cards())
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -159,13 +158,13 @@ public class DealerTest {
     @Test
     void 플레이어에게_카드를_나누어_줄_수_있다() {
         //given
-        Player pobiPlayer = new Player("pobi", new Cards(new ArrayList<>()));
+        Player pobiPlayer = new Player("pobi", new Cards());
 
         Players players = new Players(
                 List.of(
                         pobiPlayer,
-                        new Player("surf", new Cards(new ArrayList<>())),
-                        new Player("fora", new Cards(new ArrayList<>()))
+                        new Player("surf", new Cards()),
+                        new Player("fora", new Cards())
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -193,8 +192,8 @@ public class DealerTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
         Players players = new Players(List.of(
-                new Player("surf", new Cards(new ArrayList<>())),
-                new Player("fora", new Cards(new ArrayList<>()))
+                new Player("surf", new Cards()),
+                new Player("fora", new Cards())
         ));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
