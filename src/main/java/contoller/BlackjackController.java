@@ -20,7 +20,7 @@ public class BlackjackController {
         drawPlayersCards();
         drawDealerCards();
         printParticipantsCards();
-        printGameResult();
+        printIncomes();
     }
 
     private void readyGame() {
@@ -87,7 +87,7 @@ public class BlackjackController {
         OutputView.printFinalParticipant(dealer, allPlayers);
     }
 
-    private void printGameResult() {
+    private void printIncomes() {
         Map<Player, Integer> incomes = gameManager.calculateIncomes();
         OutputView.printGameResult(incomes);
     }
