@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.Arrays;
-
 public enum Denomination {
     ACE(11),
     TWO(2),

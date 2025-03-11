@@ -1,7 +1,5 @@
 package view;
 
-import static domain.participant.Dealer.THRESHOLD;
-
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Hand;
@@ -10,10 +8,13 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.WinLossResult;
+
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import static domain.participant.Dealer.THRESHOLD;
 
 public class OutputView {
     private static final Map<Denomination, String> DENOMINATION_NAME_MAP = Map.ofEntries(

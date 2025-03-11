@@ -1,25 +1,20 @@
 package controller;
 
-import static view.InputView.getPlayerNamesInput;
-import static view.InputView.getYnInput;
-import static view.OutputView.printAllResult;
-import static view.OutputView.printBust;
-import static view.OutputView.printDealerExtraCardsCount;
-import static view.OutputView.printDistributeResult;
-import static view.OutputView.printEveryOneCardsNamesWithTotal;
-import static view.OutputView.printHandCardsNames;
-
-import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.WinLossResult;
+
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import static view.InputView.getPlayerNamesInput;
+import static view.InputView.getYnInput;
+import static view.OutputView.*;
 
 public class BlackJack {
 

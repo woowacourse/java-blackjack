@@ -29,20 +29,20 @@ public abstract class Participant {
         return !isHandBust();
     }
 
-    public boolean isHandBust() {
+    public void setHandTotalToZero() {
+        hand.setAllCardValueToZero();
+    }
+
+    protected boolean isHandBust() {
         return hand.isBust();
     }
 
-    public boolean containsOriginalAce() {
+    private boolean containsOriginalAce() {
         return hand.containsOriginalAce();
     }
 
-    public void setOriginalAceValueToOne() {
+    private void setOriginalAceValueToOne() {
         hand.setOriginalAceValueToOne();
-    }
-
-    public void setHandTotalToZero() {
-        hand.setAllCardValueToZero();
     }
 
     public String getName() {
