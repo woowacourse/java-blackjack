@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.GameRule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,14 +18,12 @@ class GameResultTest {
             "22, 17, WIN",  // 플레이어가 이기는 경우
             "20, 19, LOSE", // 딜러가 이기는 경우
             "20, 22, LOSE", // 딜러가 이기는 경우
-            "21, 21, DRAW"  // 무승부
+            "21, 21, DRAW",  // 무승부
+            "22, 22, LOSE" // 둘 다 버스트라면 딜러가 이긴다
     })
     @DisplayName("플레이어의 승패를 판단할 수 있다")
     void canDecideResult(int dealerScore, int playerScore, GameResult expectedResult) {
         // given
-        dealerScore = GameRule.applyBustRule(dealerScore);
-        playerScore = GameRule.applyBustRule(playerScore);
-
         // when
         GameResult result = GameResult.of(dealerScore, playerScore);
 

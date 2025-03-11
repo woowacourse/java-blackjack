@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.GameRule;
+
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -16,6 +18,14 @@ public enum GameResult {
     }
 
     public static GameResult of(int dealerSumOfCards, int playerSumOfCards) {
+        if (GameRule.isBust(playerSumOfCards)) {
+            return LOSE;
+        }
+
+        if (GameRule.isBust(dealerSumOfCards)) {
+            return WIN;
+        }
+
         if (dealerSumOfCards < playerSumOfCards) {
             return WIN;
         }

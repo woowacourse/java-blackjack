@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.GameRule;
 import blackjack.domain.gamer.GameParticipant;
 import blackjack.domain.gamer.GameParticipants;
 import blackjack.domain.gamer.Player;
@@ -38,18 +37,11 @@ public class GameStatistics {
         return findOriginSumOfCardsOfDealer();
     }
 
-    public int applyRule(int originalSumOfCards) {
-        return GameRule.applyBustRule(originalSumOfCards);
-    }
-
     public Map<Player, GameResult> decidePlayerResults() {
         Map<Player, GameResult> playerToGameResult = new LinkedHashMap<>();
 
         playerToSumOfCards.keySet().forEach(player ->
-                playerToGameResult.put(player,
-                        GameResult.of(
-                                applyRule(dealerSumOfCards),
-                                applyRule(findOriginSumOfCards(player)))));
+                playerToGameResult.put(player, GameResult.of(dealerSumOfCards, findOriginSumOfCards(player))));
 
         return playerToGameResult;
     }
@@ -57,8 +49,8 @@ public class GameStatistics {
     public Map<GameResult, Integer> calculateDealerResult(Map<Player, GameResult> playerToGameResult) {
         Map<GameResult, Integer> dealerResult = GameResult.getDealerFormat();
 
-        playerToGameResult.keySet().forEach(player ->
-                dealerResult.merge(playerToGameResult.get(player).oppose(), 1, Integer::sum)
+        playerToGameResult.values().forEach(result ->
+                dealerResult.merge(result.oppose(), 1, Integer::sum)
         );
 
         return dealerResult;

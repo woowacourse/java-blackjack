@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.GameRule;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.GameParticipantFixture;
@@ -92,18 +91,5 @@ class GameStatisticsTest {
             assertThat(dealerResult.get(GameResult.WIN)).isEqualTo(1);
             assertThat(dealerResult.get(GameResult.DRAW)).isEqualTo(1);
         });
-    }
-
-    @Test
-    @DisplayName("버스트 룰을 적용하여 점수를 조정할 수 있다.")
-    void canApplyBustRule() {
-        // given
-        int bustedSumOfCards = GameRule.BUST_THRESHOLD_POINT.getValue() + 1;
-
-        // when
-        int adjustedScore = statistics.applyRule(bustedSumOfCards);
-
-        // then
-        assertThat(adjustedScore).isEqualTo(GameRule.BUSTED_POINT.getValue());
     }
 }
