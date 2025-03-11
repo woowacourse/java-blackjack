@@ -111,7 +111,8 @@ public class BlackJackController {
 
     private void processAdditionalHit(final Deck deck, final Player player) {
         String input = InputView.readQuestOneMoreCard(player.getDisplayName());
-        while (Command.find(input).equals(Command.YES)) {
+        Command command = Command.find(input);
+        while (command.equals(Command.YES)) {
             final Card card = deck.drawCard();
             player.hit(card);
             OutputView.printCardsInHand(player.getDisplayName(), player.getCards());

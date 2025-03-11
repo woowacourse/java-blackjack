@@ -28,7 +28,8 @@ public enum FinalResult {
 
     public static FinalResult findBySumOfRank(final int sumOfRank, final int otherSumOfRank) {
         return Arrays.stream(FinalResult.values())
-                .filter(finalResult -> finalResult.condition.test(sumOfRank, otherSumOfRank))
+                .filter(finalResult ->
+                        finalResult.condition.test(sumOfRank, otherSumOfRank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("비 정상적인 상태입니다."));
     }

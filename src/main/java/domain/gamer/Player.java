@@ -63,6 +63,8 @@ public class Player extends Gamer {
     }
 
     private int findMinSum(List<Integer> sums) {
-        return sums.stream().min(Integer::compareTo).orElse(0);
+        return sums.stream()
+                .min(Integer::compareTo)
+                .orElse(0);
     }
 }
