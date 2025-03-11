@@ -8,11 +8,9 @@ public class ProfitCalculator {
         return winningType.multiplyProfitRate(bettingAmount);
     }
 
-    public int calculateDealerProfit(final List<Integer> playerProfits) {
-        int profit = 0;
-        for (final int playerProfit : playerProfits) {
-            profit += playerProfit;
-        }
-        return -profit;
+    public int calculateDealerProfit(final List<Integer> playersProfit) {
+        return playersProfit.stream()
+                .mapToInt(playerProfit -> -playerProfit)
+                .sum();
     }
 }
