@@ -9,6 +9,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Payout;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
@@ -192,7 +193,7 @@ class BlackjackGameTest {
                     players
             );
 
-            assertThat(game.calculateDealerPayout()).isEqualTo(1000);
+            assertThat(game.calculateDealerPayout()).isEqualTo(new Payout(1000));
         }
     }
 }

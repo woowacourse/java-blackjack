@@ -24,10 +24,11 @@ public class Players {
         players.forEach((player) -> player.addInitialCards(cardDeck));
     }
 
-    public int calculateTotalPayout(final Dealer dealer) {
-        int totalPayout = 0;
+    public Payout calculateTotalPayout(final Dealer dealer) {
+        Payout totalPayout = Payout.zero();
         for (Player player : players) {
-            totalPayout += player.calculatePayout(dealer);
+            Payout playerPayout = player.calculatePayout(dealer);
+            totalPayout = totalPayout.add(playerPayout);
         }
         return totalPayout;
     }

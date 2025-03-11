@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Payout;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
@@ -53,8 +54,8 @@ public class BlackjackGame {
         return false;
     }
 
-    public int calculateDealerPayout() {
-        return convertToOppositeSign(players.calculateTotalPayout(dealer));
+    public Payout calculateDealerPayout() {
+        return players.calculateTotalPayout(dealer).negate();
     }
 
     public Dealer getDealer() {
@@ -63,9 +64,5 @@ public class BlackjackGame {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players.getPlayers());
-    }
-
-    private int convertToOppositeSign(final int number) {
-        return -number;
     }
 }

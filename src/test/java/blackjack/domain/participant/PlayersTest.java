@@ -99,7 +99,7 @@ public class PlayersTest {
             );
 
             Players players = new Players(List.of(player1, player2, player3));
-            assertThat(players.calculateTotalPayout(dealer)).isEqualTo(1500);
+            assertThat(players.calculateTotalPayout(dealer)).isEqualTo(new Payout(1500));
         }
 
         @Test
@@ -134,7 +134,7 @@ public class PlayersTest {
             );
 
             Players players = new Players(List.of(player1, player2, player3));
-            assertThat(players.calculateTotalPayout(dealer)).isEqualTo(-1000);
+            assertThat(players.calculateTotalPayout(dealer)).isEqualTo(new Payout(-1000));
         }
     }
 }

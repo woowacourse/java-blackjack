@@ -103,7 +103,7 @@ public class PlayerTest {
                     new Card(Suit.SPADE, Denomination.ACE)
             );
 
-            assertThat(player.calculatePayout(dealer)).isEqualTo(-1000);
+            assertThat(player.calculatePayout(dealer)).isEqualTo(new Payout(-1000));
         }
 
         @Test
@@ -122,7 +122,7 @@ public class PlayerTest {
                     new Card(Suit.SPADE, Denomination.JACK)
             );
 
-            assertThat(player.calculatePayout(dealer)).isEqualTo(1000);
+            assertThat(player.calculatePayout(dealer)).isEqualTo(new Payout(1000));
         }
 
         @Test
@@ -143,7 +143,7 @@ public class PlayerTest {
             );
 
             assertThat(player.isBust()).isTrue();
-            assertThat(player.calculatePayout(dealer)).isEqualTo(-1000);
+            assertThat(player.calculatePayout(dealer)).isEqualTo(new Payout(-1000));
         }
 
         @Test
@@ -162,7 +162,7 @@ public class PlayerTest {
                     new Card(Suit.SPADE, Denomination.SEVEN)
             );
 
-            assertThat(player.calculatePayout(dealer)).isEqualTo(1000);
+            assertThat(player.calculatePayout(dealer)).isEqualTo(new Payout(1000));
         }
 
         @Test
@@ -181,7 +181,7 @@ public class PlayerTest {
                     new Card(Suit.SPADE, Denomination.QUEEN)
             );
 
-            assertThat(player.calculatePayout(dealer)).isEqualTo(0);
+            assertThat(player.calculatePayout(dealer)).isEqualTo(new Payout(0));
         }
 
         @Test
@@ -200,7 +200,7 @@ public class PlayerTest {
                     new Card(Suit.SPADE, Denomination.ACE)
             );
 
-            assertThat(player.calculatePayout(dealer)).isEqualTo(1500);
+            assertThat(player.calculatePayout(dealer)).isEqualTo(new Payout(1500));
         }
 
         @Test
@@ -219,7 +219,7 @@ public class PlayerTest {
                     new Card(Suit.SPADE, Denomination.ACE)
             );
 
-            assertThat(player.calculatePayout(dealer)).isEqualTo(1000);
+            assertThat(player.calculatePayout(dealer)).isEqualTo(new Payout(1000));
         }
     }
 }

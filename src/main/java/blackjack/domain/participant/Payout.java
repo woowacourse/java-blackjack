@@ -19,10 +19,14 @@ public record Payout(
         return new Payout(this.value + amount);
     }
 
+    public Payout add(Payout other) {
+        return new Payout(this.value + other.value);
+    }
+
     public Payout calculatePayout(final Dealer dealer, final Player player) {
         GameResult result = GameResult.getPlayerGameResultFrom(dealer, player);
         if (result == GameResult.LOSE) {
-            return new Payout(-value);
+            return negate();
         }
         if (player.isBlackjack()) {
             return calculatePayoutWithBlackjack(dealer);
@@ -38,5 +42,9 @@ public record Payout(
             return this;
         }
         return blackjackPayout(value);
+    }
+
+    public Payout negate() {
+        return new Payout(-value);
     }
 }

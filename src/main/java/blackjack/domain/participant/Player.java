@@ -19,9 +19,9 @@ public class Player extends Participant {
         this.payout = this.payout.bet(amount);
     }
 
-    public int calculatePayout(final Dealer dealer) {
+    public Payout calculatePayout(final Dealer dealer) {
         this.payout = payout.calculatePayout(dealer, this);
-        return this.payout.value();
+        return this.payout;
     }
 
     @Override
