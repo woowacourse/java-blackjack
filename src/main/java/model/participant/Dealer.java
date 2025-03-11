@@ -59,7 +59,7 @@ public class Dealer extends Participant {
         return matchResult;
     }
 
-    private static void updateDealerMatchResult(Map<MatchType, Integer> matchResult, MatchType dealerMatchType) {
+    private void updateDealerMatchResult(Map<MatchType, Integer> matchResult, MatchType dealerMatchType) {
         matchResult.computeIfAbsent(dealerMatchType, k -> 0);
         matchResult.put(dealerMatchType, matchResult.get(dealerMatchType) + 1);
     }
