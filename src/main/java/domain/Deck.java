@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -7,7 +8,7 @@ public class Deck {
     private final List<Card> deck;
 
     public Deck(List<Card> deck) {
-        this.deck = deck;
+        this.deck = new ArrayList<>(deck);
     }
 
     public Card drawNewCard() {

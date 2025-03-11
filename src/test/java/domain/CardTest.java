@@ -1,30 +1,68 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static domain.Rank.ACE;
+import static domain.Rank.EIGHT;
+import static domain.Rank.FIVE;
+import static domain.Rank.FOUR;
+import static domain.Rank.JACK;
+import static domain.Rank.KING;
+import static domain.Rank.NINE;
+import static domain.Rank.QUEEN;
+import static domain.Rank.SEVEN;
+import static domain.Rank.SIX;
+import static domain.Rank.TEN;
+import static domain.Rank.THREE;
+import static domain.Rank.TWO;
+import static domain.Suit.HEART;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import fixture.CardFixture;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CardTest {
-    @RepeatedTest(52)
-    @DisplayName("랜덤으로 카드를 선택할 때 최대 카드 갯수 이내이면 예외가 발생하지 않는다.")
-    void testRandomCreation() {
-        Deck deck = DeckGenerator.generateRandomDeck();
-        assertThatCode(deck::drawNewCard).doesNotThrowAnyException();
+    @ParameterizedTest
+    @MethodSource("cardRankArguments")
+    @DisplayName("카드의 기본 점수를 가져올 수 있다.")
+    void testCardScore(Rank rank, int expectedScore) {
+        // given
+        Card card = CardFixture.of(rank, HEART);
+        // when
+        int score = card.score();
+        // then
+        assertThat(score).isEqualTo(expectedScore);
     }
 
     @Test
-    @DisplayName("랜덤으로 카드를 선택할 때 카드를 모두 사용하면 예외가 발생한다.")
-    void testRandomCreationException() {
+    @DisplayName("카드가 에이스인지 판단할 수 있다.")
+    void testIsAce() {
         // given
-        Deck deck = DeckGenerator.generateRandomDeck();
-        for (int i = 0; i < 52; i++) {
-            deck.drawNewCard();
-        }
-        // when && then
-        assertThatThrownBy(deck::drawNewCard).isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("[ERROR] 카드를 생성할 수 없습니다.");
+        Card card = CardFixture.of(ACE, HEART);
+        // when
+        boolean isAce = card.isAce();
+        // then
+        assertThat(isAce).isTrue();
+    }
+
+    private static Stream<Arguments> cardRankArguments() {
+        return Stream.of(
+                Arguments.arguments(ACE, 1),
+                Arguments.arguments(TWO, 2),
+                Arguments.arguments(THREE, 3),
+                Arguments.arguments(FOUR, 4),
+                Arguments.arguments(FIVE, 5),
+                Arguments.arguments(SIX, 6),
+                Arguments.arguments(SEVEN, 7),
+                Arguments.arguments(EIGHT, 8),
+                Arguments.arguments(NINE, 9),
+                Arguments.arguments(TEN, 10),
+                Arguments.arguments(JACK, 10),
+                Arguments.arguments(QUEEN, 10),
+                Arguments.arguments(KING, 10)
+        );
     }
 }
