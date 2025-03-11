@@ -46,6 +46,22 @@ public class Participants {
         return dealer.calculateMaxSum();
     }
 
+    public Entry<String, Cards> showInitialDealerCards() {
+        return Map.entry(dealer.getNickname(), dealer.showInitialCards());
+    }
+
+    public Map<String, Cards> showInitialParticipantsCards() {
+        return players.showTotalInitialCards();
+    }
+
+    public Entry<String, Cards> showDealerCards() {
+        return Map.entry(dealer.getNickname(), dealer.showAllCards());
+    }
+
+    public Map<String, Cards> showPlayersCards() {
+        return players.showTotalCards();
+    }
+
     private void spreadOneCard(final Gamer gamer, final Card card) {
         gamer.receiveCards(new Cards(List.of(card)));
     }

@@ -1,12 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.ResultStatus;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Gamer;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -36,57 +32,46 @@ public class ResultView {
     private static final String WINNING_DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
     private static final String WINNING_PLAYER_RESULT_FORMAT = "%s: %s";
 
-    public void printSpreadCard(final Participants participants) {
-        printNames(participants);
-        printCards(participants);
+    public void printSpreadCard(final List<String> names, final Entry<String, Cards> dealerCards,
+                                final Map<String, Cards> playersCards) {
+        printNames(names);
+        printDealerCards(dealerCards);
+        printPlayersCards(playersCards);
     }
 
-    public void printParticipantTotalCards(final Gamer gamer) {
-        System.out.println(makeParticipantsMessage(gamer));
+    public void printParticipantTotalCards(final String nickname, final Cards cards) {
+        System.out.println(makeCardMessage(nickname, cards));
     }
 
     public void printDealerExtraCard() {
         System.out.println(LINE + TITLE_DEALER_EXTRA_CARD);
     }
 
-    private void printNames(final Participants participants) {
-        final String joinedNames = participants.getPlayers().stream()
-                .map(Player::getNickname)
-                .collect(Collectors.joining(COMMA));
+    private void printNames(final List<String> names) {
+        final String joinedNames = String.join(COMMA, names);
         System.out.printf(LINE + NAME_FORMAT + LINE, joinedNames);
     }
 
-    private void printCards(final Participants participants) {
-        final Dealer dealer = participants.getDealer();
-        final String dealerMessage = String.format(CARD_FORMAT, dealer.getNickname(),
-                getCardMessage(dealer.showOneCard()));
+    public void printDealerCards(final Entry<String, Cards> dealerCards) {
+        final String dealerMessage = makeCardMessage(dealerCards.getKey(), dealerCards.getValue());
         System.out.println(dealerMessage);
-        final List<Player> players = participants.getPlayers();
-        players.stream()
-                .map(this::makeParticipantsMessage)
+    }
+
+    public void printPlayersCards(final Map<String, Cards> playersCards) {
+        playersCards.entrySet().stream()
+                .map(entry -> makeCardMessage(entry.getKey(), entry.getValue()))
                 .forEach(System.out::println);
+        System.out.println();
     }
 
-    private String makeParticipantsMessage(final Gamer gamer) {
-        return String.format(CARD_FORMAT, gamer.getNickname(),
-                getCardMessage(gamer.showAllCard()));
+    private String makeCardMessage(final String nickname, final Cards cards) {
+        return String.format(CARD_FORMAT, nickname, getCardMessage(cards));
     }
 
-    private String getCardMessage(final List<Card> cards) {
-        return cards.stream()
+    private String getCardMessage(final Cards cards) {
+        return cards.getCards().stream()
                 .map(card -> card.getDenominationName() + getShapeName(card.getShape()))
                 .collect(Collectors.joining(COMMA));
-    }
-
-    public void printCardsAndSum(final Participants participants) {
-        final Dealer dealer = participants.getDealer();
-        final String dealerMessage = String.format(CARD_SUM_FORMAT, dealer.getNickname(),
-                getCardMessage(dealer.showAllCard()), dealer.calculateMaxSum());
-        System.out.println(LINE + dealerMessage);
-        final List<Player> players = participants.getPlayers();
-        players.stream()
-                .map(this::makeParticipantsWithSumMessage)
-                .forEach(System.out::println);
     }
 
     public void showWinningResult(final Map<String, ResultStatus> result) {
@@ -102,6 +87,14 @@ public class ResultView {
         System.out.println(line);
     }
 
+    public void makeParticipantsWithSumMessage(final Entry<String, Cards> dealer,
+                                               final Map<String, Cards> participants) {
+        System.out.println(LINE + makeParticipantsWithSumMessage(dealer));
+        participants.entrySet().stream()
+                .map(this::makeParticipantsWithSumMessage)
+                .forEach(System.out::println);
+    }
+
     private void showResultStatus(final Map<String, ResultStatus> result) {
         for (Entry<String, ResultStatus> entry : result.entrySet()) {
             System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey(),
@@ -115,9 +108,9 @@ public class ResultView {
                 .count();
     }
 
-    private String makeParticipantsWithSumMessage(final Gamer gamer) {
-        return String.format(CARD_SUM_FORMAT, gamer.getNickname(),
-                getCardMessage(gamer.showAllCard()), gamer.calculateMaxSum());
+    private String makeParticipantsWithSumMessage(final Entry<String, Cards> entry) {
+        return String.format(CARD_SUM_FORMAT, entry.getKey(),
+                getCardMessage(entry.getValue()), entry.getValue().calculateResult());
     }
 
     private String getShapeName(final Shape shape) {
