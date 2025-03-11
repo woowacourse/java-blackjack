@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackjackResultEvaluator {
-    public static Map<String, WinStatus> calculateWinStatuses(BlackjackParticipants participants) {
+    public static Map<String, WinStatus> calculateWinStatus(BlackjackParticipants participants) {
         Map<String, WinStatus> winStatuses = new HashMap<>();
         String dealerName = participants.dealerName();
         for (String playerName : participants.getPlayerNames()) {
@@ -20,7 +20,7 @@ public class BlackjackResultEvaluator {
         int lose = 0;
         String dealerName = participants.dealerName();
         for (String playerName : participants.getPlayerNames()) {
-            ScoreInfo scoreInfo = new ScoreInfo(dealerName, playerName, participants);
+            ScoreInfo scoreInfo = new ScoreInfo(playerName, dealerName, participants);
             win += calculateDealerWin(scoreInfo);
             lose += calculateDealerLose(scoreInfo);
         }

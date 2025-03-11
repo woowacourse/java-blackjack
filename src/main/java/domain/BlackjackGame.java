@@ -94,7 +94,7 @@ public class BlackjackGame {
     }
 
     public Map<String, WinStatus> getPlayerWinStatuses() {
-        return BlackjackResultEvaluator.calculateWinStatuses(participants);
+        return BlackjackResultEvaluator.calculateWinStatus(participants);
     }
 
 }
