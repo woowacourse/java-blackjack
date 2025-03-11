@@ -4,12 +4,12 @@ import static blackjack.domain.Rule.BLACK_JACK;
 import static blackjack.domain.WinningType.DEFEAT;
 import static blackjack.domain.WinningType.DRAW;
 import static blackjack.domain.WinningType.WIN;
-import static blackjack.domain.WinningType.createWinningResult;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.gambler.Name;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class WinningDiscriminator {
@@ -33,6 +33,11 @@ public class WinningDiscriminator {
             countDealerWinning(playerName, winningResult);
         }
         return winningResult;
+    }
+
+    private Map<WinningType, Integer> createWinningResult() {
+        return Arrays.stream(WinningType.values())
+                .collect(toMap(identity(), type -> 0));
     }
 
     private void countDealerWinning(final Name name, final Map<WinningType, Integer> winningResult) {
