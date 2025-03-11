@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -55,26 +54,6 @@ class BlackJackGameTest {
             });
         }
 
-        @DisplayName("딜러의 첫번째 카드를 가져온다.")
-        @Test
-        void retrieveFirstCard() {
-            // given
-            List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES,
-                    TrumpCard.TWO_OF_SPADES
-            );
-            Hand hand = new Hand(cards);
-            Dealer dealer = new Dealer(hand);
-
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-
-            // when
-            TrumpCard dealerFirstCard = blackJackGame.retrieveDealerFirstCard();
-
-            // then
-            AssertionsForClassTypes.assertThat(dealerFirstCard).isEqualTo(TrumpCard.ACE_OF_SPADES);
-        }
-
         @ParameterizedTest
         @DisplayName("플레이어의 히트 판단 여부를 판단한다")
         @MethodSource("provideDealerHitAllowedCases")
@@ -84,7 +63,7 @@ class BlackJackGameTest {
             Player player = new Player("Alice", new Hand(cards));
 
             // when
-            boolean result = blackJackGame.isPlayerHitAllowed(player.retrieveCards());
+            boolean result = blackJackGame.isPlayerHitAllowed(player);
 
             // then
             assertThat(result).isTrue();
@@ -128,14 +107,47 @@ class BlackJackGameTest {
         }
 
         @Test
-        @DisplayName("주어진 카드 목록의 점수를 올바르게 계산한다.")
-        void calculateScore() {
+        @DisplayName("플레이어의 점수를 올바르게 계산한다.")
+        void calculatePlayerScore() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
+            Player player = new Player("머피", new Hand(cards));
 
             // when
-            Score score = blackJackGame.caculateScore(cards);
+            Score score = blackJackGame.calculatePlayerScore(player);
+
+            // then
+            assertThat(score).isEqualTo(Score.BLACKJACK);
+        }
+
+        @Test
+        @DisplayName("딜러의 카드를 가져온다.")
+        void retrieveDealerCards() {
+            // given
+            List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
+            Dealer dealer = new Dealer(new Hand(cards));
+
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+
+            // when
+            List<TrumpCard> dealerCards = blackJackGame.retrieveDealerCards();
+
+            // then
+            assertThat(dealerCards).isEqualTo(cards);
+        }
+
+        @Test
+        @DisplayName("딜러의 점수를 올바르게 계산한다.")
+        void calculateDealerScore() {
+            // given
+            List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
+            Dealer dealer = new Dealer(new Hand(cards));
+
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+
+            // when
+            Score score = blackJackGame.calculateDealerScore();
 
             // then
             assertThat(score).isEqualTo(Score.BLACKJACK);
@@ -173,24 +185,6 @@ class BlackJackGameTest {
             assertThatThrownBy(() -> blackJackGame.createPlayers(playerNames))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
-        }
-
-        @DisplayName("딜러의 첫번째 카드를 가져올 때 딜러는 2장의 카드를 가지고 있어야 한다.")
-        @Test
-        void retrieveFirstCard() {
-            // given
-            List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES
-            );
-            Hand hand = new Hand(cards);
-            Dealer dealer = new Dealer(hand);
-
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-
-            // when & then
-            assertThatThrownBy(blackJackGame::retrieveDealerFirstCard)
-                    .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("딜러는 " + BlackJackGame.INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
         }
 
         @ParameterizedTest

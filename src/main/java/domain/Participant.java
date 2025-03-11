@@ -28,4 +28,10 @@ public abstract class Participant {
     public List<TrumpCard> retrieveCards() {
         return hand.getCards();
     }
+
+    public Score calculateScore(Rule rule) {
+        return rule.evaluateScore(hand.getCards());
+    }
+
+    public abstract boolean isHitAllowed(Rule rule);
 }

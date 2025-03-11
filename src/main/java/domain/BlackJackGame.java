@@ -34,6 +34,7 @@ public class BlackJackGame {
         Deck deck = initializeDeck();
         Dealer dealer = initializeDealer(deck);
         Rule rule = initializeRule();
+
         return new BlackJackGame(deck, dealer, rule);
     }
 
@@ -70,23 +71,15 @@ public class BlackJackGame {
     }
 
     public TrumpCard retrieveDealerFirstCard() {
-        List<TrumpCard> cards = dealer.retrieveCards();
-
-        if (cards.size() != INITIAL_CARD_COUNT) {
-            throw new IllegalStateException("딜러는 " + INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
-        }
-
-        return cards.getFirst();
+        return dealer.retrieveFirstCard();
     }
 
-    public boolean isPlayerHitAllowed(List<TrumpCard> playerCards) {
-        return rule.isPlayerHitAllowed(playerCards);
+    public boolean isPlayerHitAllowed(Player player) {
+        return player.isHitAllowed(rule);
     }
 
     public void processPlayerHit(Player player) {
-        List<TrumpCard> cards = player.retrieveCards();
-
-        if (!isPlayerHitAllowed(cards)) {
+        if (!isPlayerHitAllowed(player)) {
             throw new IllegalStateException("플레이어는 더이상 히트할 수 없습니다.");
         }
 
@@ -96,7 +89,7 @@ public class BlackJackGame {
     public int processDealerHit() {
         int hitCount = 0;
 
-        while (rule.isDealerHitAllowed(dealer.retrieveCards())) {
+        while (dealer.isHitAllowed(rule)) {
             dealer.receiveCard(deck.draw());
             hitCount++;
         }
@@ -104,12 +97,16 @@ public class BlackJackGame {
         return hitCount;
     }
 
+    public Score calculatePlayerScore(Player player) {
+        return player.calculateScore(rule);
+    }
+
     public List<TrumpCard> retrieveDealerCards() {
         return dealer.retrieveCards();
     }
 
-    public Score caculateScore(List<TrumpCard> cards) {
-        return rule.evaluateScore(cards);
+    public Score calculateDealerScore() {
+        return dealer.calculateScore(rule);
     }
 
     public Map<String, GameResult> calculateGameResults(List<Player> players) {
@@ -117,9 +114,7 @@ public class BlackJackGame {
 
         players.forEach(player -> {
             List<TrumpCard> playerCards = player.retrieveCards();
-            List<TrumpCard> dealerCards = dealer.retrieveCards();
-
-            GameResult gameResult = rule.evaluateGameResult(playerCards, dealerCards);
+            GameResult gameResult = dealer.calculateGameResult(rule, playerCards);
 
             results.put(player.getName(), gameResult);
         });

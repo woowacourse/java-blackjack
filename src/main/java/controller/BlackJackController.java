@@ -57,7 +57,7 @@ public class BlackJackController {
     }
 
     private void executePlayerHit(Player player) {
-        while (blackJackGame.isPlayerHitAllowed(player.retrieveCards()) &&
+        while (blackJackGame.isPlayerHitAllowed(player) &&
                 inputView.readProcessHit(player.getName())) {
             blackJackGame.processPlayerHit(player);
             outputView.printPlayerCards(player.getName(), player.retrieveCards());
@@ -71,7 +71,8 @@ public class BlackJackController {
 
     private void displayCardResult(List<Player> players) {
         Map<String, CardScoreDto> playerCardScoreDto = convertPlayerCardScoreDto(players);
-        CardScoreDto dealerCardScoreDto = convertDealerCardScoreDto(blackJackGame.retrieveDealerCards());
+        CardScoreDto dealerCardScoreDto = new CardScoreDto(
+                blackJackGame.retrieveDealerCards(), blackJackGame.calculateDealerScore());
         outputView.printCardsResult(playerCardScoreDto, dealerCardScoreDto);
     }
 
@@ -79,18 +80,10 @@ public class BlackJackController {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, player -> {
                     List<TrumpCard> playerCards = player.retrieveCards();
-                    Score score = blackJackGame.caculateScore(playerCards);
+                    Score score = blackJackGame.calculatePlayerScore(player);
 
-                    return new CardScoreDto(
-                            playerCards,
-                            score);
+                    return new CardScoreDto(playerCards, score);
                 }));
-    }
-
-    private CardScoreDto convertDealerCardScoreDto(List<TrumpCard> dealerCards) {
-        Score score = blackJackGame.caculateScore(dealerCards);
-
-        return new CardScoreDto(dealerCards, score);
     }
 
     private void displayGameResult(List<Player> players) {

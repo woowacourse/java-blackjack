@@ -23,4 +23,9 @@ public class Player extends Participant {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean isHitAllowed(Rule rule) {
+        return rule.isPlayerHitAllowed(super.hand.getCards());
+    }
 }
