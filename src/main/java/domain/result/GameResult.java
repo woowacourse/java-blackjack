@@ -1,5 +1,6 @@
-package domain;
+package domain.result;
 
+import domain.participant.Player;
 import java.util.Map;
 import java.util.Set;
 

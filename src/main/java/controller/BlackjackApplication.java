@@ -2,12 +2,12 @@ package controller;
 
 import static view.AnswerType.*;
 
-import domain.Players;
-import domain.CardGiver;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Participant;
-import domain.Player;
+import domain.participant.Players;
+import domain.generator.CardGiver;
+import domain.participant.Dealer;
+import domain.result.GameResult;
+import domain.participant.Participant;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.AnswerType;

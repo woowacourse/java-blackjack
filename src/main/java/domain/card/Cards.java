@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-import static domain.CardNumberType.*;
+import static domain.card.CardNumberType.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

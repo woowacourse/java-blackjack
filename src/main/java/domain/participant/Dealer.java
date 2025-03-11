@@ -1,6 +1,9 @@
-package domain;
+package domain.participant;
 
-public class Dealer extends Participant{
+import domain.card.Card;
+import domain.card.Cards;
+
+public class Dealer extends Participant {
     private static final int VALID_DRAW_LIMIT = 16;
 
     private Dealer(Cards cards) {

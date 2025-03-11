@@ -1,7 +1,11 @@
-package domain;
+package domain.generator;
 
 import static view.AnswerType.NO;
 
+import domain.card.Card;
+import domain.card.Cards;
+import domain.participant.Participant;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.AnswerType;

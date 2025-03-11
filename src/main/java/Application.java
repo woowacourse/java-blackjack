@@ -1,3 +1,4 @@
+import config.BlackjackConfig;
 import controller.BlackjackApplication;
 
 public class Application {

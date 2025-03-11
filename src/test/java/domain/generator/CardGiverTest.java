@@ -1,8 +1,14 @@
-package domain;
+package domain.generator;
 
 import static org.assertj.core.api.Assertions.*;
-import static util.ExceptionConstants.*;
 
+import domain.card.Card;
+import domain.card.CardNumberType;
+import domain.card.CardType;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -57,11 +63,11 @@ public class CardGiverTest {
 
         //then
         SoftAssertions.assertSoftly(softly ->{
-            softly.assertThat(dealer.cards).isEqualTo(new Cards(List.of(
+            softly.assertThat(dealer.getCards()).isEqualTo(new Cards(List.of(
                     new Card(CardNumberType.FIVE, CardType.SPACE),
                     new Card(CardNumberType.SIX, CardType.CLOVER)
             )));
-            softly.assertThat(player.cards).isEqualTo(new Cards(List.of(
+            softly.assertThat(player.getCards()).isEqualTo(new Cards(List.of(
                     new Card(CardNumberType.SEVEN, CardType.CLOVER),
                     new Card(CardNumberType.THREE, CardType.CLOVER)
             )));
@@ -79,7 +85,7 @@ public class CardGiverTest {
         //when
         cardGiver.giveAdditionalCard(player, answerType);
         //then
-        assertThat(player.cards).isEqualTo(new Cards(List.of(
+        assertThat(player.getCards()).isEqualTo(new Cards(List.of(
                 new Card(CardNumberType.FIVE, CardType.SPACE)
         )));
     }
@@ -95,6 +101,6 @@ public class CardGiverTest {
         //when
         cardGiver.giveAdditionalCard(player, answerType);
         //then
-        assertThat(player.cards).isEqualTo(Cards.createEmpty());
+        assertThat(player.getCards()).isEqualTo(Cards.createEmpty());
     }
 }

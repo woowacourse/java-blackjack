@@ -1,6 +1,8 @@
+package config;
+
 import controller.BlackjackApplication;
-import domain.CardGiver;
-import domain.CardRandomGenerator;
+import domain.generator.CardGiver;
+import domain.generator.CardRandomGenerator;
 import view.InputView;
 import view.OutputView;
 import view.support.InputParser;

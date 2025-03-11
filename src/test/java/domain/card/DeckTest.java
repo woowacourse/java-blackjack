@@ -1,12 +1,7 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static util.ExceptionConstants.ERROR_HEADER;
-
-import domain.CardGiverTest.TestRandomGenerator;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 public class DeckTest {
 //    @DisplayName("배분할 카드가 2장 미만일 시 예외가 발생한다")

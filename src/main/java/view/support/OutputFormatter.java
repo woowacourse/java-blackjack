@@ -1,15 +1,15 @@
 package view.support;
 
-import static domain.CardNumberType.*;
-import static domain.CardType.*;
-import static domain.GameResultStatus.LOSE;
-import static domain.GameResultStatus.WIN;
+import static domain.card.CardNumberType.*;
+import static domain.card.CardType.*;
+import static domain.result.GameResultStatus.LOSE;
+import static domain.result.GameResultStatus.WIN;
 
-import domain.Card;
-import domain.CardNumberType;
-import domain.CardType;
-import domain.Cards;
-import domain.GameResultStatus;
+import domain.card.Card;
+import domain.card.CardNumberType;
+import domain.card.CardType;
+import domain.card.Cards;
+import domain.result.GameResultStatus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
