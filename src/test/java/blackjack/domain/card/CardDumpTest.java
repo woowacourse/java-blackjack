@@ -1,11 +1,8 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.CardDump.EMPTY_CARD_DUMP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDump;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +41,6 @@ class CardDumpTest {
         }
         assertThatThrownBy(cardDump::drawCard)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(EMPTY_CARD_DUMP);
+                .hasMessage("[ERROR] 카드 덤프가 비어 있습니다!");
     }
 }
