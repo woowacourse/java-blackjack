@@ -4,10 +4,11 @@ import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackjackGame {
 
@@ -50,18 +51,38 @@ public class BlackjackGame {
     public Map<String, ResultStatus> calculateWinningResult() {
         final int dealerSum = participants.calculateDealerMaxSum();
         final Map<String, ResultStatus> result = new HashMap<>();
-        for (Player player : participants.getPlayers()) {
+        for (Gamer player : participants.getPlayers().getPlayers()) {
             final int playerSum = player.calculateMaxSum();
             result.put(player.getNickname(), ResultStatus.calculateResultStatus(playerSum, dealerSum));
         }
         return Collections.unmodifiableMap(result);
     }
 
-    public Player getPlayer(final int index) {
-        return participants.getPlayers().get(index);
+    public Entry<String, Cards> showInitialDealerCard() {
+        return participants.showInitialDealerCards();
+    }
+
+    public Map<String, Cards> showInitialPlayersCards() {
+        return participants.showInitialParticipantsCards();
+    }
+
+    public Entry<String, Cards> showDealerCard() {
+        return participants.showDealerCards();
+    }
+
+    public Map<String, Cards> showPlayersCards() {
+        return participants.showPlayersCards();
+    }
+
+    public Gamer getPlayer(final int index) {
+        return participants.getPlayers().getPlayer(index);
     }
 
     public int getPlayerSize() {
-        return participants.getPlayers().size();
+        return participants.getPlayers().getSize();
+    }
+
+    public List<String> getPlayersNames() {
+        return participants.getPlayersNames();
     }
 }

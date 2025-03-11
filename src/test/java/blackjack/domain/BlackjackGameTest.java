@@ -24,7 +24,7 @@ import blackjack.domain.random.CardRandomGenerator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,12 +37,17 @@ class BlackjackGameTest {
     @Test
     void spreadTwoCardsToDealerAndPlayers() {
         // given
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(
+                new CardManager(new CardRandomGenerator()),
                 provideParticipants());
+        // when
+        blackjackGame.spreadInitialCards();
 
-        // when & then
-        Assertions.assertThatCode(blackjackGame::spreadInitialCards)
-                .doesNotThrowAnyException();
+        // then
+        Assertions.assertAll(
+                () -> assertThat(blackjackGame.showDealerCard().getValue().getCards()).hasSize(2),
+                () -> assertThat(blackjackGame.showPlayersCards()).hasSize(2)
+        );
     }
 
     @DisplayName("플레이어가 카드를 받을 수 있는지 물어본다.")
@@ -71,7 +76,7 @@ class BlackjackGameTest {
         blackjackGame.spreadOneCardToPlayer(0);
 
         // then
-        assertThat(blackjackGame.getPlayer(0).showAllCard()).hasSize(1);
+        assertThat(blackjackGame.getPlayer(0).showAllCards().getCards()).hasSize(1);
     }
 
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다.")
@@ -169,6 +174,6 @@ class BlackjackGameTest {
         blackjackGame.spreadOneCardToDealer();
 
         // then
-        assertThat(participants.getDealer().showAllCard()).hasSize(1);
+        assertThat(participants.getDealer().showAllCards().getCards()).hasSize(1);
     }
 }

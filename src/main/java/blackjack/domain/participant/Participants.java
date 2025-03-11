@@ -2,18 +2,19 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Participants {
 
     private static final int DEALER_COUNT = 1;
     private static final int SPREAD_MULTIPLY_SIZE = 2;
 
-    private final Dealer dealer;
+    private final Gamer dealer;
     private final Players players;
 
-    public Participants(final Dealer dealer, final Players players) {
+    public Participants(final Gamer dealer, final Players players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -24,12 +25,12 @@ public class Participants {
     }
 
     public boolean canPlayerGetMoreCard(final int index) {
-        final Player player = players.getPlayer(index);
+        final Gamer player = players.getPlayer(index);
         return player.canGetMoreCard();
     }
 
     public void spreadOneCardToPlayer(final int index, final Card card) {
-        final Player player = players.getPlayer(index);
+        final Gamer player = players.getPlayer(index);
         spreadOneCard(player, card);
     }
 
@@ -53,11 +54,15 @@ public class Participants {
         return (DEALER_COUNT + players.getSize()) * SPREAD_MULTIPLY_SIZE;
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players.getPlayers());
+    public Gamer getDealer() {
+        return dealer;
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public List<String> getPlayersNames() {
+        return players.getNames();
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

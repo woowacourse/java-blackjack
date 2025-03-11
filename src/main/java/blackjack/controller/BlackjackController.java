@@ -4,6 +4,7 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.ResultStatus;
 import blackjack.domain.card.CardManager;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -32,9 +33,9 @@ public class BlackjackController {
         final Participants participants = makeParticipants();
         final BlackjackGame blackjackGame = new BlackjackGame(cardManager, participants);
 
-        spreadInitialCards(blackjackGame, participants);
+        spreadInitialCards(blackjackGame);
         spreadExtraCards(blackjackGame);
-        resultView.printCardsAndSum(participants);
+        resultView.makeParticipantsWithSumMessage(blackjackGame.showDealerCard(), blackjackGame.showPlayersCards());
         showWinningResult(blackjackGame);
     }
 
@@ -52,9 +53,10 @@ public class BlackjackController {
                 .toList());
     }
 
-    private void spreadInitialCards(final BlackjackGame blackjackGame, final Participants participants) {
+    private void spreadInitialCards(final BlackjackGame blackjackGame) {
         blackjackGame.spreadInitialCards();
-        resultView.printSpreadCard(participants);
+        resultView.printSpreadCard(blackjackGame.getPlayersNames(), blackjackGame.showInitialDealerCard(),
+                blackjackGame.showInitialPlayersCards());
     }
 
     private void spreadExtraCards(final BlackjackGame blackjackGame) {
@@ -69,14 +71,14 @@ public class BlackjackController {
     }
 
     private void spreadExtraCards(final BlackjackGame blackjackGame, final int index) {
-        final Player player = blackjackGame.getPlayer(index);
-        while (blackjackGame.canPlayerMoreCard(index) && isMoreCard(player)) {
+        final Gamer gamer = blackjackGame.getPlayer(index);
+        while (blackjackGame.canPlayerMoreCard(index) && isMoreCard(gamer)) {
             blackjackGame.spreadOneCardToPlayer(index);
-            resultView.printParticipantTotalCards(player);
+            resultView.printParticipantTotalCards(gamer.getNickname(), gamer.showAllCards());
         }
     }
 
-    private boolean isMoreCard(final Player player) {
+    private boolean isMoreCard(final Gamer player) {
         String answer = inputView.askMoreCard(player);
         if (isValidAnswer(answer)) {
             return answer.equals(YES);
