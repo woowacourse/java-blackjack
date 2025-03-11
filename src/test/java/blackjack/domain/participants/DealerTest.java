@@ -30,9 +30,7 @@ public class DealerTest {
                 new Card(Suit.SPADE, Rank.ONE)
         ));
 
-        Dealer dealer = new Dealer(
-                players,
-                new Deck(cards));
+        Dealer dealer = new Dealer(players, new Deck(cards));
 
         //when
         dealer.prepareBlackjack();
@@ -207,11 +205,7 @@ public class DealerTest {
                 new Card(Suit.HEART, Rank.ONE),
                 new Card(Suit.SPADE, Rank.ONE)
         ));
-        Dealer dealer = new Dealer(
-                players,
-                new Deck(cards),
-                new Cards(dealerCards)
-        );
+        Dealer dealer = new Dealer(players, new Deck(cards), new Cards(dealerCards));
 
         //when & then
         Assertions.assertThat(dealer.isBlackjack()).isTrue();

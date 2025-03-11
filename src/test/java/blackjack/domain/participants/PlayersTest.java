@@ -33,9 +33,7 @@ class PlayersTest {
     @Test
     void 플레이어_수가_최소_2명을_넘지_않으면_예외가_발생한다() {
         //given
-        List<Player> players = List.of(
-                new Player("pobi", new Cards(List.of()))
-        );
+        List<Player> players = List.of(new Player("pobi", new Cards(List.of())));
 
         //when & then
         assertThatThrownBy(() -> new Players(players))

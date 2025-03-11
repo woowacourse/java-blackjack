@@ -15,7 +15,7 @@ import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class VictoryTest {
+public class GameResultTest {
     @Test
     void 플레이어의_승패를_저장할_수_있다() {
         //given
@@ -45,11 +45,7 @@ public class VictoryTest {
                 new Card(Suit.HEART, Rank.ONE),
                 new Card(Suit.SPADE, Rank.ONE)
         ));
-        Dealer dealer = new Dealer(
-                players,
-                new Deck(cards),
-                new Cards(dealerCards)
-        );
+        Dealer dealer = new Dealer(players, new Deck(cards), new Cards(dealerCards));
 
         Map<Player, WinningResult> playerVictoryResults =
                 Map.of(pobi, WinningResult.LOSE,
