@@ -2,8 +2,6 @@ package domain;
 
 import java.util.List;
 
-import domain.constant.DuelResult;
-
 public class Participant {
 	private final CardHand hand;
 	private final DuelHistory duelHistory;

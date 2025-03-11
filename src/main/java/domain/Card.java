@@ -2,8 +2,6 @@ package domain;
 
 import java.util.Objects;
 
-import domain.constant.Suit;
-
 public record Card(
 	Rank rank,
 	Suit suit

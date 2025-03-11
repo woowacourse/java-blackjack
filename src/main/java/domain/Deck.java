@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import domain.constant.Suit;
-
 public class Deck {
 	private final Queue<Card> deck;
 
