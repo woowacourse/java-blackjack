@@ -12,8 +12,8 @@ public class Dealer {
         this.cards = cards;
     }
 
-    public int calculateMaxScore() {
-        return cards.calculateMaxScore();
+    public void prepareCards(Deck deck) {
+        cards.take(deck.draw(), deck.draw());
     }
 
     public void drawAdditionalCard(Deck deck) {
@@ -22,8 +22,8 @@ public class Dealer {
         }
     }
 
-    public void prepareCards(Deck deck) {
-        cards.take(deck.draw(), deck.draw());
+    public int calculateMaxScore() {
+        return cards.calculateMaxScore();
     }
 
     public Cards getCards() {
