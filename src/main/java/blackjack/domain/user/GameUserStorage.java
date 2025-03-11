@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import blackjack.domain.game.GameRule;
 import blackjack.exception.ExceptionMessage;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -10,14 +9,14 @@ import java.util.Set;
 
 public class GameUserStorage {
 
-    private final List<Player> players = new ArrayList<>();
+    private List<Player> players;
     private Dealer dealer;
 
     public void initialize(List<Nickname> nicknames) {
         validatePlayerCount(nicknames);
         validateDuplicatedPlayer(nicknames);
-        addPlayers(nicknames);
-        addDealer();
+        makePlayers(nicknames);
+        makeDealer();
     }
 
     public List<Player> getPlayers() {
@@ -42,13 +41,13 @@ public class GameUserStorage {
         }
     }
 
-    private void addPlayers(List<Nickname> nicknames) {
-        nicknames.stream()
+    private void makePlayers(List<Nickname> nicknames) {
+        players = nicknames.stream()
                 .map(Player::new)
-                .forEach(players::add);
+                .toList();
     }
 
-    private void addDealer() {
+    private void makeDealer() {
         dealer = new Dealer();
     }
 }

@@ -8,12 +8,16 @@ import java.util.Queue;
 
 public class CardDeck {
 
-    private CardGenerator cardGenerator;
-    private Queue<Card> cards = new ArrayDeque<>();
+    private final CardGenerator cardGenerator;
+    private final Queue<Card> cards = new ArrayDeque<>();
 
     public CardDeck(CardGenerator cardGenerator) {
         this.cardGenerator = cardGenerator;
+    }
+
+    public void initialize() {
         List<Card> shuffledCards = cardGenerator.makeShuffled();
+        this.cards.clear();
         this.cards.addAll(shuffledCards);
     }
 

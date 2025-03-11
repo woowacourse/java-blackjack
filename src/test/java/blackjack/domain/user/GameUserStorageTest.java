@@ -15,7 +15,7 @@ class GameUserStorageTest {
     GameUserStorage gameUserStorage = new GameUserStorage();
 
     @Test
-    @DisplayName("입력된 닉네임으로 플레이어를 추가할 수 있다.")
+    @DisplayName("입력된 닉네임으로 플레이어를 등록할 수 있다.")
     void canRegisterPlayer() {
         List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         gameUserStorage.initialize(nicknames);

@@ -25,11 +25,16 @@ public class GameManager {
     }
 
     public void runGame(List<Nickname> nicknames) {
+        initializeCardDeck();
         registerPlayer(nicknames);
         distributeInitialCard();
         processPlayerTurns();
         processDealerTurns();
         outputGameResult();
+    }
+
+    private void initializeCardDeck() {
+        cardDeck.initialize();
     }
 
     private void registerPlayer(List<Nickname> nicknames) {
