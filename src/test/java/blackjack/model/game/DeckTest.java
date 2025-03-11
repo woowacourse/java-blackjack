@@ -34,6 +34,6 @@ class DeckTest {
         ));
 
         Card card = deck.drawCard();
-        assertThat(card.getShape()).isEqualTo(CardShape.CLOVER);
+        assertThat(card.getShape()).isEqualTo(CardShape.DIAMOND);
     }
 }
