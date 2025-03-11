@@ -80,7 +80,7 @@ public class BlackjackParticipantsManager {
 
     public boolean isBust(String name) {
         BlackjackParticipant player = findPlayer(name);
-        return !player.isBurst(player.calculateCardSum());
+        return player.isBUST(player.calculateCardSum());
     }
 
     public void addCard(String name, TrumpCard trumpCard) {

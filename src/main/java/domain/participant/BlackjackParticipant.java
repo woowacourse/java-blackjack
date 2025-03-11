@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class BlackjackParticipant {
 
-    private static final int BURST_STANDARD = 21;
+    private static final int BUST_STANDARD = 21;
     private static final int ACE_DIFF = 10;
     private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21장 이상 받을 수 없습니다";
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
@@ -33,7 +33,7 @@ public abstract class BlackjackParticipant {
     }
 
     public void addDraw(TrumpCard trumpCard) {
-        if (isBurst(calculateCardSum())) {
+        if (isBUST(calculateCardSum())) {
             throw new IllegalStateException(INVALID_CARD_STATE);
         }
         cardHands.add(trumpCard);
@@ -53,7 +53,7 @@ public abstract class BlackjackParticipant {
     }
 
     private int calculateAceIncludeSum(int aceCount, int sum) {
-        if (isBurst(sum) && aceCount != 0) {
+        if (isBUST(sum) && aceCount != 0) {
             return calculateAceIncludeSum(aceCount - 1, sum - ACE_DIFF);
         }
         return sum;
@@ -65,8 +65,8 @@ public abstract class BlackjackParticipant {
         }
     }
 
-    public boolean isBurst(int number) {
-        return BURST_STANDARD < number;
+    public boolean isBUST(int number) {
+        return BUST_STANDARD < number;
     }
 
     abstract public boolean isDrawable();
