@@ -20,7 +20,7 @@ class WinningStatusTest {
         looser.addCard(HEART_9);
         looser.addCard(HEART_1);
         
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.승리);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.플레이어_승리);
     }
     
     @Test
@@ -34,7 +34,7 @@ class WinningStatusTest {
         looser.addCard(DIAMOND_9);
         looser.addCard(HEART_1);
         
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.패배);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.플레이어_패배);
     }
     
     @Test
@@ -63,7 +63,7 @@ class WinningStatusTest {
         looser.addCard(HEART_9);
         looser.addCard(HEART_3);
         
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.승리);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.플레이어_승리);
     }
     
     @Test

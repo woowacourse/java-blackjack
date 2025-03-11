@@ -3,9 +3,9 @@ package blackjack.domain;
 import blackjack.domain.card_hand.BlackjackWinDeterminable;
 
 public enum WinningStatus {
-    승리,
+    플레이어_승리,
     무승부,
-    패배,
+    플레이어_패배,
     ;
     
     public static WinningStatus determineWinningStatus(
@@ -25,19 +25,19 @@ public enum WinningStatus {
             return getSameScoreConditionResult(condition);
         }
         if (condition.isMyHandLarger()) {
-            return WinningStatus.승리;
+            return WinningStatus.플레이어_승리;
         }
-        return WinningStatus.패배;
+        return WinningStatus.플레이어_패배;
     }
     
     private static WinningStatus getBustConditionResult(
             final BlackjackWinDetermineCondition condition
     ) {
         if (condition.isMyHandOnlyBust()) {
-            return WinningStatus.패배;
+            return WinningStatus.플레이어_패배;
         }
         if (condition.isOpponentHandOnlyBust()) {
-            return WinningStatus.승리;
+            return WinningStatus.플레이어_승리;
         }
         return WinningStatus.무승부;
     }
@@ -46,10 +46,10 @@ public enum WinningStatus {
             final BlackjackWinDetermineCondition condition
     ) {
         if (condition.isMyHandOnlyBlackjack()) {
-            return WinningStatus.승리;
+            return WinningStatus.플레이어_승리;
         }
         if (condition.isOpponentHandOnlyBlackjack()) {
-            return WinningStatus.패배;
+            return WinningStatus.플레이어_패배;
         }
         return WinningStatus.무승부;
     }

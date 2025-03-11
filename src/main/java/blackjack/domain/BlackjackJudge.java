@@ -33,11 +33,11 @@ public final class BlackjackJudge {
     }
     
     public int getDealerWinningCount() {
-        return calculateDealerWinningStatusCountOf(WinningStatus.승리);
+        return calculateDealerWinningStatusCountOf(WinningStatus.플레이어_승리);
     }
     
     public int getDealerLosingCount() {
-        return calculateDealerWinningStatusCountOf(WinningStatus.패배);
+        return calculateDealerWinningStatusCountOf(WinningStatus.플레이어_패배);
     }
     
     public int getDealerDrawingCount() {

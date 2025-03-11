@@ -111,9 +111,9 @@ public class BlackjackJudgeTest {
     
     private static Stream<Arguments> provideCardsAndWinningStatus() {
         return Stream.of(
-                Arguments.of(List.of(DIAMOND_10, DIAMOND_9), WinningStatus.승리),
+                Arguments.of(List.of(DIAMOND_10, DIAMOND_9), WinningStatus.플레이어_승리),
                 Arguments.of(List.of(DIAMOND_10, HEART_6), WinningStatus.무승부),
-                Arguments.of(List.of(DIAMOND_10, HEART_5), WinningStatus.패배)
+                Arguments.of(List.of(DIAMOND_10, HEART_5), WinningStatus.플레이어_패배)
         );
     }
 }
