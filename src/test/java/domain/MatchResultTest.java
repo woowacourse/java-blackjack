@@ -4,8 +4,10 @@ import static domain.MatchResult.DRAW;
 import static domain.MatchResult.LOSE;
 import static domain.MatchResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
+import domain.participant.Player;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,5 +42,20 @@ class MatchResultTest {
     @DisplayName("무승부 테스트")
     void calculateDrawTest() {
         assertThat(MatchResult.calculateWinner(17, 17)).isEqualTo(DRAW);
+    }
+
+    @Test
+    @DisplayName("딜러 결과 산출 테스트")
+    void calculateDealerResultTest() {
+        Map<Player, MatchResult> playerResult = new HashMap<>();
+        playerResult.put(new Player("pobi"), WIN);
+        playerResult.put(new Player("lisa"), DRAW);
+        playerResult.put(new Player("neo"), LOSE);
+
+        Map<MatchResult, Integer> dealerResult = MatchResult.calculateDealerResult(playerResult);
+
+        assertThat(dealerResult.get(WIN)).isEqualTo(1);
+        assertThat(dealerResult.get(DRAW)).isEqualTo(1);
+        assertThat(dealerResult.get(LOSE)).isEqualTo(1);
     }
 }
