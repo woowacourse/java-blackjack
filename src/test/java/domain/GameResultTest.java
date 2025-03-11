@@ -8,10 +8,6 @@ import org.junit.jupiter.api.Test;
 
 class GameResultTest {
 
-    private Hand createHand(TrumpCard... cards) {
-        return new Hand(List.of(cards));
-    }
-
     @DisplayName("딜러와 플레이어 둘 다 블랙잭인 경우")
     @Test
     void bothHasBlackjack() {
