@@ -18,10 +18,6 @@ public class CardDeck {
         cards.add(card);
     }
 
-    public int cardsSize() {
-        return cards.size();
-    }
-
     public List<TrumpCard> getFirstCard() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("카드가 비었습니다.");

@@ -23,17 +23,4 @@ public class TrumpCard {
         return cardNumber.getValue();
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-        TrumpCard trumpCard = (TrumpCard) object;
-        return cardShape == trumpCard.cardShape && cardNumber == trumpCard.cardNumber;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardShape, cardNumber);
-    }
 }
