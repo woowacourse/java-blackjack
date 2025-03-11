@@ -45,10 +45,6 @@ public enum MatchResult {
                 dealer.computeOptimalSum());
     }
 
-    public static List<MatchResult> sortedValues() {
-        return List.of(WIN, LOSE, DRAW);
-    }
-
     public String getTitle() {
         return title;
     }

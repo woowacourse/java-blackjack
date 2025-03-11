@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,9 +75,8 @@ public class Blackjack {
 
     public Map<MatchResult, Integer> computeDealerMatchResult() {
         Map<String, MatchResult> participantNameAndMatchResult = computeParticipantsMatchResult();
-        Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
-        MatchResult.sortedValues().forEach(matchResult -> matchResultCount.put(matchResult, 0));
-        
+        Map<MatchResult, Integer> matchResultCount = new EnumMap<>(MatchResult.class);
+
         participantNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
                 matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
 
@@ -86,9 +86,8 @@ public class Blackjack {
     public Map<String, MatchResult> computeParticipantsMatchResult() {
         Map<String, MatchResult> participantNameAndMatchResult = new LinkedHashMap<>();
         Player dealer = getDealer();
-        List<Player> participants = getParticipants();
 
-        for (Player participant : participants) {
+        for (Player participant : getParticipants()) {
             MatchResult matchResult = MatchResult.calculateParticipantMatchResult(dealer, participant);
             participantNameAndMatchResult.put(participant.getName(), matchResult);
         }
