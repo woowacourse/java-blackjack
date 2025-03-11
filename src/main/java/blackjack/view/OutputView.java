@@ -3,93 +3,94 @@ package blackjack.view;
 import blackjack.domain.GameResult;
 import blackjack.domain.GameResults;
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printInitCards(final Players players) {
-        String gamblersMessage = players.getGamblers()
+    private static final String NEW_LINE = System.lineSeparator();
+
+    public void printInitCardsToPlayers(final Players players) {
+        String playerNames = players.getGamblers()
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", gamblersMessage);
-        printCards(players);
+        System.out.printf(NEW_LINE + "딜러와 %s에게 2장을 나누었습니다." + NEW_LINE, playerNames);
+        printCardsToPlayers(players);
     }
 
-    public void printCards(final Players players) {
-        List<Player> playersList = getDealerGamblerList(players.getDealer(), players.getGamblers());
-        playersList.forEach(this::printCardsMessage);
-        System.out.println();
-    }
+    public void printCardsToPlayer(final Player player) {
+        String cards = player.getCards().getCards().stream()
+                .map(this::formatCardMessage)
+                .collect(Collectors.joining(", "));
 
-    public void printCardsMessage(final Player player) {
-        System.out.println(getCardsMessage(player.getName(), player.getOpenedCards()));
+        System.out.printf("%s카드: %s",
+                cards,
+                player.getName()
+        );
     }
 
     public void printDealerHitAndDealCard() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printTotalCardsMessage(final Players players) {
-        List<Player> playersList = getDealerGamblerList(players.getDealer(), players.getGamblers());
-        System.out.println();
-        System.out.println();
-        playersList.forEach(player -> System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.calculateCardNumbers()));
+    public void printResultCardsToPlayers(final Players players) {
+        printResultCardsToPlayer(players.getDealer());
+        players.getGamblers().forEach(this::printResultCardsToPlayer);
     }
 
     public void printGameResults(final Players players, final GameResults gameResults) {
         List<Gambler> gamblers = players.getGamblers();
-        Player dealer = players.getDealer();
-        System.out.println("## 최종 승패");
-        System.out.printf("%s: %s\n", dealer.getName(), getDealerWinLoseMessage(gameResults));
-        gamblers.forEach(gambler ->
-                System.out.println(gambler.getName() + ": " + getGamblerWinLoseMessage(gambler, gameResults)));
-    }
+        Dealer dealer = players.getDealer();
 
-    public String getDealerWinLoseMessage(final GameResults gameResults) {
-        StringBuilder dealerWinLoseRate = new StringBuilder();
-        if (gameResults.getDealerWin() > 0) {
-            dealerWinLoseRate.append(String.format("%d승 ", gameResults.getDealerWin()));
-        }
-        if (gameResults.getDealerDraw() > 0) {
-            dealerWinLoseRate.append(String.format("%d무 ", gameResults.getDealerDraw()));
-        }
-        if (gameResults.getDealerLose() > 0) {
-            dealerWinLoseRate.append(String.format("%d패 ", gameResults.getDealerLose()));
-        }
-        return dealerWinLoseRate.toString();
+        System.out.println("## 최종 승패");
+        System.out.printf("%s: %s" + NEW_LINE, dealer.getName(), formatDealerResultRate(gameResults));
+
+        gamblers.forEach(gambler ->
+                System.out.println(gambler.getName() + ": " + formatPlayerResultRate(gambler, gameResults)));
     }
 
     public void printErrorMessage(String message) {
         System.out.println(message);
     }
 
-    private String getGamblerWinLoseMessage(final Player gambler, final GameResults gameResults) {
+    private void printCardsToPlayers(final Players players) {
+        printCardsToPlayer(players.getDealer());
+        players.getGamblers().forEach(this::printCardsToPlayer);
+        System.out.println();
+    }
+
+    private String formatCardMessage(Card card) {
+        return CardNumberView.getNumberMessage(card.getNumber()) + CardShapeView.getShapeMessage(card.getShape());
+    }
+
+    private void printResultCardsToPlayer(final Player player) {
+        printCardsToPlayer(player);
+        System.out.printf(" - 결과: %d" + NEW_LINE, player.getCardScore());
+    }
+
+    private String formatDealerResultRate(final GameResults gameResults) {
+        StringBuilder dealerRate = new StringBuilder();
+        if (gameResults.getDealerWin() > 0) {
+            dealerRate.append(String.format("%d승 ", gameResults.getDealerWin()));
+        }
+        if (gameResults.getDealerDraw() > 0) {
+            dealerRate.append(String.format("%d무 ", gameResults.getDealerDraw()));
+        }
+        if (gameResults.getDealerLose() > 0) {
+            dealerRate.append(String.format("%d패 ", gameResults.getDealerLose()));
+        }
+        return dealerRate.toString();
+    }
+
+    private String formatPlayerResultRate(final Player gambler, final GameResults gameResults) {
         GameResult result = gameResults.getGameResult(gambler);
         return GameResultView.getShapeMessage(result);
-    }
-
-    private String getCardsMessage(String name, List<Card> cards) {
-        String cardsMessage = cards.stream().map(this::getCardMessage).collect(Collectors.joining(", "));
-        return String.format("%s카드: %s", name, cardsMessage);
-    }
-
-    private String getCardMessage(Card card) {
-        return CardNumberView.getNumberMessage(card.getNumber()) +
-                CardShapeView.getShapeMessage(card.getShape());
-    }
-
-    private List<Player> getDealerGamblerList(Player dealer, List<Gambler> gamblers) {
-        List<Player> allPlayers = new ArrayList<>();
-        allPlayers.add(dealer);
-        allPlayers.addAll(gamblers);
-        return allPlayers;
     }
 }
