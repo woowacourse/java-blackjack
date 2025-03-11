@@ -46,17 +46,6 @@ public class BlackjackController {
         printProfit(players, dealer, bettingAmounts);
     }
 
-    private void printProfit(final Players players, final Dealer dealer, final BettingAmounts bettingAmounts) {
-        outputView.printGameResultHeader();
-        GameResults gameResults = calculateGameResults(players, dealer);
-        outputView.printProfitWithName("딜러", gameResults.calculateDealerProfit(players, bettingAmounts));
-        players.getNames().forEach(name ->
-                outputView.printProfitWithName(
-                        name,
-                        bettingAmounts.findByName(name).getProfitByGameResult(gameResults.getGameResultByName(name)))
-        );
-    }
-
     private BettingAmounts initializeBettingAmounts(final List<String> names) {
         return new BettingAmounts(names.stream()
                 .collect(Collectors.toMap(
@@ -123,5 +112,16 @@ public class BlackjackController {
 
     private List<CardDto> getCardDtos(final Cards cards) {
         return cards.getCards().stream().map(CardDto::from).toList();
+    }
+
+    private void printProfit(final Players players, final Dealer dealer, final BettingAmounts bettingAmounts) {
+        outputView.printGameResultHeader();
+        GameResults gameResults = calculateGameResults(players, dealer);
+        outputView.printProfitWithName("딜러", gameResults.calculateDealerProfit(players, bettingAmounts));
+        players.getNames().forEach(name ->
+                outputView.printProfitWithName(
+                        name,
+                        bettingAmounts.findByName(name).getProfitByGameResult(gameResults.getGameResultByName(name)))
+        );
     }
 }

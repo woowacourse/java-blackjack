@@ -5,20 +5,33 @@ import model.gameresult.GameResult;
 
 public class Judge {
     public GameResult determineGameResult(final Cards dealerCards, final Cards playerCards) {
-        if (playerCards.isBust()) {
+        boolean playerBust = playerCards.isBust();
+        boolean dealerBust = dealerCards.isBust();
+        boolean playerBlackjack = playerCards.isBlackjack();
+        boolean dealerBlackjack = dealerCards.isBlackjack();
+        int playerScore = playerCards.calculateResult();
+        int dealerScore = dealerCards.calculateResult();
+
+        if (playerBust) {
             return GameResult.LOSE;
         }
-        if (dealerCards.isBust()) {
+        if (dealerBust) {
             return GameResult.WIN;
         }
-        if (playerCards.calculateResult() > dealerCards.calculateResult()) {
-            return GameResult.WIN;
-        }
-        if (playerCards.calculateResult() < dealerCards.calculateResult()) {
-            return GameResult.LOSE;
-        }
-        if (playerCards.calculateResult() == dealerCards.calculateResult()) {
+        if (playerBlackjack && dealerBlackjack) {
             return GameResult.DRAW;
+        }
+        if (playerBlackjack) {
+            return GameResult.WIN;
+        }
+        if (dealerBlackjack) {
+            return GameResult.LOSE;
+        }
+        if (playerScore > dealerScore) {
+            return GameResult.WIN;
+        }
+        if (playerScore < dealerScore) {
+            return GameResult.LOSE;
         }
         return GameResult.DRAW;
     }

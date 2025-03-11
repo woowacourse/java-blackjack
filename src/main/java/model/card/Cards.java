@@ -69,4 +69,8 @@ public class Cards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public boolean isBlackjack() {
+        return getCardsSize() == 2 && calculateResult() == 21;
+    }
 }
