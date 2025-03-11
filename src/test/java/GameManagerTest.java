@@ -126,7 +126,7 @@ public class GameManagerTest {
                         List.of(
                                 new TrumpCard(CardShape.DIA, CardNumber.ACE),
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J)),
-                        GameManger.MOO),
+                        GameManger.DRAW),
                 Arguments.arguments(
                         List.of(
                                 new TrumpCard(CardShape.DIA, CardNumber.FIVE),
@@ -145,7 +145,7 @@ public class GameManagerTest {
                                 new TrumpCard(CardShape.DIA, CardNumber.ACE),
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J),
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J)),
-                        GameManger.MOO)
+                        GameManger.DRAW)
         );
     }
 

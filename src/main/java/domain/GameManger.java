@@ -13,7 +13,7 @@ import java.util.Set;
 public class GameManger {
     public final static int WIN = 1;
     public final static int LOSE = 2;
-    public final static int MOO = 3;
+    public final static int DRAW = 3;
 
     private final List<Player> users = new ArrayList<>();
     private final Dealer dealer;
@@ -77,7 +77,7 @@ public class GameManger {
         if (dealer.getCardHand().isBlackjack() && !player.getCardHand().isBlackjack()) {
             return LOSE;
         }
-        return MOO;
+        return DRAW;
     }
 
     public Map<User, Integer> createGameResult() {
