@@ -12,7 +12,7 @@ public class RandomCardsShuffler implements CardsShuffler {
         while (!cards.isEmpty()) {
             shuffledCard.add(cards.pop());
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(shuffledCard);
         Collections.reverse(shuffledCard);
         cards.addAll(shuffledCard);
     }
