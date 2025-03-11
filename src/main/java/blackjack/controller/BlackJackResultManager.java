@@ -1,38 +1,27 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
 import blackjack.domain.GameResultType;
 import blackjack.domain.GameResultTypeJudgement;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.PlayersResult;
+import blackjack.domain.Result;
 import blackjack.dto.ResultDto;
 
 public class BlackJackResultManager {
 
     public ResultDto calculateCardResult(Players players, Dealer dealer) {
-        PlayersResult playersResult = new PlayersResult();
-        DealerResult dealerResult = new DealerResult();
+        Result result = new Result();
 
         for (Player player : players.getPlayers()) {
-            saveResult(dealer, player, playersResult, dealerResult);
+            saveResult(dealer, player, result);
         }
 
-        return new ResultDto(playersResult.getAllResult(), dealerResult.getDealerResult());
+        return new ResultDto(result.getPlayersResult(), result.getDealerResult());
     }
 
-    private void saveResult(Dealer dealer, Player player, PlayersResult playersResult, DealerResult dealerResult) {
+    private void saveResult(Dealer dealer, Player player, Result result) {
         GameResultType gameResultType = GameResultTypeJudgement.findForPlayer(player, dealer);
-        saveResultWithPlayerResult(player, gameResultType, playersResult, dealerResult);
-
-    }
-
-    public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer,
-                                           PlayersResult playersResult, DealerResult dealerResult) {
-        GameResultType gameResultOfDealer = gameResultOfPlayer.getOppositeType();
-
-        playersResult.save(player, gameResultOfPlayer);
-        dealerResult.addCountOf(gameResultOfDealer);
+        result.save(player, gameResultType);
     }
 }
