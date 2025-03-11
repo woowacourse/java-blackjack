@@ -1,15 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DistributedCardDto;
+import blackjack.dto.CardInfoDto;
 import blackjack.dto.FinalResultDto;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    public void displayCardDistribution(final DistributedCardDto dealerDto, final List<DistributedCardDto> playerDtos) {
+    public void displayCardDistribution(final CardInfoDto dealerDto, final List<CardInfoDto> playerDtos) {
 
         displayDistributionNotice(dealerDto, playerDtos);
         displayFirstCardOfDealer(dealerDto);
@@ -17,7 +16,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private void displayDistributionNotice(DistributedCardDto dealerDto, List<DistributedCardDto> playerDtos) {
+    private void displayDistributionNotice(CardInfoDto dealerDto, List<CardInfoDto> playerDtos) {
         StringBuilder sb = new StringBuilder();
         sb.append(System.lineSeparator());
         sb.append(String.format("%s와 ", dealerDto.name()));
@@ -27,7 +26,7 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    private void displayFirstCardOfDealer(final DistributedCardDto dealerDto) {
+    private void displayFirstCardOfDealer(final CardInfoDto dealerDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(dealerDto.name() + "카드: ");
         sb.append(dealerDto.cardInfos().getFirst());
@@ -35,7 +34,7 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public void displayCardInfo(final DistributedCardDto participantDto) {
+    public void displayCardInfo(final CardInfoDto participantDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(participantDto.name() + "카드: ");
         sb.append(String.join(", ", participantDto.cardInfos()));
