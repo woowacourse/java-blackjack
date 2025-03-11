@@ -5,8 +5,8 @@ import java.util.List;
 public class CardDeck {
     private final List<Card> cards;
 
-    public CardDeck(List<Card> cards) {
-        this.cards = cards;
+    public CardDeck(CardsInitializer cardsInitializer) {
+        this.cards = cardsInitializer.initialize();
     }
 
     public Card extractCard() {

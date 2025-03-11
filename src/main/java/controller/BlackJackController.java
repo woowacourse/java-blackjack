@@ -2,9 +2,9 @@ package controller;
 
 import domain.BlackjackMatchResult;
 import domain.CardDeck;
-import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Player;
+import domain.StandardCardsInitializer;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -18,16 +18,14 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardsInitializer cardsInitializer;
 
-    public BlackJackController(InputView inputView, OutputView outputView, CardsInitializer cardsInitializer) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardsInitializer = cardsInitializer;
     }
 
     public void run() {
-        CardDeck deck = new CardDeck(cardsInitializer.initialize());
+        CardDeck deck = new CardDeck(new StandardCardsInitializer());
         List<Player> players = setPlayers();
         Dealer dealer = new Dealer();
 

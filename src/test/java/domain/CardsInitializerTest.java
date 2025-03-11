@@ -15,7 +15,7 @@ class CardsInitializerTest {
     @Test
     void createCards() {
         //given
-        CardsInitializer cardsInitializer = new CardsInitializer();
+        StandardCardsInitializer cardsInitializer = new StandardCardsInitializer();
 
         //when
         assertThatCode(cardsInitializer::initialize)
@@ -27,7 +27,7 @@ class CardsInitializerTest {
     @Test
     void notDuplicatedCards() {
         //given
-        CardsInitializer cardsInitializer = new CardsInitializer();
+        StandardCardsInitializer cardsInitializer = new StandardCardsInitializer();
 
         //when
         List<Card> cards = cardsInitializer.initialize();
