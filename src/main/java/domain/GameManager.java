@@ -1,8 +1,8 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameManager {
 
@@ -18,24 +18,12 @@ public class GameManager {
     }
 
     private Participants createParticipants(List<String> playerNames) {
-        Participants initialParticipants = new Participants(new ArrayList<>());
-        addPlayers(playerNames, initialParticipants);
-        addDealer(initialParticipants);
-        return initialParticipants;
-    }
-
-    private void addPlayers(List<String> playerNames, Participants initialParticipants) {
-        playerNames.stream()
+        List<Participant> participants = playerNames.stream()
                 .map(ParticipantName::new)
-                .forEach(name -> {
-                    Player player = new Player(name, new Cards(provider.provideCards(INITIAL_DRAW_SIZE)));
-                    initialParticipants.add(player);
-                });
-    }
-
-    private void addDealer(Participants initialParticipants) {
-        Dealer dealer = new Dealer(new Cards(provider.provideCards(INITIAL_DRAW_SIZE)));
-        initialParticipants.add(dealer);
+                .map(name -> new Player(name, new Cards(provider.provideCards(INITIAL_DRAW_SIZE))))
+                .collect(Collectors.toList());
+        participants.add(new Dealer(new Cards(provider.provideCards(INITIAL_DRAW_SIZE))));
+        return new Participants(participants);
     }
 
     public Participant findDealer() {
