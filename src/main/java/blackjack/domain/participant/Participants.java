@@ -19,9 +19,8 @@ public class Participants {
     }
 
     public void spreadAllTwoCards(final Cards cards) {
-        final int size = SPREAD_MULTIPLY_SIZE;
-        dealer.receiveCards(cards.getPartialCards(0, size));
-        players.receiveCards(cards.getPartialCards(size, cards.getSize()), size);
+        dealer.receiveCards(cards.getPartialCards(0, SPREAD_MULTIPLY_SIZE));
+        players.receiveCards(cards.getPartialCards(SPREAD_MULTIPLY_SIZE, cards.getSize()), SPREAD_MULTIPLY_SIZE);
     }
 
     public boolean canPlayerGetMoreCard(final int index) {
