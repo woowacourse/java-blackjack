@@ -22,9 +22,9 @@ public class RandomCardGenerator implements CardGenerator {
 
     @Override
     public Card peekRandomCard() {
-        try{
+        try {
             return cardTypes.removeFirst();
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new IllegalStateException("[ERROR] 카드를 모두 소진하였습니다.");
         }
     }

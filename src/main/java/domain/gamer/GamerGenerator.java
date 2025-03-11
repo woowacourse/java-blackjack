@@ -28,8 +28,8 @@ public class GamerGenerator {
         }
     }
 
-    private static void validatePLayerNumber(final List<String> playerNames){
-        if(playerNames.size() > 7){
+    private static void validatePLayerNumber(final List<String> playerNames) {
+        if (playerNames.size() > 7) {
             throw new IllegalArgumentException("[ERROR] 플레이어 인원 수느 7명을 초과할 수 없습니다.");
         }
     }

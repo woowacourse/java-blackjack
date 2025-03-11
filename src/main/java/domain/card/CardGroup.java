@@ -43,7 +43,7 @@ public class CardGroup {
         return count;
     }
 
-    private boolean isOverHitRule(int score){
+    private boolean isOverHitRule(int score) {
         return score > LIMIT;
     }
 
