@@ -1,33 +1,19 @@
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import domain.blackjackgame.BlackjackDeck;
 import domain.blackjackgame.BlackjackDeckGenerator;
-import domain.blackjackgame.BlackjackGame;
-import domain.blackjackgame.BlackjackResult;
-import domain.blackjackgame.CardValue;
-import domain.blackjackgame.Suit;
-import domain.blackjackgame.TrumpCard;
-import domain.participant.Dealer;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import domain.strategy.BlackjackDrawStrategy;
+import exception.BlackJackException;
 import org.junit.jupiter.api.Test;
-import strategy.TestDrawStrategy;
 
 public class BlackjackDeckGeneratorTest {
 
     @Test
-    void 블랙잭_승리_() {
-        Deque<TrumpCard> trumpCards = new LinkedList<>(
-                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
-                        new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.NINE),
-                        new TrumpCard(Suit.CLOVER, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.J)));
-
-        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
-
-        Dealer dealer = new Dealer();
-        List<String> names = List.of("포비", "루키");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
-        BlackjackResult dealerBlackjackResult = blackjackGame.currentDealerBlackjackResult();
-        List<BlackjackResult> playerBlackjackResult = blackjackGame.currentPlayerBlackjackResult();
-
+    void 블랙잭_카드는_52장만_만들어진다() {
+        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
+        for (int i = 0; i < 52; i++) {
+            deck.drawCard();
+        }
+        assertThatThrownBy(deck::drawCard).isInstanceOf(BlackJackException.class);
     }
 }
