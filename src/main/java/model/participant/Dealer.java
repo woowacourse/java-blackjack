@@ -23,7 +23,7 @@ public class Dealer extends Participant {
         return new Dealer(DEALER_NAME);
     }
 
-    public ResultType compareTo(Player player) {
+    public ResultType createGameResult(Player player) {
         if (player.isBust()) {
             return ResultType.WIN_LOSE;
         }
@@ -33,11 +33,6 @@ public class Dealer extends Participant {
         return ResultType.of(cards.calculateScore().compareTo(player.cards.calculateScore()));
     }
 
-    @Override
-    public boolean isHit() {
-        return cards.isHit(HIT_CONDITION);
-    }
-
     public void updateResult(MatchType type) {
         matchResult.computeIfAbsent(type, k -> 0);
         matchResult.put(type, matchResult.get(type) + 1);
@@ -45,6 +40,11 @@ public class Dealer extends Participant {
 
     public Map<MatchType, Integer> getMatchResult() {
         return matchResult;
+    }
+
+    @Override
+    public boolean isHit() {
+        return cards.isHit(HIT_CONDITION);
     }
 
     @Override

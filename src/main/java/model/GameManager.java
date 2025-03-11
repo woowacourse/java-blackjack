@@ -46,7 +46,7 @@ public class GameManager {
 
     public void calculateVictory() {
         for (Player player : players.getPlayers()) {
-            ResultType resultType = dealer.compareTo(player);
+            ResultType resultType = dealer.createGameResult(player);
             List<MatchType> matches = resultType.getMatches();
             updateDealerResult(matches);
             updatePlayerResult(player, matches);
