@@ -1,17 +1,11 @@
 package domain;
 
-import java.util.List;
 import java.util.Objects;
 
-public class Player extends Participant<Player>{
+public class Player extends Participant {
 
     public Player(String name, Cards cards) {
         super(name, cards);
-    }
-
-    @Override
-    public Player createParticipant(List<Card> providedCards) {
-        return new Player(name.getName(), cards.addCards(providedCards));
     }
 
     @Override

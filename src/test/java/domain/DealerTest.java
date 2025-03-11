@@ -35,10 +35,12 @@ public class DealerTest {
         Card drawCard = new Card(Symbol.HEART, Number.FOUR);
         List<Card> providedCards = List.of(drawCard);
 
-        Dealer newDealer = dealer.drawCard(providedCards);
-        Dealer expectedDealer = new Dealer(new Cards(
-            List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK), drawCard)));
-        assertThat(newDealer).isEqualTo(expectedDealer);
+        dealer.drawCard(providedCards);
+        Cards expected = new Cards(List.of(
+            new Card(Symbol.DIAMOND, Number.EIGHT),
+            new Card(Symbol.CLOVER, Number.JACK),
+            drawCard));
+        assertThat(dealer.getCards()).isEqualTo(expected);
     }
 
     @Test

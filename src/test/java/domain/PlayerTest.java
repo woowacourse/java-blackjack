@@ -21,10 +21,9 @@ public class PlayerTest {
         Card drawCard = new Card(Symbol.HEART, Number.FOUR);
         List<Card> providedCards = List.of(drawCard);
 
-        Player newPlayer = player.drawCard(providedCards);
-        Player expectedPlayer = new Player("drago", new Cards(
-            List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK), drawCard)));
-        assertThat(newPlayer).isEqualTo(expectedPlayer);
+        player.drawCard(providedCards);
+        Cards expected = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK), drawCard));
+        assertThat(player.getCards()).isEqualTo(expected);
     }
 
     @Test

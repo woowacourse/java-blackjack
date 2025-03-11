@@ -36,10 +36,8 @@ public class Cards {
             .count();
     }
 
-    public Cards addCards(List<Card> providedCards) {
-        List<Card> newCards = new ArrayList<>(cards);
-        newCards.addAll(providedCards);
-        return new Cards(newCards);
+    public void addCards(List<Card> providedCards) {
+        cards.addAll(providedCards);
     }
 
     public boolean isBurst() {

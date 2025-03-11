@@ -56,11 +56,11 @@ public class CardsTest {
         Cards cards = new Cards(cardList);
 
         Card providedCard = new Card(Symbol.CLOVER, Number.EIGHT);
-        Cards newCards = cards.addCards(List.of(providedCard));
+        cards.addCards(List.of(providedCard));
 
         List<Card> newCardList = List.of(card1, card2, card3, providedCard);
         Cards expected = new Cards(newCardList);
-        assertThat(newCards).isEqualTo(expected);
+        assertThat(cards).isEqualTo(expected);
     }
 
     @Test

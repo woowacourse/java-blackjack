@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public abstract class Participant<T extends Participant<T>> {
+public abstract class Participant {
 
     protected Name name;
     protected Cards cards;
@@ -12,8 +12,8 @@ public abstract class Participant<T extends Participant<T>> {
         this.cards = cards;
     }
 
-    public T drawCard(List<Card> providedCards) {
-        return createParticipant(providedCards);
+    public void drawCard(List<Card> providedCards) {
+        cards.addCards(providedCards);
     }
 
     public boolean isBurst() {
@@ -23,8 +23,6 @@ public abstract class Participant<T extends Participant<T>> {
     public int getTotalNumberSum() {
         return cards.calculateTotalCardNumber();
     }
-
-    protected abstract T createParticipant(List<Card> cards);
 
     public int calculateDifferenceFromTwentyOne() {
         return cards.calculateDifferenceFromBurst();

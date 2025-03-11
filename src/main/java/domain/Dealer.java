@@ -1,9 +1,8 @@
 package domain;
 
-import java.util.List;
 import java.util.Objects;
 
-public class Dealer extends Participant<Dealer>{
+public class Dealer extends Participant {
 
     private static final int DEALER_DRAW_LIMIT = 16;
 
@@ -19,11 +18,6 @@ public class Dealer extends Participant<Dealer>{
 
     public Card getInitialCard() {
         return cards.getInitialCard();
-    }
-
-    @Override
-    public Dealer createParticipant(List<Card> providedCards) {
-        return new Dealer(cards.addCards(providedCards));
     }
 
     @Override

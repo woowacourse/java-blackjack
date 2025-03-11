@@ -54,8 +54,7 @@ public class BlackjackController {
 
     private Player drawAndCreateNewPlayer(Player player, boolean answer) {
         if (answer) {
-            player = gameManager.drawCard(player);
-            gameManager.editPlayers(player);
+            gameManager.drawCard(player);
         }
         return player;
     }
@@ -69,8 +68,7 @@ public class BlackjackController {
     private void drawDealerCards() {
         Dealer dealer = gameManager.findDealer();
         while (gameManager.isDealerHittable(dealer)) {
-            dealer = gameManager.drawCard(dealer);
-            gameManager.editDealer(dealer);
+            gameManager.drawCard(dealer);
             OutputView.printDealerDrawMessage();
         }
     }

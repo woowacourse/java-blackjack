@@ -50,32 +50,6 @@ public class GameManagerTest {
     }
 
     @Test
-    void 플레이어가_카드를뽑으면_새로운플레이어를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago"), new TestCardProvider());
-        Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));
-        Player player = new Player("drago", cardsOfDrago);
-
-        Cards newCardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK),
-                new Card(Symbol.SPADE, Number.KING)));
-        Player expected = new Player("drago", newCardsOfDrago);
-
-        assertThat(gameManager.drawCard(player)).isEqualTo(expected);
-    }
-
-    @Test
-    void 딜러가_카드를뽑으면_새로운딜러를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago"), new TestCardProvider());
-        Cards cardsOfDealer = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.SPADE, Number.ACE)));
-        Dealer dealer = new Dealer(cardsOfDealer);
-
-        Cards newCardsOfDealer = new Cards(List.of(
-                new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.SPADE, Number.ACE), new Card(Symbol.SPADE, Number.KING)));
-        Dealer expected = new Dealer(newCardsOfDealer);
-
-        assertThat(gameManager.drawCard(dealer)).isEqualTo(expected);
-    }
-
-    @Test
     void 최종_게임_결과를_반환한다() {
         GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
         Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));

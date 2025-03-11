@@ -9,8 +9,8 @@ public class GameManager {
     private static final int DEFAULT_DRAW_SIZE = 1;
 
     private final CardProvider provider;
-    private Players players;
-    private Dealer dealer;
+    private final Players players;
+    private final Dealer dealer;
 
     public GameManager(List<String> playerNames, CardProvider provider) {
         this.provider = provider;
@@ -36,16 +36,8 @@ public class GameManager {
         return players.findAllPlayers();
     }
 
-    public <T extends Participant<T>> T drawCard(T participant) {
-        return participant.createParticipant(provider.provideCards(DEFAULT_DRAW_SIZE));
-    }
-
-    public void editPlayers(Player newPlayer) {
-        players = players.editPlayer(newPlayer);
-    }
-
-    public void editDealer(Dealer newDealer) {
-        this.dealer = newDealer;
+    public void drawCard(Participant participant) {
+        participant.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
     }
 
     public Map<Player, ResultStatus> findGameResult() {
