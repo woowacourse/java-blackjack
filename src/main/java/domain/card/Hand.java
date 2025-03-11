@@ -6,6 +6,7 @@ import java.util.List;
 public class Hand {
     private static final int BONUS_THRESHOLD = 11;
     private static final int ACE_BONUS = 10;
+    private static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -40,5 +41,9 @@ public class Hand {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public boolean isBlackJackCount() {
+        return cards.size()==BLACKJACK_COUNT;
     }
 }

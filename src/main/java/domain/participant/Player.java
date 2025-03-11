@@ -26,10 +26,6 @@ public class Player extends Participant {
         }
     }
 
-    public MatchResult calculateWinner(final int dealerSum) {
-        return result.calculateResultOfPlayer(dealerSum, this.sum());
-    }
-
     private boolean isBust() {
         return result.isBust(sum());
     }

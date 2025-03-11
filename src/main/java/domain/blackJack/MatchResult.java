@@ -2,6 +2,7 @@ package domain.blackJack;
 
 public enum MatchResult {
     WIN("승"),
+    BLACKJACK("블랙잭"),
     DRAW("무"),
     LOSE("패");
 

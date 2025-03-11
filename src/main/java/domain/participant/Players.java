@@ -32,10 +32,12 @@ public class Players {
         }
     }
 
-    public LinkedHashMap<Player, MatchResult> calculateWinner(final int dealerSum) {
+    public LinkedHashMap<Player, MatchResult> calculateWinner(Dealer dealer) {
         LinkedHashMap<Player, MatchResult> res = new LinkedHashMap<>();
+        Result result = new Result();
+
         for (Player player : players) {
-            res.put(player, player.calculateWinner(dealerSum));
+            res.put(player, result.calculateResultOfPlayer(player, dealer));
         }
         return res;
     }

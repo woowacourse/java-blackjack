@@ -21,4 +21,8 @@ public abstract class Participant {
     public Hand getHand() {
         return hand;
     }
+
+    public boolean isBlackJackCount() {
+        return hand.isBlackJackCount();
+    }
 }

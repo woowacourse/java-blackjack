@@ -38,6 +38,7 @@ public class BlackJack {
     }
 
     public Map<Player, MatchResult> calculatePlayerResult() {
-        return players.calculateWinner(dealer.sum());
+//        return players.calculateWinner(dealer.sum());
+        return players.calculateWinner(dealer);
     }
 }
