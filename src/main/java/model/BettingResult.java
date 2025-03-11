@@ -38,5 +38,9 @@ public class BettingResult {
             betting.put(player, bettingPrice * 3/2);
         }
     }
+
+    public Map<Player, Integer> getBetting() {
+        return betting;
+    }
 }
 
