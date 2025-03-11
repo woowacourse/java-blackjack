@@ -65,7 +65,7 @@ public class Application {
     }
 
     private static void processDealerTurn(final Round round) {
-        if (round.dealerMustReceiveCard()) {
+        if (round.isGamblerCanReceiveCard(Name.createDealer(), Round.DEALER_RECEIVE_CRITERIA)) {
             round.distributeCards(Name.createDealer(), 1);
             printDealerReceiveCard();
         }
@@ -75,7 +75,7 @@ public class Application {
         while (isHit(playerName)) {
             round.distributeCards(playerName, 1);
             printGamblerCards(playerName, round.getCards(playerName));
-            boolean isBusted = round.isPlayerBusted(playerName);
+            boolean isBusted = !round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK);
             if (isBusted) {
                 printBusted(playerName);
                 break;

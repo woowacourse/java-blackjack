@@ -109,7 +109,7 @@ class RoundTest {
         round.distributeCards(playerName, 1);
 
         // when
-        boolean result = round.isPlayerBusted(playerName);
+        boolean result = !round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK);
 
         // then
         assertThat(result).isTrue();
@@ -132,7 +132,7 @@ class RoundTest {
         round.distributeInitialCards();
 
         // when
-        boolean result = round.dealerMustReceiveCard(); // 딜러의 점수 15
+        boolean result = round.isGamblerCanReceiveCard(Name.createDealer(), Round.DEALER_RECEIVE_CRITERIA); // 딜러의 점수 15
 
         // then
         assertThat(result).isTrue();

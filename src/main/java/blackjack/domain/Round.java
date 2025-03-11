@@ -60,13 +60,8 @@ public class Round {
         return gambler.getInitialCards();
     }
 
-    public boolean dealerMustReceiveCard() {
-        Gambler dealer = findGambler(Name.createDealer());
-        return dealer.isScoreBelow(DEALER_RECEIVE_CRITERIA);
-    }
-
-    public boolean isPlayerBusted(final Name name) {
-        return !findGambler(name).isScoreBelow(WinningDiscriminator.BLACK_JACK);
+    public boolean isGamblerCanReceiveCard(final Name name, final int score) {
+        return findGambler(name).isScoreBelow(score);
     }
 
     public WinningDiscriminator getWinningDiscriminator() {
