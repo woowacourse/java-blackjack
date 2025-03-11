@@ -1,5 +1,4 @@
 import controller.BlackJackController;
-import domain.CardsInitializer;
 import view.InputView;
 import view.OutputView;
 
@@ -9,10 +8,7 @@ public class Application {
 
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-
-        CardsInitializer cardsInitializer = new CardsInitializer();
-
-        BlackJackController blackJackController = new BlackJackController(inputView, outputView, cardsInitializer);
+        BlackJackController blackJackController = new BlackJackController(inputView, outputView);
 
         blackJackController.run();
     }

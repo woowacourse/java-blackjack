@@ -21,12 +21,10 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardsInitializer cardsInitializer;
 
-    public BlackJackController(InputView inputView, OutputView outputView, CardsInitializer cardsInitializer) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardsInitializer = cardsInitializer;
     }
 
     public void run() {
@@ -53,7 +51,7 @@ public class BlackJackController {
     }
 
     private Deck prepareDeck() {
-        List<Card> cards = cardsInitializer.initialize();
+        List<Card> cards = new CardsInitializer().initialize();
         return Deck.from(cards);
     }
 
