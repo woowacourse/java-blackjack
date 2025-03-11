@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.DealerResult;
 import blackjack.domain.GameResultType;
+import blackjack.domain.GameResultTypeJudgement;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.PlayersResult;
@@ -22,38 +23,9 @@ public class BlackJackResultManager {
     }
 
     private void saveResult(Dealer dealer, Player player, PlayersResult playersResult, DealerResult dealerResult) {
-        boolean isBustedDealer = dealer.isBusted();
-        boolean isBustedPlayer = player.isBusted();
+        GameResultType gameResultType = GameResultTypeJudgement.findForPlayer(player, dealer);
+        saveResultWithPlayerResult(player, gameResultType, playersResult, dealerResult);
 
-        if (isBustedDealer) {
-            processWhenDealerIsBusted(player, isBustedPlayer, playersResult, dealerResult);
-            return;
-        }
-
-        if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.LOSE, playersResult, dealerResult);
-            return;
-        }
-
-        GameResultType resultOfPlayer = decideResultOfPlayer(player, dealer);
-        saveResultWithPlayerResult(player, resultOfPlayer, playersResult, dealerResult);
-    }
-
-    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer, PlayersResult playersResult,
-                                           DealerResult dealerResult) {
-        if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.TIE, playersResult, dealerResult);
-            return;
-        }
-
-        saveResultWithPlayerResult(player, GameResultType.WIN, playersResult, dealerResult);
-    }
-
-    private GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
-        int playerValue = player.getOptimisticValue();
-        int dealerValue = dealer.getOptimisticValue();
-
-        return GameResultType.find(playerValue, dealerValue);
     }
 
     public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer,
