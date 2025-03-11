@@ -62,8 +62,10 @@ public class BlackjackResultEvaluator {
     }
 
     private static class ScoreInfo {
-        int dealerSum, playerSum;
-        boolean isDealerBust, isPlayerBust;
+        int dealerSum;
+        int playerSum;
+        boolean isDealerBust;
+        boolean isPlayerBust;
 
         public ScoreInfo(String playerName, String dealerName, BlackjackParticipants participants) {
             this.dealerSum = participants.calculateCardSum(dealerName);
