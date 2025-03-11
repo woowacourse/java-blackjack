@@ -3,11 +3,23 @@ package domain.participants;
 public class BettingAmount {
     private final static int MIN_BETTING_AMOUNT = 10000;
 
-    private final int amount;
+    private final int money;
 
-    public BettingAmount(int amount) {
-        validateBettingAmount(amount);
-        this.amount = amount;
+    public BettingAmount(int money) {
+        validateBettingAmount(money);
+        this.money = money;
+    }
+
+    private BettingAmount() {
+        this.money = 0;
+    }
+
+    public static BettingAmount baseBettingAmount() {
+        return new BettingAmount();
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     private void validateBettingAmount(int amount) {

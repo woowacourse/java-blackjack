@@ -8,12 +8,14 @@ import domain.game.GameResult;
 
 public class Player extends Gamer {
     private final PlayerName playerName;
+    private BettingAmount bettingAmount;
 
     private static final int BUST_THRESHOLD = 21;
 
     public Player(PlayerName playerName) {
         super();
         this.playerName = playerName;
+        this.bettingAmount = BettingAmount.baseBettingAmount();
     }
 
     public boolean isDrawable() {
@@ -29,6 +31,10 @@ public class Player extends Gamer {
 
     public PlayerName getPlayerName() {
         return playerName;
+    }
+
+    public BettingAmount getBettingAmount() {
+        return bettingAmount;
     }
 
     private GameResult decideGameResultWithBust(Dealer dealer) {
