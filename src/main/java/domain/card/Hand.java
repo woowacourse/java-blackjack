@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Hand {
 
     private static final int BUST_THRESHOLD = 22;
+    private static final int ACE_BONUS = 10;
 
     private final List<Card> cards;
 
@@ -31,8 +32,38 @@ public class Hand {
         return cards.size();
     }
 
-    public int getCoordinateSums() {
+    public int calculateFinalScore() {
+        int totalScore = calculateTotalScore();
+        if (isBust(totalScore)) {
+            return totalScore;
+        }
+        if (hasAce()) {
+            if (isBust(totalScore + ACE_BONUS)) {
+                return totalScore;
+            }
+            return totalScore + ACE_BONUS;
+        }
+        return totalScore;
+    }
+
+    public boolean isBust() {
+        return isBust(calculateTotalScore());
+    }
+
+    public boolean isBlackJack() {
+        return calculateFinalScore() == BUST_THRESHOLD - 1;
+    }
+
+    private int calculateTotalScore() {
         return cards.stream().mapToInt(Card::getNumber).sum();
+    }
+
+    private boolean isBust(int totalScore) {
+        return totalScore >= BUST_THRESHOLD;
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

@@ -55,7 +55,7 @@ public class Dealer extends Participant {
     public Map<Player, GameResult> getGameResult(Players players) {
         Map<Player, GameResult> gameResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            GameResult playerResult = rule.getResult(player, this);
+            GameResult playerResult = GameResult.getResult(player, this);
             gameResult.put(player, playerResult);
         }
         return gameResult;

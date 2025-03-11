@@ -2,18 +2,14 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hand;
-import domain.rule.BlackjackRule;
-import domain.rule.GameRule;
 import java.util.Objects;
 
 public abstract class Participant {
 
     private final Hand hand;
-    protected final GameRule rule;
 
     protected Participant(Hand hand) {
         this.hand = hand;
-        this.rule = BlackjackRule.getInstance();
     }
 
     public void addCard(Card card) {
@@ -21,15 +17,15 @@ public abstract class Participant {
     }
 
     public int getCardScore() {
-        return rule.getScore(hand);
+        return hand.calculateFinalScore();
     }
 
     public boolean isBurst() {
-        return rule.isBurst(hand);
+        return hand.isBust();
     }
 
     public boolean isBlackJack() {
-        return rule.isBlackJack(hand);
+        return hand.isBlackJack();
     }
 
     public Hand getCards() {
@@ -45,11 +41,11 @@ public abstract class Participant {
             return false;
         }
         Participant that = (Participant) o;
-        return Objects.equals(hand, that.hand) && Objects.equals(rule, that.rule);
+        return Objects.equals(hand, that.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hand, rule);
+        return Objects.hash(hand);
     }
 }
