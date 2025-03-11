@@ -19,7 +19,6 @@ public class Player extends BlackjackParticipant {
 
     @Override
     public boolean isDrawable() {
-        int sum = calculateCardSum();
-        return !isBUST(sum);
+        return !isBust();
     }
 }

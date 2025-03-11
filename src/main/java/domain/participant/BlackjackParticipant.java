@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.blackjackgame.BlackjackCardSum;
 import domain.blackjackgame.TrumpCard;
 import exception.BlackJackException;
 import java.util.ArrayList;
@@ -7,8 +8,6 @@ import java.util.List;
 
 public abstract class BlackjackParticipant {
 
-    private static final int BUST_STANDARD = 21;
-    private static final int ACE_DIFF = 10;
     private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21장 이상 받을 수 없습니다";
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
     private static final String DEALER_NAME = "딜러";
@@ -32,34 +31,20 @@ public abstract class BlackjackParticipant {
     }
 
     public void addDraw(TrumpCard trumpCard) {
-        if (isBUST(calculateCardSum())) {
+        if (isBust()) {
             throw new IllegalStateException(INVALID_CARD_STATE);
         }
         cardHands.add(trumpCard);
     }
 
+    protected boolean isBust() {
+        BlackjackCardSum blackjackCardSum = new BlackjackCardSum(cardHands);
+        return blackjackCardSum.isBUST();
+    }
+
     public int calculateCardSum() {
-        int sum = cardHands.stream().mapToInt(TrumpCard::cardNumberValue)
-                .sum();
-        int aceCount = (int) cardHands.stream()
-                .filter(TrumpCard::isAce)
-                .count();
-        if (aceCount != 0) {
-            return calculateAceIncludeSum(aceCount, sum);
-        }
-        return sum;
-    }
-
-    private int calculateAceIncludeSum(int aceCount, int sum) {
-        while (isBUST(sum) && aceCount != 0) {
-            sum = sum - ACE_DIFF;
-            aceCount--;
-        }
-        return sum;
-    }
-
-    public boolean isBUST(int number) {
-        return BUST_STANDARD < number;
+        BlackjackCardSum blackjackCardSum = new BlackjackCardSum(cardHands);
+        return blackjackCardSum.calculateCardSum();
     }
 
     abstract public boolean isDrawable();
