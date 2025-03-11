@@ -3,7 +3,6 @@ package model.bettingamount;
 import model.gameresult.GameResult;
 
 public class BettingAmount {
-
     private static final double BLACKJACK_BONUS_RATE = 1.5;
 
     private final int value;
