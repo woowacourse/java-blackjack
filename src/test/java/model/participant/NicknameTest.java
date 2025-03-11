@@ -24,7 +24,7 @@ class NicknameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"a","abcdefghijk"})
+    @ValueSource(strings = {"a", "abcdefghijk"})
     @DisplayName("유효하지 않은 닉네임 길이일 때 예외처리")
     void validateLength(String value) {
         Assertions.assertThatThrownBy(() -> new Nickname(value))

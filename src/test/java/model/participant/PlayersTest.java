@@ -26,7 +26,7 @@ public class PlayersTest {
                 Player.from("hippo")
         );
         // when
-        Players players = Players.from(List.of("pobi","hippo"));
+        Players players = Players.from(List.of("pobi", "hippo"));
         // then
         assertAll(
                 () -> Assertions.assertThat(players.getPlayers().size()).isEqualTo(2),
@@ -95,7 +95,7 @@ public class PlayersTest {
                         List.of("Adam", "Alan", "Alex", "Andy", "Brad", "Carl", "Cody", "Dale",
                                 "Drew", "Eric", "Evan", "Gary", "Glen", "Hank", "Jack", "Jake",
                                 "Jeff", "Joel", "John", "Josh", "Kirk", "Leon", "Mark", "Matt",
-                                "Mike", "Nick", "Paul", "Rick", "Sean", "Wade","hippo")
+                                "Mike", "Nick", "Paul", "Rick", "Sean", "Wade", "hippo")
                 )
         );
     }

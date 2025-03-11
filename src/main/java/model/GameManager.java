@@ -39,6 +39,7 @@ public class GameManager {
             divideCardByParticipant(participant);
         }
     }
+
     public void divideCardByParticipant(Participant participant) {
         participant.addCard(deck.pickCard());
     }

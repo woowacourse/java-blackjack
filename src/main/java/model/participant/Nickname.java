@@ -15,7 +15,7 @@ public class Nickname {
     }
 
     private static void validateLength(String value) {
-        if( value.length() < LENGTH_MIN_RANGE || value.length() > LENGTH_MAX_RANGE) {
+        if (value.length() < LENGTH_MIN_RANGE || value.length() > LENGTH_MAX_RANGE) {
             throw new IllegalArgumentException("닉네임은 2~10자만 입력 가능합니다,");
         }
     }

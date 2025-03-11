@@ -34,7 +34,7 @@ class CardDeckTest {
         //when
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-          cards.add(deck.pickCard());
+            cards.add(deck.pickCard());
         }
         //then
         Assertions.assertThat(cards.size()).isEqualTo(amount);
