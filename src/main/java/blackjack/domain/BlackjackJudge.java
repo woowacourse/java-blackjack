@@ -1,10 +1,12 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class BlackjackJudge {
     
@@ -15,6 +17,10 @@ public final class BlackjackJudge {
         validateNotNull(dealerHand, playerHands);
         this.dealerHand = dealerHand;
         this.playerHands = new ArrayList<>(playerHands);
+    }
+    
+    public static BlackjackJudge from(final BlackjackGame blackjackGame) {
+        return new BlackjackJudge(blackjackGame.getDealerHand(), blackjackGame.getPlayerHands());
     }
     
     private void validateNotNull(final DealerBlackjackCardHand dealerHand, final List<PlayerBlackjackCardHand> playerHands) {
@@ -45,11 +51,11 @@ public final class BlackjackJudge {
                 .count();
     }
     
-    public WinningStatus getWinningStatusOf(final PlayerBlackjackCardHand playerHand) {
-        if (!playerHands.contains(playerHand)) {
-            throw new IllegalArgumentException("존재하지 않는 플레이어 손패입니다.");
-        }
-        
-        return WinningStatus.determineWinningStatus(playerHand, dealerHand);
+    public Map<String, WinningStatus> getWinningStatus() {
+        return playerHands.stream()
+                .collect(Collectors.toMap(
+                        PlayerBlackjackCardHand::getPlayerName,
+                        playerHand -> WinningStatus.determineWinningStatus(playerHand, dealerHand)
+                ));
     }
 }

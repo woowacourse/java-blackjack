@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.controller.BlackjackController;
 import blackjack.controller.Controller;
 import blackjack.controller.ExceptionMessagePrintControllerProxy;
+import blackjack.service.BlackjackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.reader.SystemReader;
@@ -18,7 +19,8 @@ public class BlackjackApplication {
         final SystemWriter writer = new SystemWriter();
         final Controller controller = new BlackjackController(
                 new InputView(writer, new SystemReader()),
-                new OutputView(writer)
+                new OutputView(writer),
+                new BlackjackService()
         );
         return new ExceptionMessagePrintControllerProxy(controller, writer);
     }

@@ -1,12 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.BlackjackJudge;
+import blackjack.domain.WinningStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.view.writer.Writer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -105,10 +107,7 @@ public class OutputView {
         return " - 합계: %d".formatted(sum);
     }
 
-    public void outputFinalWinOrLoss(
-            final BlackjackJudge judge,
-            final List<PlayerBlackjackCardHand> playerHands
-    ) {
+    public void outputFinalWinOrLoss(final BlackjackJudge judge) {
         StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
         sj.add(LINE_SEPARATOR + "<최종 승패>");
         sj.add("딜러: %d승 %d무 %d패".formatted(
@@ -116,8 +115,8 @@ public class OutputView {
                 judge.getDealerDrawingCount(),
                 judge.getDealerLosingCount()
         ));
-        for (PlayerBlackjackCardHand playerHand : playerHands) {
-            sj.add("%s: %s".formatted(playerHand.getPlayerName(), judge.getWinningStatusOf(playerHand)));
+        for (Map.Entry<String, WinningStatus> entry : judge.getWinningStatus().entrySet()) {
+            sj.add("%s: %s".formatted(entry.getKey(), entry.getValue()));
         }
         writer.write(sj.toString());
     }
