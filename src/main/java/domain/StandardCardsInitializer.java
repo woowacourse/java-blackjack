@@ -39,7 +39,6 @@ public class StandardCardsInitializer implements CardsInitializer {
 
     private List<CardRank> getNumbers() {
         return Arrays.stream(CardRank.values())
-                .filter(number -> number != CardRank.SOFT_ACE)
                 .toList();
     }
 }

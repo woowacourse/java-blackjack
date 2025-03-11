@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Hand {
 
+    public static final int SOFT_ACE_POINT = 11;
     private static final int HIGHEST_SCORE = 21;
-
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -73,10 +73,10 @@ public class Hand {
     }
 
     private int calculateAcePoint(int totalPoint, CardRank ace) {
-        if (totalPoint + CardRank.SOFT_ACE.getPoint() > HIGHEST_SCORE) {
+        if (totalPoint + SOFT_ACE_POINT > HIGHEST_SCORE) {
             return ace.getPoint();
         }
-        return CardRank.SOFT_ACE.getPoint();
+        return SOFT_ACE_POINT;
     }
 
     public boolean isBurst() {
