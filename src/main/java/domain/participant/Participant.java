@@ -6,5 +6,6 @@ public interface Participant {
     boolean ableToDraw(final int score);
     boolean areYouDealer();
     String getNickname();
-    Map<BattleResult, Integer> getBattleResult();
+    void addGameRecord(BattleResult result);
+    Map<BattleResult, Integer> getGameRecord();
 }

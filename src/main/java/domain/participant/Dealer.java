@@ -1,17 +1,16 @@
 package domain.participant;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Dealer implements Participant {
     public static final int STAY_THRESHOLD = 16;
 
     private final String nickname;
-    private final Map<BattleResult, Integer> battleResult;
+    private final GameRecord gameRecord;
 
     private Dealer(final String nickname) {
         this.nickname = nickname;
-        this.battleResult = new HashMap<>();
+        this.gameRecord = new GameRecord();
     }
 
     public static Dealer generate() {
@@ -34,7 +33,12 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public Map<BattleResult, Integer> getBattleResult() {
-        return battleResult;
+    public void addGameRecord(BattleResult result) {
+        gameRecord.add(result);
+    }
+
+    @Override
+    public Map<BattleResult, Integer> getGameRecord() {
+        return gameRecord.getGameRecord();
     }
 }

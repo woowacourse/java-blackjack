@@ -1,17 +1,16 @@
 package domain.participant;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Player implements Participant {
     public static final int BUST_THRESHOLD = 21;
 
     private final String nickname;
-    private final Map<BattleResult, Integer> battleResult;
+    private final GameRecord gameRecord;
 
     private Player(final String nickname) {
         this.nickname = nickname;
-        this.battleResult = new HashMap<>();
+        this.gameRecord = new GameRecord();
     }
 
     public static Player from(final String nickname) {
@@ -34,7 +33,12 @@ public class Player implements Participant {
     }
 
     @Override
-    public Map<BattleResult, Integer> getBattleResult() {
-        return battleResult;
+    public void addGameRecord(BattleResult result) {
+        gameRecord.add(result);
+    }
+
+    @Override
+    public Map<BattleResult, Integer> getGameRecord() {
+        return gameRecord.getGameRecord();
     }
 }

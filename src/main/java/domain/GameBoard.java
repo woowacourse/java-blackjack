@@ -123,17 +123,13 @@ public class GameBoard {
     }
 
     private void updateBattleResultDraw(Participant dealer, Participant player) {
-        Map<BattleResult, Integer> dealerResult = dealer.getBattleResult();
-        Map<BattleResult, Integer> playerResult = player.getBattleResult();
-        dealerResult.merge(BattleResult.DRAW, 1, Integer::sum);
-        playerResult.merge(BattleResult.DRAW, 1, Integer::sum);
+        dealer.addGameRecord(BattleResult.DRAW);
+        player.addGameRecord(BattleResult.DRAW);
     }
 
     private void updateBattleResult(Participant winner, Participant loser) {
-        Map<BattleResult, Integer> winnerResult = winner.getBattleResult();
-        Map<BattleResult, Integer> loserResult = loser.getBattleResult();
-        winnerResult.merge(BattleResult.WIN, 1, Integer::sum);
-        loserResult.merge(BattleResult.LOSE, 1, Integer::sum);
+        winner.addGameRecord(BattleResult.WIN);
+        loser.addGameRecord(BattleResult.LOSE);
     }
 
     public CardDeck getCardDeckOf(Participant participant) {

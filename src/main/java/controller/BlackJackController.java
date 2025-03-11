@@ -102,7 +102,7 @@ public class BlackJackController {
         List<BattleResultResponse> battleResultResponses = new ArrayList<>();
         for (Participant participant : participants) {
             String participantNickname = participant.getNickname();
-            Map<BattleResult, Integer> battleResult = participant.getBattleResult();
+            Map<BattleResult, Integer> battleResult = participant.getGameRecord();
 
             BattleResultResponse battleResultResponse = new BattleResultResponse(participantNickname, battleResult);
             battleResultResponses.add(battleResultResponse);
