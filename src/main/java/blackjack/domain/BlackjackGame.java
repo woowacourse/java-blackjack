@@ -5,6 +5,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +28,8 @@ public class BlackjackGame {
         List<Player> players = new ArrayList<>();
 
         for (String name : names) {
-            Player player = new Player(name);
+            PlayerName playerName = new PlayerName(name);
+            Player player = new Player(playerName);
             players.add(player);
         }
         return new BlackjackGame(cardDeck, new Dealer(), new Players(players));

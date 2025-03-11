@@ -25,18 +25,18 @@ public class PlayerTest {
         @ValueSource(strings = {"iiif", "pppk"})
         @DisplayName("한 명의 플레이어를 이름으로 생성할 수 있다.")
         void createPlayerByName(String name) {
-            Player player = new Player(name);
+            Player player = new Player(new PlayerName(name));
 
             assertThat(player).isInstanceOf(Player.class);
         }
 
         @ParameterizedTest
         @ValueSource(strings = {"포비_", "sa나!", "훌라627", "HULA,"})
-        @DisplayName("영어 이름이 아니면 예외를 발생시킨다.")
+        @DisplayName("이름이 글자가 아니면 예외를 발생시킨다.")
         void createPlayerByEmptyName(String name) {
-            assertThatThrownBy(() -> new Player(name))
+            assertThatThrownBy(() -> new Player(new PlayerName(name)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이름은 알파벳 소문자만 입력 가능합니다.");
+                    .hasMessage("이름은 글자만 입력 가능합니다.");
         }
     }
 
@@ -47,7 +47,7 @@ public class PlayerTest {
         @Test
         @DisplayName("보유 카드가 21 미만이면 추가 배부가 가능하다")
         void canDistributeCard_Under21() {
-            Player player = new Player("sana");
+            Player player = new Player(new PlayerName("sana"));
 
             List<Card> cardsUnder21 = List.of(
                     new Card(Suit.HEART, Denomination.TWO),
@@ -62,7 +62,7 @@ public class PlayerTest {
         @Test
         @DisplayName("보유 카드가 21 이상이면 추가 배부가 불가능하다")
         void canDistributeCard_Over21() {
-            Player player = new Player("sana");
+            Player player = new Player(new PlayerName("sana"));
 
             List<Card> cardsOver21 = List.of(
                     new Card(Suit.HEART, Denomination.TWO),
@@ -82,7 +82,7 @@ public class PlayerTest {
         @Test
         @DisplayName("베팅 금액을 저장한다")
         void saveBetAmount() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
 
             assertThatCode(() -> player.bet(1000)).doesNotThrowAnyException();
         }
@@ -90,7 +90,7 @@ public class PlayerTest {
         @Test
         @DisplayName("플레이어가 패배했다면 베팅 금액을 모두 잃는다")
         void lossAllBetAmountWhenPlayerLose() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
             player.bet(1000);
             player.addCards(
                     new Card(Suit.SPADE, Denomination.TEN),
@@ -109,7 +109,7 @@ public class PlayerTest {
         @Test
         @DisplayName("플레이어가 승리했다면 베팅 금액만큼 받는다")
         void betAmountWhenPlayerWin() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
             player.bet(1000);
             player.addCards(
                     new Card(Suit.SPADE, Denomination.TEN),
@@ -128,7 +128,7 @@ public class PlayerTest {
         @Test
         @DisplayName("플레이어가 버스트라면 베팅 금액을 모두 잃는다")
         void lossAllBetAmount() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
             player.bet(1000);
             player.addCards(
                     new Card(Suit.HEART, Denomination.TWO),
@@ -149,7 +149,7 @@ public class PlayerTest {
         @Test
         @DisplayName("플레이어가 승리하면 베팅 금액을 돌려받는다")
         void winPlayerBetAmount() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
             player.bet(1000);
             player.addCards(
                     new Card(Suit.SPADE, Denomination.TEN),
@@ -168,7 +168,7 @@ public class PlayerTest {
         @Test
         @DisplayName("무승부일 시. 베팅 금액을 돌려받는다")
         void drawBetAmount() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
             player.bet(1000);
             player.addCards(
                     new Card(Suit.SPADE, Denomination.TEN),
@@ -187,7 +187,7 @@ public class PlayerTest {
         @Test
         @DisplayName("플레이어가 블랙잭이라면, 베팅 금액의 1.5배를 받는다")
         void playerBlackjackBetAmount() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
             player.bet(1000);
             player.addCards(
                     new Card(Suit.SPADE, Denomination.TEN),
@@ -206,7 +206,7 @@ public class PlayerTest {
         @Test
         @DisplayName("플레이어와 딜러 모두 블랙잭이라면, 베팅 금액만큼만 돌려받는다")
         void playerAndDealerBothBlackjackBetAmount() {
-            Player player = new Player("hula");
+            Player player = new Player(new PlayerName("hula"));
             player.bet(1000);
             player.addCards(
                     new Card(Suit.SPADE, Denomination.TEN),

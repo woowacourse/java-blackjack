@@ -23,14 +23,14 @@ public class PlayersTest {
         @DisplayName("8명 이상이면 생성 불가능하다")
         void cantGenerateOver8Players() {
             List<Player> over8Players = List.of(
-                    new Player("hula"),
-                    new Player("sana"),
-                    new Player("pppk"),
-                    new Player("iiif"),
-                    new Player("wilson"),
-                    new Player("hans"),
-                    new Player("duri"),
-                    new Player("hoddeok")
+                    new Player(new PlayerName("hula")),
+                    new Player(new PlayerName("sana")),
+                    new Player(new PlayerName("pppk")),
+                    new Player(new PlayerName("iiif")),
+                    new Player(new PlayerName("wilson")),
+                    new Player(new PlayerName("hans")),
+                    new Player(new PlayerName("duri")),
+                    new Player(new PlayerName("hoddeok"))
             );
 
             assertThatThrownBy(() -> new Players(over8Players))
@@ -50,13 +50,12 @@ public class PlayersTest {
         @DisplayName("2명에서 7명 이내면 정상적으로 생성한다")
         void generateBetween2to7Players() {
             List<Player> sevenPlayers = List.of(
-                    new Player("hula"),
-                    new Player("sana"),
-                    new Player("pppk"),
-                    new Player("iiif"),
-                    new Player("wilson"),
-                    new Player("hans"),
-                    new Player("duri")
+                    new Player(new PlayerName("sana")),
+                    new Player(new PlayerName("pppk")),
+                    new Player(new PlayerName("iiif")),
+                    new Player(new PlayerName("wilson")),
+                    new Player(new PlayerName("hans")),
+                    new Player(new PlayerName("duri"))
             );
 
             assertThatCode(() -> new Players(sevenPlayers))
@@ -71,21 +70,21 @@ public class PlayersTest {
         @Test
         @DisplayName("플레이어 베팅 금액을 모두 합산할 수 있다")
         void sumWinnings() {
-            Player player1 = new Player("hula");
+            Player player1 = new Player(new PlayerName("hula"));
             player1.bet(1000);  // 승리 (블랙잭)
             player1.addCards(
                     new Card(Suit.SPADE, Denomination.ACE),
                     new Card(Suit.CLUB, Denomination.JACK)
             );
 
-            Player player2 = new Player("sana");
+            Player player2 = new Player(new PlayerName("sana"));
             player2.bet(1000);  // 승리
             player2.addCards(
                     new Card(Suit.SPADE, Denomination.QUEEN),
                     new Card(Suit.CLUB, Denomination.JACK)
             );
 
-            Player player3 = new Player("pppk");
+            Player player3 = new Player(new PlayerName("pppk"));
             player3.bet(1000);  // 패배 (버스트)
             player3.addCards(
                     new Card(Suit.HEART, Denomination.TWO),
@@ -106,21 +105,21 @@ public class PlayersTest {
         @Test
         @DisplayName("플레이어 베팅 금액을 모두 합산할 수 있다")
         void sumWinnings2() {
-            Player player1 = new Player("hula");
+            Player player1 = new Player(new PlayerName("hula"));
             player1.bet(2000);  // 승리 (블랙잭)
             player1.addCards(
                     new Card(Suit.SPADE, Denomination.ACE),
                     new Card(Suit.CLUB, Denomination.JACK)
             );
 
-            Player player2 = new Player("sana");
+            Player player2 = new Player(new PlayerName("sana"));
             player2.bet(1000);  // 승리
             player2.addCards(
                     new Card(Suit.SPADE, Denomination.QUEEN),
                     new Card(Suit.CLUB, Denomination.JACK)
             );
 
-            Player player3 = new Player("pppk");
+            Player player3 = new Player(new PlayerName("pppk"));
             player3.bet(5000);  // 패배 (버스트)
             player3.addCards(
                     new Card(Suit.HEART, Denomination.TWO),

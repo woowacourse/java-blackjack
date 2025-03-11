@@ -10,11 +10,10 @@ public class Player extends Participant {
     private static final double BLACKJACK_BONUS_RATE = 1.5;
     private static final int DRAW_PAYOUT = 0;
 
-    private final String name;
+    private final PlayerName name;
     private int payout;
 
-    public Player(final String name) {
-        validateName(name);
+    public Player(final PlayerName name) {
         this.name = name;
         this.payout = 0;
     }
@@ -59,14 +58,6 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name;
-    }
-
-    private void validateName(final String name) {
-        boolean isAllLetter = name.chars().allMatch(Character::isLetter);
-        if (isAllLetter) {
-            return;
-        }
-        throw new IllegalArgumentException("이름은 알파벳 소문자만 입력 가능합니다.");
+        return name.value();
     }
 }

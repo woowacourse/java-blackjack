@@ -7,6 +7,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,7 @@ class GameResultTest {
 
         @BeforeEach
         void initParticipants() {
-            player = new Player("sana");
+            player = new Player(new PlayerName("sana"));
             dealer = new Dealer();
         }
 

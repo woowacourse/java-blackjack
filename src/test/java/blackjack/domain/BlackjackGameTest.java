@@ -10,6 +10,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,7 @@ class BlackjackGameTest {
     class DistributeCardTest {
 
         Players defaultPlayers = new Players(
-                List.of(new Player("hula"), new Player("sana"))
+                List.of(new Player(new PlayerName("hula")), new Player(new PlayerName("sana")))
         );
 
         @Test
@@ -122,21 +123,21 @@ class BlackjackGameTest {
             );
             dealer.addCards(initialCards1.get(0), initialCards1.get(1));
 
-            Player player1 = new Player("hula"); // 패배
+            Player player1 = new Player(new PlayerName("hula")); // 패배
             List<Card> initialCards2 = List.of(
                     new Card(Suit.HEART, Denomination.SIX),
                     new Card(Suit.SPADE, Denomination.KING)
             );
             player1.addCards(initialCards2.get(0), initialCards2.get(1));
 
-            Player player2 = new Player("sana"); // 승리
+            Player player2 = new Player(new PlayerName("sana")); // 승리
             List<Card> initialCards3 = List.of(
                     new Card(Suit.HEART, Denomination.ACE),
                     new Card(Suit.SPADE, Denomination.KING)
             );
             player2.addCards(initialCards3.get(0), initialCards3.get(1));
 
-            Player player3 = new Player("jason"); // 패배
+            Player player3 = new Player(new PlayerName("jason")); // 패배
             List<Card> initialCards4 = List.of(
                     new Card(Suit.HEART, Denomination.FIVE),
                     new Card(Suit.SPADE, Denomination.KING)
@@ -162,21 +163,21 @@ class BlackjackGameTest {
                     new Card(Suit.SPADE, Denomination.ACE)
             );
 
-            Player player1 = new Player("hula");
+            Player player1 = new Player(new PlayerName("hula"));
             player1.bet(2000);  // 승리 (블랙잭)
             player1.addCards(
                     new Card(Suit.SPADE, Denomination.ACE),
                     new Card(Suit.CLUB, Denomination.JACK)
             );
 
-            Player player2 = new Player("sana");
+            Player player2 = new Player(new PlayerName("sana"));
             player2.bet(1000);  // 승리
             player2.addCards(
                     new Card(Suit.SPADE, Denomination.QUEEN),
                     new Card(Suit.CLUB, Denomination.JACK)
             );
 
-            Player player3 = new Player("pppk");
+            Player player3 = new Player(new PlayerName("pppk"));
             player3.bet(5000);  // 패배 (버스트)
             player3.addCards(
                     new Card(Suit.HEART, Denomination.TWO),
