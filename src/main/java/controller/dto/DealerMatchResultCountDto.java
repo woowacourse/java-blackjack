@@ -1,6 +1,6 @@
 package controller.dto;
 
-import domain.MatchResult;
+import domain.stats.MatchResult;
 import java.util.Map;
 
 public record DealerMatchResultCountDto(

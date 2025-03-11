@@ -1,4 +1,4 @@
-package domain;
+package domain.stats;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package controller.dto;
 
-import domain.MatchResult;
-import domain.Player;
+import domain.player.Player;
+import domain.stats.MatchResult;
 import java.util.Map;
 import java.util.stream.Collectors;
 

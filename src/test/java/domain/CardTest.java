@@ -2,6 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {

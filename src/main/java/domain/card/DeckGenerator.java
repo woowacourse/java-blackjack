@@ -1,5 +1,9 @@
-package domain;
+package domain.card;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.Suit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

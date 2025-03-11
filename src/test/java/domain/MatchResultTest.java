@@ -1,5 +1,6 @@
 package domain;
 
+import domain.stats.MatchResult;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 

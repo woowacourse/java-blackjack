@@ -1,10 +1,11 @@
-package domain;
+package domain.player;
 
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
-    
+
     private static final int MAX_SIZE = 5;
 
     private final Dealer dealer;

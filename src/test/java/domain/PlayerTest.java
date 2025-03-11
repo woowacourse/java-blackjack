@@ -1,5 +1,10 @@
 package domain;
 
+import domain.card.Deck;
+import domain.card.DeckGenerator;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

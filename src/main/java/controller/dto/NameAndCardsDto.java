@@ -1,8 +1,8 @@
 package controller.dto;
 
-import domain.Card;
-import domain.Player;
-import domain.User;
+import domain.card.Card;
+import domain.player.Player;
+import domain.player.User;
 import java.util.List;
 
 public record NameAndCardsDto(

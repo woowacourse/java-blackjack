@@ -5,7 +5,7 @@ import controller.dto.NameAndCardsDto;
 import controller.dto.NameAndSumsDto;
 import controller.dto.NameAndSumsDto.NameAndSumDto;
 import controller.dto.UsersMatchResultDto;
-import domain.Card;
+import domain.card.Card;
 import java.util.List;
 
 public class OutputView {
