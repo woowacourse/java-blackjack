@@ -63,11 +63,19 @@ public class BlackjackGame {
                 ));
     }
 
+    public int calculateDealerWinnings() {
+        return convertToOppositeSign(players.calculateTotalPayout(dealer));
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players.getPlayers());
+    }
+
+    private int convertToOppositeSign(int number) {
+        return -number;
     }
 }

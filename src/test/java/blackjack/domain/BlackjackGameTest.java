@@ -164,4 +164,51 @@ class BlackjackGameTest {
             });
         }
     }
+
+    @Nested
+    @DisplayName("딜러의 베팅 금액 테스트")
+    class DealerBetTest {
+
+        @Test
+        @DisplayName("딜러의 베팅 금액 수익을 계산할 수 있다")
+        void calculateDealerBetAmount() {
+            Dealer dealer = new Dealer();
+            dealer.addCards(
+                    new Card(Suit.CLUB, Denomination.EIGHT),
+                    new Card(Suit.SPADE, Denomination.ACE)
+            );
+
+            Player player1 = new Player("hula");
+            player1.bet(2000);  // 승리 (블랙잭)
+            player1.addCards(
+                    new Card(Suit.SPADE, Denomination.ACE),
+                    new Card(Suit.CLUB, Denomination.JACK)
+            );
+
+            Player player2 = new Player("sana");
+            player2.bet(1000);  // 승리
+            player2.addCards(
+                    new Card(Suit.SPADE, Denomination.QUEEN),
+                    new Card(Suit.CLUB, Denomination.JACK)
+            );
+
+            Player player3 = new Player("pppk");
+            player3.bet(5000);  // 패배 (버스트)
+            player3.addCards(
+                    new Card(Suit.HEART, Denomination.TWO),
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.CLUB, Denomination.JACK)
+            );
+
+            Players players = new Players(List.of(player1, player2, player3));
+            BlackjackGame game = new BlackjackGame(
+                    CardDeck.createCardDeck(),
+                    dealer,
+                    players
+            );
+
+            assertThat(game.calculateDealerWinnings()).isEqualTo(1000);
+        }
+    }
+
 }
