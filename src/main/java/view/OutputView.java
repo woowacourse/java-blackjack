@@ -1,7 +1,7 @@
 package view;
 
-import domain.TrumpCard;
-import domain.WinStatus;
+import domain.blackjackgame.TrumpCard;
+import domain.blackjackgame.WinStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 

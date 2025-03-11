@@ -1,6 +1,6 @@
 package domain.strategy;
 
-import domain.TrumpCard;
+import domain.blackjackgame.TrumpCard;
 import java.util.Deque;
 
 public interface DrawStrategy {

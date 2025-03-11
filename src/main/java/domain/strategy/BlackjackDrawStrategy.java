@@ -1,7 +1,7 @@
 package domain.strategy;
 
-import domain.TrumpCard;
-import except.BlackJackException;
+import domain.blackjackgame.TrumpCard;
+import exception.BlackJackException;
 import java.util.Deque;
 
 public class BlackjackDrawStrategy implements DrawStrategy {

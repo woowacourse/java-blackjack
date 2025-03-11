@@ -1,6 +1,10 @@
-package domain;
+package domain.blackjackgame;
 
-import except.BlackJackException;
+import domain.participant.BlackjackParticipant;
+import domain.participant.BlackjackParticipantsManager;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

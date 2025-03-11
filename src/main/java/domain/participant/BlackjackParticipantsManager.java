@@ -1,7 +1,8 @@
-package domain;
+package domain.participant;
 
+import domain.blackjackgame.TrumpCard;
 import domain.except.BlackJackStateException;
-import except.BlackJackException;
+import exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

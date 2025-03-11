@@ -1,7 +1,7 @@
-package domain;
+package domain.blackjackgame;
 
 import domain.strategy.DrawStrategy;
-import except.BlackJackException;
+import exception.BlackJackException;
 import java.util.Deque;
 
 public class BlackjackDeck {
@@ -18,6 +18,7 @@ public class BlackjackDeck {
 
     public TrumpCard drawCard() {
         validateDrawCard();
+
         return drawStrategy.draw(deck);
     }
 

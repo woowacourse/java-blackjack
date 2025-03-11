@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjackgame;
 
 import java.util.Collections;
 import java.util.HashMap;

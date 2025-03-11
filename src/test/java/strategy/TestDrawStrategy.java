@@ -1,8 +1,8 @@
 package strategy;
 
-import domain.TrumpCard;
+import domain.blackjackgame.TrumpCard;
 import domain.strategy.DrawStrategy;
-import except.BlackJackException;
+import exception.BlackJackException;
 import java.util.Deque;
 import java.util.LinkedList;
 

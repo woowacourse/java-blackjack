@@ -1,11 +1,11 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.BlackjackDeck;
-import domain.BlackjackDeckGenerator;
-import domain.CardValue;
-import domain.Player;
-import domain.Suit;
-import domain.TrumpCard;
+import domain.blackjackgame.BlackjackDeck;
+import domain.blackjackgame.BlackjackDeckGenerator;
+import domain.blackjackgame.CardValue;
+import domain.blackjackgame.Suit;
+import domain.blackjackgame.TrumpCard;
+import domain.participant.Player;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
