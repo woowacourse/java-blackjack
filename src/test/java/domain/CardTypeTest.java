@@ -30,6 +30,6 @@ class CardTypeTest {
         //when & then
         assertThatThrownBy(() -> CardType.findByRandomIndex(invalidIndex))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_HEADER);
+                .hasMessage(ERROR_HEADER + "해당하는 카드 모양의 인덱스가 존재하지 않습니다.");
     }
 }

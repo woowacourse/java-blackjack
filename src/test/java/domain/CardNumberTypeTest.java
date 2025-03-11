@@ -29,6 +29,6 @@ public class CardNumberTypeTest {
         //when & then
         assertThatThrownBy(() -> CardNumberType.findByRandomIndex(invalidIndex))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_HEADER);
+                .hasMessageContaining(ERROR_HEADER + "해당하는 카드 숫자의 인덱스가 존재하지 않습니다.");
     }
 }

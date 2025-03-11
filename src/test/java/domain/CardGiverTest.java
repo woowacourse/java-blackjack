@@ -55,7 +55,7 @@ public class CardGiverTest {
         assertThatThrownBy(
                 cardGiver::giveDefault
         ).isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining(ERROR_HEADER);
+                .hasMessage(ERROR_HEADER + "카드가 2장 미만으로 남았습니다.");
     }
 
     @DisplayName("카드를 랜덤으로 1장 생성하여 배분한다")
