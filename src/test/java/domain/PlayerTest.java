@@ -68,8 +68,8 @@ class PlayerTest {
         for (Card card : cards) {
             player.addCard(new Cards(List.of(card)));
         }
-
-        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        Cards emptyCards = new Cards(new ArrayList<>());
+        Dealer dealer = new Dealer(new Deck(emptyCards));
         dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN))); // 20
 
         //when & then
@@ -95,7 +95,10 @@ class PlayerTest {
         for (Card card : cards) {
             player.addCard(new Cards(List.of(card)));
         }
-        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        
+        Cards emptyCards = new Cards(new ArrayList<>());
+        Dealer dealer = new Dealer(new Deck(emptyCards));
+
         List<Card> givenCards = List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN);
         for (Card givenCard : givenCards) {
             dealer.addCard(new Cards(List.of(givenCard)));

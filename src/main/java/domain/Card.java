@@ -19,7 +19,6 @@ import static domain.CardShape.HEART;
 import static domain.CardShape.SPADE;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Card {
     SPADE_ACE(ACE, SPADE),
@@ -86,8 +85,8 @@ public enum Card {
         this.cardShape = cardShape;
     }
 
-    public static List<Card> initializeCards() {
-        return Arrays.stream(Card.values()).toList();
+    public static Cards initializeCards() {
+        return new Cards(Arrays.stream(Card.values()).toList());
     }
 
     public CardRank getCardRank() {

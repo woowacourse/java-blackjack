@@ -19,7 +19,8 @@ class DealerTest {
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인합니다.")
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
-        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        Cards emptyCards = new Cards(new ArrayList<>());
+        Dealer dealer = new Dealer(new Deck(emptyCards));
         for (Card card : cards) {
             dealer.addCard(new Cards(List.of(card)));
         }
@@ -45,7 +46,8 @@ class DealerTest {
     @DisplayName("딜러가 가진 카드 중 하나가 포함됐는지 확인합니다.")
     void showFirstCardTest(List<Card> cards) {
         //given
-        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        Cards emptyCards = new Cards(new ArrayList<>());
+        Dealer dealer = new Dealer(new Deck(emptyCards));
         dealer.addCard(new Cards(cards));
         //when & then
         assertThat(cards).contains(dealer.showAnyOneCard());
@@ -64,7 +66,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 카드가 없는 경우에 카드를 보여주려고 시도하면 예외를 반환합니다.")
     void validateShowFirstCardTest() {
-        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        Cards emptyCards = new Cards(new ArrayList<>());
+        Dealer dealer = new Dealer(new Deck(emptyCards));
         Assertions.assertThrows(IllegalStateException.class, dealer::showAnyOneCard);
     }
 }
