@@ -1,27 +1,27 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.CardHand;
 import java.util.List;
 
 public abstract class AbstractGambler implements Gambler {
 
     protected final String name;
-    protected final CardDeck cardDeck;
+    protected final CardHand cardHand;
 
     protected AbstractGambler(String name) {
         this.name = name;
-        this.cardDeck = new CardDeck();
+        this.cardHand = new CardHand();
     }
 
     public abstract boolean canTakeMoreCard();
 
     public void takeCards(Card... cards) {
-        cardDeck.takeCards(cards);
+        cardHand.takeCards(cards);
     }
 
     public int calculateScore() {
-        return cardDeck.calculateScore();
+        return cardHand.calculateScore();
     }
 
     public String getName() {
@@ -29,6 +29,6 @@ public abstract class AbstractGambler implements Gambler {
     }
 
     public List<Card> getCards() {
-        return cardDeck.getCards();
+        return cardHand.getCards();
     }
 }
