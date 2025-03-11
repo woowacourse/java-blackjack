@@ -23,7 +23,7 @@ public class BlackJack {
     public void play() {
         preset();
         playersTurn();
-        dealersTurn(dealer);
+        dealersTurn();
         printResult();
     }
 
@@ -39,7 +39,7 @@ public class BlackJack {
         }
     }
 
-    public void dealersTurn(Dealer dealer) {
+    public void dealersTurn() {
         dealer.drawWithThreshold(deck);
     }
 
