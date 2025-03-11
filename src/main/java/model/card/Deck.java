@@ -19,7 +19,7 @@ public class Deck {
         return new Deck(deck);
     }
 
-    public Deck(List<Card> deckCards) {
+    private Deck(List<Card> deckCards) {
         this.deckCards = deckCards;
     }
 

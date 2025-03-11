@@ -18,7 +18,7 @@ public class ParticipantWinningResult {
         return new ParticipantWinningResult(result);
     }
 
-    public ParticipantWinningResult(Map<Player, GameResult> result) {
+    private ParticipantWinningResult(Map<Player, GameResult> result) {
         this.result = result;
     }
 
