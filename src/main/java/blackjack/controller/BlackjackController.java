@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.BattingMoney;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardDump;
@@ -50,9 +50,9 @@ public class BlackjackController {
     private List<Player> createPlayers(List<ParticipantName> playerNames) {
         List<Player> players = new ArrayList<>();
         for (ParticipantName playerName : playerNames) {
-            int money = inputView.readBattingMoney(playerName.getValue());
-            BattingMoney battingMoney = new BattingMoney(money);
-            players.add(new Player(playerName, new CardHand(), battingMoney));
+            int money = inputView.readBettingMoney(playerName.getValue());
+            BettingMoney bettingMoney = new BettingMoney(money);
+            players.add(new Player(playerName, new CardHand(), bettingMoney));
         }
         return players;
     }

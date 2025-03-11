@@ -216,11 +216,11 @@ class GameResultTest {
     @Test
     void test_BlackjackWinningMoney() {
         // given
-        BattingMoney battingMoney = new BattingMoney(10000);
+        BettingMoney bettingMoney = new BettingMoney(10000);
         GameResult blackjackWin = GameResult.BLACKJACK_WIN;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(battingMoney);
+        int outcome = blackjackWin.calculateOutcome(bettingMoney);
 
         // then
         assertThat(outcome).isEqualTo(15000);
@@ -230,11 +230,11 @@ class GameResultTest {
     @Test
     void test_BlackjackWinningMoney_truncation() {
         // given
-        BattingMoney battingMoney = new BattingMoney(1);
+        BettingMoney bettingMoney = new BettingMoney(1);
         GameResult blackjackWin = GameResult.BLACKJACK_WIN;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(battingMoney);
+        int outcome = blackjackWin.calculateOutcome(bettingMoney);
 
         // then
         assertThat(outcome).isEqualTo(1);
@@ -244,11 +244,11 @@ class GameResultTest {
     @Test
     void test_winningMoney() {
         // given
-        BattingMoney battingMoney = new BattingMoney(10000);
+        BettingMoney bettingMoney = new BettingMoney(10000);
         GameResult blackjackWin = GameResult.WIN;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(battingMoney);
+        int outcome = blackjackWin.calculateOutcome(bettingMoney);
 
         // then
         assertThat(outcome).isEqualTo(10000);
@@ -258,11 +258,11 @@ class GameResultTest {
     @Test
     void test_losingMoney() {
         // given
-        BattingMoney battingMoney = new BattingMoney(10000);
+        BettingMoney bettingMoney = new BettingMoney(10000);
         GameResult blackjackWin = GameResult.LOSE;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(battingMoney);
+        int outcome = blackjackWin.calculateOutcome(bettingMoney);
 
         // then
         assertThat(outcome).isEqualTo(-10000);
@@ -272,11 +272,11 @@ class GameResultTest {
     @Test
     void test_drawMoney() {
         // given
-        BattingMoney battingMoney = new BattingMoney(10000);
+        BettingMoney bettingMoney = new BettingMoney(10000);
         GameResult blackjackWin = GameResult.DRAW;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(battingMoney);
+        int outcome = blackjackWin.calculateOutcome(bettingMoney);
 
         // then
         assertThat(outcome).isEqualTo(0);

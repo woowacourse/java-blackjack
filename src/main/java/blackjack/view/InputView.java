@@ -28,7 +28,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public int readBattingMoney(final String playerName) {
+    public int readBettingMoney(final String playerName) {
         System.out.printf("%s의 배팅 금액은?\n", playerName);
         String moneyInput = scanner.nextLine();
         validateNumeric(moneyInput);

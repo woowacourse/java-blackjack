@@ -11,14 +11,14 @@ public class TestUtil {
         CardHand cardHand = new CardHand();
         ParticipantName playerName = new ParticipantName(name);
 
-        return new Player(playerName, cardHand, new BattingMoney(defaultMoney));
+        return new Player(playerName, cardHand, new BettingMoney(defaultMoney));
     }
 
     public static Player createPlayerOf(String name, CardHand cardHand) {
         int defaultMoney = 10000;
         ParticipantName playerName = new ParticipantName(name);
 
-        return new Player(playerName, cardHand, new BattingMoney(defaultMoney));
+        return new Player(playerName, cardHand, new BettingMoney(defaultMoney));
     }
 
 }
