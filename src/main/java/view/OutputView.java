@@ -33,12 +33,12 @@ public class OutputView {
     }
 
     private static void printInitialDealerCard(Participant dealer) {
-        System.out.printf("%s카드: %s%n", dealer.getParticipantName(), convertCardsToMessage(dealer.getInitialCards()));
+        System.out.printf("%s카드: %s%n", dealer.getParticipantName(), convertCardToMessage(dealer.getCards().getFirst()));
     }
 
     private static void printInitialPlayersCards(List<Participant> players) {
         for (Participant player : players) {
-            System.out.printf("%s카드: %s%n", player.getParticipantName(), convertCardsToMessage(player.getInitialCards()));
+            System.out.printf("%s카드: %s%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
         }
         System.out.print(NEW_LINE);
     }

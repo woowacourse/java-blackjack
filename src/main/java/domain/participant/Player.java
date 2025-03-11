@@ -1,9 +1,6 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.Cards;
-
-import java.util.List;
 
 public class Player extends Participant {
 
@@ -14,10 +11,5 @@ public class Player extends Participant {
     @Override
     public boolean isDealer() {
         return false;
-    }
-
-    @Override
-    public List<Card> getInitialCards() {
-        return cards.getCards();
     }
 }

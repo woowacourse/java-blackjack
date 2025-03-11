@@ -55,12 +55,12 @@ public class Cards {
         return calculateTotalRank() > DEALER_DRAW_LIMIT;
     }
 
-    public int calculateDifferenceFromBlackjackScore() {
-        return Math.abs(calculateTotalRank() - BLACKJACK_SCORE);
+    public boolean equalToBlackjackScore() {
+        return calculateTotalRank() == BLACKJACK_SCORE;
     }
 
-    public Card getInitialCard() {
-        return cards.getFirst();
+    public int calculateDifferenceFromBlackjackScore() {
+        return Math.abs(calculateTotalRank() - BLACKJACK_SCORE);
     }
 
     public List<Card> getCards() {

@@ -68,7 +68,7 @@ public class PlayerTest {
     }
 
     @Test
-    void 플레이어는_초기카드리스트를_두장_반환한다() {
+    void 플레이어가_가진_카드리스트를_반환한다() {
         ParticipantName participantName = new ParticipantName("duei");
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
@@ -77,7 +77,7 @@ public class PlayerTest {
 
         List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK));
 
-        assertThat(player.getInitialCards()).isEqualTo(expected);
+        assertThat(player.getCards()).isEqualTo(expected);
     }
 
     @Test
@@ -87,5 +87,32 @@ public class PlayerTest {
         Participant player = new Player(participantName, cards);
 
         assertThat(player.getParticipantName()).isEqualTo("duei");
+    }
+
+    @Test
+    void 플레이어가_가진_카드리스트의_합계가_21이면_true_아니면_false를_반환한다() {
+        ParticipantName participantName = new ParticipantName("duei");
+        Cards equalToBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.THREE)));
+        Participant isBlackjackPlayer = new Player(participantName, equalToBlackjackScoreCards);
+
+        Cards exceedBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.FOUR)));
+        Participant exceedPlayer = new Player(participantName, exceedBlackjackScoreCards);
+
+        Cards notExceedBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.QUEEN),
+                        new Card(Suit.DIAMOND, Rank.JACK)));
+        Participant notExceedPlayer = new Player(participantName, notExceedBlackjackScoreCards);
+
+        assertAll(
+                () -> assertThat(isBlackjackPlayer.isBlackjack()).isTrue(),
+                () -> assertThat(exceedPlayer.isBlackjack()).isFalse(),
+                () -> assertThat(notExceedPlayer.isBlackjack()).isFalse()
+        );
     }
 }

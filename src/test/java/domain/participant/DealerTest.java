@@ -82,15 +82,15 @@ public class DealerTest {
     }
 
     @Test
-    void 딜러는_초기카드리스트를_한장만_반환한다() {
+    void 딜러가_가진_카드리스트를_반환한다() {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK)));
         Participant dealer = new Dealer(cards);
 
-        List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.EIGHT));
+        List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK));
 
-        assertThat(dealer.getInitialCards()).isEqualTo(expected);
+        assertThat(dealer.getCards()).isEqualTo(expected);
     }
 
     @Test
@@ -99,5 +99,31 @@ public class DealerTest {
         Participant dealer = new Dealer(cards);
 
         assertThat(dealer.getParticipantName()).isEqualTo("딜러");
+    }
+
+    @Test
+    void 딜러가_가진_카드리스트의_합계가_21이면_true_아니면_false를_반환한다() {
+        Cards equalToBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.THREE)));
+        Participant isBlackjackPlayer = new Dealer(equalToBlackjackScoreCards);
+
+        Cards exceedBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.FOUR)));
+        Participant exceedDealer = new Dealer(exceedBlackjackScoreCards);
+
+        Cards notExceedBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.QUEEN),
+                        new Card(Suit.DIAMOND, Rank.JACK)));
+        Participant notExceedDealer = new Dealer(notExceedBlackjackScoreCards);
+
+        assertAll(
+                () -> assertThat(isBlackjackPlayer.isBlackjack()).isTrue(),
+                () -> assertThat(exceedDealer.isBlackjack()).isFalse(),
+                () -> assertThat(notExceedDealer.isBlackjack()).isFalse()
+        );
     }
 }

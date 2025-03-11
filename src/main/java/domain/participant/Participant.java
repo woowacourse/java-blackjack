@@ -34,10 +34,12 @@ public abstract class Participant {
         return false;
     }
 
-    public abstract List<Card> getInitialCards();
-
     public int calculateDifferenceFromBlackjackScore() {
         return cards.calculateDifferenceFromBlackjackScore();
+    }
+
+    public boolean isBlackjack() {
+        return cards.equalToBlackjackScore();
     }
 
     public String getParticipantName() {
