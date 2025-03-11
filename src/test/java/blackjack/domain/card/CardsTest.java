@@ -14,9 +14,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.ACE)),
-                new ScoreCalculator()
-        );
+                        new Card(Suit.DIAMOND, Rank.ACE)));
 
         //when
         int maxScore = cards.calculateMaxScore();
@@ -30,9 +28,7 @@ public class CardsTest {
         //given
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.KING)),
-                new ScoreCalculator()
-        );
+                        new Card(Suit.DIAMOND, Rank.KING)));
 
         //when
         int minScore = cards.calculateMinScore();
@@ -46,9 +42,7 @@ public class CardsTest {
         //given
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.KING)),
-                new ScoreCalculator()
-        );
+                        new Card(Suit.DIAMOND, Rank.KING)));
 
         //when & then
         assertThat(cards.isBlackjack()).isTrue();
@@ -58,9 +52,7 @@ public class CardsTest {
     void 카드를_받을_수_있다() {
         //given
         Cards cards = new Cards(
-                new ArrayList<>(),
-                new ScoreCalculator()
-        );
+                new ArrayList<>());
 
         //when
         cards.take(new Card(Suit.CLUB, Rank.TEN));
@@ -68,9 +60,7 @@ public class CardsTest {
         //then
         assertThat(cards).isEqualTo(
                 new Cards(
-                        List.of(new Card(Suit.CLUB, Rank.TEN)),
-                        new ScoreCalculator()
-                )
+                        List.of(new Card(Suit.CLUB, Rank.TEN)))
         );
     }
 
@@ -80,9 +70,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.DIAMOND, Rank.KING),
-                        new Card(Suit.DIAMOND, Rank.TWO)),
-                new ScoreCalculator()
-        );
+                        new Card(Suit.DIAMOND, Rank.TWO)));
 
         //when & then
         assertThatThrownBy(() -> cards.take(new Card(Suit.CLUB, Rank.TEN)))
@@ -96,9 +84,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.DIAMOND, Rank.KING),
-                        new Card(Suit.DIAMOND, Rank.TWO)),
-                new ScoreCalculator()
-        );
+                        new Card(Suit.DIAMOND, Rank.TWO)));
 
         //when
         boolean result = cards.isBust();
@@ -113,9 +99,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.DIAMOND, Rank.KING),
-                        new Card(Suit.DIAMOND, Rank.ONE)),
-                new ScoreCalculator()
-        );
+                        new Card(Suit.DIAMOND, Rank.ONE)));
 
         //when
         boolean result = cards.isBust();

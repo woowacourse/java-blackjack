@@ -44,4 +44,8 @@ public class GameBoard {
     public Players getPlayers() {
         return players;
     }
+
+    public int getDealerCardSize() {
+        return dealer.getCardSize();
+    }
 }

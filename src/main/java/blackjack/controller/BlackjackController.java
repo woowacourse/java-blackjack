@@ -18,7 +18,7 @@ public class BlackjackController {
     public void run() {
         try {
             Players players = createPlayers();
-            Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer(new Cards());
             GameBoard gameBoard = new GameBoard(Deck.defaultDeck(), dealer, players);
             handOutCards(gameBoard);
             additionalCard(gameBoard, players);
@@ -35,7 +35,7 @@ public class BlackjackController {
         return new Players(toPlayers(playerNames));
     }
 
-    private static List<Player> toPlayers(List<String> playerNames) {
+    private List<Player> toPlayers(List<String> playerNames) {
         return playerNames.stream()
                 .map(name -> new Player(name, new Cards(new ArrayList<>(), new ScoreCalculator())))
                 .toList();
@@ -57,7 +57,7 @@ public class BlackjackController {
         }));
     }
 
-    private static boolean sendCardToPlayer(GameBoard gameBoard, Player player) {
+    private boolean sendCardToPlayer(GameBoard gameBoard, Player player) {
         try {
             gameBoard.drawCard(player);
             return true;
@@ -67,12 +67,12 @@ public class BlackjackController {
         }
     }
 
-
     private void dealerAdditionalCard(GameBoard gameBoard) {
+        int prevDealerCardSize = gameBoard.getDealerCardSize();
         gameBoard.drawAdditionalCardOfDealer();
-        OutputView.printDealerAdditionalCard(1);
+        int nextDealerCardSize = gameBoard.getDealerCardSize();
+        OutputView.printDealerAdditionalCard(nextDealerCardSize - prevDealerCardSize);
     }
-
 
     private void printBlackjackResult(Dealer dealer, Players players) {
         OutputView.printDealerResult(dealer);
