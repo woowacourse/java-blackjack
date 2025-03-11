@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.util.GlobalValidator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +11,9 @@ public final class Card {
     private final CardShape shape;
     
     public Card(final int number, final CardShape shape) {
-        validateNotNull(shape);
+        GlobalValidator.validateNotNull(this, number, shape);
         this.number = CardNumber.from(number);
         this.shape = shape;
-    }
-    
-    private void validateNotNull(final CardShape shape) {
-        if (shape == null) {
-            throw new IllegalArgumentException("카드 모양은 null이 될 수 없습니다.");
-        }
     }
     
     private Card(final CardNumber number, final CardShape shape) {

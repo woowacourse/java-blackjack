@@ -3,6 +3,7 @@ package blackjack.domain.card_hand;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
 import blackjack.domain.player.Player;
+import blackjack.util.GlobalValidator;
 
 import java.util.List;
 
@@ -12,18 +13,9 @@ public final class PlayerBlackjackCardHand {
     private final Player player;
     
     public PlayerBlackjackCardHand(final Player player, final BlackjackCardHandInitializer initializer) {
-        validateNotNull(player, initializer);
+        GlobalValidator.validateNotNull(this, player, initializer);
         this.cardHand = new BlackjackCardHand(initializer);
         this.player = player;
-    }
-    
-    private void validateNotNull(final Player player, final BlackjackCardHandInitializer initializer) {
-        if (player == null) {
-            throw new IllegalArgumentException("플레이어는 null이 될 수 없습니다.");
-        }
-        if (initializer == null) {
-            throw new IllegalArgumentException("초기 카드 지급 방식은 null이 될 수 없습니다.");
-        }
     }
     
     public List<Card> getInitialCards() {

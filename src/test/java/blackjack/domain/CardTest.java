@@ -1,13 +1,5 @@
 package blackjack.domain;
 
-import java.util.EnumMap;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -16,6 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.EnumMap;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class CardTest {
     
     @Test
@@ -23,7 +23,7 @@ public class CardTest {
         // expected
         Assertions.assertThatThrownBy(() -> new Card(1, null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드 모양은 null이 될 수 없습니다.");
+                .hasMessage("Card의 인자는 null이 될 수 없습니다.");
     }
     
     @Test

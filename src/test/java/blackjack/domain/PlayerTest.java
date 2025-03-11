@@ -1,18 +1,13 @@
 package blackjack.domain;
 
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
@@ -53,6 +48,6 @@ public class PlayerTest {
         // expected
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> new Player(null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 null이 될 수 없습니다.");
+                .hasMessage("Player의 인자는 null이 될 수 없습니다.");
     }
 }

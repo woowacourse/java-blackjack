@@ -2,6 +2,7 @@ package blackjack.domain.card_hand;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
+import blackjack.util.GlobalValidator;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public final class BlackjackCardHand {
     private final CardHand cardHand;
     
     public BlackjackCardHand(final BlackjackCardHandInitializer initializer) {
+        GlobalValidator.validateNotNull(this, initializer);
         this.cardHand = new CardHand();
         this.cardHand.addCards(initializer.handoutInitialCards());
     }

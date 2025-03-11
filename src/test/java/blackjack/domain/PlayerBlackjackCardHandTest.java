@@ -1,16 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-import java.util.stream.Stream;
-
-import static blackjack.domain.card.CardShape.다이아몬드;
-import static blackjack.domain.card.CardShape.하트;
-import static blackjack.test_util.TestConstants.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
@@ -23,6 +12,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
+import java.util.stream.Stream;
+
+import static blackjack.domain.card.CardShape.다이아몬드;
+import static blackjack.domain.card.CardShape.하트;
+import static blackjack.test_util.TestConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class PlayerBlackjackCardHandTest {
     
     @Test
@@ -33,10 +33,10 @@ public class PlayerBlackjackCardHandTest {
         assertAll(
                 () -> assertThatThrownBy(() -> new PlayerBlackjackCardHand(null, List::of))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("플레이어는 null이 될 수 없습니다."),
+                        .hasMessage("PlayerBlackjackCardHand의 인자는 null이 될 수 없습니다."),
                 () -> assertThatThrownBy(() -> new PlayerBlackjackCardHand(DEFAULT_PLAYER, null))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("초기 카드 지급 방식은 null이 될 수 없습니다.")
+                        .hasMessage("PlayerBlackjackCardHand의 인자는 null이 될 수 없습니다.")
         );
     }
     

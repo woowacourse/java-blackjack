@@ -1,11 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-import java.util.stream.Stream;
-
-import static blackjack.test_util.TestConstants.*;
-import static org.assertj.core.api.Assertions.*;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
@@ -14,6 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static blackjack.test_util.TestConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DealerBlackjackCardHandTest {
     
@@ -24,7 +25,7 @@ public class DealerBlackjackCardHandTest {
         // expected
         assertThatThrownBy(() -> new DealerBlackjackCardHand(null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("초기 카드 지급 방식은 null이 될 수 없습니다.");
+                .hasMessage("DealerBlackjackCardHand의 인자는 null이 될 수 없습니다.");
     }
 
     @Test
