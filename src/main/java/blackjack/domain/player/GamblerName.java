@@ -2,17 +2,10 @@ package blackjack.domain.player;
 
 import java.util.Objects;
 
-public class Name {
+public record GamblerName(String name) {
 
-    private final String name;
-
-    public Name(final String name) {
+    public GamblerName {
         validateName(name);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     private void validateName(final String name) {
@@ -24,12 +17,7 @@ public class Name {
     @Override
     public boolean equals(final Object object) {
         if (object == null || getClass() != object.getClass()) return false;
-        Name name1 = (Name) object;
-        return Objects.equals(name, name1.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
+        GamblerName gamblerName1 = (GamblerName) object;
+        return Objects.equals(name, gamblerName1.name);
     }
 }

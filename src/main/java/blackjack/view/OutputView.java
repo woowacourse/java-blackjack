@@ -2,11 +2,11 @@ package blackjack.view;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.GameResults;
-import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
 import java.util.ArrayList;
 import java.util.List;
