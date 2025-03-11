@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import model.cards.Cards;
-import model.cards.CardsFactory;
 import model.cards.DealerCards;
 import model.cards.DealerCardsFactory;
 import model.cards.PlayerCardsFactory;
@@ -22,7 +21,7 @@ public class BlackjackGame {
     private final Players players;
     private final DealerCards dealerCards;
 
-    private BlackjackGame(final Deck deck, final Players players, final DealerCards dealerCards) {
+    public BlackjackGame(final Deck deck, final Players players, final DealerCards dealerCards) {
         this.deck = deck;
         this.players = players;
         this.dealerCards = dealerCards;
@@ -65,15 +64,23 @@ public class BlackjackGame {
         );
     }
 
-    public static BlackjackGame getBlackjackGame(final List<String> rawPlayers) {
-        Deck deck = new Deck(DeckFactory.getInitializedDeck());
-        DealerCards dealerCards = (DealerCards) new DealerCardsFactory().generate(deck);
-        Players players = generatePlayersWithCards(rawPlayers, deck);
+    public static BlackjackGame getBlackjackGame(
+            final List<String> rawPlayers,
+            final DeckFactory deckFactory,
+            final PlayerCardsFactory playerCardsFactory,
+            final DealerCardsFactory dealerCardsFactory
+    ) {
+        Deck deck = new Deck(deckFactory.getInitializedDeck());
+        DealerCards dealerCards = (DealerCards) dealerCardsFactory.generate(deck);
+        Players players = generatePlayersWithCards(rawPlayers, deck, playerCardsFactory);
         return new BlackjackGame(deck, players, dealerCards);
     }
 
-    private static Players generatePlayersWithCards(final List<String> names, final Deck deck) {
-        CardsFactory playerCardsFactory = new PlayerCardsFactory();
+    private static Players generatePlayersWithCards(
+            final List<String> names,
+            final Deck deck,
+            final PlayerCardsFactory playerCardsFactory
+    ) {
         Map<String, Cards> rawPlayers = new LinkedHashMap<>(names.size());
         names.forEach(name -> rawPlayers.put(name, playerCardsFactory.generate(deck)));
 

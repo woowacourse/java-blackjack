@@ -3,6 +3,7 @@ package model.cards;
 import exception.IllegalBlackjackStateException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import model.card.Card;
 import model.card.CardNumber;
 
@@ -64,5 +65,19 @@ public abstract class Cards {
 
         cards.remove(aceElevenCard);
         cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Cards cards1 = (Cards) o;
+        return Objects.equals(cards, cards1.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cards);
     }
 }

@@ -8,6 +8,9 @@ import model.BlackjackGame;
 import model.Players;
 import model.cards.Cards;
 import model.cards.DealerCards;
+import model.cards.DealerCardsFactory;
+import model.cards.PlayerCardsFactory;
+import model.deck.DeckFactory;
 import model.result.GameResult;
 import model.result.GameResults;
 import view.InputView;
@@ -25,7 +28,7 @@ public class BlackjackController {
 
     public void start() {
         try {
-            BlackjackGame blackjackGame = BlackjackGame.getBlackjackGame(getPlayerNames());
+            BlackjackGame blackjackGame = getBlackjackGame();
             printPlayersAndInitialCards(blackjackGame);
             askToAllPlayersForAdditionalCard(blackjackGame);
             printDealerDraw(blackjackGame);
@@ -34,6 +37,19 @@ public class BlackjackController {
         } catch (IllegalBlackjackStateException e) {
             outputView.printExceptionMessage(e);
         }
+    }
+
+    private BlackjackGame getBlackjackGame() {
+        DeckFactory deckFactory = new DeckFactory();
+        PlayerCardsFactory playerCardsFactory = new PlayerCardsFactory();
+        DealerCardsFactory dealerCardsFactory = new DealerCardsFactory();
+
+        return BlackjackGame.getBlackjackGame(
+                getPlayerNames(),
+                deckFactory,
+                playerCardsFactory,
+                dealerCardsFactory
+        );
     }
 
     private List<String> getPlayerNames() {
