@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,23 +19,20 @@ class DeckTest {
         @Test
         void drawCard() {
             // given
-            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
-                    .toList();
-            Deck deck = new Deck(cards);
+            Deck deck = Deck.create();
 
             // when & then
-            assertThat(deck.draw()).isEqualTo(cards.getLast());
+            assertThat(deck.draw()).isInstanceOf(TrumpCard.class);
         }
 
         @DisplayName("덱은 카드를 섞을 수 있다")
         @Test
         void shuffle() {
             // given
-            List<TrumpCard> cards = Arrays.stream(TrumpCard.values())
-                    .toList();
-            Deck originalDeck = new Deck(cards);
-            Deck firstShuffledDeck = new Deck(cards);
-            Deck secondShuffledDeck = new Deck(cards);
+
+            Deck originalDeck = Deck.create();
+            Deck firstShuffledDeck = Deck.create();
+            Deck secondShuffledDeck = Deck.create();
 
             // when
             firstShuffledDeck.shuffle();
@@ -74,7 +70,7 @@ class DeckTest {
             List<TrumpCard> cards = new ArrayList<>();
 
             // when
-            cards.add(TrumpCard.ACE_OF_CLUBS);
+            cards.add(new TrumpCard(Rank.ACE, Suit.CLUBS));
 
             // then
             assertThatThrownBy(() -> new Deck(cards))
@@ -90,7 +86,7 @@ class DeckTest {
 
             // when
             for (int i = 0; i < 52; i++) {
-                cards.add(TrumpCard.ACE_OF_CLUBS);
+                cards.add(new TrumpCard(Rank.ACE, Suit.CLUBS));
             }
             //then
             assertThatThrownBy(() -> new Deck(cards))

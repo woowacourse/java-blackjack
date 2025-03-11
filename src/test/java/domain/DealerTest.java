@@ -18,8 +18,8 @@ class DealerTest {
         void retrieveFirstCard() {
             // given
             List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES,
-                    TrumpCard.TWO_OF_SPADES
+                    new TrumpCard(Rank.ACE, Suit.SPADES),
+                    new TrumpCard(Rank.TWO, Suit.SPADES)
             );
             Hand hand = new Hand(cards);
 
@@ -27,7 +27,7 @@ class DealerTest {
             Dealer dealer = new Dealer(hand);
 
             // then
-            assertThat(dealer.retrieveFirstCard()).isEqualTo(TrumpCard.ACE_OF_SPADES);
+            assertThat(dealer.retrieveFirstCard()).isEqualTo(new TrumpCard(Rank.ACE, Suit.SPADES));
         }
     }
 
@@ -51,7 +51,7 @@ class DealerTest {
         void retrieveFirstCard() {
             // given
             List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES
+                    new TrumpCard(Rank.ACE, Suit.SPADES)
             );
             Hand hand = new Hand(cards);
             Dealer dealer = new Dealer(hand);

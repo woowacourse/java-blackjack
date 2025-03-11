@@ -28,11 +28,11 @@ class ScoreTest {
 
         static Stream<Arguments> provideScoreCases() {
             return Stream.of(
-                    Arguments.of(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS), Score.BLACKJACK),
-                    Arguments.of(List.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS), Score.TWENTY),
-                    Arguments.of(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS), Score.SIXTEEN),
-                    Arguments.of(List.of(TrumpCard.FIVE_OF_SPADES, TrumpCard.THREE_OF_DIAMONDS), Score.EIGHT),
-                    Arguments.of(List.of(TrumpCard.KING_OF_CLUBS, TrumpCard.QUEEN_OF_HEARTS, TrumpCard.TWO_OF_SPADES),
+                    Arguments.of(List.of(new TrumpCard(Rank.ACE, Suit.SPADES), new TrumpCard(Rank.KING, Suit.HEARTS)), Score.BLACKJACK),
+                    Arguments.of(List.of(new TrumpCard(Rank.TEN, Suit.DIAMONDS), new TrumpCard(Rank.JACK, Suit.HEARTS)), Score.TWENTY),
+                    Arguments.of(List.of(new TrumpCard(Rank.NINE, Suit.CLUBS), new TrumpCard(Rank.SEVEN, Suit.DIAMONDS)), Score.SIXTEEN),
+                    Arguments.of(List.of(new TrumpCard(Rank.FIVE, Suit.SPADES), new TrumpCard(Rank.THREE, Suit.DIAMONDS)), Score.EIGHT),
+                    Arguments.of(List.of(new TrumpCard(Rank.KING, Suit.CLUBS), new TrumpCard(Rank.QUEEN, Suit.HEARTS), new TrumpCard(Rank.TWO, Suit.SPADES)),
                             Score.BUST)
             );
         }

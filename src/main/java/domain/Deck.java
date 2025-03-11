@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -45,8 +44,14 @@ public class Deck {
         return new Deck(cards);
     }
 
-    private static ArrayList<TrumpCard> initializeCards() {
-        return new ArrayList<>(Arrays.asList(TrumpCard.values()));
+    private static List<TrumpCard> initializeCards() {
+        List<TrumpCard> trumpCard = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
+                trumpCard.add(new TrumpCard(rank, suit));
+            }
+        }
+        return trumpCard;
     }
 
     public TrumpCard draw() {

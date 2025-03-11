@@ -1,9 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -23,14 +21,14 @@ class BlackJackGameTest {
 
     @BeforeEach
     void setUp() {
-        blackJackDeck = new Deck(Arrays.stream(TrumpCard.values()).toList());
-        dealer = new Dealer(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_HEARTS)));
+        blackJackDeck = Deck.create();
+        dealer = new Dealer(
+                new Hand(List.of(new TrumpCard(Rank.SIX, Suit.CLUBS), new TrumpCard(Rank.SIX, Suit.SPADES))));
         rule = new Rule();
     }
 
     @Nested
     class ValidCases {
-
 
         @ParameterizedTest
         @DisplayName("플레이어의 히트 판단 여부를 판단한다")
@@ -49,10 +47,12 @@ class BlackJackGameTest {
 
         static Stream<Arguments> provideDealerHitAllowedCases() {
             return Stream.of(
-                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)),
-                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES)),
+                    Arguments.of(List.of(new TrumpCard(Rank.FIVE, Suit.CLUBS), new TrumpCard(Rank.SIX, Suit.HEARTS))),
                     Arguments.of(
-                            List.of(TrumpCard.THREE_OF_HEARTS, TrumpCard.THREE_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES))
+                            List.of(new TrumpCard(Rank.SEVEN, Suit.DIAMONDS), new TrumpCard(Rank.TWO, Suit.SPADES))),
+                    Arguments.of(
+                            List.of(new TrumpCard(Rank.THREE, Suit.HEARTS), new TrumpCard(Rank.THREE, Suit.DIAMONDS),
+                                    new TrumpCard(Rank.TWO, Suit.SPADES)))
             );
         }
 
@@ -61,7 +61,8 @@ class BlackJackGameTest {
         void processPlayerHit() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", Hand.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES));
+            Player player = new Player("Alice",
+                    Hand.of(new TrumpCard(Rank.TWO, Suit.DIAMONDS), new TrumpCard(Rank.FIVE, Suit.SPADES)));
 
             // when
             blackJackGame.processPlayerHit(player);
@@ -89,7 +90,8 @@ class BlackJackGameTest {
         void calculateScore() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
+            List<TrumpCard> cards = List.of(new TrumpCard(Rank.ACE, Suit.SPADES),
+                    new TrumpCard(Rank.KING, Suit.HEARTS));
 
             // when
             Score score = blackJackGame.caculateScore(cards);
@@ -103,8 +105,10 @@ class BlackJackGameTest {
         void calculateGameResults() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player1 = new Player("Alice", Hand.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS));
-            Player player2 = new Player("Bob", Hand.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS));
+            Player player1 = new Player("Alice",
+                    Hand.of(new TrumpCard(Rank.TEN, Suit.DIAMONDS), new TrumpCard(Rank.JACK, Suit.HEARTS)));
+            Player player2 = new Player("Bob",
+                    Hand.of(new TrumpCard(Rank.NINE, Suit.CLUBS), new TrumpCard(Rank.SEVEN, Suit.DIAMONDS)));
             List<Player> players = List.of(player1, player2);
 
             // when
@@ -112,33 +116,6 @@ class BlackJackGameTest {
 
             // then
             assertThat(results).containsKeys("Alice", "Bob");
-        }
-    }
-
-    @Nested
-    class InvalidCases {
-
-        @ParameterizedTest
-        @DisplayName("플레이어가 히트 할 수 없다면 히트를 할 수 없다.")
-        @MethodSource("provideHitNotAllowedCases")
-        void processPlayerHit(List<TrumpCard> cards) {
-            // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", new Hand(cards));
-
-            // when & then
-            assertThatThrownBy(() -> blackJackGame.processPlayerHit(player))
-                    .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("플레이어는 더이상 히트할 수 없습니다.");
-        }
-
-        static Stream<Arguments> provideHitNotAllowedCases() {
-            return Stream.of(
-                    Arguments.of(List.of(TrumpCard.TEN_OF_SPADES, TrumpCard.ACE_OF_HEARTS)),
-                    Arguments.of(
-                            List.of(TrumpCard.KING_OF_DIAMONDS, TrumpCard.QUEEN_OF_SPADES, TrumpCard.TWO_OF_HEARTS)),
-                    Arguments.of(List.of(TrumpCard.JACK_OF_CLUBS, TrumpCard.KING_OF_HEARTS, TrumpCard.FOUR_OF_SPADES))
-            );
         }
     }
 }

@@ -82,7 +82,7 @@ public class BlackJackController {
     private Map<String, CardScoreDto> convertPlayerCardScoreDto(List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, player -> {
-                    List<TrumpCard> playerCards = player.getHand().getCards();
+                    List<TrumpCard> playerCards = player.getCards();
                     Score score = blackJackGame.caculateScore(playerCards);
 
                     return new CardScoreDto(
@@ -92,7 +92,7 @@ public class BlackJackController {
     }
 
     private CardScoreDto convertDealerCardScoreDto(Dealer dealer) {
-        List<TrumpCard> dealerCards = dealer.getHand().getCards();
+        List<TrumpCard> dealerCards = dealer.getCards();
         Score score = blackJackGame.caculateScore(dealerCards);
 
         return new CardScoreDto(dealerCards, score);

@@ -22,11 +22,11 @@ class PlayerTest {
         @DisplayName("플레이어는 이름을 가져야 한다.")
         void validateNotNullName(String name) {
             // given
-            Hand hand = new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TEN_OF_SPADES));
+            Hand hand = new Hand(List.of(new TrumpCard(Rank.ACE, Suit.SPADES), new TrumpCard(Rank.TEN, Suit.SPADES)));
 
             // when & then
             assertThatThrownBy(() -> new Player(name, hand))
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 손패를 가져야합니다.");
         }
 
@@ -38,7 +38,7 @@ class PlayerTest {
 
             // when & then
             assertThatThrownBy(() -> new Player("머피", nullHand))
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 손패를 가져야합니다.");
         }
     }

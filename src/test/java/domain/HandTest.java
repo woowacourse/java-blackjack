@@ -19,18 +19,18 @@ class HandTest {
         void addCard() {
             // given
             List<TrumpCard> cards = new ArrayList<>();
-            cards.add(TrumpCard.ACE_OF_SPADES);
-            cards.add(TrumpCard.TWO_OF_SPADES);
+            cards.add(new TrumpCard(Rank.ACE, Suit.SPADES));
+            cards.add(new TrumpCard(Rank.TWO, Suit.SPADES));
             Hand hand = new Hand(cards);
 
             // when
-            hand.addCard(TrumpCard.THREE_OF_SPADES);
+            hand.addCard(new TrumpCard(Rank.THREE, Suit.SPADES));
 
             // then
             assertThat(hand.getCards()).containsExactlyInAnyOrder(
-                    TrumpCard.ACE_OF_SPADES,
-                    TrumpCard.TWO_OF_SPADES,
-                    TrumpCard.THREE_OF_SPADES
+                    new TrumpCard(Rank.ACE, Suit.SPADES),
+                    new TrumpCard(Rank.TWO, Suit.SPADES),
+                    new TrumpCard(Rank.THREE, Suit.SPADES)
             );
         }
     }
@@ -55,8 +55,8 @@ class HandTest {
         void validateNotDuplicate() {
             // given
             List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES,
-                    TrumpCard.ACE_OF_SPADES
+                    new TrumpCard(Rank.ACE, Suit.SPADES),
+                    new TrumpCard(Rank.ACE, Suit.SPADES)
             );
 
             // when & then
@@ -64,14 +64,15 @@ class HandTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("손패에 중복된 카드가 있습니다.");
         }
+
         @DisplayName("손패와 새로 받은 카드는 중복될 수 없다")
         @Test
         void validateAddDuplicateCard() {
             // given
-            Hand hand = Hand.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_SPADES);
+            Hand hand = Hand.of(new TrumpCard(Rank.ACE, Suit.SPADES), new TrumpCard(Rank.TWO, Suit.SPADES));
 
             // when & then
-            assertThatThrownBy(() -> hand.addCard(TrumpCard.ACE_OF_SPADES))
+            assertThatThrownBy(() -> hand.addCard(new TrumpCard(Rank.ACE, Suit.SPADES)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이미 손패에 있는 카드입니다.");
         }
