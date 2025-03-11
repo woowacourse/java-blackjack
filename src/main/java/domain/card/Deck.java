@@ -12,8 +12,7 @@ public class Deck {
     private final Deque<Card> cards;
 
     public Deck(CardsGenerator cardsGenerator) {
-        cards = new ArrayDeque<>();
-        cards.addAll(cardsGenerator.generate());
+        cards = new ArrayDeque<>(cardsGenerator.generate());
     }
 
     public Card pick() {
@@ -38,7 +37,7 @@ public class Deck {
             return false;
         }
         Deck deck = (Deck) o;
-        return Objects.equals(cards, deck.cards);
+        return new ArrayList<>(cards).equals(new ArrayList<>(deck.cards));
     }
 
     @Override
