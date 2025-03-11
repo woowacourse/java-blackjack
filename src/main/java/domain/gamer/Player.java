@@ -12,17 +12,13 @@ public class Player {
     private final String name;
     private final Gamer gamer;
 
-    public Player(String name, CardGroup cardGroup, CardGenerator cardGenerator) {
+    public Player(String name, CardGroup cardGroup) {
         this.name = name;
-        this.gamer = new Gamer(cardGroup, cardGenerator);
+        this.gamer = new Gamer(cardGroup);
     }
 
-    public void receiveCard() {
-        gamer.receiveCard();
-    }
-
-    public void receiveCard(int count) {
-        gamer.receiveCard(count);
+    public void receiveCard(Card card) {
+        gamer.receiveCard(card);
     }
 
     public boolean isBust() {

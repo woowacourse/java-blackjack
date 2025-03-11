@@ -8,28 +8,21 @@ import domain.card.CardGroup;
 import java.util.List;
 
 public class Dealer {
-    private final int DEALER_HIT_ROLE = 16;
     private final Gamer gamer;
 
-    public Dealer(CardGroup cardGroup, CardGenerator cardGenerator) {
-        this.gamer = new Gamer(cardGroup, cardGenerator);
+    public Dealer(CardGroup cardGroup) {
+        this.gamer = new Gamer(cardGroup);
+    }
+
+    public void receiveCard(Card card){
+        gamer.receiveCard(card);
     }
 
     public int calculateScore() {
         return gamer.calculateScore();
     }
 
-    public void receiveCard(int count) {
-        gamer.receiveCard(count);
-    }
-
-    public void hitCardUntilStand() {
-        while (isLessThen(DEALER_HIT_ROLE)) {
-            gamer.receiveCard();
-        }
-    }
-
-    private boolean isLessThen(int score) {
+    public boolean isLessThen(int score) {
         return gamer.calculateScore() <= score;
     }
 

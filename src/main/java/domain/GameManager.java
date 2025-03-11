@@ -10,31 +10,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static domain.GameResult.calculateResult;
 import static domain.GameResult.getAllGameResults;
 
 public class GameManager {
     public static final int LIMIT = 21;
+    private static final int DEALER_HIT_SCORE = 16;
     public static final int START_RECEIVE_CARD = 2;
 
     private final Dealer dealer;
     private final List<Player> players;
+    private final CardGenerator cardGenerator;
 
-    public GameManager(final Dealer dealer, final List<Player> players) {
+    public GameManager(final Dealer dealer, final List<Player> players, CardGenerator cardGenerator) {
         this.dealer = dealer;
         this.players = players;
+        this.cardGenerator = cardGenerator;
     }
 
     public static GameManager create(final List<String> playerNames, CardGenerator cardGenerator) {
-        Dealer dealer = GamerGenerator.generateDealer(cardGenerator);
+        Dealer dealer = GamerGenerator.generateDealer();
         List<Player> players = GamerGenerator.generatePlayer(playerNames, cardGenerator);
-        return new GameManager(dealer, players);
+        return new GameManager(dealer, players,cardGenerator);
     }
 
     public void initOpeningCards() {
-        dealer.receiveCard(START_RECEIVE_CARD);
-        players.forEach(player -> player.receiveCard(START_RECEIVE_CARD));
+        IntStream.range(0, START_RECEIVE_CARD).forEach(count -> {
+            dealCardToDealer();
+            players.forEach(this::dealCardToPlayer);
+        });
+    }
+
+    public void dealerHitUntilStand() {
+        while(dealer.isLessThen(DEALER_HIT_SCORE)){
+            dealCardToDealer();
+        }
     }
 
     public Map<GameResult, Integer> calculateDealerGameResult() {
@@ -50,12 +62,12 @@ public class GameManager {
                 ));
     }
 
-    public void dealerHitUntilStand() {
-        dealer.hitCardUntilStand();
+    public void dealCardToPlayer(Player player) {
+        player.receiveCard(cardGenerator.peekCard());
     }
 
-    public void dealCardToPlayer(Player player) {
-        player.receiveCard();
+    public void dealCardToDealer(){
+        dealer.receiveCard(cardGenerator.peekCard());
     }
 
     public int getDealerHitCount() {

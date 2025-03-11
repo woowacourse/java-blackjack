@@ -11,21 +11,13 @@ import static domain.GameManager.LIMIT;
 
 public class Gamer {
     private final CardGroup cardGroup;
-    private final CardGenerator cardGenerator;
 
-    public Gamer(CardGroup cardGroup, CardGenerator cardGenerator) {
+    public Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
-        this.cardGenerator = cardGenerator;
     }
 
-    public void receiveCard() {
-        cardGroup.addCard(cardGenerator.peekRandomCard());
-    }
-
-    public void receiveCard(int count) {
-        for (int i = 0; i < count; i++) {
-            receiveCard();
-        }
+    public void receiveCard(Card card) {
+        cardGroup.addCard(card);
     }
 
     public boolean isBust() {

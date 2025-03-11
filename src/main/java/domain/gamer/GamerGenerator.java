@@ -16,12 +16,12 @@ public class GamerGenerator {
         validateDuplicate(playerNames);
         validatePLayerNumber(playerNames);
         return playerNames.stream()
-                .map(name -> new Player(name, new CardGroup(), cardGenerator))
+                .map(name -> new Player(name, new CardGroup()))
                 .toList();
     }
 
-    public static Dealer generateDealer(CardGenerator cardGenerator) {
-        return new Dealer(new CardGroup(), cardGenerator);
+    public static Dealer generateDealer() {
+        return new Dealer(new CardGroup());
     }
 
     private static void validateDuplicate(final List<String> playerNames) {
