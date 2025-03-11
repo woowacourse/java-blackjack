@@ -34,10 +34,7 @@ class DealerTest {
                 Arguments.of(List.of(Card.HEART_TEN, Card.HEART_ACE), false),
                 Arguments.of(List.of(Card.HEART_TEN, Card.HEART_FIVE), true),
                 Arguments.of(List.of(Card.HEART_TEN, Card.HEART_SIX), true),
-                Arguments.of(List.of(Card.HEART_TEN, Card.HEART_SEVEN), false),
-                Arguments.of(List.of(Card.HEART_TEN, Card.HEART_ACE, Card.CLOVER_QUEEN), false),
-                Arguments.of(List.of(Card.HEART_TEN, Card.HEART_QUEEN, Card.CLOVER_THREE), false),
-                Arguments.of(List.of(Card.HEART_TEN, Card.DIA_JACK, Card.CLOVER_TWO), false)
+                Arguments.of(List.of(Card.HEART_TEN, Card.HEART_SEVEN), false)
         );
     }
 

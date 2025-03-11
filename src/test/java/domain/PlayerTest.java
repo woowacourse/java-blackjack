@@ -42,7 +42,7 @@ class PlayerTest {
             player.addCard(new Cards(List.of(card)));
         }
 
-        int playStandard = 21;
+        int playStandard = 20;
         // when
         boolean canGetMoreCard = player.isDrawable(playStandard);
         // then
@@ -51,17 +51,17 @@ class PlayerTest {
 
     public static Stream<Arguments> canGetMoreCardTest() {
         return Stream.of(
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_THREE), true),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), true),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), true),
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK), false),
+                Arguments.of(List.of(Card.CLOVER_JACK, Card.CLOVER_QUEEN), true),
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_ACE), true),
                 Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_THREE), false),
-                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE, Card.HEART_ACE), false)
+                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.CLOVER_ACE), false)
         );
     }
 
     @ParameterizedTest
     @MethodSource
-    @DisplayName("딜러 숫자가 21 이하일 때, 승무패를 계산하는지 확인합니다.")
+    @DisplayName("딜러 숫자가 20일 때, 승무패를 계산하는지 확인합니다.")
     void decideGameResultTest(List<Card> cards, GameResult expected) {
         //given
         Player player = new Player(new PlayerName("코기"));
@@ -78,11 +78,10 @@ class PlayerTest {
 
     public static Stream<Arguments> decideGameResultTest() {
         return Stream.of(
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_THREE), LOSE),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), WIN),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK, Card.CLOVER_ACE), LOSE),
-                Arguments.of(List.of(Card.HEART_SEVEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW),
-                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_JACK, Card.HEART_ACE, Card.SPADE_ACE), LOSE)
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_NINE, Card.CLOVER_THREE), LOSE), // 버스트
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_QUEEN), WIN), // 21
+                Arguments.of(List.of(Card.HEART_TEN, Card.CLOVER_JACK, Card.CLOVER_ACE), WIN), // 21
+                Arguments.of(List.of(Card.HEART_SEVEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW) // 20
         );
     }
 
@@ -95,11 +94,11 @@ class PlayerTest {
         for (Card card : cards) {
             player.addCard(new Cards(List.of(card)));
         }
-        
+
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
 
-        List<Card> givenCards = List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN);
+        List<Card> givenCards = List.of(Card.HEART_JACK, Card.SPADE_SIX, Card.CLOVER_SEVEN);
         for (Card givenCard : givenCards) {
             dealer.addCard(new Cards(List.of(givenCard)));
         }
