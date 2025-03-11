@@ -7,6 +7,8 @@ import domain.card.CardSymbol;
 import org.assertj.core.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class CardDeckTest {
 
@@ -67,5 +69,22 @@ public class CardDeckTest {
 
         //then
         Assertions.assertThat(cardDeck.getCards().size()).isEqualTo(1);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"TWO, THREE, 5", "FOUR, FIVE, 9"})
+    void 카드_점수_계산_테스트(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
+        // given
+        CardDeck cardDeck = CardDeck.generateEmptySet();
+        Card card1 = new Card(cardNumber1, CardSymbol.CLOVER);
+        Card card2 = new Card(cardNumber2, CardSymbol.CLOVER);
+        cardDeck.addCard(card1);
+        cardDeck.addCard(card2);
+
+        // when
+        int actual = cardDeck.getScore();
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 }
