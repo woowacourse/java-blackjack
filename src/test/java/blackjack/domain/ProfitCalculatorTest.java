@@ -46,7 +46,7 @@ class ProfitCalculatorTest {
         int result = profitCalculator.calculatePlayerProfit(DEFEAT, 10000);
 
         // then
-        assertThat(result).isEqualTo(-20000);
+        assertThat(result).isEqualTo(-10000);
     }
 
     @DisplayName("플레이어가_무승부한_경우_원금만을_회수한다")
