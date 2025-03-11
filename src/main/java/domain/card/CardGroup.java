@@ -17,14 +17,8 @@ public class CardGroup {
         this.cards = new ArrayList<>(cards);
     }
 
-    public boolean addCard(final Card card) {
-        final int size = cards.size();
+    public void addCard(final Card card) {
         cards.add(card);
-        return size + 1 == cards.size();
-    }
-
-    public int countCards() {
-        return cards.size();
     }
 
     public int calculateScore(int limit) {
