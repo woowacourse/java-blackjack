@@ -15,7 +15,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 한장의 카드만 공개한다")
     void dealerRevealsOnlyOneCard() {
-        CardPack cardPack = new CardPack(new SortShuffle());
+        CardPack cardPack = new CardPack(new SortedBlackjackShuffle());
         Dealer dealer = new Dealer();
 
         dealer.pushDealCard(cardPack, 2);

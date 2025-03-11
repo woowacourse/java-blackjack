@@ -15,7 +15,7 @@ class PlayerTest {
     void calculate_calculation_check_rot() {
         // given
         Player player = new Gambler("두리");
-        player.pushDealCard(new CardPack(new SortShuffle()), 3);
+        player.pushDealCard(new CardPack(new SortedBlackjackShuffle()), 3);
 
         // when
         int result = player.calculateCardNumbers();
@@ -28,7 +28,7 @@ class PlayerTest {
     @Test
     void ace_test() {
         Player player = new Gambler("두리");
-        player.pushDealCard(new CardPack(new ReversedSortShuffle()), 2);
+        player.pushDealCard(new CardPack(new ReversedBlackjackShuffle()), 2);
 
         // when
         int result = player.calculateCardNumbers();

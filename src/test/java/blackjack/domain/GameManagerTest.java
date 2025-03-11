@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameManagerTest {
 
-    private static final CardPack SORT_CARD_PACK = new CardPack(new SortShuffle());
-    private static final CardPack REVERSE_SORT_CARD_PACK = new CardPack(new ReversedSortShuffle());
+    private static final CardPack SORT_CARD_PACK = new CardPack(new SortedBlackjackShuffle());
+    private static final CardPack REVERSE_SORT_CARD_PACK = new CardPack(new ReversedBlackjackShuffle());
 
     @Test
     @DisplayName("참가자를 추가한다")

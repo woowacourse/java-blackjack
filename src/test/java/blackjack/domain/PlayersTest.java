@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
 
-    private static final CardPack CARD_PACK = new CardPack(new ReversedSortShuffle());
+    private static final CardPack CARD_PACK = new CardPack(new ReversedBlackjackShuffle());
 
     @Test
     @DisplayName("플레이어 목록을 추가한다")

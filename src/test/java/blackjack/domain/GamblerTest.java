@@ -15,7 +15,7 @@ public class GamblerTest {
     @Test
     @DisplayName("게임 참가자는 모든 카드를 공개한다")
     void test() {
-        CardPack cardPack = new CardPack(new SortShuffle());
+        CardPack cardPack = new CardPack(new SortedBlackjackShuffle());
         Gambler gambler = new Gambler("두리");
 
         gambler.pushDealCard(cardPack, 2);
