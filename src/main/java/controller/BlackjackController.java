@@ -3,7 +3,7 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.participant.Dealer;
-import model.Deck;
+import model.card.Deck;
 import model.GameResult;
 import model.participant.Player;
 import model.ParticipantWinningResult;

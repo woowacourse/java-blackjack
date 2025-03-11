@@ -1,7 +1,7 @@
 package model.participant;
 
 import java.util.List;
-import model.Deck;
+import model.card.Deck;
 import model.card.Card;
 
 public class Participant {
