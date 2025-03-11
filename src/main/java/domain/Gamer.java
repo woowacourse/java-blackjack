@@ -22,7 +22,7 @@ public abstract class Gamer {
         return hand.calculateTotalPoint();
     }
 
-    public void addFrom(CardDeck deck) {
+    private void addFrom(CardDeck deck) {
         hand.add(deck.drawCard());
     }
 
@@ -39,7 +39,7 @@ public abstract class Gamer {
         addFrom(deck);
     }
 
-    public void validateHitState() {
+    private void validateHitState() {
         if (!canHit()) {
             throw new IllegalStateException("[ERROR] 카드를 더 뽑을 수 없는 상태입니다.");
         }
