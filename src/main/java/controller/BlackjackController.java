@@ -6,8 +6,8 @@ import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.BlackjackResult;
 import domain.blackjackgame.BlackjackWinner;
 import domain.blackjackgame.DealerWinStatus;
+import domain.blackjackgame.PlayerGameResult;
 import domain.blackjackgame.TrumpCard;
-import domain.blackjackgame.WinStatus;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.strategy.BlackjackDrawStrategy;
@@ -60,7 +60,7 @@ public class BlackjackController {
                                        List<BlackjackResult> playerResults) {
         BlackjackWinner blackjackWinner = new BlackjackWinner(dealerResult, playerResults);
         DealerWinStatus dealerWinStatus = blackjackWinner.getDealerWinStatus();
-        Map<String, WinStatus> playerWinStatuses = blackjackWinner.getPlayerWinStatuses();
+        Map<String, PlayerGameResult> playerWinStatuses = blackjackWinner.getPlayerWinStatuses();
 
         outputView.resultHeader();
         outputView.dealerWinStatus(dealerWinStatus.win(), dealerWinStatus.lose(), blackjackGame.dealerName());

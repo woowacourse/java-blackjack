@@ -7,9 +7,9 @@ import domain.blackjackgame.BlackjackResult;
 import domain.blackjackgame.BlackjackWinner;
 import domain.blackjackgame.CardValue;
 import domain.blackjackgame.DealerWinStatus;
+import domain.blackjackgame.PlayerGameResult;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
-import domain.blackjackgame.WinStatus;
 import domain.participant.Dealer;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -37,9 +37,9 @@ public class BlackjackWinnerTest {
         assertThat(blackjackWinner.getDealerWinStatus())
                 .isEqualTo(new DealerWinStatus(0, 1));
         assertThat(blackjackWinner.getPlayerWinStatuses().get("포비"))
-                .isEqualTo(WinStatus.DRAW);
+                .isEqualTo(PlayerGameResult.DRAW);
         assertThat(blackjackWinner.getPlayerWinStatuses().get("루키"))
-                .isEqualTo(WinStatus.WIN);
+                .isEqualTo(PlayerGameResult.WIN);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class BlackjackWinnerTest {
         assertThat(blackjackWinner.getDealerWinStatus())
                 .isEqualTo(new DealerWinStatus(0, 1));
         assertThat(blackjackWinner.getPlayerWinStatuses().get("포비"))
-                .isEqualTo(WinStatus.WIN);
+                .isEqualTo(PlayerGameResult.WIN);
     }
 
     @Test

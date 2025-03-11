@@ -13,16 +13,16 @@ public class BlackjackWinner {
     private static final int ELSE_WEIGHT = 0;
 
     private final DealerWinStatus dealerWinStatus;
-    private final Map<String, WinStatus> playerWinStatuses;
+    private final Map<String, PlayerGameResult> playerWinStatuses;
 
     public BlackjackWinner(BlackjackResult blackjackDealerResult, List<BlackjackResult> blackjackPlayerResults) {
         this.dealerWinStatus = calculateDealerWinStatus(blackjackDealerResult, blackjackPlayerResults);
         this.playerWinStatuses = calculateWinStatuses(blackjackDealerResult, blackjackPlayerResults);
     }
 
-    private Map<String, WinStatus> calculateWinStatuses(BlackjackResult blackjackDealerResult,
-                                                        List<BlackjackResult> blackjackPlayerResults) {
-        Map<String, WinStatus> winStatuses = new HashMap<>();
+    private Map<String, PlayerGameResult> calculateWinStatuses(BlackjackResult blackjackDealerResult,
+                                                               List<BlackjackResult> blackjackPlayerResults) {
+        Map<String, PlayerGameResult> winStatuses = new HashMap<>();
         int dealerSum = blackjackDealerResult.cardSum();
         for (BlackjackResult blackjackResult : blackjackPlayerResults) {
             String playerName = blackjackResult.name();
@@ -69,14 +69,14 @@ public class BlackjackWinner {
         return sum > BUST_STANDARD;
     }
 
-    private WinStatus calculatePlayerWinStatus(int dealerSum, int playerSum) {
+    private PlayerGameResult calculatePlayerWinStatus(int dealerSum, int playerSum) {
         if (isPlayerDraw(dealerSum, playerSum)) {
-            return WinStatus.DRAW;
+            return PlayerGameResult.DRAW;
         }
         if (isPlayerWin(dealerSum, playerSum)) {
-            return WinStatus.WIN;
+            return PlayerGameResult.WIN;
         }
-        return WinStatus.LOSE;
+        return PlayerGameResult.LOSE;
     }
 
     private boolean isPlayerWin(int dealerSum, int playerSum) {
@@ -106,7 +106,7 @@ public class BlackjackWinner {
         return dealerWinStatus;
     }
 
-    public Map<String, WinStatus> getPlayerWinStatuses() {
+    public Map<String, PlayerGameResult> getPlayerWinStatuses() {
         return Collections.unmodifiableMap(playerWinStatuses);
     }
 }
