@@ -22,23 +22,13 @@ public class CardHand {
     }
 
     public int calculateScore() {
-        if (cards.stream().noneMatch(Card::isAce)) {
-            return cards.stream()
-                    .mapToInt(Card::score)
-                    .sum();
-        }
-        return calculateScoreWithAce();
-    }
-
-    private int calculateScoreWithAce() {
-        int minimumSum = cards.stream()
+        int totalScore = cards.stream()
                 .mapToInt(Card::score)
                 .sum();
-        int threshold = MAX_SCORE - (MAX_ACE_SCORE - MIN_ACE_SCORE);
-        if (minimumSum <= threshold) {
-            return minimumSum - MIN_ACE_SCORE + MAX_ACE_SCORE;
+        if (hasAce() && totalScore <= 11) {
+            return totalScore + 10;
         }
-        return minimumSum;
+        return totalScore;
     }
 
     public boolean isBust() {
@@ -55,6 +45,11 @@ public class CardHand {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     @Override
