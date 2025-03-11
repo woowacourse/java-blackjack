@@ -17,7 +17,7 @@ public class BlackJackController {
     public void run() {
         Game game = retryUntilSuccess(this::startGame);
         outputView.displayInitialDeal(game);
-        retryUntilSuccess(() -> giveAdditionalCardsForPlayer(game));
+        giveAdditionalCardsForPlayer(game);
         giveAdditionalCardsForDealer(game);
         displayScores(game);
         displayGameResult(game);
@@ -29,8 +29,7 @@ public class BlackJackController {
     }
 
     private void giveAdditionalCardsForPlayer(Game game) {
-        game.getPlayerNames()
-                .forEach((name) -> hitOrStay(game, name));
+        game.getPlayerNames().forEach((name) -> hitOrStay(game, name));
     }
 
     private void giveAdditionalCardsForDealer(Game game) {
@@ -52,14 +51,17 @@ public class BlackJackController {
     }
 
     private void hitOrStay(Game game, String playerName) {
-        Answer answer = inputView.readHitOrStay(playerName);
+        Answer answer = Answer.YES;
         while (game.canHit(playerName) && answer == Answer.YES) {
-            game.playerHit(playerName);
+            answer = retryUntilSuccess(() -> inputView.readHitOrStay(playerName));
+            hitByAnswer(game, playerName, answer);
             displayPlayerCards(game, playerName);
-            answer = inputView.readHitOrStay(playerName);
         }
-        if (answer == Answer.NO) {
-            displayPlayerCards(game, playerName);
+    }
+
+    private void hitByAnswer(Game game, String playerName, Answer answer) {
+        if (answer == Answer.YES) {
+            game.playerHit(playerName);
         }
     }
 
@@ -69,16 +71,7 @@ public class BlackJackController {
         outputView.displayEmptyLine();
     }
 
-    private void retryUntilSuccess(Runnable runnable) {
-        try {
-            runnable.run();
-        } catch (IllegalArgumentException e) {
-            System.out.printf("%s%n", e.getMessage());
-            retryUntilSuccess(runnable);
-        }
-    }
-
-    private Game retryUntilSuccess(Supplier<Game> supplier) {
+    private <T> T retryUntilSuccess(Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {

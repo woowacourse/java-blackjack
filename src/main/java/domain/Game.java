@@ -16,6 +16,7 @@ public class Game {
         dealer = new Dealer(deck, deck.getInitialDeal());
         validatePlayerCount(playerNames);
         validateDuplicateName(playerNames);
+        validatePlayerNames(playerNames);
         playerNames.forEach(this::registerPlayer);
     }
 
@@ -81,7 +82,7 @@ public class Game {
     private void registerPlayer(String playerName) {
         CardHand initialDeal = dealer.pickInitialDeal();
         Player player = new Player(playerName, initialDeal);
-        players.put(player, GameResult.NONE);
+        players.put(player, null);
     }
 
     private void validatePlayerCount(List<String> playerNames) {
@@ -93,6 +94,12 @@ public class Game {
     private void validateDuplicateName(List<String> playerNames) {
         if (playerNames.size() != Set.copyOf(playerNames).size()) {
             throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
+        }
+    }
+
+    private void validatePlayerNames(List<String> playerNames) {
+        if (playerNames.contains("딜러")) {
+            throw new IllegalArgumentException("[ERROR] '딜러'는 플레이어 이름으로 사용할 수 없습니다.");
         }
     }
 
