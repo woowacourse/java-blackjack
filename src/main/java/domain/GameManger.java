@@ -11,6 +11,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameManger {
+    private static final int USER_MIN_COUNT = 1;
+    private static final int USER_MAX_COUNT = 7;
+    private static final int INIT_CARD_NUMBER = 2;
+
     private final List<Player> users = new ArrayList<>();
     private final Dealer dealer;
     private final CardDeck cardDeck;
@@ -26,8 +30,8 @@ public class GameManger {
 
     private void validate(List<String> names) {
         Set<String> distinctNames = new HashSet<>(names);
-        if (names.isEmpty() || names.size() > 7) {
-            throw new IllegalArgumentException("유저는 1명 이상 7명 이하로 등록해야 합니다.");
+        if (names.isEmpty() || names.size() > USER_MAX_COUNT) {
+            throw new IllegalArgumentException("유저는 " + USER_MIN_COUNT + "명 이상 " + USER_MAX_COUNT + "명 이하로 등록해야 합니다.");
         }
         if (distinctNames.size() != names.size()) {
             throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
@@ -35,7 +39,7 @@ public class GameManger {
     }
 
     public void firstHandOutCard() {
-        for (int count = 0; count < 2; count++) {
+        for (int count = 0; count < INIT_CARD_NUMBER; count++) {
             users.forEach(user -> user.drawCard(cardDeck.drawCard()));
             dealer.drawCard(cardDeck.drawCard());
         }

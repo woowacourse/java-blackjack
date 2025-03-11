@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardHand {
+    public static final int BLACKJACK_CARD_COUNT = 21;
     public static final int MAX_SCORE = 21;
     private static final int ACE_MAX = 11;
     private static final int ACE_MIN = 1;
@@ -24,14 +25,14 @@ public class CardHand {
 
     public List<TrumpCard> getFirstCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("카드 덱을 모두 사용했습니다.");
         }
         return List.of(cards.getFirst());
     }
 
     public List<TrumpCard> getAllCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("카드 덱을 모두 사용했습니다.");
         }
         return new ArrayList<>(cards);
     }
@@ -62,6 +63,6 @@ public class CardHand {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore() == MAX_SCORE;
+        return cards.size() == BLACKJACK_CARD_COUNT && calculateScore() == MAX_SCORE;
     }
 }
