@@ -48,21 +48,23 @@ public class Cards {
     }
 
     private void generateCandidates(Set<Integer> candidates, int initialSum, int totalAces) {
-        Deque<List<Integer>> deque = new ArrayDeque<>();
-        deque.push(new ArrayList<>(List.of(initialSum, 0)));
+        record State(int sum, int usedAces) {}
+
+        Deque<State> deque = new ArrayDeque<>();
+        deque.push(new State(initialSum, 0));
 
         while (!deque.isEmpty()) {
-            List<Integer> state = deque.pop();
-            Integer currentSum = state.get(0);
-            Integer usedAces = state.get(1);
+            State state = deque.pop();
+            int currentSum = state.sum();
+            int usedAces = state.usedAces();
 
             if (usedAces == totalAces) {
                 candidates.add(currentSum);
                 continue;
             }
 
-            deque.push(new ArrayList<>(List.of(currentSum + 1, usedAces + 1)));
-            deque.push(new ArrayList<>(List.of(currentSum + 11, usedAces + 1)));
+            deque.push(new State(currentSum + 1, usedAces + 1));
+            deque.push(new State(currentSum + 11, usedAces + 1));
         }
     }
 
