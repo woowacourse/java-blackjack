@@ -10,6 +10,7 @@ public class BlackJackGame {
 
     private final Dealer dealer;
     private final Players players;
+    private int sequence = 0;
 
     private BlackJackGame(Dealer dealer, Players players) {
         this.dealer = dealer;
@@ -23,6 +24,31 @@ public class BlackJackGame {
 
     public void setupDealerCards() {
         dealer.drawUntilLimit();
+    }
+
+    public void drawCardForCurrentPlayer() {
+        if (getThisTurnPlayer().canDraw()) {
+            dealer.giveCards(getThisTurnPlayer(), 1);
+        }
+    }
+
+    public boolean isInProgress() {
+        return sequence < players.getPlayers().size();
+    }
+
+    public void determineNextTurnPlayer() {
+        while (isInProgress() && !getThisTurnPlayer().canDraw()) {
+            sequence++;
+        }
+    }
+
+    public void skipThisTurn() {
+        sequence++;
+        determineNextTurnPlayer();
+    }
+
+    public Player getThisTurnPlayer() {
+        return players.getPlayer(sequence);
     }
 
     public Map<Player, GameResult> calculateGameResult() {

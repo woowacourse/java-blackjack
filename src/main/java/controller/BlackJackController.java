@@ -23,13 +23,11 @@ public class BlackJackController {
 
     public void run() {
         try {
-            Dealer dealer = Dealer.init(new RandomCardsGenerator());
-            Players players = createPlayers();
-            BlackJackGame game = BlackJackGame.init(dealer, players);
+            BlackJackGame game = startGame();
             printInitialParticipantsHand(game);
 
-            askNewCardToAllPlayers(game);
-            setupDealerCards(game);
+            drawCards(game);
+            drawDealerCards(game);
 
             showGameResult(game);
         } catch (RuntimeException e) {
@@ -37,9 +35,16 @@ public class BlackJackController {
         }
     }
 
+    private BlackJackGame startGame() {
+        Dealer dealer = Dealer.init(new RandomCardsGenerator());
+        Players players = createPlayers();
+        return BlackJackGame.init(dealer, players);
+    }
+
     private Players createPlayers() {
-        List<String> names = inputView.readPlayerNames();
-        List<Player> players = names.stream().map(Player::init).toList();
+        List<Player> players = inputView.readPlayerNames()
+                .stream()
+                .map(Player::init).toList();
         return new Players(players);
     }
 
@@ -47,21 +52,20 @@ public class BlackJackController {
         outputView.printParticipantsHand(game);
     }
 
-    private void askNewCardToAllPlayers(BlackJackGame game) {
-        Players players = game.getPlayers();
-        for (Player player : players.getPlayers()) {
-            askNewCardToPlayer(game.getDealer(), player);
+    private void drawCards(BlackJackGame game) {
+        game.determineNextTurnPlayer();
+        while (game.isInProgress()) {
+            if (inputView.readYesOrNo(game.getThisTurnPlayer()).isNo()) {
+                game.skipThisTurn();
+                continue;
+            }
+            game.drawCardForCurrentPlayer();
+            outputView.printPlayerCards(game.getThisTurnPlayer());
+            game.determineNextTurnPlayer();
         }
     }
 
-    private void askNewCardToPlayer(Dealer dealer, Player player) {
-        while (!player.isBurst() && !player.isBlackJack() && inputView.readYesOrNo(player).isYes()) {
-            dealer.giveCards(player, 1);
-            outputView.printPlayerCards(player);
-        }
-    }
-
-    private void setupDealerCards(BlackJackGame game) {
+    private void drawDealerCards(BlackJackGame game) {
         game.setupDealerCards();
         outputView.printDealerDrawCount(game.calculateDealerDrawCount());
     }
