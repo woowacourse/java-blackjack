@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.Blackjack;
 import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.Deck;
 import domain.duel.DuelHistory;
+import domain.game.Blackjack;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
 import domain.paticipant.Player;

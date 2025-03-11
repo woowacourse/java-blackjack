@@ -1,5 +1,5 @@
 import controller.BlackjackController;
-import domain.Blackjack;
+import domain.game.Blackjack;
 import view.InputView;
 import view.OutputView;
 
