@@ -5,15 +5,17 @@ import static domain.GameResult.LOSE;
 import static domain.GameResult.WIN;
 
 public class Player extends Gamer {
+    private static final int PLAYER_DRAWABLE_THRESHOLD = 20;
     private final PlayerName playerName;
-    
+
+
     public Player(PlayerName playerName) {
         super();
         this.playerName = playerName;
     }
 
     public boolean isDrawable() {
-        return this.isDrawable(GAMER_BUST_THRESHOLD);
+        return this.isDrawable(PLAYER_DRAWABLE_THRESHOLD);
     }
 
     public GameResult decideGameResult(Dealer dealer) {

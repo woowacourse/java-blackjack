@@ -52,8 +52,9 @@ class PlayersTest {
 
     public static Stream<Arguments> canGetMoreCardTest() {
         return Stream.of(
-                Arguments.of(List.of(Card.HEART_ACE), true),
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_QUEEN), true),
+                Arguments.of(List.of(Card.HEART_ACE), false),
+                Arguments.of(List.of(Card.DIA_JACK), true),
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_QUEEN), false),
                 Arguments.of(List.of(Card.HEART_QUEEN, Card.CLOVER_THREE), false),
                 Arguments.of(List.of(Card.DIA_JACK, Card.CLOVER_TWO), false)
         );
