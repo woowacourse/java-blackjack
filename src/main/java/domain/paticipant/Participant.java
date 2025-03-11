@@ -3,9 +3,9 @@ package domain.paticipant;
 import java.util.List;
 
 import domain.CardHand;
-import domain.DuelHistory;
-import domain.DuelResult;
 import domain.card.Card;
+import domain.duel.DuelHistory;
+import domain.duel.DuelResult;
 
 public class Participant {
 	private final CardHand hand;

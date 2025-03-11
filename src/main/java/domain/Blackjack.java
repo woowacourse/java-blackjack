@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 
+import domain.duel.DuelResult;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
 import domain.paticipant.PickableCard;

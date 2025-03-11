@@ -1,4 +1,4 @@
-package domain;
+package domain.duel;
 
 public class DuelHistory {
 	private int winCount;

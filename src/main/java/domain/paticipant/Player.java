@@ -2,8 +2,8 @@ package domain.paticipant;
 
 import java.util.List;
 
-import domain.DuelResult;
 import domain.card.Card;
+import domain.duel.DuelResult;
 
 public class Player implements PickableCard {
 	private final String name;

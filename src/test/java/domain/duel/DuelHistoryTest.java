@@ -1,4 +1,4 @@
-package domain;
+package domain.duel;
 
 import static org.assertj.core.api.Assertions.*;
 
