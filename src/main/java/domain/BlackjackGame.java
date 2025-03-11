@@ -12,7 +12,7 @@ public class BlackjackGame {
     private static final int MAX_PEOPLE_WITHOUT_DEALER = 7;
     private static final String INVALID_BLACKJACK_PLAYER_SIZE = "블랙잭은 1-7명만 이용하실 수 있습니다";
 
-    private final BlackjackParticipantsManager<Player, Dealer> blackjackParticipantsManager;
+    private final BlackjackParticipantsManager blackjackParticipantsManager;
     private final BlackjackDeck deck;
 
     public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
@@ -20,11 +20,11 @@ public class BlackjackGame {
         if (playerSize < MIN_PEOPLE_WITHOUT_DEALER || playerSize > MAX_PEOPLE_WITHOUT_DEALER) {
             throw new BlackJackException(INVALID_BLACKJACK_PLAYER_SIZE);
         }
-        List<Player> players = names.stream()
+        List<BlackjackParticipant> players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
         this.deck = deck;
-        this.blackjackParticipantsManager = new BlackjackParticipantsManager<>(players, dealer);
+        this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
         initiateGame();
     }
 
