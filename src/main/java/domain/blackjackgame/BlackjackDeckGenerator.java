@@ -1,10 +1,10 @@
 package domain.blackjackgame;
 
 import domain.strategy.DrawStrategy;
-import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,8 +17,7 @@ public class BlackjackDeckGenerator {
         for (Suit suit : suits) {
             trumpCards.addAll(trumpCards(suit));
         }
-        LinkedList
-        ArrayDeque<TrumpCard> generatedDeck = new ArrayDeque<>(trumpCards);
+        LinkedList<TrumpCard> generatedDeck = new LinkedList<>(trumpCards);
         Collections.shuffle(generatedDeck);
 
         return new BlackjackDeck(generatedDeck, drawStrategy);
