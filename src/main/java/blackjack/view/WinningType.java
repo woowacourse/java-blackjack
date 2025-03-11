@@ -3,6 +3,7 @@ package blackjack.view;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.betting.BettingAmount;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -20,8 +21,8 @@ public enum WinningType {
         this.profitRate = profitRate;
     }
 
-    public int multiplyProfitRate(final int amount) {
-        return (int) (amount * profitRate);
+    public int multiplyProfitRate(final BettingAmount amount) {
+        return amount.multiplyRate(profitRate);
     }
 
     public String getDisplayName() {

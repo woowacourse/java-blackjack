@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.betting.BettingAmount;
 import blackjack.view.WinningType;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,7 +21,7 @@ class ProfitCalculatorTest {
         ProfitCalculator profitCalculator = new ProfitCalculator();
 
         // when
-        int result = profitCalculator.calculatePlayerProfit(type, 10_000);
+        int result = profitCalculator.calculatePlayerProfit(type, new BettingAmount(10_000));
 
         // then
         assertThat(result).isEqualTo(expected);

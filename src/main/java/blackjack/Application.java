@@ -1,8 +1,11 @@
 package blackjack;
 
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.gambler.Names;
 import blackjack.domain.Round;
 import blackjack.domain.WinningDiscriminator;
@@ -15,7 +18,6 @@ import blackjack.domain.gambler.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +28,8 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         Names playerNames = getPlayerNames();
+        Map<Name, BettingAmount> bettingAmounts = getBettingAmounts(playerNames);
         Round round = new Round(cardDeck, playerNames);
-        Map<Name, Integer> bettingAmounts = getBettingAmounts(playerNames);
         round.distributeInitialCards();
         outputView.printInitialDistributionPrompt(playerNames);
         printInitialCards(round, playerNames);
@@ -54,18 +56,16 @@ public class Application {
         }
     }
 
-    private static Map<Name, Integer> getBettingAmounts(final Names playerNames) {
-        Map<Name, Integer> bettingAmounts = new HashMap<>();
-        for (final Name playerName : playerNames.getNames()) {
-            int bettingAmount = getBettingAmount(playerName);
-            bettingAmounts.put(playerName, bettingAmount);
-        }
-        return bettingAmounts;
+    private static Map<Name, BettingAmount> getBettingAmounts(final Names playerNames) {
+        return playerNames.getNames()
+                .stream()
+                .collect(toMap(identity(), Application::getBettingAmount));
     }
 
-    private static int getBettingAmount(final Name playerName) {
+    private static BettingAmount getBettingAmount(final Name playerName) {
         try {
-            return inputView.inputBettingAmount(playerName);
+            int bettingAmount = inputView.inputBettingAmount(playerName);
+            return new BettingAmount(bettingAmount);
         } catch (final IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getBettingAmount(playerName);

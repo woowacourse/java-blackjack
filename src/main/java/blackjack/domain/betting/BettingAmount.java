@@ -32,4 +32,8 @@ public class BettingAmount {
     public int hashCode() {
         return Objects.hashCode(amount);
     }
+
+    public int multiplyRate(final double profitRate) {
+        return (int) (amount * profitRate);
+    }
 }
