@@ -2,15 +2,16 @@ package domain.card;
 
 import domain.card.cardsGenerator.CardsGenerator;
 import domain.participant.Participant;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Objects;
-import java.util.Stack;
 
 public class Deck {
 
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck(CardsGenerator cardsGenerator) {
-        cards = new Stack<>();
+        cards = new ArrayDeque<>();
         cards.addAll(cardsGenerator.generate());
     }
 
