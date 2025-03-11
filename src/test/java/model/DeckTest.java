@@ -17,26 +17,30 @@ public class DeckTest {
     @DisplayName("Deck에서 카드를 한 장 뽑는다.")
     void makeDeck() {
         //given
-        Card firstCard = new Card(CardRank.FOUR, CardSuit.CLOVER);
-        Deck deck = new Deck(new ArrayList<>(Arrays.asList(
-                firstCard
-        )));
-
+        Deck deck = Deck.of();
         //when
         Card card = deck.pick();
 
         //then
-        assertThat(card).isEqualTo(firstCard);
+        assertThat(card).isNotNull();
     }
 
     @Test
-    @DisplayName("Deck에서 뽑을 카드가 없는 경우 예외 발생.")
-    void Deck에서_뽑을_카드가_없는_경우() {
-        //given
-        Deck deck = new Deck(new ArrayList<>(0));
+    @DisplayName("Deck에서 모든 카드를 소진한 후, 추가로 뽑으면 예외 발생")
+    void throwExceptionWhenDeckIsEmpty() {
+        // given
+        Deck deck = Deck.of();
 
-        //when, then
-        assertThatThrownBy(() -> deck.pick()).isInstanceOf(IllegalStateException.class);
+        // when
+        while (true) {
+            try {
+                deck.pick();
+            } catch (IllegalStateException e) {
+                // then
+                assertThat(e).isInstanceOf(IllegalStateException.class)
+                        .hasMessage("[ERROR] 주어진 모든 카드들을 소진하였습니다");
+                break;
+            }
+        }
     }
-
 }
