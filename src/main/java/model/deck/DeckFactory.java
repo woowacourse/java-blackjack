@@ -10,7 +10,7 @@ import model.card.CardShape;
 
 public class DeckFactory {
 
-    public static List<Card> getInitializedDeck() {
+    public List<Card> getInitializedDeck() {
         List<Card> initialDeck = new ArrayList<>(Arrays.stream(CardNumber.values())
                 .filter(number -> number != CardNumber.ACE_ONE)
                 .flatMap(number -> Arrays.stream(CardShape.values()).map(shape -> new Card(number, shape)))
@@ -20,7 +20,7 @@ public class DeckFactory {
         return initialDeck;
     }
 
-    private static void shuffle(final List<Card> initialDeck) {
+    private void shuffle(final List<Card> initialDeck) {
         Collections.shuffle(initialDeck);
     }
 }
