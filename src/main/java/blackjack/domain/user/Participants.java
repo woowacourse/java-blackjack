@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class Participants {
 
+    private static final int PARTICIPANTS_MAX_SIZE = 25;
+
     private final Dealer dealer;
     private final List<Player> players;
 
@@ -26,17 +28,17 @@ public class Participants {
     }
 
     private void validateDuplicatePlayerNames(List<Player> players) {
-        Set<String> uniqueNames = players.stream()
+        long uniqueNameSize = players.stream()
             .map(Player::getName)
-            .collect(Collectors.toSet());
+            .distinct().count();
 
-        if (players.size() != uniqueNames.size()) {
+        if (players.size() != uniqueNameSize) {
             throw new IllegalArgumentException("중복된 이름을 가진 플레이어가 있습니다.");
         }
     }
 
     private void validatePlayerNumber(List<Player> players) {
-        if (players.size() > 25) {
+        if (players.size() > PARTICIPANTS_MAX_SIZE) {
             throw new IllegalArgumentException("플레이어는 25명까지만 참가 가능합니다.");
         }
     }
