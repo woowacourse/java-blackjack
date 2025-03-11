@@ -3,10 +3,11 @@ package domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TrumpCardManager {
-    private static final List<TrumpCard> CARD_DECK = new ArrayList<>();
+    private static final List<TrumpCard> CARD_DECK = new LinkedList<>();
 
     public static void initCache() {
         Arrays.stream(CardShape.values())
