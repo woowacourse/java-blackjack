@@ -17,7 +17,9 @@ class UserTest {
         @Test
         void test() {
             // given
-            GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
+            List<String> names = List.of("수양");
+            List<Player> users = names.stream().map(Player::new).toList();
+            GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
             User user = gameManger.findUserByUsername("수양");
             user.drawCard(gameManger.handOutCard());
             user.drawCard(gameManger.handOutCard());
@@ -33,7 +35,9 @@ class UserTest {
         @Test
         void test2() {
             // given
-            GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
+            List<String> names = List.of("수양");
+            List<Player> users = names.stream().map(Player::new).toList();
+            GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
             User user = gameManger.getDealer();
             user.drawCard(gameManger.handOutCard());
             user.drawCard(gameManger.handOutCard());
@@ -50,7 +54,9 @@ class UserTest {
     @Test
     void test3() {
         // given
-        GameManger gameManger = new GameManger(List.of("수양"), new Dealer(), new CardDeck());
+        List<String> names = List.of("수양");
+        List<Player> users = names.stream().map(Player::new).toList();
+        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
         User user = gameManger.findUserByUsername("수양");
         user.drawCard(gameManger.handOutCard());
         user.drawCard(gameManger.handOutCard());

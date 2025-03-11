@@ -5,6 +5,7 @@ import domain.GameManger;
 import domain.GameResult;
 import domain.TrumpCard;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,8 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = Parser.parseStringToList(inputView.inputUsers());
-        GameManger gameManger = new GameManger(playerNames, new Dealer(), new CardDeck());
+        List<Player> users = playerNames.stream().map(Player::new).toList();
+        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
         distributionFirstCard(gameManger, playerNames);
 
         additionalPlayerCard(gameManger, playerNames);

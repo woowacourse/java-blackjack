@@ -4,37 +4,37 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GameManger {
     private static final int USER_MIN_COUNT = 1;
     private static final int USER_MAX_COUNT = 7;
     private static final int INIT_CARD_NUMBER = 2;
 
-    private final List<Player> users = new ArrayList<>();
+    private final List<Player> users;
     private final Dealer dealer;
     private final CardDeck cardDeck;
 
-    public GameManger(List<String> names, Dealer dealer, CardDeck cardDeck) {
-        validate(names);
-        for (String name : names) {
-            users.add(new Player(name));
-        }
+    public GameManger(List<Player> users, Dealer dealer, CardDeck cardDeck) {
+        validate(users);
+        this.users = new ArrayList<Player>(users);
         this.dealer = dealer;
         this.cardDeck = cardDeck;
     }
 
-    private void validate(List<String> names) {
-        Set<String> distinctNames = new HashSet<>(names);
-        if (names.isEmpty() || names.size() > USER_MAX_COUNT) {
-            throw new IllegalArgumentException("유저는 " + USER_MIN_COUNT + "명 이상 " + USER_MAX_COUNT + "명 이하로 등록해야 합니다.");
-        }
-        if (distinctNames.size() != names.size()) {
+    private void validate(List<Player> users) {
+        boolean hasDuplicate = users.stream()
+                .map(Player::getName)
+                .collect(Collectors.toSet())
+                .size() < users.size();
+        if (hasDuplicate) {
             throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
+        }
+        if (users.isEmpty() || users.size() > USER_MAX_COUNT) {
+            throw new IllegalArgumentException("유저는 " + USER_MIN_COUNT + "명 이상 " + USER_MAX_COUNT + "명 이하로 등록해야 합니다.");
         }
     }
 
