@@ -46,10 +46,10 @@ public abstract class Participant {
             .map(Card::getDenominationNumber)
             .map(List::getFirst)
             .reduce(0, Integer::sum);
-        if (hasACE()) {
-            sum = Denomination.convertAceValue(sum, BLACKJACK_VALUE);
-        }
 
+        if (hasACE()) {
+            return Denomination.convertAceValue(sum, BLACKJACK_VALUE);
+        }
         return sum;
     }
 
