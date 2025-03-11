@@ -1,5 +1,7 @@
-package domain;
+package player;
 
+import card.Card;
+import card.Deck;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,13 @@ public class Players {
         for (Player player : players) {
             player.receiveInitialCards(deck);
         }
+    }
+
+    public Map<String, List<Card>> openInitialCards() {
+        Map<String, List<Card>> initialCards = new HashMap<>();
+        players.forEach(player -> initialCards.put(player.getName(), player.openInitialCards()));
+
+        return initialCards;
     }
 
     public int size() {

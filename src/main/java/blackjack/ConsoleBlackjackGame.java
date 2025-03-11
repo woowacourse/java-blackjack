@@ -1,12 +1,11 @@
-package controller;
+package blackjack;
 
-import domain.Blackjack;
-import domain.DeckGenerator;
-import domain.Player;
+import card.DeckGenerator;
+import player.Player;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackController {
+public class ConsoleBlackjackGame {
 
     public void run() {
         Blackjack blackjack = new Blackjack(InputView.inputParticipantName(), DeckGenerator.generateDeck());
@@ -21,9 +20,8 @@ public class BlackjackController {
     }
 
     private void openInitialCards(Blackjack blackjack) {
-        blackjack.openDealerCards();
-        OutputView.printInitialCards(blackjack.getDealer(), blackjack.getParticipants());
-        blackjack.getPlayers().forEach(OutputView::printPlayerCards);
+        OutputView.printOpenInitialCards(blackjack.getDealer(), blackjack.getParticipants());
+        OutputView.printInitialCards(blackjack.openInitialCards());
     }
 
     private void addMoreCards(Blackjack blackjack) {
@@ -41,7 +39,7 @@ public class BlackjackController {
         do {
             yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participant.getName()));
             addOneCardIfYes(blackjack, participant, yesOrNo);
-            OutputView.printPlayerCards(participant);
+            OutputView.printPlayerCards(participant.getName(), participant.getCards());
         } while (yesOrNo.equals(YesOrNo.YES));
     }
 

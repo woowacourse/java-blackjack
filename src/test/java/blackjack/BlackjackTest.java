@@ -1,9 +1,17 @@
-package domain;
+package blackjack;
 
+import card.Card;
+import card.CardRank;
+import card.CardSuit;
+import player.Dealer;
+import card.Deck;
+import card.DeckGenerator;
+import player.Participant;
+import player.Player;
+import player.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
@@ -29,6 +37,16 @@ public class BlackjackTest {
     }
 
     @Test
+    void 이름으로_블랙잭_객체를_생성한다() {
+        // given
+        Deck deck = DeckGenerator.generateDeck();
+
+        // when & then
+        Assertions.assertThatCode(() -> new Blackjack(List.of("시소", "헤일러", "부기", "사나"), deck))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
     void 플레이들이_초기에_공개한_카드를_반환한다() {
         // given
         Players players = new Players(List.of(
@@ -44,20 +62,17 @@ public class BlackjackTest {
         blackjack.distributeInitialCards();
 
         // when
-        List<Card> dealerCards = blackjack.openDealerCards();
-        List<List<Card>> participantsCards = blackjack.getParticipants().stream()
-                .map(blackjack::openParticipantsCards)
-                .toList();
+        Map<String, List<Card>> map = blackjack.openInitialCards();
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealerCards.size())
+            softly.assertThat(map.get(blackjack.getDealer().getName()).size())
                     .isEqualTo(1);
 
-            for (List<Card> cards : participantsCards) {
-                softly.assertThat(cards.size())
+            players.getParticipants().forEach(player -> {
+                softly.assertThat(map.get(player.getName()).size())
                         .isEqualTo(2);
-            }
+            });
         });
     }
 

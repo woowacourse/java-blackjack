@@ -1,6 +1,6 @@
-package domain;
+package blackjack;
 
-import java.util.List;
+import player.Player;
 
 public enum MatchResult {
     WIN("승"),

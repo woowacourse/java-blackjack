@@ -1,4 +1,4 @@
-package domain;
+package card;
 
 import java.util.Arrays;
 import java.util.Collections;

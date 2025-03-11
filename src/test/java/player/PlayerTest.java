@@ -1,5 +1,7 @@
-package domain;
+package player;
 
+import card.Deck;
+import card.DeckGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

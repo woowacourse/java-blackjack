@@ -1,5 +1,7 @@
-package domain;
+package player;
 
+import card.Card;
+import card.Deck;
 import java.util.List;
 
 public class Dealer extends Player {

@@ -1,5 +1,8 @@
-package domain;
+package player;
 
+import card.Card;
+import card.Cards;
+import card.Deck;
 import java.util.List;
 import java.util.Objects;
 

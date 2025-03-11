@@ -1,22 +1,27 @@
 package view;
 
-import domain.MatchResult;
-import domain.Player;
+import card.Card;
+import blackjack.MatchResult;
+import player.Player;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    public static void printInitialCards(Player dealer, List<Player> participants) {
+    public static void printOpenInitialCards(Player dealer, List<Player> participants) {
         List<String> names = participants.stream()
                 .map(Player::getName)
                 .toList();
 
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), String.join(", ", names));
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), String.join(", ", names));
     }
 
-    public static void printPlayerCards(Player player) {
-        System.out.printf("%s카드: %s%n", player.getName(),
-                String.join(", ", player.getCards().stream()
+    public static void printInitialCards(Map<String, List<Card>> initialCards) {
+        initialCards.forEach(OutputView::printPlayerCards);
+    }
+
+    public static void printPlayerCards(String name, List<Card> cards) {
+        System.out.printf("%s카드: %s%n", name,
+                String.join(", ", cards.stream()
                         .map(card -> String.format("%s%s", card.getCardNumber().getTitle(),
                                 card.getCardShape().getTitle()))
                         .toList()));

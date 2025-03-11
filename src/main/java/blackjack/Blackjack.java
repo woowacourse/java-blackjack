@@ -1,5 +1,11 @@
-package domain;
+package blackjack;
 
+import card.Card;
+import card.Deck;
+import player.Dealer;
+import player.Participant;
+import player.Player;
+import player.Players;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -38,13 +44,8 @@ public class Blackjack {
         players.distributeInitialCards(deck);
     }
 
-    public List<Card> openDealerCards() {
-        Player dealer = getDealer();
-        return dealer.openInitialCards();
-    }
-
-    public List<Card> openParticipantsCards(Player player) {
-        return player.openInitialCards();
+    public Map<String, List<Card>> openInitialCards() {
+        return players.openInitialCards();
     }
 
     public void addCard(Player player) {
@@ -57,10 +58,6 @@ public class Blackjack {
 
     public Map<String, Integer> getNameAndSumOfAllPlayers() {
         return players.mapToNameAndSum();
-    }
-
-    public List<Player> getPlayers() {
-        return players.getPlayers();
     }
 
     public Dealer getDealer() {
@@ -93,5 +90,4 @@ public class Blackjack {
         }
         return participantNameAndMatchResult;
     }
-
 }
