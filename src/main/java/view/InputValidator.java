@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class InputValidator {
-    private static final Pattern INPUT_PATTERN = Pattern.compile("^[가-힣a-zA-Z ]+(?:,[가-힣a-zA-Z ]+)*$");
+    private static final Pattern INPUT_PATTERN = Pattern.compile("^[^,]+(?:,[^,]+)*$");
 
     public static void validateInputFormat(String names) {
         if (!INPUT_PATTERN.matcher(names).matches()) {
-            throw new IllegalArgumentException("한글, 영문, 공백, 쉼표만 입력가능합니다.");
+            throw new IllegalArgumentException("쉼표로 구분되지 않았습니다.");
         }
     }
 
