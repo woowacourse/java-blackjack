@@ -34,7 +34,7 @@ public class ConsoleBlackjackGame {
 
     private void addMoreCards(Blackjack blackjack) {
         for (Player participant : blackjack.getParticipants()) {
-            addMoreCards(blackjack, participant);
+            addMoreCardsIfNotBust(blackjack, participant);
         }
         boolean isAdded = blackjack.addCardToDealerIfLowScore();
         if (isAdded) {
@@ -48,12 +48,19 @@ public class ConsoleBlackjackGame {
             yesOrNo = YesOrNo.from(inputView.inputWantOneMoreCard(participant.getName()));
             addOneCardIfYes(blackjack, participant, yesOrNo);
             outputView.printPlayerCards(participant.getName(), participant.getCards());
-        } while (yesOrNo.equals(YesOrNo.YES));
+        } while (yesOrNo.equals(YesOrNo.YES) && !blackjack.isBust(participant));
     }
 
     private void addOneCardIfYes(Blackjack blackjack, Player participant, YesOrNo yesOrNo) {
         if (yesOrNo.equals(YesOrNo.YES)) {
             blackjack.addCard(participant);
         }
+    }
+
+    private void addMoreCardsIfNotBust(Blackjack blackjack, Player participant) {
+        if (blackjack.isBust(participant)) {
+            return;
+        }
+        addMoreCards(blackjack, participant);
     }
 }

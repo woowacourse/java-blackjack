@@ -90,4 +90,8 @@ public class Blackjack {
         }
         return participantNameAndMatchResult;
     }
+
+    public boolean isBust(Player player) {
+        return player.isBust();
+    }
 }
