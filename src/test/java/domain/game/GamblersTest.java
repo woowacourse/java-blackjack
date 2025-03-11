@@ -8,7 +8,6 @@ import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.CardPack;
 import domain.participant.Dealer;
-import domain.participant.Gambler;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -58,22 +57,10 @@ public class GamblersTest {
         dealer.takeCards(Card.SPADE_J, Card.SPADE_7); // 16이하가 아니라서 못받음.
         player.takeCards(Card.CLOVER_10, Card.HEART_10, Card.CLOVER_2); // 21을 넘어 버스트됨.
 
-        ExtraCardsInteract interact = new ExtraCardsInteract() {
-
-            @Override
-            public boolean listenReceives(Gambler gambler) {
-                throw new IllegalStateException("선택조차 할 수 없어야 합니다.");
-            }
-
-            @Override
-            public void notifyReceived(Gambler gambler) {
-                throw new IllegalStateException("받는다는 선택을 했으므로 실패입니다.");
-            }
-        };
         CardPack cardPack = new CardPack(List.of(Card.SPADE_A, Card.SPADE_2));
 
         //when
-        gamblers.distributeExtraCards(cardPack, interact);
+        gamblers.distributeExtraCardsToPlayers(cardPack, GamblerAnswersForTest.neverCalled());
 
         //then
         assertAll(
@@ -89,22 +76,11 @@ public class GamblersTest {
         dealer.takeCards(Card.SPADE_2, Card.SPADE_3);
         player.takeCards(Card.CLOVER_2, Card.CLOVER_3);
 
-
-        ExtraCardsInteract alwaysReceivesInteract = new ExtraCardsInteract() {
-            @Override
-            public boolean listenReceives(Gambler gambler) {
-                return true;
-            }
-
-            @Override
-            public void notifyReceived(Gambler gambler) {
-                // do Nothing
-            }
-        };
         CardPack cardPack = new CardPack(List.of(Card.DIAMOND_J, Card.SPADE_J, Card.HEART_J, Card.CLOVER_J));
 
         //when
-        gamblers.distributeExtraCards(cardPack, alwaysReceivesInteract);
+        gamblers.distributeExtraCardsToPlayers(cardPack, GamblerAnswersForTest.alwaysOK());
+        gamblers.distributeExtraCardsToDealer(cardPack, GamblerAnswersForTest.alwaysOK());
 
         //then
         assertAll(
@@ -120,21 +96,10 @@ public class GamblersTest {
         dealer.takeCards(Card.SPADE_2, Card.SPADE_3);
         player.takeCards(Card.CLOVER_2, Card.CLOVER_3);
 
-        ExtraCardsInteract neverReceivesInteract = new ExtraCardsInteract() {
-            @Override
-            public boolean listenReceives(Gambler gambler) {
-                return false;
-            }
-
-            @Override
-            public void notifyReceived(Gambler gambler) {
-                throw new IllegalStateException("이 상호작용은 절대 받는다는 선택을 하지 않습니다.");
-            }
-        };
         CardPack cardPack = new CardPack(List.of(Card.DIAMOND_J, Card.SPADE_J));
 
         //when
-        gamblers.distributeExtraCards(cardPack, neverReceivesInteract);
+        gamblers.distributeExtraCardsToPlayers(cardPack, GamblerAnswersForTest.neverOK());
 
         //then
         assertAll(

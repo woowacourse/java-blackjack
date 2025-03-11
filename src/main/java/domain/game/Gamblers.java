@@ -26,16 +26,19 @@ public class Gamblers {
         players.forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
     }
 
-    public void distributeExtraCards(CardPack cardPack, ExtraCardsInteract interact) {
-        List<Gambler> gamblers = new ArrayList<>(players);
-        gamblers.add(dealer);
+    public void distributeExtraCardsToPlayers(CardPack cardPack, GamblerAnswer playerAnswer) {
+        players.forEach(player -> distributeExtraCards(player, playerAnswer, cardPack));
+    }
 
-        gamblers.forEach(gambler -> {
-            while (gambler.canTakeMoreCard() && interact.listenReceives(gambler)) {
-                gambler.takeCards(cardPack.poll());
-                interact.notifyReceived(gambler);
-            }
-        });
+    public void distributeExtraCardsToDealer(CardPack cardPack, GamblerAnswer dealerAnswer) {
+        distributeExtraCards(dealer, dealerAnswer, cardPack);
+    }
+
+    private void distributeExtraCards(Gambler gambler, GamblerAnswer gamblerAnswer, CardPack cardPack) {
+        while (gambler.canTakeMoreCard() && gamblerAnswer.isAnswerOK(gambler)) {
+            gambler.takeCards(cardPack.poll());
+            gamblerAnswer.notifyResult(gambler);
+        }
     }
 
     public WinningCounts evaluateDealerWinnings() {

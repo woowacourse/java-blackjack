@@ -40,10 +40,10 @@ public class BlackjackController {
         ParticipantsCardsResponse participantsCardsResponse = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(participantsCardsResponse);
 
-        gamblers.distributeExtraCards(cardPack, new ViewExtraCardsInteract(inputView, outputView));
+        gamblers.distributeExtraCardsToPlayers(cardPack, new ViewPlayerAnswer(inputView, outputView));
+        gamblers.distributeExtraCardsToDealer(cardPack, new ViewDealerAnswer(outputView));
 
-        List<ParticipantResultResponse> participantResultResponse = createFinalResultDTOs(dealer,
-            players);
+        List<ParticipantResultResponse> participantResultResponse = createFinalResultDTOs(dealer, players);
         outputView.printFinalCardDeck(participantResultResponse);
 
         WinningCounts winningCounts = gamblers.evaluateDealerWinnings();
