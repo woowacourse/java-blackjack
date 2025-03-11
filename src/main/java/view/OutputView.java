@@ -18,7 +18,6 @@ public class OutputView {
     private static final String DEALER_EXTRA_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
 
-
     public void printInitialParticipantHands(List<Participant> participants) {
         System.out.println();
         System.out.print("딜러와 ");

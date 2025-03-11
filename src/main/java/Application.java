@@ -16,6 +16,13 @@ public class Application {
         String userNames = inputView.inputUserNames();
         BlackJackGame blackJackGame = new BlackJackGame(cardBundle, userNames);
         List<Participant> participants = blackJackGame.getParticipants();
+        for (Participant participant : participants) {
+            if (participant.isPlayer()) {
+                int bettingAmount = inputView.inputBettingAmountOfPlayer(participant);
+                participant.startBetting(bettingAmount);
+            }
+            System.out.println();
+        }
         outputView.printInitialParticipantHands(participants);
         extraCardProcessOnPlayers(participants, blackJackGame);
         extraCardProcessOnDealer(blackJackGame);

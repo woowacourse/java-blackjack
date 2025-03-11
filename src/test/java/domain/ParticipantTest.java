@@ -17,7 +17,7 @@ public class ParticipantTest {
 
     @Nested
     @DisplayName("플레이어의 수익률을 계산한다")
-    class CalculateProfit {
+    class CalculateProfitOfPlayer {
 
         @Test
         @DisplayName("플레이어가 10_000을 배팅하고 이기는 경우, 수익률은 10_000이어야 한다.")
