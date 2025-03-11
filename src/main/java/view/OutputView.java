@@ -3,18 +3,18 @@ package view;
 import static domain.GameResult.DRAW;
 import static domain.GameResult.LOSE;
 import static domain.GameResult.WIN;
-import static domain.Shape.CLUB;
-import static domain.Shape.DIAMOND;
-import static domain.Shape.HEART;
-import static domain.Shape.SPADE;
+import static domain.card.Shape.CLUB;
+import static domain.card.Shape.DIAMOND;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
 
-import domain.Card;
 import domain.GameResult;
 import domain.Participant;
 import domain.ParticipantsResult;
 import domain.PlayerResult;
-import domain.Rank;
-import domain.Shape;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -57,7 +57,7 @@ public class OutputView {
     }
 
     private String formatCardRank(Rank rank) {
-        if (rank == Rank.A) {
+        if (rank == Rank.ACE) {
             return "A";
         }
         if (rank == Rank.KING) {

@@ -3,6 +3,9 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +21,9 @@ public class BlackJackResultCalculatorTest {
         Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.FIVE));
         Participant player1 = new Player("a");
-        player1.addCard(new Card(Shape.HEART, Rank.A));
+        player1.addCard(new Card(Shape.HEART, Rank.ACE));
         Participant player2 = new Player("b");
-        player2.addCard(new Card(Shape.HEART, Rank.ONE));
+        player2.addCard(new Card(Shape.HEART, Rank.TWO));
         Participant player3 = new Player("c");
         player3.addCard(new Card(Shape.SPADE, Rank.FIVE));
         List<Participant> players = List.of(dealer, player1, player2, player3);

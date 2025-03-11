@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Card;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;

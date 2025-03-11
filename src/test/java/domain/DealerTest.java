@@ -2,6 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,7 @@ public class DealerTest {
     @DisplayName("카드를 받아 수중에 카드를 추가한다")
     void should_add_Card_card() {
         // given
-        Card card = new Card(Shape.HEART, Rank.A);
+        Card card = new Card(Shape.HEART, Rank.ACE);
         Participant dealer = new Dealer();
 
         // when
@@ -28,8 +31,8 @@ public class DealerTest {
     void should_return_public_able_cards() {
         //given
         Participant dealer = new Dealer();
-        dealer.addCard(new Card(Shape.HEART, Rank.A));
-        dealer.addCard(new Card(Shape.HEART, Rank.ONE));
+        dealer.addCard(new Card(Shape.HEART, Rank.ACE));
+        dealer.addCard(new Card(Shape.HEART, Rank.TWO));
 
         //when
         List<Card> shownCard = dealer.getShownCard();

@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public record Card(Shape shape, Rank rank) {
 
@@ -7,7 +7,7 @@ public record Card(Shape shape, Rank rank) {
     }
 
     public boolean isAce() {
-        return rank == Rank.A;
+        return rank == Rank.ACE;
     }
 
 }

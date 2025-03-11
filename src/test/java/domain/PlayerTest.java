@@ -2,6 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +19,7 @@ public class PlayerTest {
     @DisplayName("카드를 받아 수중에 카드를 추가한다")
     void should_add_Card_card() {
         // given
-        Card card = new Card(Shape.HEART, Rank.A);
+        Card card = new Card(Shape.HEART, Rank.ACE);
         Player player = new Player("a");
 
         // then
@@ -31,8 +34,8 @@ public class PlayerTest {
     void should_return_public_able_cards() {
         //given
         Participant player = new Player("amy");
-        player.addCard(new Card(Shape.HEART, Rank.A));
-        player.addCard(new Card(Shape.HEART, Rank.ONE));
+        player.addCard(new Card(Shape.HEART, Rank.ACE));
+        player.addCard(new Card(Shape.HEART, Rank.KING));
         //when
         List<Card> shownCard = player.getShownCard();
 
@@ -43,16 +46,17 @@ public class PlayerTest {
 
     private static Stream<Arguments> cardsArguments() {
         return Stream.of(Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.KING), new Card(Shape.HEART, Rank.QUEEN),
-                                new Card(Shape.HEART, Rank.ONE)), 21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.HEART, Rank.QUEEN)), 21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.HEART, Rank.QUEEN),
-                        new Card(Shape.HEART, Rank.ONE)), 12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.A)), 12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.EIGHT),
-                        new Card(Shape.SPADE, Rank.A)), 20), Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.A), new Card(Shape.SPADE, Rank.A),
-                                new Card(Shape.CLUB, Rank.A), new Card(Shape.SPADE, Rank.TEN)), 13));
+                        List.of(new Card(Shape.HEART, Rank.KING),
+                                new Card(Shape.HEART, Rank.QUEEN),
+                                new Card(Shape.HEART, Rank.ACE)), 21),
+                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.HEART, Rank.QUEEN)), 21),
+                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.HEART, Rank.QUEEN),
+                        new Card(Shape.HEART, Rank.ACE)), 12),
+                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.SPADE, Rank.ACE)), 12),
+                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.SPADE, Rank.EIGHT),
+                        new Card(Shape.SPADE, Rank.ACE)), 20), Arguments.arguments(
+                        List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.SPADE, Rank.ACE),
+                                new Card(Shape.CLUB, Rank.ACE), new Card(Shape.SPADE, Rank.TEN)), 13));
     }
 
     @ParameterizedTest
