@@ -22,12 +22,14 @@ public class OutputView {
 
     public static void printDealerDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println();
     }
 
     private static void printAllPlayerCards(List<Player> allPlayers) {
         for (Player player : allPlayers) {
             System.out.printf("%s카드: %s%n", player.getName(), convertCardsToMessage(player.getCards()));
         }
+        System.out.println();
     }
 
     private static String findPlayerNames(List<Player> allPlayers) {
@@ -60,6 +62,7 @@ public class OutputView {
     public static void printFinalParticipant(Dealer dealer, List<Player> allPlayers) {
         printFinalDealerCard(dealer);
         printFinalAllPlayersCards(allPlayers);
+        System.out.println();
     }
 
     private static void printFinalDealerCard(Dealer dealer) {
