@@ -1,7 +1,6 @@
 package controller;
 
 import domain.blackjackgame.BlackjackDeck;
-import domain.blackjackgame.BlackjackDeckGenerator;
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.BlackjackResult;
 import domain.blackjackgame.BlackjackWinner;
@@ -10,7 +9,9 @@ import domain.blackjackgame.PlayerGameResult;
 import domain.blackjackgame.TrumpCard;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.strategy.BlackjackDeckGenerateStrategy;
 import domain.strategy.BlackjackDrawStrategy;
+import domain.strategy.DeckGenerator;
 import exception.BlackJackException;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,8 @@ public class BlackjackController {
     }
 
     private void startBlackjack(List<String> names) {
-        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
+        BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
+                new BlackjackDeckGenerateStrategy());
         BlackjackGame blackjackGame = new BlackjackGame(names, deck, new Dealer());
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);

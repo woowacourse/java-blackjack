@@ -1,27 +1,28 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.blackjackgame.BlackjackDeck;
-import domain.blackjackgame.BlackjackDeckGenerator;
 import domain.blackjackgame.CardValue;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
 import domain.participant.Dealer;
-import java.util.Deque;
+import domain.strategy.BlackjackDrawStrategy;
+import domain.strategy.DeckGenerator;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import strategy.TestDrawStrategy;
+import strategy.TestDeckGenerateStrategy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class DealerTest {
 
     @Test
     void 카드의_합이_16_초과면_뽑을수_없다() {
-        Deque<TrumpCard> trumpCards = new LinkedList<>(
+        List<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.NINE)));
-        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
+        BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
+                new TestDeckGenerateStrategy(trumpCards));
 
         Dealer dealer = new Dealer();
         dealer.addDraw(deck.drawCard());
@@ -31,10 +32,11 @@ public class DealerTest {
 
     @Test
     void 카드의_합이_16_이하면_뽑을수_있다() {
-        Deque<TrumpCard> trumpCards = new LinkedList<>(
+        List<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
                         new TrumpCard(Suit.DIAMOND, CardValue.K)));
-        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new TestDrawStrategy(trumpCards));
+        BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
+                new TestDeckGenerateStrategy(trumpCards));
 
         Dealer dealer = new Dealer();
         assertThat(dealer.isDrawable()).isTrue();
