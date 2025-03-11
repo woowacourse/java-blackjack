@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import model.participant.Player;
 import model.participant.Players;
 
@@ -21,16 +22,20 @@ public class BettingResult {
         }
     }
 
+    public int calculateDealerFinalResult() {
+        return -betting.values().stream().mapToInt(i -> i).sum();
+    }
+
     private void computeResultByWinningStatus(Player player, GameResult gameResult) {
         int bettingPrice = betting.get(player);
-        if (gameResult == GameResult.WIN){
-            betting.put(player, bettingPrice * 2);
-        }
         if (gameResult == GameResult.LOSE){
+            betting.put(player, -bettingPrice);
+        }
+        if (gameResult == GameResult.DRAW){
             betting.put(player, 0);
         }
         if (gameResult == GameResult.BLACKJACK){
-            betting.put(player, bettingPrice + bettingPrice * 3/2);
+            betting.put(player, bettingPrice * 3/2);
         }
     }
 }
