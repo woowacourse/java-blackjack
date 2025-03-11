@@ -26,22 +26,22 @@ public final class ParticipantHand {
     }
 
     public boolean checkBurst() {
-        return calculateScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
+        return calculateTotalScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
     }
 
     public boolean checkScoreBelow(final int upperBound) {
-        return calculateScoreWithAceAsMinValue() <= upperBound;
+        return calculateTotalScoreWithAceAsMinValue() <= upperBound;
     }
 
     public int calculateFinalScore() {
         if (canOneAceConvertToMaxValue()) {
-            int scoreWithAce = calculateScoreWithAceAsMinValue();
+            int scoreWithAce = calculateTotalScoreWithAceAsMinValue();
             return convertOneAceToMaxValueFrom(scoreWithAce);
         }
-        return calculateScoreWithAceAsMinValue();
+        return calculateTotalScoreWithAceAsMinValue();
     }
 
-    private int calculateScoreWithAceAsMinValue() {
+    private int calculateTotalScoreWithAceAsMinValue() {
         return cards.stream()
                 .mapToInt(Card::getCardRankDefaultValue)
                 .sum();

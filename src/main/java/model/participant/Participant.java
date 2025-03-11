@@ -7,15 +7,16 @@ import model.Deck.Deck;
 
 public abstract class Participant {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
+
     protected final ParticipantHand participantHand;
 
     public Participant() {
         this.participantHand = new ParticipantHand();
     }
 
-    public abstract List<Card> openInitialDeal();
-
     public abstract boolean canHit();
+
+    public abstract List<Card> openInitialDeal();
 
     public void receiveCard(final Card card) {
         participantHand.add(card);
