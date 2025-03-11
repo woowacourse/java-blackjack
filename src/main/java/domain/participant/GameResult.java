@@ -18,8 +18,8 @@ public enum GameResult {
         int dealerValue = dealer.getTotalValue();
         int playerValue = player.getTotalValue();
 
-        boolean isDealerBlackJack = dealer.isBlackJack(dealerValue);
-        boolean isPlayerBlackJack = player.isBlackJack(playerValue);
+        boolean isDealerBlackJack = dealer.isBlackJack();
+        boolean isPlayerBlackJack = player.isBlackJack();
         if (isPlayerBlackJack && isDealerBlackJack) {
             return DRAW;
         }

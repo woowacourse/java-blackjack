@@ -39,8 +39,8 @@ public abstract class Participant {
         return value > BURST_UPPER_BOUND;
     }
 
-    public boolean isBlackJack(int value) {
-        return value == BURST_UPPER_BOUND && cards.size() == 2;
+    public boolean isBlackJack() {
+        return getTotalValue() == BURST_UPPER_BOUND && cards.size() == 2;
     }
 
     public abstract List<Card> getShownCard();

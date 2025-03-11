@@ -163,9 +163,9 @@ class GameResultTest {
         //given
         Participant player = new Player("pobi");
         Participant dealer = new Dealer();
-        dealer.addCard(new Card(Shape.HEART, Rank.JACK));
+        dealer.addCard(new Card(Shape.HEART, Rank.TWO));
         player.addCard(new Card(Shape.HEART, Rank.TWO));
-        player.addCard(new Card(Shape.SPADE, Rank.TWO));
+        player.addCard(new Card(Shape.SPADE, Rank.JACK));
 
         // when
         GameResult playerResult = calculateResultOfPlayer(dealer, player);

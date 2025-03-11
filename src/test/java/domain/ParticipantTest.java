@@ -90,4 +90,35 @@ public class ParticipantTest {
             assertThat(calculateValue).isEqualTo(expectedValue);
         }
     }
+
+    @Test
+    @DisplayName("KING, A로 인해 blackJack인 경우 true를 반환해야 한다")
+    void when_black_jack_return_true() {
+        Participant player = new Player("pobi");
+        player.addCard(new Card(Shape.HEART, Rank.A));
+        player.addCard(new Card(Shape.HEART, Rank.JACK));
+        boolean blackJack = player.isBlackJack();
+        assertThat(blackJack).isTrue();
+    }
+
+    @Test
+    @DisplayName("KING, FIVE, SIX로 인해 합이 21인 경우, 첫 두 장이 아니기에 false를 반환한다")
+    void when_not_enough_size_then_return_false() {
+        Participant player = new Player("pobi");
+        player.addCard(new Card(Shape.HEART, Rank.KING));
+        player.addCard(new Card(Shape.HEART, Rank.FIVE));
+        player.addCard(new Card(Shape.HEART, Rank.SIX));
+        boolean blackJack = player.isBlackJack();
+        assertThat(blackJack).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 수가 2장이지만, 합이 21이 아닐 경우 false를 반환한다.")
+    void when_not_enough_sum_then_return_false() {
+        Participant player = new Player("pobi");
+        player.addCard(new Card(Shape.HEART, Rank.KING));
+        player.addCard(new Card(Shape.HEART, Rank.FIVE));
+        boolean blackJack = player.isBlackJack();
+        assertThat(blackJack).isFalse();
+    }
 }
