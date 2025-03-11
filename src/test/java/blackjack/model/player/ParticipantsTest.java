@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class ParticipantsTest {
 
     @Test
-    void 참여자가_최소_2명_최대_8명이_아닌_경우_예외가_발생한다() {
+    void 참가자가_최소_2명_최대_8명이_아닌_경우_예외가_발생한다() {
         // given
 
         // when & then
@@ -22,7 +22,7 @@ public class ParticipantsTest {
                 new Participant("한스7"),
                 new Participant("한스8"),
                 new Participant("한스9")
-        ))).hasMessage("참여자는 2~8명 이여야 합니다.");
+        ))).hasMessage("참가자는 2~8명 이여야 합니다.");
     }
 
     @Test

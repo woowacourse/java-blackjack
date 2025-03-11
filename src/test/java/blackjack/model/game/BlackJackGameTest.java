@@ -34,7 +34,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    void 참여자가_카드를_받는다() {
+    void 참가자가_카드를_받는다() {
         // given
         Dealer dealer = new Dealer();
         Participant participant1 = new Participant("벡터");
@@ -52,7 +52,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    void 참여자가_카드를_받지_않는다() {
+    void 참가자가_카드를_받지_않는다() {
         // given
         Dealer dealer = new Dealer();
         Participant participant1 = new Participant("벡터");

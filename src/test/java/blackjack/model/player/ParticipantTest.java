@@ -22,7 +22,7 @@ class ParticipantTest {
     }
 
     @Test
-    void 참여자의_이름이_2글자_이상_5글자가_아니면_예외가_발생한다() {
+    void 참가자의_이름이_2글자_이상_5글자가_아니면_예외가_발생한다() {
         // given
 
         // when & then
@@ -30,7 +30,7 @@ class ParticipantTest {
     }
 
     @Test
-    void 참여자에게_카드를_한장_준다() {
+    void 참가자에게_카드를_한장_준다() {
         Participant participant = new Participant("프리");
         participant.putCard(new Card(CardShape.HEART, CardType.NORMAL_2));
         assertThat(participant.getReceivedCards().size()).isEqualTo(1);

@@ -15,10 +15,10 @@ public class Participant extends Player {
 
     private void validate(final String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("참여자 이름을 입력해주세요.");
+            throw new IllegalArgumentException("참가자 이름을 입력해주세요.");
         }
         if (name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH) {
-            throw new IllegalArgumentException(String.format("참여자 이름은 %d~%d글자 입니다.", MINIMUM_NAME_LENGTH, MAXIMUM_NAME_LENGTH));
+            throw new IllegalArgumentException(String.format("참가자 이름은 %d~%d글자 입니다.", MINIMUM_NAME_LENGTH, MAXIMUM_NAME_LENGTH));
         }
     }
 
