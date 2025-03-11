@@ -29,13 +29,12 @@ public class Participants {
     }
 
     public ParticipantsResult calculate() {
-        int dealerValue = getDealerValue();
+        Participant dealer = findDealer();
         Map<Player, GameResult> playersResult = new HashMap<>();
         Map<GameResult, Integer> dealerResult = new HashMap<>();
         for (Participant participant : participants) {
             if (participant.isPlayer()) {
-                GameResult gameResult = GameResult.calculateDealerResult(dealerValue,
-                    participant.getTotalValue());
+                GameResult gameResult = GameResult.calculateDealerResult(dealer, participant);
                 dealerResult.put(gameResult, dealerResult.getOrDefault(gameResult, 0) + 1);
                 playersResult.put((Player) participant, gameResult.reverse());
             }
@@ -43,14 +42,10 @@ public class Participants {
         return new ParticipantsResult(playersResult, dealerResult);
     }
 
-    private int getDealerValue() {
-        int dealerValue = 0;
-        for (Participant participant : participants) {
-            if (!participant.isPlayer()) {
-                dealerValue = participant.getTotalValue();
-                break;
-            }
-        }
-        return dealerValue;
+    private Participant findDealer() {
+        return participants.stream()
+            .filter(participant -> !participant.isPlayer())
+            .findFirst()
+            .orElse(null);
     }
 }

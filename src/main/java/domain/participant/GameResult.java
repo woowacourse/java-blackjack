@@ -1,24 +1,45 @@
 package domain.participant;
 
 public enum GameResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK("블랙잭", 1.5),
+    WIN("승", 1.0),
+    DRAW("무", 0.0),
+    LOSE("패", -1.0);
 
     private final String koreanName;
+    private final double calculateValue;
 
-    GameResult(String koreanName) {
+    GameResult(String koreanName, double calculateValue) {
         this.koreanName = koreanName;
+        this.calculateValue = calculateValue;
     }
 
-    public static GameResult calculateDealerResult(int dealerValue, int playerValue) {
+    public static GameResult calculateDealerResult(Participant dealer, Participant player) {
+        int dealerValue = dealer.getTotalValue();
+        int playerValue = player.getTotalValue();
+
+        boolean isDealerBlackJack = dealer.isBlackJack(dealerValue);
+        boolean isPlayerBlackJack = player.isBlackJack(playerValue);
+        if (isPlayerBlackJack && isDealerBlackJack) {
+            return DRAW;
+        }
+        if (isPlayerBlackJack) {
+            return BLACKJACK;
+        }
         if (Participant.isBust(dealerValue) || Participant.isBust(playerValue)) {
-            return calculateBurstResult(dealerValue, playerValue);
+            return calculateBurstResult(dealer, player);
         }
         return calculateResult(dealerValue, playerValue);
     }
 
-    private static GameResult calculateBurstResult(int dealerValue, int playerValue) {
+    public double getCalculateValue(int amount) {
+        return amount * this.calculateValue;
+    }
+
+    private static GameResult calculateBurstResult(Participant dealer, Participant player) {
+
+        int dealerValue = dealer.getTotalValue();
+        int playerValue = player.getTotalValue();
         if (Participant.isBust(dealerValue) && Participant.isBust(playerValue)) {
             return DRAW;
         }
@@ -41,6 +62,9 @@ public enum GameResult {
     public GameResult reverse() {
         if (this == DRAW) {
             return DRAW;
+        }
+        if (this == BLACKJACK) {
+            return BLACKJACK;
         }
         if (this == WIN) {
             return LOSE;

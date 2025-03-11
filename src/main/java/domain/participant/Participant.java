@@ -12,6 +12,7 @@ public abstract class Participant {
 
     private final String name;
     private final List<Card> cards;
+    private Betting betting;
 
     protected Participant(String name) {
         this.name = name;
@@ -22,12 +23,24 @@ public abstract class Participant {
         cards.add(card);
     }
 
+    public int getBettingAmount() {
+        return betting.getAmount();
+    }
+
+    public void startBetting(int bettingAmount) {
+        this.betting = new Betting(bettingAmount);
+    }
+
     public String getName() {
         return name;
     }
 
     public static boolean isBust(int value) {
         return value > BURST_UPPER_BOUND;
+    }
+
+    public boolean isBlackJack(int value) {
+        return value == BURST_UPPER_BOUND && cards.size() == 2;
     }
 
     public abstract List<Card> getShownCard();
