@@ -28,9 +28,9 @@ public class RoundHistory {
 
 
   public Map<Boolean, Integer> getDealerResult() {
-    Map<Boolean, Integer> result = new HashMap<>(Map.of(true, 0, false, 0));
+    final Map<Boolean, Integer> result = new HashMap<>(Map.of(true, 0, false, 0));
 
-    for (Boolean value : history.values()) {
+    for (final Boolean value : history.values()) {
       result.put(!value, result.get(value) + 1);
     }
     return result;

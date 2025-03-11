@@ -24,7 +24,7 @@ public class Participants {
 
 
   public void add(final List<String> participantNames) {
-    for (String participantName : participantNames) {
+    for (final String participantName : participantNames) {
       final Participant player = new Player(participantName);
       if (participants.stream().anyMatch(i -> i.getName().equals(participantName))) {
         throw new BlackjackArgumentException("중복된 닉네임을 가진 플레이어가 포함되어있습니다: " + participantName);
@@ -34,7 +34,7 @@ public class Participants {
   }
 
   public void initialDeal(final Deck deck) {
-    for (Participant participant : participants) {
+    for (final Participant participant : participants) {
       participant.initialDeal(deck);
     }
   }

@@ -19,7 +19,7 @@ public class BlackjackGame {
   }
 
   public static BlackjackGame generate() {
-    var deck = Deck.createDecks(NUMBER_OF_DECK);
+    final var deck = Deck.createDecks(NUMBER_OF_DECK);
     final var participants = new Participants();
     final Deck shuffled = deck.shuffle();
     return new BlackjackGame(participants, shuffled);

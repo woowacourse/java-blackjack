@@ -45,7 +45,7 @@ public class BlackjackController {
 
   private void outputInitialDeal(BlackjackGame blackjack) {
     final var players = blackjack.getPlayers();
-    var playerNames = converter.playersToNames(players);
+    final var playerNames = converter.playersToNames(players);
     outputView.printDealIntroduce(playerNames);
     outputDealerInitialDealResult(blackjack);
     final var convertedPlayers = converter.playersToEntries(players);
@@ -77,7 +77,7 @@ public class BlackjackController {
     }
   }
 
-  private void hitByParticipant(BlackjackGame blackjack, Participant participant) {
+  private void hitByParticipant(final BlackjackGame blackjack, final Participant participant) {
     final var card = blackjack.getCardForDeal();
     participant.hit(card);
   }
@@ -116,7 +116,7 @@ public class BlackjackController {
 
     roundHistory.getHistory()
         .forEach((name, isWin) -> {
-          var result = PlayerResultText.convertBooleanToText(isWin);
+          final var result = PlayerResultText.convertBooleanToText(isWin);
           outputView.printRoundResultOnPlayers(name, result);
         });
   }
