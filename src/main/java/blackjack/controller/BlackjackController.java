@@ -3,15 +3,18 @@ package blackjack.controller;
 import blackjack.domain.GameManager;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.card.RandomBlackjackShuffle;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Players;
-import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
+
+    private static final String PLAYER_NAME_DELIMITER = ",";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -32,7 +35,7 @@ public class BlackjackController {
 
     private GameManager createGameManager() {
         CardPack cardPack = new CardPack(new RandomBlackjackShuffle());
-        List<Player> readPlayers = readAndParseNames();
+        List<Gambler> readPlayers = readAndParseNames();
 
         Players players = new Players(readPlayers, cardPack);
         outputView.printInitCards(players);
@@ -40,14 +43,22 @@ public class BlackjackController {
         return new GameManager(cardPack, players);
     }
 
-    private List<Player> readAndParseNames() {
+    private List<Gambler> readAndParseNames() {
         String playerNamesInput = inputView.readPlayerNames();
-        return PlayerNameParser.parseNames(playerNamesInput);
+        return parsePlayerByName(playerNamesInput);
+    }
+
+    public List<Gambler> parsePlayerByName(String namesInput) {
+        List<String> playerNames = List.of(namesInput.split(PLAYER_NAME_DELIMITER));
+        return playerNames.stream()
+                .map(Name::new)
+                .map(Gambler::new)
+                .collect(Collectors.toList());
     }
 
     private void dealMoreCards(final GameManager gameManager, final Players players) {
-        List<Player> gamblers = players.getGamblers();
-        for (Player gambler : gamblers) {
+        List<Gambler> gamblers = players.getGamblers();
+        for (Gambler gambler : gamblers) {
             while (!gameManager.isPlayerBust(gambler) && inputView.readOneMoreDealCard(gambler)) {
                 gameManager.dealAddCard(gambler);
                 outputView.printCardsMessage(gambler);
