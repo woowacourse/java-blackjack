@@ -33,20 +33,20 @@ public final class BlackjackJudge {
     }
     
     public int getDealerWinningCount() {
-        return calculateDealerWinningStatusCountOf(WinningStatus.플레이어_승리);
+        return countWinningStatusOf(WinningStatus.플레이어_패배);
     }
     
     public int getDealerLosingCount() {
-        return calculateDealerWinningStatusCountOf(WinningStatus.플레이어_패배);
+        return countWinningStatusOf(WinningStatus.플레이어_승리);
     }
     
     public int getDealerDrawingCount() {
-        return calculateDealerWinningStatusCountOf(WinningStatus.무승부);
+        return countWinningStatusOf(WinningStatus.무승부);
     }
     
-    private int calculateDealerWinningStatusCountOf(final WinningStatus status) {
+    private int countWinningStatusOf(final WinningStatus status) {
         return (int) playerHands.stream()
-                .map(playerHand -> WinningStatus.determineWinningStatus(dealerHand, playerHand))
+                .map(playerHand -> WinningStatus.determineWinningStatus(playerHand, dealerHand))
                 .filter(winningStatus -> winningStatus == status)
                 .count();
     }
