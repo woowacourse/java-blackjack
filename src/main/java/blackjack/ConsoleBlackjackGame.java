@@ -7,21 +7,29 @@ import view.OutputView;
 
 public class ConsoleBlackjackGame {
 
+    private final InputView inputView;
+    private final OutputView outputView;
+
+    public ConsoleBlackjackGame(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
     public void run() {
-        Blackjack blackjack = new Blackjack(InputView.inputParticipantName(), DeckGenerator.generateDeck());
+        Blackjack blackjack = new Blackjack(inputView.inputParticipantName(), DeckGenerator.generateDeck());
 
         blackjack.distributeInitialCards();
         openInitialCards(blackjack);
         addMoreCards(blackjack);
 
-        OutputView.printPlayersCardsAndSum(blackjack.getDealer(),
+        outputView.printPlayersCardsAndSum(blackjack.getDealer(),
                 blackjack.getParticipants(), blackjack.getNameAndSumOfAllPlayers());
-        OutputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
+        outputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
     }
 
     private void openInitialCards(Blackjack blackjack) {
-        OutputView.printOpenInitialCards(blackjack.getDealer(), blackjack.getParticipants());
-        OutputView.printInitialCards(blackjack.openInitialCards());
+        outputView.printOpenInitialCards(blackjack.getDealer(), blackjack.getParticipants());
+        outputView.printInitialCards(blackjack.openInitialCards());
     }
 
     private void addMoreCards(Blackjack blackjack) {
@@ -30,16 +38,16 @@ public class ConsoleBlackjackGame {
         }
         boolean isAdded = blackjack.addCardToDealerIfLowScore();
         if (isAdded) {
-            OutputView.printAddCardToDealer();
+            outputView.printAddCardToDealer();
         }
     }
 
     private void addMoreCards(Blackjack blackjack, Player participant) {
         YesOrNo yesOrNo;
         do {
-            yesOrNo = YesOrNo.from(InputView.inputWantOneMoreCard(participant.getName()));
+            yesOrNo = YesOrNo.from(inputView.inputWantOneMoreCard(participant.getName()));
             addOneCardIfYes(blackjack, participant, yesOrNo);
-            OutputView.printPlayerCards(participant.getName(), participant.getCards());
+            outputView.printPlayerCards(participant.getName(), participant.getCards());
         } while (yesOrNo.equals(YesOrNo.YES));
     }
 
