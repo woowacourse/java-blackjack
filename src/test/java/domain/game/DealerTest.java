@@ -9,7 +9,6 @@ import domain.card.CardDeck;
 import domain.card.CardNumber;
 import domain.card.Pattern;
 import domain.card.TestShuffler;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
@@ -32,15 +31,13 @@ public class DealerTest {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Dealer dealer = new Dealer(cardDeck);
-        Hand hand = dealer.getHand();
-        List<Card> cards = hand.getCards();
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        dealer.drawCard(DRAW_COUNT_WHEN_START);
 
         //when
         Card singleCard = dealer.getSingleCard();
 
         //then
-        assertThat(singleCard.equals(new Card(Pattern.SPADE, CardNumber.TEN))).isTrue();
+        assertThat(singleCard.equals(new Card(Pattern.SPADE, CardNumber.KING))).isTrue();
     }
 
     @Test
@@ -61,13 +58,13 @@ public class DealerTest {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Dealer dealer = new Dealer(cardDeck);
-        Hand hand = dealer.getHand();
-        List<Card> cards = hand.getCards();
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
+        dealer.drawCard(DRAW_COUNT_WHEN_START);
+
+        // when
+        int actual = dealer.calculateTotalCardNumber();
 
         //when & then
-        assertThat(dealer.calculateTotalCardNumber()).isEqualTo(20);
+        assertThat(actual).isEqualTo(20);
     }
 
     @Test
@@ -75,13 +72,11 @@ public class DealerTest {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Dealer dealer = new Dealer(cardDeck);
-        Hand hand = dealer.getHand();
-        List<Card> cards = hand.getCards();
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
+        dealer.drawCard(DRAW_COUNT_WHEN_START);
+        dealer.drawCard(DRAW_COUNT_WHEN_HIT);
 
         //when & then
-        assertThat(dealer.isOverBustBound()).isFalse();
+        assertThat(dealer.isOverBustBound()).isTrue();
     }
 
     @Test
@@ -89,13 +84,10 @@ public class DealerTest {
         //given
         CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
         Dealer dealer = new Dealer(cardDeck);
-        Hand hand = dealer.getHand();
-        List<Card> cards = hand.getCards();
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.SEVEN));
+        dealer.drawCard(DRAW_COUNT_WHEN_START);
 
         //when & then
         assertThat(dealer.isOverDrawBound()).isTrue();
     }
-    
+
 }
