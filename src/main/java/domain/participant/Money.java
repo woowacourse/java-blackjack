@@ -19,4 +19,8 @@ public class Money {
     public static Money from(int money){
         return new Money(money);
     }
+
+    public double calculateProfit(double rate) {
+        return money*rate;
+    }
 }

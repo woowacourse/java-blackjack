@@ -1,18 +1,24 @@
 package domain.blackJack;
 
 public enum MatchResult {
-    WIN("승"),
-    BLACKJACK("블랙잭"),
-    DRAW("무"),
-    LOSE("패");
+    WIN("승", 2),
+    BLACKJACK("블랙잭", 1.5),
+    DRAW("무", 1),
+    LOSE("패", 0);
 
     private final String value;
+    private final double rate;
 
-    MatchResult(final String value) {
+    MatchResult(String value, double rate) {
         this.value = value;
+        this.rate = rate;
     }
 
     public String getValue() {
         return value;
+    }
+
+    public double getRate() {
+        return rate;
     }
 }

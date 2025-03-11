@@ -155,4 +155,10 @@ public class OutputView {
         return dealerMatchResult;
     }
 
+    public void printProfit(Map<Player, Double> playerProfit) {
+        playerProfit.forEach(((player, money) ->{
+            System.out.println(player.getName());
+            System.out.println(money);
+        }));
+    }
 }

@@ -5,6 +5,7 @@ import domain.blackJack.Result;
 import domain.card.CardDeck;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -32,14 +33,25 @@ public class Players {
         }
     }
 
-    public LinkedHashMap<Player, MatchResult> calculateWinner(Dealer dealer) {
+    public LinkedHashMap<Player, Double> calculateWinner(Dealer dealer) {
         LinkedHashMap<Player, MatchResult> res = new LinkedHashMap<>();
         Result result = new Result();
 
         for (Player player : players) {
             res.put(player, result.calculateResultOfPlayer(player, dealer));
         }
-        return res;
+
+        return calculateProfit(res, result);
+    }
+
+    private LinkedHashMap<Player, Double> calculateProfit(LinkedHashMap<Player, MatchResult> res, Result result) {
+        LinkedHashMap<Player, Double> tmp = new LinkedHashMap<>();
+        for (Entry<Player, MatchResult> playerMatchResult : res.entrySet()) {
+            Player player = playerMatchResult.getKey();
+            tmp.put(player, player.calculateProfit(playerMatchResult.getValue()));
+        }
+
+        return tmp;
     }
 
     public static void validatePlayerNumbers(final List<String> players) {

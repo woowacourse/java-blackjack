@@ -33,4 +33,8 @@ public class Player extends Participant {
     public String getName() {
         return name;
     }
+
+    public double calculateProfit(MatchResult matchResult) {
+        return money.calculateProfit(matchResult.getRate());
+    }
 }
