@@ -23,7 +23,8 @@ public class RandomCardsGenerator implements CardsGenerator {
 
     @Override
     public List<Card> generate() {
-        Collections.shuffle(CARDS);
-        return new ArrayList<>(CARDS);
+        List<Card> cards = new ArrayList<>(CARDS);
+        Collections.shuffle(cards);
+        return cards;
     }
 }
