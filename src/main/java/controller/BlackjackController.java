@@ -16,15 +16,17 @@ import view.Parser;
 public class BlackjackController {
     private final OutputView outputView;
     private final InputView inputView;
+    private final TrumpCardManager trumpCardManager;
 
-    public BlackjackController(OutputView outputView, InputView inputView) {
+    public BlackjackController(OutputView outputView, InputView inputView,  TrumpCardManager trumpCardManager) {
         this.outputView = outputView;
         this.inputView = inputView;
+        this.trumpCardManager = trumpCardManager;
     }
 
     public void run() {
         List<String> playerNames = Parser.parserStringToList(inputView.inputUsers());
-        GameManager gameManager = new GameManager(playerNames);
+        GameManager gameManager = new GameManager(playerNames,trumpCardManager);
 
         distributionFirstCard(gameManager, playerNames);
 
@@ -36,7 +38,6 @@ public class BlackjackController {
         calculateGameResult(gameManager);
     }
     private void distributionFirstCard(GameManager gameManager, List<String> playerNames) {
-        TrumpCardManager.initCache();
         gameManager.firstHandOutCard();
 
         displayOpenCard(gameManager.getDealer().getName(), gameManager.getDealer());
@@ -62,7 +63,7 @@ public class BlackjackController {
             if (yesOrNo.equalsIgnoreCase("N")) {
                 return;
             }
-            player.drawCard();
+            gameManager.drawMoreCard(player);
             displayOpenCard(playerName, player);
         }
     }
@@ -70,7 +71,7 @@ public class BlackjackController {
     private void additionalDealerCard(GameManager gameManager) {
         User dealer = gameManager.getDealer();
         while (!dealer.isImpossibleDraw()) {
-            dealer.drawCard();
+            gameManager.drawMoreCard(dealer);
             outputView.displayDealerAddCard();
         }
     }

@@ -3,24 +3,26 @@ package domain;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameManager {
     public final static int MAX_PLAYER = 7;
 
-    private final List<User> users = new ArrayList<>();
+    private final List<User> users;
     private final User dealer;
+    private final TrumpCardManager trumpCardManager;
 
-    public GameManager(List<String> names) {
+    public GameManager(List<String> names,TrumpCardManager trumpCardManager) {
         validate(names);
-        for (String name : names) {
-            users.add(new Player(name));
-        }
+        users = names.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
         this.dealer = new Dealer("딜러");
+        this.trumpCardManager = trumpCardManager;
     }
 
     private void validate(List<String> names) {
@@ -35,14 +37,20 @@ public class GameManager {
 
     public void firstHandOutCard() {
         for (int count = 0; count < 2; count++) {
-            users.forEach(User::drawCard);
-            dealer.drawCard();
+            users.forEach(user -> {
+                user.receiveCard(trumpCardManager.drawCard());
+            });
+            dealer.receiveCard(trumpCardManager.drawCard());
         }
+    }
+
+    public void drawMoreCard(final User user) {
+        user.receiveCard(trumpCardManager.drawCard());
     }
 
     public User findUserByUsername(String name) {
         return users.stream()
-                .filter(user -> user.has(name))
+                .filter(user -> user.hasName(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }

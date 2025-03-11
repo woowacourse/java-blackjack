@@ -1,35 +1,28 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Stack;
 
 public class TrumpCardManager {
-    private static final Stack<TrumpCard> CARD_DECK = new Stack<>();
+    private final Stack<TrumpCard> trumpCards = new Stack<>();
 
-    public static void initCache() {
+    public TrumpCardManager() {
+        initCache();
+    }
+
+    public void initCache() {
         Arrays.stream(CardShape.values())
                 .forEach(cardShape -> Arrays.stream(CardNumber.values())
-                        .forEach(cardNumber -> CARD_DECK.push(new TrumpCard(cardShape, cardNumber))));
-        Collections.shuffle(CARD_DECK);
+                        .forEach(cardNumber -> trumpCards.push(new TrumpCard(cardShape, cardNumber))));
+        Collections.shuffle(trumpCards);
     }
 
-    public static void bin() {
-        while (!CARD_DECK.isEmpty()) {
-            CARD_DECK.removeFirst();
-        }
-    }
-
-    public static TrumpCard drawCard() {
-        if (CARD_DECK.isEmpty()) {
+    public TrumpCard drawCard() {
+        if (trumpCards.isEmpty()) {
             throw new IllegalArgumentException("카드가 다 떨어졌습니다");
         }
-        return CARD_DECK.pop();
+        return trumpCards.pop();
     }
 
-    public static List<TrumpCard> getCardDeck() {
-        return new ArrayList<>(CARD_DECK);
-    }
 }

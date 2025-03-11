@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.CardDeck;
-import domain.TrumpCardManager;
 import domain.TrumpCard;
 import java.util.List;
 
@@ -16,21 +15,17 @@ public abstract class User {
 
     public abstract boolean isImpossibleDraw();
 
-    public void drawCard() {
-        TrumpCard trumpCard = TrumpCardManager.drawCard();
+
+    public void receiveCard(final TrumpCard trumpCard) {
         cardDeck.addTrumpCard(trumpCard);
     }
 
-    public boolean has(String name) {
+    public boolean hasName(String name) {
         return getName().equals(name);
     }
 
     public String getName() {
         return this.name;
-    }
-
-    public int getSize() {
-        return cardDeck.cardsSize();
     }
 
     public abstract List<TrumpCard> openCard();

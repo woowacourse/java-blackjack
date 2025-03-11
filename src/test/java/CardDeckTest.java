@@ -1,12 +1,15 @@
 import domain.CardDeck;
 import domain.CardNumber;
-import domain.TrumpCardManager;
 import domain.CardShape;
+import domain.GameManager;
 import domain.TrumpCard;
+import domain.TrumpCardManager;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,38 +17,47 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardDeckTest {
-    @BeforeEach
-    public void setUp() {
-        TrumpCardManager.bin();
-        TrumpCardManager.initCache();
-    }
 
-    @DisplayName("카드 배부 시 52장의 카드 덱에서 카드를 뽑아서 배부한다.")
+    private final List<TrumpCard> cardDeck = List.of(
+        new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
+        new TrumpCard(CardShape.CLOVER, CardNumber.TWO),
+        new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
+        new TrumpCard(CardShape.HEART, CardNumber.ACE),
+        new TrumpCard(CardShape.HEART, CardNumber.TWO),
+        new TrumpCard(CardShape.HEART, CardNumber.FOUR),
+        new TrumpCard(CardShape.DIA, CardNumber.ACE),
+        new TrumpCard(CardShape.DIA, CardNumber.TWO),
+        new TrumpCard(CardShape.DIA, CardNumber.FOUR)
+    );
+
+    @DisplayName("카드를 배부한다.")
     @Test
     void test2() {
         // given
-        int originCardDeckSize = TrumpCardManager.getCardDeck().size();
+        FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
 
-        // when
-        TrumpCardManager.drawCard();
-        int afterDrawDeckSize = TrumpCardManager.getCardDeck().size();
+        //when
+        TrumpCard trumpCard = trumpCardManager.drawCard();
 
-        // then
-        Assertions.assertThat(originCardDeckSize - 1).isEqualTo(afterDrawDeckSize);
+        //then
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(trumpCard.getCardShape()).isEqualTo(CardShape.CLOVER);
+            softAssertions.assertThat(trumpCard.getCardNumber()).isEqualTo(CardNumber.ACE);
+        });
     }
 
     @DisplayName("카드가 다 떨어지면 예외를 발생한다")
     @Test
     void test3() {
         // given
-        int count = 0;
+        TrumpCardManager trumpCardManager = new TrumpCardManager();
+
         for (int i = 0; i < 52; i++) {
-            TrumpCardManager.drawCard();
-            count++;
+            trumpCardManager.drawCard();
         }
 
         // when & then
-        Assertions.assertThatThrownBy(TrumpCardManager::drawCard)
+        Assertions.assertThatThrownBy(trumpCardManager::drawCard)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드가 다 떨어졌습니다");
     }
@@ -157,5 +169,19 @@ public class CardDeckTest {
 
         // then
         Assertions.assertThat(isBlackjack).isEqualTo(true);
+    }
+
+    private static class FakeTrumpCardManager extends TrumpCardManager {
+
+        private final Queue<TrumpCard> fakeTrumpCards;
+
+        public FakeTrumpCardManager(List<TrumpCard> trumpCards) {
+            this.fakeTrumpCards = new LinkedList<>(trumpCards);
+        }
+
+        @Override
+        public TrumpCard drawCard(){
+            return fakeTrumpCards.poll();
+        }
     }
 }
