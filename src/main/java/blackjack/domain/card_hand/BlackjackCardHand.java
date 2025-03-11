@@ -79,4 +79,8 @@ public final class BlackjackCardHand {
     public int getCardCount() {
         return cardHand.getCardCount();
     }
+    
+    public boolean isAddedUpToMax() {
+        return getBlackjackSum() == BLACK_JACK_SUM;
+    }
 }

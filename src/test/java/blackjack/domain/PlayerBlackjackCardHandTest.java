@@ -237,7 +237,7 @@ public class PlayerBlackjackCardHandTest {
         ));
 
         // when
-        final boolean result = player.isAddedTo21();
+        final boolean result = player.isAddedUpToMax();
 
         // then
         assertThat(result).isTrue();

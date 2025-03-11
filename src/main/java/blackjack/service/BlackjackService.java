@@ -21,7 +21,7 @@ public class BlackjackService {
     ) {
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             playerTurnNotifier.accept(playerHand.getPlayerName());
-            if (playerHand.isAddedTo21()) {
+            if (playerHand.isAddedUpToMax()) {
                 reached21Notifier.run();
                 continue;
             }

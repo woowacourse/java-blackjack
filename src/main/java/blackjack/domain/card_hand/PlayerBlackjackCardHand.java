@@ -46,7 +46,7 @@ public final class PlayerBlackjackCardHand {
         return cardHand.isBust();
     }
     
-    public boolean isAddedTo21() {
-        return getBlackjackSum() == 21;
+    public boolean isAddedUpToMax() {
+        return cardHand.isAddedUpToMax();
     }
 }
