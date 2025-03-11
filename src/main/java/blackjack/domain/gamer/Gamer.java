@@ -24,10 +24,6 @@ public abstract class Gamer {
         return cards.getCards();
     }
 
-    public int getCardCount() {
-        return cards.count();
-    }
-
     public boolean isBust() {
         return cards.isBust();
     }
