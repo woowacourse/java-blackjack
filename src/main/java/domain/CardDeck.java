@@ -24,7 +24,7 @@ public class CardDeck {
 
     public List<TrumpCard> getFirstCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("카드가 비었습니다.");
         }
         return List.of(cards.getFirst());
     }
@@ -38,7 +38,7 @@ public class CardDeck {
 
     public boolean hasAce() {
         return cards.stream()
-                .anyMatch((card) -> card.getCardNumberValue() == CardNumber.ACE.getValue());
+            .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
     }
 
     public boolean isImpossibleDraw(int maxScore) {
