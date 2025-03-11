@@ -39,7 +39,7 @@ public class CardHand {
 
     public boolean hasAce() {
         return cards.stream()
-                .anyMatch((card) -> card.getCardNumberValue() == CardNumber.ACE.getValue());
+                .anyMatch((card) -> card.getCardNumberValue() == CardNumber.ACE.getWorth());
     }
 
     public boolean isAtLeastScore(int maxScore) {

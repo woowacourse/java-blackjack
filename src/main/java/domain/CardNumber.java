@@ -16,16 +16,16 @@ public enum CardNumber {
     K(10, "K"),
     ;
 
-    private final int value;
+    private final int worth;
     private final String displayName;
 
     CardNumber(int value, String displayName) {
-        this.value = value;
+        this.worth = value;
         this.displayName = displayName;
     }
 
-    public int getValue() {
-        return value;
+    public int getWorth() {
+        return worth;
     }
 
     public String getDisplayName() {
