@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +19,14 @@ public class Dealer extends Gamer {
     }
 
     @Override
+    public Cards showInitialCards() {
+        return new Cards(List.of(cards.getFirstCard()));
+    }
+
+    @Override
     public boolean canGetMoreCard() {
         int sum = cards.calculateMinSum();
         return sum <= DEALER_THRESHOLD;
-    }
-
-    public List<Card> showOneCard() {
-        return List.of(cards.getFirstCard());
     }
 
     @Override

@@ -56,7 +56,7 @@ public class PlayerTest {
 
     @DisplayName("플레이어는 모든 카드를 보여준다.")
     @Test
-    void showPlayerCards() {
+    void showPlayerAllCards() {
         // given
         final Cards cards = provideCards(2);
         player.receiveCards(cards);
@@ -64,11 +64,28 @@ public class PlayerTest {
                 new Card(Shape.SPADE, Denomination.TWO));
 
         // when
-        final List<Card> playerCards = player.showAllCard();
+        final Cards playerCards = player.showAllCards();
 
         // then
-        assertThat(playerCards).isEqualTo(expected);
+        assertThat(playerCards.getCards()).isEqualTo(expected);
     }
+
+    @DisplayName("플레이어는 1장만 보여준다.")
+    @Test
+    void showPlayerInitialCards() {
+        // given
+        final Cards cards = provideCards(2);
+        player.receiveCards(cards);
+        final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.A),
+                new Card(Shape.SPADE, Denomination.TWO));
+
+        // when
+        final Cards playerCards = player.showInitialCards();
+
+        // then
+        assertThat(playerCards.getCards()).isEqualTo(expected);
+    }
+
 
     @DisplayName("플레이어가 가진 카드의 합이 21 미만이면 true를 반환한다.")
     @ParameterizedTest

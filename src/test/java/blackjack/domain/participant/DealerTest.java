@@ -50,10 +50,10 @@ class DealerTest {
         dealer.receiveCards(cards);
 
         // when
-        final List<Card> dealerCards = dealer.showOneCard();
+        final Cards dealerCards = dealer.showInitialCards();
 
         // then
-        assertThat(dealerCards).isEqualTo(List.of(new Card(Shape.SPADE, Denomination.A)));
+        assertThat(dealerCards.getCards()).isEqualTo(List.of(new Card(Shape.SPADE, Denomination.A)));
     }
 
     @DisplayName("딜러가 가진 카드의 합이 16 이하면 true를 반환한다.")

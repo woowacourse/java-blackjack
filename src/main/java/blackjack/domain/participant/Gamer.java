@@ -1,8 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.List;
 
 public abstract class Gamer {
 
@@ -11,6 +9,8 @@ public abstract class Gamer {
     public Gamer(final Cards cards) {
         this.cards = cards;
     }
+
+    public abstract Cards showInitialCards();
 
     public abstract boolean canGetMoreCard();
 
@@ -24,7 +24,7 @@ public abstract class Gamer {
         return cards.calculateResult();
     }
 
-    public List<Card> showAllCard() {
-        return cards.getCards();
+    public Cards showAllCards() {
+        return cards;
     }
 }

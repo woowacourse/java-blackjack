@@ -20,6 +20,11 @@ public class Player extends Gamer {
     }
 
     @Override
+    public Cards showInitialCards() {
+        return cards;
+    }
+
+    @Override
     public boolean canGetMoreCard() {
         int sum = cards.calculateMinSum();
         return sum < BLACKJACK_NUMBER;
