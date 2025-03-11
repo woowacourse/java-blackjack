@@ -13,7 +13,6 @@ import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import view.AnswerType;
 
 public class CardGiverTest {
 
@@ -30,24 +29,6 @@ public class CardGiverTest {
             return testCards.get(index++);
         }
     }
-
-//    @DisplayName("카드를 2장 배분한다")
-//    @Test
-//    void test1() {
-//        // given
-//        RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
-//        CardGiver cardGiver = new CardGiver(randomGenerator);
-//
-//        Card expectedCard1 = new Card(CardNumberType.FIVE, CardType.SPACE);
-//        Card expectedCard2 = new Card(CardNumberType.SIX, CardType.CLOVER);
-//
-//        //when
-//        Cards cards = cardGiver.giveDefault();
-//
-//        //then
-//        assertThat(cards.getCards()).containsExactly(expectedCard1, expectedCard2);
-//    }
-
 
     @DisplayName("모든 참여자에게 기본적으로 2장씩 배분한다.")
     @Test
@@ -80,8 +61,6 @@ public class CardGiverTest {
     void test34() {
         //given
         Player player = new Player("mimi", Hand.createEmpty());
-        AnswerType answerType = AnswerType.YES;
-
         CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
 
         //when
@@ -92,18 +71,4 @@ public class CardGiverTest {
                 new Card(CardNumberType.FIVE, CardType.SPACE)
         )));
     }
-
-//    @DisplayName("사용자 답변이 NO이면 추가 카드를 받지 않는다.")
-//    @Test
-//    void test35() {
-//        //given
-//        Player player = new Player("mimi", Cards.createEmpty());
-//        AnswerType answerType = AnswerType.NO;
-//
-//        CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
-//        //when
-//        cardGiver.giveAdditionalCard(player, answerType);
-//        //then
-//        assertThat(player.getCards()).isEqualTo(Cards.createEmpty());
-//    }
 }

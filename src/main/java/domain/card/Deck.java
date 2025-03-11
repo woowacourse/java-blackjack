@@ -16,6 +16,10 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    public Deck(List<Card> deck) {
+        this.deck = deck;
+    }
+
     public Card draw() {
         checkRemainingCard();
         return deck.removeFirst();
