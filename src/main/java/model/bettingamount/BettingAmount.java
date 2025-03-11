@@ -11,7 +11,7 @@ public class BettingAmount {
         this.value = value;
     }
 
-    public int getProfitByGameResult(GameResult result) {
+    public int getProfitByGameResult(final GameResult result) {
         if (result == GameResult.WIN) {
             return getWinValue();
         }

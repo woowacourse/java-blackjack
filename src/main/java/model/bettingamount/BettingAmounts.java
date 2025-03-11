@@ -9,7 +9,7 @@ public class BettingAmounts {
         this.bettingAmounts = bettingAmounts;
     }
 
-    public BettingAmount findByName(String name) {
+    public BettingAmount findByName(final String name) {
         if (bettingAmounts.containsKey(name)) {
             return bettingAmounts.get(name);
         }
