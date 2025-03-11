@@ -23,11 +23,11 @@ public class GameManagerTest {
                 "pobi",
                 "hippo"
         ));
-        GameManager manager = new GameManager(Dealer.of(), players, new CardDeck());
+        Dealer dealer = Dealer.from(new CardDeck());
         //when
         //then
         for (Player player : players.getPlayers()) {
-            manager.divideCardsByParticipant(player, amount);
+            dealer.divideCardsByParticipant(player, amount);
             Assertions.assertThat(player.getCards().size()).isEqualTo(amount);
         }
     }
@@ -43,10 +43,9 @@ public class GameManagerTest {
         );
         int amount = 2;
         Players players = Players.from(allPlayer);
-        Dealer dealer = Dealer.of();
-        GameManager gameManager = new GameManager(dealer, players, new CardDeck());
+        Dealer dealer = Dealer.from(new CardDeck());
         // when
-        gameManager.divideInitialCardToParticipant();
+        dealer.divideInitialCardToParticipant(players);
 
         // then
         for (Player player : players.getPlayers()) {
