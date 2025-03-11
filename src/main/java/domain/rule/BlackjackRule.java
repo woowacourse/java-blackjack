@@ -10,7 +10,7 @@ public class BlackjackRule implements GameRule {
     private static final int SUM_LIMIT = 21;
 
     @Override
-    public boolean isBurst(Cards cards) {
+    public boolean isBust(Cards cards) {
         Set<Integer> coordinates = cards.getCoordinateSums();
         return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
     }
@@ -23,19 +23,18 @@ public class BlackjackRule implements GameRule {
     @Override
     public int getScore(Cards cards) {
         Set<Integer> coordinates = cards.getCoordinateSums();
-        if (isBurst(cards)) {
+        if (isBust(cards)) {
             return getMinSum(coordinates);
         }
         return getMaxSum(coordinates);
     }
 
-    // TODO: 파라미터로 누구의 카드인지 구별해야 하는가? (self는 Player, other는 Dealer여야 함)
     @Override
     public GameResult getResult(Player player, Dealer dealer) {
-        if (isBurst(player.getCards())) {
+        if (isBust(player.getCards())) {
             return GameResult.LOSE;
         }
-        if (isBurst(dealer.getCards()) || getScore(player.getCards()) > getScore(dealer.getCards())) {
+        if (isBust(dealer.getCards()) || getScore(player.getCards()) > getScore(dealer.getCards())) {
             return GameResult.WIN;
         }
         if (getScore(player.getCards()) < getScore(dealer.getCards())) {

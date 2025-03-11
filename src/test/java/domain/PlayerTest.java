@@ -111,7 +111,7 @@ public class PlayerTest {
         );
     }
 
-    @DisplayName("플레이어가 소유한 카드에 따라서 burst 여부를 판단한다.")
+    @DisplayName("플레이어가 소유한 카드에 따라서 bust 여부를 판단한다.")
     @ParameterizedTest
     @MethodSource("createBurstCase")
     void test1(List<Card> inputCard, boolean expected) {
@@ -119,7 +119,7 @@ public class PlayerTest {
         Cards cards = Cards.of(inputCard);
         Player dealer = Player.from("플레이어1", cards);
         //when
-        final boolean actual = dealer.isBurst();
+        final boolean actual = dealer.isBust();
         //then
         assertThat(actual).isEqualTo(expected);
     }

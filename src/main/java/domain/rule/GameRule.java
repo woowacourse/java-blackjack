@@ -6,7 +6,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 
 public interface GameRule {
-    boolean isBurst(Cards cards);
+    boolean isBust(Cards cards);
 
     boolean isWin(Cards cards);
 

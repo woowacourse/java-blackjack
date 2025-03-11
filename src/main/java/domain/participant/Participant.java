@@ -24,8 +24,8 @@ public abstract class Participant {
         return rule.getScore(cards);
     }
 
-    public boolean isBurst() {
-        return rule.isBurst(cards);
+    public boolean isBust() {
+        return rule.isBust(cards);
     }
 
     public boolean isWin() {

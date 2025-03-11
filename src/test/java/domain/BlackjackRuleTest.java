@@ -98,7 +98,7 @@ class BlackjackRuleTest {
         );
     }
 
-    @DisplayName("플레이어가 소유한 카드에 따라서 burst 여부를 판단한다.")
+    @DisplayName("플레이어가 소유한 카드에 따라서 bust 여부를 판단한다.")
     @ParameterizedTest
     @MethodSource("createBurstCase")
     void test1(List<Card> inputCard, boolean expected) {
@@ -106,7 +106,7 @@ class BlackjackRuleTest {
         Cards cards = Cards.of(inputCard);
 
         // when
-        final boolean actual = rule.isBurst(cards);
+        final boolean actual = rule.isBust(cards);
 
         //then
         assertThat(actual).isEqualTo(expected);
