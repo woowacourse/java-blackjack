@@ -72,7 +72,7 @@ public class BlackJackController {
     }
 
     private boolean canHit(Player player) {
-        return !player.isBurst() && YES_SIGN.equals(getYesOrNo(player));
+        return player.canHit() && YES_SIGN.equals(getYesOrNo(player));
     }
 
     private String getYesOrNo(Player player) {
@@ -80,11 +80,9 @@ public class BlackJackController {
     }
 
     private void processDealerTurn(Dealer dealer, CardDeck deck) {
-        try {
+        if (dealer.canHit()) {
             dealer.hit(deck);
             outputView.printDealerHitSuccess();
-        } catch (IllegalStateException e) {
-            outputView.printDealerHitFail();
         }
     }
 

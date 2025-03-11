@@ -34,6 +34,17 @@ public abstract class Gamer {
         return this.name;
     }
 
-    public abstract void hit(CardDeck deck);
+    public void hit(CardDeck deck) {
+        validateHitState();
+        addFrom(deck);
+    }
+
+    public void validateHitState() {
+        if (!canHit()) {
+            throw new IllegalStateException("[ERROR] 카드를 더 뽑을 수 없는 상태입니다.");
+        }
+    }
+
+    public abstract boolean canHit();
 }
 
