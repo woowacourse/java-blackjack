@@ -17,7 +17,7 @@ public class CardHand {
 	}
 
 	public void addCards(final List<Card> cards) {
-		cards.addAll(cards);
+		this.cards.addAll(cards);
 	}
 
 	public int calculateAllScore(final int bustScore) {
