@@ -11,15 +11,4 @@ public class BattingMoney {
         return value;
     }
 
-    public int getBlackjackWinningMoney() {
-        return (int) (value * 1.5);
-    }
-
-    public int getNormalWinningMoney() {
-        return value;
-    }
-
-    public int getLosingMoney() {
-        return value;
-    }
 }
