@@ -49,7 +49,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("카드 합계 테스트")
-    void sumTest() {
+    void calculateSumTest() {
         //given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer(cardDeck);
@@ -57,7 +57,7 @@ public class DealerTest {
         dealer.addCards();
 
         //when-then
-        assertThat(dealer.sum()).isEqualTo(12);
+        assertThat(dealer.calculateSum()).isEqualTo(12);
     }
 
     @Test

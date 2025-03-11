@@ -105,6 +105,6 @@ public class PlayerTest {
         dealer.addCards();
 
         //when-then
-        assertThat(player.calculateWinner(dealer.sum())).isEqualTo(LOSE);
+        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(LOSE);
     }
 }

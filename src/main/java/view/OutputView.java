@@ -1,8 +1,5 @@
 package view;
 
-import static domain.MatchResult.DRAW;
-import static domain.MatchResult.LOSE;
-import static domain.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
@@ -67,7 +64,7 @@ public class OutputView {
     public void printScore(final Players players, final Dealer dealer) {
         printNewLine();
         System.out.print(printDealerDeck(dealer));
-        System.out.printf(score, dealer.sum());
+        System.out.printf(score, dealer.calculateSum());
         printNewLine();
 
         for (Player player : players.getPlayers()) {

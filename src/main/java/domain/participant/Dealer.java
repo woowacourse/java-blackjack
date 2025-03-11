@@ -29,12 +29,12 @@ public class Dealer {
         }
     }
 
-    public int sum() {
+    public int calculateSum() {
         return hand.sum();
     }
 
     public boolean isUnderThreshold() {
-        return sum() <= DEALER_DRAW_THRESHOLD;
+        return calculateSum() <= DEALER_DRAW_THRESHOLD;
     }
 
     public CardDeck getHand() {
