@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import model.bettingamount.BettingAmounts;
 import model.deck.Deck;
 
 public class Players {
@@ -14,9 +15,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players createByNames(final List<String> names, final Deck deck) {
+    public static Players createByNames(final List<String> names, final Deck deck,
+                                        final BettingAmounts bettingAmounts) {
         return new Players(names.stream()
-                .map(name -> new Player(name, deck))
+                .map(name -> new Player(name, deck, bettingAmounts.findByName(name)))
                 .collect(Collectors.toList()));
     }
 

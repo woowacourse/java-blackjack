@@ -2,7 +2,10 @@ package controller;
 
 import dto.CardDto;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import model.bettingamount.BettingAmount;
+import model.bettingamount.BettingAmounts;
 import model.Judge;
 import model.UserInput;
 import model.card.Cards;
@@ -31,7 +34,10 @@ public class BlackjackController {
 
     public void start() {
         deck.shuffle();
-        Players players = initializePlayers();
+        List<String> names = inputView.readPlayerNames();
+        BettingAmounts bettingAmounts = initializeBettingAmounts(names);
+
+        Players players = initializePlayers(names, bettingAmounts);
         Dealer dealer = new Dealer(deck);
 
         printInitialGameState(players, dealer);
@@ -41,10 +47,19 @@ public class BlackjackController {
         printGameResult(players, dealer);
     }
 
-    private Players initializePlayers() {
-        List<String> names = inputView.readPlayerNames();
+    private BettingAmounts initializeBettingAmounts(final List<String> names) {
+        return new BettingAmounts(names.stream()
+                .collect(Collectors.toMap(
+                                Function.identity(),
+                                name -> new BettingAmount(inputView.readBettingAmount(name))
+                        )
+                )
+        );
+    }
+
+    private Players initializePlayers(final List<String> names, final BettingAmounts bettingAmounts) {
         outputView.printNewLine();
-        return Players.createByNames(names, deck);
+        return Players.createByNames(names, deck, bettingAmounts);
     }
 
     private void printInitialGameState(final Players players, final Dealer dealer) {
@@ -62,10 +77,7 @@ public class BlackjackController {
     }
 
     private void handlePlayerTurn(final Player player) {
-        while (playerCanDraw(player)) {
-            if (!wantsAdditionalCard(player)) {
-                return;
-            }
+        while (playerCanDraw(player) && wantsAdditionalCard(player)) {
             player.receiveCard(deck.getCard());
             outputView.printCardsWithName(player.getName(), getCardDtos(player.getCards()));
         }

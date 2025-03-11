@@ -8,7 +8,6 @@ public class GameResults {
     public GameResults(final Map<String, GameResult> gameResults) {
         this.gameResults = gameResults;
     }
-
     public GameResult getGameResultByName(final String name) {
         return gameResults.get(name);
     }
