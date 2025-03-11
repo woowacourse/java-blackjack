@@ -72,7 +72,7 @@ class WinningTypeDiscriminatorTest {
 
     @DisplayName("딜러의 합계가 21을 넘는 경우 플레이어의 승패 여부를 계산한다")
     @ParameterizedTest
-    @CsvSource(value = {"라젤:WIN", "레오:WIN", "비타:DEFEAT", "꾹이:DRAW"}, delimiterString = ":")
+    @CsvSource(value = {"라젤:WIN", "레오:WIN", "비타:DEFEAT", "꾹이:DEFEAT"}, delimiterString = ":")
     void judgePlayerResult_DealerIsBust_Test(String playerName, WinningType expected) {
         // given
         Map<Name, Integer> playerScores = Map.of(

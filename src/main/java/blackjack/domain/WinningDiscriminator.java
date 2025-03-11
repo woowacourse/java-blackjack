@@ -29,26 +29,19 @@ public class WinningDiscriminator {
 
     public Map<WinningType, Integer> judgeDealerResult() {
         Map<WinningType, Integer> winningResult = createWinningResult();
-        for (final Integer playerScore : playerScores.values()) {
-            countDealerWinning(playerScore, winningResult);
+        for (final Name playerName : playerScores.keySet()) {
+            countDealerWinning(playerName, winningResult);
         }
         return winningResult;
     }
 
-    private void countDealerWinning(final int playerScore, final Map<WinningType, Integer> winningResult) {
-        if (playerScore > BLACK_JACK) {
-            winningResult.put(WIN, winningResult.get(WIN) + 1);
-            return;
-        }
-        if (dealerScore > BLACK_JACK) {
+    private void countDealerWinning(final Name name, final Map<WinningType, Integer> winningResult) {
+        WinningType winningType = judgePlayerResult(name);
+        if (winningType == WIN) {
             winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
             return;
         }
-        if (playerScore > dealerScore) {
-            winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
-            return;
-        }
-        if (playerScore < dealerScore) {
+        if (winningType == DEFEAT) {
             winningResult.put(WIN, winningResult.get(WIN) + 1);
             return;
         }
@@ -59,6 +52,9 @@ public class WinningDiscriminator {
         int playerScore = playerScores.get(name);
         if (playerScore > BLACK_JACK) {
             return DEFEAT;
+        }
+        if (dealerScore > BLACK_JACK) {
+            return WIN;
         }
         if (playerScore > dealerScore) {
             return WIN;
