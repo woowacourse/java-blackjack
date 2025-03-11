@@ -37,13 +37,14 @@ public class OutputView {
 
     public void printDealerDrawCount(int count) {
         if (count > 0) {
-            System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", count);
+            System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.%n%n", count);
         }
     }
 
     public void printPlayersCardAndSum(Players players) {
         List<Player> allPlayers = players.getPlayers();
         allPlayers.forEach(this::printCardsAndResult);
+        printEmptyLine();
     }
 
     public void printDealerCardsAndResult(Dealer dealer) {
