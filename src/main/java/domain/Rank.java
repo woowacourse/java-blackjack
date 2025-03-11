@@ -18,9 +18,9 @@ public enum Rank {
     SOFT_ACE("A", 11);
 
     private final String name;
-    private final Integer point;
+    private final int point;
 
-    Rank(String name, Integer point) {
+    Rank(String name, int point) {
         this.name = name;
         this.point = point;
     }
