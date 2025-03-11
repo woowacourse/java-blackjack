@@ -9,6 +9,10 @@ public class ProfitCalculator {
     }
 
     public int calculateDealerProfit(final List<Integer> playerProfits) {
-        return 0;
+        int profit = 0;
+        for (final int playerProfit : playerProfits) {
+            profit += playerProfit;
+        }
+        return -profit;
     }
 }

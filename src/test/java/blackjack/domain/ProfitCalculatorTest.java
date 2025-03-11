@@ -37,4 +37,33 @@ class ProfitCalculatorTest {
         // then
         assertThat(result).isEqualTo(-10_000);
     }
+
+    @DisplayName("딜러의_수익금은_플레이어의_수익/손실으로부터_계산한다")
+    @Test
+    void aaa() {
+        // given
+        ProfitCalculator profitCalculator = new ProfitCalculator();
+        List<Integer> playerProfits = List.of(-20_000, -10_000, -20_000);
+
+        // when
+        int result = profitCalculator.calculateDealerProfit(playerProfits);
+
+        // then
+        assertThat(result).isEqualTo(50_000);
+    }
+
+
+    @DisplayName("딜러의_수익금은_플레이어의_수익/손실으로부터_계산한다")
+    @Test
+    void aaaa() {
+        // given
+        ProfitCalculator profitCalculator = new ProfitCalculator();
+        List<Integer> playerProfits = List.of(-20_000, 20_000);
+
+        // when
+        int result = profitCalculator.calculateDealerProfit(playerProfits);
+
+        // then
+        assertThat(result).isEqualTo(0);
+    }
 }
