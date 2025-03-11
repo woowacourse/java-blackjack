@@ -1,6 +1,8 @@
-package model;
+package model.participant;
 
 import java.util.List;
+import model.Deck;
+import model.card.Card;
 
 public class Participant {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;

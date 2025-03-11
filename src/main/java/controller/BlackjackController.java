@@ -2,12 +2,12 @@ package controller;
 
 import java.util.List;
 import java.util.Map;
-import model.Dealer;
+import model.participant.Dealer;
 import model.Deck;
 import model.GameResult;
-import model.Player;
+import model.participant.Player;
 import model.ParticipantWinningResult;
-import model.Players;
+import model.participant.Players;
 import view.InputView;
 import view.OutputView;
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Map;
+import model.participant.Player;
 
 public class PlayerBetting {
     private final Map<Player, Integer> betting;

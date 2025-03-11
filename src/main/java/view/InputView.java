@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import model.Player;
+import model.participant.Player;
 import model.PlayerChoice;
 
 public class InputView {

@@ -1,10 +1,14 @@
-package model;
+package model.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.card.Card;
+import model.card.CardRank;
 
 public class ParticipantHand {
     private static final int BURST_SCORE_LIMIT = 21;
+    private static final int BLACKJACK_CONDITION_CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     public ParticipantHand() {
@@ -20,7 +24,7 @@ public class ParticipantHand {
     }
 
     public boolean checkBlackjack(){
-        return cards.size() == 2 && calculateFinalScore() == 21;
+        return cards.size() == BLACKJACK_CONDITION_CARD_COUNT && calculateFinalScore() == BURST_SCORE_LIMIT;
     }
 
     public boolean checkScoreBelow(int upperBound) {

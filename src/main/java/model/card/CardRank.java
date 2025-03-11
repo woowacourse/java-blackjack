@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public enum CardRank {
     ACE("A", 1, 11),

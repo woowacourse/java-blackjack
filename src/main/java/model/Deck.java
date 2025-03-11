@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import model.card.Card;
+import model.card.CardRank;
+import model.card.CardSuit;
 
 public class Deck {
     private final List<Card> deckCards;
