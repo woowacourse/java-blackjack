@@ -5,6 +5,7 @@ import domain.participant.Participant;
 import domain.card.Rank;
 import domain.ResultStatus;
 import domain.card.Suit;
+import domain.participant.Participants;
 
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,11 @@ public class OutputView {
 
     private OutputView() {}
 
-    public static void printInitialParticipant(Participant dealer, List<Participant> players) {
+    public static void printInitialParticipants(Participants participants) {
+        Participant dealer = participants.findDealer();
+        List<Participant> players = participants.findPlayers();
         System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getParticipantName(), findPlayerNames(players));
+
         printInitialDealerCard(dealer);
         printInitialPlayersCards(players);
     }
@@ -59,9 +63,9 @@ public class OutputView {
         System.out.printf("%s카드: %s%n%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
     }
 
-    public static void printFinalParticipant(Participant dealer, List<Participant> players) {
-        printFinalDealerCard(dealer);
-        printFinalAllPlayersCards(players);
+    public static void printFinalParticipant(Participants participants) {
+        printFinalDealerCard(participants.findDealer());
+        printFinalAllPlayersCards(participants.findPlayers());
     }
 
     private static void printFinalDealerCard(Participant dealer) {

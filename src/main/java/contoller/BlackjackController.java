@@ -4,6 +4,7 @@ import domain.card.Deck;
 import domain.GameManager;
 import domain.participant.Participant;
 import domain.ResultStatus;
+import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
@@ -26,13 +27,13 @@ public class BlackjackController {
         List<String> playerNames = InputView.readPlayerNames();
         gameManager = new GameManager(playerNames, new Deck());
 
-        Participant dealer = gameManager.findDealer();
-        List<Participant> players = gameManager.findPlayers();
-        OutputView.printInitialParticipant(dealer, players);
+        Participants participants = gameManager.findParticipants();
+        OutputView.printInitialParticipants(participants);
     }
 
     private void drawPlayersCards() {
-        List<Participant> players = gameManager.findPlayers();
+        Participants participants = gameManager.findParticipants();
+        List<Participant> players = participants.findPlayers();
         for (Participant player : players) {
             drawCard(player);
         }
@@ -48,7 +49,7 @@ public class BlackjackController {
             printCardsIfFirstTurn(player, isFirstTurn);
 
             isFirstTurn = false;
-        } while (!player.isBust() && answer);
+        } while (gameManager.shouldPlayerHit(player) && answer);
     }
 
     private void drawCardIfAnswerIsYes(Participant player, boolean answer) {
@@ -64,17 +65,14 @@ public class BlackjackController {
     }
 
     private void drawDealerCards() {
-        Participant dealer = gameManager.findDealer();
-        while (dealer.shouldHit()) {
-            gameManager.drawCard(dealer);
+        while (gameManager.shouldDealerHit()) {
             OutputView.printDealerDrawMessage();
         }
     }
 
     private void printParticipantsCards() {
-        Participant dealer = gameManager.findDealer();
-        List<Participant> players = gameManager.findPlayers();
-        OutputView.printFinalParticipant(dealer, players);
+        Participants participants = gameManager.findParticipants();
+        OutputView.printFinalParticipant(participants);
     }
 
     private void printGameResult() {

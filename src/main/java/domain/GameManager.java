@@ -34,19 +34,28 @@ public class GameManager {
         return new Participants(participants);
     }
 
-    public Participant findDealer() {
-        return participants.findDealer();
-    }
-
-    public List<Participant> findPlayers() {
-        return participants.findPlayers();
-    }
-
     public void drawCard(Participant participant) {
         participant.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
     }
 
+    public boolean shouldPlayerHit(Participant player) {
+        return !player.isBust();
+    }
+
+    public boolean shouldDealerHit() {
+        Participant dealer = participants.findDealer();
+        if (dealer.shouldHit()) {
+            drawCard(dealer);
+            return true;
+        }
+        return false;
+    }
+
     public Map<Participant, ResultStatus> findGameResult() {
         return ResultStatus.judgeGameResult(participants);
+    }
+
+    public Participants findParticipants() {
+        return participants;
     }
 }
