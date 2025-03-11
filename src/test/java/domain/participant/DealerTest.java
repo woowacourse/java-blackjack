@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardNumberType;
 import domain.card.CardType;
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,9 @@ public class DealerTest {
         //given
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -35,9 +35,9 @@ public class DealerTest {
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.ACE, CardType.DIAMOND),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -54,9 +54,9 @@ public class DealerTest {
                 new Card(CardNumberType.QUEEN, CardType.HEART),
                 new Card(CardNumberType.SIX, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -73,9 +73,9 @@ public class DealerTest {
                 new Card(CardNumberType.QUEEN, CardType.HEART),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -92,9 +92,9 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.HEART),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();

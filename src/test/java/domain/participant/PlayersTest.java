@@ -5,7 +5,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import domain.card.Card;
 import domain.card.CardNumberType;
 import domain.card.CardType;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.result.GameResult;
 import domain.result.GameResultStatus;
 import java.util.List;
@@ -27,9 +27,9 @@ class PlayersTest {
         //then
         Assertions.assertThat(players.getPlayers()).containsExactlyInAnyOrderElementsOf(
                 List.of(
-                new Player("mimi", Cards.createEmpty()),
-                new Player("wade", Cards.createEmpty()),
-                new Player("pobi", Cards.createEmpty())
+                new Player("mimi", Hand.createEmpty()),
+                new Player("wade", Hand.createEmpty()),
+                new Player("pobi", Hand.createEmpty())
                 )
         );
     }
@@ -42,21 +42,21 @@ class PlayersTest {
         dealer.getCards().add(new Card(CardNumberType.JACK, CardType.DIAMOND));
         dealer.getCards().add(new Card(CardNumberType.QUEEN, CardType.DIAMOND));
 
-        Cards winCards = new Cards(List.of(
+        Hand winHand = new Hand(List.of(
                 new Card(CardNumberType.ACE, CardType.DIAMOND),
                 new Card(CardNumberType.QUEEN, CardType.DIAMOND)
         ));
-        Cards drawCards = new Cards(List.of(
+        Hand drawHand = new Hand(List.of(
                 new Card(CardNumberType.JACK, CardType.DIAMOND),
                 new Card(CardNumberType.QUEEN, CardType.SPACE)
         ));
-        Cards loseCards = new Cards(List.of(
+        Hand loseHand = new Hand(List.of(
                 new Card(CardNumberType.FIVE, CardType.DIAMOND),
                 new Card(CardNumberType.EIGHT, CardType.DIAMOND)
         ));
-        Player winner = new Player("mimi", winCards);
-        Player drawer = new Player("wade", drawCards);
-        Player loser = new Player("pobi", loseCards);
+        Player winner = new Player("mimi", winHand);
+        Player drawer = new Player("wade", drawHand);
+        Player loser = new Player("pobi", loseHand);
         Players players = Players.create(List.of(winner, drawer, loser));
 
         //when

@@ -1,14 +1,11 @@
 package domain.generator;
 
-import static view.AnswerType.NO;
-
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
-import view.AnswerType;
 
 public class CardGiver {
     private static final int DEFAULT_CARD_GIVE_COUNT = 2;
@@ -33,11 +30,11 @@ public class CardGiver {
         player.addCard(giveOne());
     }
 
-    private Cards giveDefault() {
+    private Hand giveDefault() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < DEFAULT_CARD_GIVE_COUNT; i++) {
             cards.add(randomGenerator.generate());
         }
-        return new Cards(cards);
+        return new Hand(cards);
     }
 }

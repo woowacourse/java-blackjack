@@ -4,21 +4,20 @@ import static domain.card.CardNumberType.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class Cards {
+public class Hand {
     private static final int VALID_MAX_SUM_LIMIT = 21;
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static Cards createEmpty() {
-        return new Cards(new ArrayList<>());
+    public static Hand createEmpty() {
+        return new Hand(new ArrayList<>());
     }
 
     public List<Card> getCards() {
@@ -37,31 +36,41 @@ public class Cards {
         return sumWithLowAce > VALID_MAX_SUM_LIMIT;
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public void add(Card receivedCard) {
+        cards.add(receivedCard);
     }
 
-    public void addAll(Cards receivedCards) {
-        cards.addAll(receivedCards.getCards());
+    public void addAll(Hand receivedHand) {
+        cards.addAll(receivedHand.getCards());
     }
 
     public int calculateSum() {
+        int nonAceSum = calculateSumWithoutAce();
+        return calculateSumContainingAce(nonAceSum);
+    }
+
+    private int calculateSumWithoutAce() {
         int sum = 0;
-        List<Card> sortedCards = getSortedCards();
-        for (Card card : sortedCards) {
-            if(card.cardNumberType() != ACE) {
-                sum += card.getDefaultNumber();
-                continue;
-            }
-            sum += getAceNumber(sum);
+        List<Card> nonAceCards = cards.stream()
+                .filter(card -> card.cardNumberType() != ACE)
+                .toList();
+
+        for (Card card : nonAceCards) {
+            sum += card.getDefaultNumber();
         }
         return sum;
     }
 
-    private List<Card> getSortedCards() {
-        return cards.stream()
-                .sorted(Comparator.comparing(Card::getDefaultNumber).reversed())
-                .toList();
+    private int calculateSumContainingAce(int restSum) {
+        int sum = restSum;
+        int aceCount = (int) cards.stream()
+                .filter(card -> card.cardNumberType() == ACE)
+                .count();
+
+        for (int i = 0; i < aceCount; i++) {
+            sum += getAceNumber(sum);
+        }
+        return sum;
     }
 
     @Override
@@ -69,7 +78,7 @@ public class Cards {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        Cards other = (Cards) object;
+        Hand other = (Hand) object;
         return Objects.equals(cards, other.cards);
     }
 

@@ -1,24 +1,24 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
 public class Dealer extends Participant {
     private static final int VALID_DRAW_LIMIT = 16;
 
-    private Dealer(Cards cards) {
-        super(cards);
+    private Dealer(Hand hand) {
+        super(hand);
     }
 
     public static Dealer createEmpty() {
-        return new Dealer(Cards.createEmpty());
+        return new Dealer(Hand.createEmpty());
     }
 
     public Card getFirstCard() {
-        return cards.getFirst();
+        return hand.getFirst();
     }
 
     public boolean isPossibleDraw() {
-        return cards.calculateSum() <= VALID_DRAW_LIMIT;
+        return hand.calculateSum() <= VALID_DRAW_LIMIT;
     }
 }

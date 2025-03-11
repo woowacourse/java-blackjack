@@ -1,18 +1,18 @@
 package domain.participant;
 
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.Objects;
 
 public class Player extends Participant {
     private final String name;
 
-    public Player(String name, Cards cards) {
-        super(cards);
+    public Player(String name, Hand hand) {
+        super(hand);
         this.name = name;
     }
 
     public boolean hasBustCards() {
-        return cards.isBust();
+        return hand.isBust();
     }
 
     public String getName() {

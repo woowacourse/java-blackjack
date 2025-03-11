@@ -2,7 +2,7 @@ package domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Player;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 class GameResultTest {
 
     Map<Player, GameResultStatus> gameResults = Map.of(
-            new Player("mimi", Cards.createEmpty()), GameResultStatus.WIN,
-            new Player("hiro", Cards.createEmpty()), GameResultStatus.LOSE,
-            new Player("hipo", Cards.createEmpty()), GameResultStatus.LOSE,
-            new Player("july", Cards.createEmpty()), GameResultStatus.LOSE
+            new Player("mimi", Hand.createEmpty()), GameResultStatus.WIN,
+            new Player("hiro", Hand.createEmpty()), GameResultStatus.LOSE,
+            new Player("hipo", Hand.createEmpty()), GameResultStatus.LOSE,
+            new Player("july", Hand.createEmpty()), GameResultStatus.LOSE
             );
 
     @DisplayName("승의 개수를 정상적으로 반환한다")

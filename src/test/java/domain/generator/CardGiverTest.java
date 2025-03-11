@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import domain.card.Card;
 import domain.card.CardNumberType;
 import domain.card.CardType;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -55,7 +55,7 @@ public class CardGiverTest {
         //given
         CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
         Dealer dealer = Dealer.createEmpty();
-        Player player = new Player("mimi", Cards.createEmpty());
+        Player player = new Player("mimi", Hand.createEmpty());
 
         List<Participant> participants = List.of(dealer, player);
         //when
@@ -63,11 +63,11 @@ public class CardGiverTest {
 
         //then
         SoftAssertions.assertSoftly(softly ->{
-            softly.assertThat(dealer.getCards()).isEqualTo(new Cards(List.of(
+            softly.assertThat(dealer.getCards()).isEqualTo(new Hand(List.of(
                     new Card(CardNumberType.FIVE, CardType.SPACE),
                     new Card(CardNumberType.SIX, CardType.CLOVER)
             )));
-            softly.assertThat(player.getCards()).isEqualTo(new Cards(List.of(
+            softly.assertThat(player.getCards()).isEqualTo(new Hand(List.of(
                     new Card(CardNumberType.SEVEN, CardType.CLOVER),
                     new Card(CardNumberType.THREE, CardType.CLOVER)
             )));
@@ -78,14 +78,14 @@ public class CardGiverTest {
     @Test
     void test34() {
         //given
-        Player player = new Player("mimi", Cards.createEmpty());
+        Player player = new Player("mimi", Hand.createEmpty());
         AnswerType answerType = AnswerType.YES;
 
         CardGiver cardGiver = new CardGiver(new TestRandomGenerator());
         //when
         cardGiver.giveAdditionalCard(player);
         //then
-        assertThat(player.getCards()).isEqualTo(new Cards(List.of(
+        assertThat(player.getCards()).isEqualTo(new Hand(List.of(
                 new Card(CardNumberType.FIVE, CardType.SPACE)
         )));
     }

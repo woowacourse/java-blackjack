@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+public class HandTest {
 
     @DisplayName("기존 카드의 합이 21 초과라면 true를 반환한다")
     @Test
@@ -15,10 +15,10 @@ public class CardsTest {
         List<Card> testCards = List.of(new Card(CardNumberType.FOUR, CardType.CLOVER),
                 new Card(CardNumberType.EIGHT, CardType.DIAMOND),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
 
         //when & then
-        assertThat(cards.isBust()).isTrue();
+        assertThat(hand.isBust()).isTrue();
     }
 
     @DisplayName("추가 배분 시 카드의 합을 구할 때, ACE는 모두 1로 계산하며 예외가 발생하지 않는다")
@@ -29,24 +29,24 @@ public class CardsTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND),
                 new Card(CardNumberType.ACE, CardType.HEART),
                 new Card(CardNumberType.EIGHT, CardType.HEART));
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
 
         //when
-        assertThat(cards.isBust()).isFalse();
+        assertThat(hand.isBust()).isFalse();
     }
 
     @DisplayName("새로 배분된 카드를 저장한다")
     @Test
     void test2() {
         //given
-        Cards cards = Cards.createEmpty();
+        Hand hand = Hand.createEmpty();
         Card testCard = new Card(CardNumberType.SIX, CardType.CLOVER);
 
         //when
-        cards.add(testCard);
+        hand.add(testCard);
 
         //then
-        assertThat(cards.getCards()).contains(testCard);
+        assertThat(hand.getCards()).contains(testCard);
     }
 
 
@@ -56,9 +56,9 @@ public class CardsTest {
         //given
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         //when
-        int sum = cards.calculateSum();
+        int sum = hand.calculateSum();
         //then
         assertThat(sum).isEqualTo(16);
     }
@@ -71,9 +71,9 @@ public class CardsTest {
                 new Card(CardNumberType.SIX, CardType.DIAMOND),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         //when
-        int sum = cards.calculateSum();
+        int sum = hand.calculateSum();
         //then
         assertThat(sum).isEqualTo(12);
     }
@@ -86,9 +86,9 @@ public class CardsTest {
                 new Card(CardNumberType.FIVE, CardType.DIAMOND),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
                 );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         //when
-        int sum = cards.calculateSum();
+        int sum = hand.calculateSum();
         //then
         assertThat(sum).isEqualTo(21);
     }
@@ -101,9 +101,9 @@ public class CardsTest {
                 new Card(CardNumberType.ACE, CardType.HEART),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         //when
-        int sum = cards.calculateSum();
+        int sum = hand.calculateSum();
         //then
         assertThat(sum).isEqualTo(13);
     }
@@ -116,14 +116,14 @@ public class CardsTest {
                 new Card(CardNumberType.ACE, CardType.HEART),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
-        Cards emptyCards = Cards.createEmpty();
+        Hand hand = new Hand(testCards);
+        Hand emptyHand = Hand.createEmpty();
 
         //when
-        emptyCards.addAll(cards);
+        emptyHand.addAll(hand);
 
         //thens
-        assertThat(emptyCards.getCards()).hasSize(2);
-        assertThat(emptyCards.getCards()).containsExactlyInAnyOrderElementsOf(testCards);
+        assertThat(emptyHand.getCards()).hasSize(2);
+        assertThat(emptyHand.getCards()).containsExactlyInAnyOrderElementsOf(testCards);
     }
 }
