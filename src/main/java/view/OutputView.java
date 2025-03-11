@@ -30,6 +30,8 @@ public class OutputView {
     private static final String RESULT_INTRO = "## 최종 승패";
     private static final String PLAYER_RESULT = "%s: %s";
     private static final String DEALER_RESULT = "딜러: ";
+    private static final String BLANK_SPACE = " ";
+    private static final int ZERO_COUNT = 0;
 
     public void printParticipant(final Players players, final Dealer dealer) {
         printHitNotice(players);
@@ -129,10 +131,10 @@ public class OutputView {
     }
 
     private static void appendMatchResultIfNotZero(StringBuilder stringBuilder, Entry<MatchResult, Integer> map) {
-        if (map.getValue() == 0) {
+        if (map.getValue() == ZERO_COUNT) {
             return;
         }
-        stringBuilder.append(map.getValue()).append(map.getKey().getValue()).append(" ");
+        stringBuilder.append(map.getValue()).append(map.getKey().getValue()).append(BLANK_SPACE);
     }
 
     private void printNewLine() {
