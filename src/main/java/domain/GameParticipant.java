@@ -15,7 +15,7 @@ public class GameParticipant {
         cardHand.add(newCard);
     }
 
-    public int calculateScore() {
+    public GameScore calculateScore() {
         return cardHand.calculateScore();
     }
 

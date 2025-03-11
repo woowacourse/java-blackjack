@@ -29,7 +29,7 @@ public class OutputView {
         List<GameParticipant> participants = game.getParticipants();
         for (GameParticipant participant : participants) {
             displayParticipantAndCards(participant);
-            System.out.printf(" - 결과: %d%n", participant.calculateScore());
+            System.out.printf(" - 결과: %s%n", participant.calculateScore());
         }
     }
 

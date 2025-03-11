@@ -43,9 +43,9 @@ class CardHandTest {
         // given
         CardHand cardHand = new CardHand(Set.of(CardFixture.of(TWO, CLOVER)));
         // when
-        int score = cardHand.calculateScore();
+        GameScore score = cardHand.calculateScore();
         // then
-        assertThat(score).isEqualTo(2);
+        assertThat(score).isEqualTo(new GameScore(2));
     }
 
     @Test
@@ -55,9 +55,9 @@ class CardHandTest {
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TWO, HEART), CardFixture.of(KING, CLOVER)));
         // when
-        int score = cardHand.calculateScore();
+        GameScore score = cardHand.calculateScore();
         // then
-        assertThat(score).isEqualTo(12);
+        assertThat(score).isEqualTo(new GameScore(12));
     }
 
     @ParameterizedTest
@@ -67,9 +67,9 @@ class CardHandTest {
         // given
         CardHand cardHand = new CardHand(cards);
         // when
-        int score = cardHand.calculateScore();
+        GameScore score = cardHand.calculateScore();
         // then
-        assertThat(score).isEqualTo(expectedScore);
+        assertThat(score).isEqualTo(new GameScore(expectedScore));
     }
 
     @Test

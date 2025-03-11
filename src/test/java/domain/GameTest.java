@@ -81,7 +81,7 @@ class GameTest {
         // when
         boolean actual = game.doesDealerNeedCard();
         // then
-        boolean expected = dealer.calculateScore() <= 16;
+        boolean expected = new GameScore(17).isGreaterThan(dealer.calculateScore());
         assertThat(actual).isEqualTo(expected);
     }
 }

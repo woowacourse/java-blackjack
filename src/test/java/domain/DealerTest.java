@@ -28,9 +28,9 @@ class DealerTest {
                 Set.of(CardFixture.of(TWO, HEART), CardFixture.of(THREE, DIAMOND), CardFixture.of(FOUR, CLOVER)));
         Dealer dealer = new Dealer(deck, cardHand);
         // when
-        int score = dealer.calculateScore();
+        GameScore score = dealer.calculateScore();
         // then
-        assertThat(score).isEqualTo(9);
+        assertThat(score).isEqualTo(new GameScore(9));
     }
 
     @Test

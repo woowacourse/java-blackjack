@@ -25,9 +25,9 @@ class PlayerTest {
                 Set.of(CardFixture.of(TWO, HEART), CardFixture.of(THREE, DIAMOND), CardFixture.of(FOUR, CLOVER)));
         Player player = new Player("pobi", cardHand);
         // when
-        int score = player.calculateScore();
+        GameScore score = player.calculateScore();
         // then
-        assertThat(score).isEqualTo(9);
+        assertThat(score).isEqualTo(new GameScore(9));
     }
 
     @Test
