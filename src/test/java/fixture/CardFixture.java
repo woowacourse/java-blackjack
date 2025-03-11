@@ -1,5 +1,9 @@
-package domain;
+package fixture;
 
+import domain.Card;
+import domain.CardNumberType;
+import domain.CardType;
+import domain.GivenCards;
 import java.util.ArrayList;
 import java.util.List;
 

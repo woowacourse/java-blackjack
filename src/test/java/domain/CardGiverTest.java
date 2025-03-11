@@ -3,7 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.*;
 import static util.ExceptionConstants.*;
 
-import java.util.ArrayList;
+import fixture.CardFixture;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
