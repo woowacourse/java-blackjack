@@ -75,12 +75,12 @@ public class Round {
         return gamblers.stream()
                 .filter(gambler -> gambler.isNameEquals(name))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다:" + name));
+                .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 겜블러 입니다:" + name));
     }
 
     private Map<Name, Integer> createPlayerScores() {
         return gamblers.stream()
-                .filter(gambler -> gambler instanceof Player)
+                .filter(gambler -> !Name.isDealerName(gambler.getName()))
                 .collect(toMap(Gambler::getName, Gambler::calculateScore));
     }
 
