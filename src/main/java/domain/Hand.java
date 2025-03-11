@@ -14,25 +14,21 @@ public class Hand {
     }
 
     public BlackjackMatchResult determineMatchResultAgainst(Hand other) {
-        BlackjackMatchResult burstResult = handleBurstCases(other);
-        if (burstResult != null) {
-            return burstResult;
+        if (this.isBurst() || other.isBurst()) {
+            return checkBurstResult(other);
         }
 
         return compareScores(other);
     }
 
-    private BlackjackMatchResult handleBurstCases(Hand other) {
+    private BlackjackMatchResult checkBurstResult(Hand other) {
         if (this.isBurst() && other.isBurst()) {
             return BlackjackMatchResult.DRAW;
         }
         if (this.isBurst()) {
             return BlackjackMatchResult.LOSE;
         }
-        if (other.isBurst()) {
-            return BlackjackMatchResult.WIN;
-        }
-        return null;
+        return BlackjackMatchResult.WIN;
     }
 
     private BlackjackMatchResult compareScores(Hand other) {
