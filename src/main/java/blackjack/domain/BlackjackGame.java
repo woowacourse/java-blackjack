@@ -4,6 +4,7 @@ import blackjack.domain.card.CardManager;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Players;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class BlackjackGame {
+
+    private static final int SPREAD_SIZE = 1;
 
     private final CardManager cardManager;
     private final Participants participants;
@@ -30,18 +33,18 @@ public class BlackjackGame {
         return participants.canPlayerGetMoreCard(index);
     }
 
-    public void spreadOneCardToPlayer(final int index) {
-        final Cards cards = cardManager.spreadCards(1);
-        participants.spreadOneCardToPlayer(index, cards.getFirstCard());
+    public void spreadOneCardToPlayer(final Gamer gamer) {
+        final Cards cards = cardManager.spreadCards(SPREAD_SIZE);
+        gamer.receiveCards(new Cards(List.of(cards.getFirstCard())));
+    }
+
+    public void spreadOneCardToDealer() {
+        final Cards cards = cardManager.spreadCards(SPREAD_SIZE);
+        participants.spreadOneCardToDealer(cards.getFirstCard());
     }
 
     public boolean canDealerMoreCard() {
         return participants.canDealerGetMoreCard();
-    }
-
-    public void spreadOneCardToDealer() {
-        final Cards cards = cardManager.spreadCards(1);
-        participants.spreadOneCardToDealer(cards.getFirstCard());
     }
 
     public int sumCardDenomination(final Gamer gamer) {
@@ -74,12 +77,12 @@ public class BlackjackGame {
         return participants.showPlayersCards();
     }
 
-    public Gamer getPlayer(final int index) {
-        return participants.getPlayers().getPlayer(index);
+    public Players findExtraCardsAvailablePlayers() {
+        return participants.findExtraCardsAvailablePlayers();
     }
 
-    public int getPlayerSize() {
-        return participants.getPlayers().getSize();
+    public Gamer getPlayer(final int index) {
+        return participants.getPlayers().getPlayer(index);
     }
 
     public List<String> getPlayersNames() {

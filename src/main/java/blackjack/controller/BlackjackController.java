@@ -65,15 +65,15 @@ public class BlackjackController {
     }
 
     private void spreadPlayersExtraCards(final BlackjackGame blackjackGame) {
-        for (int index = 0; index < blackjackGame.getPlayerSize(); index++) {
-            spreadExtraCards(blackjackGame, index);
+        Players players = blackjackGame.findExtraCardsAvailablePlayers();
+        for (Gamer gamer : players.getPlayers()) {
+            spreadExtraCards(blackjackGame, gamer);
         }
     }
 
-    private void spreadExtraCards(final BlackjackGame blackjackGame, final int index) {
-        final Gamer gamer = blackjackGame.getPlayer(index);
-        while (blackjackGame.canPlayerMoreCard(index) && isMoreCard(gamer)) {
-            blackjackGame.spreadOneCardToPlayer(index);
+    private void spreadExtraCards(final BlackjackGame blackjackGame, final Gamer gamer) {
+        while (gamer.canGetMoreCard() && isMoreCard(gamer)) {
+            blackjackGame.spreadOneCardToPlayer(gamer);
             resultView.printParticipantTotalCards(gamer.getNickname(), gamer.showAllCards());
         }
     }

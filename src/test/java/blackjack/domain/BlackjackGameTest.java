@@ -5,6 +5,7 @@ import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideOver21Cards;
 import static blackjack.fixture.TestFixture.provideParticipants;
+import static blackjack.fixture.TestFixture.providePlayers;
 import static blackjack.fixture.TestFixture.provideThreePlayersWithCards;
 import static blackjack.fixture.TestFixture.provideTwoPlayersWithCards;
 import static blackjack.fixture.TestFixture.provideUnder16Cards;
@@ -18,6 +19,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
 import blackjack.domain.random.CardRandomGenerator;
@@ -69,14 +71,17 @@ class BlackjackGameTest {
     @Test
     void spreadOneCardToPlayer() {
         // given
+        Players players = providePlayers();
+        Participants participants = new Participants(new Dealer(provideEmptyCards()), players);
         final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
-                provideParticipants());
+                participants);
+        Gamer gamer = players.getPlayer(0);
 
         // when
-        blackjackGame.spreadOneCardToPlayer(0);
+        blackjackGame.spreadOneCardToPlayer(gamer);
 
         // then
-        assertThat(blackjackGame.getPlayer(0).showAllCards().getCards()).hasSize(1);
+        assertThat(gamer.showAllCards().getCards()).hasSize(1);
     }
 
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다.")

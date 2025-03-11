@@ -29,9 +29,8 @@ public class Participants {
         return player.canGetMoreCard();
     }
 
-    public void spreadOneCardToPlayer(final int index, final Card card) {
-        final Gamer player = players.getPlayer(index);
-        spreadOneCard(player, card);
+    public Players findExtraCardsAvailablePlayers() {
+        return players.findExtraCardsAvailablePlayers();
     }
 
     public void spreadOneCardToDealer(final Card card) {
@@ -62,12 +61,12 @@ public class Participants {
         return players.showTotalCards();
     }
 
-    private void spreadOneCard(final Gamer gamer, final Card card) {
-        gamer.receiveCards(new Cards(List.of(card)));
-    }
-
     public int getInitialTotalCardsSize() {
         return (DEALER_COUNT + players.getSize()) * SPREAD_MULTIPLY_SIZE;
+    }
+
+    private void spreadOneCard(final Gamer gamer, final Card card) {
+        gamer.receiveCards(new Cards(List.of(card)));
     }
 
     public Gamer getDealer() {

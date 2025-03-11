@@ -38,6 +38,12 @@ public class Players {
                         LinkedHashMap::new));
     }
 
+    public Players findExtraCardsAvailablePlayers() {
+        return new Players(players.stream()
+                .filter(Gamer::canGetMoreCard)
+                .toList());
+    }
+
     private void validate(List<? extends Gamer> players) {
         if (isDuplicate(players)) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름을 입력했습니다.");
