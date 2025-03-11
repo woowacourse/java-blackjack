@@ -9,11 +9,13 @@ import java.util.function.Function;
 public class Player extends Participant {
     private final String name;
     private final Result result;
+    private final Money money;
 
-    public Player(final String name, final Result result) {
+    public Player(final String name, final Money money) {
         super();
         this.name = name;
-        this.result = result;
+        this.result = new Result();
+        this.money = money;
     }
 
     public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
@@ -35,5 +37,4 @@ public class Player extends Participant {
     public String getName() {
         return name;
     }
-
 }

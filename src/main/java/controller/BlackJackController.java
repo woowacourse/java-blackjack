@@ -4,7 +4,11 @@ import config.CardDeckFactory;
 import domain.blackJack.BlackJack;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
+import domain.participant.Money;
+import domain.participant.Player;
 import domain.participant.Players;
+import java.util.ArrayList;
+import java.util.List;
 import view.InputUntilValid;
 import view.InputView;
 import view.OutputView;
@@ -19,12 +23,29 @@ public class BlackJackController {
     }
 
     public void start() {
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Players players = Players.from(inputView.readPlayersName());
-        Dealer dealer = new Dealer();
+        CardDeck cardDeck = setUpCardDeck();
+        Players players = setUpPlayers();
 
-        playBlackJack(players, dealer, cardDeck);
+        playBlackJack(players, new Dealer(), cardDeck);
+    }
+
+    private Players setUpPlayers() {
+        List<String> names = inputView.readPlayersName();
+        Players.validateIsDuplicate(names);
+        Players.validatePlayerNumbers(names);
+
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            Money money = Money.from(inputView.askPlayerForBattingMoney(name));
+            players.add(new Player(name, money));
+        }
+
+        return Players.from(players);
+    }
+
+    private CardDeck setUpCardDeck() {
+        CardDeckFactory cardDeckFactory = new CardDeckFactory();
+        return cardDeckFactory.create();
     }
 
     private void playBlackJack(final Players players, final Dealer dealer, final CardDeck cardDeck) {
@@ -33,7 +54,7 @@ public class BlackJackController {
         outputView.printParticipant(players, dealer);
 
         blackJack.drawPlayers(
-                (player) -> InputUntilValid.validatePlayerAnswer(player, inputView::askPlayerForHitOrStand),
+                (player) -> InputUntilValid.validatePlayer(player, inputView::askPlayerForHitOrStand),
                 outputView::printPlayerDeck);
 
         outputView.printDrawDealer(dealer);
