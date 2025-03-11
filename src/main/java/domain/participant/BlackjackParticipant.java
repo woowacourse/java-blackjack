@@ -11,8 +11,7 @@ public abstract class BlackjackParticipant {
     private static final int ACE_DIFF = 10;
     private static final String INVALID_CARD_STATE = "비정상적인 카드 추가입니다. 플레이어는 21장 이상 받을 수 없습니다";
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
-    private static final String DEALER_NAME = "딜러";
-    private static final String INVALID_PLAYER_NAME = "일반 플레이어는 딜러일 수 없습니다.";
+    protected static final String DEALER_NAME = "딜러";
 
     private final List<TrumpCard> cardHands = new ArrayList<>();
     private final String name;
@@ -57,12 +56,6 @@ public abstract class BlackjackParticipant {
             return calculateAceIncludeSum(aceCount - 1, sum - ACE_DIFF);
         }
         return sum;
-    }
-
-    protected void validatePlayerName() {
-        if (name.equals(dealerName())) {
-            throw new BlackJackException(INVALID_PLAYER_NAME);
-        }
     }
 
     public boolean isBUST(int number) {
