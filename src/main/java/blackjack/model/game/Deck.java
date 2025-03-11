@@ -2,16 +2,13 @@ package blackjack.model.game;
 
 import blackjack.model.card.Card;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.List;
 
 public class Deck {
-    private final Deque<Card> cards;
+    private final List<Card> cards;
 
     public Deck(final List<Card> cards) {
-        this.cards = new ArrayDeque<>();
-        this.cards.addAll(cards);
+        this.cards = cards;
     }
 
     public int getCardCount() {
@@ -19,6 +16,6 @@ public class Deck {
     }
 
     public Card drawCard() {
-        return cards.pop();
+        return cards.removeFirst();
     }
 }

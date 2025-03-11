@@ -48,7 +48,7 @@ public class OutputView {
     }
 
     public void outputPlayerCardStatus(final Player player) {
-        if (player instanceof  Dealer) {
+        if (player instanceof Dealer) {
             System.out.println(makeDealerCardStatusText(generateCardNames(player.getReceivedCards())));
             return;
         }
