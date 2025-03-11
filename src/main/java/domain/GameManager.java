@@ -24,7 +24,7 @@ public class GameManager {
     private final List<Player> players;
     private final CardGenerator cardGenerator;
 
-    public GameManager(final Dealer dealer, final List<Player> players, CardGenerator cardGenerator) {
+    private GameManager(final Dealer dealer, final List<Player> players, CardGenerator cardGenerator) {
         this.dealer = dealer;
         this.players = players;
         this.cardGenerator = cardGenerator;
