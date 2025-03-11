@@ -1,5 +1,6 @@
 package domain;
 
+import domain.deck.Card;
 import java.util.List;
 
 public class GameParticipant {

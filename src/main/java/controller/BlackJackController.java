@@ -1,8 +1,8 @@
 package controller;
 
-import domain.DeckGenerator;
 import domain.Game;
 import domain.Player;
+import domain.deck.DeckGenerator;
 import java.util.List;
 import java.util.function.Supplier;
 import view.Answer;

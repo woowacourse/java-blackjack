@@ -1,17 +1,19 @@
 package domain;
 
-import static domain.Rank.ACE;
-import static domain.Rank.FOUR;
-import static domain.Rank.NINE;
-import static domain.Rank.SIX;
-import static domain.Rank.TEN;
-import static domain.Rank.THREE;
-import static domain.Rank.TWO;
-import static domain.Suit.CLOVER;
-import static domain.Suit.DIAMOND;
-import static domain.Suit.HEART;
+import static domain.deck.Rank.ACE;
+import static domain.deck.Rank.FOUR;
+import static domain.deck.Rank.NINE;
+import static domain.deck.Rank.SIX;
+import static domain.deck.Rank.TEN;
+import static domain.deck.Rank.THREE;
+import static domain.deck.Rank.TWO;
+import static domain.deck.Suit.CLOVER;
+import static domain.deck.Suit.DIAMOND;
+import static domain.deck.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.deck.Deck;
+import domain.deck.DeckGenerator;
 import fixture.CardFixture;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;

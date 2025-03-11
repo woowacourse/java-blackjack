@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 public enum Suit {
     SPADE("스페이드"),

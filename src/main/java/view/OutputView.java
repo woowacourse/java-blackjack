@@ -1,10 +1,10 @@
 package view;
 
-import domain.Card;
 import domain.Game;
 import domain.GameParticipant;
 import domain.GameResult;
 import domain.Player;
+import domain.deck.Card;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,5 +1,6 @@
-package domain;
+package domain.deck;
 
+import domain.CardHand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

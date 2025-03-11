@@ -1,10 +1,10 @@
 package fixture;
 
-import domain.Card;
-import domain.Deck;
-import domain.DeckGenerator;
-import domain.Rank;
-import domain.Suit;
+import domain.deck.Card;
+import domain.deck.Deck;
+import domain.deck.DeckGenerator;
+import domain.deck.Rank;
+import domain.deck.Suit;
 import java.util.ArrayList;
 import java.util.List;
 

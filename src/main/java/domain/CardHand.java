@@ -1,5 +1,6 @@
 package domain;
 
+import domain.deck.Card;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;

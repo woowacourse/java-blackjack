@@ -1,11 +1,13 @@
 package domain;
 
-import static domain.Rank.ACE;
-import static domain.Suit.CLOVER;
-import static domain.Suit.HEART;
+import static domain.deck.Rank.ACE;
+import static domain.deck.Suit.CLOVER;
+import static domain.deck.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.deck.Card;
+import domain.deck.Deck;
 import fixture.CardFixture;
 import java.util.List;
 import java.util.Set;

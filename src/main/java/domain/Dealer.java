@@ -1,5 +1,7 @@
 package domain;
 
+import domain.deck.Card;
+import domain.deck.Deck;
 import java.util.Arrays;
 import java.util.EnumMap;
 
