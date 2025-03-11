@@ -12,6 +12,7 @@ import domain.game.Blackjack;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
 import domain.paticipant.Player;
+import domain.paticipant.Players;
 import view.InputView;
 import view.OutputView;
 
@@ -27,15 +28,10 @@ public class BlackjackController {
 	}
 
 	public void run() {
-		final List<Player> players = inputPlayers();
+		final Players players = Players.from(inputView.readPlayerNames());
 		final Dealer dealer = new Dealer();
 		final Deck deck = Deck.createShuffledDeck();
-		startGame(players, dealer, deck);
-	}
-
-	private List<Player> inputPlayers() {
-		final List<String> playerNames = inputView.readPlayerNames();
-		return playerNames.stream().map(Player::new).collect(Collectors.toList());
+		startGame(players.getPlayers(), dealer, deck);
 	}
 
 	private void startGame(final List<Player> players, final Dealer dealer, final Deck deck) {
@@ -72,10 +68,8 @@ public class BlackjackController {
 
 	private Map<String, List<String>> convertPlayersToEntries(final List<Player> players) {
 		return players.stream()
-			.collect(Collectors.toMap(
-				player -> player.getName(),
-				player -> convertParticipantCardText(player.getParticipant())
-			));
+			.collect(Collectors.toMap(player -> player.getName(),
+				player -> convertParticipantCardText(player.getParticipant())));
 	}
 
 	private void outputPickCard(final List<Player> players, final Dealer dealer, Deck deck) {
@@ -113,9 +107,7 @@ public class BlackjackController {
 	}
 
 	private List<String> convertParticipantCardText(final Participant dealerParticipant) {
-		return dealerParticipant.getCardHand().getCards().stream()
-			.map(this::convertedCardText)
-			.toList();
+		return dealerParticipant.getCardHand().getCards().stream().map(this::convertedCardText).toList();
 	}
 
 	private String convertedCardText(final Card dealerFirstCard) {
