@@ -4,7 +4,6 @@ import domain.Dealer;
 import domain.Deck;
 import domain.GameManager;
 import domain.Player;
-import domain.ResultStatus;
 import view.InputView;
 import view.OutputView;
 
@@ -90,7 +89,7 @@ public class BlackjackController {
     }
 
     private void printGameResult() {
-        Map<Player, ResultStatus> result = gameManager.findGameResult();
-        OutputView.printGameResult(result);
+        Map<Player, Integer> incomes = gameManager.calculateIncomes();
+        OutputView.printGameResult(incomes);
     }
 }

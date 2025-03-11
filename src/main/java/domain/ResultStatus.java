@@ -2,17 +2,20 @@ package domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public enum ResultStatus {
-    WIN("승"),
-    LOSE("패"),
-    PUSH("무승부");
+    WIN(betAmount -> betAmount),
+    LOSE(betAmount -> -betAmount),
+    PUSH(betAmount -> 0),
+    BLACK_JACK(betAmount -> (int) (betAmount * 1.5));
 
-    private final String status;
+    private final Function<Integer, Integer> calculateProfit;
 
-    ResultStatus(String status) {
-        this.status = status;
+    ResultStatus(Function<Integer, Integer> calculateProfit) {
+        this.calculateProfit = calculateProfit;
     }
+
 
     public static Map<Player, ResultStatus> judgeGameResult(Players players, Dealer dealer) {
         Map<Player, ResultStatus> result = new HashMap<>();
@@ -25,15 +28,34 @@ public enum ResultStatus {
     }
 
     private static void judgeGameResultByPlayer(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
+        if (isPlayerBust(player, result)) return;
+        if (isPlayerBlackJack(player, result)) return;
+        if (isDealerBust(dealer, player, result)) return;
+        compareDifference(dealer, player, result);
+    }
+
+    private static boolean isPlayerBust(Player player, Map<Player, ResultStatus> result) {
         if (player.isBurst()) {
             result.put(player, ResultStatus.LOSE);
-            return;
+            return true;
         }
+        return false;
+    }
+
+    private static boolean isPlayerBlackJack(Player player, Map<Player, ResultStatus> result) {
+        if (player.isBlackJack()) {
+            result.put(player, ResultStatus.BLACK_JACK);
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isDealerBust(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
         if (dealer.isBurst()) {
             result.put(player, ResultStatus.WIN);
-            return;
+            return true;
         }
-        compareDifference(dealer, player, result);
+        return false;
     }
 
     private static void compareDifference(Dealer dealer, Player player, Map<Player, ResultStatus> result) {
@@ -50,11 +72,7 @@ public enum ResultStatus {
         result.put(player, ResultStatus.WIN);
     }
 
-    public static Map<ResultStatus, Integer> initMap() {
-        Map<ResultStatus, Integer> counts = new HashMap<>();
-        for (ResultStatus value : values()) {
-            counts.put(value, 0);
-        }
-        return counts;
+    public int calculateIncome(int betAmount) {
+        return calculateProfit.apply(betAmount);
     }
 }

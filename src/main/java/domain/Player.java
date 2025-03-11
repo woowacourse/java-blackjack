@@ -5,11 +5,19 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
-    private int betAmount;
+    private final int betAmount;
 
     public Player(String name, List<Card> cards, int betAmount) {
         super(name, cards);
         this.betAmount = betAmount;
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public int calculateIncome(ResultStatus resultStatus) {
+        return resultStatus.calculateIncome(betAmount);
     }
 
     @Override

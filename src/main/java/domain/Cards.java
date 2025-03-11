@@ -56,6 +56,10 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateTotalCardNumber() == BLACKJACK_SCORE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

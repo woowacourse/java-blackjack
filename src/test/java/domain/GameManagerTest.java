@@ -9,6 +9,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,7 +50,18 @@ public class GameManagerTest {
     }
 
     @Test
-    void 최종_게임_결과를_반환한다() {
+    void 플레이어별_수익률을_반환한다() {
+        GameManager gameManager = new GameManager(List.of("drago", "duei"), List.of(2000,1000), new TestCardProvider());
 
+        Map<Player, Integer> incomes = gameManager.calculateIncomes();
+
+        Map<Player, Integer> expected = Map.of(
+            new Player("drago", List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)), 2000),
+            -2000,
+            new Player("duei", List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.SPADE, Number.ACE)), 1000),
+            -1000
+        );
+
+        assertThat(incomes).isEqualTo(expected);
     }
 }

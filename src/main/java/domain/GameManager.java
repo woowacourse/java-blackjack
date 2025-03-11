@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class GameManager {
         validateNamesAndAmountsSize(playerNames, betAmounts);
         List<Player> createdPlayers = new ArrayList<>();
         for (int i = 0; i < playerNames.size(); i++) {
-            createdPlayers.add(new Player(playerNames.get(i), provider.provideCards(INITIAL_DRAW_SIZE), betAmounts.get(i)));
+            createdPlayers.add(new Player(playerNames.get(i), drawInitialCards(), betAmounts.get(i)));
         }
         return createdPlayers;
     }
@@ -50,8 +51,14 @@ public class GameManager {
         participant.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
     }
 
-    public Map<Player, ResultStatus> findGameResult() {
-        return ResultStatus.judgeGameResult(players, dealer);
+    public Map<Player, Integer> calculateIncomes() {
+        Map<Player, Integer> incomes = new HashMap<>();
+        Map<Player, ResultStatus> gameResult = ResultStatus.judgeGameResult(players, dealer);
+        for (Player player : gameResult.keySet()) {
+            int income = player.calculateIncome(gameResult.get(player));
+            incomes.put(player, income);
+        }
+        return incomes;
     }
 
     public boolean isPlayerBurst(Player player) {

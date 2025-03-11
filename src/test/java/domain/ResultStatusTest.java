@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 import java.util.Map;
@@ -90,11 +92,15 @@ public class ResultStatusTest {
         assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
     }
 
-    @Test
-    void 게임결과_초기맵을_반환한다() {
-        Map<ResultStatus, Integer> initMap = ResultStatus.initMap();
-        Map<ResultStatus, Integer> expected = Map.of(ResultStatus.WIN, 0, ResultStatus.LOSE, 0, ResultStatus.PUSH, 0);
+    @ParameterizedTest
+    @CsvSource({
+        "WIN, 1000, 1000",
+        "LOSE, 1000, -1000",
+        "PUSH, 1000, 0",
+        "BLACK_JACK, 1000, 1500"
+    })
+    void 상태에_따른_수익률을_계산한다(ResultStatus status, int betAmount, int income) {
+        assertThat(status.calculateIncome(betAmount)).isEqualTo(income);
 
-        assertThat(initMap).isEqualTo(expected);
     }
 }

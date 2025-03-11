@@ -80,4 +80,30 @@ public class CardsTest {
                 () -> assertThat(exceedCards.isBurst()).isTrue()
         );
     }
+
+    @Test
+    void 카드가_두장만에_21을_만족한_경우_true를_반환한다() {
+         Cards blackJackCards = new Cards(List.of(
+             new Card(Symbol.DIAMOND, Number.ACE),
+            new Card(Symbol.DIAMOND, Number.JACK)));
+
+         assertThat(blackJackCards.isBlackJack()).isTrue();
+    }
+
+    @Test
+    void 카드가_두장만에_21을_만족하지_못한_경우_false를_반환한다() {
+        Cards noBlackJackCards = new Cards(List.of(
+            new Card(Symbol.DIAMOND, Number.ACE),
+            new Card(Symbol.DIAMOND, Number.NINE)));
+
+        Cards threeCardsTwentyOneCards = new Cards(List.of(
+            new Card(Symbol.DIAMOND, Number.NINE),
+            new Card(Symbol.DIAMOND, Number.NINE),
+            new Card(Symbol.HEART, Number.THREE)));
+
+        assertAll(
+            () -> assertThat(noBlackJackCards.isBlackJack()).isFalse(),
+            () -> assertThat(threeCardsTwentyOneCards.isBlackJack()).isFalse()
+        );
+    }
 }

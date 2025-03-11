@@ -60,4 +60,53 @@ public class PlayerTest {
 
         assertThat(player.getTotalNumberSum()).isEqualTo(22);
     }
+
+    @Test
+    void 플레이어가_두장으로_21을_완성한_경우_true를_반환한다() {
+        Player player = new Player("drago",
+            List.of(new Card(Symbol.DIAMOND, Number.ACE),
+                new Card(Symbol.DIAMOND, Number.JACK)),
+            1000);
+
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
+    void 플레이어가_두장으로_21을_완성하지_못한_경우_false를_반환한다() {
+        Player noBustPlayer = new Player("drago",
+            List.of(new Card(Symbol.DIAMOND, Number.ACE),
+                new Card(Symbol.DIAMOND, Number.NINE)),
+            1000);
+
+        Player threeCardTwentyOnePlayer = new Player("drago",
+            List.of(new Card(Symbol.DIAMOND, Number.NINE),
+                new Card(Symbol.DIAMOND, Number.NINE),
+                new Card(Symbol.HEART, Number.THREE)),
+            1000);
+
+        assertAll(
+            () -> assertThat(noBustPlayer.isBlackJack()).isFalse(),
+            () -> assertThat(threeCardTwentyOnePlayer.isBlackJack()).isFalse()
+        );
+    }
+
+    @Test
+    void 결과별_수익을_계산한다() {
+        Player player = new Player("drago",
+            List.of(new Card(Symbol.DIAMOND, Number.ACE),
+                new Card(Symbol.DIAMOND, Number.NINE)),
+            1000);
+
+        int loseIncome = player.calculateIncome(ResultStatus.LOSE);
+        int winIncome = player.calculateIncome(ResultStatus.WIN);
+        int pushIncome = player.calculateIncome(ResultStatus.PUSH);
+        int blackJackIncome = player.calculateIncome(ResultStatus.BLACK_JACK);
+
+        assertAll(
+            () -> assertThat(loseIncome).isEqualTo(-1000),
+            () -> assertThat(winIncome).isEqualTo(1000),
+            () -> assertThat(pushIncome).isEqualTo(0),
+            () -> assertThat(blackJackIncome).isEqualTo(1500)
+        );
+    }
 }
