@@ -20,7 +20,7 @@ public class Players {
     public Map<Player, GameResult> calculateStatistics(Dealer dealer) {
         Map<Player, GameResult> playerResult = new HashMap<>();
         for (Player player : players) {
-            GameResult gameResult = GameResult.playerResultFrom(dealer, player);
+            GameResult gameResult = GameResult.getPlayerGameResultFrom(dealer, player);
             playerResult.put(player, gameResult);
         }
         return playerResult;

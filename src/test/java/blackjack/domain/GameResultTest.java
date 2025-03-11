@@ -39,7 +39,7 @@ class GameResultTest {
             );
             dealer.addCards(blackjackCards2.get(0), blackjackCards2.get(1));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.DRAW);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.DRAW);
         }
 
         @Test
@@ -59,7 +59,7 @@ class GameResultTest {
             );
             dealer.addCards(bustCards2.get(0), bustCards2.get(1), bustCards2.get(2));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.LOSE);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.LOSE);
         }
 
         @Test
@@ -78,7 +78,7 @@ class GameResultTest {
             );
             dealer.addCards(generalCards.get(0), generalCards.get(1), generalCards.get(2));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
         }
 
         @Test
@@ -97,7 +97,7 @@ class GameResultTest {
             );
             dealer.addCards(generalCards2.get(0), generalCards2.get(1), generalCards2.get(2));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
         }
     }
 }

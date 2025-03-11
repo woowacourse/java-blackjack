@@ -11,7 +11,7 @@ public enum GameResult {
         this.text = text;
     }
 
-    public static GameResult playerResultFrom(final Dealer dealer, final Player player) {
+    public static GameResult getPlayerGameResultFrom(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             return LOSE;
         }
