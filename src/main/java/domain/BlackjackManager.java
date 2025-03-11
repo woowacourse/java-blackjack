@@ -3,6 +3,8 @@ package domain;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public class BlackjackManager {
     private final Players players;
@@ -19,6 +21,27 @@ public class BlackjackManager {
 
     public void openInitialCards() {
         players.openInitialCards();
+    }
+
+    public void addMoreCardsToPlayers(Function<String, Boolean> wantMoreCard,
+                                      BiConsumer<String, List<Card>> callback) {
+        for (Player participant : getParticipants()) {
+            addMorCardsToPlayer(participant, wantMoreCard, callback);
+        }
+    }
+
+    private void addMorCardsToPlayer(Player participant,
+                                     Function<String, Boolean> wantMoreCard,
+                                     BiConsumer<String, List<Card>> callback) {
+        boolean isContinued = wantMoreCard.apply(participant.getName());
+        while (!participant.isBust() && isContinued) {
+            participant.drawOneCard(deck);
+            callback.accept(participant.getName(), participant.getCards());
+            isContinued = wantMoreCard.apply(participant.getName());
+        }
+        if (!participant.isBust() && !isContinued) {
+            callback.accept(participant.getName(), participant.getCards());
+        }
     }
 
     public void addOneCard(Player player) {

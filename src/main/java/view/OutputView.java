@@ -5,6 +5,7 @@ import controller.dto.NameAndCardsDto;
 import controller.dto.NameAndSumsDto;
 import controller.dto.NameAndSumsDto.NameAndSumDto;
 import controller.dto.ParticipantsMatchResultDto;
+import domain.Card;
 import java.util.List;
 
 public class OutputView {
@@ -15,20 +16,22 @@ public class OutputView {
 
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), String.join(", ", names));
 
-        printPlayerCards(dealer);
-        participants.forEach(OutputView::printPlayerCards);
+        printPlayerCards(dealer.name(), dealer.cards());
+        participants.forEach(participant ->
+                printPlayerCards(participant.name(), participant.cards()));
         System.out.println();
     }
 
-    public static void printPlayerCards(NameAndCardsDto player) {
-        System.out.printf("%s카드: %s%n", player.name(),
-                String.join(", ", player.cards().stream()
+    public static void printPlayerCards(String name, List<Card> cards) {
+        System.out.printf("%s카드: %s%n", name,
+                String.join(", ", cards.stream()
                         .map(card -> String.format("%s%s", card.getRank().getTitle(),
                                 card.getSuit().getTitle()))
                         .toList()));
     }
 
-    public static void printPlayersCardsAndSum(NameAndCardsDto dealer, List<NameAndCardsDto> participants,
+    public static void printPlayersCardsAndSum(NameAndCardsDto dealer,
+                                               List<NameAndCardsDto> participants,
                                                NameAndSumsDto nameAndSumsDto) {
         printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSumsDto.nameAndSums()));
         participants.forEach(player ->

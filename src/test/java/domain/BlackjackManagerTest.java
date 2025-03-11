@@ -54,8 +54,9 @@ public class BlackjackManagerTest {
     @Test
     void 딜러의_카드_합이_16이하면_카드를_한장_추가한다() {
         // given
+        Dealer dealer = new Dealer();
         Players players = new Players(List.of(
-                new Dealer(),
+                dealer,
                 new Participant("시소"),
                 new Participant("헤일러"),
                 new Participant("부기"),
@@ -78,12 +79,14 @@ public class BlackjackManagerTest {
         )));
         BlackjackManager blackjackManager = new BlackjackManager(players, deck);
         blackjackManager.distributeInitialCards();
+        final int beforeSize = dealer.getCards().size();
 
         // when
-        boolean actual = blackjackManager.addCardToDealerIfLowScore();
+        blackjackManager.addCardToDealerIfLowScore();
+        final int afterSize = dealer.getCards().size();
 
         // then
-        Assertions.assertThat(actual).isTrue();
+        Assertions.assertThat(afterSize).isEqualTo(beforeSize + 1);
     }
 
     @Test
