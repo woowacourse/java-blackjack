@@ -33,6 +33,7 @@ public class BlackjackController {
         OutputView.printInitialParticipant(dealer, allPlayers);
     }
 
+
     private static List<Integer> readPlayerBetAmount(List<String> playerNames) {
         List<Integer> betAmounts = new ArrayList<>();
         for (String playerName : playerNames) {
@@ -53,6 +54,7 @@ public class BlackjackController {
         boolean isFirstTurn = true;
         do {
             answer = InputView.askForOneMoreCard(player);
+
             drawAndCreateNewPlayer(player, answer);
 
             printCardsIfFirstTurn(player, isFirstTurn, answer);
