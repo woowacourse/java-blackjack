@@ -109,7 +109,7 @@ public class BlackjackManagerTest {
 
         // when
         Map<Player, MatchResult> usersMatchResult
-                = blackjackManager.computeUsersMatchResult(dealer, users.getUsers());
+                = blackjackManager.computeUsersMatchResult();
 
         // then
         SoftAssertions.assertSoftly(softly -> {
@@ -148,11 +148,11 @@ public class BlackjackManagerTest {
         BlackjackManager blackjackManager = new BlackjackManager(players, deck);
         blackjackManager.distributeInitialCards();
         Map<Player, MatchResult> usersMatchResult
-                = blackjackManager.computeUsersMatchResult(dealer, users.getUsers());
+                = blackjackManager.computeUsersMatchResult();
 
         // when
         Map<MatchResult, Integer> dealerMatchResultCount
-                = blackjackManager.computeDealerMatchResultCount(usersMatchResult);
+                = blackjackManager.computeDealerMatchResultCount();
 
         // then
         SoftAssertions.assertSoftly(softly -> {

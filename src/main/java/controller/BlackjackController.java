@@ -44,17 +44,13 @@ public class BlackjackController {
     }
 
     private void printGameResult(BlackjackManager blackjackManager) {
-        final Dealer dealer = blackjackManager.getDealer();
-        final List<User> users = blackjackManager.getUsers();
-        OutputView.printPlayersCardsAndSum(NameAndCardsDto.toNameAndCards(dealer),
-                NameAndCardsDto.toNameAndCards(users),
+        OutputView.printPlayersCardsAndSum(NameAndCardsDto.toNameAndCards(blackjackManager.getDealer()),
+                NameAndCardsDto.toNameAndCards(blackjackManager.getUsers()),
                 NameAndSumsDto.from(blackjackManager.computePlayerSum()));
 
-        final var usersMatchResult = blackjackManager.computeUsersMatchResult(dealer, users);
-        final var dealerMathResultCount = blackjackManager.computeDealerMatchResultCount(usersMatchResult);
         OutputView.printMatchResults(blackjackManager.getDealerName(),
-                DealerMatchResultCountDto.from(dealerMathResultCount),
-                UsersMatchResultDto.from(usersMatchResult));
+                DealerMatchResultCountDto.from(blackjackManager.computeDealerMatchResultCount()),
+                UsersMatchResultDto.from(blackjackManager.computeUsersMatchResult()));
     }
 
     private BlackjackManager createBlackjackManager() {

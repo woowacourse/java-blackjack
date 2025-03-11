@@ -63,8 +63,8 @@ public class BlackjackManager {
         return results;
     }
 
-    public Map<MatchResult, Integer> computeDealerMatchResultCount(
-            Map<Player, MatchResult> userNameAndMatchResult) {
+    public Map<MatchResult, Integer> computeDealerMatchResultCount() {
+        Map<Player, MatchResult> userNameAndMatchResult = computeUsersMatchResult();
         Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
         MatchResult.sortedValues().forEach(matchResult -> matchResultCount.put(matchResult, 0));
 
@@ -73,8 +73,10 @@ public class BlackjackManager {
         return matchResultCount;
     }
 
-    public Map<Player, MatchResult> computeUsersMatchResult(Dealer dealer,
-                                                            List<User> users) {
+    public Map<Player, MatchResult> computeUsersMatchResult() {
+        Dealer dealer = getDealer();
+        List<User> users = getUsers();
+
         Map<Player, MatchResult> results = new LinkedHashMap<>();
         for (Player user : users) {
             MatchResult matchResult = computeUserMatchResult(dealer, user);
