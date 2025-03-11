@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Players {
+public final class Players {
     
     private static final int PLAYER_MIN_SIZE = 1;
     private static final int PLAYER_MAX_SIZE = 6;
