@@ -10,6 +10,7 @@ import model.bettingamount.BettingAmount;
 import model.bettingamount.BettingAmounts;
 import model.card.Cards;
 import model.deck.Deck;
+import model.gameresult.GameResult;
 import model.gameresult.GameResults;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -34,13 +35,20 @@ public class BlackjackController {
     public void start() {
         List<String> names = inputView.readPlayerNames();
         BettingAmounts bettingAmounts = initializeBettingAmounts(names);
-        outputView.printNewLine();
         Players players = Players.createByNames(names, deck);
         Dealer dealer = new Dealer(deck);
+        startGame(players, dealer);
+        endGame(players, dealer, bettingAmounts);
+    }
 
+    private void startGame(final Players players, final Dealer dealer) {
+        outputView.printNewLine();
         printInitialGameState(players, dealer);
         playPlayerTurns(players);
         printDealerDrawCount(dealer);
+    }
+
+    private void endGame(final Players players, final Dealer dealer, final BettingAmounts bettingAmounts) {
         printFinalGameState(dealer, players);
         printProfit(players, dealer, bettingAmounts);
     }
@@ -48,9 +56,8 @@ public class BlackjackController {
     private BettingAmounts initializeBettingAmounts(final List<String> names) {
         return new BettingAmounts(names.stream()
                 .collect(Collectors.toMap(
-                                Function.identity(),
-                                name -> new BettingAmount(inputView.readBettingAmount(name))
-                        )
+                        Function.identity(),
+                        name -> new BettingAmount(inputView.readBettingAmount(name)))
                 )
         );
     }
@@ -116,11 +123,26 @@ public class BlackjackController {
     private void printProfit(final Players players, final Dealer dealer, final BettingAmounts bettingAmounts) {
         outputView.printGameResultHeader();
         GameResults gameResults = calculateGameResults(players, dealer);
-        outputView.printProfitWithName("딜러", gameResults.calculateDealerProfit(players, bettingAmounts));
-        players.getNames().forEach(name ->
-                outputView.printProfitWithName(
-                        name,
-                        bettingAmounts.findByName(name).getProfitByGameResult(gameResults.getGameResultByName(name)))
-        );
+        printDealerProfit(gameResults, players, bettingAmounts);
+        printPlayersProfit(players, gameResults, bettingAmounts);
+    }
+
+    private void printDealerProfit(final GameResults gameResults, final Players players,
+                                   final BettingAmounts bettingAmounts) {
+        int dealerProfit = gameResults.calculateDealerProfit(players, bettingAmounts);
+        outputView.printProfitWithName("딜러", dealerProfit);
+    }
+
+    private void printPlayersProfit(final Players players, final GameResults gameResults,
+                                    final BettingAmounts bettingAmounts) {
+        players.getNames().forEach(name -> printPlayerProfit(name, gameResults, bettingAmounts));
+    }
+
+    private void printPlayerProfit(final String name, final GameResults gameResults,
+                                   final BettingAmounts bettingAmounts) {
+        BettingAmount bettingAmountByName = bettingAmounts.findByName(name);
+        GameResult gameResultByName = gameResults.getGameResultByName(name);
+        int profit = bettingAmountByName.getProfitByGameResult(gameResultByName);
+        outputView.printProfitWithName(name, profit);
     }
 }
