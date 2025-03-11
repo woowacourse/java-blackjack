@@ -84,8 +84,6 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return cards.stream()
-                .map(card -> new Card(card.getCardSymbol(), card.getCardRank()))
-                .toList();
+        return new ArrayList<>(cards);
     }
 }
