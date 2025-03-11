@@ -20,7 +20,8 @@ public class Cards {
 
     public int sumCardScores() {
         int sum = calculateScore();
-        for (int i = 0; i < countAces(); i++) {
+        int aceCounts = countAces();
+        for (int i = 0; i < aceCounts; i++) {
             sum = processAce(sum);
         }
         return sum;
