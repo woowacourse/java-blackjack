@@ -21,7 +21,8 @@ class BlackjackGameTest {
     @Test
     void test_distributeInitialCards() {
         // given
-        Player player = new Player("player", new CardHand());
+        Player player = TestUtil.createPlayerFromName("player");
+
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardHand());
         BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
@@ -38,7 +39,8 @@ class BlackjackGameTest {
     @Test
     void test_dealerTurn() {
         // given
-        Player player = new Player("player", new CardHand());
+        Player player = TestUtil.createPlayerFromName("player");
+
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardHand());
         BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
@@ -55,22 +57,22 @@ class BlackjackGameTest {
     @Test
     void testGameReport1() {
         // given
-        CardHand CardHand1 = new CardHand();
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
-        Player player1 = new Player("player1", CardHand1);
+        CardHand cardHand1 = new CardHand();
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
+        Player player1 = TestUtil.createPlayerOf("player", cardHand1);
 
-        CardHand CardHand2 = new CardHand();
-        CardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand2.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
-        Player player2 = new Player("player2", CardHand2);
+        CardHand cardHand2 = new CardHand();
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
+        Player player2 = TestUtil.createPlayerOf("player", cardHand2);
 
         List<Player> players = List.of(player1, player2);
 
-        CardHand CardHand3 = new CardHand();
-        CardHand3.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand3.add(new Card(CardSuit.CLUB, CardRank.JACK)); //19
-        Dealer dealer = new Dealer(CardHand3);
+        CardHand cardHand3 = new CardHand();
+        cardHand3.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand3.add(new Card(CardSuit.CLUB, CardRank.JACK)); //19
+        Dealer dealer = new Dealer(cardHand3);
 
         BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
         Map<GameResult, Integer> dealerResult = game.getDealerResult(dealer, players);
@@ -81,15 +83,16 @@ class BlackjackGameTest {
     @Test
     void testGameReport2() {
         // given
-        CardHand CardHand1 = new CardHand();
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 20
-        Player player1 = new Player("player1", CardHand1);
+        CardHand cardHand1 = new CardHand();
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 20
+        Player player1 = TestUtil.createPlayerOf("player1", cardHand1);
 
-        CardHand CardHand2 = new CardHand();
-        CardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand2.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); // 16
-        Player player2 = new Player("player2", CardHand2);
+
+        CardHand cardHand2 = new CardHand();
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); // 16
+        Player player2 = TestUtil.createPlayerOf("player2", cardHand2);
 
         List<Player> players = List.of(player1, player2);
 
@@ -111,15 +114,15 @@ class BlackjackGameTest {
     @Test
     void testGameReportFromPlayer_playerWin() {
         // given
-        CardHand CardHand1 = new CardHand();
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 20
-        Player player1 = new Player("player1", CardHand1);
+        CardHand cardHand1 = new CardHand();
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 20
+        Player player1 = TestUtil.createPlayerOf("player1", cardHand1);
 
-        CardHand CardHand3 = new CardHand();
-        CardHand3.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand3.add(new Card(CardSuit.CLUB, CardRank.JACK)); // 19
-        Dealer dealer = new Dealer(CardHand3);
+        CardHand cardHand2 = new CardHand();
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.JACK)); // 19
+        Dealer dealer = new Dealer(cardHand2);
 
         BlackjackGame game = new BlackjackGame(List.of(player1), dealer, CardDump.shuffledDump());
         GameResult playerResult = game.getPlayerResult(player1, dealer);
@@ -131,10 +134,10 @@ class BlackjackGameTest {
     @Test
     void testGameReportFromPlayer_playerLose() {
         // given
-        CardHand CardHand1 = new CardHand();
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        CardHand1.add(new Card(CardSuit.CLUB, CardRank.FIVE)); // 14
-        Player player1 = new Player("player1", CardHand1);
+        CardHand cardHand1 = new CardHand();
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.FIVE)); // 14
+        Player player1 = TestUtil.createPlayerOf("player1", cardHand1);
 
         CardHand CardHand3 = new CardHand();
         CardHand3.add(new Card(CardSuit.CLUB, CardRank.NINE));

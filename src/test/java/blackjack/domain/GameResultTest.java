@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
@@ -21,7 +20,7 @@ class GameResultTest {
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardHand1);
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
 
         CardHand cardHand2 = new CardHand();
         cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -29,7 +28,7 @@ class GameResultTest {
         Dealer dealer = new Dealer(cardHand2);
 
         //when
-        GameResult dealerResult = GameResult.checkDealerWin(player.getScore(), dealer.getScore());
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.WIN);
@@ -44,7 +43,7 @@ class GameResultTest {
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.FIVE));
 
-        Player player = new Player("player1", cardHand1);
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
 
         CardHand cardHand2 = new CardHand();
         cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -52,7 +51,7 @@ class GameResultTest {
         Dealer dealer = new Dealer(cardHand2);
 
         //when
-        GameResult dealerResult = GameResult.checkDealerWin(player.getScore(), dealer.getScore());
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.LOSE);
@@ -66,7 +65,7 @@ class GameResultTest {
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardHand1);
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
 
         CardHand cardHand2 = new CardHand();
         cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -75,8 +74,8 @@ class GameResultTest {
         Dealer dealer = new Dealer(cardHand2);
 
         //when
-        GameResult dealerResult = GameResult.checkDealerWin(player.getScore(), dealer.getScore());
-        GameResult playerResult = GameResult.checkPlayerWin(player.getScore(), dealer.getScore());
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.DRAW);
@@ -92,7 +91,7 @@ class GameResultTest {
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.JACK));
 
-        Player player = new Player("player1", cardHand1);
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
 
         CardHand cardHand2 = new CardHand();
         cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -101,8 +100,8 @@ class GameResultTest {
         Dealer dealer = new Dealer(cardHand2);
 
         //when
-        GameResult dealerResult = GameResult.checkDealerWin(player.getScore(), dealer.getScore());
-        GameResult playerResult = GameResult.checkPlayerWin(player.getScore(), dealer.getScore());
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.WIN);
@@ -118,7 +117,7 @@ class GameResultTest {
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand1.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("player1", cardHand1);
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
 
         CardHand cardHand2 = new CardHand();
         cardHand2.add(new Card(CardSuit.CLUB, CardRank.NINE));
@@ -128,12 +127,88 @@ class GameResultTest {
         Dealer dealer = new Dealer(cardHand2);
 
         //when
-        GameResult dealerResult = GameResult.checkDealerWin(player.getScore(), dealer.getScore());
-        GameResult playerResult = GameResult.checkPlayerWin(player.getScore(), dealer.getScore());
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
 
         //then
         assertThat(dealerResult).isEqualTo(GameResult.LOSE);
         assertThat(playerResult).isEqualTo(GameResult.WIN);
     }
 
+    @DisplayName("플레이어가 블랙잭인 경우, 같은 21이어도 플레이어가 이긴다.")
+    @Test
+    void testWinnerEvaluation_playerBlackjack() {
+        //given
+        CardHand cardHand1 = new CardHand();
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.JACK));
+
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
+
+        CardHand cardHand2 = new CardHand();
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.JACK));
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.FIVE));
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.SIX));
+
+        Dealer dealer = new Dealer(cardHand2);
+
+        //when
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
+
+        //then
+        assertThat(dealerResult).isEqualTo(GameResult.LOSE);
+        assertThat(playerResult).isEqualTo(GameResult.WIN);
+    }
+
+    @DisplayName("플레이어와 딜러 둘다 블랙잭인 겨웅 무승부다.")
+    @Test
+    void testWinnerEvaluation_BlackjackDraw() {
+        //given
+        CardHand cardHand1 = new CardHand();
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.JACK));
+
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
+
+        CardHand cardHand2 = new CardHand();
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.JACK));
+
+        Dealer dealer = new Dealer(cardHand2);
+
+        //when
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
+
+        //then
+        assertThat(dealerResult).isEqualTo(GameResult.DRAW);
+        assertThat(playerResult).isEqualTo(GameResult.DRAW);
+    }
+
+    @DisplayName("딜러가 블랙잭이고 플레이어가 일반 21인 경우 딜러가 이긴다.")
+    @Test
+    void testWinnerEvaluation_dealerBlackjack() {
+        //given
+        CardHand cardHand1 = new CardHand();
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.FIVE));
+        cardHand1.add(new Card(CardSuit.CLUB, CardRank.SIX));
+
+        Player player = TestUtil.createPlayerOf("player", cardHand1);
+
+        CardHand cardHand2 = new CardHand();
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardHand2.add(new Card(CardSuit.CLUB, CardRank.JACK));
+
+        Dealer dealer = new Dealer(cardHand2);
+
+        //when
+        GameResult dealerResult = GameResult.checkDealerWin(player, dealer);
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
+
+        //then
+        assertThat(dealerResult).isEqualTo(GameResult.WIN);
+        assertThat(playerResult).isEqualTo(GameResult.LOSE);
+    }
 }

@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.TestUtil;
 import blackjack.domain.card.Card;
 
 import blackjack.domain.card.CardHand;
@@ -21,7 +22,7 @@ class PlayerTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerFromName("player");
 
         // when
         boolean canHit = player.canHit();
@@ -39,7 +40,7 @@ class PlayerTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Player player = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
         boolean canHit = player.canHit();
@@ -56,7 +57,7 @@ class PlayerTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
         List<Card> startCards = player.showStartCards();

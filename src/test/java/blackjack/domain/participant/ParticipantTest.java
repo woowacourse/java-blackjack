@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.TestUtil;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardRank;
@@ -19,10 +20,10 @@ class ParticipantTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.EIGHT)); //17
 
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        int totalScore = score.getScore().intValue();
+        int totalScore = player.getScore().intValue();
         assertThat(totalScore).isEqualTo(17);
     }
 
@@ -34,10 +35,10 @@ class ParticipantTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.ACE)); //11 -> 20
 
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        int totalScore = score.getScore().intValue();
+        int totalScore = player.getScore().intValue();
         assertThat(totalScore).isEqualTo(20);
     }
 
@@ -50,10 +51,10 @@ class ParticipantTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
         cardHand.add(new Card(CardSuit.CLUB, CardRank.ACE)); //1선택 -> 17
 
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        int totalScore = score.getScore().intValue();
+        int totalScore = player.getScore().intValue();
         assertThat(totalScore).isEqualTo(17);
     }
 
@@ -66,10 +67,10 @@ class ParticipantTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.ACE));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
 
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        int totalScore = score.getScore().intValue();
+        int totalScore = player.getScore().intValue();
         assertThat(totalScore).isEqualTo(21);
     }
 
@@ -78,10 +79,10 @@ class ParticipantTest {
     void testPlayerAddCard() {
         // given
         CardHand cardHand = new CardHand();
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        score.receiveCard(new Card(CardSuit.CLUB, CardRank.ACE));
+        player.receiveCard(new Card(CardSuit.CLUB, CardRank.ACE));
 
         // then
         assertThat(cardHand.deckSize()).isEqualTo(1);
@@ -95,11 +96,10 @@ class ParticipantTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.JACK));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.KING));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.TWO));
-
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        boolean bust = score.isBust();
+        boolean bust = player.isBust();
 
         // then
         assertThat(bust).isTrue();
@@ -112,11 +112,10 @@ class ParticipantTest {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(CardSuit.CLUB, CardRank.JACK));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.KING));
-
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        boolean bust = score.isBust();
+        boolean bust = player.isBust();
 
         // then
         assertThat(bust).isFalse();
@@ -130,10 +129,11 @@ class ParticipantTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.JACK));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.ACE));
 
-        Player score = new Player("user1", cardHand);
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        boolean blackjack = score.isBlackjack();
+        boolean blackjack = player.isBlackjack();
+
         // then
         assertThat(blackjack).isTrue();
     }
@@ -146,10 +146,11 @@ class ParticipantTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.JACK));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.FIVE));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.SIX));
-        Player score = new Player("user1", cardHand);
+
+        Player player = TestUtil.createPlayerOf("player", cardHand);
 
         // when
-        boolean blackjack = score.isBlackjack();
+        boolean blackjack = player.isBlackjack();
         // then
         assertThat(blackjack).isFalse();
     }
