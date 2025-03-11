@@ -1,11 +1,11 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.Cards.BUST_THRESHOLD;
+
 import java.util.List;
 import java.util.Set;
 
 public class ScoreCalculator {
-    private static final int BUST_THRESHOLD = 21;
-
     public int calculateMaxScore(List<Card> cards) {
         return maxDfs(0, 0, cards);
     }
