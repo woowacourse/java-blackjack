@@ -34,29 +34,29 @@ public class BlackJackResultCalculatorTest {
 
         // then
         assertAll(
-            () -> {
-                Map<GameResult, Integer> dealerExpected = new HashMap<>();
-                dealerExpected.put(GameResult.WIN, 1);
-                dealerExpected.put(GameResult.DRAW, 1);
-                dealerExpected.put(GameResult.LOSE, 1);
-                assertThat(participantsResult.dealerResult().getDealerResult()).isEqualTo(
-                    dealerExpected);
-            },
-            () -> {
-                List<PlayerResult> playerResults = participantsResult.playerResults();
-                assertThat(playerResults.get(0)).isEqualTo(
-                    new PlayerResult(player1, GameResult.WIN));
-            },
-            () -> {
-                List<PlayerResult> playerResults = participantsResult.playerResults();
-                assertThat(playerResults.get(1)).isEqualTo(
-                    new PlayerResult(player2, GameResult.LOSE));
-            },
-            () -> {
-                List<PlayerResult> playerResults = participantsResult.playerResults();
-                assertThat(playerResults.get(2)).isEqualTo(
-                    new PlayerResult(player3, GameResult.DRAW));
-            }
+                () -> {
+                    Map<GameResult, Integer> dealerExpected = new HashMap<>();
+                    dealerExpected.put(GameResult.WIN, 1);
+                    dealerExpected.put(GameResult.DRAW, 1);
+                    dealerExpected.put(GameResult.LOSE, 1);
+                    assertThat(participantsResult.dealerResult().getDealerResult()).isEqualTo(
+                            dealerExpected);
+                },
+                () -> {
+                    List<PlayerResult> playerResults = participantsResult.playerResults();
+                    assertThat(playerResults.get(0)).isEqualTo(
+                            new PlayerResult(player1, GameResult.WIN));
+                },
+                () -> {
+                    List<PlayerResult> playerResults = participantsResult.playerResults();
+                    assertThat(playerResults.get(1)).isEqualTo(
+                            new PlayerResult(player2, GameResult.LOSE));
+                },
+                () -> {
+                    List<PlayerResult> playerResults = participantsResult.playerResults();
+                    assertThat(playerResults.get(2)).isEqualTo(
+                            new PlayerResult(player3, GameResult.DRAW));
+                }
         );
     }
 }

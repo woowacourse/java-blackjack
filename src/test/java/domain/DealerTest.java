@@ -46,7 +46,7 @@ public class DealerTest {
     void should_return_true_when_can_pick() {
         //given
         List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
-            new Card(Shape.CLUB, Rank.EIGHT));
+                new Card(Shape.CLUB, Rank.EIGHT));
         Participant dealer = new Dealer();
         for (Card card : cards) {
             dealer.addCard(card);
@@ -56,7 +56,7 @@ public class DealerTest {
         boolean canPick = dealer.canPick();
 
         //then
-        assertThat(canPick).isTrue();
+        assertThat(canPick).isEqualTo(true);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class DealerTest {
     void should_return_false_when_cannot_pick() {
         //given
         List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
-            new Card(Shape.CLUB, Rank.NINE));
+                new Card(Shape.CLUB, Rank.NINE));
         Participant dealer = new Dealer();
         for (Card card : cards) {
             dealer.addCard(card);
@@ -76,5 +76,4 @@ public class DealerTest {
         //then
         assertThat(canPick).isFalse();
     }
-
 }

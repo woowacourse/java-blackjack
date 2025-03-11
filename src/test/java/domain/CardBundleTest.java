@@ -19,7 +19,7 @@ public class CardBundleTest {
 
         //when
         List<Card> allCards = cardBundle.getAllCards();
-        
+
         //then
         Set<Card> testAllCards = new HashSet<>(allCards);
         assertThat(allCards).hasSize(testAllCards.size());

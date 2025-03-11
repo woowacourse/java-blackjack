@@ -3,7 +3,6 @@ package domain;
 import java.util.Objects;
 
 public class PlayerResult {
-
     private final Participant player;
     private final GameResult gameResult;
 

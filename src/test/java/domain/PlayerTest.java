@@ -36,6 +36,7 @@ public class PlayerTest {
         Participant player = new Player("amy");
         player.addCard(new Card(Shape.HEART, Rank.ACE));
         player.addCard(new Card(Shape.HEART, Rank.KING));
+
         //when
         List<Card> shownCard = player.getShownCard();
 
@@ -43,20 +44,30 @@ public class PlayerTest {
         assertThat(shownCard).hasSize(2);
     }
 
-
     private static Stream<Arguments> cardsArguments() {
         return Stream.of(Arguments.arguments(
                         List.of(new Card(Shape.HEART, Rank.KING),
                                 new Card(Shape.HEART, Rank.QUEEN),
                                 new Card(Shape.HEART, Rank.ACE)), 21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.HEART, Rank.QUEEN)), 21),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.HEART, Rank.QUEEN),
-                        new Card(Shape.HEART, Rank.ACE)), 12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.SPADE, Rank.ACE)), 12),
-                Arguments.arguments(List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.SPADE, Rank.EIGHT),
-                        new Card(Shape.SPADE, Rank.ACE)), 20), Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.ACE), new Card(Shape.SPADE, Rank.ACE),
-                                new Card(Shape.CLUB, Rank.ACE), new Card(Shape.SPADE, Rank.TEN)), 13));
+                Arguments.arguments(
+                        List.of(new Card(Shape.HEART, Rank.ACE),
+                                new Card(Shape.HEART, Rank.QUEEN)), 21),
+                Arguments.arguments(
+                        List.of(new Card(Shape.HEART, Rank.ACE),
+                                new Card(Shape.HEART, Rank.QUEEN),
+                                new Card(Shape.HEART, Rank.ACE)), 12),
+                Arguments.arguments(
+                        List.of(new Card(Shape.HEART, Rank.ACE),
+                                new Card(Shape.SPADE, Rank.ACE)), 12),
+                Arguments.arguments(
+                        List.of(new Card(Shape.HEART, Rank.ACE),
+                                new Card(Shape.SPADE, Rank.EIGHT),
+                                new Card(Shape.SPADE, Rank.ACE)), 20),
+                Arguments.arguments(
+                        List.of(new Card(Shape.HEART, Rank.ACE),
+                                new Card(Shape.SPADE, Rank.ACE),
+                                new Card(Shape.CLUB, Rank.ACE),
+                                new Card(Shape.SPADE, Rank.TEN)), 13));
     }
 
     @ParameterizedTest
@@ -84,22 +95,27 @@ public class PlayerTest {
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 21 이하일 경우, true를 반환한다")
     void should_return_true_when_can_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING), new Card(Shape.HEART, Rank.QUEEN),
-                new Card(Shape.HEART, Rank.ONE));
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+                new Card(Shape.HEART, Rank.NINE),
+                new Card(Shape.HEART, Rank.TWO));
         Participant player = new Player("a");
         for (Card card : cards) {
             player.addCard(card);
         }
 
+        // when
         boolean canPick = player.canPick();
-        assertThat(canPick).isTrue();
+
+        // then
+        assertThat(canPick).isEqualTo(true);
     }
 
     @Test
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 22 이상 경우, false를 반환한다")
     void should_return_false_when_cannot_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING), new Card(Shape.HEART, Rank.QUEEN),
+        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
+                new Card(Shape.HEART, Rank.QUEEN),
                 new Card(Shape.HEART, Rank.TWO));
         Participant player = new Player("a");
         for (Card card : cards) {

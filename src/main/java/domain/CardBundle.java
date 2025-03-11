@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardBundle {
-
     private final List<Card> cards;
 
     public CardBundle() {

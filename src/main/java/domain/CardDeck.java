@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class CardDeck {
-
     private final Deque<Card> deck;
 
     public CardDeck(List<Card> shuffledCards) {

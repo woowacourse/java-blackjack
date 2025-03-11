@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public abstract class Participant {
-
     private final String name;
     private final List<Card> cards;
 
@@ -53,7 +52,7 @@ public abstract class Participant {
         final int totalAceAsOneValue = aceAsOneCount * 1;
         return baseValue + totalAceAsElevenValue + totalAceAsOneValue;
     }
-    
+
     private int getAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
