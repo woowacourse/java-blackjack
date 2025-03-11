@@ -57,7 +57,7 @@ public class BlackjackController {
             OutputView.printPlayerCards(NameAndCardsDto.toNameAndCards(participant));
             return;
         }
-        while (isContinued == YES) {
+        while (isContinued == YES && !participant.isBust()) {
             blackjackManager.addOneCard(participant);
             OutputView.printPlayerCards(NameAndCardsDto.toNameAndCards(participant));
             isContinued = wantOneMoreCard(participant);
