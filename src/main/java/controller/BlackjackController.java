@@ -28,7 +28,7 @@ public class BlackjackController {
         OutputView.printAllParticipantScore(dealer, players);
 
         dealer.calculateVictory(players);
-        OutputView.printResult(dealer, players);
+        OutputView.printResult(dealer, dealer.calculateVictory(players), players);
     }
 
     private void receiveAdditionalCard(Player player, Dealer dealer) {

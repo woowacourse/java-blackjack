@@ -85,9 +85,9 @@ public class OutputView {
         System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
     }
 
-    public static void printResult(Dealer dealer, Players players) {
+    public static void printResult(Dealer dealer, Map<MatchType, Integer> dealerResult ,Players players) {
         String dealerNickname = dealer.getNickname();
-        String resultFormatByDealer = getResultFormatByDealer(dealer.getMatchResult());
+        String resultFormatByDealer = getResultFormatByDealer(dealerResult);
 
         System.out.println();
         System.out.println("## 최종 승패");

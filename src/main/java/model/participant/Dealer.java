@@ -17,18 +17,15 @@ public class Dealer extends Participant {
 
     private final String nickname;
     private final CardDeck deck;
-    private final Map<MatchType, Integer> matchResult;
 
     private Dealer(String nickname, CardDeck deck) {
         this.nickname = nickname;
         this.deck = deck;
-        this.matchResult = new HashMap<>();
     }
 
     public static Dealer from(CardDeck deck) {
         return new Dealer(DEALER_NAME,deck);
     }
-
 
     public void divideInitialCardToParticipant(Players players) {
         List<Participant> participants = new ArrayList<>();
@@ -58,30 +55,24 @@ public class Dealer extends Participant {
         return ResultType.of(cards.calculateScore().compareTo(player.cards.calculateScore()));
     }
 
-    public void calculateVictory(Players players) {
+    public Map<MatchType, Integer> calculateVictory(Players players) {
+        Map<MatchType, Integer> matchResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
             ResultType resultType = createGameResult(player);
             List<MatchType> matches = resultType.getMatches();
-            updateDealerResult(matches);
+            updateResult(matches.getFirst(), matchResult);
             updatePlayerResult(player, matches);
         }
+        return matchResult;
     }
 
     private static void updatePlayerResult(Player player, List<MatchType> matches) {
         player.updateResult(matches.getLast());
     }
 
-    private void updateDealerResult(List<MatchType> matches) {
-        updateResult(matches.getFirst());
-    }
-
-    public void updateResult(MatchType type) {
+    public void updateResult(MatchType type, Map<MatchType, Integer> matchResult) {
         matchResult.computeIfAbsent(type, k -> 0);
         matchResult.put(type, matchResult.get(type) + 1);
-    }
-
-    public Map<MatchType, Integer> getMatchResult() {
-        return matchResult;
     }
 
     @Override

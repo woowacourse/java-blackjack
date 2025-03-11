@@ -1,5 +1,6 @@
 package model.participant;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,9 +112,9 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 게임 결과 업데이트가 잘 되는 지")
     void dealerGameResult() {
+        HashMap<MatchType, Integer> dealerResult = new HashMap<>();
         Dealer dealer = Dealer.from(new CardDeck());
-        dealer.updateResult(MatchType.WIN);
-        Map<MatchType, Integer> matchResult = dealer.getMatchResult();
-        Assertions.assertThat(matchResult.get(MatchType.WIN)).isEqualTo(1);
+        dealer.updateResult(MatchType.WIN, dealerResult);
+        Assertions.assertThat(dealerResult.get(MatchType.WIN)).isEqualTo(1);
     }
 }
