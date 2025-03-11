@@ -17,15 +17,17 @@ public class PlayersTest {
 
     @Test
     void 플레이어별_이름과_카드리스트의_총합을_반환한다() {
-        Player drago = new Player("drago", new Cards(
+        Player drago = new Player("drago",
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
                         new Card(Symbol.DIAMOND, Number.JACK),
-                        new Card(Symbol.HEART, Number.FOUR))));
+                        new Card(Symbol.HEART, Number.FOUR)),
+            1000);
 
-        Player duei = new Player("duei", new Cards(
+        Player duei = new Player("duei",
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
                         new Card(Symbol.DIAMOND, Number.JACK),
-                        new Card(Symbol.HEART, Number.TWO))));
+                        new Card(Symbol.HEART, Number.TWO)),
+            1000);
 
         Players players = new Players(List.of(drago, duei));
         Map<Player, Integer> expected = Map.of(drago, 22, duei, 20);
@@ -35,13 +37,15 @@ public class PlayersTest {
 
     @Test
     void 플레이어를_새로운_플레이어로_교체한다() {
-        Cards cards = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.FOUR)));
-        Player player = new Player("drago", cards);
+        List<Card> cards = List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.FOUR));
+        Player player = new Player("drago", cards, 1000);
         Players players = new Players(new ArrayList<>(List.of(player)));
 
-        Cards newCards = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
-                new Card(Symbol.CLOVER, Number.FOUR), new Card(Symbol.HEART, Number.JACK)));
-        Player newPlayer = new Player("drago", newCards);
+        List<Card> newCards = List.of(
+            new Card(Symbol.DIAMOND, Number.EIGHT),
+            new Card(Symbol.CLOVER, Number.FOUR),
+            new Card(Symbol.HEART, Number.JACK));
+        Player newPlayer = new Player("drago", newCards, 2000);
         Players expected = new Players(List.of(newPlayer));
 
         assertThat(players.editPlayer(newPlayer)).isEqualTo(expected);

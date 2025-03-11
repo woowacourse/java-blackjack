@@ -17,10 +17,10 @@ public class DealerTest {
     @Test
     void 딜러의_카드_숫자_총합이_16초과면_true_아니면_false_반환한다() {
         Dealer exceedSixteenDealer = new Dealer(
-            new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK))));
+            List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));
 
         Dealer notExceedSixteenDealer = new Dealer(
-            new Cards(List.of(new Card(Symbol.CLOVER, Number.TWO), new Card(Symbol.HEART, Number.JACK))));
+            List.of(new Card(Symbol.CLOVER, Number.TWO), new Card(Symbol.HEART, Number.JACK)));
 
         assertAll(
             () -> assertThat(exceedSixteenDealer.isDealerHittable()).isFalse(),
@@ -30,8 +30,7 @@ public class DealerTest {
 
     @Test
     void 딜러가_카드를_뽑는다() {
-        Dealer dealer = new Dealer(new Cards(
-            List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK))));
+        Dealer dealer = new Dealer(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK)));
         Card drawCard = new Card(Symbol.HEART, Number.FOUR);
         List<Card> providedCards = List.of(drawCard);
 
@@ -45,14 +44,14 @@ public class DealerTest {
 
     @Test
     void 딜러가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
-        Dealer exceedDealer = new Dealer(new Cards(
+        Dealer exceedDealer = new Dealer(
             List.of(
                 new Card(Symbol.DIAMOND, Number.EIGHT),
                 new Card(Symbol.DIAMOND, Number.JACK),
-                new Card(Symbol.HEART, Number.FOUR))));
+                new Card(Symbol.HEART, Number.FOUR)));
 
-        Dealer notExceedDealer = new Dealer(new Cards(
-            List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK))));
+        Dealer notExceedDealer = new Dealer(
+            List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK)));
 
         assertAll(
             () -> assertThat(exceedDealer.isBurst()).isTrue(),
@@ -62,22 +61,18 @@ public class DealerTest {
 
     @Test
     void 딜러가_가진_카드리스트의_총합을_반환한다() {
-        Dealer dealer = new Dealer(new Cards(
+        Dealer dealer = new Dealer(
                 List.of(
                         new Card(Symbol.DIAMOND, Number.EIGHT),
                         new Card(Symbol.DIAMOND, Number.JACK),
-                        new Card(Symbol.HEART, Number.FOUR))));
+                        new Card(Symbol.HEART, Number.FOUR)));
 
         assertThat(dealer.getTotalNumberSum()).isEqualTo(22);
     }
 
     @Test
     void 딜러가_가진_첫번쨰_카드를_반환한다() {
-        Dealer dealer = new Dealer(new Cards(
-                List.of(
-                        new Card(Symbol.HEART, Number.EIGHT),
-                        new Card(Symbol.CLOVER, Number.SEVEN)
-                )));
+        Dealer dealer = new Dealer(List.of(new Card(Symbol.HEART, Number.EIGHT), new Card(Symbol.CLOVER, Number.SEVEN)));
 
         Card expected = new Card(Symbol.HEART, Number.EIGHT);
 
@@ -91,10 +86,10 @@ public class DealerTest {
         Card card3 = new Card(Symbol.DIAMOND, Number.SIX);
         Card card4 = new Card(Symbol.DIAMOND, Number.ACE);
         List<Card> cardList = List.of(card1, card2, card3);
-        Dealer notExceedDealer = new Dealer(new Cards(cardList));
+        Dealer notExceedDealer = new Dealer(cardList);
 
         List<Card> otherCardList = List.of(card1, card2, card3, card4);
-        Dealer exceedDealer = new Dealer(new Cards(otherCardList));
+        Dealer exceedDealer = new Dealer(otherCardList);
 
         assertAll(
             () -> assertThat(notExceedDealer.isDealerHittable()).isTrue(),

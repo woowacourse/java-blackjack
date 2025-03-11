@@ -7,9 +7,9 @@ public abstract class Participant {
     protected Name name;
     protected Cards cards;
 
-    public Participant(String name, Cards cards) {
+    public Participant(String name, List<Card> cards) {
         this.name = new Name(name);
-        this.cards = cards;
+        this.cards = new Cards(cards);
     }
 
     public void drawCard(List<Card> providedCards) {

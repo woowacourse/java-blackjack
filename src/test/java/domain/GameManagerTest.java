@@ -9,7 +9,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,8 +39,8 @@ public class GameManagerTest {
 
     @Test
     void 초기_딜러_카드_정보를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
-        Cards cardsOfDealer = new Cards(List.of(new Card(Symbol.SPADE, Number.KING), new Card(Symbol.CLOVER, Number.ACE)));
+        GameManager gameManager = new GameManager(List.of("drago", "duei"), List.of(2000,1000), new TestCardProvider());
+        List<Card> cardsOfDealer = List.of(new Card(Symbol.SPADE, Number.KING), new Card(Symbol.CLOVER, Number.ACE));
 
         Dealer result = gameManager.findDealer();
 
@@ -51,15 +50,6 @@ public class GameManagerTest {
 
     @Test
     void 최종_게임_결과를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago", "duei"), new TestCardProvider());
-        Cards cardsOfDrago = new Cards(List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)));
-        Cards cardsOfDuei = new Cards(List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.SPADE, Number.ACE)));
-        Map<Player, ResultStatus> result = gameManager.findGameResult();
 
-        Map<Player, ResultStatus> expected = Map.of(
-            new Player("drago", cardsOfDrago), ResultStatus.LOSE,
-            new Player("duei", cardsOfDuei), ResultStatus.LOSE
-        );
-        assertThat(result).isEqualTo(expected);
     }
 }

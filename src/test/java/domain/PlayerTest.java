@@ -16,8 +16,11 @@ public class PlayerTest {
 
     @Test
     void 플레이어가_카드를_뽑는다() {
-        Player player = new Player("drago", new Cards(
-            List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.CLOVER, Number.JACK))));
+        Player player = new Player("drago",
+            List.of(
+                new Card(Symbol.DIAMOND, Number.EIGHT),
+                new Card(Symbol.CLOVER, Number.JACK)),
+            1000);
         Card drawCard = new Card(Symbol.HEART, Number.FOUR);
         List<Card> providedCards = List.of(drawCard);
 
@@ -28,12 +31,18 @@ public class PlayerTest {
 
     @Test
     void 플레이어가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
-        Player drago = new Player("drago", new Cards(
-                List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK),
-                        new Card(Symbol.HEART, Number.KING))));
+        Player drago = new Player("drago",
+                List.of(
+                    new Card(Symbol.DIAMOND, Number.EIGHT),
+                    new Card(Symbol.DIAMOND, Number.JACK),
+                    new Card(Symbol.HEART, Number.KING)),
+            1000);
 
-        Player duei = new Player("duei", new Cards(
-                List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.DIAMOND, Number.JACK))));
+        Player duei = new Player("duei",
+                List.of(
+                    new Card(Symbol.DIAMOND, Number.EIGHT),
+                    new Card(Symbol.DIAMOND, Number.JACK)),
+            1000);
 
         assertAll(
                 () -> assertThat(drago.isBurst()).isTrue(),
@@ -43,10 +52,11 @@ public class PlayerTest {
 
     @Test
     void 플레이어의_이름과_카드리스트의_총합을_반환한다() {
-        Player player = new Player("drago", new Cards(
+        Player player = new Player("drago",
                 List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
                         new Card(Symbol.DIAMOND, Number.JACK),
-                        new Card(Symbol.HEART, Number.FOUR))));
+                        new Card(Symbol.HEART, Number.FOUR)),
+            1000);
 
         assertThat(player.getTotalNumberSum()).isEqualTo(22);
     }

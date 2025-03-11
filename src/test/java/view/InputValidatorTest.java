@@ -27,4 +27,19 @@ public class InputValidatorTest {
         assertThatCode(() -> InputValidator.validateNameFormat(input))
             .doesNotThrowAnyException();
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "이천원", "2천원", " "})
+    void 숫자_형식을_위반한_경우_예외발생한다(String input) {
+        assertThatThrownBy(() -> InputValidator.validateBetAmount(input))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 배팅 금액은 숫자만 입력가능 합니다.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"20000", "10000", "3500", "400"})
+    void 숫자_형식을_지킨_경우_예외발생하지_않는다(String input) {
+        assertThatCode(() -> InputValidator.validateBetAmount(input))
+            .doesNotThrowAnyException();
+    }
 }

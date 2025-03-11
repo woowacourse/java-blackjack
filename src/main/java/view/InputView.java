@@ -26,4 +26,11 @@ public class InputView {
         String input = scanner.nextLine();
         return Answer.selectAnswer(input);
     }
+
+    public static int readBetAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        String input = scanner.nextLine();
+        InputValidator.validateBetAmount(input);
+        return Integer.parseInt(input);
+    }
 }

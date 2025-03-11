@@ -8,6 +8,7 @@ import domain.ResultStatus;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +26,20 @@ public class BlackjackController {
 
     private void readyGame() {
         List<String> playerNames = InputView.readPlayerNames();
-        this.gameManager = new GameManager(playerNames, new Deck());
+        List<Integer> betAmounts = readPlayerBetAmount(playerNames);
+        this.gameManager = new GameManager(playerNames, betAmounts, new Deck());
 
         Dealer dealer = gameManager.findDealer();
         List<Player> allPlayers = gameManager.findAllPlayers();
         OutputView.printInitialParticipant(dealer, allPlayers);
+    }
+
+    private static List<Integer> readPlayerBetAmount(List<String> playerNames) {
+        List<Integer> betAmounts = new ArrayList<>();
+        for (String playerName : playerNames) {
+            betAmounts.add(InputView.readBetAmount(playerName));
+        }
+        return betAmounts;
     }
 
     private void drawPlayersCards() {

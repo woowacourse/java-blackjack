@@ -1,11 +1,15 @@
 package domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends Participant {
 
-    public Player(String name, Cards cards) {
+    private int betAmount;
+
+    public Player(String name, List<Card> cards, int betAmount) {
         super(name, cards);
+        this.betAmount = betAmount;
     }
 
     @Override
