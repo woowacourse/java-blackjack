@@ -1,6 +1,7 @@
 package blackjack.model.game;
 
 import static blackjack.model.card.CardCreator.createCard;
+import static java.util.List.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -34,11 +35,11 @@ class BlackJackGameTest {
 
     private static Stream<Arguments> 딜러의_카드를_뽑아야_한다면_카드를_뽑는다_테스트_케이스() {
         Cards cards = new Cards(
-                List.of(createCard(CardNumber.TEN), createCard(CardNumber.SIX)));
+                of(createCard(CardNumber.TEN), createCard(CardNumber.SIX)));
         return Stream.of(
                 Arguments.of(cards, cards, true, 3),
                 Arguments.of(cards, new Cards(
-                        List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN))
+                        of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN))
                 ), false, 2)
         );
     }
@@ -46,12 +47,12 @@ class BlackJackGameTest {
     @Test
     void 게임_시작시_플레이어들에게_카드_두장을_나눠준다() {
         BlackJackGame blackJackGame = new BlackJackGame(() -> new Cards(
-                List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
+                of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
                         createCard(CardNumber.FIVE))
         ));
         User user = new User("pobi");
         Dealer dealer = new Dealer();
-        List<Player> players = List.of(dealer, user);
+        List<Player> players = of(dealer, user);
 
         blackJackGame.dealInitialCards(players);
 
@@ -64,7 +65,7 @@ class BlackJackGameTest {
     void 플레이어가_시작_카드를_오픈한다(Player player, Cards expectedCards) {
         BlackJackGame blackJackGame = new BlackJackGame(Cards::empty);
         player.receiveCards(new Cards(
-                List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE)))
+                of(createCard(CardNumber.TWO), createCard(CardNumber.THREE)))
         );
 
         assertThat(blackJackGame.openInitialCards(player)).isEqualTo(expectedCards);
@@ -86,7 +87,7 @@ class BlackJackGameTest {
         user.receiveCards(userCards);
         BlackJackGame blackJackGame = new BlackJackGame(Cards::empty);
 
-        assertThat(blackJackGame.calculateResult(List.of(dealer, user))).containsExactlyInAnyOrderEntriesOf(expected);
+        assertThat(blackJackGame.calculateResult(of(dealer, user))).containsExactlyInAnyOrderEntriesOf(expected);
     }
 
     private static Stream<Arguments> 플레이어들의_승패_결과를_계산한다_테스트_케이스() {
@@ -100,6 +101,19 @@ class BlackJackGameTest {
                                 new User("pobi"), Map.of(Result.WIN, 0, Result.DRAW, 1, Result.LOSE, 0)
                         ))
         );
+    }
+
+    @Test
+    void 플레이어들의_최적_포인트를_계산한다() {
+        Player pobi = new User("pobi");
+        pobi.receiveCards(new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TEN)));
+        Player json = new User("json");
+        json.receiveCards(new Cards(createCard(CardNumber.ACE), createCard(CardNumber.ACE),
+                createCard(CardNumber.TEN), createCard(CardNumber.TEN)));
+        BlackJackGame blackJackGame = new BlackJackGame(Cards::empty);
+
+        assertThat(blackJackGame.calculateOptimalPoints(of(pobi, json)))
+                .containsExactlyInAnyOrderEntriesOf(Map.of(pobi, 21, json, 22));
     }
 
 }
