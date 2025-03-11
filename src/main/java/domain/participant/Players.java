@@ -17,7 +17,8 @@ public class Players {
 
     public static Players createByNames(List<String> playerNames) {
         List<Player> players = playerNames.stream()
-                .map(playerName -> new Player(playerName, Hand.createEmpty()))
+                .map(playerName -> new Player(
+                        playerName, Hand.createEmpty()))
                 .toList();
         return new Players(players);
     }
@@ -41,7 +42,8 @@ public class Players {
         Map<Player, GameResultStatus> gameResult = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> GameResultStatus.calculate(dealerSum, player.calculateCardsSum())
+                        player -> GameResultStatus.calculate(
+                                dealerSum, player.calculateCardsSum())
                 ));
         return new GameResult(gameResult);
     }
