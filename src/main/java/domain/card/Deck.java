@@ -2,9 +2,10 @@ package domain.card;
 
 import static util.ExceptionConstants.*;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
     private static final String DECK_IS_EMPTY = "더이상 남아있는 카드가 없습니다.";
@@ -21,18 +22,14 @@ public class Deck {
     }
 
     private List<Card> initializeDeck() {
-        List<Card> result = new ArrayList<>();
-
-        for (CardType cardType : CardType.values()) {
-            for (CardNumberType cardNumberType : CardNumberType.values()) {
-                result.add(new Card(cardNumberType, cardType));
-            }
-        }
-        return result;
+        return Arrays.stream(CardType.values())
+                .flatMap(cardType -> Arrays.stream(CardNumberType.values())
+                        .map(cardNumberType -> new Card(cardNumberType, cardType)))
+                .collect(Collectors.toList());
     }
 
     private void checkRemainingCard() {
-        if(deck.isEmpty()) {
+        if (deck.isEmpty()) {
             throw new IllegalStateException(ERROR_HEADER + DECK_IS_EMPTY);
         }
     }
