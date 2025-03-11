@@ -18,10 +18,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<String> usernames = inputView.insertUsernames();
-        List<PlayerName> playerNames = usernames.stream()
-                .map(PlayerName::new)
-                .toList();
+        List<PlayerName> playerNames = inputView.insertUsernames();
 
         Game game = showInitialState(playerNames);
         for (PlayerName playerName : playerNames) {

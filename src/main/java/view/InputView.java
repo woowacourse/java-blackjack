@@ -4,6 +4,7 @@ import static view.InputValidator.validateDuplicate;
 import static view.InputValidator.validateInputFormat;
 import static view.InputValidator.validateUserResponse;
 
+import domain.PlayerName;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,13 +17,15 @@ public class InputView {
             "n", false
     );
 
-    public List<String> insertUsernames() {
+    public List<PlayerName> insertUsernames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리, 한글 영문 공백 쉼표만 입력 가능)");
         String rawNames = readLine();
         validateInputFormat(rawNames);
         List<String> splittedNames = Parser.splitByDelimiter(rawNames, DELIMITER_COMMA);
         validateDuplicate(splittedNames);
-        return splittedNames;
+        return splittedNames.stream()
+                .map(PlayerName::new)
+                .toList();
     }
 
     private String readLine() {
