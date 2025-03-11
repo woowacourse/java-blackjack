@@ -19,10 +19,7 @@ public enum WinningResult {
         if (!mainCards.isBlackjack() && subCards.isBlackjack()) {
             return false;
         }
-        if (mainScore == subScore) {
-            return true;
-        }
-        return false;
+        return mainScore == subScore;
     }),
     WIN((mainCards, subCards) -> {
         int mainScore = mainCards.calculateMaxScore();
