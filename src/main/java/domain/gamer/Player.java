@@ -1,15 +1,23 @@
 package domain.gamer;
 
-import domain.card.CardGenerator;
 import domain.card.CardGroup;
 import java.util.Objects;
 
 public class Player extends Gamer {
     private final String name;
 
-    public Player(String name, CardGroup cardGroup, CardGenerator cardGenerator) {
-        super(cardGroup, cardGenerator);
+    public Player(String name, CardGroup cardGroup) {
+        super(cardGroup);
         this.name = name;
+    }
+
+    private Player(final Player player) {
+        super(player.cardGroup);
+        this.name = player.name;
+    }
+
+    public static Player newInstance(final Player player) {
+        return new Player(player);
     }
 
     public String getName() {
