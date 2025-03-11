@@ -3,16 +3,16 @@ package domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class TrumpCardManager {
-    private static final List<TrumpCard> CARD_DECK = new LinkedList<>();
+    private static final Stack<TrumpCard> CARD_DECK = new Stack<>();
 
     public static void initCache() {
         Arrays.stream(CardShape.values())
                 .forEach(cardShape -> Arrays.stream(CardNumber.values())
-                        .forEach(cardNumber -> CARD_DECK.add(new TrumpCard(cardShape, cardNumber))));
+                        .forEach(cardNumber -> CARD_DECK.push(new TrumpCard(cardShape, cardNumber))));
         Collections.shuffle(CARD_DECK);
     }
 
@@ -26,7 +26,7 @@ public class TrumpCardManager {
         if (CARD_DECK.isEmpty()) {
             throw new IllegalArgumentException("카드가 다 떨어졌습니다");
         }
-        return CARD_DECK.removeFirst();
+        return CARD_DECK.pop();
     }
 
     public static List<TrumpCard> getCardDeck() {
