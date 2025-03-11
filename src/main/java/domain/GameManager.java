@@ -11,9 +11,6 @@ import java.util.Map;
 
 public class GameManager {
     public final static int MAX_PLAYER = 7;
-    public final static int WIN = 1;
-    public final static int LOSE = 2;
-    public final static int MOO = 3;
 
     private final List<User> users = new ArrayList<>();
     private final User dealer;
@@ -54,28 +51,28 @@ public class GameManager {
         return this.dealer;
     }
 
-    public int compare(User player) {
+    public GameResult compare(User player) {
         if (player.isBurst()) {
-            return LOSE;
+            return GameResult.LOSE;
         }
         if (dealer.getCardDeck().calculateScore() < player.getCardDeck().calculateScore()) {
-            return WIN;
+            return GameResult.WIN;
         }
         if (dealer.getCardDeck().calculateScore() > player.getCardDeck().calculateScore()) {
-            return LOSE;
+            return GameResult.LOSE;
         }
         return compareSameScore(player);
     }
 
-    private int compareSameScore(User player) {
+    private GameResult compareSameScore(User player) {
         if (dealer.getCardDeck().isBlackjack() && !player.getCardDeck().isBlackjack()) {
-            return LOSE;
+            return GameResult.LOSE;
         }
-        return MOO;
+        return GameResult.DRAW;
     }
 
-    public Map<User, Integer> createGameResult() {
-        Map<User, Integer> gameResult = new LinkedHashMap<>();
+    public Map<User, GameResult> createGameResult() {
+        Map<User, GameResult> gameResult = new LinkedHashMap<>();
         if (dealer.isBurst()) {
             users.forEach((user) -> putGameResultBurst(user, gameResult));
             return gameResult;
@@ -84,11 +81,11 @@ public class GameManager {
         return gameResult;
     }
 
-    private void putGameResultBurst(User user, Map<User, Integer> gameResult) {
+    private void putGameResultBurst(User user, Map<User, GameResult> gameResult) {
         if (user.isBurst()) {
-            gameResult.put(user, LOSE);
+            gameResult.put(user, GameResult.LOSE);
             return;
         }
-        gameResult.put(user, WIN);
+        gameResult.put(user, GameResult.WIN);
     }
 }

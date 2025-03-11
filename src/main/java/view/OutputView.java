@@ -1,6 +1,7 @@
 package view;
 
 import domain.GameManager;
+import domain.GameResult;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
@@ -25,17 +26,17 @@ public class OutputView {
         System.out.printf("딜러: %d승 %d패 %d 무승부\n", winCount, loseCount, mooCount);
     }
 
-    public void displayGameResult(Map<User, Integer> gameResult) {
+    public void displayGameResult(Map<User, GameResult> gameResult) {
         gameResult.forEach((key, value) -> displayUserGameResult(
                 key.getName(),
                 convertGameResult(value)));
     }
 
-    private String convertGameResult(Integer value) {
-        if (value.equals(GameManager.WIN)) {
+    private String convertGameResult(GameResult value) {
+        if (value == GameResult.WIN) {
             return "승";
         }
-        if (value.equals(GameManager.LOSE)) {
+        if (value == GameResult.LOSE) {
             return "패";
         }
         return "무승부";

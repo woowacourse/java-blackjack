@@ -1,6 +1,7 @@
 import static org.assertj.core.api.Assertions.*;
 
 import domain.CardNumber;
+import domain.GameResult;
 import domain.TrumpCardManager;
 import domain.CardShape;
 import domain.TrumpCard;
@@ -95,16 +96,16 @@ public class GameManagerTest {
         dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.TWO));
 
         //when
-        int result = gameManager.compare(player);
+        GameResult result = gameManager.compare(player);
 
         //then
-        Assertions.assertThat(result).isEqualTo(GameManager.WIN);
+        Assertions.assertThat(result).isEqualTo(GameResult.WIN);
     }
 
     @DisplayName("딜러와 유저의 총합이 같을 때 딜러가 블랙잭이라면 무승부 혹은 패배이다.")
     @ParameterizedTest
     @MethodSource("addCardDeck")
-    void test8(List<TrumpCard> playerCards, List<TrumpCard> dealerCards, int expectStatus) {
+    void test8(List<TrumpCard> playerCards, List<TrumpCard> dealerCards, GameResult expectStatus) {
         //given
         GameManager gameManager = new GameManager(List.of("수양"));
         User player = gameManager.findUserByUsername("수양");
@@ -118,7 +119,7 @@ public class GameManagerTest {
         }
 
         //when
-        int result = gameManager.compare(player);
+        GameResult result = gameManager.compare(player);
 
         //then
         Assertions.assertThat(result).isEqualTo(expectStatus);
@@ -133,7 +134,7 @@ public class GameManagerTest {
                         List.of(
                                 new TrumpCard(CardShape.DIA, CardNumber.ACE),
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J)),
-                        GameManager.MOO),
+                        GameResult.DRAW),
                 Arguments.arguments(
                         List.of(
                                 new TrumpCard(CardShape.DIA, CardNumber.FIVE),
@@ -142,7 +143,7 @@ public class GameManagerTest {
                         List.of(
                                 new TrumpCard(CardShape.DIA, CardNumber.ACE),
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J)),
-                        GameManager.LOSE),
+                        GameResult.LOSE),
                 Arguments.arguments(
                         List.of(
                                 new TrumpCard(CardShape.DIA, CardNumber.ACE),
@@ -152,7 +153,7 @@ public class GameManagerTest {
                                 new TrumpCard(CardShape.DIA, CardNumber.ACE),
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J),
                                 new TrumpCard(CardShape.CLOVER, CardNumber.J)),
-                        GameManager.MOO)
+                        GameResult.DRAW)
         );
     }
 
@@ -163,17 +164,17 @@ public class GameManagerTest {
         GameManager gameManager = new GameManager(List.of("유저"));
         User user = gameManager.findUserByUsername("유저");
         user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+        user.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
 
         gameManager.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
         gameManager.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
         gameManager.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
 
         // when
-        Map<User, Integer> gameResult = gameManager.createGameResult();
+        Map<User, GameResult> gameResult = gameManager.createGameResult();
 
         // then
-        Assertions.assertThat(gameResult.get(user)).isEqualTo(GameManager.LOSE);
+        Assertions.assertThat(gameResult.get(user)).isEqualTo(GameResult.LOSE);
     }
 }
