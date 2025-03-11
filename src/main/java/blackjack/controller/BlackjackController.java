@@ -37,7 +37,7 @@ public class BlackjackController {
 
     private List<Player> toPlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> new Player(name, new Cards(new ArrayList<>(), new ScoreCalculator())))
+                .map(name -> new Player(name, new Cards(new ArrayList<>(), new ScoreCalculator()), 0))
                 .toList();
     }
 

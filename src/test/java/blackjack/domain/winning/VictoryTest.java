@@ -23,14 +23,14 @@ public class VictoryTest {
                 new Cards(List.of(
                         new Card(Suit.CLUB, Rank.THREE),
                         new Card(Suit.CLUB, Rank.TEN)
-                ), new ScoreCalculator()));
+                )), 1000);
         Player surf = new Player("surf",
                 new Cards(List.of(
                         new Card(Suit.CLUB, Rank.THREE),
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.CLUB, Rank.FIVE),
                         new Card(Suit.HEART, Rank.THREE)
-                ), new ScoreCalculator()));
+                )), 1000);
         List<Card> dealerCards = List.of(
                 new Card(Suit.CLUB, Rank.ACE),
                 new Card(Suit.CLUB, Rank.NINE)

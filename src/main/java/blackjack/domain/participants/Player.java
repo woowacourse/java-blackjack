@@ -2,19 +2,39 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.winning.WinningResult;
 import java.util.Objects;
 
 public class Player {
     private final String name;
     private final Cards cards;
+    private final int battingMoney;
 
-    public Player(String name, Cards cards) {
+    public Player(String name, Cards cards, int battingMoney) {
         this.name = name.trim();
         this.cards = cards;
+        this.battingMoney = battingMoney;
     }
 
     public void prepareCards(Deck deck) {
         cards.take(deck.draw(), deck.draw());
+    }
+
+    public int calculateRevenue(Dealer dealer) {
+        if (cards.isBust()) {
+            return -battingMoney;
+        }
+        WinningResult winningResult = WinningResult.decide(cards, dealer.getCards());
+        if (winningResult == WinningResult.WIN) {
+            if (cards.isBlackjack()) {
+                return (int) (battingMoney * 1.5 - battingMoney);
+            }
+            return battingMoney;
+        }
+        if (winningResult == WinningResult.LOSE) {
+            return -battingMoney;
+        }
+        return 0;
     }
 
     public void drawCard(Deck deck) {
@@ -43,13 +63,15 @@ public class Player {
         }
 
         Player player = (Player) object;
-        return getName().equals(player.getName()) && Objects.equals(getCards(), player.getCards());
+        return battingMoney == player.battingMoney && getName().equals(player.getName()) && Objects.equals(
+                getCards(), player.getCards());
     }
 
     @Override
     public int hashCode() {
         int result = getName().hashCode();
         result = 31 * result + Objects.hashCode(getCards());
+        result = 31 * result + battingMoney;
         return result;
     }
 }

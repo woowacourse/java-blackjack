@@ -28,7 +28,7 @@ class GameBoardTest {
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
         Dealer dealer = new Dealer(new Cards());
-        Players players = new Players(new Player("pobi", new Cards()), new Player("neo", new Cards()));
+        Players players = new Players(new Player("pobi", new Cards(), 0), new Player("neo", new Cards(), 0));
         GameBoard gameBoard = new GameBoard(deck, dealer, players);
 
         //when
@@ -44,11 +44,11 @@ class GameBoardTest {
                         new Player("pobi", new Cards(
                                 new Card(Suit.CLUB, Rank.ACE),
                                 new Card(Suit.DIAMOND, Rank.EIGHT)
-                        )),
+                        ), 0),
                         new Player("neo", new Cards(
                                 new Card(Suit.DIAMOND, Rank.NINE),
                                 new Card(Suit.DIAMOND, Rank.ACE)
-                        ))
+                        ), 0)
                 ))
         );
     }
@@ -59,17 +59,17 @@ class GameBoardTest {
         Deck deck = new Deck(
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Player pobi = new Player("pobi", new Cards());
+        Player pobi = new Player("pobi", new Cards(), 1000);
         GameBoard gameBoard = new GameBoard(deck, new Dealer(new Cards()), new Players(
                 pobi,
-                new Player("neo", new Cards())
+                new Player("neo", new Cards(), 1000)
         ));
 
         //when
         gameBoard.drawCard(pobi);
 
         //then
-        assertThat(pobi).isEqualTo(new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.TEN))));
+        assertThat(pobi).isEqualTo(new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.TEN)), 1000));
     }
 
     @Test
@@ -81,8 +81,8 @@ class GameBoardTest {
         );
         Dealer dealer = new Dealer(new Cards());
         GameBoard gameBoard = new GameBoard(deck, dealer, new Players(
-                new Player("pobi", new Cards()),
-                new Player("neo", new Cards())
+                new Player("pobi", new Cards(), 1000),
+                new Player("neo", new Cards(), 1000)
         ));
 
         //when
