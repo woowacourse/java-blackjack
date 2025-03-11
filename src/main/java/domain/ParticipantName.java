@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Objects;
-
 public record ParticipantName(String name) {
     private static final String BLANK_NAME = "닉네임은 공백일 수 없습니다";
 

@@ -6,6 +6,7 @@ public abstract class BlackjackParticipant {
 
     protected final ParticipantHand hand;
     private final ParticipantName name;
+
     protected BlackjackParticipant(String name) {
         this.name = new ParticipantName(name);
         hand = new ParticipantHand();
