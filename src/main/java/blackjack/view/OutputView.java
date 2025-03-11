@@ -1,12 +1,11 @@
 package blackjack.view;
 
-import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.domain.Rule.DEALER_RECEIVE_CRITERIA;
 import static blackjack.domain.WinningType.DEFEAT;
 import static blackjack.domain.WinningType.DRAW;
 import static blackjack.domain.WinningType.WIN;
 import static java.util.stream.Collectors.joining;
 
+import blackjack.domain.Round;
 import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.WinningType;
 import blackjack.domain.card.Card;
@@ -29,11 +28,11 @@ public class OutputView {
     }
 
     public static void printBusted(final Name playerName) {
-        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, BLACK_JACK);
+        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, WinningDiscriminator.BLACK_JACK);
     }
 
     public static void printDealerReceiveCard() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_RECEIVE_CRITERIA);
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", Round.DEALER_RECEIVE_CRITERIA);
     }
 
     public static void printGamblerResult(final Name name, final List<Card> cards, final int score) {

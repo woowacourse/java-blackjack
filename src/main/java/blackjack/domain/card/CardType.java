@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.Rule.MAX_ACE_VALUE;
-
 public enum CardType {
     TWO(2, "2"),
     THREE(3, "3"),
@@ -15,7 +13,7 @@ public enum CardType {
     KING(10, "K"),
     QUEEN(10, "Q"),
     JACK(10, "J"),
-    ACE(MAX_ACE_VALUE, "A");
+    ACE(11, "A"); // 에이스의 값은 최대 값이 11로 정한다.
 
     private final int value;
     private final String displayName;

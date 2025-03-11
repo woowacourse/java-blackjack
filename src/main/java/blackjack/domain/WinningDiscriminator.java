@@ -1,18 +1,16 @@
 package blackjack.domain;
 
-import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.domain.WinningType.DEFEAT;
-import static blackjack.domain.WinningType.DRAW;
-import static blackjack.domain.WinningType.WIN;
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
-
 import blackjack.domain.gambler.Name;
 
 import java.util.Arrays;
 import java.util.Map;
 
+import static blackjack.domain.WinningType.*;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
+
 public class WinningDiscriminator {
+    public static final int BLACK_JACK = 21;
     private final int dealerScore;
     private final Map<Name, Integer> playerScores;
 

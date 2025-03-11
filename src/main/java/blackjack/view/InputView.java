@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import static blackjack.domain.Rule.DEALER_NAME;
 import static blackjack.view.ErrorMessage.INVALID_HIT_RESPONSE;
 import static blackjack.view.ErrorMessage.INVALID_PLAYER_COUNT;
 import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_DUPLICATED;
@@ -36,7 +35,7 @@ public class InputView {
 
     private static void validateNameEqualsDealerName(final String[] parsedName) {
         List<String> playerNames = List.of(parsedName);
-        if (playerNames.contains(DEALER_NAME.toString())) {
+        if (playerNames.contains(Name.createDealer().toString())) {
             throw new IllegalArgumentException(NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
         }
     }

@@ -1,14 +1,16 @@
 package blackjack.domain.gambler;
 
+import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static blackjack.domain.Rule.*;
-
 public class Hands {
     private final List<Card> cards;
+    private static final int MIN_ACE_VALUE = 1;
 
     public Hands() {
         this.cards = new ArrayList<>();
@@ -37,11 +39,11 @@ public class Hands {
     }
 
     protected int adjustSumByAce(int sum, int aceCount) {
-        if (sum <= BLACK_JACK) {
+        if (sum <= WinningDiscriminator.BLACK_JACK) {
             return sum;
         }
-        while (aceCount > 0 && sum > BLACK_JACK) {
-            sum -= (MAX_ACE_VALUE - MIN_ACE_VALUE);
+        while (aceCount > 0 && sum > WinningDiscriminator.BLACK_JACK) {
+            sum -= (CardType.ACE.getValue() - MIN_ACE_VALUE);
             aceCount--;
         }
         return sum;

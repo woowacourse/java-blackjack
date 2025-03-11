@@ -1,6 +1,5 @@
 package blackjack;
 
-import static blackjack.domain.Rule.DEALER_NAME;
 import static blackjack.view.InputView.inputPlayerHit;
 import static blackjack.view.InputView.inputPlayerName;
 import static blackjack.view.OutputView.printBusted;
@@ -53,7 +52,7 @@ public class Application {
     }
 
     private static void printInitialCards(final Round round, final List<Name> playerNames) {
-        printGamblerCards(DEALER_NAME, round.getInitialCards(DEALER_NAME));
+        printGamblerCards(Name.createDealer(), round.getInitialCards(Name.createDealer()));
         for (Name playerName : playerNames) {
             printGamblerCards(playerName, round.getInitialCards(playerName));
         }
@@ -67,7 +66,7 @@ public class Application {
 
     private static void processDealerTurn(final Round round) {
         if (round.dealerMustReceiveCard()) {
-            round.distributeCards(DEALER_NAME, 1);
+            round.distributeCards(Name.createDealer(), 1);
             printDealerReceiveCard();
         }
     }
@@ -97,7 +96,7 @@ public class Application {
     }
 
     private static void printGameResult(final Round round, final List<Name> playerNames) {
-        printGamblerResult(DEALER_NAME, round.getCards(DEALER_NAME), round.getScore(DEALER_NAME));
+        printGamblerResult(Name.createDealer(), round.getCards(Name.createDealer()), round.getScore(Name.createDealer()));
         for (Name playerName : playerNames) {
             List<Card> cards = round.getCards(playerName);
             int score = round.getScore(playerName);

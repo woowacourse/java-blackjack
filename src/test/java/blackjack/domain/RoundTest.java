@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.Rule.DEALER_NAME;
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -61,9 +59,9 @@ class RoundTest {
 
         // then
         assertThat(round.getScore(playerName)).isNotZero();
-        assertThat(round.getCards(DEALER_NAME)).size().isEqualTo(2);
-        assertThat(round.getCards(DEALER_NAME)).contains(card1, card2);
-        assertThat(round.getScore(DEALER_NAME)).isEqualTo(16);
+        assertThat(round.getCards(Name.createDealer())).size().isEqualTo(2);
+        assertThat(round.getCards(Name.createDealer())).contains(card1, card2);
+        assertThat(round.getScore(Name.createDealer())).isEqualTo(16);
         assertThat(round.getCards(playerName)).size().isEqualTo(2);
         assertThat(round.getCards(playerName)).contains(card3, card4);
         assertThat(round.getScore(playerName)).isEqualTo(20);

@@ -9,7 +9,7 @@ public class Name {
     private static final int MAX_NAME_LENGTH = 5;
     private static final int MIN_NAME_LENGTH = 2;
     private static final String SPACE = " ";
-
+    private static final Name DEALER_NAME = new Name("딜러");
     private final String name;
 
     public Name(final String name) {
@@ -24,6 +24,10 @@ public class Name {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_FORMAT.getMessage());
         }
         return name;
+    }
+
+    public static Name createDealer() {
+        return DEALER_NAME;
     }
 
     @Override

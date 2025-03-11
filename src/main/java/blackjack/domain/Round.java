@@ -1,8 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.Rule.BLACK_JACK;
-import static blackjack.domain.Rule.DEALER_RECEIVE_CRITERIA;
-import static blackjack.domain.Rule.DEALER_NAME;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
@@ -16,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Round {
+    public static final int DEALER_RECEIVE_CRITERIA = 16;
     private final CardDeck cardDeck;
     private final List<Gambler> gamblers;
 
@@ -26,7 +24,7 @@ public class Round {
 
     private List<Gambler> registerGamblers(final List<Name> playerNames) {
         List<Gambler> gamblers = new ArrayList<>();
-        gamblers.add(new Dealer(DEALER_NAME));
+        gamblers.add(new Dealer(Name.createDealer()));
         for (final Name playerName : playerNames) {
             Player player = new Player(playerName);
             gamblers.add(player);
@@ -63,16 +61,16 @@ public class Round {
     }
 
     public boolean dealerMustReceiveCard() {
-        Gambler dealer = findGambler(DEALER_NAME);
+        Gambler dealer = findGambler(Name.createDealer());
         return dealer.isScoreBelow(DEALER_RECEIVE_CRITERIA);
     }
 
     public boolean isPlayerBusted(final Name name) {
-        return !findGambler(name).isScoreBelow(BLACK_JACK);
+        return !findGambler(name).isScoreBelow(WinningDiscriminator.BLACK_JACK);
     }
 
     public WinningDiscriminator getWinningDiscriminator() {
-        Gambler dealer = findGambler(DEALER_NAME);
+        Gambler dealer = findGambler(Name.createDealer());
         int dealerScore = dealer.calculateScore();
         Map<Name, Integer> playerScores = createPlayerScores();
         return new WinningDiscriminator(dealerScore, playerScores); 
