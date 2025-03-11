@@ -21,13 +21,15 @@ public abstract class Participant {
     }
 
     public void addCards(final CardDeck cardDeck, final int count) {
-        if (isPossibleToAdd()) {
-            IntStream.range(0, count)
-                .mapToObj(i -> cardDeck.pickRandomCard())
-                .forEach(cards::add);
-            return;
+        if (isImpossibleToAdd()) {
+            throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
         }
-        throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
+
+        IntStream.range(0, count)
+            .forEach(i -> {
+                Card card = cardDeck.pickRandomCard();
+                cards.add(card);
+        });
     }
 
     public boolean isBlackjack() {
@@ -58,6 +60,8 @@ public abstract class Participant {
     public abstract List<Card> openInitialCards();
 
     public abstract boolean isPossibleToAdd();
+
+    public abstract boolean isImpossibleToAdd();
 
     private boolean hasACE() {
         return cards.stream()

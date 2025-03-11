@@ -24,6 +24,11 @@ public class Player extends Participant {
         return super.calculateDenominations() < PLAYER_DISTRIBUTE_CARD_THRESHOLD;
     }
 
+    @Override
+    public boolean isImpossibleToAdd() {
+        return super.calculateDenominations() >= PLAYER_DISTRIBUTE_CARD_THRESHOLD;
+    }
+
     public String getName() {
         return playerName.getName();
     }

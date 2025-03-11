@@ -20,4 +20,9 @@ public class Dealer extends Participant {
     public boolean isPossibleToAdd() {
         return super.calculateDenominations() <= DEALER_DISTRIBUTE_CARD_THRESHOLD;
     }
+
+    @Override
+    public boolean isImpossibleToAdd() {
+        return super.calculateDenominations() > DEALER_DISTRIBUTE_CARD_THRESHOLD;
+    }
 }

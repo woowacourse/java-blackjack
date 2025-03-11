@@ -30,6 +30,11 @@ public class ParticipantTest {
             public boolean isPossibleToAdd() {
                 return true;
             }
+
+            @Override
+            public boolean isImpossibleToAdd() {
+                return false;
+            }
         };
     }
 
