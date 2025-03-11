@@ -17,7 +17,7 @@ public class Game {
 
     public static Game initialize(List<PlayerName> playerNames) {
         Game game = new Game(playerNames);
-        game.distributeStartingHands();
+        game.distributeStartingHands(playerNames);
         return game;
     }
 
@@ -25,9 +25,8 @@ public class Game {
         return players.getPlayerCard(playerName);
     }
 
-    public void distributeStartingHands() {
+    public void distributeStartingHands(List<PlayerName> playerNames) {
         giveCardToDealer(INITIAL_HANDS);
-        List<PlayerName> playerNames = players.getUsernames();
         playerNames.forEach(playerName -> giveCardToPlayer(playerName, INITIAL_HANDS));
     }
 
@@ -59,13 +58,13 @@ public class Game {
     public Card getDealerOneCard() {
         return dealer.showAnyOneCard();
     }
-    
+
     public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }
 
     public Gamer getDealer() {
-        return dealer.clone();
+        return dealer;
     }
 
     public GameStatistics getGameStatistics() {

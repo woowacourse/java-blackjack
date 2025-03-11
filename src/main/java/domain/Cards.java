@@ -2,7 +2,7 @@ package domain;
 
 import static domain.Gamer.GAMER_BUST_THRESHOLD;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -80,6 +80,6 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return new ArrayList<>(cards);
     }
 }

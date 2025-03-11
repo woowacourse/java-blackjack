@@ -2,11 +2,11 @@ package domain;
 
 import java.util.ArrayList;
 
-public abstract class Gamer implements Cloneable {
+public abstract class Gamer {
     public static final int GAMER_BUST_THRESHOLD = 21;
     protected final Cards cards;
 
-    protected Gamer() {
+    public Gamer() {
         this.cards = new Cards(new ArrayList<>());
     }
 
@@ -30,17 +30,7 @@ public abstract class Gamer implements Cloneable {
         return score <= standard;
     }
 
-    @Override
-    public Gamer clone() {
-        try {
-            Gamer clone = (Gamer) super.clone();
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
-
     public Cards getCards() {
-        return cards;
+        return new Cards(cards.getCards());
     }
 }
