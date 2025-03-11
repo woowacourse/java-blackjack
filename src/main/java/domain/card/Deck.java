@@ -3,6 +3,7 @@ package domain.card;
 import domain.card.cardsGenerator.CardsGenerator;
 import domain.participant.Participant;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 부족합니다.");
         }
-        return cards.pop();
+        return cards.removeLast();
     }
 
     public void giveCardTo(Participant participant, int count) {
