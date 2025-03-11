@@ -16,8 +16,6 @@ public enum CardRank {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private static final int SOFT_ACE_VALUE = 11;
-
     private final int value;
     private final String description;
 
@@ -28,10 +26,6 @@ public enum CardRank {
 
     public boolean isAce() {
         return this.equals(ACE);
-    }
-
-    public int getSoftAceValue() {
-        return SOFT_ACE_VALUE;
     }
 
     public int getValue() {
