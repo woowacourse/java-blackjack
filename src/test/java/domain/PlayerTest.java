@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.card.*;
-import domain.fake.AceCardGenerator;
 import domain.gamer.Player;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +24,7 @@ public class PlayerTest {
         CardGenerator randomCardGenerator = new RandomCardGenerator();
 
         //when
-        final Player player = new Player(name, cardGroup, randomCardGenerator);
+        final Player player = new Player(name, cardGroup);
 
         //then
         assertThat(player).isInstanceOf(Player.class);
@@ -37,12 +36,11 @@ public class PlayerTest {
         //given
         final String name = "윌슨";
         final List<Card> cards = new ArrayList<>();
-        final CardGenerator cardGenerator = new AceCardGenerator();
         final CardGroup cardGroup = new CardGroup(cards);
 
         //when
-        final Player player = new Player(name, cardGroup, cardGenerator);
-        player.receiveCard();
+        final Player player = new Player(name, cardGroup);
+        player.receiveCard(new Card(CLOVER, ACE));
 
         //then
         assertThat(cardGroup.getCards().size()).isEqualTo(1);
@@ -66,9 +64,9 @@ public class PlayerTest {
         final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
 
         //when
-        final Player player1 = new Player(name1, cardGroup1, randomCardGenerator);
-        final Player player2 = new Player(name2, cardGroup2, randomCardGenerator);
-        final Player player3 = new Player(name3, cardGroup3, randomCardGenerator);
+        final Player player1 = new Player(name1, cardGroup1);
+        final Player player2 = new Player(name2, cardGroup2);
+        final Player player3 = new Player(name3, cardGroup3);
 
         final GameResult gameResult1 = player1.calculateGameResult(7);
         final GameResult gameResult2 = player2.calculateGameResult(7);

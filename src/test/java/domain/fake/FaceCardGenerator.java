@@ -8,7 +8,7 @@ import domain.card.CardType;
 public class FaceCardGenerator implements CardGenerator {
 
     @Override
-    public Card peekRandomCard() {
+    public Card peekCard() {
         return new Card(CardType.CLOVER, CardScore.JACK);
     }
 }

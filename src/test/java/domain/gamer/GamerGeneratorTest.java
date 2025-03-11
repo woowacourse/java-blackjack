@@ -18,7 +18,7 @@ class GamerGeneratorTest {
 
     @Test
     void 딜러_생성_테스트(){
-        Dealer dealer = GamerGenerator.generateDealer(new RandomCardGenerator());
+        Dealer dealer = GamerGenerator.generateDealer();
 
         assertThat(dealer).isInstanceOf(Dealer.class);
     }
