@@ -58,7 +58,7 @@ public class BlackjackManagerTest {
         final int beforeSize = dealer.getCards().size();
 
         // when
-        blackjackManager.addCardToDealerIfLowScore();
+        blackjackManager.addCardToDealerIfLowSum();
         final int afterSize = dealer.getCards().size();
 
         // then

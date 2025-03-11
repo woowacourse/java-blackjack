@@ -44,7 +44,7 @@ public class BlackjackManager {
         }
     }
 
-    public boolean addCardToDealerIfLowScore() {
+    public boolean addCardToDealerIfLowSum() {
         return getDealer().drawOneCardIfLowScore(deck);
     }
 

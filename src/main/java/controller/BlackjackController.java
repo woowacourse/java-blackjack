@@ -37,10 +37,9 @@ public class BlackjackController {
     }
 
     private void addMoreCards(BlackjackManager blackjackManager) {
-        blackjackManager.addMoreCardsToPlayers(InputView::inputWantOneMoreCard,
-                OutputView::printPlayerCards);
+        blackjackManager.addMoreCardsToPlayers(InputView::inputWantOneMoreCard, OutputView::printPlayerCards);
 
-        if (blackjackManager.addCardToDealerIfLowScore()) {
+        if (blackjackManager.addCardToDealerIfLowSum()) {
             OutputView.printAddCardToDealer();
         }
     }

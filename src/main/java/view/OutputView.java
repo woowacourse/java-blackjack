@@ -17,8 +17,7 @@ public class OutputView {
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), String.join(", ", names));
 
         printPlayerCards(dealer.name(), dealer.cards());
-        participants.forEach(participant ->
-                printPlayerCards(participant.name(), participant.cards()));
+        participants.forEach(participant -> printPlayerCards(participant.name(), participant.cards()));
         System.out.println();
     }
 
@@ -62,13 +61,13 @@ public class OutputView {
 
     public static void printMatchResults(String dealerName, DealerMatchResultCountDto dealerResult,
                                          ParticipantsMatchResultDto participantsMathResult) {
-        System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResultFormat(dealerResult));
+        System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResult(dealerResult));
 
-        participantsMathResult.participantMatchResult()
-                .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
+        participantsMathResult.nameMatchResult()
+                .forEach((key, value) -> System.out.printf("%s: %s%n", key, value.getTitle()));
     }
 
-    private static String convertToDealerMatchResultFormat(DealerMatchResultCountDto dealerResult) {
+    private static String convertToDealerMatchResult(DealerMatchResultCountDto dealerResult) {
         StringBuilder sb = new StringBuilder();
         dealerResult.matchResultCount().forEach((key, value) ->
                 sb.append(String.format("%d%s ", value, key.getTitle()))
