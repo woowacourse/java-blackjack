@@ -4,8 +4,6 @@ import domain.GameResult;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.cardsGenerator.CardsGenerator;
-import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -16,12 +14,10 @@ public class Dealer extends Participant {
     private static final int DRAW_BOUNDARY = 16;
     private static final int INIT_COUNT = 2;
 
-    private final Map<GameResult, Integer> result;
     private final Deck deck;
 
     private Dealer(Hand hand, Deck deck) {
         super(hand);
-        this.result = new EnumMap<>(GameResult.class);
         this.deck = deck;
     }
 
@@ -61,18 +57,12 @@ public class Dealer extends Participant {
         for (Player player : players.getPlayers()) {
             GameResult playerResult = rule.getResult(player, this);
             gameResult.put(player, playerResult);
-            GameResult dealerResult = playerResult.getReverse();
-            result.put(dealerResult, result.getOrDefault(dealerResult, 0) + 1);
         }
         return gameResult;
     }
 
     public int getNewCardCount() {
-        return super.getCards().getCards().size();
-    }
-
-    public Map<GameResult, Integer> getResult() {
-        return Collections.unmodifiableMap(result);
+        return super.getCards().getCards().size() - INIT_COUNT;
     }
 
     @Override
@@ -87,11 +77,11 @@ public class Dealer extends Participant {
             return false;
         }
         Dealer dealer = (Dealer) o;
-        return Objects.equals(result, dealer.result) && Objects.equals(deck, dealer.deck);
+        return Objects.equals(deck, dealer.deck);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(result, deck);
+        return Objects.hash(deck);
     }
 }

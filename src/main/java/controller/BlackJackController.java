@@ -77,8 +77,8 @@ public class BlackJackController {
     }
 
     private void showPlayerResult(BlackJackGame game) {
+        Map<GameResult, Integer> dealerResult = game.calculateDealerWinningCount();
         Map<Player, GameResult> playerResult = game.calculateGameResult();
-        Map<GameResult, Integer> dealerResult = game.calculateDealerWinCount();
         outputView.printResult(dealerResult, playerResult);
     }
 }

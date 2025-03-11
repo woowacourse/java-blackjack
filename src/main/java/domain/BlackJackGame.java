@@ -3,6 +3,7 @@ package domain;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJackGame {
@@ -28,8 +29,14 @@ public class BlackJackGame {
         return dealer.getGameResult(players);
     }
 
-    public Map<GameResult, Integer> calculateDealerWinCount() {
-        return dealer.getResult();
+    public Map<GameResult, Integer> calculateDealerWinningCount() {
+        Map<Player, GameResult> playerResult = calculateGameResult();
+        Map<GameResult, Integer> dealerWinningCount = new HashMap<>();
+        playerResult.values().stream()
+                .map(GameResult::getReverse)
+                .forEach((result) -> dealerWinningCount.put(result, dealerWinningCount.getOrDefault(result, 0) + 1));
+
+        return dealerWinningCount;
     }
 
     public int calculateDealerDrawCount() {
