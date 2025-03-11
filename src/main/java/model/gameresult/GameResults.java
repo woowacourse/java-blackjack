@@ -1,6 +1,8 @@
 package model.gameresult;
 
 import java.util.Map;
+import model.bettingamount.BettingAmounts;
+import model.participant.Players;
 
 public class GameResults {
     private final Map<String, GameResult> gameResults;
@@ -8,6 +10,7 @@ public class GameResults {
     public GameResults(final Map<String, GameResult> gameResults) {
         this.gameResults = gameResults;
     }
+
     public GameResult getGameResultByName(final String name) {
         return gameResults.get(name);
     }
@@ -26,5 +29,12 @@ public class GameResults {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
+    }
+
+    public int calculateDealerProfit(final Players players, final BettingAmounts bettingAmounts) {
+        return players.getNames().stream()
+                .mapToInt(name -> bettingAmounts.findByName(name)
+                        .getProfitByGameResult(getOppositeResult(gameResults.get(name))))
+                .sum();
     }
 }

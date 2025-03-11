@@ -4,13 +4,12 @@ import dto.CardDto;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import model.bettingamount.BettingAmount;
-import model.bettingamount.BettingAmounts;
 import model.Judge;
 import model.UserInput;
+import model.bettingamount.BettingAmount;
+import model.bettingamount.BettingAmounts;
 import model.card.Cards;
 import model.deck.Deck;
-import model.gameresult.GameResult;
 import model.gameresult.GameResults;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -36,15 +35,26 @@ public class BlackjackController {
         deck.shuffle();
         List<String> names = inputView.readPlayerNames();
         BettingAmounts bettingAmounts = initializeBettingAmounts(names);
-
-        Players players = initializePlayers(names, bettingAmounts);
+        outputView.printNewLine();
+        Players players = Players.createByNames(names, deck, bettingAmounts);
         Dealer dealer = new Dealer(deck);
 
         printInitialGameState(players, dealer);
         playPlayerTurns(players);
         printDealerDrawCount(dealer);
         printFinalGameState(dealer, players);
-        printGameResult(players, dealer);
+        printProfit(players, dealer, bettingAmounts);
+    }
+
+    private void printProfit(final Players players, final Dealer dealer, final BettingAmounts bettingAmounts) {
+        outputView.printGameResultHeader();
+        GameResults gameResults = calculateGameResults(players, dealer);
+        outputView.printProfitWithName("딜러", gameResults.calculateDealerProfit(players, bettingAmounts));
+        players.getNames().forEach(name ->
+                outputView.printProfitWithName(
+                        name,
+                        bettingAmounts.findByName(name).getProfitByGameResult(gameResults.getGameResultByName(name)))
+        );
     }
 
     private BettingAmounts initializeBettingAmounts(final List<String> names) {
@@ -55,11 +65,6 @@ public class BlackjackController {
                         )
                 )
         );
-    }
-
-    private Players initializePlayers(final List<String> names, final BettingAmounts bettingAmounts) {
-        outputView.printNewLine();
-        return Players.createByNames(names, deck, bettingAmounts);
     }
 
     private void printInitialGameState(final Players players, final Dealer dealer) {
@@ -106,23 +111,6 @@ public class BlackjackController {
                         player.calculateScore())
         );
         outputView.printNewLine();
-    }
-
-    private void printGameResult(final Players players, final Dealer dealer) {
-        GameResults gameResults = calculateGameResults(players, dealer);
-
-        outputView.printGameResultHeader();
-        outputView.printDealerGameResult(
-                gameResults.calculateDealerResultCount(GameResult.WIN),
-                gameResults.calculateDealerResultCount(GameResult.DRAW),
-                gameResults.calculateDealerResultCount(GameResult.LOSE)
-        );
-
-        players.getPlayers().forEach(player ->
-                outputView.printPlayerGameResult(
-                        player.getName(),
-                        gameResults.getGameResultByName(player.getName()).getMessage())
-        );
     }
 
     private GameResults calculateGameResults(final Players players, final Dealer dealer) {
