@@ -51,8 +51,8 @@ public class Player {
         return resolveBust();
     }
 
-    private boolean isNotDealer() {
-        return !this.getClass().equals(Dealer.class);
+    boolean isNotDealer() {
+        return true;
     }
 
     public int getHandTotal() {

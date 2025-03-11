@@ -40,4 +40,9 @@ public class Dealer extends Player {
     public int getExtraSize() {
         return hand.getExtraSize();
     }
+
+    @Override
+    boolean isNotDealer() {
+        return false;
+    }
 }
