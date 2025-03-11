@@ -3,7 +3,9 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.view.WinningType;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -20,5 +22,19 @@ class ProfitCalculatorTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("딜러의_수익금은_플레이어의_수익/손실으로부터_계산한다")
+    @Test
+    void aa() {
+        // given
+        ProfitCalculator profitCalculator = new ProfitCalculator();
+        List<Integer> playerProfits = List.of(-20_000, 10_000, 20_000);
+
+        // when
+        int result = profitCalculator.calculateDealerProfit(playerProfits);
+
+        // then
+        assertThat(result).isEqualTo(-10_000);
     }
 }
