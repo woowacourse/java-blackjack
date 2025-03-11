@@ -22,12 +22,6 @@ public class Players {
         );
     }
 
-    public void dealInitialCards(Deck deck) {
-        for (Player player : players) {
-            player.dealInitialCards(deck);
-        }
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

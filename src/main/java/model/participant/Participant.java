@@ -16,12 +16,6 @@ public class Participant {
         participantHand.add(card);
     }
 
-    public void dealInitialCards(Deck deck) {
-        for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
-            receiveCard(deck.pick());
-        }
-    }
-
     public boolean isBust() {
         return participantHand.checkBust();
     }
