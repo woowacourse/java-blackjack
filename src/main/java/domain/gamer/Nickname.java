@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Nickname {
 
-    private static final String REGEX = "^[a-zA-Z가-힣]{2,5}$";
+    private static final String NICKNAME_REGEX = "^[a-zA-Z가-힣]{2,5}$";
     private final String displayName;
 
     public Nickname(final String displayName) {
@@ -13,7 +13,7 @@ public class Nickname {
     }
 
     private void validateNaming(final String displayName) {
-        if (displayName.matches(REGEX)) {
+        if (displayName.matches(NICKNAME_REGEX)) {
             return;
         }
         throw new IllegalArgumentException("이름은 영어로만 작성이 가능하며 2~5글자여야합니다.");
