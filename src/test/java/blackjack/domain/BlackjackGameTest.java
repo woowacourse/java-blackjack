@@ -191,7 +191,7 @@ class BlackjackGameTest {
                     players
             );
 
-            assertThat(game.calculateDealerWinnings()).isEqualTo(1000);
+            assertThat(game.calculateDealerPayout()).isEqualTo(1000);
         }
     }
 }

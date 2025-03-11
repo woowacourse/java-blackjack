@@ -51,7 +51,7 @@ public class BlackjackGame {
         return false;
     }
 
-    public int calculateDealerWinnings() {
+    public int calculateDealerPayout() {
         return convertToOppositeSign(players.calculateTotalPayout(dealer));
     }
 

@@ -88,7 +88,7 @@ public class BlackjackController {
 
     private void showBetResult(final BlackjackGame blackjackGame) {
         outputView.printBetResultTitle();
-        outputView.printBetResultByDealer(blackjackGame.calculateDealerWinnings());
+        outputView.printBetResultByDealer(blackjackGame.calculateDealerPayout());
         Dealer dealer = blackjackGame.getDealer();
         for (Player player : blackjackGame.getPlayers()) {
             outputView.printBetResultByPlayer(player.getName(), player.calculatePayout(dealer));
