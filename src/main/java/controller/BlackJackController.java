@@ -6,8 +6,8 @@ import static domain.BlackJackConstants.THRESHOLD;
 import domain.Command;
 import domain.FinalResult;
 import domain.deck.Card;
+import domain.deck.CardSetGenerator;
 import domain.deck.Deck;
-import domain.deck.DeckGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Nickname;
 import domain.gamer.Player;
@@ -51,9 +51,9 @@ public class BlackJackController {
     }
 
     private Deck generateDeck() {
-        final DeckGenerator deckGenerator = new DeckGenerator();
-        final List<Card> cards = deckGenerator.generate();
-        deckGenerator.shuffle(cards, new Random());
+        final CardSetGenerator cardSetGenerator = new CardSetGenerator();
+        final List<Card> cards = cardSetGenerator.generate();
+        cardSetGenerator.shuffle(cards, new Random());
         return new Deck(cards);
     }
 

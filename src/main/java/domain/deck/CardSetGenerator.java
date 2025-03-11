@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class DeckGenerator {
+public class CardSetGenerator {
 
     public List<Card> generate() {
         return Arrays.stream(Shape.values())

@@ -6,17 +6,17 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DeckGeneratorTest {
+class CardSetGeneratorTest {
 
     @DisplayName("카드 목록을 구성한다.")
     @Test
     void 카드_목록을_구성한다() {
 
         // given
-        final DeckGenerator deckGenerator = new DeckGenerator();
+        final CardSetGenerator cardSetGenerator = new CardSetGenerator();
 
         // when & then
-        Assertions.assertThatCode(deckGenerator::generate)
+        Assertions.assertThatCode(cardSetGenerator::generate)
                 .doesNotThrowAnyException();
     }
 
@@ -25,13 +25,13 @@ class DeckGeneratorTest {
     void 카드를_셔플한다() {
 
         // given
-        final DeckGenerator deckGenerator = new DeckGenerator();
-        final List<Card> cards = deckGenerator.generate();
+        final CardSetGenerator cardSetGenerator = new CardSetGenerator();
+        final List<Card> cards = cardSetGenerator.generate();
         final List<Card> previousCards = List.copyOf(cards);
         final Random random = new Random(123);
 
         // when
-        deckGenerator.shuffle(cards, random);
+        cardSetGenerator.shuffle(cards, random);
 
         // then
         Assertions.assertThat(previousCards).isNotEqualTo(cards);

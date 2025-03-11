@@ -15,10 +15,10 @@ class DeckTest {
     void 덱을_생성한다() {
 
         // given
-        final DeckGenerator deckGenerator = new DeckGenerator();
+        final CardSetGenerator cardSetGenerator = new CardSetGenerator();
 
         // when & then
-        assertThatCode(() -> new Deck(deckGenerator.generate()))
+        assertThatCode(() -> new Deck(cardSetGenerator.generate()))
                 .doesNotThrowAnyException();
     }
 
