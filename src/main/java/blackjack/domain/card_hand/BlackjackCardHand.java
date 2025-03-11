@@ -9,7 +9,7 @@ import java.util.List;
 public final class BlackjackCardHand {
     
     private static final int BUST_THRESHOLD = 21;
-    private static final int BLACK_JACK_MAX_SUM = 21;
+    private static final int BLACK_JACK_SUM = 21;
     private static final int BLACK_JACK_CARD_COUNT = 2;
     
     private final CardHand cardHand;
@@ -31,11 +31,11 @@ public final class BlackjackCardHand {
     }
     
     public boolean isBust() {
-        return getBlackjackSum() > BLACK_JACK_MAX_SUM;
+        return getBlackjackSum() > BUST_THRESHOLD;
     }
     
     public boolean isBlackjack() {
-        return getBlackjackSum() == BLACK_JACK_MAX_SUM && cardHand.getCardCount() == BLACK_JACK_CARD_COUNT;
+        return getBlackjackSum() == BLACK_JACK_SUM && cardHand.getCardCount() == BLACK_JACK_CARD_COUNT;
     }
     
     private List<Integer> calculatePossibleSums() {
