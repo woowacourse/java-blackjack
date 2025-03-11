@@ -5,16 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -40,19 +36,7 @@ public class VictoryTest {
                 new Card(Suit.CLUB, Rank.NINE)
         );
         Players players = new Players(List.of(pobi, surf));
-        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
-                new Card(Suit.CLUB, Rank.FOUR),
-                new Card(Suit.CLUB, Rank.FIVE),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.DIAMOND, Rank.ONE),
-                new Card(Suit.HEART, Rank.ONE),
-                new Card(Suit.SPADE, Rank.ONE)
-        ));
-        Dealer dealer = new Dealer(
-                players,
-                new Deck(cards),
-                new Cards(dealerCards, new ScoreCalculator())
-        );
+        Dealer dealer = new Dealer(new Cards(dealerCards, new ScoreCalculator()));
 
         //when
         Victory victory = Victory.create(dealer, players);

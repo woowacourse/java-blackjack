@@ -1,7 +1,7 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import java.util.Objects;
 
 public class Player {
@@ -13,8 +13,12 @@ public class Player {
         this.cards = cards;
     }
 
-    public void send(Card... cards) {
-        this.cards.take(cards);
+    public void prepareCards(Deck deck) {
+        cards.take(deck.draw(), deck.draw());
+    }
+
+    public void drawCard(Deck deck) {
+        cards.take(deck.draw());
     }
 
     public int calculateMaxScore() {

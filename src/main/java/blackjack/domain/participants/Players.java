@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Deck;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -24,17 +26,24 @@ public class Players {
         }
     }
 
+    public void prepareCards(Deck deck) {
+        players.forEach(player -> player.prepareCards(deck));
+    }
+
+    public void drawCard(Deck deck, Player player) {
+        if (!players.contains(player)) {
+            throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
+        }
+        player.drawCard(deck);
+    }
+
     public void sendAll(Consumer<Player> consumer) {
         for (Player player : players) {
             consumer.accept(player);
         }
     }
 
-    public boolean contains(Player player) {
-        return players.contains(player);
-    }
-
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 }

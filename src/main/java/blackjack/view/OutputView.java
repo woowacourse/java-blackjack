@@ -5,6 +5,7 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
+import blackjack.domain.participants.Players;
 import blackjack.domain.winning.Victory;
 import blackjack.domain.winning.WinningResult;
 import java.util.List;
@@ -13,17 +14,18 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printDealerAndPlayerCards(Cards dealerCards, List<Player> players) {
-        String names = players.stream()
+    public static void printDealerAndPlayerCards(Dealer dealer, Players players) {
+        String names = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(","));
         System.out.println();
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
+        Cards dealerCards = dealer.getCards();
         System.out.println("딜러카드: " +
                 toKoreaRank(dealerCards.getCards().getFirst().getRank()) +
                 toKoreaSuit(dealerCards.getCards().getFirst().getSuit())
         );
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }
         System.out.println();

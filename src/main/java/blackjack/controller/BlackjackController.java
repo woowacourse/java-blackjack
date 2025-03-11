@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.GameBoard;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardsShuffler;
@@ -17,12 +18,13 @@ public class BlackjackController {
     public void run() {
         try {
             Players players = createPlayers();
-            Dealer dealer = new Dealer(players, Deck.defaultDeck(), new ScoreCalculator());
-            handOutCards(dealer, players);
-            additionalCard(dealer, players);
-            dealerAdditionalCard(dealer);
+            Dealer dealer = new Dealer();
+            GameBoard gameBoard = new GameBoard(Deck.defaultDeck(), dealer, players);
+            handOutCards(gameBoard);
+            additionalCard(gameBoard, players);
+            dealerAdditionalCard(gameBoard);
             printBlackjackResult(dealer, players);
-            printVictory(dealer, players);
+            printVictory(gameBoard, players);
         } catch (RuntimeException e) {
             OutputView.printErrorMessage(e);
         }
@@ -39,15 +41,15 @@ public class BlackjackController {
                 .toList();
     }
 
-    private void handOutCards(Dealer dealer, Players players) {
-        dealer.prepareBlackjack(new RandomCardsShuffler());
-        OutputView.printDealerAndPlayerCards(dealer.getCards(), players.getPlayers());
+    private void handOutCards(GameBoard gameBoard) {
+        gameBoard.prepareGame(new RandomCardsShuffler());
+        OutputView.printDealerAndPlayerCards(gameBoard.getDealer(), gameBoard.getPlayers());
     }
 
-    private void additionalCard(Dealer dealer, Players players) {
+    private void additionalCard(GameBoard gameBoard, Players players) {
         players.sendAll((player -> {
             while (InputView.inputAdditionalCard(player)) {
-                if (!sendCardToPlayer(dealer, player)) {
+                if (!sendCardToPlayer(gameBoard, player)) {
                     break;
                 }
                 OutputView.printPlayerCards(player);
@@ -55,9 +57,9 @@ public class BlackjackController {
         }));
     }
 
-    private static boolean sendCardToPlayer(Dealer dealer, Player player) {
+    private static boolean sendCardToPlayer(GameBoard gameBoard, Player player) {
         try {
-            dealer.sendCardToPlayer(player);
+            gameBoard.drawCard(player);
             return true;
         } catch (RuntimeException e) {
             OutputView.printCannotAdditionalCard();
@@ -66,11 +68,9 @@ public class BlackjackController {
     }
 
 
-    private void dealerAdditionalCard(Dealer dealer) {
-        int prevSize = dealer.getCardSize();
-        dealer.pickAdditionalCard();
-        int nextSize = dealer.getCardSize();
-        OutputView.printDealerAdditionalCard(nextSize - prevSize);
+    private void dealerAdditionalCard(GameBoard gameBoard) {
+        gameBoard.drawAdditionalCardOfDealer();
+        OutputView.printDealerAdditionalCard(1);
     }
 
 
@@ -79,8 +79,8 @@ public class BlackjackController {
         OutputView.printPlayerResult(players.getPlayers());
     }
 
-    private void printVictory(Dealer dealer, Players players) {
-        Victory victory = dealer.createVictory();
+    private void printVictory(GameBoard gameBoard, Players players) {
+        Victory victory = gameBoard.createVictory();
         OutputView.printVictory(victory, players.getPlayers());
     }
 }

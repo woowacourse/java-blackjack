@@ -1,6 +1,5 @@
 package blackjack.domain.participants;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Cards;
@@ -43,22 +42,5 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 수는 최소 2명입니다.");
-    }
-
-    @Test
-    void 특정_플레이어가_존재하는지_확인할_수_있다() {
-        //given
-        Players players = new Players(
-                List.of(
-                        new Player("pobi", new Cards(List.of(), new ScoreCalculator())),
-                        new Player("neo", new Cards(List.of(), new ScoreCalculator()))
-                )
-        );
-
-        //when
-        boolean result = players.contains(new Player("pobi", new Cards(List.of(), new ScoreCalculator())));
-
-        //then
-        assertThat(result).isTrue();
     }
 }
