@@ -29,8 +29,8 @@ public class Dealer extends Participant {
         calculateBettingAmount(player.calculateBettingAmount(gameResult));
     }
 
-    private void calculateBettingAmount(int bettingAmount) {
-        this.totalBettingAmount -= bettingAmount;
+    private void calculateBettingAmount(Chip bettingChip) {
+        this.totalBettingAmount -= bettingChip.getBettingAmount();
     }
 
     public GameResult judgeWin(Player player) {

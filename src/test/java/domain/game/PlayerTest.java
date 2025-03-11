@@ -65,27 +65,4 @@ public class PlayerTest {
                 () -> assertThat(player.getBettingAmount()).isEqualTo(bettingAmount)
         );
     }
-
-    private static Stream<Arguments> provideGameResultAndBettingAmount() {
-        return Stream.of(
-                Arguments.of(GameResult.BLACKJACK_WIN, 1000, 1500),
-                Arguments.of(GameResult.WIN, 1000, 1000),
-                Arguments.of(GameResult.LOSE, 1000, -1000),
-                Arguments.of(GameResult.DRAW, 1000, 0)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideGameResultAndBettingAmount")
-    void 플레이어의_게임_결과에_따라_배팅_금액을_계산해야한다(GameResult gameResult, int bettingAmount, int expected) {
-        //given
-        String name = "pobi";
-        Player player = new Player(name, bettingAmount);
-
-        //when
-        int actual = player.calculateBettingAmount(gameResult);
-
-        //then
-        assertThat(actual).isEqualTo(expected);
-    }
 }

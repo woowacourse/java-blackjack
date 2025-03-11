@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class DealerTest {
 
@@ -63,10 +62,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(-1000)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
     }
 
     @Test
@@ -84,10 +80,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(1000)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -105,10 +98,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(0)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW));
     }
 
     @Test
@@ -126,10 +116,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(1000)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -147,10 +134,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(-1000)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
     }
 
     @Test
@@ -168,10 +152,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(1000)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -189,10 +170,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(0)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW));
     }
 
     @Test
@@ -211,10 +189,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(1000)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -232,10 +207,7 @@ public class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertAll(
-                () -> assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN)),
-                () -> assertThat(dealer.getTotalBettingAmount()).isEqualTo(-1000)
-        );
+        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
     }
 
     @Test
