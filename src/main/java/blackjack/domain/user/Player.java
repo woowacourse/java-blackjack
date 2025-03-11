@@ -7,37 +7,35 @@ import java.util.List;
 
 public class Player {
 
-    private final Nickname nickname;
-    private final Hand hand;
+    private final GameUser gameUser;
 
     public Player(Nickname nickname) {
-        this.nickname = nickname;
-        this.hand = new Hand();
+        this.gameUser = new GameUser(nickname);
     }
 
     public void addInitialCards(List<Card> cards) {
-        hand.addCard(cards);
+        gameUser.addCardInHand(cards);
     }
 
     public void hit(Card card) {
         validateHitPossibility();
-        hand.addCard(card);
+        gameUser.addCardInHand(card);
     }
 
     public boolean checkHitPossibility() {
-        return GameRule.checkPossibilityOfHit(hand.calculateTotalPoint());
+        return GameRule.checkPossibilityOfHit(gameUser.getPoint());
     }
 
     public List<Card> getHand() {
-        return hand.getCards();
+        return gameUser.getHand();
     }
 
     public int getPoint() {
-        return hand.calculateTotalPoint();
+        return gameUser.getPoint();
     }
 
     public String getNickname() {
-        return nickname.getValue();
+        return gameUser.getNickname();
     }
 
     private void validateHitPossibility() {

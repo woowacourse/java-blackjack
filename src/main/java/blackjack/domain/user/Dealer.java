@@ -8,19 +8,18 @@ import java.util.List;
 
 public class Dealer {
 
-    private final static String DEALER_NAME = "딜러";
-
-    private final Player player;
+    private final static Nickname DEALER_NICKNAME = new Nickname("딜러");
+    private final GameUser gameUser;
     private final CardDeck cardDeck;
 
     public Dealer(CardDeck cardDeck) {
-        this.player = new Player(new Nickname(DEALER_NAME));
+        this.gameUser = new GameUser(DEALER_NICKNAME);
         this.cardDeck = cardDeck;
     }
 
     public void drawSelfInitialCard() {
         List<Card> cards = cardDeck.drawCard(GameRule.INITIAL_CARD_COUNT.getValue());
-        player.addInitialCards(cards);
+        gameUser.addCardInHand(cards);
     }
 
     public List<Card> distributePlayerInitialCard() {
@@ -33,9 +32,9 @@ public class Dealer {
 
     public int drawSelfCardUntilLimit() {
         int count = 0;
-        while (GameRule.checkPossibilityOfDealerDrawing(player.getPoint())) {
+        while (GameRule.checkPossibilityOfDealerDrawing(gameUser.getPoint())) {
             Card drawnCard = cardDeck.drawCard(1).getFirst();
-            player.hit(drawnCard);
+            gameUser.addCardInHand(drawnCard);
             count++;
         }
         return count;
@@ -43,24 +42,24 @@ public class Dealer {
 
     public Card findFirstCard() {
         validateBeforeDrawInitialCards();
-        List<Card> cards = player.getHand();
+        List<Card> cards = gameUser.getHand();
         return cards.getFirst();
     }
 
     public String getDealerName() {
-        return player.getNickname();
+        return gameUser.getNickname();
     }
 
     public List<Card> getHand() {
-        return player.getHand();
+        return gameUser.getHand();
     }
 
     public int getPoint() {
-        return player.getPoint();
+        return gameUser.getPoint();
     }
 
     private void validateBeforeDrawInitialCards() {
-        if (player.getHand().isEmpty()) {
+        if (gameUser.getHand().isEmpty()) {
             throw new IllegalArgumentException(ExceptionMessage.BEFORE_CARD_DISTRIBUTION.getContent());
         }
     }
