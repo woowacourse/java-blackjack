@@ -88,5 +88,4 @@ public final class OutputView {
     private static void print(final String message) {
         System.out.println(message);
     }
-
 }

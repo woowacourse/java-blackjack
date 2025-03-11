@@ -14,6 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum FinalResult {
+
     WIN("승", (sumOfRank, otherSumOfRank) -> sumOfRank > otherSumOfRank),
     LOSE("패", (sumOfRank, otherSumOfRank) -> sumOfRank < otherSumOfRank),
     DRAW("무", Integer::equals);
@@ -54,7 +55,6 @@ public enum FinalResult {
         if (playerSum > BUST_NUMBER) {
             return LOSE;
         }
-
         if (dealerSum > BUST_NUMBER) {
             return WIN;
         }

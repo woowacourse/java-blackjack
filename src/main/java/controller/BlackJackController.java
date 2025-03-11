@@ -65,7 +65,6 @@ public class BlackJackController {
     private void setGame(final List<Player> players, Dealer dealer, final Deck deck) {
         players.forEach(player -> receiveInitialCards(player, deck));
         receiveInitialCards(dealer, deck);
-
     }
 
     private void receiveInitialCards(Gamer gamer, Deck deck) {
@@ -112,6 +111,7 @@ public class BlackJackController {
     private void processAdditionalHit(final Deck deck, final Player player) {
         String input = InputView.readQuestOneMoreCard(player.getDisplayName());
         Command command = Command.find(input);
+
         while (command.equals(Command.YES)) {
             final Card card = deck.drawCard();
             player.hit(card);
@@ -128,7 +128,6 @@ public class BlackJackController {
         while (dealer.canHit()) {
             final Card card = deck.drawCard();
             dealer.hit(card);
-
             OutputView.printDealerHit(THRESHOLD, dealer.getDisplayName());
         }
     }

@@ -3,6 +3,7 @@ package domain;
 import java.util.Arrays;
 
 public enum Command {
+
     YES("Y"),
     NO("N");
 

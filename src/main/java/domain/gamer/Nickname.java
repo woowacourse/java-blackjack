@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Nickname {
 
     private static final String NICKNAME_REGEX = "^[a-zA-Z가-힣]{2,5}$";
+
     private final String displayName;
 
     public Nickname(final String displayName) {

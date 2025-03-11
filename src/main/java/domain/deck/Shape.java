@@ -1,6 +1,7 @@
 package domain.deck;
 
 public enum Shape {
+
     DIAMOND("다이아몬드"),
     HEART("하트"),
     SPADE("스페이드"),
