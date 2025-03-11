@@ -1,9 +1,9 @@
 package domain;
 
-import domain.dto.NameAndCards;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
@@ -44,15 +44,18 @@ public class BlackjackTest {
         blackjack.distributeInitialCards();
 
         // when
-        NameAndCards dealer = blackjack.openDealerCards();
-        List<NameAndCards> participants = blackjack.openParticipantsCards();
+        List<Card> dealerCards = blackjack.openDealerCards();
+        List<List<Card>> participantsCards = blackjack.getParticipants().stream()
+                .map(blackjack::openParticipantsCards)
+                .toList();
+
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.cards().size())
+            softly.assertThat(dealerCards.size())
                     .isEqualTo(1);
 
-            for (NameAndCards nameAndCards : participants) {
-                softly.assertThat(nameAndCards.cards().size())
+            for (List<Card> cards : participantsCards) {
+                softly.assertThat(cards.size())
                         .isEqualTo(2);
             }
         });
@@ -73,10 +76,13 @@ public class BlackjackTest {
         Deck deck = DeckGenerator.generateDeck();
         Blackjack blackjack = new Blackjack(players, deck);
         blackjack.distributeInitialCards();
-        final int drawnCount = blackjack.getNameAndCards(player).cards().size();
+        final int drawnCount = player.getHandCards().size();
 
-        // when & then
-        Assertions.assertThat(blackjack.addCard(player).cards().size())
+        // when
+        blackjack.addCard(player);
+
+        // then
+        Assertions.assertThat(player.getCards().size())
                 .isEqualTo(drawnCount + 1);
 
 
