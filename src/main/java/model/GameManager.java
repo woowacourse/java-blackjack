@@ -48,8 +48,16 @@ public class GameManager {
         for (Player player : players.getPlayers()) {
             ResultType resultType = dealer.compareTo(player);
             List<MatchType> matches = resultType.getMatches();
-            dealer.updateResult(matches.getFirst());
-            player.updateResult(matches.getLast());
+            updateDealerResult(matches);
+            updatePlayerResult(player, matches);
         }
+    }
+
+    private static void updatePlayerResult(Player player, List<MatchType> matches) {
+        player.updateResult(matches.getLast());
+    }
+
+    private void updateDealerResult(List<MatchType> matches) {
+        dealer.updateResult(matches.getFirst());
     }
 }
