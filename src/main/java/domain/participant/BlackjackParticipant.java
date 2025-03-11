@@ -51,8 +51,9 @@ public abstract class BlackjackParticipant {
     }
 
     private int calculateAceIncludeSum(int aceCount, int sum) {
-        if (isBUST(sum) && aceCount != 0) {
-            return calculateAceIncludeSum(aceCount - 1, sum - ACE_DIFF);
+        while (isBUST(sum) && aceCount != 0) {
+            sum = sum - ACE_DIFF;
+            aceCount--;
         }
         return sum;
     }
