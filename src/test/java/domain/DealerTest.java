@@ -44,8 +44,8 @@ public class DealerTest {
         Participant notExceedDealer = new Dealer(notExceedBlackjackScoreCards);
 
         assertAll(
-                () -> assertThat(exceedDealer.isBurst()).isTrue(),
-                () -> assertThat(notExceedDealer.isBurst()).isFalse()
+                () -> assertThat(exceedDealer.isBust()).isTrue(),
+                () -> assertThat(notExceedDealer.isBust()).isFalse()
         );
     }
 

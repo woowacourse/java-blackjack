@@ -19,7 +19,7 @@ public abstract class Participant {
         cards = cards.addCards(providedCards);
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return cards.isBlackjackScoreExceeded();
     }
 

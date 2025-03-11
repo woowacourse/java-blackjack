@@ -19,11 +19,11 @@ public enum ResultStatus {
     }
 
     private static void judgeGameResultByPlayer(Participant dealer, Participant player, Map<Participant, ResultStatus> result) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             result.put(player, ResultStatus.LOSE);
             return;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             result.put(player, ResultStatus.WIN);
             return;
         }

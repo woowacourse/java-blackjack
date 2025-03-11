@@ -46,8 +46,8 @@ public class PlayerTest {
         Participant notExceedPlayer = new Player(participantName, notExceedBlackjackScoreCards);
 
         assertAll(
-                () -> assertThat(exceedPlayer.isBurst()).isTrue(),
-                () -> assertThat(notExceedPlayer.isBurst()).isFalse()
+                () -> assertThat(exceedPlayer.isBust()).isTrue(),
+                () -> assertThat(notExceedPlayer.isBust()).isFalse()
         );
     }
 

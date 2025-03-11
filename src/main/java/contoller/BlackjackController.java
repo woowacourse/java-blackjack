@@ -48,7 +48,7 @@ public class BlackjackController {
             printCardsIfFirstTurn(player, isFirstTurn);
 
             isFirstTurn = false;
-        } while (!player.isBurst() && answer);
+        } while (!player.isBust() && answer);
     }
 
     private void drawCardIfAnswerIsYes(Participant player, boolean answer) {
