@@ -34,16 +34,17 @@ public class Hand {
 
     public int calculateFinalScore() {
         int totalScore = calculateTotalScore();
-        if (isBust(totalScore)) {
-            return totalScore;
-        }
         if (hasAce()) {
-            if (isBust(totalScore + ACE_BONUS)) {
-                return totalScore;
-            }
-            return totalScore + ACE_BONUS;
+            return applyBonus(totalScore);
         }
         return totalScore;
+    }
+
+    private int applyBonus(int totalScore) {
+        if (isBust(totalScore + ACE_BONUS)) {
+            return totalScore;
+        }
+        return totalScore + ACE_BONUS;
     }
 
     public boolean isBust() {
