@@ -12,8 +12,8 @@ public class Player {
         this.hand = new Hand(cardDeck);
     }
 
-    public void drawCard(int cardCount) {
-        hand.drawCard(cardCount);
+    public void drawCard(int drawCount) {
+        hand.drawCard(drawCount);
     }
 
     public int getCardsCount() {
