@@ -2,7 +2,6 @@ package domain.gamer;
 
 import domain.GameResult;
 import domain.card.Card;
-import domain.card.CardGenerator;
 import domain.card.CardGroup;
 import java.util.List;
 
@@ -10,21 +9,13 @@ public abstract class Gamer {
     public static final int LIMIT = 21;
 
     protected final CardGroup cardGroup;
-    protected final CardGenerator cardGenerator;
 
-    protected Gamer(CardGroup cardGroup, CardGenerator cardGenerator) {
+    protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
-        this.cardGenerator = cardGenerator;
     }
 
-    public boolean receiveCard(final Card card) {
-        return cardGroup.addCard(card);
-    }
-
-    public void receiveCard(int count) {
-        while (count-- > 0) {
-            cardGroup.addCard(cardGenerator.generate());
-        }
+    public void giveCard(final Card card) {
+        cardGroup.addCard(card);
     }
 
     public boolean isBust() {
