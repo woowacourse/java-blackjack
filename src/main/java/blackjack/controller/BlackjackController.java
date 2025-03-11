@@ -1,6 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGame;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
+import blackjack.domain.deck.BlackjackDeck;
 import blackjack.domain.player.Players;
 import blackjack.service.BlackjackService;
 import blackjack.view.InputView;
@@ -25,18 +27,23 @@ public class BlackjackController implements Controller {
         final List<String> playerNames = inputView.getPlayerNames();
         final Players players = Players.from(playerNames);
         final List<Integer> bettingAmounts = inputView.getBettingAmounts(playerNames);
-        final BlackjackGame game = BlackjackGame.from(players, bettingAmounts);
-        outputView.outputInitialCards(game.getDealerHand(), game.getPlayerHands());
+
+        final BlackjackDeck deck = new BlackjackDeck();
+        final List<PlayerBettingBlackjackCardHand> playerHands = players.toBlackjackBettingCardHand(deck, bettingAmounts);
+        final DealerBlackjackCardHand dealerHands = new DealerBlackjackCardHand(deck);
+
+        outputView.outputInitialCards(dealerHands, playerHands);
         blackjackService.addPlayerCards(
-                game,
+                playerHands,
+                deck,
                 outputView::outputAddingMessage,
                 outputView::addTo21Warning,
                 outputView::bustWarning,
                 inputView::getAddingCardDecision,
                 outputView::outputCardsAndSum
         );
-        blackjackService.addDealerCards(game, outputView::outputDealerAddedCards);
-        outputView.outputOpenCards(game.getDealerHand(), game.getPlayerHands());
-        outputView.outputFinalProfit(game.getDealerHand(), game.getPlayerHands());
+        blackjackService.addDealerCards(dealerHands, deck, outputView::outputDealerAddedCards);
+        outputView.outputOpenCards(dealerHands, playerHands);
+        outputView.outputFinalProfit(dealerHands, playerHands);
     }
 }

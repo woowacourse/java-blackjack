@@ -1,22 +1,25 @@
 package blackjack.service;
 
-import blackjack.domain.BlackjackGame;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
+import blackjack.domain.deck.CardDrawer;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BlackjackService {
     
     public void addPlayerCards(
-            final BlackjackGame blackjackGame,
+            final List<PlayerBettingBlackjackCardHand> playerHands,
+            final CardDrawer cardDrawer,
             final Consumer<String> playerTurnNotifier,
             final Runnable reached21Notifier,
             final Runnable bustNotifier,
             final Function<String, Boolean> addCardDecision,
             final Consumer<PlayerBettingBlackjackCardHand> playerHandNotifier
     ) {
-        for (PlayerBettingBlackjackCardHand playerHand : blackjackGame.getPlayerHands()) {
+        for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             playerTurnNotifier.accept(playerHand.getPlayerName());
             if (playerHand.isAddedTo21()) {
                 reached21Notifier.run();
@@ -27,17 +30,18 @@ public class BlackjackService {
                 continue;
             }
             while (addCardDecision.apply(playerHand.getPlayerName())) {
-                playerHand.addCard(blackjackGame.draw());
+                playerHand.addCard(cardDrawer.draw());
                 playerHandNotifier.accept(playerHand);
             }
         }
     }
     
     public void addDealerCards(
-            final BlackjackGame blackjackGame,
+            final DealerBlackjackCardHand dealerHand,
+            final CardDrawer cardDrawer,
             final Consumer<Integer> dealerCardsAddedNotifier
     ) {
-        final int addedSize = blackjackGame.startAddingAndGetAddedSize();
+        final int addedSize = dealerHand.startAddingAndGetAddedSize(cardDrawer);
         dealerCardsAddedNotifier.accept(addedSize);
     }
 }
