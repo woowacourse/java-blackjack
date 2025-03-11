@@ -36,4 +36,8 @@ public class BettingAmount {
     public int multiplyRate(final double profitRate) {
         return (int) (amount * profitRate);
     }
+
+    public int calculateProfit(final int winningAmount) {
+        return winningAmount - amount;
+    }
 }

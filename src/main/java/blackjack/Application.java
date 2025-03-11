@@ -40,7 +40,7 @@ public class Application {
         processPlayersTurn(playerNames, round);
         processDealerTurn(round);
         printGameResult(round, playerNames);
-        printProfits(round, playerNames, bettingAmounts);
+        printProfits(round.getWinningDiscriminator(), bettingAmounts);
     }
 
     private static CardDeck createCardDeck() {
@@ -132,23 +132,23 @@ public class Application {
         }
     }
 
-    /**
-     * 리팩터링 TODO
-     */
-    private static void printProfits(final Round round, final Names names, final Map<Name, BettingAmount> bettingAmounts) {
-        WinningDiscriminator discriminator = round.getWinningDiscriminator();
-        Map<Name, Integer> playersProfit = new HashMap<>();
-        for (Name playerName : names.getNames()) {
-            WinningType winningType = discriminator.judgePlayerResult(playerName);
-            BettingAmount bettingAmount = bettingAmounts.get(playerName);
-            int profit = profitCalculator.calculatePlayerProfit(winningType, bettingAmount);
-            playersProfit.put(playerName, profit);
-        }
-        List<Integer> listplayersProfit = playersProfit.values()
-                .stream()
-                .toList();
-        int dealerProfit = profitCalculator.calculateDealerProfit(listplayersProfit);
+    private static void printProfits(final WinningDiscriminator winningDiscriminator,
+                                     final Map<Name, BettingAmount> bettingAmounts) {
+        Map<Name, WinningType> playersWinningResult = winningDiscriminator.judgePlayersResult();
+        Map<Name, Integer> playersProfit = calculatePlayersProfit(bettingAmounts, playersWinningResult);
+        int dealerProfit = profitCalculator.calculateDealerProfit(playersProfit);
         outputView.printProfit(dealerProfit, playersProfit);
     }
 
+    private static Map<Name, Integer> calculatePlayersProfit(final Map<Name, BettingAmount> bettingAmounts,
+                                                             final Map<Name, WinningType> playersWinningResult) {
+        Map<Name, Integer> playersProfit = new HashMap<>();
+        for (final Name name : playersWinningResult.keySet()) {
+            WinningType winningType = playersWinningResult.get(name);
+            BettingAmount bettingAmount = bettingAmounts.get(name);
+            int profit = profitCalculator.calculatePlayerProfit(winningType, bettingAmount);
+            playersProfit.put(name, profit);
+        }
+        return playersProfit;
+    }
 }

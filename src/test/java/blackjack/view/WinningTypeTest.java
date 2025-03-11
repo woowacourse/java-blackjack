@@ -13,7 +13,7 @@ class WinningTypeTest {
     @ParameterizedTest
     void multiplyProfitRate(WinningType type, int expected) {
         // when
-        int result = type.multiplyProfitRate(new BettingAmount(10_000));
+        int result = type.calculateWinningAmount(new BettingAmount(10_000));
 
         // then
         assertThat(result).isEqualTo(expected);

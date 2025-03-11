@@ -62,6 +62,9 @@ public class WinningDiscriminator {
         if (playerScore > BLACK_JACK) {
             return DEFEAT;
         }
+        if (dealerScore > BLACK_JACK) {
+            return WIN;
+        }
         if (playerScore > dealerScore) {
             return WIN;
         }

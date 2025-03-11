@@ -1,17 +1,20 @@
 package blackjack.domain;
 
 import blackjack.domain.betting.BettingAmount;
+import blackjack.domain.gambler.Name;
 import blackjack.view.WinningType;
-import java.util.List;
+import java.util.Map;
 
 public class ProfitCalculator {
     public int calculatePlayerProfit(final WinningType winningType, final BettingAmount bettingAmount) {
-        return winningType.multiplyProfitRate(bettingAmount);
+        int winningAmount = winningType.calculateWinningAmount(bettingAmount);
+        return bettingAmount.calculateProfit(winningAmount);
     }
 
-    public int calculateDealerProfit(final List<Integer> playersProfit) {
-        return playersProfit.stream()
-                .mapToInt(playerProfit -> -playerProfit)
+    public int calculateDealerProfit(final Map<Name, Integer> playersProfit) {
+        return playersProfit.values()
+                .stream()
+                .mapToInt(Math::negateExact)
                 .sum();
     }
 }
