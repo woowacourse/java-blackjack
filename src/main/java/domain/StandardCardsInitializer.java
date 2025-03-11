@@ -28,7 +28,7 @@ public class StandardCardsInitializer implements CardsInitializer {
     private void insertCards(List<CardRank> cardRanks, List<CardSymbol> cardSymbols, List<Card> cards) {
         for (CardRank cardRank : cardRanks) {
             for (CardSymbol cardSymbol : cardSymbols) {
-                cards.add(new Card(cardSymbol, cardRank));
+                cards.add(Card.of(cardSymbol, cardRank));
             }
         }
     }
