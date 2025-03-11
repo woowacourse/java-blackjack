@@ -2,6 +2,7 @@ package controller;
 
 import domain.CardDeck;
 import domain.GameManger;
+import domain.GameResult;
 import domain.TrumpCard;
 import domain.user.Dealer;
 import domain.user.User;
@@ -55,15 +56,15 @@ public class BlackjackController {
                 addCardAllPlayer(gameManger, playerName));
     }
 
-    private void calculateDealerResult(Map<User, Integer> gameResult) {
-        int loseCount = getResultStateCount(gameResult, 1);
-        int winCount = getResultStateCount(gameResult, 2);
-        int mooCount = getResultStateCount(gameResult, 3);
+    private void calculateDealerResult(Map<User, GameResult> gameResult) {
+        int dealerLoseCount = getResultStateCount(gameResult, GameResult.WIN);
+        int dealerWinCount = getResultStateCount(gameResult, GameResult.LOSE);
+        int dealerDrawCount = getResultStateCount(gameResult, GameResult.DRAW);
 
-        outputView.displayDealerGameResult(winCount, loseCount, mooCount);
+        outputView.displayDealerGameResult(dealerLoseCount, dealerWinCount, dealerDrawCount);
     }
 
-    private int getResultStateCount(Map<User, Integer> gameResult, int status) {
+    private int getResultStateCount(Map<User, GameResult> gameResult, GameResult status) {
         return (int) gameResult.entrySet().stream()
                 .filter(entry -> entry.getValue() == status)
                 .count();
@@ -117,7 +118,7 @@ public class BlackjackController {
     }
 
     private void calculateGameResult(GameManger gameManger) {
-        Map<User, Integer> gameResult = gameManger.createGameResult();
+        Map<User, GameResult> gameResult = gameManger.createGameResult();
         calculateDealerResult(gameResult);
 
         outputView.displayGameResult(gameResult);

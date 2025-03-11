@@ -1,6 +1,6 @@
 package view;
 
-import domain.GameManger;
+import domain.GameResult;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
@@ -15,26 +15,26 @@ public class OutputView {
     }
 
     private void displayCards(String name, List<String> printCards) {
-        System.out.print(name + "카드: " + String.join(", ", printCards) +"\n");
+        System.out.print(name + "카드: " + String.join(", ", printCards) + "\n");
     }
 
 
-    public void displayDealerGameResult(int winCount, int loseCount, int mooCount) {
+    public void displayDealerGameResult(int winCount, int loseCount, int drawCount) {
         System.out.println("\n## 최종 승패");
-        System.out.printf("딜러: %d승 %d패 %d 무승부\n", winCount, loseCount, mooCount);
+        System.out.printf("딜러: %d승 %d패 %d 무승부\n", winCount, loseCount, drawCount);
     }
 
-    public void displayGameResult(Map<User, Integer> gameResult) {
+    public void displayGameResult(Map<User, GameResult> gameResult) {
         gameResult.forEach((key, value) -> displayUserGameResult(
                 key.getName(),
                 convertGameResult(value)));
     }
 
-    private String convertGameResult(Integer value) {
-        if (value.equals(GameManger.WIN)) {
+    private String convertGameResult(GameResult value) {
+        if (value.equals(GameResult.WIN)) {
             return "승";
         }
-        if (value.equals(GameManger.LOSE)) {
+        if (value.equals(GameResult.LOSE)) {
             return "패";
         }
         return "무승부";
@@ -45,6 +45,6 @@ public class OutputView {
     }
 
     public void displayOpenCardsResult(String name, List<String> printCards, int score) {
-        System.out.print(name + "카드: " + String.join(", ", printCards + (" - 결과: " + score)) +"\n");
+        System.out.print(name + "카드: " + String.join(", ", printCards + (" - 결과: " + score)) + "\n");
     }
 }

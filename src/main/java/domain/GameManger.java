@@ -11,10 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameManger {
-    public final static int WIN = 1;
-    public final static int LOSE = 2;
-    public final static int DRAW = 3;
-
     private final List<Player> users = new ArrayList<>();
     private final Dealer dealer;
     private final CardDeck cardDeck;
@@ -60,28 +56,28 @@ public class GameManger {
         return cardDeck.drawCard();
     }
 
-    private int compareScore(User player) {
+    private GameResult compareScore(User player) {
         if (player.isBust()) {
-            return LOSE;
+            return GameResult.LOSE;
         }
         if (dealer.getCardHand().calculateScore() < player.getCardHand().calculateScore()) {
-            return WIN;
+            return GameResult.WIN;
         }
         if (dealer.getCardHand().calculateScore() > player.getCardHand().calculateScore()) {
-            return LOSE;
+            return GameResult.LOSE;
         }
         return compareSameScore(player);
     }
 
-    private int compareSameScore(User player) {
+    private GameResult compareSameScore(User player) {
         if (dealer.getCardHand().isBlackjack() && !player.getCardHand().isBlackjack()) {
-            return LOSE;
+            return GameResult.LOSE;
         }
-        return DRAW;
+        return GameResult.DRAW;
     }
 
-    public Map<User, Integer> createGameResult() {
-        Map<User, Integer> gameResult = new LinkedHashMap<>();
+    public Map<User, GameResult> createGameResult() {
+        Map<User, GameResult> gameResult = new LinkedHashMap<>();
         if (dealer.isBust()) {
             users.forEach((user) -> putGameResultBust(user, gameResult));
             return gameResult;
@@ -90,11 +86,11 @@ public class GameManger {
         return gameResult;
     }
 
-    private void putGameResultBust(User user, Map<User, Integer> gameResult) {
+    private void putGameResultBust(User user, Map<User, GameResult> gameResult) {
         if (user.isBust()) {
-            gameResult.put(user, LOSE);
+            gameResult.put(user, GameResult.LOSE);
             return;
         }
-        gameResult.put(user, WIN);
+        gameResult.put(user, GameResult.WIN);
     }
 }
