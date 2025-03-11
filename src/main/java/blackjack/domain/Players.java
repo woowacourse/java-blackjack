@@ -26,6 +26,14 @@ public class Players {
         return playerResult;
     }
 
+    public int calculateTotalPayout(Dealer dealer) {
+        int totalPayout = 0;
+        for (Player player : players) {
+            totalPayout += player.calculatePayout(dealer);
+        }
+        return totalPayout;
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
