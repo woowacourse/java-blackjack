@@ -1,48 +1,39 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class Cards {
     private static final int BUST_LIMIT = 21;
 
     private final List<Card> cards;
-    private final Map<Card, Boolean> isOpened;
-
 
     public Cards() {
         this.cards = new ArrayList<>();
-        this.isOpened = new HashMap<>();
     }
 
     public void addAll(List<Card> cards) {
-        cards.forEach(card -> isOpened.put(card, false));
         this.cards.addAll(cards);
     }
 
     public void openCards(int count) {
         while (count > 0) {
             Card willBeOpened = findNotOpenedCard();
-            isOpened.put(willBeOpened, true);
+            willBeOpened.openCard();
             count--;
         }
     }
 
     private Card findNotOpenedCard() {
         return cards.stream()
-                .filter(card -> !isOpened.get(card))
+                .filter(card -> !card.isOpened())
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
     }
 
     public List<Card> getOpenedCards() {
-        return isOpened.entrySet()
-                .stream()
-                .filter(Entry::getValue)
-                .map(Map.Entry::getKey)
+        return cards.stream()
+                .filter(card -> !card.isOpened())
                 .toList();
     }
 

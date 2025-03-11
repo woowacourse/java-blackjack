@@ -5,10 +5,16 @@ import java.util.List;
 public class Card {
     private final Suit suit;
     private final Rank rank;
+    private boolean isOpened;
 
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
+        this.isOpened = false;
+    }
+
+    public void openCard() {
+        this.isOpened = true;
     }
 
     public List<Integer> getScores() {
@@ -21,5 +27,9 @@ public class Card {
 
     public Suit getSuit() {
         return suit;
+    }
+
+    public boolean isOpened() {
+        return isOpened;
     }
 }
