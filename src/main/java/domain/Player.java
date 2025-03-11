@@ -6,4 +6,10 @@ public class Player extends BlackjackParticipant {
         super(name);
         validatePlayerName();
     }
+
+    @Override
+    public boolean isDrawable() {
+        int sum = calculateCardSum();
+        return !isBurst(sum);
+    }
 }

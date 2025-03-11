@@ -58,7 +58,7 @@ public abstract class BlackjackParticipant {
         return sum;
     }
 
-    public void validatePlayerName() {
+    protected void validatePlayerName() {
         if (name.equals(dealerName())) {
             throw new BlackJackException(INVALID_PLAYER_NAME);
         }
@@ -68,10 +68,7 @@ public abstract class BlackjackParticipant {
         return BURST_STANDARD < number;
     }
 
-    public boolean isDrawable() {
-        int sum = calculateCardSum();
-        return !isBurst(sum);
-    }
+    abstract public boolean isDrawable();
 
     public List<TrumpCard> trumpCards() {
         return trumpCards;
