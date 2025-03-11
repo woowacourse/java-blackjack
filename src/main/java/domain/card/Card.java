@@ -1,19 +1,19 @@
 package domain.card;
 
-import domain.card.CardType.Score;
-
 public class Card {
 
     private static final int ACE_HIGH_SCORE = 11;
     private static final int ACE_LOW_SCORE = 1;
     private final CardType type;
+    private final CardScore score;
 
-    public Card(CardType type) {
+    public Card(CardType type, final CardScore score) {
         this.type = type;
+        this.score = score;
     }
 
-    public Score getScore() {
-        return type.getScore();
+    public CardScore getScore() {
+        return score;
     }
 
     public CardType getType() {
@@ -21,7 +21,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return type.getScore().getValue() == ACE_LOW_SCORE;
+        return score == CardScore.ACE;
     }
 
     public int calculateAceScore(final int score, final int limit) {
