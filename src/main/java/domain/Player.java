@@ -38,4 +38,16 @@ public class Player {
     public Hand getHand() {
         return hand;
     }
+
+    public int getTotalScore() {
+        return hand.calculateTotalScore();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 }

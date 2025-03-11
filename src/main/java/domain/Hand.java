@@ -47,6 +47,36 @@ public class Hand {
         }
     }
 
+    public int calculateTotalScore() {
+        int totalScore = getTotalScore(cards);
+        int aceCount = getAceCount(cards);
+        int bonusScore = calculateAceBonusScore(totalScore, aceCount);
+        return totalScore + bonusScore;
+    }
+
+    private int getTotalScore(List<TrumpCard> cards) {
+        return cards.stream().mapToInt(c -> c.getRank().getValue()).sum();
+    }
+
+    private int getAceCount(List<TrumpCard> cards) {
+        return (int) cards.stream().filter(c -> c.getRank() == Rank.ACE).count();
+    }
+
+    private int calculateAceBonusScore(int totalScore, int aceCount) {
+        if (aceCount > 0 && totalScore + 10 <= 21) {
+            return 10;
+        }
+        return 0;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateTotalScore() == 21;
+    }
+
+    public boolean isBust() {
+        return calculateTotalScore() > 21;
+    }
+
     public List<TrumpCard> getCards() {
         return List.copyOf(cards);
     }

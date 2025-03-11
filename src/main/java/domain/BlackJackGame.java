@@ -8,21 +8,21 @@ public class BlackJackGame {
 
     private final Deck deck;
     private final Dealer dealer;
-    private final Rule rule;
 
-    public BlackJackGame(Deck deck, Dealer dealer, Rule rule) {
-        validate(deck, dealer, rule);
+
+    public BlackJackGame(Deck deck, Dealer dealer) {
+        validate(deck, dealer);
         this.deck = deck;
         this.dealer = dealer;
-        this.rule = rule;
+
     }
 
-    private void validate(Deck deck, Dealer dealer, Rule rule) {
-        validateNotNull(deck, dealer, rule);
+    private void validate(Deck deck, Dealer dealer) {
+        validateNotNull(deck, dealer);
     }
 
-    private void validateNotNull(Deck deck, Dealer dealer, Rule rule) {
-        if (deck == null || dealer == null || rule == null) {
+    private void validateNotNull(Deck deck, Dealer dealer) {
+        if (deck == null || dealer == null) {
             throw new IllegalArgumentException("블랙잭게임은 덱과 딜러와 룰을 가지고 있어야합니다.");
         }
     }
@@ -30,8 +30,8 @@ public class BlackJackGame {
     public static BlackJackGame create() {
         Deck deck = initializeDeck();
         Dealer dealer = initializeDealer(deck);
-        Rule rule = initializeRule();
-        return new BlackJackGame(deck, dealer, rule);
+
+        return new BlackJackGame(deck, dealer);
     }
 
     private static Deck initializeDeck() {
@@ -45,18 +45,11 @@ public class BlackJackGame {
         return new Dealer(Hand.of(deck.draw(), deck.draw()));
     }
 
-    private static Rule initializeRule() {
-        return new Rule();
-    }
 
     public Hand createStartingHands() {
             TrumpCard firstCard = deck.draw();
             TrumpCard secondCard = deck.draw();
         return Hand.of(firstCard, secondCard);
-    }
-
-    public boolean isPlayerHitAllowed(List<TrumpCard> playerCards) {
-        return rule.isPlayerHitAllowed(playerCards);
     }
 
     public void processPlayerHit(Player player) {
@@ -66,7 +59,7 @@ public class BlackJackGame {
     public int processDealerHit() {
         int hitCount = 0;
 
-        while (rule.isDealerHitAllowed(dealer.getCards())) {
+        while (dealer.isHitable()) {
             dealer.addCard(deck.draw());
             hitCount++;
         }
@@ -74,18 +67,15 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public Score caculateScore(List<TrumpCard> cards) {
-        return rule.evaluateScore(cards);
+    public int calculateScore(Dealer player) {
+        return player.getTotalScore();
     }
 
     public Map<String, GameResult> calculateGameResults(List<Player> players) {
         Map<String, GameResult> results = new HashMap<>();
 
         players.forEach(player -> {
-            List<TrumpCard> playerCards = player.getCards();
-            List<TrumpCard> dealerCards = dealer.getCards();
-
-            GameResult gameResult = rule.evaluateGameResult(playerCards, dealerCards);
+            GameResult gameResult = GameResult.from(player, dealer);
 
             results.put(player.getName(), gameResult);
         });

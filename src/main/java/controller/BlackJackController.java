@@ -5,7 +5,6 @@ import domain.BlackJackGame;
 import domain.Dealer;
 import domain.GameResult;
 import domain.Player;
-import domain.Score;
 import domain.TrumpCard;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public class BlackJackController {
     }
 
     private void executePlayerHit(Player player) {
-        while (blackJackGame.isPlayerHitAllowed(player.getCards()) &&
+        while (!player.isBust() &&
                 inputView.readProcessHit(player.getName())) {
             blackJackGame.processPlayerHit(player);
             outputView.printPlayerCards(player.getName(), player.getCards());
@@ -83,19 +82,19 @@ public class BlackJackController {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, player -> {
                     List<TrumpCard> playerCards = player.getCards();
-                    Score score = blackJackGame.caculateScore(playerCards);
+                    int totalScore = player.getTotalScore();
 
                     return new CardScoreDto(
                             playerCards,
-                            score);
+                            totalScore);
                 }));
     }
 
     private CardScoreDto convertDealerCardScoreDto(Dealer dealer) {
-        List<TrumpCard> dealerCards = dealer.getCards();
-        Score score = blackJackGame.caculateScore(dealerCards);
+        List<TrumpCard> cards = dealer.getCards();
+        int totalScore = blackJackGame.calculateScore(dealer);
 
-        return new CardScoreDto(dealerCards, score);
+        return new CardScoreDto(cards, totalScore);
     }
 
     private void displayGameResult(List<Player> players) {

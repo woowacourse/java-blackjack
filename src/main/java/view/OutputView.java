@@ -45,14 +45,14 @@ public class OutputView {
         System.out.print(dealerCardScoreDtos.cards().stream()
                 .map(this::getCardInfo)
                 .collect(Collectors.joining(",")));
-        System.out.printf(" - 결과: %s\n", dealerCardScoreDtos.score().getTitle());
+        System.out.printf(" - 결과: %s\n", dealerCardScoreDtos.totalScore());
 
         playerCardScoreDto.forEach((name, cardScoreDto) -> {
             System.out.printf("%s카드: ", name);
             System.out.print(cardScoreDto.cards().stream()
                     .map(this::getCardInfo)
                     .collect(Collectors.joining(",")));
-            System.out.printf(" - 결과: %s\n", cardScoreDto.score().getTitle());
+            System.out.printf(" - 결과: %s\n", cardScoreDto.totalScore());
         });
     }
 
