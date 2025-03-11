@@ -29,8 +29,8 @@ public enum CardNumber {
         return value;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public static String numberToText(CardNumber cardNumber) {
+        return cardNumber.displayName;
     }
 
     public static CardNumber pick(int index) {

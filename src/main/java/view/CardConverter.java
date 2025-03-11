@@ -5,23 +5,7 @@ import domain.CardShape;
 
 public class CardConverter {
     public static String createTrumpCard(CardShape cardShape, CardNumber cardNumber) {
-        return numberToText(cardNumber) + shapeToText(cardShape);
+        return CardNumber.numberToText(cardNumber) + CardShape.shapeToText(cardShape);
     }
 
-    private static String shapeToText(CardShape cardShape) {
-        if (CardShape.DIA == cardShape) {
-            return "다이아몬드";
-        }
-        if (CardShape.SPADE == cardShape) {
-            return "스페이드";
-        }
-        if (CardShape.CLOVER == cardShape) {
-            return "클로버";
-        }
-        return "하트";
-    }
-
-    private static String numberToText(CardNumber cardNumber) {
-        return cardNumber.getDisplayName();
-    }
 }

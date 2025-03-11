@@ -29,9 +29,9 @@ public class CardNumberTest {
         TrumpCard trumpCard3= new TrumpCard(CardShape.CLOVER, CardNumber.ACE);
 
         //when
-        String displayName1 = trumpCard1.getCardNumber().getDisplayName();
-        String displayName2 = trumpCard2.getCardNumber().getDisplayName();
-        String displayName3 = trumpCard3.getCardNumber().getDisplayName();
+        String displayName1 = CardNumber.numberToText(trumpCard1.getCardNumber());
+        String displayName2 = CardNumber.numberToText(trumpCard2.getCardNumber());
+        String displayName3 =  CardNumber.numberToText(trumpCard3.getCardNumber());
         //then
 
         SoftAssertions.assertSoftly(softAssertions -> {
