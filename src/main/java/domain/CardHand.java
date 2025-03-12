@@ -25,14 +25,14 @@ public class CardHand {
 
     public List<TrumpCard> getFirstCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드 덱을 모두 사용했습니다.");
+            throw new IllegalArgumentException("갖고 있는 카드가 없습니다.");
         }
         return List.of(cards.getFirst());
     }
 
     public List<TrumpCard> getAllCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드 덱을 모두 사용했습니다.");
+            throw new IllegalArgumentException("갖고 있는 카드가 없습니다.");
         }
         return new ArrayList<>(cards);
     }
