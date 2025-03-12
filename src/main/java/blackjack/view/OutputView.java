@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.Player;
 import blackjack.dto.CardInfoDto;
 import blackjack.dto.FinalResultDto;
@@ -42,11 +41,6 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public void displayExtraDealerCardStatus() {
-        System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
     public void displayFinalCardStatus(final FinalResultDto dealerDto, final List<FinalResultDto> playerDtos) {
         System.out.println();
         displayResultInfo(dealerDto);
@@ -68,26 +62,6 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public void displayDealerResult(final Map<GameResult, Integer> dealerResult) {
-        System.out.println();
-        StringBuilder sb = new StringBuilder();
-        sb.append("## 최종 승패\n");
-
-        sb.append("딜러: ");
-        for (GameResult gameResult : GameResult.values()) {
-            if (!dealerResult.containsKey(gameResult)) {
-                continue;
-            }
-            sb.append(String.format("%d%s ", dealerResult.get(gameResult), gameResult.getStatus()));
-        }
-
-        System.out.println(sb);
-    }
-
-    public void displayPlayerResult(final Player player, final GameResult playerResult) {
-        System.out.println(player.getName().trim() + ": " + playerResult.getStatus());
-    }
-
     public void displayDealerTurnResult(int numberOfHit) {
         System.out.println();
         for(int i=0; i<numberOfHit; i++) {
@@ -99,4 +73,19 @@ public class OutputView {
         System.out.println("버스트이기 때문에 카드를 더 받을 수 없습니다.");
     }
 
+    public void displayFinalProfits(int dealerProfit, Map<Player, Integer> playersProfit) {
+        System.out.println("\n## 최종 수익");
+        displayDealerProfit(dealerProfit);
+        displayPlayersProfit(playersProfit);
+    }
+
+    private void displayDealerProfit(int dealerProfit) {
+        System.out.println("딜러: " + dealerProfit);
+    }
+
+    private void displayPlayersProfit(Map<Player, Integer> playersProfit) {
+        playersProfit.forEach((player, profit) ->
+                System.out.printf("%s: %d\n", player.getName(), profit)
+        );
+    }
 }

@@ -5,7 +5,6 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardDump;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import blackjack.dto.CardInfoDto;
@@ -44,7 +43,7 @@ public class BlackjackController {
         processDealerTurn(game);
 
         displayFinalCardsInfo(dealer, game);
-        generateGameResultAndDisplay(game, dealer, game.getPlayers());
+        displayAllFinalProfitsInfo(game);
     }
 
     private List<Player> createPlayers(List<ParticipantName> playerNames) {
@@ -115,12 +114,10 @@ public class BlackjackController {
         });
     }
 
-    private void generateGameResultAndDisplay(BlackjackGame game, Dealer dealer, List<Player> players) {
-        Map<GameResult, Integer> dealerResult = game.getDealerResult(dealer, players);
-        outputView.displayDealerResult(dealerResult);
-        for (Player player : players) {
-            GameResult playerResult = game.getPlayerResult(player, dealer);
-            outputView.displayPlayerResult(player, playerResult);
-        }
+    private void displayAllFinalProfitsInfo(BlackjackGame game) {
+        int dealerProfit = game.calculateDealerProfit();
+        Map<Player, Integer> playersProfit = game.calculatePlayersProfit();
+
+        outputView.displayFinalProfits(dealerProfit, playersProfit);
     }
 }
