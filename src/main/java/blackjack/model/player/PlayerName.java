@@ -1,5 +1,7 @@
 package blackjack.model.player;
 
+import java.util.Objects;
+
 public class PlayerName {
     public static final int MINIMUM_NAME_LENGTH = 2;
     public static final int MAXIMUM_NAME_LENGTH = 5;
@@ -18,5 +20,22 @@ public class PlayerName {
         if (name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException(String.format("참가자 이름은 %d~%d글자 입니다.", MINIMUM_NAME_LENGTH, MAXIMUM_NAME_LENGTH));
         }
+    }
+
+    String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerName that = (PlayerName) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

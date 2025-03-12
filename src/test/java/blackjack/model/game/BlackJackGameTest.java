@@ -9,6 +9,8 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import java.util.List;
+
+import blackjack.model.player.PlayerName;
 import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
@@ -17,8 +19,8 @@ class BlackJackGameTest {
     void 게임이_시작하면_모든_플레이어에게_카드를_두장씩_배분한다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant1 = new Participant("벡터");
-        Participant participant2 = new Participant("한스");
+        Participant participant1 = new Participant(new PlayerName("벡터"), new BettedMoney(10_000));
+        Participant participant2 = new Participant(new PlayerName("한스"), new BettedMoney(10_000));
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
 
@@ -37,8 +39,8 @@ class BlackJackGameTest {
     void 참가자가_카드를_받는다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant1 = new Participant("벡터");
-        Participant participant2 = new Participant("한스");
+        Participant participant1 = new Participant(new PlayerName("벡터"), new BettedMoney(10_000));
+        Participant participant2 = new Participant(new PlayerName("한스"), new BettedMoney(10_000));
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
 
@@ -55,8 +57,8 @@ class BlackJackGameTest {
     void 참가자가_카드를_받지_않는다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant1 = new Participant("벡터");
-        Participant participant2 = new Participant("한스");
+        Participant participant1 = new Participant(new PlayerName("벡터"), new BettedMoney(10_000));
+        Participant participant2 = new Participant(new PlayerName("한스"), new BettedMoney(10_000));
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
 
@@ -74,8 +76,8 @@ class BlackJackGameTest {
     void 딜러에게_카드를_추가한다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant1 = new Participant("벡터");
-        Participant participant2 = new Participant("한스");
+        Participant participant1 = new Participant(new PlayerName("벡터"), new BettedMoney(10_000));
+        Participant participant2 = new Participant(new PlayerName("한스"), new BettedMoney(10_000));
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
 
@@ -91,8 +93,8 @@ class BlackJackGameTest {
     void 딜러의_포인트가_16_이하면_카드를_더_받아야_한다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant1 = new Participant("벡터");
-        Participant participant2 = new Participant("한스");
+        Participant participant1 = new Participant(new PlayerName("벡터"), new BettedMoney(10_000));
+        Participant participant2 = new Participant(new PlayerName("한스"), new BettedMoney(10_000));
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
         BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);
@@ -107,8 +109,8 @@ class BlackJackGameTest {
     void 딜러의_포인트가_17_이상이면_카드를_더_받지_않는다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant1 = new Participant("벡터");
-        Participant participant2 = new Participant("한스");
+        Participant participant1 = new Participant(new PlayerName("벡터"), new BettedMoney(10_000));
+        Participant participant2 = new Participant(new PlayerName("한스"), new BettedMoney(10_000));
         Participants participants = new Participants(List.of(participant1, participant2));
         DeckInitializer deckInitializer = new DeckInitializer();
         BlackJackGame blackJackGame = new BlackJackGame(deckInitializer, dealer, participants);

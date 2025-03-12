@@ -7,6 +7,7 @@ import blackjack.model.card.CardShape;
 import blackjack.model.card.CardType;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
+import blackjack.model.player.PlayerName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantResultTest {
@@ -15,7 +16,7 @@ class ParticipantResultTest {
     void 플레이어가_버스트가_아니고_참가자가_패배인_경우() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant = new Participant("프리");
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_2));
 
@@ -30,7 +31,7 @@ class ParticipantResultTest {
     void 플레이어가_버스트가_아니고_참가자가_승리인_경우() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant = new Participant("프리");
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_2));
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
 
@@ -45,7 +46,7 @@ class ParticipantResultTest {
     void 플레이어가_버스트가_아니고_무승부인_경우() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant = new Participant("프리");
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
 
@@ -60,7 +61,7 @@ class ParticipantResultTest {
     void 참가자가_버스트고_딜러가_버스트가_아닌_경우_딜러가_승리한다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant = new Participant("프리");
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
         participant.putCard(new Card(CardShape.CLOVER, CardType.JACK));
         participant.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
@@ -78,7 +79,7 @@ class ParticipantResultTest {
     void 딜러가_버스트고_참가자가_버스트가_아닌_경우_참가자승리한다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant = new Participant("프리");
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.JACK));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
@@ -96,7 +97,7 @@ class ParticipantResultTest {
     void 플레이어_모두_버스트인_경우_딜러가_승리한다() {
         // given
         Dealer dealer = new Dealer();
-        Participant participant = new Participant("프리");
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.JACK));
         dealer.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
