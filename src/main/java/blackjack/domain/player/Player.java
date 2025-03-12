@@ -9,13 +9,18 @@ import java.util.Objects;
 
 public abstract class Player {
 
-    private final GamblerName gamblerName;
+    private final PlayerName playerName;
     private final List<Card> cards;
     private static final int MAX_HAND_VALUE = 21;
     private static final int ACE_ADDITIONAL_VALUE = 10;
 
     public Player(final String name) {
-        this.gamblerName = new GamblerName(name);
+        this.playerName = new PlayerName(name);
+        cards = new ArrayList<>();
+    }
+
+    public Player(PlayerName playerName) {
+        this.playerName = playerName;
         cards = new ArrayList<>();
     }
 
@@ -42,7 +47,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return gamblerName.name();
+        return playerName.name();
     }
 
     abstract public List<Card> getOpenedCards();
@@ -65,11 +70,11 @@ public abstract class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(gamblerName, player.gamblerName);
+        return Objects.equals(playerName, player.playerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(gamblerName);
+        return Objects.hash(playerName);
     }
 }
