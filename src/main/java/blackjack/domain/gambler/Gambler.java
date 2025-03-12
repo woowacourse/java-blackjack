@@ -29,6 +29,11 @@ public abstract class Gambler {
     public boolean isScoreBelow(final int criteria) {
         return hands.isScoreBelow(criteria);
     }
+
+    public int calculateScoreDifference(final Gambler other) {
+        return calculateScore() - other.calculateScore();
+    }
+
     public boolean isBlackjack() {
         return hands.hasSize(2) && calculateScore() == BLACK_JACK;
     }

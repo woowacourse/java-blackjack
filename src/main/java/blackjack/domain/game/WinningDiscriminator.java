@@ -27,26 +27,25 @@ public class WinningDiscriminator {
                 .collect(toMap(Gambler::getName, this::judgePlayerResult));
     }
 
-    /**
-     * TODO
-     * 점수도 플레이어 내부에서 비교할 수 있지 않을까?
-     */
     private WinningType judgePlayerResult(final Gambler player) {
-        int playScore = player.calculateScore();
-        int dealerScore = dealer.calculateScore();
-        if (playScore > BLACK_JACK) {
+        if (!player.isScoreBelow(BLACK_JACK)) {
             return DEFEAT;
         }
-        if (dealerScore > BLACK_JACK) {
+        if (!dealer.isScoreBelow(BLACK_JACK)) {
             return WIN;
         }
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             return BLACKJACK_WIN;
         }
-        if (playScore > dealerScore) {
+        return judgePlayerResultByScoreDifference(player);
+    }
+
+    private WinningType judgePlayerResultByScoreDifference(final Gambler player) {
+        int scoreDifference = player.calculateScoreDifference(dealer);
+        if (scoreDifference > 0) {
             return WIN;
         }
-        if (playScore < dealerScore) {
+        if (scoreDifference < 0) {
             return DEFEAT;
         }
         return DRAW;

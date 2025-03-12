@@ -3,12 +3,14 @@ package blackjack.domain.gambler;
 import static blackjack.domain.card.CardShape.CLOVER;
 import static blackjack.domain.card.CardShape.HEART;
 import static blackjack.domain.card.CardType.ACE;
+import static blackjack.domain.card.CardType.EIGHT;
 import static blackjack.domain.card.CardType.TEN;
 import static blackjack.domain.fixture.CardFixture.createCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
+import blackjack.domain.fixture.GamblerFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -70,6 +72,21 @@ class PlayerTest {
 
         // when
         boolean result = player.isScoreBelow(criteria);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("주어진_Gambler_와의_점수_차이를_반환한다")
+    @CsvSource(value = {"TEN:TEN:2", "TEN:EIGHT:0", "TEN:SIX:-2"}, delimiterString = ":")
+    @ParameterizedTest
+    void calculateScoreDifference(CardType firstType, CardType secondType, int expected) {
+        // given
+        Dealer dealer = GamblerFixture.createDealerWithCards(TEN, EIGHT);
+        Player player = GamblerFixture.createPlayerWithCards(new Name("레오"), firstType, secondType);
+
+        // when
+        int result = player.calculateScoreDifference(dealer);
 
         // then
         assertThat(result).isEqualTo(expected);
