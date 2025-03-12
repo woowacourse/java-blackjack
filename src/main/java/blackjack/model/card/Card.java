@@ -23,10 +23,6 @@ public class Card {
         return cardType;
     }
 
-    public boolean equalsCardType(CardType cardType) {
-        return this.cardType.equals(cardType);
-    }
-
     public boolean isSpecialCard() {
         return getCardType().getCardGroup() == CardGroup.SPECIAL;
     }
