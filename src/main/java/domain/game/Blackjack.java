@@ -44,8 +44,8 @@ public class Blackjack {
 		dealer.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
 	}
 
-	public void pickCardPlayersIfNotBust(final BooleanSupplier userAnswer) {
-
+	public void pickCardPlayersIfNotBust(final BooleanSupplier playerAnswer) {
+		players.pickCardPlayersIfNotBust(playerAnswer, deck, BUST_SCORE);
 	}
 
 	public boolean isPickCardByPlayer(final Player player) {
