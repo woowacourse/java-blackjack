@@ -20,4 +20,8 @@ public class Players {
         Arrays.stream(parsedNames)
                 .forEach(parsedName -> players.add(new Player(parsedName)));
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

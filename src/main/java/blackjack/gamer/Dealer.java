@@ -32,4 +32,9 @@ public class Dealer extends Gamer {
     private Card spreadOneCard() {
         return cardMachine.drawOneCard();
     }
+
+    @Override
+    public String getNickName() {
+        return NICKNAME;
+    }
 }

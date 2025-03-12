@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
+import blackjack.gamer.Player;
 import blackjack.gamer.Players;
 import blackjack.view.InputView;
 
@@ -19,7 +20,7 @@ public class Blackjack {
 
         initDealer();
         makePlayers(inputView);
-
+        betMoney(inputView);
     }
 
     private void initDealer() {
@@ -36,4 +37,18 @@ public class Blackjack {
         }
     }
 
+    private void betMoney(final InputView inputView) {
+        for (Player player : players.getPlayers()) {
+            receiveBettingMoney(inputView, player);
+        }
+    }
+
+    private static void receiveBettingMoney(final InputView inputView, final Player player) {
+        try {
+            player.bet(inputView.readBettingMoney(player));
+        } catch (IllegalArgumentException e) {
+            inputView.printErrorMessage(e);
+            receiveBettingMoney(inputView, player);
+        }
+    }
 }

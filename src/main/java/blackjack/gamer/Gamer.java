@@ -1,5 +1,6 @@
 package blackjack.gamer;
 
+import blackjack.BettingMachine;
 import blackjack.card.Card;
 import blackjack.card.Hand;
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 public abstract class Gamer {
 
     private final Hand hand;
+    protected final BettingMachine bettingMachine;
 
     public Gamer() {
         this.hand = new Hand();
+        this.bettingMachine = new BettingMachine();
     }
 
     private void receiveCard(Card card) {
@@ -23,4 +26,6 @@ public abstract class Gamer {
     private int sumCards() {
         return hand.sumCards();
     }
+
+    public abstract String getNickName();
 }
