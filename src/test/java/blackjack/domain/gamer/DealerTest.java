@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.CardNumber;
 import blackjack.fixture.DeckFixture;
+import blackjack.fixture.GameManagerFixture;
 
 class DealerTest {
 
@@ -22,7 +23,9 @@ class DealerTest {
     @DisplayName("딜러는 카드 숫자 합이 16 이하이면 카드를 추가로 받을 수 있다")
     void canReceiveAdditionalCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        dealer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(cardNumber1, cardNumber2)
+        ).drawStartingCards(dealer);
 
         // when
         boolean actual = dealer.canReceiveAdditionalCards();
@@ -40,7 +43,9 @@ class DealerTest {
     @DisplayName("딜러는 카드 숫자 합이 16 초과면 카드를 추가로 받을 수 없다")
     void canReceiveAdditionalCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        dealer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(cardNumber1, cardNumber2)
+        ).drawStartingCards(dealer);
 
         // when
         boolean actual = dealer.canReceiveAdditionalCards();

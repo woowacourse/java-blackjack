@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.Player;
 import blackjack.dto.RoundResultDto;
 import blackjack.util.ListMerger;
 
@@ -16,9 +16,9 @@ public record FinalResultResponseDto(
     List<InnerGamer> gamers
 ) {
 
-    public static FinalResultResponseDto of(Dealer dealer, Players players) {
-        InnerGamer convertedDealer = InnerGamer.from(dealer, new ArrayList<>(players.getPlayers()));
-        List<InnerGamer> convertedPlayers = players.getPlayers().stream()
+    public static FinalResultResponseDto of(Dealer dealer, List<Player> players) {
+        InnerGamer convertedDealer = InnerGamer.from(dealer, new ArrayList<>(players));
+        List<InnerGamer> convertedPlayers = players.stream()
             .map(player -> InnerGamer.from(player, List.of(dealer)))
             .toList();
         return new FinalResultResponseDto(ListMerger.combine(convertedDealer, convertedPlayers));

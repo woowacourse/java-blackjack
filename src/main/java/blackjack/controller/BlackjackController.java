@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.gamer.Player;
 import blackjack.service.BlackjackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -21,20 +22,19 @@ public class BlackjackController {
     }
 
     private void drawPlayerCards() {
-        while (blackjackService.hasMorePlayer()) {
-            String nowPlayerName = blackjackService.nextPlayerName();
-            drawCardsFor(nowPlayerName);
+        for (var player : blackjackService.getPlayers()) {
+            drawCardsFor(player);
         }
     }
 
-    private void drawCardsFor(String nowPlayerName) {
-        while (blackjackService.canReceiveAdditionalCards(nowPlayerName)
-            && InputView.readAdditionalCardSelection(nowPlayerName).selection()) {
-            blackjackService.drawCardFor(nowPlayerName);
-            OutputView.printAdditionalCard(blackjackService.getPlayerCards(nowPlayerName));
+    private void drawCardsFor(Player player) {
+        while (blackjackService.canReceiveAdditionalCards(player)
+            && InputView.readAdditionalCardSelection(player.getName()).selection()) {
+            blackjackService.drawCardFor(player);
+            OutputView.printAdditionalCard(blackjackService.getPlayerCards(player));
         }
-        if (!blackjackService.canReceiveAdditionalCards(nowPlayerName)) {
-            OutputView.printBustNotice(nowPlayerName);
+        if (!blackjackService.canReceiveAdditionalCards(player)) {
+            OutputView.printBustNotice(player.getName());
         }
     }
 

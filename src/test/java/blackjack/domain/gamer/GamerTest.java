@@ -14,10 +14,12 @@ import blackjack.domain.RoundResult;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.deck.Deck;
 import blackjack.fixture.DeckFixture;
+import blackjack.fixture.GameManagerFixture;
 
 class GamerTest {
 
-    private Gamer gamer= new Player("Pobi");;
+    private Gamer gamer = new Player("Pobi");
+    ;
 
     @ParameterizedTest
     @CsvSource({
@@ -28,7 +30,9 @@ class GamerTest {
     @DisplayName("21이하인 경우 버스트되지 않는다")
     void isBustTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(cardNumber1, cardNumber2)
+        ).drawStartingCards(gamer);
 
         // when
         boolean actual = gamer.isBust();
@@ -48,7 +52,7 @@ class GamerTest {
         CardNumber cardNumber3, boolean expected) {
         // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
-        gamer.initialize(deck);
+        GameManagerFixture.GameManagerWith(deck).drawStartingCards(gamer);
         gamer.drawCard(deck);
 
         // when
@@ -67,7 +71,9 @@ class GamerTest {
     @DisplayName("버스트되지 않으면 Ace는 11로 계산한다")
     void getSumOfCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
         // given
-        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(cardNumber1, cardNumber2)
+        ).drawStartingCards(gamer);
 
         // when
         int sumOfCards = gamer.getSumOfCards();
@@ -86,7 +92,7 @@ class GamerTest {
     void getSumOfCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, int expected) {
         // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
-        gamer.initialize(deck);
+        GameManagerFixture.GameManagerWith(deck).drawStartingCards(gamer);
         gamer.drawCard(deck);
 
         // when
@@ -105,7 +111,9 @@ class GamerTest {
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(cardNumber1, cardNumber2)
+        ).drawStartingCards(gamer);
 
         // when
         boolean actual = gamer.isBlackjack();
@@ -123,10 +131,10 @@ class GamerTest {
         Player b = new Player("bb");
         Player c = new Player("cc");
 
-        dealer.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX));
-        a.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK));
-        b.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO));
-        c.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE));
+        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX)).drawStartingCards(dealer);
+        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK)).drawStartingCards(a);
+        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO)).drawStartingCards(b);
+        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE)).drawStartingCards(c);
 
         List<Gamer> players = List.of(a, b, c);
 

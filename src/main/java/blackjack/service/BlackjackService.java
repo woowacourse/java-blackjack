@@ -1,10 +1,12 @@
 package blackjack.service;
 
-import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.RandomCardStrategy;
+import java.util.List;
+
+import blackjack.domain.GameManager;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
 import blackjack.dto.GamerDto;
 import blackjack.dto.request.NamesRequestDto;
 import blackjack.dto.response.FinalResultResponseDto;
@@ -13,58 +15,56 @@ import blackjack.dto.response.StartingCardsResponseDto;
 
 public class BlackjackService {
 
-    private final Deck deck = Deck.generateFrom(new RandomCardStrategy());
-    private final Dealer dealer = new Dealer();
-    private Players players;
+    private GameManager gameManager;
+    private Gamers gamers;
 
     public void setPlayer(NamesRequestDto requestDto) {
-        players = Players.of(requestDto.names().stream()
-            .map(Player::new)
-            .toList());
+        Dealer dealer = new Dealer();
+        gameManager = dealer;
+        gamers = Gamers.of(dealer,
+            requestDto.names().stream()
+                .map(Player::new)
+                .toList());
     }
 
     public StartingCardsResponseDto drawStartingCards() {
-        dealer.initialize(deck);
-        players.initialize(deck);
-        return StartingCardsResponseDto.of(dealer, players);
+        gameManager.drawStartingCards(gamers.getDealer());
+        for (var player : gamers.getPlayers()) {
+            gameManager.drawStartingCards(player);
+        }
+        return StartingCardsResponseDto.of(gamers.getDealer(), gamers.getPlayers());
     }
 
-    public boolean hasMorePlayer() {
-        return players.hasNext();
+    public List<Player> getPlayers() {
+        return gamers.getPlayers();
     }
 
-    public String nextPlayerName() {
-        return players.next().getName();
+    public void drawCardFor(Player player) {
+        gameManager.drawCard(player);
     }
 
-    public void drawCardFor(String playerName) {
-        Player player = players.getByName(playerName);
-        player.drawCard(deck);
-    }
-
-    public GamerDto getPlayerCards(String playerName) {
-        Player player = players.getByName(playerName);
+    public GamerDto getPlayerCards(Player player) {
         return GamerDto.from(player);
     }
 
-    public boolean canReceiveAdditionalCards(String playerName) {
-        Player player = players.getByName(playerName);
+    public boolean canReceiveAdditionalCards(Player player) {
         return player.canReceiveAdditionalCards();
     }
 
     public boolean dealerCanReceiveAdditionalCards() {
+        Gamer dealer = gamers.getDealer();
         return dealer.canReceiveAdditionalCards();
     }
 
     public void drawCardForDealer() {
-        dealer.drawCard(deck);
+        gameManager.drawCard(gamers.getDealer());
     }
 
     public RoundResultsResponseDto getRoundResults() {
-        return RoundResultsResponseDto.of(dealer, players);
+        return RoundResultsResponseDto.of(gamers.getDealer(), gamers.getPlayers());
     }
 
     public FinalResultResponseDto getFinalResult() {
-        return FinalResultResponseDto.of(dealer, players);
+        return FinalResultResponseDto.of(gamers.getDealer(), gamers.getPlayers());
     }
 }

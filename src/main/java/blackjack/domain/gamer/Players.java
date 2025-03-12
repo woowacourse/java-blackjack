@@ -3,8 +3,6 @@ package blackjack.domain.gamer;
 import java.util.List;
 import java.util.Optional;
 
-import blackjack.domain.deck.Deck;
-
 public class Players {
 
     private final List<Player> players;
@@ -16,12 +14,6 @@ public class Players {
 
     public static Players of(List<Player> players) {
         return new Players(players);
-    }
-
-    public void initialize(Deck deck) {
-        for (var player : players) {
-            player.initialize(deck);
-        }
     }
 
     public boolean hasNext() {
