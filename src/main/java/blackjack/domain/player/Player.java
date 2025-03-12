@@ -53,6 +53,10 @@ public abstract class Player {
         return hand.calculateCardScore();
     }
 
+    public boolean isBlackJack() {
+        return true;
+    }
+
     public String getName() {
         return name.getName();
     }
