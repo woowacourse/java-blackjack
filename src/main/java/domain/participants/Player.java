@@ -28,6 +28,10 @@ public class Player extends Gamer {
         return decideGameResultWithoutBust(dealer);
     }
 
+    public boolean isSameName(PlayerName playerName) {
+        return this.playerName.equals(playerName);
+    }
+
     public PlayerName getPlayerName() {
         return playerName;
     }

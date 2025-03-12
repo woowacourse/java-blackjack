@@ -20,6 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
@@ -140,5 +141,18 @@ class PlayerTest {
         BettingAmount bettingAmount = player.getBettingAmount();
         // then
         assertThat(bettingAmount.getMoney()).isEqualTo(10000);
+    }
+
+    @ParameterizedTest
+    @DisplayName("같은 이름인지 정확히 확인한다.")
+    @CsvSource({"a,true", "b,false"})
+    void isSameNameTest(String username, boolean expected) {
+        // given
+        Player player = new Player(new PlayerName("a"), new BettingAmount(10000));
+        PlayerName playerName = new PlayerName(username);
+        // when
+        boolean isSameName = player.isSameName(playerName);
+        // then
+        assertThat(isSameName).isEqualTo(expected);
     }
 }
