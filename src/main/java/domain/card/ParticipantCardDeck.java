@@ -22,26 +22,27 @@ public class ParticipantCardDeck {
     }
 
     public int calculateScore() {
-        int totalScore = 0;
-        int aceCounts = 0;
-
-        for (Card card : cards) {
-            totalScore += card.getNumber();
-            if (card.isAceCard()) {
-                aceCounts++;
-            }
-        }
+        int totalScore = calculateTotalScore();
+        int aceCounts = countAce();
 
         return adjustAceScore(aceCounts, totalScore);
     }
 
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
+    }
+
+    private int calculateTotalScore() {
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
+    }
+
     private int adjustAceScore(int aceCounts, int totalScore) {
-        while (aceCounts-- > 0) {
-            if (totalScore + 10 <= GameRule.BUST_THRESHOLD.getValue()) {
-                totalScore += 10;
-            }
-        }
-        return totalScore;
+        int maxAdjustableAces = Math.min(aceCounts, (GameRule.BUST_THRESHOLD.getValue() - totalScore) / 10);
+        return totalScore + (maxAdjustableAces * 10);
     }
 
     public void addCard(Card card) {
