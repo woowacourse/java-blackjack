@@ -1,10 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.gambler.Name;
-import blackjack.view.WinningType;
+import blackjack.domain.game.WinningType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;

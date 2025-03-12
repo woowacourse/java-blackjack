@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import static blackjack.domain.Round.BLACK_JACK;
-import static blackjack.domain.Round.DEALER_DRAW_THRESHOLD;
+import static blackjack.domain.game.Round.BLACK_JACK;
+import static blackjack.domain.game.Round.DEALER_DRAW_THRESHOLD;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static java.util.stream.Collectors.joining;
 

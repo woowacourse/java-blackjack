@@ -1,6 +1,6 @@
 package blackjack.domain.gambler;
 
-import static blackjack.domain.Round.BLACK_JACK;
+import static blackjack.domain.game.Round.BLACK_JACK;
 
 import blackjack.domain.card.Card;
 import java.util.List;

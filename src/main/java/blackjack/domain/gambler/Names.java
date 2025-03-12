@@ -1,7 +1,7 @@
 package blackjack.domain.gambler;
 
-import static blackjack.domain.Round.MAX_PLAYER_COUNT;
-import static blackjack.domain.Round.MIN_PLAYER_COUNT;
+import static blackjack.domain.game.Round.MAX_PLAYER_COUNT;
+import static blackjack.domain.game.Round.MIN_PLAYER_COUNT;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static blackjack.view.ErrorMessage.INVALID_PLAYER_COUNT;
 import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_DUPLICATED;

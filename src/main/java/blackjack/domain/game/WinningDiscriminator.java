@@ -1,15 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
-import static blackjack.domain.Round.BLACK_JACK;
-import static blackjack.view.WinningType.BLACKJACK_WIN;
-import static blackjack.view.WinningType.DEFEAT;
-import static blackjack.view.WinningType.DRAW;
-import static blackjack.view.WinningType.WIN;
+import static blackjack.domain.game.Round.BLACK_JACK;
+import static blackjack.domain.game.WinningType.BLACKJACK_WIN;
+import static blackjack.domain.game.WinningType.DEFEAT;
+import static blackjack.domain.game.WinningType.DRAW;
+import static blackjack.domain.game.WinningType.WIN;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.gambler.Gambler;
 import blackjack.domain.gambler.Name;
-import blackjack.view.WinningType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

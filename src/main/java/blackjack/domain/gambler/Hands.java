@@ -1,6 +1,6 @@
 package blackjack.domain.gambler;
 
-import static blackjack.domain.Round.BLACK_JACK;
+import static blackjack.domain.game.Round.BLACK_JACK;
 import static blackjack.domain.card.Card.MAX_ACE_VALUE;
 import static blackjack.domain.card.Card.MIN_ACE_VALUE;
 

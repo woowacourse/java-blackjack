@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 

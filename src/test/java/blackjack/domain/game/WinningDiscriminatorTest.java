@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import static blackjack.domain.card.CardType.ACE;
 import static blackjack.domain.card.CardType.EIGHT;
@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Player;
-import blackjack.view.WinningType;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
