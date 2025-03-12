@@ -16,8 +16,8 @@ public class ScoreTest {
 		@Test
 		void plusScore() {
 			// given
-			final Score score = new Score(0);
-			final Score plusValue = new Score(10);
+			final Score score = Score.from(0);
+			final Score plusValue = Score.from(10);
 
 			// when
 			final Score actual = score.plus(plusValue);
@@ -35,14 +35,14 @@ public class ScoreTest {
 		@Test
 		void minusScore() {
 			// given
-			final Score score = new Score(100);
-			final Score minusValue = new Score(10);
+			final Score score = Score.from(100);
+			final Score minusValue = Score.from(10);
 
 			// when
 			final Score actual = score.minus(minusValue);
 
 			// then
-			assertThat(actual).isEqualTo(new Score(90));
+			assertThat(actual).isEqualTo(Score.from(90));
 		}
 	}
 
@@ -54,8 +54,8 @@ public class ScoreTest {
 		@Test
 		void isGreaterThanScore() {
 			// given
-			final Score score = new Score(100);
-			final Score moreThanValue = new Score(99);
+			final Score score = Score.from(100);
+			final Score moreThanValue = Score.from(99);
 
 			// when
 			final boolean actual = score.isGreaterThan(moreThanValue);
@@ -68,8 +68,8 @@ public class ScoreTest {
 		@Test
 		void isLessThanScore() {
 			// given
-			final Score score = new Score(100);
-			final Score moreThanValue = new Score(101);
+			final Score score = Score.from(100);
+			final Score moreThanValue = Score.from(101);
 
 			// when
 			final boolean actual = score.isLessThan(moreThanValue);

@@ -72,7 +72,7 @@ public class PlayersTest {
 				final Players players = Players.from(List.of("부기"));
 				final Function<String, Boolean> playerAnswer = (name) -> true;
 				final Deck shuffledDeck = Deck.createShuffledDeck();
-				final Score bustScore = new Score(21);
+				final Score bustScore = Score.from(21);
 
 				// when
 				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck, bustScore);

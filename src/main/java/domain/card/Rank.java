@@ -1,21 +1,21 @@
 package domain.card;
 
 public enum Rank {
-	ACE(new Score(11)),
-	TWO(new Score(2)),
-	THREE(new Score(3)),
-	FOUR(new Score(4)),
-	FIVE(new Score(5)),
-	SIX(new Score(6)),
-	SEVEN(new Score(7)),
-	EIGHT(new Score(8)),
-	NINE(new Score(9)),
-	TEN(new Score(10)),
-	JACK(new Score(10)),
-	QUEEN(new Score(10)),
-	KING(new Score(10));
+	ACE(Score.from(11)),
+	TWO(Score.from(2)),
+	THREE(Score.from(3)),
+	FOUR(Score.from(4)),
+	FIVE(Score.from(5)),
+	SIX(Score.from(6)),
+	SEVEN(Score.from(7)),
+	EIGHT(Score.from(8)),
+	NINE(Score.from(9)),
+	TEN(Score.from(10)),
+	JACK(Score.from(10)),
+	QUEEN(Score.from(10)),
+	KING(Score.from(10));
 
-	private static final Score ACE_MIN = new Score(1);
+	private static final Score ACE_MIN = Score.from(1);
 
 	private final Score score;
 

@@ -17,8 +17,8 @@ import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
 
 public class DealerTest {
-	private static final Score DEALER_PICK_CARD_SCORE_MAX = new Score(16);
-	private static final Score BUST_SCORE = new Score(21);
+	private static final Score DEALER_PICK_CARD_SCORE_MAX = Score.from(16);
+	private static final Score BUST_SCORE = Score.from(21);
 
 	@Nested
 	@DisplayName("딜러가 카드를 받아야 하는지 여부를 반환한다.")

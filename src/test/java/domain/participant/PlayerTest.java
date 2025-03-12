@@ -21,7 +21,7 @@ import domain.paticipant.Participant;
 import domain.paticipant.Player;
 
 public class PlayerTest {
-	private static final Score BUST_SCORE = new Score(21);
+	private static final Score BUST_SCORE = Score.from(21);
 
 	@Nested
 	@DisplayName("플레아어가 카드를 뽑을지 여부를 반환한다.")

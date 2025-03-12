@@ -28,10 +28,10 @@ class CardHandTest {
 		void test_calculateAllScore(List<Card> cards, int expected) {
 			//given
 			final var cardHand = new CardHand(cards);
-			final Score bustScore = new Score(21);
+			final Score bustScore = Score.from(21);
 
 			//when&then
-			Assertions.assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(new Score(expected));
+			Assertions.assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(Score.from(expected));
 		}
 
 		private static Stream<Arguments> getCardList() {

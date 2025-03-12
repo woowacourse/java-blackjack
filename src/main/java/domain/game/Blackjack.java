@@ -14,8 +14,8 @@ import domain.paticipant.Player;
 import domain.paticipant.Players;
 
 public class Blackjack {
-	private static final Score BUST_SCORE = new Score(21);
-	private static final Score DEALER_PICK_CARD_SCORE_MAX = new Score(16);
+	private static final Score BUST_SCORE = Score.from(21);
+	private static final Score DEALER_PICK_CARD_SCORE_MAX = Score.from(16);
 	public static final int INIT_PICK_CARD_COUNT = 2;
 
 	private final Players players;

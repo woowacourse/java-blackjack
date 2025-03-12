@@ -78,7 +78,7 @@ public class BlackjackTest {
 			final List<String> names = List.of("부기", "파랑", "히스타");
 			final Blackjack blackjack = Blackjack.from(names);
 			final Function<String, Boolean> alwaysYes = (name) -> true;
-			final Score bustScore = new Score(21);
+			final Score bustScore = Score.from(21);
 
 			// when
 			blackjack.pickCardPlayersIfNotBust(alwaysYes);
@@ -103,8 +103,8 @@ public class BlackjackTest {
 		void pickCardDealerIfNotMax() {
 			// given
 			final Blackjack blackjack = Blackjack.from(List.of(""));
-			final Score bustScore = new Score(21);
-			final Score dealerPickCardMaxScore = new Score(16);
+			final Score bustScore = Score.from(21);
+			final Score dealerPickCardMaxScore = Score.from(16);
 
 			// when
 			blackjack.pickCardDealerIfNotMax();
