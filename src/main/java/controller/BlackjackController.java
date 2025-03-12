@@ -8,7 +8,6 @@ import domain.game.GameManager;
 import domain.game.GameResult;
 import domain.participant.Player;
 import dto.SetUpCardsDTO;
-import domain.game.TakeMoreCardSelector;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -38,13 +37,32 @@ public class BlackjackController {
         SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(setUpCardsDTO);
 
-        gameManager.distributeExtraCards(new TakeMoreCardViewSelector());
+        distributeExtraCardToPlayers(gameManager, players);
+        distributeExtraCardToDealer(gameManager, dealer);
 
         List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
         outputView.printFinalCardDeck(finalResultDTOS);
 
         GameResult gameResult = gameManager.evaluateFinalScore();
         outputView.printGameResult(gameResult);
+    }
+
+    private void distributeExtraCardToPlayers(GameManager gameManager, List<Player> players) {
+        players.forEach(player -> distributeExtraCardToPlayer(gameManager, player));
+    }
+
+    private void distributeExtraCardToPlayer(GameManager gameManager, Player player) {
+        while (player.canTakeMoreCard() && inputView.getYesOrNo(player.getName())) {
+            player.takeMoreCard(gameManager.poll());
+            outputView.printTakenMoreCards(player.getName(), player.getCards());
+        }
+    }
+
+    private void distributeExtraCardToDealer(GameManager gameManager, Dealer dealer) {
+        if(dealer.canTakeMoreCard()){
+            dealer.takeMoreCard(gameManager.poll());
+            outputView.printDealerTake();
+        }
     }
 
     public SetUpCardsDTO createSetUpCardsDTO(Dealer dealer, List<Player> players) {
@@ -67,23 +85,5 @@ public class BlackjackController {
         }
 
         return finalResultDTOs;
-    }
-
-    private class TakeMoreCardViewSelector implements TakeMoreCardSelector {
-
-        @Override
-        public boolean isYes(String name) {
-            return inputView.getYesOrNo(name);
-        }
-
-        @Override
-        public void takenResult(String name, List<Card> cards) {
-            outputView.printTakenMoreCards(name, cards);
-        }
-
-        @Override
-        public void dealerTakenResult() {
-            outputView.printDealerTake();
-        }
     }
 }

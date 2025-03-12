@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.card.CardDeck;
@@ -30,22 +31,8 @@ public class GameManager {
         players.forEach(player -> player.setUpCardDeck(cardDeck.poll(), cardDeck.poll()));
     }
 
-    public void distributeExtraCards(TakeMoreCardSelector selector) {
-        for (Player player : players) {
-            distributeExtraCardToPlayer(player, selector);
-        }
-
-        if (dealer.canTakeMoreCard()) {
-            dealer.takeMoreCard(cardDeck.poll());
-            selector.dealerTakenResult();
-        }
-    }
-
-    public void distributeExtraCardToPlayer(Player player, TakeMoreCardSelector selector) {
-        while (player.canTakeMoreCard() && selector.isYes(player.getName())) {
-            player.takeMoreCard(cardDeck.poll());
-            selector.takenResult(player.getName(), player.getCards());
-        }
+    public Card poll() {
+        return cardDeck.poll();
     }
 
     public GameResult evaluateFinalScore() {
