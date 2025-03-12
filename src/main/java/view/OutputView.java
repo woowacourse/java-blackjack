@@ -77,7 +77,7 @@ public class OutputView {
     }
 
     private static void printScore(Participant participant) {
-        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getSum());
+        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
     }
 
     public static void printResult(Dealer dealer, Players players) {

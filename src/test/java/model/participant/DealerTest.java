@@ -62,7 +62,7 @@ class DealerTest {
         dealer.addCards(divideCards);
 
         // when
-        int sum = dealer.getSum();
+        int sum = dealer.getScore();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);
@@ -101,7 +101,7 @@ class DealerTest {
 
         // when
         // then
-        System.out.println(dealer.getSum());
+        System.out.println(dealer.getScore());
         Assertions.assertThat(dealer.isNotUp()).isFalse();
     }
 

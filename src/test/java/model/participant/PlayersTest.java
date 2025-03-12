@@ -52,7 +52,7 @@ public class PlayersTest {
         player.addCards(divideCards);
 
         // when
-        int sum = player.getSum();
+        int sum = player.getScore();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);

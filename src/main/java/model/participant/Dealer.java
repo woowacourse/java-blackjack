@@ -1,7 +1,6 @@
 package model.participant;
 
 import model.score.MatchResult;
-import model.score.ResultType;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -26,18 +25,8 @@ public class Dealer extends Participant {
         return new Dealer(DEALER_NAME);
     }
 
-    public ResultType compareTo(Player player) {
-        if (player.isBust()) {
-            return ResultType.WIN_LOSE;
-        }
-        if (isBust()) {
-            return ResultType.LOSE_WIN;
-        }
-        return ResultType.of(score.compareTo(player.score));
-    }
-
     public boolean isNotUp() {
-        return score.getValue() < STANDING_CONDITION;
+        return getScore() < STANDING_CONDITION;
     }
 
     public void updateResult(MatchResult type) {
