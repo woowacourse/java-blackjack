@@ -17,14 +17,14 @@ public class Cards {
     }
 
     public int calculateResult() {
-        int sum = calculateMaxSum(cards);
-        if (isUnderThreshold(sum)) {
-            return sum;
+        int maxScore = calculateMaxScore(cards);
+        if (isUnderThreshold(maxScore)) {
+            return maxScore;
         }
-        return subtractAce(sum);
+        return subtractAce(maxScore);
     }
 
-    public int calculateMinSum() {
+    public int calculateMinScore() {
         return cards.stream()
                 .mapToInt(Card::getCardMinNumber)
                 .sum();
@@ -34,22 +34,22 @@ public class Cards {
         cards.addAll(givenCards.getCards());
     }
 
-    private int calculateMaxSum(final List<Card> cards) {
+    private int calculateMaxScore(final List<Card> cards) {
         return cards.stream()
                 .mapToInt(Card::getCardMaxNumber)
                 .sum();
     }
 
-    private boolean isUnderThreshold(final int sum) {
-        return sum <= BLACKJACK_NUMBER;
+    private boolean isUnderThreshold(final int score) {
+        return score <= BLACKJACK_NUMBER;
     }
 
-    private int subtractAce(int sum) {
+    private int subtractAce(int score) {
         int aceCount = countAce(cards);
-        while (!isUnderThreshold(sum) && aceCount-- > 0) {
-            sum -= ACE_SUBTRACT;
+        while (!isUnderThreshold(score) && aceCount-- > 0) {
+            score -= ACE_SUBTRACT;
         }
-        return sum;
+        return score;
     }
 
     private int countAce(final List<Card> cards) {

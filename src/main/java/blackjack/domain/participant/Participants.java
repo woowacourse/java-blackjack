@@ -41,8 +41,8 @@ public class Participants {
         return dealer.canGetMoreCard();
     }
 
-    public int calculateDealerMaxSum() {
-        return dealer.calculateMaxSum();
+    public int calculateDealerMaxScore() {
+        return dealer.calculateMaxScore();
     }
 
     public Entry<String, Cards> showInitialDealerCards() {

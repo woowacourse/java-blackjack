@@ -35,7 +35,7 @@ public class BlackjackController {
 
         spreadInitialCards(blackjackGame);
         spreadExtraCards(blackjackGame);
-        resultView.makeParticipantsWithSumMessage(blackjackGame.showDealerCard(), blackjackGame.showPlayersCards());
+        resultView.makeParticipantsWithScoreMessage(blackjackGame.showDealerCard(), blackjackGame.showPlayersCards());
         showWinningResult(blackjackGame);
     }
 

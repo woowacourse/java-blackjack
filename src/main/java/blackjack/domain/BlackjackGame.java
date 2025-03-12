@@ -47,16 +47,16 @@ public class BlackjackGame {
         return participants.canDealerGetMoreCard();
     }
 
-    public int sumCardDenomination(final Gamer gamer) {
-        return gamer.calculateMaxSum();
+    public int calculateMaxScore(final Gamer gamer) {
+        return gamer.calculateMaxScore();
     }
 
     public Map<String, ResultStatus> calculateWinningResult() {
-        final int dealerSum = participants.calculateDealerMaxSum();
+        final int dealerScore = participants.calculateDealerMaxScore();
         final Map<String, ResultStatus> result = new HashMap<>();
         for (Gamer player : participants.getPlayers().getPlayers()) {
-            final int playerSum = player.calculateMaxSum();
-            result.put(player.getNickname(), ResultStatus.calculateResultStatus(playerSum, dealerSum));
+            final int playerScore = player.calculateMaxScore();
+            result.put(player.getNickname(), ResultStatus.calculateResultStatus(playerScore, dealerScore));
         }
         return Collections.unmodifiableMap(result);
     }

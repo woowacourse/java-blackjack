@@ -25,8 +25,8 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canGetMoreCard() {
-        int sum = cards.calculateMinSum();
-        return sum <= DEALER_THRESHOLD;
+        int score = cards.calculateMinScore();
+        return score <= DEALER_THRESHOLD;
     }
 
     @Override

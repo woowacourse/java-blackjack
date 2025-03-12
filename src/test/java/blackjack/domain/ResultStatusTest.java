@@ -18,10 +18,10 @@ class ResultStatusTest {
             "23, 18, LOSE"
     })
     @ParameterizedTest
-    void calculateResultStatus(final int sum, final int comparedSum, final ResultStatus resultStatus) {
+    void calculateResultStatus(final int score, final int comparedScore, final ResultStatus resultStatus) {
         // given
 
         // when & then
-        assertThat(ResultStatus.calculateResultStatus(sum, comparedSum)).isEqualTo(resultStatus);
+        assertThat(ResultStatus.calculateResultStatus(score, comparedScore)).isEqualTo(resultStatus);
     }
 }

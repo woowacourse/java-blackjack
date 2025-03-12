@@ -16,14 +16,14 @@ class CardsTest {
     @DisplayName("21 이하에서 카드 최대 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMaxSum(final Cards cards, final int expected) {
+    void calculateMaxScore(final Cards cards, final int expected) {
         // given
 
         // when & then
         assertThat(cards.calculateResult()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> calculateMaxSum() {
+    private static Stream<Arguments> calculateMaxScore() {
         return Stream.of(
                 Arguments.of(provideSmallerAceCards(), 18),
                 Arguments.of(provideBiggerAceCards(), 21),
@@ -34,14 +34,14 @@ class CardsTest {
     @DisplayName("21 이하에서 카드 최소 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMinSum(final Cards cards, final int expected) {
+    void calculateMinScore(final Cards cards, final int expected) {
         // given
 
         // when & then
-        assertThat(cards.calculateMinSum()).isEqualTo(expected);
+        assertThat(cards.calculateMinScore()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> calculateMinSum() {
+    private static Stream<Arguments> calculateMinScore() {
         return Stream.of(
                 Arguments.of(provideSmallerAceCards(), 18),
                 Arguments.of(provideBiggerAceCards(), 11),

@@ -26,8 +26,8 @@ public class Player extends Gamer {
 
     @Override
     public boolean canGetMoreCard() {
-        int sum = cards.calculateMinSum();
-        return sum < BLACKJACK_NUMBER;
+        int score = cards.calculateMinScore();
+        return score < BLACKJACK_NUMBER;
     }
 
     @Override

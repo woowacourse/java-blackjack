@@ -26,7 +26,7 @@ public class ResultView {
     private static final String COMMA = ", ";
     private static final String CARD_FORMAT = "%s카드: %s";
     private static final String TITLE_DEALER_EXTRA_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String CARD_SUM_FORMAT = "%s카드: %s - 결과: %d";
+    private static final String CARD_SCORE_FORMAT = "%s카드: %s - 결과: %d";
 
     private static final String TITLE_WINNING_RESULT = "## 최종 승패";
     private static final String WINNING_DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
@@ -87,11 +87,11 @@ public class ResultView {
         System.out.println(line);
     }
 
-    public void makeParticipantsWithSumMessage(final Entry<String, Cards> dealer,
-                                               final Map<String, Cards> participants) {
-        System.out.println(LINE + makeParticipantsWithSumMessage(dealer));
+    public void makeParticipantsWithScoreMessage(final Entry<String, Cards> dealer,
+                                                 final Map<String, Cards> participants) {
+        System.out.println(LINE + makeParticipantsWithScoreMessage(dealer));
         participants.entrySet().stream()
-                .map(this::makeParticipantsWithSumMessage)
+                .map(this::makeParticipantsWithScoreMessage)
                 .forEach(System.out::println);
     }
 
@@ -108,8 +108,8 @@ public class ResultView {
                 .count();
     }
 
-    private String makeParticipantsWithSumMessage(final Entry<String, Cards> entry) {
-        return String.format(CARD_SUM_FORMAT, entry.getKey(),
+    private String makeParticipantsWithScoreMessage(final Entry<String, Cards> entry) {
+        return String.format(CARD_SCORE_FORMAT, entry.getKey(),
                 getCardMessage(entry.getValue()), entry.getValue().calculateResult());
     }
 

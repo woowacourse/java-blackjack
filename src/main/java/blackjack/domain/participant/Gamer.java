@@ -20,7 +20,7 @@ public abstract class Gamer {
         cards.addAll(givenCards);
     }
 
-    public int calculateMaxSum() {
+    public int calculateMaxScore() {
         return cards.calculateResult();
     }
 
