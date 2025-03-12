@@ -31,8 +31,21 @@ public final class Formatter {
         return player.getName() + "카드: " + formatStartingCardStatus(player);
     }
 
+    public static String formatMultipleCardStatusWithName(Participant participant) {
+        if (participant.doesHaveName()) {
+            Player player = (Player) participant;
+            return player.getName() + "카드: " + formatStartingCardStatus(player);
+        }
+        throw new IllegalArgumentException("이름이 없는 참가자의 상태를 출력할 수 없습니다.");
+    }
+
     public static String formatDealerStartCardStatus(Dealer dealer) {
         List<Card> cards = dealer.getCards();
+        return "딜러카드: " + Formatter.formatCard(cards.getFirst());
+    }
+
+    public static String formatSingleCardStatus(Participant participant) {
+        List<Card> cards = participant.getCards();
         return "딜러카드: " + Formatter.formatCard(cards.getFirst());
     }
 

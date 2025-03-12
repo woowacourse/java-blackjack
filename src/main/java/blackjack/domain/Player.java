@@ -34,11 +34,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public List<Integer> getPossibleSums() {
-        return hand.calculatePossibleSums();
-    }
-
-    @Override
     public void takeCard(Card newCard) {
         hand.takeCard(newCard);
     }
@@ -46,6 +41,25 @@ public class Player implements Participant {
     @Override
     public int getOptimisticValue() {
         return hand.getOptimisticValue();
+    }
+
+    // TODO: isOverLimit 과 합쳐야 할까?
+    // TODO: 21 을 내부에서 알아도 될까?
+    @Override
+    public boolean ableToTakeMoreCards() {
+        return hand.calculatePossibleSums().stream()
+                .allMatch(sum -> sum <= 21);
+    }
+
+    @Override
+    public boolean canDecideToTakeMoreCard() {
+        return true;
+    }
+
+    @Override
+    public boolean isOverLimit(int limit) {
+        return hand.calculatePossibleSums().stream()
+                .allMatch(sum -> sum <= limit);
     }
 
     public String getName() {

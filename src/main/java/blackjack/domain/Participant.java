@@ -13,9 +13,13 @@ public interface Participant {
 
     List<Card> getCards();
 
-    List<Integer> getPossibleSums();
-
     void takeCard(Card newCard);
 
     int getOptimisticValue();
+
+    boolean ableToTakeMoreCards();
+
+    boolean canDecideToTakeMoreCard();
+
+    boolean isOverLimit(int limit);
 }

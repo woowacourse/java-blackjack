@@ -2,6 +2,7 @@ package blackjack.manager;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
+import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -28,6 +29,15 @@ public class BlackjackProcessManager {
     public void giveStartingCardsFor(Dealer dealer) {
         List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
         cards.forEach(dealer::takeCard);
+    }
+
+    public void giveStartingCards(Participants participants) {
+        participants.getParticipants().forEach(this::giveStartingCards);
+    }
+
+    private void giveStartingCards(Participant participant) {
+        List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
+        cards.forEach(participant::takeCard);
     }
 
     public void giveStartingCardsFor(Player player) {

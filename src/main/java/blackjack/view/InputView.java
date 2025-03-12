@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +20,13 @@ public final class InputView {
         return parseNames(rawNames);
     }
 
-    public static Confirmation askToGetMoreCard(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-
-        return Confirmation.find(scanner.nextLine());
+    public static Confirmation askToGetMoreCard(Participant participant) {
+        if (participant.canDecideToTakeMoreCard()) {
+            Player player = (Player) participant;
+            System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+            return Confirmation.find(scanner.nextLine());
+        }
+        throw new IllegalArgumentException("카드를 더 받을지의 여부를 선택할 수 없는 참가자입니다.");
     }
 
     private static List<String> parseNames(String rawNames) {

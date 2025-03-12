@@ -32,11 +32,6 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public List<Integer> getPossibleSums() {
-        return hand.calculatePossibleSums();
-    }
-
-    @Override
     public void takeCard(Card newCard) {
         hand.takeCard(newCard);
     }
@@ -44,5 +39,22 @@ public class Dealer implements Participant {
     @Override
     public int getOptimisticValue() {
         return hand.getOptimisticValue();
+    }
+
+    @Override
+    public boolean ableToTakeMoreCards() {
+        return hand.calculatePossibleSums().stream()
+                .allMatch(sum -> sum <= 16);
+    }
+
+    @Override
+    public boolean canDecideToTakeMoreCard() {
+        return false;
+    }
+
+    @Override
+    public boolean isOverLimit(int limit) {
+        return hand.calculatePossibleSums().stream()
+                .allMatch(sum -> sum <= limit);
     }
 }

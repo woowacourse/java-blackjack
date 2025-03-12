@@ -22,4 +22,12 @@ public class Participants {
     public List<Participant> getParticipants() {
         return participants;
     }
+
+    public List<String> getNamesOfParticipants() {
+        return participants.stream()
+                .filter(participant -> participant.doesHaveName())
+                .map(participant -> (Player) participant)
+                .map(participant -> participant.getName())
+                .toList();
+    }
 }

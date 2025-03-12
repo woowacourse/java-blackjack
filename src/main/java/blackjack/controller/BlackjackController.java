@@ -1,7 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.Player;
+import blackjack.domain.Participant;
+import blackjack.domain.Participants;
 import blackjack.domain.Players;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
@@ -29,64 +30,64 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = InputView.readNames();
+
         Players players = blackJackInitManager.savePlayers(names);
         Dealer dealer = blackJackInitManager.saveDealer();
-
-
-
-        giveStartingCards(players, dealer);
-
-        giveMoreCardFor(players);
-        giveMoreCardFor(dealer);
 
         List<PlayerResult> playerResults = getCardResultOfPlayer(players, dealer);
         DealerResult dealerResult = getCardResultOfDealer(dealer);
 
         OutputView.printCardResult(playerResults, dealerResult, dealer);
         OutputView.printGameResult(dealerResult, playerResults);
+
+        //TODO: 위의 로직 제거
+
+        Participants participants = blackJackInitManager.saveParticipants(names);
+
+        giveStartingCards(participants);
+        participants.getParticipants().forEach(this::giveMoreCard);
+
     }
 
-    private void giveMoreCardFor(Dealer dealer) {
-        while (gameRuleEvaluator.canTakeCardFor(dealer)) {
-            OutputView.printMoreCard();
-            blackjackProcessManager.giveCard(dealer);
+    private void giveMoreCard(Participant participant) {
+        if (participant.canDecideToTakeMoreCard()) {
+            takeCardsAsLongAsWanted(participant);
+            return;
         }
+        takeCardManually(participant);
     }
 
-    private void giveMoreCardFor(Players players) {
-        for (Player player : players.getPlayers()) {
-            giveMoreCardFor(player);
-        }
-    }
-
-    private void giveMoreCardFor(Player player) {
-        Confirmation confirmation = InputView.askToGetMoreCard(player);
+    private void takeCardsAsLongAsWanted(Participant participant) {
+        Confirmation confirmation = InputView.askToGetMoreCard(participant);
         if (confirmation.equals(Confirmation.N)) {
-            OutputView.printCardResult(player);
+            OutputView.printCardResult(participant);
             return;
         }
 
-        blackjackProcessManager.giveCard(player);
-        OutputView.printCardResult(player);
+        blackjackProcessManager.giveCard(participant);
+        OutputView.printCardResult(participant);
 
-        if (gameRuleEvaluator.isBustedFor(player)) {
-            OutputView.printBustedPlayer(player);
+        if (gameRuleEvaluator.isBusted(participant)) {
+            OutputView.printBustedParticipantWithName(participant);
             return;
         }
 
-        if (gameRuleEvaluator.canTakeCardFor(player)) {
-            giveMoreCardFor(player);
+        if (participant.ableToTakeMoreCards()) {
+            giveMoreCard(participant);
         }
     }
 
-    private void giveStartingCards(Players players, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            blackjackProcessManager.giveStartingCardsFor(player);
+    private void takeCardManually(Participant participant) {
+        while (participant.ableToTakeMoreCards()) {
+            OutputView.printMoreCard();
+            blackjackProcessManager.giveCard(participant);
         }
+    }
 
-        blackjackProcessManager.giveStartingCardsFor(dealer);
+    private void giveStartingCards(Participants participants) {
+        blackjackProcessManager.giveStartingCards(participants);
 
-        OutputView.printStartingCardsStatuses(dealer, players);
+        OutputView.printStartingCardsStatuses(participants);
     }
 
     private List<PlayerResult> getCardResultOfPlayer(Players players, Dealer dealer) {

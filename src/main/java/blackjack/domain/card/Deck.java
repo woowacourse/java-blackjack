@@ -38,6 +38,7 @@ public class Deck {
         return Collections.unmodifiableList(cards);
     }
 
+    // TODO: size 제한하기
     public List<Card> takeCards(int size) {
         validateEmpty(size);
 
