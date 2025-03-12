@@ -1,5 +1,7 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.CardFixture;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -16,6 +18,16 @@ public class GameParticipantFixture {
     @SuppressWarnings("unchecked")
     public static Player createPlayer(String nickname) {
         return Player.of(Nickname.from(nickname), (Function<Player, Boolean>) ignoreFunction, (Consumer<GameParticipant>) ignoreConsumer);
+    }
+
+    public static Player createPlayer(String nickname, int sumOfCards) {
+        Player player = createPlayer(nickname);
+
+        CardFixture.createCardsForSum(sumOfCards).getCards().forEach(
+                player::drawCard
+        );
+
+        return player;
     }
 
     public static Player createPlayer(String nickname,
@@ -36,6 +48,16 @@ public class GameParticipantFixture {
     @SuppressWarnings("unchecked")
     public static Dealer createDealer(int playerCount) {
         return createDealer(playerCount, (Consumer<GameParticipant>) ignoreConsumer, ignoreRunnable);
+    }
+
+    public static Dealer createDealer(int playerCount, int sumOfCards) {
+        Dealer dealer = createDealer(playerCount);
+
+        CardFixture.createCardsForSum(sumOfCards).getCards().forEach(
+                dealer::drawCard
+        );
+
+        return dealer;
     }
 
     public static Dealer createDealer(int playerCount,

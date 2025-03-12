@@ -1,7 +1,6 @@
 package blackjack.domain.result;
 
 import blackjack.domain.GameRule;
-import blackjack.domain.gamer.GameParticipant;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -19,15 +18,13 @@ public enum GameResult {
         this.description = description;
     }
 
-    public static GameResult of(GameParticipant hero, GameParticipant villain) {
-        int heroScore = hero.calculateSumOfCards();
-        int villainScore = villain.calculateSumOfCards();
+    public static GameResult of(int playerScore, int dealerScore) {
 
-        if (bothBust(heroScore, villainScore)) {
-            return judgeByRule(hero);
+        if (bothBust(playerScore, dealerScore)) {
+            return LOSE;
         }
 
-        return compareScores(heroScore, villainScore);
+        return compareScores(playerScore, dealerScore);
     }
 
     public static Map<GameResult, Integer> count(List<GameResult> results) {
@@ -63,23 +60,15 @@ public enum GameResult {
         return GameRule.isBust(heroScore) && GameRule.isBust(villainScore);
     }
 
-    // 동시에 버스트된다면, 딜러의 승리다
-    private static GameResult judgeByRule(GameParticipant hero) {
-        if (hero.isDealer()) {
-            return WIN;
-        }
-        return LOSE;
-    }
+    private static GameResult compareScores(int playerScore, int dealerScore) {
+        playerScore = GameRule.applyBustRule(playerScore);
+        dealerScore = GameRule.applyBustRule(dealerScore);
 
-    private static GameResult compareScores(int heroScore, int villainScore) {
-        heroScore = GameRule.applyBustRule(heroScore);
-        villainScore = GameRule.applyBustRule(villainScore);
-
-        if (heroScore > villainScore) {
+        if (playerScore > dealerScore) {
             return WIN;
         }
 
-        if (heroScore < villainScore) {
+        if (playerScore < dealerScore) {
             return LOSE;
         }
 

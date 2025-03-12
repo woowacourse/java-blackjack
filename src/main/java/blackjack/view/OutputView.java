@@ -73,8 +73,7 @@ public class OutputView {
                 dealerResultToCount.get(GameResult.DRAW), GameResult.DRAW.getDescription()
         );
 
-        participants.getGameParticipants().stream()
-                .filter(GameParticipant::isPlayer)
+        participants.getPlayers()
                 .forEach(player ->
                         System.out.printf("%s: %s %n",
                                 player.getNickname().getValue(),

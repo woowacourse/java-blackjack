@@ -2,8 +2,9 @@ package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFixture;
-import blackjack.domain.gamer.GameParticipant;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.GameParticipantFixture;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,20 +27,20 @@ class GameResultTest {
             "21, 21, DRAW",  // 무승부
             "22, 22, LOSE" // 둘 다 버스트라면 딜러가 이긴다
     })
-    @DisplayName("참여자(히어로: 플레이어, 빌런: 딜러)의 승패를 판단할 수 있다")
+    @DisplayName("플레이어의 승패를 판단할 수 있다")
     void canDecideResult(int heroSum, int villainSum, GameResult expectedResult) {
         // given
-        GameParticipant hero = GameParticipantFixture.createPlayer("강산");
-        GameParticipant villain = GameParticipantFixture.createDealer();
+        Player player = GameParticipantFixture.createPlayer("강산");
+        Dealer dealer = GameParticipantFixture.createDealer();
 
-        List<Card> heroCards = CardFixture.createCardsForSum(heroSum).getCards();
-        List<Card> villainCards = CardFixture.createCardsForSum(villainSum).getCards();
+        List<Card> playerCards = CardFixture.createCardsForSum(heroSum).getCards();
+        List<Card> dealerCards = CardFixture.createCardsForSum(villainSum).getCards();
 
-        heroCards.forEach(hero::drawCard);
-        villainCards.forEach(villain::drawCard);
+        playerCards.forEach(player::drawCard);
+        dealerCards.forEach(dealer::drawCard);
 
         // when
-        GameResult result = GameResult.of(hero, villain);
+        GameResult result = GameResult.of(player.calculateSumOfCards(), dealer.calculateSumOfCards());
 
         // then
         assertThat(result).isEqualTo(expectedResult);

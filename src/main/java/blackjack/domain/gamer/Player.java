@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.GameResult;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -25,5 +26,9 @@ public class Player extends GameParticipant {
     @Override
     public boolean shouldHit() {
         return !this.isBust() && hitDecision.apply(this);
+    }
+
+    public GameResult judgeResult(Dealer dealer) {
+        return GameResult.of(this.calculateSumOfCards(), dealer.calculateSumOfCards());
     }
 }
