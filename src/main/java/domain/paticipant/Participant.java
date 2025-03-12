@@ -4,6 +4,7 @@ import java.util.List;
 
 import domain.card.Card;
 import domain.card.CardHand;
+import domain.card.Score;
 import domain.duel.DuelHistory;
 import domain.duel.DuelResult;
 
@@ -29,7 +30,7 @@ public class Participant {
 		duelHistory.write(duelResult);
 	}
 
-	public int calculateAllScore(final int bustScore) {
+	public Score calculateAllScore(final int bustScore) {
 		return hand.calculateAllScore(bustScore);
 	}
 

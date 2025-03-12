@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.Rank;
+import domain.card.Score;
 import domain.card.Suit;
 
 class CardHandTest {
@@ -30,7 +31,7 @@ class CardHandTest {
 			final int bustScore = 21;
 
 			//when&then
-			Assertions.assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(expected);
+			Assertions.assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(new Score(expected));
 		}
 
 		private static Stream<Arguments> getCardList() {

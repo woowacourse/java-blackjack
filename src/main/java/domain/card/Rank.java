@@ -23,15 +23,16 @@ public enum Rank {
 		this.score = score;
 	}
 
-	public static int ifOverThanBustScoreAceIsMIN(int score, int aceCount, final int bustScore) {
-		while (score > bustScore && aceCount-- > 0) {
-			score -= ACE.score;
-			score += ACE_MIN;
+	public static Score ifOverThanBustScoreAceIsMIN(Score score, int aceCount, final int bustScore) {
+		while (score.isGreaterThan(bustScore) && aceCount-- > 0) {
+			score = score
+				.minus(ACE.score)
+				.plus(ACE_MIN);
 		}
 		return score;
 	}
 
-	public int sum(final int score) {
-		return this.score + score;
+	public Score sum(final Score score) {
+		return score.plus(this.score);
 	}
 }

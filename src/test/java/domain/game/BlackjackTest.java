@@ -85,8 +85,9 @@ public class BlackjackTest {
 			// then
 			assertSoftly(s -> {
 				for (final Player player : blackjack.getPlayers().getPlayers()) {
-					s.assertThat(player.getParticipant().getCardHand().calculateAllScore(bustScore))
-						.isGreaterThan(bustScore);
+					s.assertThat(
+							player.getParticipant().getCardHand().calculateAllScore(bustScore).isGreaterThan(bustScore))
+						.isTrue();
 				}
 			});
 		}
@@ -108,8 +109,8 @@ public class BlackjackTest {
 			blackjack.pickCardDealerIfNotMax();
 
 			// then
-			assertThat(blackjack.getDealer().getParticipant().calculateAllScore(bustScore))
-				.isGreaterThan(dealerPickCardMaxScore);
+			assertThat(blackjack.getDealer().getParticipant().calculateAllScore(bustScore).isGreaterThan(
+				dealerPickCardMaxScore)).isTrue();
 		}
 	}
 
@@ -128,7 +129,7 @@ public class BlackjackTest {
 			final Blackjack blackjack = new Blackjack();
 
 			// when
-			final int actual = blackjack.calculateScore(participant);
+			final int actual = blackjack.calculateScore(participant).getValue();
 
 			// then
 			assertThat(actual).isEqualTo(12);

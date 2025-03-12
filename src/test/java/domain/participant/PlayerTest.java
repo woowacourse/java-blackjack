@@ -103,7 +103,7 @@ public class PlayerTest {
 			final Player player = new Player("", participant);
 
 			// when
-			final int actual = player.calculateAllScore(BUST_SCORE);
+			final int actual = player.calculateAllScore(BUST_SCORE).getValue();
 
 			// then
 			assertThat(actual).isEqualTo(21);

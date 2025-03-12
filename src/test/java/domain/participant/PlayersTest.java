@@ -78,8 +78,12 @@ public class PlayersTest {
 
 				// then
 				assertThat(
-					players.getPlayers().getFirst().getParticipant().getCardHand().calculateAllScore(21)).isGreaterThan(
-					bustScore);
+					players.getPlayers()
+						.getFirst()
+						.getParticipant()
+						.getCardHand()
+						.calculateAllScore(21)
+						.isGreaterThan(bustScore)).isTrue();
 			}
 		}
 

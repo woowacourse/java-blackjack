@@ -10,7 +10,7 @@ public record Card(
 		return Objects.equals(this.rank, rank);
 	}
 
-	public int sumNumber(final int score) {
+	public Score sumNumber(final Score score) {
 		return rank.sum(score);
 	}
 }

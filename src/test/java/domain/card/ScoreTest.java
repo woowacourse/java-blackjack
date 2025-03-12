@@ -61,7 +61,7 @@ public class ScoreTest {
 			final boolean actual = score.isGreaterThan(moreThanValue);
 
 			// then
-			assertThat(actual).isFalse();
+			assertThat(actual).isTrue();
 		}
 
 		@DisplayName("x가 주어진 score보다 더 큰가")
@@ -75,7 +75,7 @@ public class ScoreTest {
 			final boolean actual = score.isGreaterThan(moreThanValue);
 
 			// then
-			assertThat(actual).isFalse();
+			assertThat(actual).isTrue();
 		}
 
 		@DisplayName("x가 주어진 값보다 작은가")

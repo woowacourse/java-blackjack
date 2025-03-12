@@ -20,8 +20,8 @@ public class CardHand {
 		this.cards.addAll(cards);
 	}
 
-	public int calculateAllScore(final int bustScore) {
-		int score = 0;
+	public Score calculateAllScore(final int bustScore) {
+		Score score = new Score(0);
 
 		for (final Card card : cards) {
 			score = card.sumNumber(score);

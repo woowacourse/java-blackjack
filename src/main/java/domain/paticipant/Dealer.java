@@ -3,6 +3,7 @@ package domain.paticipant;
 import java.util.List;
 
 import domain.card.Card;
+import domain.card.Score;
 import domain.duel.DuelResult;
 
 public class Dealer implements PickableCard {
@@ -22,15 +23,16 @@ public class Dealer implements PickableCard {
 	}
 
 	public boolean isPickCard(final int bustScore, final int dealerPickCardScoreMax) {
-		return participant.calculateAllScore(bustScore) <= dealerPickCardScoreMax;
+		final Score score = participant.calculateAllScore(bustScore);
+		return score.isLessThan(dealerPickCardScoreMax) || score.equals(new Score(dealerPickCardScoreMax));
 	}
 
-	public int calculateAllScore(final int bustScore) {
+	public Score calculateAllScore(final int bustScore) {
 		return participant.calculateAllScore(bustScore);
 	}
 
 	public boolean isBust(final int bustScore) {
-		return calculateAllScore(bustScore) > bustScore;
+		return calculateAllScore(bustScore).isGreaterThan(bustScore);
 	}
 
 	public void writeDuelResult(final DuelResult duelResult) {

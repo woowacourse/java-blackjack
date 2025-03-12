@@ -80,7 +80,7 @@ public class BlackjackController {
 	private void outputDealerHandResult(final Blackjack blackjack) {
 		final Participant participant = blackjack.getDealer().getParticipant();
 		final List<String> convertedCards = convertParticipantCardText(participant);
-		final int score = blackjack.calculateScore(participant);
+		final int score = blackjack.calculateScore(participant).getValue();
 		outputView.printDealerHandResult(convertedCards, score);
 	}
 
@@ -98,7 +98,7 @@ public class BlackjackController {
 		for (final Player player : blackjack.getPlayers().getPlayers()) {
 			final Participant participant = player.getParticipant();
 			final List<String> convertedCards = convertParticipantCardText(participant);
-			final int score = blackjack.calculateScore(participant);
+			final int score = blackjack.calculateScore(participant).getValue();
 			outputView.printPlayerHandResult(player.getName(), convertedCards, score);
 		}
 	}

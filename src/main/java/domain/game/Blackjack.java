@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import domain.card.Deck;
+import domain.card.Score;
 import domain.duel.DuelResult;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
@@ -58,7 +59,7 @@ public class Blackjack {
 		picker.addCards(deck.pickCards(1));
 	}
 
-	public int calculateScore(final Participant participant) {
+	public Score calculateScore(final Participant participant) {
 		return participant.calculateAllScore(BUST_SCORE);
 	}
 
@@ -73,7 +74,7 @@ public class Blackjack {
 			return;
 		}
 		if (dealer.isBust(BUST_SCORE)
-			|| player.calculateAllScore(BUST_SCORE) > dealer.calculateAllScore(BUST_SCORE)) {
+			|| player.calculateAllScore(BUST_SCORE).isGreaterThan(dealer.calculateAllScore(BUST_SCORE))) {
 			dealer.writeDuelResult(DuelResult.LOSE);
 			player.writeDuelResult(DuelResult.WIN);
 			return;
