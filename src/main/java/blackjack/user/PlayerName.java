@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.user;
 
 public class PlayerName {
 

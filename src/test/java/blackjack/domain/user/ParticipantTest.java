@@ -3,10 +3,11 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Denomination;
-import blackjack.domain.Suit;
+import blackjack.card.Card;
+import blackjack.card.CardDeck;
+import blackjack.card.Denomination;
+import blackjack.card.Suit;
+import blackjack.user.Participant;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

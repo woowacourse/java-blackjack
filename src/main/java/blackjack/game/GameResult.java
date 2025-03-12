@@ -1,7 +1,7 @@
-package blackjack.domain;
+package blackjack.game;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
+import blackjack.user.Dealer;
+import blackjack.user.Player;
 
 public enum GameResult {
     WIN("승"),

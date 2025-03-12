@@ -1,7 +1,7 @@
-package blackjack.domain.user;
+package blackjack.user;
 
-import blackjack.domain.Card;
-import blackjack.domain.GameResult;
+import blackjack.card.Card;
+import blackjack.game.GameResult;
 import java.util.List;
 
 public class Dealer extends Participant {

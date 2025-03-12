@@ -1,10 +1,11 @@
-package blackjack.domain;
+package blackjack.game;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Participant;
-import blackjack.domain.user.Participants;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.PlayerName;
+import blackjack.card.CardDeck;
+import blackjack.user.Dealer;
+import blackjack.user.Participant;
+import blackjack.user.Participants;
+import blackjack.user.Player;
+import blackjack.user.PlayerName;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

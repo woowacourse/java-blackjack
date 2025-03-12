@@ -1,13 +1,11 @@
-package blackjack.domain.user;
+package blackjack.user;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Denomination;
+import blackjack.card.Card;
+import blackjack.card.CardDeck;
+import blackjack.card.Denomination;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public abstract class Participant {
 
