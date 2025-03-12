@@ -19,7 +19,7 @@ public class BettingResult {
     }
 
     public int calculateDealerFinalResult() {
-        return -betting.values().stream().mapToInt(i -> i).sum();
+        return betting.values().stream().mapToInt(i-> -i).sum();
     }
 
     private void computeResultByWinningStatus(Player player, GameResult gameResult) {
@@ -30,7 +30,7 @@ public class BettingResult {
         if (gameResult == GameResult.DRAW){
             betting.put(player, 0);
         }
-        if (gameResult == GameResult.BLACKJACK){
+        if (gameResult == GameResult.WIN && player.checkBlackjack()){
             betting.put(player, bettingPrice * 3/2);
         }
     }

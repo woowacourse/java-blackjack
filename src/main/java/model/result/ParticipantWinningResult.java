@@ -21,17 +21,9 @@ public class ParticipantWinningResult {
     private Map<Player, GameResult> calculateWinningResult(Players players, Dealer dealer) {
         Map<Player, GameResult> result = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            result.put(player, checkPlayerWinningResult(dealer, player));
+            result.put(player, checkPlayerWin(dealer, player));
         }
         return result;
-    }
-
-    private GameResult checkPlayerWinningResult(Dealer dealer, Player player) {
-        GameResult playerWinningResult = checkPlayerWin(dealer, player);
-        if (playerWinningResult == GameResult.WIN && player.checkBlackjack()) {
-            return GameResult.BLACKJACK;
-        }
-        return playerWinningResult;
     }
 
     private GameResult checkPlayerWin(Dealer dealer, Player player) {

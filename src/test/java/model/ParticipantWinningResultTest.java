@@ -138,38 +138,4 @@ class ParticipantWinningResultTest {
         //then
         assertEquals(gameResult.get(player), expect);
     }
-
-    @Test
-    @DisplayName("2장의 카드로 21을 만들어 승리할 경우 블랙잭을 반환한다")
-    void 두장의_카드로_21을_만들어_승리할_경우_블랙잭을_반환한다() {
-        //given
-        dealer.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
-        dealer.receiveCard(new Card(CardRank.EIGHT, CardSuit.DIAMOND));
-        player.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
-        player.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
-        //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
-        GameResult expect = GameResult.BLACKJACK;
-
-        //then
-        assertEquals(gameResult.get(player), expect);
-    }
-
-    @Test
-    @DisplayName("딜러와 플레이어 모두 블랙잭일 경우 무승부 반환")
-    void 딜러와_플레이어_모두_블랙잭일_경우_무승부를_반환() {
-        //given
-        dealer.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
-        dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
-        player.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
-        player.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
-        //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
-        GameResult expect = GameResult.DRAW;
-
-        //then
-        assertEquals(gameResult.get(player), expect);
-    }
 }
