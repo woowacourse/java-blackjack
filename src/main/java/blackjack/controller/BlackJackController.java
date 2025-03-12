@@ -2,12 +2,10 @@ package blackjack.controller;
 
 import blackjack.model.game.BlackJackGame;
 import blackjack.model.game.Result;
-import blackjack.model.player.BlackJackPlayer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,10 +30,10 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         List<Player> players = makeUsers();
-        dealInitialCards(players, dealer);
+        blackJackGame.dealInitialCards(dealer, players);
         outputView.printDealInitialCardsResult(dealer, players);
 
-        players.forEach(this::userDrawMoreCards);
+        players.forEach(this::drawMorePlayerCards);
         outputView.printDealerDrawnMoreCards(blackJackGame.drawMoreCard(dealer));
 
         outputView.printOptimalPoints(dealer, players);
@@ -53,17 +51,11 @@ public class BlackJackController {
                 .toList();
     }
 
-    private void userDrawMoreCards(final Player player) {
+    private void drawMorePlayerCards(final Player player) {
         while (player.canDrawMoreCard() && inputView.readUserDrawMoreCard(player)) {
             blackJackGame.drawMoreCard(player);
             outputView.printPlayerCards(player);
         }
-    }
-
-    private void dealInitialCards(final List<Player> players, final BlackJackPlayer dealer) {
-        List<BlackJackPlayer> allBlackJackPlayers = new ArrayList<>(players);
-        allBlackJackPlayers.add(dealer);
-        blackJackGame.dealInitialCards(allBlackJackPlayers);
     }
 
     private Map<Player, Result> getUsersResults(final Dealer dealer, final List<Player> players) {

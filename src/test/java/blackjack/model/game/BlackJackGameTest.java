@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
-import blackjack.model.player.BlackJackPlayer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import java.util.List;
@@ -39,11 +38,10 @@ class BlackJackGameTest {
                         createCard(CardNumber.FIVE))
         ));
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck);
-        Player player = new Player("pobi");
         Dealer dealer = new Dealer();
-        List<BlackJackPlayer> blackJackPlayers = List.of(dealer, player);
+        Player player = new Player("pobi");
 
-        blackJackGame.dealInitialCards(blackJackPlayers);
+        blackJackGame.dealInitialCards(dealer, List.of(player));
 
         assertThat(dealer.getCards().getValues()).hasSize(2);
         assertThat(player.getCards().getValues()).hasSize(2);

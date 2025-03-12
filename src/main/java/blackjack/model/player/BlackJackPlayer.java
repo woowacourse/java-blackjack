@@ -4,6 +4,7 @@ import blackjack.model.card.Cards;
 import java.util.Collections;
 import java.util.Objects;
 
+// 안터페이스 쓰기
 public abstract class BlackJackPlayer {
 
     protected static final int BLACKJACK_POINT = 21;
@@ -16,34 +17,34 @@ public abstract class BlackJackPlayer {
         this.cards = Cards.empty();
     }
 
-    public int getMinimumPoint() {
+    public final int getMinimumPoint() {
         return Collections.min(cards.calculatePossiblePoints());
     }
 
-    public void receiveCards(final Cards cards) {
+    public final void receiveCards(final Cards cards) {
         this.cards.merge(cards);
     }
 
-    public Cards openAllCards() {
+    public final Cards openAllCards() {
         return cards;
     }
 
-    public int calculateOptimalPoint() {
+    public final int calculateOptimalPoint() {
         return cards.calculatePossiblePoints().stream()
                 .filter(point -> point < BLACKJACK_POINT)
                 .max(Integer::compareTo)
                 .orElse(getMinimumPoint());
     }
 
-    protected boolean isBust() {
+    protected final boolean isBust() {
         return calculateOptimalPoint() > BLACKJACK_POINT;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public Cards getCards() {
+    public final Cards getCards() {
         return cards;
     }
 
