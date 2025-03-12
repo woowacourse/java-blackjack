@@ -3,7 +3,7 @@ package contoller;
 import domain.card.Deck;
 import domain.GameManager;
 import domain.participant.Participant;
-import domain.ResultStatus;
+import domain.GameResult;
 import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
@@ -90,7 +90,7 @@ public class BlackjackController {
     }
 
     private void printGameResult() {
-        Map<Participant, ResultStatus> result = gameManager.findGameResult();
+        Map<Participant, GameResult> result = gameManager.findGameResult();
         OutputView.printGameResult(result);
     }
 }

@@ -21,4 +21,9 @@ public class Player extends Participant {
     public boolean shouldHit() {
         return !cards.isBlackjackScoreExceeded();
     }
+
+    @Override
+    public int getBettingAmount() {
+        return bettingAmount.getAmount();
+    }
 }

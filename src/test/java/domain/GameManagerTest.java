@@ -125,11 +125,11 @@ public class GameManagerTest {
                 List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
         Cards cardsOfDuei = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.FIVE), new Card(Suit.SPADE, Rank.QUEEN)));
-        Map<Participant, ResultStatus> result = gameManager.findGameResult();
+        Map<Participant, GameResult> result = gameManager.findGameResult();
 
-        Map<Participant, ResultStatus> expected = Map.of(
-                new Player(new ParticipantName("drago"), new BettingAmount(10000), cardsOfDrago), ResultStatus.LOSE,
-                new Player(new ParticipantName("duei"), new BettingAmount(20000), cardsOfDuei), ResultStatus.LOSE
+        Map<Participant, GameResult> expected = Map.of(
+                new Player(new ParticipantName("drago"), new BettingAmount(10000), cardsOfDrago), GameResult.LOSE,
+                new Player(new ParticipantName("duei"), new BettingAmount(20000), cardsOfDuei), GameResult.LOSE
         );
         assertThat(result).isEqualTo(expected);
     }

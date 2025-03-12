@@ -3,7 +3,7 @@ package view;
 import domain.card.Card;
 import domain.participant.Participant;
 import domain.card.Rank;
-import domain.ResultStatus;
+import domain.GameResult;
 import domain.card.Suit;
 import domain.participant.Participants;
 
@@ -84,35 +84,35 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(Map<Participant, ResultStatus> result) {
-        Map<ResultStatus, Integer> counts = countStatusResult(result);
+    public static void printGameResult(Map<Participant, GameResult> result) {
+        Map<GameResult, Integer> counts = countStatusResult(result);
         System.out.print(NEW_LINE);
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패 %d무%n",
-                counts.get(ResultStatus.LOSE), counts.get(ResultStatus.WIN), counts.get(ResultStatus.PUSH));
+                counts.get(GameResult.LOSE), counts.get(GameResult.WIN), counts.get(GameResult.PUSH));
         for (Participant player : result.keySet()) {
             printPlayerGameResult(result, player);
         }
     }
 
-    private static void printPlayerGameResult(Map<Participant, ResultStatus> result, Participant player) {
-        ResultStatus resultStatus = result.get(player);
-        if (resultStatus == ResultStatus.WIN) {
+    private static void printPlayerGameResult(Map<Participant, GameResult> result, Participant player) {
+        GameResult gameResult = result.get(player);
+        if (gameResult == GameResult.WIN) {
             System.out.printf("%s: 승%n", player.getParticipantName());
             return;
         }
-        if (resultStatus == ResultStatus.LOSE) {
+        if (gameResult == GameResult.LOSE) {
             System.out.printf("%s: 패%n", player.getParticipantName());
             return;
         }
         System.out.printf("%s: 무%n", player.getParticipantName());
     }
 
-    private static Map<ResultStatus, Integer> countStatusResult(Map<Participant, ResultStatus> result) {
-        Map<ResultStatus, Integer> counts = ResultStatus.initMap();
+    private static Map<GameResult, Integer> countStatusResult(Map<Participant, GameResult> result) {
+        Map<GameResult, Integer> counts = GameResult.initMap();
         for (Participant player : result.keySet()) {
-            ResultStatus resultStatus = result.get(player);
-            counts.put(resultStatus, counts.get(resultStatus) + 1);
+            GameResult gameResult = result.get(player);
+            counts.put(gameResult, counts.get(gameResult) + 1);
         }
         return counts;
     }
