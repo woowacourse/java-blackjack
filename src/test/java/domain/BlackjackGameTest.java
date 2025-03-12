@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Deck;
 import domain.card.Rank;
+import domain.card.Suit;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
 import domain.participant.Participants;

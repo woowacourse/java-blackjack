@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Rank;
+import domain.card.Suit;
 import domain.card.TrumpCard;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -35,7 +36,7 @@ class RoundHistoryTest {
       //when
       final var roundHistory = RoundHistory.of(dealer, players);
       //then
-      Map<String, Boolean> expected = new HashMap<>(Map.of(name, true));
+      Map<String, RoundResult> expected = new HashMap<>(Map.of(name, RoundResult.WIN));
       assertThat(roundHistory.getHistory()).isEqualTo(expected);
     }
 
@@ -53,7 +54,7 @@ class RoundHistoryTest {
       //when
       final var roundHistory = RoundHistory.of(dealer, players);
       //then
-      var expected = new HashMap<>(Map.of(true, 0, false, 1));
+      Map<RoundResult, Integer> expected = new HashMap<>(Map.of(RoundResult.WIN, 1));
       assertThat(roundHistory.getDealerResult()).isEqualTo(expected);
     }
   }

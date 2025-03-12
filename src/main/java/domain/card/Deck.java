@@ -1,6 +1,5 @@
 package domain.card;
 
-import domain.Suit;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;

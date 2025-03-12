@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 public final class RoundHistory {
 
-  private final Map<String, Boolean> history;
+  private final Map<String, RoundResult> history;
 
-  private RoundHistory(Map<String, Boolean> history) {
+  private RoundHistory(Map<String, RoundResult> history) {
     this.history = new HashMap<>(history);
   }
 
@@ -18,26 +18,25 @@ public final class RoundHistory {
       final Participant dealer,
       final List<Participant> players
   ) {
-    final Map<String, Boolean> history = players.stream()
+    final Map<String, RoundResult> history = players.stream()
         .collect(Collectors.toMap(
             Participant::getName,
-            player -> player.round(dealer)
+            player -> RoundResult.round(player, dealer)
         ));
     return new RoundHistory(history);
   }
 
 
-  public Map<Boolean, Integer> getDealerResult() {
-    final Map<Boolean, Integer> result = new HashMap<>();
+  public Map<RoundResult, Integer> getDealerResult() {
+    final Map<RoundResult, Integer> result = new HashMap<>();
 
-    for (final Boolean value : history.values()) {
-      boolean key = !value;
-      result.put(key, result.getOrDefault(key, 0) + 1);
+    for (final RoundResult value : history.values()) {
+      result.put(value, result.getOrDefault(value, 0) + 1);
     }
     return result;
   }
 
-  public Map<String, Boolean> getHistory() {
+  public Map<String, RoundResult> getHistory() {
     return history;
   }
 }

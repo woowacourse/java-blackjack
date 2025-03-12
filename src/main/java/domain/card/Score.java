@@ -26,7 +26,6 @@ public record Score(int value) {
     return equals(BLACKJACK_SCORE);
   }
 
-
   public boolean isGreaterThan(final Score other) {
     return this.value > other.value;
   }

@@ -1,7 +1,6 @@
 package controller;
 
 import controller.converter.DomainToTextConverter;
-import controller.converter.RoundResultText;
 import domain.BlackjackGame;
 import domain.RoundHistory;
 import domain.card.TrumpCard;
@@ -91,7 +90,7 @@ public final class BlackjackController {
   private void outputPlayerHandResult(final Participant participants) {
     final List<String> convertedCards = converter.participantCardToText(participants);
     final var score = participants.calculateScore();
-    outputView.printPlayerRoundResult(participants.getName(), convertedCards, score);
+    outputView.printPlayerRoundResult(participants.getName(), convertedCards, score.value());
   }
 
   private void round(final BlackjackGame blackjack) {
@@ -101,9 +100,8 @@ public final class BlackjackController {
     outputView.printRoundResultOnDealer(dealerRoundHistory);
 
     roundHistory.getHistory()
-        .forEach((name, isWin) -> {
-          final var result = RoundResultText.convertBooleanToText(isWin);
-          outputView.printRoundResultOnPlayers(name, result);
+        .forEach((name, result) -> {
+          outputView.printRoundResultOnPlayers(name, result.getText());
         });
   }
 }

@@ -3,7 +3,6 @@ package domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Suit;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayDeque;
 import java.util.List;

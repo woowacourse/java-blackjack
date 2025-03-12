@@ -1,5 +1,6 @@
 package view;
 
+import domain.RoundResult;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public final class OutputView {
     System.out.println("## 최종 승패");
   }
 
-  public void printRoundResultOnDealer(final Map<Boolean, Integer> result) {
+  public void printRoundResultOnDealer(final Map<RoundResult, Integer> result) {
     var winCount = result.getOrDefault(true, 0);
     var loseCount = result.getOrDefault(false, 0);
     System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount, loseCount);
