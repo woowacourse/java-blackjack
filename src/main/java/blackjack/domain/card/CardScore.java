@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.Collections;
 import java.util.List;
 
 public enum CardScore {
@@ -37,10 +38,10 @@ public enum CardScore {
     }
 
     public int getMinNumber() {
-        return scores.getFirst();
+        return Collections.min(scores);
     }
 
     public int getMaxNumber() {
-        return scores.getLast();
+        return Collections.max(scores);
     }
 }
