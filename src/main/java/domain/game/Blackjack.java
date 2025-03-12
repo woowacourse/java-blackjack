@@ -1,5 +1,6 @@
 package domain.game;
 
+import java.util.Collections;
 import java.util.List;
 
 import domain.card.Deck;
@@ -15,10 +16,26 @@ public class Blackjack {
 	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
 	private static final int INIT_PICK_CARD_COUNT = 2;
 
+	private final Players players;
+	private final Dealer dealer;
+	private final Deck deck;
+
 	public Blackjack() {
+		this.players = Players.from(Collections.emptyList());
+		this.dealer = new Dealer();
+		this.deck = Deck.createShuffledDeck();
 	}
 
-	public Blackjack(final List<String> names) {
+	public Blackjack(final Players players, final Dealer dealer, final Deck deck) {
+		this.players = players;
+		this.dealer = dealer;
+		this.deck = deck;
+	}
+
+	public static Blackjack from(final List<String> names) {
+		return new Blackjack(
+			Players.from(names), new Dealer(), Deck.createShuffledDeck()
+		);
 	}
 
 	public void initPickCard(final Dealer dealer, final List<Player> players, final Deck deck) {
@@ -62,14 +79,14 @@ public class Blackjack {
 	}
 
 	public Players getPlayers() {
-		return null;
+		return players;
 	}
 
 	public Dealer getDealer() {
-		return null;
+		return dealer;
 	}
 
 	public Deck getDeck() {
-		return null;
+		return deck;
 	}
 }

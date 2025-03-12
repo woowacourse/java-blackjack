@@ -31,7 +31,7 @@ public class BlackjackTest {
 			final List<String> names = List.of("부기", "파랑", "히스타");
 
 			// when
-			final Blackjack blackjack = new Blackjack(names);
+			final Blackjack blackjack = Blackjack.from(names);
 
 			// then
 			assertThat(blackjack.getPlayers().getPlayers()).hasSize(3);
