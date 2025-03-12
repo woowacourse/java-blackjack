@@ -6,7 +6,7 @@ import domain.card.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     protected static final int BURST_BOUND = 21;
 
