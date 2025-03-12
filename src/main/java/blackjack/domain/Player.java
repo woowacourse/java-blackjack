@@ -4,7 +4,7 @@ import blackjack.common.Constants;
 import blackjack.common.ErrorMessage;
 import java.util.List;
 
-public class Player implements CardHolder {
+public class Player implements Participant {
 
     private final String name;
     private final Hand hand;

@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Dealer implements CardHolder {
+public class Dealer implements Participant {
 
     private static final int DEALER_MUST_TAKE_UNDER = 16;
     private static final int FIRST_CARD_POSITION = 0;

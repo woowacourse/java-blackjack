@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.common.Constants;
 import blackjack.domain.Card;
-import blackjack.domain.CardHolder;
+import blackjack.domain.Participant;
 import blackjack.domain.CardRank;
 import blackjack.domain.CardSuit;
 import blackjack.domain.Dealer;
@@ -40,8 +40,8 @@ public final class Formatter {
         return "딜러카드: " + parseStartingCardStatus(dealer);
     }
 
-    private static String parseCardResultValue(CardHolder cardHolder) {
-        int value = cardHolder.getOptimisticValue();
+    private static String parseCardResultValue(Participant participant) {
+        int value = participant.getOptimisticValue();
 
         if (value == Constants.BUSTED_VALUE) {
             return "Busted!";
@@ -50,8 +50,8 @@ public final class Formatter {
         return java.lang.String.valueOf(value);
     }
 
-    private static String parseStartingCardStatus(CardHolder cardHolder) {
-        return cardHolder.getAllCards().stream()
+    private static String parseStartingCardStatus(Participant participant) {
+        return participant.getAllCards().stream()
                 .map(Formatter::parseCardName)
                 .collect(Collectors.joining(", "));
     }

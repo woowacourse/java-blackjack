@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-public interface CardHolder {
+public interface Participant {
 
     List<Card> getAllCards();
 

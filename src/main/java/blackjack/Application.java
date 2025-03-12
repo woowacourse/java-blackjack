@@ -1,14 +1,14 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.controller.BlackjackInitManager;
+import blackjack.controller.BlackjackProcessManager;
 import blackjack.factory.SingDeckGenerator;
 
 public class Application {
 
     public static void main(String[] args) {
-        BlackjackInitManager blackJackInitManager = new BlackjackInitManager(new SingDeckGenerator());
-        BlackjackController blackjackController = new BlackjackController(blackJackInitManager);
+        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(new SingDeckGenerator());
+        BlackjackController blackjackController = new BlackjackController(blackjackProcessManager);
 
         blackjackController.run();
     }

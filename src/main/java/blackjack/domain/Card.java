@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +14,7 @@ public class Card {
     }
 
     public List<Integer> getValue() {
-        return Collections.unmodifiableList(cardRank.getValues());
+        return cardRank.getValues();
     }
 
     @Override

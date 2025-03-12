@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack.service;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
@@ -8,11 +8,11 @@ import blackjack.domain.Players;
 import blackjack.factory.DeckGenerator;
 import java.util.List;
 
-public class BlackjackInitManager {
+public class BlackjackInitService {
 
     private final DeckGenerator deckGenerator;
 
-    public BlackjackInitManager(DeckGenerator deckGenerator) {
+    public BlackjackInitService(DeckGenerator deckGenerator) {
         this.deckGenerator = deckGenerator;
     }
 
