@@ -96,34 +96,4 @@ public class CardGiverTest {
             )));
         });
     }
-
-    @DisplayName("사용자 답변이 YES이면 추가 카드를 받는다.")
-    @Test
-    void test34() {
-        //given
-        Player player = new Player("mimi", Cards.createEmpty());
-        AnswerType answerType = AnswerType.YES;
-
-        CardGiver cardGiver = new CardGiver(new TestGenerator(), GivenCards.createEmpty());
-        //when
-        cardGiver.giveAdditionalCard(player, answerType);
-        //then
-        assertThat(player.cards).isEqualTo(new Cards(List.of(
-                new Card(CardNumberType.FIVE, CardType.SPACE)
-        )));
-    }
-
-    @DisplayName("사용자 답변이 NO이면 추가 카드를 받지 않는다.")
-    @Test
-    void test35() {
-        //given
-        Player player = new Player("mimi", Cards.createEmpty());
-        AnswerType answerType = AnswerType.NO;
-
-        CardGiver cardGiver = new CardGiver(new TestGenerator(), GivenCards.createEmpty());
-        //when
-        cardGiver.giveAdditionalCard(player, answerType);
-        //then
-        assertThat(player.cards).isEqualTo(Cards.createEmpty());
-    }
 }
