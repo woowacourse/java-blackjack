@@ -11,17 +11,17 @@ class PlayersTest {
     void 플레이어_수가_최대_10명을_넘으면_예외가_발생한다() {
         //given
         List<Player> players = List.of(
-                new Player("poba", new Cards(), 1000),
-                new Player("pobg", new Cards(), 1000),
-                new Player("pobb", new Cards(), 1000),
-                new Player("pobh", new Cards(), 1000),
-                new Player("pobc", new Cards(), 1000),
-                new Player("pobi", new Cards(), 1000),
-                new Player("pobd", new Cards(), 1000),
-                new Player("pobj", new Cards(), 1000),
-                new Player("pobe", new Cards(), 1000),
-                new Player("pobk", new Cards(), 1000),
-                new Player("pobf", new Cards(), 1000)
+                new Player("poba", new Cards(), new BattingMoney(1000)),
+                new Player("pobg", new Cards(), new BattingMoney(1000)),
+                new Player("pobb", new Cards(), new BattingMoney(1000)),
+                new Player("pobh", new Cards(), new BattingMoney(1000)),
+                new Player("pobc", new Cards(), new BattingMoney(1000)),
+                new Player("pobi", new Cards(), new BattingMoney(1000)),
+                new Player("pobd", new Cards(), new BattingMoney(1000)),
+                new Player("pobj", new Cards(), new BattingMoney(1000)),
+                new Player("pobe", new Cards(), new BattingMoney(1000)),
+                new Player("pobk", new Cards(), new BattingMoney(1000)),
+                new Player("pobf", new Cards(), new BattingMoney(1000))
         );
 
         //when & then
@@ -34,7 +34,7 @@ class PlayersTest {
     void 플레이어_수가_최소_2명을_넘지_않으면_예외가_발생한다() {
         //given
         List<Player> players = List.of(
-                new Player("pobi", new Cards(), 1000)
+                new Player("pobi", new Cards(), new BattingMoney(1000))
         );
 
         //when & then

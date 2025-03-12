@@ -20,7 +20,7 @@ class PlayerTest {
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Player player = new Player("pobi", new Cards(), 0);
+        Player player = new Player("pobi", new Cards(), new BattingMoney(0));
 
         //when
         player.prepareCards(deck);
@@ -29,7 +29,7 @@ class PlayerTest {
         assertThat(player).isEqualTo(new Player("pobi", new Cards(
                 new Card(Suit.CLUB, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.NINE)
-        ), 0));
+        ), new BattingMoney(0)));
     }
 
     @Test
@@ -40,13 +40,14 @@ class PlayerTest {
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Player player = new Player("pobi", new Cards(), 0);
+        Player player = new Player("pobi", new Cards(), new BattingMoney(0));
 
         //when
         player.drawCard(deck);
 
         //then
-        assertThat(player).isEqualTo(new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.EIGHT)), 0));
+        assertThat(player).isEqualTo(
+                new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.EIGHT)), new BattingMoney(0)));
     }
 
     @Test
@@ -59,7 +60,7 @@ class PlayerTest {
         Player player = new Player("pobi", new Cards(
                 new Card(Suit.CLUB, Rank.TEN),
                 new Card(Suit.DIAMOND, Rank.NINE)
-        ), 10000);
+        ), new BattingMoney(10000));
 
         //when
         int result = player.calculateRevenue(dealer);
@@ -84,7 +85,7 @@ class PlayerTest {
         Player player = new Player("pobi", new Cards(
                 new Card(Suit.CLUB, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.NINE)
-        ), 10000);
+        ), new BattingMoney(10000));
 
         //when
         int result = player.calculateRevenue(dealer);
@@ -109,7 +110,7 @@ class PlayerTest {
         Player player = new Player("pobi", new Cards(
                 new Card(Suit.CLUB, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.NINE)
-        ), 10000);
+        ), new BattingMoney(10000));
 
         //when
         int result = player.calculateRevenue(dealer);
@@ -135,7 +136,7 @@ class PlayerTest {
                 new Card(Suit.CLUB, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.HEART, Rank.NINE)
-        ), 10000);
+        ), new BattingMoney(10000));
 
         //when
         int result = player.calculateRevenue(dealer);
@@ -161,7 +162,7 @@ class PlayerTest {
         Player player = new Player("pobi", new Cards(
                 new Card(Suit.CLUB, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.TEN)
-        ), 10000);
+        ), new BattingMoney(10000));
 
         //when
         int result = player.calculateRevenue(dealer);

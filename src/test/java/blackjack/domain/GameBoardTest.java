@@ -9,6 +9,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.FixCardsShuffler;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.participants.BattingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -28,7 +29,8 @@ class GameBoardTest {
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
         Dealer dealer = new Dealer(new Cards());
-        Players players = new Players(new Player("pobi", new Cards(), 0), new Player("neo", new Cards(), 0));
+        Players players = new Players(new Player("pobi", new Cards(), new BattingMoney(0)),
+                new Player("neo", new Cards(), new BattingMoney(0)));
         GameBoard gameBoard = new GameBoard(deck, dealer, players);
 
         //when
@@ -44,11 +46,11 @@ class GameBoardTest {
                         new Player("pobi", new Cards(
                                 new Card(Suit.CLUB, Rank.ACE),
                                 new Card(Suit.DIAMOND, Rank.EIGHT)
-                        ), 0),
+                        ), new BattingMoney(0)),
                         new Player("neo", new Cards(
                                 new Card(Suit.DIAMOND, Rank.NINE),
                                 new Card(Suit.DIAMOND, Rank.ACE)
-                        ), 0)
+                        ), new BattingMoney(0))
                 ))
         );
     }
@@ -59,17 +61,18 @@ class GameBoardTest {
         Deck deck = new Deck(
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Player pobi = new Player("pobi", new Cards(), 1000);
+        Player pobi = new Player("pobi", new Cards(), new BattingMoney(1000));
         GameBoard gameBoard = new GameBoard(deck, new Dealer(new Cards()), new Players(
                 pobi,
-                new Player("neo", new Cards(), 1000)
+                new Player("neo", new Cards(), new BattingMoney(1000))
         ));
 
         //when
         gameBoard.drawCard(pobi);
 
         //then
-        assertThat(pobi).isEqualTo(new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.TEN)), 1000));
+        assertThat(pobi).isEqualTo(
+                new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.TEN)), new BattingMoney(1000)));
     }
 
     @Test
@@ -81,8 +84,8 @@ class GameBoardTest {
         );
         Dealer dealer = new Dealer(new Cards());
         GameBoard gameBoard = new GameBoard(deck, dealer, new Players(
-                new Player("pobi", new Cards(), 1000),
-                new Player("neo", new Cards(), 1000)
+                new Player("pobi", new Cards(), new BattingMoney(1000)),
+                new Player("neo", new Cards(), new BattingMoney(1000))
         ));
 
         //when

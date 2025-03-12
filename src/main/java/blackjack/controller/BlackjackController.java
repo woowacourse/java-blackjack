@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardsShuffler;
 import blackjack.domain.card.ScoreCalculator;
+import blackjack.domain.participants.BattingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -37,7 +38,7 @@ public class BlackjackController {
 
     private List<Player> toPlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> new Player(name, new Cards(new ArrayList<>(), new ScoreCalculator()), 0))
+                .map(name -> new Player(name, new Cards(new ArrayList<>(), new ScoreCalculator()), new BattingMoney(0)))
                 .toList();
     }
 

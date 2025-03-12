@@ -8,9 +8,9 @@ import java.util.Objects;
 public class Player {
     private final String name;
     private final Cards cards;
-    private final int battingMoney;
+    private final BattingMoney battingMoney;
 
-    public Player(String name, Cards cards, int battingMoney) {
+    public Player(String name, Cards cards, BattingMoney battingMoney) {
         this.name = name.trim();
         this.cards = cards;
         this.battingMoney = battingMoney;
@@ -20,34 +20,19 @@ public class Player {
         cards.take(deck.draw(), deck.draw());
     }
 
-    public int calculateRevenue(Dealer dealer) {
-        if (cards.isBust()) {
-            dealer.plusAmount(battingMoney);
-            return -battingMoney;
-        }
-        WinningResult winningResult = WinningResult.decide(cards, dealer.getCards());
-        if (winningResult == WinningResult.WIN) {
-            if (cards.isBlackjack()) {
-                int revenue = (int) (battingMoney * 1.5 - battingMoney);
-                dealer.minusAmount(revenue);
-                return revenue;
-            }
-            dealer.minusAmount(battingMoney);
-            return battingMoney;
-        }
-        if (winningResult == WinningResult.LOSE) {
-            dealer.plusAmount(battingMoney);
-            return -battingMoney;
-        }
-        return 0;
-    }
-
     public void drawCard(Deck deck) {
         cards.take(deck.draw());
     }
 
     public int calculateMaxScore() {
         return cards.calculateMaxScore();
+    }
+
+    public int calculateRevenue(Dealer dealer) {
+        WinningResult winningResult = WinningResult.decide(cards, dealer.getCards());
+        int revenue = battingMoney.calculateRevenue(cards, winningResult);
+        dealer.minusAmount(revenue);
+        return revenue;
     }
 
     public Cards getCards() {
@@ -68,15 +53,15 @@ public class Player {
         }
 
         Player player = (Player) object;
-        return battingMoney == player.battingMoney && getName().equals(player.getName()) && Objects.equals(
-                getCards(), player.getCards());
+        return getName().equals(player.getName()) && Objects.equals(getCards(), player.getCards())
+                && Objects.equals(battingMoney, player.battingMoney);
     }
 
     @Override
     public int hashCode() {
         int result = getName().hashCode();
         result = 31 * result + Objects.hashCode(getCards());
-        result = 31 * result + battingMoney;
+        result = 31 * result + Objects.hashCode(battingMoney);
         return result;
     }
 }
