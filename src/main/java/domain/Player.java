@@ -1,9 +1,8 @@
 package domain;
 
-import static domain.Cards.BLACKJACK_SCORE;
-
 import domain.card.Card;
 import java.util.List;
+import java.util.Optional;
 
 public class Player extends Participant {
 
@@ -18,7 +17,17 @@ public class Player extends Participant {
 
     @Override
     public boolean ableToAddCard() {
-        int cardsScore = cards.calculateScore();
-        return cardsScore <= BLACKJACK_SCORE;
+        return !isBust();
+    }
+
+    @Override
+    protected <T extends Participant> Optional<GameStatus> determineGameStatusWhenBust(final T other) {
+        if (isBust()) {
+            return Optional.of(GameStatus.LOSE);
+        }
+        if (other.isBust()) {
+            return Optional.of(GameStatus.WIN);
+        }
+        return Optional.empty();
     }
 }

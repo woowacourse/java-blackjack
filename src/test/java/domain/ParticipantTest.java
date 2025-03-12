@@ -9,6 +9,7 @@ import domain.card.Suit;
 import exception.ErrorException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -17,29 +18,32 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class ParticipantTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"TWO:WIN", "JACK,QUEEN,KING:TIE"}, delimiterString = ":")
-    @DisplayName("GameOver인 참여자가 있는 GameStatus 계산 기능 테스트")
-    void determineCardsOver21Test(String rankNames, String gameStatusName) {
+    @CsvSource(value = {"TWO:LOSE:WIN", "JACK,QUEEN,KING:LOSE:WIN"}, delimiterString = ":")
+    @DisplayName("Bust인 플레이어가 있는 GameStatus 계산 기능 테스트")
+    void determineCardsOver21Test(String rankNames, String playerStatus, String dealerStatus) {
         // given
-        List<Rank> ranks = List.of(Rank.JACK, Rank.QUEEN, Rank.KING);
-        Participant participant = createParticipantCardsOfRanks(ranks);
-        List<Rank> otherRanks = createRanks(rankNames);
-        Participant otherParticipant = createParticipantCardsOfRanks(otherRanks);
+        List<Rank> playerRanks = List.of(Rank.JACK, Rank.QUEEN, Rank.KING);
+        Player player = createParticipant(playerRanks, Player::new);
+        List<Rank> dealerRanks = createRanks(rankNames);
+        Dealer dealer = createParticipant(dealerRanks, Dealer::new);
         // then & when
-        assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
+        assertEquals(GameStatus.valueOf(playerStatus), player.determineGameStatus(dealer));
+        assertEquals(GameStatus.valueOf(dealerStatus), dealer.determineGameStatus(player));
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"JACK,QUEEN:WIN", "QUEEN,TWO:TIE", "JACK:LOSE", "JACK,QUEEN,KING:LOSE"}, delimiterString = ":")
-    @DisplayName("GameOver인 참여자가 없는 GameStatus 계산 기능 테스트")
-    void determineCardsUnder21Test(String rankNames, String gameStatusName) {
+    @CsvSource(value = {"JACK,QUEEN:LOSE:WIN", "QUEEN,TWO:TIE:TIE", "JACK:WIN:LOSE", "JACK,QUEEN,KING:WIN:LOSE"},
+            delimiterString = ":")
+    @DisplayName("Bust인 플레이어가 없는 GameStatus 계산 기능 테스트")
+    void determineCardsUnder21Test(String rankNames, String playerStatus, String dealerStatus) {
         // given
-        List<Rank> ranks = List.of(Rank.JACK, Rank.TWO);
-        Participant participant = createParticipantCardsOfRanks(ranks);
-        List<Rank> otherRanks = createRanks(rankNames);
-        Participant otherParticipant = createParticipantCardsOfRanks(otherRanks);
+        List<Rank> playerRanks = List.of(Rank.JACK, Rank.TWO);
+        Player player = createParticipant(playerRanks, Player::new);
+        List<Rank> DealerRanks = createRanks(rankNames);
+        Dealer dealer = createParticipant(DealerRanks, Dealer::new);
         // then & when
-        assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
+        assertEquals(GameStatus.valueOf(playerStatus), player.determineGameStatus(dealer));
+        assertEquals(GameStatus.valueOf(dealerStatus), dealer.determineGameStatus(player));
     }
 
     @ParameterizedTest
@@ -47,13 +51,13 @@ public class ParticipantTest {
     @DisplayName("이름이 공백인 참여자 예외 테스트")
     void blankParticipantNameTest(String name) {
         // given & when & then
-        assertThatThrownBy(() -> createParticipant(name))
+        assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(ErrorException.class)
                 .hasMessageContaining("[ERROR]");
     }
 
-    private static Participant createParticipantCardsOfRanks(List<Rank> ranks) {
-        Participant participant = createParticipant("행성");
+    private static <T extends Participant> T createParticipant(List<Rank> ranks, Function<String, T> creator) {
+        T participant = creator.apply("행성");
         ranks.stream()
                 .map(rank -> new Card(rank, Suit.DIAMOND))
                 .forEach(participant::addCard);
@@ -64,19 +68,5 @@ public class ParticipantTest {
         return Arrays.stream(rankNames.split(","))
                 .map(Rank::valueOf)
                 .toList();
-    }
-
-    private static Participant createParticipant(String name) {
-        return new Participant(name) {
-            @Override
-            public List<Card> getInitialCards() {
-                return List.of();
-            }
-
-            @Override
-            public boolean ableToAddCard() {
-                return false;
-            }
-        };
     }
 }

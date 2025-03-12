@@ -12,8 +12,12 @@ public class Cards {
 
     private final List<Card> cards;
 
+    public Cards(List<Card> cards) {
+        this.cards = cards;
+    }
+
     public Cards() {
-        this.cards = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     public void addCard(Card card) {
@@ -25,60 +29,33 @@ public class Cards {
                 .map(card -> card.rank().getValue())
                 .reduce(0, Integer::sum);
         int aceCount = calculateAceCount();
-        while (aceCount-- > 0 && !isGameOver(score + ACE_PLUS_SCORE)) {
+        while (aceCount-- > 0 && !isBust(score + ACE_PLUS_SCORE)) {
             score += ACE_PLUS_SCORE;
         }
         return score;
     }
 
-    public GameStatus determineGameStatus(Cards otherCards) {
-        int cardsScore = calculateScore();
-        int otherCardsScore = otherCards.calculateScore();
-        if (!isGameOver(cardsScore) && !isGameOver(otherCardsScore)) {
-            return evaluateStatusByScore(cardsScore, otherCardsScore);
-        }
-        return evaluateStatusByGameOver(cardsScore, otherCardsScore);
-    }
-
-    public int calculateAceCount() {
+    private int calculateAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
+    protected GameStatus determineGameStatusByScore(final Cards other) {
+        if (calculateScore() > other.calculateScore()) {
+            return GameStatus.WIN;
+        }
+        if (calculateScore() < other.calculateScore()) {
+            return GameStatus.LOSE;
+        }
+        return GameStatus.TIE;
     }
 
-    public Card pickCard() {
-        return cards.removeFirst();
+    public boolean isBust(int score) {
+        return score > BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    private GameStatus evaluateStatusByScore(int cardsScore, int otherCardsScore) {
-        if (cardsScore > otherCardsScore) {
-            return GameStatus.WIN;
-        }
-        if (cardsScore < otherCardsScore) {
-            return GameStatus.LOSE;
-        }
-        return GameStatus.TIE;
-    }
-
-    private GameStatus evaluateStatusByGameOver(int cardsScore, int otherCardsScore) {
-        if (!isGameOver(cardsScore) && isGameOver(otherCardsScore)) {
-            return GameStatus.WIN;
-        }
-        if (isGameOver(cardsScore) && !isGameOver(otherCardsScore)) {
-            return GameStatus.LOSE;
-        }
-        return GameStatus.TIE;
-    }
-
-    private boolean isGameOver(int score) {
-        return score > BLACKJACK_SCORE;
     }
 }

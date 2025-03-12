@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import exception.ErrorException;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Participant {
 
@@ -19,6 +20,8 @@ public abstract class Participant {
 
     public abstract boolean ableToAddCard();
 
+    protected abstract <T extends Participant> Optional<GameStatus> determineGameStatusWhenBust(T other);
+
     public void addCard(Card card) {
         cards.addCard(card);
     }
@@ -27,20 +30,17 @@ public abstract class Participant {
         return this.name.equals(name);
     }
 
-    public GameStatus determineGameStatus(Participant participant) {
-        return cards.determineGameStatus(participant.cards);
+    public GameStatus determineGameStatus(Participant other) {
+        Optional<GameStatus> gameStatus = determineGameStatusWhenBust(other);
+        return gameStatus.orElseGet(() -> cards.determineGameStatusByScore(other.cards));
     }
 
-    public String getName() {
-        return name;
+    public boolean isBust() {
+        return cards.isBust(cards.calculateScore());
     }
 
     public List<Card> getCards() {
         return cards.getCards();
-    }
-
-    public int getCardsScore() {
-        return cards.calculateScore();
     }
 
     private void validateBlank(String name) {

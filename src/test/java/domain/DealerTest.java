@@ -25,7 +25,7 @@ public class DealerTest {
     }
 
     private static Dealer createDealerCardsOfRanks(List<Rank> ranks) {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer("딜러");
         ranks.stream()
                 .map(rank -> new Card(rank, Suit.DIAMOND))
                 .forEach(dealer::addCard);

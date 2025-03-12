@@ -2,14 +2,14 @@ package domain;
 
 import domain.card.Card;
 import java.util.List;
+import java.util.Optional;
 
-public class Dealer extends Participant  {
+public class Dealer extends Participant {
 
     private static final int ADD_CARD_UPPER_BOUND = 16;
-    private static final String DEALER_NAME = "딜러";
 
-    protected Dealer() {
-        super(DEALER_NAME);
+    protected Dealer(String name) {
+        super(name);
     }
 
     @Override
@@ -22,5 +22,16 @@ public class Dealer extends Participant  {
     public boolean ableToAddCard() {
         int cardsScore = cards.calculateScore();
         return cardsScore <= ADD_CARD_UPPER_BOUND;
+    }
+
+    @Override
+    protected <T extends Participant> Optional<GameStatus> determineGameStatusWhenBust(final T other) {
+        if (other.isBust()) {
+            return Optional.of(GameStatus.WIN);
+        }
+        if (isBust()) {
+            return Optional.of(GameStatus.LOSE);
+        }
+        return Optional.empty();
     }
 }
