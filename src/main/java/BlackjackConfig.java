@@ -2,6 +2,7 @@ import controller.BlackjackApplication;
 import domain.CardGiver;
 import domain.CardRandomGenerator;
 import domain.GivenCards;
+import view.ConsoleView;
 import view.InputView;
 import view.OutputView;
 import view.support.InputParser;
@@ -11,8 +12,7 @@ public class BlackjackConfig {
 
     public BlackjackApplication blackjackApplication() {
         return new BlackjackApplication(
-                inputView(),
-                outputView(),
+                new ConsoleView(inputView(), outputView()),
                 cardGiver()
         );
     }

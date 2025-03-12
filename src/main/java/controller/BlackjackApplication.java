@@ -12,22 +12,17 @@ import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.AnswerType;
-import view.InputView;
-import view.OutputView;
-
+import view.ConsoleView;
 public class BlackjackApplication {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final ConsoleView consoleView;
     private final CardGiver cardGiver;
 
     public BlackjackApplication(
-            InputView inputView,
-            OutputView outputView,
+            ConsoleView consoleView,
             CardGiver cardGiver
     ) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+        this.consoleView = consoleView;
         this.cardGiver = cardGiver;
     }
 
@@ -45,7 +40,7 @@ public class BlackjackApplication {
     }
 
     private Players initializePlayers() {
-        List<String> playerNames = inputView.requestPlayerNames();
+        List<String> playerNames = consoleView.requestPlayerNames();
         return Players.createByNames(playerNames);
     }
 
@@ -54,7 +49,7 @@ public class BlackjackApplication {
         participants.add(dealer);
         cardGiver.giveDefaultTo(participants);
 
-        outputView.printInitialCards(dealer, players);
+        consoleView.printInitialCards(dealer, players);
     }
 
     private void askForAdditionalCard(Players players) {
@@ -64,26 +59,26 @@ public class BlackjackApplication {
     private void decideAdditionalCardForDealer(Dealer dealer) {
         if (dealer.isPossibleDraw()) {
             dealer.addCard(cardGiver.giveOne());
-            outputView.printDealerDraw();
+            consoleView.printDealerDraw();
             return;
         }
-        outputView.printDealerNoDraw();
+        consoleView.printDealerNoDraw();
     }
 
     private void calculateResult(Dealer dealer, Players players) {
         final Referee referee = new Referee();
 
-        outputView.printCardsResult(dealer, players);
+        consoleView.printCardsResult(dealer, players);
         GameResults gameResults = referee.judge(dealer, players);
-        outputView.printGameResults(gameResults);
+        consoleView.printGameResults(gameResults);
     }
 
     private void processPlayerCardRequest(Player player) {
-        AnswerType answerType = inputView.requestAdditionalCard(player);
+        AnswerType answerType = consoleView.requestAdditionalCard(player);
         while (isPossibleRequest(player, answerType)) {
             cardGiver.giveAdditionalCard(player, answerType);
-            outputView.printCurrentCard(player);
-            answerType = inputView.requestAdditionalCard(player);
+            consoleView.printCurrentCard(player);
+            answerType = consoleView.requestAdditionalCard(player);
         }
         showMessageIfBust(player);
         showCurrentCardIfNo(player, answerType);
@@ -91,13 +86,13 @@ public class BlackjackApplication {
 
     private void showMessageIfBust(Player player) {
         if (player.hasBustCards()) {
-            outputView.printBustMessage();
+            consoleView.printBustMessage();
         }
     }
 
     private void showCurrentCardIfNo(Player player, AnswerType answerType) {
         if (answerType == NO) {
-            outputView.printCurrentCard(player);
+            consoleView.printCurrentCard(player);
         }
     }
 
