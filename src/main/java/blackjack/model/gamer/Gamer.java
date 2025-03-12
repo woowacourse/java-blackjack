@@ -19,4 +19,8 @@ public abstract class Gamer {
     private List<Card> showAllCards() {
         return hand.openAllCards();
     }
+
+    private int sumCards() {
+        return hand.sumCards();
+    }
 }

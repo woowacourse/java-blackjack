@@ -1,14 +1,20 @@
 package blackjack.model.card;
 
-import java.awt.Shape;
-
 public class Card {
 
-    private final Denomination denomination;
     private final Shape shape;
+    private final Denomination denomination;
 
-    public Card(final Denomination denomination, final Shape shape) {
-        this.denomination = denomination;
+    public Card(final Shape shape, final Denomination denomination) {
         this.shape = shape;
+        this.denomination = denomination;
+    }
+
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
+    public int getNumber() {
+        return denomination.getNumber();
     }
 }

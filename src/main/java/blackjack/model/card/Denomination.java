@@ -21,4 +21,8 @@ public enum Denomination {
     Denomination(final int number) {
         this.number = number;
     }
+
+    public int getNumber() {
+        return number;
+    }
 }
