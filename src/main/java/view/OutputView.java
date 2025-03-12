@@ -39,15 +39,13 @@ public class OutputView {
         );
     }
 
-    public void printGameResult(Map<Winning, Long> dealerWinnings, List<Player> players,
+    public void printGameResult(Map<Winning, Long> dealerWinnings,
         Map<Player, Winning> playerWinnings) {
         System.out.println("## 최종 승패");
         printDealerWinnings(dealerWinnings);
 
-        for (Player player : players) {
-            Winning winning = playerWinnings.get(player);
-            System.out.printf("%s: %s%n", player.getName(), winning.getName());
-        }
+        playerWinnings.forEach((player, winning) ->
+            System.out.printf("%s: %s%n", player.getName(), winning.getName()));
     }
 
     private void printDealerWinnings(Map<Winning, Long> dealerWinnings) {
