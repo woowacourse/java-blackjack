@@ -10,6 +10,7 @@ public class Players {
 
     private final Dealer dealer;
     private final List<Gambler> gamblers;
+
     private static final int PLAYERS_INIT_CARD_COUNT = 2;
 
     public Players(List<Gambler> gamblers) {

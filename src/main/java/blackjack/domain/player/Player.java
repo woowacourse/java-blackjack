@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.GameScore;
 import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
@@ -22,22 +23,22 @@ public abstract class Player {
         this.cards.addAll(cards);
     }
 
+    public GameScore getGameScore() {
+        GameScore gameScore = new GameScore(cards.stream()
+                .mapToInt(Card::getValue)
+                .sum(), cards.size());
+        if (hasAce()) {
+            gameScore = gameScore.addAce();
+        }
+        return gameScore;
+    }
+
     public boolean isPlayerBust() {
-        return calculateCardNumber() > MAX_HAND_VALUE;
+        return getGameScore().isBust();
     }
 
     public boolean isPlayerNotBust() {
         return !isPlayerBust();
-    }
-
-    public int calculateCardNumber() {
-        int sum = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-        if (canCalculateAceWithEleven(sum)) {
-            sum += 10;
-        }
-        return sum;
     }
 
     public String getName() {

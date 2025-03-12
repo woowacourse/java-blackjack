@@ -28,7 +28,7 @@ public class BlackjackController {
         displayGameResults(gameManager);
     }
 
-    private void dealMoreCards(final GameManager gameManager) {
+    private void dealMoreCards(GameManager gameManager) {
         Players players = gameManager.getPlayers();
         List<Gambler> gamblers = players.getGamblers();
         for (Gambler gambler : gamblers) {

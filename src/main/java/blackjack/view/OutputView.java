@@ -43,7 +43,7 @@ public class OutputView {
         System.out.println();
         System.out.println();
         playersList.forEach(player -> {
-            System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.calculateCardNumber());
+            System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.getGameScore());
         });
     }
 

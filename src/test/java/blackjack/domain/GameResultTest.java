@@ -72,7 +72,7 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("딜러와 참가자가 둘다 bust 면 DRAW 를 반환한다")
+    @DisplayName("딜러와 참가자가 둘다 bust 면 LOSE 를 반환한다")
     void both_bust_test() {
         Gambler gambler = new Gambler("두리");
         GameManager gameManager = new GameManager(List.of(gambler));
@@ -90,7 +90,7 @@ class GameResultTest {
                 new Card(CardNumber.JACK, CardShape.DIAMOND)
         ));
 
-        Assertions.assertThat(GameResult.getGameResult(dealer, gambler)).isEqualTo(GameResult.DRAW);
+        Assertions.assertThat(GameResult.getGameResult(dealer, gambler)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
@@ -102,8 +102,7 @@ class GameResultTest {
 
         dealer.pushDealCards(List.of(
                 new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                new Card(CardNumber.JACK, CardShape.CLOVER),
-                new Card(CardNumber.JACK, CardShape.DIAMOND)
+                new Card(CardNumber.JACK, CardShape.CLOVER)
 
         ));
         gambler.pushDealCards(List.of(
@@ -112,7 +111,7 @@ class GameResultTest {
                 new Card(CardNumber.JACK, CardShape.DIAMOND)
         ));
 
-        Assertions.assertThat(GameResult.getGameResult(dealer, gambler)).isEqualTo(GameResult.DRAW);
+        Assertions.assertThat(GameResult.getGameResult(dealer, gambler)).isEqualTo(GameResult.LOSE);
     }
 
     @Test

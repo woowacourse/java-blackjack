@@ -14,7 +14,7 @@ public class Dealer extends Player {
     }
 
     public boolean isDealerHit() {
-        return this.calculateCardNumber() <= DEALER_HIT_MAX_VALUE;
+        return this.getGameScore().isDealerHit();
     }
 
     @Override

@@ -26,10 +26,10 @@ class PlayerTest {
         ));
 
         // when
-        int result = player.calculateCardNumber();
+        GameScore result = player.getGameScore();
 
         // then
-        assertThat(result).isEqualTo(30);
+        assertThat(result).isEqualTo(new GameScore(30, 3));
     }
 
     @DisplayName("에이스가 2장이면 12로 계산한다")
@@ -43,8 +43,8 @@ class PlayerTest {
 
         );
 
-        int result = player.calculateCardNumber();
+        GameScore result = player.getGameScore();
 
-        assertThat(result).isEqualTo(12);
+        assertThat(result).isEqualTo(new GameScore(12, 2));
     }
 }
