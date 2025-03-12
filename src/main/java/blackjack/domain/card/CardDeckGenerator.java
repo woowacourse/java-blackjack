@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CardGenerator {
+public class CardDeckGenerator {
 
-    public List<Card> makeShuffled() {
+    public CardDeck makeShuffled() {
         List<Card> newCards = makeCard();
         Collections.shuffle(newCards);
-        return newCards;
+        return new CardDeck(newCards);
     }
 
     private List<Card> makeCard() {

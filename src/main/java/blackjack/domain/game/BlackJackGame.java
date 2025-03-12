@@ -9,32 +9,28 @@ import blackjack.domain.user.Nickname;
 import blackjack.domain.user.Player;
 import java.util.List;
 
-public class GameManager {
+public class BlackJackGame {
 
     private GameUserStorage users;
     private CardDeck cardDeck;
     private GameInputOutput gameInputOutput;
 
-    public GameManager(GameUserStorage users, CardDeck cardDeck) {
+    public BlackJackGame(
+            GameUserStorage users,
+            CardDeck cardDeck,
+            GameInputOutput gameInputOutput
+    ) {
         this.users = users;
         this.cardDeck = cardDeck;
-    }
-
-    public void setUpInputOutput(GameInputOutput gameInputOutput) {
         this.gameInputOutput = gameInputOutput;
     }
 
     public void runGame(List<Nickname> nicknames) {
-        initializeCardDeck();
         registerPlayer(nicknames);
         distributeInitialCard();
         processPlayerTurns();
         processDealerTurns();
         outputGameResult();
-    }
-
-    private void initializeCardDeck() {
-        cardDeck.initialize();
     }
 
     private void registerPlayer(List<Nickname> nicknames) {

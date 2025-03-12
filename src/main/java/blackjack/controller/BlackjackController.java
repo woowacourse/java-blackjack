@@ -1,29 +1,39 @@
 package blackjack.controller;
 
 import blackjack.configuration.ApplicationConfiguration;
-import blackjack.domain.game.GameManager;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckGenerator;
+import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.io.GameInputOutput;
+import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.user.Nickname;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackJackController {
+public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final GameManager gameManager;
+    private final CardDeckGenerator cardDeckGenerator;
 
-    public BlackJackController(ApplicationConfiguration configuration) {
+    public BlackjackController(ApplicationConfiguration configuration) {
         inputView = configuration.getInputView();
         outputView = configuration.getOutputView();
-        gameManager = configuration.getGameManager();
-        gameManager.setUpInputOutput(makeGameInputOutput());
+        cardDeckGenerator = configuration.getCardDeckGenerator();
     }
 
     public void run() {
         List<Nickname> nicknames = inputView.readNicknames();
-        gameManager.runGame(nicknames);
+        BlackJackGame blackjackGame = makeBlackjackGame();
+        blackjackGame.runGame(nicknames);
+    }
+
+    private BlackJackGame makeBlackjackGame() {
+        GameUserStorage gameUserStorage = new GameUserStorage();
+        CardDeck cardDeck = cardDeckGenerator.makeShuffled();
+        GameInputOutput gameInputOutput = makeGameInputOutput();
+        return new BlackJackGame(gameUserStorage, cardDeck, gameInputOutput);
     }
 
     private GameInputOutput makeGameInputOutput() {
