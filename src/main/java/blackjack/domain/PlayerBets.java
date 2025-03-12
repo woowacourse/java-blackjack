@@ -35,6 +35,9 @@ public class PlayerBets {
         double totalProfit = 0;
         for (Player player : players) {
             RoundResult roundResult = RoundResult.judgeResult(dealer, player);
+            if (roundResult == RoundResult.TIE) {
+
+            }
             if (roundResult == RoundResult.WIN) {
                 totalProfit += bets.get(player);
             }

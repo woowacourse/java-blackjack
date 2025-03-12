@@ -137,4 +137,30 @@ class PlayerBetsTest {
         // then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "TWO,EIGHT,THREE,SEVEN,0",
+            "ACE,JACK,ACE,KING,0",
+    })
+    @DisplayName("무승부일 경우 딜러의 수익을 0으로 계산한다")
+    void dealerTieTest(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3,
+                       CardNumber cardNumber4, double expected) {
+        // given
+        PlayerBets playerBets = new PlayerBets();
+        List<Player> players = List.of(player);
+        Deck playerDeck = DeckFixture.deckOf(cardNumber1, cardNumber2);
+        for (Player player : players) {
+            player.initialize(playerDeck);
+            playerBets.add(player, 20000);
+        }
+        Deck dealerDeck = DeckFixture.deckOf(cardNumber3, cardNumber4);
+        dealer.initialize(dealerDeck);
+
+        // when
+        double actual = playerBets.getDealerProfit(dealer, players);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
