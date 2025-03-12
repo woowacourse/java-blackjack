@@ -1,14 +1,14 @@
 package model.Deck;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public final class Deck {
     private final List<Card> deck;
 
     public static Deck of() {
-        List<Card> deck = new ArrayList<>();
+        List<Card> deck = new LinkedList<>();
         for (CardSuit cardSuit : CardSuit.values()) {
             for (CardRank rank : CardRank.values()) {
                 Card card = new Card(rank, cardSuit);
@@ -25,9 +25,8 @@ public final class Deck {
 
     public Card pick() {
         validateDeckEmpty();
-        Card card = deck.getFirst();
-        deck.remove(card);
-        return card;
+        Card removingCard = deck.removeFirst();
+        return removingCard;
     }
 
     private void validateDeckEmpty() {
