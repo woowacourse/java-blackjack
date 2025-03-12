@@ -51,7 +51,7 @@ public class Player {
         return resolveBust();
     }
 
-    boolean isNotDealer() {
+    public boolean isNotDealer() {
         return true;
     }
 
@@ -61,6 +61,10 @@ public class Player {
 
     public boolean isHandBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
     public boolean containsOriginalAce() {

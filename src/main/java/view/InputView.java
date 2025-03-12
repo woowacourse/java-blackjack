@@ -1,6 +1,8 @@
 package view;
 
+import domain.Accountant;
 import domain.Player;
+import domain.Players;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -13,6 +15,16 @@ public class InputView {
     private static final String ASK_ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
 
     private static final Scanner sc = new Scanner(System.in);
+
+    public static void accountBettingPrice(Players players, Accountant accountant) {
+        for (Player player: players.getPlayers()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(player.getName())
+                    .append("의 배팅 금액은?");
+            System.out.println(stringBuilder);
+            accountant.accountBettingPrice(player, Integer.parseInt(sc.nextLine()));
+        }
+    }
 
     public static String getPlayerNamesInput() {
         System.out.println(ASK_PLAYER_NAMES_MESSAGE);

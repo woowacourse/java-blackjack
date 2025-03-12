@@ -42,7 +42,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    boolean isNotDealer() {
+    public boolean isNotDealer() {
         return false;
     }
 }

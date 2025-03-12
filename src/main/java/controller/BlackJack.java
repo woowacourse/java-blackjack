@@ -1,24 +1,28 @@
 package controller;
 
+import static view.InputView.accountBettingPrice;
 import static view.InputView.getPlayerNamesInput;
 import static view.OutputView.printDealerExtraCardsCount;
 import static view.OutputView.printDistributeResult;
 import static view.OutputView.printEveryOneCardsNamesWithTotal;
-import static view.OutputView.printWinLossResult;
+import static view.OutputView.printProfitPerParticipant;
 
-import controller.dto.WinLossCountDto;
+import domain.Accountant;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import domain.Players;
-import java.util.ArrayList;
-import java.util.Arrays;
+import domain.WinLossResult;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BlackJack {
 
     private Players players;
     private final Dealer dealer = new Dealer();
+
     private final Deck deck = new Deck();
+    private final Accountant accountant = new Accountant();
 
     public void play() {
         preset();
@@ -29,6 +33,7 @@ public class BlackJack {
 
     private void preset() {
         players = new Players(getPlayerNamesInput());
+        accountBettingPrice(players, accountant);
         deck.distributeCards(dealer, players);
         printDistributeResult(players, dealer);
     }
