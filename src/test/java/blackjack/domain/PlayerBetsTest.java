@@ -91,4 +91,25 @@ class PlayerBetsTest {
         // then
         assertThat(actual).isEqualTo(30000);
     }
+
+    @Test
+    @DisplayName("딜러가 패배할 경우 수익을 0으로 계산한다")
+    void dealerLoseTest() {
+        // given
+        PlayerBets playerBets = new PlayerBets();
+        List<Player> players = List.of(new Player("Pobi"), new Player("Neo"));
+        Deck playerDeck = DeckFixture.deckOf(CardNumber.FOUR, CardNumber.FIVE, CardNumber.SIX, CardNumber.EIGHT);
+        for (Player player : players) {
+            player.initialize(playerDeck);
+            playerBets.add(player, 15000);
+        }
+        Deck dealerDeck = DeckFixture.deckOf(CardNumber.TWO, CardNumber.THREE);
+        dealer.initialize(dealerDeck);
+
+        // when
+        double actual = playerBets.getDealerProfit(dealer, players);
+
+        // then
+        assertThat(actual).isEqualTo(0);
+    }
 }
