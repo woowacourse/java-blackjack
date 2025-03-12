@@ -2,6 +2,7 @@ package domain.blackJack;
 
 import domain.card.CardDeck;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Map;
@@ -39,5 +40,13 @@ public class BlackJack {
 
     public Map<Player, Integer> calculatePlayerResult() {
         return players.calculateWinner(dealer);
+    }
+
+    public int calculateDealerResult(Map<Player, Integer> profitOfPlayer) {
+        int sum = 0;
+        for (Integer value : profitOfPlayer.values()) {
+            sum += value;
+        }
+        return -sum;
     }
 }

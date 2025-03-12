@@ -9,6 +9,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import view.InputUntilValid;
 import view.InputView;
 import view.OutputView;
@@ -61,6 +62,8 @@ public class BlackJackController {
         blackJack.drawDealer();
 
         outputView.printScore(players, dealer);
-        outputView.printProfit(blackJack.calculatePlayerResult());
+        Map<Player, Integer> profitOfPlayer = blackJack.calculatePlayerResult();
+        int dealerProfit = blackJack.calculateDealerResult(profitOfPlayer);
+        outputView.printProfit(profitOfPlayer, dealerProfit);
     }
 }
