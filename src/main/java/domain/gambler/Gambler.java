@@ -17,6 +17,12 @@ public abstract class Gambler {
         this.cards = cards;
     }
 
+    public abstract List<Card> openInitialCards();
+
+    public List<Card> openCards() {
+        return new ArrayList<>(cards.getCards());
+    }
+
     public void addOneCard(Card card) {
         cards.addOneCard(card);
     }
@@ -31,10 +37,6 @@ public abstract class Gambler {
 
     public boolean doesNotBust() {
         return !isBust();
-    }
-
-    public List<Card> openCards() {
-        return new ArrayList<>(cards.getCards());
     }
 
     private void validateInitialCardsSize(Cards cards) {

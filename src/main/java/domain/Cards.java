@@ -27,6 +27,14 @@ public class Cards {
         return sum;
     }
 
+    public List<Card> openDealerInitialCards() {
+        return List.of(cards.getFirst());
+    }
+
+    public List<Card> openPlayerInitialCards() {
+        return new ArrayList<>(cards);
+    }
+
     public Card drawOneCard() {
         return cards.removeLast();
     }

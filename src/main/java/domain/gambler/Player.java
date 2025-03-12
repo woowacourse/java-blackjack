@@ -1,7 +1,9 @@
 package domain.gambler;
 
+import domain.Card;
 import domain.Cards;
 import domain.constant.MatchResult;
+import java.util.List;
 
 public class Player extends Gambler {
 
@@ -20,6 +22,11 @@ public class Player extends Gambler {
             return getMatchResultWhenOverBustStandard(sum);
         }
         return getMatchResult(dealerScore, sum);
+    }
+
+    @Override
+    public List<Card> openInitialCards() {
+        return cards.openPlayerInitialCards();
     }
 
     private MatchResult getMatchResultWhenOverBustStandard(int sum) {

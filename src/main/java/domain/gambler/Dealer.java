@@ -2,7 +2,7 @@ package domain.gambler;
 
 import domain.Card;
 import domain.Cards;
-import java.util.Comparator;
+import java.util.List;
 
 public class Dealer extends Gambler {
 
@@ -15,10 +15,9 @@ public class Dealer extends Gambler {
         this.cards = cards;
     }
 
-    public Card openInitialCard() {
-        return cards.getCards().stream()
-                .min(Comparator.comparingInt(Card::getRankScore))
-                .orElse(cards.getCards().getFirst());
+    @Override
+    public List<Card> openInitialCards() {
+        return cards.openDealerInitialCards();
     }
 
     public boolean isSumUnderThreshold() {
