@@ -2,42 +2,31 @@ package blackjack.domain;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Player;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameResults {
 
-    private final Map<Gambler, GameResult> gameResults;
+    private final Map<Player, Integer> gameResults;
 
     public GameResults(final Dealer dealer, final List<Gambler> gamblers) {
-        gameResults = gamblers.stream()
-                .collect(Collectors.toMap(
-                        gambler -> gambler,
-                        gambler -> GameResult.evaluateGameResult(dealer, gambler)
-                ));
+        gameResults = new LinkedHashMap<>();
+
+        for (Gambler gambler : gamblers) {
+            int compared = gambler.compareWithOtherPlayer(dealer);
+
+            if (compared == -1) {
+                int multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.0);
+                gameResults.put(dealer, multiplier);
+                gameResults.put(gambler, -multiplier);
+            }
+        }
     }
 
-    public int getDealerWin() {
-        return (int) gameResults.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(GameResult.LOSE)
-                ).count();
-    }
-
-    public int getDealerLose() {
-        return (int) gameResults.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(GameResult.WIN)
-                ).count();
-    }
-
-    public int getDealerDraw() {
-        return (int) gameResults.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(GameResult.DRAW)
-                ).count();
-    }
-
-    public Map<Gambler, GameResult> getGameResults() {
+    public Map<Player, Integer> getGameResults() {
         return gameResults;
     }
 }
