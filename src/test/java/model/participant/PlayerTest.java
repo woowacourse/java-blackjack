@@ -1,10 +1,6 @@
 package model.participant;
 
-import model.card.Card;
-import model.card.CardDeck;
-import model.card.Suit;
-import model.card.AceRank;
-import model.card.NormalRank;
+import model.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +34,8 @@ public class PlayerTest {
         // given
         final List<Card> expectedCards = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            expectedCards.add(new CardDeck().pickCard());
+            CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
+            expectedCards.add(deck.pickCard());
         }
 
         // when

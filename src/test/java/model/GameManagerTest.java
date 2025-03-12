@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 import model.card.CardDeck;
+import model.card.ShuffledDeckGenerator;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
@@ -14,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class GameManagerTest {
 
-    private final CardDeck deck = new CardDeck();
+    private final CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2})

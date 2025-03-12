@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DealerTest {
 
-    private final CardDeck deck = new CardDeck();
+    private final CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
 
     @Test
     @DisplayName("딜러 객체가 잘 생성되는 지")
@@ -40,7 +40,7 @@ class DealerTest {
     void addCardsSuccess() {
 
         // given
-        final Card card = new CardDeck().pickCard();
+        final Card card = deck.pickCard();
 
         // when
         Dealer dealer = new Dealer();
