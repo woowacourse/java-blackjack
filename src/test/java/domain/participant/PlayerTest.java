@@ -39,4 +39,12 @@ public class PlayerTest {
 
         assertThat(player.computeBetResult(WinLossResult.WIN)).isEqualTo(new BetMoney(20000));
     }
+
+    @Test
+    @DisplayName("블랙잭으로 승리 시 베팅 금액은 1.5배가 된다.")
+    void test4() {
+        Player player = new Player("moru").bet(10000);
+
+        assertThat(player.computeBetResult(WinLossResult.BLACKJACK_WIN)).isEqualTo(new BetMoney(15000));
+    }
 }
