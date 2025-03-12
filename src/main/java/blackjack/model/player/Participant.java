@@ -19,10 +19,10 @@ public class Participant extends Player {
     }
 
     public ParticipantResult duelWith(Dealer dealer) {
-        if (this.isBlackJack() && dealer.isBlackJack()) {
+        if (isBothBlackJack(dealer)) {
             return ParticipantResult.DRAW;
         }
-        if (this.isBlackJack()) {
+        if (isBlackJack()) {
             return ParticipantResult.BLACKJACK;
         }
         if (isBust()) {
@@ -31,15 +31,7 @@ public class Participant extends Player {
         if (dealer.isBust()) {
             return ParticipantResult.WIN;
         }
-        int dealerPoint = dealer.calculatePoint();
-        int participantPoint = calculatePoint();
-        if (dealerPoint > participantPoint) {
-            return ParticipantResult.LOSE;
-        }
-        if (dealerPoint < participantPoint) {
-            return ParticipantResult.WIN;
-        }
-        return ParticipantResult.DRAW;
+        return comparePoints(dealer);
     }
 
     public String getName() {
@@ -73,7 +65,19 @@ public class Participant extends Player {
         }
     }
 
-    public int getBetAmount() {
-        return betAmount.value();
+    private boolean isBothBlackJack(Dealer dealer) {
+        return this.isBlackJack() && dealer.isBlackJack();
+    }
+
+    private ParticipantResult comparePoints(Dealer dealer) {
+        int dealerPoint = dealer.calculatePoint();
+        int participantPoint = calculatePoint();
+        if (dealerPoint > participantPoint) {
+            return ParticipantResult.LOSE;
+        }
+        if (dealerPoint < participantPoint) {
+            return ParticipantResult.WIN;
+        }
+        return ParticipantResult.DRAW;
     }
 }

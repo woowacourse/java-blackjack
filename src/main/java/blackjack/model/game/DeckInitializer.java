@@ -19,7 +19,7 @@ public class DeckInitializer {
         return new Deck(cards);
     }
 
-    private static Function<CardShape, Stream<? extends Card>> generateCard() {
+    private static Function<CardShape, Stream<Card>> generateCard() {
         return cardShape -> Stream.of(CardType.values()).map(cardType -> new Card(cardShape, cardType));
     }
 }

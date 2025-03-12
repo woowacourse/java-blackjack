@@ -44,8 +44,4 @@ public class Participants {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
     }
-
-    public int calculateParticipantBetAmount() {
-        return participants.stream().mapToInt(Participant::getBetAmount).sum();
-    }
 }

@@ -1,7 +1,6 @@
 package blackjack.model.game;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.CardType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -28,7 +27,7 @@ public class ReceivedCards {
     }
 
     public boolean hasAce() {
-        return cards.stream().anyMatch(card -> card.equalsCardType(CardType.ACE));
+        return cards.stream().anyMatch(Card::isAceCard);
     }
 
     public boolean isBust() {
