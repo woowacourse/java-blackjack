@@ -1,4 +1,4 @@
-package blackjack.model.participant;
+package blackjack.view;
 
 public enum ParticipantAction {
 

@@ -25,14 +25,11 @@ public final class Dealer extends Participant {
         return deck.draw();
     }
 
-    public ParticipantAction decideHit() {
+    public boolean decideHit() {
         if (hand.size() != INITIAL_HAND_SIZE) {
             throw new IllegalStateException("딜러가 가진 패가 %d장이 아니어서 히트 여부를 결정할 수 없습니다.".formatted(INITIAL_HAND_SIZE));
         }
-        if (getTotal() <= DEALER_HIT_THRESHOLD) {
-            return ParticipantAction.HIT;
-        }
-        return ParticipantAction.STAND;
+        return getTotal() <= DEALER_HIT_THRESHOLD;
     }
 
     public Card getVisibleCard() {

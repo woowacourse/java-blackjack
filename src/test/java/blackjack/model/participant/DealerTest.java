@@ -211,10 +211,10 @@ class DealerTest {
     @DisplayName("가진 패의 총합이 16이하인 경우 히트한다.")
     @ParameterizedTest
     @CsvSource({
-            "TEN, SIX, HIT",
-            "TEN, SEVEN, STAND"
+            "TEN, SIX, true",
+            "TEN, SEVEN, false"
     })
-    void canHitTrueTest(CardValue cardValue1, CardValue cardValue2, ParticipantAction expected) {
+    void canHitTrueTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
         // given
         Card card1 = createCard(Suit.SPADES, cardValue1);
         Card card2 = createCard(Suit.SPADES, cardValue2);
@@ -224,10 +224,10 @@ class DealerTest {
         dealer.dealCard(dealer);
 
         // when
-        ParticipantAction dealerAction = dealer.decideHit();
+        boolean isHit = dealer.decideHit();
 
         // then
-        assertThat(dealerAction)
+        assertThat(isHit)
                 .isSameAs(expected);
     }
 

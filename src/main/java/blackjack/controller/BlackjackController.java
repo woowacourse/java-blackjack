@@ -6,7 +6,6 @@ import blackjack.model.card.Deck;
 import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.card.RandomCardShuffler;
-import blackjack.model.participant.ParticipantAction;
 import blackjack.model.participant.GamePlayers;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -80,8 +79,7 @@ public final class BlackjackController {
     }
 
     private void askHitForDealer(Dealer dealer) {
-        ParticipantAction dealerAction = dealer.decideHit();
-        if (dealer.canHit() && dealerAction.isHit()) {
+        if (dealer.canHit() && dealer.decideHit()) {
             dealer.dealCard(dealer);
             outputView.printDealerHit(true);
         }
