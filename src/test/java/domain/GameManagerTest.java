@@ -1,15 +1,10 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.*;
 
-import domain.CardDeck;
-import domain.CardRank;
-import domain.CardShape;
-import domain.GameResult;
-import domain.TrumpCard;
 import domain.user.Dealer;
-import domain.GameManger;
 import domain.user.Player;
 import domain.user.User;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;

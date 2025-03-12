@@ -1,8 +1,5 @@
-import domain.CardHand;
-import domain.CardRank;
-import domain.CardDeck;
-import domain.CardShape;
-import domain.TrumpCard;
+package domain;
+
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
