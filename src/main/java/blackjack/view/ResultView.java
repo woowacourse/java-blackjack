@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class ResultView {
 
     private static final String CARDS_FORMAT = "%s: %s";
-    private static final String COMMA = ",";
+    private static final String COMMA = ", ";
 
     public void printCards(final Gamer gamer) {
         final String message = makeCardMessage(gamer);
