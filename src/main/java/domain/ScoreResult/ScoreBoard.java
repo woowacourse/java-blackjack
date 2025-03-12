@@ -3,6 +3,7 @@ package domain.ScoreResult;
 import domain.game.GameRule;
 import domain.participant.Participant;
 import domain.participant.Participants;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,86 +25,57 @@ public class ScoreBoard {
     public void calculateScoreBoard() {
         Participant dealer = findDealer();
         for (Participant participant : scoreBoard.keySet()) {
-            if (participant.areYouDealer()) {
-                continue;
+            if (!participant.areYouDealer()) {
+                determineOutcome(dealer, participant);
             }
-            determineWinner(dealer, participant);
         }
     }
 
     private Participant findDealer() {
-        return scoreBoard.keySet().stream().filter(Participant::areYouDealer)
+        return scoreBoard.keySet().stream()
+                .filter(Participant::areYouDealer)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
     }
 
-    private void determineWinner(Participant dealer, Participant participant) {
-        if (checkAllBust(dealer, participant)) {
+    private void determineOutcome(Participant dealer, Participant player) {
+        int dealerScore = dealer.getScore();
+        int playerScore = player.getScore();
+
+        if (GameRule.checkBust(playerScore) && GameRule.checkBust(dealerScore)) {
+            recordDraw(dealer, player);
             return;
         }
-
-        if (checkPlayerWin(dealer, participant)) {
-            return;
-        }
-
-        if (checkDealerWin(dealer, participant)) {
-            return;
-        }
-
-        updateBattleResultDraw(dealer, participant);
-    }
-
-    private boolean checkDealerWin(Participant dealer, Participant participant) {
-        int playerScore = participant.getScore();
-        int dealerScore = dealer.getScore();
-
-        if (checkWinner(dealerScore, playerScore)) {
-            if (GameRule.checkBust(dealerScore)) {
-                updateBattleResult(participant, dealer);
-                return true;
-            }
-            updateBattleResult(dealer, participant);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkPlayerWin(Participant dealer, Participant participant) {
-        int playerScore = participant.getScore();
-        int dealerScore = dealer.getScore();
-
-        if (checkWinner(playerScore, dealerScore)) {
-            updateBattleResult(participant, dealer);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkAllBust(Participant dealer, Participant participant) {
-        int playerScore = participant.getScore();
-        int dealerScore = dealer.getScore();
 
         if (GameRule.checkBust(playerScore)) {
-            if (GameRule.checkBust(dealerScore)) {
-                updateBattleResultDraw(dealer, participant);
-                return true;
-            }
-            updateBattleResult(dealer, participant);
-            return true;
+            recordWin(dealer, player);
+            return;
         }
-        return false;
+
+        if (GameRule.checkBust(dealerScore)) {
+            recordWin(player, dealer);
+            return;
+        }
+
+        if (playerScore > dealerScore) {
+            recordWin(player, dealer);
+            return;
+        }
+
+        if (playerScore < dealerScore) {
+            recordWin(dealer, player);
+            return;
+        }
+
+        recordDraw(dealer, player);
     }
 
-    private boolean checkWinner(int score1, int score2) {
-        return score1 > score2;
-    }
-
-    private void updateBattleResultDraw(Participant dealer, Participant player) {
+    private void recordDraw(Participant dealer, Participant player) {
         scoreBoard.get(dealer).addResult(BattleResult.DRAW);
         scoreBoard.get(player).addResult(BattleResult.DRAW);
     }
 
-    private void updateBattleResult(Participant winner, Participant loser) {
+    private void recordWin(Participant winner, Participant loser) {
         scoreBoard.get(winner).addResult(BattleResult.WIN);
         scoreBoard.get(loser).addResult(BattleResult.LOSE);
     }

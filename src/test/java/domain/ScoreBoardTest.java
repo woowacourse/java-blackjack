@@ -67,8 +67,13 @@ class ScoreBoardTest {
         Participants participants = new Participants(originParticipants);
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
-        participants.drawTwoCards(gameCardDeck);
-        participants.drawTwoCards(gameCardDeck);
+        player1.drawCard(gameCardDeck, 4);
+        player2.drawCard(gameCardDeck, 7);
+        dealer.drawCard(gameCardDeck, 4);
+
+        System.out.println(player1.getScore());
+        System.out.println(player2.getScore());
+        System.out.println(dealer.getScore());
 
         ScoreBoard scoreBoard = new ScoreBoard(participants);
 
@@ -79,8 +84,8 @@ class ScoreBoardTest {
 
         //then
         org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.LOSE)).isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE)).isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.WIN)).isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE)).isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN)).isEqualTo(1)
         );
