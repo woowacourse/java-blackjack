@@ -18,5 +18,6 @@ public class InputView {
 
     public String readBettingMoney(final Player player) {
         System.out.println(String.format(INPUT_BETTING_MONEY, player.getNickName()));
+        return scanner.nextLine();
     }
 }
