@@ -59,18 +59,18 @@ class ResultTest {
                 Arguments.of(new CardDeck( // 25, 27, LOSE
                         List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, FIVE),
                                 new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, SEVEN))), LOSE),
-                Arguments.of(new CardDeck( // 21, 23, LOSE
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, ACE),
-                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, THREE))), LOSE),
-                Arguments.of(new CardDeck( // 20, 10, LOSE
-                        List.of(new Card(SPADE, JACK), new Card(SPADE, FOUR), new Card(SPADE, SIX),
-                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), LOSE),
-                Arguments.of(new CardDeck( // 25, 20, WIN
+                Arguments.of(new CardDeck( // 25, 20, LOSE
                         List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, FIVE),
-                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), WIN),
-                Arguments.of(new CardDeck( // 10, 20, WIN
+                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), LOSE),
+                Arguments.of(new CardDeck( // 10, 20, LOSE
                         List.of(new Card(SPADE, TWO), new Card(SPADE, THREE), new Card(SPADE, FIVE),
-                                new Card(HEART, JACK), new Card(HEART, FOUR), new Card(HEART, SIX))), WIN),
+                                new Card(HEART, JACK), new Card(HEART, FOUR), new Card(HEART, SIX))), LOSE),
+                Arguments.of(new CardDeck( // 21, 23, WIN
+                        List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, ACE),
+                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, THREE))), WIN),
+                Arguments.of(new CardDeck( // 20, 10, WIN
+                        List.of(new Card(SPADE, JACK), new Card(SPADE, FOUR), new Card(SPADE, SIX),
+                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), WIN),
                 Arguments.of(new CardDeck( // 20, 20, DRAW
                         List.of(new Card(SPADE, JACK), new Card(SPADE, FOUR), new Card(SPADE, SIX),
                                 new Card(HEART, JACK), new Card(HEART, FOUR), new Card(HEART, SIX))), DRAW),
