@@ -40,7 +40,7 @@ public class Count {
 		return value;
 	}
 
-	public boolean isGreaterThan(final Count value) {
-		return false;
+	public boolean isGreaterThan(final Count count) {
+		return value > count.value;
 	}
 }
