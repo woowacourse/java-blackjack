@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.game.GameResult;
 
 public enum GameResultView {
     WIN("승"),

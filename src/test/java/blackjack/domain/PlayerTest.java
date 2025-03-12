@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.game.GameScore;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;

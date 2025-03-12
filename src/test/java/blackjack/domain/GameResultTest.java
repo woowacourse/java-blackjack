@@ -3,6 +3,8 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.game.GameManager;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import org.assertj.core.api.Assertions;

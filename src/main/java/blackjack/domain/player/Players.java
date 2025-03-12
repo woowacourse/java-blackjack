@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import blackjack.domain.GameResults;
 import blackjack.domain.card.CardPack;
+import blackjack.domain.game.GameResults;
 
 import java.util.HashSet;
 import java.util.List;

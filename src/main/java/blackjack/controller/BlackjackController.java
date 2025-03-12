@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.BetAmount;
-import blackjack.domain.GameManager;
+import blackjack.domain.game.GameManager;
+import blackjack.domain.player.BetAmount;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.PlayerName;

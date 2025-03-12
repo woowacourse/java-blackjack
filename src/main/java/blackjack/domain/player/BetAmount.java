@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.player;
+
+import blackjack.domain.game.GameResult;
 
 public record BetAmount(int amount) {
     public BetAmount {
