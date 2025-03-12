@@ -49,6 +49,10 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
+
     public int getTotalValue() {
         final int constTotalValue = calculateConstValue(cards);
         final int aceCount = getAceCount();
