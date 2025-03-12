@@ -45,8 +45,8 @@ class DeckTest {
 
         // then
         assertAll(
-                () -> assertThat(firstCard).isEqualTo(new Card(Shape.DIAMOND, Denomination.TWO)),
-                () -> assertThat(secondCard).isEqualTo(new Card(Shape.DIAMOND, Denomination.THREE))
+                () -> assertThat(firstCard).isEqualTo(new Card(Shape.DIAMOND, CardScore.TWO)),
+                () -> assertThat(secondCard).isEqualTo(new Card(Shape.DIAMOND, CardScore.THREE))
         );
     }
 }

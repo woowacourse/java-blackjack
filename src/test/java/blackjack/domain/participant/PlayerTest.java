@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Denomination;
+import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
@@ -60,8 +60,8 @@ public class PlayerTest {
         // given
         final Hand hand = provideCards(2);
         player.receiveCards(hand);
-        final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.A),
-                new Card(Shape.SPADE, Denomination.TWO));
+        final List<Card> expected = List.of(new Card(Shape.SPADE, CardScore.A),
+                new Card(Shape.SPADE, CardScore.TWO));
 
         // when
         final Hand playerHand = player.showAllCards();
@@ -76,8 +76,8 @@ public class PlayerTest {
         // given
         final Hand hand = provideCards(2);
         player.receiveCards(hand);
-        final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.A),
-                new Card(Shape.SPADE, Denomination.TWO));
+        final List<Card> expected = List.of(new Card(Shape.SPADE, CardScore.A),
+                new Card(Shape.SPADE, CardScore.TWO));
 
         // when
         final Hand playerHand = player.showInitialCards();
@@ -101,17 +101,17 @@ public class PlayerTest {
     private static Stream<Arguments> canHit() {
         return Stream.of(
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, Denomination.TEN),
-                        new Card(Shape.SPADE, Denomination.NINE)
+                        new Card(Shape.SPADE, CardScore.TEN),
+                        new Card(Shape.SPADE, CardScore.NINE)
                 )), true),
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, Denomination.A),
-                        new Card(Shape.SPADE, Denomination.K)
+                        new Card(Shape.SPADE, CardScore.A),
+                        new Card(Shape.SPADE, CardScore.K)
                 )), true),
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, Denomination.K),
-                        new Card(Shape.SPADE, Denomination.Q),
-                        new Card(Shape.SPADE, Denomination.A)
+                        new Card(Shape.SPADE, CardScore.K),
+                        new Card(Shape.SPADE, CardScore.Q),
+                        new Card(Shape.SPADE, CardScore.A)
                 )), false)
         );
     }

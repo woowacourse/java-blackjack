@@ -5,15 +5,15 @@ import java.util.Objects;
 public class Card {
 
     private final Shape shape;
-    private final Denomination denomination;
+    private final CardScore cardScore;
 
-    public Card(final Shape shape, final Denomination denomination) {
+    public Card(final Shape shape, final CardScore cardScore) {
         this.shape = shape;
-        this.denomination = denomination;
+        this.cardScore = cardScore;
     }
 
     public boolean isAce() {
-        return this.denomination == Denomination.A;
+        return this.cardScore == CardScore.A;
     }
 
     @Override
@@ -21,27 +21,27 @@ public class Card {
         if (!(o instanceof final Card card)) {
             return false;
         }
-        return shape == card.shape && denomination == card.denomination;
+        return shape == card.shape && cardScore == card.cardScore;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape, denomination);
+        return Objects.hash(shape, cardScore);
     }
 
     public Shape getShape() {
         return shape;
     }
 
-    public String getDenominationName() {
-        return denomination.getName();
+    public String getCardScoreName() {
+        return cardScore.getName();
     }
 
     public int getCardMinNumber() {
-        return denomination.getMinNumber();
+        return cardScore.getMinNumber();
     }
 
     public int getCardMaxNumber() {
-        return denomination.getMaxNumber();
+        return cardScore.getMaxNumber();
     }
 }

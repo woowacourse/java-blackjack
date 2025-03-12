@@ -71,7 +71,7 @@ public class ResultView {
 
     private String getCardMessage(final Hand hand) {
         return hand.getHand().stream()
-                .map(card -> card.getDenominationName() + getShapeName(card.getShape()))
+                .map(card -> card.getCardScoreName() + getShapeName(card.getShape()))
                 .collect(Collectors.joining(COMMA));
     }
 

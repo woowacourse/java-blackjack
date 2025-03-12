@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Denomination;
+import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
@@ -145,14 +145,14 @@ class BlackjackGameTest {
     @Test
     void makeDealerWinningResult() {
         // given
-        final Dealer dealer = new Dealer(new Hand(List.of(new Card(Shape.SPADE, Denomination.J),
-                new Card(Shape.SPADE, Denomination.EIGHT))));
-        final Hand player1Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.NINE),
-                new Card(Shape.SPADE, Denomination.TEN)));
-        final Hand player2Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.TWO),
-                new Card(Shape.SPADE, Denomination.J)));
-        final Hand player3Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
-                new Card(Shape.SPADE, Denomination.K)));
+        final Dealer dealer = new Dealer(new Hand(List.of(new Card(Shape.SPADE, CardScore.J),
+                new Card(Shape.SPADE, CardScore.EIGHT))));
+        final Hand player1Hand = new Hand(List.of(new Card(Shape.SPADE, CardScore.NINE),
+                new Card(Shape.SPADE, CardScore.TEN)));
+        final Hand player2Hand = new Hand(List.of(new Card(Shape.SPADE, CardScore.TWO),
+                new Card(Shape.SPADE, CardScore.J)));
+        final Hand player3Hand = new Hand(List.of(new Card(Shape.SPADE, CardScore.EIGHT),
+                new Card(Shape.SPADE, CardScore.K)));
         final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 new Participants(dealer,
                         new Players(provideThreePlayersWithCards(player1Hand, player2Hand, player3Hand))));

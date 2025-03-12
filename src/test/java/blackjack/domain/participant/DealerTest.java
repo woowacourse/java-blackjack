@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Denomination;
+import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
@@ -53,7 +53,7 @@ class DealerTest {
         final Hand dealerHand = dealer.showInitialCards();
 
         // then
-        assertThat(dealerHand.getHand()).isEqualTo(List.of(new Card(Shape.SPADE, Denomination.A)));
+        assertThat(dealerHand.getHand()).isEqualTo(List.of(new Card(Shape.SPADE, CardScore.A)));
     }
 
     @DisplayName("딜러가 가진 카드의 합이 16 이하면 true를 반환한다.")
@@ -70,17 +70,17 @@ class DealerTest {
     private static Stream<Arguments> canHit() {
         return Stream.of(
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, Denomination.TEN),
-                        new Card(Shape.SPADE, Denomination.NINE)
+                        new Card(Shape.SPADE, CardScore.TEN),
+                        new Card(Shape.SPADE, CardScore.NINE)
                 )), false),
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, Denomination.A),
-                        new Card(Shape.SPADE, Denomination.K)
+                        new Card(Shape.SPADE, CardScore.A),
+                        new Card(Shape.SPADE, CardScore.K)
                 )), true),
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, Denomination.K),
-                        new Card(Shape.SPADE, Denomination.Q),
-                        new Card(Shape.SPADE, Denomination.A)
+                        new Card(Shape.SPADE, CardScore.K),
+                        new Card(Shape.SPADE, CardScore.Q),
+                        new Card(Shape.SPADE, CardScore.A)
                 )), false)
         );
     }

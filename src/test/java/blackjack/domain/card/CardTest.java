@@ -11,10 +11,10 @@ class CardTest {
     void test() {
         // given
         final Shape shape = Shape.DIAMOND;
-        final Denomination denomination = Denomination.A;
+        final CardScore cardScore = CardScore.A;
 
         // when & then
-        Assertions.assertThatCode(() -> new Card(shape, denomination))
+        Assertions.assertThatCode(() -> new Card(shape, cardScore))
                 .doesNotThrowAnyException();
     }
 }

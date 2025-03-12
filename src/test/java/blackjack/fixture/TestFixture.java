@@ -1,7 +1,7 @@
 package blackjack.fixture;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
+import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
@@ -22,9 +22,9 @@ public class TestFixture {
         public Card pickCard() {
             callingCount += 1;
             if (callingCount == 0 || callingCount == 1) {
-                return new Card(Shape.DIAMOND, Denomination.TWO);
+                return new Card(Shape.DIAMOND, CardScore.TWO);
             }
-            return new Card(Shape.DIAMOND, Denomination.THREE);
+            return new Card(Shape.DIAMOND, CardScore.THREE);
         }
     }
 
@@ -50,43 +50,43 @@ public class TestFixture {
     }
 
     public static Hand provideOver21Cards() {
-        return new Hand(List.of(new Card(Shape.SPADE, Denomination.K),
-                new Card(Shape.SPADE, Denomination.Q), new Card(Shape.SPADE, Denomination.J)));
+        return new Hand(List.of(new Card(Shape.SPADE, CardScore.K),
+                new Card(Shape.SPADE, CardScore.Q), new Card(Shape.SPADE, CardScore.J)));
     }
 
     public static Hand provideUnder21Cards() {
-        return new Hand(List.of(new Card(Shape.SPADE, Denomination.TWO),
-                new Card(Shape.SPADE, Denomination.THREE)));
+        return new Hand(List.of(new Card(Shape.SPADE, CardScore.TWO),
+                new Card(Shape.SPADE, CardScore.THREE)));
     }
 
     public static Hand provideUnder16Cards() {
-        return new Hand(List.of(new Card(Shape.SPADE, Denomination.TWO),
-                new Card(Shape.SPADE, Denomination.FOUR)));
+        return new Hand(List.of(new Card(Shape.SPADE, CardScore.TWO),
+                new Card(Shape.SPADE, CardScore.FOUR)));
     }
 
     public static Hand provideOver16Cards() {
-        return new Hand(List.of(new Card(Shape.SPADE, Denomination.TEN),
-                new Card(Shape.HEART, Denomination.TEN)));
+        return new Hand(List.of(new Card(Shape.SPADE, CardScore.TEN),
+                new Card(Shape.HEART, CardScore.TEN)));
     }
 
     public static Hand provideSmallerAceCards() {
-        return new Hand(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
-                new Card(Shape.HEART, Denomination.NINE),
-                new Card(Shape.HEART, Denomination.A)
+        return new Hand(List.of(new Card(Shape.SPADE, CardScore.EIGHT),
+                new Card(Shape.HEART, CardScore.NINE),
+                new Card(Shape.HEART, CardScore.A)
         ));
     }
 
     public static Hand provideBiggerAceCards() {
-        return new Hand(List.of(new Card(Shape.SPADE, Denomination.K),
-                new Card(Shape.HEART, Denomination.A)
+        return new Hand(List.of(new Card(Shape.SPADE, CardScore.K),
+                new Card(Shape.HEART, CardScore.A)
         ));
     }
 
     public static Hand provideBiggerAndSmallerAceCards() {
-        return new Hand(List.of(new Card(Shape.SPADE, Denomination.A),
-                new Card(Shape.HEART, Denomination.A),
-                new Card(Shape.HEART, Denomination.TWO),
-                new Card(Shape.HEART, Denomination.THREE)
+        return new Hand(List.of(new Card(Shape.SPADE, CardScore.A),
+                new Card(Shape.HEART, CardScore.A),
+                new Card(Shape.HEART, CardScore.TWO),
+                new Card(Shape.HEART, CardScore.THREE)
         ));
     }
 
