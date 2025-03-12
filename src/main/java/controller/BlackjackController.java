@@ -84,10 +84,10 @@ public class BlackjackController {
     private void askForAdditionalCardByName(final String name, final BlackjackGame blackjackGame) {
         while (!blackjackGame.checkIsBustByName(name)) {
             UserInput decision = getUserInput(name);
-            if (decision.equals(UserInput.NO)) {
+            if (decision == UserInput.NO) {
                 break;
             }
-            if (decision.equals(UserInput.YES)) {
+            if (decision == UserInput.YES) {
                 blackjackGame.giveCardToPlayer(name);
                 outputView.printCardsWithName(name, getCardDtos(blackjackGame.getPlayerCardsByName(name)));
             }
