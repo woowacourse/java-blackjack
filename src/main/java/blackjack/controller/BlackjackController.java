@@ -1,13 +1,22 @@
 package blackjack.controller;
 
+import java.util.List;
+
+import blackjack.domain.GameManager;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
-import blackjack.service.BlackjackService;
+import blackjack.dto.GamerDto;
+import blackjack.dto.response.FinalResultResponseDto;
+import blackjack.dto.response.RoundResultsResponseDto;
+import blackjack.dto.response.StartingCardsResponseDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    private final BlackjackService blackjackService = new BlackjackService();
+    private Gamers gamers;
+    private GameManager gameManager;
 
     public void run() {
         setPlayers();
@@ -17,36 +26,51 @@ public class BlackjackController {
     }
 
     private void setPlayers() {
-        blackjackService.setPlayer(InputView.readNames());
-        OutputView.printStartingCards(blackjackService.drawStartingCards());
+        List<String> names = InputView.readNames().names();
+        Dealer dealer = new Dealer();
+        gameManager = dealer;
+        gamers = Gamers.of(dealer,
+            names.stream()
+                .map(Player::new)
+                .toList());
+        OutputView.printStartingCards(drawStartingCards());
+    }
+
+    public StartingCardsResponseDto drawStartingCards() {
+        gameManager.drawStartingCards(gamers.getDealer());
+        for (var player : gamers.getPlayers()) {
+            gameManager.drawStartingCards(player);
+        }
+        return StartingCardsResponseDto.of(gamers.getDealer(), gamers.getPlayers());
     }
 
     private void drawPlayerCards() {
-        for (var player : blackjackService.getPlayers()) {
+        for (var player : gamers.getPlayers()) {
             drawCardsFor(player);
         }
     }
 
     private void drawCardsFor(Player player) {
-        while (blackjackService.canReceiveAdditionalCards(player)
+        while (player.canReceiveAdditionalCards()
             && InputView.readAdditionalCardSelection(player.getName()).selection()) {
-            blackjackService.drawCardFor(player);
-            OutputView.printAdditionalCard(blackjackService.getPlayerCards(player));
+            gameManager.drawCard(player);
+            OutputView.printAdditionalCard(GamerDto.from(player));
         }
-        if (!blackjackService.canReceiveAdditionalCards(player)) {
+        if (!player.canReceiveAdditionalCards()) {
             OutputView.printBustNotice(player.getName());
         }
     }
 
     private void drawDealerCards() {
-        while (blackjackService.dealerCanReceiveAdditionalCards()) {
-            blackjackService.drawCardForDealer();
+        Dealer dealer = gamers.getDealer();
+        while (dealer.canReceiveAdditionalCards()) {
+            gameManager.drawCard(dealer);
             OutputView.printDealerDrawNotice();
         }
     }
 
     private void printResult() {
-        OutputView.printRoundResult(blackjackService.getRoundResults());
-        OutputView.printFinalResult(blackjackService.getFinalResult());
+        OutputView.printRoundResult(RoundResultsResponseDto.of(gamers.getDealer(), gamers.getPlayers()));
+        OutputView.printFinalResult(FinalResultResponseDto.of(gamers.getDealer(), gamers.getPlayers()));
     }
 }
