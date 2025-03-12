@@ -91,7 +91,7 @@ class RoundTest {
         assertThat(dealerWinning.get(type)).isEqualTo(expected);
     }
 
-    @DisplayName("플레이어 버스트 테스트")
+    @DisplayName("플레이어가 버스트인 경우를 판별한다")
     @Test
     void isPlayerBustedTest() {
         // given
@@ -115,7 +115,7 @@ class RoundTest {
         assertThat(result).isTrue();
     }
 
-    @DisplayName("ss")
+    @DisplayName("딜러가 카드를 추가로 받아야 하는 경우인지 판별한다")
     @Test
     void dealerMustReceiveCardTest() {
         // given
