@@ -30,6 +30,8 @@ public final class DealerBlackjackCardHand {
         return cardHand.getCardCount() - beforeCount;
     }
 
+    // ↓ Forwarding Methods
+
     public List<Card> getCards() {
         return cardHand.getCards();
     }

@@ -13,6 +13,8 @@ public final class BlackjackDeck implements BlackjackCardHandInitializer, CardDr
         return List.of(draw(), draw());
     }
 
+    // ↓ Forwarding Methods
+
     @Override
     public Card draw() {
         return deck.draw();

@@ -22,12 +22,14 @@ public final class PlayerBlackjackCardHand {
         return List.of(cardHand.getCards().getFirst(), cardHand.getCards().get(1));
     }
 
-    public void addCard(final Card card) {
-        cardHand.addCard(card);
-    }
+    // ↓ Forwarding Methods
 
     public String getPlayerName() {
         return player.getName();
+    }
+
+    public void addCard(final Card card) {
+        cardHand.addCard(card);
     }
 
     public List<Card> getCards() {
