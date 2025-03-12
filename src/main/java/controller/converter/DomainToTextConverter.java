@@ -40,8 +40,14 @@ public class DomainToTextConverter {
   }
 
   public List<String> participantCardToText(final Participant participant) {
-    return participant.getHand().getCards()
+    return participant.getCards()
         .stream()
+        .map(this::cardToText)
+        .toList();
+  }
+
+  public List<String> handToText(final List<TrumpCard> hand) {
+    return hand.stream()
         .map(this::cardToText)
         .toList();
   }

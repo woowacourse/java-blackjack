@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.TrumpCard;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -53,8 +54,8 @@ public abstract class Participant {
     return score > dealerScore;
   }
 
-  public Hand getHand() {
-    return hand;
+  public List<TrumpCard> getCards() {
+    return hand.getCards();
   }
 
   public int getHandCount() {

@@ -29,7 +29,7 @@ class ParticipantTest {
       participant.hit(card);
 
       // then
-      List<TrumpCard> actualCards = participant.getHand().getCards();
+      List<TrumpCard> actualCards = participant.getCards();
       assertThat(actualCards.getFirst()).isEqualTo(card);
     }
 
@@ -46,7 +46,7 @@ class ParticipantTest {
       participant.initialDeal(deck);
 
       // then
-      List<TrumpCard> actualCards = participant.getHand().getCards();
+      List<TrumpCard> actualCards = participant.getCards();
       assertThat(actualCards).isEqualTo(cards);
       assertThat(actualCards).isNotSameAs(cards); // 방어적 복사 테스트
     }
