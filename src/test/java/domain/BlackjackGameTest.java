@@ -10,6 +10,7 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 import java.util.ArrayDeque;
 import java.util.List;
+import mock.MockParticipant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -95,28 +96,6 @@ class BlackjackGameTest {
       blackjack.hitByParticipant(participant);
       //then
       assertThat(participant.getCards().getFirst()).isEqualTo(card);
-    }
-  }
-
-  private static class MockParticipant extends Participant {
-
-    public MockParticipant() {
-      super();
-    }
-
-    @Override
-    public boolean isHit() {
-      return true;
-    }
-
-    @Override
-    public boolean isDealer() {
-      return true;
-    }
-
-    @Override
-    public String getName() {
-      return "MOCK";
     }
   }
 }

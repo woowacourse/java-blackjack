@@ -2,7 +2,6 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.RoundResult;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Score;
@@ -10,6 +9,7 @@ import domain.card.Suit;
 import domain.card.TrumpCard;
 import java.util.ArrayDeque;
 import java.util.List;
+import mock.MockParticipant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -73,64 +73,6 @@ class ParticipantTest {
       // then
       final Score score = participant.calculateScore();
       assertThat(score.value()).isEqualTo(12);
-    }
-  }
-
-
-  @Nested
-  @DisplayName("라운드 결과를 반환한다.")
-  class Round {
-
-    @Test
-    @DisplayName("올바르게 승자를 가려낸다.")
-    void test_round() {
-      // given
-      final Participant winner = new MockParticipant();
-      winner.hit(new TrumpCard(Rank.ACE, Suit.CLUB));
-
-      final Participant loser = new MockParticipant();
-      loser.hit(new TrumpCard(Rank.TEN, Suit.CLUB));
-      // when&then
-      assertThat(RoundResult.round(winner, loser)).isEqualTo(RoundResult.WIN);
-      assertThat(RoundResult.round(loser, winner)).isEqualTo(RoundResult.LOSE);
-    }
-
-    @Test
-    @DisplayName("21점이 넘는다면, 상대방이 승리한다.")
-    void test_RoundOverBurst() {
-      // given
-      final Participant buster = new MockParticipant();
-      buster.hit(new TrumpCard(Rank.TEN, Suit.CLUB));
-      buster.hit(new TrumpCard(Rank.TEN, Suit.CLUB));
-      buster.hit(new TrumpCard(Rank.TEN, Suit.CLUB));
-
-      final Participant player = new MockParticipant();
-      player.hit(new TrumpCard(Rank.TEN, Suit.CLUB));
-      // when&then
-      assertThat(RoundResult.round(player, buster)).isEqualTo(RoundResult.WIN);
-      assertThat(RoundResult.round(buster, player)).isEqualTo(RoundResult.LOSE);
-    }
-  }
-
-  private static class MockParticipant extends Participant {
-
-    public MockParticipant() {
-      super();
-    }
-
-    @Override
-    public boolean isHit() {
-      return false;
-    }
-
-    @Override
-    public boolean isDealer() {
-      return false;
-    }
-
-    @Override
-    public String getName() {
-      return "MOCK";
     }
   }
 }
