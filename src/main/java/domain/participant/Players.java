@@ -35,10 +35,9 @@ public class Players {
 
     public LinkedHashMap<Player, Integer> calculateWinner(Dealer dealer) {
         LinkedHashMap<Player, MatchResult> matchResultOfPlayer = new LinkedHashMap<>();
-        Result result = new Result();
 
         for (Player player : players) {
-            matchResultOfPlayer.put(player, result.calculateResultOfPlayer(player, dealer));
+            matchResultOfPlayer.put(player, Result.calculateResultOfPlayer(player, dealer));
         }
 
         return calculateProfit(matchResultOfPlayer);

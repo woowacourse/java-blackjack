@@ -12,7 +12,7 @@ import domain.participant.Player;
 public class Result {
     private static final int BLACKJACK_NUMBER = 21;
 
-    public MatchResult calculateResultOfPlayer(Player player, Dealer dealer) {
+    public static MatchResult calculateResultOfPlayer(Player player, Dealer dealer) {
         int playerSum = player.sum();
         int dealerSum = dealer.sum();
 
@@ -33,11 +33,11 @@ public class Result {
         return DRAW;
     }
 
-    private boolean isBlackjack(Participant participant) {
+    private static boolean isBlackjack(Participant participant) {
         return participant.sum() == BLACKJACK_NUMBER && participant.isBlackJackCount();
     }
 
-    public boolean isBust(int sum) {
+    public static boolean isBust(int sum) {
         return sum > BLACKJACK_NUMBER;
     }
 }

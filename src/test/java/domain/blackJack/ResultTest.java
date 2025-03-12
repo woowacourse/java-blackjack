@@ -35,7 +35,6 @@ class ResultTest {
     @MethodSource("provideCardDeckForCalculateResultOfPlayer")
     void calculateResultOfPlayerTest(CardDeck cardDeck, MatchResult matchResult) {
         // given
-        Result result = new Result();
         Player player = new Player("pobi", Money.from(1000));
         Dealer dealer = new Dealer();
 
@@ -48,7 +47,7 @@ class ResultTest {
         dealer.hitCard(cardDeck);
 
         // when-then
-        assertThat(result.calculateResultOfPlayer(player, dealer)).isEqualTo(matchResult);
+        assertThat(Result.calculateResultOfPlayer(player, dealer)).isEqualTo(matchResult);
     }
 
     private static Stream<Arguments> provideCardDeckForCalculateResultOfPlayer() {
@@ -85,7 +84,6 @@ class ResultTest {
     @MethodSource("provideCardDeckForCalculateBlackJackOfPlayer")
     void calculateBlackJackOfPlayerTest(CardDeck cardDeck, MatchResult matchResult) {
         // given
-        Result result = new Result();
         Player player = new Player("pobi", Money.from(1000));
         Dealer dealer = new Dealer();
 
@@ -96,7 +94,7 @@ class ResultTest {
         dealer.hitCard(cardDeck);
 
         // when-then
-        assertThat(result.calculateResultOfPlayer(player, dealer)).isEqualTo(matchResult);
+        assertThat(Result.calculateResultOfPlayer(player, dealer)).isEqualTo(matchResult);
     }
 
     private static Stream<Arguments> provideCardDeckForCalculateBlackJackOfPlayer() {

@@ -8,13 +8,11 @@ import java.util.function.Function;
 
 public class Player extends Participant {
     private final String name;
-    private final Result result;
     private final Money money;
 
     public Player(final String name, final Money money) {
         super();
         this.name = name;
-        this.result = new Result();
         this.money = money;
     }
 
@@ -27,7 +25,7 @@ public class Player extends Participant {
     }
 
     private boolean isBust() {
-        return result.isBust(sum());
+        return Result.isBust(sum());
     }
 
     public String getName() {
