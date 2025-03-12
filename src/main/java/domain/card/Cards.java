@@ -59,10 +59,6 @@ public class Cards {
         return calculateTotalRank() == BLACKJACK_SCORE;
     }
 
-    public int calculateDifferenceFromBlackjackScore() {
-        return Math.abs(calculateTotalRank() - BLACKJACK_SCORE);
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

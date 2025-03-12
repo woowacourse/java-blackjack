@@ -59,13 +59,13 @@ public enum GameResult {
     }
 
     private static void compareDifference(Participant dealer, Participant player, Map<Participant, GameResult> result) {
-        int dealerAbs = dealer.calculateDifferenceFromBlackjackScore();
-        int playerAbs = player.calculateDifferenceFromBlackjackScore();
-        if (playerAbs > dealerAbs) {
+        int dealerTotal = dealer.getTotalRankSum();
+        int playerTotal = player.getTotalRankSum();
+        if (dealerTotal > playerTotal) {
             result.put(player, GameResult.LOSE);
             return;
         }
-        if (playerAbs == dealerAbs) {
+        if (dealerTotal == playerTotal) {
             result.put(player, GameResult.PUSH);
             return;
         }

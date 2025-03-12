@@ -34,10 +34,6 @@ public abstract class Participant {
         return cards.calculateTotalRank();
     }
 
-    public int calculateDifferenceFromBlackjackScore() {
-        return cards.calculateDifferenceFromBlackjackScore();
-    }
-
     public boolean isBlackjack() {
         return getCards().size() == INITIAL_CARDS_SIZE && cards.equalToBlackjackScore();
     }
