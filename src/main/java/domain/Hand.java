@@ -65,4 +65,7 @@ public class Hand {
     }
 
 
+    public boolean isBlackJack() {
+        return getSize() == INITIAL_SIZE && getTotal() == BUST_THRESHOLD;
+    }
 }
