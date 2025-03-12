@@ -10,15 +10,14 @@ public final class Card {
     private final CardNumber number;
     private final CardShape shape;
     
-    public Card(final int number, final CardShape shape) {
-        GlobalValidator.validateNotNull(this, number, shape);
-        this.number = CardNumber.from(number);
+    private Card(final CardNumber number, final CardShape shape) {
+        GlobalValidator.validateNotNull(Card.class, number, shape);
+        this.number = number;
         this.shape = shape;
     }
     
-    private Card(final CardNumber number, final CardShape shape) {
-        this.number = number;
-        this.shape = shape;
+    public Card(final int number, final CardShape shape) {
+        this(CardNumber.from(number), shape);
     }
     
     public static List<Card> createTrumpCards() {

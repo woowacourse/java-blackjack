@@ -30,7 +30,7 @@ public class BlackjackController implements Controller {
 
         final BlackjackDeck deck = new BlackjackDeck();
         final List<PlayerBettingBlackjackCardHand> playerHands = players.toBlackjackBettingCardHand(deck, bettingAmounts);
-        final DealerBlackjackCardHand dealerHands = new DealerBlackjackCardHand(deck);
+        final DealerBlackjackCardHand dealerHands = DealerBlackjackCardHand.createWithInitialCards(deck);
 
         outputView.outputInitialCards(dealerHands, playerHands);
         blackjackService.addPlayerCards(

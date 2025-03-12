@@ -23,7 +23,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final int bettingAmount = 999;
 
         // expected
-        Assertions.assertThatThrownBy(() -> PlayerBettingBlackjackCardHand.from(DEFAULT_PLAYER, bettingAmount, List::of))
+        Assertions.assertThatThrownBy(() -> PlayerBettingBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, bettingAmount, List::of))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 1000원 이상, 100000원 이하여야 합니다.");
     }
@@ -34,7 +34,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final int bettingAmount = 100001;
 
         // expected
-        Assertions.assertThatThrownBy(() -> PlayerBettingBlackjackCardHand.from(DEFAULT_PLAYER, bettingAmount, List::of))
+        Assertions.assertThatThrownBy(() -> PlayerBettingBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, bettingAmount, List::of))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 1000원 이상, 100000원 이하여야 합니다.");
     }
@@ -208,18 +208,18 @@ public class PlayerBettingBlackjackCardHandTest {
     }
 
     private static blackjack.domain.card_hand.PlayerBettingBlackjackCardHand bettingPlayerWith(int money, Card... cards) {
-        return blackjack.domain.card_hand.PlayerBettingBlackjackCardHand.from(DEFAULT_PLAYER, money, () -> List.of(cards));
+        return blackjack.domain.card_hand.PlayerBettingBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, money, () -> List.of(cards));
     }
 
     private static blackjack.domain.card_hand.PlayerBettingBlackjackCardHand bettingPlayerWith(int money, List<Card> cards) {
-        return blackjack.domain.card_hand.PlayerBettingBlackjackCardHand.from(DEFAULT_PLAYER, money, () -> cards);
+        return blackjack.domain.card_hand.PlayerBettingBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, money, () -> cards);
     }
 
     private static DealerBlackjackCardHand dealerWith(Card... cards) {
-        return new DealerBlackjackCardHand(() -> List.of(cards));
+        return DealerBlackjackCardHand.createWithInitialCards(() -> List.of(cards));
     }
 
     private static DealerBlackjackCardHand dealerWith(List<Card> cards) {
-        return new DealerBlackjackCardHand(() -> cards);
+        return DealerBlackjackCardHand.createWithInitialCards(() -> cards);
     }
 }

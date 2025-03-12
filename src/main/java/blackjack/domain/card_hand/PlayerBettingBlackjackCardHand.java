@@ -4,6 +4,7 @@ import blackjack.domain.WinningStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
 import blackjack.domain.player.Player;
+import blackjack.util.GlobalValidator;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public final class PlayerBettingBlackjackCardHand {
     private final int bettingAmount;
     
     private PlayerBettingBlackjackCardHand(final PlayerBlackjackCardHand hand, final int bettingAmount) {
+        GlobalValidator.validateNotNull(PlayerBettingBlackjackCardHand.class, hand, bettingAmount);
         validateBettingAmount(bettingAmount);
         this.hand = hand;
         this.bettingAmount = bettingAmount;
@@ -28,11 +30,12 @@ public final class PlayerBettingBlackjackCardHand {
         }
     }
     
-    public static PlayerBettingBlackjackCardHand from(
+    public static PlayerBettingBlackjackCardHand createWithInitialCards(
             final Player player,
             final int bettingAmount,
             final BlackjackCardHandInitializer initializer
     ) {
+        GlobalValidator.validateNotNull(PlayerBettingBlackjackCardHand.class, player, initializer);
         return new PlayerBettingBlackjackCardHand(new PlayerBlackjackCardHand(player, initializer), bettingAmount);
     }
     

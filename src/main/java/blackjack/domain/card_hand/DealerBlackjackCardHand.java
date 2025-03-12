@@ -12,10 +12,15 @@ public final class DealerBlackjackCardHand {
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     private final BlackjackCardHand cardHand;
-
-    public DealerBlackjackCardHand(final BlackjackCardHandInitializer initializer) {
-        GlobalValidator.validateNotNull(this, initializer);
-        this.cardHand = new BlackjackCardHand(initializer);
+    
+    private DealerBlackjackCardHand(final BlackjackCardHand cardHand) {
+        GlobalValidator.validateNotNull(DealerBlackjackCardHand.class, cardHand);
+        this.cardHand = cardHand;
+    }
+    
+    public static DealerBlackjackCardHand createWithInitialCards(final BlackjackCardHandInitializer initializer) {
+        GlobalValidator.validateNotNull(DealerBlackjackCardHand.class, initializer);
+        return new DealerBlackjackCardHand(BlackjackCardHand.createWithInitialCards(initializer));
     }
 
     public Card getInitialCard() {

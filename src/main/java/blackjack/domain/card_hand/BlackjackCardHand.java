@@ -14,10 +14,16 @@ public final class BlackjackCardHand {
     
     private final CardHand cardHand;
     
-    public BlackjackCardHand(final BlackjackCardHandInitializer initializer) {
-        GlobalValidator.validateNotNull(this, initializer);
-        this.cardHand = new CardHand();
-        this.cardHand.addCards(initializer.handoutInitialCards());
+    private BlackjackCardHand(final CardHand cardHand) {
+        GlobalValidator.validateNotNull(BlackjackCardHand.class, cardHand);
+        this.cardHand = cardHand;
+    }
+    
+    public static BlackjackCardHand createWithInitialCards(final BlackjackCardHandInitializer initializer) {
+        GlobalValidator.validateNotNull(BlackjackCardHand.class, initializer);
+        final CardHand cardHand = new CardHand();
+        cardHand.addCards(initializer.handoutInitialCards());
+        return new BlackjackCardHand(cardHand);
     }
     
     public int getBlackjackSum() {

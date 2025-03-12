@@ -16,11 +16,12 @@ public final class Players {
     private final List<Player> players;
 
     private Players(final List<Player> players) {
-        GlobalValidator.validateNotNull(this, players);
+        GlobalValidator.validateNotNull(Players.class, players);
         this.players = players;
     }
 
     public static Players from(final List<String> playerNames) {
+        GlobalValidator.validateNotNull(Players.class, playerNames);
         validatePlayerNamesNotDuplicated(playerNames);
         validatePlayerNamesSize(playerNames);
         final List<Player> players = playerNames.stream()
@@ -54,7 +55,7 @@ public final class Players {
     public List<PlayerBettingBlackjackCardHand> toBlackjackBettingCardHand(final BlackjackDeck deck, final List<Integer> bettingAmounts) {
         final List<PlayerBettingBlackjackCardHand> bettingBlackjackCardHands = new ArrayList<>();
         for (int i = 0; i < players.size(); i++) {
-            bettingBlackjackCardHands.add(PlayerBettingBlackjackCardHand.from(players.get(i), bettingAmounts.get(i), deck));
+            bettingBlackjackCardHands.add(PlayerBettingBlackjackCardHand.createWithInitialCards(players.get(i), bettingAmounts.get(i), deck));
         }
         return Collections.unmodifiableList(bettingBlackjackCardHands);
     }

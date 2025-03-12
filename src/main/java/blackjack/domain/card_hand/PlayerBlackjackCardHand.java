@@ -13,8 +13,8 @@ public final class PlayerBlackjackCardHand {
     private final Player player;
 
     public PlayerBlackjackCardHand(final Player player, final BlackjackCardHandInitializer initializer) {
-        GlobalValidator.validateNotNull(this, player, initializer);
-        this.cardHand = new BlackjackCardHand(initializer);
+        GlobalValidator.validateNotNull(PlayerBlackjackCardHand.class, player, initializer);
+        this.cardHand = BlackjackCardHand.createWithInitialCards(initializer);
         this.player = player;
     }
 

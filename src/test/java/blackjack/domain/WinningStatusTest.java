@@ -191,10 +191,10 @@ class WinningStatusTest {
     }
 
     private static DealerBlackjackCardHand dealerWith(Card... cards) {
-        return new DealerBlackjackCardHand(() -> List.of(cards));
+        return DealerBlackjackCardHand.createWithInitialCards(() -> List.of(cards));
     }
 
     private static DealerBlackjackCardHand dealerWith(List<Card> cards) {
-        return new DealerBlackjackCardHand(() -> cards);
+        return DealerBlackjackCardHand.createWithInitialCards(() -> cards);
     }
 }
