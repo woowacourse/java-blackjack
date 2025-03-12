@@ -57,7 +57,7 @@ public enum GameResult {
         return GameResult.DRAW;
     }
 
-    public int calculateOutcome(BettingMoney bettingMoney) {
+    public int calculatePayout(BettingMoney bettingMoney) {
         return (int)(bettingMoney.intValue() * payoutRate);
     }
 

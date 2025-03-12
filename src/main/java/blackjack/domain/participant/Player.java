@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.BettingMoney;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.List;
@@ -13,6 +14,10 @@ public class Player extends Participant {
         super(cardHand);
         this.name = name;
         this.bettingMoney = bettingMoney;
+    }
+
+    public int calculateProfit(GameResult gameResult) {
+        return gameResult.calculatePayout(bettingMoney);
     }
 
     @Override

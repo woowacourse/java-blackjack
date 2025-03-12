@@ -21,4 +21,10 @@ public class TestUtil {
         return new Player(playerName, cardHand, new BettingMoney(defaultMoney));
     }
 
+    public static Player createPlayerOf(CardHand cardHand, int bet) {
+        ParticipantName playerName = new ParticipantName("player");
+
+        return new Player(playerName, cardHand, new BettingMoney(bet));
+    }
+
 }

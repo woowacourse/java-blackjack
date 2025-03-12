@@ -220,10 +220,10 @@ class GameResultTest {
         GameResult blackjackWin = GameResult.BLACKJACK_WIN;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(bettingMoney);
+        int payout = blackjackWin.calculatePayout(bettingMoney);
 
         // then
-        assertThat(outcome).isEqualTo(15000);
+        assertThat(payout).isEqualTo(15000);
     }
 
     @DisplayName("수익이 소수면 버리기 처리한다.")
@@ -234,10 +234,10 @@ class GameResultTest {
         GameResult blackjackWin = GameResult.BLACKJACK_WIN;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(bettingMoney);
+        int payout = blackjackWin.calculatePayout(bettingMoney);
 
         // then
-        assertThat(outcome).isEqualTo(1);
+        assertThat(payout).isEqualTo(1);
     }
 
     @DisplayName("플레이어가 이겼을 때 배팅한 금액만큼 그대로 수익이된다.")
@@ -248,10 +248,10 @@ class GameResultTest {
         GameResult blackjackWin = GameResult.WIN;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(bettingMoney);
+        int payout = blackjackWin.calculatePayout(bettingMoney);
 
         // then
-        assertThat(outcome).isEqualTo(10000);
+        assertThat(payout).isEqualTo(10000);
     }
 
     @DisplayName("플레이어가 졌을 때 배팅한 금액만큼 수익이 마이너스가 된다.")
@@ -262,10 +262,10 @@ class GameResultTest {
         GameResult blackjackWin = GameResult.LOSE;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(bettingMoney);
+        int payout = blackjackWin.calculatePayout(bettingMoney);
 
         // then
-        assertThat(outcome).isEqualTo(-10000);
+        assertThat(payout).isEqualTo(-10000);
     }
 
     @DisplayName("플레이어가 비겼을 때 수익도 손실도 없다.")
@@ -276,10 +276,10 @@ class GameResultTest {
         GameResult blackjackWin = GameResult.DRAW;
 
         // when
-        int outcome = blackjackWin.calculateOutcome(bettingMoney);
+        int payout = blackjackWin.calculatePayout(bettingMoney);
 
         // then
-        assertThat(outcome).isEqualTo(0);
+        assertThat(payout).isEqualTo(0);
     }
 
 }
