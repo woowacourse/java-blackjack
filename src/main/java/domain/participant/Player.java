@@ -20,7 +20,7 @@ public final class Player extends Participant {
 
   @Override
   public boolean isHit() {
-    return calculateScore() <= BLACKJACK_SCORE;
+    return !calculateScore().isBust();
   }
 
   @Override

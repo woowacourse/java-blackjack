@@ -2,9 +2,11 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Suit;
+import domain.RoundResult;
 import domain.card.Deck;
 import domain.card.Rank;
+import domain.card.Score;
+import domain.card.Suit;
 import domain.card.TrumpCard;
 import java.util.ArrayDeque;
 import java.util.List;
@@ -69,7 +71,8 @@ class ParticipantTest {
       participant.initialDeal(deck);
 
       // then
-      assertThat(participant.calculateScore()).isEqualTo(12);
+      final Score score = participant.calculateScore();
+      assertThat(score.value()).isEqualTo(12);
     }
   }
 
@@ -88,8 +91,8 @@ class ParticipantTest {
       final Participant loser = new MockParticipant();
       loser.hit(new TrumpCard(Rank.TEN, Suit.CLUB));
       // when&then
-      assertThat(winner.round(loser)).isTrue();
-      assertThat(loser.round(winner)).isFalse();
+      assertThat(RoundResult.round(winner, loser)).isEqualTo(RoundResult.WIN);
+      assertThat(RoundResult.round(loser, winner)).isEqualTo(RoundResult.LOSE);
     }
 
     @Test
@@ -104,8 +107,8 @@ class ParticipantTest {
       final Participant player = new MockParticipant();
       player.hit(new TrumpCard(Rank.TEN, Suit.CLUB));
       // when&then
-      assertThat(player.round(buster)).isTrue();
-      assertThat(buster.round(player)).isFalse();
+      assertThat(RoundResult.round(player, buster)).isEqualTo(RoundResult.WIN);
+      assertThat(RoundResult.round(buster, player)).isEqualTo(RoundResult.LOSE);
     }
   }
 

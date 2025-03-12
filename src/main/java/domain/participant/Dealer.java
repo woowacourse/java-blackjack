@@ -1,11 +1,9 @@
 package domain.participant;
 
-import domain.DealerRoster;
 import domain.card.Hand;
 
 public final class Dealer extends Participant {
 
-  private static final int STAND_SCORE = 17;
   private static final String DEFAULT_NAME = DealerRoster.DEFAULT.getName();
 
   public Dealer() {
@@ -18,7 +16,7 @@ public final class Dealer extends Participant {
 
   @Override
   public boolean isHit() {
-    return calculateScore() < STAND_SCORE;
+    return calculateScore().isDealerNeedHit();
   }
 
   @Override

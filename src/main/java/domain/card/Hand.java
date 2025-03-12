@@ -25,19 +25,19 @@ public final class Hand {
     cards.add(card);
   }
 
-  public int calculateScore() {
-    int score = 0;
-    for (final TrumpCard card : cards) {
-      score = card.add(score);
+  public Score calculateScore() {
+    final Score score = cards.stream()
+        .map(TrumpCard::getScore)
+        .reduce(Score::add)
+        .orElse(new Score(0));
+    if (hasAce()) {
+      return score.withAce();
     }
-
-    return Rank.ifBustAceIsMIN(score, calculateAceCount());
+    return score;
   }
 
-  private int calculateAceCount() {
-    return (int) cards.stream()
-        .filter(card -> card.isMatchRank(Rank.ACE))
-        .count();
+  private boolean hasAce() {
+    return cards.stream().anyMatch(TrumpCard::isAce);
   }
 
   public List<TrumpCard> getCards() {

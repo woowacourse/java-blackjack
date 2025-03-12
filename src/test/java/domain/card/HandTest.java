@@ -1,6 +1,5 @@
 package domain.card;
 
-import domain.Suit;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -24,7 +23,9 @@ class HandTest {
       final var cardHand = new Hand(cards);
 
       //when&then
-      Assertions.assertThat(cardHand.calculateScore()).isEqualTo(expected);
+      final Score score = cardHand.calculateScore();
+
+      Assertions.assertThat(score.value()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> getCardList() {

@@ -2,10 +2,9 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.DealerRoster;
-import domain.Suit;
 import domain.card.Hand;
 import domain.card.Rank;
+import domain.card.Suit;
 import domain.card.TrumpCard;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

@@ -53,8 +53,8 @@ public final class DomainToTextConverter {
   }
 
   public String cardToText(final TrumpCard dealerFirstTrumpCard) {
-    final String rankToText = RankToTextConverter.convert(dealerFirstTrumpCard.rank());
-    final String suitToText = dealerFirstTrumpCard.suit().getValue();
+    final String rankToText = RankToTextConverter.convert(dealerFirstTrumpCard.getRank());
+    final String suitToText = dealerFirstTrumpCard.getSuit().getValue();
     return rankToText + suitToText;
   }
 }
