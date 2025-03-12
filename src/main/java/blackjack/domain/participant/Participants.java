@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.ResultStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -11,10 +12,10 @@ public class Participants {
     private static final int DEALER_COUNT = 1;
     private static final int SPREAD_MULTIPLY_SIZE = 2;
 
-    private final Gamer dealer;
+    private final Dealer dealer;
     private final Players players;
 
-    public Participants(final Gamer dealer, final Players players) {
+    public Participants(final Dealer dealer, final Players players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -41,10 +42,6 @@ public class Participants {
         return dealer.canGetMoreCard();
     }
 
-    public int calculateDealerMaxScore() {
-        return dealer.calculateMaxScore();
-    }
-
     public Entry<String, Cards> showInitialDealerCards() {
         return Map.entry(dealer.getNickname(), dealer.showInitialCards());
     }
@@ -63,6 +60,10 @@ public class Participants {
 
     public int getInitialTotalCardsSize() {
         return (DEALER_COUNT + players.getSize()) * SPREAD_MULTIPLY_SIZE;
+    }
+
+    public Map<String, ResultStatus> calculateWinningResult() {
+        return dealer.calculateMaxScore(players.calculateScores());
     }
 
     private void spreadOneCard(final Gamer gamer, final Card card) {

@@ -52,13 +52,7 @@ public class BlackjackGame {
     }
 
     public Map<String, ResultStatus> calculateWinningResult() {
-        final int dealerScore = participants.calculateDealerMaxScore();
-        final Map<String, ResultStatus> result = new HashMap<>();
-        for (Gamer player : participants.getPlayers().getPlayers()) {
-            final int playerScore = player.calculateMaxScore();
-            result.put(player.getNickname(), ResultStatus.calculateResultStatus(playerScore, dealerScore));
-        }
-        return Collections.unmodifiableMap(result);
+        return participants.calculateWinningResult();
     }
 
     public Entry<String, Cards> showInitialDealerCard() {

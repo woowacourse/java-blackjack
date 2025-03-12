@@ -44,6 +44,11 @@ public class Players {
                 .toList());
     }
 
+    public Map<String, Integer> calculateScores() {
+        return players.stream()
+                .collect(Collectors.toMap(Gamer::getNickname, Gamer::calculateMaxScore));
+    }
+
     private void validate(List<? extends Gamer> players) {
         if (isDuplicate(players)) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름을 입력했습니다.");

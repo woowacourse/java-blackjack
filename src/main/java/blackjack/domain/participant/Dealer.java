@@ -1,9 +1,13 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.ResultStatus;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Dealer extends Gamer {
 
@@ -27,6 +31,13 @@ public class Dealer extends Gamer {
     public boolean canGetMoreCard() {
         int score = cards.calculateMinScore();
         return score <= DEALER_THRESHOLD;
+    }
+
+    public Map<String, ResultStatus> calculateMaxScore(final Map<String, Integer> playerScores) {
+        int dealerScore = calculateMaxScore();
+        return playerScores.entrySet().stream()
+                .collect(Collectors.toMap(Entry::getKey,
+                        entry -> ResultStatus.calculateResultStatus(entry.getValue(), dealerScore)));
     }
 
     @Override
