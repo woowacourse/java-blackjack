@@ -12,23 +12,34 @@ public enum ResultStatus {
         if (score <= BURST_THRESHOLD) {
             return calculateResultStatusUnderBlackjackNumber(score, comparedScore);
         }
-        return LOSE;
+        return WIN;
     }
 
     private static ResultStatus calculateResultStatusUnderBlackjackNumber(final int score, final int comparedScore) {
         if (comparedScore <= BURST_THRESHOLD) {
             return calculateResultStatusBothUnderBlackjackNumber(score, comparedScore);
         }
-        return WIN;
+        return LOSE;
     }
 
-    private static ResultStatus calculateResultStatusBothUnderBlackjackNumber(final int score, final int comparedScore) {
+    private static ResultStatus calculateResultStatusBothUnderBlackjackNumber(final int score,
+                                                                              final int comparedScore) {
         if (score > comparedScore) {
-            return WIN;
+            return LOSE;
         }
         if (score == comparedScore) {
             return PUSH;
         }
-        return LOSE;
+        return WIN;
+    }
+
+    public ResultStatus makeOppositeResult() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return PUSH;
     }
 }
