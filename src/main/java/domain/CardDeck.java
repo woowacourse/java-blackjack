@@ -7,6 +7,7 @@ public class CardDeck {
     public static final int MAX_SCORE = 21;
     private static final int ACE_MAX = 11;
     private static final int ACE_MIN = 1;
+    private static final int BLACK_SIZE = 2;
 
     private final List<TrumpCard> cards;
 
@@ -58,6 +59,6 @@ public class CardDeck {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore() == MAX_SCORE;
+        return cards.size() == BLACK_SIZE && calculateScore() == MAX_SCORE;
     }
 }
