@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 // TODO: 테스트 리팩토링 - given when then
-class CardNumberTest {
+class CardNumberDtoTest {
 
     @ParameterizedTest
     @CsvSource({

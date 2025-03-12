@@ -7,15 +7,12 @@ import java.util.function.BiFunction;
 import blackjack.domain.gamer.Gamer;
 
 public enum RoundResult {
-    WIN("승"),
-    LOSE("패"),
-    TIE("무"),
+    WIN,
+    LOSE,
+    TIE,
     ;
 
-    private final String displayName;
-
-    RoundResult(String displayName) {
-        this.displayName = displayName;
+    RoundResult() {
     }
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
@@ -73,9 +70,5 @@ public enum RoundResult {
             return LOSE;
         }
         return null;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 }

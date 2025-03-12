@@ -4,6 +4,8 @@ import java.util.List;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
+import blackjack.dto.card.CardDto;
+import blackjack.dto.card.CardsDto;
 
 public record GamerDto(
     String name,

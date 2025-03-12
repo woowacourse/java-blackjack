@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.RoundResult;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Players;
+import blackjack.dto.RoundResultDto;
 import blackjack.util.ListMerger;
 
 public record FinalResultResponseDto(
@@ -26,11 +26,15 @@ public record FinalResultResponseDto(
 
     public record InnerGamer(
         String name,
-        Map<RoundResult, Integer> result
+        Map<RoundResultDto, Integer> result
     ) {
 
         public static InnerGamer from(Gamer gamer, List<Gamer> otherGamers) {
-            return new InnerGamer(gamer.getName(), gamer.getFinalResult(otherGamers));
+            return new InnerGamer(
+                gamer.getName(),
+                gamer.getFinalResult(otherGamers).entrySet().stream()
+                    .collect(Collectors.toMap(set -> RoundResultDto.from(set.getKey()), Map.Entry::getValue))
+            );
         }
 
         @Override
