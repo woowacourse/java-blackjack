@@ -10,8 +10,8 @@ public class Card {
         this.rank = rank;
     }
 
-    public int adjustRank() {
-        return rank.adjustRankScore();
+    public void adjustRank() {
+        rank.adjustRankScore();
     }
 
     public int getRankScore() {

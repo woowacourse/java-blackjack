@@ -20,14 +20,12 @@ public abstract class Participant {
 
     private void adjustScoreIfNeeded() {
         if (!isBust()) {
-            return ;
+            return;
         }
         for (Card card : hands) {
-            int adjustedRankScore = card.adjustRank();
-            if (adjustedRankScore != -1) {
-                if (!isBust()) {
-                    return ;
-                }
+            card.adjustRank();
+            if (!isBust()) {
+                return;
             }
         }
     }

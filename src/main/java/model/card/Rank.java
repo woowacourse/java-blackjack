@@ -1,7 +1,5 @@
 package model.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public enum Rank {
@@ -32,19 +30,10 @@ public enum Rank {
         this.scoreData = score;
     }
 
-    public int adjustRankScore() {
-        final List<Integer> sortedScores = sorted();
+    public void adjustRankScore() {
         if (!isLastValue()) {
             scoreIdx++;
-            return sortedScores.get(scoreIdx);
         }
-        return -1;
-    }
-
-    private List<Integer> sorted() {
-        List<Integer> scores = new ArrayList<>(scoreData);
-        scores.sort(Collections.reverseOrder());
-        return scores;
     }
 
     public boolean isLastValue() {
