@@ -10,7 +10,7 @@ public class BlackjackRule {
     private static final int SUM_LIMIT = 21;
 
     public boolean isBlackjack(Cards cards) {
-        return false;
+        return true;
     }
 
     public boolean isBust(Cards cards) {
