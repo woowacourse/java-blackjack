@@ -1,7 +1,10 @@
 package blackjack.domain.game;
 
+import static blackjack.domain.card.CardType.*;
+import static blackjack.domain.fixture.CardFixture.createCards;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
@@ -14,54 +17,96 @@ import blackjack.domain.gambler.Names;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class RoundTest {
     private final Shuffler shuffler = new TestShuffler();
+    private final Name NAME = new Name("라젤");
 
     @DisplayName("특정 플레이어에게 지정한 장 수의 카드를 지급한다")
     @Test
     void distributeCardsTest() {
         // given
-        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
-        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
+        Card card1 = new Card(CardShape.CLOVER, TEN);
+        Card card2 = new Card(CardShape.HEART, EIGHT);
         CardDeck cardDeck = new CardDeck(List.of(card1, card2), shuffler);
 
-        Name playerName = new Name("라젤");
-        Names playerNames = new Names(List.of(playerName));
+        Names playerNames = new Names(List.of(NAME));
         Round round = new Round(cardDeck, playerNames);
 
         // when
-        round.distributeCards(playerName, 2);
+        round.distributeCards(NAME, 2);
 
         // then
-        assertThat(round.getCards(playerName)).contains(card1, card2);
-        assertThat(round.getScore(playerName)).isEqualTo(18);
+        assertAll(
+            () -> assertThat(round.getCards(NAME)).contains(card1, card2),
+            () -> assertThat(round.getScore(NAME)).isEqualTo(18)
+        );
     }
 
     @DisplayName("게임 시작 시, 플레이어와 딜러에게 2장씩 카드를 지급한다")
     @Test
     void distributeInitialCardsTest() {
         // given
-        Card card1 = new Card(CardShape.CLOVER, CardType.FIVE);
-        Card card2 = new Card(CardShape.HEART, CardType.ACE);
-        Card card3 = new Card(CardShape.CLOVER, CardType.TEN);
-        Card card4 = new Card(CardShape.HEART, CardType.KING);
+        Card card1 = new Card(CardShape.CLOVER, FIVE);
+        Card card2 = new Card(CardShape.HEART, ACE);
+        Card card3 = new Card(CardShape.CLOVER, TEN);
+        Card card4 = new Card(CardShape.HEART, KING);
         CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4), shuffler);
 
-        Name playerName = new Name("라젤");
-        Names playerNames = new Names(List.of(playerName));
+        Names playerNames = new Names(List.of(NAME));
         Round round = new Round(cardDeck, playerNames);
 
         // when
         round.distributeInitialCards();
 
         // then
-        assertThat(round.getScore(playerName)).isNotZero();
-        assertThat(round.getCards(DEALER_NAME)).hasSize(2);
-        assertThat(round.getCards(DEALER_NAME)).contains(card1, card2);
-        assertThat(round.getScore(DEALER_NAME)).isEqualTo(16);
-        assertThat(round.getCards(playerName)).hasSize(2);
-        assertThat(round.getCards(playerName)).contains(card3, card4);
-        assertThat(round.getScore(playerName)).isEqualTo(20);
+        assertAll(
+            () -> assertThat(round.getScore(NAME)).isEqualTo(20),
+            () -> assertThat(round.getCards(NAME)).hasSize(2),
+            () -> assertThat(round.getCards(NAME)).contains(card3, card4),
+            () -> assertThat(round.getScore(DEALER_NAME)).isEqualTo(16),
+            () -> assertThat(round.getCards(DEALER_NAME)).hasSize(2),
+            () -> assertThat(round.getCards(DEALER_NAME)).contains(card1, card2)
+        );
+    }
+
+    @DisplayName("해당_이름을_가진_겜블러가_버스트_되었는지_여부를_반환한다")
+    @CsvSource(value = {"TWO:false", "THREE:true"}, delimiterString = ":")
+    @ParameterizedTest
+    void isBusted(CardType type, boolean expected) {
+        // given
+        List<Card> cards = createCards(KING, NINE, type);
+        CardDeck cardDeck = new CardDeck(cards, shuffler);
+        Names playerNames = new Names(List.of(NAME));
+        Round round = new Round(cardDeck, playerNames);
+
+        round.distributeCards(NAME, 3);
+
+        // when
+        boolean result = round.isBusted(NAME);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+    
+    @DisplayName("딜러가_한장을_더_받아야_하는지_여부를_반환한다")
+    @CsvSource(value = {"TWO:true", "THREE:false"}, delimiterString = ":")
+    @ParameterizedTest
+    void dealerMustDraw(CardType type, boolean expected) {
+        // given
+        List<Card> cards = createCards(EIGHT, SIX, type);
+        CardDeck cardDeck = new CardDeck(cards, shuffler);
+        Names playerNames = new Names(List.of(NAME));
+        Round round = new Round(cardDeck, playerNames);
+
+        round.distributeCards(DEALER_NAME, 3);
+
+        // when
+        boolean result = round.dealerMustDraw();
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 }
