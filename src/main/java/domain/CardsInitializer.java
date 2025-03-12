@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,9 +14,10 @@ public class CardsInitializer {
 
     public List<Card> initialize() {
         List<Card> cards = createCards();
-        cardShuffler.shuffle(cards);
+        List<Card> shuffleCards = new ArrayList<>(cards);
+        cardShuffler.shuffle(shuffleCards);
 
-        return cards;
+        return shuffleCards;
     }
 
     private List<Card> createCards() {
