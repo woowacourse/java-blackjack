@@ -1,6 +1,6 @@
 package object.participant;
 
-import object.game.BattleResult;
+import object.game.GameResult;
 
 public class Wallet {
     private final int betMoney;
@@ -15,8 +15,8 @@ public class Wallet {
         return new Wallet(betMoney, 0);
     }
 
-    public Wallet applyBetRate(BattleResult battleResult) {
-        double betRate = battleResult.getBetRate();
+    public Wallet applyBetRate(GameResult gameResult) {
+        double betRate = gameResult.getBetRate();
         return new Wallet(betMoney, (int) (betMoney * betRate));
     }
 

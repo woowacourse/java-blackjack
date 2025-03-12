@@ -1,6 +1,6 @@
 package object.participant;
 
-import object.game.BattleResult;
+import object.game.GameResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,12 +26,12 @@ public class WalletTest {
             "1000, DRAW, 0",
             "1000, LOSE, -1000",
     })
-    void 월렛_베팅률_적용_테스트(int betMoney, BattleResult battleResult, int expectedProfit) {
+    void 월렛_베팅률_적용_테스트(int betMoney, GameResult gameResult, int expectedProfit) {
         // given
         Wallet wallet = Wallet.generateEmptyWalletFrom(betMoney);
 
         // when
-        Wallet appliedWallet = wallet.applyBetRate(battleResult);
+        Wallet appliedWallet = wallet.applyBetRate(gameResult);
 
         // then
         int actual = appliedWallet.getProfit();

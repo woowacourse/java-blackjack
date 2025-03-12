@@ -13,7 +13,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import object.game.BattleResult;
+import object.game.GameResult;
 import object.game.Score;
 
 public class OutputView {
@@ -70,21 +70,21 @@ public class OutputView {
         System.out.println("\n## 최종 승패");
         for (BattleResultResponse response : resultResponses) {
             String nickname = response.nickname();
-            Map<BattleResult, Integer> battleResultCount = response.battleResult();
+            Map<GameResult, Integer> battleResultCount = response.battleResult();
 
             System.out.printf("%s: %s%n", nickname, parseBattleResult(battleResultCount));
         }
     }
 
-    private String parseBattleResult(Map<BattleResult, Integer> battleResultCount) {
+    private String parseBattleResult(Map<GameResult, Integer> battleResultCount) {
         StringBuilder result = new StringBuilder();
-        for (BattleResult battleResult : BattleResult.values()) {
-            if (!battleResultCount.containsKey(battleResult)) {
+        for (GameResult gameResult : GameResult.values()) {
+            if (!battleResultCount.containsKey(gameResult)) {
                 continue;
             }
 
-            int count = battleResultCount.get(battleResult);
-            result.append(count).append(battleResult.getName()).append(" ");
+            int count = battleResultCount.get(gameResult);
+            result.append(count).append(gameResult.getName()).append(" ");
         }
 
         return result.toString();

@@ -1,12 +1,12 @@
 package object.participant;
 
 import java.util.Map;
-import object.game.BattleResult;
+import object.game.GameResult;
 
 public interface Participant {
     boolean ableToDraw(final int score);
     boolean areYouDealer();
     String getNickname();
-    void addGameRecord(BattleResult result);
-    Map<BattleResult, Integer> getGameRecord();
+    void addGameRecord(GameResult result);
+    Map<GameResult, Integer> getGameRecord();
 }

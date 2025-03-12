@@ -325,13 +325,13 @@ public class BlackJackBoardTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.WIN)).isTrue(),
-                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.LOSE)).isFalse(),
-                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
-                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.WIN)).isFalse(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.WIN)).isTrue(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.DRAW)).isFalse()
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(GameResult.WIN)).isTrue(),
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(GameResult.LOSE)).isFalse(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(GameResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(GameResult.WIN)).isFalse(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.WIN)).isTrue(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.DRAW)).isFalse()
                 );
     }
 
@@ -373,17 +373,17 @@ public class BlackJackBoardTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.DRAW)).isTrue(),
-                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.WIN)).isFalse(),
-                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.LOSE)).isFalse(),
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(GameResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(GameResult.WIN)).isFalse(),
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(GameResult.LOSE)).isFalse(),
                 
-                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.DRAW)).isTrue(),
-                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.WIN)).isFalse(),
-                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.LOSE)).isFalse(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(GameResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(GameResult.WIN)).isFalse(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(GameResult.LOSE)).isFalse(),
 
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.DRAW)).isTrue(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.WIN)).isFalse(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.LOSE)).isFalse()
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.DRAW)).isTrue(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.WIN)).isFalse(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.LOSE)).isFalse()
         );
     }
 
@@ -435,9 +435,9 @@ public class BlackJackBoardTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
-                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.WIN)).isTrue()
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(GameResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(GameResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.WIN)).isTrue()
         );
     }
 }

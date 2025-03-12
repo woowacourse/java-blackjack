@@ -1,7 +1,7 @@
 package object.participant;
 
 import java.util.Map;
-import object.game.BattleResult;
+import object.game.GameResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,16 +20,16 @@ public class GameRecordTest {
     }
 
     @ParameterizedTest
-    @EnumSource(BattleResult.class)
-    void 게임_전적_업데이트_테스트(BattleResult battleResult) {
+    @EnumSource(GameResult.class)
+    void 게임_전적_업데이트_테스트(GameResult gameResult) {
         // given
         GameRecord gameRecord = new GameRecord();
 
         // when
-        gameRecord.add(battleResult);
+        gameRecord.add(gameResult);
 
         // then
-        Map<BattleResult, Integer> record = gameRecord.getGameRecord();
-        Assertions.assertThat(record.getOrDefault(battleResult, 0)).isEqualTo(1);
+        Map<GameResult, Integer> record = gameRecord.getGameRecord();
+        Assertions.assertThat(record.getOrDefault(gameResult, 0)).isEqualTo(1);
     }
 }

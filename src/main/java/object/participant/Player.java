@@ -1,7 +1,7 @@
 package object.participant;
 
 import java.util.Map;
-import object.game.BattleResult;
+import object.game.GameResult;
 
 public class Player implements Participant {
     private static final int STAY_THRESHOLD = 21;
@@ -34,12 +34,12 @@ public class Player implements Participant {
     }
 
     @Override
-    public void addGameRecord(BattleResult result) {
+    public void addGameRecord(GameResult result) {
         gameRecord.add(result);
     }
 
     @Override
-    public Map<BattleResult, Integer> getGameRecord() {
+    public Map<GameResult, Integer> getGameRecord() {
         return gameRecord.getGameRecord();
     }
 }

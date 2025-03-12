@@ -155,17 +155,17 @@ public class BlackJackBoard {
     }
 
     private void updateBattleResultDraw(Participant dealer, Participant player) {
-        dealer.addGameRecord(BattleResult.DRAW);
-        player.addGameRecord(BattleResult.DRAW);
+        dealer.addGameRecord(GameResult.DRAW);
+        player.addGameRecord(GameResult.DRAW);
     }
 
     private void updateBattleResultBlackJack(Participant winner, Participant loser) {
-        winner.addGameRecord(BattleResult.BLACKJACK_WIN);
-        loser.addGameRecord(BattleResult.LOSE);
+        winner.addGameRecord(GameResult.BLACKJACK_WIN);
+        loser.addGameRecord(GameResult.LOSE);
     }
 
     private void updateBattleResult(Participant winner, Participant loser) {
-        winner.addGameRecord(BattleResult.WIN);
-        loser.addGameRecord(BattleResult.LOSE);
+        winner.addGameRecord(GameResult.WIN);
+        loser.addGameRecord(GameResult.LOSE);
     }
 }
