@@ -29,6 +29,10 @@ public class BlackJackGame {
         }
     }
 
+    public void startBetting(int amount, Participant participant) {
+        participant.startBetting(amount);
+    }
+
     public int receiveExtraCardProcessOfDealer() {
         return participants.getParticipants().stream()
             .filter(participant -> !participant.isPlayer())

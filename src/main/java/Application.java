@@ -16,18 +16,28 @@ public class Application {
         String userNames = inputView.inputUserNames();
         BlackJackGame blackJackGame = new BlackJackGame(cardBundle, userNames);
         List<Participant> participants = blackJackGame.getParticipants();
-        for (Participant participant : participants) {
-            if (participant.isPlayer()) {
-                int bettingAmount = inputView.inputBettingAmountOfPlayer(participant);
-                participant.startBetting(bettingAmount);
-            }
-            System.out.println();
-        }
+        processOfAllPlayersBetting(participants, blackJackGame);
         outputView.printInitialParticipantHands(participants);
         extraCardProcessOnPlayers(participants, blackJackGame);
         extraCardProcessOnDealer(blackJackGame);
         processOfPrintParticipantsInfo(participants);
         processOfPrintGameResult(blackJackGame);
+    }
+
+    private static void processOfAllPlayersBetting(List<Participant> participants,
+        BlackJackGame blackJackGame) {
+        for (Participant participant : participants) {
+            processOfPlayerBetting(participant, blackJackGame);
+        }
+    }
+
+    private static void processOfPlayerBetting(Participant participant,
+        BlackJackGame blackJackGame) {
+        if (participant.isPlayer()) {
+            int bettingAmount = inputView.inputBettingAmountOfPlayer(participant);
+            blackJackGame.startBetting(bettingAmount, participant);
+        }
+        outputView.printBlankLine();
     }
 
     private static void processOfPrintGameResult(BlackJackGame blackJackGame) {
