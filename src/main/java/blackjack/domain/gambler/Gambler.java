@@ -1,5 +1,7 @@
 package blackjack.domain.gambler;
 
+import static blackjack.domain.Round.BLACK_JACK;
+
 import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +28,9 @@ public abstract class Gambler {
 
     public boolean isScoreBelow(final int criteria) {
         return hands.isScoreBelow(criteria);
+    }
+    public boolean isBlackjack() {
+        return hands.hasSize(2) && calculateScore() == BLACK_JACK;
     }
 
     public List<Card> getCards() {

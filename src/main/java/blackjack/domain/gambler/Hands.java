@@ -16,6 +16,10 @@ public class Hands {
         this.cards = new ArrayList<>();
     }
 
+    public boolean hasSize(final int size) {
+        return cards.size() == size;
+    }
+
     public void addCard(final Card card) {
         cards.add(card);
     }
@@ -36,7 +40,7 @@ public class Hands {
                 .count();
     }
 
-    private static int adjustSumByAce(int sum, int aceCount) {
+    private int adjustSumByAce(int sum, int aceCount) {
         if (sum <= BLACK_JACK) {
             return sum;
         }
