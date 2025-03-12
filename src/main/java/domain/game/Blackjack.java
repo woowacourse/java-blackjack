@@ -2,6 +2,7 @@ package domain.game;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import domain.card.Deck;
 import domain.duel.DuelResult;
@@ -41,6 +42,10 @@ public class Blackjack {
 	public void initPickCard() {
 		players.pickCards(deck, INIT_PICK_CARD_COUNT);
 		dealer.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
+	}
+
+	public void pickCardPlayersIfNotBust(final BooleanSupplier userAnswer) {
+
 	}
 
 	public boolean isPickCardByPlayer(final Player player) {
