@@ -17,8 +17,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GameBoard {
-    private static final int BUST_THRESHOLD = 21;
-
     private final Map<Participant, CardDeck> cardDeckOfParticipant;
     private final CardDeck playingCard;
 
@@ -34,7 +32,6 @@ public class GameBoard {
 
         return new GameBoard(participants);
     }
-
 
     public void drawTwoCards() {
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
@@ -131,16 +128,6 @@ public class GameBoard {
 
         Score playerScore = getScoreOf(participant);
 
-        /*
-        용어 정리: 블랙잭 (첫 두장이 21인 경우)
-        베팅 1배: 자기가 베팅한 금액만큼 벌었다. (즉 2배)
-
-        1. 플레이어가 블랙잭이라면 1.5배 승리.
-        1.1. 하지만 딜러도 블랙잭이라면 무승부. 0배
-
-        2. 이기면 1배, 지면 베팅 금액을 잃는다.
-         */
-
         if (playerScore.isBust()) {
             // 무조건 플레이어 패배 (베팅 금액 잃음)
             updateBattleResult(dealer, participant);
@@ -156,11 +143,13 @@ public class GameBoard {
         if (playerScore.getScore() > dealerScore.getScore()) {
             // 플레이어 승리(1배)
             updateBattleResult(participant, dealer);
+            return;
         }
 
         if (playerScore.getScore() < dealerScore.getScore()) {
             // 플레이어 패배(베팅 금액 잃음)
             updateBattleResult(dealer, participant);
+            return;
         }
 
         // 무승부
