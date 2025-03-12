@@ -13,10 +13,10 @@ import model.participant.Players;
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static Map<Player, Integer> inputBettingPrice(Players players){
+    public static Map<Player, Integer> inputBettingPrice(Players players) {
         Map<Player, Integer> bettingResult = new HashMap<>();
-        for (Player player : players.getPlayers()){
-            System.out.println( player.getName() + "의 배팅 금액은?");
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + "의 배팅 금액은?");
             int bettingPrice = validateInteger(SCANNER.nextLine());
             bettingResult.put(player, bettingPrice);
         }
@@ -38,7 +38,7 @@ public class InputView {
     }
 
     private static int validateInteger(String inputPrice) {
-        if (inputPrice.chars().allMatch(Character::isDigit)){
+        if (inputPrice.chars().allMatch(Character::isDigit)) {
             return Integer.parseInt(inputPrice);
         }
         throw new IllegalArgumentException("[ERROR] 숫자만 입력해주세요 입력값:" + inputPrice);

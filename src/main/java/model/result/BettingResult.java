@@ -12,26 +12,26 @@ public class BettingResult {
     }
 
     public void calculatePlayerBettingResult(Players players, ParticipantWinningResult participantWinningResult) {
-        for (Player player : players.getPlayers()){
+        for (Player player : players.getPlayers()) {
             GameResult gameResult = participantWinningResult.getPlayerGameResult(player);
             computeResultByWinningStatus(player, gameResult);
         }
     }
 
     public int calculateDealerFinalResult() {
-        return betting.values().stream().mapToInt(i-> -i).sum();
+        return betting.values().stream().mapToInt(i -> -i).sum();
     }
 
     private void computeResultByWinningStatus(Player player, GameResult gameResult) {
         int bettingPrice = betting.get(player);
-        if (gameResult == GameResult.LOSE){
+        if (gameResult == GameResult.LOSE) {
             betting.put(player, -bettingPrice);
         }
-        if (gameResult == GameResult.DRAW){
+        if (gameResult == GameResult.DRAW) {
             betting.put(player, 0);
         }
-        if (gameResult == GameResult.WIN && player.checkBlackjack()){
-            betting.put(player, bettingPrice * 3/2);
+        if (gameResult == GameResult.WIN && player.checkBlackjack()) {
+            betting.put(player, bettingPrice * 3 / 2);
         }
     }
 

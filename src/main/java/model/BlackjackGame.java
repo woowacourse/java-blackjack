@@ -23,7 +23,7 @@ public class BlackjackGame {
         }
     }
 
-    public void runDealerTurn (Dealer dealer) {
+    public void runDealerTurn(Dealer dealer) {
         while (dealer.checkScoreUnderSixteen()) {
             OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());

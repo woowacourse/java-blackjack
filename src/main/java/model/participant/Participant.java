@@ -1,7 +1,6 @@
 package model.participant;
 
 import java.util.List;
-import model.card.Deck;
 import model.card.Card;
 
 public class Participant {

@@ -1,6 +1,5 @@
 package model.participant;
 
-
 import model.card.Card;
 
 public class Dealer extends Participant {

@@ -53,7 +53,7 @@ public class ParticipantWinningResult {
         return Collections.unmodifiableMap(result);
     }
 
-    public GameResult getPlayerGameResult(Player player){
+    public GameResult getPlayerGameResult(Player player) {
         return result.get(player);
     }
 }

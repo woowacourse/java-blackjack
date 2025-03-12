@@ -1,6 +1,5 @@
 package model.participant;
 
-
 public class Player extends Participant {
     private final String name;
 
@@ -9,7 +8,7 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public boolean checkBlackjack(){
+    public boolean checkBlackjack() {
         return getParticipantHand().checkBlackjack();
     }
 

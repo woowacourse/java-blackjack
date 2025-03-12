@@ -23,7 +23,7 @@ public class ParticipantHand {
         return calculateScoreWithAceAsMinValue() > BUST_SCORE_LIMIT;
     }
 
-    public boolean checkBlackjack(){
+    public boolean checkBlackjack() {
         return cards.size() == BLACKJACK_CONDITION_CARD_COUNT && calculateFinalScore() == BUST_SCORE_LIMIT;
     }
 
@@ -39,7 +39,7 @@ public class ParticipantHand {
         return calculateScoreWithAceAsMinValue();
     }
 
-    public Card openFirstCard(){
+    public Card openFirstCard() {
         return cards.getFirst();
     }
 
