@@ -103,7 +103,7 @@ public class ScoreTest {
 			final boolean actual = score.isLessThan(moreThanValue);
 
 			// then
-			assertThat(actual).isFalse();
+			assertThat(actual).isTrue();
 		}
 	}
 }
