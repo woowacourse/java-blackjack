@@ -68,9 +68,9 @@ class DealerTest {
     }
     
     @Nested
-    @DisplayName("플레이어를 자신과 비교해 결과를 알려준다. 딜러는 플레이어 결과의 반대이다.")
+    @DisplayName("플레이어를 자신과 비교해 결과를 알려준다.")
     class informResultToPlayerTest {
-        @DisplayName("딜러와 플레이어 중 21 혹은 21에 가까운 숫자를 가진 딜러가 이긴다.")
+        @DisplayName("딜러가 21에 더 가까울 떄, 플레이어 결과는 패배이다.")
         @Test
         void testWinnerEvaluation_dealerWin() {
             //given
@@ -87,13 +87,12 @@ class DealerTest {
 
             //when
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
 
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.WIN);
+            assertThat(playerResult).isEqualTo(GameResult.LOSE);
         }
 
-        @DisplayName("딜러와 플레이어 중 21 혹은 21에 가까운 숫자를 가진 플레이어가 이긴다.")
+        @DisplayName("플레이어가 21에 더 가까울 떄, 플레이어 결과는 승이다.")
         @Test
         void testWinnerEvaluation_dealerLose() {
             //given
@@ -111,10 +110,9 @@ class DealerTest {
 
             //when
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
 
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.LOSE);
+            assertThat(playerResult).isEqualTo(GameResult.WIN);
         }
 
         @DisplayName("딜러와 플레이어 점수가 같으면 무승부다.")
@@ -135,14 +133,12 @@ class DealerTest {
 
             //when
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
 
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.DRAW);
             assertThat(playerResult).isEqualTo(GameResult.DRAW);
         }
 
-        @DisplayName("플레이어가 버스트인 경우, 딜러가 이기고 플레이어가 패배한다.")
+        @DisplayName("플레이어가 버스트인 경우, 플레이어가 패배한다.")
         @Test
         void testWinnerEvaluation_playerBusted() {
             //given
@@ -161,10 +157,8 @@ class DealerTest {
 
             //when
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
 
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.WIN);
             assertThat(playerResult).isEqualTo(GameResult.LOSE);
 
         }
@@ -187,12 +181,9 @@ class DealerTest {
             Dealer dealer = new Dealer(cardHand2);
 
             //when
-            
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
 
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.LOSE);
             assertThat(playerResult).isEqualTo(GameResult.WIN);
         }
 
@@ -215,10 +206,8 @@ class DealerTest {
 
             //when
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
-            
+
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.LOSE);
             assertThat(playerResult).isEqualTo(GameResult.BLACKJACK_WIN);
         }
 
@@ -240,14 +229,12 @@ class DealerTest {
 
             //when
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
 
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.DRAW);
             assertThat(playerResult).isEqualTo(GameResult.DRAW);
         }
 
-        @DisplayName("딜러가 블랙잭이고 플레이어가 일반 21인 경우 딜러가 이긴다.")
+        @DisplayName("딜러가 블랙잭이고 플레이어가 일반 21인 경우 플레이어가 패배.")
         @Test
         void testWinnerEvaluation_dealerBlackjack() {
             //given
@@ -266,10 +253,8 @@ class DealerTest {
 
             //when
             GameResult playerResult = dealer.informResultTo(player);
-            GameResult dealerResult = GameResult.reverse(playerResult);
 
             //then
-            assertThat(dealerResult).isEqualTo(GameResult.WIN);
             assertThat(playerResult).isEqualTo(GameResult.LOSE);
         }
     }

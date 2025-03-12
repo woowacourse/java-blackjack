@@ -12,16 +12,6 @@ public enum GameResult {
         this.payoutRate = payoutRate;
     }
 
-    public static GameResult reverse(GameResult gameResult) {
-        if (gameResult == GameResult.WIN || gameResult == GameResult.BLACKJACK_WIN) {
-            return GameResult.LOSE;
-        }
-        if (gameResult == GameResult.LOSE) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
-    }
-
     public int calculatePayout(BettingMoney bettingMoney) {
         return (int)(bettingMoney.intValue() * payoutRate);
     }
