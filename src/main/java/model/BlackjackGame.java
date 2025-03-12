@@ -12,25 +12,26 @@ public class BlackjackGame {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
     private final static Deck deck = Deck.of();
 
-    public void dealInitially(Players players, Dealer dealer) {
-        dealInitialCardsToAllPlayers(players);
+    private final Players players;
+    private final Dealer dealer;
+
+    public BlackjackGame(Players players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
+    }
+
+    public void dealInitially() {
+        OutputView.printInitialDealResult(dealer, players);
+        dealInitialCardsToAllPlayers();
         dealInitialCardsToParticipant(dealer);
     }
 
-    public void runPlayerTurn(Players players) {
-        for (Player player : players.getPlayers()) {
-            chooseAtOnePlayerTurn(player);
-        }
+    public void runGameTurn() {
+        runPlayerTurn();
+        runDealerTurn();
     }
 
-    public void runDealerTurn(Dealer dealer) {
-        while (dealer.checkScoreUnderSixteen()) {
-            OutputView.printDealerDealResult();
-            dealer.receiveCard(deck.pick());
-        }
-    }
-
-    private void dealInitialCardsToAllPlayers(Players players) {
+    private void dealInitialCardsToAllPlayers() {
         for (Player player : players.getPlayers()) {
             dealInitialCardsToParticipant(player);
         }
@@ -39,6 +40,19 @@ public class BlackjackGame {
     private void dealInitialCardsToParticipant(Participant participant) {
         for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
             participant.receiveCard(deck.pick());
+        }
+    }
+
+    private void runPlayerTurn() {
+        for (Player player : players.getPlayers()) {
+            chooseAtOnePlayerTurn(player);
+        }
+    }
+
+    private void runDealerTurn() {
+        while (dealer.checkScoreUnderSixteen()) {
+            OutputView.printDealerDealResult();
+            dealer.receiveCard(deck.pick());
         }
     }
 
