@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
+import static blackjack.domain.card.Hand.BLACKJACK_NUMBER;
 
 public enum ResultStatus {
 

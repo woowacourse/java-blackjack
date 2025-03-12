@@ -5,19 +5,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Cards {
+public class Hand {
 
     public static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_SUBTRACT = 10;
 
-    private final List<Card> cards;
+    private final List<Card> hand;
 
-    public Cards(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public Hand(final List<Card> hand) {
+        this.hand = new ArrayList<>(hand);
     }
 
     public int calculateResult() {
-        int maxScore = calculateMaxScore(cards);
+        int maxScore = calculateMaxScore(hand);
         if (isUnderThreshold(maxScore)) {
             return maxScore;
         }
@@ -25,13 +25,13 @@ public class Cards {
     }
 
     public int calculateMinScore() {
-        return cards.stream()
+        return hand.stream()
                 .mapToInt(Card::getCardMinNumber)
                 .sum();
     }
 
-    public void addAll(final Cards givenCards) {
-        cards.addAll(givenCards.getCards());
+    public void addAll(final Hand givenHand) {
+        hand.addAll(givenHand.getHand());
     }
 
     private int calculateMaxScore(final List<Card> cards) {
@@ -45,7 +45,7 @@ public class Cards {
     }
 
     private int subtractAce(int score) {
-        int aceCount = countAce(cards);
+        int aceCount = countAce(hand);
         while (!isUnderThreshold(score) && aceCount-- > 0) {
             score -= ACE_SUBTRACT;
         }
@@ -60,30 +60,30 @@ public class Cards {
 
     @Override
     public boolean equals(final Object o) {
-        if (!(o instanceof final Cards cards1)) {
+        if (!(o instanceof final Hand hand1)) {
             return false;
         }
-        return Objects.equals(cards, cards1.cards);
+        return Objects.equals(hand, hand1.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(cards);
+        return Objects.hashCode(hand);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 
-    public Cards getPartialCards(int start, int end) {
-        return new Cards(cards.subList(start, end));
+    public Hand getPartialCards(int start, int end) {
+        return new Hand(hand.subList(start, end));
     }
 
     public Card getFirstCard() {
-        return cards.getFirst();
+        return hand.getFirst();
     }
 
     public int getSize() {
-        return cards.size();
+        return hand.size();
     }
 }

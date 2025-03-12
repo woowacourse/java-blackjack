@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
+import static blackjack.domain.card.Hand.BLACKJACK_NUMBER;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -10,23 +10,23 @@ public class Player extends Gamer {
 
     private final String nickname;
 
-    public Player(final String nickname, final Cards cards) {
-        super(cards);
+    public Player(final String nickname, final Hand hand) {
+        super(hand);
         this.nickname = nickname;
     }
 
     public static Player createEmpty(final String nickname) {
-        return new Player(nickname, new Cards(new ArrayList<>()));
+        return new Player(nickname, new Hand(new ArrayList<>()));
     }
 
     @Override
-    public Cards showInitialCards() {
-        return cards;
+    public Hand showInitialCards() {
+        return hand;
     }
 
     @Override
     public boolean canGetMoreCard() {
-        int score = cards.calculateMinScore();
+        int score = hand.calculateMinScore();
         return score < BLACKJACK_NUMBER;
     }
 
@@ -35,12 +35,12 @@ public class Player extends Gamer {
         if (!(o instanceof final Player player)) {
             return false;
         }
-        return Objects.equals(nickname, player.nickname) && Objects.equals(cards, player.cards);
+        return Objects.equals(nickname, player.nickname) && Objects.equals(hand, player.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, cards);
+        return Objects.hash(nickname, hand);
     }
 
     @Override

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import java.util.List;
@@ -45,54 +45,54 @@ public class PlayerTest {
     @Test
     void receiveCards() {
         // given
-        Cards cards = provideCards(2);
+        Hand hand = provideCards(2);
 
         // when
-        player.receiveCards(cards);
+        player.receiveCards(hand);
 
         // then
-        assertThat(player).isEqualTo(new Player("엠제이", cards));
+        assertThat(player).isEqualTo(new Player("엠제이", hand));
     }
 
     @DisplayName("플레이어는 모든 카드를 보여준다.")
     @Test
     void showPlayerAllCards() {
         // given
-        final Cards cards = provideCards(2);
-        player.receiveCards(cards);
+        final Hand hand = provideCards(2);
+        player.receiveCards(hand);
         final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.A),
                 new Card(Shape.SPADE, Denomination.TWO));
 
         // when
-        final Cards playerCards = player.showAllCards();
+        final Hand playerHand = player.showAllCards();
 
         // then
-        assertThat(playerCards.getCards()).isEqualTo(expected);
+        assertThat(playerHand.getHand()).isEqualTo(expected);
     }
 
     @DisplayName("플레이어는 1장만 보여준다.")
     @Test
     void showPlayerInitialCards() {
         // given
-        final Cards cards = provideCards(2);
-        player.receiveCards(cards);
+        final Hand hand = provideCards(2);
+        player.receiveCards(hand);
         final List<Card> expected = List.of(new Card(Shape.SPADE, Denomination.A),
                 new Card(Shape.SPADE, Denomination.TWO));
 
         // when
-        final Cards playerCards = player.showInitialCards();
+        final Hand playerHand = player.showInitialCards();
 
         // then
-        assertThat(playerCards.getCards()).isEqualTo(expected);
+        assertThat(playerHand.getHand()).isEqualTo(expected);
     }
 
 
     @DisplayName("플레이어가 가진 카드의 합이 21 미만이면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void canGetMoreCard(final Cards cards, final boolean expected) {
+    void canGetMoreCard(final Hand hand, final boolean expected) {
         // given
-        final Player player = new Player("엠제이", cards);
+        final Player player = new Player("엠제이", hand);
 
         // when & then
         assertThat(player.canGetMoreCard()).isEqualTo(expected);
@@ -100,15 +100,15 @@ public class PlayerTest {
 
     private static Stream<Arguments> canGetMoreCard() {
         return Stream.of(
-                Arguments.of(new Cards(List.of(
+                Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.TEN),
                         new Card(Shape.SPADE, Denomination.NINE)
                 )), true),
-                Arguments.of(new Cards(List.of(
+                Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.A),
                         new Card(Shape.SPADE, Denomination.K)
                 )), true),
-                Arguments.of(new Cards(List.of(
+                Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.K),
                         new Card(Shape.SPADE, Denomination.Q),
                         new Card(Shape.SPADE, Denomination.A)
@@ -119,9 +119,9 @@ public class PlayerTest {
     @DisplayName("카드 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMaxScore(final Cards cards, final int expected) {
+    void calculateMaxScore(final Hand hand, final int expected) {
         // given
-        player.receiveCards(cards);
+        player.receiveCards(hand);
 
         // when & then
         assertThat(player.calculateMaxScore()).isEqualTo(expected);

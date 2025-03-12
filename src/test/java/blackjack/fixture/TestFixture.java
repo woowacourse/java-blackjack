@@ -1,7 +1,7 @@
 package blackjack.fixture;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
@@ -32,65 +32,65 @@ public class TestFixture {
         return new Participants(new Dealer(provideEmptyCards()), providePlayers());
     }
 
-    public static Cards provideCards(final int count) {
-        return new Cards(CardGenerator.DECKS.subList(0, count));
+    public static Hand provideCards(final int count) {
+        return new Hand(CardGenerator.DECKS.subList(0, count));
     }
 
     public static Players providePlayers() {
         return new Players(List.of(new Player("엠제이", provideEmptyCards()), new Player("밍트", provideEmptyCards())));
     }
 
-    public static List<Player> provideTwoPlayersWithCards(final Cards cards1, final Cards cards2) {
-        return List.of(new Player("엠제이", cards1), new Player("밍트", cards2));
+    public static List<Player> provideTwoPlayersWithCards(final Hand hand1, final Hand hand2) {
+        return List.of(new Player("엠제이", hand1), new Player("밍트", hand2));
     }
 
-    public static List<Player> provideThreePlayersWithCards(final Cards cards1, final Cards cards2,
-                                                            final Cards cards3) {
-        return List.of(new Player("엠제이", cards1), new Player("밍트", cards2), new Player("포비", cards3));
+    public static List<Player> provideThreePlayersWithCards(final Hand hand1, final Hand hand2,
+                                                            final Hand hand3) {
+        return List.of(new Player("엠제이", hand1), new Player("밍트", hand2), new Player("포비", hand3));
     }
 
-    public static Cards provideOver21Cards() {
-        return new Cards(List.of(new Card(Shape.SPADE, Denomination.K),
+    public static Hand provideOver21Cards() {
+        return new Hand(List.of(new Card(Shape.SPADE, Denomination.K),
                 new Card(Shape.SPADE, Denomination.Q), new Card(Shape.SPADE, Denomination.J)));
     }
 
-    public static Cards provideUnder21Cards() {
-        return new Cards(List.of(new Card(Shape.SPADE, Denomination.TWO),
+    public static Hand provideUnder21Cards() {
+        return new Hand(List.of(new Card(Shape.SPADE, Denomination.TWO),
                 new Card(Shape.SPADE, Denomination.THREE)));
     }
 
-    public static Cards provideUnder16Cards() {
-        return new Cards(List.of(new Card(Shape.SPADE, Denomination.TWO),
+    public static Hand provideUnder16Cards() {
+        return new Hand(List.of(new Card(Shape.SPADE, Denomination.TWO),
                 new Card(Shape.SPADE, Denomination.FOUR)));
     }
 
-    public static Cards provideOver16Cards() {
-        return new Cards(List.of(new Card(Shape.SPADE, Denomination.TEN),
+    public static Hand provideOver16Cards() {
+        return new Hand(List.of(new Card(Shape.SPADE, Denomination.TEN),
                 new Card(Shape.HEART, Denomination.TEN)));
     }
 
-    public static Cards provideSmallerAceCards() {
-        return new Cards(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
+    public static Hand provideSmallerAceCards() {
+        return new Hand(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
                 new Card(Shape.HEART, Denomination.NINE),
                 new Card(Shape.HEART, Denomination.A)
         ));
     }
 
-    public static Cards provideBiggerAceCards() {
-        return new Cards(List.of(new Card(Shape.SPADE, Denomination.K),
+    public static Hand provideBiggerAceCards() {
+        return new Hand(List.of(new Card(Shape.SPADE, Denomination.K),
                 new Card(Shape.HEART, Denomination.A)
         ));
     }
 
-    public static Cards provideBiggerAndSmallerAceCards() {
-        return new Cards(List.of(new Card(Shape.SPADE, Denomination.A),
+    public static Hand provideBiggerAndSmallerAceCards() {
+        return new Hand(List.of(new Card(Shape.SPADE, Denomination.A),
                 new Card(Shape.HEART, Denomination.A),
                 new Card(Shape.HEART, Denomination.TWO),
                 new Card(Shape.HEART, Denomination.THREE)
         ));
     }
 
-    public static Cards provideEmptyCards() {
-        return new Cards(new ArrayList<>());
+    public static Hand provideEmptyCards() {
+        return new Hand(new ArrayList<>());
     }
 }

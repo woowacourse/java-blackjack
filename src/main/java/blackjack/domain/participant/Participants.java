@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.ResultStatus;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,9 +20,9 @@ public class Participants {
         this.players = players;
     }
 
-    public void spreadAllTwoCards(final Cards cards) {
-        dealer.receiveCards(cards.getPartialCards(0, SPREAD_MULTIPLY_SIZE));
-        players.receiveCards(cards.getPartialCards(SPREAD_MULTIPLY_SIZE, cards.getSize()), SPREAD_MULTIPLY_SIZE);
+    public void spreadAllTwoCards(final Hand hand) {
+        dealer.receiveCards(hand.getPartialCards(0, SPREAD_MULTIPLY_SIZE));
+        players.receiveCards(hand.getPartialCards(SPREAD_MULTIPLY_SIZE, hand.getSize()), SPREAD_MULTIPLY_SIZE);
     }
 
     public boolean canPlayerGetMoreCard(final int index) {
@@ -42,19 +42,19 @@ public class Participants {
         return dealer.canGetMoreCard();
     }
 
-    public Entry<String, Cards> showInitialDealerCards() {
+    public Entry<String, Hand> showInitialDealerCards() {
         return Map.entry(dealer.getNickname(), dealer.showInitialCards());
     }
 
-    public Map<String, Cards> showInitialParticipantsCards() {
+    public Map<String, Hand> showInitialParticipantsCards() {
         return players.showTotalInitialCards();
     }
 
-    public Entry<String, Cards> showDealerCards() {
+    public Entry<String, Hand> showDealerCards() {
         return Map.entry(dealer.getNickname(), dealer.showAllCards());
     }
 
-    public Map<String, Cards> showPlayersCards() {
+    public Map<String, Hand> showPlayersCards() {
         return players.showTotalCards();
     }
 
@@ -63,11 +63,11 @@ public class Participants {
     }
 
     public Map<String, ResultStatus> calculateWinningResult() {
-        return dealer.calculateMaxScore(players.calculateScores());
+        return dealer.calculateWinningResult(players.calculateScores());
     }
 
     private void spreadOneCard(final Gamer gamer, final Card card) {
-        gamer.receiveCards(new Cards(List.of(card)));
+        gamer.receiveCards(new Hand(List.of(card)));
     }
 
     public Gamer getDealer() {

@@ -14,8 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardManager;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
@@ -40,14 +40,14 @@ class BlackjackGameTest {
     void spreadTwoCardsToDealerAndPlayers() {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(
-                new CardManager(new CardRandomGenerator()),
+                new Deck(new CardRandomGenerator()),
                 provideParticipants());
         // when
         blackjackGame.spreadInitialCards();
 
         // then
         Assertions.assertAll(
-                () -> assertThat(blackjackGame.showDealerCard().getValue().getCards()).hasSize(2),
+                () -> assertThat(blackjackGame.showDealerCard().getValue().getHand()).hasSize(2),
                 () -> assertThat(blackjackGame.showPlayersCards()).hasSize(2)
         );
     }
@@ -56,7 +56,7 @@ class BlackjackGameTest {
     @Test
     void canPlayerMoreCardToPlayer() {
         // given
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 new Participants(new Dealer(provideEmptyCards()),
                         new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
 
@@ -73,7 +73,7 @@ class BlackjackGameTest {
         // given
         Players players = providePlayers();
         Participants participants = new Participants(new Dealer(provideEmptyCards()), players);
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 participants);
         Gamer gamer = players.getPlayer(0);
 
@@ -81,16 +81,16 @@ class BlackjackGameTest {
         blackjackGame.spreadOneCardToPlayer(gamer);
 
         // then
-        assertThat(gamer.showAllCards().getCards()).hasSize(1);
+        assertThat(gamer.showAllCards().getHand()).hasSize(1);
     }
 
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다.")
     @ParameterizedTest
     @MethodSource
-    void canDealerMoreCard(final Cards cards, final boolean expected) {
+    void canDealerMoreCard(final Hand hand, final boolean expected) {
         // given
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
-                new Participants(new Dealer(cards),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+                new Participants(new Dealer(hand),
                         new Players(provideTwoPlayersWithCards(provideEmptyCards(), provideEmptyCards()))));
 
         // when & then
@@ -107,11 +107,11 @@ class BlackjackGameTest {
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     @ParameterizedTest
     @MethodSource
-    void canPlayerMoreCard(final Cards cards, final boolean expected) {
+    void canPlayerMoreCard(final Hand hand, final boolean expected) {
         // given
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 new Participants(new Dealer(provideEmptyCards()),
-                        new Players(provideTwoPlayersWithCards(cards, provideEmptyCards()))));
+                        new Players(provideTwoPlayersWithCards(hand, provideEmptyCards()))));
 
         // when & then
         assertThat(blackjackGame.canPlayerMoreCard(0)).isEqualTo(expected);
@@ -129,7 +129,7 @@ class BlackjackGameTest {
     void calculateMaxScore() {
         // given
         final Dealer dealer = new Dealer(provideUnder16Cards());
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 new Participants(dealer,
                         new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
 
@@ -145,19 +145,19 @@ class BlackjackGameTest {
     @Test
     void calculateWinningResult() {
         // given
-        final Cards dealerCards = new Cards(List.of(new Card(Shape.SPADE, Denomination.J),
+        final Hand dealerHand = new Hand(List.of(new Card(Shape.SPADE, Denomination.J),
                 new Card(Shape.SPADE, Denomination.EIGHT)));
 
-        final Dealer dealer = new Dealer(dealerCards);
-        final Cards player1Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.NINE),
+        final Dealer dealer = new Dealer(dealerHand);
+        final Hand player1Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.NINE),
                 new Card(Shape.SPADE, Denomination.TEN)));
-        final Cards player2Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.TWO),
+        final Hand player2Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.TWO),
                 new Card(Shape.SPADE, Denomination.J)));
-        final Cards player3Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
+        final Hand player3Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
                 new Card(Shape.SPADE, Denomination.K)));
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 new Participants(dealer,
-                        new Players(provideThreePlayersWithCards(player1Cards, player2Cards, player3Cards))));
+                        new Players(provideThreePlayersWithCards(player1Hand, player2Hand, player3Hand))));
 
         // when & then
         final String mj = "엠제이";
@@ -172,13 +172,13 @@ class BlackjackGameTest {
     void spreadOneCardToDealer() {
         // given
         Participants participants = provideParticipants();
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 participants);
 
         // when
         blackjackGame.spreadOneCardToDealer();
 
         // then
-        assertThat(participants.getDealer().showAllCards().getCards()).hasSize(1);
+        assertThat(participants.getDealer().showAllCards().getHand()).hasSize(1);
     }
 }

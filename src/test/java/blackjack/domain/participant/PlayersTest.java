@@ -6,7 +6,7 @@ import static blackjack.fixture.TestFixture.providePlayers;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,17 +49,17 @@ public class PlayersTest {
     @Test
     void receiveCards() {
         // given
-        final Cards cards = provideCards(4);
+        final Hand hand = provideCards(4);
         final int count = 2;
 
         // when
-        players.receiveCards(cards, count);
+        players.receiveCards(hand, count);
 
         // then
         assertAll(
                 () -> assertThat(players.getPlayers().getFirst()).isEqualTo(
-                        new Player("엠제이", cards.getPartialCards(0, 2))),
-                () -> assertThat(players.getPlayers().get(1)).isEqualTo(new Player("밍트", cards.getPartialCards(2, 4)))
+                        new Player("엠제이", hand.getPartialCards(0, 2))),
+                () -> assertThat(players.getPlayers().get(1)).isEqualTo(new Player("밍트", hand.getPartialCards(2, 4)))
         );
     }
 }

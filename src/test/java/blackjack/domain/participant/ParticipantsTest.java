@@ -9,7 +9,7 @@ import static blackjack.fixture.TestFixture.provideUnder21Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -25,18 +25,18 @@ class ParticipantsTest {
     void test() {
         // given
         Participants participants = provideParticipants();
-        Cards cards = provideCards(6);
-        final Cards totalCards = provideCards(6);
-        final Cards dealerCards = totalCards.getPartialCards(0, 2);
-        final Cards playerCard1 = totalCards.getPartialCards(2, 4);
-        final Cards playerCard2 = totalCards.getPartialCards(4, 6);
+        Hand hand = provideCards(6);
+        final Hand totalHand = provideCards(6);
+        final Hand dealerHand = totalHand.getPartialCards(0, 2);
+        final Hand playerCard1 = totalHand.getPartialCards(2, 4);
+        final Hand playerCard2 = totalHand.getPartialCards(4, 6);
 
         // when
-        participants.spreadAllTwoCards(cards);
+        participants.spreadAllTwoCards(hand);
 
         // then
         assertAll(
-                () -> assertThat(participants.getDealer()).isEqualTo(new Dealer(dealerCards)),
+                () -> assertThat(participants.getDealer()).isEqualTo(new Dealer(dealerHand)),
                 () -> assertThat(participants.getPlayers()).isEqualTo(
                         new Players(provideTwoPlayersWithCards(playerCard1, playerCard2)))
         );
@@ -57,9 +57,9 @@ class ParticipantsTest {
     @MethodSource
     void canDealerGetMoreCard(final Dealer dealer, final boolean expected) {
         // given
-        final Cards firstCards = provideUnder21Cards();
-        final Cards secondCards = provideOver21Cards();
-        final List<Player> players = provideTwoPlayersWithCards(firstCards, secondCards);
+        final Hand firstHand = provideUnder21Cards();
+        final Hand secondHand = provideOver21Cards();
+        final List<Player> players = provideTwoPlayersWithCards(firstHand, secondHand);
         Participants participants = new Participants(dealer, new Players(players));
 
         // when & then
@@ -76,9 +76,9 @@ class ParticipantsTest {
     @DisplayName("플레이어가 카드를 더 얻을 수 있으면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void canPlayerGetMoreCard(final Cards cards, final boolean expected) {
+    void canPlayerGetMoreCard(final Hand hand, final boolean expected) {
         // given
-        final Players players = new Players(List.of(new Player("밍트", cards)));
+        final Players players = new Players(List.of(new Player("밍트", hand)));
 
         Participants participants = new Participants(Dealer.createEmpty(), players);
 

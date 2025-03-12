@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class CardManager {
+public class Deck {
 
     private final Map<Card, Boolean> cardsUsageStatus;
     private final CardGenerator cardGenerator;
 
-    public CardManager(final CardGenerator cardGenerator) {
+    public Deck(final CardGenerator cardGenerator) {
         this.cardsUsageStatus = initializeCardsUsageStatus();
         this.cardGenerator = cardGenerator;
     }
@@ -23,8 +23,8 @@ public class CardManager {
         return cardsUsageStatus;
     }
 
-    public Cards spreadCards(final int count) {
-        return new Cards(IntStream.range(0, count)
+    public Hand spreadCards(final int count) {
+        return new Hand(IntStream.range(0, count)
                 .mapToObj(o -> spreadOneCard())
                 .toList());
     }

@@ -8,7 +8,7 @@ import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import java.util.List;
@@ -33,35 +33,35 @@ class DealerTest {
     @Test
     void receiveCards() {
         // given
-        final Cards cards = provideCards(2);
+        final Hand hand = provideCards(2);
 
         // when
-        dealer.receiveCards(cards);
+        dealer.receiveCards(hand);
 
         // then
-        assertThat(dealer).isEqualTo(new Dealer(cards));
+        assertThat(dealer).isEqualTo(new Dealer(hand));
     }
 
     @DisplayName("딜러는 카드 2개 중 1개만 보여준다.")
     @Test
     void showDealerCards() {
         // given
-        final Cards cards = provideCards(2);
-        dealer.receiveCards(cards);
+        final Hand hand = provideCards(2);
+        dealer.receiveCards(hand);
 
         // when
-        final Cards dealerCards = dealer.showInitialCards();
+        final Hand dealerHand = dealer.showInitialCards();
 
         // then
-        assertThat(dealerCards.getCards()).isEqualTo(List.of(new Card(Shape.SPADE, Denomination.A)));
+        assertThat(dealerHand.getHand()).isEqualTo(List.of(new Card(Shape.SPADE, Denomination.A)));
     }
 
     @DisplayName("딜러가 가진 카드의 합이 16 이하면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void canGetMoreCard(final Cards cards, final boolean expected) {
+    void canGetMoreCard(final Hand hand, final boolean expected) {
         // given
-        final Dealer dealer = new Dealer(cards);
+        final Dealer dealer = new Dealer(hand);
 
         // when & then
         assertThat(dealer.canGetMoreCard()).isEqualTo(expected);
@@ -69,15 +69,15 @@ class DealerTest {
 
     private static Stream<Arguments> canGetMoreCard() {
         return Stream.of(
-                Arguments.of(new Cards(List.of(
+                Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.TEN),
                         new Card(Shape.SPADE, Denomination.NINE)
                 )), false),
-                Arguments.of(new Cards(List.of(
+                Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.A),
                         new Card(Shape.SPADE, Denomination.K)
                 )), true),
-                Arguments.of(new Cards(List.of(
+                Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.K),
                         new Card(Shape.SPADE, Denomination.Q),
                         new Card(Shape.SPADE, Denomination.A)
@@ -88,15 +88,15 @@ class DealerTest {
     @DisplayName("카드 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMaxScore(final Cards cards, final int expected) {
+    void calculateWinningResult(final Hand hand, final int expected) {
         // given
-        dealer.receiveCards(cards);
+        dealer.receiveCards(hand);
 
         // when & then
         assertThat(dealer.calculateMaxScore()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> calculateMaxScore() {
+    private static Stream<Arguments> calculateWinningResult() {
         return Stream.of(
                 Arguments.of(provideSmallerAceCards(), 18),
                 Arguments.of(provideBiggerAceCards(), 21),

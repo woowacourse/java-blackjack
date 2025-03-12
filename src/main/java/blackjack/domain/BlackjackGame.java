@@ -1,12 +1,10 @@
 package blackjack.domain;
 
-import blackjack.domain.card.CardManager;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,18 +13,18 @@ public class BlackjackGame {
 
     private static final int SPREAD_SIZE = 1;
 
-    private final CardManager cardManager;
+    private final Deck deck;
     private final Participants participants;
 
-    public BlackjackGame(final CardManager cardManager, final Participants participants) {
-        this.cardManager = cardManager;
+    public BlackjackGame(final Deck deck, final Participants participants) {
+        this.deck = deck;
         this.participants = participants;
     }
 
     public void spreadInitialCards() {
         int cardsCount = participants.getInitialTotalCardsSize();
-        final Cards cards = cardManager.spreadCards(cardsCount);
-        participants.spreadAllTwoCards(cards);
+        final Hand hand = deck.spreadCards(cardsCount);
+        participants.spreadAllTwoCards(hand);
     }
 
     public boolean canPlayerMoreCard(final int index) {
@@ -34,13 +32,13 @@ public class BlackjackGame {
     }
 
     public void spreadOneCardToPlayer(final Gamer gamer) {
-        final Cards cards = cardManager.spreadCards(SPREAD_SIZE);
-        gamer.receiveCards(new Cards(List.of(cards.getFirstCard())));
+        final Hand hand = deck.spreadCards(SPREAD_SIZE);
+        gamer.receiveCards(new Hand(List.of(hand.getFirstCard())));
     }
 
     public void spreadOneCardToDealer() {
-        final Cards cards = cardManager.spreadCards(SPREAD_SIZE);
-        participants.spreadOneCardToDealer(cards.getFirstCard());
+        final Hand hand = deck.spreadCards(SPREAD_SIZE);
+        participants.spreadOneCardToDealer(hand.getFirstCard());
     }
 
     public boolean canDealerMoreCard() {
@@ -55,19 +53,19 @@ public class BlackjackGame {
         return participants.calculateWinningResult();
     }
 
-    public Entry<String, Cards> showInitialDealerCard() {
+    public Entry<String, Hand> showInitialDealerCard() {
         return participants.showInitialDealerCards();
     }
 
-    public Map<String, Cards> showInitialPlayersCards() {
+    public Map<String, Hand> showInitialPlayersCards() {
         return participants.showInitialParticipantsCards();
     }
 
-    public Entry<String, Cards> showDealerCard() {
+    public Entry<String, Hand> showDealerCard() {
         return participants.showDealerCards();
     }
 
-    public Map<String, Cards> showPlayersCards() {
+    public Map<String, Hand> showPlayersCards() {
         return participants.showPlayersCards();
     }
 

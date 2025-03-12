@@ -1,30 +1,30 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 
 public abstract class Gamer {
 
-    protected final Cards cards;
+    protected final Hand hand;
 
-    public Gamer(final Cards cards) {
-        this.cards = cards;
+    public Gamer(final Hand hand) {
+        this.hand = hand;
     }
 
-    public abstract Cards showInitialCards();
+    public abstract Hand showInitialCards();
 
     public abstract boolean canGetMoreCard();
 
     public abstract String getNickname();
 
-    public void receiveCards(final Cards givenCards) {
-        cards.addAll(givenCards);
+    public void receiveCards(final Hand givenHand) {
+        hand.addAll(givenHand);
     }
 
     public int calculateMaxScore() {
-        return cards.calculateResult();
+        return hand.calculateResult();
     }
 
-    public Cards showAllCards() {
-        return cards;
+    public Hand showAllCards() {
+        return hand;
     }
 }

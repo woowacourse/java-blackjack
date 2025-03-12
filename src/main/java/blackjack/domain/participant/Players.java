@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -18,21 +18,21 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public void receiveCards(final Cards cards, final int count) {
+    public void receiveCards(final Hand hand, final int count) {
         for (int i = 0; i < players.size(); i++) {
             final Gamer player = players.get(i);
-            player.receiveCards(cards.getPartialCards(i * count, (i + 1) * count));
+            player.receiveCards(hand.getPartialCards(i * count, (i + 1) * count));
         }
     }
 
-    public Map<String, Cards> showTotalInitialCards() {
+    public Map<String, Hand> showTotalInitialCards() {
         return players.stream()
                 .collect(Collectors.toMap(Gamer::getNickname,
                         Gamer::showInitialCards, (e1, e2) -> e1,
                         LinkedHashMap::new));
     }
 
-    public Map<String, Cards> showTotalCards() {
+    public Map<String, Hand> showTotalCards() {
         return players.stream()
                 .collect(Collectors.toMap(Gamer::getNickname, Gamer::showInitialCards, (e1, e2) -> e1,
                         LinkedHashMap::new));

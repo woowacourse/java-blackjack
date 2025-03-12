@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.ResultStatus;
-import blackjack.domain.card.CardManager;
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
@@ -29,9 +29,9 @@ public class BlackjackController {
     }
 
     public void run() {
-        final CardManager cardManager = new CardManager(new CardRandomGenerator());
+        final Deck deck = new Deck(new CardRandomGenerator());
         final Participants participants = makeParticipants();
-        final BlackjackGame blackjackGame = new BlackjackGame(cardManager, participants);
+        final BlackjackGame blackjackGame = new BlackjackGame(deck, participants);
 
         spreadInitialCards(blackjackGame);
         spreadExtraCards(blackjackGame);

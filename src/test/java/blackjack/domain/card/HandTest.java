@@ -11,16 +11,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class CardsTest {
+class HandTest {
 
     @DisplayName("21 이하에서 카드 최대 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMaxScore(final Cards cards, final int expected) {
+    void calculateMaxScore(final Hand hand, final int expected) {
         // given
 
         // when & then
-        assertThat(cards.calculateResult()).isEqualTo(expected);
+        assertThat(hand.calculateResult()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> calculateMaxScore() {
@@ -34,11 +34,11 @@ class CardsTest {
     @DisplayName("21 이하에서 카드 최소 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMinScore(final Cards cards, final int expected) {
+    void calculateMinScore(final Hand hand, final int expected) {
         // given
 
         // when & then
-        assertThat(cards.calculateMinScore()).isEqualTo(expected);
+        assertThat(hand.calculateMinScore()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> calculateMinScore() {

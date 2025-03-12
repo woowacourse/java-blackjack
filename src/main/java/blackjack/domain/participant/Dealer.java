@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.ResultStatus;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,26 +14,26 @@ public class Dealer extends Gamer {
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;
 
-    public Dealer(final Cards cards) {
-        super(cards);
+    public Dealer(final Hand hand) {
+        super(hand);
     }
 
     public static Dealer createEmpty() {
-        return new Dealer(new Cards(new ArrayList<>()));
+        return new Dealer(new Hand(new ArrayList<>()));
     }
 
     @Override
-    public Cards showInitialCards() {
-        return new Cards(List.of(cards.getFirstCard()));
+    public Hand showInitialCards() {
+        return new Hand(List.of(hand.getFirstCard()));
     }
 
     @Override
     public boolean canGetMoreCard() {
-        int score = cards.calculateMinScore();
+        int score = hand.calculateMinScore();
         return score <= DEALER_THRESHOLD;
     }
 
-    public Map<String, ResultStatus> calculateMaxScore(final Map<String, Integer> playerScores) {
+    public Map<String, ResultStatus> calculateWinningResult(final Map<String, Integer> playerScores) {
         int dealerScore = calculateMaxScore();
         return playerScores.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
@@ -45,12 +45,12 @@ public class Dealer extends Gamer {
         if (!(o instanceof final Dealer dealer)) {
             return false;
         }
-        return Objects.equals(cards, dealer.cards);
+        return Objects.equals(hand, dealer.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(cards);
+        return Objects.hashCode(hand);
     }
 
     @Override
