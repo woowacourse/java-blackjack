@@ -6,21 +6,18 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.Set;
 
-public class BlackjackRule implements GameRule {
+public class BlackjackRule {
     private static final int SUM_LIMIT = 21;
 
-    @Override
     public boolean isBust(Cards cards) {
         Set<Integer> coordinates = cards.getCoordinateSums();
         return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
     }
 
-    @Override
     public boolean isWin(Cards cards) {
         return getScore(cards) == SUM_LIMIT;
     }
 
-    @Override
     public int getScore(Cards cards) {
         Set<Integer> coordinates = cards.getCoordinateSums();
         if (isBust(cards)) {
@@ -29,7 +26,6 @@ public class BlackjackRule implements GameRule {
         return getMaxSum(coordinates);
     }
 
-    @Override
     public GameResult getResult(Player player, Dealer dealer) {
         if (isBust(player.getCards())) {
             return GameResult.LOSE;

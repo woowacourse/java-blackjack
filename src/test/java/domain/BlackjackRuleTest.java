@@ -7,7 +7,6 @@ import domain.card.cardsGenerator.RandomCardsGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.rule.BlackjackRule;
-import domain.rule.GameRule;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackRuleTest {
-    private final GameRule rule = new BlackjackRule();
+    private final BlackjackRule rule = new BlackjackRule();
     private final Deck deck = new Deck(new RandomCardsGenerator());
 
     @DisplayName("21 이하일 때, 최적의 결과를 선택할 수 있다.")
