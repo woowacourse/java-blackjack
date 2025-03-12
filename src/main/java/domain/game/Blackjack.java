@@ -8,11 +8,18 @@ import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
 import domain.paticipant.PickableCard;
 import domain.paticipant.Player;
+import domain.paticipant.Players;
 
 public class Blackjack {
 	private static final int BUST_SCORE = 21;
 	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
 	private static final int INIT_PICK_CARD_COUNT = 2;
+
+	public Blackjack() {
+	}
+
+	public Blackjack(final List<String> names) {
+	}
 
 	public void initPickCard(final Dealer dealer, final List<Player> players, final Deck deck) {
 		dealer.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
@@ -52,5 +59,17 @@ public class Blackjack {
 
 		dealer.writeDuelResult(DuelResult.WIN);
 		player.writeDuelResult(DuelResult.LOSE);
+	}
+
+	public Players getPlayers() {
+		return null;
+	}
+
+	public Dealer getDealer() {
+		return null;
+	}
+
+	public Deck getDeck() {
+		return null;
 	}
 }

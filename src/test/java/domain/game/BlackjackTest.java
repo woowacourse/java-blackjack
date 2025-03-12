@@ -21,6 +21,26 @@ import domain.paticipant.Player;
 public class BlackjackTest {
 
 	@Nested
+	@DisplayName("블랙잭 게임 생성")
+	class BlackjackConstruct {
+
+		@DisplayName("블랙잭 게임을 생성한다.")
+		@Test
+		void blackjackConstruct() {
+			// given
+			final List<String> names = List.of("부기", "파랑", "히스타");
+
+			// when
+			final Blackjack blackjack = new Blackjack(names);
+
+			// then
+			assertThat(blackjack.getPlayers().getPlayers()).hasSize(3);
+			assertThat(blackjack.getDealer()).isNotNull();
+			assertThat(blackjack.getDeck()).isNotNull();
+		}
+	}
+
+	@Nested
 	@DisplayName("플레이어 카드 뽑는 여부 체크")
 	class IsPickCardByPlayer {
 
