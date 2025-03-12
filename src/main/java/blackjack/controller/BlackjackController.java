@@ -1,10 +1,11 @@
 package blackjack.controller;
 
+import blackjack.domain.player.Players;
+
 import java.util.List;
 
 import blackjack.domain.BlackjackJudge;
 import blackjack.domain.deck.BlackjackDeck;
-import blackjack.domain.Player;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.view.InputView;
@@ -38,8 +39,8 @@ public class BlackjackController implements Controller {
     
     private List<PlayerBlackjackCardHand> createPlayerCardHands(final BlackjackDeck deck) {
         final List<String> playerNames = inputView.getPlayerNames();
-        final List<Player> players = Player.createPlayers(playerNames);
-        return players.stream()
+        final Players players = Players.createPlayers(playerNames);
+        return players.getPlayers().stream()
                 .map(player -> new PlayerBlackjackCardHand(player, deck))
                 .toList();
     }
