@@ -1,9 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.round.Round;
+import blackjack.domain.PlayerBets;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.round.Round;
 import blackjack.dto.GamerDto;
+import blackjack.dto.request.BetsRequestDto;
 import blackjack.dto.request.NamesRequestDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -24,6 +26,7 @@ public class BlackjackController {
     private void setRound() {
         Dealer dealer = new Dealer();
         List<Player> players = setPlayers();
+        PlayerBets playerBets = setBets(players);
         round = new Round(dealer, players);
         OutputView.printStartingCards(round.initialize());
     }
@@ -33,6 +36,15 @@ public class BlackjackController {
         return namesRequestDto.names().stream()
                 .map(Player::new)
                 .toList();
+    }
+
+    private PlayerBets setBets(List<Player> players) {
+        PlayerBets playerBets = new PlayerBets();
+        for (Player player : players) {
+            BetsRequestDto betsRequestDto = InputView.readBets(player.getName());
+            playerBets.add(player, betsRequestDto.amount());
+        }
+        return playerBets;
     }
 
     private void drawPlayerCards() {

@@ -10,10 +10,23 @@ import java.util.List;
 
 public class PlayerBets {
 
+    private static final int MIN_BET = 1;
+    private static final int MAX_BET = 100_000_000;
+
     private final LinkedHashMap<Gamer, Integer> bets = new LinkedHashMap<>();
 
     public void add(Gamer gamer, int amount) {
+        validateRange(amount);
         bets.put(gamer, amount);
+    }
+
+    private void validateRange(int amount) {
+        if (amount < MIN_BET) {
+            throw new IllegalArgumentException(String.format("[ERROR] %s 이상의 수를 입력해 주세요.", MIN_BET));
+        }
+        if (amount > MAX_BET) {
+            throw new IllegalArgumentException(String.format("[ERROR] %s 이하의 수를 입력해 주세요.", MAX_BET));
+        }
     }
 
     public double getPlayerProfit(Player player, Dealer dealer) {
