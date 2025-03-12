@@ -9,4 +9,8 @@ public record Card(Shape shape, Rank rank) {
     public boolean isAce() {
         return rank.isAce();
     }
+
+    public String getName() {
+        return shape.getName();
+    }
 }

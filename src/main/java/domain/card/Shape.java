@@ -1,24 +1,18 @@
 package domain.card;
 
 public enum Shape {
-    SPADE,
-    HEART,
-    DIAMOND,
-    CLUB;
+    SPADE("스페이드"),
+    HEART("하트"),
+    DIAMOND("다이아몬드"),
+    CLUB("클로버");
 
-    public String formatCardShape() {
-        if (this == DIAMOND) {
-            return "다이아몬드";
-        }
-        if (this == HEART) {
-            return "하트";
-        }
-        if (this == CLUB) {
-            return "클로버";
-        }
-        if (this == SPADE) {
-            return "스페이드";
-        }
-        return "";
+    private final String name;
+
+    Shape(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
