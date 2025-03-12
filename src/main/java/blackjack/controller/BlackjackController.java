@@ -43,7 +43,7 @@ public class BlackjackController {
         processDealerTurn(game);
 
         displayFinalCardsInfo(dealer, game);
-        displayAllFinalProfitsInfo(dealer, game.getPlayers());
+        displayAllFinalProfitsInfo(game);
     }
 
     private List<Player> createPlayers(List<ParticipantName> playerNames) {
@@ -114,9 +114,9 @@ public class BlackjackController {
         });
     }
 
-    private void displayAllFinalProfitsInfo(Dealer dealer, List<Player> players) {
-        int dealerProfit = dealer.calculateOwnProfit(players);
-        Map<Player, Integer> playersProfit = dealer.calculatePlayersProfit(players);
+    private void displayAllFinalProfitsInfo(BlackjackGame game) {
+        int dealerProfit = game.calculateDealerProfit();
+        Map<Player, Integer> playersProfit = game.calculatePlayersProfit();
 
         outputView.displayFinalProfits(dealerProfit, playersProfit);
     }

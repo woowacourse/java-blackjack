@@ -3,9 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Dealer extends Participant {
     private final static String DEALER_NAME = "딜러";
@@ -49,23 +47,6 @@ public class Dealer extends Participant {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
-    }
-
-    public Map<Player, Integer> calculatePlayersProfit(List<Player> players) {
-        HashMap<Player, Integer> playersProfit = new HashMap<>();
-        for (Player player : players) {
-            int profit = player.calculateProfit(informResultTo(player));
-            playersProfit.put(player, profit);
-        }
-        return playersProfit;
-    }
-
-    public int calculateOwnProfit(List<Player> players) {
-        Map<Player, Integer> playersProfit = calculatePlayersProfit(players);
-        int totalProfit = playersProfit.values().stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-        return -totalProfit;
     }
 
     @Override

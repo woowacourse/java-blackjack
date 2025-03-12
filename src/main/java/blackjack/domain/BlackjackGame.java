@@ -44,6 +44,24 @@ public class BlackjackGame {
         }
     }
 
+    public Map<Player, Integer> calculatePlayersProfit() {
+        HashMap<Player, Integer> playersProfit = new HashMap<>();
+        for (Player player : players) {
+            GameResult playerResult = dealer.informResultTo(player);
+            int profit = player.calculateProfit(playerResult);
+            playersProfit.put(player, profit);
+        }
+        return playersProfit;
+    }
+
+    public int calculateDealerProfit() {
+        Map<Player, Integer> playersProfit = calculatePlayersProfit(); // 예: 딜러의 멤버변수 players
+        int totalProfit = playersProfit.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        return -totalProfit;
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

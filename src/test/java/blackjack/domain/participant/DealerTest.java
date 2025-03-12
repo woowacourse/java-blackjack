@@ -2,16 +2,13 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.BlackjackGame;
 import blackjack.domain.GameResult;
 import blackjack.domain.TestUtil;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDump;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -275,59 +272,6 @@ class DealerTest {
             assertThat(dealerResult).isEqualTo(GameResult.WIN);
             assertThat(playerResult).isEqualTo(GameResult.LOSE);
         }
-    }
-
-    @DisplayName("딜러의 수익은 플레이어수익 합의 반대이다")
-    @Test
-    void testDealerProfit_playersProfitSumReverse() {
-        // given
-        CardHand playerHand= new CardHand();
-        playerHand.add(new Card(CardSuit.CLUB, CardRank.KING));
-        playerHand.add(new Card(CardSuit.CLUB, CardRank.JACK)); // 20
-
-        int player1Bet = 10000;
-        Player player1 = TestUtil.createPlayerOf(playerHand, player1Bet);
-
-        int player2Bet = 5000;
-        Player player2 = TestUtil.createPlayerOf(playerHand, player2Bet);
-
-        CardHand dealerHand = new CardHand();
-        dealerHand.add(new Card(CardSuit.CLUB, CardRank.KING));
-        dealerHand.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 21
-        Dealer dealer = new Dealer(dealerHand);
-
-        List<Player> players = List.of(player1, player2);
-
-        int dealerProfit = dealer.calculateOwnProfit(players);
-
-        AssertionsForClassTypes.assertThat(dealerProfit).isEqualTo(15000);
-    }
-
-    @DisplayName("플레이어들의 수익을 각각 계산한다.")
-    @Test
-    void testDealerProfit_playersProfit() {
-        // given
-        CardHand playerHand= new CardHand();
-        playerHand.add(new Card(CardSuit.CLUB, CardRank.KING));
-        playerHand.add(new Card(CardSuit.CLUB, CardRank.JACK)); // 20
-
-        int player1Bet = 10000;
-        Player player1 = TestUtil.createPlayerOf(playerHand, player1Bet);
-
-        int player2Bet = 5000;
-        Player player2 = TestUtil.createPlayerOf(playerHand, player2Bet);
-
-        CardHand dealerHand = new CardHand();
-        dealerHand.add(new Card(CardSuit.CLUB, CardRank.KING));
-        dealerHand.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 21
-        Dealer dealer = new Dealer(dealerHand);
-
-        List<Player> players = List.of(player1, player2);
-
-        Map<Player, Integer> playerProfits = dealer.calculatePlayersProfit(players);
-
-        AssertionsForClassTypes.assertThat(playerProfits.get(player1)).isEqualTo(-10000);
-        AssertionsForClassTypes.assertThat(playerProfits.get(player2)).isEqualTo(-5000);
     }
 
 }
