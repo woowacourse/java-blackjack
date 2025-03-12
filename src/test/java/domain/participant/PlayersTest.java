@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -55,7 +56,28 @@ public class PlayersTest {
 					s.assertThat(player.getParticipant().getCardHand().getCards()).hasSize(pickedCardCount);
 				}
 			});
+		}
 
+		@Nested
+		@DisplayName("추가 카드 뽑기")
+		class PickCardIfNotBust {
+
+			@DisplayName("플레이어의 점수가 21점 이하라면, 플레이어의 응답에 따라 카드를 추가로 뽑는다.")
+			@Test
+			void pickCardIfNotBust() {
+				// given
+				final Players players = Players.from(List.of(""));
+				final BooleanSupplier playerAnswer = () -> true;
+				final Deck shuffledDeck = Deck.createShuffledDeck();
+
+				// when
+				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck);
+
+				// then
+				assertThat(
+					players.getPlayers().getFirst().getParticipant().getCardHand().calculateAllScore(21)).isGreaterThan(
+					21);
+			}
 		}
 	}
 }
