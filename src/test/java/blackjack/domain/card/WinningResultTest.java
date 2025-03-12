@@ -1,8 +1,17 @@
 package blackjack.domain.card;
 
+import static blackjack.fixture.CardFixture.CLUB_NINE;
+import static blackjack.fixture.CardFixture.CLUB_TEN;
+import static blackjack.fixture.CardFixture.DIAMOND_ACE;
+import static blackjack.fixture.CardFixture.DIAMOND_KING;
+import static blackjack.fixture.CardFixture.DIAMOND_NINE;
+import static blackjack.fixture.CardFixture.DIAMOND_TEN;
+import static blackjack.fixture.CardFixture.DIAMOND_THREE;
+import static blackjack.fixture.CardFixture.DIAMOND_TWO;
+import static blackjack.fixture.CardFixture.HEART_NINE;
+import static blackjack.fixture.CardFixture.HEART_TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class WinningResultTest {
@@ -11,18 +20,14 @@ public class WinningResultTest {
     void 승부를_보는_두명이_모두_21을_초과한_경우_무승부이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.DIAMOND, Rank.TEN),
-                        new Card(Suit.HEART, Rank.TEN)
-                )
+                CLUB_TEN,
+                DIAMOND_TEN,
+                HEART_TEN
         );
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.NINE),
-                        new Card(Suit.DIAMOND, Rank.NINE),
-                        new Card(Suit.HEART, Rank.NINE)
-                )
+                CLUB_NINE,
+                DIAMOND_NINE,
+                HEART_NINE
         );
 
         //when
@@ -36,17 +41,13 @@ public class WinningResultTest {
     void 상대방이_21을_초과했고_본인이_21을_초과하지_않았다면_승리이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.DIAMOND, Rank.TEN)
-                )
+                CLUB_TEN,
+                DIAMOND_TEN
         );
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.NINE),
-                        new Card(Suit.DIAMOND, Rank.NINE),
-                        new Card(Suit.HEART, Rank.NINE)
-                )
+                CLUB_NINE,
+                DIAMOND_NINE,
+                HEART_NINE
         );
 
         //when
@@ -60,16 +61,12 @@ public class WinningResultTest {
     void 상대방이_21을_초과하지_않았고_본인이_21을_초과하지_않았을_때_더_높은_점수가_승리이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.DIAMOND, Rank.TEN)
-                )
+                CLUB_TEN,
+                DIAMOND_TEN
         );
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.NINE),
-                        new Card(Suit.DIAMOND, Rank.NINE)
-                )
+                CLUB_NINE,
+                DIAMOND_NINE
         );
 
         //when
@@ -83,17 +80,13 @@ public class WinningResultTest {
     void 상대방이_블랙잭이_아닌_21이고_본인이_블랙잭일_때_승리이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.TEN)
-                )
+                DIAMOND_ACE,
+                DIAMOND_TEN
         );
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.NINE),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.DIAMOND, Rank.NINE)
-                )
+                CLUB_NINE,
+                DIAMOND_THREE,
+                DIAMOND_NINE
         );
 
         //when
@@ -107,17 +100,13 @@ public class WinningResultTest {
     void 상대방과_점수가_같다면_무승부이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.DIAMOND, Rank.TEN)
-                )
+                CLUB_TEN,
+                DIAMOND_TEN
         );
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.NINE),
-                        new Card(Suit.CLUB, Rank.TWO),
-                        new Card(Suit.DIAMOND, Rank.NINE)
-                )
+                CLUB_NINE,
+                DIAMOND_TWO,
+                DIAMOND_NINE
         );
 
         //when
@@ -131,15 +120,11 @@ public class WinningResultTest {
     void 상대방이_21을_초과하지_않았고_본인이_21을_초과하지_않았을_때_더_낮은_점수가_패배이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.NINE),
-                        new Card(Suit.CLUB, Rank.TWO))
-        );
+                CLUB_NINE,
+                DIAMOND_TWO);
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.HEART, Rank.TEN)
-                )
+                CLUB_TEN,
+                HEART_TEN
         );
 
         //when
@@ -153,17 +138,13 @@ public class WinningResultTest {
     void 본인이_21을_초과하고_상대방이_21을_초과하지_않았다면_패배이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.HEART, Rank.TEN),
-                        new Card(Suit.DIAMOND, Rank.TWO)
-                )
+                CLUB_TEN,
+                HEART_TEN,
+                DIAMOND_TWO
         );
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.KING),
-                        new Card(Suit.CLUB, Rank.ACE)
-                )
+                DIAMOND_KING,
+                DIAMOND_ACE
         );
 
         //when
@@ -177,17 +158,13 @@ public class WinningResultTest {
     void 상대방이_블랙잭이고_본인이_블랙잭이_아닌_21일_때_패배이다() {
         //given
         Cards mainCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.HEART, Rank.TEN),
-                        new Card(Suit.DIAMOND, Rank.ONE)
-                )
+                CLUB_TEN,
+                HEART_TEN,
+                new Card(Suit.DIAMOND, Rank.ONE)
         );
         Cards subCards = new Cards(
-                List.of(
-                        new Card(Suit.CLUB, Rank.KING),
-                        new Card(Suit.CLUB, Rank.ACE)
-                )
+                DIAMOND_KING,
+                DIAMOND_ACE
         );
 
         //when

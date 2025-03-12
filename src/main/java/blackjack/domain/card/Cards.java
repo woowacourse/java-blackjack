@@ -11,12 +11,9 @@ public class Cards {
     private static final int BLACKJACK_CARD_NUMBER = 2;
     private final List<Card> cards;
 
-    public Cards() {
-        this(new ArrayList<>());
-    }
-
-    public Cards(List<Card> cards) {
-        this.cards = cards;
+    public Cards(Card... cards) {
+        this.cards = new ArrayList<>();
+        Collections.addAll(this.cards, cards);
     }
 
     public Score calculateScore() {
@@ -36,10 +33,6 @@ public class Cards {
 
     public boolean isBlackjack() {
         return calculateScore().isBlackjackScore() && cards.size() == BLACKJACK_CARD_NUMBER;
-    }
-
-    public boolean isBust() {
-        return calculateScore().isBust();
     }
 
     public List<Card> getCards() {

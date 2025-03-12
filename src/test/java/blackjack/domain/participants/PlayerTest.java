@@ -1,5 +1,9 @@
 package blackjack.domain.participants;
 
+import static blackjack.fixture.CardFixture.DIAMOND_ACE;
+import static blackjack.fixture.CardFixture.DIAMOND_EIGHT;
+import static blackjack.fixture.CardFixture.DIAMOND_TWO;
+import static blackjack.fixture.CardFixture.HEART_THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -7,8 +11,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import java.util.ArrayList;
-import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
@@ -17,15 +19,13 @@ class PlayerTest {
     void 카드_합이_21이_넘는_경우_카드를_더_받지_못한다() {
         //given
         Player player = new Player("pobi", new Cards(
-                Arrays.asList(
-                        new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.TWO)
-                )
+                DIAMOND_ACE,
+                DIAMOND_ACE,
+                DIAMOND_EIGHT,
+                DIAMOND_EIGHT,
+                DIAMOND_ACE,
+                DIAMOND_ACE,
+                DIAMOND_TWO
         ));
 
         Card card = new Card(Suit.HEART, Rank.TWO);
@@ -42,9 +42,8 @@ class PlayerTest {
         Player player = new Player(
                 "pobi",
                 new Cards(
-                        new ArrayList<>(Arrays.asList(
-                                new Card(Suit.DIAMOND, Rank.ACE),
-                                new Card(Suit.DIAMOND, Rank.TWO)))
+                        DIAMOND_ACE,
+                        DIAMOND_TWO
                 ));
 
         Card card = new Card(Suit.HEART, Rank.THREE);
@@ -53,11 +52,12 @@ class PlayerTest {
         player.additionalTake(card);
 
         //then
-        assertThat(player.getCards().getCards()).isEqualTo(
-                Arrays.asList(
-                        new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.TWO),
-                        new Card(Suit.HEART, Rank.THREE))
+        assertThat(player.getCards()).isEqualTo(
+                new Cards(
+                        DIAMOND_ACE,
+                        DIAMOND_TWO,
+                        HEART_THREE
+                )
         );
     }
 }

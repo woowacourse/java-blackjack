@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import static blackjack.fixture.CardFixture.DIAMOND_EIGHT;
+import static blackjack.fixture.CardFixture.DIAMOND_ONE;
+import static blackjack.fixture.CardFixture.DIAMOND_TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,9 +17,9 @@ public class DeckTest {
         //given
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.CLUB, Rank.TEN)
+                DIAMOND_EIGHT,
+                DIAMOND_ONE,
+                DIAMOND_TEN
         ));
         Deck deck = new Deck(cards);
 

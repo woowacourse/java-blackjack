@@ -4,7 +4,6 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import java.util.ArrayList;
 
 public class Dealer {
     private final Players players;
@@ -12,7 +11,7 @@ public class Dealer {
     private final Cards cards;
 
     public Dealer(Players players, Deck deck) {
-        this(players, deck, new Cards(new ArrayList<>()));
+        this(players, deck, new Cards());
     }
 
     public Dealer(Players players, Deck deck, Cards cards) {

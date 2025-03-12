@@ -1,5 +1,16 @@
 package blackjack.domain.participants;
 
+import static blackjack.fixture.CardFixture.CLUB_FIVE;
+import static blackjack.fixture.CardFixture.CLUB_FOUR;
+import static blackjack.fixture.CardFixture.CLUB_ONE;
+import static blackjack.fixture.CardFixture.DIAMOND_ACE;
+import static blackjack.fixture.CardFixture.DIAMOND_FIVE;
+import static blackjack.fixture.CardFixture.DIAMOND_FOUR;
+import static blackjack.fixture.CardFixture.DIAMOND_ONE;
+import static blackjack.fixture.CardFixture.DIAMOND_TEN;
+import static blackjack.fixture.CardFixture.DIAMOND_THREE;
+import static blackjack.fixture.CardFixture.HEART_ONE;
+import static blackjack.fixture.CardFixture.SPADE_ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,12 +37,12 @@ public class DealerTest {
                 ));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
-                new Card(Suit.CLUB, Rank.FOUR),
-                new Card(Suit.CLUB, Rank.FIVE),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.DIAMOND, Rank.ONE),
-                new Card(Suit.HEART, Rank.ONE),
-                new Card(Suit.SPADE, Rank.ONE)
+                CLUB_FOUR,
+                CLUB_FIVE,
+                CLUB_ONE,
+                DIAMOND_ONE,
+                HEART_ONE,
+                SPADE_ONE
         ));
 
         Dealer dealer = new Dealer(players, new Deck(cards));
@@ -42,22 +53,22 @@ public class DealerTest {
         //then
         assertAll(
                 () -> assertEquals(dealer.getCards(),
-                        new Cards(List.of(
-                                new Card(Suit.SPADE, Rank.ONE),
-                                new Card(Suit.HEART, Rank.ONE)
-                        ))
+                        new Cards(
+                                SPADE_ONE,
+                                HEART_ONE
+                        )
                 ),
                 () -> assertEquals(players.getPlayers().get(0).getCards(),
-                        new Cards(List.of(
-                                new Card(Suit.DIAMOND, Rank.ONE),
-                                new Card(Suit.CLUB, Rank.ONE)
-                        ))
+                        new Cards(
+                                DIAMOND_ONE,
+                                CLUB_ONE
+                        )
                 ),
                 () -> assertEquals(players.getPlayers().get(1).getCards(),
-                        new Cards(List.of(
-                                new Card(Suit.CLUB, Rank.FIVE),
-                                new Card(Suit.CLUB, Rank.FOUR)
-                        ))
+                        new Cards(
+                                CLUB_FIVE,
+                                CLUB_FOUR
+                        )
                 )
         );
     }
@@ -75,12 +86,13 @@ public class DealerTest {
         Stack<Card> cards = new Stack<>();
         cards.addAll(
                 List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
+                        DIAMOND_ACE,
+                        DIAMOND_ONE,
+                        DIAMOND_TEN,
+                        DIAMOND_THREE,
+                        DIAMOND_FOUR,
+                        DIAMOND_FIVE
+                )
         );
         Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck);
@@ -91,10 +103,10 @@ public class DealerTest {
         //then
         assertThat(dealer.getCards().getCards())
                 .isEqualTo(List.of(
-                        new Card(Suit.CLUB, Rank.FIVE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.TEN)
+                        DIAMOND_FIVE,
+                        DIAMOND_FOUR,
+                        DIAMOND_THREE,
+                        DIAMOND_TEN
                 ));
     }
 
@@ -131,14 +143,13 @@ public class DealerTest {
     @Test
     void 카드_합이_21이_넘는_플레이어에게_카드를_나누어_줄_수_없다() {
         //given
-        Player pobiPlayer = new Player("pobi", new Cards((
-                List.of(
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
-        )));
+        Player pobiPlayer = new Player("pobi", new Cards(
+                DIAMOND_ONE,
+                DIAMOND_TEN,
+                DIAMOND_THREE,
+                DIAMOND_FOUR,
+                DIAMOND_FIVE
+        ));
 
         Players players = new Players(
                 List.of(
@@ -150,12 +161,13 @@ public class DealerTest {
         Stack<Card> cards = new Stack<>();
         cards.addAll(
                 List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
+                        DIAMOND_ACE,
+                        DIAMOND_ONE,
+                        DIAMOND_TEN,
+                        DIAMOND_THREE,
+                        DIAMOND_FOUR,
+                        DIAMOND_FIVE
+                )
         );
         Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck);
@@ -181,12 +193,13 @@ public class DealerTest {
         Stack<Card> cards = new Stack<>();
         cards.addAll(
                 List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
+                        DIAMOND_ACE,
+                        DIAMOND_ONE,
+                        DIAMOND_TEN,
+                        DIAMOND_THREE,
+                        DIAMOND_FOUR,
+                        DIAMOND_FIVE
+                )
         );
         Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck);
