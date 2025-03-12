@@ -1,0 +1,165 @@
+package blackjack.model.participant;
+
+import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
+import static blackjack.model.card.CardFixtures.createCard;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
+import blackjack.model.card.CardValue;
+import blackjack.model.card.Suit;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+@DisplayName("플레이어 테스트")
+class PlayerTest {
+
+    @DisplayName("이름을 가진다.")
+    @Test
+    void createPlayerTest() {
+        // given
+        Name pobiName = new Name("포비");
+
+        // when, then
+        assertThatCode(() -> new Player(pobiName))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("카드를 받을 수 있다.")
+    @Test
+    void receiveHandTest() {
+        // given
+        Player player = new Player(new Name("포비"));
+
+        // when
+        player.receiveHand(SPADE_ACE_CARD);
+
+        // then
+        assertThat(player.getHand())
+                .contains(SPADE_ACE_CARD);
+
+    }
+
+    @DisplayName("가진 패의 총합이 21 이상일 때 카드를 받는 경우 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenReceiveCardAfterHandExceeds21() {
+        // given
+        Player player = new Player(new Name("포비"));
+
+        // when
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+
+        // then
+        assertThatCode(() -> player.receiveHand(SPADE_TEN_CARD))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("더 이상 카드를 받을 수 없습니다.");
+    }
+
+    @DisplayName("가진 패의 총합을 계산한다.")
+    @Test
+    void calculateHandTotalTest() {
+        // given
+        Player player = new Player(new Name("포비"));
+
+        // when
+        player.receiveHand(SPADE_TEN_CARD);
+        player.receiveHand(SPADE_SIX_CARD);
+
+        // then
+        assertThat(player.getTotal())
+                .isEqualTo(16);
+    }
+
+    @DisplayName("ACE를 가진 채, 총합이 11 이하인 경우 ACE를 11로 간주한다.")
+    @Test
+    void calculateHandTotalWithAceTest() {
+        // given
+        Player player = new Player(new Name("포비"));
+
+        // when
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+
+        // then
+        assertThat(player.getTotal())
+                .isEqualTo(21);
+    }
+
+    @DisplayName("ACE를 가진 채, 총합이 11 초과인 경우 ACE를 1로 간주한다.")
+    @Test
+    void calculateHandTotalWithAceTestOver11() {
+        // given
+        Player player = new Player(new Name("포비"));
+
+        // when
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TWO_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+
+        // then
+        assertThat(player.getTotal())
+                .isEqualTo(13);
+    }
+
+    @DisplayName("패가 2장만 있고, 합이 21이면 블랙잭이다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, ACE, true",
+            "TEN, TEN, false",
+    })
+    void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
+        // given
+        Player player = new Player(new Name("포비"));
+        player.receiveHand(createCard(Suit.SPADES, value1));
+        player.receiveHand(createCard(Suit.SPADES, value2));
+
+        // when
+        boolean isBlackjack = player.isBlackjack();
+
+        // then
+        assertThat(isBlackjack)
+                .isSameAs(expected);
+    }
+
+    @DisplayName("21이 초과하면 버스트이다.")
+    @ParameterizedTest
+    @CsvSource({
+            "TEN, TEN, TEN, true",
+            "TWO, TWO, ACE, false",
+    })
+    void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
+        // given
+        Player player = new Player(new Name("포비"));
+        player.receiveHand(createCard(Suit.SPADES, value1));
+        player.receiveHand(createCard(Suit.SPADES, value2));
+        player.receiveHand(createCard(Suit.SPADES, value3));
+
+        // when
+        boolean isBust = player.isBust();
+
+        // then
+        assertThat(isBust)
+                .isSameAs(expected);
+    }
+
+    @DisplayName("가진 패의 총합이 21 이상인 경우 히트할 수 없다.")
+    @Test
+    void canHitTest() {
+        // given
+        Player player = new Player(new Name("포비"));
+        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveHand(SPADE_TEN_CARD);
+
+        // then
+        boolean canHit = player.canHit();
+
+        // when
+        assertThat(canHit)
+                .isFalse();
+    }
+}
