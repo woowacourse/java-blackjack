@@ -58,7 +58,9 @@ public class Application {
         BlackJackGame blackJackGame) {
         while (blackJackGame.canExtraReceiveOfPlayer(participant)) {
             String userOpinion = inputView.inputPlayerWantMoreCard(participant);
-            blackJackGame.receiveExtraCardProcessOfPlayer(participant, userOpinion);
+            if (userOpinion.equalsIgnoreCase("y")) {
+                blackJackGame.receiveExtraCardProcessOfPlayer(participant);
+            }
             outputView.printCardMessageTest(participant);
             if (userOpinion.equalsIgnoreCase("n")) {
                 break;

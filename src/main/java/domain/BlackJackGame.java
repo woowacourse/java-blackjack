@@ -50,11 +50,8 @@ public class BlackJackGame {
         return participant.canPick() && participant.isPlayer();
     }
 
-    // TODO: userOpinion을 컨트롤러에게 넘기기 (여기서는 바로 addCard 호출하는 것만)
-    public void receiveExtraCardProcessOfPlayer(Participant participant, String userOpinion) {
-        if (userOpinion.equalsIgnoreCase("y")) {
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-        }
+    public void receiveExtraCardProcessOfPlayer(Participant participant) {
+        participant.addCard(cardDeck.getAndRemoveFrontCard());
     }
 
     public ParticipantsResult calculateParticipantsResult() {
