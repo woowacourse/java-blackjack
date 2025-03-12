@@ -29,6 +29,12 @@ public class GameResults {
                 gameResults.put(dealer, -multiplier);
                 gameResults.put(gambler, multiplier);
             }
+
+            if (compared == 0) {
+                int multiplier = gambler.getCards().calculateBetAmountByMultiplier(0);
+                gameResults.put(dealer, multiplier);
+                gameResults.put(gambler, multiplier);
+            }
         }
     }
 
