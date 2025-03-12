@@ -14,7 +14,7 @@ public class BetMoney {
         return new BetMoney(amount * 1.5);
     }
 
-    public BetMoney applyDealerBustBonus() {
+    public BetMoney applyWinBonus() {
         return new BetMoney(amount * 2);
     }
 

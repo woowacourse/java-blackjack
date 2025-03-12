@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.bet.BetMoney;
+import domain.result.WinLossResult;
 
 public class Player extends Participant {
 
@@ -18,6 +19,10 @@ public class Player extends Participant {
 
     public Player bet(final double betAmount) {
         return new Player(getName(), betAmount);
+    }
+
+    public BetMoney computeBetResult(final WinLossResult winLossResult) {
+        return new BetMoney(betMoney.applyWinBonus().getAmount());
     }
 
     public BetMoney getBetMoney() {
