@@ -45,7 +45,7 @@ public class OutputView {
 	}
 
 	public void printBlackjackDealerDuelResult(final Count winCount, final Count loseCount) {
-		System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount.getValue(), loseCount.getValue());
+		System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount.value(), loseCount.value());
 	}
 
 	public void printBlackjackPlayerDuelResult(final String name, final boolean isWin) {

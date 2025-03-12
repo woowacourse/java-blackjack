@@ -1,11 +1,6 @@
 package domain.card;
 
-public class Count {
-	private final int value;
-
-	public Count(final int value) {
-		this.value = value;
-	}
+public record Count(int value) {
 
 	public Count increment() {
 		return new Count(value + 1);
@@ -19,10 +14,6 @@ public class Count {
 		return value == 0;
 	}
 
-	public int getValue() {
-		return value;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -33,11 +24,6 @@ public class Count {
 		Count count = (Count)o;
 
 		return value == count.value;
-	}
-
-	@Override
-	public int hashCode() {
-		return value;
 	}
 
 	public boolean isGreaterThan(final Count count) {
