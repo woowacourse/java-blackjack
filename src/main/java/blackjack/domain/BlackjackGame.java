@@ -53,7 +53,7 @@ public class BlackjackGame {
         return playerProfits;
     }
 
-    public int calculatePlayerProfit(final Player player, final Dealer dealer) {
+    private int calculatePlayerProfit(final Player player, final Dealer dealer) {
         GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
         return player.calculateProfit(playerResult);
     }
