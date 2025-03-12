@@ -62,7 +62,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
+        assertThat(gameResult).containsExactly(GameResult.WIN);
     }
 
     @Test
@@ -80,7 +80,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
+        assertThat(gameResult).containsExactly(GameResult.LOSE);
     }
 
     @Test
@@ -98,7 +98,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW));
+        assertThat(gameResult).containsExactly(GameResult.DRAW);
     }
 
     @Test
@@ -116,7 +116,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
+        assertThat(gameResult).containsExactly(GameResult.LOSE);
     }
 
     @Test
@@ -134,7 +134,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
+        assertThat(gameResult).containsExactly(GameResult.WIN);
     }
 
     @Test
@@ -152,7 +152,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
+        assertThat(gameResult).containsExactly(GameResult.LOSE);
     }
 
     @Test
@@ -170,7 +170,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW));
+        assertThat(gameResult).containsExactly(GameResult.DRAW);
     }
 
     @Test
@@ -189,7 +189,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
+        assertThat(gameResult).containsExactly(GameResult.LOSE);
     }
 
     @Test
@@ -207,7 +207,7 @@ class DealerTest {
         List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
 
         //then
-        assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
+        assertThat(gameResult).containsExactly(GameResult.WIN);
     }
 
     @Test
