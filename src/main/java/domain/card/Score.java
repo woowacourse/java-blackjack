@@ -12,7 +12,7 @@ public class Score {
 	}
 
 	public Score plus(final Score plusValue) {
-		return null;
+		return new Score(value + plusValue.value);
 	}
 
 	public Score minus(final int minusValue) {

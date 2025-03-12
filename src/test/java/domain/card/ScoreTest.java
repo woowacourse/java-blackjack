@@ -37,7 +37,7 @@ public class ScoreTest {
 			final Score actual = score.plus(plusValue);
 
 			// then
-			assertThat(actual.getValue()).isEqualTo(plusValue);
+			assertThat(actual).isEqualTo(plusValue);
 		}
 	}
 
