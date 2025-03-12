@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
@@ -13,22 +14,22 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printDealerAndPlayerCards(Cards dealerCards, List<Player> players) {
+    public static void printDealerAndPlayerCards(Card dealerCard, List<Player> players) {
         String names = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(","));
         System.out.println();
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
-        printDealerCard(dealerCards);
+        printDealerCard(dealerCard);
         for (Player player : players) {
             printPlayerCards(player);
         }
         System.out.println();
     }
 
-    private static void printDealerCard(Cards dealerCards) {
+    private static void printDealerCard(Card dealerCard) {
         System.out.print("딜러카드: ");
-        String cards = toKoreanCards(dealerCards);
+        String cards = toKoreanCard(dealerCard);
         System.out.println(cards);
     }
 
@@ -56,8 +57,12 @@ public class OutputView {
         System.out.println();
     }
 
-    private static String toKoreanCards(Cards dealerCards) {
-        return dealerCards.getCards().stream()
+    private static String toKoreanCard(Card card) {
+        return toKoreanRank(card.getRank()) + toKoreanSuit(card.getSuit());
+    }
+
+    private static String toKoreanCards(Cards cards) {
+        return cards.getCards().stream()
                 .map(card ->
                         toKoreanRank(card.getRank()) + toKoreanSuit(card.getSuit()))
                 .collect(Collectors.joining(", "));

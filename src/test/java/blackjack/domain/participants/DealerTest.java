@@ -41,19 +41,20 @@ public class DealerTest {
         assertAll(
                 () -> assertEquals(dealer.retrieveCards(),
                         List.of(
-                                new Card(Suit.SPADE, Rank.ONE)
+                                new Card(Suit.SPADE, Rank.ONE),
+                                new Card(Suit.HEART, Rank.ONE)
                         )
                 ),
                 () -> assertEquals(players.getPlayers().get(0).retrieveCards(),
                         List.of(
-                                new Card(Suit.HEART, Rank.ONE),
-                                new Card(Suit.DIAMOND, Rank.ONE)
+                                new Card(Suit.DIAMOND, Rank.ONE),
+                                new Card(Suit.CLUB, Rank.ONE)
                         )
                 ),
                 () -> assertEquals(players.getPlayers().get(1).retrieveCards(),
                         List.of(
-                                new Card(Suit.CLUB, Rank.ONE),
-                                new Card(Suit.CLUB, Rank.FIVE)
+                                new Card(Suit.CLUB, Rank.FIVE),
+                                new Card(Suit.CLUB, Rank.FOUR)
                         )
                 )
         );

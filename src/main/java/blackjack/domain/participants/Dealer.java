@@ -23,12 +23,12 @@ public class Dealer {
     }
 
     public void prepareBlackjack() {
-        pickOneCards();
+        pickCards();
         handOutCard();
     }
 
-    public void pickOneCards() {
-        cards.additionalTake(deck.draw());
+    public void pickCards() {
+        cards.take(deck.draw(), deck.draw());
     }
 
     private void handOutCard() {
@@ -65,6 +65,10 @@ public class Dealer {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public Card getFirstCard() {
+        return cards.getCards().get(0);
     }
 
     public List<Card> retrieveCards() {
