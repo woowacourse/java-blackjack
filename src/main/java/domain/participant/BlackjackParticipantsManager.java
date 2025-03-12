@@ -62,7 +62,7 @@ public class BlackjackParticipantsManager {
 
     public TrumpCard firstDealerCards() {
         validateEmptyCards(dealerCards());
-        return dealer.cardHands().get(0);
+        return dealer.cardHands().getFirst();
     }
 
     public int calculateCardSum(String name) {
@@ -88,11 +88,23 @@ public class BlackjackParticipantsManager {
         player.addDraw(trumpCard);
     }
 
+    public void addInitiateCardsToPlayer(String name, List<TrumpCard> trumpCards) {
+        for (TrumpCard trumpCard : trumpCards) {
+            addCard(name, trumpCard);
+        }
+    }
+
     public void addDealerCard(TrumpCard trumpCard) {
         dealer.addDraw(trumpCard);
     }
 
     public boolean dealerDrawable() {
         return dealer.isDrawable();
+    }
+
+    public void addInitiateCardsToDealer(List<TrumpCard> trumpCards) {
+        for (TrumpCard trumpCard : trumpCards) {
+            addDealerCard(trumpCard);
+        }
     }
 }

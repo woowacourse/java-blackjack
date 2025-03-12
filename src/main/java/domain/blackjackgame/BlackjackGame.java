@@ -35,11 +35,19 @@ public class BlackjackGame {
     private void initiateGame() {
         List<String> playerNames = blackjackParticipantsManager.getPlayerNames();
         for (String name : playerNames) {
-            drawCard(name);
-            drawCard(name);
+            initiateDrawCardToPlayer(name);
         }
-        drawDealerCard();
-        drawDealerCard();
+        initiateDealerDrawCard();
+    }
+
+    private void initiateDealerDrawCard() {
+        List<TrumpCard> firstDrawCards = List.of(deck.drawCard(), deck.drawCard());
+        blackjackParticipantsManager.addInitiateCardsToDealer(firstDrawCards);
+    }
+
+    private void initiateDrawCardToPlayer(String name) {
+        List<TrumpCard> firstDrawCards = List.of(deck.drawCard(), deck.drawCard());
+        blackjackParticipantsManager.addInitiateCardsToPlayer(name, firstDrawCards);
     }
 
     public List<BlackjackResult> currentPlayerBlackjackResult() {
