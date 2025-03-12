@@ -56,4 +56,8 @@ public class GameManager {
     public Player getPlayerByName(String name) {
         return players.findByName(name);
     }
+
+    public void calculateResult() {
+        players.calculateResult(dealer);
+    }
 }

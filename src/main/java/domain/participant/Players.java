@@ -51,10 +51,34 @@ public class Players {
         }
     }
 
+    public void calculateResult(Dealer dealer) {
+        for (Player player : players) {
+            handleBetResult(dealer, player);
+        }
+    }
+
     private void handleInitialBlackjack(Dealer dealer, Player player) {
+        int blackjackAmount = getBlackjackAmount(player);
         if (BlackjackResult.isBlackjack(player) && !BlackjackResult.isBlackjack(dealer)) {
-            player.increaseTotalAmount(Money.BLACKJACK_BET_RATIO);
-            dealer.decreaseTotalAmount(player.getBetAmount(), Money.BLACKJACK_BET_RATIO);
+            player.increaseAmount(blackjackAmount);
+            dealer.decreaseAmount(blackjackAmount);
+        }
+    }
+
+    private int getBlackjackAmount(Player player) {
+        return (int) Math.round(player.getBetAmount() * Money.BLACKJACK_BET_RATIO);
+    }
+
+    private void handleBetResult(Dealer dealer, Player player) {
+        BlackjackResult playerResult = player.getBlackjackResult(dealer);
+
+        if (playerResult == BlackjackResult.LOSE) {
+            player.decreaseAmount(player.getBetAmount());
+            dealer.increaseAmount(player.getBetAmount());
+        }
+        if (playerResult == BlackjackResult.WIN) {
+            player.increaseAmount(player.getBetAmount());
+            dealer.decreaseAmount(player.getBetAmount());
         }
     }
 }

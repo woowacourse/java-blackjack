@@ -141,4 +141,30 @@ class PlayersTest {
             assertThat(dealer.getTotalWinnings()).isEqualTo(0);
         });
     }
+
+    @Test
+    void 카드_결과로_최종_손익을_계산한다() {
+        // given
+        Player winner = Player.of("winner", Money.of(1000));
+        winner.receive(Card.of(TrumpNumber.ACE, TrumpShape.SPADE));
+        winner.receive(Card.of(TrumpNumber.NINE, TrumpShape.SPADE));
+        Player loser = Player.of("loser", Money.of(2000));
+        loser.receive(Card.of(TrumpNumber.ACE, TrumpShape.SPADE));
+        loser.receive(Card.of(TrumpNumber.SIX, TrumpShape.SPADE));
+        Players players = Players.of(List.of(winner, loser));
+
+        Dealer dealer = Dealer.of(CardDeck.of());
+        dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.DIAMOND));
+        dealer.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.SPADE));
+
+        // when
+        players.calculateResult(dealer);
+
+        // then
+        Assertions.assertAll(() -> {
+            assertThat(winner.getTotalWinnings()).isEqualTo(1000);
+            assertThat(loser.getTotalWinnings()).isEqualTo(-2000);
+            assertThat(dealer.getTotalWinnings()).isEqualTo(1000);
+        });
+    }
 }

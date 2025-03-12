@@ -40,8 +40,9 @@ public class BlackjackController {
 
         drawToPlayers(gameManager);
         drawToDealer(dealer);
-
         outputView.printFinalCardsContent(dealer, players);
+        
+        gameManager.calculateResult();
         outputView.printResult(dealer, players);
     }
 
