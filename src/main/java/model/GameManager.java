@@ -6,7 +6,7 @@ import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
-import model.score.MatchType;
+import model.score.MatchResult;
 import model.score.ResultType;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class GameManager {
     public void calculateVictory() {
         for (Player player : players.getPlayers()) {
             ResultType resultType = dealer.compareTo(player);
-            List<MatchType> matches = resultType.getMatches();
+            List<MatchResult> matches = resultType.getMatches();
             dealer.updateResult(matches.getFirst());
             player.updateResult(matches.getLast());
         }

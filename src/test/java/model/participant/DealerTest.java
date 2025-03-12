@@ -2,9 +2,9 @@ package model.participant;
 
 import model.card.Card;
 import model.card.CardDeck;
-import model.card.RankType;
-import model.card.SuitType;
-import model.score.MatchType;
+import model.card.Rank;
+import model.card.Suit;
+import model.score.MatchResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,8 +51,8 @@ class DealerTest {
         // given
         // 총 합이 9
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.FIVE),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+                new Card(Suit.HEARTS, Rank.FIVE),
+                new Card(Suit.CLUBS, Rank.FOUR)
         );
         int expected = divideCards.stream()
                 .mapToInt(Card::getRankScore)
@@ -74,8 +74,8 @@ class DealerTest {
 
         // given
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.JACK),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+                new Card(Suit.HEARTS, Rank.JACK),
+                new Card(Suit.CLUBS, Rank.FOUR)
         );
 
         Dealer dealer = Dealer.newInstance();
@@ -92,8 +92,8 @@ class DealerTest {
 
         // given
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.JACK),
-                new Card(SuitType.CLUBS, RankType.KING)
+                new Card(Suit.HEARTS, Rank.JACK),
+                new Card(Suit.CLUBS, Rank.KING)
         );
 
         Dealer dealer = Dealer.newInstance();
@@ -109,8 +109,8 @@ class DealerTest {
     @DisplayName("딜러의 게임 결과 업데이트가 잘 되는 지")
     void dealerGameResult() {
         Dealer dealer = Dealer.newInstance();
-        dealer.updateResult(MatchType.WIN);
-        Map<MatchType, Integer> matchResult = dealer.getMatchResult();
-        Assertions.assertThat(matchResult.get(MatchType.WIN)).isEqualTo(1);
+        dealer.updateResult(MatchResult.WIN);
+        Map<MatchResult, Integer> matchResult = dealer.getMatchResult();
+        Assertions.assertThat(matchResult.get(MatchResult.WIN)).isEqualTo(1);
     }
 }

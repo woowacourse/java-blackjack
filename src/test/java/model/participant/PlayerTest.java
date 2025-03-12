@@ -2,8 +2,8 @@ package model.participant;
 
 import model.card.Card;
 import model.card.CardDeck;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Rank;
+import model.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,16 +59,16 @@ public class PlayerTest {
         return Stream.of(
                 Arguments.arguments(
                         List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.HEARTS, RankType.FIVE),
-                                new Card(SuitType.SPADES, RankType.SEVEN)
+                                new Card(Suit.CLUBS, Rank.ACE),
+                                new Card(Suit.HEARTS, Rank.FIVE),
+                                new Card(Suit.SPADES, Rank.SEVEN)
                         )
                 ),
                 Arguments.arguments(
                         List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.SPADES, RankType.FIVE),
-                                new Card(SuitType.HEARTS, RankType.ACE)
+                                new Card(Suit.CLUBS, Rank.ACE),
+                                new Card(Suit.SPADES, Rank.FIVE),
+                                new Card(Suit.HEARTS, Rank.ACE)
                         )
                 )
         );
@@ -79,8 +79,8 @@ public class PlayerTest {
     void isNotEnoughScoreConditionFalse() {
         //given
         List<Card> cards = List.of(
-                new Card(SuitType.CLUBS, RankType.ACE),
-                new Card(SuitType.HEARTS, RankType.KING)
+                new Card(Suit.CLUBS, Rank.ACE),
+                new Card(Suit.HEARTS, Rank.KING)
         );
         Participant player = Player.from("pobi");
         player.addCards(cards);

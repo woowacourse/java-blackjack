@@ -10,8 +10,8 @@ public final class CardDeck {
 
     private static List<Card> shuffledInitDeck() {
         ArrayList<Card> deck = new ArrayList<>();
-        for (SuitType suit : SuitType.values()) {
-            for (RankType rank : RankType.values()) {
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
                 deck.add(new Card(suit, rank));
             }
         }

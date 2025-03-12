@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public enum RankType {
+public enum Rank {
 
     TWO(2),
     THREE(3),
@@ -23,12 +23,12 @@ public enum RankType {
     private final List<Integer> score;
     private int scoreIdx;
 
-    RankType(int score) {
+    Rank(int score) {
         this.score = List.of(score);
         this.scoreIdx = 0;
     }
 
-    RankType(List<Integer> score) {
+    Rank(List<Integer> score) {
         this.score = score;
     }
 

@@ -1,13 +1,13 @@
 package model.participant;
 
-import model.score.MatchType;
+import model.score.MatchResult;
 
 import java.util.Objects;
 
 public class Player extends Participant {
 
     private final Nickname nickname;
-    private MatchType matchType;
+    private MatchResult matchType;
 
     private Player(String nickname) {
         this.nickname = new Nickname(nickname);
@@ -17,11 +17,11 @@ public class Player extends Participant {
         return new Player(nickname);
     }
 
-    public void updateResult(MatchType matchType) {
+    public void updateResult(MatchResult matchType) {
         this.matchType = matchType;
     }
 
-    public MatchType getMatchType() {
+    public MatchResult getMatchType() {
         return matchType;
     }
 

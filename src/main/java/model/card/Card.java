@@ -2,10 +2,10 @@ package model.card;
 
 public class Card {
 
-    private final SuitType suit;
-    private final RankType rank;
+    private final Suit suit;
+    private final Rank rank;
 
-    public Card(SuitType suit, RankType rank) {
+    public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
     }
@@ -18,11 +18,11 @@ public class Card {
         return rank.getRankScore();
     }
 
-    public SuitType getSuit() {
+    public Suit getSuit() {
         return suit;
     }
 
-    public RankType getRank() {
+    public Rank getRank() {
         return rank;
     }
 }

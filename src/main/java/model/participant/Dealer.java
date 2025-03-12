@@ -1,6 +1,6 @@
 package model.participant;
 
-import model.score.MatchType;
+import model.score.MatchResult;
 import model.score.ResultType;
 
 import java.util.EnumMap;
@@ -12,12 +12,12 @@ public class Dealer extends Participant {
     private static final int STANDING_CONDITION = 17;
 
     private final String nickname;
-    private final Map<MatchType, Integer> matchResult;
+    private final Map<MatchResult, Integer> matchResult;
 
     private Dealer(String nickname) {
         this.nickname = nickname;
-        this.matchResult = new EnumMap<>(MatchType.class);
-        for (MatchType type : MatchType.values()) {
+        this.matchResult = new EnumMap<>(MatchResult.class);
+        for (MatchResult type : MatchResult.values()) {
             matchResult.put(type, 0);
         }
     }
@@ -40,11 +40,11 @@ public class Dealer extends Participant {
         return score.getValue() < STANDING_CONDITION;
     }
 
-    public void updateResult(MatchType type) {
+    public void updateResult(MatchResult type) {
         matchResult.put(type, matchResult.get(type) + 1);
     }
 
-    public Map<MatchType, Integer> getMatchResult() {
+    public Map<MatchResult, Integer> getMatchResult() {
         return matchResult;
     }
 

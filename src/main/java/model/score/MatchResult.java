@@ -1,6 +1,6 @@
 package model.score;
 
-public enum MatchType {
+public enum MatchResult {
 
     WIN,
     LOSE,

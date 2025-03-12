@@ -1,8 +1,8 @@
 package model.participant;
 
 import model.card.Card;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Rank;
+import model.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,8 +40,8 @@ public class PlayersTest {
         // given
         // 총 합이 9
         List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.FIVE),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+                new Card(Suit.HEARTS, Rank.FIVE),
+                new Card(Suit.CLUBS, Rank.FOUR)
         );
         int expected = divideCards.stream()
                 .mapToInt(Card::getRankScore)

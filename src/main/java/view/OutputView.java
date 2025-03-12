@@ -1,13 +1,13 @@
 package view;
 
 import model.card.Card;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Rank;
+import model.card.Suit;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
-import model.score.MatchType;
+import model.score.MatchResult;
 
 import java.util.List;
 import java.util.Map;
@@ -96,9 +96,9 @@ public class OutputView {
 
     }
 
-    public static String getResultFormatByDealer(Map<MatchType, Integer> matchResult) {
+    public static String getResultFormatByDealer(Map<MatchResult, Integer> matchResult) {
         StringBuilder result = new StringBuilder();
-        for (MatchType matchType : matchResult.keySet()) {
+        for (MatchResult matchType : matchResult.keySet()) {
             int matchCount = matchResult.get(matchType);
             if (matchCount != 0) {
                 result.append(matchCount).append(MATCH_FORMAT.get(matchType.name()));
@@ -108,13 +108,13 @@ public class OutputView {
         return result.toString();
     }
 
-    public static String getResultFormatByPlayer(MatchType matchType) {
+    public static String getResultFormatByPlayer(MatchResult matchType) {
         return MATCH_FORMAT.get(matchType.name());
     }
 
     public static String getCardFormat(Card card) {
-        RankType rankType = card.getRank();
-        SuitType suitType = card.getSuit();
+        Rank rankType = card.getRank();
+        Suit suitType = card.getSuit();
         return RANK_FORMAT.get(rankType.name()) + SUIT_FORMAT.get(suitType.name());
     }
 
