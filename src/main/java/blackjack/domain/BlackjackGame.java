@@ -119,7 +119,7 @@ public class BlackjackGame {
             playerResultStatusEntry.getKey().lose();
         }
         if (playerResultStatusEntry.getValue() == ResultStatus.DRAW) {
-            playerResultStatusEntry.getKey().lose();
+            playerResultStatusEntry.getKey().draw();
         }
         if (playerResultStatusEntry.getValue() == ResultStatus.BLACKJACK) {
             playerResultStatusEntry.getKey().blackjack();
