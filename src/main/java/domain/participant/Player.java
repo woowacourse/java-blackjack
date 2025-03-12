@@ -9,10 +9,13 @@ public class Player extends Participant {
 
     public Player(String name) {
         super(new HandCards());
+        validateName(name);
+        this.name = name.trim();
+    }
+
+    private static void validateName(String name) {
         validateNotBlank(name);
-        name = name.trim();
-        validateLength(name);
-        this.name = name;
+        validateLength(name.trim());
     }
 
     private static void validateNotBlank(String name) {
