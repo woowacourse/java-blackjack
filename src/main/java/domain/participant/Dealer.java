@@ -24,7 +24,7 @@ public class Dealer extends Participant {
     }
 
     public void handoutCards(Players players) {
-        List<Participant> participants = new ArrayList<>(players.getPlayers());
+        List<Participant> participants = new ArrayList<>(players.get());
         participants.add(this);
         deck.handoutCards(participants);
     }
@@ -35,7 +35,7 @@ public class Dealer extends Participant {
 
     public Map<Player, GameResult> getPlayerResult(Players players) {
         Map<Player, GameResult> gameResult = new HashMap<>();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.get()) {
             GameResult playerResult = getRule().getResult(player, this);
             gameResult.put(player, playerResult);
         }

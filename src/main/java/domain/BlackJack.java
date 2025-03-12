@@ -61,6 +61,6 @@ public class BlackJack {
     }
 
     public Set<Player> getPlayers() {
-        return players.getPlayers();
+        return players.get();
     }
 }

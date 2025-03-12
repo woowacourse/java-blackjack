@@ -29,7 +29,7 @@ public class Players {
         }
     }
 
-    public Set<Player> getPlayers() {
+    public Set<Player> get() {
         return Collections.unmodifiableSet(players);
     }
 }
