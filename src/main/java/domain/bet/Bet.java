@@ -17,7 +17,7 @@ public class Bet {
     }
 
     public Bet applyPlayerBustPenalty() {
-        return new Bet(10000);
+        return new Bet(0);
     }
 
     public double getAmount() {
