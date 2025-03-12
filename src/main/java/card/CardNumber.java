@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum CardNumber {
 
-    ACE(List.of(1, 11)),
+    ACE(1, 11),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -28,6 +28,10 @@ public enum CardNumber {
 
     CardNumber(int value) {
         this(List.of(value));
+    }
+
+    CardNumber(int value1, int value2) {
+        this(List.of(value1, value2));
     }
 
     public List<Integer> getValues() {
