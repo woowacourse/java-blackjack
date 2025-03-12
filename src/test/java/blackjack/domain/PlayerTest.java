@@ -4,11 +4,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.player.Player;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
 
@@ -49,7 +50,7 @@ class PlayerTest {
         player.addCards(List.of(ace, ten));
 
         boolean result = player.isBlackJack();
-        Assertions.assertThat(result).isTrue();
+        assertThat(result).isTrue();
     }
 
     static class TestPlayer extends Player {
