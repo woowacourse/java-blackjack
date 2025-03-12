@@ -8,10 +8,10 @@ public class Score {
 	}
 
 	public Score plus(final int plusValue) {
-		return null;
+		return new Score(value + plusValue);
 	}
 
 	public int getValue() {
-		return 0;
+		return value;
 	}
 }
