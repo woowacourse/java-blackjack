@@ -29,7 +29,7 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canHit() {
-        int score = hand.calculateWithSoftHand();
+        int score = hand.calculateWithHardHand();
         return score <= DEALER_THRESHOLD;
     }
 

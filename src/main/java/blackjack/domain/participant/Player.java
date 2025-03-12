@@ -26,7 +26,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canHit() {
-        int score = hand.calculateWithSoftHand();
+        int score = hand.calculateWithHardHand();
         return score < BURST_THRESHOLD;
     }
 

@@ -24,7 +24,7 @@ public class Hand {
         return subtractAce(maxScore);
     }
 
-    public int calculateWithSoftHand() {
+    public int calculateWithHardHand() {
         return hand.stream()
                 .mapToInt(Card::getCardMinNumber)
                 .sum();
