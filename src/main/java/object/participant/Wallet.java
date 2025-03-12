@@ -1,9 +1,10 @@
 package object.participant;
 
 public class Wallet {
-    private final int betAmount;
+    private final int betMoney;
+    private int earnedMoney;
 
-    public Wallet(int betAmount) {
-        this.betAmount = betAmount;
+    public Wallet(int betMoney) {
+        this.betMoney = betMoney;
     }
 }

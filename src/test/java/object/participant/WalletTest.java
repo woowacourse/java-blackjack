@@ -7,10 +7,10 @@ public class WalletTest {
     @Test
     void 월렛_생성_테스트() {
         // given
-        int betAmount = 1000;
+        int betMoney = 1000;
 
         // when
-        Wallet wallet = new Wallet(betAmount);
+        Wallet wallet = new Wallet(betMoney);
 
         // then
         Assertions.assertThat(wallet).isInstanceOf(Wallet.class);
