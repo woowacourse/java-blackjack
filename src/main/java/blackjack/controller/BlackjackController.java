@@ -24,21 +24,27 @@ public final class BlackjackController {
     }
 
     public void run() {
-        Dealer dealer = getDealer();
+        Dealer dealer = createDealer();
         GamePlayers gamePlayers = getGamePlayers();
         playBlackjack(dealer, gamePlayers);
         displayResult(dealer, gamePlayers);
     }
 
-    private Dealer getDealer() {
+    private Dealer createDealer() {
         return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
     }
 
     private GamePlayers getGamePlayers() {
-        List<String> playerNames = inputView.readPlayerNames();
-        return GamePlayers.createForNewGame(playerNames.stream()
+        outputView.printStartBanner();
+        List<Player> players = createPlayersFromInput();
+        return GamePlayers.createForNewGame(players);
+    }
+
+    private List<Player> createPlayersFromInput() {
+        return inputView.readPlayerNames()
+                .stream()
                 .map(name -> new Player(new Name(name)))
-                .toList());
+                .toList();
     }
 
     private void playBlackjack(Dealer dealer, GamePlayers gamePlayers) {

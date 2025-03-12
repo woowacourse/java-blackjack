@@ -50,7 +50,7 @@ class NameTest {
         // when, then
         assertThatCode(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름은 2자 이상 5자 이하로만 가능합니다. 입력: %s".formatted(name));
+                .hasMessage("이름은 한글로만 2자 이상 5자 이하로만 가능합니다. 입력: %s".formatted(name));
     }
 
     @DisplayName("같은 이름을 가진 경우 동일하다고 간주한다.")
@@ -77,7 +77,7 @@ class NameTest {
         // when, then
         assertThatCode(() -> new Name(englishName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름은 한글로만 입력 가능합니다. 입력: %s".formatted(englishName));
+                .hasMessage("이름은 한글로만 2자 이상 5자 이하로만 가능합니다. 입력: %s".formatted(englishName));
     }
 
     @DisplayName("이름을 확인할 수 있다.")
