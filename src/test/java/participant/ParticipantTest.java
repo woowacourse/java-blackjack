@@ -1,0 +1,4 @@
+package participant;
+
+class ParticipantTest {
+}

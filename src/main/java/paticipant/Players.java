@@ -1,0 +1,52 @@
+package paticipant;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import card.Deck;
+import card.Score;
+
+public class Players {
+	private final List<Player> players;
+
+	public Players(final List<Player> players) {
+		this.players = new ArrayList<>(players);
+	}
+
+	public static Players from(final List<String> names) {
+		return new Players(names.stream()
+			.map(Player::new)
+			.collect(Collectors.toList()));
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void pickCards(final Deck deck, final int pickedCardCount) {
+		for (final Player player : players) {
+			player.addCards(deck.pickCards(pickedCardCount));
+		}
+	}
+
+	public void pickCardPlayersIfNotBust(final Function<String, Boolean> playerAnswer, final Deck deck,
+		final Score bustScore) {
+		for (final Player player : players) {
+			pickCard(playerAnswer, deck, bustScore, player);
+		}
+	}
+
+	private void pickCard(final Function<String, Boolean> playerAnswer, final Deck deck, final Score bustScore,
+		final Player player) {
+		while (!player.isBust(bustScore) && playerAnswer.apply(player.getName())) {
+			player.addCards(deck.pickCards(1));
+		}
+	}
+
+	public void duelVsDealer(final Consumer<Player> duel) {
+		players.forEach(duel);
+	}
+}
