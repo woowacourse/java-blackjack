@@ -38,17 +38,17 @@ public class BlackjackService {
     }
 
     public void drawCardFor(String playerName) {
-        Player player = players.findByName(playerName);
+        Player player = players.getByName(playerName);
         player.drawCard(deck);
     }
 
     public GamerDto getPlayerCards(String playerName) {
-        Player player = players.findByName(playerName);
+        Player player = players.getByName(playerName);
         return GamerDto.from(player);
     }
 
     public boolean canReceiveAdditionalCards(String playerName) {
-        Player player = players.findByName(playerName);
+        Player player = players.getByName(playerName);
         return player.canReceiveAdditionalCards();
     }
 

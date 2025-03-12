@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import java.util.List;
+import java.util.Optional;
 
 import blackjack.domain.deck.Deck;
 
@@ -38,10 +39,14 @@ public class Players {
         return players;
     }
 
-    public Player findByName(String name) {
+    public Optional<Player> findByName(String name) {
         return players.stream()
             .filter(player -> player.getName().equals(name))
-            .findAny()
-            .orElse(null);
+            .findAny();
+    }
+
+    public Player getByName(String name) {
+        return findByName(name)
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어명입니다."));
     }
 }
