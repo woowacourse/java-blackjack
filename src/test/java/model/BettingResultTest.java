@@ -38,7 +38,7 @@ class BettingResultTest {
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
         int expect = 10000;
-        int result = bettingResult.getBettingNet(player);
+        int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
     }
 
@@ -54,7 +54,7 @@ class BettingResultTest {
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
         int expect = -10000;
-        int result = bettingResult.getBettingNet(player);
+        int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
     }
 
@@ -70,7 +70,7 @@ class BettingResultTest {
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
         int expect = 0;
-        int result = bettingResult.getBettingNet(player);
+        int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
     }
 
@@ -87,7 +87,7 @@ class BettingResultTest {
         BettingResult bettingResult = new BettingResult(map);
         bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
         int expect = 15000;
-        int result = bettingResult.getBettingNet(player);
+        int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
     }
 

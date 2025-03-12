@@ -11,13 +11,10 @@ public class BettingResult {
         this.betting = betting;
     }
 
-    public Integer getBettingNet(Player player) {
-        return betting.get(player);
-    }
-
     public void calculatePlayerBettingResult(Players players, ParticipantWinningResult participantWinningResult) {
         for (Player player : players.getPlayers()){
-            computeResultByWinningStatus(player, participantWinningResult.getPlayerGameResult(player));
+            GameResult gameResult = participantWinningResult.getPlayerGameResult(player);
+            computeResultByWinningStatus(player, gameResult);
         }
     }
 
