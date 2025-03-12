@@ -1,23 +1,31 @@
 import domain.CardNumber;
 import domain.CardShape;
+import domain.GameManager;
 import domain.TrumpCard;
+import domain.TrumpCardManager;
+import domain.user.User;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardNumberTest {
-    @DisplayName("열 세개의 숫자 중 하나의 숫자를 뽑는다.")
+    @DisplayName("뽑은 카드의 숫자는 1이상 13 이하이다.")
     @Test
     void test() {
         // given
-        int oneIndex = 13;
+        GameManager gameManager = new GameManager(List.of("레몬"), new TrumpCardManager());
+        User user = gameManager.findUserByUsername("레몬");
+        gameManager.drawMoreCard(user);
+
 
         // when
-        CardNumber cardNumber = CardNumber.pick(oneIndex);
+        List<TrumpCard> trumpCards = user.openCard();
+        int cardNumberValue = trumpCards.getFirst().getCardNumberValue();
 
         // then
-        Assertions.assertThat(cardNumber).isEqualTo(CardNumber.K);
+        Assertions.assertThat(cardNumberValue).isBetween(1,13);
     }
 
     @DisplayName("카드 출력시 해당 카드의 출력용 이름을 보여준다")

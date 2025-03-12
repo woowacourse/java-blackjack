@@ -33,12 +33,4 @@ public enum CardNumber {
         return cardNumber.displayName;
     }
 
-    public static CardNumber pick(int index) {
-        for (CardNumber value : values()) {
-            if (value.index == index) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException();
-    }
 }
