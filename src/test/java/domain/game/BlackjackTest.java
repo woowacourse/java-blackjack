@@ -89,7 +89,27 @@ public class BlackjackTest {
 				}
 			});
 		}
+	}
 
+	@Nested
+	@DisplayName("딜러 추가 카드 뽑기")
+	class PickCardDealerIfNotMax {
+
+		@DisplayName("딜러가 16점 이하라면, 카드를 추가로 뽑는다.")
+		@Test
+		void pickCardDealerIfNotMax() {
+			// given
+			final Blackjack blackjack = Blackjack.from(List.of(""));
+			final int bustScore = 21;
+			final int dealerPickCardMaxScore = 16;
+
+			// when
+			blackjack.pickCardDealerIfNotMax();
+
+			// then
+			assertThat(blackjack.getDealer().getParticipant().calculateAllScore(bustScore))
+				.isGreaterThan(dealerPickCardMaxScore);
+		}
 	}
 
 	@Nested

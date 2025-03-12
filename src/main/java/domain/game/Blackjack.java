@@ -48,6 +48,10 @@ public class Blackjack {
 		players.pickCardPlayersIfNotBust(playerAnswer, deck, BUST_SCORE);
 	}
 
+	public void pickCardDealerIfNotMax() {
+
+	}
+
 	public boolean isPickCardByPlayer(final Player player) {
 		return player.isPickCard(BUST_SCORE);
 	}
