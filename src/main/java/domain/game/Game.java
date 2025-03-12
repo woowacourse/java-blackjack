@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.participants.BettingAmount;
 import domain.participants.Dealer;
 import domain.participants.Gamer;
 import domain.participants.PlayerName;
@@ -16,9 +17,9 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
-    public Game(List<PlayerName> playerNames) {
+    public Game(Map<PlayerName, BettingAmount> playerInfo) {
         this.dealer = new Dealer(new Deck(Card.initializeCards()));
-        this.players = new Players(playerNames);
+        this.players = new Players(playerInfo);
     }
 
     public void giveCardToPlayer(PlayerName playerName, int count) {

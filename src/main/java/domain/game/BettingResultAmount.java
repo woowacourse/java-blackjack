@@ -12,7 +12,7 @@ public class BettingResultAmount {
         this.money = calculateBettingResult(bettingAmount, gameResult);
     }
 
-    public BettingResultAmount(int money){
+    public BettingResultAmount(int money) {
         this.money = money;
     }
 

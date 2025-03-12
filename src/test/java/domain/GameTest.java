@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Card;
 import domain.game.Game;
+import domain.participants.BettingAmount;
 import domain.participants.PlayerName;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +20,12 @@ class GameTest {
 
     @BeforeEach
     void beforeEach() {
-        List<PlayerName> usernames = List.of(new PlayerName("a"), new PlayerName("b"), new PlayerName("c"));
-        game = new Game(usernames);
+        Map<PlayerName, BettingAmount> players = Map.of(
+                new PlayerName("a"),new BettingAmount(10000),
+                new PlayerName("b"),new BettingAmount(10000),
+                new PlayerName("c"),new BettingAmount(10000)
+        );
+        game = new Game(players);
     }
 
     @Test

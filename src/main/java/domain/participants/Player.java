@@ -7,15 +7,14 @@ import static domain.game.GameResult.WIN;
 import domain.game.GameResult;
 
 public class Player extends Gamer {
-    private final PlayerName playerName;
-    private BettingAmount bettingAmount;
-
     private static final int BUST_THRESHOLD = 21;
+    private final PlayerName playerName;
+    private final BettingAmount bettingAmount;
 
-    public Player(PlayerName playerName) {
+    public Player(PlayerName playerName, BettingAmount bettingAmount) {
         super();
         this.playerName = playerName;
-        this.bettingAmount = BettingAmount.baseBettingAmount();
+        this.bettingAmount = bettingAmount;
     }
 
     public boolean isDrawable() {
@@ -35,10 +34,6 @@ public class Player extends Gamer {
 
     public BettingAmount getBettingAmount() {
         return bettingAmount;
-    }
-
-    public void setBettingAmount(BettingAmount bettingAmount) {
-        this.bettingAmount = bettingAmount;
     }
 
     private GameResult decideGameResultWithBust(Dealer dealer) {

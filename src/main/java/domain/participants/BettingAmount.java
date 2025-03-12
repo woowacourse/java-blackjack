@@ -10,14 +10,6 @@ public class BettingAmount {
         this.money = money;
     }
 
-    private BettingAmount() {
-        this.money = 0;
-    }
-
-    public static BettingAmount baseBettingAmount() {
-        return new BettingAmount();
-    }
-
     public int getMoney() {
         return money;
     }

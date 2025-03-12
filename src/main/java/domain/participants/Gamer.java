@@ -32,7 +32,7 @@ public abstract class Gamer implements Cloneable {
         cards.addAll(addedCards);
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         int score = calculateScore();
         return score > BLACKJACK_MAX_SCORE;
     }

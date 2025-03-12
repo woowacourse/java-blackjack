@@ -3,6 +3,7 @@ package domain;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.card.Card;
+import domain.participants.BettingAmount;
 import domain.participants.Gamer;
 import domain.participants.PlayerName;
 import domain.participants.Players;
@@ -22,8 +23,12 @@ class PlayersTest {
     @DisplayName("특정 이름을 가진 플레이어에게 카드를 제공한다.")
     void giveCardToGamerTest() {
         // given
-        List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
-        Players players = new Players(usernames);
+        Map<PlayerName, BettingAmount> playersInfo = Map.of(
+                new PlayerName("김"),new BettingAmount(10000),
+                new PlayerName("이"),new BettingAmount(10000),
+                new PlayerName("박"),new BettingAmount(10000)
+        );
+        Players players = new Players(playersInfo);
         PlayerName username = new PlayerName("이");
         Card card = Card.HEART_JACK;
         // when
@@ -38,8 +43,12 @@ class PlayersTest {
     @DisplayName("특정 플레이어가 카드를 더 받을 수 있는지 확인합니다.")
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
-        List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
-        Players players = new Players(usernames);
+        Map<PlayerName, BettingAmount> playersInfo = Map.of(
+                new PlayerName("김"),new BettingAmount(10000),
+                new PlayerName("이"),new BettingAmount(10000),
+                new PlayerName("박"),new BettingAmount(10000)
+        );
+        Players players = new Players(playersInfo);
         players.giveCard(new PlayerName("김"), cards);
 
         //when & then
@@ -59,11 +68,14 @@ class PlayersTest {
     @DisplayName("플레이어가 모두 존재하는지 확인합니다.")
     void getPlayerInfoTest() {
         // given
-        List<PlayerName> usernames = List.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"));
-        Players players = new Players(usernames);
+        Map<PlayerName, BettingAmount> playersInfo = Map.of(
+                new PlayerName("김"),new BettingAmount(10000),
+                new PlayerName("이"),new BettingAmount(10000),
+                new PlayerName("박"),new BettingAmount(10000)
+        );
+        Players players = new Players(playersInfo);
         // when
         Map<PlayerName, Gamer> playerInfo = players.getPlayersInfo();
-
         // then
         assertTrue(
                 playerInfo.keySet().containsAll(Set.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"))));

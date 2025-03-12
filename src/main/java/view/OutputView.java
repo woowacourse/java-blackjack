@@ -1,9 +1,9 @@
 package view;
 
-import static domain.participants.Dealer.BUST_THRESHOLD;
 import static domain.game.GameResult.DRAW;
 import static domain.game.GameResult.LOSE;
 import static domain.game.GameResult.WIN;
+import static domain.participants.Dealer.BUST_THRESHOLD;
 
 import domain.card.Card;
 import domain.game.GameResult;

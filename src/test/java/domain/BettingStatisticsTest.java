@@ -44,12 +44,9 @@ public class BettingStatisticsTest {
     }
 
     private Map<Player, GameResult> initialized() {
-        Player player1 = new Player(new PlayerName("a"));
-        player1.setBettingAmount(new BettingAmount(10000));
-        Player player2 = new Player(new PlayerName("b"));
-        player2.setBettingAmount(new BettingAmount(20000));
-        Player player3 = new Player(new PlayerName("c"));
-        player3.setBettingAmount(new BettingAmount(30000));
+        Player player1 = new Player(new PlayerName("a"),new BettingAmount(10000));
+        Player player2 = new Player(new PlayerName("b"),new BettingAmount(20000));
+        Player player3 = new Player(new PlayerName("c"),new BettingAmount(30000));
         return Map.of(player1, GameResult.WIN, player2, GameResult.DRAW, player3, GameResult.LOSE);
     }
 }

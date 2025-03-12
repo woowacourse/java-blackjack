@@ -3,14 +3,19 @@ package controller;
 import static view.Response.YES;
 
 import domain.game.Game;
+import domain.participants.BettingAmount;
 import domain.participants.PlayerName;
+import domain.participants.PlayerNames;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
     public static final int DEFAULT_CARDS_PER_TURN = 1;
-    
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -21,12 +26,11 @@ public class BlackJackController {
 
     public void run() {
         List<String> usernames = inputView.insertUsernames();
-        List<PlayerName> playerNames = usernames.stream()
-                .map(PlayerName::new)
-                .toList();
-
-        Game game = initializeGame(playerNames);
-        for (PlayerName playerName : playerNames) {
+        PlayerNames playerNames = new PlayerNames(usernames);
+        List<PlayerName> playerUsernames = playerNames.getPlayerNames();
+        Map<PlayerName, BettingAmount> bettingAmountsInfo = getBettingAmountsInfo(playerUsernames);
+        Game game = initializeGame(bettingAmountsInfo);
+        for (PlayerName playerName : playerUsernames) {
             askPlayer(game, playerName);
         }
         askDealer(game);
@@ -34,8 +38,8 @@ public class BlackJackController {
         outputView.printGameStatistics(game.getGameStatistics());
     }
 
-    private Game initializeGame(List<PlayerName> playerNames) {
-        Game game = new Game(playerNames);
+    private Game initializeGame(Map<PlayerName, BettingAmount> bettingAmountsInfo) {
+        Game game = new Game(bettingAmountsInfo);
         game.distributeStartingHands();
         outputView.printInitialState(game.getPlayersInfo(), game.getDealerOneCard());
         return game;
@@ -53,5 +57,13 @@ public class BlackJackController {
             game.giveCardToDealer(DEFAULT_CARDS_PER_TURN);
             outputView.printDealerDrawMoreCard();
         }
+    }
+
+    private Map<PlayerName, BettingAmount> getBettingAmountsInfo(List<PlayerName> playerNames) {
+        return playerNames.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        playerName -> new BettingAmount(inputView.insertBettingAmount(playerName.username()))
+                ));
     }
 }
