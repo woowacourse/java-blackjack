@@ -76,11 +76,10 @@ public class Round {
 
     public WinningDiscriminator getWinningDiscriminator() {
         Gambler dealer = findGambler(DEALER_NAME);
-        int dealerScore = dealer.calculateScore();
-        Map<Name, Integer> playerScores = gamblers.stream()
+        List<Gambler> players = gamblers.stream()
                 .filter(Gambler::isPlayer)
-                .collect(toMap(Gambler::getName, Gambler::calculateScore));
-        return new WinningDiscriminator(dealerScore, playerScores);
+                .toList();
+        return new WinningDiscriminator(dealer, players);
     }
 
     private Gambler findGambler(final Name name) {
