@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.card.Deck;
+
 public class Players {
 	private final List<Player> players;
 
@@ -19,5 +21,8 @@ public class Players {
 
 	public List<Player> getPlayers() {
 		return players;
+	}
+
+	public void pickCards(final Deck deck, final int pickedCardCount) {
 	}
 }
