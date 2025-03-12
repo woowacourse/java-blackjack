@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -69,7 +69,7 @@ public class PlayersTest {
 			void pickCardIfNotBust() {
 				// given
 				final Players players = Players.from(List.of("부기"));
-				final BooleanSupplier playerAnswer = () -> true;
+				final Function<String, Boolean> playerAnswer = (name) -> true;
 				final Deck shuffledDeck = Deck.createShuffledDeck();
 				final int bustScore = 21;
 

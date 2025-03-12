@@ -2,7 +2,7 @@ package domain.game;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BooleanSupplier;
+import java.util.function.Function;
 
 import domain.card.Deck;
 import domain.duel.DuelResult;
@@ -44,7 +44,7 @@ public class Blackjack {
 		dealer.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
 	}
 
-	public void pickCardPlayersIfNotBust(final BooleanSupplier playerAnswer) {
+	public void pickCardPlayersIfNotBust(final Function<String, Boolean> playerAnswer) {
 		players.pickCardPlayersIfNotBust(playerAnswer, deck, BUST_SCORE);
 	}
 

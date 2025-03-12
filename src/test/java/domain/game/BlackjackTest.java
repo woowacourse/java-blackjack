@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
-import java.util.function.BooleanSupplier;
+import java.util.function.Function;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -75,7 +75,7 @@ public class BlackjackTest {
 			// given
 			final List<String> names = List.of("부기", "파랑", "히스타");
 			final Blackjack blackjack = Blackjack.from(names);
-			final BooleanSupplier alwaysYes = () -> true;
+			final Function<String, Boolean> alwaysYes = (name) -> true;
 			final int bustScore = 21;
 
 			// when
