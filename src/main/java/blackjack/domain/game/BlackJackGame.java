@@ -28,7 +28,7 @@ public class BlackJackGame {
 
     public void runGame(List<Nickname> nicknames) {
         registerPlayer(nicknames);
-        receiveBettingAmount();
+        registerBettingAmount();
         distributeInitialCard();
         processPlayerTurns();
         processDealerTurns();
@@ -39,10 +39,11 @@ public class BlackJackGame {
         users.initialize(nicknames);
     }
 
-    private void receiveBettingAmount() {
+    private void registerBettingAmount() {
         List<Player> players = users.getPlayers();
         for (Player player : players) {
             BettingAmount bettingAmount = gameInputOutput.readBettingAmount(player.getNickname());
+            player.registerBettingAmount(bettingAmount);
         }
     }
 

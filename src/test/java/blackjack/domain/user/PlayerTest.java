@@ -21,6 +21,15 @@ class PlayerTest {
     Player player = new Player(new Nickname("플레이어"));
 
     @Test
+    @DisplayName("배팅 금액을 추가할 수 있다.")
+    void canRegisterBettingAmount() {
+        BettingAmount expectedBettingAmount = new BettingAmount(1000);
+        player.registerBettingAmount(expectedBettingAmount);
+
+        assertThat(player.getBettingAmount()).isEqualTo(expectedBettingAmount);
+    }
+
+    @Test
     @DisplayName("초기 카드를 추가할 수 있다.")
     void canAddInitialCards() {
         List<Card> initialCards = List.of(

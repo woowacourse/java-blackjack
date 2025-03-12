@@ -8,9 +8,14 @@ import java.util.List;
 public class Player {
 
     private final GameUser gameUser;
+    private BettingAmount bettingAmount;
 
     public Player(Nickname nickname) {
         this.gameUser = new GameUser(nickname);
+    }
+
+    public void registerBettingAmount(BettingAmount bettingAmount) {
+        this.bettingAmount = bettingAmount;
     }
 
     public void addInitialCards(List<Card> cards) {
@@ -36,6 +41,10 @@ public class Player {
 
     public String getNickname() {
         return gameUser.getNickname();
+    }
+
+    public BettingAmount getBettingAmount() {
+        return bettingAmount;
     }
 
     private void validateHitPossibility() {
