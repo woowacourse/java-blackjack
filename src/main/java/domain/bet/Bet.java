@@ -11,4 +11,8 @@ public class Bet {
     public double applyBlackJackBonus() {
         return amount * 1.5;
     }
+
+    public double applyDealerBustBonus() {
+        return amount;
+    }
 }

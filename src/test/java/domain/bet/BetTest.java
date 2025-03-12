@@ -21,4 +21,12 @@ class BetTest {
 
         assertThat(bet.applyBlackJackBonus()).isEqualTo(15000);
     }
+
+    @Test
+    @DisplayName("딜러가 버스트 시 살아남은 플레이어라면 베팅 금액의 2배를 리턴한다.")
+    void test3() {
+        Bet bet = new Bet(10000);
+
+        assertThat(bet.applyDealerBustBonus()).isEqualTo(20000);
+    }
 }
