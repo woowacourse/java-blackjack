@@ -50,10 +50,6 @@ public class Dealer {
         }
     }
 
-    public boolean isBlackjack() {
-        return cards.isBlackjack();
-    }
-
     public GameResult createVictory() {
         return GameResult.create(this, players);
     }
