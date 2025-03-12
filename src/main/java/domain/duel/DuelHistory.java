@@ -22,6 +22,6 @@ public class DuelHistory {
 	}
 
 	public boolean isWin() {
-		return false;
+		return winCount.isGreaterThan(loseCount);
 	}
 }
