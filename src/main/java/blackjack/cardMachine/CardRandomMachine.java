@@ -1,6 +1,7 @@
 package blackjack.cardMachine;
 
 import blackjack.card.Card;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +26,9 @@ public class CardRandomMachine implements CardMachine {
 
     @Override
     public Card drawOneCard() {
-        Collections.shuffle(deck);
-        final Card drawCard = deck.getFirst();
+        final ArrayList<Card> mutableDeck = new ArrayList<>(deck);
+        Collections.shuffle(mutableDeck);
+        final Card drawCard = mutableDeck.getFirst();
         if (isAlreadyUsed(drawCard)) {
             drawOneCard();
         }
