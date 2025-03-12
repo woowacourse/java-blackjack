@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.List;
@@ -22,6 +23,30 @@ public class Dealer extends Participant {
     public List<Card> showStartCards() {
         Card firstCard = cardHand.getCards().getFirst();
         return List.of(firstCard);
+    }
+
+    public GameResult informResultTo(Player player) {
+        if(player.isBust()) {
+            return GameResult.LOSE;
+        }
+        if(this.isBust()) {
+            return GameResult.WIN;
+        }
+
+        if (this.isBlackjack() && player.isBlackjack()) {
+            return GameResult.DRAW;
+        }
+        if(player.isBlackjack()) {
+            return GameResult.BLACKJACK_WIN;
+        }
+
+        if(player.getScore().isHigherThan(this.getScore())) {
+            return GameResult.WIN;
+        }
+        if(this.getScore().isHigherThan(player.getScore())) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
     }
 
     @Override

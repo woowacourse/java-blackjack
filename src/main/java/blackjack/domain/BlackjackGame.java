@@ -54,7 +54,7 @@ public class BlackjackGame {
     }
 
     private int calculatePlayerProfit(final Player player, final Dealer dealer) {
-        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
+        GameResult playerResult = dealer.informResultTo(player);
         return player.calculateProfit(playerResult);
     }
 

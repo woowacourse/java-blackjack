@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.HandState;
 import blackjack.domain.Score;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,10 +35,6 @@ public class CardHand {
                     .toList();
         }
         return new HashSet<>(sums);
-    }
-
-    public HandState getHandState() {
-        return HandState.from(this);
     }
 
     public int deckSize() {
