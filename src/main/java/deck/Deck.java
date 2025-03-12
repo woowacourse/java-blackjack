@@ -1,8 +1,8 @@
-package model.deck;
+package deck;
 
+import card.Card;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import model.card.Card;
 
 public class Deck {
 

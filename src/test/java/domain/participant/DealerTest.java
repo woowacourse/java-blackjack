@@ -1,11 +1,12 @@
-package model.participant;
+package domain.participant;
 
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
+import card.Card;
+import card.CardNumber;
+import card.CardType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import participant.Dealer;
 
 class DealerTest {
 

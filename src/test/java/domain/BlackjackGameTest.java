@@ -1,15 +1,17 @@
-package model;
+package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import card.Card;
+import card.CardNumber;
+import card.CardType;
+import game.BlackjackGame;
+import game.GameResult;
+import participant.Dealer;
+import participant.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
-import model.participant.Dealer;
-import model.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

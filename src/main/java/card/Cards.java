@@ -1,6 +1,4 @@
-package model.card;
-
-import static constant.BlackjackConstant.BUST_NUMBER;
+package card;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -11,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Cards {
+
+    private static final int BUST_NUMBER = 21;
 
     private final List<Card> cards;
 
@@ -47,7 +47,8 @@ public class Cards {
     }
 
     private Set<Integer> generateCandidates(int initialSum, int totalAces) {
-        record State(int sum, int usedAces) {}
+        record State(int sum, int usedAces) {
+        }
 
         Set<Integer> candidates = new HashSet<>();
         Deque<State> deque = new ArrayDeque<>();

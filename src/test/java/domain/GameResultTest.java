@@ -1,13 +1,13 @@
-package model;
+package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
-import model.participant.Dealer;
-import model.participant.Player;
-import org.assertj.core.api.Assertions;
+import card.Card;
+import card.CardNumber;
+import card.CardType;
+import game.GameResult;
+import participant.Dealer;
+import participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ class GameResultTest {
     @DisplayName("두 점수 사이 승패 여부 결정 테스트")
     void test1() {
         // given
-        Player player = new Player("율무");
+        Player player = new Player("율무", 10000);
         player.receiveCard(new Card(CardType.DIAMOND, CardNumber.TEN));
         player.receiveCard(new Card(CardType.DIAMOND, CardNumber.JACK));
 

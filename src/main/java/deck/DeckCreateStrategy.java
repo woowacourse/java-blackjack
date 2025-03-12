@@ -1,7 +1,7 @@
-package model.deck;
+package deck;
 
+import card.Card;
 import java.util.List;
-import model.card.Card;
 
 public interface DeckCreateStrategy {
 
