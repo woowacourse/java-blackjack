@@ -59,15 +59,15 @@ class DealerTest {
     @DisplayName("딜러가 가진 카드의 합이 16 이하면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void canGetMoreCard(final Hand hand, final boolean expected) {
+    void canHit(final Hand hand, final boolean expected) {
         // given
         final Dealer dealer = new Dealer(hand);
 
         // when & then
-        assertThat(dealer.canGetMoreCard()).isEqualTo(expected);
+        assertThat(dealer.canHit()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> canGetMoreCard() {
+    private static Stream<Arguments> canHit() {
         return Stream.of(
                 Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.TEN),
@@ -93,7 +93,7 @@ class DealerTest {
         dealer.receiveCards(hand);
 
         // when & then
-        assertThat(dealer.calculateMaxScore()).isEqualTo(expected);
+        assertThat(dealer.calculateScore()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> calculateWinningResult() {

@@ -15,7 +15,7 @@ public class InputView {
         return readLine();
     }
 
-    public String askMoreCard(Gamer player) {
+    public String askHit(Gamer player) {
         System.out.printf(TITLE_ASK_MORE_CARD + LINE, player.getNickname());
         return readLine();
     }

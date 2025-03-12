@@ -90,15 +90,15 @@ public class PlayerTest {
     @DisplayName("플레이어가 가진 카드의 합이 21 미만이면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void canGetMoreCard(final Hand hand, final boolean expected) {
+    void canHit(final Hand hand, final boolean expected) {
         // given
         final Player player = new Player("엠제이", hand);
 
         // when & then
-        assertThat(player.canGetMoreCard()).isEqualTo(expected);
+        assertThat(player.canHit()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> canGetMoreCard() {
+    private static Stream<Arguments> canHit() {
         return Stream.of(
                 Arguments.of(new Hand(List.of(
                         new Card(Shape.SPADE, Denomination.TEN),
@@ -124,7 +124,7 @@ public class PlayerTest {
         player.receiveCards(hand);
 
         // when & then
-        assertThat(player.calculateMaxScore()).isEqualTo(expected);
+        assertThat(player.calculateScore()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> calculateMaxScore() {

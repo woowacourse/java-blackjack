@@ -25,8 +25,8 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean canGetMoreCard() {
-        int score = hand.calculateMinScore();
+    public boolean canHit() {
+        int score = hand.calculateWithSoftHand();
         return score < BLACKJACK_NUMBER;
     }
 

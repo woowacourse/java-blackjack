@@ -55,7 +55,7 @@ class ParticipantsTest {
     @DisplayName("딜러가 카드를 더 얻을 수 있으면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void canDealerGetMoreCard(final Dealer dealer, final boolean expected) {
+    void canDealerHit(final Dealer dealer, final boolean expected) {
         // given
         final Hand firstHand = provideUnder21Cards();
         final Hand secondHand = provideOver21Cards();
@@ -63,10 +63,10 @@ class ParticipantsTest {
         Participants participants = new Participants(dealer, new Players(players));
 
         // when & then
-        assertThat(participants.canDealerGetMoreCard()).isEqualTo(expected);
+        assertThat(participants.canDealerHit()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> canDealerGetMoreCard() {
+    private static Stream<Arguments> canDealerHit() {
         return Stream.of(
                 Arguments.of(Dealer.createEmpty(), true),
                 Arguments.of(new Dealer(provideOver16Cards()), false)
@@ -76,17 +76,17 @@ class ParticipantsTest {
     @DisplayName("플레이어가 카드를 더 얻을 수 있으면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void canPlayerGetMoreCard(final Hand hand, final boolean expected) {
+    void canPlayerHit(final Hand hand, final boolean expected) {
         // given
         final Players players = new Players(List.of(new Player("밍트", hand)));
 
         Participants participants = new Participants(Dealer.createEmpty(), players);
 
         // when & then
-        assertThat(participants.canPlayerGetMoreCard(0)).isEqualTo(expected);
+        assertThat(participants.canPlayerHit(0)).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> canPlayerGetMoreCard() {
+    private static Stream<Arguments> canPlayerHit() {
         return Stream.of(
                 Arguments.of(provideUnder21Cards(), true),
                 Arguments.of(provideOver21Cards(), false)

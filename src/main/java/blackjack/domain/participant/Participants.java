@@ -25,29 +25,29 @@ public class Participants {
         players.receiveCards(hand.getPartialCards(SPREAD_MULTIPLY_SIZE, hand.getSize()), SPREAD_MULTIPLY_SIZE);
     }
 
-    public boolean canPlayerGetMoreCard(final int index) {
-        final Gamer player = players.getPlayer(index);
-        return player.canGetMoreCard();
-    }
-
-    public Players findExtraCardsAvailablePlayers() {
-        return players.findExtraCardsAvailablePlayers();
-    }
-
-    public void spreadOneCardToDealer(final Card card) {
-        spreadOneCard(dealer, card);
-    }
-
-    public boolean canDealerGetMoreCard() {
-        return dealer.canGetMoreCard();
-    }
-
     public Entry<String, Hand> showInitialDealerCards() {
         return Map.entry(dealer.getNickname(), dealer.showInitialCards());
     }
 
     public Map<String, Hand> showInitialParticipantsCards() {
         return players.showTotalInitialCards();
+    }
+
+    public boolean canDealerHit() {
+        return dealer.canHit();
+    }
+
+    public boolean canPlayerHit(final int index) {
+        final Gamer player = players.getPlayer(index);
+        return player.canHit();
+    }
+
+    public Players findHitAvailablePlayers() {
+        return players.findHitAvailablePlayers();
+    }
+
+    public void spreadOneCardToDealer(final Card card) {
+        spreadOneCard(dealer, card);
     }
 
     public Entry<String, Hand> showDealerCards() {
@@ -58,12 +58,12 @@ public class Participants {
         return players.showTotalCards();
     }
 
-    public int getInitialTotalCardsSize() {
-        return (DEALER_COUNT + players.getSize()) * SPREAD_MULTIPLY_SIZE;
-    }
-
     public Map<String, ResultStatus> calculateWinningResult() {
         return dealer.calculateWinningResult(players.calculateScores());
+    }
+
+    public int getInitialTotalCardsSize() {
+        return (DEALER_COUNT + players.getSize()) * SPREAD_MULTIPLY_SIZE;
     }
 
     private void spreadOneCard(final Gamer gamer, final Card card) {

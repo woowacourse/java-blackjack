@@ -72,19 +72,19 @@ public class BlackjackController {
     }
 
     private void spreadExtraCards(final BlackjackGame blackjackGame, final Gamer gamer) {
-        while (gamer.canGetMoreCard() && isMoreCard(gamer)) {
+        while (gamer.canHit() && wantHit(gamer)) {
             blackjackGame.spreadOneCardToPlayer(gamer);
             resultView.printParticipantTotalCards(gamer.getNickname(), gamer.showAllCards());
         }
     }
 
-    private boolean isMoreCard(final Gamer player) {
-        String answer = inputView.askMoreCard(player);
+    private boolean wantHit(final Gamer player) {
+        String answer = inputView.askHit(player);
         if (isValidAnswer(answer)) {
             return answer.equals(YES);
         }
         resultView.showln("잘못된 응답입니다. 다시 입력해주세요.");
-        return isMoreCard(player);
+        return wantHit(player);
     }
 
     private boolean isValidAnswer(final String answer) {
@@ -92,7 +92,7 @@ public class BlackjackController {
     }
 
     private void spreadDealerExtraCards(final BlackjackGame blackjackGame) {
-        while (blackjackGame.canDealerMoreCard()) {
+        while (blackjackGame.canDealerHit()) {
             blackjackGame.spreadOneCardToDealer();
             resultView.printDealerExtraCard();
         }

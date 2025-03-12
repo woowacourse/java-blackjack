@@ -34,14 +34,14 @@ class HandTest {
     @DisplayName("21 이하에서 카드 최소 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMinScore(final Hand hand, final int expected) {
+    void calculateWithSoftHand(final Hand hand, final int expected) {
         // given
 
         // when & then
-        assertThat(hand.calculateMinScore()).isEqualTo(expected);
+        assertThat(hand.calculateWithSoftHand()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> calculateMinScore() {
+    private static Stream<Arguments> calculateWithSoftHand() {
         return Stream.of(
                 Arguments.of(provideSmallerAceCards(), 18),
                 Arguments.of(provideBiggerAceCards(), 11),

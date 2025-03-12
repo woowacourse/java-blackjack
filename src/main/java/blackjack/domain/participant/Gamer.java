@@ -12,7 +12,7 @@ public abstract class Gamer {
 
     public abstract Hand showInitialCards();
 
-    public abstract boolean canGetMoreCard();
+    public abstract boolean canHit();
 
     public abstract String getNickname();
 
@@ -20,7 +20,7 @@ public abstract class Gamer {
         hand.addAll(givenHand);
     }
 
-    public int calculateMaxScore() {
+    public int calculateScore() {
         return hand.calculateResult();
     }
 

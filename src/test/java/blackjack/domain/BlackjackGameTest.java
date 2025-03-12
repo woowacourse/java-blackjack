@@ -62,8 +62,8 @@ class BlackjackGameTest {
 
         // when & then
         assertAll(
-                () -> assertThat(blackjackGame.canPlayerMoreCard(0)).isTrue(),
-                () -> assertThat(blackjackGame.canPlayerMoreCard(1)).isFalse()
+                () -> assertThat(blackjackGame.canPlayerHit(0)).isTrue(),
+                () -> assertThat(blackjackGame.canPlayerHit(1)).isFalse()
         );
     }
 
@@ -87,17 +87,17 @@ class BlackjackGameTest {
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다.")
     @ParameterizedTest
     @MethodSource
-    void canDealerMoreCard(final Hand hand, final boolean expected) {
+    void canDealerHit(final Hand hand, final boolean expected) {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 new Participants(new Dealer(hand),
                         new Players(provideTwoPlayersWithCards(provideEmptyCards(), provideEmptyCards()))));
 
         // when & then
-        assertThat(blackjackGame.canDealerMoreCard()).isEqualTo(expected);
+        assertThat(blackjackGame.canDealerHit()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> canDealerMoreCard() {
+    private static Stream<Arguments> canDealerHit() {
         return Stream.of(
                 Arguments.of(provideUnder16Cards(), true),
                 Arguments.of(provideOver16Cards(), false)
@@ -107,17 +107,17 @@ class BlackjackGameTest {
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     @ParameterizedTest
     @MethodSource
-    void canPlayerMoreCard(final Hand hand, final boolean expected) {
+    void canPlayerHit(final Hand hand, final boolean expected) {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
                 new Participants(new Dealer(provideEmptyCards()),
                         new Players(provideTwoPlayersWithCards(hand, provideEmptyCards()))));
 
         // when & then
-        assertThat(blackjackGame.canPlayerMoreCard(0)).isEqualTo(expected);
+        assertThat(blackjackGame.canPlayerHit(0)).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> canPlayerMoreCard() {
+    private static Stream<Arguments> canPlayerHit() {
         return Stream.of(
                 Arguments.of(provideUnder21Cards(), true),
                 Arguments.of(provideOver21Cards(), false)
@@ -126,7 +126,7 @@ class BlackjackGameTest {
 
     @DisplayName("카드의 합을 계산한다.")
     @Test
-    void calculateMaxScore() {
+    void calculateScore() {
         // given
         final Dealer dealer = new Dealer(provideUnder16Cards());
         final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
@@ -135,9 +135,9 @@ class BlackjackGameTest {
 
         // when & then
         assertAll(
-                () -> assertThat(blackjackGame.calculateMaxScore(dealer)).isEqualTo(6),
-                () -> assertThat(blackjackGame.calculateMaxScore(blackjackGame.getPlayer(0))).isEqualTo(5),
-                () -> assertThat(blackjackGame.calculateMaxScore(blackjackGame.getPlayer(1))).isEqualTo(30)
+                () -> assertThat(blackjackGame.calculateScore(dealer)).isEqualTo(6),
+                () -> assertThat(blackjackGame.calculateScore(blackjackGame.getPlayer(0))).isEqualTo(5),
+                () -> assertThat(blackjackGame.calculateScore(blackjackGame.getPlayer(1))).isEqualTo(30)
         );
     }
 
@@ -164,7 +164,7 @@ class BlackjackGameTest {
         final String mint = "밍트";
         final String pobi = "포비";
         assertThat(blackjackGame.calculateWinningResult()).isEqualTo(
-                Map.of(mj, ResultStatus.WIN, mint, ResultStatus.LOSE, pobi, ResultStatus.DRAW));
+                Map.of(mj, ResultStatus.WIN, mint, ResultStatus.LOSE, pobi, ResultStatus.PUSH));
     }
 
     @DisplayName("한 장의 카드를 딜러에게 준다.")

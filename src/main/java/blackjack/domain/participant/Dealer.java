@@ -28,13 +28,13 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean canGetMoreCard() {
-        int score = hand.calculateMinScore();
+    public boolean canHit() {
+        int score = hand.calculateWithSoftHand();
         return score <= DEALER_THRESHOLD;
     }
 
     public Map<String, ResultStatus> calculateWinningResult(final Map<String, Integer> playerScores) {
-        int dealerScore = calculateMaxScore();
+        int dealerScore = calculateScore();
         return playerScores.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
                         entry -> ResultStatus.calculateResultStatus(entry.getValue(), dealerScore)));

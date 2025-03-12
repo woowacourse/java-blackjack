@@ -27,8 +27,12 @@ public class BlackjackGame {
         participants.spreadAllTwoCards(hand);
     }
 
-    public boolean canPlayerMoreCard(final int index) {
-        return participants.canPlayerGetMoreCard(index);
+    public boolean canPlayerHit(final int index) {
+        return participants.canPlayerHit(index);
+    }
+
+    public boolean canDealerHit() {
+        return participants.canDealerHit();
     }
 
     public void spreadOneCardToPlayer(final Gamer gamer) {
@@ -41,12 +45,8 @@ public class BlackjackGame {
         participants.spreadOneCardToDealer(hand.getFirstCard());
     }
 
-    public boolean canDealerMoreCard() {
-        return participants.canDealerGetMoreCard();
-    }
-
-    public int calculateMaxScore(final Gamer gamer) {
-        return gamer.calculateMaxScore();
+    public int calculateScore(final Gamer gamer) {
+        return gamer.calculateScore();
     }
 
     public Map<String, ResultStatus> calculateWinningResult() {
@@ -70,7 +70,7 @@ public class BlackjackGame {
     }
 
     public Players findExtraCardsAvailablePlayers() {
-        return participants.findExtraCardsAvailablePlayers();
+        return participants.findHitAvailablePlayers();
     }
 
     public Gamer getPlayer(final int index) {

@@ -38,15 +38,15 @@ public class Players {
                         LinkedHashMap::new));
     }
 
-    public Players findExtraCardsAvailablePlayers() {
+    public Players findHitAvailablePlayers() {
         return new Players(players.stream()
-                .filter(Gamer::canGetMoreCard)
+                .filter(Gamer::canHit)
                 .toList());
     }
 
     public Map<String, Integer> calculateScores() {
         return players.stream()
-                .collect(Collectors.toMap(Gamer::getNickname, Gamer::calculateMaxScore));
+                .collect(Collectors.toMap(Gamer::getNickname, Gamer::calculateScore));
     }
 
     private void validate(List<? extends Gamer> players) {
