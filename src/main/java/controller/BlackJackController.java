@@ -1,11 +1,12 @@
 package controller;
 
-import domain.*;
+import domain.Dealer;
+import domain.Deck;
+import domain.Player;
+import domain.Players;
 import domain.strategy.DeckShuffleStrategy;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
 
 public class BlackJackController {
 
@@ -21,7 +22,7 @@ public class BlackJackController {
 
     public void run() {
         Deck deck = new Deck(new DeckShuffleStrategy());
-        Players players = registerPlayers(inputView.readParticipantsNames(), deck);
+        Players players = Players.registerPlayers(inputView.readParticipantsNames(), deck);
         Dealer dealer = new Dealer(deck.drawInitialCards());
         outputView.printInitialGameSettings(players, dealer);
 
@@ -29,13 +30,6 @@ public class BlackJackController {
         checkDealerHit(dealer, deck);
         outputView.printGameSummary(players, dealer);
         outputView.printGameResult(players.deriveResults(dealer.sumCardNumbers()));
-    }
-
-    private Players registerPlayers(List<String> names, Deck deck) {
-        return new Players(names.stream()
-                .map(Nickname::new)
-                .map(nickname -> new Player(nickname, deck.drawInitialCards()))
-                .toList());
     }
 
     private void selectPlayersHitOrStand(Players players, Deck deck) {

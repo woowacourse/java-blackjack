@@ -10,8 +10,15 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         this.players = players;
+    }
+
+    public static Players registerPlayers(List<String> names, Deck deck) {
+        return new Players(names.stream()
+                .map(Nickname::new)
+                .map(nickname -> new Player(nickname, deck.drawInitialCards()))
+                .toList());
     }
 
     public Map<Player, GameResult> deriveResults(int dealerScore) {
