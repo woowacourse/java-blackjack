@@ -14,8 +14,8 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isImpossibleDraw() {
-        return cardHand.isAtLeastScore(CardHand.MAX_SCORE);
+    public boolean isDrawable() {
+        return !cardHand.isAtLeastScore(CardHand.MAX_SCORE);
     }
 
     @Override

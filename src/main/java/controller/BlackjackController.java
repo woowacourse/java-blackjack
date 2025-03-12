@@ -47,7 +47,7 @@ public class BlackjackController {
 
     private void additionalDealerCard(GameManger gameManger) {
         User dealer = gameManger.getDealer();
-        while (!dealer.isImpossibleDraw()) {
+        while (!dealer.isDrawable()) {
             dealer.drawCard(gameManger.handOutCard());
             outputView.displayDealerAddCard();
         }
@@ -74,7 +74,7 @@ public class BlackjackController {
 
     private void addCardAllPlayer(GameManger gameManger, String playerName) {
         User player = gameManger.findUserByUsername(playerName);
-        while (!player.isImpossibleDraw()) {
+        while (player.isDrawable()) {
             String yesOrNo = inputView.inputYesOrNo(playerName);
             if (yesOrNo.equalsIgnoreCase("N")) {
                 return;

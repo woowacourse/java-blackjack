@@ -11,7 +11,7 @@ public abstract class User {
         this.cardHand = new CardHand();
     }
 
-    public abstract boolean isImpossibleDraw();
+    public abstract boolean isDrawable();
 
     public abstract List<TrumpCard> openInitialCard();
 
