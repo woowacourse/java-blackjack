@@ -78,16 +78,14 @@ public class Application {
     }
 
     private static void processPlayerTurn(final Round round, final Name playerName) {
-        while (isHit(playerName)) {
+        while (round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK) && isHit(playerName)) {
             round.distributeCards(playerName, 1);
             printGamblerCards(playerName, round.getCards(playerName));
-            boolean isBusted = !round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK);
-            if (isBusted) {
-                printBusted(playerName);
-                break;
-            }
         }
-        if (!round.isPlayerOwnsCardExceptInitialCards(playerName)) { // 첫 카드를 받은 이후로 카드를 받지 않은 경우
+        if (!round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK)) {
+            printBusted(playerName);
+        }
+        if (!round.isPlayerOwnsCardExceptInitialCards(playerName)) {
             printGamblerCards(playerName, round.getCards(playerName));
         }
     }
