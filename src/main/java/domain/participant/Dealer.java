@@ -1,18 +1,18 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.HandCards;
 
 public class Dealer extends Participant {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
 
     public Dealer() {
-        super(new CardDeck());
+        super(new HandCards());
     }
 
     public Card getOpenCard() {
-        return cardDeck.getCards().getFirst();
+        return handCards.getCards().getFirst();
     }
 
     @Override

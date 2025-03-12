@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.card.CardDeck;
+import domain.card.HandCards;
 import domain.game.Winning;
 
 public class Player extends Participant {
@@ -8,7 +8,7 @@ public class Player extends Participant {
     private final String name;
 
     public Player(String name) {
-        super(new CardDeck());
+        super(new HandCards());
         validateNotBlank(name);
         name = name.trim();
         validateLength(name);

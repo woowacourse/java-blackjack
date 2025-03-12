@@ -1,32 +1,32 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.HandCards;
 import java.util.List;
 
 public abstract class Participant {
 
-    protected final CardDeck cardDeck;
+    protected final HandCards handCards;
 
-    public Participant(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
+    public Participant(HandCards handCards) {
+        this.handCards = handCards;
     }
 
     public void setUpCardDeck(Card first, Card second) {
-        cardDeck.setUpCards(first, second);
+        handCards.setUpCards(first, second);
     }
 
     protected abstract boolean canTakeMoreCard();
 
     public void takeMoreCard(Card card) {
-        cardDeck.takeMore(card);
+        handCards.takeMore(card);
     }
 
     public int calculateScore() {
-        return cardDeck.calculateScore();
+        return handCards.calculateScore();
     }
 
     public List<Card> getCards() {
-        return cardDeck.getCards();
+        return handCards.getCards();
     }
 }

@@ -2,7 +2,7 @@ package domain.game;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.card.CardPack;
+import domain.card.CardDeck;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,21 +13,21 @@ public class GameManager {
 
     private final Dealer dealer;
     private final List<Player> players;
-    private final CardPack cardPack;
+    private final CardDeck cardDeck;
 
     public GameManager(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
-        this.cardPack = new CardPack();
+        this.cardDeck = new CardDeck();
     }
 
     public void shuffle() {
-        cardPack.shuffle();
+        cardDeck.shuffle();
     }
 
     public void distributeSetUpCards() {
-        dealer.setUpCardDeck(cardPack.poll(), cardPack.poll());
-        players.forEach(player -> player.setUpCardDeck(cardPack.poll(), cardPack.poll()));
+        dealer.setUpCardDeck(cardDeck.poll(), cardDeck.poll());
+        players.forEach(player -> player.setUpCardDeck(cardDeck.poll(), cardDeck.poll()));
     }
 
     public void distributeExtraCards(TakeMoreCardSelector selector) {
@@ -36,14 +36,14 @@ public class GameManager {
         }
 
         if (dealer.canTakeMoreCard()) {
-            dealer.takeMoreCard(cardPack.poll());
+            dealer.takeMoreCard(cardDeck.poll());
             selector.dealerTakenResult();
         }
     }
 
     public void distributeExtraCardToPlayer(Player player, TakeMoreCardSelector selector) {
         while (player.canTakeMoreCard() && selector.isYes(player.getName())) {
-            player.takeMoreCard(cardPack.poll());
+            player.takeMoreCard(cardDeck.poll());
             selector.takenResult(player.getName(), player.getCards());
         }
     }

@@ -1,46 +1,38 @@
 package domain.card;
 
-import domain.game.Winning;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> deck = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
-    public void setUpCards(Card card1, Card card2) {
-        deck.add(card1);
-        deck.add(card2);
+    public CardDeck() {
+        initializeCardPack();
     }
 
-    public void takeMore(Card card) {
-        deck.add(card);
-    }
-
-    public int calculateScore() {
-        int sum = deck.stream()
-            .mapToInt(Card::getNumber)
-            .sum();
-
-        if (hasAce()) {
-            return calculateOptimalScore(sum);
+    private void initializeCardPack() {
+        for (Rank rank : Rank.values()) {
+            for (Shape shape : Shape.values()) {
+                Card card = new Card(rank, shape);
+                cards.add(card);
+            }
         }
-        return sum;
     }
 
-    private boolean hasAce() {
-        return deck.stream()
-            .anyMatch(card -> card.rank() == Rank.ACE);
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 
-    private int calculateOptimalScore(int sum){
-        if (sum + Rank.ACE_LOW_HIGH_GAP <= Winning.BLACK_JACK) {
-            return sum + Rank.ACE_LOW_HIGH_GAP;
+    public Card poll() {
+        if(cards.isEmpty()) {
+            initializeCardPack();
         }
-        return sum;
+        return cards.removeFirst();
     }
 
     public List<Card> getCards() {
-        return List.copyOf(deck);
+        return List.copyOf(cards);
     }
 }
