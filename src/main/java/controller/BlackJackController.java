@@ -1,9 +1,9 @@
 package controller;
 
-import domain.Card;
-import domain.Deck;
-import domain.Game;
-import domain.RandomShuffler;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.game.Game;
+import domain.shuffler.RandomShuffler;
 import java.util.List;
 import java.util.function.Supplier;
 import view.Answer;

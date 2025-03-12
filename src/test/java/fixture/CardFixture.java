@@ -1,10 +1,10 @@
 package fixture;
 
-import domain.Card;
-import domain.Deck;
-import domain.RandomShuffler;
-import domain.Rank;
-import domain.Suit;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.shuffler.RandomShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;

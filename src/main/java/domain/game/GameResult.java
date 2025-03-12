@@ -1,4 +1,7 @@
-package domain;
+package domain.game;
+
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 public enum GameResult {
     WIN("승"),

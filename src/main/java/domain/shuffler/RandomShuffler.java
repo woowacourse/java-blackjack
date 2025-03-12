@@ -1,5 +1,6 @@
-package domain;
+package domain.shuffler;
 
+import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 

@@ -1,5 +1,9 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.card.CardHand;
+import domain.card.Deck;
+import domain.game.GameResult;
 import java.util.Arrays;
 import java.util.EnumMap;
 

@@ -1,18 +1,25 @@
 package domain;
 
-import static domain.Rank.EIGHT;
-import static domain.Rank.FIVE;
-import static domain.Rank.JACK;
-import static domain.Rank.KING;
-import static domain.Rank.NINE;
-import static domain.Rank.SEVEN;
-import static domain.Rank.SIX;
-import static domain.Rank.TEN;
-import static domain.Suit.CLOVER;
-import static domain.Suit.DIAMOND;
-import static domain.Suit.HEART;
+import static domain.card.Rank.EIGHT;
+import static domain.card.Rank.FIVE;
+import static domain.card.Rank.JACK;
+import static domain.card.Rank.KING;
+import static domain.card.Rank.NINE;
+import static domain.card.Rank.SEVEN;
+import static domain.card.Rank.SIX;
+import static domain.card.Rank.TEN;
+import static domain.card.Suit.CLOVER;
+import static domain.card.Suit.DIAMOND;
+import static domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardHand;
+import domain.card.Deck;
+import domain.game.GameResult;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.shuffler.RandomShuffler;
 import fixture.CardFixture;
 import java.util.Set;
 import java.util.stream.Stream;
