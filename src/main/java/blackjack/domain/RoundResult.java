@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 import blackjack.domain.gamer.Gamer;
@@ -28,13 +29,11 @@ public enum RoundResult {
 
     private static RoundResult getResultOf(List<BiFunction<Gamer, Gamer, RoundResult>> getResultFunctions, Gamer gamer,
         Gamer otherGamer) {
-        for (var function : getResultFunctions) {
-            RoundResult roundResult = function.apply(gamer, otherGamer);
-            if (roundResult != null) {
-                return roundResult;
-            }
-        }
-        return TIE;
+        return getResultFunctions.stream()
+            .map(function -> function.apply(gamer, otherGamer))
+            .filter(Objects::nonNull)
+            .findFirst()
+            .orElse(TIE);
     }
 
     private static RoundResult getBustResult(Gamer gamer, Gamer otherGamer) {
