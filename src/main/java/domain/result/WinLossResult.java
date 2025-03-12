@@ -38,15 +38,19 @@ public enum WinLossResult {
             return LOSS;
         }
         if (dealer.getHandTotal() == player.getHandTotal()) {
-            if (player.isBlackJack() && !dealer.isBlackJack()) {
-                return BLACKJACK_WIN;
-            }
-            if (dealer.isBlackJack() && !player.isBlackJack()) {
-                return LOSS;
-            }
-                return DRAW;
+            return checkBlackJackCase(dealer, player);
         }
         return NONE;
+    }
+
+    private static WinLossResult checkBlackJackCase(final Dealer dealer, final Player player) {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return BLACKJACK_WIN;
+        }
+        if (dealer.isBlackJack() && !player.isBlackJack()) {
+            return LOSS;
+        }
+        return DRAW;
     }
 
     public String getWinLossMessage() {
