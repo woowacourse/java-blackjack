@@ -40,6 +40,10 @@ public class OutputView {
         return cardDto.number() + cardDto.shape();
     }
 
+    public void printDealerCardsWithResult(final List<CardDto> cardDtos, final int result) {
+        printCardsWithNameAndResult("딜러", cardDtos, result);
+    }
+
     public void printCardsWithNameAndResult(final String name, final List<CardDto> cardDtos, final int result) {
         List<String> cardOutputs = cardDtos.stream()
                 .map(this::concatCardDto)

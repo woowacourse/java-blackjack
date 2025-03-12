@@ -112,7 +112,7 @@ public class BlackjackController {
 
     private void printFinalCards(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
-        outputView.printCardsWithNameAndResult("딜러", getCardDtos(blackjackGame.getDealerCards()),
+        outputView.printDealerCardsWithResult(getCardDtos(blackjackGame.getDealerCards()),
                 blackjackGame.getDealerResult());
 
         blackjackGame.getSequencedPlayerNames().forEach(name -> outputView.printCardsWithNameAndResult(
