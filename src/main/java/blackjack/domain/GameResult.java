@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import static blackjack.domain.HandState.BLACKJACK;
+import static blackjack.domain.HandState.BUST;
+
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
@@ -18,28 +21,32 @@ public enum GameResult {
     }
 
     public static GameResult checkPlayerWin(final Player player, final Dealer dealer) {
-        if (player.isBust()) {
+        HandState playerState = player.getHandState();
+        HandState dealerState = dealer.getHandState();
+        if (playerState == BUST) {
             return GameResult.LOSE;
         }
-        if (dealer.isBust()) {
+        if (dealerState == BUST) {
             return GameResult.WIN;
         }
 
-        if(player.isBlackjack() && dealer.isBlackjack()) {
+        if(playerState == BLACKJACK && dealerState == BLACKJACK) {
             return GameResult.DRAW;
         }
 
-        if(player.isBlackjack()) {
+        if(playerState == BLACKJACK) {
             return GameResult.BLACKJACK_WIN;
         }
-        if(dealer.isBlackjack()) {
+        if(dealerState == BLACKJACK) {
             return GameResult.LOSE;
         }
 
-        if (player.getScore().isHigherThan(dealer.getScore())) {
+        Score playerScore = player.getScore();
+        Score dealerScore = dealer.getScore();
+        if (playerScore.isHigherThan(dealerScore)) {
             return GameResult.WIN;
         }
-        if (dealer.getScore().isHigherThan(player.getScore())) {
+        if (dealerScore.isHigherThan(playerScore)) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;

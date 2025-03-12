@@ -2,60 +2,78 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Set;
+import blackjack.domain.Score;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class CardHandTest {
 
-    @DisplayName("가지고있는 카드들의 총합 가능성을 계산한다.")
-    @Test
-    void testCards() {
-        CardHand cardHand = new CardHand();
-        cardHand.add(new Card(CardSuit.HEART, CardRank.TWO));
-        cardHand.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
+    @Nested
+    @DisplayName("손패로 만들 수 있는 21이하의 가장 높은 값이 손패의 점수이다.")
+    class CardHandScore {
 
-        Set<Integer> possibleSums = cardHand.calculatePossibleSum();
+        @DisplayName("Ace가 없는 경우 손패의 합이 그대로 점수가 된다.")
+        @Test
+        void testCards() {
+            // given
+            CardHand cardHand = new CardHand();
+            cardHand.add(new Card(CardSuit.HEART, CardRank.TWO));
+            cardHand.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        assertThat(possibleSums).isEqualTo(Set.of(10));
-    }
+            // when
+            Score score = cardHand.getScore();
 
-    @DisplayName("총합 가능성 계산 시 에이스가 1인 경우와 11인 경우 모두 계산한다.")
-    @Test
-    void testCards_ace() {
-        CardHand cardHand = new CardHand();
-        cardHand.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
-        cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
+            // then
+            assertThat(score.intValue()).isEqualTo(10);
+        }
 
-        Set<Integer> possibleSums = cardHand.calculatePossibleSum();
+        @DisplayName("Ace를 11로 계산했을 때 21이 넘지 않는다면 11로 계산한다.")
+        @Test
+        void testCards_ace() {
+            // given
+            CardHand cardHand = new CardHand();
+            cardHand.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
+            cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
 
-        assertThat(possibleSums).isEqualTo(Set.of(9, 19));
-    }
+            // when
+            Score score = cardHand.getScore();
 
-    @DisplayName("에이스가 여러개인 경우에도 정상적으로 계산한다.")
-    @Test
-    void testCards_multipleAce() {
-        CardHand cardHand = new CardHand();
-        cardHand.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
-        cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
+            // then
+            assertThat(score.intValue()).isEqualTo(19);
+        }
 
-        Set<Integer> possibleSums = cardHand.calculatePossibleSum();
+        @DisplayName("Ace가 2개라면 2개 중 1개는 1로 계산된다.")
+        @Test
+        void testCards_multipleAce() {
+            // given
+            CardHand cardHand = new CardHand();
+            cardHand.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
+            cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
+            cardHand.add(new Card(CardSuit.HEART, CardRank.ACE)); // 1로계산
 
-        assertThat(possibleSums).isEqualTo(Set.of(10, 20, 30));
-    }
+            // when
+            Score score = cardHand.getScore();
 
-    @DisplayName("에이스가 4개인 경우에도 정상적으로 계산한다.")
-    @Test
-    void testCards_multipleAce4() {
-        CardHand cardHand = new CardHand();
-        cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
+            // then
+            assertThat(score.intValue()).isEqualTo(20);
+        }
 
-        Set<Integer> possibleSums = cardHand.calculatePossibleSum();
+        @DisplayName("Ace가 4개일 때 한 개를 제외하고는 1로 계산된다.")
+        @Test
+        void testCards_multipleAce4() {
+            // given
+            CardHand cardHand = new CardHand();
+            cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
+            cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
+            cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
+            cardHand.add(new Card(CardSuit.HEART, CardRank.ACE));
 
-        assertThat(possibleSums).isEqualTo(Set.of(4, 14, 24, 34, 44));
+            // when
+            Score score = cardHand.getScore();
+
+            // then
+            assertThat(score.intValue()).isEqualTo(14);
+        }
     }
 }

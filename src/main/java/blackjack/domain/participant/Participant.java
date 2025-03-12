@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.HandState;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
@@ -31,6 +32,10 @@ public abstract class Participant {
 
     public Score getScore() {
         return cardHand.getScore();
+    }
+
+    public HandState getHandState() {
+        return cardHand.getHandState();
     }
 
     public List<Card> getCardDeck() {

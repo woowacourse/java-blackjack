@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.HandState;
 import blackjack.domain.Score;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +14,19 @@ public class CardHand {
         cards.add(card);
     }
 
-    public Set<Integer> calculatePossibleSum() {
+    public boolean isBlackjack() {
+        return getScore().isBlackjack(deckSize());
+    }
+
+    public boolean isBust() {
+        return getScore().isBust();
+    }
+
+    public Score getScore() {
+        return new Score(calculatePossibleSum());
+    }
+
+    private Set<Integer> calculatePossibleSum() {
         List<Integer> sums = new ArrayList<>();
         sums.add(0);
 
@@ -25,16 +38,8 @@ public class CardHand {
         return new HashSet<>(sums);
     }
 
-    public boolean isBlackjack() {
-        return getScore().isBlackjack(deckSize());
-    }
-
-    public boolean isBust() {
-        return getScore().isBust();
-    }
-
-    public Score getScore() {
-        return new Score(calculatePossibleSum());
+    public HandState getHandState() {
+        return HandState.from(this);
     }
 
     public int deckSize() {
