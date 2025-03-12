@@ -2,11 +2,14 @@ package blackjack.controller;
 
 import blackjack.model.game.BlackJackGame;
 import blackjack.model.game.DeckInitializer;
+import blackjack.model.game.ParticipantResult;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.Map;
 
 public class BlackJackController {
 
@@ -21,17 +24,17 @@ public class BlackJackController {
     public void run() {
         Participants participants = Parser.parseParticipants(inputView.inputParticipant());
         Dealer dealer = new Dealer();
-        BlackJackGame blackJackGame = new BlackJackGame(
-                new DeckInitializer(),
-                dealer,
-                participants
-        );
+        BlackJackGame blackJackGame = new BlackJackGame(new DeckInitializer(), dealer, participants);
         blackJackGame.initializeGame();
         outputView.outputFirstCardDistributionResult(participants, dealer);
+        progressTurns(blackJackGame, dealer, participants);
+        calculateFinalResults(dealer, participants);
+    }
+
+    private void progressTurns(final BlackJackGame blackJackGame, final Dealer dealer, final Participants participants) {
         giveMoreCardToWantingParticipants(blackJackGame);
         giveMoreDealerCard(blackJackGame, dealer);
         outputView.outputFinalCardStatus(dealer, participants);
-        outputView.outputFinalResult(dealer, participants);
     }
 
     private void giveMoreCardToWantingParticipants(final BlackJackGame blackJackGame) {
@@ -58,5 +61,11 @@ public class BlackJackController {
             outputView.outputPlayerCardStatus(dealer);
         }
         outputView.outputDealerCardFinish();
+    }
+
+    private void calculateFinalResults(final Dealer dealer, final Participants participants) {
+        Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
+        Map<ParticipantResult, Integer> participantResultCounts = ParticipantResult.countResults(participantResults);
+        outputView.outputFinalResult(participantResults, participantResultCounts);
     }
 }

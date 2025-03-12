@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blackjack.model.game.ParticipantResult.LOSE;
+import static blackjack.model.game.ParticipantResult.WIN;
+
 public class OutputView {
 
     public static final String NAME_DELIMITER = ", ";
@@ -85,16 +88,13 @@ public class OutputView {
         System.out.println(LINE + "딜러는 17이상이라 더이상 카드를 받을 수 없습니다." + LINE);
     }
 
-    public void outputFinalResult(final Dealer dealer, final Participants participants) {
+    public void outputFinalResult(final Map<Participant, ParticipantResult> participantResults, final Map<ParticipantResult, Integer> participantResultCounts) {
         System.out.println("## 최종 승패");
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
-        Map<ParticipantResult, Integer> winLoseResult = new HashMap<>(Map.of(ParticipantResult.WIN, 0, ParticipantResult.LOSE, 0));
-        for (Participant participant : participants.getParticipants()) {
-            ParticipantResult participantResult = ParticipantResult.of(dealer, participant);
-            customStringBuilder.appendLine(String.format("%s: %s", participant.getName(), participantResult.getDescription()));
-            winLoseResult.merge(participantResult, 1, Integer::sum);
+        customStringBuilder.appendLine(String.format("딜러: %d승 %d패", participantResultCounts.get(LOSE), participantResultCounts.get(WIN)));
+        for (Map.Entry<Participant, ParticipantResult> resultEntry : participantResults.entrySet()) {
+            customStringBuilder.appendLine(String.format("%s: %s", resultEntry.getKey().getName(), resultEntry.getValue().getDescription()));
         }
-        System.out.println(String.format("딜러: %d승 %d패", winLoseResult.get(ParticipantResult.LOSE), winLoseResult.get(ParticipantResult.WIN)));
         customStringBuilder.print();
     }
 
