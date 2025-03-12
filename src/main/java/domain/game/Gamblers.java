@@ -1,5 +1,7 @@
 package domain.game;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import domain.card.CardPack;
@@ -41,22 +43,10 @@ public class Gamblers {
         }
     }
 
-    public WinningCounts evaluateDealerWinnings() {
-        Map<Player, Winning> playerWinnings = evaluatePlayerWinnings();
-        int winCount = 0, drawCount = 0, loseCount = 0;
-
-        for (Winning winning : playerWinnings.values()) {
-            if (winning == Winning.WIN) {
-                loseCount++;
-            }
-            if (winning == Winning.DRAW) {
-                drawCount++;
-            }
-            if (winning == Winning.LOSE) {
-                winCount++;
-            }
-        }
-        return new WinningCounts(winCount, drawCount, loseCount);
+    public Map<Winning, Long> evaluateDealerWinnings() {
+        return evaluatePlayerWinnings().values()
+            .stream()
+            .collect(groupingBy(Winning::reverse, counting()));
     }
 
     public Map<Player, Winning> evaluatePlayerWinnings() {

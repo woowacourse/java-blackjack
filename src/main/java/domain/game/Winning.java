@@ -18,6 +18,16 @@ public enum Winning {
         return name;
     }
 
+    public static Winning reverse(Winning winning) {
+        if (winning == WIN) {
+            return LOSE;
+        }
+        if (winning == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
     public static Winning determineForPlayer(int playerScore, int dealerScore) {
         if (playerScore > BLACK_JACK) {
             return LOSE;

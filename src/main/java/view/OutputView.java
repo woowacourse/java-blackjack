@@ -2,12 +2,12 @@ package view;
 
 import domain.card.Card;
 import domain.game.Winning;
-import domain.game.WinningCounts;
 import domain.participant.Dealer;
 import domain.participant.Gambler;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -39,26 +39,24 @@ public class OutputView {
         );
     }
 
-    public void printGameResult(WinningCounts winningCounts, Map<Player, Winning> playerWinnings) {
+    public void printGameResult(Map<Winning, Long> dealerWinnings, List<Player> players,
+        Map<Player, Winning> playerWinnings) {
         System.out.println("## 최종 승패");
-        printDealerWinnings(winningCounts);
+        printDealerWinnings(dealerWinnings);
 
-        playerWinnings.forEach((player, winning) ->
-            System.out.printf("%s: %s\n", player.getName(), winning.getName())
-        );
+        for (Player player : players) {
+            Winning winning = playerWinnings.get(player);
+            System.out.printf("%s: %s%n", player.getName(), winning.getName());
+        }
     }
 
-    private static void printDealerWinnings(WinningCounts winningCounts) {
+    private void printDealerWinnings(Map<Winning, Long> dealerWinnings) {
         System.out.print("딜러: ");
-        if (winningCounts.winCount() > 0) {
-            System.out.print(winningCounts.winCount() + "승 ");
-        }
-        if (winningCounts.drawCount() > 0) {
-            System.out.print(winningCounts.drawCount() + "무 ");
-        }
-        if (winningCounts.loseCount() > 0) {
-            System.out.print(winningCounts.loseCount() + "패 ");
-        }
+        dealerWinnings.entrySet()
+            .stream()
+            .sorted(Entry.comparingByKey())
+            .forEach(
+                entry -> System.out.printf("%d%s ", entry.getValue(), entry.getKey().getName()));
         System.out.println();
     }
 

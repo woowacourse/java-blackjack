@@ -5,7 +5,6 @@ import domain.card.CardHand;
 import domain.card.CardPack;
 import domain.game.Gamblers;
 import domain.game.Winning;
-import domain.game.WinningCounts;
 import domain.participant.Dealer;
 import domain.participant.Gambler;
 import domain.participant.Player;
@@ -34,17 +33,15 @@ public class BlackjackController {
         cardPack.shuffle();
 
         gamblers.distributeSetUpCards(cardPack);
-
         outputView.printSetUpCardDeck(dealer, players);
 
         gamblers.distributeExtraCardsToPlayers(cardPack, new ViewPlayerAnswer(inputView, outputView));
         gamblers.distributeExtraCardsToDealer(cardPack, new ViewDealerAnswer(outputView));
-
         outputView.printFinalCardDeck(chainGamblers(dealer, players));
 
-        WinningCounts winningCounts = gamblers.evaluateDealerWinnings();
+        Map<Winning, Long> dealerWinnings = gamblers.evaluateDealerWinnings();
         Map<Player, Winning> playerWinnings = gamblers.evaluatePlayerWinnings();
-        outputView.printGameResult(winningCounts, playerWinnings);
+        outputView.printGameResult(dealerWinnings, players, playerWinnings);
     }
 
     private List<Player> createPlayers() {

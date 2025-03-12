@@ -172,11 +172,11 @@ public class GamblersTest {
         losePlayer3.takeCards(Card.HEART_K, Card.HEART_9); // 19
 
         //when
-        WinningCounts winningCounts = gamblers.evaluateDealerWinnings();
+        Map<Winning, Long> dealerWinnings = gamblers.evaluateDealerWinnings();
 
-        int dealerWinCount = winningCounts.winCount();
-        int dealerDrawCount = winningCounts.drawCount();
-        int dealerLoseCount = winningCounts.loseCount();
+        var dealerWinCount = dealerWinnings.get(Winning.WIN);
+        var dealerDrawCount = dealerWinnings.get(Winning.DRAW);
+        var dealerLoseCount = dealerWinnings.get(Winning.LOSE);
 
         //then
         assertAll(
