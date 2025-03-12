@@ -1,5 +1,7 @@
 package domain.participant;
 
+import static error.ErrorMessage.NOT_EXIST_DEALER;
+
 import error.exception.InvalidParticipantSizeException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,35 +20,46 @@ public class Participants {
         this.participants = participants;
     }
 
-    private void validateParticipantSize(List<Participant> participants) {
-        if (participants.size() > PLAYER_MAX_SIZE + DEALER) {
-            throw new InvalidParticipantSizeException(PLAYER_MAX_SIZE + DEALER);
-        }
-    }
-
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
 
-    public ParticipantsResult calculate() {
+    public ParticipantsResult calculateOfResult() {
         Participant dealer = findDealer();
         Map<Player, GameResult> playersResult = new HashMap<>();
         Map<GameResult, Integer> dealerResult = new HashMap<>();
-        for (Participant participant : participants) {
-            if (participant.isPlayer()) {
-                GameResult gameResult = GameResult.calculateResultOfPlayer(dealer, participant);
-                dealerResult.put(gameResult.convertOfDealer(),
-                    dealerResult.getOrDefault(gameResult.convertOfDealer(), 0) + 1);
-                playersResult.put((Player) participant, gameResult);
-            }
-        }
+        calculateResultOfParticipant(dealer, dealerResult, playersResult);
         return new ParticipantsResult(playersResult, dealerResult);
+    }
+
+    private void calculateResultOfParticipant(Participant dealer,
+        Map<GameResult, Integer> dealerResult,
+        Map<Player, GameResult> playersResult) {
+        for (Participant participant : participants) {
+            addResultOfParticipant(dealer, dealerResult, playersResult, participant);
+        }
+    }
+
+    private void addResultOfParticipant(Participant dealer, Map<GameResult, Integer> dealerResult,
+        Map<Player, GameResult> playersResult, Participant participant) {
+        if (participant.isPlayer()) {
+            GameResult gameResult = GameResult.calculateResultOfPlayer(dealer, participant);
+            dealerResult.put(gameResult.convertOfDealer(),
+                dealerResult.getOrDefault(gameResult.convertOfDealer(), 0) + 1);
+            playersResult.put((Player) participant, gameResult);
+        }
     }
 
     private Participant findDealer() {
         return participants.stream()
             .filter(participant -> !participant.isPlayer())
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalStateException(NOT_EXIST_DEALER.getMessage()));
+    }
+
+    private void validateParticipantSize(List<Participant> participants) {
+        if (participants.size() > PLAYER_MAX_SIZE + DEALER) {
+            throw new InvalidParticipantSizeException(PLAYER_MAX_SIZE + DEALER);
+        }
     }
 }

@@ -15,9 +15,6 @@ public enum GameResult {
     }
 
     public static GameResult calculateResultOfPlayer(Participant dealer, Participant player) {
-        int dealerValue = dealer.getTotalValue();
-        int playerValue = player.getTotalValue();
-
         boolean isDealerBlackJack = dealer.isBlackJack();
         boolean isPlayerBlackJack = player.isBlackJack();
         if (isPlayerBlackJack && isDealerBlackJack) {
@@ -26,6 +23,12 @@ public enum GameResult {
         if (isPlayerBlackJack) {
             return BLACKJACK;
         }
+        return calculateNoneBlackJackCase(dealer, player);
+    }
+
+    private static GameResult calculateNoneBlackJackCase(Participant dealer, Participant player) {
+        int dealerValue = dealer.getTotalValue();
+        int playerValue = player.getTotalValue();
         if (Participant.isBust(dealerValue) || Participant.isBust(playerValue)) {
             return calculateBurstResult(dealer, player);
         }
@@ -37,7 +40,6 @@ public enum GameResult {
     }
 
     private static GameResult calculateBurstResult(Participant dealer, Participant player) {
-
         int dealerValue = dealer.getTotalValue();
         int playerValue = player.getTotalValue();
         if (Participant.isBust(dealerValue) && Participant.isBust(playerValue)) {

@@ -59,7 +59,7 @@ public class BlackJackGame {
     }
 
     public ParticipantsResult calculateParticipantsResult() {
-        return participants.calculate();
+        return participants.calculateOfResult();
     }
 
     public List<Participant> getParticipants() {

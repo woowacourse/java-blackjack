@@ -59,6 +59,9 @@ public abstract class Participant {
         return calculateTotalValue(constTotalValue, aceCount);
     }
 
+    /***
+     * 반복문을 돌며 A가 11로 계산될 수 있는지에 대한 경우의 수를 탐색한다.
+     */
     private int calculateTotalValue(int baseValue, int aceCount) {
         int candidateResult = baseValue;
         for (int oneValueCount = 0; oneValueCount <= aceCount; ++oneValueCount) {

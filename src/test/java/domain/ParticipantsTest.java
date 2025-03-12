@@ -56,7 +56,7 @@ class ParticipantsTest {
             player2.addCard(new Card(Shape.HEART, Rank.SEVEN));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
             Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
@@ -79,7 +79,7 @@ class ParticipantsTest {
             player2.addCard(new Card(Shape.SPADE, Rank.FIVE));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
             Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
@@ -100,7 +100,7 @@ class ParticipantsTest {
             player2.addCard(new Card(Shape.HEART, Rank.SEVEN));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
             Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
@@ -121,7 +121,7 @@ class ParticipantsTest {
             player2.addCard(new Card(Shape.SPADE, Rank.FIVE));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
             Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
