@@ -32,6 +32,9 @@ public enum WinLossResult {
     }
 
     public static WinLossResult from(final Dealer dealer, final Player player) {
+        if(dealer.getHandTotal() < player.getHandTotal()) {
+            return WIN;
+        }
         if(dealer.getHandTotal() > player.getHandTotal()){
             return LOSS;
         }
