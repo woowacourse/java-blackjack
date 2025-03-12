@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.ResultStatus;
+import blackjack.domain.DealerWinningResult;
 import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,12 @@ public class Dealer extends Gamer {
         return score <= DEALER_THRESHOLD;
     }
 
-    public Map<String, ResultStatus> calculateWinningResult(final Map<String, Integer> playerScores) {
+    public DealerWinningResult makeDealerWinningResult(final Map<String, Integer> playerScores) {
         int dealerScore = calculateScore();
-        return playerScores.entrySet().stream()
+        Map<String, ResultStatus> result = playerScores.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
                         entry -> ResultStatus.calculateResultStatus(entry.getValue(), dealerScore)));
+        return new DealerWinningResult(result);
     }
 
     @Override

@@ -49,8 +49,8 @@ public class BlackjackGame {
         return gamer.calculateScore();
     }
 
-    public Map<String, ResultStatus> calculateWinningResult() {
-        return participants.calculateWinningResult();
+    public DealerWinningResult makeDealerWinningResult() {
+        return participants.makeDealerWinningResult();
     }
 
     public Entry<String, Hand> showInitialDealerCard() {

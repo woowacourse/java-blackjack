@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.ResultStatus;
+import blackjack.domain.DealerWinningResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import java.util.List;
@@ -58,8 +58,8 @@ public class Participants {
         return players.showTotalCards();
     }
 
-    public Map<String, ResultStatus> calculateWinningResult() {
-        return dealer.calculateWinningResult(players.calculateScores());
+    public DealerWinningResult makeDealerWinningResult() {
+        return dealer.makeDealerWinningResult(players.calculateScores());
     }
 
     public int getInitialTotalCardsSize() {

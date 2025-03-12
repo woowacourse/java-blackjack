@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.ResultStatus;
+import blackjack.domain.DealerWinningResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Gamer;
@@ -13,7 +13,6 @@ import blackjack.util.StringParser;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -99,7 +98,7 @@ public class BlackjackController {
     }
 
     private void showWinningResult(final BlackjackGame blackjackGame) {
-        final Map<String, ResultStatus> result = blackjackGame.calculateWinningResult();
-        resultView.showWinningResult(result);
+        final DealerWinningResult result = blackjackGame.makeDealerWinningResult();
+        resultView.showDealerWinningResult(result);
     }
 }

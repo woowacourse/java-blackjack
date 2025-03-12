@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.DealerWinningResult;
 import blackjack.domain.ResultStatus;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
@@ -74,13 +75,13 @@ public class ResultView {
                 .collect(Collectors.joining(COMMA));
     }
 
-    public void showWinningResult(final Map<String, ResultStatus> result) {
+    public void showDealerWinningResult(final DealerWinningResult result) {
         System.out.println(LINE + TITLE_WINNING_RESULT);
-        int winCount = countResultStatus(result, ResultStatus.LOSE);
-        int drawCount = countResultStatus(result, ResultStatus.PUSH);
-        int loseCount = countResultStatus(result, ResultStatus.WIN);
+        int winCount = result.countResultStatus(ResultStatus.WIN);
+        int drawCount = result.countResultStatus(ResultStatus.PUSH);
+        int loseCount = result.countResultStatus(ResultStatus.LOSE);
         System.out.printf(WINNING_DEALER_RESULT_FORMAT + LINE, winCount, drawCount, loseCount);
-        showResultStatus(result);
+        showPlayerResultStatus(result.makePlayerWinningResult());
     }
 
     public void showln(final String line) {
@@ -95,17 +96,11 @@ public class ResultView {
                 .forEach(System.out::println);
     }
 
-    private void showResultStatus(final Map<String, ResultStatus> result) {
+    private void showPlayerResultStatus(final Map<String, ResultStatus> result) {
         for (Entry<String, ResultStatus> entry : result.entrySet()) {
             System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey(),
                     getResultStatusName(entry.getValue()));
         }
-    }
-
-    private int countResultStatus(final Map<String, ResultStatus> result, final ResultStatus input) {
-        return (int) result.values().stream()
-                .filter(resultStatus -> resultStatus == input)
-                .count();
     }
 
     private String makeParticipantsWithScoreMessage(final Entry<String, Hand> entry) {

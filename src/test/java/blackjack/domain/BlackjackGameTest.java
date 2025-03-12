@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Gamer;
@@ -141,14 +141,12 @@ class BlackjackGameTest {
         );
     }
 
-    @DisplayName("딜러에 대한 플레이어의 승,패 결과를 계산한다")
+    @DisplayName("딜러의 승,패 결과를 계산한다")
     @Test
-    void calculateWinningResult() {
+    void makeDealerWinningResult() {
         // given
-        final Hand dealerHand = new Hand(List.of(new Card(Shape.SPADE, Denomination.J),
-                new Card(Shape.SPADE, Denomination.EIGHT)));
-
-        final Dealer dealer = new Dealer(dealerHand);
+        final Dealer dealer = new Dealer(new Hand(List.of(new Card(Shape.SPADE, Denomination.J),
+                new Card(Shape.SPADE, Denomination.EIGHT))));
         final Hand player1Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.NINE),
                 new Card(Shape.SPADE, Denomination.TEN)));
         final Hand player2Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.TWO),
@@ -159,12 +157,15 @@ class BlackjackGameTest {
                 new Participants(dealer,
                         new Players(provideThreePlayersWithCards(player1Hand, player2Hand, player3Hand))));
 
-        // when & then
-        final String mj = "엠제이";
-        final String mint = "밍트";
-        final String pobi = "포비";
-        assertThat(blackjackGame.calculateWinningResult()).isEqualTo(
-                Map.of(mj, ResultStatus.WIN, mint, ResultStatus.LOSE, pobi, ResultStatus.PUSH));
+        final DealerWinningResult expected = new DealerWinningResult(Map.of(
+                "엠제이", ResultStatus.LOSE, "밍트", ResultStatus.WIN, "포비", ResultStatus.PUSH
+        ));
+
+        // when
+        DealerWinningResult dealerWinningResult = blackjackGame.makeDealerWinningResult();
+
+        // then
+        assertThat(dealerWinningResult).isEqualTo(expected);
     }
 
     @DisplayName("한 장의 카드를 딜러에게 준다.")
