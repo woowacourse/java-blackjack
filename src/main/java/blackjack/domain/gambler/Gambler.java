@@ -34,6 +34,9 @@ public abstract class Gambler {
     public int calculateScore() {
         int sum = calculateSum();
         long aceCount = calculateAceCount();
+        if (aceCount == 0) {
+            return sum;
+        }
         return adjustSumByAce(sum, (int) aceCount);
     }
 
@@ -50,12 +53,11 @@ public abstract class Gambler {
     }
 
     protected int adjustSumByAce(int sum, int aceCount) {
-        if (sum <= WinningDiscriminator.BLACK_JACK) {
-            return sum;
-        }
-        while (aceCount > 0 && sum > WinningDiscriminator.BLACK_JACK) {
-            sum -= (CardType.ACE.getValue() - MIN_ACE_VALUE);
-            aceCount--;
+        int differenceBetweenMaxAndMinValue = CardType.ACE.getValue() - MIN_ACE_VALUE;
+        sum -= differenceBetweenMaxAndMinValue * (aceCount - 1);
+
+        if (sum > WinningDiscriminator.BLACK_JACK) {
+            sum -= differenceBetweenMaxAndMinValue;
         }
         return sum;
     }
