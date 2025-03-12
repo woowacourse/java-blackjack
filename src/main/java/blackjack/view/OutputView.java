@@ -12,9 +12,9 @@ public class OutputView {
 
     public static void printStartingCards(StartingCardsResponseDto responseDto) {
         System.out.printf("%s와 %s에게 %d장을 나누었습니다.%n",
-            responseDto.getDealerName(),
-            responseDto.getPlayerNames(),
-            responseDto.startingCardsSize());
+                responseDto.getDealerName(),
+                responseDto.getPlayerNames(),
+                responseDto.startingCardsSize());
         System.out.println(responseDto.dealer());
         for (var player : responseDto.players()) {
             System.out.println(player);
@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     public static void printFinalResult(FinalResultResponseDto responseDto) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         for (var gamer : responseDto.gamers()) {
             System.out.println(gamer);
         }

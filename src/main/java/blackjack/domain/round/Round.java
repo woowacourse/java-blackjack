@@ -1,5 +1,6 @@
 package blackjack.domain.round;
 
+import blackjack.domain.PlayerBets;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
 import blackjack.domain.gamer.Dealer;
@@ -9,6 +10,7 @@ import blackjack.dto.response.RoundResultsResponseDto;
 import blackjack.dto.response.StartingCardsResponseDto;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Round {
@@ -55,7 +57,13 @@ public class Round {
         return RoundResultsResponseDto.of(dealer, players);
     }
 
-    public FinalResultResponseDto getFinalResult() {
-        return FinalResultResponseDto.of(dealer, players);
+    public FinalResultResponseDto getFinalResult(PlayerBets playerBets) {
+        LinkedHashMap<String, Double> playerProfits = new LinkedHashMap<>();
+        double dealerProfit = playerBets.getDealerProfit(dealer, players);
+        for (Player player : players) {
+            double playerProfit = playerBets.getPlayerProfit(player, dealer);
+            playerProfits.put(player.getName(), playerProfit);
+        }
+        return FinalResultResponseDto.of(dealerProfit, playerProfits);
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class BlackjackController {
 
     private Round round;
+    private PlayerBets playerBets;
 
     public void run() {
         setRound();
@@ -26,7 +27,7 @@ public class BlackjackController {
     private void setRound() {
         Dealer dealer = new Dealer();
         List<Player> players = setPlayers();
-        PlayerBets playerBets = setBets(players);
+        playerBets = setBets(players);
         round = new Round(dealer, players);
         OutputView.printStartingCards(round.initialize());
     }
@@ -76,6 +77,6 @@ public class BlackjackController {
 
     private void printResult() {
         OutputView.printRoundResult(round.getRoundResults());
-        OutputView.printFinalResult(round.getFinalResult());
+        OutputView.printFinalResult(round.getFinalResult(playerBets));
     }
 }
