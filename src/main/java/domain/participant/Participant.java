@@ -14,6 +14,10 @@ public class Participant {
         hand.addCard(card);
     }
 
+    public int calculateSum() {
+        return hand.calculateSum();
+    }
+
     public Hand getHand() {
         return hand;
     }
