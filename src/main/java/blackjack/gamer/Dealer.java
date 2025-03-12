@@ -19,7 +19,7 @@ public class Dealer extends Gamer {
     }
 
     public void initCardMachine() {
-        List<Card> deck = organizeDeck();
+        final List<Card> deck = organizeDeck();
         cardMachine.receiveDeck(deck);
     }
 
