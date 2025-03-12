@@ -7,8 +7,8 @@ public class DuelHistory {
 	private Count loseCount;
 
 	public DuelHistory() {
-		winCount = new Count(0);
-		loseCount = new Count(0);
+		winCount = Count.from(0);
+		loseCount = Count.from(0);
 	}
 
 	public void write(final DuelResult duelResult) {

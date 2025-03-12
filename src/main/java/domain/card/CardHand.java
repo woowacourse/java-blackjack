@@ -31,7 +31,7 @@ public class CardHand {
 	}
 
 	private Count calculateAceCount() {
-		return new Count((int)cards.stream()
+		return Count.from((int)cards.stream()
 			.filter(card -> card.isMatchNumber(Rank.ACE))
 			.count());
 	}

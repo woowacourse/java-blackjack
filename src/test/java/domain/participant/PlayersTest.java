@@ -99,7 +99,7 @@ public class PlayersTest {
 				// given
 				final Players players = Players.from(List.of("부기", "구구", "파랑"));
 				final Consumer<Player> duel = player -> player.writeDuelResult(DuelResult.WIN);
-				final Count expected = new Count(1);
+				final Count expected = Count.from(1);
 
 				// when
 				players.duelVsDealer(duel);

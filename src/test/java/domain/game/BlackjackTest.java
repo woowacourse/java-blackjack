@@ -23,8 +23,8 @@ import domain.paticipant.Player;
 import domain.paticipant.Players;
 
 public class BlackjackTest {
-	private static final Count ZERO = new Count(0);
-	private static final Count ONE = new Count(1);
+	private static final Count ZERO = Count.from(0);
+	private static final Count ONE = Count.from(1);
 
 	@Nested
 	@DisplayName("블랙잭 게임 생성")
@@ -160,7 +160,7 @@ public class BlackjackTest {
 					s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
 				}
 				s.assertThat(blackjack.getDealer().getParticipant().getDuelHistory().getWinCount())
-					.isEqualTo(new Count(playerNames.size()));
+					.isEqualTo(Count.from(playerNames.size()));
 			});
 		}
 	}

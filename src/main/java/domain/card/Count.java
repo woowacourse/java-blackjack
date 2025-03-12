@@ -1,13 +1,24 @@
 package domain.card;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public record Count(int value) {
+	private static final Map<Integer, Count> CACHE = new ConcurrentHashMap<>();
+
+	public static Count from(final int value) {
+		if (value <= 5) {
+			return CACHE.computeIfAbsent(value, v -> new Count(v));
+		}
+		return new Count(value);
+	}
 
 	public Count increment() {
-		return new Count(value + 1);
+		return Count.from(value + 1);
 	}
 
 	public Count decrement() {
-		return new Count(value - 1);
+		return Count.from(value - 1);
 	}
 
 	public boolean isZero() {

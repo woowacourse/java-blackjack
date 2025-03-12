@@ -17,8 +17,8 @@ public class CountTest {
 		@Test
 		void increment() {
 			// given
-			final Count count = new Count(0);
-			final Count expected = new Count(1);
+			final Count count = Count.from(0);
+			final Count expected = Count.from(1);
 
 			// when
 			final Count actual = count.increment();
@@ -31,8 +31,8 @@ public class CountTest {
 		@Test
 		void decrement() {
 			// given
-			final Count count = new Count(1);
-			final Count expected = new Count(0);
+			final Count count = Count.from(1);
+			final Count expected = Count.from(0);
 
 			// when
 			final Count actual = count.decrement();
@@ -50,8 +50,8 @@ public class CountTest {
 		@Test
 		void isZero() {
 			// given
-			final Count notZero = new Count(1);
-			final Count zero = new Count(0);
+			final Count notZero = Count.from(1);
+			final Count zero = Count.from(0);
 
 			// when
 			final boolean actualNotZero = notZero.isZero();
@@ -73,8 +73,8 @@ public class CountTest {
 		@Test
 		void isGreaterThan() {
 			// given
-			final Count greater = new Count(1);
-			final Count less = new Count(0);
+			final Count greater = Count.from(1);
+			final Count less = Count.from(0);
 
 			// when
 			final boolean actual = greater.isGreaterThan(less);

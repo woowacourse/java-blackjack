@@ -22,8 +22,8 @@ public class DuelHistoryTest {
 		void write(final DuelResult duelResult, final int winCount, final int loseCount) {
 			// given
 			final var duelHistory = new DuelHistory();
-			final Count expectedWinCount = new Count(winCount);
-			final Count expectedLoseCount = new Count(loseCount);
+			final Count expectedWinCount = Count.from(winCount);
+			final Count expectedLoseCount = Count.from(loseCount);
 
 			// when
 			duelHistory.write(duelResult);
