@@ -23,9 +23,12 @@ public class Player extends Participant {
 
     public BetMoney computeBetResult(final WinLossResult winLossResult) {
         if(winLossResult == WinLossResult.WIN) {
-            return new BetMoney(betMoney.applyWinBonus().getAmount());
+            return betMoney.applyWinBonus();
         }
-        return new BetMoney(betMoney.applyBlackJackBonus().getAmount());
+        if(winLossResult == WinLossResult.BLACKJACK_WIN) {
+            return betMoney.applyBlackJackBonus();
+        }
+        return betMoney.applyLossPenalty();
     }
 
     public BetMoney getBetMoney() {
