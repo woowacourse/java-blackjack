@@ -8,9 +8,10 @@ import java.util.Set;
 
 public class BlackjackRule {
     private static final int SUM_LIMIT = 21;
+    private static final int BLACKJACK_COUNT = 2;
 
     public boolean isBlackjack(Cards cards) {
-        return cards.getValues().size() == 2 && isWin(cards);
+        return cards.getCount() == BLACKJACK_COUNT && isWin(cards);
     }
 
     public boolean isBust(Cards cards) {

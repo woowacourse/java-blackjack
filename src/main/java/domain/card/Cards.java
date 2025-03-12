@@ -43,6 +43,10 @@ public class Cards {
         return result;
     }
 
+    public int getCount() {
+        return cards.size();
+    }
+
     public List<Card> getValues() {
         return Collections.unmodifiableList(cards);
     }
