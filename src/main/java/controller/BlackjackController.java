@@ -114,8 +114,7 @@ public class BlackjackController {
 		for (final Player player : players) {
 			final String name = player.getName();
 			final DuelHistory duelHistory = player.getParticipant().getDuelHistory();
-			final boolean isWin = duelHistory.getWinCount() == 1;
-			outputView.printBlackjackPlayerDuelResult(name, isWin);
+			outputView.printBlackjackPlayerDuelResult(name, duelHistory.isWin());
 		}
 	}
 }

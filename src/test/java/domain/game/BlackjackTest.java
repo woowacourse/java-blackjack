@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
 import domain.card.CardHand;
+import domain.card.Count;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Score;
@@ -22,6 +23,8 @@ import domain.paticipant.Player;
 import domain.paticipant.Players;
 
 public class BlackjackTest {
+	private static final Count ZERO = new Count(0);
+	private static final Count ONE = new Count(1);
 
 	@Nested
 	@DisplayName("블랙잭 게임 생성")
@@ -154,10 +157,10 @@ public class BlackjackTest {
 			// then
 			assertSoftly(s -> {
 				for (final Player player : blackjack.getPlayers().getPlayers()) {
-					s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+					s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
 				}
 				s.assertThat(blackjack.getDealer().getParticipant().getDuelHistory().getWinCount())
-					.isEqualTo(playerNames.size());
+					.isEqualTo(new Count(playerNames.size()));
 			});
 		}
 	}
@@ -183,10 +186,10 @@ public class BlackjackTest {
 
 			// then
 			assertSoftly(s -> {
-				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
-				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
-				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ONE);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
 			});
 		}
 
@@ -207,10 +210,10 @@ public class BlackjackTest {
 
 			// then
 			assertSoftly(s -> {
-				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
-				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
-				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ONE);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
 			});
 		}
 
@@ -232,10 +235,10 @@ public class BlackjackTest {
 
 			// then
 			assertSoftly(s -> {
-				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
-				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
-				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ONE);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
 			});
 		}
 
@@ -257,10 +260,10 @@ public class BlackjackTest {
 
 			// then
 			assertSoftly(s -> {
-				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
-				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
-				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ONE);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
 			});
 		}
 
@@ -281,10 +284,10 @@ public class BlackjackTest {
 
 			// then
 			assertSoftly(s -> {
-				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
-				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(0);
-				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
-				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ONE);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
 			});
 		}
 	}

@@ -30,10 +30,10 @@ public class CardHand {
 		return Rank.ifOverThanBustScoreAceIsMIN(score, calculateAceCount(), bustScore);
 	}
 
-	private int calculateAceCount() {
-		return (int)cards.stream()
+	private Count calculateAceCount() {
+		return new Count((int)cards.stream()
 			.filter(card -> card.isMatchNumber(Rank.ACE))
-			.count();
+			.count());
 	}
 
 	public List<Card> getCards() {

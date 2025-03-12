@@ -3,6 +3,8 @@ package view;
 import java.util.List;
 import java.util.Map;
 
+import domain.card.Count;
+
 public class OutputView {
 	private static final String PLAYER_NAME_DELIMITER = ", ";
 
@@ -42,8 +44,8 @@ public class OutputView {
 		System.out.println("## 최종 승패");
 	}
 
-	public void printBlackjackDealerDuelResult(final int winCount, final int loseCount) {
-		System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount, loseCount);
+	public void printBlackjackDealerDuelResult(final Count winCount, final Count loseCount) {
+		System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount.getValue(), loseCount.getValue());
 	}
 
 	public void printBlackjackPlayerDuelResult(final String name, final boolean isWin) {

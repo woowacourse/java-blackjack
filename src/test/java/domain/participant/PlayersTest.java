@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import domain.card.Count;
 import domain.card.Deck;
 import domain.card.Score;
 import domain.duel.DuelResult;
@@ -97,7 +98,8 @@ public class PlayersTest {
 			void duel() {
 				// given
 				final Players players = Players.from(List.of("부기", "구구", "파랑"));
-				Consumer<Player> duel = player -> player.writeDuelResult(DuelResult.WIN);
+				final Consumer<Player> duel = player -> player.writeDuelResult(DuelResult.WIN);
+				final Count expected = new Count(1);
 
 				// when
 				players.duelVsDealer(duel);
@@ -105,7 +107,7 @@ public class PlayersTest {
 				// then
 				assertSoftly(s -> {
 					for (final Player player : players.getPlayers()) {
-						s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+						s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(expected);
 					}
 				});
 			}

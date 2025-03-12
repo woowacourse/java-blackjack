@@ -6,6 +6,11 @@ public class DuelHistory {
 	private Count winCount;
 	private Count loseCount;
 
+	public DuelHistory() {
+		winCount = new Count(0);
+		loseCount = new Count(0);
+	}
+
 	public void write(final DuelResult duelResult) {
 		switch (duelResult) {
 			case WIN -> winCount = winCount.increment();

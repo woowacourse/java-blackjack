@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import domain.card.Count;
+
 public class DuelHistoryTest {
 
 	@Nested
@@ -17,9 +19,11 @@ public class DuelHistoryTest {
 		@DisplayName("주어진 값이 DuelResult.WIN이라면 승리에 대한 기록을, DuelResult.LOSE라면 패배에 대한 기록을 한다.")
 		@ParameterizedTest
 		@CsvSource(value = {"WIN:1:0", "LOSE:0:1"}, delimiter = ':')
-		void write(final DuelResult duelResult, final int expectedWinCount, final int expectedLoseCount) {
+		void write(final DuelResult duelResult, final int winCount, final int loseCount) {
 			// given
 			final var duelHistory = new DuelHistory();
+			final Count expectedWinCount = new Count(winCount);
+			final Count expectedLoseCount = new Count(loseCount);
 
 			// when
 			duelHistory.write(duelResult);
