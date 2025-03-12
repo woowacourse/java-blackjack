@@ -57,7 +57,6 @@ public class Players {
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
-
         return new GameStatistics(gameResults);
     }
 
