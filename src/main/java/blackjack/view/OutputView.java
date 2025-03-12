@@ -46,13 +46,13 @@ public class OutputView {
 
     public static void printDealerResult(Dealer dealer) {
         String cards = toKoreanCards(dealer.getCards());
-        System.out.println("딜러카드: " + cards + " - 결과: " + dealer.calculateMaxScore());
+        System.out.println("딜러카드: " + cards + " - 결과: " + dealer.getCards().calculateScore());
     }
 
     public static void printPlayerResult(List<Player> players) {
         for (Player player : players) {
             String cards = toKoreanCards(player.getCards());
-            System.out.println(player.getName() + "카드: " + cards + " - 결과: " + player.calculateMaxScore());
+            System.out.println(player.getName() + "카드: " + cards + " - 결과: " + player.getCards().calculateScore());
         }
         System.out.println();
     }

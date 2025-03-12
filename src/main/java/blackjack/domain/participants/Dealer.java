@@ -35,10 +35,6 @@ public class Dealer {
         players.sendAll((player) -> player.take(deck.draw(), deck.draw()));
     }
 
-    public int calculateMaxScore() {
-        return cards.calculateMaxScore();
-    }
-
     public void sendCardToPlayer(Player player) {
         if (!players.contains(player)) {
             throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
@@ -50,7 +46,7 @@ public class Dealer {
     }
 
     public void pickAdditionalCard() {
-        while (calculateMaxScore() <= 16) {
+        while (cards.doesNeedDealerPickAdditionalCard()) {
             cards.additionalTake(deck.draw());
         }
     }

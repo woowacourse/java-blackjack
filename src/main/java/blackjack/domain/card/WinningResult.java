@@ -1,31 +1,30 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Score.BUST_THRESHOLD;
-
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum WinningResult {
     DRAW((mainCards, subCards) -> {
-        int mainScore = mainCards.calculateMaxScore();
-        int subScore = subCards.calculateMaxScore();
+        Score mainScore = mainCards.calculateScore();
+        Score subScore = subCards.calculateScore();
 
-        if (mainScore > BUST_THRESHOLD && subScore > BUST_THRESHOLD) {
+        if (mainScore.isBust() && subScore.isBust()) {
             return true;
         }
+
         if (mainCards.isBlackjack() && !subCards.isBlackjack()) {
             return false;
         }
         if (!mainCards.isBlackjack() && subCards.isBlackjack()) {
             return false;
         }
-        return mainScore == subScore;
+        return mainScore.value() == subScore.value();
     }),
     WIN((mainCards, subCards) -> {
-        int mainScore = mainCards.calculateMaxScore();
-        int subScore = subCards.calculateMaxScore();
+        Score mainScore = mainCards.calculateScore();
+        Score subScore = subCards.calculateScore();
 
-        if (mainScore <= BUST_THRESHOLD && subScore > BUST_THRESHOLD) {
+        if (!mainScore.isBust() && subScore.isBust()) {
             return true;
         }
 
@@ -33,17 +32,16 @@ public enum WinningResult {
             return true;
         }
 
-        if (mainScore <= BUST_THRESHOLD) {
-            return mainScore > subScore;
+        if (!mainScore.isBust()) {
+            return mainScore.isGreaterThan(subScore);
         }
-
         return false;
     }),
     LOSE((mainCards, subCards) -> {
-        int mainScore = mainCards.calculateMaxScore();
-        int subScore = subCards.calculateMaxScore();
+        Score mainScore = mainCards.calculateScore();
+        Score subScore = subCards.calculateScore();
 
-        if (mainScore > BUST_THRESHOLD && subScore <= BUST_THRESHOLD) {
+        if (mainScore.isBust() && !subScore.isBust()) {
             return true;
         }
 
@@ -51,10 +49,9 @@ public enum WinningResult {
             return true;
         }
 
-        if (mainScore <= BUST_THRESHOLD) {
-            return mainScore < subScore;
+        if (!mainScore.isBust()) {
+            return mainScore.isLessThan(subScore);
         }
-
         return false;
     });
 

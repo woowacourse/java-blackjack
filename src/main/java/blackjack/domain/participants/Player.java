@@ -26,10 +26,6 @@ public class Player {
         return cards.canTake();
     }
 
-    public int calculateMaxScore() {
-        return cards.calculateMaxScore();
-    }
-
     public boolean isBlackjack() {
         return cards.isBlackjack();
     }

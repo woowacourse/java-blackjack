@@ -1,76 +1,48 @@
 package blackjack.domain.card;
 
-import java.util.Set;
+public record Score(int value) {
+    private static final Score BLACKJACK_SCORE = new Score(21);
+    private static final Score ADDITIONAL_SCORE = new Score(10);
+    private static final Score DEALER_SCORE_THRESHOLD = new Score(17);
 
-public class Score {
-    private static final int DEFAULT_CARD_SIZE = 2;
-    static final int BUST_THRESHOLD = 21;
-
-    private final Cards cards;
-
-    public Score(Cards cards) {
-        this.cards = cards;
+    public Score withAce() {
+        Score maxScore = this.add(ADDITIONAL_SCORE);
+        if (maxScore.isGreaterThan(BLACKJACK_SCORE)) {
+            return this;
+        }
+        return maxScore;
     }
 
-    public int calculateMaxScore() {
-        return maxDfs(0, 0);
+    private Score add(Score otherScore) {
+        return new Score(this.value + otherScore.value);
     }
 
-    private int maxDfs(int depth, int totalScore) {
-        if (depth == cards.getSize()) {
-            return totalScore;
-        }
-
-        Card card = cards.getCard(depth);
-        Set<Integer> scores = card.getRank().getScores();
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        for (int score : scores) {
-            int sum = maxDfs(depth + 1, totalScore + score);
-            if (sum > BUST_THRESHOLD) {
-                min = Math.min(min, sum);
-                continue;
-            }
-            max = Math.max(max, sum);
-        }
-        if (max == Integer.MIN_VALUE) {
-            return min;
-        }
-        return max;
+    public boolean isBlackjackScore() {
+        return equals(BLACKJACK_SCORE);
     }
 
-    public int calculateMinScore() {
-        return minDfs(0, 0);
+    public boolean isBust() {
+        return this.isGreaterThan(BLACKJACK_SCORE);
     }
 
-    private int minDfs(int depth, int totalScore) {
-        if (depth == cards.getSize()) {
-            return totalScore;
-        }
-        Card card = cards.getCard(depth);
-        Set<Integer> scores = card.getRank().getScores();
-        int min = Integer.MAX_VALUE;
-        for (int score : scores) {
-            min = Math.min(min, minDfs(depth + 1, totalScore + score));
-        }
-        return min;
-    }
-
-    public boolean isBlackjack() {
-        return cards.getSize() == DEFAULT_CARD_SIZE
-                && calculateMaxScore() == BUST_THRESHOLD;
+    public boolean isGreaterThan(Score otherScore) {
+        return this.value > otherScore.value;
     }
 
     public boolean canTake() {
-        int minScore = calculateMinScore();
-        return minScore < BUST_THRESHOLD;
+        return this.isLessThan(BLACKJACK_SCORE);
     }
 
-    public void additionalTake(Card card) {
-        int minScore = calculateMaxScore();
-        if (minScore >= BUST_THRESHOLD) {
-            throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
-        }
-        this.cards.add(card);
+    public boolean doesNeedDealerPickAdditionalCard() {
+        return this.isLessThan(DEALER_SCORE_THRESHOLD);
+    }
+
+    public boolean isLessThan(Score otherScore) {
+        return this.value <= otherScore.value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

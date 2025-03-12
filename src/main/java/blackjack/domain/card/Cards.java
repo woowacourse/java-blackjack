@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Cards {
+    private static final int BLACKJACK_CARD_NUMBER = 2;
     private final List<Card> cards;
-    private final Score score;
 
     public Cards() {
         this(new ArrayList<>());
@@ -17,19 +16,29 @@ public class Cards {
 
     public Cards(List<Card> cards) {
         this.cards = cards;
-        this.score = new Score(this);
     }
 
-    public int calculateMaxScore() {
-        return score.calculateMaxScore();
+    public Score calculateScore() {
+        Score totalScore = new Score(cards.stream()
+                .mapToInt(Card::getScore)
+                .sum());
+        if (hasAce()) {
+            return totalScore.withAce();
+        }
+        return totalScore;
     }
 
-    public int calculateMinScore() {
-        return score.calculateMinScore();
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
-        return score.isBlackjack();
+        return calculateScore().isBlackjackScore() && cards.size() == BLACKJACK_CARD_NUMBER;
+    }
+
+    public boolean isBust() {
+        return calculateScore().isBust();
     }
 
     public List<Card> getCards() {
@@ -41,43 +50,26 @@ public class Cards {
     }
 
     public void additionalTake(Card card) {
-        score.additionalTake(card);
+
+        if (calculateScore().isBust()) {
+            throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
+        }
+        this.cards.add(card);
+    }
+
+    public boolean doesNeedDealerPickAdditionalCard() {
+        return calculateScore().doesNeedDealerPickAdditionalCard();
     }
 
     public boolean canTake() {
-        return score.canTake();
+        return calculateScore().canTake();
     }
 
     public int getSize() {
         return cards.size();
     }
 
-    public Card getCard(int index) {
-        return cards.get(index);
-    }
-
     public void add(Card card) {
         cards.add(card);
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-
-        Cards cards1 = (Cards) object;
-        return Objects.equals(getCards(), cards1.getCards()) && Objects.equals(score,
-                cards1.score);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hashCode(getCards());
-        result = 31 * result + Objects.hashCode(score);
-        return result;
     }
 }
