@@ -1,11 +1,13 @@
 package domain.participants;
 
 import domain.card.Card;
+import domain.game.BettingStatistics;
 import domain.game.GameResult;
 import domain.game.GameStatistics;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -60,9 +62,21 @@ public class Players {
         return new GameStatistics(gameResults);
     }
 
+    public BettingStatistics calculateBettingStatistics(Dealer dealer) {
+        Map<Player, GameResult> gameResults = players.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        player -> player.decideGameResult(dealer),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
+        return new BettingStatistics(gameResults);
+    }
+
     private Player selectPlayer(PlayerName playerName) {
         return players.stream().filter(player -> player.getPlayerName().equals(playerName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
     }
+
 }

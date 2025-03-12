@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.game.BettingResultAmount;
+import domain.game.BettingStatistics;
 import domain.game.GameResult;
 import domain.game.GameStatistics;
 import domain.participants.BettingAmount;
@@ -122,12 +124,30 @@ class PlayersTest {
         assertThat(results.get(new PlayerName("d"))).isEqualTo(GameResult.DRAW);
     }
 
+    @Test
+    @DisplayName("정확한 배팅 금액 결과를 반환한다.")
+    void calculateBettingStatisticsTest(){
+        // given
+        Players players = getPlayers();
+        Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
+        dealer.addCard(List.of(DIA_TEN, DIA_JACK));
+        // when
+        BettingStatistics bettingStatistics = players.calculateBettingStatistics(dealer);
+        // then
+        assertThat(bettingStatistics.calculateDealerBettingResult()).isEqualTo(new BettingResultAmount(40000));
+        Map<PlayerName, BettingResultAmount> bettingResult = bettingStatistics.getBettingResult();
+        assertThat(bettingResult.get(new PlayerName("a"))).isEqualTo(new BettingResultAmount(10000));
+        assertThat(bettingResult.get(new PlayerName("b"))).isEqualTo(new BettingResultAmount(-20000));
+        assertThat(bettingResult.get(new PlayerName("c"))).isEqualTo(new BettingResultAmount(-30000));
+        assertThat(bettingResult.get(new PlayerName("d"))).isEqualTo(new BettingResultAmount(0));
+    }
+
     private Players getPlayers() {
         Map<PlayerName, BettingAmount> playersInfo = Map.of(
                 new PlayerName("a"), new BettingAmount(10000),
-                new PlayerName("b"), new BettingAmount(10000),
-                new PlayerName("c"), new BettingAmount(10000),
-                new PlayerName("d"), new BettingAmount(10000)
+                new PlayerName("b"), new BettingAmount(20000),
+                new PlayerName("c"), new BettingAmount(30000),
+                new PlayerName("d"), new BettingAmount(40000)
         );
         Players players = new Players(playersInfo);
         players.giveCard(new PlayerName("a"), List.of(HEART_TEN, HEART_ACE));
