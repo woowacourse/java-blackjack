@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -8,6 +9,8 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.winning.WinningResult;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BattingMoneyTest {
 
@@ -90,5 +93,14 @@ class BattingMoneyTest {
 
         //then
         assertThat(revenue).isEqualTo(-1000);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 999, 1500})
+    void 배팅금액이_1000원_단위가_아니라면_예외를_발생시킨다(int amount) {
+        //given & when & then
+        assertThatThrownBy(() -> new BattingMoney(amount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅금액은 1000원 단위여야합니다.");
     }
 }

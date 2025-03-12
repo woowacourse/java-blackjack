@@ -20,7 +20,7 @@ class PlayerTest {
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Player player = new Player("pobi", new Cards(), new BattingMoney(0));
+        Player player = new Player("pobi", new Cards(), new BattingMoney(1000));
 
         //when
         player.prepareCards(deck);
@@ -29,7 +29,7 @@ class PlayerTest {
         assertThat(player).isEqualTo(new Player("pobi", new Cards(
                 new Card(Suit.CLUB, Rank.EIGHT),
                 new Card(Suit.DIAMOND, Rank.NINE)
-        ), new BattingMoney(0)));
+        ), new BattingMoney(1000)));
     }
 
     @Test
@@ -40,14 +40,14 @@ class PlayerTest {
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Player player = new Player("pobi", new Cards(), new BattingMoney(0));
+        Player player = new Player("pobi", new Cards(), new BattingMoney(1000));
 
         //when
         player.drawCard(deck);
 
         //then
         assertThat(player).isEqualTo(
-                new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.EIGHT)), new BattingMoney(0)));
+                new Player("pobi", new Cards(new Card(Suit.CLUB, Rank.EIGHT)), new BattingMoney(1000)));
     }
 
     @Test

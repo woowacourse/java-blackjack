@@ -29,8 +29,8 @@ class GameBoardTest {
                 new Card(Suit.DIAMOND, Rank.ACE)
         );
         Dealer dealer = new Dealer(new Cards());
-        Players players = new Players(new Player("pobi", new Cards(), new BattingMoney(0)),
-                new Player("neo", new Cards(), new BattingMoney(0)));
+        Players players = new Players(new Player("pobi", new Cards(), new BattingMoney(1000)),
+                new Player("neo", new Cards(), new BattingMoney(1000)));
         GameBoard gameBoard = new GameBoard(deck, dealer, players);
 
         //when
@@ -46,11 +46,11 @@ class GameBoardTest {
                         new Player("pobi", new Cards(
                                 new Card(Suit.CLUB, Rank.ACE),
                                 new Card(Suit.DIAMOND, Rank.EIGHT)
-                        ), new BattingMoney(0)),
+                        ), new BattingMoney(1000)),
                         new Player("neo", new Cards(
                                 new Card(Suit.DIAMOND, Rank.NINE),
                                 new Card(Suit.DIAMOND, Rank.ACE)
-                        ), new BattingMoney(0))
+                        ), new BattingMoney(1000))
                 ))
         );
     }
