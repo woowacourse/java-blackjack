@@ -1,14 +1,14 @@
 package game;
 
 import deck.Deck;
-import participant.Dealer;
-import participant.Player;
-import participant.Players;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import participant.Dealer;
+import participant.Player;
+import participant.Players;
 
 public class BlackjackGame {
 
@@ -21,8 +21,8 @@ public class BlackjackGame {
         }
     }
 
-    public void runPlayerTurn(Player player, Deck deck, boolean drawOneMore) {
-        if (!drawOneMore || !player.canReceiveCard()) {
+    public void runPlayerTurn(Player player, Deck deck) {
+        if (!player.canReceiveCard()) {
             return;
         }
         player.receiveCard(deck.draw());

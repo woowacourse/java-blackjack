@@ -36,7 +36,10 @@ public class BlackjackManager {
         for (Player player : players.getPlayers()) {
             while (player.canReceiveCard()) {
                 boolean drawOneMore = inputView.readDrawOneMore(player.getNickname());
-                blackjackGame.runPlayerTurn(player, deck, drawOneMore);
+                if (!drawOneMore) {
+                    break;
+                }
+                blackjackGame.runPlayerTurn(player, deck);
                 outputView.printPlayerCards(player);
             }
         }
