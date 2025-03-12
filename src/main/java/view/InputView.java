@@ -31,11 +31,11 @@ public class InputView {
         return Answer.isYes(scanner.nextLine());
     }
 
-    public int askPlayerForBattingMoney(final String name){
+    public int askPlayerForBattingMoney(final String name) {
         System.out.printf(ASK_BATTING_MONEY, name);
         try {
             return Integer.parseInt(scanner.nextLine());
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자로 입력해 주세요.");
         }
     }

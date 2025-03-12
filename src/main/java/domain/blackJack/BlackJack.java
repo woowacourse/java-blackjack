@@ -2,7 +2,6 @@ package domain.blackJack;
 
 import domain.card.CardDeck;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Map;

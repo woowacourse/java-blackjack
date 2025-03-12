@@ -44,6 +44,6 @@ public class Hand {
     }
 
     public boolean isBlackJackCount() {
-        return cards.size()==BLACKJACK_COUNT;
+        return cards.size() == BLACKJACK_COUNT;
     }
 }

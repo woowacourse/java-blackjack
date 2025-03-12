@@ -79,14 +79,17 @@ public class DealerTest {
 
     private static Stream<Arguments> provideCardDeckForDrawTest() {
         return Stream.of(
-                Arguments.of(new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, THREE), new Card(DIAMOND, QUEEN))), 3),
-                Arguments.of(new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 2)
+                Arguments.of(new CardDeck(
+                        List.of(new Card(DIAMOND, JACK), new Card(SPADE, THREE), new Card(DIAMOND, QUEEN))), 3),
+                Arguments.of(
+                        new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))),
+                        2)
         );
     }
 
     @Test
     @DisplayName("히든 카드를 제외한 카드 반환 테스트")
-    void getCardExceptHiddenTest(){
+    void getCardExceptHiddenTest() {
         // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer();

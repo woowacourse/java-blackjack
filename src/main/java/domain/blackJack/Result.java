@@ -16,8 +16,8 @@ public class Result {
         int playerSum = player.sum();
         int dealerSum = dealer.sum();
 
-        if (isBlackjack(player)){
-            if(isBlackjack(dealer)){
+        if (isBlackjack(player)) {
+            if (isBlackjack(dealer)) {
                 return DRAW;
             }
             return BLACKJACK;
@@ -34,7 +34,7 @@ public class Result {
     }
 
     private boolean isBlackjack(Participant participant) {
-        return participant.sum()==BLACKJACK_NUMBER && participant.isBlackJackCount();
+        return participant.sum() == BLACKJACK_NUMBER && participant.isBlackJackCount();
     }
 
     public boolean isBust(int sum) {

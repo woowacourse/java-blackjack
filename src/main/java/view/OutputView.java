@@ -1,24 +1,18 @@
 package view;
 
-import static domain.blackJack.MatchResult.DRAW;
-import static domain.blackJack.MatchResult.LOSE;
-import static domain.blackJack.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
 
-import domain.blackJack.MatchResult;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,7 +106,7 @@ public class OutputView {
         System.out.println(NEW_LINE + RESULT_INTRO);
         System.out.printf(DEALER_RESULT + NEW_LINE, dealerProfit);
         playerProfit.forEach(((player, money) ->
-            System.out.printf(PLAYER_RESULT + NEW_LINE, player.getName(), money)
+                System.out.printf(PLAYER_RESULT + NEW_LINE, player.getName(), money)
         ));
     }
 }

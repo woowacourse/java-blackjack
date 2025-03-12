@@ -84,7 +84,7 @@ public class PlayerTest {
         assertThat(player.calculateProfit(matchResult)).isEqualTo(profit);
     }
 
-    private static Stream<Arguments> provideMatchResultForProfit(){
+    private static Stream<Arguments> provideMatchResultForProfit() {
         return Stream.of(
                 Arguments.of(WIN, 10000),
                 Arguments.of(DRAW, 0),
