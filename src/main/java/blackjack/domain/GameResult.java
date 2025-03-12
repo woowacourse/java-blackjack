@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
 
 public enum GameResult {
 
@@ -8,7 +9,7 @@ public enum GameResult {
     LOSE,
     DRAW;
 
-    public static GameResult evaluateGameResult(final Player dealer, final Player gambler) {
+    public static GameResult evaluateGameResult(final Dealer dealer, final Gambler gambler) {
         if (dealer.compareWithOtherPlayer(gambler) > 0) {
             return LOSE;
         }

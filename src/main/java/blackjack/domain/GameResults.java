@@ -4,21 +4,20 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameResults {
 
     private final Map<Player, GameResult> gameResults;
 
     public GameResults(final Dealer dealer, final List<Gambler> gamblers) {
-        gameResults = new HashMap<>(); // todo : 종단 안티 패턴
-        gamblers.forEach(
-                player -> {
-                    gameResults.put(player, GameResult.evaluateGameResult(dealer, player));
-                }
-        );
+        gameResults = gamblers.stream()
+                .collect(Collectors.toMap(
+                        gambler -> gambler,
+                        gambler -> GameResult.evaluateGameResult(dealer, gambler)
+                ));
     }
 
     public GameResult getGameResult(final Player player) {
@@ -26,20 +25,20 @@ public class GameResults {
     }
 
     public int getDealerWin() {
-        return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.LOSE)
-        ).count();
+        return (int) gameResults.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(GameResult.LOSE)
+                ).count();
     }
 
     public int getDealerLose() {
-        return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.WIN)
-        ).count();
+        return (int) gameResults.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(GameResult.WIN)
+                ).count();
     }
 
     public int getDealerDraw() {
-        return (int) gameResults.entrySet().stream().filter(entry ->
-                entry.getValue().equals(GameResult.DRAW)
-        ).count();
+        return (int) gameResults.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(GameResult.DRAW)
+                ).count();
     }
 }
