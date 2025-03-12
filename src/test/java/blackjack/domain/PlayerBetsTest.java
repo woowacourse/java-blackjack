@@ -7,6 +7,8 @@ import blackjack.domain.gamer.Player;
 import blackjack.fixture.DeckFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -111,5 +113,28 @@ class PlayerBetsTest {
 
         // then
         assertThat(actual).isEqualTo(0);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "TWO,EIGHT,THREE,SEVEN,0",
+            "ACE,JACK,ACE,KING,0",
+    })
+    @DisplayName("무승부일 경우 플레이어의 수익을 0으로 계산한다")
+    void playerTieTest(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3,
+                       CardNumber cardNumber4, double expected) {
+        // given
+        PlayerBets playerBets = new PlayerBets();
+        playerBets.add(player, 20000);
+        Deck playerDeck = DeckFixture.deckOf(cardNumber1, cardNumber2);
+        player.initialize(playerDeck);
+        Deck dealerDeck = DeckFixture.deckOf(cardNumber3, cardNumber4);
+        dealer.initialize(dealerDeck);
+
+        // when
+        double actual = playerBets.getPlayerProfit(player, dealer);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

@@ -19,6 +19,9 @@ public class PlayerBets {
     public double getPlayerProfit(Player player, Dealer dealer) {
         int playerBet = bets.get(player);
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
+        if (roundResult == RoundResult.TIE) {
+            return 0;
+        }
         if (roundResult == RoundResult.LOSE) {
             return -playerBet;
         }
