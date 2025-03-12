@@ -29,4 +29,16 @@ public abstract class Participant {
     public List<Card> getOwnedCards() {
         return ownedCards.getCards();
     }
+
+    public int getTotalWinnings() {
+        return totalWinnings.getAmount();
+    }
+
+    protected void increaseAmount(int amount) {
+        totalWinnings.increase(amount);
+    }
+
+    protected void decreaseAmount(int amount) {
+        totalWinnings.decrease(amount);
+    }
 }

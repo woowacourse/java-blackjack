@@ -51,4 +51,28 @@ class ParticipantTest {
         // then
         assertThat(cardCount).isEqualTo(3);
     }
+
+    @Test
+    void 금액을_증가시킨다() {
+        // given
+        Participant participant = Player.of("name", Money.of(100)); // 이름, 베팅 금액
+
+        // when
+        participant.increaseAmount(2000);
+
+        // then
+        assertThat(participant.getTotalWinnings()).isEqualTo(2000);
+    }
+
+    @Test
+    void 금액을_감소시킨다() {
+        // given
+        Participant participant = Player.of("name", Money.of(100)); // 이름, 베팅 금액
+
+        // when
+        participant.decreaseAmount(2000);
+
+        // then
+        assertThat(participant.getTotalWinnings()).isEqualTo(-2000);
+    }
 }
