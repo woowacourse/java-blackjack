@@ -9,8 +9,9 @@ import java.util.List;
 
 public class Participants {
 
+  private static final int NUMBER_OF_DEALER = 1;
+
   private final List<Participant> participants;
-  private final int NUMBER_OF_DEALER = 1;
 
   public Participants(List<Participant> participants) {
     validateNumberOfDealer(participants);
@@ -68,9 +69,9 @@ public class Participants {
     return players;
   }
 
-  public List<TrumpCard> getCards(Participant target) {
+  public List<TrumpCard> getCards(final Participant target) {
     final var name = target.getName();
-    var participant = participants.stream()
+    final var participant = participants.stream()
         .filter(currentParticipant -> currentParticipant.getName().equals(name))
         .findFirst()
         .orElseThrow(() -> new BlackjackArgumentException("등록되지 않은 사용자입니다: " + name));
