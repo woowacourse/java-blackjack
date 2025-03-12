@@ -1,14 +1,5 @@
 package domain.participant;
 
-public class Betting {
+public record Betting(int amount) {
 
-    private final int amount;
-
-    public Betting(int amount) {
-        this.amount = amount;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
 }

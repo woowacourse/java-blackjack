@@ -24,7 +24,7 @@ public abstract class Participant {
     }
 
     public int getBettingAmount() {
-        return betting.getAmount();
+        return betting.amount();
     }
 
     public void startBetting(int bettingAmount) {
