@@ -1,12 +1,11 @@
 package controller;
 
 import domain.*;
-
-import java.util.List;
-
 import domain.strategy.DeckShuffleStrategy;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
 
 public class BlackJackController {
 
