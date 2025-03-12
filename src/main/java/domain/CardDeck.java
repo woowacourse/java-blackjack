@@ -20,18 +20,9 @@ public class CardDeck {
         return cards.removeFirst();
     }
 
-    public List<List<Card>> pickInitialCardsStack(int stackSize) {
-        List<List<Card>> cardsStack = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            List<Card> cards = pickInitialCards(stackSize);
-            cardsStack.add(cards);
-        }
-        return cardsStack;
-    }
-
-    private List<Card> pickInitialCards(int stackSize) {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < stackSize; i++) {
+    public List<Card> pickCards(int size) {
+        List<Card> cards = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
             cards.add(pickCard());
         }
         return cards;

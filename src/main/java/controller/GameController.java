@@ -2,122 +2,90 @@ package controller;
 
 import domain.CardDeck;
 import domain.CardDeckGenerator;
-import domain.Dealer;
+import domain.Cards;
 import domain.Game;
 import domain.GameResult;
-import domain.Participant;
-import domain.Player;
-import domain.card.Card;
+import domain.Participants;
 import domain.dto.GameResultDto;
 import domain.dto.ParticipantCardsDto;
+import exception.ExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
-import exception.ExceptionHandler;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import view.InputView;
 import view.OutputView;
 
 public class GameController {
 
-    private final Game game;
-    private final CardDeck cardDeck;
-
-    public GameController() {
-        this.game = new Game();
-        this.cardDeck = CardDeckGenerator.generate();
-    }
-
     public void run() {
-        registerGamePlayers();
-        distributeGameInitialCards();
-        distributeParticipantExtraCards();
-        determineFinalParticipantCards();
-        determineGameResult();
+        CardDeck cardDeck = CardDeckGenerator.generate();
+        Participants participants = registerPlayers();
+        Game game = new Game(cardDeck, participants);
+        game.distributeInitialCards();
+        displayInitialParticipantsCards(participants);
+        distributePlayersExtraCard(game, participants);
+        distributeDealerExtraCard(game);
+        displayFinalParticipantsCards(participants);
+        displayGameResult(participants);
     }
 
-    private void registerGamePlayers() {
-        ExceptionHandler.repeatUntilSuccess(() -> {
+    private Participants registerPlayers() {
+        return ExceptionHandler.repeatUntilSuccess(() -> {
             List<String> names = InputView.readPlayerNames();
-            game.registerPlayers(names);
+            return new Participants(names);
         });
     }
 
-    private void distributeGameInitialCards() {
-        List<List<Card>> cardsStack = cardDeck.pickInitialCardsStack(game.countParticipants());
-        game.distributeInitialCards(cardsStack);
-        displayDistributedGameInitialCards();
-    }
-
-    private void distributeParticipantExtraCards() {
-        List<Player> players = game.getPlayers();
-        for (Player player : players) {
-            distributePlayerExtraCards(player);
+    private void distributePlayersExtraCard(final Game game, final Participants participants) {
+        List<String> playerNames = participants.getPlayerNames();
+        for (String playerName : playerNames) {
+            distributeExtraCardTo(playerName, participants, game);
         }
-        distributeDealerExtraCard();
     }
 
-    private void distributePlayerExtraCards(Player player) {
-        while (player.ableToAddCard() && InputView.readAddPlayerCard(player.getName())) {
-            Card card = cardDeck.pickCard();
-            player.addCard(card);
+    private void distributeExtraCardTo(final String playerName, final Participants participants, final Game game) {
+        while (game.isAbleToAddCard(playerName) && InputView.readAddPlayerCard(playerName)) {
+            game.distributeExtraCardTo(playerName);
+            Cards cards = participants.getCardsOf(playerName);
+            OutputView.printParticipantCards(createParticipantCardsDto(playerName, cards));
         }
-        ParticipantCardsDto participantCardsDto = createParticipantCardsDto(player);
-        OutputView.printParticipantCards(participantCardsDto);
     }
 
-    private void distributeDealerExtraCard() {
-        Dealer dealer = game.getDealer();
-        boolean dealerExtraCard = dealer.ableToAddCard();
-        if (dealerExtraCard) {
-            dealer.addCard(cardDeck.pickCard());
-        }
-        ParticipantCardsDto dealerCardsDto = createParticipantCardsDto(dealer);
-        OutputView.printDealerExtraCard(dealerCardsDto, dealerExtraCard);
+    private void distributeDealerExtraCard(Game game) {
+        boolean isAdded = game.isAddedExtraCardToDealer();
+        OutputView.printDealerExtraCard(isAdded);
     }
 
-    private void determineFinalParticipantCards() {
+    private void displayInitialParticipantsCards(Participants participants) {
+        displayParticipantsCards(participants.getInitialCardsOfAll(), OutputView::printInitialParticipantsCards);
+    }
+
+    private void displayFinalParticipantsCards(Participants participants) {
+        displayParticipantsCards(participants.getCardsOfAll(), OutputView::printFinalParticipantsCards);
+    }
+
+    private void displayParticipantsCards(Map<String, Cards> cardsOfAll, Consumer<List<ParticipantCardsDto>> printer) {
         List<ParticipantCardsDto> participantCardsDtos = new ArrayList<>();
-        participantCardsDtos.add(createParticipantCardsDto(game.getDealer()));
-        List<Player> players = game.getPlayers();
-        for (Player player : players) {
-            participantCardsDtos.add(createParticipantCardsDto(player));
+        for (Entry<String, Cards> entry : cardsOfAll.entrySet()) {
+            participantCardsDtos.add(createParticipantCardsDto(entry.getKey(), entry.getValue()));
         }
-        OutputView.printFinalParticipantsCards(participantCardsDtos);
+        printer.accept(participantCardsDtos);
     }
 
-    private void determineGameResult() {
-        Map<Participant, GameResult> dealerGameResult = game.determineDealerGameResult();
-        Entry<Participant, GameResult> dealerEntry = dealerGameResult.entrySet().iterator().next();
-        GameResultDto dealerGameResultDto = createGameResultDto(dealerEntry.getKey(), dealerEntry.getValue());
-
-        Map<Participant, GameResult> playerGameResults = game.determinePlayersGameResult();
-        List<GameResultDto> playerGameResultDtos = new ArrayList<>();
-        playerGameResults.forEach((key, value) -> playerGameResultDtos.add(createGameResultDto(key, value)));
-        OutputView.printFinalGameResult(dealerGameResultDto, playerGameResultDtos);
+    private void displayGameResult(Participants participants) {
+        Map<String, GameResult> gameResults = participants.determineGameResult();
+        List<GameResultDto> gameResultDtos = new ArrayList<>();
+        gameResults.forEach((key, value) -> gameResultDtos.add(createGameResultDto(key, value)));
+        OutputView.printGameResult(gameResultDtos);
     }
 
-    private void displayDistributedGameInitialCards() {
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayers();
-        List<ParticipantCardsDto> playerCardsDtos = new ArrayList<>();
-        for (Player player : players) {
-            playerCardsDtos.add(createParticipantInitialCardsDto(player));
-        }
-        ParticipantCardsDto dealerCardsDto = createParticipantInitialCardsDto(dealer);
-        OutputView.printParticipantInitialCards(dealerCardsDto, playerCardsDtos);
+    private ParticipantCardsDto createParticipantCardsDto(String name, Cards cards) {
+        return new ParticipantCardsDto(name, cards.getCards(), cards.calculateScore());
     }
 
-    private ParticipantCardsDto createParticipantInitialCardsDto(Participant participant) {
-        return new ParticipantCardsDto(participant.getName(), participant.getInitialCards(),
-                participant.getCardsScore());
-    }
-
-    private ParticipantCardsDto createParticipantCardsDto(Participant participant) {
-        return new ParticipantCardsDto(participant.getName(), participant.getCards(), participant.getCardsScore());
-    }
-
-    private GameResultDto createGameResultDto(Participant participant, GameResult gameResult) {
-        return new GameResultDto(participant.getName(), gameResult.getGameResult());
+    private GameResultDto createGameResultDto(String name, GameResult gameResult) {
+        return new GameResultDto(name, gameResult.getGameResult());
     }
 }
