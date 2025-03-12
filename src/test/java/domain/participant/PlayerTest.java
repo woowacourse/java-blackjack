@@ -2,6 +2,7 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.bet.BetMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     @Test
-    @DisplayName("Player 는 핸드의 총합값을 반환할 수 있다")
+    @DisplayName("플레이어는 핸드의 총합값을 반환할 수 있다")
     void test1() {
         Player player = new Player("모루");
         player.addCard(new Card(Denomination.TWO, Suit.CLUB));
@@ -20,6 +21,14 @@ public class PlayerTest {
         player.addCard(new Card(Denomination.FIVE, Suit.DIAMOND));
 
         assertThat(player.getHandTotal()).isEqualTo(11);
+    }
+
+    @Test
+    @DisplayName("플레이어는 베팅을 할 수 있다.")
+    void test2() {
+        Player player = new Player("moru");
+
+        assertThat(player.bet(10000).getBetMoney()).isEqualTo(new BetMoney(10000));
     }
 
 }
