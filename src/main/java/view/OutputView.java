@@ -23,13 +23,13 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public void inputNames() {
-        System.out.println(INPUT_NAMES);
-    }
-
     public void printInitiateDraw(List<String> names) {
         String nicknames = String.join(SPLITTER, names);
         System.out.printf(INITIATE_DRAW, nicknames);
+    }
+
+    public void inputNames() {
+        System.out.println(INPUT_NAMES);
     }
 
     public void openCards(String name, List<TrumpCard> trumpCards) {
