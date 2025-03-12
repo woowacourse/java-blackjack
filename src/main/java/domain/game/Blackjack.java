@@ -71,7 +71,24 @@ public class Blackjack {
 	}
 
 	public void duel() {
+		players.duelVsDealer(this::duelDealerVsPlayer);
+	}
 
+	private void duelDealerVsPlayer(final Player player) {
+		if (player.isBust(BUST_SCORE)) {
+			dealer.writeDuelResult(DuelResult.WIN);
+			player.writeDuelResult(DuelResult.LOSE);
+			return;
+		}
+		if (dealer.isBust(BUST_SCORE)
+			|| player.calculateAllScore(BUST_SCORE) > dealer.calculateAllScore(BUST_SCORE)) {
+			dealer.writeDuelResult(DuelResult.LOSE);
+			player.writeDuelResult(DuelResult.WIN);
+			return;
+		}
+
+		dealer.writeDuelResult(DuelResult.WIN);
+		player.writeDuelResult(DuelResult.LOSE);
 	}
 
 	public void duelDealerVsPlayer(final Dealer dealer, final Player player) {
