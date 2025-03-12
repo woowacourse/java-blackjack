@@ -34,5 +34,4 @@ public class DeckTest {
         //when, then
         assertThatThrownBy(() -> deck.pick()).isInstanceOf(IllegalStateException.class);
     }
-
 }

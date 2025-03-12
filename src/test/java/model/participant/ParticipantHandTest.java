@@ -17,6 +17,7 @@ class ParticipantHandTest {
     void setUp() {
         participantHand = new ParticipantHand();
     }
+
     @Test
     @DisplayName("받은 카드 합이 21 이하면 burst가 아니라고 반환한다")
     void 받은카드_isBurst_아닐때_계산() {

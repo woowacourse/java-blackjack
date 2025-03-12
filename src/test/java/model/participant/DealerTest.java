@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ class DealerTest {
     void setUp() {
         dealer = new Dealer();
     }
+
     @DisplayName("카드의 합이 16이하이면 true를 반환한다.")
     @Test
     void 카드합_16이하이면_true반환() {
@@ -38,4 +40,15 @@ class DealerTest {
         assertFalse(dealer.canHit());
     }
 
+    @DisplayName("첫 카드 배분 후 맨 처음에 뽑은 한 장만 공개한다.")
+    @Test
+    void 첫카드_배분후_한장_공개() {
+        //given
+        Card firstCard = new Card(CardRank.FIVE, CardSuit.DIAMOND);
+        dealer.receiveCard(firstCard);
+        dealer.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
+
+        //when, then
+        Assertions.assertThat(dealer.openInitialDeal()).containsExactly(firstCard);
+    }
 }
