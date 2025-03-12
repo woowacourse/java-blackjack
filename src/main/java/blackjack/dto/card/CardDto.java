@@ -12,9 +12,4 @@ public record CardDto(
             CardTypeDto.from(card.type()),
             CardNumberDto.from(card.number()));
     }
-
-    @Override
-    public String toString() {
-        return number.getDisplayName() + type.getDisplayName();
-    }
 }

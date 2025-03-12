@@ -1,7 +1,6 @@
 package blackjack.dto.response;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import blackjack.domain.GameManager;
 import blackjack.domain.gamer.Dealer;
@@ -22,15 +21,5 @@ public record StartingCardsResponseDto(
                 .map(GamerDto::from)
                 .toList()
         );
-    }
-
-    public String getDealerName() {
-        return dealer.name();
-    }
-
-    public String getPlayerNames() {
-        return players().stream()
-            .map(GamerDto::name)
-            .collect(Collectors.joining(", "));
     }
 }

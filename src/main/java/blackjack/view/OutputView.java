@@ -1,6 +1,12 @@
 package blackjack.view;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import blackjack.dto.GamerDto;
+import blackjack.dto.card.CardDto;
+import blackjack.dto.card.CardsDto;
 import blackjack.dto.response.FinalResultResponseDto;
 import blackjack.dto.response.RoundResultsResponseDto;
 import blackjack.dto.response.StartingCardsResponseDto;
@@ -12,17 +18,17 @@ public class OutputView {
 
     public static void printStartingCards(StartingCardsResponseDto responseDto) {
         System.out.printf("%s와 %s에게 %d장을 나누었습니다.%n",
-            responseDto.getDealerName(),
-            responseDto.getPlayerNames(),
+            responseDto.dealer().name(),
+            gamerNameJoining(responseDto.players()),
             responseDto.startingCardsSize());
-        System.out.println(responseDto.dealer());
+        System.out.println(toString(responseDto.dealer()));
         for (var player : responseDto.players()) {
-            System.out.println(player);
+            System.out.println(toString(player));
         }
     }
 
     public static void printAdditionalCard(GamerDto responseDto) {
-        System.out.println(responseDto);
+        System.out.println(toString(responseDto));
     }
 
     public static void printBustNotice(String name) {
@@ -34,16 +40,50 @@ public class OutputView {
     }
 
     public static void printRoundResult(RoundResultsResponseDto responseDto) {
-        System.out.println(responseDto.dealer());
+        System.out.println(toString(responseDto.dealer()));
         for (var player : responseDto.players()) {
-            System.out.println(player);
+            System.out.println(toString(player));
         }
     }
 
     public static void printFinalResult(FinalResultResponseDto responseDto) {
         System.out.println("## 최종 승패");
         for (var gamer : responseDto.gamers()) {
-            System.out.println(gamer);
+            System.out.println(toString(gamer));
         }
+    }
+
+    private static String toString(CardDto dto) {
+        return dto.number().getDisplayName() + dto.type().getDisplayName();
+    }
+
+    private static String toString(CardsDto dto) {
+        return dto.cards().stream()
+            .map(OutputView::toString)
+            .collect(Collectors.joining(", "));
+    }
+
+    private static String toString(GamerDto dto) {
+        return String.format("%s카드 : %s", dto.name(), toString(dto.cards()));
+    }
+
+    private static String toString(RoundResultsResponseDto.InnerGamer dto) {
+        return String.format("%s - 결과: %d", toString(dto.gamer()), dto.sumOfCards());
+    }
+
+    private static String toString(FinalResultResponseDto.InnerGamer dto) {
+        return String.format("%s: %s",
+            dto.name(),
+            dto.result().entrySet().stream()
+                .filter(result -> result.getValue() > 0)
+                .sorted(Comparator.comparing(result -> result.getKey().ordinal()))
+                .map(result -> result.getValue() + result.getKey().getDisplayName())
+                .collect(Collectors.joining(" ")));
+    }
+
+    private static String gamerNameJoining(List<GamerDto> dtos) {
+        return dtos.stream()
+            .map(GamerDto::name)
+            .collect(Collectors.joining(", "));
     }
 }

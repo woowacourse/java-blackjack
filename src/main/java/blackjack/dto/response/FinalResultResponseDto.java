@@ -1,7 +1,6 @@
 package blackjack.dto.response;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,17 +34,6 @@ public record FinalResultResponseDto(
                 gamer.getFinalResult(otherGamers).entrySet().stream()
                     .collect(Collectors.toMap(set -> RoundResultDto.from(set.getKey()), Map.Entry::getValue))
             );
-        }
-
-        @Override
-        public String toString() {
-            return String.format("%s: %s",
-                name,
-                result.entrySet().stream()
-                    .filter(result -> result.getValue() > 0)
-                    .sorted(Comparator.comparing(result -> result.getKey().ordinal()))
-                    .map(result -> result.getValue() + result.getKey().getDisplayName())
-                    .collect(Collectors.joining(" ")));
         }
     }
 }

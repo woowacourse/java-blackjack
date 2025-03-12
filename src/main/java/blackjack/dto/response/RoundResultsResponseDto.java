@@ -31,10 +31,5 @@ public record RoundResultsResponseDto(
                 GamerDto.from(gamer),
                 gamer.getSumOfCards());
         }
-
-        @Override
-        public String toString() {
-            return String.format("%s - 결과: %d", gamer, sumOfCards);
-        }
     }
 }

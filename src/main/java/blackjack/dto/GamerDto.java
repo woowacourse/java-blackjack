@@ -25,9 +25,4 @@ public record GamerDto(
             dealer.getName(),
             new CardsDto(List.of(CardDto.from(dealer.getCards().getLast()))));
     }
-
-    @Override
-    public String toString() {
-        return String.format("%s카드 : %s", name, cards);
-    }
 }
