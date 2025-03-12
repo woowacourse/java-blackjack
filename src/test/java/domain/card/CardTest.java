@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardTest {
+class CardTest {
 
     @Test
     void 하나의_카드를_문자열로_변환한다() {

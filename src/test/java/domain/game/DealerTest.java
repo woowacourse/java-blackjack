@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DealerTest {
+class DealerTest {
 
     private static void provideWinCard(List<Card> cards) {
         cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
@@ -227,21 +227,10 @@ public class DealerTest {
 
     private static Stream<Arguments> provideCard() {
         return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(Pattern.SPADE, CardNumber.TEN),
-                                new Card(Pattern.SPADE, CardNumber.SEVEN)
-                        ),
-                        false
-                ),
-                Arguments.of(
-                        List.of(
-                                new Card(Pattern.SPADE, CardNumber.TEN),
-                                new Card(Pattern.SPADE, CardNumber.SIX)
-                        ),
-                        true
-                )
-        );
+                Arguments.of(List.of(new Card(Pattern.SPADE, CardNumber.TEN),
+                        new Card(Pattern.SPADE, CardNumber.SEVEN)), false),
+                Arguments.of(List.of(new Card(Pattern.SPADE, CardNumber.TEN),
+                        new Card(Pattern.SPADE, CardNumber.SIX)), true));
     }
 
     @ParameterizedTest

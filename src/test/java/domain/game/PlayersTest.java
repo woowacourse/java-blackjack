@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+class PlayersTest {
 
     @Test
     void 인원_수가_5명_초과이면_예외를_던진다() {

@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class GameResultTest {
+class GameResultTest {
 
     @ParameterizedTest
     @CsvSource(value = {"WIN,1", "BLACKJACK_WIN,1", "LOSE,2", "DRAW,1"})

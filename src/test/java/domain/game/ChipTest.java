@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChipTest {
+class ChipTest {
 
     @ParameterizedTest
     @CsvSource(value = {"LOSE,1000,-1000", "DRAW,1000,0", "WIN,1000,1000", "BLACKJACK_WIN,1000,1500"})

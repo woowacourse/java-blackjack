@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ParticipantTest {
+class ParticipantTest {
 
     @Test
     void 카드_덱에서_카드_두_장을_받아온다() {

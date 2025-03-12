@@ -17,22 +17,11 @@ public class PlayerTest {
 
     private static Stream<Arguments> provideCard() {
         return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(Pattern.SPADE, CardNumber.TEN),
-                                new Card(Pattern.SPADE, CardNumber.TEN),
-                                new Card(Pattern.SPADE, CardNumber.TWO)
-                        ),
-                        false
-                ),
-                Arguments.of(
-                        List.of(
-                                new Card(Pattern.SPADE, CardNumber.TEN),
-                                new Card(Pattern.SPADE, CardNumber.ACE)
-                        ),
-                        true
-                )
-        );
+                Arguments.of(List.of(new Card(Pattern.SPADE, CardNumber.TEN),
+                        new Card(Pattern.SPADE, CardNumber.TEN),
+                        new Card(Pattern.SPADE, CardNumber.TWO)), false),
+                Arguments.of(List.of(new Card(Pattern.SPADE, CardNumber.TEN),
+                        new Card(Pattern.SPADE, CardNumber.ACE)), true));
     }
 
     @ParameterizedTest
