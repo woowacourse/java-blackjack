@@ -54,7 +54,7 @@ public abstract class Player {
     }
 
     public boolean isBlackJack() {
-        return true;
+        return hand.isBlackJack();
     }
 
     public String getName() {
