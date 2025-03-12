@@ -1,7 +1,6 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.game.GameResult;
 import domain.game.GameStatistics;
@@ -27,10 +26,9 @@ class GameStatisticsTest {
         int winCount = gameStatistics.getDealerWinCount();
         int loseCount = gameStatistics.getDealerLoseCount();
         int drawCount = gameStatistics.getDealerDrawCount();
-        assertAll(
-                () -> assertEquals(1, winCount),
-                () -> assertEquals(2, loseCount),
-                () -> assertEquals(3, drawCount)
-        );
+        // then
+        assertThat(winCount).isEqualTo(1);
+        assertThat(loseCount).isEqualTo(2);
+        assertThat(drawCount).isEqualTo(3);
     }
 }

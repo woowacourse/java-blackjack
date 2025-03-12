@@ -53,12 +53,12 @@ class GameTest {
     @Test
     @DisplayName("초기 참가자에게 카드가 2장씩 분배됐는지 확인합니다.")
     void distributeStartingHandsTest() {
+        // when
         game.distributeStartingHands();
-
-        assertAll(() -> assertEquals(2, game.getDealer().getCards().size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("a")).size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("b")).size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("c")).size())
-        );
+        // then
+        assertThat(game.getDealer().getCards().size()).isEqualTo(2);
+        assertThat(game.getPlayerCards(new PlayerName("a")).size()).isEqualTo(2);
+        assertThat(game.getPlayerCards(new PlayerName("b")).size()).isEqualTo(2);
+        assertThat(game.getPlayerCards(new PlayerName("c")).size()).isEqualTo(2);
     }
 }

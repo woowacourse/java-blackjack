@@ -15,7 +15,6 @@ import domain.participants.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,12 +29,10 @@ class PlayerTest {
         //given
         Card card = Card.CLOVER_EIGHT;
         Player player = new Player(new PlayerName("코기"), new BettingAmount(10000));
-
         //when
         player.addCard(List.of(card));
-
         //then
-        Assertions.assertTrue(player.getCards().contains(card));
+        assertThat(player.getCards()).contains(card);
     }
 
     @ParameterizedTest
@@ -47,9 +44,8 @@ class PlayerTest {
         player.addCard(cards);
         //when
         final int cardScore = player.calculateScore();
-
         //then
-        Assertions.assertEquals(cardScore, expected);
+        assertThat(cardScore).isEqualTo(expected);
     }
 
     public static Stream<Arguments> calculateCardScoreTest() {
@@ -95,9 +91,10 @@ class PlayerTest {
         player.addCard(cards);
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
         dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN));
-
-        //when & then
-        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+        //when
+        GameResult gameResult = player.decideGameResult(dealer);
+        // then
+        assertThat(gameResult).isEqualTo(expected);
     }
 
     public static Stream<Arguments> decideGameResultTest() {
@@ -119,9 +116,10 @@ class PlayerTest {
         player.addCard(cards);
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
         dealer.addCard(List.of(Card.HEART_JACK, Card.SPADE_QUEEN, Card.CLOVER_SEVEN));
-
-        //when & then
-        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+        //when
+        GameResult gameResult = player.decideGameResult(dealer);
+        // then
+        assertThat(gameResult).isEqualTo(expected);
     }
 
     public static Stream<Arguments> decideGameResultBustTest() {

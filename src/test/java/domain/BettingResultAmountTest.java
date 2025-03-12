@@ -1,10 +1,11 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.game.BettingResultAmount;
 import domain.game.GameResult;
 import domain.participants.BettingAmount;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,7 +21,7 @@ public class BettingResultAmountTest {
         BettingResultAmount bettingResultAmount = new BettingResultAmount(bettingAmount, gameResult);
         // then
         int resultMoney = bettingResultAmount.getMoney();
-        Assertions.assertThat(resultMoney).isEqualTo(expected);
+        assertThat(resultMoney).isEqualTo(expected);
     }
 
     private static Stream<Arguments> calculateBettingResultAmount() {

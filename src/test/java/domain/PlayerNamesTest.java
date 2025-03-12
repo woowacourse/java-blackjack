@@ -1,8 +1,9 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import domain.participants.PlayerNames;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class PlayerNamesTest {
         // given
         List<String> names = List.of("a", "a", "b");
         // when & then
-        Assertions.assertThatThrownBy(() -> new PlayerNames(names))
+        assertThatThrownBy(() -> new PlayerNames(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름이 있습니다.");
     }

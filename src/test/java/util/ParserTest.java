@@ -1,5 +1,7 @@
 package util;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +14,9 @@ class ParserTest {
         //given
         String rawInput = "1,2,3 , 4";
         List<String> answer = List.of("1", "2", "3", "4");
-
-        // when & then
-        Assertions.assertEquals(Parser.splitByDelimiter(rawInput, ","), answer);
+        // when
+        List<String> result = Parser.splitByDelimiter(rawInput, ",");
+        // then
+        assertThat(result).isEqualTo(answer);
     }
 }

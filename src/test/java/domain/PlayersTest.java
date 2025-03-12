@@ -17,7 +17,6 @@ import static domain.card.Card.SPADE_QUEEN;
 import static domain.card.Card.SPADE_TEN;
 import static domain.card.Card.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.card.Card;
 import domain.card.Deck;
@@ -100,8 +99,8 @@ class PlayersTest {
         // when
         Map<PlayerName, Gamer> playerInfo = players.getPlayersInfo();
         // then
-        assertTrue(
-                playerInfo.keySet().containsAll(Set.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박"))));
+        assertThat(playerInfo.keySet()).containsAll(
+                Set.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박")));
     }
 
     @Test
@@ -126,7 +125,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("정확한 배팅 금액 결과를 반환한다.")
-    void calculateBettingStatisticsTest(){
+    void calculateBettingStatisticsTest() {
         // given
         Players players = getPlayers();
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));

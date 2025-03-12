@@ -24,7 +24,6 @@ class DealerTest {
         //given
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
         dealer.addCard(cards);
-
         //when & then
         assertThat(dealer.isDrawable()).isEqualTo(expected);
     }
