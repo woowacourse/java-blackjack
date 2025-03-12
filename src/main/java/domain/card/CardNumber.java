@@ -18,8 +18,6 @@ public enum CardNumber {
     QUEEN(10),
     KING(10);
 
-    public static final int VALUE_TO_SOFT_ACE = 10;
-
     private final int number;
 
     CardNumber(int number) {

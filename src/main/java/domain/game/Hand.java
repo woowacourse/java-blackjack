@@ -1,7 +1,5 @@
 package domain.game;
 
-import static domain.card.CardNumber.VALUE_TO_SOFT_ACE;
-
 import domain.card.Card;
 import domain.card.CardNumber;
 import java.util.ArrayList;
@@ -10,6 +8,7 @@ import java.util.List;
 public class Hand {
 
     public static final int BUST_BOUND = 21;
+    private static final int VALUE_TO_SOFT_ACE = 10;
 
     private final List<Card> cards;
 
