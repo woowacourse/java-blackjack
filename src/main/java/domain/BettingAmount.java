@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class BettingAmount {
 
     private static final int MINIMUM_BETTING_AMOUNT = 10_000;
@@ -19,5 +21,17 @@ public class BettingAmount {
 
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        BettingAmount that = (BettingAmount) object;
+        return amount == that.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(amount);
     }
 }
