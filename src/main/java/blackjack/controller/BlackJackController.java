@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.model.game.BettedMoney;
 import blackjack.model.game.BlackJackGame;
 import blackjack.model.game.DeckInitializer;
 import blackjack.model.game.ParticipantResult;
@@ -22,13 +23,20 @@ public class BlackJackController {
     }
 
     public void run() {
-        Participants participants = Parser.parseParticipants(inputView.inputParticipant());
+        Participants participants = generateParticipants();
         Dealer dealer = new Dealer();
         BlackJackGame blackJackGame = new BlackJackGame(new DeckInitializer(), dealer, participants);
         blackJackGame.initializeGame();
         outputView.outputFirstCardDistributionResult(participants, dealer);
         progressTurns(blackJackGame, dealer, participants);
         calculateFinalResults(dealer, participants);
+    }
+
+    private Participants generateParticipants() {
+        String namesText = inputView.inputParticipantName();
+        return new Participants(Parser.parseNames(namesText).stream()
+                .map(name -> new Participant(name, new BettedMoney(inputView.inputParticipantMoney(name))))
+                .toList());
     }
 
     private void progressTurns(final BlackJackGame blackJackGame, final Dealer dealer, final Participants participants) {

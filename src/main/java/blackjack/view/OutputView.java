@@ -7,7 +7,6 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,7 @@ public class OutputView {
 
     private static String makeFirstDistributionPlayersText(final Participants participants) {
         return String.format(
-                "딜러와 %s에게 2장을 나누었습니다.",
+                "%n딜러와 %s에게 2장을 나누었습니다.",
                 participants.getParticipants()
                         .stream()
                         .map(Participant::getName)
