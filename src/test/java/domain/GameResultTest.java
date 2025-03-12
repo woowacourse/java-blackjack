@@ -184,7 +184,7 @@ class GameResultTest {
     @CsvSource(value = {"21, false", "22, true"})
     void should_return_true_when_burst(int value, boolean expected) {
         // when
-        boolean result = Participant.isBust(value);
+        boolean result = dealer.isBust(value);
 
         // then
         assertThat(result).isEqualTo(expected);

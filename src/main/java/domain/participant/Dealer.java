@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.BlackJackCards;
 import domain.card.Card;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Dealer extends Participant {
     private static final int PICK_DECISION_VALUE = 16;
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(DEALER_NAME, new BlackJackCards());
     }
 
     @Override
