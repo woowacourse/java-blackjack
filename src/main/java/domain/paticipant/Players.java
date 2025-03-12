@@ -45,5 +45,6 @@ public class Players {
 	}
 
 	public void duelVsDealer(final Consumer<Player> duel) {
+		players.forEach(duel);
 	}
 }
