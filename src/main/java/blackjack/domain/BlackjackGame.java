@@ -55,7 +55,7 @@ public class BlackjackGame {
     }
 
     public int calculateDealerProfit() {
-        Map<Player, Integer> playersProfit = calculatePlayersProfit(); // 예: 딜러의 멤버변수 players
+        Map<Player, Integer> playersProfit = calculatePlayersProfit();
         int totalProfit = playersProfit.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
