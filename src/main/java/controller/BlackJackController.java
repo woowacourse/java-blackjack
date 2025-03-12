@@ -1,6 +1,7 @@
 package controller;
 
 import controller.dto.CardScoreDto;
+import domain.BettingMoney;
 import domain.BlackJackGame;
 import domain.GameResult;
 import domain.Player;
@@ -46,8 +47,11 @@ public class BlackJackController {
     }
 
     private List<Player> createPlayers() {
-        List<String> playerNames = inputView.readPlayerNames();
-        return blackJackGame.createPlayers(playerNames);
+        Map<String, BettingMoney> playerInfos = inputView.readPlayerNames().stream()
+                .collect(Collectors.toMap(
+                        name -> name, name -> new BettingMoney(1000)));
+
+        return blackJackGame.createPlayers(playerInfos);
     }
 
     private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {

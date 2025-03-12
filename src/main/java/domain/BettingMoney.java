@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class BettingMoney {
 
     private final int amount;
@@ -17,5 +19,21 @@ public class BettingMoney {
         if (amount < 0) {
             throw new IllegalArgumentException("배팅 금액은 0 이상이어야 합니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        BettingMoney that = (BettingMoney) o;
+        
+        return amount == that.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(amount);
     }
 }
