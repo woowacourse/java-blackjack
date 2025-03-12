@@ -13,6 +13,6 @@ public class Bet {
     }
 
     public double applyDealerBustBonus() {
-        return amount;
+        return amount * 2;
     }
 }
