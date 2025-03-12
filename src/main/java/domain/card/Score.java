@@ -20,7 +20,7 @@ public class Score {
 	}
 
 	public Score minus(final Score minusValue) {
-		return null;
+		return new Score(value - minusValue.value);
 	}
 
 	public boolean isGreaterThan(final int value) {
