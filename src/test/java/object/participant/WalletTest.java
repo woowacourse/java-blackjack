@@ -11,7 +11,7 @@ public class WalletTest {
         int betMoney = 1000;
 
         // when
-        Wallet wallet = new Wallet(betMoney);
+        Wallet wallet = Wallet.generateEmptyWalletFrom(betMoney);
 
         // then
         Assertions.assertThat(wallet).isInstanceOf(Wallet.class);
@@ -21,14 +21,14 @@ public class WalletTest {
     void 월렛_베팅률_적용_테스트() {
         // given
         int betMoney = 1000;
-        Wallet wallet = new Wallet(betMoney);
+        Wallet wallet = Wallet.generateEmptyWalletFrom(betMoney);
 
         // when
-        wallet.applyBetRate(BattleResult.WIN);
+        Wallet appliedWallet = wallet.applyBetRate(BattleResult.WIN);
 
         // then
         int expected = 2000;
-        int actual = wallet.getEarnedMoney();
+        int actual = appliedWallet.getEarnedMoney();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
 }
