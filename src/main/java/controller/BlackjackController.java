@@ -16,14 +16,14 @@ public class BlackjackController {
         Players players = Players.from(values);
         CardDeck deck = new CardDeck();
         deck.shuffle();
-        Dealer dealer = Dealer.from(deck);
-        dealer.divideInitialCardToParticipant(players);
+        Dealer dealer = new Dealer();
+        dealer.divideInitialCardToParticipant(players, deck);
         OutputView.printDivisionStart(dealer, players.getPlayers());
 
         for (Player player : players.getPlayers()) {
-            receiveAdditionalCard(player, dealer);
+            receiveAdditionalCard(player, dealer, deck);
         }
-        receiveAdditionalCard(dealer);
+        receiveAdditionalCard(dealer, deck);
 
         OutputView.printAllParticipantScore(dealer, players);
 
@@ -31,17 +31,17 @@ public class BlackjackController {
         OutputView.printResult(dealer, dealer.calculateVictory(players), players);
     }
 
-    private void receiveAdditionalCard(Player player, Dealer dealer) {
+    private void receiveAdditionalCard(Player player, Dealer dealer, CardDeck deck) {
         while (player.isHit() && agreeIntent(player)) {
-            dealer.divideCardByParticipant(player);
+            dealer.divideCardByParticipant(player, deck, 1);
             player.applyAceRule();
             OutputView.printCurrentHands(player);
         }
     }
 
-    private void receiveAdditionalCard(Dealer dealer) {
+    private void receiveAdditionalCard(Dealer dealer, CardDeck deck) {
         while (dealer.isHit()) {
-            dealer.divideCardByParticipant(dealer);
+            dealer.divideCardByParticipant(dealer, deck, 1);
             dealer.applyAceRule();
             OutputView.printStandingDealer(dealer);
         }

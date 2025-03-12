@@ -18,12 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DealerTest {
 
+    private final CardDeck deck = new CardDeck();
+
     @Test
     @DisplayName("딜러 객체가 잘 생성되는 지")
     void newDealer() {
 
         // given
-        final Participant dealer = Dealer.from(new CardDeck());
+        final Participant dealer = new Dealer();
         String expected = "딜러";
 
         // when
@@ -41,7 +43,7 @@ class DealerTest {
         final Card card = new CardDeck().pickCard();
 
         // when
-        Dealer dealer = Dealer.from(new CardDeck());
+        Dealer dealer = new Dealer();
         dealer.addCard(card);
 
         // then
@@ -61,7 +63,7 @@ class DealerTest {
                 .mapToInt(card -> card.getRank().getScore())
                 .sum();
 
-        Dealer dealer = Dealer.from(new CardDeck());
+        Dealer dealer = new Dealer();
         divideCard(cards,dealer);
 
         // when
@@ -81,7 +83,7 @@ class DealerTest {
                 new Card(Suit.CLUBS, NormalRank.FOUR)
         );
 
-        Dealer dealer = Dealer.from(new CardDeck());
+        Dealer dealer = new Dealer();
         divideCard(cards, dealer);
 
         // when
@@ -99,7 +101,7 @@ class DealerTest {
                 new Card(Suit.CLUBS, NormalRank.KING)
         );
 
-        Dealer dealer = Dealer.from(new CardDeck());
+        Dealer dealer = new Dealer();
         divideCard(cards, dealer);
 
         // when
@@ -112,7 +114,7 @@ class DealerTest {
     @DisplayName("딜러의 게임 결과가 제대로 생성되는지")
     void dealerGameResult(List<Card> playerCards, List<Card> dealerCards,
                           MatchType playerMatchType, MatchType dealerMatchType) {
-        Dealer dealer = Dealer.from(new CardDeck());
+        Dealer dealer = new Dealer();
         divideCard(dealerCards, dealer);
 
         Players players = Players.from(List.of("hippo"));

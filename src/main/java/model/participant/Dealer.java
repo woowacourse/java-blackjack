@@ -16,35 +16,26 @@ public class Dealer extends Participant {
     private static final int INITIAL_DEAL_COUNT = 2;
 
     private final String nickname;
-    private final CardDeck deck;
 
-    private Dealer(String nickname, CardDeck deck) {
-        this.nickname = nickname;
-        this.deck = deck;
+    public Dealer() {
+        this.nickname = DEALER_NAME;
     }
 
-    public static Dealer from(CardDeck deck) {
-        return new Dealer(DEALER_NAME, deck);
-    }
-
-    public void divideInitialCardToParticipant(Players players) {
+    public void divideInitialCardToParticipant(Players players, CardDeck deck) {
         List<Participant> participants = new ArrayList<>();
         participants.add(this);
         participants.addAll(players.getPlayers());
         for (Participant participant : participants) {
-            divideCardsByParticipant(participant, INITIAL_DEAL_COUNT);
+            divideCardByParticipant(participant,deck, INITIAL_DEAL_COUNT);
         }
     }
 
-    public void divideCardsByParticipant(Participant participant, int amount) {
+    public void divideCardByParticipant(Participant participant, CardDeck deck, int amount) {
         for (int i = 0; i < amount; i++) {
-            divideCardByParticipant(participant);
+           participant.addCard(deck.pickCard());
         }
     }
 
-    public void divideCardByParticipant(Participant participant) {
-        participant.addCard(deck.pickCard());
-    }
 
     public Map<MatchType, Integer> calculateVictory(Players players) {
         Map<MatchType, Integer> matchResult = new HashMap<>();

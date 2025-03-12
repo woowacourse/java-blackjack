@@ -14,6 +14,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class GameManagerTest {
 
+    private final CardDeck deck = new CardDeck();
+
     @ParameterizedTest
     @ValueSource(ints = {1, 2})
     @DisplayName("카드 덱으로부터 원하는 카드 장 수를 입력 받아 플레이어에게 분배")
@@ -23,11 +25,11 @@ public class GameManagerTest {
                 "pobi",
                 "hippo"
         ));
-        Dealer dealer = Dealer.from(new CardDeck());
+        Dealer dealer = new Dealer();
         //when
         //then
         for (Player player : players.getPlayers()) {
-            dealer.divideCardsByParticipant(player, amount);
+            dealer.divideCardByParticipant(player, deck ,amount);
             Assertions.assertThat(player.getCards().size()).isEqualTo(amount);
         }
     }
@@ -43,9 +45,9 @@ public class GameManagerTest {
         );
         int amount = 2;
         Players players = Players.from(allPlayer);
-        Dealer dealer = Dealer.from(new CardDeck());
+        Dealer dealer = new Dealer();
         // when
-        dealer.divideInitialCardToParticipant(players);
+        dealer.divideInitialCardToParticipant(players, deck);
 
         // then
         for (Player player : players.getPlayers()) {
