@@ -327,9 +327,12 @@ public class GameBoardTest {
         //then
         assertAll(
                 () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.WIN)).isTrue(),
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.LOSE)).isFalse(),
                 () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.WIN)).isFalse(),
                 () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.WIN)).isTrue(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.LOSE)).isTrue()
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.DRAW)).isFalse()
                 );
     }
 
