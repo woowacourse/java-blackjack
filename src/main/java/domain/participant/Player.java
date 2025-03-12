@@ -35,6 +35,6 @@ public class Player extends Participant {
     }
 
     public int calculateProfit(MatchResult matchResult) {
-        return money.calculateProfit(matchResult.getRate());
+        return money.calculateProfit(matchResult);
     }
 }

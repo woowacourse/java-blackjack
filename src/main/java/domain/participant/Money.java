@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.blackJack.MatchResult;
+
 public class Money {
     private static final int MIN_MONEY_RANGE = 0;
 
@@ -20,7 +22,7 @@ public class Money {
         return new Money(money);
     }
 
-    public int calculateProfit(double rate) {
-        return (int) Math.floor(money*rate) - money;
+    public int calculateProfit(MatchResult matchResult) {
+        return (int) Math.floor(money*matchResult.getRate()) - money;
     }
 }
