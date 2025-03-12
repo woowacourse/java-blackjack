@@ -2,8 +2,8 @@ package domain;
 
 public abstract class Gamer {
 
-    private final String name;
-    private final Hand hand = new Hand();
+    protected final String name;
+    protected final Hand hand = new Hand();
 
     protected Gamer(String name) {
         this.name = name;
