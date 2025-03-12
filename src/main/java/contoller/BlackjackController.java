@@ -3,7 +3,6 @@ package contoller;
 import domain.card.Deck;
 import domain.GameManager;
 import domain.participant.Participant;
-import domain.GameResult;
 import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
@@ -22,7 +21,7 @@ public class BlackjackController {
         drawMorePlayersCards();
         drawMoreDealerCards();
         printParticipantsCards();
-        printGameResult();
+        printProfits();
     }
 
     private void readyGame() {
@@ -55,26 +54,20 @@ public class BlackjackController {
 
     private void drawCard(Participant player) {
         boolean answer;
-        boolean isFirstTurn = true;
-        do {
+
+        while (gameManager.shouldPlayerHit(player)) {
             answer = InputView.askForOneMoreCard(player);
             drawCardIfAnswerIsYes(player, answer);
-
-            printCardsIfFirstTurn(player, isFirstTurn);
-
-            isFirstTurn = false;
-        } while (gameManager.shouldPlayerHit(player) && answer);
+            if (!answer) {
+                break;
+            }
+            OutputView.printPlayerCard(player);
+        }
     }
 
     private void drawCardIfAnswerIsYes(Participant player, boolean answer) {
         if (answer) {
             gameManager.drawCard(player);
-        }
-    }
-
-    private static void printCardsIfFirstTurn(Participant player, boolean isFirstTurn) {
-        if (isFirstTurn) {
-            OutputView.printPlayerCard(player);
         }
     }
 
@@ -89,8 +82,9 @@ public class BlackjackController {
         OutputView.printFinalParticipant(participants);
     }
 
-    private void printGameResult() {
-        Map<Participant, GameResult> result = gameManager.findGameResult();
-        OutputView.printGameResult(result);
+    private void printProfits() {
+        Map<Participant, Integer> profits = gameManager.findPlayersProfits();
+        int profitOfDealer = gameManager.findDealerProfit();
+        OutputView.printProfits(profits, profitOfDealer);
     }
 }

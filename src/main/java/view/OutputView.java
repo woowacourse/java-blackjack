@@ -84,36 +84,12 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(Map<Participant, GameResult> result) {
-        Map<GameResult, Integer> counts = countStatusResult(result);
+    public static void printProfits(Map<Participant, Integer> profits, int profitOfDealer) {
         System.out.print(NEW_LINE);
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패 %d무%n",
-                counts.get(GameResult.LOSE), counts.get(GameResult.WIN), counts.get(GameResult.PUSH));
-        for (Participant player : result.keySet()) {
-            printPlayerGameResult(result, player);
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d%n", profitOfDealer);
+        for (Participant player : profits.keySet()) {
+            System.out.printf("%s: %d%n", player.getParticipantName(), profits.get(player));
         }
-    }
-
-    private static void printPlayerGameResult(Map<Participant, GameResult> result, Participant player) {
-        GameResult gameResult = result.get(player);
-        if (gameResult == GameResult.WIN) {
-            System.out.printf("%s: 승%n", player.getParticipantName());
-            return;
-        }
-        if (gameResult == GameResult.LOSE) {
-            System.out.printf("%s: 패%n", player.getParticipantName());
-            return;
-        }
-        System.out.printf("%s: 무%n", player.getParticipantName());
-    }
-
-    private static Map<GameResult, Integer> countStatusResult(Map<Participant, GameResult> result) {
-        Map<GameResult, Integer> counts = GameResult.initMap();
-        for (Participant player : result.keySet()) {
-            GameResult gameResult = result.get(player);
-            counts.put(gameResult, counts.get(gameResult) + 1);
-        }
-        return counts;
     }
 }

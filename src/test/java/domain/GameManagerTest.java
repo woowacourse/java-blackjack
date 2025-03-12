@@ -118,20 +118,30 @@ public class GameManagerTest {
     }
 
     @Test
-    void 최종_게임_결과를_반환한다() {
+    void 최종_플레이어들의_수익을_반환한다() {
         GameManager gameManager = new GameManager(
                 List.of("drago", "duei"), Map.of("drago", 10000, "duei", 20000), new GameManagerTest.TestCardProvider());
         Cards cardsOfDrago = new Cards(
                 List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
         Cards cardsOfDuei = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.FIVE), new Card(Suit.SPADE, Rank.QUEEN)));
-        Map<Participant, GameResult> result = gameManager.findGameResult();
 
-        Map<Participant, GameResult> expected = Map.of(
-                new Player(new ParticipantName("drago"), new BettingAmount(10000), cardsOfDrago), GameResult.LOSE,
-                new Player(new ParticipantName("duei"), new BettingAmount(20000), cardsOfDuei), GameResult.LOSE
+        Map<Participant, Integer> expected = Map.of(
+                new Player(new ParticipantName("drago"), new BettingAmount(10000), cardsOfDrago), -10000,
+                new Player(new ParticipantName("duei"), new BettingAmount(20000), cardsOfDuei), -20000
         );
-        assertThat(result).isEqualTo(expected);
+
+        assertThat(gameManager.findPlayersProfits()).isEqualTo(expected);
+    }
+
+    @Test
+    void 최종_딜러의_수익을_반환한다() {
+        GameManager gameManager = new GameManager(
+                List.of("drago", "duei"), Map.of("drago", 10000, "duei", 20000), new GameManagerTest.TestCardProvider());
+
+        int expected = 30000;
+
+        assertThat(gameManager.findDealerProfit()).isEqualTo(expected);
     }
 
     @Test

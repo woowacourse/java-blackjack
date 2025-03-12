@@ -125,10 +125,19 @@ public class GameResultTest {
     }
 
     @Test
-    void 게임결과_초기맵을_반환한다() {
-        Map<GameResult, Integer> initMap = GameResult.initMap();
-        Map<GameResult, Integer> expected = Map.of(GameResult.WIN, 0, GameResult.LOSE, 0, GameResult.PUSH, 0, GameResult.BLACKJACK, 0);
+    void 딜러의_총수익을_반환한다() {
+        Participant player = new Player(new ParticipantName("duei"), new BettingAmount(10000),
+                new Cards(List.of(new Card(Suit.HEART, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.KING))));
 
-        assertThat(initMap).isEqualTo(expected);
+        Participant dealer = new Dealer(new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.KING),
+                        new Card(Suit.HEART, Rank.NINE))));
+
+        Participants participants = new Participants(List.of(player, dealer));
+
+        int expected = -15000;
+
+        assertThat(GameResult.calculateDealerProfits(participants)).isEqualTo(expected);
     }
 }

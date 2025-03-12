@@ -19,7 +19,7 @@ public class Player extends Participant {
 
     @Override
     public boolean shouldHit() {
-        return !cards.isBlackjackScoreExceeded();
+        return !cards.isBlackjackScoreExceeded() && !cards.equalToBlackjackScore();
     }
 
     @Override

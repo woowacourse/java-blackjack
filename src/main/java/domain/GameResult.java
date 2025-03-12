@@ -34,7 +34,7 @@ public enum GameResult {
         return profitsByPlayer;
     }
 
-    public static Map<Participant, GameResult> judgeGameResult(Participants participants) {
+    private static Map<Participant, GameResult> judgeGameResult(Participants participants) {
         Map<Participant, GameResult> result = new LinkedHashMap<>();
 
         Map<Participant, Integer> totalRankSumByPlayer = participants.getTotalRankSumByPlayer();
@@ -74,11 +74,10 @@ public enum GameResult {
         result.put(player, GameResult.WIN);
     }
 
-    public static Map<GameResult, Integer> initMap() {
-        Map<GameResult, Integer> counts = new HashMap<>();
-        for (GameResult value : values()) {
-            counts.put(value, 0);
-        }
-        return counts;
+    public static int calculateDealerProfits(Participants participants) {
+        return -calculateProfits(participants).values()
+                .stream()
+                .mapToInt(profit -> profit)
+                .sum();
     }
 }

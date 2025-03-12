@@ -54,8 +54,12 @@ public class GameManager {
         return false;
     }
 
-    public Map<Participant, GameResult> findGameResult() {
-        return GameResult.judgeGameResult(participants);
+    public Map<Participant, Integer> findPlayersProfits() {
+        return GameResult.calculateProfits(participants);
+    }
+
+    public int findDealerProfit() {
+        return GameResult.calculateDealerProfits(participants);
     }
 
     public Participants findParticipants() {
