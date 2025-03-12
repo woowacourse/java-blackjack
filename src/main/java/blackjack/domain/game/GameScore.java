@@ -42,6 +42,10 @@ public class GameScore {
         return this.isLessThan(DEALER_HIT_SCORE);
     }
 
+    public int getValue() {
+        return this.value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

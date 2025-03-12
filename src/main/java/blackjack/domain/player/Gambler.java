@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.GameResult;
 
 import java.util.List;
 
@@ -20,5 +21,9 @@ public class Gambler extends Player {
     @Override
     public List<Card> getOpenedCards() {
         return this.getCards();
+    }
+
+    public Profit getProfit(GameResult gameResult) {
+        return betAmount.getProfit(gameResult);
     }
 }

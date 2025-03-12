@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Profit;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,38 +10,22 @@ import java.util.Map;
 
 public class GameResults {
 
-    Map<Gambler, GameResult> gameResults;
+    Map<Gambler, Profit> gameResults;
 
     public GameResults(Dealer dealer, List<Gambler> gamblers) {
         gameResults = new HashMap<>();
         gamblers.forEach(
-                player -> {
-                    gameResults.put(player, GameResult.getGameResult(dealer, player));
-                }
+                gambler ->
+                        gameResults.put(gambler, gambler.getProfit(GameResult.getGameResult(dealer, gambler)))
         );
     }
 
-    public GameResult getGameResult(Gambler gambler) {
+    public Profit getGameResult(Gambler gambler) {
         return gameResults.get(gambler);
     }
 
-    public int getDealerWin() {
-        return getGameResultCount(GameResult.LOSE);
-    }
-
-    public int getDealerLose() {
-        return getGameResultCount(GameResult.WIN);
-    }
-
-    public int getDealerDraw() {
-        return getGameResultCount(GameResult.DRAW);
-    }
-
-    private int getGameResultCount(GameResult gameResult) {
-        return (int) gameResults.entrySet()
-                .stream()
-                .filter(entry ->
-                        entry.getValue().equals(gameResult)
-                ).count();
+    public Profit getDealerProfit() {
+        return gameResults.values().stream()
+                .reduce(new Profit(0), Profit::addProfit).negate();
     }
 }
