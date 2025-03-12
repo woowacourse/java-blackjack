@@ -43,7 +43,7 @@ class WinningDiscriminatorTest {
             assertThat(result.get(name)).isEqualByComparingTo(WinningType.BLACKJACK_WIN);
         }
 
-        @DisplayName("플레이어와_딜러_모두_블랙잭이면_블랙잭_무승부를_반환한다")
+        @DisplayName("플레이어와_딜러_모두_블랙잭이면_무승부를_반환한다")
         @Test
         void judgeBlackjackDraw() {
             // given
@@ -55,7 +55,7 @@ class WinningDiscriminatorTest {
             Map<Name, WinningType> result = winningDiscriminator.judgePlayersResult();
 
             // then
-            assertThat(result.get(name)).isEqualByComparingTo(WinningType.BLACKJACK_DRAW);
+            assertThat(result.get(name)).isEqualByComparingTo(WinningType.DRAW);
         }
 
         @DisplayName("플레이어가_딜러보다_높은_점수를_가지면_승리를_반환한다")

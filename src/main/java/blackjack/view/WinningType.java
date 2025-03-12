@@ -9,7 +9,6 @@ import java.util.Map;
 
 public enum WinningType {
     BLACKJACK_WIN("블랙잭 승", 2.5),
-    BLACKJACK_DRAW("블랙잭 무승부", 1.0),
     WIN("승", 2.0),
     DEFEAT("패", 0),
     DRAW("무", 1.0);
@@ -24,10 +23,6 @@ public enum WinningType {
 
     public int calculateWinningAmount(final BettingAmount amount) {
         return amount.multiply(winningRate);
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 
     public static Map<WinningType, Integer> createWinningResult() {

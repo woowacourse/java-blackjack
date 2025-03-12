@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
-import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
@@ -12,7 +11,6 @@ import blackjack.domain.gambler.Names;
 import blackjack.domain.gambler.Player;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Round {
     public static final int MIN_PLAYER_COUNT = 1;
