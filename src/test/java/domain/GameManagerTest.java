@@ -92,7 +92,7 @@ public class GameManagerTest {
         dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardRank.TWO));
 
         //when
-        Map<User, GameResult> gameResult = gameManger.createGameResult();
+        Map<User, GameResult> gameResult = gameManger.judgeResult();
 
         //then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(GameResult.WIN);
@@ -117,7 +117,7 @@ public class GameManagerTest {
         }
 
         //when
-        Map<User, GameResult> gameResult = gameManger.createGameResult();
+        Map<User, GameResult> gameResult = gameManger.judgeResult();
 
         //then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(expectStatus);
@@ -172,7 +172,7 @@ public class GameManagerTest {
         gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.Q));
 
         // when
-        Map<User, GameResult> gameResult = gameManger.createGameResult();
+        Map<User, GameResult> gameResult = gameManger.judgeResult();
 
         // then
         Assertions.assertThat(gameResult.get(user)).isEqualTo(GameResult.LOSE);

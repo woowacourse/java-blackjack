@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameManger {
     private static final int USER_MIN_COUNT = 1;
@@ -26,11 +25,12 @@ public class GameManger {
     }
 
     private void validate(List<Player> users) {
-        boolean hasDuplicate = users.stream()
+        long distinctUserCount = users.stream()
                 .map(Player::getName)
-                .collect(Collectors.toSet())
-                .size() < users.size();
-        if (hasDuplicate) {
+                .distinct()
+                .count();
+
+        if (distinctUserCount != users.size()) {
             throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
         }
         if (users.isEmpty() || users.size() > USER_MAX_COUNT) {
@@ -83,7 +83,7 @@ public class GameManger {
         return GameResult.DRAW;
     }
 
-    public Map<User, GameResult> createGameResult() {
+    public Map<User, GameResult> judgeResult() {
         Map<User, GameResult> gameResult = new LinkedHashMap<>();
         if (dealer.isBust()) {
             users.forEach((user) -> putGameResultBust(user, gameResult));

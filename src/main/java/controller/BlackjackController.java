@@ -120,7 +120,7 @@ public class BlackjackController {
     }
 
     private void calculateGameResult(GameManger gameManger) {
-        Map<User, GameResult> gameResult = gameManger.createGameResult();
+        Map<User, GameResult> gameResult = gameManger.judgeResult();
         calculateDealerResult(gameResult);
 
         outputView.displayGameResult(gameResult);
