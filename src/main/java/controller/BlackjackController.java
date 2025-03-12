@@ -53,14 +53,14 @@ public class BlackjackController {
 
     private void distributeExtraCardToPlayer(GameManager gameManager, Player player) {
         while (player.canTakeMoreCard() && inputView.getYesOrNo(player.getName())) {
-            player.takeMoreCard(gameManager.poll());
+            gameManager.distributeExtraCardToParticipant(player);
             outputView.printTakenMoreCards(player.getName(), player.getCards());
         }
     }
 
     private void distributeExtraCardToDealer(GameManager gameManager, Dealer dealer) {
         if(dealer.canTakeMoreCard()){
-            dealer.takeMoreCard(gameManager.poll());
+            gameManager.distributeExtraCardToParticipant(dealer);
             outputView.printDealerTake();
         }
     }
