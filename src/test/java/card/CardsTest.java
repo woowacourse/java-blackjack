@@ -11,8 +11,8 @@ public class CardsTest {
     void test1() {
         // given
         Cards cards = new Cards();
-        cards.add(new Card(CardType.DIAMOND, CardNumber.JACK));
-        cards.add(new Card(CardType.DIAMOND, CardNumber.QUEEN));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.JACK));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.QUEEN));
 
         // when
         int result = cards.calculateNearestTotal();
@@ -27,8 +27,8 @@ public class CardsTest {
     void test2() {
         // given
         Cards cards = new Cards();
-        cards.add(new Card(CardType.DIAMOND, CardNumber.JACK));
-        cards.add(new Card(CardType.DIAMOND, CardNumber.ACE));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.JACK));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.ACE));
 
         // when
         int result = cards.calculateNearestTotal();
@@ -43,9 +43,9 @@ public class CardsTest {
     void test3() {
         // given
         Cards cards = new Cards();
-        cards.add(new Card(CardType.DIAMOND, CardNumber.EIGHT));
-        cards.add(new Card(CardType.DIAMOND, CardNumber.ACE));
-        cards.add(new Card(CardType.CLOVER, CardNumber.ACE));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.ACE));
+        cards.add(new Card(CardShape.CLOVER, CardNumber.ACE));
 
         // when
         int result = cards.calculateNearestTotal();
@@ -59,10 +59,10 @@ public class CardsTest {
     void test4() {
         // given
         Cards cards = new Cards();
-        cards.add(new Card(CardType.DIAMOND, CardNumber.ACE));
-        cards.add(new Card(CardType.DIAMOND, CardNumber.QUEEN));
-        cards.add(new Card(CardType.CLOVER, CardNumber.KING));
-        cards.add(new Card(CardType.CLOVER, CardNumber.THREE));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.ACE));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.QUEEN));
+        cards.add(new Card(CardShape.CLOVER, CardNumber.KING));
+        cards.add(new Card(CardShape.CLOVER, CardNumber.THREE));
 
         // when
         int result = cards.calculateNearestTotal();

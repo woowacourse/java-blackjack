@@ -2,11 +2,11 @@ package card;
 
 public class Card {
 
-    private final CardType cardType;
+    private final CardShape cardShape;
     private final CardNumber cardNumber;
 
-    public Card(CardType cardType, CardNumber cardNumber) {
-        this.cardType = cardType;
+    public Card(CardShape cardShape, CardNumber cardNumber) {
+        this.cardShape = cardShape;
         this.cardNumber = cardNumber;
     }
 
@@ -18,7 +18,7 @@ public class Card {
         return cardNumber;
     }
 
-    public CardType getCardType() {
-        return cardType;
+    public CardShape getCardType() {
+        return cardShape;
     }
 }

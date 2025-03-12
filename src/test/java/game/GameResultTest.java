@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import card.Card;
 import card.CardNumber;
-import card.CardType;
+import card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import participant.Dealer;
@@ -17,12 +17,12 @@ class GameResultTest {
     void test1() {
         // given
         Player player = new Player("율무", 10000);
-        player.receiveCard(new Card(CardType.DIAMOND, CardNumber.TEN));
-        player.receiveCard(new Card(CardType.DIAMOND, CardNumber.JACK));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.JACK));
 
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.THREE));
-        dealer.receiveCard(new Card(CardType.CLOVER, CardNumber.THREE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.THREE));
+        dealer.receiveCard(new Card(CardShape.CLOVER, CardNumber.THREE));
 
         // when
         GameResult result = GameResult.judge(player, dealer);

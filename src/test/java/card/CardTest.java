@@ -11,7 +11,7 @@ class CardTest {
     @DisplayName("ACE 카드라면 true를 반환한다.")
     void test1() {
         // given
-        Card aceCard = new Card(CardType.SPADE, CardNumber.ACE);
+        Card aceCard = new Card(CardShape.SPADE, CardNumber.ACE);
 
         // when
         boolean result = aceCard.isAce();
@@ -24,7 +24,7 @@ class CardTest {
     @DisplayName("ACE 카드가 아니라면 false를 반환한다.")
     void test2() {
         // given
-        Card aceCard = new Card(CardType.SPADE, CardNumber.THREE);
+        Card aceCard = new Card(CardShape.SPADE, CardNumber.THREE);
 
         // when
         boolean result = aceCard.isAce();

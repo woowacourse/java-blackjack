@@ -2,14 +2,14 @@ package view;
 
 import card.Card;
 import card.CardNumber;
-import card.CardType;
+import card.CardShape;
 import game.GameResult;
+import java.util.List;
+import java.util.Map;
 import participant.Dealer;
 import participant.Participant;
 import participant.Player;
 import participant.Players;
-import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -124,13 +124,13 @@ public class OutputView {
     }
 
     private String cardTypeToString(Card card) {
-        if (card.getCardType() == CardType.CLOVER) {
+        if (card.getCardType() == CardShape.CLOVER) {
             return CLOVER;
         }
-        if (card.getCardType() == CardType.DIAMOND) {
+        if (card.getCardType() == CardShape.DIAMOND) {
             return DIAMOND;
         }
-        if (card.getCardType() == CardType.SPADE) {
+        if (card.getCardType() == CardShape.SPADE) {
             return SPADE;
         }
         return HEART;

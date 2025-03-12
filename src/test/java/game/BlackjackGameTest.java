@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import card.Card;
 import card.CardNumber;
-import card.CardType;
+import card.CardShape;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,9 +38,9 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.THREE));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.THREE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.THREE));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.THREE));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.THREE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
 
         // when
         blackjackGame.runPlayerTurn(miso);
@@ -56,9 +56,9 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
 
         // when
         blackjackGame.runPlayerTurn(miso);
@@ -74,9 +74,9 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.KING));
 
         // when
         blackjackGame.runPlayerTurn(miso);
@@ -92,9 +92,9 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.THREE));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.THREE));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.THREE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.THREE));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.THREE));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
 
         // when
         blackjackGame.runDealerTurn();
@@ -110,9 +110,9 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
 
         // when
         blackjackGame.runDealerTurn();
@@ -128,9 +128,9 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.KING));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.KING));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.KING));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.KING));
 
         // when
         blackjackGame.runDealerTurn();
@@ -146,13 +146,13 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
 
         // when
         Map<Player, GameResult> playerGameResult = blackjackGame.calculatePlayerGameResult();
@@ -171,13 +171,13 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.JACK));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.JACK));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
 
         // when
         Map<Player, GameResult> playerGameResult = blackjackGame.calculatePlayerGameResult();
@@ -196,13 +196,13 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
         // when
         Map<Player, GameResult> playerGameResult = blackjackGame.calculatePlayerGameResult();
@@ -221,13 +221,13 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.JACK));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.JACK));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
         Map<Player, GameResult> playerGameResult = blackjackGame.calculatePlayerGameResult();
 
         // when
@@ -246,13 +246,13 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
         Map<Player, GameResult> playerGameResult = blackjackGame.calculatePlayerGameResult();
 
         // when
@@ -271,13 +271,13 @@ class BlackjackGameTest {
         List<String> playerNames = List.of("미소");
         BlackjackGame blackjackGame = new BlackjackGame(playerNames);
         Player miso = blackjackGame.getPlayers().getPlayers().getFirst();
-        miso.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        miso.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        miso.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
         Dealer dealer = blackjackGame.getDealer();
-        dealer.receiveCard(new Card(CardType.SPADE, CardNumber.KING));
-        dealer.receiveCard(new Card(CardType.HEART, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
         Map<Player, GameResult> playerGameResult = blackjackGame.calculatePlayerGameResult();
 
         // when
