@@ -20,14 +20,14 @@ public class CardPack {
                 .toList();
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     private List<Card> initCards() {
         return Arrays.stream(CardShape.values())
                 .flatMap(shape -> Arrays.stream(CardNumber.values())
                         .map(number -> new Card(number, shape)))
                 .collect(Collectors.toList());
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

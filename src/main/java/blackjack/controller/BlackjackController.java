@@ -25,6 +25,8 @@ public class BlackjackController {
 
     public void start() {
         GameManager gameManager = createGameManager();
+        outputView.printInitCardsToPlayers(gameManager.getPlayers());
+
         Players players = gameManager.getPlayers();
 
         dealMoreCards(gameManager, players);
@@ -34,11 +36,7 @@ public class BlackjackController {
 
     private GameManager createGameManager() {
         CardPack cardPack = new CardPack(new RandomBlackjackShuffle());
-        List<Gambler> readPlayers = readAndParseNames();
-
-        Players players = new Players(readPlayers, cardPack);
-        outputView.printInitCardsToPlayers(players);
-
+        List<Gambler> players = readAndParseNames();
         return new GameManager(cardPack, players);
     }
 
@@ -63,20 +61,20 @@ public class BlackjackController {
         List<Gambler> gamblers = players.getGamblers();
         for (Gambler gambler : gamblers) {
             while (!gameManager.isPlayerBust(gambler) && inputView.readOneMoreDealCard(gambler)) {
-                gameManager.dealAddCard(gambler);
+                gameManager.addCardForGambler(gambler);
                 outputView.printCardsToPlayer(gambler);
             }
         }
     }
 
     private void dealMoreDealerCards(final GameManager gameManager) {
-        while (gameManager.isDealerHitThenDealAddCard()) {
+        while (gameManager.isDealerHitThenAddCard()) {
             outputView.printDealerHitAndDealCard();
         }
     }
 
     private void displayGameResults(final Players players) {
         outputView.printResultCardsToPlayers(players);
-        outputView.printGameResults(players.getGameResult());
+//        outputView.printGameResults(players.getGameResult());
     }
 }

@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPack;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +20,8 @@ public abstract class Player {
 
     abstract public List<Card> getOpenedCards();
 
-    public void pushDealCard(final CardPack cardPack, final int count) {
-        hand.addCards(cardPack.getDealByCount(count));
+    public void addCards(final List<Card> cards) {
+        hand.addCards(cards);
     }
 
     public int compareWithOtherPlayer(final Player otherPlayer) {
