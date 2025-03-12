@@ -39,16 +39,8 @@ public class WinningDiscriminator {
     }
 
     private void countDealerWinning(final Name name, final Map<WinningType, Integer> winningResult) {
-        WinningType winningType = judgePlayerResult(name);
-        if (winningType == WIN) {
-            winningResult.put(DEFEAT, winningResult.get(DEFEAT) + 1);
-            return;
-        }
-        if (winningType == DEFEAT) {
-            winningResult.put(WIN, winningResult.get(WIN) + 1);
-            return;
-        }
-        winningResult.put(DRAW, winningResult.get(DRAW) + 1);
+        WinningType dealerResult = judgePlayerResult(name).reverse();
+        winningResult.put(dealerResult, winningResult.get(dealerResult) + 1);
     }
 
     private WinningType judgePlayerResult(final Name name) {

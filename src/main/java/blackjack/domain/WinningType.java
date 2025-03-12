@@ -14,4 +14,14 @@ public enum WinningType {
     public String getDisplayName() {
         return displayName;
     }
+
+    public WinningType reverse() {
+        if (this == WIN) {
+            return DEFEAT;
+        }
+        if (this == DEFEAT) {
+            return WIN;
+        }
+        return DRAW;
+    }
 }
