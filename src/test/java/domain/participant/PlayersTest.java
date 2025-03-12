@@ -5,8 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.Money;
+import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.TrumpNumber;
+import domain.card.TrumpShape;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
@@ -88,5 +92,53 @@ class PlayersTest {
 
         // then
         assertThat(player.getName()).isEqualTo("pobi1");
+    }
+
+    @Test
+    void 플레이어들_중_블랙잭인_플레이어에_대해_금액을_업데이트한다() {
+        // given
+        Player winner = Player.of("pobi1", Money.of(1000));
+        Player player = Player.of("pobi2", Money.of(1000));
+        Players players = Players.of(List.of(winner, player));
+
+        winner.receive(Card.of(TrumpNumber.ACE, TrumpShape.SPADE));
+        winner.receive(Card.of(TrumpNumber.JACK, TrumpShape.SPADE));
+        player.receive(Card.of(TrumpNumber.FIVE, TrumpShape.DIAMOND));
+        player.receive(Card.of(TrumpNumber.SIX, TrumpShape.DIAMOND));
+
+        Dealer dealer = Dealer.of(CardDeck.of());
+        dealer.receive(Card.of(TrumpNumber.FIVE, TrumpShape.DIAMOND));
+        dealer.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.SPADE));
+
+        // when
+        players.judgeBlackjack(dealer);
+
+        // then
+        Assertions.assertAll(() -> {
+            assertThat(winner.getTotalWinnings()).isEqualTo(1500);
+            assertThat(dealer.getTotalWinnings()).isEqualTo(-1500);
+        });
+    }
+
+    @Test
+    void 플레이어와_딜러_모두_블랙잭이면_플레이어는_베팅금을_돌려받는다() {
+        // given
+        Player player = Player.of("pobi1", Money.of(1000));
+        player.receive(Card.of(TrumpNumber.ACE, TrumpShape.SPADE));
+        player.receive(Card.of(TrumpNumber.JACK, TrumpShape.SPADE));
+        Players players = Players.of(List.of(player));
+
+        Dealer dealer = Dealer.of(CardDeck.of());
+        dealer.receive(Card.of(TrumpNumber.ACE, TrumpShape.DIAMOND));
+        dealer.receive(Card.of(TrumpNumber.JACK, TrumpShape.SPADE));
+
+        // when
+        players.judgeBlackjack(dealer);
+
+        // then
+        Assertions.assertAll(() -> {
+            assertThat(player.getTotalWinnings()).isEqualTo(0);
+            assertThat(dealer.getTotalWinnings()).isEqualTo(0);
+        });
     }
 }

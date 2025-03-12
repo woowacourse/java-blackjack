@@ -35,11 +35,11 @@ public enum BlackjackResult {
         return DRAW;
     }
 
-    private static boolean isBust(Participant participant) {
+    public static boolean isBust(Participant participant) {
         return participant.getScore() > Card.BLACKJACK_SCORE;
     }
 
-    private static boolean isBlackjack(Participant participant) {
+    public static boolean isBlackjack(Participant participant) {
         return participant.getScore() == Card.BLACKJACK_SCORE && participant.getCardCount() == BLACKJACK_MIN_CARD_COUNT;
     }
 

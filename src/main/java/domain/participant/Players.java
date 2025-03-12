@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.Money;
+import domain.result.BlackjackResult;
 import java.util.List;
 
 public class Players {
@@ -41,5 +43,18 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public void judgeBlackjack(Dealer dealer) {
+        for (Player player : players) {
+            handleInitialBlackjack(dealer, player);
+        }
+    }
+
+    private void handleInitialBlackjack(Dealer dealer, Player player) {
+        if (BlackjackResult.isBlackjack(player) && !BlackjackResult.isBlackjack(dealer)) {
+            player.increaseTotalAmount(Money.BLACKJACK_BET_RATIO);
+            dealer.decreaseTotalAmount(player.getBetAmount(), Money.BLACKJACK_BET_RATIO);
+        }
     }
 }

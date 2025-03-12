@@ -28,6 +28,7 @@ public class GameManager {
             players.receiveCards(dealer);
             dealer.receive(dealer.drawCard());
         }
+        players.judgeBlackjack(dealer);
     }
 
     public void passCardToPlayer(String name) {
