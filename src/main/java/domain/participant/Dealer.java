@@ -6,7 +6,8 @@ import domain.game.Winning;
 
 public class Dealer extends AbstractGambler {
 
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
+    private static final int TAKE_CARD_THRESHOLD = 16;
 
     public Dealer(CardHand cardHand) {
         super(DEALER_NAME, cardHand);
@@ -18,7 +19,7 @@ public class Dealer extends AbstractGambler {
 
     @Override
     public boolean canTakeMoreCard() {
-        return (calculateScore() <= 16);
+        return (calculateScore() <= TAKE_CARD_THRESHOLD);
     }
 
     public Winning judgeWinningForPlayer(Player playerToCompare) {
