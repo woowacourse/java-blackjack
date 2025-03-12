@@ -1,8 +1,10 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.util.List;
 import java.util.Stack;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
@@ -22,7 +24,7 @@ public class DeckTest {
         deck.shuffleCards(new FixCardsShuffler());
 
         //then
-        Assertions.assertThat(deck.getCards()).isEqualTo(cards);
+        assertThat(deck.getCards()).isEqualTo(cards);
     }
 
     @Test
@@ -42,7 +44,7 @@ public class DeckTest {
         deck.draw();
 
         //then
-        Assertions.assertThatThrownBy(() -> deck.draw())
+        assertThatThrownBy(() -> deck.draw())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("남아있는 카드가 없습니다.");
     }

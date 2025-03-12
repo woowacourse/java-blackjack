@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
@@ -11,6 +12,6 @@ public class CardTest {
         Card card2 = new Card(Suit.CLUB, Rank.EIGHT);
 
         //when & then
-        Assertions.assertThat(card1).isEqualTo(card2);
+        assertThat(card1).isEqualTo(card2);
     }
 }

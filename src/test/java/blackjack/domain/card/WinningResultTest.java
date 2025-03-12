@@ -1,7 +1,8 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class WinningResultTest {
@@ -28,7 +29,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.DRAW);
+        assertThat(result).isEqualTo(WinningResult.DRAW);
     }
 
     @Test
@@ -52,7 +53,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.WIN);
+        assertThat(result).isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -75,7 +76,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.WIN);
+        assertThat(result).isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -99,7 +100,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.WIN);
+        assertThat(result).isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -123,7 +124,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.DRAW);
+        assertThat(result).isEqualTo(WinningResult.DRAW);
     }
 
     @Test
@@ -145,7 +146,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
+        assertThat(result).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -169,7 +170,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
+        assertThat(result).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -193,6 +194,6 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
+        assertThat(result).isEqualTo(WinningResult.LOSE);
     }
 }

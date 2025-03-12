@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
@@ -26,7 +26,7 @@ public class CardsTest {
         int scoreResult = cards.calculateScore().value();
 
         //then
-        Assertions.assertThat(scoreResult).isEqualTo(21);
+        assertThat(scoreResult).isEqualTo(21);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class CardsTest {
         int scoreResult = cards.calculateScore().value();
 
         //then
-        Assertions.assertThat(scoreResult).isEqualTo(22);
+        assertThat(scoreResult).isEqualTo(22);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class CardsTest {
         int minScore = cards.calculateScore().value();
 
         //then
-        Assertions.assertThat(minScore).isEqualTo(21);
+        assertThat(minScore).isEqualTo(21);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class CardsTest {
         );
 
         //when & then
-        Assertions.assertThat(cards.isBlackjack()).isTrue();
+        assertThat(cards.isBlackjack()).isTrue();
     }
 
     @Test
@@ -109,7 +109,7 @@ public class CardsTest {
         );
 
         //when & then
-        Assertions.assertThat(cards.isBlackjack()).isFalse();
+        assertThat(cards.isBlackjack()).isFalse();
     }
 
     @Test
@@ -122,8 +122,8 @@ public class CardsTest {
         );
 
         //when & then
-        Assertions.assertThatThrownBy(() -> cards.additionalTake(
-                        new Card(Suit.CLUB, Rank.FOUR)))
+        assertThatThrownBy(() -> cards.additionalTake(
+                new Card(Suit.CLUB, Rank.FOUR)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
     }

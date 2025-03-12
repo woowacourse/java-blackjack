@@ -1,5 +1,8 @@
 package blackjack.domain.participants;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,7 +13,6 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.List;
 import java.util.Stack;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
@@ -87,7 +89,7 @@ public class DealerTest {
         dealer.pickAdditionalCard();
 
         //then
-        Assertions.assertThat(dealer.getCards().getCards())
+        assertThat(dealer.getCards().getCards())
                 .isEqualTo(List.of(
                         new Card(Suit.CLUB, Rank.FIVE),
                         new Card(Suit.CLUB, Rank.FOUR),
@@ -121,7 +123,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(players, deck);
 
         //when & then
-        Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(foraPlayer))
+        assertThatThrownBy(() -> dealer.sendCardToPlayer(foraPlayer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 플레이어는 존재하지 않습니다.");
     }
@@ -159,7 +161,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(players, deck);
 
         //when & then
-        Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(pobiPlayer))
+        assertThatThrownBy(() -> dealer.sendCardToPlayer(pobiPlayer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
     }
@@ -190,6 +192,6 @@ public class DealerTest {
         Dealer dealer = new Dealer(players, deck);
 
         //when & then
-        Assertions.assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
+        assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
     }
 }

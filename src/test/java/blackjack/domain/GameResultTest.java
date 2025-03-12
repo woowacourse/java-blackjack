@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -12,7 +14,6 @@ import blackjack.domain.participants.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class GameResultTest {
@@ -56,7 +57,7 @@ public class GameResultTest {
         GameResult gameResult = GameResult.create(dealer, players);
 
         //then
-        Assertions.assertThat(gameResult.getPlayerGameResults()).isEqualTo(playerVictoryResults);
-        Assertions.assertThat(gameResult.getDealerGameResults()).isEqualTo(dealerVictoryResult);
+        assertThat(gameResult.getPlayerGameResults()).isEqualTo(playerVictoryResults);
+        assertThat(gameResult.getDealerGameResults()).isEqualTo(dealerVictoryResult);
     }
 }
