@@ -31,17 +31,7 @@ public class DeckTest {
     void 남아있는_카드가_없을_때_더_뽑을_수_없다() {
         //given
         Stack<Card> cards = new Stack<>();
-        cards.addAll(List.of(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.CLUB, Rank.TEN)
-        ));
         Deck deck = new Deck(cards);
-
-        //when
-        deck.draw();
-        deck.draw();
-        deck.draw();
 
         //then
         assertThatThrownBy(() -> deck.draw())
