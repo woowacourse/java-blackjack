@@ -83,4 +83,19 @@ class WinLossResultTest {
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.BLACKJACK_WIN);
     }
+
+    @Test
+    @DisplayName("딜러와 플레이어의 총합이 21로 같은데, 딜러만 블랙잭이면 플레이어 패배")
+    void test6() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Denomination.TEN, Suit.CLUB));
+        dealer.addCard(new Card(Denomination.ACE, Suit.DIAMOND));
+
+        Player player = new Player("모루");
+        player.addCard(new Card(Denomination.TEN, Suit.CLUB));
+        player.addCard(new Card(Denomination.NINE, Suit.DIAMOND));
+        player.addCard(new Card(Denomination.TWO, Suit.DIAMOND));
+
+        assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.LOSS);
+    }
 }
