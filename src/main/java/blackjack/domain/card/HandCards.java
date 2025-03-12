@@ -24,7 +24,6 @@ public class HandCards {
         return cards.size() == BLACKJACK_CARDS_SIZE && calculateDenominations() == BLACKJACK_VALUE;
     }
 
-
     public boolean isBust() {
         return calculateDenominations() > BLACKJACK_VALUE;
     }
