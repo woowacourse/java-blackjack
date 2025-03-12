@@ -3,7 +3,7 @@ package blackjack.domain.card;
 public record Score(int value) {
     private static final Score BLACKJACK_SCORE = new Score(21);
     private static final Score ADDITIONAL_SCORE = new Score(10);
-    private static final Score DEALER_SCORE_THRESHOLD = new Score(17);
+    private static final Score DEALER_SCORE_THRESHOLD = new Score(16);
 
     public Score withAce() {
         Score maxScore = this.add(ADDITIONAL_SCORE);
