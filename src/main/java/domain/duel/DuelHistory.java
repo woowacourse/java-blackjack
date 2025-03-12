@@ -1,21 +1,27 @@
 package domain.duel;
 
+import domain.card.Count;
+
 public class DuelHistory {
-	private int winCount;
-	private int loseCount;
+	private Count winCount;
+	private Count loseCount;
 
 	public void write(final DuelResult duelResult) {
 		switch (duelResult) {
-			case WIN -> winCount++;
-			case LOSE -> loseCount++;
+			case WIN -> winCount = winCount.increment();
+			case LOSE -> loseCount = loseCount.increment();
 		}
 	}
 
-	public int getWinCount() {
+	public Count getWinCount() {
 		return winCount;
 	}
 
-	public int getLoseCount() {
+	public Count getLoseCount() {
 		return loseCount;
+	}
+
+	public boolean isWin() {
+		return false;
 	}
 }
