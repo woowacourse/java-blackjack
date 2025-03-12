@@ -10,14 +10,14 @@ import blackjack.dto.ResultDto;
 
 public class BlackJackResultManager {
 
-    public ResultDto calculateCardResult(Players players, Dealer dealer) {
+    public Result calculateCardResult(Players players, Dealer dealer) {
         Result result = new Result();
 
         for (Player player : players.getPlayers()) {
             saveResult(dealer, player, result);
         }
 
-        return new ResultDto(result.getPlayersResult(), result.getDealerResult());
+        return result;
     }
 
     private void saveResult(Dealer dealer, Player player, Result result) {

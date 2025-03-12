@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.dto.ResultDto;
+import blackjack.domain.Result;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -78,9 +78,9 @@ public class BlackjackController {
     }
 
     private void printResult(Players players, Dealer dealer) {
-        ResultDto resultDto = blackJackResultManager.calculateCardResult(players, dealer);
+        Result result = blackJackResultManager.calculateCardResult(players, dealer);
         OutputView.printCardResult(players, dealer);
-        OutputView.printGameResult(resultDto.dealerResult(),
-                resultDto.playersResult());
+        OutputView.printGameResult(result.getDealerResult(),
+                result.getPlayersResult());
     }
 }

@@ -6,7 +6,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.GameResultType;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.dto.ResultDto;
+import blackjack.domain.Result;
 import blackjack.utils.HandFixture;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,10 +37,10 @@ class BlackJackResultManagerTest {
         Players players = Players.from(playerList);
 
         // when
-        ResultDto resultDto = blackJackResultManager.calculateCardResult(players, dealer);
+        Result result = blackJackResultManager.calculateCardResult(players, dealer);
 
         // then
-        assertThat(resultDto.dealerResult()).containsEntry(GameResultType.WIN, 5);
+        assertThat(result.getDealerResult()).containsEntry(GameResultType.WIN, 5);
     }
 
     @DisplayName("플레이어와 딜러가 busted 라면 무를 반환한다.")
@@ -58,9 +58,9 @@ class BlackJackResultManagerTest {
         Players players = Players.from(playerList);
 
         // when
-        ResultDto resultDto = blackJackResultManager.calculateCardResult(players, dealer);
+        Result result = blackJackResultManager.calculateCardResult(players, dealer);
 
-        assertThat(resultDto.dealerResult()).containsEntry(GameResultType.TIE, 5);
+        assertThat(result.getDealerResult()).containsEntry(GameResultType.TIE, 5);
     }
 
     @DisplayName("플레이어만 busted라면 딜러가 승리한다.")
@@ -78,10 +78,10 @@ class BlackJackResultManagerTest {
         Players players = Players.from(playerList);
 
         // when
-        ResultDto resultDto = blackJackResultManager.calculateCardResult(players, dealer);
+        Result result = blackJackResultManager.calculateCardResult(players, dealer);
 
         // then
-        assertThat(resultDto.dealerResult()).containsEntry(GameResultType.WIN, 5);
+        assertThat(result.getDealerResult()).containsEntry(GameResultType.WIN, 5);
     }
 
     @DisplayName("딜러만 busted라면 플레이어가 승리한다.")
@@ -99,9 +99,9 @@ class BlackJackResultManagerTest {
         Players players = Players.from(playerList);
 
         // when
-        ResultDto resultDto = blackJackResultManager.calculateCardResult(players, dealer);
+        Result result = blackJackResultManager.calculateCardResult(players, dealer);
 
         // then
-        assertThat(resultDto.dealerResult()).containsEntry(GameResultType.LOSE, 5);
+        assertThat(result.getDealerResult()).containsEntry(GameResultType.LOSE, 5);
     }
 }
