@@ -107,5 +107,28 @@ public class HandTest {
             assertThat(hand.isBlackJack()).isFalse();
         }
 
+        @Test
+        @DisplayName("Hand에 카드가 3장이면서, 총 합이 21이면 블랙잭이 아니다.")
+        void test9() {
+            Hand hand = new Hand();
+
+            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
+            hand.addCard(new Card(Denomination.NINE, Suit.CLUB));
+            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+
+            assertThat(hand.isBlackJack()).isFalse();
+        }
+    }
+
+    @Test
+    @DisplayName("Hand에 21이면 최대값이다.")
+    void test7() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
+        hand.addCard(new Card(Denomination.NINE, Suit.CLUB));
+        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+
+        assertThat(hand.isMaxScore()).isTrue();
     }
 }

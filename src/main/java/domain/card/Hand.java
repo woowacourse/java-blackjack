@@ -9,6 +9,7 @@ public class Hand {
     private static final int ORIGINAL_ACE_VALUE = 11;
     private static final int BLACKJACK_MAX_SCORE = 21;
     public static final int INITIAL_SIZE = 2;
+    public static final int AFTER_APPLY_BUST_PENALTY_SCORE = 0;
 
     private final List<Card> cards;
 
@@ -33,7 +34,15 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getTotal() > BLACKJACK_MAX_SCORE;
+        return getTotal() > BLACKJACK_MAX_SCORE || getTotal() == AFTER_APPLY_BUST_PENALTY_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return getSize() == INITIAL_SIZE && isMaxScore();
+    }
+
+    public boolean isMaxScore() {
+        return getTotal() == BLACKJACK_MAX_SCORE;
     }
 
     public void setAllCardValueToZero() {
@@ -46,12 +55,6 @@ public class Hand {
         return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
     }
 
-    public boolean isBlackJack() {
-        if(getSize() == INITIAL_SIZE && getTotal() == BLACKJACK_MAX_SCORE) {
-            return true;
-        }
-        return false;
-    }
 
     public int getTotal() {
         return cards.stream().mapToInt(Card::getValue).sum();

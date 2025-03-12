@@ -17,9 +17,9 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
-    public int getHandTotal() {
-        return hand.getTotal();
-    }
+    public boolean isBlackJack() { return hand.isBlackJack(); }
+
+    public boolean isMaxScore() { return hand.isMaxScore(); }
 
     public boolean resolveBust() {
         if (isHandBust() && containsOriginalAce()) {
@@ -29,11 +29,15 @@ public abstract class Participant {
         return !isHandBust();
     }
 
-    public void setHandTotalToZero() {
+    public int getHandTotal() {
+        return hand.getTotal();
+    }
+
+    public void applyBustPenalty() {
         hand.setAllCardValueToZero();
     }
 
-    protected boolean isHandBust() {
+    public boolean isHandBust() {
         return hand.isBust();
     }
 
