@@ -47,7 +47,7 @@ public class BlackjackApplication {
     }
 
     private static void distributeAdditionalCards(final BlackjackGame blackjackGame,
-        InputView inputView, GameView gameView) {
+        final InputView inputView, final GameView gameView) {
         Participants participants = blackjackGame.getParticipants();
 
         for (Player player : participants.getPlayers()) {
@@ -85,12 +85,12 @@ public class BlackjackApplication {
         }
     }
 
-    private static void showFinalCards(final BlackjackGame blackjackGame, GameView gameView) {
+    private static void showFinalCards(final BlackjackGame blackjackGame, final GameView gameView) {
         Participants participants = blackjackGame.getParticipants();
         gameView.printFinalCardResults(participants);
     }
 
-    private static void showWinLoseResult(final BlackjackGame blackjackGame, GameView gameView) {
+    private static void showWinLoseResult(final BlackjackGame blackjackGame, final GameView gameView) {
         Map<GameResult, Integer> dealerResult = blackjackGame.calculateStatisticsForDealer();
         Map<Player, GameResult> playerResults = blackjackGame.calculateStatisticsForPlayer();
 
