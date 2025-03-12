@@ -16,7 +16,7 @@ class NamesTest {
     @Test
     void validateEqualsDealerName() {
         // given
-        List<Name> names = List.of(new Name("딜러"));
+        List<Name> names = createNames("딜러");
 
         // when
         // then
@@ -29,7 +29,7 @@ class NamesTest {
     @Test
     void validateDuplicatedNames() {
         // given
-        List<Name> names = List.of(new Name("레오"), new Name("레오"));
+        List<Name> names = createNames("레오", "레오");
 
         // when
         // then

@@ -24,9 +24,4 @@ public enum WinningType {
     public int calculateWinningAmount(final BettingAmount amount) {
         return amount.multiply(winningRate);
     }
-
-    public static Map<WinningType, Integer> createWinningResult() {
-        return Arrays.stream(WinningType.values())
-                .collect(toMap(identity(), type -> 0));
-    }
 }

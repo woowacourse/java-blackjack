@@ -102,7 +102,7 @@ public class Application {
         while (isHit(playerName)) {
             round.distributeCards(playerName, 1);
             outputView.printGamblerCards(playerName, round.getCards(playerName));
-            boolean isBusted = round.isPlayerBusted(playerName);
+            boolean isBusted = round.isBusted(playerName);
             if (isBusted) {
                 outputView.printBusted(playerName);
                 break;
