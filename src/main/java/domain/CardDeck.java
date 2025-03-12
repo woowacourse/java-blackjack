@@ -17,10 +17,6 @@ public class CardDeck {
         return cardDeck.removeFirst();
     }
 
-    public TrumpCard getCard(int index) {
-        return cardDeck.get(index);
-    }
-
     public List<TrumpCard> getCardDeck() {
         return new ArrayList<>(cardDeck);
     }
