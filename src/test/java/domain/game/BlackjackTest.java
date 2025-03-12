@@ -41,6 +41,30 @@ public class BlackjackTest {
 	}
 
 	@Nested
+	@DisplayName("블랙잭 초기 카드 분배")
+	class InitPickCard {
+
+		@DisplayName("player들과 dealer에게 초기 카드를 뽑아준다.")
+		@Test
+		void initPickCard() {
+			// given
+			final List<String> names = List.of("부기", "파랑", "히스타");
+			final Blackjack blackjack = Blackjack.from(names);
+
+			// when
+			blackjack.initPickCard();
+
+			// then
+			assertSoftly(s -> {
+				for (final Player player : blackjack.getPlayers().getPlayers()) {
+					s.assertThat(player.getParticipant().getCardHand().getCards()).hasSize(2);
+				}
+				s.assertThat(blackjack.getDealer().getParticipant().getCardHand().getCards()).hasSize(2);
+			});
+		}
+	}
+
+	@Nested
 	@DisplayName("플레이어 카드 뽑는 여부 체크")
 	class IsPickCardByPlayer {
 
@@ -268,33 +292,6 @@ public class BlackjackTest {
 				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(0);
 				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
 			});
-		}
-	}
-
-	@Nested
-	@DisplayName("블랙잭 규칙에 따라, 유저들에게 카드를 뽑아준다.")
-	class InitPickCardToPlayersAndDealer {
-
-		@DisplayName("플레이어들과 딜러에게 2장씩 뽑아준다.")
-		@Test
-		void initPickCardToPlayersAndDealer() {
-			// given
-			final List<Player> players = List.of(new Player(""), new Player(""), new Player(""), new Player(""));
-			final Dealer dealer = new Dealer();
-			final Blackjack blackjack = new Blackjack();
-			final Deck deck = Deck.createShuffledDeck();
-
-			// when
-			blackjack.initPickCard(dealer, players, deck);
-
-			// then
-			assertSoftly(s -> {
-				players.forEach(player -> {
-					s.assertThat(player.getParticipant().getCardHand().getCards()).hasSize(2);
-				});
-				s.assertThat(dealer.getParticipant().getCardHand().getCards()).hasSize(2);
-			});
-
 		}
 	}
 

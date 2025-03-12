@@ -38,11 +38,8 @@ public class Blackjack {
 		);
 	}
 
-	public void initPickCard(final Dealer dealer, final List<Player> players, final Deck deck) {
-		dealer.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
-		for (final Player player : players) {
-			player.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
-		}
+	public void initPickCard() {
+
 	}
 
 	public boolean isPickCardByPlayer(final Player player) {
