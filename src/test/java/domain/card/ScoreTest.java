@@ -25,6 +25,20 @@ public class ScoreTest {
 			// then
 			assertThat(actual.getValue()).isEqualTo(plusValue);
 		}
+
+		@DisplayName("score에 주어진 Score를 더한 값을 더한다.")
+		@Test
+		void plusScore() {
+			// given
+			final Score score = new Score(0);
+			final Score plusValue = new Score(10);
+
+			// when
+			final Score actual = score.plus(plusValue);
+
+			// then
+			assertThat(actual.getValue()).isEqualTo(plusValue);
+		}
 	}
 
 	@Nested

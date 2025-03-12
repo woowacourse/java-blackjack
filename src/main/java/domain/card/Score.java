@@ -11,6 +11,10 @@ public class Score {
 		return new Score(value + plusValue);
 	}
 
+	public Score plus(final Score plusValue) {
+		return null;
+	}
+
 	public Score minus(final int minusValue) {
 		return new Score(value - minusValue);
 	}
