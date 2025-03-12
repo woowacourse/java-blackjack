@@ -26,6 +26,9 @@ public class GameResults {
 
             if (compared == 1) {
                 int multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.0);
+                if (gambler.isBlackJack()) {
+                    multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.5);
+                }
                 gameResults.put(dealer, -multiplier);
                 gameResults.put(gambler, multiplier);
             }

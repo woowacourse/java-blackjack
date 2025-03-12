@@ -34,6 +34,12 @@ public abstract class Player {
         if (this.isNotBust() && otherPlayer.isBust()) {
             return 1;
         }
+        if (this.isBlackJack()) {
+            if (otherPlayer.isBlackJack()) {
+                return 0;
+            }
+            return 1;
+        }
         return Integer.compare(this.getCardScore(), otherPlayer.getCardScore());
     }
 
