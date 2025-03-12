@@ -16,6 +16,13 @@ public class BettingStatistics {
                 ));
     }
 
+    public BettingResultAmount calculateDealerBettingResult() {
+        int dealerResult = bettingResult.values().stream()
+                .mapToInt(bettingResult -> -bettingResult.getMoney())
+                .sum();
+        return new BettingResultAmount(dealerResult);
+    }
+
     public Map<PlayerName, BettingResultAmount> getBettingResult() {
         return bettingResult;
     }

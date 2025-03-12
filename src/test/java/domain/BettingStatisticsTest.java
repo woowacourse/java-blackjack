@@ -31,6 +31,18 @@ public class BettingStatisticsTest {
         assertThat(bettingResultAmount3.getMoney()).isEqualTo(-30000);
     }
 
+    @Test
+    @DisplayName("게임 결과에 따라 딜러의 전체 수익을 계산한다.")
+    void calculateDealerResult(){
+        // given
+        Map<Player, GameResult> result = initialized();
+        // when
+        BettingStatistics bettingStatistics = new BettingStatistics(result);
+        // then
+        BettingResultAmount dealerResult = bettingStatistics.calculateDealerBettingResult();
+        assertThat(dealerResult).isEqualTo(new BettingResultAmount(20000));
+    }
+
     private Map<Player, GameResult> initialized() {
         Player player1 = new Player(new PlayerName("a"));
         player1.setBettingAmount(new BettingAmount(10000));
