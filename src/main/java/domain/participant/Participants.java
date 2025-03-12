@@ -1,5 +1,6 @@
 package domain.participant;
 
+import error.exception.InvalidParticipantSizeException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +20,7 @@ public class Participants {
 
     private void validateParticipantSize(List<Participant> participants) {
         if (participants.size() > PLAYER_MAX_SIZE + DEALER) {
-            throw new IllegalArgumentException("게임의 최대 참여자는 %d명을 넘을 수 없습니다.".formatted(
-                PLAYER_MAX_SIZE));
+            throw new InvalidParticipantSizeException(PLAYER_MAX_SIZE + DEALER);
         }
     }
 
