@@ -48,13 +48,6 @@ public class OutputView {
         }
     }
 
-    public void printParticipantHand(Participant participant) {
-        System.out.print(SPREAD_NAME_RESULT.formatted(participant.getName()));
-        List<Card> shownCard = participant.getShownCard();
-        String cardMessage = formatCards(shownCard);
-        System.out.println(cardMessage);
-    }
-
     public void printFullParticipantInfo(Participant participant) {
         System.out.println(formatFullParticipantInfo(participant));
     }
@@ -79,7 +72,6 @@ public class OutputView {
     public void printGameResult(ParticipantsResult participantsResult) {
         System.out.println();
         System.out.println(RESULT_MESSAGE);
-        //Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
         Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
         printDealerResult(playersResult);
         printPlayersResult(playersResult);
@@ -103,18 +95,5 @@ public class OutputView {
 
     public void printBlankLine() {
         System.out.println();
-    }
-
-    private String dealerFormatter(Map<GameResult, Integer> dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (GameResult gameResult : GameResult.values()) {
-            String koreanName = gameResult.getKoreanName();
-            if (dealerResult.get(gameResult) == null) {
-                continue;
-            }
-            stringBuilder.append(dealerResult.get(gameResult));
-            stringBuilder.append(koreanName + " ");
-        }
-        return stringBuilder.toString();
     }
 }

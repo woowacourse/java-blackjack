@@ -35,8 +35,4 @@ public class BlackJackCreator {
         Collections.shuffle(shuffledAllCards);
         return new CardDeck(shuffledAllCards);
     }
-
-    public static CardBundle createCardBundle() {
-        return new CardBundle();
-    }
 }
