@@ -31,17 +31,20 @@ public enum WinLossResult {
     }
 
     public static WinLossResult from(final Dealer dealer, final Player player) {
-        if(dealer.getHandTotal() < player.getHandTotal()) {
+        if (dealer.getHandTotal() < player.getHandTotal()) {
             return WIN;
         }
-        if(dealer.getHandTotal() > player.getHandTotal()){
+        if (dealer.getHandTotal() > player.getHandTotal()) {
             return LOSS;
         }
-        if(dealer.getHandTotal() == player.getHandTotal()) {
+        if (dealer.getHandTotal() == player.getHandTotal()) {
             if (player.isBlackJack() && !dealer.isBlackJack()) {
                 return BLACKJACK_WIN;
             }
-            return DRAW;
+            if (dealer.isBlackJack() && !player.isBlackJack()) {
+                return LOSS;
+            }
+                return DRAW;
         }
         return NONE;
     }
