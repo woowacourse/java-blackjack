@@ -2,14 +2,14 @@ package domain;
 
 import java.util.List;
 
-public abstract class BlackjackParticipant {
+public abstract class Participant {
 
     protected final ParticipantHand hand;
     private final ParticipantName name;
 
-    protected BlackjackParticipant(String name) {
+    protected Participant(String name) {
         this.name = new ParticipantName(name);
-        hand = new ParticipantHand();
+        this.hand = new ParticipantHand();
     }
 
     public void addDraw(TrumpCard trumpCard) {

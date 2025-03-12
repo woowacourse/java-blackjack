@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BlackjackDeckGenerator {
+public class DeckGenerator {
 
-    public static BlackjackDeck generateDeck(DrawStrategy drawStrategy) {
+    public static Deck generateDeck(DrawStrategy drawStrategy) {
         List<Suit> suits = Arrays.stream(Suit.values()).toList();
         Set<TrumpCard> trumpCards = new HashSet<>();
         for (Suit suit : suits) {
@@ -19,7 +19,7 @@ public class BlackjackDeckGenerator {
         }
         LinkedList<TrumpCard> generatedDeck = new LinkedList<>(trumpCards);
         Collections.shuffle(generatedDeck);
-        return new BlackjackDeck(generatedDeck, drawStrategy);
+        return new Deck(generatedDeck, drawStrategy);
     }
 
     private static Set<TrumpCard> trumpCards(Suit suit) {

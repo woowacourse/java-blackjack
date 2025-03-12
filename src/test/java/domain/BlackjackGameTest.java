@@ -19,11 +19,11 @@ class BlackjackGameTest {
     void 플레이어_수는_1명_이상이여야_한다() {
         // given
         List<String> names = List.of();
-        BlackjackDeck blackjackDeck = createRandomDeck();
+        Deck deck = createRandomDeck();
 
         // when & then
         assertThatThrownBy(() -> new BlackjackGame(names,
-                blackjackDeck))
+                deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭은 1-7명만 이용하실 수 있습니다.");
     }
@@ -32,7 +32,7 @@ class BlackjackGameTest {
     void 플레이어_수가_7명을_초과하면_예외가_발생한다() {
         // given
         List<String> names = List.of("포비1", "포비2", "포비3", "포비4", "포비5", "포비6", "포비7", "포비8", "포비9");
-        BlackjackDeck deck = createRandomDeck();
+        Deck deck = createRandomDeck();
 
         //when & then
         assertThatThrownBy(() -> new BlackjackGame(names, deck))
@@ -90,13 +90,13 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = createTestGame(names, drawOrder);
 
         // when
-        List<BlackjackResult> blackjackResults = blackjackGame.currentPlayerBlackjackResult();
+        List<Result> results = blackjackGame.currentPlayerBlackjackResult();
 
         // then
         List<Score> expectedPlayersCardSum = List.of(Score.from(18), Score.from(19));
 
-        assertThatIterable(blackjackResults.stream()
-                .map(BlackjackResult::cardSum)
+        assertThatIterable(results.stream()
+                .map(Result::cardSum)
                 .toList()
         ).containsExactlyElementsOf(expectedPlayersCardSum);
     }
@@ -111,11 +111,11 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = createTestGame(names, drawOrder);
 
         // when
-        BlackjackResult blackjackResult = blackjackGame.currentDealerBlackjackResult();
+        Result result = blackjackGame.currentDealerBlackjackResult();
 
         // then
         Score expectedDealerCardSum = Score.from(5);
-        assertThat(blackjackResult.cardSum())
+        assertThat(result.cardSum())
                 .isEqualTo(expectedDealerCardSum);
     }
 }

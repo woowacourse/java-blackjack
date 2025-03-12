@@ -40,7 +40,7 @@ class PlayerTest {
     @MethodSource("createDrawableCards")
     void 카드의_합이_21_이하면_뽑을_수_있다(List<TrumpCard> hand) {
         // given
-        BlackjackDeck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
+        Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
         Player player = new Player("루키");
 
         // when
@@ -76,7 +76,7 @@ class PlayerTest {
     @MethodSource("createBustCards")
     void 카드의_합이_21_초과면_카드를_뽑을_수_없다(List<TrumpCard> hand) {
         // given
-        BlackjackDeck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
+        Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
         Player player = new Player("루키");
 
         // when

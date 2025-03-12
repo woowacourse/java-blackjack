@@ -17,7 +17,7 @@ class DeckTest {
         // given
         List<TrumpCard> drawCards = List.of(new TrumpCard(Suit.CLOVER, CardValue.EIGHT),
                 new TrumpCard(Suit.DIAMOND, CardValue.EIGHT));
-        BlackjackDeck deck = BlackjackDeckTestFixture.createSequentialDeck(drawCards);
+        Deck deck = BlackjackDeckTestFixture.createSequentialDeck(drawCards);
 
         //when
         TrumpCard drawCard = deck.drawCard();
@@ -30,7 +30,7 @@ class DeckTest {
     @Test
     void 덱에서_카드가_없으면_예외가_발생한다() {
         // given
-        BlackjackDeck deck = BlackjackDeckTestFixture.createRandomDeck();
+        Deck deck = BlackjackDeckTestFixture.createRandomDeck();
         for (int i = 0; i < 52; i++) {
             deck.drawCard();
         }

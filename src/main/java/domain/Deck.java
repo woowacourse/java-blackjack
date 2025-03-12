@@ -3,12 +3,12 @@ package domain;
 import domain.strategy.DrawStrategy;
 import java.util.Deque;
 
-public class BlackjackDeck {
+public class Deck {
 
     private final DrawStrategy drawStrategy;
     private final Deque<TrumpCard> deck;
 
-    public BlackjackDeck(Deque<TrumpCard> deck, DrawStrategy drawStrategy) {
+    public Deck(Deque<TrumpCard> deck, DrawStrategy drawStrategy) {
         this.deck = deck;
         this.drawStrategy = drawStrategy;
     }

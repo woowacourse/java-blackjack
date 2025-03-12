@@ -1,6 +1,6 @@
 package domain;
 
-public class Dealer extends BlackjackParticipant {
+public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private final Score DEALER_STOP_HIT_STANDARD_SCORE = Score.from(16);

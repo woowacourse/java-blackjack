@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class BlackJackParticipantTest {
+class ParticipantTest {
 
     static Stream<Arguments> createAceCardHand() {
         return Stream.of(
@@ -37,7 +37,7 @@ class BlackJackParticipantTest {
     @MethodSource("createAceCardHand")
     void 에이스가_포함된_경우에_에이스를_최적의_값으로_계산한다(List<TrumpCard> hand, Score expected) {
         // given
-        BlackjackDeck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
+        Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
         Player player = new Player("루키");
 
         // when

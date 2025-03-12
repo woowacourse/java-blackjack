@@ -9,13 +9,13 @@ public class BlackjackGame {
     private final int MAX_PEOPLE_WITHOUT_DEALER = 7;
     private final String INVALID_BLACKJACK_PLAYER_SIZE = "블랙잭은 1-7명만 이용하실 수 있습니다.";
 
-    private final BlackjackParticipants participants;
-    private final BlackjackDeck deck;
+    private final Participants participants;
+    private final Deck deck;
 
-    public BlackjackGame(List<String> names, BlackjackDeck deck) {
+    public BlackjackGame(List<String> names, Deck deck) {
         validatePlayerSize(names.size());
         this.deck = deck;
-        this.participants = new BlackjackParticipants(names, new Dealer());
+        this.participants = new Participants(names, new Dealer());
         initiateGame();
     }
 
@@ -80,21 +80,21 @@ public class BlackjackGame {
         return participants.isDrawable(dealerName);
     }
 
-    public List<BlackjackResult> currentPlayerBlackjackResult() {
+    public List<Result> currentPlayerBlackjackResult() {
         return participants.calculatePlayerResults();
     }
 
-    public BlackjackResult currentDealerBlackjackResult() {
+    public Result currentDealerBlackjackResult() {
         ParticipantName dealerName = participants.dealerName();
         return participants.calculateResult(dealerName);
     }
 
     public DealerWinStatus getDealerWinStatus() {
-        return BlackjackResultEvaluator.calculateDealerWinStatus(participants);
+        return ResultEvaluator.calculateDealerWinStatus(participants);
     }
 
     public Map<ParticipantName, WinStatus> getPlayerWinStatuses() {
-        return BlackjackResultEvaluator.calculateWinStatus(participants);
+        return ResultEvaluator.calculateWinStatus(participants);
     }
 
 }

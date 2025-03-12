@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-class BlackjackResultEvaluatorTest {
+class ResultEvaluatorTest {
 
     @Test
     void 블랙잭_플레이어의_승패_결과를_계산한다() {
@@ -19,7 +19,7 @@ class BlackjackResultEvaluatorTest {
                 new TrumpCard(Suit.CLOVER, CardValue.J));
 
         List<String> names = List.of("포비", "루키");
-        BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
+        Participants participants = new Participants(names, new Dealer());
 
         for (TrumpCard pobiCard : pobiCards) {
             participants.addCard(new ParticipantName("포비"), pobiCard);
@@ -34,7 +34,7 @@ class BlackjackResultEvaluatorTest {
         }
 
         // when
-        Map<ParticipantName, WinStatus> winStatuses = BlackjackResultEvaluator.calculateWinStatus(participants);
+        Map<ParticipantName, WinStatus> winStatuses = ResultEvaluator.calculateWinStatus(participants);
 
         // then
         assertThat(winStatuses.get(new ParticipantName("포비")))
@@ -54,7 +54,7 @@ class BlackjackResultEvaluatorTest {
                 new TrumpCard(Suit.CLOVER, CardValue.J));
 
         List<String> names = List.of("포비", "루키");
-        BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
+        Participants participants = new Participants(names, new Dealer());
 
         for (TrumpCard pobiCard : pobiCards) {
             participants.addCard(new ParticipantName("포비"), pobiCard);
@@ -69,7 +69,7 @@ class BlackjackResultEvaluatorTest {
         }
 
         // when
-        DealerWinStatus dealerWinStatus = BlackjackResultEvaluator.calculateDealerWinStatus(participants);
+        DealerWinStatus dealerWinStatus = ResultEvaluator.calculateDealerWinStatus(participants);
 
         // then
         DealerWinStatus expected = new DealerWinStatus(2, 0);
@@ -87,7 +87,7 @@ class BlackjackResultEvaluatorTest {
                 new TrumpCard(Suit.HEART, CardValue.NINE));
         List<String> names = List.of("포비");
 
-        BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
+        Participants participants = new Participants(names, new Dealer());
 
         for (TrumpCard pobiCard : pobiCards) {
             participants.addCard(new ParticipantName("포비"), pobiCard);
@@ -97,7 +97,7 @@ class BlackjackResultEvaluatorTest {
             participants.addCard(participants.dealerName(), dealerCard);
         }
         // when
-        DealerWinStatus dealerWinStatus = BlackjackResultEvaluator.calculateDealerWinStatus(participants);
+        DealerWinStatus dealerWinStatus = ResultEvaluator.calculateDealerWinStatus(participants);
 
         // then
         assertThat(dealerWinStatus).isEqualTo(new DealerWinStatus(0, 0));
@@ -114,7 +114,7 @@ class BlackjackResultEvaluatorTest {
                 new TrumpCard(Suit.CLOVER, CardValue.J), new TrumpCard(Suit.SPADE, CardValue.J));
         List<String> names = List.of("포비", "투다");
 
-        BlackjackParticipants participants = new BlackjackParticipants(names, new Dealer());
+        Participants participants = new Participants(names, new Dealer());
 
         for (TrumpCard pobiCard : pobiCards) {
             participants.addCard(new ParticipantName("포비"), pobiCard);
@@ -129,7 +129,7 @@ class BlackjackResultEvaluatorTest {
         }
 
         // when
-        DealerWinStatus dealerWinStatus = BlackjackResultEvaluator.calculateDealerWinStatus(participants);
+        DealerWinStatus dealerWinStatus = ResultEvaluator.calculateDealerWinStatus(participants);
 
         //then
         assertThat(dealerWinStatus).isEqualTo(new DealerWinStatus(0, 1));

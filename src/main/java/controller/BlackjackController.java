@@ -1,9 +1,9 @@
 package controller;
 
-import domain.BlackjackDeck;
-import domain.BlackjackDeckGenerator;
+import domain.Deck;
+import domain.DeckGenerator;
 import domain.BlackjackGame;
-import domain.BlackjackResult;
+import domain.Result;
 import domain.DealerWinStatus;
 import domain.ParticipantName;
 import domain.Player;
@@ -29,7 +29,7 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = handleInput(this::handleNames);
-        BlackjackDeck deck = BlackjackDeckGenerator.generateDeck(new BlackjackDrawStrategy());
+        Deck deck = DeckGenerator.generateDeck(new BlackjackDrawStrategy());
         BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
@@ -46,11 +46,11 @@ public class BlackjackController {
     }
 
     private void blackjackCardResult(BlackjackGame blackjackGame) {
-        BlackjackResult dealerResult = blackjackGame.currentDealerBlackjackResult();
+        Result dealerResult = blackjackGame.currentDealerBlackjackResult();
         openPlayerResultCards(dealerResult);
 
-        List<BlackjackResult> playerResults = blackjackGame.currentPlayerBlackjackResult();
-        for (BlackjackResult result : playerResults) {
+        List<Result> playerResults = blackjackGame.currentPlayerBlackjackResult();
+        for (Result result : playerResults) {
             openPlayerResultCards(result);
         }
     }
@@ -66,10 +66,10 @@ public class BlackjackController {
         }
     }
 
-    private void openPlayerResultCards(BlackjackResult blackjackResult) {
-        ParticipantName name = blackjackResult.name();
-        List<TrumpCard> trumpCards = blackjackResult.trumpCards();
-        Score totalScore = blackjackResult.cardSum();
+    private void openPlayerResultCards(Result result) {
+        ParticipantName name = result.name();
+        List<TrumpCard> trumpCards = result.trumpCards();
+        Score totalScore = result.cardSum();
 
         outputView.openCardsWithSum(name, trumpCards, totalScore);
     }
@@ -114,10 +114,10 @@ public class BlackjackController {
     }
 
     private void openPlayerCards(BlackjackGame blackjackGame) {
-        List<BlackjackResult> blackjackResults = blackjackGame.currentPlayerBlackjackResult();
-        for (BlackjackResult blackjackResult : blackjackResults) {
-            ParticipantName name = blackjackResult.name();
-            openPlayerCard(blackjackResult.trumpCards(), name);
+        List<Result> results = blackjackGame.currentPlayerBlackjackResult();
+        for (Result result : results) {
+            ParticipantName name = result.name();
+            openPlayerCard(result.trumpCards(), name);
         }
     }
 

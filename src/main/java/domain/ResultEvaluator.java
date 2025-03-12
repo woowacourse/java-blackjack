@@ -3,13 +3,13 @@ package domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlackjackResultEvaluator {
+public class ResultEvaluator {
 
-    private BlackjackResultEvaluator() {
+    private ResultEvaluator() {
 
     }
 
-    public static Map<ParticipantName, WinStatus> calculateWinStatus(BlackjackParticipants participants) {
+    public static Map<ParticipantName, WinStatus> calculateWinStatus(Participants participants) {
         Map<ParticipantName, WinStatus> winStatuses = new HashMap<>();
         ParticipantName dealerName = participants.dealerName();
         for (ParticipantName playerName : participants.getPlayerNames()) {
@@ -20,7 +20,7 @@ public class BlackjackResultEvaluator {
         return winStatuses;
     }
 
-    public static DealerWinStatus calculateDealerWinStatus(BlackjackParticipants participants) {
+    public static DealerWinStatus calculateDealerWinStatus(Participants participants) {
         int win = 0;
         int lose = 0;
         ParticipantName dealerName = participants.dealerName();
@@ -73,7 +73,7 @@ public class BlackjackResultEvaluator {
         boolean isDealerBust;
         boolean isPlayerBust;
 
-        public ScoreInfo(ParticipantName playerName, ParticipantName dealerName, BlackjackParticipants participants) {
+        public ScoreInfo(ParticipantName playerName, ParticipantName dealerName, Participants participants) {
             this.dealerSum = participants.calculateCardSum(dealerName);
             this.playerSum = participants.calculateCardSum(playerName);
             this.isDealerBust = participants.isBust(dealerName);
