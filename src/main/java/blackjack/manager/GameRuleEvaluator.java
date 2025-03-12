@@ -1,8 +1,8 @@
 package blackjack.manager;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
 import blackjack.domain.Player;
-import blackjack.domain.cardholder.CardHolder;
 import java.util.List;
 
 public class GameRuleEvaluator {
@@ -30,8 +30,8 @@ public class GameRuleEvaluator {
         return isBustedFor(dealer.getCardHolder());
     }
 
-    private boolean isBustedFor(CardHolder cardHolder) {
-        List<Integer> possibleSums = cardHolder.calculatePossibleSums();
+    private boolean isBustedFor(Hand hand) {
+        List<Integer> possibleSums = hand.calculatePossibleSums();
 
         return possibleSums.stream()
                 .allMatch(sum -> sum > BUSTED_STANDARD_VALUE);

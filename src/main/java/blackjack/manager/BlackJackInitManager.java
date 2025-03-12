@@ -1,12 +1,11 @@
 package blackjack.manager;
 
-import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.Dealer;
-import blackjack.domain.card.Deck;
+import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.card.Deck;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class BlackJackInitManager {
 
@@ -20,15 +19,15 @@ public class BlackJackInitManager {
         return new Deck(cardsGenerator.generate());
     }
 
-    public Players savePlayers(List<String> names, Supplier<CardHolder> cardHolderSupplier) {
+    public Players savePlayers(List<String> names) {
         List<Player> players = names.stream()
-                .map(name -> new Player(name, cardHolderSupplier.get()))
+                .map(name -> new Player(name, new Hand()))
                 .toList();
 
         return new Players(players);
     }
 
-    public Dealer saveDealer(Supplier<CardHolder> cardHolderSupplier) {
-        return new Dealer(cardHolderSupplier.get());
+    public Dealer saveDealer() {
+        return new Dealer(new Hand());
     }
 }

@@ -1,34 +1,33 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardholder.CardHolder;
 import java.util.List;
 
 public class Dealer {
 
-    private final CardHolder cardHolder;
+    private final Hand hand;
 
-    public Dealer(CardHolder cardHolder) {
-        this.cardHolder = cardHolder;
+    public Dealer(Hand hand) {
+        this.hand = hand;
     }
 
     public List<Integer> getPossibleSums() {
-        return cardHolder.calculatePossibleSums();
+        return hand.calculatePossibleSums();
     }
 
     public void takeCard(Card newCard) {
-        cardHolder.takeCard(newCard);
+        hand.takeCard(newCard);
     }
 
     public List<Card> getAllCards() {
-        return cardHolder.getAllCards();
+        return hand.getAllCards();
     }
 
     public Card revealFirstCard() {
-        return cardHolder.getAllCards().getFirst();
+        return hand.getAllCards().getFirst();
     }
 
-    public CardHolder getCardHolder() {
-        return cardHolder;
+    public Hand getCardHolder() {
+        return hand;
     }
 }

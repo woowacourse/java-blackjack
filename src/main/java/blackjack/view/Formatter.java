@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
@@ -65,7 +65,7 @@ public final class Formatter {
         return java.lang.String.valueOf(value);
     }
 
-    private static String formatStartingCardStatus(CardHolder cardHolder) {
+    private static String formatStartingCardStatus(Hand cardHolder) {
         return cardHolder.getAllCards().stream()
                 .map(Formatter::formatCard)
                 .collect(Collectors.joining(", "));

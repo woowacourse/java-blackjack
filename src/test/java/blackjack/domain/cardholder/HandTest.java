@@ -1,5 +1,6 @@
 package blackjack.domain.cardholder;
 
+import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;

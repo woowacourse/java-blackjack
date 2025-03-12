@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.cardholder.Hand;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayersResults;
@@ -30,8 +29,8 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = InputView.readNames();
-        Players players = blackJackInitManager.savePlayers(names, Hand::new);
-        Dealer dealer = blackJackInitManager.saveDealer(Hand::new);
+        Players players = blackJackInitManager.savePlayers(names);
+        Dealer dealer = blackJackInitManager.saveDealer();
 
         giveStartingCards(players, dealer);
 

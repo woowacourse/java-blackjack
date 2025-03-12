@@ -1,14 +1,11 @@
 package blackjack.manager;
 
-import blackjack.StubPossibleSumCardHolder;
+import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
+import blackjack.domain.Player;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.card.Card;
-import blackjack.domain.cardholder.CardHolder;
-import blackjack.domain.Dealer;
-import blackjack.domain.cardholder.Hand;
-import blackjack.domain.Player;
-import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,10 +16,16 @@ class GameRuleEvaluatorTest {
     void test1() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(1, 16, 19));
+
+        Card card1 = new Card(CardSuit.SPADE, CardRank.ACE);
+        Card card2 = new Card(CardSuit.SPADE, CardRank.SEVEN);
+
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
 
         // when
-        boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(hand));
 
         // then
         assertThat(actual).isFalse();
@@ -33,10 +36,16 @@ class GameRuleEvaluatorTest {
     void test2() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(1, 3, 13));
+
+        Card card1 = new Card(CardSuit.SPADE, CardRank.ACE);
+        Card card2 = new Card(CardSuit.SPADE, CardRank.TWO);
+
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
 
         // when
-        boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Dealer(hand));
 
         // then
         assertThat(actual).isTrue();
@@ -47,9 +56,16 @@ class GameRuleEvaluatorTest {
     void test3() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(1, 21, 100));
+
+        Card card1 = new Card(CardSuit.SPADE, CardRank.ACE);
+        Card card2 = new Card(CardSuit.SPADE, CardRank.SEVEN);
+
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
+
         // when
-        boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", hand));
 
         // then
         assertThat(actual).isTrue();
@@ -60,10 +76,18 @@ class GameRuleEvaluatorTest {
     void test4() {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        CardHolder cardHolder = new StubPossibleSumCardHolder(List.of(22, 23, 100));
+
+        Card card1 = new Card(CardSuit.CLUB, CardRank.TEN);
+        Card card2 = new Card(CardSuit.SPADE, CardRank.TEN);
+        Card card3 = new Card(CardSuit.HEART, CardRank.TEN);
+
+        Hand hand = new Hand();
+        hand.takeCard(card1);
+        hand.takeCard(card2);
+        hand.takeCard(card3);
 
         // when
-        boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", cardHolder));
+        boolean actual = gameRuleEvaluator.canTakeCardFor(new Player("꾹이", hand));
 
         // then
         assertThat(actual).isFalse();

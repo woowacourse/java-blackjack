@@ -1,6 +1,5 @@
 package blackjack.manager;
 
-import blackjack.domain.cardholder.Hand;
 import blackjack.domain.Players;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +28,7 @@ class BlackJackInitManagerTest {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when
-        Players players = blackJackInitManager.savePlayers(names, Hand::new);
+        Players players = blackJackInitManager.savePlayers(names);
 
         // the
         assertThat(players.getPlayers()).hasSize(3);
@@ -42,7 +41,7 @@ class BlackJackInitManagerTest {
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when & then
-        assertThatCode(() -> blackJackInitManager.saveDealer(Hand::new))
+        assertThatCode(blackJackInitManager::saveDealer)
                 .doesNotThrowAnyException();
 
     }

@@ -1,12 +1,12 @@
 package blackjack.manager;
 
-import blackjack.StubPossibleSumCardHolder;
 import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Deck;
-import blackjack.domain.cardholder.CardHolder;
-import blackjack.domain.cardholder.Hand;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
@@ -59,8 +59,23 @@ class BlackjackProcessManagerTest {
     @Test
     void test3() {
         // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
-        Player player = new Player("꾹이", new StubPossibleSumCardHolder(List.of(15, 19, 20)));
+        Card card1 = new Card(CardSuit.SPADE, CardRank.ACE);
+        Card card2 = new Card(CardSuit.SPADE, CardRank.TEN);
+
+        Hand dealerHand = new Hand();
+        dealerHand.takeCard(card1);
+        dealerHand.takeCard(card2);
+
+        Hand playerHand = new Hand();
+
+        Card card3 = new Card(CardSuit.CLUB, CardRank.ACE);
+        Card card4 = new Card(CardSuit.SPADE, CardRank.SEVEN);
+
+        playerHand.takeCard(card3);
+        playerHand.takeCard(card4);
+
+        Dealer dealer = new Dealer(dealerHand);
+        Player player = new Player("꾹이", playerHand);
 
         // when
         GameResultType gameResultType = blackjackProcessManager.decideResultOfPlayer(player, dealer);
@@ -73,8 +88,20 @@ class BlackjackProcessManagerTest {
     @Test
     void test4() {
         // given
-        Dealer dealer = new Dealer(new StubPossibleSumCardHolder(List.of(15, 20, 21)));
-        Player player = new Player("꾹이", new StubPossibleSumCardHolder(List.of(15, 19, 21)));
+
+        Card card1 = new Card(CardSuit.SPADE, CardRank.ACE);
+        Card card2 = new Card(CardSuit.SPADE, CardRank.SEVEN);
+
+        Hand dealerHand = new Hand();
+        dealerHand.takeCard(card1);
+        dealerHand.takeCard(card2);
+
+        Hand playerHand = new Hand();
+        playerHand.takeCard(card1);
+        playerHand.takeCard(card2);
+
+        Dealer dealer = new Dealer(dealerHand);
+        Player player = new Player("꾹이", playerHand);
 
         // when
         GameResultType gameResultType = blackjackProcessManager.decideResultOfPlayer(player, dealer);
@@ -90,49 +117,9 @@ class BlackjackProcessManagerTest {
         CardsGenerator cardsGenerator = new CardsGenerator();
         Deck deck = new Deck(cardsGenerator.generate());
         PlayersResults playersResults = PlayersResults.create();
-        Player player = new Player("히로", new CardHolder() {
-            @Override
-            public List<Card> getAllCards() {
-                return List.of();
-            }
+        Player player = new Player("히로", new Hand());
 
-            @Override
-            public void takeCard(Card newCard) {
-
-            }
-
-            @Override
-            public List<Integer> calculatePossibleSums() {
-                return List.of();
-            }
-
-            @Override
-            public int getOptimisticValue() {
-                return 0;
-            }
-        });
-
-        Dealer dealer = new Dealer(new CardHolder() {
-            @Override
-            public List<Card> getAllCards() {
-                return List.of();
-            }
-
-            @Override
-            public void takeCard(Card newCard) {
-
-            }
-
-            @Override
-            public List<Integer> calculatePossibleSums() {
-                return List.of();
-            }
-
-            @Override
-            public int getOptimisticValue() {
-                return 0;
-            }
-        });
+        Dealer dealer = new Dealer(new Hand());
 
         PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, 31);
         playersResults.save(playerResult);

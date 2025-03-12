@@ -1,4 +1,4 @@
-package blackjack.domain.cardholder;
+package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Hand implements CardHolder {
+public class Hand {
 
     public static final int BUSTED_STANDARD_VALUE = 21;
 

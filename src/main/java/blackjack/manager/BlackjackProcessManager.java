@@ -1,11 +1,11 @@
 package blackjack.manager;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.cardholder.CardHolder;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
@@ -35,10 +35,10 @@ public class BlackjackProcessManager {
         cards.forEach(player::takeCard);
     }
 
-    public void giveCard(CardHolder cardHolder) {
+    public void giveCard(Hand hand) {
         List<Card> cards = deck.takeCards(ADDITIONAL_CARD_SIZE);
 
-        cards.forEach(cardHolder::takeCard);
+        cards.forEach(hand::takeCard);
     }
 
     public void calculateCardResult(Players players, Dealer dealer, GameRuleEvaluator gameRuleEvaluator) {
