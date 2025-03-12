@@ -64,4 +64,23 @@ public class CountTest {
 			});
 		}
 	}
+
+	@Nested
+	@DisplayName("비교 연산")
+	class than {
+
+		@DisplayName("x가 더 크다면 true를 반환한다.")
+		@Test
+		void isGreaterThan() {
+			// given
+			final Count greater = new Count(1);
+			final Count less = new Count(0);
+
+			// when
+			final boolean actual = greater.isGreaterThan(less);
+
+			// then
+			assertThat(actual).isTrue();
+		}
+	}
 }

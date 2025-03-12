@@ -19,6 +19,10 @@ public class Count {
 		return value == 0;
 	}
 
+	public int getValue() {
+		return value;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -34,5 +38,9 @@ public class Count {
 	@Override
 	public int hashCode() {
 		return value;
+	}
+
+	public boolean isGreaterThan(final Count value) {
+		return false;
 	}
 }
