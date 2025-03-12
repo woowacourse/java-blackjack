@@ -18,6 +18,7 @@ import domain.card.Suit;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
 import domain.paticipant.Player;
+import domain.paticipant.Players;
 
 public class BlackjackTest {
 
@@ -113,88 +114,6 @@ public class BlackjackTest {
 	}
 
 	@Nested
-	@DisplayName("플레이어 카드 뽑는 여부 체크")
-	class IsPickCardByPlayer {
-
-		@DisplayName("플레이어의 점수가 BUST_SCORE 이하라면 true를 반환한다.")
-		@Test
-		void isPickCardByPlayers() {
-			// given
-			final Card card1 = new Card(Rank.ACE, Suit.CLUB);
-			final Card card2 = new Card(Rank.TEN, Suit.CLUB);
-			final CardHand cardHand = new CardHand(List.of(card1, card2));
-			final Participant participant = new Participant(cardHand);
-			final Player player = new Player("", participant);
-			final Blackjack blackjack = new Blackjack();
-
-			// when
-			boolean actual = blackjack.isPickCardByPlayer(player);
-
-			// then
-			assertThat(actual).isTrue();
-		}
-
-		@DisplayName("플레이어의 점수가 BUST_SCORE 초과라면 false를 반환한다.")
-		@Test
-		void isPickCardByPlayers1() {
-			// given
-			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
-			final Card card2 = new Card(Rank.TEN, Suit.CLUB);
-			final Card card3 = new Card(Rank.TWO, Suit.CLUB);
-			final CardHand cardHand = new CardHand(List.of(card1, card2, card3));
-			final Participant participant = new Participant(cardHand);
-			final Player player = new Player("", participant);
-			final Blackjack blackjack = new Blackjack();
-
-			// when
-			boolean actual = blackjack.isPickCardByPlayer(player);
-
-			// then
-			assertThat(actual).isFalse();
-		}
-
-	}
-
-	@Nested
-	@DisplayName("딜러 카드 뽑는 여부 체크")
-	class IsPickCardByDealer {
-
-		@DisplayName("딜러 점수가 주어진 조건 이하라면 true를 반환한다.")
-		@Test
-		void isPickCardByDealer() {
-			// given
-			final Card card1 = new Card(Rank.SIX, Suit.CLUB);
-			final Card card2 = new Card(Rank.TEN, Suit.CLUB);
-			final CardHand cardHand = new CardHand(List.of(card1, card2));
-			final Dealer dealer = new Dealer(new Participant(cardHand));
-			final Blackjack blackjack = new Blackjack();
-
-			// when
-			boolean actual = blackjack.isPickCardByDealer(dealer);
-
-			// then
-			assertThat(actual).isTrue();
-		}
-
-		@DisplayName("딜러 점수가 주어진 조건 초과라면 false를 반환한다.")
-		@Test
-		void isPickCardByDealer1() {
-			// given
-			final Card card1 = new Card(Rank.TEN, Suit.CLUB);
-			final Card card2 = new Card(Rank.SEVEN, Suit.CLUB);
-			final CardHand cardHand = new CardHand(List.of(card1, card2));
-			final Dealer dealer = new Dealer(new Participant(cardHand));
-			final Blackjack blackjack = new Blackjack();
-
-			// when
-			boolean actual = blackjack.isPickCardByDealer(dealer);
-
-			// then
-			assertThat(actual).isFalse();
-		}
-	}
-
-	@Nested
 	@DisplayName("BUST_SCORE를 기준으로 점수를 계산한다.")
 	class CalculateScore {
 
@@ -255,10 +174,10 @@ public class BlackjackTest {
 			final Participant participant = new Participant(cardHand);
 			final Dealer dealer = new Dealer(new Participant(cardHand));
 			final Player player = new Player("", participant);
-			final Blackjack blackjack = new Blackjack();
+			final Blackjack blackjack = new Blackjack(new Players(List.of(player)), dealer, Deck.createShuffledDeck());
 
 			// when
-			blackjack.duelDealerVsPlayer(dealer, player);
+			blackjack.duel();
 
 			// then
 			assertSoftly(s -> {
@@ -279,10 +198,10 @@ public class BlackjackTest {
 			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
 			final Player player = new Player(" ", playerParticipant);
 			final Dealer dealer = new Dealer(dealerParticipant);
-			final Blackjack blackjack = new Blackjack();
+			final Blackjack blackjack = new Blackjack(new Players(List.of(player)), dealer, Deck.createShuffledDeck());
 
 			// when
-			blackjack.duelDealerVsPlayer(dealer, player);
+			blackjack.duel();
 
 			// then
 			assertSoftly(s -> {
@@ -304,10 +223,10 @@ public class BlackjackTest {
 			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
 			final Player player = new Player(" ", playerParticipant);
 			final Dealer dealer = new Dealer(dealerParticipant);
-			final Blackjack blackjack = new Blackjack();
+			final Blackjack blackjack = new Blackjack(new Players(List.of(player)), dealer, Deck.createShuffledDeck());
 
 			// when
-			blackjack.duelDealerVsPlayer(dealer, player);
+			blackjack.duel();
 
 			// then
 			assertSoftly(s -> {
@@ -329,10 +248,10 @@ public class BlackjackTest {
 			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
 			final Player player = new Player(" ", playerParticipant);
 			final Dealer dealer = new Dealer(dealerParticipant);
-			final Blackjack blackjack = new Blackjack();
+			final Blackjack blackjack = new Blackjack(new Players(List.of(player)), dealer, Deck.createShuffledDeck());
 
 			// when
-			blackjack.duelDealerVsPlayer(dealer, player);
+			blackjack.duel();
 
 			// then
 			assertSoftly(s -> {
@@ -353,10 +272,10 @@ public class BlackjackTest {
 			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
 			final Player player = new Player(" ", playerParticipant);
 			final Dealer dealer = new Dealer(dealerParticipant);
-			final Blackjack blackjack = new Blackjack();
+			final Blackjack blackjack = new Blackjack(new Players(List.of(player)), dealer, Deck.createShuffledDeck());
 
 			// when
-			blackjack.duelDealerVsPlayer(dealer, player);
+			blackjack.duel();
 
 			// then
 			assertSoftly(s -> {
