@@ -1,14 +1,14 @@
 package domain.user;
 
 import domain.TrumpCardManager;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Users {
     private final List<User> users;
 
     public Users(List<User> users) {
-        this.users = new ArrayList<>(users);
+        this.users = users;
     }
 
     public void userCardDraw(TrumpCardManager trumpCardManager) {
@@ -17,12 +17,12 @@ public class Users {
 
     public User findByUserName(String name) {
         return users.stream()
-            .filter(user -> user.hasName(name))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+                .filter(user -> user.hasName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }
 
     public List<User> getUsers() {
-        return new ArrayList<>(users);
+        return Collections.unmodifiableList(users);
     }
 }
