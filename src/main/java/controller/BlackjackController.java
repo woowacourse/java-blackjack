@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import model.participant.Dealer;
 import model.deck.Deck;
-import model.participant.Participants;
+import model.participant.Players;
 import model.result.GameResult;
 import model.participant.Player;
 import model.result.ParticipantWinningResult;
@@ -16,28 +16,30 @@ public class BlackjackController {
     public void run() {
         try {
             List<String> playerNames = InputView.readPlayerNames();
-            Participants participants = Participants.from(playerNames);
+            Players players = Players.from(playerNames);
+            Dealer dealer = new Dealer();
             Deck deck = Deck.of();
 
-            dealInitially(participants, deck);
+            dealInitially(players, dealer, deck);
+            hitOrStandAtPlayersTurn(players, deck);
+            hitOrStandAtDealerTurn(dealer, deck);
 
-            hitOrStandAtPlayersTurn(participants, deck);
-            hitOrStandAtDealerTurn(participants, deck);
-
-            OutputView.printFinalScores(participants);
-            printWinningResult(participants);
+            printFinalScore(players, dealer);
+            printWinningResult(players, dealer);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
     }
 
-    private void dealInitially(final Participants participants, final Deck deck) {
-        participants.dealInitialCards(deck);
-        OutputView.printInitialDeal(participants);
+    private void dealInitially(final Players players, final Dealer dealer, final Deck deck) {
+        players.getPlayers().forEach(participant ->
+                participant.dealInitialCards(deck)
+        );
+        OutputView.printInitialDeal(players, dealer);
     }
 
-    private void hitOrStandAtPlayersTurn(final Participants participants, final Deck deck) {
-        participants.getPlayers().forEach(player ->
+    private void hitOrStandAtPlayersTurn(final Players players, final Deck deck) {
+        players.getPlayers().forEach(player ->
                 hitOrStandAtOnePlayerTurn(deck, player)
         );
     }
@@ -45,20 +47,23 @@ public class BlackjackController {
     private void hitOrStandAtOnePlayerTurn(final Deck deck, final Player player) {
         while (player.canHit() && InputView.readHit(player)) {
             player.receiveCard(deck.pick());
-            OutputView.printDealResultOf(player);
+            OutputView.printPlayerHitResult(player);
         }
     }
 
-    private static void hitOrStandAtDealerTurn(final Participants participants, final Deck deck) {
-        Dealer dealer = participants.getDealer();
+    private static void hitOrStandAtDealerTurn(final Dealer dealer, final Deck deck) {
         while (dealer.canHit()) {
             dealer.receiveCard(deck.pick());
-            OutputView.printDealerDealResult();
+            OutputView.printDealerHitResult();
         }
     }
+    private static void printFinalScore(Players players, Dealer dealer) {
+        OutputView.printDealerFinalScore(dealer);
+        OutputView.printPlayersFinalScore(players);
+    }
 
-    private void printWinningResult(final Participants participants) {
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
+    private void printWinningResult(final Players players, final Dealer dealer) {
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
 
         OutputView.printDealerFinalResult(dealerWinningResult);

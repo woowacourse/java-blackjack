@@ -8,8 +8,8 @@ import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
 import model.participant.Dealer;
-import model.participant.Participants;
 import model.participant.Player;
+import model.participant.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,13 +18,13 @@ class ParticipantWinningResultTest {
     private static String name = "pobi";
     private Dealer dealer;
     private Player player;
-    private Participants participants;
+    private Players players;
 
     @BeforeEach
     void setUp() {
-        participants = Participants.from(List.of("moda"));
-        dealer = participants.getDealer();
-        player = participants.getPlayers().getFirst();
+        players = Players.from(List.of("moda"));
+        dealer = new Dealer();
+        player = players.getPlayers().getFirst();
     }
 
     @Test
@@ -37,7 +37,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.FIVE, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         GameResult result = participantWinningResult.getResult().get(player);
         GameResult expect = GameResult.WIN;
 
@@ -56,7 +56,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.QUEEN, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         GameResult result = participantWinningResult.getResult().get(player);
         GameResult expect = GameResult.LOSE;
 
@@ -76,7 +76,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.QUEEN, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         GameResult result = participantWinningResult.getResult().get(player);
         GameResult expect = GameResult.LOSE;
 
@@ -94,7 +94,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         Map<Player, GameResult> gameResult = participantWinningResult.getResult();
         GameResult expect = GameResult.WIN;
 
@@ -112,7 +112,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.THREE, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         Map<Player, GameResult> gameResult = participantWinningResult.getResult();
         GameResult expect = GameResult.LOSE;
 
@@ -130,7 +130,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         Map<Player, GameResult> gameResult = participantWinningResult.getResult();
         GameResult expect = GameResult.DRAW;
 
