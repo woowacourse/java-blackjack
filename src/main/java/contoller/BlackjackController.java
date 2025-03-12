@@ -1,5 +1,6 @@
 package contoller;
 
+import domain.BettingAmount;
 import domain.card.Deck;
 import domain.GameManager;
 import domain.participant.Participant;
@@ -28,6 +29,9 @@ public class BlackjackController {
         gameManager = new GameManager(playerNames, new Deck());
 
         Participants participants = gameManager.findParticipants();
+        for (Participant player : participants.findPlayers()) {
+            BettingAmount bettingAmount = new BettingAmount(InputView.readBettingAmount(player));
+        }
         OutputView.printInitialParticipants(participants);
     }
 
