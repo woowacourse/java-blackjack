@@ -20,5 +20,4 @@ class CardRandomGeneratorTest {
         // then
         assertThat(card).isNotNull();
     }
-
 }
