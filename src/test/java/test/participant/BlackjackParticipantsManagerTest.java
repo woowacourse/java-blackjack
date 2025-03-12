@@ -1,8 +1,12 @@
-package domain.participant;
+package test.participant;
 
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.participant.BlackjackParticipant;
+import domain.participant.BlackjackParticipantsManager;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.List;

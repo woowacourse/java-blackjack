@@ -1,9 +1,15 @@
-package domain.blackjackgame;
+package test.blackjackgame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIterable;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.blackjackgame.BlackjackDeck;
+import domain.blackjackgame.BlackjackGame;
+import domain.blackjackgame.BlackjackResult;
+import domain.blackjackgame.CardValue;
+import domain.blackjackgame.Suit;
+import domain.blackjackgame.TrumpCard;
 import domain.participant.Dealer;
 import domain.strategy.BlackjackDeckGenerateStrategy;
 import domain.strategy.BlackjackDrawStrategy;

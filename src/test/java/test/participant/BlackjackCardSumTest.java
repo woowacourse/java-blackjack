@@ -1,4 +1,4 @@
-package domain.participant;
+package test.participant;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.blackjackgame.CardValue;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
+import domain.participant.BlackjackCardSum;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

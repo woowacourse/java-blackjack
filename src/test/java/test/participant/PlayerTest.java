@@ -1,4 +1,4 @@
-package domain.participant;
+package test.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,6 +6,7 @@ import domain.blackjackgame.BlackjackDeck;
 import domain.blackjackgame.CardValue;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
+import domain.participant.Player;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
 import java.util.LinkedList;
