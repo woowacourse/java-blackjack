@@ -28,10 +28,11 @@ public final class RoundHistory {
 
 
   public Map<Boolean, Integer> getDealerResult() {
-    final Map<Boolean, Integer> result = new HashMap<>(Map.of(true, 0, false, 0));
+    final Map<Boolean, Integer> result = new HashMap<>();
 
     for (final Boolean value : history.values()) {
-      result.put(!value, result.get(value) + 1);
+      boolean key = !value;
+      result.put(key, result.getOrDefault(key, 0) + 1);
     }
     return result;
   }

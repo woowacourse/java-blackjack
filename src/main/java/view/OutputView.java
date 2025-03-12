@@ -39,7 +39,9 @@ public final class OutputView {
   }
 
   public void printRoundResultOnDealer(final Map<Boolean, Integer> result) {
-    System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), result.get(true), result.get(false));
+    var winCount = result.getOrDefault(true, 0);
+    var loseCount = result.getOrDefault(false, 0);
+    System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount, loseCount);
   }
 
 
