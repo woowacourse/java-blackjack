@@ -55,7 +55,21 @@ public class ScoreTest {
 		void isGreaterThan() {
 			// given
 			final Score score = new Score(100);
-			final int moreThanValue = 100;
+			final int moreThanValue = 99;
+
+			// when
+			final boolean actual = score.isGreaterThan(moreThanValue);
+
+			// then
+			assertThat(actual).isFalse();
+		}
+
+		@DisplayName("x보다 더 작은가")
+		@Test
+		void isLessThan() {
+			// given
+			final Score score = new Score(100);
+			final int moreThanValue = 101;
 
 			// when
 			final boolean actual = score.isGreaterThan(moreThanValue);
