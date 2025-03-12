@@ -1,9 +1,7 @@
+package domain.blackjackgame;
+
 import static org.assertj.core.api.Assertions.assertThatIterable;
 
-import domain.blackjackgame.BlackjackDeck;
-import domain.blackjackgame.CardValue;
-import domain.blackjackgame.Suit;
-import domain.blackjackgame.TrumpCard;
 import domain.strategy.BlackjackDeckGenerateStrategy;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
