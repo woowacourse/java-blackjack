@@ -57,22 +57,23 @@ public enum GameResult {
     }
 
     public int countReversedGameResult(List<GameResult> gameResults) {
+        return countByCondition(gameResults, getReversedGameResult());
+    }
+
+    private GameResult getReversedGameResult() {
         if (this == GameResult.WIN) {
-            return (int) gameResults.stream()
-                    .filter(gameResult -> gameResult == GameResult.LOSE)
-                    .count();
+            return GameResult.LOSE;
         }
         if (this == GameResult.LOSE) {
-            return (int) gameResults.stream()
-                    .filter(gameResult -> gameResult == GameResult.WIN)
-                    .count();
+            return GameResult.WIN;
         }
-        if (this == GameResult.DRAW) {
-            return (int) gameResults.stream()
-                    .filter(gameResult -> gameResult == GameResult.DRAW)
-                    .count();
-        }
-        throw new IllegalArgumentException("[ERROR] 대상 결과 개수 계산에 실패했습니다.");
+        return GameResult.DRAW;
+    }
+
+    private int countByCondition(List<GameResult> gameResults, GameResult target) {
+        return (int) gameResults.stream()
+                .filter(gameResult -> gameResult == target)
+                .count();
     }
 
     public String getResult() {
