@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.CardHand;
 import domain.game.Winning;
 
-public class Dealer extends AbstractGambler {
+public class Dealer extends Gambler {
 
     private static final String DEALER_NAME = "딜러";
     private static final int TAKE_CARD_THRESHOLD = 16;

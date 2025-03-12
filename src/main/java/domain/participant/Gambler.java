@@ -1,17 +1,35 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import java.util.List;
 
-public interface Gambler {
+public abstract class Gambler {
 
-    boolean canTakeMoreCard();
+    protected final String name;
+    protected final CardHand cardHand;
 
-    void takeCards(Card... card);
+    protected Gambler(String name, CardHand cardHand) {
+        this.name = name;
+        this.cardHand = cardHand;
+    }
 
-    int calculateScore();
+    public abstract boolean canTakeMoreCard();
 
-    String getName();
+    public void takeCards(Card... cards) {
+        cardHand.takeCards(cards);
+    }
 
-    List<Card> getCards();
+    public int calculateScore() {
+        return cardHand.calculateScore();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return cardHand.getCards();
+    }
 }
+

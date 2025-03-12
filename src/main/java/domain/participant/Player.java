@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.CardHand;
 
-public class Player extends AbstractGambler {
+public class Player extends Gambler {
 
     public static final int TAKE_CARD_THRESHOLD = 21;
     public static final int NAME_LENGTH_THRESHOLD = 10;
