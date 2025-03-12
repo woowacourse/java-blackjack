@@ -24,5 +24,8 @@ public class Players {
 	}
 
 	public void pickCards(final Deck deck, final int pickedCardCount) {
+		for (final Player player : players) {
+			player.addCards(deck.pickCards(pickedCardCount));
+		}
 	}
 }
