@@ -12,7 +12,7 @@ public class CountTest {
 	@DisplayName("카운트에 대한 연산")
 	class count {
 
-		@DisplayName("1 카운트한다.")
+		@DisplayName("1만큼 카운트를 증가시킨다.")
 		@Test
 		void increment() {
 			// given
@@ -21,6 +21,20 @@ public class CountTest {
 
 			// when
 			final Count actual = count.increment();
+
+			// then
+			assertThat(actual).isEqualTo(expected);
+		}
+
+		@DisplayName("1 만큼 카운트를 감소시킨다.")
+		@Test
+		void decrement() {
+			// given
+			final Count count = new Count(1);
+			final Count expected = new Count(0);
+
+			// when
+			final Count actual = count.decrement();
 
 			// then
 			assertThat(actual).isEqualTo(expected);
