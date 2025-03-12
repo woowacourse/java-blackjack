@@ -1,11 +1,6 @@
 package domain.card;
 
-public class Score {
-	private final int value;
-
-	public Score(final int value) {
-		this.value = value;
-	}
+public record Score(int value) {
 
 	public Score plus(final Score plusValue) {
 		return new Score(value + plusValue.value);
@@ -23,10 +18,6 @@ public class Score {
 		return this.value < score.value;
 	}
 
-	public int getValue() {
-		return value;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -39,8 +30,4 @@ public class Score {
 		return value == score.value;
 	}
 
-	@Override
-	public int hashCode() {
-		return value;
-	}
 }

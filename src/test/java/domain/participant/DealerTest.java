@@ -103,7 +103,7 @@ public class DealerTest {
 			final Dealer dealer = new Dealer(participant);
 
 			// when
-			final int actual = dealer.calculateAllScore(BUST_SCORE).getValue();
+			final int actual = dealer.calculateAllScore(BUST_SCORE).value();
 
 			// then
 			assertThat(actual).isEqualTo(21);

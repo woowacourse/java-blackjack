@@ -130,7 +130,7 @@ public class BlackjackTest {
 			final Blackjack blackjack = new Blackjack();
 
 			// when
-			final int actual = blackjack.calculateScore(participant).getValue();
+			final int actual = blackjack.calculateScore(participant).value();
 
 			// then
 			assertThat(actual).isEqualTo(12);
