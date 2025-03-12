@@ -232,8 +232,8 @@ class BlackjackGameTest {
         final Player player1 = blackjackGame.getPlayer(0);
         final Player player2 = blackjackGame.getPlayer(1);
 
-        player1.bet(10000);
-        player2.bet(20000);
+        player1.bet(10000); // 블랙잭
+        player2.bet(20000); // 패배
 
         blackjackGame.calculateWinningResult(false);
 
@@ -261,8 +261,8 @@ class BlackjackGameTest {
         final Player player1 = blackjackGame.getPlayer(0);
         final Player player2 = blackjackGame.getPlayer(1);
 
-        player1.bet(10000);
-        player2.bet(20000);
+        player1.bet(10000); // push
+        player2.bet(20000); // 자동으로 패배
 
         blackjackGame.calculateWinningResult(true);
 
@@ -271,6 +271,41 @@ class BlackjackGameTest {
                 () -> assertThat(player1.getEarnedMoney()).isEqualTo(0),
                 () -> assertThat(player2.getEarnedMoney()).isEqualTo(-20000),
                 () -> assertThat(dealer.getEarnedMoney()).isEqualTo(20000)
+        );
+    }
+
+    @DisplayName("승리, 패배, 무승부 경우의 베팅 결과를 계산한다.")
+    @Test
+    void calculateGeneralCase() {
+        // given
+        final Cards sum19Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.TEN),
+                new Card(Shape.SPADE, Denomination.NINE)));
+        final Cards sum21Cards = new Cards(List.of(new Card(Shape.HEART, Denomination.TEN),
+                new Card(Shape.HEART, Denomination.FIVE), new Card(Shape.HEART, Denomination.SIX)));
+
+        final Dealer dealer = new Dealer(sum19Cards);
+        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
+                new Participants(dealer,
+                        new Players(provideThreePlayersWithCards(sum21Cards, sum19Cards,
+                                provideUnder21Cards()))));
+
+        // when
+        final Player player1 = blackjackGame.getPlayer(0);
+        final Player player2 = blackjackGame.getPlayer(1);
+        final Player player3 = blackjackGame.getPlayer(2);
+
+        player1.bet(10000); // 승리
+        player2.bet(10000); // 무승부
+        player3.bet(10000); // 패배
+
+        blackjackGame.calculateWinningResult(false);
+
+        // then
+        assertAll(
+                () -> assertThat(player1.getEarnedMoney()).isEqualTo(10000),
+                () -> assertThat(player2.getEarnedMoney()).isEqualTo(0),
+                () -> assertThat(player3.getEarnedMoney()).isEqualTo(-10000),
+                () -> assertThat(dealer.getEarnedMoney()).isEqualTo(0)
         );
     }
 }
