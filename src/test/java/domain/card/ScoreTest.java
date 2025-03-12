@@ -45,4 +45,23 @@ public class ScoreTest {
 			assertThat(actual.getValue()).isEqualTo(90);
 		}
 	}
+
+	@Nested
+	@DisplayName("score 비교 연산")
+	class isThan {
+
+		@DisplayName("x보다 더 큰가")
+		@Test
+		void isGreaterThan() {
+			// given
+			final Score score = new Score(100);
+			final int moreThanValue = 100;
+
+			// when
+			final boolean actual = score.isGreaterThan(moreThanValue);
+
+			// then
+			assertThat(actual).isFalse();
+		}
+	}
 }

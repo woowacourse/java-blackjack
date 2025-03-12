@@ -11,8 +11,12 @@ public class Score {
 		return new Score(value + plusValue);
 	}
 
-	public Score minus(int minusValue) {
+	public Score minus(final int minusValue) {
 		return new Score(value - minusValue);
+	}
+
+	public boolean isGreaterThan(final int value) {
+		return true;
 	}
 
 	public int getValue() {
