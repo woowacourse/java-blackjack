@@ -47,7 +47,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(less16Cards);
         
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
         
         // then
         Assertions.assertThat(result).isEqualTo(1000);
@@ -61,7 +61,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(HEART_6, HEART_10);
 
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
 
         // then
         Assertions.assertThat(result).isEqualTo(-1000);
@@ -75,7 +75,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(cards2);
         
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
         
         // then
         Assertions.assertThat(result).isEqualTo(0);
@@ -89,7 +89,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(notBustNotBlackjackCards);
         
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
         
         // then
         Assertions.assertThat(result).isEqualTo(-1000);
@@ -103,7 +103,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(bustCards);
         
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
         
         // then
         Assertions.assertThat(result).isEqualTo(-1000);
@@ -117,7 +117,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(DIAMOND_9, DIAMOND_10, HEART_3);
 
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
         
         // then
         Assertions.assertThat(result).isEqualTo(1000);
@@ -132,7 +132,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(DIAMOND_5, DIAMOND_1);
 
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
 
         // then
         Assertions.assertThat(result).isEqualTo(1500);
@@ -146,7 +146,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(blackjackCards);
 
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
         
         // then
         Assertions.assertThat(result).isEqualTo(0);
@@ -160,7 +160,7 @@ public class PlayerBettingBlackjackCardHandTest {
         final var dealer = dealerWith(blackjackCards);
 
         // when
-        final var result = player.compareHand(dealer);
+        final var result = player.calculateIncome(dealer);
         
         // then
         Assertions.assertThat(result).isEqualTo(-1000);

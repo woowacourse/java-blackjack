@@ -36,7 +36,7 @@ public final class PlayerBettingBlackjackCardHand {
         return new PlayerBettingBlackjackCardHand(new PlayerBlackjackCardHand(player, initializer), bettingAmount);
     }
     
-    public double compareHand(final DealerBlackjackCardHand dealerHand) {
+    public double calculateIncome(final DealerBlackjackCardHand dealerHand) {
         final WinningStatus winningStatus = WinningStatus.determineWinningStatus(hand, dealerHand);
         if (isBlackjackWinning(winningStatus)) {
             return bettingAmount * BLACK_JACK_PROFIT_RATIO;

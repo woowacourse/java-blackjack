@@ -116,7 +116,7 @@ public class OutputView {
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             sj.add("%s: %d".formatted(
                     playerHand.getPlayerName(),
-                    (int) playerHand.compareHand(dealerHand)
+                    (int) playerHand.calculateIncome(dealerHand)
             ));
         }
         writer.write(sj.toString());
@@ -126,7 +126,7 @@ public class OutputView {
         final Map<String, Double> profits = playerHands.stream()
                 .collect(Collectors.toMap(
                         PlayerBettingBlackjackCardHand::getPlayerName,
-                        hand -> hand.compareHand(dealerHand)
+                        hand -> hand.calculateIncome(dealerHand)
                 ));
 
         return -profits.values().stream().mapToDouble(Double::doubleValue).sum();
