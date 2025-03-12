@@ -12,7 +12,7 @@ public class Count {
 	}
 
 	public Count decrement() {
-		return null;
+		return new Count(value - 1);
 	}
 
 	@Override
