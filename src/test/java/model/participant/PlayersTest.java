@@ -1,5 +1,6 @@
 package model.participant;
 
+import static util.TestCardDistributor.divideCard;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
@@ -39,19 +40,16 @@ public class PlayersTest {
     void sum() {
         // given
         // 총 합이 9
-        List<Card> divideCards = List.of(
+        List<Card> cards = List.of(
                 new Card(Suit.HEARTS, NormalRank.FIVE),
                 new Card(Suit.CLUBS, NormalRank.FOUR)
         );
-        int expected = divideCards.stream()
+        int expected = cards.stream()
                 .mapToInt(card -> card.getRank().getScore())
                 .sum();
 
-        String nickname = "pobi";
-        Player player = Player.from(nickname);
-        for (Card card : divideCards) {
-            player.addCard(card);
-        }
+        Player player = Player.from("pobi");
+        divideCard(cards, player);
 
         // when
         int sum = player.getScore();

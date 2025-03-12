@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static util.TestCardDistributor.divideCard;
+
 public class PlayerTest {
 
     @Test
@@ -41,9 +43,8 @@ public class PlayerTest {
 
         // when
         Player player = Player.from("pobi");
-        for (Card card : expectedCards) {
-            player.addCard(card);
-        }
+        divideCard(expectedCards, player);
+
 
         // then
         Assertions.assertThat(player.getCards()).containsAll(expectedCards);
@@ -54,11 +55,10 @@ public class PlayerTest {
     @DisplayName("게임 진행 점수 조건이 충분한 지 : true")
     void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
-        Participant player = Player.from("pobi");
 
-        for (Card card : cards) {
-            player.addCard(card);
-        }
+        Player player = Player.from("pobi");
+        divideCard(cards, player);
+
         //when
         //then
         Assertions.assertThat(player.isHit()).isTrue();
@@ -73,13 +73,6 @@ public class PlayerTest {
                                 new Card(Suit.SPADES, NormalRank.SEVEN)
                         )
                 )
-/*                Arguments.arguments(
-                        List.of(
-                                new Card(Suit.CLUBS, AceRank.SOFT_ACE),
-                                new Card(Suit.SPADES, NormalRank.FIVE),
-                                new Card(Suit.HEARTS, AceRank.SOFT_ACE)
-                        )
-                )*/
         );
     }
 

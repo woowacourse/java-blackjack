@@ -1,19 +1,18 @@
 package model.participant;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import model.card.*;
 import model.score.MatchType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static util.TestCardDistributor.divideCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -42,7 +41,7 @@ class DealerTest {
         final Card card = new CardDeck().pickCard();
 
         // when
-        Participant dealer = Dealer.from(new CardDeck());
+        Dealer dealer = Dealer.from(new CardDeck());
         dealer.addCard(card);
 
         // then
@@ -53,19 +52,17 @@ class DealerTest {
     @DisplayName("딜러의 핸즈에 있는 카드 랭크의 합을 잘 구하는 지")
     void sum() {
         // given
-        // 총 합이 9
-        List<Card> divideCards = List.of(
+        List<Card> cards = List.of(
                 new Card(Suit.HEARTS, NormalRank.FIVE),
                 new Card(Suit.CLUBS, NormalRank.FOUR)
         );
-        int expected = divideCards.stream()
+
+        int expected = cards.stream()
                 .mapToInt(card -> card.getRank().getScore())
                 .sum();
 
-        Participant dealer = Dealer.from(new CardDeck());
-        for (Card divideCard : divideCards) {
-            dealer.addCard(divideCard);
-        }
+        Dealer dealer = Dealer.from(new CardDeck());
+        divideCard(cards,dealer);
 
         // when
         int sum = dealer.getScore();
@@ -79,15 +76,14 @@ class DealerTest {
     void isNotUpTrue() {
 
         // given
-        List<Card> divideCards = List.of(
+        List<Card> cards = List.of(
                 new Card(Suit.HEARTS, NormalRank.JACK),
                 new Card(Suit.CLUBS, NormalRank.FOUR)
         );
 
         Dealer dealer = Dealer.from(new CardDeck());
-        for (Card divideCard : divideCards) {
-            dealer.addCard(divideCard);
-        }
+        divideCard(cards, dealer);
+
         // when
         // then
         assertThat(dealer.isHit()).isTrue();
@@ -98,15 +94,14 @@ class DealerTest {
     void isNotUpFalse() {
 
         // given
-        List<Card> divideCards = List.of(
+        List<Card> cards = List.of(
                 new Card(Suit.HEARTS, NormalRank.JACK),
                 new Card(Suit.CLUBS, NormalRank.KING)
         );
 
         Dealer dealer = Dealer.from(new CardDeck());
-        for (Card divideCard : divideCards) {
-            dealer.addCard(divideCard);
-        }
+        divideCard(cards, dealer);
+
         // when
         // then
         assertThat(dealer.isHit()).isFalse();
@@ -118,15 +113,11 @@ class DealerTest {
     void dealerGameResult(List<Card> playerCards, List<Card> dealerCards,
                           MatchType playerMatchType, MatchType dealerMatchType) {
         Dealer dealer = Dealer.from(new CardDeck());
-        for (Card card : dealerCards) {
-            dealer.addCard(card);
-        }
+        divideCard(dealerCards, dealer);
 
         Players players = Players.from(List.of("hippo"));
         Player player = players.getPlayers().getFirst();
-        for (Card card : playerCards) {
-            player.addCard(card);
-        }
+        divideCard(playerCards, player);
 
         Map<MatchType, Integer> dealerMatchResult = dealer.calculateVictory(players);
 
@@ -176,4 +167,5 @@ class DealerTest {
                 )
         );
     }
+
 }
