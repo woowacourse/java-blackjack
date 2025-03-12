@@ -26,4 +26,16 @@ class ParticipantTest {
         assertEquals(participant.getHand().getHand().getFirst(), card);
     }
 
+    @Test
+    @DisplayName("참가자 카드 합계 테스트")
+    void calculateSumTest() {
+        //given
+        Participant participant = new Participant(new Hand(new ArrayList<>()));
+        Card card = new Card(DIAMOND, TWO);
+        participant.addCard(card);
+
+        //when-then
+        assertEquals(2, participant.calculateSum());
+    }
+
 }
