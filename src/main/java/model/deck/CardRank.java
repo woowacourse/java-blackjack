@@ -15,6 +15,8 @@ public enum CardRank {
     QUEEN("Q", 10),
     KING("K", 10);
 
+    private static final int NO_VALUE = -1;
+
     private final String name;
     private final int defaultValue;
     private final int maxValue;
@@ -22,7 +24,7 @@ public enum CardRank {
     CardRank(String cardName, int defaultValue) {
         this.name = cardName;
         this.defaultValue = defaultValue;
-        this.maxValue = 0;
+        this.maxValue = NO_VALUE;
     }
 
     CardRank(String name, int defaultValue, int maxValue) {
@@ -40,7 +42,7 @@ public enum CardRank {
     }
 
     public int getMaxValue() {
-        if (maxValue == 0) {
+        if (maxValue == NO_VALUE) {
             throw new IllegalStateException("최대 값을 선택할 수 없는 카드입니다.");
         }
         return maxValue;
