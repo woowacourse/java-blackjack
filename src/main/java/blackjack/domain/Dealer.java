@@ -7,27 +7,27 @@ public class Dealer extends Participant {
     private final static String DEALER_NAME = "딜러";
     private final static int DEALER_HIT_THRESHOLD = 16;
 
-    private final CardDump cardDump;
+    private final CardProvider cardProvider;
 
-    public Dealer(CardDump cardDump) {
-        super(new CardDeck());
-        this.cardDump = cardDump;
+    public Dealer(CardProvider cardProvider) {
+        super();
+        this.cardProvider = cardProvider;
     }
 
     public void initCardDeck() {
-        cardDeck.add(cardDump.drawCard());
-        cardDeck.add(cardDump.drawCard());
+        cardStorage.add(cardProvider.drawCard());
+        cardStorage.add(cardProvider.drawCard());
     }
 
     public CardDeck createCardDeck() {
         CardDeck cardDeck = new CardDeck();
-        cardDeck.add(cardDump.drawCard());
-        cardDeck.add(cardDump.drawCard());
+        cardDeck.add(cardProvider.drawCard());
+        cardDeck.add(cardProvider.drawCard());
         return cardDeck;
     }
 
     public Card drawCard() {
-        return cardDump.drawCard();
+        return cardProvider.drawCard();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Dealer extends Participant {
 
     @Override
     public int calculateTotalCardScore() {
-        Set<Integer> possibleScore = cardDeck.calculatePossibleSums();
+        Set<Integer> possibleScore = cardStorage.calculatePossibleSums();
         return Collections.max(possibleScore);
     }
 

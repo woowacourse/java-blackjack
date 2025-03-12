@@ -5,18 +5,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CardDeck {
-    private final List<Card> cards = new ArrayList<>();
+public class CardDeck implements CardStorage {
+    private final List<Card> cards;
 
+    public CardDeck() {
+        this.cards = new ArrayList<>();
+    }
+
+    public int getDeckSize() {
+        return cards.size();
+    }
+
+    @Override
     public void add(Card card) {
         cards.add(card);
     }
 
-    public void addAll(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
-    public Set<Integer> calculatePossibleSum() {
+    @Override
+    public Set<Integer> calculatePossibleSums() {
         List<Integer> sums = new ArrayList<>();
         sums.add(0);
 
@@ -28,10 +34,7 @@ public class CardDeck {
         return new HashSet<>(sums);
     }
 
-    public int getDeckSize() {
-        return cards.size();
-    }
-
+    @Override
     public List<Card> getCards() {
         return cards;
     }

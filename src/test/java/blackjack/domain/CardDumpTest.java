@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.CardDump.CARD_AMOUNT_LIMIT_EXCEEDED;
 import static blackjack.domain.CardDump.EMPTY_CARD_DUMP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -44,17 +43,5 @@ class CardDumpTest {
         assertThatThrownBy(cardDump::drawCard)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(EMPTY_CARD_DUMP);
-    }
-
-    @DisplayName("카드 덤프에 충분한 카드가 없는 경우 예외가 발생하는 것을 확인한다.")
-    @Test
-    void testCardDumpAmountError() {
-        CardDump cardDump = new CardDump();
-        for (int i = 0; i < 51; i++) {
-            cardDump.drawCard();
-        }
-        assertThatThrownBy(cardDump::drawCards)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage(CARD_AMOUNT_LIMIT_EXCEEDED);
     }
 }

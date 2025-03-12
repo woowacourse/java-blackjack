@@ -9,26 +9,26 @@ public class Player extends Participant {
     private final String name;
 
     public Player(String name) {
-        super(new CardDeck());
+        super();
         this.name = name;
     }
 
     public void initCardDeck(CardDeck cardDeck) {
         for (Card card : cardDeck.getCards()) {
-            this.cardDeck.add(card);
+            this.cardStorage.add(card);
         }
     }
 
     @Override
     public boolean canHit() {
-        Set<Integer> possibleSum = cardDeck.calculatePossibleSums();
+        Set<Integer> possibleSum = cardStorage.calculatePossibleSums();
         int minScore = Collections.min(possibleSum);
         return minScore <= TARGET_SCORE;
     }
 
     @Override
     public int calculateTotalCardScore() {
-        Set<Integer> possibleSum = cardDeck.calculatePossibleSums();
+        Set<Integer> possibleSum = cardStorage.calculatePossibleSums();
         return possibleSum.stream()
                 .filter(sum -> sum <= TARGET_SCORE)
                 .max(Integer::compareTo)

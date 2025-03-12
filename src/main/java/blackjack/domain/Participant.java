@@ -5,10 +5,10 @@ import java.util.List;
 public abstract class Participant {
     private static final int TARGET_SCORE = 21;
 
-    protected final CardDeck cardDeck;
+    protected final CardStorage cardStorage;
 
-    protected Participant(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
+    protected Participant() {
+        this.cardStorage = new CardDeck();
     }
 
     abstract boolean canHit();
@@ -20,11 +20,11 @@ public abstract class Participant {
     }
 
     public void addCard(Card card) {
-        cardDeck.add(card);
+        cardStorage.add(card);
     }
 
     public List<Card> getCardDeck() {
-        return cardDeck.getCards();
+        return cardStorage.getCards();
     }
 
     public abstract String getName();
