@@ -15,7 +15,8 @@ public abstract class User {
 
     public abstract boolean isImpossibleDraw();
 
-
+    public abstract List<TrumpCard> openCard();
+    
     public void receiveCard(final TrumpCard trumpCard) {
         cardDeck.addTrumpCard(trumpCard);
     }
@@ -27,8 +28,6 @@ public abstract class User {
     public String getName() {
         return this.name;
     }
-
-    public abstract List<TrumpCard> openCard();
 
     public CardDeck getCardDeck() {
         return this.cardDeck;
