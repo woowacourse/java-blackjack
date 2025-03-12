@@ -21,19 +21,25 @@ public class OutputView {
     public void printInitialParticipantHands(List<Participant> participants) {
         System.out.println();
         System.out.print("딜러와 ");
-        String result = participants.stream().skip(1).map(Participant::getName)
-            .collect(Collectors.joining(", "));
-        System.out.print(SPREAD_PLAYER_MESSAGE.formatted(result));
+        printSpreadCardOfPlayerMessage(participants);
+        printParticipantCard(participants);
         System.out.println();
+    }
 
+    private void printParticipantCard(List<Participant> participants) {
         for (Participant participant : participants) {
             System.out.print(SPREAD_NAME_RESULT.formatted(participant.getName()));
-
             List<Card> shownCard = participant.getShownCard();
             String cardMessage = shownCard.stream().map(this::formatCard)
                 .collect(Collectors.joining(", "));
             System.out.println(cardMessage);
         }
+    }
+
+    private void printSpreadCardOfPlayerMessage(List<Participant> participants) {
+        String result = participants.stream().skip(1).map(Participant::getName)
+            .collect(Collectors.joining(", "));
+        System.out.print(SPREAD_PLAYER_MESSAGE.formatted(result));
         System.out.println();
     }
 
@@ -52,7 +58,7 @@ public class OutputView {
         System.out.println(formatFullParticipantInfo(participant));
     }
 
-    public void printCardMessageTest(Participant participant) {
+    public void printParticipantNameAndCard(Participant participant) {
         String cardResult = formatCards(participant.getCards());
         System.out.print(SPREAD_NAME_RESULT.formatted(participant.getName()));
         System.out.println(cardResult);

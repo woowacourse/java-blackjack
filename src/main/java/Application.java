@@ -71,7 +71,7 @@ public class Application {
             if (userOpinion.equalsIgnoreCase("y")) {
                 blackJackGame.receiveExtraCardProcessOfPlayer(participant);
             }
-            outputView.printCardMessageTest(participant);
+            outputView.printParticipantNameAndCard(participant);
             if (userOpinion.equalsIgnoreCase("n")) {
                 break;
             }
