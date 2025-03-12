@@ -42,8 +42,9 @@ public class OutputView {
 
     public static void printDealerExtraCardsCount(Dealer dealer) {
         int dealerExtraCardsCount = dealer.getExtraSize();
-        if (dealerExtraCardsCount > 0)
+        if (dealerExtraCardsCount > 0) {
             System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
+        }
     }
 
     public static void printWinLossResult(Players players, Dealer dealer, WinLossCountDto winLossCountResult) {
@@ -64,7 +65,7 @@ public class OutputView {
         System.out.println("YOU DIE!!!!!!!!!!!!!!!!");
     }
 
-    public static String getFormattedOpenedCard(Card card){
+    public static String getFormattedOpenedCard(Card card) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(card.getDenomination().getValue())
                 .append(card.getSuit().getShape());
@@ -94,10 +95,20 @@ public class OutputView {
     }
 
     public static void printProfitPerParticipant(Map<Player, Integer> profitPerParticipant, Dealer dealer) {
-        System.out.println(dealer.getName() + ": " + profitPerParticipant.get(dealer));
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(dealer.getName())
+                .append(": ")
+                .append(profitPerParticipant.get(dealer))
+                .append("\n")
+        ;
+
         profitPerParticipant.entrySet().stream().filter(it -> it.getKey().isNotDealer()).forEach(it -> {
-            System.out.println(it.getKey().getName()+": "+it.getValue());
+            stringBuilder.append(it.getKey().getName())
+                    .append(": ")
+                    .append(it.getValue())
+                    .append("\n");
         });
+        System.out.println(stringBuilder);
     }
 
     private static void openCardsWithTotal(Player player, StringBuilder stringBuilder) {

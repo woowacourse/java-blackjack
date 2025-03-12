@@ -13,7 +13,7 @@ import domain.Deck;
 import domain.Player;
 import domain.Players;
 import domain.WinLossResult;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJack {
@@ -57,7 +57,7 @@ public class BlackJack {
     }
 
     private Map<Player, Integer> calculateProfit() {
-        Map<Player, Integer> profitPerParticipant = new HashMap<>();
+        Map<Player, Integer> profitPerParticipant = new LinkedHashMap<>();
         int dealersProfit = 0;
         for (Player player : players.getPlayers()) {
             int playersProfit = accountant.getProfit(player, computeWinLoss(player, dealer));
