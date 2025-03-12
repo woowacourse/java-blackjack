@@ -16,7 +16,7 @@ public class Player extends BlackJackPlayer {
     }
 
     @Override
-    public boolean canDrawMoreCard() {
+    protected boolean canDrawMoreCard() {
         return getMinimumPoint() < DRAWABLE_POINT;
     }
 }

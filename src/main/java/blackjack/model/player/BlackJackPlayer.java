@@ -4,7 +4,6 @@ import blackjack.model.card.Cards;
 import java.util.Collections;
 import java.util.Objects;
 
-// 안터페이스 쓰기
 public abstract class BlackJackPlayer {
 
     protected static final int BLACKJACK_POINT = 21;
@@ -15,10 +14,6 @@ public abstract class BlackJackPlayer {
     protected BlackJackPlayer(final String name) {
         this.name = name;
         this.cards = Cards.empty();
-    }
-
-    public final int getMinimumPoint() {
-        return Collections.min(cards.calculatePossiblePoints());
     }
 
     public final void receiveCards(final Cards cards) {
@@ -36,6 +31,10 @@ public abstract class BlackJackPlayer {
                 .orElse(getMinimumPoint());
     }
 
+    protected final int getMinimumPoint() {
+        return Collections.min(cards.calculatePossiblePoints());
+    }
+
     protected final boolean isBust() {
         return calculateOptimalPoint() > BLACKJACK_POINT;
     }
@@ -50,7 +49,7 @@ public abstract class BlackJackPlayer {
 
     public abstract Cards openInitialCards();
 
-    public abstract boolean canDrawMoreCard();
+    protected abstract boolean canDrawMoreCard();
 
     @Override
     public boolean equals(final Object o) {

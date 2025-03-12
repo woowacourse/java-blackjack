@@ -2,9 +2,12 @@ package blackjack.model.player;
 
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
+import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
+import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -192,15 +195,109 @@ class DealerTest {
         );
     }
 
+    private static Dealer makeDealer(final Cards cards) {
+        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
+        dealer.receiveCards(cards);
+        return dealer;
+    }
+
     private static Player makeUser(final String name, final Cards cards) {
         Player player = new Player(name);
         player.receiveCards(cards);
         return player;
     }
 
+    private static Stream<Arguments> 자신의_카드를_뽑는다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        makeDealer(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.SIX)))),
+                        true
+                ),
+                Arguments.of(
+                        makeDealer(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN),
+                                createCard(CardNumber.FOUR)))),
+                        false
+                )
+        );
+    }
+
+    //
+    //    public void drawMoreCard(final BlackJackPlayer blackJackPlayer) {
+    //        if (canDrawMoreCard(blackJackPlayer)) {
+    //            blackJackPlayer.receiveCards(drawCard(SINGLE_DRAW_AMOUNT));
+    //            return;
+    //        }
+    //        throw new IllegalStateException("카드를 더 뽑을 수 없습니다.");
+    //    }
+
+    static Stream<Arguments> 블랙잭_플레이어가_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Dealer(new DefaultCardDeckInitializer()),
+                        new FakeBlackJackPlayer("pobi", true),
+                        true
+                ),
+                Arguments.of(
+                        new Dealer(new DefaultCardDeckInitializer()),
+                        new FakeBlackJackPlayer("pobi", false),
+                        false
+                )
+        );
+    }
+
     @BeforeEach
     void setUp() {
-        dealer = new Dealer();
+        dealer = new Dealer(new DefaultCardDeckInitializer());
+    }
+
+    @Test
+    void 게임_시작시_자신과_플레이어들에게_카드_두장을_나눠준다() {
+        CardDeck cardDeck = new CardDeck(new Cards(
+                List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
+                        createCard(CardNumber.FIVE))
+        ));
+        Dealer dealer = new Dealer("딜러", cardDeck);
+        Player player = new Player("pobi");
+
+        dealer.dealInitialCards(List.of(player));
+
+        assertThat(dealer.getCards().getValues()).hasSize(2);
+        assertThat(player.getCards().getValues()).hasSize(2);
+    }
+
+    @ParameterizedTest
+    @MethodSource("블랙잭_플레이어가_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
+    void 블랙잭_플레이어가_카드를_더_뽑을_수_있는지_반환한다(final Dealer dealer, final BlackJackPlayer blackJackPlayer,
+                                       final boolean expected) {
+        assertThat(dealer.canDrawMoreCard(blackJackPlayer)).isEqualTo(expected);
+    }
+
+    @Test
+    void 블랙잭_플레이어의_카드를_더_뽑는다() {
+        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
+        BlackJackPlayer blackJackPlayer = new FakeBlackJackPlayer("pobi", true);
+
+        dealer.drawMoreCard(blackJackPlayer);
+
+        assertThat(blackJackPlayer.getCards().getValues()).hasSize(1);
+    }
+
+    @Test
+    void 블랙잭_플레이어가_카드를_더_뽑을_수_없는_경우_예외를_던진다() {
+        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
+        BlackJackPlayer blackJackPlayer = new FakeBlackJackPlayer("pobi", false);
+
+        assertThatIllegalStateException()
+                .isThrownBy(() -> dealer.drawMoreCard(blackJackPlayer));
+    }
+
+    @ParameterizedTest
+    @MethodSource("자신의_카드를_뽑는다_테스트_케이스")
+    void 자신의_카드를_뽑는다(final Dealer dealer, final boolean expected) {
+
+        boolean actual = dealer.drawSelf();
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -253,5 +350,25 @@ class DealerTest {
         dealer.receiveCards(cards);
 
         assertThat(dealer.isWin(player)).isEqualTo(expected);
+    }
+
+    private static class FakeBlackJackPlayer extends BlackJackPlayer {
+
+        private final boolean canDrawMoreCard;
+
+        public FakeBlackJackPlayer(final String name, final boolean canDrawMoreCard) {
+            super(name);
+            this.canDrawMoreCard = canDrawMoreCard;
+        }
+
+        @Override
+        public Cards openInitialCards() {
+            throw new IllegalStateException("이 메서드는 테스트할 수 없습니다.");
+        }
+
+        @Override
+        protected boolean canDrawMoreCard() {
+            return canDrawMoreCard;
+        }
     }
 }

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
+import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import java.util.List;
@@ -51,7 +52,7 @@ class ResultTest {
 
 
     private static Dealer makeDealer(final Cards cards) {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
         dealer.receiveCards(cards);
         return dealer;
     }
