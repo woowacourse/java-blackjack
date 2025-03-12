@@ -6,28 +6,28 @@ public enum ResultStatus {
 
     WIN,
     LOSE,
-    DRAW;
+    PUSH;
 
     public static ResultStatus calculateResultStatus(final int score, final int comparedScore) {
         if (score <= BLACKJACK_NUMBER) {
-            return calculateResultStatusUnder21(score, comparedScore);
+            return calculateResultStatusUnderBlackjackNumber(score, comparedScore);
         }
         return LOSE;
     }
 
-    private static ResultStatus calculateResultStatusUnder21(final int score, final int comparedScore) {
+    private static ResultStatus calculateResultStatusUnderBlackjackNumber(final int score, final int comparedScore) {
         if (comparedScore <= BLACKJACK_NUMBER) {
-            return calculateResultStatusBothUnder21(score, comparedScore);
+            return calculateResultStatusBothUnderBlackjackNumber(score, comparedScore);
         }
         return WIN;
     }
 
-    private static ResultStatus calculateResultStatusBothUnder21(final int score, final int comparedScore) {
+    private static ResultStatus calculateResultStatusBothUnderBlackjackNumber(final int score, final int comparedScore) {
         if (score > comparedScore) {
             return WIN;
         }
         if (score == comparedScore) {
-            return DRAW;
+            return PUSH;
         }
         return LOSE;
     }

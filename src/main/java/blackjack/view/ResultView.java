@@ -19,7 +19,7 @@ public class ResultView {
     private static final Map<ResultStatus, String> RESULT_STATUS_KOREAN = Map.of(
             ResultStatus.WIN, "승",
             ResultStatus.LOSE, "패",
-            ResultStatus.DRAW, "무"
+            ResultStatus.PUSH, "무"
     );
     private static final String LINE = System.lineSeparator();
     private static final String NAME_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
@@ -77,7 +77,7 @@ public class ResultView {
     public void showWinningResult(final Map<String, ResultStatus> result) {
         System.out.println(LINE + TITLE_WINNING_RESULT);
         int winCount = countResultStatus(result, ResultStatus.LOSE);
-        int drawCount = countResultStatus(result, ResultStatus.DRAW);
+        int drawCount = countResultStatus(result, ResultStatus.PUSH);
         int loseCount = countResultStatus(result, ResultStatus.WIN);
         System.out.printf(WINNING_DEALER_RESULT_FORMAT + LINE, winCount, drawCount, loseCount);
         showResultStatus(result);
