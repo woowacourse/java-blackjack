@@ -57,6 +57,28 @@ public class BlackjackGame {
         return GameResult.checkPlayerWin(player, dealer);
     }
 
+    public Map<Player, Integer> calculatePlayersProfit() {
+        Map<Player, Integer> playerProfits = new HashMap<>();
+        for (Player player : players) {
+            int profit = calculatePlayerProfit(player, dealer);
+            playerProfits.put(player, profit);
+        }
+        return playerProfits;
+    }
+
+    public int calculatePlayerProfit(final Player player, final Dealer dealer) {
+        GameResult playerResult = GameResult.checkPlayerWin(player, dealer);
+        return player.calculateProfit(playerResult);
+    }
+
+    public int calculateDealerProfit() {
+        int playersProfitSum = players.stream()
+                .mapToInt(player -> calculatePlayerProfit(player, dealer))
+                .sum();
+
+        return - playersProfitSum;
+    }
+
     public List<Player> getPlayers() {
         return players;
     }
