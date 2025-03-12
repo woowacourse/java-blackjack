@@ -14,4 +14,14 @@ public enum GameResult {
     public String getResultMeaning() {
         return resultMeaning;
     }
+
+    public GameResult findReverse() {
+        if (this == GameResult.WIN) {
+            return GameResult.LOSE;
+        }
+        if (this == GameResult.LOSE) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
 }

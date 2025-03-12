@@ -27,7 +27,7 @@ public final class ParticipantWinningResult {
         Map<GameResult, Integer> dealerResult = new HashMap<>();
         for (Player player : result.keySet()){
             GameResult playerGameResult = result.get(player);
-            calculateDealerResult(playerGameResult, dealerResult);
+            updateDealerResult(playerGameResult, dealerResult);
         }
         return dealerResult;
     }
@@ -55,20 +55,8 @@ public final class ParticipantWinningResult {
         return GameResult.DRAW;
     }
 
-    private void calculateDealerResult(final GameResult gameResult, final Map<GameResult, Integer> dealerResult) {
-        if (gameResult == GameResult.WIN){
-            updateDealerResult(GameResult.LOSE, dealerResult);
-        }
-        if (gameResult == GameResult.LOSE){
-            updateDealerResult(GameResult.WIN, dealerResult);
-        }
-        if (gameResult == GameResult.DRAW){
-            updateDealerResult(GameResult.DRAW, dealerResult);
-        }
-    }
-
     private void updateDealerResult(final GameResult gameResult, final Map<GameResult, Integer> dealerResult) {
-        dealerResult.merge(gameResult, 1, Integer::sum);
+        dealerResult.merge(gameResult.findReverse(), 1, Integer::sum);
     }
 
     public Map<Player, GameResult> getResult() {
