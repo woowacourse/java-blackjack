@@ -58,6 +58,20 @@ public class ScoreTest {
 			// then
 			assertThat(actual.getValue()).isEqualTo(90);
 		}
+
+		@DisplayName("score에 주어진 Score를 뺀 값을 반환한다.")
+		@Test
+		void minusScore() {
+			// given
+			final Score score = new Score(100);
+			final Score minusValue = new Score(10);
+
+			// when
+			final Score actual = score.minus(minusValue);
+
+			// then
+			assertThat(actual).isEqualTo(new Score(90));
+		}
 	}
 
 	@Nested
