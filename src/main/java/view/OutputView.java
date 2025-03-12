@@ -4,8 +4,8 @@ import static domain.Participants.DEALER_NAME;
 
 import domain.GameStatus;
 import domain.card.Card;
-import domain.dto.GameResultDto;
-import domain.dto.ParticipantCardsDto;
+import dto.GameResultDto;
+import dto.ParticipantCardsDto;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
