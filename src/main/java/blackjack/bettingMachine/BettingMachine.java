@@ -1,20 +1,20 @@
-package blackjack;
+package blackjack.bettingMachine;
 
 public class BettingMachine {
 
     private static final int UNIT_BETTING_MONEY = 100;
 
-    private long bettingMoney;
-    private final long earnedMoney;
+    private final Money bettingMoney;
+    private final Money earnedMoney;
 
     public BettingMachine() {
-        this.bettingMoney = 0;
-        this.earnedMoney = 0;
+        this.bettingMoney = new Money(0);
+        this.earnedMoney = new Money(0);
     }
 
     public void bet(final String bettingAmount) {
         validateBettingAmount(bettingAmount);
-        this.bettingMoney = Integer.parseInt(bettingAmount);
+        this.bettingMoney.increase(Integer.parseInt(bettingAmount));
     }
 
     private void validateBettingAmount(final String bettingAmount) {

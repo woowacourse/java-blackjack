@@ -1,6 +1,6 @@
 package blackjack.gamer;
 
-import blackjack.BettingMachine;
+import blackjack.bettingMachine.BettingMachine;
 import blackjack.card.Card;
 import blackjack.card.Hand;
 import java.util.List;
