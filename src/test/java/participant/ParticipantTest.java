@@ -1,4 +1,4 @@
-package domain.participant;
+package participant;
 
 import card.Card;
 import card.CardNumber;
@@ -6,8 +6,6 @@ import card.CardType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import participant.Participant;
-import participant.Player;
 
 class ParticipantTest {
 

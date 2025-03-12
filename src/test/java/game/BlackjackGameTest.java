@@ -1,19 +1,17 @@
-package domain;
+package game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import card.Card;
 import card.CardNumber;
 import card.CardType;
-import game.BlackjackGame;
-import game.GameResult;
-import participant.Dealer;
-import participant.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import participant.Dealer;
+import participant.Player;
 
 class BlackjackGameTest {
 

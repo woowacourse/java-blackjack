@@ -1,6 +1,5 @@
-package domain.deck;
+package deck;
 
-import deck.Deck;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
