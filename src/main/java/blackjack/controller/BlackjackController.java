@@ -2,15 +2,14 @@ package blackjack.controller;
 
 import blackjack.model.participant.Dealer;
 import blackjack.model.MatchResult;
-import blackjack.model.participant.Participant;
 import blackjack.model.card.Deck;
 import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.participant.ParticipantAction;
+import blackjack.model.participant.GamePlayers;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,52 +26,31 @@ public final class BlackjackController {
 
     public void run() {
         Dealer dealer = getDealer();
-        List<Player> players = getPlayers();
-        validateGame(players, dealer);
-        initializeHand(dealer, players);
-        outputView.printInitialCards(dealer.getVisibleCard(), players);
-        askHitForAllPlayer(dealer, players);
-        askHitForDealer(dealer);
-        displayResult(dealer, players);
+        GamePlayers gamePlayers = getGamePlayers();
+        playBlackjack(dealer, gamePlayers);
+        displayResult(dealer, gamePlayers);
     }
 
     private Dealer getDealer() {
         return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
     }
 
-    private List<Player> getPlayers() {
+    private GamePlayers getGamePlayers() {
         List<String> playerNames = inputView.readPlayerNames();
-        return playerNames.stream()
+        return GamePlayers.createForNewGame(playerNames.stream()
                 .map(name -> new Player(new Name(name)))
-                .toList();
+                .toList());
     }
 
-    private void validateGame(List<Player> players, Dealer dealer) {
-        if (players.isEmpty()) {
-            throw new IllegalArgumentException("게임 참가자가 없습니다.");
-        }
-        boolean isDuplicatePlayerName = new HashSet<>(players).size() != players.size();
-        if (isDuplicatePlayerName) {
-            throw new IllegalArgumentException("게임 참가자의 이름이 중복되어 게임을 시작할 수 없습니다.");
-        }
-        validateParticipants(players, dealer);
+    private void playBlackjack(Dealer dealer, GamePlayers gamePlayers) {
+        initializeHand(dealer, gamePlayers);
+        displayInitialHand(dealer, gamePlayers);
+        askHitForAllPlayer(dealer, gamePlayers);
+        askHitForDealer(dealer);
     }
 
-    private void validateParticipants(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            validateParticipant(player);
-        }
-        validateParticipant(dealer);
-    }
-
-    private void validateParticipant(Participant participant) {
-        if (!participant.getHand().isEmpty()) {
-            throw new IllegalArgumentException("게임 참가자의 패가 이미 존재하여 게임을 시작할 수 없습니다.");
-        }
-    }
-
-    private void initializeHand(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
+    private void initializeHand(Dealer dealer, GamePlayers gamePlayers) {
+        for (Player player : gamePlayers) {
             dealer.dealCard(player);
             dealer.dealCard(player);
         }
@@ -80,8 +58,12 @@ public final class BlackjackController {
         dealer.dealCard(dealer);
     }
 
-    private void askHitForAllPlayer(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
+    private void displayInitialHand(Dealer dealer, GamePlayers gamePlayers) {
+        outputView.printInitialCards(dealer.getVisibleCard(), gamePlayers.getPlayers());
+    }
+
+    private void askHitForAllPlayer(Dealer dealer, GamePlayers gamePlayers) {
+        for (Player player : gamePlayers) {
             askHit(dealer, player);
         }
     }
@@ -105,15 +87,15 @@ public final class BlackjackController {
         }
     }
 
-    private void displayResult(Dealer dealer, List<Player> players) {
+    private void displayResult(Dealer dealer, GamePlayers gamePlayers) {
         outputView.printDealerHandAndTotal(dealer.getHand(), dealer.getTotal());
-        outputView.printPlayerHandAndTotal(players);
-        outputView.printMatchResult(judgeMatchResults(dealer, players));
+        outputView.printPlayerHandAndTotal(gamePlayers.getPlayers());
+        outputView.printMatchResult(judgeMatchResults(dealer, gamePlayers));
     }
 
-    private Map<Player, MatchResult> judgeMatchResults(Dealer dealer, List<Player> players) {
+    private Map<Player, MatchResult> judgeMatchResults(Dealer dealer, GamePlayers gamePlayers) {
         Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player player : players) {
+        for (Player player : gamePlayers) {
             results.put(player, dealer.compareWith(player).getReversed());
         }
         return results;
