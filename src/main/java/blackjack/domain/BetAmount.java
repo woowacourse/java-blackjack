@@ -10,7 +10,6 @@ public class BetAmount {
         this.earnedMoney = 0;
     }
 
-
     public void setBetMoney(final long betMoney) {
         this.betMoney = betMoney;
     }
