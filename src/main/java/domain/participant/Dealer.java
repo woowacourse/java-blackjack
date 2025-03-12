@@ -1,11 +1,12 @@
 package domain.participant;
 
-import static domain.GameManager.DEALER_HIT_MIN_THRESHOLD;
-
 import domain.card.Card;
 import domain.card.CardDeck;
 
 public class Dealer extends Participant {
+
+    public static final int DEALER_HIT_MIN_THRESHOLD = 16;
+
     private final CardDeck cardDeck;
 
     public Dealer(CardDeck cardDeck) {
@@ -27,5 +28,9 @@ public class Dealer extends Participant {
         }
         receive(drawCard());
         return true;
+    }
+
+    public void decreaseTotalAmount(int amount, double ratio) {
+        decreaseAmount((int) Math.round(amount * ratio));
     }
 }
