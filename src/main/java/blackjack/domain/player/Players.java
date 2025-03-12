@@ -9,24 +9,24 @@ import java.util.Collections;
 import java.util.List;
 
 public final class Players {
-    
+
     private static final int PLAYER_MIN_SIZE = 1;
     private static final int PLAYER_MAX_SIZE = 6;
-    
+
     private final List<Player> players;
-    
+
     private Players(final List<Player> players) {
         GlobalValidator.validateNotNull(this, players);
         this.players = players;
     }
-    
+
     public static Players from(final List<String> playerNames) {
         validatePlayerNamesNotDuplicated(playerNames);
         validatePlayerNamesSize(playerNames);
         final List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .toList();
-        
+
         return new Players(players);
     }
 

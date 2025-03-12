@@ -1,9 +1,9 @@
 package blackjack.test_util;
 
-import static blackjack.domain.card.CardShape.*;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
+
+import static blackjack.domain.card.CardShape.*;
 
 public class TestConstants {
     

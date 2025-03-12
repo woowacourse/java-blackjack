@@ -5,6 +5,5 @@ public enum CardShape {
     다이아몬드,
     스페이드,
     클로버,
-    ;
     
 }

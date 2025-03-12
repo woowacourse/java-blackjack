@@ -11,17 +11,17 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController implements Controller {
-    
+
     private final InputView inputView;
     private final OutputView outputView;
     private final BlackjackService blackjackService;
-    
+
     public BlackjackController(final InputView inputView, final OutputView outputView, final BlackjackService blackjackService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.blackjackService = blackjackService;
     }
-    
+
     @Override
     public void run() {
         final List<String> playerNames = inputView.getPlayerNames();

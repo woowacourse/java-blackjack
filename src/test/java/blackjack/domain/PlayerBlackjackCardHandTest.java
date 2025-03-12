@@ -24,11 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PlayerBlackjackCardHandTest {
-    
+
     @Test
     void 생성자의_파라미터가_NULL이면_예외를_발생시킨다() {
         // given
-        
+
         // expected
         assertAll(
                 () -> assertThatThrownBy(() -> new PlayerBlackjackCardHand(null, List::of))
@@ -39,7 +39,7 @@ public class PlayerBlackjackCardHandTest {
                         .hasMessage("PlayerBlackjackCardHand의 인자는 null이 될 수 없습니다.")
         );
     }
-    
+
     @Test
     void 손패를_가진_플레이어의_이름을_확인할_수_있다() {
         // given
@@ -209,9 +209,9 @@ public class PlayerBlackjackCardHandTest {
                 Arguments.of(List.of(HEART_9, HEART_10), 21),
                 Arguments.of(List.of(HEART_9, HEART_10), 21),
                 Arguments.of(List.of(), 12)
-                );
+        );
     }
-    
+
     @Test
     void 내_손패가_버스트인지_알_수_있다() {
         // given

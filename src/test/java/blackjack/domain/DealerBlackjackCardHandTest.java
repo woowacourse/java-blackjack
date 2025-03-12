@@ -17,11 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DealerBlackjackCardHandTest {
-    
+
     @Test
     void CardHandInitializer가_NULL이면_예외를_발생시킨다() {
         // given
-        
+
         // expected
         assertThatThrownBy(() -> new DealerBlackjackCardHand(null))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -56,16 +56,16 @@ public class DealerBlackjackCardHandTest {
         // then
         assertThat(DealerBlackjackCardHand.getBlackjackSum()).isEqualTo(expectedSum);
     }
-    
+
     @Test
     void 딜러_손패가_추가_카드를_뽑으면_뽑은_개수를_반환한다() {
         // given
         DealerBlackjackCardHand DealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_9, DIAMOND_5));
         final List<Card> addedCards = List.of(HEART_1, HEART_2, HEART_3);
-        
+
         // when
         final int result = DealerBlackjackCardHand.startAddingAndGetAddedSize(new CardDrawerStub(addedCards));
-        
+
         // then
         assertThat(result).isEqualTo(2);
     }
