@@ -4,7 +4,7 @@ import object.game.GameResult;
 
 public class Wallet {
     private final int betMoney;
-    private final int earnedMoney;
+    private int earnedMoney;
 
     private Wallet(int betMoney, int earnedMoney) {
         this.betMoney = betMoney;
@@ -15,9 +15,13 @@ public class Wallet {
         return new Wallet(betMoney, 0);
     }
 
-    public Wallet applyBetRate(GameResult gameResult) {
+    public void winBetRate(GameResult gameResult) {
         double betRate = gameResult.getBetRate();
-        return new Wallet(betMoney, (int) (betMoney * betRate));
+        addEarnedMoney(betMoney * betRate);
+    }
+
+    public void addEarnedMoney(Number amount) {
+        this.earnedMoney += amount.intValue();
     }
 
     public int getProfit() {

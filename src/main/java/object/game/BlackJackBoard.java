@@ -128,44 +128,44 @@ public class BlackJackBoard {
 
         if (playerScore.isBust()) {
             // 무조건 플레이어 패배 (베팅 금액 잃음)
-            updateBattleResult(dealer, participant);
+            updateGameResult(dealer, participant);
             return;
         }
 
         if (playerScore.isBlackJack() && !dealerScore.isBlackJack()) {
             // 플레이어 1.5배
-            updateBattleResultBlackJack(participant, dealer);
+            updateGameResultBlackJack(participant, dealer);
             return;
         }
 
         if (playerScore.getScore() > dealerScore.getScore()) {
             // 플레이어 승리(1배)
-            updateBattleResult(participant, dealer);
+            updateGameResult(participant, dealer);
             return;
         }
 
         if (playerScore.getScore() < dealerScore.getScore()) {
             // 플레이어 패배(베팅 금액 잃음)
-            updateBattleResult(dealer, participant);
+            updateGameResult(dealer, participant);
             return;
         }
 
         // 무승부
-        updateBattleResultDraw(dealer, participant);
+        updateGameResultDraw(dealer, participant);
     }
 
-    private void updateBattleResultDraw(Participant dealer, Participant player) {
-        dealer.addGameRecord(GameResult.DRAW);
-        player.addGameRecord(GameResult.DRAW);
+    private void updateGameResultDraw(Participant dealer, Participant player) {
+        dealer.applyGameRecord(GameResult.DRAW);
+        player.applyGameRecord(GameResult.DRAW);
     }
 
-    private void updateBattleResultBlackJack(Participant winner, Participant loser) {
-        winner.addGameRecord(GameResult.BLACKJACK_WIN);
-        loser.addGameRecord(GameResult.LOSE);
+    private void updateGameResultBlackJack(Participant winner, Participant loser) {
+        winner.applyGameRecord(GameResult.BLACKJACK_WIN);
+        loser.applyGameRecord(GameResult.LOSE);
     }
 
-    private void updateBattleResult(Participant winner, Participant loser) {
-        winner.addGameRecord(GameResult.WIN);
-        loser.addGameRecord(GameResult.LOSE);
+    private void updateGameResult(Participant winner, Participant loser) {
+        winner.applyGameRecord(GameResult.WIN);
+        loser.applyGameRecord(GameResult.LOSE);
     }
 }

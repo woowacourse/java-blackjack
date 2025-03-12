@@ -8,10 +8,12 @@ public class Dealer implements Participant {
 
     private final String nickname;
     private final GameRecord gameRecord;
+    private final Wallet wallet;
 
     private Dealer(final String nickname) {
         this.nickname = nickname;
         this.gameRecord = new GameRecord();
+        this.wallet = Wallet.generateEmptyWalletFrom(0);
     }
 
     public static Dealer generate() {
@@ -34,12 +36,21 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public void addGameRecord(GameResult result) {
+    public void applyGameRecord(GameResult result) {
         gameRecord.add(result);
     }
 
     @Override
     public Map<GameResult, Integer> getGameRecord() {
         return gameRecord.getGameRecord();
+    }
+
+    @Override
+    public int getProfit() {
+        return wallet.getProfit();
+    }
+
+    public void addEarnedMoney(int amount) {
+        wallet.addEarnedMoney(amount);
     }
 }

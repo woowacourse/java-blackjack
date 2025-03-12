@@ -8,10 +8,12 @@ public class Player implements Participant {
 
     private final String nickname;
     private final GameRecord gameRecord;
+    private final Wallet wallet;
 
     private Player(final String nickname) {
         this.nickname = nickname;
         this.gameRecord = new GameRecord();
+        this.wallet = Wallet.generateEmptyWalletFrom(0);
     }
 
     public static Player from(final String nickname) {
@@ -34,12 +36,17 @@ public class Player implements Participant {
     }
 
     @Override
-    public void addGameRecord(GameResult result) {
+    public void applyGameRecord(GameResult result) {
         gameRecord.add(result);
+        wallet.winBetRate(result);
     }
 
     @Override
     public Map<GameResult, Integer> getGameRecord() {
         return gameRecord.getGameRecord();
+    }
+
+    public int getProfit() {
+        return wallet.getProfit();
     }
 }

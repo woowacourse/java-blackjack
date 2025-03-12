@@ -7,6 +7,7 @@ public interface Participant {
     boolean ableToDraw(final int score);
     boolean areYouDealer();
     String getNickname();
-    void addGameRecord(GameResult result);
+    void applyGameRecord(GameResult result);
     Map<GameResult, Integer> getGameRecord();
+    int getProfit();
 }

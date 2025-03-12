@@ -31,10 +31,10 @@ public class WalletTest {
         Wallet wallet = Wallet.generateEmptyWalletFrom(betMoney);
 
         // when
-        Wallet appliedWallet = wallet.applyBetRate(gameResult);
+        wallet.winBetRate(gameResult);
 
         // then
-        int actual = appliedWallet.getProfit();
+        int actual = wallet.getProfit();
         Assertions.assertThat(actual).isEqualTo(expectedProfit);
     }
 }
