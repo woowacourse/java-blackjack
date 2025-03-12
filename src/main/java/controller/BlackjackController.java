@@ -1,7 +1,7 @@
 package controller;
 
 import controller.converter.DomainToTextConverter;
-import controller.converter.PlayerResultText;
+import controller.converter.RoundResultText;
 import domain.BlackjackGame;
 import domain.RoundHistory;
 import domain.card.TrumpCard;
@@ -60,7 +60,9 @@ public final class BlackjackController {
     for (Participant player : blackjack.getPlayers()) {
       processPlayerHits(player, blackjack);
     }
+    processDealerHits(blackjack);
   }
+
 
   public void processPlayerHits(final Participant player, final BlackjackGame blackjack) {
     final var name = player.getName();
@@ -71,6 +73,13 @@ public final class BlackjackController {
     }
   }
 
+  private void processDealerHits(BlackjackGame blackjack) {
+    final var dealer = blackjack.getDealer();
+    while (dealer.isHit()) {
+      outputView.printDealerHit();
+      blackjack.hitByParticipant(dealer);
+    }
+  }
 
   private void processOpenHandResult(final BlackjackGame blackjack) {
     final List<Participant> participants = blackjack.getParticipants();
@@ -93,7 +102,7 @@ public final class BlackjackController {
 
     roundHistory.getHistory()
         .forEach((name, isWin) -> {
-          final var result = PlayerResultText.convertBooleanToText(isWin);
+          final var result = RoundResultText.convertBooleanToText(isWin);
           outputView.printRoundResultOnPlayers(name, result);
         });
   }

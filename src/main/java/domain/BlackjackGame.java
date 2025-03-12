@@ -45,8 +45,10 @@ public final class BlackjackGame {
     return cards.getFirst();
   }
 
-  public void hitByParticipant(final Participant participant) {
+
+  public void hitByParticipant(final Participant target) {
     final var card = deck.draw();
+    final var participant = participants.find(target);
     participant.hit(card);
   }
 

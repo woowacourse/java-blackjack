@@ -70,15 +70,18 @@ public final class Participants {
   }
 
   public List<TrumpCard> getCards(final Participant target) {
-    final var name = target.getName();
-    final var participant = participants.stream()
-        .filter(currentParticipant -> currentParticipant.getName().equals(name))
-        .findFirst()
-        .orElseThrow(() -> new BlackjackArgumentException("등록되지 않은 사용자입니다: " + name));
+    final Participant participant = find(target);
     return participant.getCards();
   }
 
   public List<Participant> getParticipants() {
     return Collections.unmodifiableList(participants);
+  }
+
+  public Participant find(final Participant target) {
+    return participants.stream()
+        .filter(currentParticipant -> currentParticipant.equals(target))
+        .findFirst()
+        .orElseThrow(() -> new BlackjackArgumentException("등록되지 않은 사용자입니다: " + target.getName()));
   }
 }
