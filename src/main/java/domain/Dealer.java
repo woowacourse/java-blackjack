@@ -19,13 +19,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isPossibleDraw() {
-        if (cards.isAceCountEqualTo(DOUBLE_ACE_COUNT)) {
-            return true;
-        }
-        int sumWithoutAce = cards.calculateSumWithoutAce();
-        if (cards.isAceCountEqualTo(SINGLE_ACE_COUNT)) {
-            return (sumWithoutAce + CardNumberType.getAceHighNumber()) <= VALID_DRAW_LIMIT;
-        }
-        return sumWithoutAce <= VALID_DRAW_LIMIT;
+        return cards.calculateSum() <= VALID_DRAW_LIMIT;
     }
 }

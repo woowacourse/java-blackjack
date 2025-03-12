@@ -11,10 +11,7 @@ import view.support.OutputFormatter;
 public class BlackjackConfig {
 
     public BlackjackApplication blackjackApplication() {
-        return new BlackjackApplication(
-                new ConsoleView(inputView(), outputView()),
-                cardGiver()
-        );
+        return new BlackjackApplication(new ConsoleView(inputView(), outputView()), cardGiver());
     }
 
     private InputView inputView() {

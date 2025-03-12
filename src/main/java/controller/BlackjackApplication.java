@@ -3,7 +3,6 @@ package controller;
 import static view.AnswerType.*;
 
 import domain.Players;
-import domain.Referee;
 import domain.CardGiver;
 import domain.Dealer;
 import domain.GameResults;
@@ -18,10 +17,7 @@ public class BlackjackApplication {
     private final ConsoleView consoleView;
     private final CardGiver cardGiver;
 
-    public BlackjackApplication(
-            ConsoleView consoleView,
-            CardGiver cardGiver
-    ) {
+    public BlackjackApplication(ConsoleView consoleView, CardGiver cardGiver) {
         this.consoleView = consoleView;
         this.cardGiver = cardGiver;
     }
@@ -66,10 +62,8 @@ public class BlackjackApplication {
     }
 
     private void calculateResult(Dealer dealer, Players players) {
-        final Referee referee = new Referee();
-
         consoleView.printCardsResult(dealer, players);
-        GameResults gameResults = referee.judge(dealer, players);
+        GameResults gameResults = players.calculateGameResult(dealer);
         consoleView.printGameResults(gameResults);
     }
 
