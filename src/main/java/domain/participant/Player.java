@@ -6,11 +6,4 @@ public class Player extends Participant {
     public Player(final String name) {
         super(name);
     }
-
-    public int getWinLoss(final int dealerTotal) {
-        if (isHandBust()) {
-            return LOSS;
-        }
-        return Integer.compare(getHandTotal(), dealerTotal);
-    }
 }
