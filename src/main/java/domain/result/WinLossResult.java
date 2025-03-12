@@ -8,8 +8,7 @@ public enum WinLossResult {
     WIN("승"),
     LOSS("패"),
     DRAW("무"),
-    BUST("버스트"),
-    BLACKJACK("블랙잭"),
+    BLACKJACK_WIN("블랙잭"),
     NONE("");
 
     private final String winLossMessage;
@@ -39,6 +38,9 @@ public enum WinLossResult {
             return LOSS;
         }
         if(dealer.getHandTotal() == player.getHandTotal()) {
+            if (player.isBlackJack() && !dealer.isBlackJack()) {
+                return BLACKJACK_WIN;
+            }
             return DRAW;
         }
         return NONE;
