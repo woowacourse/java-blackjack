@@ -24,10 +24,11 @@ public abstract class Participant {
     }
 
     public void receiveHand(Card card) {
-        if (BLACKJACK_VALUE_TOTAL <= getTotal()) {
-            throw new IllegalArgumentException("더 이상 카드를 받을 수 없습니다.");
+        if (canHit()) {
+            hand.add(card);
+            return;
         }
-        hand.add(card);
+        throw new IllegalArgumentException("더 이상 카드를 받을 수 없습니다.");
     }
 
     public int getTotal() {
