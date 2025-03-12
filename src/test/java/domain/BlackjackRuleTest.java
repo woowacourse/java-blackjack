@@ -357,4 +357,46 @@ class BlackjackRuleTest {
                 )
         );
     }
+
+    @DisplayName("블랙잭이 아닌 경우를 판단할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("createNotBlackjackCards")
+    void 블랙잭_아닌_경우_판단(List<Card> inputCards) {
+        // given
+        Cards cards = Cards.of(inputCards);
+
+        // when
+        final boolean isBlackjack = rule.isBlackjack(cards);
+
+        // then
+        assertThat(isBlackjack).isFalse();
+    }
+
+    private static Stream createNotBlackjackCards() {
+        return Stream.of(
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.TEN, CardShape.HEART),
+                        new Card(CardNumber.FIVE, CardShape.CLOVER)
+                ),
+                List.of(
+                        new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                        new Card(CardNumber.SIX, CardShape.HEART),
+                        new Card(CardNumber.FIVE, CardShape.DIAMOND)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.A, CardShape.HEART),
+                        new Card(CardNumber.TEN, CardShape.DIAMOND),
+                        new Card(CardNumber.NINE, CardShape.SPADE)
+                ),
+                List.of(
+                        new Card(CardNumber.TWO, CardShape.CLOVER),
+                        new Card(CardNumber.THREE, CardShape.HEART),
+                        new Card(CardNumber.TWO, CardShape.SPADE),
+                        new Card(CardNumber.FIVE, CardShape.HEART),
+                        new Card(CardNumber.EIGHT, CardShape.SPADE)
+                )
+        );
+    }
 }
