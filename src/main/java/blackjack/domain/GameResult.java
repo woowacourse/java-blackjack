@@ -33,12 +33,8 @@ public enum GameResult {
         if(playerState == BLACKJACK && dealerState == BLACKJACK) {
             return GameResult.DRAW;
         }
-
         if(playerState == BLACKJACK) {
             return GameResult.BLACKJACK_WIN;
-        }
-        if(dealerState == BLACKJACK) {
-            return GameResult.LOSE;
         }
 
         Score playerScore = player.getScore();
