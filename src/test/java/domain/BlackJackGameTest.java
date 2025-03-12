@@ -37,18 +37,21 @@ class BlackJackGameTest {
         void createPlayers() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            List<String> playerNames = List.of("Alice", "Bob");
             Deck originalDeck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
+            Map<String, BettingMoney> playerInfos = Map.of(
+                    "Alice", new BettingMoney(1000), "Bob", new BettingMoney(1000));
 
             // when
-            List<Player> players = blackJackGame.createPlayers(playerNames);
+            List<Player> players = blackJackGame.createPlayers(playerInfos);
 
             // then
             assertSoftly(softly -> {
                 softly.assertThat(players.getFirst().getName()).isEqualTo("Alice");
+                softly.assertThat(players.getFirst().getBettingMoney()).isEqualTo(new BettingMoney(1000));
                 softly.assertThat(players.getFirst().retrieveCards()).isEqualTo(
                         originalDeck.drawMultiple(2));
                 softly.assertThat(players.getLast().getName()).isEqualTo("Bob");
+                softly.assertThat(players.getLast().getBettingMoney()).isEqualTo(new BettingMoney(1000));
                 softly.assertThat(players.getLast().retrieveCards()).isEqualTo(
                         originalDeck.drawMultiple(2));
             });
@@ -60,7 +63,7 @@ class BlackJackGameTest {
         void isPlayerHitAllowed(List<TrumpCard> cards) {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", new Hand(cards));
+            Player player = new Player("Alice", new BettingMoney(1000), new Hand(cards));
 
             // when
             boolean result = blackJackGame.isPlayerHitAllowed(player);
@@ -83,7 +86,8 @@ class BlackJackGameTest {
         void processPlayerHit() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", new Hand(List.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES)));
+            Player player = new Player("Alice", new BettingMoney(1000),
+                    new Hand(List.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES)));
 
             // when
             blackJackGame.processPlayerHit(player);
@@ -112,7 +116,7 @@ class BlackJackGameTest {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Player player = new Player("머피", new Hand(cards));
+            Player player = new Player("머피", new BettingMoney(1000), new Hand(cards));
 
             // when
             Score score = blackJackGame.calculatePlayerScore(player);
@@ -158,9 +162,10 @@ class BlackJackGameTest {
         void calculateGameResults() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player1 = new Player("Alice",
+            Player player1 = new Player("Alice", new BettingMoney(1000),
                     new Hand(List.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS)));
-            Player player2 = new Player("Bob", new Hand(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS)));
+            Player player2 = new Player("Bob", new BettingMoney(1000),
+                    new Hand(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS)));
             List<Player> players = List.of(player1, player2);
 
             // when
@@ -174,26 +179,13 @@ class BlackJackGameTest {
     @Nested
     class InvalidCases {
 
-        @DisplayName("플레이어의 이름은 중복될 수 없다.")
-        @Test
-        void createPlayers() {
-            // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            List<String> playerNames = List.of("머피", "머피");
-
-            // when & then
-            assertThatThrownBy(() -> blackJackGame.createPlayers(playerNames))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
-        }
-
         @ParameterizedTest
         @DisplayName("플레이어가 히트 할 수 없다면 히트를 할 수 없다.")
         @MethodSource("provideHitNotAllowedCases")
         void processPlayerHit(List<TrumpCard> cards) {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", new Hand(cards));
+            Player player = new Player("Alice", new BettingMoney(1000), new Hand(cards));
 
             // when & then
             assertThatThrownBy(() -> blackJackGame.processPlayerHit(player))

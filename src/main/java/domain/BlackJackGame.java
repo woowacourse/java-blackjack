@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -39,21 +38,12 @@ public class BlackJackGame {
         return new BlackJackGame(deck, dealer, rule);
     }
 
-    public List<Player> createPlayers(List<String> names) {
-        validateNotDuplicate(names);
-        List<Player> players = new ArrayList<>();
-
-        names.forEach(name -> {
-            players.add(new Player(name, new Hand(deck.drawMultiple(INITIAL_CARD_COUNT))));
-        });
-
-        return players;
-    }
-
-    private void validateNotDuplicate(List<String> names) {
-        if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
-        }
+    public List<Player> createPlayers(Map<String, BettingMoney> playerInfos) {
+        return playerInfos.entrySet().stream()
+                .map(entry -> new Player(
+                        entry.getKey(), entry.getValue(),
+                        new Hand(deck.drawMultiple(INITIAL_CARD_COUNT))))
+                .toList();
     }
 
     public TrumpCard retrieveDealerFirstCard() {

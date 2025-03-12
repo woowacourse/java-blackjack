@@ -27,7 +27,7 @@ class PlayerTest {
                     TrumpCard.TWO_OF_SPADES
             );
             Hand hand = new Hand(cards);
-            Player player = new Player("머피", hand);
+            Player player = new Player("머피", new BettingMoney(1000), hand);
 
             // when
             List<TrumpCard> retrievedCards = player.retrieveCards();
@@ -44,7 +44,7 @@ class PlayerTest {
                     TrumpCard.ACE_OF_SPADES
             );
             Hand hand = new Hand(cards);
-            Player player = new Player("머피", hand);
+            Player player = new Player("머피", new BettingMoney(1000), hand);
 
             // when
             player.receiveCard(TrumpCard.TWO_OF_SPADES);
@@ -59,7 +59,7 @@ class PlayerTest {
         void calculatePlayerScore() {
             // given
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Player player = new Player("머피", new Hand(cards));
+            Player player = new Player("머피", new BettingMoney(1000), new Hand(cards));
             Rule rule = new Rule();
 
             // when
@@ -74,7 +74,7 @@ class PlayerTest {
         @MethodSource("provideDealerHitAllowedCases")
         void isHitAllowed(List<TrumpCard> cards) {
             // given
-            Player player = new Player("Alice", new Hand(cards));
+            Player player = new Player("Alice", new BettingMoney(1000), new Hand(cards));
             Rule rule = new Rule();
 
             // when
@@ -105,12 +105,23 @@ class PlayerTest {
         @DisplayName("플레이어는 이름을 가져야 한다.")
         void validateNotNullName(String name) {
             // given
-            Hand hand = new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TEN_OF_SPADES));
 
             // when & then
-            assertThatThrownBy(() -> new Player(name, hand))
+            assertThatThrownBy(() -> new Player(name, new BettingMoney(1000), new Hand(List.of())))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("플레이어는 이름을 가져야합니다.");
+                    .hasMessage("플레이어는 이름과 배팅 금액을 가져야합니다.");
+        }
+
+        @Test
+        @DisplayName("플레이어는 배팅 금액을 가져야 한다.")
+        void validateNotNullBettingMoney() {
+            // given
+            BettingMoney nullBettingMoney = null;
+
+            // when & then
+            assertThatThrownBy(() -> new Player("머피", nullBettingMoney, new Hand(List.of())))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("플레이어는 이름과 배팅 금액을 가져야합니다.");
         }
 
         @Test
@@ -120,7 +131,7 @@ class PlayerTest {
             Hand nullHand = null;
 
             // when & then
-            assertThatThrownBy(() -> new Player("머피", nullHand))
+            assertThatThrownBy(() -> new Player("머피", new BettingMoney(1000), nullHand))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("참가자는 손패를 가져야합니다.");
         }
