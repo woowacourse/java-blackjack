@@ -17,33 +17,25 @@ public enum WinLossResult {
         this.winLossMessage = winLossMessage;
     }
 
-    public static WinLossResult of(final int winLossOption) {
-        if (winLossOption == 1) {
-            return WIN;
-        }
-        if (winLossOption == -1) {
-            return LOSS;
-        }
-        if (winLossOption == 0) {
-            return DRAW;
-        }
-        return NONE;
-    }
-
     public static WinLossResult from(final Dealer dealer, final Player player) {
         if (player.isHandBust()) {
             return LOSS;
         }
+        return computeWinLossResult(dealer, player);
+    }
+
+    private static WinLossResult computeWinLossResult(final Dealer dealer, final Player player) {
+        WinLossResult winLossResult = WinLossResult.NONE;
         if (dealer.getHandTotal() < player.getHandTotal()) {
-            return WIN;
+            winLossResult = WIN;
         }
         if (dealer.getHandTotal() > player.getHandTotal()) {
-            return LOSS;
+            winLossResult = LOSS;
         }
         if (dealer.getHandTotal() == player.getHandTotal()) {
-            return checkBlackJackCase(dealer, player);
+            winLossResult = checkBlackJackCase(dealer, player);
         }
-        return NONE;
+        return winLossResult;
     }
 
     private static WinLossResult checkBlackJackCase(final Dealer dealer, final Player player) {
