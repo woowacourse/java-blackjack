@@ -6,9 +6,11 @@ import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
@@ -34,7 +36,8 @@ public class OutputView {
 
     public void printParticipant(final Players players, final Dealer dealer) {
         printHitNotice(players);
-        printDealerDeckWithHidden(dealer);
+
+        System.out.println(DEALER_CARDS + printParticipantDeck(dealer.getFirstOpenHand()));
 
         for (Player player : players.getPlayers()) {
             printPlayerDeck(player);
@@ -42,17 +45,17 @@ public class OutputView {
         System.out.print(NEW_LINE);
     }
 
-    public void printPlayerDeck(final Player player) {
-        System.out.println(resultMaker(player));
-    }
-
-    public String printDealerDeck(final Dealer dealer) {
-        System.out.printf(DEALER_CARDS);
+    public String printParticipantDeck(final Hand hand) {
         List<String> cardSymbols = new ArrayList<>();
-        for (Card card : dealer.getHand().getCards()) {
+        for (Card card : hand.getCards()) {
             cardSymbols.add(toSymbol(card));
         }
         return String.join(COMMA_DELIMITER, cardSymbols);
+    }
+
+    public void printPlayerDeck(final Player player) {
+        System.out.printf(PLAYER_CARDS, player.getName());
+        System.out.println(printParticipantDeck(player.getHand()));
     }
 
     public void printDrawDealer(final Dealer dealer) {
@@ -63,18 +66,15 @@ public class OutputView {
     }
 
     public void printScore(final Players players, final Dealer dealer) {
-        System.out.print(NEW_LINE);
-        System.out.print(printDealerDeck(dealer));
+        System.out.printf(NEW_LINE + DEALER_CARDS);
+        System.out.print(printParticipantDeck(dealer.getHand()));
         System.out.printf(SCORE + NEW_LINE, dealer.sum());
 
         for (Player player : players.getPlayers()) {
-            System.out.print(resultMaker(player));
+            System.out.printf(PLAYER_CARDS, player.getName());
+            System.out.print(printParticipantDeck(player.getHand()));
             System.out.printf(SCORE + NEW_LINE, player.sum());
         }
-    }
-
-    private void printDealerDeckWithHidden(final Dealer dealer) {
-        System.out.println(DEALER_CARDS + toSymbol(dealer.getHandExceptHidden()));
     }
 
     private void printHitNotice(final Players players) {
@@ -85,15 +85,6 @@ public class OutputView {
         }
         System.out.print(NEW_LINE);
         System.out.printf(HIT_CARDS, String.join(COMMA_DELIMITER, playersName));
-    }
-
-    private String resultMaker(final Player player) {
-        System.out.printf(PLAYER_CARDS, player.getName());
-        List<String> cardSymbols = new ArrayList<>();
-        for (Card card : player.getHand().getCards()) {
-            cardSymbols.add(toSymbol(card));
-        }
-        return String.join(COMMA_DELIMITER, cardSymbols);
     }
 
     private static String toSymbol(final Card card) {

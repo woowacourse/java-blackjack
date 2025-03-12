@@ -14,6 +14,10 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
+    private Hand(List<Card> cards) {
+        this.cards = cards;
+    }
+
     public void addCard(final Card card) {
         cards.add(card);
     }
@@ -35,8 +39,11 @@ public class Hand {
                 .anyMatch(Card::isA);
     }
 
-    public Card getCardExceptHidden() {
-        return cards.getFirst();
+    public Hand firstOpenCards() {
+        List<Card> firstOpenCards = new ArrayList<>(cards);
+        firstOpenCards.removeLast();
+
+        return new Hand(firstOpenCards);
     }
 
     public List<Card> getCards() {

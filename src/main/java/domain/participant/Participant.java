@@ -3,7 +3,7 @@ package domain.participant;
 import domain.card.CardDeck;
 import domain.card.Hand;
 
-public abstract class Participant {
+public abstract class Participant{
     protected final Hand hand;
 
     public Participant() {
@@ -19,6 +19,10 @@ public abstract class Participant {
     }
 
     public Hand getHand() {
+        return hand;
+    }
+
+    public Hand getFirstOpenHand(){
         return hand;
     }
 

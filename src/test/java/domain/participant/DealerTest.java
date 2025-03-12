@@ -13,6 +13,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.Hand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -94,15 +95,17 @@ public class DealerTest {
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer();
         dealer.hitCard(cardDeck);
+        dealer.hitCard(cardDeck);
 
         // when
-        Card card = dealer.getHandExceptHidden();
+        Hand hand = dealer.getFirstOpenHand();
 
+        System.out.println("hand.getCards().size() = " + hand.getCards().size());
         // then
         assertSoftly(softly -> {
-            softly.assertThat(card.getShape()).isEqualTo(DIAMOND);
-            softly.assertThat(card.getNumber()).isEqualTo(ACE);
+            softly.assertThat(hand.getCards().size()).isEqualTo(1);
+            softly.assertThat(hand.getCards().getFirst().getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(hand.getCards().getFirst().getNumber()).isEqualTo(ACE);
         });
-
     }
 }

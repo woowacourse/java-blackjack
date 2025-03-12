@@ -12,6 +12,7 @@ import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -72,20 +73,21 @@ public class HandTest {
 
     @Test
     @DisplayName("히든 카드를 제외한 카드 반환 테스트")
-    void getCardExceptHiddenTest() {
+    void firstOpenCardsTest() {
         // given
         Hand hand = new Hand();
         hand.addCard(new Card(DIAMOND, TWO));
         hand.addCard(new Card(SPADE, ACE));
 
         // when
-        Card card = hand.getCardExceptHidden();
+        Hand handForFirstOpen = hand.firstOpenCards();
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(card.getShape()).isEqualTo(DIAMOND);
-            softly.assertThat(card.getNumber()).isEqualTo(TWO);
+            softly.assertThat(handForFirstOpen.getCards().size()).isEqualTo(1);
+            softly.assertThat(handForFirstOpen.getCards().getFirst().getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(handForFirstOpen.getCards().getFirst().getNumber()).isEqualTo(TWO);
         });
-
     }
+
 }
