@@ -15,6 +15,10 @@ public class Count {
 		return new Count(value - 1);
 	}
 
+	public boolean isZero() {
+		return false;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
