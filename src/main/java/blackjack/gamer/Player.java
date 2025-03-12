@@ -1,6 +1,6 @@
-package blackjack.model.gamer;
+package blackjack.gamer;
 
-import blackjack.model.card.Hand;
+import blackjack.card.Hand;
 
 public class Player extends Gamer {
 

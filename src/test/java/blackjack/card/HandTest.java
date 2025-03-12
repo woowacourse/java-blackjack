@@ -1,4 +1,4 @@
-package blackjack.model.card;
+package blackjack.card;
 
 import static blackjack.fixture.TestFixture.provideOneAceCards;
 import static blackjack.fixture.TestFixture.provideTwoAceCards1;

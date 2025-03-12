@@ -1,8 +1,8 @@
 package blackjack.fixture;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Denomination;
-import blackjack.model.card.Shape;
+import blackjack.card.Card;
+import blackjack.card.Denomination;
+import blackjack.card.Shape;
 import java.util.List;
 
 public class TestFixture {

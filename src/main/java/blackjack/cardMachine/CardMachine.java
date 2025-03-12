@@ -1,6 +1,6 @@
-package blackjack.model.cardMachine;
+package blackjack.cardMachine;
 
-import blackjack.model.card.Card;
+import blackjack.card.Card;
 import java.util.List;
 
 public interface CardMachine {
