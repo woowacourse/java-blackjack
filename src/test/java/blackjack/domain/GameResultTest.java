@@ -59,4 +59,25 @@ class GameResultTest {
                 () -> assertThat(result.get(gambler)).isEqualTo(1_000)
         );
     }
+
+    @Test
+    @DisplayName("무승부인 경우 각자 최종 수익은 0원이다")
+    void 무승부인_경우_각자_최종_수익은_0원이다() {
+        Dealer dealer = new Dealer();
+        dealer.pushDealCard(SORT_CARD_PACK, 2);
+
+        Gambler gambler = new Gambler("비타", 1_000);
+        gambler.pushDealCard(SORT_CARD_PACK, 2);
+
+        List<Gambler> gamblers = List.of(gambler);
+
+        GameResults gameResults = new GameResults(dealer, gamblers);
+
+        Map<Player, Integer> result = gameResults.getGameResults();
+
+        assertAll(
+                () -> assertThat(result.get(dealer)).isEqualTo(0),
+                () -> assertThat(result.get(gambler)).isEqualTo(0)
+        );
+    }
 }
