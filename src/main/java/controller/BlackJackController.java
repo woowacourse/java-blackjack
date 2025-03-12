@@ -40,7 +40,7 @@ public class BlackJackController {
     }
 
     private void selectHitOrStand(Player player, Deck deck) {
-        while (inputView.readOneMoreCardResponse(player.getNickname()).equals(HIT_COMMAND)
+        while (inputView.readShouldHit(player.getNickname()).equals(HIT_COMMAND)
         && player.addOneCard(deck.drawOneCard())) {
             outputView.printPlayerCards(player);
         }

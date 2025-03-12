@@ -12,7 +12,7 @@ public class InputView {
         return splitNames(scanner.nextLine());
     }
 
-    public String readOneMoreCardResponse(String name) {
+    public String readShouldHit(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
         String response = scanner.nextLine();
         validateYesOrNo(response);
