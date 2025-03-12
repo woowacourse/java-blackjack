@@ -12,7 +12,7 @@ public class BettingAmount {
     }
 
     private void validateRange(int amount) {
-        if (amount <= MINIMUM_BETTING_AMOUNT) {
+        if (amount < MINIMUM_BETTING_AMOUNT) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 최소 10,000원부터 입력 가능합니다.");
         }
     }
