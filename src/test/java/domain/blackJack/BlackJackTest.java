@@ -94,25 +94,4 @@ public class BlackJackTest {
         //then
         assertThat(dealer.getHand().getCards().size()).isEqualTo(4);
     }
-
-//    @Test
-//    @DisplayName("결과 선출 테스트")
-//    void calculatePlayerResultTest() {
-//        //given
-//        Players players = Players.from(
-//                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
-//        CardDeck cardDeck = new CardDeck(
-//                List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK),
-//                        new Card(HEART, ACE), new Card(CLOVER, ACE)));
-//
-//        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeck);
-//
-//        //when
-//        blackJack.hitCardsToParticipant();
-//        Map<Player, MatchResult> playerMatchResultMap = blackJack.calculatePlayerResult();
-//
-//        //then
-//        SoftAssertions softAssertions = new SoftAssertions();
-//        playerMatchResultMap.forEach((key, value) -> softAssertions.assertThat(value).isEqualTo(WIN));
-//    }
 }
