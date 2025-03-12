@@ -67,12 +67,14 @@ public class DealerTest {
     @Test
     void 딜러가_가진_카드리스트의_합계가_16초과이면_true_아니면_false를_반환한다() {
         Cards exceedDealerDrawLimitCards = new Cards(
-                List.of(new Card(Suit.CLOVER, Rank.SIX), new Card(Suit.HEART, Rank.JACK)));
+                List.of(new Card(Suit.CLOVER, Rank.SIX),
+                        new Card(Suit.HEART, Rank.JACK)));
 
         Participant shouldHitDealer = new Dealer(exceedDealerDrawLimitCards);
 
         Cards notExceedDealerDrawLimitCards = new Cards(
-                List.of(new Card(Suit.CLOVER, Rank.SEVEN), new Card(Suit.HEART, Rank.JACK)));
+                List.of(new Card(Suit.CLOVER, Rank.SEVEN),
+                        new Card(Suit.HEART, Rank.JACK)));
         Participant shouldNotHitDealer = new Dealer(notExceedDealerDrawLimitCards);
 
         assertAll(
@@ -102,11 +104,10 @@ public class DealerTest {
     }
 
     @Test
-    void 딜러가_가진_카드리스트의_합계가_21이면_true_아니면_false를_반환한다() {
+    void 딜러가_가진_카드리스트_두장의_합계가_21이면_true_아니면_false를_반환한다() {
         Cards equalToBlackjackScoreCards = new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.JACK),
-                        new Card(Suit.HEART, Rank.THREE)));
+                List.of(new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.JACK)));
         Participant isBlackjackPlayer = new Dealer(equalToBlackjackScoreCards);
 
         Cards exceedBlackjackScoreCards = new Cards(
@@ -120,10 +121,17 @@ public class DealerTest {
                         new Card(Suit.DIAMOND, Rank.JACK)));
         Participant notExceedDealer = new Dealer(notExceedBlackjackScoreCards);
 
+        Cards exceedSizeCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.THREE)));
+        Participant exceedSizeDealer = new Dealer(exceedSizeCards);
+
         assertAll(
                 () -> assertThat(isBlackjackPlayer.isBlackjack()).isTrue(),
                 () -> assertThat(exceedDealer.isBlackjack()).isFalse(),
-                () -> assertThat(notExceedDealer.isBlackjack()).isFalse()
+                () -> assertThat(notExceedDealer.isBlackjack()).isFalse(),
+                () -> assertThat(exceedSizeDealer.isBlackjack()).isFalse()
         );
     }
 }

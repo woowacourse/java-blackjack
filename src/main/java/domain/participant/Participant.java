@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public abstract class Participant {
 
+    private static final int INITIAL_CARDS_SIZE = 2;
+
     protected ParticipantName participantName;
     protected Cards cards;
 
@@ -39,7 +41,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return cards.equalToBlackjackScore();
+        return getCards().size() == INITIAL_CARDS_SIZE && cards.equalToBlackjackScore();
     }
 
     public String getParticipantName() {

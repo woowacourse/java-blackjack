@@ -90,12 +90,11 @@ public class PlayerTest {
     }
 
     @Test
-    void 플레이어가_가진_카드리스트의_합계가_21이면_true_아니면_false를_반환한다() {
+    void 플레이어가_가진_카드리스트_두장의_합계가_21이면_true_아니면_false를_반환한다() {
         ParticipantName participantName = new ParticipantName("duei");
         Cards equalToBlackjackScoreCards = new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.JACK),
-                        new Card(Suit.HEART, Rank.THREE)));
+                List.of(new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.DIAMOND, Rank.JACK)));
         Participant isBlackjackPlayer = new Player(participantName, equalToBlackjackScoreCards);
 
         Cards exceedBlackjackScoreCards = new Cards(
@@ -109,10 +108,17 @@ public class PlayerTest {
                         new Card(Suit.DIAMOND, Rank.JACK)));
         Participant notExceedPlayer = new Player(participantName, notExceedBlackjackScoreCards);
 
+        Cards exceedSizeCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.THREE)));
+        Participant exceedSizePlayer = new Player(participantName, exceedSizeCards);
+
         assertAll(
                 () -> assertThat(isBlackjackPlayer.isBlackjack()).isTrue(),
                 () -> assertThat(exceedPlayer.isBlackjack()).isFalse(),
-                () -> assertThat(notExceedPlayer.isBlackjack()).isFalse()
+                () -> assertThat(notExceedPlayer.isBlackjack()).isFalse(),
+                () -> assertThat(exceedSizePlayer.isBlackjack()).isFalse()
         );
     }
 }
