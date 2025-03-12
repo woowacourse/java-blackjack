@@ -2,6 +2,7 @@ package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
@@ -38,6 +39,30 @@ public class GamblersTest {
     void 딜러와_플레이어들로_Gamblers를_생성한다() {
         assertThatCode(() -> new Gamblers(dealer, List.of(player1, player2)))
             .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 플레이어가_없으면_예외가_발생한다() {
+        assertThatThrownBy(() -> new Gamblers(dealer, List.of()))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 플레이어가_8명보다_많으면_예외가_발생한다() {
+        List<Player> players = List.of(
+            new Player("플레이어1", new CardHand()),
+            new Player("플레이어2", new CardHand()),
+            new Player("플레이어3", new CardHand()),
+            new Player("플레이어4", new CardHand()),
+            new Player("플레이어5", new CardHand()),
+            new Player("플레이어6", new CardHand()),
+            new Player("플레이어7", new CardHand()),
+            new Player("플레이어8", new CardHand()),
+            new Player("플레이어9", new CardHand())
+            );
+
+        assertThatThrownBy(() -> new Gamblers(dealer, players))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

@@ -14,10 +14,13 @@ import java.util.function.Function;
 
 public class Gamblers {
 
+    private static final int MAX_PLAYERS_COUNT = 8;
+
     private final Dealer dealer;
     private final List<Player> players;
 
     public Gamblers(Dealer dealer, List<Player> players) {
+        validatePlayers(players);
         this.dealer = dealer;
         this.players = players;
     }
@@ -54,5 +57,14 @@ public class Gamblers {
         return players.stream()
             .collect(toMap(Function.identity(),
                 player -> Winning.determineForPlayer(player.calculateScore(), dealerScore)));
+    }
+
+    private void validatePlayers(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("플레이어가 최소 1명은 있어야 합니다.");
+        }
+        if (players.size() > MAX_PLAYERS_COUNT) {
+            throw new IllegalArgumentException("최대 " + MAX_PLAYERS_COUNT + "명의 플레이어만 참가할 수 있습니다.");
+        }
     }
 }
