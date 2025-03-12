@@ -14,6 +14,19 @@ public enum GameResult {
         this.text = text;
     }
 
+    public static GameResult FromDenominationsSum(final Dealer dealer, Player player) {
+        int dealerSum = dealer.calculateDenominations();
+        int playerSum = player.calculateDenominations();
+
+        if (dealerSum < playerSum) {
+            return WIN;
+        }
+        if (dealerSum == playerSum) {
+            return DRAW;
+        }
+        return LOSE;
+    }
+
     public GameResult changeStatusOpposite() {
         if (this == WIN) {
             return LOSE;
