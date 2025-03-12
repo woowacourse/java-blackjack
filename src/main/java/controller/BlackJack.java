@@ -51,25 +51,56 @@ public class BlackJack {
     private void printResult() {
         printDealerExtraCardsCount(dealer);
         printEveryOneCardsNamesWithTotal(players, dealer);
-        printWinLossResult(players, dealer, computeWinLoss(players, dealer));
+        Map<Player, Integer> profitPerParticipant = calculateProfit();
+        printProfitPerParticipant(profitPerParticipant, dealer);
+
+//        printWinLossResult(players, dealer, countWinLoss(players, dealer));
     }
 
-    public WinLossCountDto computeWinLoss(Players players, Dealer dealer) {
-        ArrayList<Integer> winLossDraw = new ArrayList<>(Arrays.asList(0,0,0));
-        int dealerScore = dealer.getHandTotal();
-        players.getPlayers().forEach(player -> {
-            int playerScore = player.getHandTotal();
-            if (playerScore < dealerScore) {
-                winLossDraw.add(0, 1);
-            }
-            if (playerScore > dealerScore) {
-                winLossDraw.add(1, 1);
-            }
-            if (playerScore == dealerScore) {
-                winLossDraw.add(2, 1);
-            }
-        });
-        return new WinLossCountDto(winLossDraw.get(0), winLossDraw.get(1), winLossDraw.get(2));
+    private Map<Player, Integer> calculateProfit() {
+        Map<Player, Integer> profitPerParticipant = new HashMap<>();
+        int dealersProfit = 0;
+        for (Player player : players.getPlayers()) {
+            int playersProfit = accountant.getProfit(player, computeWinLoss(player, dealer));   // 각 플레이어 수익금
+            profitPerParticipant.put(player, playersProfit);
+            dealersProfit -= playersProfit;
+        }
+        profitPerParticipant.put(dealer, dealersProfit);
+        return profitPerParticipant;
     }
+
+
+    private WinLossResult computeWinLoss(Player player, Dealer dealer) {
+        int playerScore = player.getHandTotal();
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return WinLossResult.WIN_WITH_BLACK_JACK;
+        }
+        if (playerScore > dealer.getHandTotal()) {
+            return WinLossResult.WIN;
+        }
+        if (playerScore == dealer.getHandTotal()) {
+            return WinLossResult.DRAW;
+        }
+        return WinLossResult.LOSS;
+    }
+
+//    public WinLossCountDto countWinLoss(Players players, Dealer dealer) {
+//        ArrayList<Integer> winLossDraw = new ArrayList<>(Arrays.asList(0,0,0));
+//        int dealerScore = dealer.getHandTotal();
+//        players.getPlayers().forEach(player -> {
+//            // winLossResult가 나옴
+//            int playerScore = player.getHandTotal();
+//            if (playerScore < dealerScore) {
+//                winLossDraw.add(0, 1);
+//            }
+//            if (playerScore > dealerScore) {
+//                winLossDraw.add(1, 1);
+//            }
+//            if (playerScore == dealerScore) {
+//                winLossDraw.add(2, 1);
+//            }
+//        });
+//        return new WinLossCountDto(winLossDraw.get(0), winLossDraw.get(1), winLossDraw.get(2));
+//    }
 
 }

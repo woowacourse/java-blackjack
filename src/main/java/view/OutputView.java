@@ -9,6 +9,7 @@ import domain.Hand;
 import domain.Player;
 import domain.Players;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -90,6 +91,13 @@ public class OutputView {
             openHand(player, stringBuilder);
             stringBuilder.append("\n");
         }
+    }
+
+    public static void printProfitPerParticipant(Map<Player, Integer> profitPerParticipant, Dealer dealer) {
+        System.out.println(dealer.getName() + ": " + profitPerParticipant.get(dealer));
+        profitPerParticipant.entrySet().stream().filter(it -> it.getKey().isNotDealer()).forEach(it -> {
+            System.out.println(it.getKey().getName()+": "+it.getValue());
+        });
     }
 
     private static void openCardsWithTotal(Player player, StringBuilder stringBuilder) {
