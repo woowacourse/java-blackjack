@@ -52,26 +52,26 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_돈을_받을_수_있다() {
+    void 수익을_계산할_수_있다() {
         //given
-        Dealer dealer = new Dealer(new Cards(), 0);
+        Dealer dealer = new Dealer(new Cards(
+                new Card(Suit.CLUB, Rank.EIGHT),
+                new Card(Suit.DIAMOND, Rank.NINE)
+        ));
+
+        Players players = new Players(
+                new Player("neo",
+                        new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.TEN)),
+                        new BattingMoney(10000)),
+                new Player("neo",
+                        new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.SIX)),
+                        new BattingMoney(20000))
+        );
 
         //when
-        dealer.plusAmount(1000);
+        int profit = dealer.calculateProfit(players);
 
         //then
-        assertThat(dealer).isEqualTo(new Dealer(new Cards(), 1000));
-    }
-
-    @Test
-    void 딜러는_돈을_잃을_수_있다() {
-        //given
-        Dealer dealer = new Dealer(new Cards(), 0);
-
-        //when
-        dealer.minusAmount(1000);
-
-        //then
-        assertThat(dealer).isEqualTo(new Dealer(new Cards(), -1000));
+        assertThat(profit).isEqualTo(10000);
     }
 }

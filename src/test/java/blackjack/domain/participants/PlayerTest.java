@@ -1,7 +1,6 @@
 package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -63,16 +62,10 @@ class PlayerTest {
         ), new BattingMoney(10000));
 
         //when
-        int result = player.calculateRevenue(dealer);
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
-        assertSoftly(softly -> {
-            softly.assertThat(result).isEqualTo(10000);
-            softly.assertThat(dealer).isEqualTo(new Dealer(new Cards(
-                    new Card(Suit.CLUB, Rank.EIGHT),
-                    new Card(Suit.DIAMOND, Rank.NINE)
-            ), -10000));
-        });
+        assertThat(result).isEqualTo(10000);
     }
 
     @Test
@@ -88,16 +81,10 @@ class PlayerTest {
         ), new BattingMoney(10000));
 
         //when
-        int result = player.calculateRevenue(dealer);
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
-        assertSoftly(softly -> {
-            softly.assertThat(result).isEqualTo(-10000);
-            softly.assertThat(dealer).isEqualTo(new Dealer(new Cards(
-                    new Card(Suit.CLUB, Rank.TEN),
-                    new Card(Suit.DIAMOND, Rank.NINE)
-            ), 10000));
-        });
+        assertThat(result).isEqualTo(-10000);
     }
 
     @Test
@@ -113,16 +100,10 @@ class PlayerTest {
         ), new BattingMoney(10000));
 
         //when
-        int result = player.calculateRevenue(dealer);
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
-        assertSoftly(softly -> {
-            softly.assertThat(result).isEqualTo(0);
-            softly.assertThat(dealer).isEqualTo(new Dealer(new Cards(
-                    new Card(Suit.CLUB, Rank.EIGHT),
-                    new Card(Suit.DIAMOND, Rank.NINE)
-            ), 0));
-        });
+        assertThat(result).isEqualTo(0);
     }
 
     @Test
@@ -139,17 +120,10 @@ class PlayerTest {
         ), new BattingMoney(10000));
 
         //when
-        int result = player.calculateRevenue(dealer);
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
-        assertSoftly(softly -> {
-                    softly.assertThat(result).isEqualTo(-10000);
-                    softly.assertThat(dealer).isEqualTo(new Dealer(new Cards(
-                            new Card(Suit.CLUB, Rank.EIGHT),
-                            new Card(Suit.DIAMOND, Rank.NINE)
-                    ), 10000));
-                }
-        );
+        assertThat(result).isEqualTo(-10000);
     }
 
     @Test
@@ -165,16 +139,9 @@ class PlayerTest {
         ), new BattingMoney(10000));
 
         //when
-        int result = player.calculateRevenue(dealer);
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
-        assertSoftly(softly -> {
-                    softly.assertThat(result).isEqualTo(5000);
-                    softly.assertThat(dealer).isEqualTo(new Dealer(new Cards(
-                            new Card(Suit.CLUB, Rank.EIGHT),
-                            new Card(Suit.DIAMOND, Rank.NINE)
-                    ), -5000));
-                }
-        );
+        assertThat(result).isEqualTo(5000);
     }
 }

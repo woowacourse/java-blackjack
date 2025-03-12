@@ -25,7 +25,7 @@ class BattingMoneyTest {
         BattingMoney battingMoney = new BattingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateRevenue(cards, WinningResult.LOSE);
+        int revenue = battingMoney.calculateProfit(cards, WinningResult.LOSE);
 
         //then
         assertThat(revenue).isEqualTo(-1000);
@@ -41,7 +41,7 @@ class BattingMoneyTest {
         BattingMoney battingMoney = new BattingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateRevenue(cards, WinningResult.WIN);
+        int revenue = battingMoney.calculateProfit(cards, WinningResult.WIN);
 
         //then
         assertThat(revenue).isEqualTo(500);
@@ -57,7 +57,7 @@ class BattingMoneyTest {
         BattingMoney battingMoney = new BattingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateRevenue(cards, WinningResult.WIN);
+        int revenue = battingMoney.calculateProfit(cards, WinningResult.WIN);
 
         //then
         assertThat(revenue).isEqualTo(1000);
@@ -73,7 +73,7 @@ class BattingMoneyTest {
         BattingMoney battingMoney = new BattingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateRevenue(cards, WinningResult.DRAW);
+        int revenue = battingMoney.calculateProfit(cards, WinningResult.DRAW);
 
         //then
         assertThat(revenue).isEqualTo(0);
@@ -89,7 +89,7 @@ class BattingMoneyTest {
         BattingMoney battingMoney = new BattingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateRevenue(cards, WinningResult.LOSE);
+        int revenue = battingMoney.calculateProfit(cards, WinningResult.LOSE);
 
         //then
         assertThat(revenue).isEqualTo(-1000);

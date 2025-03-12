@@ -1,5 +1,6 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +48,12 @@ public class Players {
         for (Player player : players) {
             consumer.accept(player);
         }
+    }
+
+    public int calculateTotalProfit(Cards competitiveCards) {
+        return players.stream()
+                .mapToInt(player -> player.calculateProfit(competitiveCards))
+                .sum();
     }
 
     public List<Player> getPlayers() {

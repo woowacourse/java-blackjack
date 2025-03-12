@@ -28,11 +28,9 @@ public class Player {
         return cards.calculateMaxScore();
     }
 
-    public int calculateRevenue(Dealer dealer) {
-        WinningResult winningResult = WinningResult.decide(cards, dealer.getCards());
-        int revenue = battingMoney.calculateRevenue(cards, winningResult);
-        dealer.minusAmount(revenue);
-        return revenue;
+    public int calculateProfit(Cards competitiveCards) {
+        WinningResult winningResult = WinningResult.decide(cards, competitiveCards);
+        return battingMoney.calculateProfit(cards, winningResult);
     }
 
     public Cards getCards() {
