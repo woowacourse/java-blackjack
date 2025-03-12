@@ -65,11 +65,11 @@ public class BlackjackWinner {
         return ELSE_WEIGHT;
     }
 
-    private boolean isBust(int sum) {
+    private static boolean isBust(int sum) {
         return sum > BUST_STANDARD;
     }
 
-    private PlayerGameResult calculatePlayerWinStatus(int dealerSum, int playerSum) {
+    public static PlayerGameResult calculatePlayerWinStatus(int dealerSum, int playerSum) {
         if (isPlayerDraw(dealerSum, playerSum)) {
             return PlayerGameResult.DRAW;
         }
@@ -79,7 +79,7 @@ public class BlackjackWinner {
         return PlayerGameResult.LOSE;
     }
 
-    private boolean isPlayerWin(int dealerSum, int playerSum) {
+    private static boolean isPlayerWin(int dealerSum, int playerSum) {
         if (isBust(dealerSum) && isBust(playerSum)) {
             return false;
         }
@@ -92,7 +92,7 @@ public class BlackjackWinner {
         return playerSum > dealerSum;
     }
 
-    private boolean isPlayerDraw(int dealerSum, int playerSum) {
+    private static boolean isPlayerDraw(int dealerSum, int playerSum) {
         if (dealerSum == playerSum) {
             return true;
         }
