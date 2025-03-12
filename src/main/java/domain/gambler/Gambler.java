@@ -5,12 +5,12 @@ import domain.Cards;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gambler {
+public abstract class Gambler {
 
     public static final int MAX_SCORE = 21;
     public static final int INITIAL_CARD_COUNT = 2;
 
-    private final Cards cards;
+    protected final Cards cards;
 
     protected Gambler(Cards cards) {
         validateInitialCardsSize(cards);
