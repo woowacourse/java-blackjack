@@ -1,6 +1,5 @@
 package blackjack.model;
 
-import static blackjack.TestFixtures.NO_HIT_STRATEGY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;

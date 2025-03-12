@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 @FunctionalInterface
 public interface HitDecisionStrategy {

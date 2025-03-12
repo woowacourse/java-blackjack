@@ -1,7 +1,7 @@
 package blackjack;
 
-import blackjack.model.HitDecisionStrategy;
-import blackjack.model.PlayerHandVisualizer;
+import blackjack.model.participant.HitDecisionStrategy;
+import blackjack.model.participant.PlayerHandVisualizer;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;

@@ -1,6 +1,4 @@
-package blackjack.model;
-
-import blackjack.model.participant.Player;
+package blackjack.model.participant;
 
 @FunctionalInterface
 public interface PlayerHandVisualizer {

@@ -1,6 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.model.HitDecisionStrategy;
 import java.util.ArrayList;
 import java.util.Objects;
 
