@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class GameResults {
 
-    private final Map<Player, GameResult> gameResults;
+    private final Map<Gambler, GameResult> gameResults;
 
     public GameResults(final Dealer dealer, final List<Gambler> gamblers) {
         gameResults = gamblers.stream()
@@ -18,10 +17,6 @@ public class GameResults {
                         gambler -> gambler,
                         gambler -> GameResult.evaluateGameResult(dealer, gambler)
                 ));
-    }
-
-    public GameResult getGameResult(final Player player) {
-        return gameResults.get(player);
     }
 
     public int getDealerWin() {
@@ -40,5 +35,9 @@ public class GameResults {
         return (int) gameResults.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(GameResult.DRAW)
                 ).count();
+    }
+
+    public Map<Gambler, GameResult> getGameResults() {
+        return gameResults;
     }
 }

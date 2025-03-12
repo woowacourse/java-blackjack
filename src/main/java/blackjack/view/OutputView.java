@@ -3,12 +3,11 @@ package blackjack.view;
 import blackjack.domain.GameResult;
 import blackjack.domain.GameResults;
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -45,15 +44,19 @@ public class OutputView {
         players.getGamblers().forEach(this::printResultCardsToPlayer);
     }
 
-    public void printGameResults(final Players players, final GameResults gameResults) {
-        List<Gambler> gamblers = players.getGamblers();
-        Dealer dealer = players.getDealer();
+    public void printGameResults(final GameResults gameResults) {
+        Map<Gambler, GameResult> results = gameResults.getGameResults();
 
         System.out.println("## 최종 승패");
-        System.out.printf("%s: %s" + NEW_LINE, dealer.getName(), formatDealerResultRate(gameResults));
+        System.out.printf("딜러: %s" + NEW_LINE, formatDealerResultRate(gameResults));
 
-        gamblers.forEach(gambler ->
-                System.out.println(gambler.getName() + ": " + formatPlayerResultRate(gambler, gameResults)));
+        results.entrySet().forEach(this::printGamblerGameResult);
+    }
+
+    private void printGamblerGameResult(final Map.Entry<Gambler, GameResult> entry) {
+        String name = entry.getKey().getName();
+        GameResult gameResult = entry.getValue();
+        System.out.println(name + ": " + formatPlayerResultRate(gameResult));
     }
 
     public void printErrorMessage(String message) {
@@ -89,8 +92,7 @@ public class OutputView {
         return dealerRate.toString();
     }
 
-    private String formatPlayerResultRate(final Player gambler, final GameResults gameResults) {
-        GameResult result = gameResults.getGameResult(gambler);
-        return GameResultView.getShapeMessage(result);
+    private String formatPlayerResultRate(final GameResult gameResult) {
+        return GameResultView.getResultMessage(gameResult);
     }
 }
