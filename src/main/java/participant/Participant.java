@@ -10,13 +10,13 @@ public abstract class Participant {
     private static final int BUST_NUMBER = 21;
 
     private final String nickname;
-    private final Cards cards;
     private final int betAmount;
+    private final Cards cards;
 
     public Participant(String nickname, int betAmount) {
         this.nickname = nickname;
-        this.cards = new Cards();
         this.betAmount = betAmount;
+        this.cards = new Cards();
     }
 
     public void receiveCard(Card card) {
