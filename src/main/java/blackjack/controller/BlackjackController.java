@@ -32,6 +32,8 @@ public class BlackjackController {
         Players players = blackJackInitManager.savePlayers(names);
         Dealer dealer = blackJackInitManager.saveDealer();
 
+
+
         giveStartingCards(players, dealer);
 
         giveMoreCardFor(players);

@@ -1,0 +1,25 @@
+package blackjack.domain;
+
+import java.util.List;
+
+public class Participants {
+
+    private static final int PARTICIPANTS_VALID_SIZE = 7;
+
+    private final List<Participant> participants;
+
+    public Participants(List<Participant> participants) {
+        validate(participants);
+        this.participants = participants;
+    }
+
+    private void validate(List<Participant> participants) {
+        if (participants.size() > PARTICIPANTS_VALID_SIZE) {
+            throw new IllegalArgumentException("7명을 초과할 수 없습니다.");
+        }
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+}
