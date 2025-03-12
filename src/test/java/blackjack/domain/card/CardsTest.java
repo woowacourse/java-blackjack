@@ -17,9 +17,24 @@ class CardsTest {
         "ACE,QUEEN,21",
     })
     @DisplayName("카드 숫자 합을 계산한다")
-    void sumTest(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
+    void sumTest1(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
         // when
         Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2);
+
+        // then
+        assertThat(cards.sum()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "ACE,TWO,QUEEN,13",
+        "ACE,QUEEN, KING,21",
+        "ACE,QUEEN, EIGHT,19",
+    })
+    @DisplayName("ACE를 11로 했을 때 카드 숫자 합이 21을 넘으면 ACE를 1로 계산한다.")
+    void sumTest2(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, int expected) {
+        // when
+        Cards cards = CardsFixture.cardsOf(cardNumber1, cardNumber2, cardNumber3);
 
         // then
         assertThat(cards.sum()).isEqualTo(expected);
