@@ -44,19 +44,6 @@ public class BlackjackGame {
         }
     }
 
-    public Map<GameResult, Integer> getDealerResult(final Dealer dealer, final List<Player> players) {
-        Map<GameResult, Integer> gameFinalResult = new HashMap<>();
-        for (Player player : players) {
-            GameResult result = GameResult.checkDealerWin(player, dealer);
-            gameFinalResult.put(result, gameFinalResult.getOrDefault(result, 0) + 1);
-        }
-        return gameFinalResult;
-    }
-
-    public GameResult getPlayerResult(final Player player, final Dealer dealer) {
-        return GameResult.checkPlayerWin(player, dealer);
-    }
-
     public Map<Player, Integer> calculatePlayersProfit() {
         Map<Player, Integer> playerProfits = new HashMap<>();
         for (Player player : players) {
