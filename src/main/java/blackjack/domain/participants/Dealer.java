@@ -7,9 +7,15 @@ import java.util.Objects;
 public class Dealer {
 
     private final Cards cards;
+    private int amount;
 
     public Dealer(Cards cards) {
+        this(cards, 0);
+    }
+
+    public Dealer(Cards cards, int amount) {
         this.cards = cards;
+        this.amount = amount;
     }
 
     public void prepareCards(Deck deck) {
@@ -24,6 +30,14 @@ public class Dealer {
 
     public int calculateMaxScore() {
         return cards.calculateMaxScore();
+    }
+
+    public void plusAmount(int amount) {
+        this.amount += amount;
+    }
+
+    public void minusAmount(int amount) {
+        this.amount -= amount;
     }
 
     public Cards getCards() {
@@ -44,11 +58,13 @@ public class Dealer {
         }
 
         Dealer dealer = (Dealer) object;
-        return Objects.equals(getCards(), dealer.getCards());
+        return amount == dealer.amount && Objects.equals(getCards(), dealer.getCards());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getCards());
+        int result = Objects.hashCode(getCards());
+        result = 31 * result + amount;
+        return result;
     }
 }

@@ -22,16 +22,21 @@ public class Player {
 
     public int calculateRevenue(Dealer dealer) {
         if (cards.isBust()) {
+            dealer.plusAmount(battingMoney);
             return -battingMoney;
         }
         WinningResult winningResult = WinningResult.decide(cards, dealer.getCards());
         if (winningResult == WinningResult.WIN) {
             if (cards.isBlackjack()) {
-                return (int) (battingMoney * 1.5 - battingMoney);
+                int revenue = (int) (battingMoney * 1.5 - battingMoney);
+                dealer.minusAmount(revenue);
+                return revenue;
             }
+            dealer.minusAmount(battingMoney);
             return battingMoney;
         }
         if (winningResult == WinningResult.LOSE) {
+            dealer.plusAmount(battingMoney);
             return -battingMoney;
         }
         return 0;

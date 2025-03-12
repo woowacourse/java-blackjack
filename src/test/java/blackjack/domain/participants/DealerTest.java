@@ -50,4 +50,28 @@ class DealerTest {
                 new Card(Suit.DIAMOND, Rank.NINE)
         )));
     }
+
+    @Test
+    void 딜러는_돈을_받을_수_있다() {
+        //given
+        Dealer dealer = new Dealer(new Cards(), 0);
+
+        //when
+        dealer.plusAmount(1000);
+
+        //then
+        assertThat(dealer).isEqualTo(new Dealer(new Cards(), 1000));
+    }
+
+    @Test
+    void 딜러는_돈을_잃을_수_있다() {
+        //given
+        Dealer dealer = new Dealer(new Cards(), 0);
+
+        //when
+        dealer.minusAmount(1000);
+
+        //then
+        assertThat(dealer).isEqualTo(new Dealer(new Cards(), -1000));
+    }
 }
