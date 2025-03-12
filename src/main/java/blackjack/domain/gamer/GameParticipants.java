@@ -47,7 +47,12 @@ public class GameParticipants {
     }
 
     public GameStatistics calculateGameStatistics() {
-        return GameStatistics.from(this);
+        GameStatistics statistics = GameStatistics.initialize(this);
+
+        getPlayers().forEach(player ->
+                statistics.markResult(player, dealer, player.judgeResult(dealer)));
+
+        return statistics;
     }
 
     public List<GameParticipant> getGameParticipants() {

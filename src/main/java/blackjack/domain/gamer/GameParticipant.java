@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.GameResult;
 
 import java.util.function.Consumer;
 
@@ -26,6 +27,10 @@ public abstract class GameParticipant {
 
     public int calculateSumOfCards() {
         return hand.calculateSum();
+    }
+
+    public GameResult judgeResult(GameParticipant villain) {
+        return GameResult.of(this, villain);
     }
 
     public boolean isBust() {

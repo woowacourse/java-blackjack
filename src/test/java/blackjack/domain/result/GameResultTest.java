@@ -1,11 +1,15 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFixture;
+import blackjack.domain.gamer.GameParticipant;
+import blackjack.domain.gamer.GameParticipantFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,18 +18,28 @@ class GameResultTest {
 
     @ParameterizedTest
     @CsvSource({
-            "16, 17, WIN",  // 플레이어가 이기는 경우
-            "22, 17, WIN",  // 플레이어가 이기는 경우
-            "20, 19, LOSE", // 딜러가 이기는 경우
-            "20, 22, LOSE", // 딜러가 이기는 경우
+            "17, 16, WIN",  // 플레이어가 이기는 경우
+            "17, 22, WIN",  // 플레이어가 이기는 경우
+            "19, 20, LOSE", // 딜러가 이기는 경우
+            "22, 20, LOSE", // 딜러가 이기는 경우
+            "17, 17, DRAW",  // 무승부
             "21, 21, DRAW",  // 무승부
             "22, 22, LOSE" // 둘 다 버스트라면 딜러가 이긴다
     })
-    @DisplayName("플레이어의 승패를 판단할 수 있다")
-    void canDecideResult(int dealerScore, int playerScore, GameResult expectedResult) {
+    @DisplayName("참여자(히어로: 플레이어, 빌런: 딜러)의 승패를 판단할 수 있다")
+    void canDecideResult(int heroSum, int villainSum, GameResult expectedResult) {
         // given
+        GameParticipant hero = GameParticipantFixture.createPlayer("강산");
+        GameParticipant villain = GameParticipantFixture.createDealer();
+
+        List<Card> heroCards = CardFixture.createCardsForSum(heroSum).getCards();
+        List<Card> villainCards = CardFixture.createCardsForSum(villainSum).getCards();
+
+        heroCards.forEach(hero::drawCard);
+        villainCards.forEach(villain::drawCard);
+
         // when
-        GameResult result = GameResult.of(dealerScore, playerScore);
+        GameResult result = GameResult.of(hero, villain);
 
         // then
         assertThat(result).isEqualTo(expectedResult);
@@ -51,17 +65,20 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("딜러 게임 결과 초기값을 설정할 수 있다")
-    void shouldInitializeDealerGameResultWithZeroValues() {
+    @DisplayName("나열된 게임 결과들을 카운트할 수 있다")
+    void canCountResults() {
         // given
+        List<GameResult> results = List.of(
+                GameResult.WIN,
+                GameResult.WIN,
+                GameResult.LOSE);
+
         // when
-        Map<GameResult, Integer> dealerFormat = GameResult.getDealerFormat();
+        Map<GameResult, Integer> resultToCounts = GameResult.count(results);
 
         // then
-        assertThat(dealerFormat)
-                .isInstanceOf(EnumMap.class)
-                .hasSize(3)
-                .containsKeys(GameResult.WIN, GameResult.LOSE, GameResult.DRAW)
-                .allSatisfy((key, value) -> assertThat(value).isZero());
+        assertThat(resultToCounts.get(GameResult.WIN)).isEqualTo(2);
+        assertThat(resultToCounts.get(GameResult.LOSE)).isEqualTo(1);
+        assertThat(resultToCounts.get(GameResult.DRAW)).isEqualTo(0);
     }
 }

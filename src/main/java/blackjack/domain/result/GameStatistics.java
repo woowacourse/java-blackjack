@@ -2,69 +2,41 @@ package blackjack.domain.result;
 
 import blackjack.domain.gamer.GameParticipant;
 import blackjack.domain.gamer.GameParticipants;
-import blackjack.domain.gamer.Player;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class GameStatistics {
 
-    private final Map<Player, Integer> playerToSumOfCards;
-    private final int dealerSumOfCards;
+    private final Map<GameParticipant, List<GameResult>> participantToResults;
 
-    private GameStatistics(Map<Player, Integer> playerToSumOfCards, int dealerSumOfCards) {
-        this.playerToSumOfCards = playerToSumOfCards;
-        this.dealerSumOfCards = dealerSumOfCards;
+    private GameStatistics(Map<GameParticipant, List<GameResult>> participantToResults) {
+        this.participantToResults = participantToResults;
     }
 
-    public static GameStatistics from(GameParticipants participants) {
-        Map<Player, Integer> playerToSumOfCards = new LinkedHashMap<>();
+    public static GameStatistics initialize(GameParticipants participants) {
+        Map<GameParticipant, List<GameResult>> participantToResults = new LinkedHashMap<>();
 
-        participants.getPlayers().forEach(player ->
-                playerToSumOfCards.put(player, player.calculateSumOfCards())
+        participants.getGameParticipants().forEach(participant ->
+                participantToResults.put(participant, new LinkedList<>())
         );
 
-        int dealerSumOfCards = participants.getDealer().calculateSumOfCards();
-
-        return new GameStatistics(playerToSumOfCards, dealerSumOfCards);
+        return new GameStatistics(participantToResults);
     }
 
-    public int findOriginSumOfCards(GameParticipant participant) {
-        if (participant.isPlayer()) {
-            return findOriginSumOfCardsByPlayer((Player) participant);
-        }
-
-        return findOriginSumOfCardsOfDealer();
+    public void markResult(GameParticipant hero, GameParticipant villain, GameResult result) {
+        participantToResults.get(hero).add(result);
+        participantToResults.get(villain).add(result.oppose());
     }
 
-    public Map<Player, GameResult> decidePlayerResults() {
-        Map<Player, GameResult> playerToGameResult = new LinkedHashMap<>();
-
-        playerToSumOfCards.keySet().forEach(player ->
-                playerToGameResult.put(player, GameResult.of(dealerSumOfCards, findOriginSumOfCards(player))));
-
-        return playerToGameResult;
+    public List<GameResult> find(GameParticipant participant) {
+        return participantToResults.get(participant);
     }
 
-    public Map<GameResult, Integer> calculateDealerResult(Map<Player, GameResult> playerToGameResult) {
-        Map<GameResult, Integer> dealerResult = GameResult.getDealerFormat();
-
-        playerToGameResult.values().forEach(result ->
-                dealerResult.merge(result.oppose(), 1, Integer::sum)
-        );
-
-        return dealerResult;
-    }
-
-    private int findOriginSumOfCardsByPlayer(Player player) {
-        if (playerToSumOfCards.containsKey(player)) {
-            return playerToSumOfCards.get(player);
-        }
-
-        throw new IllegalArgumentException(String.format("해당 플레이어가 없습니다: %s", player));
-    }
-
-    private int findOriginSumOfCardsOfDealer() {
-        return dealerSumOfCards;
+    public Map<GameParticipant, List<GameResult>> getParticipantToResults() {
+        return Collections.unmodifiableMap(participantToResults);
     }
 }

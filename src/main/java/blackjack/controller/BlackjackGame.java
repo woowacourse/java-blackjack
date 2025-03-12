@@ -28,10 +28,10 @@ public class BlackjackGame {
         outputView.printCards(participants);
 
         participants.executeHitPhase();
-        GameStatistics gameStatistics = participants.calculateGameStatistics();
-        outputView.printCardsWithSum(participants, gameStatistics);
+        outputView.printCardsWithSum(participants);
 
-        outputView.printGameResults(gameStatistics);
+        GameStatistics gameStatistics = participants.calculateGameStatistics();
+        outputView.printGameResults(participants, gameStatistics);
     }
 
     private GameParticipants initializeGameParticipants() {

@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static blackjack.domain.result.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameStatisticsTest {
 
@@ -44,52 +44,26 @@ class GameStatisticsTest {
         dealer.drawCard(CardFixture.createCard(9));
         dealer.drawCard(CardFixture.createCard(9));
 
-        statistics = GameStatistics.from(participants);
+        statistics = GameStatistics.initialize(participants);
     }
 
     @Test
-    @DisplayName("게임 참가자로부터 GameStatistics를 생성할 수 있다")
-    void canCreateGameStatisticsFromGameParticipants() {
+    @DisplayName("게임 참가자의 승패무와 같은 게임 결과를 기입할 수 있다. " +
+            "외부에서 반대 측에 반대 결과를 기입해준다면, 실수의 여지가 있기에 1번의 호출로 양측에 결과를 기입한다 ")
+    void canMarkGameResult() {
         // given
         // when
-        // then
-        assertAll(() -> {
-            assertThat(statistics.findOriginSumOfCards(player1)).isEqualTo(20);
-            assertThat(statistics.findOriginSumOfCards(player2)).isEqualTo(18);
-            assertThat(statistics.findOriginSumOfCards(player3)).isEqualTo(16);
-            assertThat(statistics.findOriginSumOfCards(dealer)).isEqualTo(18);
-        });
-    }
+        statistics.markResult(player1, dealer, GameResult.WIN);
+        statistics.markResult(player2, dealer, GameResult.DRAW);
+        statistics.markResult(player3, dealer, GameResult.LOSE);
 
-    @Test
-    @DisplayName("플레이어의 승패를 결정할 수 있다")
-    void canDecidePlayerResults() {
-        // given
-        // when
-        Map<Player, GameResult> results = statistics.decidePlayerResults();
+        Map<GameResult, Integer> dealerResults = GameResult.count(statistics.find(dealer));
 
         // then
-        assertAll(() -> {
-            assertThat(results.get(player1)).isEqualTo(GameResult.WIN);
-            assertThat(results.get(player2)).isEqualTo(GameResult.DRAW);
-            assertThat(results.get(player3)).isEqualTo(GameResult.LOSE);
-        });
-    }
-
-    @Test
-    @DisplayName("딜러의 게임 결과를 계산할 수 있다")
-    void canCalculateDealerResult() {
-        // given
-        Map<Player, GameResult> playerResults = statistics.decidePlayerResults();
-
-        // when
-        Map<GameResult, Integer> dealerResult = statistics.calculateDealerResult(playerResults);
-
-        // then
-        assertAll(() -> {
-            assertThat(dealerResult.get(GameResult.LOSE)).isEqualTo(1);
-            assertThat(dealerResult.get(GameResult.WIN)).isEqualTo(1);
-            assertThat(dealerResult.get(GameResult.DRAW)).isEqualTo(1);
-        });
+        assertThat(statistics.getParticipantToResults().get(player1).getFirst()).isEqualTo(GameResult.WIN);
+        assertThat(statistics.getParticipantToResults().get(player2).getFirst()).isEqualTo(GameResult.DRAW);
+        assertThat(dealerResults.get(GameResult.WIN)).isEqualTo(1);
+        assertThat(dealerResults.get(GameResult.LOSE)).isEqualTo(1);
+        assertThat(dealerResults.get(GameResult.DRAW)).isEqualTo(1);
     }
 }

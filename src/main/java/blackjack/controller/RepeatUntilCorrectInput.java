@@ -11,7 +11,7 @@ public class RepeatUntilCorrectInput {
             return inputSupplier.get();
         } catch (IllegalArgumentException e) {
             outputView.printCorrectInput(e.getMessage());
-            return inputSupplier.get();
+            return repeat(inputSupplier, outputView);
         }
     }
 }

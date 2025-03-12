@@ -4,7 +4,6 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.GameParticipant;
 import blackjack.domain.gamer.GameParticipants;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameStatistics;
 
@@ -46,10 +45,10 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printCardsWithSum(GameParticipants participants, GameStatistics gameStatistics) {
+    public void printCardsWithSum(GameParticipants participants) {
         System.out.println();
         participants.getGameParticipants().forEach(participant ->
-                printSum(buildParticipantCards(participant), gameStatistics.findOriginSumOfCards(participant)));
+                printSum(buildParticipantCards(participant), participant.calculateSumOfCards()));
     }
 
     private void printSum(String cardContent, int sum) {
@@ -61,23 +60,25 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResults(GameStatistics gameStatistics) {
+    public void printGameResults(GameParticipants participants, GameStatistics gameStatistics) {
         System.out.println();
         System.out.println("## 최종 승패");
-        Map<Player, GameResult> playerResults = gameStatistics.decidePlayerResults();
-        Map<GameResult, Integer> dealerResult = gameStatistics.calculateDealerResult(playerResults);
+        Map<GameParticipant, List<GameResult>> participantToResults = gameStatistics.getParticipantToResults();
+        Map<GameResult, Integer> dealerResultToCount =
+                GameResult.count(participantToResults.get(participants.getDealer()));
 
         System.out.printf("딜러: %s%s %s%s %s%s %n",
-                dealerResult.get(GameResult.WIN), GameResult.WIN.getDescription(),
-                dealerResult.get(GameResult.LOSE), GameResult.LOSE.getDescription(),
-                dealerResult.get(GameResult.DRAW), GameResult.DRAW.getDescription()
+                dealerResultToCount.get(GameResult.WIN), GameResult.WIN.getDescription(),
+                dealerResultToCount.get(GameResult.LOSE), GameResult.LOSE.getDescription(),
+                dealerResultToCount.get(GameResult.DRAW), GameResult.DRAW.getDescription()
         );
 
-        playerResults.keySet().forEach(
-                player -> System.out.printf("%s: %s %n",
-                        player.getNickname().getValue(),
-                        playerResults.get(player).getDescription())
-        );
+        participants.getGameParticipants().stream()
+                .filter(GameParticipant::isPlayer)
+                .forEach(player ->
+                        System.out.printf("%s: %s %n",
+                                player.getNickname().getValue(),
+                                participantToResults.get(player).getFirst().getDescription()));
         System.out.println();
     }
 }
