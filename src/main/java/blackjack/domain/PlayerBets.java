@@ -6,10 +6,11 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.round.RoundResult;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class PlayerBets {
 
-    private LinkedHashMap<Gamer, Integer> bets = new LinkedHashMap();
+    private final LinkedHashMap<Gamer, Integer> bets = new LinkedHashMap<>();
 
     public void add(Gamer gamer, int amount) {
         bets.put(gamer, amount);
@@ -25,5 +26,16 @@ public class PlayerBets {
             return (double) playerBet * 1.5;
         }
         return playerBet;
+    }
+
+    public double getDealerProfit(Dealer dealer, List<Player> players) {
+        double totalProfit = 0;
+        for (Player player : players) {
+            RoundResult roundResult = RoundResult.judgeResult(dealer, player);
+            if (roundResult == RoundResult.WIN) {
+                totalProfit += bets.get(player);
+            }
+        }
+        return totalProfit;
     }
 }

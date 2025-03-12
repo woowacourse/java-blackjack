@@ -8,6 +8,8 @@ import blackjack.fixture.DeckFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerBetsTest {
@@ -67,5 +69,26 @@ class PlayerBetsTest {
 
         // then
         assertThat(actual).isEqualTo(-20000);
+    }
+
+    @Test
+    @DisplayName("딜러가 승리할 경우 플레이어가 베팅한 금액을 수익으로 계산한다")
+    void dealerWinTest() {
+        // given
+        PlayerBets playerBets = new PlayerBets();
+        List<Player> players = List.of(new Player("Pobi"), new Player("Neo"));
+        Deck playerDeck = DeckFixture.deckOf(CardNumber.TWO, CardNumber.THREE, CardNumber.FOUR, CardNumber.FIVE);
+        for (Player player : players) {
+            player.initialize(playerDeck);
+            playerBets.add(player, 15000);
+        }
+        Deck dealerDeck = DeckFixture.deckOf(CardNumber.EIGHT, CardNumber.NINE);
+        dealer.initialize(dealerDeck);
+
+        // when
+        double actual = playerBets.getDealerProfit(dealer, players);
+
+        // then
+        assertThat(actual).isEqualTo(30000);
     }
 }
