@@ -16,6 +16,6 @@ public record DistributedCardDto(String name, List<String> cardInfos) {
     }
 
     public static List<DistributedCardDto> fromPlayers(final Players players) {
-        return players.getPlayers().stream().map(DistributedCardDto::from).toList();
+        return players.members().stream().map(DistributedCardDto::from).toList();
     }
 }

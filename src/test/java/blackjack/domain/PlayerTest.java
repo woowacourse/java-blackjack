@@ -6,14 +6,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-
-    @DisplayName("플레이어는 딜러로부터 카드를 받아 카드 덱을 초기화할 수 있다.")
+    @DisplayName("플레이어는 카드 덱을 받아서 초기화할 수 있다.")
     @Test
     void testPlayerInitCardDeck() {
-        Dealer dealer = new Dealer(new CardDeck(), new CardDump());
-        Player player = new Player("user1", new CardDeck());
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.add(new Card(CardSuit.HEART, CardRank.TWO));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        player.receiveInitialCardDeck(dealer.giveCardsToPlayer());
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
 
         assertThat(player.getCardDeck().size()).isEqualTo(2);
     }
@@ -21,112 +22,100 @@ class PlayerTest {
     @DisplayName("카드가 21이 초과하지 않는다면 카드를 더 뽑을 수 있다.")
     @Test
     void testPlayerCanDrawCard() {
-        // given
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("user1", cardDeck);
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
 
-        // when
-        boolean canTakeExtraCard = player.canHit();
-
-        // then
-        assertThat(canTakeExtraCard).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @DisplayName("카드가 21이 초과하지 않는다면 카드를 더 뽑을 수 있다.")
     @Test
     void testPlayerCanDrawCard_false() {
-        // given
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Player player = new Player("user1", cardDeck);
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
 
-        // when
-        boolean canTakeExtraCard = player.canHit();
-
-        // then
-        assertThat(canTakeExtraCard).isFalse();
+        assertThat(player.canHit()).isFalse();
     }
 
     @DisplayName("플레이어의 카드 덱의 최종 점수를 계산한다")
     @Test
     void testPlayerTotalCardScore() {
-        // given
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT)); //17
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Player player = new Player("user1", cardDeck);
-
-        // when
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
         int totalScore = player.calculateTotalCardScore();
+
         assertThat(totalScore).isEqualTo(17);
     }
 
     @DisplayName("플레이어의 카드 덱에 에이스가 있고, 버스트가 아닐 때, 최대 점수를 계산한다")
     @Test
     void testPlayerTotalCardScore_hasAce_noBust() {
-        // given
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE)); //11 -> 20
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
 
-        Player player = new Player("user1", cardDeck);
-
-        // when
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
         int totalScore = player.calculateTotalCardScore();
+
         assertThat(totalScore).isEqualTo(20);
     }
 
     @DisplayName("플레이어의 카드 덱에 에이스가 있고, 버스트일 때, 에이스를 1로 계산한다")
     @Test
     void testPlayerTotalCardScore_hasAce_Bust() {
-        // given
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN)); //16
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE)); //1선택 -> 17
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = new Player("user1", cardDeck);
-
-        // when
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
         int totalScore = player.calculateTotalCardScore();
+
         assertThat(totalScore).isEqualTo(17);
     }
 
     @DisplayName("플레이어의 카드 덱에 에이스가 여러 개인 있는 경우 알맞은 합을 반환")
     @Test
     void testPlayerTotalCardScore_hasMultipleAce() {
-        // given
         CardDeck cardDeck = new CardDeck();
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.ACE));
         cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
 
-        Player player = new Player("user1", cardDeck);
-
-        // when
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
         int totalScore = player.calculateTotalCardScore();
+
         assertThat(totalScore).isEqualTo(21);
     }
 
     @DisplayName("플레이어는 자신의 카드 덱에 카드를 추가할 수 있다")
     @Test
     void testPlayerAddCard() {
-        // given
         CardDeck cardDeck = new CardDeck();
-        Card card = new Card(CardSuit.CLUB, CardRank.NINE);
-        Player player = new Player("user1", cardDeck);
+        cardDeck.add(new Card(CardSuit.CLUB, CardRank.NINE));
 
-        // when
+        Player player = new Player("user1");
+        player.initCardDeck(cardDeck);
+
+        Card card = new Card(CardSuit.CLUB, CardRank.SEVEN);
         player.addCard(card);
 
-        // then
-        assertThat(cardDeck.getDeckSize()).isEqualTo(1);
+        assertThat(player.getCardDeck().size()).isEqualTo(2);
     }
 }

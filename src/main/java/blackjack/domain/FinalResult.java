@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameReport {
+public class FinalResult {
 
-    public Map<GameResult, Integer> getDealerResult(final Dealer dealer, final List<Player> players) {
+    public Map<GameResult, Integer> createDealerFinalResult(final Dealer dealer, final List<Player> players) {
         Map<GameResult, Integer> gameFinalResult = new HashMap<>();
         for (Player player : players) {
             GameResult result = GameResult.checkDealerWin(player, dealer);
@@ -15,7 +15,7 @@ public class GameReport {
         return gameFinalResult;
     }
 
-    public GameResult getPlayerResult(final Player player, final Dealer dealer) {
+    public GameResult createPlayerFinalResult(final Player player, final Dealer dealer) {
         return GameResult.checkPlayerWin(player, dealer);
     }
 }

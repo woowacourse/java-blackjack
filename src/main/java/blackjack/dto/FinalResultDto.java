@@ -22,6 +22,6 @@ public record FinalResultDto(
     }
 
     public static List<FinalResultDto> fromPlayers(final Players players) {
-        return players.getPlayers().stream().map(FinalResultDto::from).toList();
+        return players.members().stream().map(FinalResultDto::from).toList();
     }
 }
