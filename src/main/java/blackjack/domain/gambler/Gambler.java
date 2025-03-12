@@ -1,6 +1,7 @@
 package blackjack.domain.gambler;
 
 import static blackjack.domain.game.Round.BLACKJACK;
+import static blackjack.domain.game.Round.BLACKJACK_CARD_COUNT;
 
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -35,7 +36,7 @@ public abstract class Gambler {
     }
 
     public boolean isBlackjack() {
-        return hands.hasSize(2) && calculateScore() == BLACKJACK;
+        return hands.hasSize(BLACKJACK_CARD_COUNT) && calculateScore() == BLACKJACK;
     }
 
     public List<Card> getCards() {
