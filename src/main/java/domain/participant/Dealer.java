@@ -21,16 +21,4 @@ public class Dealer extends Participant {
     public Card drawCard() {
         return cardDeck.popCard();
     }
-
-    public boolean passCardToSelf() {
-        if (getScore() > DEALER_HIT_MIN_THRESHOLD) {
-            return false;
-        }
-        receive(drawCard());
-        return true;
-    }
-
-    public void decreaseTotalAmount(int amount, double ratio) {
-        decreaseAmount((int) Math.round(amount * ratio));
-    }
 }
