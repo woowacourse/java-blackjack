@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.deck.Card;
 import domain.deck.Deck;
+import domain.deck.DeckGenerator;
 import fixture.CardFixture;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,7 @@ class DeckTest {
     @DisplayName("카드를 한 장 뽑을 수 있다.")
     void test() {
         // given
-        Deck deck = new Deck(List.of(CardFixture.of(ACE, CLOVER)));
+        Deck deck = DeckGenerator.generateTestDeck(List.of(CardFixture.of(ACE, CLOVER)));
         // when
         Card card = deck.drawNewCard();
         // then
@@ -30,7 +31,7 @@ class DeckTest {
     @DisplayName("모든 카드를 뽑으면 예외가 발생한다.")
     void test2() {
         // given
-        Deck deck = new Deck(List.of(CardFixture.of(ACE, CLOVER)));
+        Deck deck = DeckGenerator.generateTestDeck(List.of(CardFixture.of(ACE, CLOVER)));
         deck.drawNewCard();
         // when && then
         assertThatThrownBy(deck::drawNewCard)
@@ -43,7 +44,7 @@ class DeckTest {
     void test4() {
         // given
         List<Card> cards = List.of(CardFixture.of(ACE, CLOVER), CardFixture.of(ACE, HEART));
-        Deck deck = new Deck(cards);
+        Deck deck = DeckGenerator.generateTestDeck(cards);
         // when
         CardHand initialDeal = deck.getInitialDeal();
         // then
