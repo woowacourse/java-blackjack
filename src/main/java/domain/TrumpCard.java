@@ -21,4 +21,8 @@ public class TrumpCard {
         return cardNumber.getValue();
     }
 
+
+    public boolean isAce() {
+        return cardNumber == CardNumber.ACE;
+    }
 }

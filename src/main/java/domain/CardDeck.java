@@ -34,7 +34,7 @@ public class CardDeck {
 
     public boolean hasAce() {
         return cards.stream()
-            .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
+                .anyMatch(TrumpCard::isAce);
     }
 
     public boolean isImpossibleDraw(int maxScore) {
@@ -58,6 +58,6 @@ public class CardDeck {
     }
 
     public boolean isBlackjack() {
-        return  cards.size() == 2 && calculateScore() == MAX_SCORE ;
+        return cards.size() == 2 && calculateScore() == MAX_SCORE;
     }
 }
