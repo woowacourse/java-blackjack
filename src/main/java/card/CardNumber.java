@@ -1,6 +1,5 @@
 package card;
 
-import java.util.Collections;
 import java.util.List;
 
 public enum CardNumber {
@@ -34,7 +33,7 @@ public enum CardNumber {
         this(List.of(value1, value2));
     }
 
-    public List<Integer> getValues() {
-        return Collections.unmodifiableList(values);
+    public int getValue() {
+        return values.getFirst();
     }
 }

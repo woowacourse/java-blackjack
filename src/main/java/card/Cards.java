@@ -36,7 +36,7 @@ public class Cards {
     private int totalWithoutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(card -> card.getCardNumber().getValues().getFirst())
+                .mapToInt(card -> card.getCardNumber().getValue())
                 .sum();
     }
 

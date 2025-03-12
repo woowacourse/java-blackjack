@@ -120,7 +120,7 @@ public class OutputView {
         if (card.getCardNumber() == CardNumber.KING) {
             return KING;
         }
-        return String.valueOf(card.getCardNumber().getValues().get(0));
+        return String.valueOf(card.getCardNumber().getValue());
     }
 
     private String cardTypeToString(Card card) {
