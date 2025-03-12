@@ -12,7 +12,7 @@ import model.cards.DealerCardsFactory;
 import model.cards.PlayerCardsFactory;
 import model.deck.Deck;
 import model.deck.DeckFactory;
-import model.result.GameResultPolicy;
+import model.result.GameResult;
 import model.result.GameResults;
 
 public class BlackjackGame {
@@ -59,7 +59,7 @@ public class BlackjackGame {
         return new GameResults(players.getNames().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        name -> GameResultPolicy.determineGameResult(dealerCards, players.findCardsByName(name)
+                        name -> GameResult.determineGameResult(dealerCards, players.findCardsByName(name)
                         )))
         );
     }
