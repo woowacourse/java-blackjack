@@ -1,15 +1,21 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CardsInitializer {
 
+    private final CardShuffler cardShuffler;
+
+    public CardsInitializer(final CardShuffler cardShuffler) {
+        this.cardShuffler = cardShuffler;
+    }
+
     public List<Card> initialize() {
         List<Card> cards = createCards();
-        return cardsShuffle(cards);
+        cardShuffler.shuffle(cards);
+
+        return cards;
     }
 
     private List<Card> createCards() {
@@ -21,12 +27,6 @@ public class CardsInitializer {
                         numbers.stream()
                                 .map(number -> new Card(symbol, number)))
                 .toList();
-    }
-
-    private List<Card> cardsShuffle(List<Card> cards) {
-        List<Card> shuffleCards = new ArrayList<>(cards);
-        Collections.shuffle(shuffleCards);
-        return shuffleCards;
     }
 
     private List<Symbol> getSymbols() {

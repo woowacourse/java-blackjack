@@ -16,19 +16,18 @@ class CardsInitializerTest {
     @Test
     void createCards() {
         //given
-        CardsInitializer cardsInitializer = new CardsInitializer();
+        CardsInitializer cardsInitializer = new CardsInitializer(new CardShuffler());
 
         //when
         assertThatCode(cardsInitializer::initialize)
                 .doesNotThrowAnyException();
-
     }
 
     @DisplayName("초기 카드 뭉치는 중복되지 않는다")
     @Test
     void notDuplicatedCards() {
         //given
-        CardsInitializer cardsInitializer = new CardsInitializer();
+        CardsInitializer cardsInitializer = new CardsInitializer(new CardShuffler());
 
         //when
         List<Card> cards = cardsInitializer.initialize();
@@ -43,7 +42,7 @@ class CardsInitializerTest {
     @DisplayName("카드리스트는 불변이다")
     @Test
     void immutableCardList() {
-        CardsInitializer cardsInitializer = new CardsInitializer();
+        CardsInitializer cardsInitializer = new CardsInitializer(new CardShuffler());
 
         //when
         List<Card> cards = cardsInitializer.initialize();

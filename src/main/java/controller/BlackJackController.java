@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Card;
+import domain.CardShuffler;
 import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Deck;
@@ -46,7 +47,7 @@ public class BlackJackController {
     }
 
     private Deck prepareDeck() {
-        List<Card> cards = new CardsInitializer().initialize();
+        List<Card> cards = new CardsInitializer(new CardShuffler()).initialize();
         return Deck.from(cards);
     }
 
