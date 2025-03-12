@@ -16,7 +16,7 @@ import static view.InputView.getPlayerNamesInput;
 import static view.InputView.getYnInput;
 import static view.OutputView.*;
 
-public class BlackJack {
+public class BlackJackController {
 
     private static final String DELIMITER = ",";
     private static final String YES = "y";
@@ -70,14 +70,19 @@ public class BlackJack {
     }
 
     private void playTurn(final Participant participant, final Supplier<Boolean> shouldDrawMore) {
+        if(participant.isMaxScore()) return;
         boolean isAlive = participant.resolveBust();
-        while (isAlive && shouldDrawMore.get()) {
+        while (isAlive && !participant.isMaxScore() && shouldDrawMore.get()) {
             isAlive = drawAdditionalCard(participant);
         }
         if (!isAlive) {
-            participant.setHandTotalToZero();
-            printBust();
+            handleBust(participant);
         }
+    }
+
+    private static void handleBust(final Participant participant) {
+        participant.applyBustPenalty();
+        printBust();
     }
 
     private boolean drawAdditionalCard(final Participant participant) {
@@ -91,7 +96,7 @@ public class BlackJack {
     private void printResult(final Players players) {
         Map<String, WinLossResult> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            playerResults.put(player.getName(), WinLossResult.of(player.getWinLoss(dealer.getHandTotal())));
+            playerResults.put(player.getName(), WinLossResult.from(dealer, player));
         }
 
         printAllResult(playerResults, dealer.getName());
