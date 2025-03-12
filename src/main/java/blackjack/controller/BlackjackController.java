@@ -8,7 +8,7 @@ import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.random.CardRandomGenerator;
+import blackjack.domain.shuffle.ShuffleCardGenerator;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -28,7 +28,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        final Deck deck = new Deck(new CardRandomGenerator());
+        final Deck deck = new Deck(new ShuffleCardGenerator());
         final Participants participants = makeParticipants();
         final BlackjackGame blackjackGame = new BlackjackGame(deck, participants);
 

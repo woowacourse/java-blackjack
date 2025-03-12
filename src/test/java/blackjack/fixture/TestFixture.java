@@ -1,14 +1,14 @@
 package blackjack.fixture;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.random.CardGenerator;
+import blackjack.domain.shuffle.CardGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class TestFixture {
     }
 
     public static Hand provideCards(final int count) {
-        return new Hand(CardGenerator.DECKS.subList(0, count));
+        return new Hand(CardGenerator.DECK.subList(0, count));
     }
 
     public static Players providePlayers() {

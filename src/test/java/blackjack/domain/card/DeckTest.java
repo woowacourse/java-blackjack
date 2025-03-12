@@ -3,8 +3,8 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.random.CardGenerator;
-import blackjack.domain.random.CardRandomGenerator;
+import blackjack.domain.shuffle.CardGenerator;
+import blackjack.domain.shuffle.ShuffleCardGenerator;
 import blackjack.fixture.TestFixture.TestCardGeneratorGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ class DeckTest {
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(new CardRandomGenerator());
+        deck = new Deck(new ShuffleCardGenerator());
     }
 
     @DisplayName("카드를 여러장 분배한다.")

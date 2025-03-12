@@ -22,7 +22,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
-import blackjack.domain.random.CardRandomGenerator;
+import blackjack.domain.shuffle.ShuffleCardGenerator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -40,7 +40,7 @@ class BlackjackGameTest {
     void spreadTwoCardsToDealerAndPlayers() {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(
-                new Deck(new CardRandomGenerator()),
+                new Deck(new ShuffleCardGenerator()),
                 provideParticipants());
         // when
         blackjackGame.spreadInitialCards();
@@ -56,7 +56,7 @@ class BlackjackGameTest {
     @Test
     void canPlayerMoreCardToPlayer() {
         // given
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 new Participants(new Dealer(provideEmptyCards()),
                         new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
 
@@ -73,7 +73,7 @@ class BlackjackGameTest {
         // given
         Players players = providePlayers();
         Participants participants = new Participants(new Dealer(provideEmptyCards()), players);
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 participants);
         Gamer gamer = players.getPlayer(0);
 
@@ -89,7 +89,7 @@ class BlackjackGameTest {
     @MethodSource
     void canDealerHit(final Hand hand, final boolean expected) {
         // given
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 new Participants(new Dealer(hand),
                         new Players(provideTwoPlayersWithCards(provideEmptyCards(), provideEmptyCards()))));
 
@@ -109,7 +109,7 @@ class BlackjackGameTest {
     @MethodSource
     void canPlayerHit(final Hand hand, final boolean expected) {
         // given
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 new Participants(new Dealer(provideEmptyCards()),
                         new Players(provideTwoPlayersWithCards(hand, provideEmptyCards()))));
 
@@ -129,7 +129,7 @@ class BlackjackGameTest {
     void calculateScore() {
         // given
         final Dealer dealer = new Dealer(provideUnder16Cards());
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 new Participants(dealer,
                         new Players(provideTwoPlayersWithCards(provideUnder21Cards(), provideOver21Cards()))));
 
@@ -153,7 +153,7 @@ class BlackjackGameTest {
                 new Card(Shape.SPADE, Denomination.J)));
         final Hand player3Hand = new Hand(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
                 new Card(Shape.SPADE, Denomination.K)));
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 new Participants(dealer,
                         new Players(provideThreePlayersWithCards(player1Hand, player2Hand, player3Hand))));
 
@@ -173,7 +173,7 @@ class BlackjackGameTest {
     void spreadOneCardToDealer() {
         // given
         Participants participants = provideParticipants();
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new CardRandomGenerator()),
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(new ShuffleCardGenerator()),
                 participants);
 
         // when

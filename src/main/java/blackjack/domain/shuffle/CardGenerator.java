@@ -1,4 +1,4 @@
-package blackjack.domain.random;
+package blackjack.domain.shuffle;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CardGenerator {
 
-    List<Card> DECKS = Arrays.stream(Shape.values())
+    List<Card> DECK = Arrays.stream(Shape.values())
             .flatMap(shape -> Arrays.stream(Denomination.values())
                     .map(denomination -> new Card(shape, denomination)))
             .toList();
