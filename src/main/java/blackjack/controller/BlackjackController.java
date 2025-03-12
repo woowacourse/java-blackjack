@@ -44,14 +44,19 @@ public class BlackjackController {
 
     private List<Gambler> readAndParseNames() {
         String playerNamesInput = inputView.readPlayerNames();
-        return parsePlayerByName(playerNamesInput);
+        return createGamblers(playerNamesInput);
     }
 
-    public List<Gambler> parsePlayerByName(String namesInput) {
-        List<String> playerNames = List.of(namesInput.split(PLAYER_NAME_DELIMITER));
-        return playerNames.stream()
-                .map(playerName -> new Gambler(playerName, 0))
+    private List<Gambler> createGamblers(String namesInput) {
+        List<String> names = List.of(namesInput.split(PLAYER_NAME_DELIMITER));
+        return names.stream()
+                .map(this::createGambler)
                 .collect(Collectors.toList());
+    }
+
+    private Gambler createGambler(final String name) {
+        int batMoney = inputView.readBatAmount(name);
+        return new Gambler(name, batMoney);
     }
 
     private void dealMoreCards(final GameManager gameManager, final Players players) {

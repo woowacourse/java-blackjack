@@ -17,12 +17,28 @@ public class InputView {
         return CONSOLE.nextLine();
     }
 
+    public int readBatAmount(String name) {
+        System.out.printf("%s의 배팅 금액은?", name);
+        String inputBatAmount = CONSOLE.nextLine();
+        validateIsNumeric(inputBatAmount);
+
+        return Integer.parseInt(inputBatAmount);
+    }
+
     public boolean readOneMoreDealCard(final Player player) {
         System.out.println(NEW_LINE + player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = CONSOLE.nextLine();
         validateYesOrNo(input);
 
         return input.equals(YES);
+    }
+
+    public void validateIsNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private void validateYesOrNo(final String input) {
