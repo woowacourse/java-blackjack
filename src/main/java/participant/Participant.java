@@ -1,20 +1,22 @@
-package model.participant;
+package participant;
 
-import static constant.BlackjackConstant.BUST_NUMBER;
-
+import card.Card;
+import card.Cards;
 import java.util.Collections;
 import java.util.List;
-import model.card.Card;
-import model.card.Cards;
 
 public abstract class Participant {
 
+    private static final int BUST_NUMBER = 21;
+
     private final String nickname;
     private final Cards cards;
+    private final int betAmount;
 
-    public Participant(String nickname) {
+    public Participant(String nickname, int betAmount) {
         this.nickname = nickname;
         this.cards = new Cards();
+        this.betAmount = betAmount;
     }
 
     public void receiveCard(Card card) {

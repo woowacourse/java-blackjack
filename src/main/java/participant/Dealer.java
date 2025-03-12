@@ -1,13 +1,13 @@
-package model.participant;
+package participant;
 
-import static constant.BlackjackConstant.DEALER_CARDS_MIN_TOTAL;
-
-import model.card.Card;
+import card.Card;
 
 public class Dealer extends Participant {
 
+    private static final int DEALER_CARDS_MIN_TOTAL = 17;
+
     public Dealer() {
-        super("딜러");
+        super("딜러", 10000);
     }
 
     @Override

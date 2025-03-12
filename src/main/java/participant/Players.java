@@ -1,17 +1,14 @@
-package model.participant;
+package participant;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> names) {
-        this.players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+    public Players(List<Player> players) {
+        this.players = players;
     }
 
     public List<Player> getPlayers() {
