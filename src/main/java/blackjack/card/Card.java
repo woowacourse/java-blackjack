@@ -17,4 +17,12 @@ public class Card {
     public int getNumber() {
         return denomination.getNumber();
     }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
 }

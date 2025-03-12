@@ -6,6 +6,7 @@ import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import blackjack.gamer.Players;
 import blackjack.view.InputView;
+import blackjack.view.ResultView;
 import java.util.List;
 
 public class Blackjack {
@@ -19,11 +20,12 @@ public class Blackjack {
 
     public void run() {
         final InputView inputView = new InputView();
-
+        final ResultView resultView = new ResultView();
         initDealer();
         makePlayers(inputView);
         betMoney(inputView);
         spreadTwoCards();
+        showInitialCards(resultView);
     }
 
     private void initDealer() {
@@ -61,6 +63,13 @@ public class Blackjack {
         for (Player player : players.getPlayers()) {
             final List<Card> playerCards = dealer.spreadTwoCards();
             player.receiveCards(playerCards);
+        }
+    }
+
+    private void showInitialCards(final ResultView resultView) {
+        resultView.printCards(dealer);
+        for (Player player : players.getPlayers()) {
+            resultView.printCards(player);
         }
     }
 }

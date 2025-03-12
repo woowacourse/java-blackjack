@@ -41,6 +41,11 @@ public class Dealer extends Gamer {
     }
 
     @Override
+    public List<Card> showInitialCards() {
+        return List.of(hand.openOneCard());
+    }
+
+    @Override
     public String getNickName() {
         return NICKNAME;
     }

@@ -25,6 +25,10 @@ public class Hand {
         return cards;
     }
 
+    public Card openOneCard() {
+        return cards.getFirst();
+    }
+
     public int sumCards() {
         int aceCount = (int) cards.stream()
                 .filter(Card::isAce)

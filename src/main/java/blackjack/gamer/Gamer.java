@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Gamer {
 
-    private final Hand hand;
+    protected final Hand hand;
     protected final BettingMachine bettingMachine;
 
     public Gamer() {
@@ -30,6 +30,8 @@ public abstract class Gamer {
     private int sumCards() {
         return hand.sumCards();
     }
+
+    public abstract List<Card> showInitialCards();
 
     public abstract String getNickName();
 }
