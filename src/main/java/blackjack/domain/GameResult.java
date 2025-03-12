@@ -10,10 +10,11 @@ public enum GameResult {
     DRAW;
 
     public static GameResult evaluateGameResult(final Dealer dealer, final Gambler gambler) {
-        if (dealer.compareWithOtherPlayer(gambler) > 0) {
+        int compared = dealer.compareWithOtherPlayer(gambler);
+        if (compared > 0) {
             return LOSE;
         }
-        if (dealer.compareWithOtherPlayer(gambler) < 0) {
+        if (compared < 0) {
             return WIN;
         }
         return DRAW;
