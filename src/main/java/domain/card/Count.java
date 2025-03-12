@@ -16,7 +16,7 @@ public class Count {
 	}
 
 	public boolean isZero() {
-		return false;
+		return value == 0;
 	}
 
 	@Override
