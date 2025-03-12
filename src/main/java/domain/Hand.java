@@ -58,4 +58,25 @@ public class Hand {
     public List<Card> getCards() {
         return cards;
     }
+
+    public MatchResult determineMatchResult(final Hand other) {
+        if (this.isBust() || other.isBust()) {
+            return checkBustResult(other);
+        }
+        return checkScoreResult(other);
+    }
+
+    private MatchResult checkScoreResult(final Hand other) {
+        return MatchResult.judge(this.calculateTotalScore(), other.calculateTotalScore());
+    }
+
+    private MatchResult checkBustResult(final Hand other) {
+        if (this.isBust() && other.isBust()) {
+            return MatchResult.DRAW;
+        }
+        if (this.isBust()) {
+            return MatchResult.LOSE;
+        }
+        return MatchResult.WIN;
+    }
 }

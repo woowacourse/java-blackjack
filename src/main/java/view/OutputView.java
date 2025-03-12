@@ -1,8 +1,10 @@
 package view;
 
 import domain.Card;
+import domain.Dealer;
 import domain.Gamer;
 import domain.MatchResult;
+import domain.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,7 +12,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String NEXT_LINE = System.lineSeparator();
 
-    public void printInitialCards(Gamer dealer, List<Gamer> players) {
+    public void printInitialCards(Dealer dealer, List<Player> players) {
         String playerNames = getPlayerNames(players);
         System.out.printf(NEXT_LINE + "%s와 %s에게 2장을 나누었습니다.%s", "딜러", playerNames, NEXT_LINE);
 
@@ -20,11 +22,11 @@ public class OutputView {
         System.out.println();
     }
 
-    private String getPlayerNames(List<Gamer> players) {
+    private String getPlayerNames(List<Player> players) {
         return players.stream().map(Gamer::getName).collect(Collectors.joining(", "));
     }
 
-    public void printCards(Gamer player) {
+    public void printCards(Player player) {
         cardFormat(player);
         System.out.println();
     }
@@ -33,27 +35,27 @@ public class OutputView {
         System.out.println(NEXT_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEXT_LINE);
     }
 
-    public void printCardResult(Gamer dealer, List<Gamer> players) {
+    public void printCardResult(Dealer dealer, List<Player> players) {
         cardFormat(dealer);
         printScore(dealer);
 
-        for (Gamer player : players) {
+        for (Player player : players) {
             cardFormat(player);
             printScore(player);
         }
     }
 
-    private void cardFormat(Gamer player) {
-        String cards = player.getHand().getCards().stream().map(this::formatSingleCard)
+    private void cardFormat(Gamer dealer) {
+        String cards = dealer.getHand().getCards().stream().map(this::formatSingleCard)
                 .collect(Collectors.joining(", "));
-        System.out.printf("%s카드: %s", player.getName(), cards);
+        System.out.printf("%s카드: %s", dealer.getName(), cards);
     }
 
     private String formatSingleCard(Card card) {
         return String.format("%s%s", card.getRank().getName(), card.getSymbol().getName());
     }
 
-    public void printMatchResult(Map<MatchResult, Integer> dealerResult, Map<Gamer, MatchResult> playerResult) {
+    public void printMatchResult(Map<MatchResult, Integer> dealerResult, Map<Player, MatchResult> playerResult) {
         System.out.println(NEXT_LINE + "## 최종승패");
 
         printDealerResult(dealerResult);
@@ -61,7 +63,7 @@ public class OutputView {
         printPlayerResult(playerResult);
     }
 
-    private void printPlayerResult(Map<Gamer, MatchResult> playerResult) {
+    private void printPlayerResult(Map<Player, MatchResult> playerResult) {
         for (Gamer player : playerResult.keySet()) {
             System.out.printf("%s: %s%n", player.getName(), playerResult.get(player).getState());
         }

@@ -1,6 +1,7 @@
 package domain;
 
 public enum MatchResult {
+
     WIN("승"),
     DRAW("무"),
     LOSE("패");
@@ -11,21 +12,8 @@ public enum MatchResult {
         this.state = state;
     }
 
-    public static MatchResult judge(Hand dealerHand, Hand playerHand) {
-        if (bothPlayersBust(dealerHand, playerHand)) {
-            return DRAW;
-        }
-        if (dealerHand.isBust()) {
-            return LOSE;
-        }
-        if (playerHand.isBust()) {
-            return WIN;
-        }
-        return compareScores(dealerHand.calculateTotalScore(), playerHand.calculateTotalScore());
-    }
-
-    private static boolean bothPlayersBust(Hand dealerHand, Hand playerHand) {
-        return dealerHand.isBust() && playerHand.isBust();
+    public static MatchResult judge(int dealerScore, int playerScore) {
+        return compareScores(dealerScore, playerScore);
     }
 
     private static MatchResult compareScores(int dealerScore, int playerScore) {
@@ -35,8 +23,17 @@ public enum MatchResult {
         if (dealerScore > playerScore) {
             return WIN;
         }
-
         return LOSE;
+    }
+
+    public MatchResult reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
     }
 
     public String getState() {

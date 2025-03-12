@@ -41,7 +41,7 @@ class MatchResultTest {
         player.hit(deck);
 
         //when
-        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = dealer.getMatchResult(player);
 
         //then
         assertThat(actual).isEqualTo(MatchResult.DRAW);
@@ -79,7 +79,7 @@ class MatchResultTest {
         player.hit(deck);
 
         //when
-        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = dealer.getMatchResult(player);
 
         //then
         assertThat(actual).isEqualTo(MatchResult.DRAW);
@@ -117,7 +117,7 @@ class MatchResultTest {
         player.hit(deck);
 
         //when //then
-        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = dealer.getMatchResult(player);
 
         assertThat(actual).isEqualTo(MatchResult.WIN);
     }
@@ -154,7 +154,7 @@ class MatchResultTest {
         player.hit(deck);
 
         //when
-        MatchResult actual = MatchResult.judge(dealer.getHand(), player.getHand());
+        MatchResult actual = MatchResult.judge(dealer.getScore(), player.getScore());
 
         //then
         assertThat(actual).isEqualTo(MatchResult.LOSE);
