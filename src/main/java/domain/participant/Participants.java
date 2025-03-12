@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Deck;
+import domain.card.TrumpCard;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,22 +9,31 @@ import java.util.List;
 public class Participants {
 
   private final List<Participant> participants;
+  private final int NUMBER_OF_DEALER = 1;
 
-  public Participants() {
-    this.participants = new ArrayList<>();
+  public Participants(List<Participant> participants) {
+    validateNumberOfDealer(participants);
+    this.participants = participants;
   }
 
-  public void addDealer() {
-    if (participants.stream().anyMatch(Participant::isDealer)) {
-      throw new BlackjackArgumentException("하나의 게임에 복수의 딜러는 존재할 수 없습니다.");
+  private void validateNumberOfDealer(List<Participant> participants) {
+    long currentNumberOfDealer = participants.stream()
+        .filter(Participant::isDealer)
+        .count();
+    if (currentNumberOfDealer != NUMBER_OF_DEALER) {
+      throw new BlackjackArgumentException("하나의 게임에 하나의 딜러가 존재해야 합니다.");
     }
-
-    final Participant dealer = new Dealer();
-    participants.add(dealer);
   }
 
+  public static Participants from(final List<String> participantNames) {
+    final List<Participant> participants = new ArrayList<>();
+    participants.add(new Dealer());
+    participants.addAll(generatePlayers(participantNames));
+    return new Participants(participants);
+  }
 
-  public void add(final List<String> participantNames) {
+  private static List<Participant> generatePlayers(final List<String> participantNames) {
+    final List<Participant> participants = new ArrayList<>();
     for (final String participantName : participantNames) {
       final Participant player = new Player(participantName);
       if (participants.stream().anyMatch(i -> i.getName().equals(participantName))) {
@@ -31,6 +41,7 @@ public class Participants {
       }
       participants.add(player);
     }
+    return participants;
   }
 
   public void initialDeal(final Deck deck) {
@@ -59,4 +70,14 @@ public class Participants {
   public List<Participant> getParticipants() {
     return new ArrayList<>(participants);
   }
+
+  public List<TrumpCard> getCards(Participant target) {
+    final var name = target.getName();
+    var participant = participants.stream()
+        .filter(currentParticipant -> currentParticipant.getName().equals(name))
+        .findFirst()
+        .orElseThrow(() -> new BlackjackArgumentException("등록되지 않은 사용자입니다: " + name));
+    return participant.getCards();
+  }
+
 }
