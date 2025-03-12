@@ -6,7 +6,7 @@ import card.Card;
 import card.Score;
 import duel.DuelResult;
 
-public class Player implements PickableCard {
+public class Player {
 	private final String name;
 	private final Participant participant;
 

@@ -9,7 +9,6 @@ import card.Score;
 import duel.DuelResult;
 import paticipant.Dealer;
 import paticipant.Participant;
-import paticipant.PickableCard;
 import paticipant.Player;
 import paticipant.Players;
 
@@ -53,10 +52,6 @@ public class Blackjack {
 		while (dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX)) {
 			dealer.addCards(deck.pickCards(1));
 		}
-	}
-
-	public void pickCard(final PickableCard picker, final Deck deck) {
-		picker.addCards(deck.pickCards(1));
 	}
 
 	public Score calculateScore(final Participant participant) {

@@ -291,39 +291,4 @@ public class BlackjackTest {
 			});
 		}
 	}
-
-	@Nested
-	@DisplayName("딜러와 플레이어에게 카드를 제공하라")
-	class PickCard {
-
-		@DisplayName("플레이어에게 카드를 한 장 제공하라")
-		@Test
-		void pickCardToPlayer() {
-			// given
-			final Player player = new Player("");
-			final Blackjack blackjack = new Blackjack();
-			final Deck deck = Deck.createShuffledDeck();
-
-			// when
-			blackjack.pickCard(player, deck);
-
-			// then
-			assertThat(player.getParticipant().getCardHand().getCards()).hasSize(1);
-		}
-
-		@DisplayName("딜러에게 카드를 한 장 제공하라")
-		@Test
-		void pickCardToDealer() {
-			// given
-			final Dealer dealer = new Dealer();
-			final Blackjack blackjack = new Blackjack();
-			final Deck deck = Deck.createShuffledDeck();
-
-			// when
-			blackjack.pickCard(dealer, deck);
-
-			// then
-			assertThat(dealer.getParticipant().getCardHand().getCards()).hasSize(1);
-		}
-	}
 }
