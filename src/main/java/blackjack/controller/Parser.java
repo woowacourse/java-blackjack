@@ -1,8 +1,8 @@
 package blackjack.controller;
 
-import blackjack.model.player.Participant;
-import blackjack.model.player.Participants;
+import blackjack.model.game.BetAmount;
 import java.util.Arrays;
+import java.util.List;
 
 public class Parser {
 
@@ -10,12 +10,10 @@ public class Parser {
     public static final String RECEIVE_COMMAND = "y";
     public static final String NOT_RECEIVE_COMMAND = "n";
 
-    public static Participants parseParticipants(String names) {
+    public static List<String> parseNames(String names) {
         String[] splittedNames = names.split(DELIMITER);
         validateNameCount(splittedNames);
-        return new Participants(Arrays.stream(splittedNames)
-                .map(Participant::new)
-                .toList());
+        return Arrays.asList(splittedNames);
     }
 
     public static boolean parseCommand(String comamnd) {
@@ -32,6 +30,14 @@ public class Parser {
     private static void validateCommand(String command) {
         if (!command.equals(RECEIVE_COMMAND) && !command.equals(NOT_RECEIVE_COMMAND)) {
             throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
+        }
+    }
+
+    public static BetAmount parseBetAmount(String amount) {
+        try {
+            return new BetAmount(Integer.parseInt(amount));
+        } catch(NumberFormatException numberFormatException) {
+            throw new IllegalArgumentException("배팅액은 숫자로 입력해주세요.");
         }
     }
 }

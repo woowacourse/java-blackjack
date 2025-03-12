@@ -21,4 +21,10 @@ public abstract class Player {
     public int calculatePoint() {
         return receivedCards.calculateTotalPoint();
     }
+
+    public boolean isBlackJack() {
+        long specialCardCount = getReceivedCards().stream().filter(Card::isSpecialCard).count();
+        long aceCardCount = getReceivedCards().stream().filter(Card::isAceCard).count();
+        return specialCardCount == 1 && aceCardCount == 1;
+    }
 }

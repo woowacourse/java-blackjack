@@ -35,7 +35,7 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_2));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.LOSE);
@@ -52,7 +52,7 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.LOSE);
@@ -68,7 +68,7 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.DRAW);
@@ -86,7 +86,7 @@ class ParticipantTest {
         dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.WIN);
@@ -107,9 +107,41 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.LOSE);
+    }
+
+    @Test
+    void 참여자가_블랙잭인_경우_참여자는_블랙잭으로_승리한다() {
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
+
+        // when
+        ParticipantResult result = participant.duelWith(dealer);
+
+        // then
+        assertThat(result).isEqualTo(ParticipantResult.BLACKJACK);
+    }
+
+    @Test
+    void 딜러와_플레이어_모두_블랙잭인_경우_무승부이다(){
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
+
+        // when
+        ParticipantResult result = participant.duelWith(dealer);
+
+        // then
+        assertThat(result).isEqualTo(ParticipantResult.DRAW);
     }
 }

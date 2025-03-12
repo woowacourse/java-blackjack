@@ -35,6 +35,10 @@ public class BlackJackGame {
         return turn.getCurrentTurnParticipant();
     }
 
+    public String getCurrentTurnParticipantName() {
+        return turn.getCurrentTurnParticipant().getName();
+    }
+
     public boolean isDrawableDealerCard() {
         return dealer.isDrawable();
     }
@@ -54,5 +58,9 @@ public class BlackJackGame {
     private void putTowCard(Player player) {
         player.putCard(deck.drawCard());
         player.putCard(deck.drawCard());
+    }
+
+    public boolean isCurrentParticipantBust() {
+        return getCurrentTurnParticipant().isBust();
     }
 }

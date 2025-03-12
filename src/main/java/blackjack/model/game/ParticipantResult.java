@@ -1,6 +1,7 @@
 package blackjack.model.game;
 
 public enum ParticipantResult {
+    BLACKJACK("승"),
     WIN("승"),
     LOSE("패"),
     DRAW("무"),
