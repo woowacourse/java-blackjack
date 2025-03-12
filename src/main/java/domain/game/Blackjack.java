@@ -49,7 +49,9 @@ public class Blackjack {
 	}
 
 	public void pickCardDealerIfNotMax() {
-
+		while (dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX)) {
+			dealer.addCards(deck.pickCards(1));
+		}
 	}
 
 	public boolean isPickCardByPlayer(final Player player) {
