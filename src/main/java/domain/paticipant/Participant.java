@@ -30,7 +30,7 @@ public class Participant {
 		duelHistory.write(duelResult);
 	}
 
-	public Score calculateAllScore(final int bustScore) {
+	public Score calculateAllScore(final Score bustScore) {
 		return hand.calculateAllScore(bustScore);
 	}
 

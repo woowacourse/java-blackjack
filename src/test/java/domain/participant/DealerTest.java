@@ -11,13 +11,14 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.Rank;
+import domain.card.Score;
 import domain.card.Suit;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
 
 public class DealerTest {
-	private static final int DEALER_PICK_CARD_SCORE_MAX = 16;
-	private static final int BUST_SCORE = 21;
+	private static final Score DEALER_PICK_CARD_SCORE_MAX = new Score(16);
+	private static final Score BUST_SCORE = new Score(21);
 
 	@Nested
 	@DisplayName("딜러가 카드를 받아야 하는지 여부를 반환한다.")

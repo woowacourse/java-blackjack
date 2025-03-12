@@ -24,16 +24,16 @@ public class Player implements PickableCard {
 		participant.addCards(cards);
 	}
 
-	public boolean isPickCard(final int bustScore) {
+	public boolean isPickCard(final Score bustScore) {
 		final Score score = participant.calculateAllScore(bustScore);
-		return score.isLessThan(bustScore) || score.equals(new Score(bustScore));
+		return score.isLessThan(bustScore) || score.equals(bustScore);
 	}
 
-	public Score calculateAllScore(final int bustScore) {
+	public Score calculateAllScore(final Score bustScore) {
 		return participant.calculateAllScore(bustScore);
 	}
 
-	public boolean isBust(final int bustScore) {
+	public boolean isBust(final Score bustScore) {
 		return calculateAllScore(bustScore).isGreaterThan(bustScore);
 	}
 

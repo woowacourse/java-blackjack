@@ -22,16 +22,16 @@ public class Dealer implements PickableCard {
 		participant.addCards(cards);
 	}
 
-	public boolean isPickCard(final int bustScore, final int dealerPickCardScoreMax) {
+	public boolean isPickCard(final Score bustScore, final Score dealerPickCardScoreMax) {
 		final Score score = participant.calculateAllScore(bustScore);
-		return score.isLessThan(dealerPickCardScoreMax) || score.equals(new Score(dealerPickCardScoreMax));
+		return score.isLessThan(dealerPickCardScoreMax) || score.equals(dealerPickCardScoreMax);
 	}
 
-	public Score calculateAllScore(final int bustScore) {
+	public Score calculateAllScore(final Score bustScore) {
 		return participant.calculateAllScore(bustScore);
 	}
 
-	public boolean isBust(final int bustScore) {
+	public boolean isBust(final Score bustScore) {
 		return calculateAllScore(bustScore).isGreaterThan(bustScore);
 	}
 

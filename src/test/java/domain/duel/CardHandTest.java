@@ -28,7 +28,7 @@ class CardHandTest {
 		void test_calculateAllScore(List<Card> cards, int expected) {
 			//given
 			final var cardHand = new CardHand(cards);
-			final int bustScore = 21;
+			final Score bustScore = new Score(21);
 
 			//when&then
 			Assertions.assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(new Score(expected));

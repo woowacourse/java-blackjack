@@ -20,7 +20,7 @@ public class CardHand {
 		this.cards.addAll(cards);
 	}
 
-	public Score calculateAllScore(final int bustScore) {
+	public Score calculateAllScore(final Score bustScore) {
 		Score score = new Score(0);
 
 		for (final Card card : cards) {

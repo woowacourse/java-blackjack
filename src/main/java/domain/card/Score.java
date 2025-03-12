@@ -7,32 +7,16 @@ public class Score {
 		this.value = value;
 	}
 
-	public Score plus(final int plusValue) {
-		return new Score(value + plusValue);
-	}
-
 	public Score plus(final Score plusValue) {
 		return new Score(value + plusValue.value);
-	}
-
-	public Score minus(final int minusValue) {
-		return new Score(value - minusValue);
 	}
 
 	public Score minus(final Score minusValue) {
 		return new Score(value - minusValue.value);
 	}
 
-	public boolean isGreaterThan(final int value) {
-		return this.value > value;
-	}
-
 	public boolean isGreaterThan(final Score score) {
 		return this.value > score.value;
-	}
-
-	public boolean isLessThan(final int value) {
-		return this.value < value;
 	}
 
 	public boolean isLessThan(final Score score) {

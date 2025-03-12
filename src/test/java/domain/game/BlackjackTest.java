@@ -14,6 +14,7 @@ import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.Deck;
 import domain.card.Rank;
+import domain.card.Score;
 import domain.card.Suit;
 import domain.paticipant.Dealer;
 import domain.paticipant.Participant;
@@ -77,7 +78,7 @@ public class BlackjackTest {
 			final List<String> names = List.of("부기", "파랑", "히스타");
 			final Blackjack blackjack = Blackjack.from(names);
 			final Function<String, Boolean> alwaysYes = (name) -> true;
-			final int bustScore = 21;
+			final Score bustScore = new Score(21);
 
 			// when
 			blackjack.pickCardPlayersIfNotBust(alwaysYes);
@@ -102,8 +103,8 @@ public class BlackjackTest {
 		void pickCardDealerIfNotMax() {
 			// given
 			final Blackjack blackjack = Blackjack.from(List.of(""));
-			final int bustScore = 21;
-			final int dealerPickCardMaxScore = 16;
+			final Score bustScore = new Score(21);
+			final Score dealerPickCardMaxScore = new Score(16);
 
 			// when
 			blackjack.pickCardDealerIfNotMax();

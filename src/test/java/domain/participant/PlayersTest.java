@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Deck;
+import domain.card.Score;
 import domain.duel.DuelResult;
 import domain.paticipant.Player;
 import domain.paticipant.Players;
@@ -71,7 +72,7 @@ public class PlayersTest {
 				final Players players = Players.from(List.of("부기"));
 				final Function<String, Boolean> playerAnswer = (name) -> true;
 				final Deck shuffledDeck = Deck.createShuffledDeck();
-				final int bustScore = 21;
+				final Score bustScore = new Score(21);
 
 				// when
 				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck, bustScore);
@@ -82,7 +83,7 @@ public class PlayersTest {
 						.getFirst()
 						.getParticipant()
 						.getCardHand()
-						.calculateAllScore(21)
+						.calculateAllScore(bustScore)
 						.isGreaterThan(bustScore)).isTrue();
 			}
 		}

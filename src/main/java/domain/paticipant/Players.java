@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
+import domain.card.Score;
 
 public class Players {
 	private final List<Player> players;
@@ -32,13 +33,13 @@ public class Players {
 	}
 
 	public void pickCardPlayersIfNotBust(final Function<String, Boolean> playerAnswer, final Deck deck,
-		final int bustScore) {
+		final Score bustScore) {
 		for (final Player player : players) {
 			pickCard(playerAnswer, deck, bustScore, player);
 		}
 	}
 
-	private void pickCard(final Function<String, Boolean> playerAnswer, final Deck deck, final int bustScore,
+	private void pickCard(final Function<String, Boolean> playerAnswer, final Deck deck, final Score bustScore,
 		final Player player) {
 		while (!player.isBust(bustScore) && playerAnswer.apply(player.getName())) {
 			player.addCards(deck.pickCards(1));
