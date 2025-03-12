@@ -38,6 +38,7 @@ public class CardDeckTest {
                 assertThat(cards).contains(card);
             }
         }
+        assertThat(cards).hasSize(52);
     }
 
     @Test
