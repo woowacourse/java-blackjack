@@ -7,7 +7,6 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private final Nickname nickname;
-    private MatchResult matchType;
 
     private Player(String nickname) {
         this.nickname = new Nickname(nickname);
@@ -15,14 +14,6 @@ public class Player extends Participant {
 
     public static Player from(String nickname) {
         return new Player(nickname);
-    }
-
-    public void updateResult(MatchResult matchType) {
-        this.matchType = matchType;
-    }
-
-    public MatchResult getMatchType() {
-        return matchType;
     }
 
     @Override
@@ -40,5 +31,13 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hashCode(nickname);
+    }
+
+    public MatchResult matchFrom(Dealer dealer) {
+        return MatchResult.fromCompare(compareToScore(dealer));
+    }
+
+    private int compareToScore(Dealer dealer) {
+        return this.getScore() - dealer.getScore();
     }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 public abstract class Participant {
 
     private final List<Card> hands;
-    // protected Score score;
 
     protected Participant() {
         this.hands = new ArrayList<>();
@@ -20,17 +19,13 @@ public abstract class Participant {
     }
 
     private void adjustScoreIfNeeded() {
-        int score = getScore();
-        if (!isBust(score)) {
+        if (!isBust()) {
             return ;
         }
         for (Card card : hands) {
-            int oldRankScore = card.getRankScore();
             int adjustedRankScore = card.adjustRank();
             if (adjustedRankScore != -1) {
-                score -= oldRankScore;
-                score += adjustedRankScore;
-                if (!isBust(score)) {
+                if (!isBust()) {
                     return ;
                 }
             }
@@ -41,8 +36,8 @@ public abstract class Participant {
         return getScore() < 21;
     }
 
-    public boolean isBust(int score) {
-        return score > 21;
+    public boolean isBust() {
+        return getScore() > 21;
     }
 
     abstract public String getNickname();

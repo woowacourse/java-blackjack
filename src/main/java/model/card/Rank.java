@@ -20,39 +20,38 @@ public enum Rank {
     QUEEN(10),
     ACE(List.of(11, 1));
 
-    private final List<Integer> score;
+    private final List<Integer> scoreData;
     private int scoreIdx;
 
     Rank(int score) {
-        this.score = List.of(score);
+        this.scoreData = List.of(score);
         this.scoreIdx = 0;
     }
 
     Rank(List<Integer> score) {
-        this.score = score;
+        this.scoreData = score;
     }
 
     public int adjustRankScore() {
-        final List<Integer> sorted = sorted();
-        sorted.sort(Collections.reverseOrder());
+        final List<Integer> sortedScores = sorted();
         if (!isLastValue()) {
             scoreIdx++;
-            return sorted.get(scoreIdx);
+            return sortedScores.get(scoreIdx);
         }
         return -1;
     }
 
     private List<Integer> sorted() {
-        List<Integer> sorted = new ArrayList<>(score);
-        sorted.sort(Collections.reverseOrder());
-        return sorted;
+        List<Integer> scores = new ArrayList<>(scoreData);
+        scores.sort(Collections.reverseOrder());
+        return scores;
     }
 
     public boolean isLastValue() {
-        return scoreIdx + 1 >= score.size();
+        return scoreIdx + 1 >= scoreData.size();
     }
 
-    public int getRankScore() {
-        return score.get(scoreIdx);
+    public int getScore() {
+        return scoreData.get(scoreIdx);
     }
 }

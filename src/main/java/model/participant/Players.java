@@ -1,43 +1,65 @@
 package model.participant;
 
+import model.score.MatchResult;
+
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 
 public class Players {
 
-  private final List<Player> values;
+    private final List<Player> values;
 
-  private Players(List<Player> values) {
-    validateDuplication(values);
-    validateNumber(values);
-    this.values = values;
-  }
-
-  public static Players from(List<String> input) {
-    List<Player> inputPlayers = input.stream()
-            .map(Player::from)
-            .toList();
-    return new Players(inputPlayers);
-  }
-
-  private void validateDuplication(List<Player> values) {
-    if(values.stream().distinct().count() != values.size()) {
-      throw new IllegalArgumentException("중복된 플레이어는 등록할 수 없습니다.");
+    private Players(List<Player> values) {
+        validateDuplication(values);
+        validateNumber(values);
+        this.values = values;
     }
-  }
 
-  private void validateNumber(List<Player> values) {
-    if (values.isEmpty() || values.size() > 30) {
-      throw new IllegalArgumentException("게임 참가자는 1~30명까지 가능합니다.");
+    public static Players from(List<String> input) {
+        List<Player> inputPlayers = input.stream()
+                .map(Player::from)
+                .toList();
+        return new Players(inputPlayers);
     }
-  }
 
-  public List<Player> getPlayers() {
-    return values;
-  }
+    private void validateDuplication(List<Player> values) {
+        if (values.stream().distinct().count() != values.size()) {
+            throw new IllegalArgumentException("중복된 플레이어는 등록할 수 없습니다.");
+        }
+    }
 
-  public List<String> getNicknames() {
-    return values.stream()
-            .map(Participant::getNickname)
-            .toList();
-  }
+    private void validateNumber(List<Player> values) {
+        if (values.isEmpty() || values.size() > 30) {
+            throw new IllegalArgumentException("게임 참가자는 1~30명까지 가능합니다.");
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return values;
+    }
+
+    public List<String> getNicknames() {
+        return values.stream()
+                .map(Participant::getNickname)
+                .toList();
+    }
+
+    public HashMap<Player, MatchResult> getMatchResult(Dealer dealer) {
+        HashMap<Player, MatchResult> matchResults = new HashMap<>();
+        for (Player player : getPlayers()) {
+            MatchResult matchResult = player.matchFrom(dealer);
+            matchResults.put(player, matchResult);
+        }
+        return matchResults;
+    }
+
+    public EnumMap<MatchResult, Integer> getMatchCount(Dealer dealer) {
+        EnumMap<MatchResult, Integer> matchCounts = new EnumMap<>(MatchResult.class);
+        for (Player player : getPlayers()) {
+            MatchResult matchResult = player.matchFrom(dealer);
+            matchCounts.put(matchResult, matchCounts.getOrDefault(matchResult, 0) + 1);
+        }
+        return matchCounts;
+    }
 }

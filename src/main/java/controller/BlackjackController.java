@@ -1,5 +1,6 @@
 package controller;
 
+import model.VictoryResultDto;
 import model.participant.Dealer;
 import model.GameManager;
 import model.participant.Player;
@@ -26,8 +27,8 @@ public class BlackjackController {
 
         OutputView.printAllParticipantScore(dealer, players);
 
-        gameManager.calculateVictory();
-        OutputView.printResult(dealer, players);
+        VictoryResultDto victoryResultDto = gameManager.calculateVictory();
+        OutputView.printResult(victoryResultDto);
     }
 
     private void receiveAdditionalCard(Player player, GameManager gameManager) {

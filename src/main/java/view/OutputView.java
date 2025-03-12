@@ -1,5 +1,6 @@
 package view;
 
+import model.VictoryResultDto;
 import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
@@ -80,17 +81,17 @@ public class OutputView {
         System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
     }
 
-    public static void printResult(Dealer dealer, Players players) {
-        String dealerNickname = dealer.getNickname();
-        String resultFormatByDealer = getResultFormatByDealer(dealer.getMatchResult());
+    public static void printResult(VictoryResultDto dto) {
+        String dealerNickname = "딜러"; // TODO: 딜러 닉네임 어떻게 가져율 것인지
+        String resultFormatByDealer = getResultFormatByDealer(dto.dealerMatchResult());
 
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("%s: %s%n", dealerNickname, resultFormatByDealer);
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : dto.playersMatchResult().keySet()) {
             String nickname = player.getNickname();
-            String resultFormatByPlayer = getResultFormatByPlayer(player.getMatchType());
+            String resultFormatByPlayer = getResultFormatByPlayer(dto.playersMatchResult().get(player));
             System.out.printf("%s: %s%n", nickname, resultFormatByPlayer);
         }
 

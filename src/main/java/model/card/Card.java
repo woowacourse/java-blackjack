@@ -15,7 +15,7 @@ public class Card {
     }
 
     public int getRankScore() {
-        return rank.getRankScore();
+        return rank.getScore();
     }
 
     public Suit getSuit() {

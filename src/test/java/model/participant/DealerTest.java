@@ -4,13 +4,11 @@ import model.card.Card;
 import model.card.CardDeck;
 import model.card.Rank;
 import model.card.Suit;
-import model.score.MatchResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 class DealerTest {
 
@@ -103,14 +101,5 @@ class DealerTest {
         // then
         System.out.println(dealer.getScore());
         Assertions.assertThat(dealer.isNotUp()).isFalse();
-    }
-
-    @Test
-    @DisplayName("딜러의 게임 결과 업데이트가 잘 되는 지")
-    void dealerGameResult() {
-        Dealer dealer = Dealer.newInstance();
-        dealer.updateResult(MatchResult.WIN);
-        Map<MatchResult, Integer> matchResult = dealer.getMatchResult();
-        Assertions.assertThat(matchResult.get(MatchResult.WIN)).isEqualTo(1);
     }
 }

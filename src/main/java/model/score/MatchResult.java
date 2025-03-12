@@ -1,18 +1,40 @@
 package model.score;
 
+import java.util.EnumMap;
+
 public enum MatchResult {
 
     WIN,
     LOSE,
     DRAW;
 
-    public MatchResult reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
+    public static MatchResult fromCompare(int compare) {
+        if (compare > 0) {
             return WIN;
         }
-        return this;
+        if (compare < 0) {
+            return LOSE;
+        }
+        return DRAW;
+    }
+
+    public static EnumMap<MatchResult, Integer> reverseAll(EnumMap<MatchResult, Integer> matchCounts) {
+        EnumMap<MatchResult, Integer> reverseMatchCounts = new EnumMap<>(MatchResult.class);
+        for (MatchResult matchResult : matchCounts.keySet()) {
+            MatchResult reverseMatchResult = reverse(matchResult);
+            reverseMatchCounts.put(reverseMatchResult, reverseMatchCounts.getOrDefault(matchResult, 0) + 1);
+        }
+        return reverseMatchCounts;
+    }
+
+
+    private static MatchResult reverse(MatchResult result) {
+        if (result == WIN) {
+            return LOSE;
+        }
+        if (result == LOSE) {
+            return WIN;
+        }
+        return result;
     }
 }
