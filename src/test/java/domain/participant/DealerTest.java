@@ -28,16 +28,4 @@ class DealerTest {
         // then
         assertThat(dealer.getOwnedCards()).hasSize(1);
     }
-
-    @Test
-    void 딜러는_배당_금액을_잃는다() {
-        // given
-        Dealer dealer = Dealer.of(CardDeck.of());
-
-        // when
-        dealer.decreaseTotalAmount(1000, 1.5);
-
-        // then
-        assertThat(dealer.getTotalWinnings()).isEqualTo(-1500);
-    }
 }

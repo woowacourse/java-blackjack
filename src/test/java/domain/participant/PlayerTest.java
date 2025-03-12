@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
@@ -70,22 +69,6 @@ public class PlayerTest {
 
         // then
         assertThat(blackjackResult).isEqualTo(result);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "1, 1000",
-            "1.5, 1500"
-    })
-    void 플레이어의_현재_금액을_증가시킨다(double ratio, int totalAmount) {
-        // given
-        Player player = Player.of("pobi", Money.of(1000));
-
-        // when
-        player.increaseTotalAmount(ratio);
-
-        // then
-        assertThat(player.getTotalWinnings()).isEqualTo(totalAmount);
     }
 
     private static Stream<Arguments> createPlayerAndResult() {

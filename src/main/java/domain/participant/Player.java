@@ -22,10 +22,6 @@ public class Player extends Participant {
         return name;
     }
 
-    public void increaseTotalAmount(double ratio) {
-        increaseAmount((int) Math.round(betAmount.getAmount() * ratio));
-    }
-
     public int getBetAmount() {
         return betAmount.getAmount();
     }
