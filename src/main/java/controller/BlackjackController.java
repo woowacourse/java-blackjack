@@ -4,7 +4,6 @@ import controller.converter.DomainToTextConverter;
 import controller.converter.PlayerResultText;
 import domain.BlackjackGame;
 import domain.RoundHistory;
-import domain.card.Hand;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
 import java.util.List;
@@ -24,9 +23,8 @@ public class BlackjackController {
   }
 
   public void run() {
-    final BlackjackGame blackjack = BlackjackGame.generate();
     final var names = inputView.readPlayerNames();
-    blackjack.addParticipants(names);
+    final BlackjackGame blackjack = BlackjackGame.from(names);
 
     startGame(blackjack);
   }
@@ -34,7 +32,7 @@ public class BlackjackController {
   private void startGame(final BlackjackGame blackjack) {
     initialDael(blackjack);
     deal(blackjack);
-    openHandResult(blackjack);
+    processOpenHandResult(blackjack);
     round(blackjack);
   }
 
@@ -43,7 +41,7 @@ public class BlackjackController {
     outputInitialDeal(blackjack);
   }
 
-  private void outputInitialDeal(BlackjackGame blackjack) {
+  private void outputInitialDeal(final BlackjackGame blackjack) {
     final var players = blackjack.getPlayers();
     final var playerNames = converter.playersToNames(players);
     outputView.printDealIntroduce(playerNames);
@@ -53,58 +51,37 @@ public class BlackjackController {
   }
 
   private void outputDealerInitialDealResult(final BlackjackGame blackjack) {
-    final var dealer = blackjack.getDealer();
-    final Hand hand = dealer.getHand();
-    final TrumpCard firstCard = hand.getCards().getFirst();
+    final TrumpCard firstCard = blackjack.openDealerFirstCard();
     outputView.printDealerHitResult(converter.cardToText(firstCard));
   }
 
+
   private void deal(final BlackjackGame blackjack) {
-    hitByPlayer(blackjack);
-    hitByDealer(blackjack);
+    for (Participant player : blackjack.getPlayers()) {
+      processPlayerHits(player, blackjack);
+    }
   }
 
-  private void hitByPlayer(final BlackjackGame blackjack) {
-    final var players = blackjack.getPlayers();
-    players.forEach(player -> processPlayerHits(blackjack, player));
-  }
-
-  private void processPlayerHits(final BlackjackGame blackjack, final Participant player) {
+  public void processPlayerHits(final Participant player, final BlackjackGame blackjack) {
     final var name = player.getName();
     while (player.isHit() && inputView.readPlayerAnswer(name)) {
-      hitByParticipant(blackjack, player);
-      outputPlayerHand(player);
-    }
-  }
-
-  private void hitByParticipant(final BlackjackGame blackjack, final Participant participant) {
-    final var card = blackjack.getCardForDeal();
-    participant.hit(card);
-  }
-
-  private void outputPlayerHand(final Participant player) {
-    final var name = player.getName();
-    outputView.printPlayerHand(name, converter.participantCardToText(player));
-  }
-
-  private void hitByDealer(final BlackjackGame blackjack) {
-    final var dealer = blackjack.getDealer();
-
-    while (dealer.isHit()) {
-      hitByParticipant(blackjack, dealer);
-      outputView.printDealerHit();
+      blackjack.hitByParticipant(player);
+      final List<TrumpCard> hand = blackjack.getCards(player);
+      outputView.printPlayerHand(player.getName(), converter.handToText(hand));
     }
   }
 
 
-  private void openHandResult(final BlackjackGame blackjack) {
-    final var participants = blackjack.getParticipants();
-    participants.forEach(this::outputPlayerHandResult);
+  private void processOpenHandResult(final BlackjackGame blackjack) {
+    final List<Participant> participants = blackjack.getParticipants();
+    for (Participant participant : participants) {
+      outputPlayerHandResult(participant);
+    }
   }
 
   private void outputPlayerHandResult(final Participant participants) {
     final List<String> convertedCards = converter.participantCardToText(participants);
-    final int score = participants.calculateScore();
+    final var score = participants.calculateScore();
     outputView.printPlayerRoundResult(participants.getName(), convertedCards, score);
   }
 

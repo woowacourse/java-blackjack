@@ -4,6 +4,7 @@ import domain.card.Deck;
 import domain.card.TrumpCard;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Participants {
@@ -67,10 +68,6 @@ public class Participants {
     return players;
   }
 
-  public List<Participant> getParticipants() {
-    return new ArrayList<>(participants);
-  }
-
   public List<TrumpCard> getCards(Participant target) {
     final var name = target.getName();
     var participant = participants.stream()
@@ -80,4 +77,7 @@ public class Participants {
     return participant.getCards();
   }
 
+  public List<Participant> getParticipants() {
+    return Collections.unmodifiableList(participants);
+  }
 }

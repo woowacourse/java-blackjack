@@ -18,10 +18,9 @@ class BlackjackGameTest {
     @DisplayName("한 명의 딜러와 명단에 따른 플레이어를 추가한다.")
     void test_initializeBlackjack() {
       //given
-      final BlackjackGame blackjack = BlackjackGame.generate();
       final var names = List.of("pobi", "bita");
       //when
-      blackjack.addParticipants(names);
+      final BlackjackGame blackjack = BlackjackGame.from(names);
       //then
       var dealer = blackjack.getDealer();
       var actualNames = blackjack.getParticipants().stream()
@@ -38,9 +37,8 @@ class BlackjackGameTest {
       //이때 지급되는 카드의 수는 도메인 룰에 따라 달라질 수 있다.
     void test_initialDeal() {
       //given
-      final BlackjackGame blackjack = BlackjackGame.generate();
       final var names = List.of("pobi", "bita");
-      blackjack.addParticipants(names);
+      final BlackjackGame blackjack = BlackjackGame.from(names);
       //when
       blackjack.initialDeal();
       //then
