@@ -23,6 +23,10 @@ public class Players {
         dealer.pushDealCard(cardPack, 1);
     }
 
+    public void dealAddCardForGambler(final Gambler gambler, final CardPack cardPack) {
+        gambler.pushDealCard(cardPack, 1);
+    }
+
     public boolean isDealerHit() {
         return dealer.isHit();
     }
@@ -31,9 +35,9 @@ public class Players {
         return new GameResults(dealer, gamblers);
     }
 
-    private void validateHasDuplication(final List<Gambler> players) {
-        int size = new HashSet<>(players).size();
-        if (players.size() != size) {
+    private void validateHasDuplication(final List<Gambler> gamblers) {
+        int size = new HashSet<>(gamblers).size();
+        if (gamblers.size() != size) {
             throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
         }
     }

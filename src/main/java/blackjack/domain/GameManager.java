@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardPack;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -14,8 +15,8 @@ public class GameManager {
         this.players = players;
     }
 
-    public void dealAddCard(final Player player) {
-        player.pushDealCard(cardPack, 1);
+    public void dealAddCard(final Gambler gambler) {
+        players.dealAddCardForGambler(gambler, cardPack);
     }
 
     public boolean isPlayerBust(final Player player) {
