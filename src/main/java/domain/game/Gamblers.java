@@ -33,7 +33,8 @@ public class Gamblers {
         distributeExtraCards(dealer, dealerAnswer, cardPack);
     }
 
-    private void distributeExtraCards(Gambler gambler, GamblerAnswer gamblerAnswer, CardPack cardPack) {
+    private void distributeExtraCards(Gambler gambler, GamblerAnswer gamblerAnswer,
+        CardPack cardPack) {
         while (gambler.canTakeMoreCard() && gamblerAnswer.isAnswerOK(gambler)) {
             gambler.takeCards(cardPack.poll());
             gamblerAnswer.notifyResult(gambler);
