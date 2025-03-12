@@ -13,37 +13,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final Map<Rank, String> RANK_NAMES = Map.ofEntries(
-        Map.entry(Rank.ACE, "A"),
-        Map.entry(Rank.TWO, "2"),
-        Map.entry(Rank.THREE, "3"),
-        Map.entry(Rank.FOUR, "4"),
-        Map.entry(Rank.FIVE, "5"),
-        Map.entry(Rank.SIX, "6"),
-        Map.entry(Rank.SEVEN, "7"),
-        Map.entry(Rank.EIGHT, "8"),
-        Map.entry(Rank.NINE, "9"),
-        Map.entry(Rank.TEN, "10"),
-        Map.entry(Rank.JACK, "J"),
-        Map.entry(Rank.QUEEN, "Q"),
-        Map.entry(Rank.KING, "K")
-    );
-
-    private static final Map<Shape, String> SHAPE_NAMES = Map.ofEntries(
-        Map.entry(Shape.SPADE, Shape.SPADE.getName()),
-        Map.entry(Shape.DIAMOND, Shape.DIAMOND.getName()),
-        Map.entry(Shape.HEART, Shape.HEART.getName()),
-        Map.entry(Shape.CLOVER, Shape.CLOVER.getName())
-    );
-
-    private static final Map<Winning, String> WINNING_NAMES = Map.ofEntries(
-        Map.entry(Winning.WIN, "승"),
-        Map.entry(Winning.DRAW, "무"),
-        Map.entry(Winning.LOSE, "패")
-    );
-
     private String cardNameOf(Card card) {
-        return RANK_NAMES.get(card.rank()) + SHAPE_NAMES.get(card.shape());
+        return card.rank().getName() + card.shape().getName();
     }
 
     public void printSetUpCardDeck(SetUpCardsDTO setUpCardsDTO) {
@@ -82,7 +53,7 @@ public class OutputView {
         gameResult.getPlayerWinningResult()
             .forEach(
                 (player, winning) -> System.out.printf("%s: %s\n",
-                    player.getName(), WINNING_NAMES.get(winning))
+                    player.getName(), winning.getName())
             );
     }
 
