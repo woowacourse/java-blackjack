@@ -15,8 +15,9 @@ import java.util.List;
 public class Round {
     public static final int MIN_PLAYER_COUNT = 1;
     public static final int MAX_PLAYER_COUNT = 6;
-    public static final int BLACK_JACK = 21;
+    public static final int BLACKJACK = 21;
     public static final int DEALER_DRAW_THRESHOLD = 16;
+    public static final String NOT_EXISTS_PLAYER = "존재하지 않는 플레이어입니다: %s";
 
     private final CardDeck cardDeck;
     private final List<Gambler> gamblers = new ArrayList<>();
@@ -69,7 +70,7 @@ public class Round {
     }
 
     public boolean isPlayerBusted(final Name name) {
-        return !findGambler(name).isScoreBelow(BLACK_JACK);
+        return !findGambler(name).isScoreBelow(BLACKJACK);
     }
 
     public WinningDiscriminator getWinningDiscriminator() {
@@ -84,6 +85,6 @@ public class Round {
         return gamblers.stream()
                 .filter(gambler -> gambler.isNameEquals(name))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다:" + name));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXISTS_PLAYER.formatted(name)));
     }
 }

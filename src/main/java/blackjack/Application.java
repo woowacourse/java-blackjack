@@ -56,7 +56,7 @@ public class Application {
             List<Name> names = inputView.inputPlayerName();
             return new Names(names);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return getPlayerNames();
         }
     }
@@ -72,7 +72,7 @@ public class Application {
             int bettingAmount = inputView.inputBettingAmount(playerName);
             return new BettingAmount(bettingAmount);
         } catch (final IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return getBettingAmount(playerName);
         }
     }
@@ -118,7 +118,7 @@ public class Application {
         try {
             return inputView.inputPlayerHit(playerName);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return isHit(playerName);
         }
     }

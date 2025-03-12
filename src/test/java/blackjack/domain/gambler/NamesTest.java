@@ -1,9 +1,6 @@
 package blackjack.domain.gambler;
 
 import static blackjack.domain.fixture.NameFixture.createNames;
-import static blackjack.view.ErrorMessage.INVALID_PLAYER_COUNT;
-import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_DUPLICATED;
-import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_EQUAL_DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -25,7 +22,7 @@ class NamesTest {
         // then
         assertThatThrownBy(() -> new Names(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
+                .hasMessage("'딜러'라는 이름은 사용이 불가능 하다.");
     }
 
     @DisplayName("플레이어의 이름이 중복되면 예외를 발생한다")
@@ -38,7 +35,7 @@ class NamesTest {
         // then
         assertThatThrownBy(() -> new Names(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(NAME_CANNOT_BE_DUPLICATED.getMessage());
+                .hasMessage("플레이어의 이름은 중복 불가하다.");
     }
 
     @DisplayName("플레이어 수가 기준 미만이거나 초과이면 예외를 발생한다")
@@ -49,7 +46,7 @@ class NamesTest {
         // then
         assertThatThrownBy(() -> new Names(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(INVALID_PLAYER_COUNT.getMessage());
+                .hasMessage("플레이어 명수는 최소 1명, 최대 6명까지다.");
     }
 
     private static Stream<Arguments> returnInvalidCountPlayerNames() {

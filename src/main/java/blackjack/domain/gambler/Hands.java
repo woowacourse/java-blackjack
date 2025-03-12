@@ -1,6 +1,6 @@
 package blackjack.domain.gambler;
 
-import static blackjack.domain.game.Round.BLACK_JACK;
+import static blackjack.domain.game.Round.BLACKJACK;
 import static blackjack.domain.card.Card.MAX_ACE_VALUE;
 import static blackjack.domain.card.Card.MIN_ACE_VALUE;
 
@@ -41,10 +41,10 @@ public class Hands {
     }
 
     private int adjustSumByAce(int sum, int aceCount) {
-        if (sum <= BLACK_JACK) {
+        if (sum <= BLACKJACK) {
             return sum;
         }
-        while (aceCount > 0 && sum > BLACK_JACK) {
+        while (aceCount > 0 && sum > BLACKJACK) {
             sum -= (MAX_ACE_VALUE - MIN_ACE_VALUE);
             aceCount--;
         }

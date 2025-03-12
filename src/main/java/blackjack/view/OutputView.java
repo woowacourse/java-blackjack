@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import static blackjack.domain.game.Round.BLACK_JACK;
+import static blackjack.domain.game.Round.BLACKJACK;
 import static blackjack.domain.game.Round.DEALER_DRAW_THRESHOLD;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static java.util.stream.Collectors.joining;
@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class OutputView {
+    private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String JOIN_DELIMITER = ", ";
 
     public void printInitialDistributionPrompt(final Names playerNames) {
@@ -26,7 +27,7 @@ public class OutputView {
     }
 
     public void printBusted(final Name playerName) {
-        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, BLACK_JACK);
+        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, BLACKJACK);
     }
 
     public void printDealerDraw() {
@@ -58,5 +59,9 @@ public class OutputView {
         for (Entry<Name, Integer> entry : playersProfit.entrySet()) {
             System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
         }
+    }
+
+    public void printErrorMessage(final String errorMessage) {
+        System.out.println(ERROR_PREFIX + errorMessage);
     }
 }

@@ -5,6 +5,7 @@ import java.util.Objects;
 public class BettingAmount {
     private static final int MIN_AMOUNT = 1_000;
     private static final int MAX_AMOUNT = 1_000_000;
+    private static final String INVALID_BETTING_AMOUNT = "베팅 금액은 %d원부터 %d원까지 입니다.";
 
     private final int amount;
 
@@ -15,7 +16,7 @@ public class BettingAmount {
 
     private void validateRange(final int amount) {
         if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
-            throw new IllegalArgumentException("베팅 금액은 %d원부터 %d원까지 입니다.".formatted(MIN_AMOUNT, MAX_AMOUNT));
+            throw new IllegalArgumentException(INVALID_BETTING_AMOUNT.formatted(MIN_AMOUNT, MAX_AMOUNT));
         }
     }
 
