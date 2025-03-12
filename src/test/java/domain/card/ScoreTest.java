@@ -91,5 +91,19 @@ public class ScoreTest {
 			// then
 			assertThat(actual).isFalse();
 		}
+
+		@DisplayName("x가 주어진 Score 값보다 작은가")
+		@Test
+		void isLessThanScore() {
+			// given
+			final Score score = new Score(100);
+			final Score moreThanValue = new Score(101);
+
+			// when
+			final boolean actual = score.isLessThan(moreThanValue);
+
+			// then
+			assertThat(actual).isFalse();
+		}
 	}
 }
