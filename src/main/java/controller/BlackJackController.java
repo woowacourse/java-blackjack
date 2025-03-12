@@ -60,7 +60,7 @@ public class BlackJackController {
     private boolean playerCanHit(Player player) {
         String playerResponse = inputView.readOneMoreCardResponse(player.getNickname());
         boolean wantsToHit = playerResponse.equals(HIT_COMMAND);
-        boolean notBust = !player.isBust();
+        boolean notBust = player.doesNotBust();
 
         return wantsToHit & notBust;
     }

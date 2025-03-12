@@ -29,6 +29,10 @@ public class Gambler {
         return sumCardScores() > MAX_SCORE;
     }
 
+    public boolean doesNotBust() {
+        return !isBust();
+    }
+
     public List<Card> openCards() {
         return new ArrayList<>(cards.getCards());
     }
