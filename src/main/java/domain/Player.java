@@ -8,6 +8,7 @@ public class Player extends Participant {
 
     @Override
     boolean isDrawable() {
-        return !hand.isBust();
+        Score totalScore = hand.calculateCardSum();
+        return !hand.isBust(totalScore);
     }
 }

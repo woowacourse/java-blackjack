@@ -27,6 +27,10 @@ public record Score(int value) {
         return this.value() < other.value();
     }
 
+    public boolean isEqualTo(Score other) {
+        return this.value() == other.value();
+    }
+
     public boolean isGreaterThan(Score other) {
         return this.value > other.value();
     }

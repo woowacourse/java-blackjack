@@ -17,14 +17,15 @@ public class ParticipantHand {
 
 
     public void addCard(TrumpCard card) {
-        if (isBust()) {
+        Score totalScore = calculateCardSum();
+        if (isBust(totalScore)) {
             throw new IllegalStateException(String.format(BUST_HAND_FORMAT, BUST_STANDARD_SCORE.toInt()));
         }
         handCards.add(card);
     }
 
-    public boolean isBust() {
-        return calculateCardSum().isGreaterThan(BUST_STANDARD_SCORE);
+    public boolean isBust(Score score) {
+        return score.isGreaterThan(BUST_STANDARD_SCORE);
     }
 
     public Score calculateCardSum() {
@@ -35,6 +36,12 @@ public class ParticipantHand {
         Score totalScore = totalScore();
         int aceCount = aceCount();
         return calculateAceIncludeSum(aceCalculateStandard, aceCount, totalScore);
+    }
+
+    public WinStatus getWinStatusAgainst(Score other) {
+        Score totalScore = calculateCardSum();
+        GameJudge gameJudge = new GameJudge(totalScore, other);
+        return gameJudge.getResult();
     }
 
     private Score totalScore() {

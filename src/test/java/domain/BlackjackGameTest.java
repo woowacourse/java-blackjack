@@ -90,13 +90,13 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = createTestGame(names, drawOrder);
 
         // when
-        List<Result> results = blackjackGame.currentPlayerBlackjackResult();
+        List<GameResult> gameResults = blackjackGame.currentPlayerBlackjackResult();
 
         // then
         List<Score> expectedPlayersCardSum = List.of(Score.from(18), Score.from(19));
 
-        assertThatIterable(results.stream()
-                .map(Result::cardSum)
+        assertThatIterable(gameResults.stream()
+                .map(GameResult::cardSum)
                 .toList()
         ).containsExactlyElementsOf(expectedPlayersCardSum);
     }
@@ -111,11 +111,12 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = createTestGame(names, drawOrder);
 
         // when
-        Result result = blackjackGame.currentDealerBlackjackResult();
+        GameResult gameResult = blackjackGame.currentDealerBlackjackResult();
 
         // then
         Score expectedDealerCardSum = Score.from(5);
-        assertThat(result.cardSum())
+        assertThat(gameResult.cardSum())
                 .isEqualTo(expectedDealerCardSum);
     }
+
 }

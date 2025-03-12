@@ -28,14 +28,14 @@ public class Participants {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_EXIST));
     }
 
-    public List<Result> calculatePlayerResults() {
-        List<Result> results = new ArrayList<>();
+    public List<GameResult> calculatePlayerResults() {
+        List<GameResult> gameResults = new ArrayList<>();
         for (ParticipantName name : getPlayerNames()) {
             List<TrumpCard> trumpCards = participantCards(name);
             Score sum = calculateCardSum(name);
-            results.add(new Result(name, trumpCards, sum));
+            gameResults.add(new GameResult(name, trumpCards, sum));
         }
-        return Collections.unmodifiableList(results);
+        return Collections.unmodifiableList(gameResults);
     }
 
     public List<ParticipantName> getPlayerNames() {
@@ -45,12 +45,12 @@ public class Participants {
                 .toList();
     }
 
-    public Result calculateResult(ParticipantName name) {
+    public GameResult calculateResult(ParticipantName name) {
         Participant participant = findParticipant(name);
         ParticipantHand hand = participant.hand;
         Score sum = hand.calculateCardSum();
         List<TrumpCard> trumpCards = hand.getCards();
-        return new Result(name, trumpCards, sum);
+        return new GameResult(name, trumpCards, sum);
     }
 
     public List<TrumpCard> participantCards(ParticipantName name) {
@@ -84,5 +84,11 @@ public class Participants {
     public void addCard(ParticipantName name, TrumpCard trumpCard) {
         Participant participant = findParticipant(name);
         participant.addDraw(trumpCard);
+    }
+
+    public WinStatus determineResult(ParticipantName selfName, ParticipantName opponentName) {
+        Participant self = findParticipant(selfName);
+        Participant opponent = findParticipant(opponentName);
+        return self.determineResult(opponent.calculateCardSum());
     }
 }

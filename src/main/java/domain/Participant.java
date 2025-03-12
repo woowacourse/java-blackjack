@@ -23,7 +23,8 @@ public abstract class Participant {
     abstract boolean isDrawable();
 
     public boolean isBust() {
-        return hand.isBust();
+        Score score = hand.calculateCardSum();
+        return hand.isBust(score);
     }
 
     public boolean isNameMatch(ParticipantName name) {
@@ -40,5 +41,9 @@ public abstract class Participant {
 
     public boolean isDealer() {
         return false;
+    }
+
+    public WinStatus determineResult(Score other) {
+        return hand.getWinStatusAgainst(other);
     }
 }

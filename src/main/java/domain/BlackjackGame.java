@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,8 @@ public class BlackjackGame {
 
     private final Participants participants;
     private final Deck deck;
-
     public BlackjackGame(List<String> names, Deck deck) {
+
         validatePlayerSize(names.size());
         this.deck = deck;
         this.participants = new Participants(names, new Dealer());
@@ -80,21 +81,40 @@ public class BlackjackGame {
         return participants.isDrawable(dealerName);
     }
 
-    public List<Result> currentPlayerBlackjackResult() {
+    public List<GameResult> currentPlayerBlackjackResult() {
         return participants.calculatePlayerResults();
     }
 
-    public Result currentDealerBlackjackResult() {
+    public GameResult currentDealerBlackjackResult() {
         ParticipantName dealerName = participants.dealerName();
         return participants.calculateResult(dealerName);
     }
 
-    public DealerWinStatus getDealerWinStatus() {
-        return ResultEvaluator.calculateDealerWinStatus(participants);
+    public Map<ParticipantName, WinStatus> getPlayerWinStatuses() {
+        Map<ParticipantName, WinStatus> winStatuses = new HashMap<>();
+        List<ParticipantName> playerNames = participants.getPlayerNames();
+        ParticipantName dealerName = participants.dealerName();
+
+        for (ParticipantName playerName : playerNames) {
+            WinStatus winStatus = participants.determineResult(playerName, dealerName);
+            winStatuses.put(playerName, winStatus);
+        }
+        return winStatuses;
     }
 
-    public Map<ParticipantName, WinStatus> getPlayerWinStatuses() {
-        return ResultEvaluator.calculateWinStatus(participants);
+    public DealerWinStatus calculateDealerWinStatus(Map<ParticipantName, WinStatus> playerWinStatuses) {
+        int playerCount = playerWinStatuses.size();
+        int winCount = playerCount - countWinStatus(playerWinStatuses, WinStatus.LOSE);
+        int loseCount = playerCount - countWinStatus(playerWinStatuses, WinStatus.WIN);
+
+        return new DealerWinStatus(winCount, loseCount);
+    }
+
+    private int countWinStatus(Map<ParticipantName, WinStatus> playerWinStatues, WinStatus winStatus) {
+        return (int) playerWinStatues.values()
+                .stream()
+                .filter(status -> status.equals(winStatus))
+                .count();
     }
 
 }

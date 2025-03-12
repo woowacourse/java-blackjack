@@ -1,5 +1,6 @@
 package domain;
 
+
 public enum WinStatus {
 
     WIN("승"),

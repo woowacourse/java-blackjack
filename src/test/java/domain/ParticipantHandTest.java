@@ -137,7 +137,8 @@ class ParticipantHandTest {
         }
 
         // then
-        assertThat(hand.isBust()).isTrue();
+        Score totalScore = hand.calculateCardSum();
+        assertThat(hand.isBust(totalScore)).isTrue();
     }
 
     @ParameterizedTest
@@ -152,7 +153,8 @@ class ParticipantHandTest {
         }
 
         // then
-        assertThat(hand.isBust()).isFalse();
+        Score totalScore = hand.calculateCardSum();
+        assertThat(hand.isBust(totalScore)).isFalse();
     }
 
     @ParameterizedTest
