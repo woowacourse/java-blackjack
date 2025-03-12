@@ -110,7 +110,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cards);
 
         // when
-        Card card = dealer.openOneCard();
+        Card card = dealer.openInitialCard();
 
         // then
         assertThat(card.getRank()).isEqualTo(TrumpRank.KING);

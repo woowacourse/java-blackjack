@@ -15,7 +15,7 @@ public class Dealer extends Gambler {
         this.cards = cards;
     }
 
-    public Card openOneCard() {
+    public Card openInitialCard() {
         return cards.getCards().stream()
                 .min(Comparator.comparingInt(Card::getRankScore))
                 .orElse(cards.getCards().getFirst());
