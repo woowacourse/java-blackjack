@@ -28,8 +28,8 @@ public class BlackJackController {
 
         selectPlayersHitOrStand(players, deck);
         checkDealerHit(dealer, deck);
-        outputView.printGameSummary(players, dealer);
-        outputView.printGameResult(players.deriveResults(dealer.sumCardNumbers()));
+        outputView.printGameResults(players, dealer);
+        outputView.printWinningResults(players.deriveResults(dealer.sumCardNumbers()));
     }
 
     private void selectPlayersHitOrStand(Players players, Deck deck) {
@@ -41,7 +41,7 @@ public class BlackJackController {
 
     private void selectHitOrStand(Player player, Deck deck) {
         while (inputView.readShouldHit(player.getNickname()).equals(HIT_COMMAND)
-        && player.addOneCard(deck.drawOneCard())) {
+                && player.addOneCard(deck.drawOneCard())) {
             outputView.printPlayerCards(player);
         }
     }

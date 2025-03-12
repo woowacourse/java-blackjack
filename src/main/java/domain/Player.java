@@ -1,7 +1,7 @@
 package domain;
 
 import domain.constant.BlackJackRules;
-import domain.constant.GameResult;
+import domain.constant.WinningResult;
 import java.util.List;
 
 public class Player {
@@ -23,7 +23,7 @@ public class Player {
         return cards.sumCardNumbers();
     }
 
-    public GameResult compareTo(int dealerScore) {
+    public WinningResult compareTo(int dealerScore) {
         int sum = sumCardNumbers();
         if (sum > BlackJackRules.BUST_STANDARD || dealerScore > BlackJackRules.BUST_STANDARD) {
             return getWinDrawLoseWhenOverBustStandard(sum);
@@ -31,21 +31,21 @@ public class Player {
         return determineGameResult(dealerScore, sum);
     }
 
-    private GameResult getWinDrawLoseWhenOverBustStandard(int sum) {
+    private WinningResult getWinDrawLoseWhenOverBustStandard(int sum) {
         if (sum > BlackJackRules.BUST_STANDARD) {
-            return GameResult.LOSE;
+            return WinningResult.LOSE;
         }
-        return GameResult.WIN;
+        return WinningResult.WIN;
     }
 
-    private GameResult determineGameResult(int dealerScore, int sum) {
+    private WinningResult determineGameResult(int dealerScore, int sum) {
         if (sum == dealerScore) {
-            return GameResult.DRAW;
+            return WinningResult.DRAW;
         }
         if (sum > dealerScore) {
-            return GameResult.WIN;
+            return WinningResult.WIN;
         }
-        return GameResult.LOSE;
+        return WinningResult.LOSE;
     }
 
     public List<Card> openCards() {
@@ -60,5 +60,9 @@ public class Player {
 
     public String getNickname() {
         return nickname.getValue();
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 }

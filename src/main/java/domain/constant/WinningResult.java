@@ -1,12 +1,12 @@
 package domain.constant;
 
-public enum GameResult {
+public enum WinningResult {
     WIN("승"), DRAW("무"), LOSE("패"),
     ;
 
     private final String message;
 
-    GameResult(String message) {
+    WinningResult(String message) {
         this.message = message;
     }
 

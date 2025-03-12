@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.constant.TrumpEmblem;
 import domain.constant.TrumpNumber;
-import domain.constant.GameResult;
+import domain.constant.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -90,7 +90,7 @@ class PlayerTest {
             "KING, THREE, EIGHT, 21, DRAW"
     })
     void 딜러와의_승무패를_정한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int dealerScore,
-                       GameResult expected) {
+                       WinningResult expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
@@ -98,10 +98,10 @@ class PlayerTest {
         player.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
-        GameResult gameResult = player.compareTo(dealerScore);
+        WinningResult winningResult = player.compareTo(dealerScore);
 
         // then
-        assertThat(gameResult).isEqualTo(expected);
+        assertThat(winningResult).isEqualTo(expected);
     }
 
     private List<Card> makeCards(TrumpNumber number1, TrumpNumber number2) {
