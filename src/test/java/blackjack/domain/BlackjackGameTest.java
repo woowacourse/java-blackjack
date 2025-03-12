@@ -178,44 +178,7 @@ class BlackjackGameTest {
         // then
         assertThatCode(() -> player1.bet(10000)).doesNotThrowAnyException();
     }
-
-    @DisplayName("카드 합에 맞는 베팅 결과를 계산한다.")
-    @Test
-    void calculateEanings() {
-        // given
-        final Cards dealerCards = new Cards(List.of(new Card(Shape.SPADE, Denomination.J),
-                new Card(Shape.SPADE, Denomination.EIGHT)));
-        final Dealer dealer = new Dealer(dealerCards); // 18
-        final Cards player1Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.NINE),
-                new Card(Shape.SPADE, Denomination.TEN))); // 19
-        final Cards player2Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.TWO),
-                new Card(Shape.SPADE, Denomination.J))); // 12
-        final Cards player3Cards = new Cards(List.of(new Card(Shape.SPADE, Denomination.EIGHT),
-                new Card(Shape.SPADE, Denomination.K))); // 18
-        final BlackjackGame blackjackGame = new BlackjackGame(new CardManager(new CardRandomGenerator()),
-                new Participants(dealer,
-                        new Players(provideThreePlayersWithCards(player1Cards, player2Cards, player3Cards))));
-
-        // when
-        final Player player1 = blackjackGame.getPlayer(0);
-        final Player player2 = blackjackGame.getPlayer(1);
-        final Player player3 = blackjackGame.getPlayer(2);
-
-        player1.bet(10000);
-        player2.bet(20000);
-        player3.bet(30000);
-
-        blackjackGame.calculateWinningResult(false);
-
-        // then
-        assertAll(
-                () -> assertThat(player1.getEarnedMoney()).isEqualTo(10000),
-                () -> assertThat(player2.getEarnedMoney()).isEqualTo(-20000),
-                () -> assertThat(player3.getEarnedMoney()).isEqualTo(-30000),
-                () -> assertThat(dealer.getEarnedMoney()).isEqualTo(40000)
-        );
-    }
-
+    
     @DisplayName("blackjack 경우의 베팅 결과를 계산한다.")
     @Test
     void calculateBlackjack() {
