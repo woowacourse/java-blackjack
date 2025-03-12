@@ -15,8 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ProfitCalculatorTest {
     @DisplayName("플레이어의_수익금을_계산한다")
-    @CsvSource(value = {"BLACKJACK_WIN:15_000", "WIN:10_000", "DEFEAT:-10_000", "DRAW:0"},
-            delimiterString = ":")
+    @CsvSource(value = {"BLACKJACK_WIN:15_000", "WIN:10_000", "DEFEAT:-10_000", "DRAW:0"}, delimiterString = ":")
     @ParameterizedTest
     void calculatePlayerProfit(WinningType type, int expected) {
         // given

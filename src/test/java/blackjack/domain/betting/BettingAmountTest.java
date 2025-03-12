@@ -33,14 +33,14 @@ class BettingAmountTest {
         assertThat(result).isEqualTo(15_000);
     }
 
-    @DisplayName("주어진_우승_금액으로부터_수익금을_계산한다")
+    @DisplayName("주어진_금액에서_베팅_금액을_뺄셈해서_반환한다")
     @Test
-    void calculateProfit() {
+    void subtractFrom() {
         // given
         BettingAmount bettingAmount = new BettingAmount(10_000);
 
         // when
-        int result = bettingAmount.calculateProfit(20_000);
+        int result = bettingAmount.subtractFrom(20_000);
 
         // then
         assertThat(result).isEqualTo(10_000);

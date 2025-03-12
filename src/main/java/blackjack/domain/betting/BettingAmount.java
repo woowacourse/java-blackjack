@@ -23,8 +23,8 @@ public class BettingAmount {
         return (int) (amount * winningRate);
     }
 
-    public int calculateProfit(final int winningAmount) {
-        return winningAmount - amount;
+    public int subtractFrom(final int amount) {
+        return amount - this.amount;
     }
 
     @Override
