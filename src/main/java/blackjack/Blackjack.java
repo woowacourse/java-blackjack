@@ -1,10 +1,12 @@
 package blackjack;
 
+import blackjack.card.Card;
 import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import blackjack.gamer.Players;
 import blackjack.view.InputView;
+import java.util.List;
 
 public class Blackjack {
     private final Dealer dealer;
@@ -21,6 +23,7 @@ public class Blackjack {
         initDealer();
         makePlayers(inputView);
         betMoney(inputView);
+        spreadTwoCards();
     }
 
     private void initDealer() {
@@ -49,6 +52,15 @@ public class Blackjack {
         } catch (IllegalArgumentException e) {
             inputView.printErrorMessage(e);
             receiveBettingMoney(inputView, player);
+        }
+    }
+
+    private void spreadTwoCards() {
+        final List<Card> dealerCards = dealer.spreadTwoCards();
+        dealer.receiveCards(dealerCards);
+        for (Player player : players.getPlayers()) {
+            final List<Card> playerCards = dealer.spreadTwoCards();
+            player.receiveCards(playerCards);
         }
     }
 }

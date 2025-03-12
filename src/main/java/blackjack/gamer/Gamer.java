@@ -15,7 +15,11 @@ public abstract class Gamer {
         this.bettingMachine = new BettingMachine();
     }
 
-    private void receiveCard(Card card) {
+    public void receiveCards(List<Card> cards) {
+        hand.addCards(cards);
+    }
+
+    public void receiveCard(Card card) {
         hand.addCard(card);
     }
 

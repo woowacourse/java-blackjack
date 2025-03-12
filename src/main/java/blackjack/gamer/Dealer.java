@@ -4,6 +4,7 @@ import blackjack.card.Card;
 import blackjack.card.Denomination;
 import blackjack.card.Shape;
 import blackjack.cardMachine.CardMachine;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,12 @@ public class Dealer extends Gamer {
     public void initCardMachine() {
         List<Card> deck = organizeDeck();
         cardMachine.receiveDeck(deck);
+    }
+
+    public List<Card> spreadTwoCards() {
+        final Card firstCard = spreadOneCard();
+        final Card secondCard = spreadOneCard();
+        return new ArrayList<>(List.of(firstCard, secondCard));
     }
 
     private List<Card> organizeDeck() {
