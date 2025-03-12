@@ -4,11 +4,10 @@ import exception.IllegalBlackjackInputException;
 import java.util.List;
 
 public class InputConverter {
-    private static final String COMMA = ",";
 
-    public static List<String> splitByComma(final String input) {
+    public static List<String> splitByDelimiter(final String input, final String delimiter) {
         validateNotNullOrBlankInput(input);
-        return List.of(input.trim().split(COMMA));
+        return List.of(input.trim().split(delimiter));
     }
 
     public static void validateNotNullOrBlankInput(final String input) {

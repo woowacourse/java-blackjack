@@ -7,11 +7,13 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String PLAYER_NAMES_DELIMITER = ",";
+
     private Scanner scanner = new Scanner(System.in);
 
     public List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return InputConverter.splitByComma(scanner.nextLine());
+        return InputConverter.splitByDelimiter(scanner.nextLine(), PLAYER_NAMES_DELIMITER);
     }
 
     public String askForAdditionalCard(final String name) {
