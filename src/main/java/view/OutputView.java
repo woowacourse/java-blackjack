@@ -1,6 +1,5 @@
 package view;
 
-import domain.GameManager;
 import domain.GameResult;
 import domain.user.User;
 import java.util.List;
@@ -18,7 +17,7 @@ public class OutputView {
     }
 
     private void displayCards(String name, List<String> printCards) {
-        System.out.print(name + "카드: " + String.join(", ", printCards) +"\n");
+        System.out.print(name + "카드: " + String.join(", ", printCards) + "\n");
     }
 
 
@@ -50,6 +49,6 @@ public class OutputView {
     public void displayOpenCardsResult(String name, List<String> printCards, int score) {
         String str = printCards.stream()
                 .collect(Collectors.joining(", "));
-        System.out.println(name + "카드: " +  str + " - 결과: " + score);
+        System.out.println(name + "카드: " + str + " - 결과: " + score);
     }
 }

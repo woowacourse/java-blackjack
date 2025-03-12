@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 
 public class GameManager {
     public final static int MAX_PLAYER = 7;
-
+    public final static int MAX_RANGE_HAND_OUT_CARD = 2;
+    public final static int MIN_RANGE_HAND_OUT_CARD = 0;
     private final Users users;
     private final User dealer;
     private final TrumpCardManager trumpCardManager;
@@ -20,8 +21,8 @@ public class GameManager {
     public GameManager(List<String> names, TrumpCardManager trumpCardManager) {
         validate(names);
         this.users = new Users(names.stream()
-            .map(Player::new)
-            .collect(Collectors.toList()));
+                .map(Player::new)
+                .collect(Collectors.toList()));
         this.dealer = new Dealer("딜러");
         this.trumpCardManager = trumpCardManager;
     }
@@ -37,12 +38,11 @@ public class GameManager {
     }
 
     public void firstHandOutCard() {
-        for (int count = 0; count < 2; count++) {
+        for (int count = MIN_RANGE_HAND_OUT_CARD; count < MAX_RANGE_HAND_OUT_CARD; count++) {
             users.userCardDraw(trumpCardManager);
             dealer.receiveCard(trumpCardManager.drawCard());
         }
     }
-
 
     public void drawMoreCard(final User user) {
         user.receiveCard(trumpCardManager.drawCard());
@@ -93,5 +93,4 @@ public class GameManager {
         }
         gameResult.put(user, GameResult.WIN);
     }
-
 }

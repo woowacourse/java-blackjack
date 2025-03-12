@@ -5,7 +5,7 @@ public enum CardShape {
     HEART("하트"),
     SPADE("스페이드"),
     CLOVER("클로버");
-
+    
     private final String displayName;
 
     CardShape(String displayName) {
@@ -13,6 +13,6 @@ public enum CardShape {
     }
 
     public static String shapeToText(CardShape cardShape) {
-            return cardShape.displayName;
+        return cardShape.displayName;
     }
 }

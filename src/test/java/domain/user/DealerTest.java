@@ -15,17 +15,16 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     private final List<TrumpCard> cardDeck = List.of(
-        new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
-        new TrumpCard(CardShape.CLOVER, CardNumber.TWO),
-        new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
-        new TrumpCard(CardShape.HEART, CardNumber.ACE),
-        new TrumpCard(CardShape.HEART, CardNumber.TWO),
-        new TrumpCard(CardShape.HEART, CardNumber.FOUR),
-        new TrumpCard(CardShape.DIA, CardNumber.ACE),
-        new TrumpCard(CardShape.DIA, CardNumber.TWO),
-        new TrumpCard(CardShape.DIA, CardNumber.FOUR)
+            new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
+            new TrumpCard(CardShape.CLOVER, CardNumber.TWO),
+            new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
+            new TrumpCard(CardShape.HEART, CardNumber.ACE),
+            new TrumpCard(CardShape.HEART, CardNumber.TWO),
+            new TrumpCard(CardShape.HEART, CardNumber.FOUR),
+            new TrumpCard(CardShape.DIA, CardNumber.ACE),
+            new TrumpCard(CardShape.DIA, CardNumber.TWO),
+            new TrumpCard(CardShape.DIA, CardNumber.FOUR)
     );
-
 
 
     @DisplayName("딜러의 모든 카드를 연다")
@@ -33,7 +32,7 @@ public class DealerTest {
     void test() {
         //given
         FakeTrumpCardManager fakeTrumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = new GameManager(List.of("레몬"),fakeTrumpCardManager);
+        GameManager gameManager = new GameManager(List.of("레몬"), fakeTrumpCardManager);
         Dealer dealer = (Dealer) gameManager.getDealer();
         //when
         for (int i = 0; i < 5; i++) {
@@ -48,7 +47,7 @@ public class DealerTest {
     void test1() {
         //given
         FakeTrumpCardManager fakeTrumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = new GameManager(List.of("레몬"),fakeTrumpCardManager);
+        GameManager gameManager = new GameManager(List.of("레몬"), fakeTrumpCardManager);
         Dealer dealer = (Dealer) gameManager.getDealer();
 
         //when
@@ -60,7 +59,6 @@ public class DealerTest {
         Assertions.assertThat(dealer.getCardDeck().calculateScore()).isGreaterThanOrEqualTo(16);
     }
 
-
     private static class FakeTrumpCardManager extends TrumpCardManager {
 
         private final Queue<TrumpCard> fakeTrumpCards;
@@ -70,7 +68,7 @@ public class DealerTest {
         }
 
         @Override
-        public TrumpCard drawCard(){
+        public TrumpCard drawCard() {
             return fakeTrumpCards.poll();
         }
     }

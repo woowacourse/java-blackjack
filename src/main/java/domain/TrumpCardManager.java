@@ -24,5 +24,4 @@ public class TrumpCardManager {
         }
         return trumpCards.pop();
     }
-
 }

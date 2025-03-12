@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Objects;
-
 public class TrumpCard {
     private final CardShape cardShape;
     private final CardNumber cardNumber;

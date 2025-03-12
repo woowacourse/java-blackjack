@@ -9,7 +9,7 @@ public class Player extends User {
         super(name);
         validate(name);
     }
-
+    
     @Override
     public boolean isImpossibleDraw() {
         return cardDeck.isImpossibleDraw(CardDeck.MAX_SCORE);

@@ -32,5 +32,4 @@ public enum CardNumber {
     public static String numberToText(CardNumber cardNumber) {
         return cardNumber.displayName;
     }
-
 }

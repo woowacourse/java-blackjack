@@ -19,13 +19,12 @@ public class CardNumberTest {
         User user = gameManager.findUserByUsername("레몬");
         gameManager.drawMoreCard(user);
 
-
         // when
         List<TrumpCard> trumpCards = user.openCard();
         int cardNumberValue = trumpCards.getFirst().getCardNumberValue();
 
         // then
-        Assertions.assertThat(cardNumberValue).isBetween(1,13);
+        Assertions.assertThat(cardNumberValue).isBetween(1, 13);
     }
 
     @DisplayName("카드 출력시 해당 카드의 출력용 이름을 보여준다")
@@ -33,13 +32,13 @@ public class CardNumberTest {
     void getDisplayNameTest() {
         //given
         TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardNumber.J);
-        TrumpCard trumpCard2= new TrumpCard(CardShape.CLOVER, CardNumber.FIVE);
-        TrumpCard trumpCard3= new TrumpCard(CardShape.CLOVER, CardNumber.ACE);
+        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardNumber.FIVE);
+        TrumpCard trumpCard3 = new TrumpCard(CardShape.CLOVER, CardNumber.ACE);
 
         //when
         String displayName1 = CardNumber.numberToText(trumpCard1.getCardNumber());
         String displayName2 = CardNumber.numberToText(trumpCard2.getCardNumber());
-        String displayName3 =  CardNumber.numberToText(trumpCard3.getCardNumber());
+        String displayName3 = CardNumber.numberToText(trumpCard3.getCardNumber());
         //then
 
         SoftAssertions.assertSoftly(softAssertions -> {

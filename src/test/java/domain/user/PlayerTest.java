@@ -16,10 +16,10 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private final List<TrumpCard> cardDeck = List.of(
-        new TrumpCard(CardShape.CLOVER, CardNumber.J),
-        new TrumpCard(CardShape.CLOVER, CardNumber.SEVEN),
-        new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
-        new TrumpCard(CardShape.CLOVER, CardNumber.THREE)
+            new TrumpCard(CardShape.CLOVER, CardNumber.J),
+            new TrumpCard(CardShape.CLOVER, CardNumber.SEVEN),
+            new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
+            new TrumpCard(CardShape.CLOVER, CardNumber.THREE)
     );
 
     @DisplayName("플레이어가 21이 넘을때까지 카드를 뽑는다")
@@ -27,8 +27,8 @@ public class PlayerTest {
     void test1() {
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = new GameManager(List.of("레몬"),trumpCardManager);
-        Player player = (Player)gameManager.findUserByUsername("레몬");
+        GameManager gameManager = new GameManager(List.of("레몬"), trumpCardManager);
+        Player player = (Player) gameManager.findUserByUsername("레몬");
 
         //when
         while (!player.isImpossibleDraw()) {
@@ -37,7 +37,7 @@ public class PlayerTest {
         //then
         Assertions.assertThat(player.getCardDeck().calculateScore()).isGreaterThanOrEqualTo(21);
     }
-
+    
     @DisplayName("플레이어는 dealer 혹은 딜러이름을 사용할 수 없다.")
     @Test
     void test2() {
@@ -48,10 +48,12 @@ public class PlayerTest {
 
         //when & then
         SoftAssertions.assertSoftly((softAssertions) -> {
-            softAssertions.assertThatIllegalArgumentException().isThrownBy(() -> new GameManager(dealer1,trumpCardManager))
-                .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
-            softAssertions.assertThatIllegalArgumentException().isThrownBy(() -> new GameManager(dealer2,trumpCardManager))
-                .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
+            softAssertions.assertThatIllegalArgumentException()
+                    .isThrownBy(() -> new GameManager(dealer1, trumpCardManager))
+                    .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
+            softAssertions.assertThatIllegalArgumentException()
+                    .isThrownBy(() -> new GameManager(dealer2, trumpCardManager))
+                    .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         });
     }
 
@@ -64,7 +66,7 @@ public class PlayerTest {
         }
 
         @Override
-        public TrumpCard drawCard(){
+        public TrumpCard drawCard() {
             return fakeTrumpCards.poll();
         }
     }

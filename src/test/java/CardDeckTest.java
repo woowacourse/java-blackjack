@@ -1,7 +1,6 @@
 import domain.CardDeck;
 import domain.CardNumber;
 import domain.CardShape;
-import domain.GameManager;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
 import java.util.LinkedList;
@@ -19,15 +18,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class CardDeckTest {
 
     private final List<TrumpCard> cardDeck = List.of(
-        new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
-        new TrumpCard(CardShape.CLOVER, CardNumber.TWO),
-        new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
-        new TrumpCard(CardShape.HEART, CardNumber.ACE),
-        new TrumpCard(CardShape.HEART, CardNumber.TWO),
-        new TrumpCard(CardShape.HEART, CardNumber.FOUR),
-        new TrumpCard(CardShape.DIA, CardNumber.ACE),
-        new TrumpCard(CardShape.DIA, CardNumber.TWO),
-        new TrumpCard(CardShape.DIA, CardNumber.FOUR)
+            new TrumpCard(CardShape.CLOVER, CardNumber.ACE),
+            new TrumpCard(CardShape.CLOVER, CardNumber.TWO),
+            new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
+            new TrumpCard(CardShape.HEART, CardNumber.ACE),
+            new TrumpCard(CardShape.HEART, CardNumber.TWO),
+            new TrumpCard(CardShape.HEART, CardNumber.FOUR),
+            new TrumpCard(CardShape.DIA, CardNumber.ACE),
+            new TrumpCard(CardShape.DIA, CardNumber.TWO),
+            new TrumpCard(CardShape.DIA, CardNumber.FOUR)
     );
 
     @DisplayName("카드를 배부한다.")
@@ -180,7 +179,7 @@ public class CardDeckTest {
         }
 
         @Override
-        public TrumpCard drawCard(){
+        public TrumpCard drawCard() {
             return fakeTrumpCards.poll();
         }
     }
