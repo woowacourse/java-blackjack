@@ -50,7 +50,7 @@ public class ScoreTest {
 	@DisplayName("score 비교 연산")
 	class isThan {
 
-		@DisplayName("x보다 더 큰가")
+		@DisplayName("x가 주어진 값보다 더 큰가")
 		@Test
 		void isGreaterThan() {
 			// given
@@ -64,7 +64,21 @@ public class ScoreTest {
 			assertThat(actual).isFalse();
 		}
 
-		@DisplayName("x보다 더 작은가")
+		@DisplayName("x가 주어진 score보다 더 큰가")
+		@Test
+		void isGreaterThanScore() {
+			// given
+			final Score score = new Score(100);
+			final Score moreThanValue = new Score(99);
+
+			// when
+			final boolean actual = score.isGreaterThan(moreThanValue);
+
+			// then
+			assertThat(actual).isFalse();
+		}
+
+		@DisplayName("x가 주어진 값보다 작은가")
 		@Test
 		void isLessThan() {
 			// given
