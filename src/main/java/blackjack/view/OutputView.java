@@ -3,15 +3,11 @@ package blackjack.view;
 import static blackjack.domain.Round.BLACK_JACK;
 import static blackjack.domain.Round.DEALER_DRAW_THRESHOLD;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
-import static blackjack.view.WinningType.DEFEAT;
-import static blackjack.view.WinningType.DRAW;
-import static blackjack.view.WinningType.WIN;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.gambler.Names;
-import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Name;
+import blackjack.domain.gambler.Names;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -46,27 +42,6 @@ public class OutputView {
         return components.stream()
                 .map(T::toString)
                 .collect(joining(delimiter));
-    }
-
-    public void printWinning(final WinningDiscriminator winningDiscriminator) {
-        System.out.println("##최종 승패");
-        printDealerWinning(winningDiscriminator);
-        printPlayerWinning(winningDiscriminator);
-    }
-
-    private void printDealerWinning(final WinningDiscriminator winningDiscriminator) {
-        Map<WinningType, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
-        Integer winCount = dealerWinning.get(WIN);
-        Integer drawCount = dealerWinning.get(DRAW);
-        Integer defeatCount = dealerWinning.get(DEFEAT);
-        System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, defeatCount);
-    }
-
-    private void printPlayerWinning(final WinningDiscriminator winningDiscriminator) {
-        Map<Name, WinningType> playerWinning = winningDiscriminator.judgePlayersResult();
-        for (final Entry<Name, WinningType> entry : playerWinning.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getDisplayName());
-        }
     }
 
     public void printProfit(final int dealerProfit, final Map<Name, Integer> playersProfit) {
