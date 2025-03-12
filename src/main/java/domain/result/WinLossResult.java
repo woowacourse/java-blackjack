@@ -31,6 +31,9 @@ public enum WinLossResult {
     }
 
     public static WinLossResult from(final Dealer dealer, final Player player) {
+        if (player.isHandBust()) {
+            return LOSS;
+        }
         if (dealer.getHandTotal() < player.getHandTotal()) {
             return WIN;
         }
