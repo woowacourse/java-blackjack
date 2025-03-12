@@ -28,9 +28,7 @@ public class Cards {
         return candidates.stream()
                 .filter(candidate -> candidate <= BUST_NUMBER)
                 .max(Integer::compareTo)
-                .orElse(candidates.stream()
-                        .min(Integer::compareTo)
-                        .get());
+                .orElseGet(() -> Collections.min(candidates));
     }
 
     private int totalWithoutAce() {
