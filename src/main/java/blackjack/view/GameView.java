@@ -2,32 +2,38 @@ package blackjack.view;
 
 import blackjack.card.Card;
 import blackjack.game.GameResult;
+import blackjack.user.Dealer;
+import blackjack.user.Participants;
+import blackjack.user.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameView {
 
-    private static final String ERROR_PREFIX = "[ERROR] ";
+    public void printInitialCardResults(final Participants participants) {
+        printDistributeMessage(participants.getPlayerNames());
 
-    public void printErrorMessage(final IllegalArgumentException e) {
-        System.out.println(ERROR_PREFIX + e.getMessage());
+        printDealerCardResult(participants.getDealer());
+        for (Player player : participants.getPlayers()) {
+            printPlayerCardResult(player);
+        }
     }
 
-    public void printStartGame(final List<String> playerNames) {
+    private void printDistributeMessage(final List<String> playerNames) {
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", playerNames));
     }
 
-    public void printPlayerCardResult(final String name, final List<Card> cards) {
-        String cardResult = parseCardToString(cards);
-        System.out.printf("%s카드: %s%n", name, cardResult);
-    }
-
-    public void printDealerCardResult(final List<Card> cards) {
-        Card firstCard = cards.getFirst();
+    public void printDealerCardResult(final Dealer dealer) {
+        Card firstCard = dealer.openInitialCards().getFirst();
         String cardResult = firstCard.denomination().getText() + firstCard.suit().getText();
         System.out.printf("딜러카드: %s%n", cardResult);
+    }
+
+    public void printPlayerCardResult(final Player player) {
+        String cardResult = parseCardToString(player.openCards());
+        System.out.printf("%s카드: %s%n", player.getName(), cardResult);
     }
 
     public void printAddExtraCardToDealer() {
@@ -35,16 +41,23 @@ public class GameView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
     }
 
-    public void printDealerFinalCardResult(final int sum, final List<Card> cards) {
-        String cardResult = parseCardToString(cards);
-        System.out.println();
-        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, sum);
+    public void printFinalCardResults(final Participants participants) {
+        printDealerFinalCardResult(participants.getDealer());
+        for (Player player : participants.getPlayers()) {
+            printPlayerFinalCardResult(player);
+        }
     }
 
-    public void printPlayerFinalCardResult(final String name, final int sum,
-        final List<Card> cards) {
-        String cardResult = parseCardToString(cards);
-        System.out.printf("%s카드: %s - 결과 %d%n", name, cardResult, sum);
+    private void printDealerFinalCardResult(final Dealer dealer) {
+        String cardResult = parseCardToString(dealer.openCards());
+        System.out.println();
+        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.calculateDenominations());
+    }
+
+    private void printPlayerFinalCardResult(final Player player) {
+        String cardResult = parseCardToString(player.openCards());
+        System.out.printf("%s카드: %s - 결과 %d%n", player.getName(), cardResult,
+            player.calculateDenominations());
     }
 
     public void printResultTitle() {
