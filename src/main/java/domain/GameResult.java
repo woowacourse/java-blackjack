@@ -3,7 +3,6 @@ package domain;
 import domain.participant.Participant;
 import domain.participant.Participants;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -36,7 +35,6 @@ public enum GameResult {
 
     private static Map<Participant, GameResult> judgeGameResult(Participants participants) {
         Map<Participant, GameResult> result = new LinkedHashMap<>();
-
         Map<Participant, Integer> totalRankSumByPlayer = participants.getTotalRankSumByPlayer();
         for (Participant player : totalRankSumByPlayer.keySet()) {
             judgeGameResultByPlayer(participants.findDealer(), player, result);

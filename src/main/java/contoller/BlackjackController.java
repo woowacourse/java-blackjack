@@ -7,9 +7,9 @@ import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -31,12 +31,10 @@ public class BlackjackController {
     }
 
     private Map<String, Integer> getBettingAmounts(List<String> playerNames) {
-        Map<String, Integer> bettingAmounts = new HashMap<>();
-        for (String name : playerNames) {
-            int bettingAmount = InputView.readBettingAmount(name);
-            bettingAmounts.put(name, bettingAmount);
-        }
-        return bettingAmounts;
+        return playerNames.stream()
+                .collect(Collectors.toMap(name -> name,
+                        InputView::readBettingAmount
+                ));
     }
 
     private void drawInitialCards() {

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +31,10 @@ public class Participants {
         return participants.stream()
                 .filter(participant -> !participant.isDealer())
                 .collect(Collectors.toMap(participant -> participant,
-                        Participant::getTotalRankSum));
+                        Participant::getTotalRankSum,
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
     }
 
     @Override
