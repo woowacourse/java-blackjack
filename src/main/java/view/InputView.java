@@ -21,8 +21,8 @@ public class InputView {
                 .toList();
     }
 
-    public static int readBettingAmount(Participant player) {
-        System.out.printf("%n%s의 베팅 금액은?%n", player.getParticipantName());
+    public static int readBettingAmount(String name) {
+        System.out.printf("%n%s의 베팅 금액은?%n", name);
         String input = scanner.nextLine();
         return InputValidator.validateNumberFormat(input);
     }

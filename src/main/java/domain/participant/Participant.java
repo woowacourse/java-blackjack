@@ -24,16 +24,14 @@ public abstract class Participant {
         cards = cards.addCards(providedCards);
     }
 
+    public abstract boolean shouldHit();
+
     public boolean isBust() {
         return cards.isBlackjackScoreExceeded();
     }
 
     public int getTotalRankSum() {
         return cards.calculateTotalRank();
-    }
-
-    public boolean shouldHit() {
-        return false;
     }
 
     public int calculateDifferenceFromBlackjackScore() {

@@ -25,8 +25,8 @@ public class ResultStatusTest {
 
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하면_플레이어는_패배한다() {
-        Participant player = new Player(new ParticipantName("drago"), new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.KING),
+        Participant player = new Player(new ParticipantName("drago"), new BettingAmount(10000),
+                new Cards(List.of(new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.CLOVER, Rank.JACK),
                         new Card(Suit.HEART, Rank.TWO))));
 
@@ -44,8 +44,8 @@ public class ResultStatusTest {
 
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하지않고_딜러숫자의합이_21을_초과하면_플레이어는_승리한다() {
-        Participant player = new Player(new ParticipantName("drago"), new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.KING),
+        Participant player = new Player(new ParticipantName("drago"), new BettingAmount(10000),
+                new Cards(List.of(new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.CLOVER, Rank.NINE),
                         new Card(Suit.HEART, Rank.TWO))));
 
@@ -63,8 +63,8 @@ public class ResultStatusTest {
 
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않는경우_21에가까운_플레이어가_승리한다() {
-        Participant player = new Player(new ParticipantName("drago"), new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.KING),
+        Participant player = new Player(new ParticipantName("drago"), new BettingAmount(10000),
+                new Cards(List.of(new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.CLOVER, Rank.NINE),
                         new Card(Suit.HEART, Rank.TWO))));
 
@@ -82,8 +82,8 @@ public class ResultStatusTest {
 
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않고_동일하면_무승부이다() {
-        Participant player = new Player(new ParticipantName("drago"), new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.KING),
+        Participant player = new Player(new ParticipantName("drago"), new BettingAmount(10000),
+                new Cards(List.of(new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.CLOVER, Rank.NINE),
                         new Card(Suit.HEART, Rank.TWO))));
 

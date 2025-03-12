@@ -20,16 +20,19 @@ public class GameManager {
     private final CardProvider provider;
     private final Participants participants;
 
-    public GameManager(List<String> playerNames, CardProvider provider) {
+    public GameManager(List<String> playerNames, Map<String, Integer> bettingAmounts, CardProvider provider) {
         this.provider = provider;
-        this.participants = createParticipants(playerNames);
+        this.participants = createParticipants(playerNames, bettingAmounts);
     }
 
-    private Participants createParticipants(List<String> playerNames) {
+    private Participants createParticipants(List<String> playerNames, Map<String, Integer> bettingAmounts) {
         List<Participant> participants = playerNames.stream()
-                .map(ParticipantName::new)
-                .map(name -> new Player(name, new Cards(provider.provideCards(INITIAL_DRAW_SIZE))))
-                .collect(Collectors.toList());
+                .map(name -> {
+                    ParticipantName participantName = new ParticipantName(name);
+                    BettingAmount bettingAmount = new BettingAmount(bettingAmounts.get(name));
+                    Cards cards = new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
+                    return new Player(participantName, bettingAmount, cards);
+                }).collect(Collectors.toList());
         participants.add(new Dealer(new Cards(provider.provideCards(INITIAL_DRAW_SIZE))));
         return new Participants(participants);
     }
@@ -39,7 +42,7 @@ public class GameManager {
     }
 
     public boolean shouldPlayerHit(Participant player) {
-        return !player.isBust();
+        return player.shouldHit();
     }
 
     public boolean shouldDealerHit() {

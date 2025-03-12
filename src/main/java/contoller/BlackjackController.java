@@ -1,6 +1,5 @@
 package contoller;
 
-import domain.BettingAmount;
 import domain.card.Deck;
 import domain.GameManager;
 import domain.participant.Participant;
@@ -9,6 +8,7 @@ import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,24 +18,34 @@ public class BlackjackController {
 
     public void run() {
         readyGame();
-        drawPlayersCards();
-        drawDealerCards();
+        drawInitialCards();
+        drawMorePlayersCards();
+        drawMoreDealerCards();
         printParticipantsCards();
         printGameResult();
     }
 
     private void readyGame() {
         List<String> playerNames = InputView.readPlayerNames();
-        gameManager = new GameManager(playerNames, new Deck());
+        Map<String, Integer> bettingAmounts = getBettingAmounts(playerNames);
+        gameManager = new GameManager(playerNames, bettingAmounts, new Deck());
+    }
 
-        Participants participants = gameManager.findParticipants();
-        for (Participant player : participants.findPlayers()) {
-            BettingAmount bettingAmount = new BettingAmount(InputView.readBettingAmount(player));
+    private Map<String, Integer> getBettingAmounts(List<String> playerNames) {
+        Map<String, Integer> bettingAmounts = new HashMap<>();
+        for (String name : playerNames) {
+            int bettingAmount = InputView.readBettingAmount(name);
+            bettingAmounts.put(name, bettingAmount);
         }
+        return bettingAmounts;
+    }
+
+    private void drawInitialCards() {
+        Participants participants = gameManager.findParticipants();
         OutputView.printInitialParticipants(participants);
     }
 
-    private void drawPlayersCards() {
+    private void drawMorePlayersCards() {
         Participants participants = gameManager.findParticipants();
         List<Participant> players = participants.findPlayers();
         for (Participant player : players) {
@@ -68,7 +78,7 @@ public class BlackjackController {
         }
     }
 
-    private void drawDealerCards() {
+    private void drawMoreDealerCards() {
         while (gameManager.shouldDealerHit()) {
             OutputView.printDealerDrawMessage();
         }
