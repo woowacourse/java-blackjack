@@ -40,6 +40,7 @@ public class BlackjackController {
         return new GameInputOutput(
                 outputView::printInitialHands,
                 inputView::readWannaHit,
+                inputView::readBettingAmount,
                 outputView::printHitResult,
                 outputView::printDealerDrawing,
                 outputView::printFinalHands,

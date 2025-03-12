@@ -1,6 +1,7 @@
 package blackjack.domain.io;
 
 import blackjack.domain.game.GameResult;
+import blackjack.domain.user.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import java.util.List;
@@ -11,6 +12,7 @@ public class GameInputOutput {
 
     private final DealerAndPlayersFunction printInitialHandsMethod;
     private final Function<String, Boolean> readWannaHitMethod;
+    private final Function<String, BettingAmount> readBettingAmountMethod;
     private final PlayerFunction printHitResultMethod;
     private final Consumer<Integer> printDealerDrawingMethod;
     private final DealerAndPlayersFunction printFinalHandsMethod;
@@ -19,6 +21,7 @@ public class GameInputOutput {
     public GameInputOutput(
             DealerAndPlayersFunction printInitialHandsMethod,
             Function<String, Boolean> readWannaHitMethod,
+            Function<String, BettingAmount> readBettingAmountMethod,
             PlayerFunction printHitResultMethod,
             Consumer<Integer> printDealerDrawingMethod,
             DealerAndPlayersFunction printFinalHandsMethod,
@@ -26,6 +29,7 @@ public class GameInputOutput {
     ) {
         this.printInitialHandsMethod = printInitialHandsMethod;
         this.readWannaHitMethod = readWannaHitMethod;
+        this.readBettingAmountMethod = readBettingAmountMethod;
         this.printHitResultMethod = printHitResultMethod;
         this.printDealerDrawingMethod = printDealerDrawingMethod;
         this.printFinalHandsMethod = printFinalHandsMethod;
@@ -38,6 +42,10 @@ public class GameInputOutput {
 
     public boolean readIngWannaHit(String nickname) {
         return readWannaHitMethod.apply(nickname);
+    }
+
+    public BettingAmount readBettingAmount(String nickname) {
+        return readBettingAmountMethod.apply(nickname);
     }
 
     public void printingHitResult(Player player) {

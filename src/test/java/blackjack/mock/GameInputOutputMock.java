@@ -3,6 +3,7 @@ package blackjack.mock;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.io.GameInputOutput;
+import blackjack.domain.user.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class GameInputOutputMock extends GameInputOutput {
 
     public GameInputOutputMock() {
         super(null, null, null,
-                null, null, null);
+                null, null, null, null);
     }
 
     @Override
@@ -33,6 +34,11 @@ public class GameInputOutputMock extends GameInputOutput {
     @Override
     public boolean readIngWannaHit(String nickname) {
         return true;
+    }
+
+    @Override
+    public BettingAmount readBettingAmount(String nickname) {
+        return new BettingAmount(10000);
     }
 
     @Override

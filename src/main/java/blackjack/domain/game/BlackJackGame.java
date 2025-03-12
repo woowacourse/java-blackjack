@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.io.GameInputOutput;
+import blackjack.domain.user.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.user.Nickname;
@@ -27,6 +28,7 @@ public class BlackJackGame {
 
     public void runGame(List<Nickname> nicknames) {
         registerPlayer(nicknames);
+        receiveBettingAmount();
         distributeInitialCard();
         processPlayerTurns();
         processDealerTurns();
@@ -35,6 +37,13 @@ public class BlackJackGame {
 
     private void registerPlayer(List<Nickname> nicknames) {
         users.initialize(nicknames);
+    }
+
+    private void receiveBettingAmount() {
+        List<Player> players = users.getPlayers();
+        for (Player player : players) {
+            BettingAmount bettingAmount = gameInputOutput.readBettingAmount(player.getNickname());
+        }
     }
 
     private void distributeInitialCard() {
