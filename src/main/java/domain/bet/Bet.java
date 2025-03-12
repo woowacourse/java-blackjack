@@ -9,6 +9,6 @@ public class Bet {
     }
 
     public double applyBlackJackBonus() {
-        return amount;
+        return amount * 1.5;
     }
 }
