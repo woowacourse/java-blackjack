@@ -5,7 +5,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Dealer {
     private final Players players;
@@ -65,10 +64,6 @@ public class Dealer {
 
     public Card getFirstCard() {
         return cards.getCards().get(0);
-    }
-
-    public List<Card> retrieveCards() {
-        return cards.getCards();
     }
 
     public int getCardSize() {

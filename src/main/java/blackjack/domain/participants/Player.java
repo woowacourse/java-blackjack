@@ -3,7 +3,6 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.List;
 
 public class Player {
     private final String name;
@@ -32,10 +31,6 @@ public class Player {
 
     public Cards getCards() {
         return cards;
-    }
-
-    public List<Card> retrieveCards() {
-        return cards.getCards();
     }
 
     public String getName() {
