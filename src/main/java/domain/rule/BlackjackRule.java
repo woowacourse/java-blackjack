@@ -10,7 +10,7 @@ public class BlackjackRule {
     private static final int SUM_LIMIT = 21;
 
     public boolean isBlackjack(Cards cards) {
-        return true;
+        return cards.getValues().size() == 2 && isWin(cards);
     }
 
     public boolean isBust(Cards cards) {
