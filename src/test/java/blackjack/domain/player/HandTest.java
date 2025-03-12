@@ -1,9 +1,17 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -31,5 +39,30 @@ class HandTest {
         int result = hand.calculateBetAmountByMultiplier(multiple);
 
         assertThat(result).isEqualTo(excepted);
+    }
+
+    @ParameterizedTest
+    @MethodSource("blackJackHandTestCases")
+    @DisplayName("블랙잭인 경우 TRUE를 반환한다")
+    void 블랙잭_여부를_반환한다(List<Card> cards, boolean excepted) {
+        Hand hand = new Hand(0);
+        hand.addCards(cards);
+
+        boolean result = hand.isBlackJack();
+
+        assertThat(result).isEqualTo(excepted);
+    }
+
+    private static Stream<Arguments> blackJackHandTestCases() {
+        Card ace = new Card(CardNumber.ACE, CardShape.CLOVER);
+        Card five = new Card(CardNumber.FIVE, CardShape.CLOVER);
+        Card ten = new Card(CardNumber.TEN, CardShape.CLOVER);
+
+        return Stream.of(
+                Arguments.of(List.of(ace), false),
+                Arguments.of(List.of(ace, five), false),
+                Arguments.of(List.of(ace, five, five), false),
+                Arguments.of(List.of(ace, ten), true)
+        );
     }
 }
