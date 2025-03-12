@@ -26,4 +26,23 @@ public class ScoreTest {
 			assertThat(actual.getValue()).isEqualTo(plusValue);
 		}
 	}
+
+	@Nested
+	@DisplayName("score 뺄셈")
+	class minus {
+
+		@DisplayName("score 빼기")
+		@Test
+		void minus() {
+			// given
+			final Score score = new Score(100);
+			final int minusValue = 10;
+
+			// when
+			final Score actual = score.minus(minusValue);
+
+			// then
+			assertThat(actual.getValue()).isEqualTo(90);
+		}
+	}
 }
