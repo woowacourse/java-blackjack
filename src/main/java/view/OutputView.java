@@ -46,7 +46,7 @@ public final class OutputView {
   }
 
 
-  public void printRoundResultOnPlayers(final String name, final String result) {
-    System.out.printf("%s: %s" + System.lineSeparator(), name, result);
+  public void printRoundResultOnPlayers(final String name, final RoundResult result) {
+    System.out.printf("%s: %s" + System.lineSeparator(), name, result.getText());
   }
 }

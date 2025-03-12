@@ -98,10 +98,7 @@ public final class BlackjackController {
     final RoundHistory roundHistory = blackjack.writeRoundHistory();
     final var dealerRoundHistory = roundHistory.getDealerResult();
     outputView.printRoundResultOnDealer(dealerRoundHistory);
-
-    roundHistory.getHistory()
-        .forEach((name, result) -> {
-          outputView.printRoundResultOnPlayers(name, result.getText());
-        });
+    final var history = roundHistory.getHistory();
+    history.forEach(outputView::printRoundResultOnPlayers);
   }
 }
