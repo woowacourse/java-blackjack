@@ -61,13 +61,16 @@ public class GameManger {
     }
 
     private GameResult compareScore(User player) {
+        int dealerScore = dealer.getCardHand().calculateScore();
+        int playerScore = player.getCardHand().calculateScore();
+
         if (player.isBust()) {
             return GameResult.LOSE;
         }
-        if (dealer.getCardHand().calculateScore() < player.getCardHand().calculateScore()) {
+        if (dealerScore < playerScore) {
             return GameResult.WIN;
         }
-        if (dealer.getCardHand().calculateScore() > player.getCardHand().calculateScore()) {
+        if (dealerScore > playerScore) {
             return GameResult.LOSE;
         }
         return compareSameScore(player);
