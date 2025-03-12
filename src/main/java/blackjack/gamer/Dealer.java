@@ -2,7 +2,6 @@ package blackjack.gamer;
 
 import blackjack.card.Card;
 import blackjack.card.Denomination;
-import blackjack.card.Hand;
 import blackjack.card.Shape;
 import blackjack.cardMachine.CardMachine;
 import java.util.Arrays;
@@ -14,12 +13,11 @@ public class Dealer extends Gamer {
 
     private final CardMachine cardMachine;
 
-    public Dealer(final Hand hand, final CardMachine cardMachine) {
-        super(hand);
+    public Dealer(final CardMachine cardMachine) {
         this.cardMachine = cardMachine;
     }
 
-    private void initCardMachine() {
+    public void initCardMachine() {
         List<Card> deck = organizeDeck();
         cardMachine.receiveDeck(deck);
     }

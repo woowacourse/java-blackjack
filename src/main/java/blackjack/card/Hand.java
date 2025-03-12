@@ -1,5 +1,6 @@
 package blackjack.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -8,12 +9,16 @@ public class Hand {
     private static final int THRESHOLD_WITH_SMALL_ACE = 11;
     private final List<Card> cards;
 
-    public Hand(final List<Card> cards) {
-        this.cards = cards;
+    public Hand() {
+        this.cards = new ArrayList<>();
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        this.cards.add(card);
+    }
+
+    public void addCards(final List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
     public List<Card> openAllCards() {

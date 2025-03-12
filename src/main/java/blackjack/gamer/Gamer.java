@@ -8,8 +8,8 @@ public abstract class Gamer {
 
     private final Hand hand;
 
-    public Gamer(final Hand hand) {
-        this.hand = hand;
+    public Gamer() {
+        this.hand = new Hand();
     }
 
     private void receiveCard(Card card) {

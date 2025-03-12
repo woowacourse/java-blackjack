@@ -11,8 +11,7 @@ public class CardRandomMachine implements CardMachine {
     private List<Card> deck;
     private final Map<Card, Boolean> cardUsage;
 
-    public CardRandomMachine(final List<Card> deck) {
-        this.deck = deck;
+    public CardRandomMachine() {
         cardUsage = new HashMap<>();
     }
 

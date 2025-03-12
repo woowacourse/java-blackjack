@@ -1,13 +1,10 @@
 package blackjack.gamer;
 
-import blackjack.card.Hand;
-
 public class Player extends Gamer {
 
     private final String nickName;
 
-    public Player(final Hand hand, final String nickName) {
-        super(hand);
+    public Player(final String nickName) {
         this.nickName = nickName;
     }
 }

@@ -19,9 +19,12 @@ class HandTest {
     @ParameterizedTest
     void sumCards(List<Card> cards, int sum) {
         // given
-        final Hand hand = new Hand(cards);
+        final Hand hand = new Hand();
 
-        // when && then
+        // when
+        hand.addCards(cards);
+
+        // then
         assertThat(hand.sumCards()).isEqualTo(sum);
     }
 
