@@ -5,12 +5,14 @@ import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Deck;
+import domain.duel.DuelResult;
 import domain.paticipant.Player;
 import domain.paticipant.Players;
 
@@ -78,6 +80,29 @@ public class PlayersTest {
 				assertThat(
 					players.getPlayers().getFirst().getParticipant().getCardHand().calculateAllScore(21)).isGreaterThan(
 					bustScore);
+			}
+		}
+
+		@Nested
+		@DisplayName("딜러와의 듀얼")
+		class Duel {
+
+			@DisplayName("딜러와 듀얼을 진행한다.")
+			@Test
+			void duel() {
+				// given
+				final Players players = Players.from(List.of("부기", "구구", "파랑"));
+				Consumer<Player> duel = player -> player.writeDuelResult(DuelResult.WIN);
+
+				// when
+				players.duelVsDealer(duel);
+
+				// then
+				assertSoftly(s -> {
+					for (final Player player : players.getPlayers()) {
+						s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(1);
+					}
+				});
 			}
 		}
 	}

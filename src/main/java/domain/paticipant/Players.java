@@ -3,6 +3,7 @@ package domain.paticipant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
@@ -36,10 +37,13 @@ public class Players {
 		}
 	}
 
-	private static void pickCard(final BooleanSupplier playerAnswer, final Deck deck, final int bustScore,
+	private void pickCard(final BooleanSupplier playerAnswer, final Deck deck, final int bustScore,
 		final Player player) {
 		while (!player.isBust(bustScore) && playerAnswer.getAsBoolean()) {
 			player.addCards(deck.pickCards(1));
 		}
+	}
+
+	public void duelVsDealer(final Consumer<Player> duel) {
 	}
 }
