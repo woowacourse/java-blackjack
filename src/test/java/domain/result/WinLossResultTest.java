@@ -98,4 +98,16 @@ class WinLossResultTest {
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.LOSS);
     }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 모두 버스트이면, 플레이어 패배")
+    void test7() {
+        Dealer dealer = new Dealer();
+        dealer.applyBustPenalty();
+
+        Player player = new Player("모루");
+        player.applyBustPenalty();
+
+        assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.LOSS);
+    }
 }
