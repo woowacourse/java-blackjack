@@ -10,19 +10,23 @@ import model.participant.Players;
 public class ParticipantWinningResult {
     private final Map<Player, GameResult> result;
 
+    private ParticipantWinningResult(Players players, Dealer dealer) {
+        this.result = calculateWinningResult(players, dealer);
+    }
+
     public static ParticipantWinningResult of(Players players, Dealer dealer) {
+        return new ParticipantWinningResult(players, dealer);
+    }
+
+    private Map<Player, GameResult> calculateWinningResult(Players players, Dealer dealer) {
         Map<Player, GameResult> result = new HashMap<>();
         for (Player player : players.getPlayers()) {
             result.put(player, checkPlayerWinningResult(dealer, player));
         }
-        return new ParticipantWinningResult(result);
+        return result;
     }
 
-    private ParticipantWinningResult(Map<Player, GameResult> result) {
-        this.result = result;
-    }
-
-    private static GameResult checkPlayerWinningResult(Dealer dealer, Player player) {
+    private GameResult checkPlayerWinningResult(Dealer dealer, Player player) {
         GameResult playerWinningResult = checkPlayerWin(dealer, player);
         if (playerWinningResult == GameResult.WIN && player.checkBlackjack()) {
             return GameResult.BLACKJACK;
@@ -30,7 +34,7 @@ public class ParticipantWinningResult {
         return playerWinningResult;
     }
 
-    private static GameResult checkPlayerWin(Dealer dealer, Player player) {
+    private GameResult checkPlayerWin(Dealer dealer, Player player) {
         if (player.isBust()) {
             return GameResult.LOSE;
         }
@@ -40,7 +44,7 @@ public class ParticipantWinningResult {
         return checkResultIfNotBust(dealer, player);
     }
 
-    private static GameResult checkResultIfNotBust(Dealer dealer, Player player) {
+    private GameResult checkResultIfNotBust(Dealer dealer, Player player) {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = player.calculateFinalScore();
 
