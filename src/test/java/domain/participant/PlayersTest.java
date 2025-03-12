@@ -66,17 +66,18 @@ public class PlayersTest {
 			@Test
 			void pickCardIfNotBust() {
 				// given
-				final Players players = Players.from(List.of(""));
+				final Players players = Players.from(List.of("부기"));
 				final BooleanSupplier playerAnswer = () -> true;
 				final Deck shuffledDeck = Deck.createShuffledDeck();
+				final int bustScore = 21;
 
 				// when
-				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck);
+				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck, bustScore);
 
 				// then
 				assertThat(
 					players.getPlayers().getFirst().getParticipant().getCardHand().calculateAllScore(21)).isGreaterThan(
-					21);
+					bustScore);
 			}
 		}
 	}

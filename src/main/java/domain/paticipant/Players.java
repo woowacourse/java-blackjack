@@ -30,6 +30,11 @@ public class Players {
 		}
 	}
 
-	public void pickCardPlayersIfNotBust(final BooleanSupplier playerAnswer, final Deck deck) {
+	public void pickCardPlayersIfNotBust(final BooleanSupplier playerAnswer, final Deck deck, final int bustScore) {
+		for (final Player player : players) {
+			while (!player.isBust(bustScore) && playerAnswer.getAsBoolean()) {
+				player.addCards(deck.pickCards(1));
+			}
+		}
 	}
 }
