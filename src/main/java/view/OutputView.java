@@ -1,15 +1,15 @@
 package view;
 
+import card.Card;
+import card.CardNumber;
+import card.CardType;
+import game.GameResult;
+import participant.Dealer;
+import participant.Participant;
+import participant.Player;
+import participant.Players;
 import java.util.List;
 import java.util.Map;
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
-import model.participant.Dealer;
-import model.GameResult;
-import model.participant.Participant;
-import model.participant.Player;
-import model.participant.Players;
 
 public class OutputView {
 
@@ -29,10 +29,7 @@ public class OutputView {
     private static final String ALL_CARDS = "%s: %s";
     private static final String RESULT = " - 결과: %s";
 
-    private OutputView() {
-    }
-
-    public static void printDistributionCards(Dealer dealer, Players players) {
+    public void printDistributionCards(Dealer dealer, Players players) {
         printNewLine();
         print("딜러와 ");
         print(String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()
@@ -48,17 +45,17 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printPlayerCards(Participant player) {
+    public void printPlayerCards(Participant player) {
         System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.getCards()));
         printNewLine();
     }
 
-    public static void printDealerReceivedCard() {
+    public void printDealerReceivedCard() {
         printNewLine();
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printAllCardAndScore(Players players, Dealer dealer) {
+    public void printAllCardAndScore(Players players, Dealer dealer) {
         printNewLine();
         printPlayerCardsWithScore(dealer);
 
@@ -68,19 +65,19 @@ public class OutputView {
         printNewLine();
     }
 
-    private static void printPlayerCardsWithScore(Participant player) {
+    private void printPlayerCardsWithScore(Participant player) {
         System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.getCards()));
         System.out.printf(RESULT, player.score());
         printNewLine();
     }
 
-    private static String allCardToString(List<Card> cards) {
+    private String allCardToString(List<Card> cards) {
         return String.join(NICKNAME_SEPARATOR, cards.stream()
-                .map(OutputView::cardToString)
+                .map(this::cardToString)
                 .toList());
     }
 
-    public static void printResult(Map<GameResult, Integer> dealerResults, Map<Player, GameResult> playerResults) {
+    public void printResult(Map<GameResult, Integer> dealerResults, Map<Player, GameResult> playerResults) {
         println("## 최종 승패");
         print("딜러:");
         for (GameResult gameResult : GameResult.values()) {
@@ -96,7 +93,7 @@ public class OutputView {
         }
     }
 
-    private static String gameResultToString(GameResult gameResult) {
+    private String gameResultToString(GameResult gameResult) {
         if (gameResult.equals(GameResult.WIN)) {
             return WIN;
         }
@@ -106,11 +103,11 @@ public class OutputView {
         return DRAW;
     }
 
-    private static String cardToString(Card card) {
+    private String cardToString(Card card) {
         return cardNumberToString(card) + cardTypeToString(card);
     }
 
-    private static String cardNumberToString(Card card) {
+    private String cardNumberToString(Card card) {
         if (card.getCardNumber() == CardNumber.ACE) {
             return ACE;
         }
@@ -126,7 +123,7 @@ public class OutputView {
         return String.valueOf(card.getCardNumber().getValues().get(0));
     }
 
-    private static String cardTypeToString(Card card) {
+    private String cardTypeToString(Card card) {
         if (card.getCardType() == CardType.CLOVER) {
             return CLOVER;
         }
@@ -139,15 +136,15 @@ public class OutputView {
         return HEART;
     }
 
-    private static void print(String message) {
+    private void print(String message) {
         System.out.print(message);
     }
 
-    private static void println(String message) {
+    private void println(String message) {
         System.out.println(message);
     }
 
-    private static void printNewLine() {
+    private void printNewLine() {
         System.out.println();
     }
 }
