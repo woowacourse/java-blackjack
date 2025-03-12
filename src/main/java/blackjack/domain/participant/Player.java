@@ -10,7 +10,7 @@ public class Player extends Participant {
     private final ParticipantName name;
     private final BettingMoney bettingMoney;
 
-    public Player(ParticipantName name, CardHand cardHand, BettingMoney bettingMoney) {
+    public Player(final ParticipantName name, final CardHand cardHand, final BettingMoney bettingMoney) {
         super(cardHand);
         this.name = name;
         this.bettingMoney = bettingMoney;

@@ -1,7 +1,7 @@
 package blackjack.dto;
 
+import blackjack.domain.Score;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
 
@@ -16,7 +16,7 @@ public record FinalResultDto(
         List<String> cardInfos = participant.getCardDeck().stream()
                 .map(card -> card.getRank().getName() + card.getSuit().getName())
                 .toList();
-        blackjack.domain.Score score = participant.getScore();
+        Score score = participant.getScore();
         boolean isBust = participant.isBust();
 
         return new FinalResultDto(name, cardInfos, score.intValue(), isBust);
