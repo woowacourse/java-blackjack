@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.GameRule;
 import blackjack.domain.result.GameStatistics;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -31,32 +32,35 @@ public class GameParticipants {
     }
 
     public void executeHitPhase() {
-        players.forEach(participant -> {
-                    while (participant.shouldHit()) {
-                        dealer.dealCard(participant);
-                        participant.showHand();
-                    }
-                }
-        );
-
-        while (dealer.shouldHit()) {
-            dealer.dealCard(dealer);
-        }
-
+        getGameParticipants(false).forEach(participant -> {
+            while (participant.shouldHit()) {
+                dealer.dealCard(participant);
+                participant.showHand();
+            }
+        });
         dealer.openHiddenCard();
     }
 
     public GameStatistics calculateGameStatistics() {
         GameStatistics statistics = GameStatistics.initialize(this);
 
-        getPlayers().forEach(player ->
+        players.forEach(player ->
                 statistics.markResult(player, dealer, player.judgeResult(dealer)));
 
         return statistics;
     }
 
     public List<GameParticipant> getGameParticipants() {
-        return Stream.concat(Stream.of(dealer), players.stream())
+        return getGameParticipants(true);
+    }
+
+    public List<GameParticipant> getGameParticipants(boolean dealerFirst) {
+        if (dealerFirst) {
+            return Stream.concat(Stream.of(dealer), players.stream())
+                    .toList();
+        }
+
+        return Stream.concat(players.stream(), Stream.of(dealer))
                 .toList();
     }
 
@@ -65,6 +69,6 @@ public class GameParticipants {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 }

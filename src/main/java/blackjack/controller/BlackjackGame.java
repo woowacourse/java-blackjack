@@ -40,7 +40,7 @@ public class BlackjackGame {
                 .map(nickname -> Player.of(nickname, this::askHit, this::showHands))
                 .toList();
 
-        Dealer dealer = Dealer.create(players.size(), this::showHands, this::displayHitDecision);
+        Dealer dealer = Dealer.create(players.size(), this::displayHitDecision);
 
         return GameParticipants.of(players, dealer);
     }

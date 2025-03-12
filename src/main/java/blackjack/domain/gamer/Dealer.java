@@ -4,8 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardMachine;
 import blackjack.domain.card.Cards;
 
-import java.util.function.Consumer;
-
 public class Dealer extends GameParticipant {
 
     private static final String NICKNAME = "딜러";
@@ -18,21 +16,18 @@ public class Dealer extends GameParticipant {
     private Dealer(Nickname nickname,
                    Cards hand,
                    CardMachine cardMachine,
-                   Consumer<GameParticipant> handDisplay,
                    Runnable hitDecisionDisplay) {
-        super(nickname, hand, handDisplay);
+        super(nickname, hand);
         this.cardMachine = cardMachine;
         this.hitDecisionDisplay = hitDecisionDisplay;
     }
 
     public static Dealer create(int playerCount,
-                                Consumer<GameParticipant> handDisplay,
                                 Runnable hitDecisionDisplay) {
         return new Dealer(
                 Nickname.from(NICKNAME),
                 Cards.empty(),
                 CardMachine.initialize(playerCount),
-                handDisplay,
                 hitDecisionDisplay);
     }
 
@@ -43,6 +38,11 @@ public class Dealer extends GameParticipant {
             hitDecisionDisplay.run();
         }
         return shouldHit;
+    }
+
+    @Override
+    public void showHand() {
+        // 아무런 동작을 하지 않는 것이 올바른 동작이다.
     }
 
     public void dealCard(GameParticipant participant) {

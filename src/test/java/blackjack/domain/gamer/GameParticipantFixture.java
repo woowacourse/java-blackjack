@@ -45,9 +45,8 @@ public class GameParticipantFixture {
         return createDealer(1);
     }
 
-    @SuppressWarnings("unchecked")
     public static Dealer createDealer(int playerCount) {
-        return createDealer(playerCount, (Consumer<GameParticipant>) ignoreConsumer, ignoreRunnable);
+        return createDealer(playerCount, ignoreRunnable);
     }
 
     public static Dealer createDealer(int playerCount, int sumOfCards) {
@@ -61,13 +60,7 @@ public class GameParticipantFixture {
     }
 
     public static Dealer createDealer(int playerCount,
-                                      Consumer<GameParticipant> handDisplay) {
-        return createDealer(playerCount, handDisplay, ignoreRunnable);
-    }
-
-    public static Dealer createDealer(int playerCount,
-                                      Consumer<GameParticipant> handDisplay,
                                       Runnable hitDecisionDisplay) {
-        return Dealer.create(playerCount, handDisplay, hitDecisionDisplay);
+        return Dealer.create(playerCount, hitDecisionDisplay);
     }
 }

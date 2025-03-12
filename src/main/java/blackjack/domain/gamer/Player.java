@@ -9,12 +9,14 @@ import java.util.function.Function;
 public class Player extends GameParticipant {
 
     private final Function<Player, Boolean> hitDecision;
+    private final Consumer<GameParticipant> handDisplay;
 
     private Player(Nickname nickname, Cards hand,
                    Function<Player, Boolean> hitDecision,
                    Consumer<GameParticipant> handDisplay) {
-        super(nickname, hand, handDisplay);
+        super(nickname, hand);
         this.hitDecision = hitDecision;
+        this.handDisplay = handDisplay;
     }
 
     public static Player of(Nickname nickname,
@@ -26,6 +28,11 @@ public class Player extends GameParticipant {
     @Override
     public boolean shouldHit() {
         return !this.isBust() && hitDecision.apply(this);
+    }
+
+    @Override
+    public void showHand() {
+        this.handDisplay.accept(this);
     }
 
     public GameResult judgeResult(Dealer dealer) {
