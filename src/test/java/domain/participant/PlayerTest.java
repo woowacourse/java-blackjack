@@ -55,4 +55,12 @@ public class PlayerTest {
 
         assertThat(player.computeBetResult(WinLossResult.LOSS)).isEqualTo(new BetMoney(0));
     }
+
+    @Test
+    @DisplayName("무승부 시 베팅 금액을 그대로 가져간다.")
+    void test6() {
+        Player player = new Player("moru").bet(10000);
+
+        assertThat(player.computeBetResult(WinLossResult.DRAW)).isEqualTo(new BetMoney(10000));
+    }
 }
