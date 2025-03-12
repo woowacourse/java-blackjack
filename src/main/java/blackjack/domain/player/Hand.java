@@ -42,6 +42,10 @@ public class Hand {
         return (int) (batAmount * v);
     }
 
+    public boolean isBlackJack() {
+        return calculateCardScore() == BUST_THRESHOLD && cards.size() == 2;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
