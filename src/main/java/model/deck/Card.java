@@ -1,4 +1,4 @@
-package model.Deck;
+package model.deck;
 
 public final class Card {
     private final CardRank cardRank;

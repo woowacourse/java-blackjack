@@ -1,4 +1,4 @@
-package model.Deck;
+package model.deck;
 
 public enum CardSuit {
     SPADE("스페이드"),

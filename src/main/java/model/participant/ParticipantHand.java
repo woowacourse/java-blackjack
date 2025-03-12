@@ -3,8 +3,8 @@ package model.participant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import model.Deck.Card;
-import model.Deck.CardRank;
+import model.deck.Card;
+import model.deck.CardRank;
 
 public final class ParticipantHand {
     private static final int BURST_SCORE_LIMIT = 21;

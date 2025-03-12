@@ -1,7 +1,7 @@
 package model.participant;
 
 import java.util.List;
-import model.Deck.Card;
+import model.deck.Card;
 
 public final class Dealer extends Participant {
     private static final int DEALER_HIT_THRESHOLD = 16;

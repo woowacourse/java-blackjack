@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import model.Deck.Card;
+import model.deck.Card;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Participants;

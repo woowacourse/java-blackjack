@@ -1,10 +1,9 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import model.participant.Dealer;
-import model.Deck.Deck;
+import model.deck.Deck;
 import model.participant.Participants;
 import model.result.GameResult;
 import model.participant.Player;

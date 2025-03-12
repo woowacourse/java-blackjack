@@ -2,8 +2,8 @@ package model.participant;
 
 import java.util.List;
 import java.util.stream.IntStream;
-import model.Deck.Card;
-import model.Deck.Deck;
+import model.deck.Card;
+import model.deck.Deck;
 
 public abstract class Participant {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;

@@ -1,14 +1,10 @@
-package model;
+package model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
-import model.Deck.Deck;
-import model.participant.Dealer;
-import model.participant.Participant;
-import model.participant.Participants;
-import model.participant.Player;
+import model.deck.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
