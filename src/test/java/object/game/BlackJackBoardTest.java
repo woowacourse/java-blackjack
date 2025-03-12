@@ -1,4 +1,4 @@
-package object;
+package object.game;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -9,8 +9,6 @@ import object.card.Card;
 import object.card.CardDeck;
 import object.card.CardNumber;
 import object.card.CardSymbol;
-import object.game.BattleResult;
-import object.game.BlackJackBoard;
 import object.participant.Dealer;
 import object.participant.Participant;
 import object.participant.Player;

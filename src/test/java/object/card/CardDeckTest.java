@@ -1,11 +1,7 @@
-package object;
+package object.card;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import object.card.Card;
-import object.card.CardDeck;
-import object.card.CardNumber;
-import object.card.CardSymbol;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

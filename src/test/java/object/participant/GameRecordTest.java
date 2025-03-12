@@ -1,8 +1,7 @@
-package object;
+package object.participant;
 
 import java.util.Map;
 import object.game.BattleResult;
-import object.game.GameRecord;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

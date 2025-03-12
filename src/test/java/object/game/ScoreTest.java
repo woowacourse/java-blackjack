@@ -1,6 +1,5 @@
-package object;
+package object.game;
 
-import object.game.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,5 @@
-package object;
+package object.participant;
 
-import object.participant.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

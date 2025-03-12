@@ -2,7 +2,6 @@ package object.participant;
 
 import java.util.Map;
 import object.game.BattleResult;
-import object.game.GameRecord;
 
 public class Dealer implements Participant {
     public static final int STAY_THRESHOLD = 16;

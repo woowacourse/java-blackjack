@@ -1,8 +1,9 @@
-package object.game;
+package object.participant;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import object.game.BattleResult;
 
 public class GameRecord {
     private final Map<BattleResult, Integer> gameRecord;

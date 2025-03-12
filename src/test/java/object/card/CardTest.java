@@ -1,8 +1,5 @@
-package object;
+package object.card;
 
-import object.card.Card;
-import object.card.CardNumber;
-import object.card.CardSymbol;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
