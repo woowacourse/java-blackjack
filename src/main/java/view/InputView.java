@@ -23,7 +23,9 @@ public class InputView {
     public int getBetAmount(String name) {
         System.out.println(name + "의 배팅 금액은?");
         try {
-            return scanner.nextInt();
+            int betAmount = scanner.nextInt();
+            scanner.nextLine();
+            return betAmount;
         } catch (InputMismatchException e) {
             throw new IllegalArgumentException("올바른 금액을 입력해야 합니다.");
         }
