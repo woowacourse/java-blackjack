@@ -49,19 +49,19 @@ public class HandTest {
     }
 
     private static Stream<Arguments> provideCardDeckForSumWithAce() {
-        return Stream.of(Arguments.of(
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE))), 11,
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE))), 12,
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE))), 13,
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE),
-                        new Card(CLOVER, ACE))), 14,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE))), 21,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE), new Card(HEART, ACE))), 12,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, QUEEN), new Card(HEART, ACE))), 21,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE),
-                        new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 19,
-                new ArrayList<>(List.of(new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 20
-        ));
+        return Stream.of(
+                Arguments.of(new ArrayList<>(List.of(new Card(DIAMOND, ACE))), 11),
+                Arguments.of(new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE))), 12),
+                Arguments.of(new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE))), 13),
+                Arguments.of(new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE),
+                        new Card(CLOVER, ACE))), 14),
+                Arguments.of(new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE))), 21),
+                Arguments.of(new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE), new Card(HEART, ACE))), 12),
+                Arguments.of(new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, QUEEN), new Card(HEART, ACE))), 21),
+                Arguments.of(new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE),
+                        new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 19),
+                Arguments.of(new ArrayList<>(List.of(new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 20)
+        );
     }
 
     @Test

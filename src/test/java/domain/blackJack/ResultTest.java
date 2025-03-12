@@ -13,7 +13,6 @@ import static domain.card.Number.SEVEN;
 import static domain.card.Number.SIX;
 import static domain.card.Number.THREE;
 import static domain.card.Number.TWO;
-import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,32 +52,32 @@ class ResultTest {
     }
 
     private static Stream<Arguments> provideCardDeckForCalculateResultOfPlayer() {
-        return Stream.of(Arguments.of(
-                new CardDeck( // 25, 25, LOSE
+        return Stream.of(
+                Arguments.of(new CardDeck( // 25, 25, LOSE
                         List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, FIVE),
-                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, FIVE))), LOSE,
-                new CardDeck( // 25, 27, LOSE
+                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, FIVE))), LOSE),
+                Arguments.of(new CardDeck( // 25, 27, LOSE
                         List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, FIVE),
-                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, SEVEN))), LOSE,
-                new CardDeck( // 21, 23, LOSE
+                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, SEVEN))), LOSE),
+                Arguments.of(new CardDeck( // 21, 23, LOSE
                         List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, ACE),
-                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, THREE))), LOSE,
-                new CardDeck( // 20, 10, LOSE
+                                new Card(HEART, JACK), new Card(HEART, KING), new Card(HEART, THREE))), LOSE),
+                Arguments.of(new CardDeck( // 20, 10, LOSE
                         List.of(new Card(SPADE, JACK), new Card(SPADE, FOUR), new Card(SPADE, SIX),
-                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), LOSE,
-                new CardDeck( // 25, 20, WIN
+                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), LOSE),
+                Arguments.of(new CardDeck( // 25, 20, WIN
                         List.of(new Card(SPADE, JACK), new Card(SPADE, KING), new Card(SPADE, FIVE),
-                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), WIN,
-                new CardDeck( // 10, 20, WIN
+                                new Card(HEART, TWO), new Card(HEART, THREE), new Card(HEART, FIVE))), WIN),
+                Arguments.of(new CardDeck( // 10, 20, WIN
                         List.of(new Card(SPADE, TWO), new Card(SPADE, THREE), new Card(SPADE, FIVE),
-                                new Card(HEART, JACK), new Card(HEART, FOUR), new Card(HEART, SIX))), WIN,
-                new CardDeck( // 20, 20, DRAW
+                                new Card(HEART, JACK), new Card(HEART, FOUR), new Card(HEART, SIX))), WIN),
+                Arguments.of(new CardDeck( // 20, 20, DRAW
                         List.of(new Card(SPADE, JACK), new Card(SPADE, FOUR), new Card(SPADE, SIX),
-                                new Card(HEART, JACK), new Card(HEART, FOUR), new Card(HEART, SIX))), DRAW,
-                new CardDeck( // 21, 21, DRAW
+                                new Card(HEART, JACK), new Card(HEART, FOUR), new Card(HEART, SIX))), DRAW),
+                Arguments.of(new CardDeck( // 21, 21, DRAW
                         List.of(new Card(SPADE, JACK), new Card(SPADE, FIVE), new Card(SPADE, SIX),
-                                new Card(HEART, JACK), new Card(HEART, FIVE), new Card(HEART, SIX))), DRAW
-        ));
+                                new Card(HEART, JACK), new Card(HEART, FIVE), new Card(HEART, SIX))), DRAW)
+        );
     }
 
     @ParameterizedTest
@@ -101,13 +100,13 @@ class ResultTest {
     }
 
     private static Stream<Arguments> provideCardDeckForCalculateBlackJackOfPlayer() {
-        return Stream.of(Arguments.of(
-                new CardDeck( // 21, 20, BLACKJACK
+        return Stream.of(
+                Arguments.of(new CardDeck( // 21, 20, BLACKJACK
                         List.of(new Card(SPADE, JACK), new Card(SPADE, ACE),
-                                new Card(HEART, JACK), new Card(HEART, KING))), BLACKJACK,
-                new CardDeck( // 21, 21, DRAW
+                                new Card(HEART, JACK), new Card(HEART, KING))), BLACKJACK),
+                Arguments.of(new CardDeck( // 21, 21, DRAW
                         List.of(new Card(SPADE, JACK), new Card(SPADE, ACE),
-                                new Card(HEART, JACK), new Card(HEART, ACE))), DRAW
-        ));
+                                new Card(HEART, JACK), new Card(HEART, ACE))), DRAW)
+        );
     }
 }

@@ -1,18 +1,14 @@
 package domain.participant;
 
-import static domain.blackJack.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
-import static domain.card.Number.THREE;
-import static domain.card.Number.TWO;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.blackJack.Result;
 import domain.card.Card;
 import domain.card.CardDeck;
 import java.io.ByteArrayInputStream;
@@ -68,23 +64,4 @@ public class PlayerTest {
         // then
         assertThat(player.getHand().getCards().size()).isEqualTo(3);
     }
-
-//    @Test
-//    @DisplayName("승패 결정 테스트")
-//    void calculateWinner() {
-//        // given
-//        Player player = new Player("pobi", Money.from(1000));
-//        CardDeck cardDeck = new CardDeck(
-//                List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE), new Card(HEART, TWO), new Card(DIAMOND, THREE)));
-//        Dealer dealer = new Dealer();
-//
-//        player.hitCard(cardDeck);
-//        player.hitCard(cardDeck);
-//
-//        dealer.hitCard(cardDeck);
-//        dealer.hitCard(cardDeck);
-//
-//        // when-then
-//        assertThat(player.calculateWinner(dealer.sum())).isEqualTo(WIN);
-//    }
 }
