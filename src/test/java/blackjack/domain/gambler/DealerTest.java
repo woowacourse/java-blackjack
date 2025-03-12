@@ -1,6 +1,7 @@
 package blackjack.domain.gambler;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
@@ -24,7 +25,22 @@ public class DealerTest {
         List<Card> result = dealer.getInitialCards();
 
         // then
-        assertThat(result).hasSize(1);
-        assertThat(result.getFirst()).isEqualTo(card1);
+        assertAll(
+            () -> assertThat(result).hasSize(1),
+            () -> assertThat(result.getFirst()).isEqualTo(card1)
+        );
+    }
+
+    @DisplayName("플레이어인지_여부를_반환한다")
+    @Test
+    void isPlayer() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when
+        boolean result = dealer.isPlayer();
+
+        // then
+        assertThat(result).isFalse();
     }
 }

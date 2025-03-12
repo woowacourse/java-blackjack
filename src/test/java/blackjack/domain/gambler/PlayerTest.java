@@ -1,55 +1,44 @@
 package blackjack.domain.gambler;
 
-import static blackjack.domain.card.CardShape.CLOVER;
-import static blackjack.domain.card.CardShape.HEART;
 import static blackjack.domain.card.CardType.ACE;
 import static blackjack.domain.card.CardType.EIGHT;
 import static blackjack.domain.card.CardType.TEN;
-import static blackjack.domain.fixture.CardFixture.createCards;
+import static blackjack.domain.fixture.GamblerFixture.createDealerWithCards;
+import static blackjack.domain.fixture.GamblerFixture.createPlayerWithCards;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardType;
-import blackjack.domain.fixture.GamblerFixture;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerTest {
-    @DisplayName("이름을 통해 플레이어를 생성한다.")
-    @Test
-    void createTest() {
-        Player player = new Player(new Name("라젤"));
+    private final Name NAME = new Name("라젤");
 
-        assertThat(player.getName()).isEqualTo(new Name("라젤"));
-    }
-
-    @DisplayName("패에 카드를 추가한다")
+    @DisplayName("플레이어의_패에_카드를_추가한다")
     @Test
     void addCardTest() {
-        Player player = new Player(new Name("라젤"));
-        Card card1 = new Card(CLOVER, TEN);
-        Card card2 = new Card(HEART, CardType.EIGHT);
+        // given
+        Player player = createPlayerWithCards(NAME, TEN, EIGHT);
 
-        player.addCard(card1);
-        player.addCard(card2);
+        // when
+        int result = player.calculateScore();
 
-        assertThat(player.calculateScore()).isEqualTo(18);
+        // then
+        assertThat(result).isEqualTo(18);
     }
 
-    /**
-     * TODO
-     * 테스트 케이스 늘리기
-     */
-    @DisplayName("패에 카드가 2개이고, 합이 21인지 여부를 반환한다")
-    @Test
+    @DisplayName("패에_카드가_2개이고_합이_21인지_여부를_반환한다")
+    @CsvSource(value = {"TEN:TEN:2", "TEN:EIGHT:0", "TEN:SIX:-2"}, delimiterString = ":")
+    @ParameterizedTest
     void isBlackjack() {
         // given
-        Player player = new Player(new Name("레오"));
-        for (Card card : createCards(TEN, ACE)) {
-            player.addCard(card);
-        }
+        Player player = createPlayerWithCards(NAME, TEN, ACE);
 
         // when
         boolean result = player.isBlackjack();
@@ -58,17 +47,12 @@ class PlayerTest {
         assertThat(result).isTrue();
     }
 
-    @DisplayName("카드의 합이 특정 값 이하인지 확인한지 테스트")
+    @DisplayName("카드의_합이_특정 값 이하인지 확인한지 테스트")
     @CsvSource(value = {"21:True", "16:False"}, delimiterString = ":")
     @ParameterizedTest
     void isBelowTest(int criteria, boolean expected) {
         // given
-        Player player = new Player(new Name("라젤"));
-        Card card1 = new Card(CLOVER, TEN);
-        Card card2 = new Card(HEART, CardType.EIGHT);
-
-        player.addCard(card1);
-        player.addCard(card2);
+        Player player = createPlayerWithCards(NAME, TEN, EIGHT);
 
         // when
         boolean result = player.isScoreBelow(criteria);
@@ -82,13 +66,46 @@ class PlayerTest {
     @ParameterizedTest
     void calculateScoreDifference(CardType firstType, CardType secondType, int expected) {
         // given
-        Dealer dealer = GamblerFixture.createDealerWithCards(TEN, EIGHT);
-        Player player = GamblerFixture.createPlayerWithCards(new Name("레오"), firstType, secondType);
+        Dealer dealer = createDealerWithCards(TEN, EIGHT);
+        Player player = createPlayerWithCards(NAME, firstType, secondType);
 
         // when
         int result = player.calculateScoreDifference(dealer);
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("처음_카드를_받은_후_플레이어는_두개의_카드를_오픈한다")
+    @Test
+    void getInitialCardsTest() {
+        // given
+        Player player = new Player(NAME);
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
+        player.addCard(card1);
+        player.addCard(card2);
+
+        // when
+        List<Card> result = player.getInitialCards();
+
+        // then
+        assertAll(
+                () -> assertThat(result).hasSize(2),
+                () -> assertThat(result).contains(card1, card2)
+        );
+    }
+
+    @DisplayName("플레이어인지_여부를_반환한다")
+    @Test
+    void isPlayer() {
+        // given
+        Player player = new Player(NAME);
+
+        // when
+        boolean result = player.isPlayer();
+
+        // then
+        assertThat(result).isTrue();
     }
 }
