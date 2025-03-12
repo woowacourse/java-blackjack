@@ -11,14 +11,14 @@ public class ShuffledDeckCreator implements DeckCreateStrategy {
 
     @Override
     public List<Card> createAllCards() {
-        List<Card> temp = new ArrayList<>();
-        for (CardShape type : CardShape.values()) {
-            for (CardNumber number : CardNumber.values()) {
-                temp.add(new Card(type, number));
+        List<Card> cards = new ArrayList<>();
+        for (CardShape cardShape : CardShape.values()) {
+            for (CardNumber cardNumber : CardNumber.values()) {
+                cards.add(new Card(cardShape, cardNumber));
             }
         }
-        Collections.shuffle(temp);
+        Collections.shuffle(cards);
 
-        return temp;
+        return cards;
     }
 }
