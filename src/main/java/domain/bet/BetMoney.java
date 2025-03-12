@@ -18,7 +18,7 @@ public class BetMoney {
         return new BetMoney(amount * 2);
     }
 
-    public BetMoney applyPlayerBustPenalty() {
+    public BetMoney applyLossPenalty() {
         return new BetMoney(0);
     }
 

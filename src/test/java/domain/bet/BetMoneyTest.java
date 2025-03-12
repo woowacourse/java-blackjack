@@ -38,7 +38,7 @@ class BetMoneyTest {
     void test4() {
         BetMoney betMoney = new BetMoney(10000);
 
-        BetMoney applyedBetMoney = betMoney.applyPlayerBustPenalty();
+        BetMoney applyedBetMoney = betMoney.applyLossPenalty();
 
         assertThat(applyedBetMoney.getAmount()).isEqualTo(0);
     }
