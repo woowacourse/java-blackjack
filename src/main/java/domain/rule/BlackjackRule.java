@@ -9,6 +9,10 @@ import java.util.Set;
 public class BlackjackRule {
     private static final int SUM_LIMIT = 21;
 
+    public boolean isBlackjack(Cards cards) {
+        return false;
+    }
+
     public boolean isBust(Cards cards) {
         Set<Integer> coordinates = cards.getCoordinateSums();
         return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);

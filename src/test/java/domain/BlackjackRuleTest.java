@@ -322,4 +322,39 @@ class BlackjackRuleTest {
         //then
         assertThat(actual).isEqualTo(GameResult.LOSE);
     }
+
+    @DisplayName("카드가 2장이면서 합이 21인 경우 블랙잭으로 판단할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("createBlackjackCards")
+    void 블랙잭_판단(List<Card> inputCards) {
+        // given
+        Cards cards = Cards.of(inputCards);
+
+        // when
+        final boolean isBlackjack = rule.isBlackjack(cards);
+
+        // then
+        assertThat(isBlackjack).isTrue();
+    }
+
+    private static Stream createBlackjackCards() {
+        return Stream.of(
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.TEN, CardShape.HEART)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.KING, CardShape.HEART)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.QUEEN, CardShape.HEART)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.JACK, CardShape.HEART)
+                )
+        );
+    }
 }
