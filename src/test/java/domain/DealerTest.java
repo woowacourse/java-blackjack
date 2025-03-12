@@ -13,13 +13,12 @@ import static domain.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.CardFixture;
-import fixture.TestShuffler;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    private final Deck deck = new Deck(new TestShuffler());
+    private final Deck deck = new Deck(new RandomShuffler());
 
     @Test
     @DisplayName("자기 점수를 계산한다.")

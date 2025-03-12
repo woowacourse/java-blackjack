@@ -1,23 +1,16 @@
 package domain;
 
-import static domain.Rank.ACE;
-import static domain.Rank.TWO;
-import static domain.Suit.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import fixture.CardFixture;
-import fixture.TestShuffler;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-    private final Deck deck = new Deck(new TestShuffler());
+    private final Deck deck = new Deck(new RandomShuffler());
     private final List<String> playerNames = List.of("pobi", "norang", "haru");
     private final Game game = new Game(playerNames, deck);
-    private final CardHand cardHand = new CardHand(Set.of(CardFixture.of(ACE, CLOVER), CardFixture.of(TWO, CLOVER)));
 
     @Test
     @DisplayName("참여자가 5명이 넘어갈 경우 예외가 발생한다.")

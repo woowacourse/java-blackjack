@@ -2,15 +2,16 @@ package fixture;
 
 import domain.Card;
 import domain.Deck;
+import domain.RandomShuffler;
 import domain.Rank;
 import domain.Suit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CardFixture {
-    private static final int SUIT_COUNT = 4;
     public static List<Card> deckFixture = new ArrayList<>();
-    private static final Deck deck = new Deck(new TestShuffler());
+    private static final Deck deck = new Deck(new RandomShuffler());
 
     static {
         for (int i = 0; i < 52; i++) {
@@ -19,8 +20,9 @@ public class CardFixture {
     }
 
     public static Card of(Rank rank, Suit suit) {
-        int rankIndex = rank.ordinal();
-        int suitIndex = suit.ordinal();
-        return deckFixture.get(rankIndex * SUIT_COUNT + suitIndex);
+        return deckFixture.stream()
+                .filter(card -> card.getRank() == rank && card.getSuit() == suit)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("[ERROR] 해당하는 카드를 찾을 수 없습니다."));
     }
 }

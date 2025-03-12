@@ -23,6 +23,14 @@ public class Card {
         return rank.getName() + suit.getName();
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -24,6 +24,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class CardHandTest {
+
     @Test
     @DisplayName("카드를 추가한다.")
     void testAddCard() {
