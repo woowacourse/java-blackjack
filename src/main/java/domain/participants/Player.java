@@ -17,6 +17,12 @@ public class Player extends Gamer {
         this.bettingAmount = bettingAmount;
     }
 
+    private Player(Player player){
+        super(player);
+        this.playerName = player.playerName;
+        this.bettingAmount = player.bettingAmount;
+    }
+
     public boolean isDrawable() {
         return super.isDrawable(BUST_THRESHOLD);
     }
@@ -38,6 +44,11 @@ public class Player extends Gamer {
 
     public BettingAmount getBettingAmount() {
         return bettingAmount;
+    }
+
+    @Override
+    public Gamer newInstance() {
+        return new Player(this);
     }
 
     private GameResult decideGameResultWithBust(Dealer dealer) {

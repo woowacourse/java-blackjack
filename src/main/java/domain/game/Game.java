@@ -57,7 +57,7 @@ public class Game {
     }
 
     public Gamer getDealer() {
-        return dealer.clone();
+        return dealer.newInstance();
     }
 
     public GameStatistics getGameStatistics() {

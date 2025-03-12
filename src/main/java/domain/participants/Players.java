@@ -45,7 +45,7 @@ public class Players {
         return players.stream()
                 .collect(Collectors.toMap(
                         Player::getPlayerName,
-                        Gamer::clone,
+                        Gamer::newInstance,
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
