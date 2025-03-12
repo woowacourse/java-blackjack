@@ -6,6 +6,7 @@ import domain.bet.BetMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
+import domain.result.WinLossResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -31,4 +32,11 @@ public class PlayerTest {
         assertThat(player.bet(10000).getBetMoney()).isEqualTo(new BetMoney(10000));
     }
 
+    @Test
+    @DisplayName("승리 시 베팅 금액은 2배가 된다.")
+    void test3() {
+        Player player = new Player("moru").bet(10000);
+
+        assertThat(player.computeBetResult(WinLossResult.WIN)).isEqualTo(new BetMoney(20000));
+    }
 }
