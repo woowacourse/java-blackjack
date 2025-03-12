@@ -37,13 +37,6 @@ public class Hand {
         return totalPoint;
     }
 
-    private int calculateAcePoint(int totalPoint, Rank ace) {
-        if (totalPoint + Rank.SOFT_ACE.getPoint() > MAX_SCORE) {
-            return ace.getPoint();
-        }
-        return Rank.SOFT_ACE.getPoint();
-    }
-
     private List<Rank> extractAces() {
         return cards.stream()
                 .filter(Card::isAce)
@@ -51,12 +44,11 @@ public class Hand {
                 .toList();
     }
 
-    public boolean isBust() {
-        return calculateTotalScore() > MAX_SCORE;
-    }
-
-    public List<Card> getCards() {
-        return cards;
+    private int calculateAcePoint(int totalPoint, Rank ace) {
+        if (totalPoint + Rank.SOFT_ACE.getPoint() > MAX_SCORE) {
+            return ace.getPoint();
+        }
+        return Rank.SOFT_ACE.getPoint();
     }
 
     public MatchResult determineMatchResult(final Hand other) {
@@ -66,8 +58,8 @@ public class Hand {
         return checkScoreResult(other);
     }
 
-    private MatchResult checkScoreResult(final Hand other) {
-        return MatchResult.judge(this.calculateTotalScore(), other.calculateTotalScore());
+    public boolean isBust() {
+        return calculateTotalScore() > MAX_SCORE;
     }
 
     private MatchResult checkBustResult(final Hand other) {
@@ -78,5 +70,13 @@ public class Hand {
             return MatchResult.LOSE;
         }
         return MatchResult.WIN;
+    }
+
+    private MatchResult checkScoreResult(final Hand other) {
+        return MatchResult.judge(this.calculateTotalScore(), other.calculateTotalScore());
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

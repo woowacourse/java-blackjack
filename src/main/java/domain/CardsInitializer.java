@@ -14,6 +14,10 @@ public class CardsInitializer {
 
     public List<Card> initialize() {
         List<Card> cards = createCards();
+        return shuffleCards(cards);
+    }
+
+    private List<Card> shuffleCards(final List<Card> cards) {
         List<Card> shuffleCards = new ArrayList<>(cards);
         cardShuffler.shuffle(shuffleCards);
 
@@ -31,11 +35,13 @@ public class CardsInitializer {
                 .toList();
     }
 
-    private List<Symbol> getSymbols() {
-        return Arrays.stream(Symbol.values()).toList();
+    private List<Rank> getNumbers() {
+        return Arrays.stream(Rank.values())
+                .filter(number -> !number.equals(Rank.SOFT_ACE))
+                .toList();
     }
 
-    private List<Rank> getNumbers() {
-        return Arrays.stream(Rank.values()).filter(number -> !number.equals(Rank.SOFT_ACE)).toList();
+    private List<Symbol> getSymbols() {
+        return Arrays.stream(Symbol.values()).toList();
     }
 }
