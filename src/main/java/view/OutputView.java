@@ -1,6 +1,7 @@
 package view;
 
 import domain.GameResult;
+import domain.TrumpCard;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
@@ -11,13 +12,8 @@ public class OutputView {
     }
 
     public void displayOpenCards(String name, List<String> printCards) {
-        displayCards(name, printCards);
-    }
-
-    private void displayCards(String name, List<String> printCards) {
         System.out.print(name + "카드: " + String.join(", ", printCards) + "\n");
     }
-
 
     public void displayDealerGameResult(int winCount, int loseCount, int drawCount) {
         System.out.println("\n## 최종 승패");
@@ -46,5 +42,15 @@ public class OutputView {
 
     public void displayOpenCardsResult(String name, List<String> printCards, int score) {
         System.out.print(name + "카드: " + String.join(", ", printCards + (" - 결과: " + score)) + "\n");
+    }
+
+    public void displayAllDealerCard(String name, List<TrumpCard> dealerCards, int score) {
+        List<String> dealerPrintCards = dealerCards.stream()
+                .map(dealerCard -> CardConverter.createTrumpCard(
+                        dealerCard.cardShape(),
+                        dealerCard.cardNumber()
+                )).toList();
+
+        displayOpenCardsResult(name, dealerPrintCards, score);
     }
 }

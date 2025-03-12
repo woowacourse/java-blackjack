@@ -85,7 +85,7 @@ public class BlackjackController {
         Dealer dealer = (Dealer) gameManger.getDealer();
         List<TrumpCard> dealerCards = dealer.openAllCard();
         int score = dealer.calculateScore();
-        displayConvertCards(dealer.getName(), dealerCards, score);
+        outputView.displayAllDealerCard(dealer.getName(), dealerCards, score);
     }
 
     private void displayPlayers(GameManger gameManger, List<String> playerNames) {
