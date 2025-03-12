@@ -20,7 +20,7 @@ public class Score {
 	}
 
 	public boolean isLessThan(final int value) {
-		return true;
+		return this.value < value;
 	}
 
 	public int getValue() {
