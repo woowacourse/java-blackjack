@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     private String formatCard(Card card) {
-        return String.format(SPREAD_CARD_RESULT, card.rank().formatCardRank(),
+        return String.format(SPREAD_CARD_RESULT, card.rank().getName(),
             card.shape().formatCardShape());
     }
 
