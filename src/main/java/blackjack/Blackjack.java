@@ -1,9 +1,9 @@
 package blackjack;
 
 import blackjack.cardMachine.CardRandomMachine;
-import blackjack.file.InputView;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Players;
+import blackjack.view.InputView;
 
 public class Blackjack {
     private final Dealer dealer;
