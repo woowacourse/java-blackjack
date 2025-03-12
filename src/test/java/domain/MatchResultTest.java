@@ -2,162 +2,81 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MatchResultTest {
 
-    @DisplayName("플레이어와 딜러 모두 버스트라면 무승부다")
+    @DisplayName("딜러와 플레이어의 점수가 같다면 draw를 반환한다.")
     @Test
-    void judgeBustDraw() {
+    void draw() {
         //given
-        List<Card> cards = new ArrayList<>();
-
-        Card card1 = new Card(Symbol.COLVER, Rank.THREE);
-        Card card2 = new Card(Symbol.HEART, Rank.SIX);
-        Card card3 = new Card(Symbol.SPADE, Rank.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
-        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
-        Card card6 = new Card(Symbol.HEART, Rank.JACK);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
-
-        Deck deck = Deck.from(cards);
-
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        dealer.prepareGame(deck);
-        player.prepareGame(deck);
-
-        dealer.hit(deck);
-        player.hit(deck);
+        int dealerScore = 10;
+        int playerScore = 10;
 
         //when
-        MatchResult actual = dealer.getMatchResult(player);
+        MatchResult actual = MatchResult.judge(dealerScore, playerScore);
 
         //then
         assertThat(actual).isEqualTo(MatchResult.DRAW);
     }
 
-    @DisplayName("플레이어와 딜러 모두 버스트가 아닐때 점수가 같다면 무승부다.")
+    @DisplayName("딜러와 플레이어중 점수가 딜러의 점수가 더 높다면 WIN을 반환한다.")
     @Test
-    void judgeNotBustDraw() {
+    void win() {
         //given
-        List<Card> cards = new ArrayList<>();
-
-        Card card1 = new Card(Symbol.COLVER, Rank.TWO);
-        Card card2 = new Card(Symbol.HEART, Rank.TWO);
-        Card card3 = new Card(Symbol.SPADE, Rank.SIX);
-        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
-        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
-        Card card6 = new Card(Symbol.HEART, Rank.JACK);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
-
-        Deck deck = Deck.from(cards);
-
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        dealer.prepareGame(deck);
-        player.prepareGame(deck);
-
-        dealer.hit(deck);
-        player.hit(deck);
+        int dealerScore = 13;
+        int playerScore = 10;
 
         //when
-        MatchResult actual = dealer.getMatchResult(player);
+        MatchResult actual = MatchResult.judge(dealerScore, playerScore);
 
         //then
-        assertThat(actual).isEqualTo(MatchResult.DRAW);
-    }
-
-    @DisplayName("플레이어와 딜러 중 한쪽만 버스트라면 점수에 상관없이 버스트가 아닌 쪽이 승리한다.")
-    @Test
-    void judgeOnlyOneBustWin() {
-        //given
-        List<Card> cards = new ArrayList<>();
-
-        Card card1 = new Card(Symbol.COLVER, Rank.TWO);
-        Card card2 = new Card(Symbol.HEART, Rank.TWO);
-        Card card3 = new Card(Symbol.SPADE, Rank.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
-        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
-        Card card6 = new Card(Symbol.HEART, Rank.JACK);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
-
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        Deck deck = Deck.from(cards);
-
-        dealer.prepareGame(deck);
-        player.prepareGame(deck);
-
-        dealer.hit(deck);
-        player.hit(deck);
-
-        //when //then
-        MatchResult actual = dealer.getMatchResult(player);
-
         assertThat(actual).isEqualTo(MatchResult.WIN);
     }
 
-    @DisplayName("플레이어와 딜러 중 둘다 버스트가 아니고, 점수가 서로 다를경우 점수가 21에 가까운쪽이 승리한다.")
+    @DisplayName("딜러와 플레이어중 점수가 플레이어의 점수가 더 높다면 LOSE를 반환한다.")
     @Test
-    void judge() {
+    void lose() {
         //given
-        List<Card> cards = new ArrayList<>();
-
-        Card card1 = new Card(Symbol.COLVER, Rank.ACE);
-        Card card2 = new Card(Symbol.HEART, Rank.TWO);
-        Card card3 = new Card(Symbol.SPADE, Rank.JACK);
-        Card card4 = new Card(Symbol.DIAMOND, Rank.JACK);
-        Card card5 = new Card(Symbol.COLVER, Rank.SIX);
-        Card card6 = new Card(Symbol.HEART, Rank.JACK);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
-
-        Deck deck = Deck.from(cards);
-
-        Dealer dealer = new Dealer();
-        Player player = new Player("ad");
-
-        dealer.prepareGame(deck);
-        player.prepareGame(deck);
-
-        dealer.hit(deck);
-        player.hit(deck);
+        int dealerScore = 8;
+        int playerScore = 10;
 
         //when
-        MatchResult actual = MatchResult.judge(dealer.getScore(), player.getScore());
+        MatchResult actual = MatchResult.judge(dealerScore, playerScore);
 
         //then
         assertThat(actual).isEqualTo(MatchResult.LOSE);
+    }
+
+    @DisplayName("딜러가 승리하면 플레이어는 패배다.")
+    @Test
+    void dealerIsWinThanPlayerLose() {
+        //given
+        int dealerScore = 13;
+        int playerScore = 10;
+
+        //when
+        MatchResult result = MatchResult.judge(dealerScore, playerScore);
+        MatchResult actual = result.reverse();
+
+        //then
+        assertThat(actual).isEqualTo(MatchResult.LOSE);
+    }
+
+    @DisplayName("딜러가 패배하면 플레이어는 승리다.")
+    @Test
+    void dealerIsLoseThanPlayerWin() {
+        //given
+        int dealerScore = 8;
+        int playerScore = 10;
+
+        //when
+        MatchResult result = MatchResult.judge(dealerScore, playerScore);
+        MatchResult actual = result.reverse();
+
+        //then
+        assertThat(actual).isEqualTo(MatchResult.WIN);
     }
 
 }
