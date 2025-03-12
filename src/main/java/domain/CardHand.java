@@ -43,8 +43,8 @@ public class CardHand {
     }
 
     public boolean isAtLeastScore(int maxScore) {
-        int sum = calculateScore();
-        return sum >= maxScore;
+        int score = calculateScore();
+        return score >= maxScore;
     }
 
     public boolean checkOverScore() {
