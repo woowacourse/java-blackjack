@@ -9,31 +9,30 @@ public class Dealer extends Participant {
     private static final int BLACK_JACK_CONDITION_COUNT = 2;
     private static final int BLACK_JACK_NUMBER = 21;
 
-    private int totalBettingAmount;
+    private int totalProfit;
 
     public Dealer() {
-        this.totalBettingAmount = 0;
+        this.totalProfit = 0;
     }
 
     public List<GameResult> judgeGameResult(List<Player> players) {
         return players.stream()
-                .map(player -> {
-                    GameResult playerGameResult = judgeWin(player);
-                    calculateBettingResultFromDealer(player, playerGameResult);
-                    return playerGameResult;
-                })
+                .map(this::judgePlayerVsDealerResult)
                 .toList();
     }
 
-    private void calculateBettingResultFromDealer(Player player, GameResult gameResult) {
-        calculateBettingAmount(player.calculateBettingAmount(gameResult));
+    private GameResult judgePlayerVsDealerResult(Player player) {
+        GameResult playerGameResult = judgeWin(player);
+        calculateBettingResult(player, playerGameResult);
+        return playerGameResult;
     }
 
-    private void calculateBettingAmount(Chip bettingChip) {
-        this.totalBettingAmount -= bettingChip.getBettingAmount();
+    private void calculateBettingResult(Player player, GameResult playerGameResult) {
+        Chip playerBettingResult = player.calculateBettingAmount(playerGameResult);
+        this.totalProfit -= playerBettingResult.getBettingAmount();
     }
 
-    public GameResult judgeWin(Player player) {
+    private GameResult judgeWin(Player player) {
         if (player.isOverBurstBound()) {
             return GameResult.LOSE;
         }
@@ -78,7 +77,7 @@ public class Dealer extends Participant {
         return cards.getFirst();
     }
 
-    public int getTotalBettingAmount() {
-        return totalBettingAmount;
+    public int getTotalProfit() {
+        return totalProfit;
     }
 }
