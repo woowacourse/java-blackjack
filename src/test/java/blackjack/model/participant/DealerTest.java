@@ -1,12 +1,9 @@
 package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
-import blackjack.model.card.Deck;
-import blackjack.model.card.FixedCardShuffler;
 import blackjack.model.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -133,36 +130,6 @@ class DealerTest {
                 .isSameAs(expected);
     }
 
-    @DisplayName("보여줄 때 첫 번째 카드 한장을 반환한다.")
-    @Test
-    void getVisibleCardTest() {
-        // give
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer();
-        Card firstCard = deck.draw();
-        dealer.receiveHand(firstCard);
-        dealer.receiveHand(deck.draw());
-
-        // when
-        Card visibleCard = dealer.getVisibleCard();
-
-        // then
-        assertThat(visibleCard)
-                .isEqualTo(firstCard);
-    }
-
-    @DisplayName("보여줄 때 가진 패가 없는 경우 예외가 발생한다.")
-    @Test
-    void shouldThrowException_WhenNoHandGetVisibleCardTest() {
-        // given
-        Dealer dealer = new Dealer();
-
-        // when, then
-        assertThatCode(dealer::getVisibleCard)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("딜러가 가진 패가 없습니다.");
-    }
-
     @DisplayName("가진 패의 총합이 16이하인 경우 히트한다.")
     @ParameterizedTest
     @CsvSource({
@@ -176,10 +143,10 @@ class DealerTest {
         dealer.receiveHand(new Card(Suit.SPADES, cardValue2));
 
         // when
-        boolean shouldHit = dealer.shouldHit();
+        boolean canHit = dealer.canHit();
 
         // then
-        assertThat(shouldHit)
+        assertThat(canHit)
                 .isSameAs(expected);
     }
 }

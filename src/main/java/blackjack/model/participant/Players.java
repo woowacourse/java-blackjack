@@ -21,6 +21,10 @@ public class Players {
         }
     }
 
+    public void dealInitialCards() {
+
+    }
+
     public List<Player> getPlayers() {
         return players.stream().toList();
     }

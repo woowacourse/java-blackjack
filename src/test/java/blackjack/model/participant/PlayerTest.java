@@ -1,14 +1,11 @@
 package blackjack.model.participant;
 
-import static blackjack.TestFixtures.NO_HIT_STRATEGY;
-import static blackjack.TestFixtures.createHitDecisionStrategy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -153,31 +150,52 @@ class PlayerTest {
                 .isSameAs(expected);
     }
 
-    @DisplayName("플레이어가 히트 여부를 결정한다.")
+    @DisplayName("플레이어가 버스트, 블랙잭이 아니면 히트할 수 있다.")
     @Test
-    void shouldHitFalseTest() {
+    void canHitTrue_WhenNotBustAndNotBlackJackTest() {
         // given
         Player player = new Player("pobi");
+        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
+        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
 
         // then
-        boolean shouldHit = player.shouldHit(NO_HIT_STRATEGY);
+        boolean canHit = player.canHit();
 
         // when
-        assertThat(shouldHit)
+        assertThat(canHit)
+                .isTrue();
+    }
+
+    @DisplayName("플레이어가 버스트면 히트할 수 없다.")
+    @Test
+    void canHitFalse_WhenBustTest() {
+        // given
+        Player player = new Player("pobi");
+        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
+        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
+        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
+
+        // then
+        boolean canHit = player.canHit();
+
+        // when
+        assertThat(canHit)
                 .isFalse();
     }
 
-    @DisplayName("플레이어가 히트 여부를 결정한다.")
+    @DisplayName("플레이어가 블랙잭이면 히트할 수 없다.")
     @Test
-    void shouldHitTrueTest() {
+    void canHitFalse_WhenBlackJackTest() {
         // given
         Player player = new Player("pobi");
+        player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
+        player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
 
         // then
-        boolean shouldHit = player.shouldHit(createHitDecisionStrategy(List.of(true)));
+        boolean canHit = player.canHit();
 
         // when
-        assertThat(shouldHit)
-                .isTrue();
+        assertThat(canHit)
+                .isFalse();
     }
 }

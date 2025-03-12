@@ -1,7 +1,7 @@
 package blackjack.model;
 
-import static blackjack.TestFixtures.TEST_EMPTY_VISUALIZER;
-import static blackjack.TestFixtures.createHitDecisionStrategy;
+import static blackjack.TestFixtures.DEALER;
+import static blackjack.TestFixtures.UNSHUFFLED_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -11,7 +11,6 @@ import blackjack.model.card.Deck;
 import blackjack.model.card.FixedCardShuffler;
 import blackjack.model.card.Suit;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.HitDecisionStrategy;
 import blackjack.model.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -56,15 +55,13 @@ class GameTest {
     @Test
     void playTurnForAllPlayerTest() {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer();
-        HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, false));
-        List<Player> players = List.of(new Player("pobi"));
-        Game game = new Game(deck, dealer, players);
+        Player pobi = new Player("pobi");
+        List<Player> players = List.of(pobi);
+        Game game = new Game(UNSHUFFLED_DECK, DEALER, players);
         game.dealInitialCards();
 
         //when
-        game.askHitForAllPlayer(hitDecisionStrategy, TEST_EMPTY_VISUALIZER);
+        game.hitPlayer(pobi);
 
         // then
         assertThat(players)
@@ -90,31 +87,6 @@ class GameTest {
                 .isEqualTo(spadeFive);
     }
 
-    @DisplayName("처음 받은 패가 블랙잭인 경우, 히트 여부를 묻지 않는다.")
-    @Test
-    void playTurn_ForAllPlayer_WhenBlackjackTest() {
-        // given
-        List<Card> cards = List.of(
-                new Card(Suit.SPADES, CardValue.ACE),
-                new Card(Suit.SPADES, CardValue.TEN),
-                new Card(Suit.SPADES, CardValue.TWO),
-                new Card(Suit.SPADES, CardValue.FIVE)
-        );
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer();
-        HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true));
-        List<Player> players = List.of(new Player("pobi"));
-        Game game = new Game(deck, dealer, players);
-        game.dealInitialCards();
-
-        //when
-        game.askHitForAllPlayer(hitDecisionStrategy, TEST_EMPTY_VISUALIZER);
-
-        // then
-        assertThat(players)
-                .allSatisfy(player -> assertThat(player.getHand()).hasSize(2));
-    }
-
     @DisplayName("버스트인 경우 히트 여부를 묻지 않는다.")
     @Test
     void playTurn_ForAllPlayer_WhenBustTest() {
@@ -128,13 +100,14 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer();
-        HitDecisionStrategy hitDecisionStrategy = createHitDecisionStrategy(List.of(true, true));
         List<Player> players = List.of(new Player("pobi"));
         Game game = new Game(deck, dealer, players);
         game.dealInitialCards();
 
         //when
-        game.askHitForAllPlayer(hitDecisionStrategy, TEST_EMPTY_VISUALIZER);
+        for (Player player : players) {
+            game.hitPlayer(player);
+        }
 
         // then
         assertThat(players)
@@ -159,7 +132,7 @@ class GameTest {
         game.dealInitialCards();
 
         //when
-        boolean isDealerHit = game.dealerHit();
+        boolean isDealerHit = game.hitDealer();
 
         // then
         assertThat(isDealerHit)
@@ -186,7 +159,7 @@ class GameTest {
         game.dealInitialCards();
 
         //when
-        boolean isDealerHit = game.dealerHit();
+        boolean isDealerHit = game.hitDealer();
 
         // then
         assertThat(isDealerHit)

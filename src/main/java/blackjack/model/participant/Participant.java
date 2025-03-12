@@ -10,14 +10,26 @@ import blackjack.model.card.CardValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
 
+    protected final String name;
     protected final List<Card> hand;
 
-    protected Participant(List<Card> hand) {
+    protected Participant(String name, List<Card> hand) {
+        validateName(name);
+        this.name = name;
         this.hand = new ArrayList<>(hand);
     }
+
+    private void validateName(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("이름은 한글자 이상이어야합니다.");
+        }
+    }
+
+    public abstract boolean canHit();
 
     public void receiveHand(Card card) {
         hand.add(card);
@@ -75,7 +87,28 @@ public abstract class Participant {
         return BLACKJACK_VALUE_TOTAL < calculateHandTotal();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+
     public List<Card> getHand() {
         return Collections.unmodifiableList(hand);
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -41,11 +41,16 @@ public class BlackjackController {
     }
 
     private void askHitForAllPlayer(Game game) {
-        game.askHitForAllPlayer(inputView::readHitOrNot, outputView::printPlayerHand);
+        for (Player player : game.getPlayers()) {
+            while (player.canHit() && inputView.readHitOrNot(player.getName())) {
+                game.hitPlayer(player);
+                outputView.printPlayerHand(player);
+            }
+        }
     }
 
     private void dealerHitOrNot(Game game) {
-        boolean isDealerHit = game.dealerHit();
+        boolean isDealerHit = game.hitDealer();
         outputView.printDealerHit(isDealerHit);
     }
 

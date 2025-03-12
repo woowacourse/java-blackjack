@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("플레이어 테스트")
 class PlayersTest {
 
     @DisplayName("플레이어가 1명 ~ 6명이고 이름이 중복되지 않으면 players를 생성한다")

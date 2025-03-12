@@ -3,10 +3,8 @@ package blackjack.model;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.HitDecisionStrategy;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
-import blackjack.model.participant.PlayerHandVisualizer;
 import blackjack.model.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,30 +35,12 @@ public class Game {
         participant.receiveHand(deck.draw());
     }
 
-    public void askHitForAllPlayer(HitDecisionStrategy hitDecisionStrategy, PlayerHandVisualizer playerHandVisualizer) {
-        for (Player player : players.getPlayers()) {
-            askHit(player, hitDecisionStrategy, playerHandVisualizer);
-        }
+    public void hitPlayer(Player player) {
+        dealCard(player);
     }
 
-    private void askHit(Player player, HitDecisionStrategy hitDecisionStrategy,
-                        PlayerHandVisualizer playerHandVisualizer) {
-        if (player.isBlackjack()) {
-            return;
-        }
-        boolean isFirstTurn = true;
-        while (!player.isBust() && player.shouldHit(hitDecisionStrategy)) {
-            dealCard(player);
-            playerHandVisualizer.accept(player);
-            isFirstTurn = false;
-        }
-        if (isFirstTurn) {
-            playerHandVisualizer.accept(player);
-        }
-    }
-
-    public boolean dealerHit() {
-        if (dealer.shouldHit()) {
+    public boolean hitDealer() {
+        if (dealer.canHit()) {
             dealCard(dealer);
             return true;
         }
@@ -76,7 +56,7 @@ public class Game {
     }
 
     public Card getDealerVisibleCard() {
-        return dealer.getVisibleCard();
+        return dealer.getHand().getFirst();
     }
 
     public List<Player> getPlayers() {
