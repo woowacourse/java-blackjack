@@ -38,6 +38,9 @@ public enum WinLossResult {
         if(dealer.getHandTotal() > player.getHandTotal()){
             return LOSS;
         }
+        if(dealer.getHandTotal() == player.getHandTotal()) {
+            return DRAW;
+        }
         return NONE;
     }
 
