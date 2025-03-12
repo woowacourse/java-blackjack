@@ -5,8 +5,10 @@ import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -55,6 +57,15 @@ public class Players {
                 .mapToInt(player -> player.calculateProfit(competitiveCards))
                 .sum();
     }
+
+    public Map<Player, Integer> calculateAllProfit(Dealer dealer) {
+        return players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> player.calculateProfit(dealer.getCards())
+                ));
+    }
+
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);

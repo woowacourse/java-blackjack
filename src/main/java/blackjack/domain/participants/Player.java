@@ -30,7 +30,7 @@ public class Player {
 
     public int calculateProfit(Cards competitiveCards) {
         WinningResult winningResult = WinningResult.decide(cards, competitiveCards);
-        return battingMoney.calculateProfit(cards, winningResult);
+        return battingMoney.calculateProfit(winningResult);
     }
 
     public Cards getCards() {

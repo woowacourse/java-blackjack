@@ -1,37 +1,47 @@
 package blackjack.domain.winning;
 
 import blackjack.domain.card.Cards;
+import java.util.function.Function;
 
 public enum WinningResult {
-    DRAW, WIN, LOSE;
+    DRAW((battingAmount) -> battingAmount),
+    WIN((battingAmount) -> battingAmount * 2),
+    BLACKJACK_WIN((battingAmount) -> (int) (battingAmount * 1.5)),
+    LOSE((battingAmount) -> 0);
 
-    public static WinningResult decide(Cards mainCards, Cards subCards) {
-        if (mainCards.isBust() && subCards.isBust()) {
-            return WinningResult.DRAW;
-        }
-        if (mainCards.isBust()) {
-            return WinningResult.LOSE;
-        }
-        if (subCards.isBust()) {
-            return WinningResult.WIN;
-        }
+    private final Function<Integer, Integer> winningAmountExpression;
 
-        if (mainCards.isBlackjack() && subCards.isBlackjack()) {
-            return WinningResult.DRAW;
-        }
-        if (mainCards.isBlackjack()) {
-            return WinningResult.WIN;
-        }
-        if (subCards.isBlackjack()) {
-            return WinningResult.LOSE;
-        }
-
-        return compareScore(mainCards, subCards);
+    WinningResult(Function<Integer, Integer> winningAmountExpression) {
+        this.winningAmountExpression = winningAmountExpression;
     }
 
-    private static WinningResult compareScore(Cards mainCards, Cards subCards) {
-        int mainScore = mainCards.calculateMaxScore();
-        int subScore = subCards.calculateMaxScore();
+    public static WinningResult decide(Cards playerCards, Cards dealerCards) {
+        if (playerCards.isBust()) {
+            return WinningResult.LOSE;
+        }
+        if (dealerCards.isBust()) {
+            return WinningResult.WIN;
+        }
+        if (playerCards.isBlackjack() && dealerCards.isBlackjack()) {
+            return WinningResult.DRAW;
+        }
+        if (playerCards.isBlackjack()) {
+            return WinningResult.BLACKJACK_WIN;
+        }
+        if (dealerCards.isBlackjack()) {
+            return WinningResult.LOSE;
+        }
+
+        return compareScore(playerCards, dealerCards);
+    }
+
+    public int calculateWinningAmount(int battingAmount) {
+        return winningAmountExpression.apply(battingAmount);
+    }
+
+    private static WinningResult compareScore(Cards playerCards, Cards dealerCards) {
+        int mainScore = playerCards.calculateMaxScore();
+        int subScore = dealerCards.calculateMaxScore();
         if (mainScore > subScore) {
             return WinningResult.WIN;
         }
@@ -40,5 +50,4 @@ public enum WinningResult {
         }
         return WinningResult.DRAW;
     }
-
 }

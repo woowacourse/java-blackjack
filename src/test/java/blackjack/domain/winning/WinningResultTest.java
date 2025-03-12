@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class WinningResultTest {
 
     @Test
-    void 승부를_보는_두명이_모두_21을_초과한_경우_무승부이다() {
+    void 승부를_보는_두명이_모두_21을_초과한_경우_메인_카드_패배이다() {
         //given
         Cards mainCards = new Cards(
                 List.of(
@@ -35,7 +35,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.DRAW);
+        Assertions.assertThat(result).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class WinningResultTest {
     }
 
     @Test
-    void 상대방이_블랙잭이_아닌_21이고_본인이_블랙잭일_때_승리이다() {
+    void 상대방이_블랙잭이_아닌_21이고_본인이_블랙잭일_때_블랙잭_승리이다() {
         //given
         Cards mainCards = new Cards(
                 List.of(
@@ -112,7 +112,7 @@ public class WinningResultTest {
         WinningResult result = WinningResult.decide(mainCards, subCards);
 
         //then
-        Assertions.assertThat(result).isEqualTo(WinningResult.WIN);
+        Assertions.assertThat(result).isEqualTo(WinningResult.BLACKJACK_WIN);
     }
 
     @Test

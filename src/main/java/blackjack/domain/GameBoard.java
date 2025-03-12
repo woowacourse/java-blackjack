@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.winning.Profit;
 import blackjack.domain.winning.Victory;
 
 public class GameBoard {
@@ -37,6 +38,13 @@ public class GameBoard {
         return Victory.create(dealer, players);
     }
 
+    public Profit createProfit() {
+        return new Profit(
+                dealer.calculateProfit(players),
+                players.calculateAllProfit(dealer)
+        );
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
@@ -48,4 +56,5 @@ public class GameBoard {
     public int getDealerCardSize() {
         return dealer.getCardSize();
     }
+
 }

@@ -1,6 +1,5 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.winning.WinningResult;
 
 public record BattingMoney(
@@ -12,27 +11,7 @@ public record BattingMoney(
         }
     }
 
-    public int calculateProfit(Cards cards, WinningResult winningResult) {
-        return calculateWinningAmount(cards, winningResult) - amount;
-    }
-
-    private int calculateWinningAmount(Cards cards, WinningResult winningResult) {
-        if (cards.isBust()) {
-            return 0;
-        }
-
-        if (winningResult == WinningResult.WIN && cards.isBlackjack()) {
-            return (int) (amount * 1.5);
-        }
-
-        if (winningResult == WinningResult.WIN) {
-            return amount * 2;
-        }
-
-        if (winningResult == WinningResult.DRAW) {
-            return amount;
-        }
-
-        return 0;
+    public int calculateProfit(WinningResult winningResult) {
+        return winningResult.calculateWinningAmount(amount) - amount;
     }
 }
