@@ -18,21 +18,22 @@ public class Participants {
         }
     }
 
-    public void drawCardTo(GameCardDeck gameCardDeck, Participant unKnownParticipant) {
-        Participant participant = findParticipant(unKnownParticipant);
-        participant.drawCard(gameCardDeck, 1);
-    }
-
-    private Participant findParticipant(Participant unKnownParticipant) {
+    public Participant findDealer() {
         return participants.stream()
-                .filter(participant -> participant.equals(unKnownParticipant))
+                .filter(Participant::areYouDealer)
                 .findFirst()
                 .orElseThrow();
     }
 
-    public boolean ableToDraw(Participant unKnownParticipant) {
-        Participant participant = findParticipant(unKnownParticipant);
-        return participant.ableToDraw();
+    public Participants findOnlyPlayers() {
+        List<Participant> onlyPlayers = new ArrayList<>();
+        for (Participant participant : participants) {
+            if (participant.areYouDealer()) {
+                continue;
+            }
+            onlyPlayers.add(participant);
+        }
+        return new Participants(onlyPlayers);
     }
 
     public List<Participant> getParticipants() {

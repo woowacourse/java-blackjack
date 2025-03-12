@@ -2,7 +2,6 @@ package domain;
 
 import domain.card.Card;
 import domain.card.GameCardDeck;
-import domain.card.ParticipantCardDeck;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
