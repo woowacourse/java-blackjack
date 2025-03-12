@@ -30,8 +30,9 @@ public class BlackjackController {
     }
 
     private Game createGame(List<Player> players) {
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler()));
-        return new Game(dealer, players);
+        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler());
+        Dealer dealer = new Dealer();
+        return new Game(deck, dealer, players);
     }
 
     private void dealInitialHand(Game game) {

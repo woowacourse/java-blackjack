@@ -3,20 +3,12 @@ package blackjack.model.participant;
 import static blackjack.model.constants.RuleConstants.DEALER_HIT_THRESHOLD;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.Deck;
 import java.util.ArrayList;
 
 public class Dealer extends Participant {
 
-    private final Deck deck;
-
-    public Dealer(Deck deck) {
+    public Dealer() {
         super(new ArrayList<>());
-        this.deck = deck;
-    }
-
-    public Card drawCard() {
-        return deck.draw();
     }
 
     public boolean shouldHit() {

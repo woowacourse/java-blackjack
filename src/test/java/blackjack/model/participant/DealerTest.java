@@ -8,8 +8,6 @@ import blackjack.model.card.CardValue;
 import blackjack.model.card.Deck;
 import blackjack.model.card.FixedCardShuffler;
 import blackjack.model.card.Suit;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,31 +16,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayName("딜러 테스트")
 class DealerTest {
 
-    @DisplayName("카드를 한장 뽑는다.")
-    @Test
-    void drawCardTest() {
-        // given
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Suit.SPADES, CardValue.ACE));
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-
-        // when
-        Card card = dealer.drawCard();
-
-        // then
-        assertThat(card)
-                .isEqualTo(new Card(Suit.SPADES, CardValue.ACE));
-    }
-
     @DisplayName("카드를 한장 받는다.")
     @Test
     void receiveHandTest() {
         // given
-        List<Card> cards = new ArrayList<>();
         Card card = new Card(Suit.SPADES, CardValue.ACE);
-        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
 
         // when
         dealer.receiveHand(card);
@@ -58,8 +37,7 @@ class DealerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
         Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
         dealer.receiveHand(spadeTen);
         dealer.receiveHand(spadeFive);
 
@@ -77,8 +55,7 @@ class DealerTest {
         // given
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
         dealer.receiveHand(spadeTen);
         dealer.receiveHand(spadeAce);
 
@@ -97,8 +74,7 @@ class DealerTest {
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTwo = new Card(Suit.SPADES, CardValue.TWO);
         Card spadeNine = new Card(Suit.SPADES, CardValue.NINE);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
         dealer.receiveHand(spadeAce);
         dealer.receiveHand(spadeTwo);
         dealer.receiveHand(spadeNine);
@@ -121,8 +97,7 @@ class DealerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, value1);
         Card spadeAce = new Card(Suit.SPADES, value2);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
         dealer.receiveHand(spadeTen);
         dealer.receiveHand(spadeAce);
 
@@ -145,8 +120,7 @@ class DealerTest {
         Card card1 = new Card(Suit.SPADES, value1);
         Card card2 = new Card(Suit.SPADES, value2);
         Card card3 = new Card(Suit.SPADES, value3);
-        Deck deck = Deck.createShuffledDeck(new ArrayList<>(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
         dealer.receiveHand(card1);
         dealer.receiveHand(card2);
         dealer.receiveHand(card3);
@@ -164,10 +138,10 @@ class DealerTest {
     void getVisibleCardTest() {
         // give
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
-        Card firstCard = dealer.drawCard();
+        Dealer dealer = new Dealer();
+        Card firstCard = deck.draw();
         dealer.receiveHand(firstCard);
-        dealer.receiveHand(dealer.drawCard());
+        dealer.receiveHand(deck.draw());
 
         // when
         Card visibleCard = dealer.getVisibleCard();
@@ -181,8 +155,7 @@ class DealerTest {
     @Test
     void shouldThrowException_WhenNoHandGetVisibleCardTest() {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
 
         // when, then
         assertThatCode(dealer::getVisibleCard)
@@ -198,8 +171,7 @@ class DealerTest {
     })
     void shouldHitTrueTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
         // given
-        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
         dealer.receiveHand(new Card(Suit.SPADES, cardValue1));
         dealer.receiveHand(new Card(Suit.SPADES, cardValue2));
 

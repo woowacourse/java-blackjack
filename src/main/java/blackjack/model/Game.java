@@ -1,6 +1,7 @@
 package blackjack.model;
 
 import blackjack.model.card.Card;
+import blackjack.model.card.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.HitDecisionStrategy;
 import blackjack.model.participant.Participant;
@@ -13,10 +14,12 @@ import java.util.Map;
 
 public class Game {
 
+    private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
-    public Game(Dealer dealer, List<Player> players) {
+    public Game(Deck deck, Dealer dealer, List<Player> players) {
+        this.deck = deck;
         this.dealer = dealer;
         this.players = new Players(players);
     }
@@ -31,8 +34,7 @@ public class Game {
     }
 
     private void dealCard(Participant participant) {
-        Card card = dealer.drawCard();
-        participant.receiveHand(card);
+        participant.receiveHand(deck.draw());
     }
 
     public void askHitForAllPlayer(HitDecisionStrategy hitDecisionStrategy, PlayerHandVisualizer playerHandVisualizer) {

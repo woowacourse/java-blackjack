@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
-import blackjack.model.card.Deck;
-import blackjack.model.card.FixedCardShuffler;
 import blackjack.model.card.Suit;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
@@ -25,7 +23,7 @@ class MatchResultTest {
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer();
 
         // when
         MatchResult matchResult = MatchResult.judge(dealer, player);
@@ -40,7 +38,7 @@ class MatchResultTest {
     void win_WhenPlayerNoBustAndDealerBust() {
         // given
         Player player = new Player("pobi");
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer();
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
@@ -60,7 +58,7 @@ class MatchResultTest {
         Player player = new Player("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer();
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
@@ -79,7 +77,7 @@ class MatchResultTest {
         Player player = new Player("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer();
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
@@ -98,7 +96,7 @@ class MatchResultTest {
         Player player = new Player("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer();
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
@@ -124,7 +122,7 @@ class MatchResultTest {
         Player player = new Player("pobi");
         player.receiveHand(new Card(Suit.SPADES, playerCard1));
         player.receiveHand(new Card(Suit.SPADES, playerCard2));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer();
         dealer.receiveHand(new Card(Suit.SPADES, dealerCard1));
         dealer.receiveHand(new Card(Suit.SPADES, dealerCard2));
 
