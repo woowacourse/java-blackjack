@@ -64,7 +64,4 @@ public enum GameResult {
         return (int)(bettingMoney.intValue() * payoutRate);
     }
 
-    public String getStatus() {
-        return status;
-    }
 }
