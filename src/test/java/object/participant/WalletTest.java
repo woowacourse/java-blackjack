@@ -3,6 +3,8 @@ package object.participant;
 import object.game.BattleResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class WalletTest {
     @Test
@@ -17,18 +19,22 @@ public class WalletTest {
         Assertions.assertThat(wallet).isInstanceOf(Wallet.class);
     }
 
-    @Test
-    void 월렛_베팅률_적용_테스트() {
+    @ParameterizedTest
+    @CsvSource({
+            "1000, BLACKJACK_WIN, 1500",
+            "1000, WIN, 1000",
+            "1000, DRAW, 0",
+            "1000, LOSE, -1000",
+    })
+    void 월렛_베팅률_적용_테스트(int betMoney, BattleResult battleResult, int expectedProfit) {
         // given
-        int betMoney = 1000;
         Wallet wallet = Wallet.generateEmptyWalletFrom(betMoney);
 
         // when
-        Wallet appliedWallet = wallet.applyBetRate(BattleResult.WIN);
+        Wallet appliedWallet = wallet.applyBetRate(battleResult);
 
         // then
-        int expected = 1000;
         int actual = appliedWallet.getProfit();
-        Assertions.assertThat(actual).isEqualTo(expected);
+        Assertions.assertThat(actual).isEqualTo(expectedProfit);
     }
 }
