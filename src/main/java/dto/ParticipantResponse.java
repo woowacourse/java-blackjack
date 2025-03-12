@@ -1,9 +1,7 @@
 package dto;
 
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
 import java.util.List;
+import object.participant.Participant;
 
 public record ParticipantResponse(String dealerName, List<String> playerNames) {
 

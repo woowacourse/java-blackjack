@@ -1,12 +1,12 @@
 package dto;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.participant.Participant;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import object.card.Card;
+import object.card.CardDeck;
+import object.participant.Participant;
 
 public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfParticipant) {
 
