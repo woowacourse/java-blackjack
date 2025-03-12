@@ -8,7 +8,7 @@ public class Count {
 	}
 
 	public Count increment() {
-		return null;
+		return new Count(value + 1);
 	}
 
 	@Override
