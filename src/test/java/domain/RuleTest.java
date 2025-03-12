@@ -148,7 +148,7 @@ class RuleTest {
                     Arguments.of(
                             List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS),
                             List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS),
-                            GameResult.WIN
+                            GameResult.BLACKJACK_WIN
                     ),
                     Arguments.of(
                             List.of(TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_HEARTS),
