@@ -85,14 +85,14 @@ public class GameManagerTest {
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
-        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardRank.ACE));
-        player.getCardHand().addTrumpCard(new TrumpCard(CardShape.DIA, CardRank.NINE));
+        player.addTrumpCard(new TrumpCard(CardShape.DIA, CardRank.ACE));
+        player.addTrumpCard(new TrumpCard(CardShape.DIA, CardRank.NINE));
 
-        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardRank.THREE));
-        dealer.getCardHand().addTrumpCard(new TrumpCard(CardShape.HEART, CardRank.TWO));
+        dealer.addTrumpCard(new TrumpCard(CardShape.HEART, CardRank.THREE));
+        dealer.addTrumpCard(new TrumpCard(CardShape.HEART, CardRank.TWO));
 
         //when
-        Map<User, GameResult> gameResult = gameManger.judgeResult();
+        Map<User, GameResult> gameResult = gameManger.calculatePlayerScore();
 
         //then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(GameResult.WIN);
@@ -110,14 +110,14 @@ public class GameManagerTest {
         User dealer = gameManger.getDealer();
 
         for (TrumpCard card : playerCards) {
-            player.getCardHand().addTrumpCard(card);
+            player.addTrumpCard(card);
         }
         for (TrumpCard card : dealerCards) {
-            dealer.getCardHand().addTrumpCard(card);
+            dealer.addTrumpCard(card);
         }
 
         //when
-        Map<User, GameResult> gameResult = gameManger.judgeResult();
+        Map<User, GameResult> gameResult = gameManger.calculatePlayerScore();
 
         //then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(expectStatus);
@@ -163,16 +163,16 @@ public class GameManagerTest {
         List<Player> users = names.stream().map(Player::new).toList();
         GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
         User user = gameManger.findUserByUsername("유저");
-        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
-        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
-        user.getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
+        user.addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
+        user.addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
+        user.addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
 
-        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.K));
-        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
-        gameManger.getDealer().getCardHand().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.Q));
+        gameManger.getDealer().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.K));
+        gameManger.getDealer().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.J));
+        gameManger.getDealer().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardRank.Q));
 
         // when
-        Map<User, GameResult> gameResult = gameManger.judgeResult();
+        Map<User, GameResult> gameResult = gameManger.calculatePlayerScore();
 
         // then
         Assertions.assertThat(gameResult.get(user)).isEqualTo(GameResult.LOSE);

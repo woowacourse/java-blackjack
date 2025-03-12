@@ -32,7 +32,7 @@ public class BlackjackController {
         additionalPlayerCard(gameManger, playerNames);
         additionalDealerCard(gameManger);
 
-        createGameResult(gameManger, playerNames);
+        displayScore(gameManger, playerNames);
         calculateGameResult(gameManger);
 
         inputView.close();
@@ -58,20 +58,6 @@ public class BlackjackController {
                 addCardAllPlayer(gameManger, playerName));
     }
 
-    private void calculateDealerResult(Map<User, GameResult> gameResult) {
-        int dealerLoseCount = getResultStateCount(gameResult, GameResult.WIN);
-        int dealerWinCount = getResultStateCount(gameResult, GameResult.LOSE);
-        int dealerDrawCount = getResultStateCount(gameResult, GameResult.DRAW);
-
-        outputView.displayDealerGameResult(dealerLoseCount, dealerWinCount, dealerDrawCount);
-    }
-
-    private int getResultStateCount(Map<User, GameResult> gameResult, GameResult status) {
-        return (int) gameResult.entrySet().stream()
-                .filter(entry -> entry.getValue() == status)
-                .count();
-    }
-
     private void addCardAllPlayer(GameManger gameManger, String playerName) {
         User player = gameManger.findUserByUsername(playerName);
         while (player.isDrawable()) {
@@ -90,7 +76,7 @@ public class BlackjackController {
         outputView.displayOpenCards(playerName, cards);
     }
 
-    private void createGameResult(GameManger gameManger, List<String> playerNames) {
+    private void displayScore(GameManger gameManger, List<String> playerNames) {
         displayDealer(gameManger);
         displayPlayers(gameManger, playerNames);
     }
@@ -98,7 +84,7 @@ public class BlackjackController {
     private void displayDealer(GameManger gameManger) {
         Dealer dealer = (Dealer) gameManger.getDealer();
         List<TrumpCard> dealerCards = dealer.openAllCard();
-        int score = dealer.getCardHand().calculateScore();
+        int score = dealer.calculateScore();
         displayConvertCards(dealer.getName(), dealerCards, score);
     }
 
@@ -107,7 +93,7 @@ public class BlackjackController {
                 .map(gameManger::findUserByUsername)
                 .toList()
                 .forEach(player -> displayConvertCards(player.getName(), player.openInitialCard(),
-                        player.getCardHand().calculateScore()));
+                        player.calculateScore()));
     }
 
     private void displayConvertCards(String name, List<TrumpCard> dealerCards, int score) {
@@ -120,9 +106,11 @@ public class BlackjackController {
     }
 
     private void calculateGameResult(GameManger gameManger) {
-        Map<User, GameResult> gameResult = gameManger.judgeResult();
-        calculateDealerResult(gameResult);
+        Map<GameResult, Integer> gameResultIntegerMap = gameManger.calculateDealerScore();
+        outputView.displayDealerGameResult(gameResultIntegerMap.get(GameResult.WIN),
+                gameResultIntegerMap.get(GameResult.LOSE), gameResultIntegerMap.get(GameResult.DRAW));
 
+        Map<User, GameResult> gameResult = gameManger.calculatePlayerScore();
         outputView.displayGameResult(gameResult);
     }
 }

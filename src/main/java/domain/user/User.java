@@ -25,8 +25,16 @@ public abstract class User {
         return cardHand.cardsSize();
     }
 
-    public CardHand getCardHand() {
-        return this.cardHand;
+    public int calculateScore() {
+        return this.cardHand.calculateScore();
+    }
+
+    public boolean isBlackjack() {
+        return this.cardHand.isBlackjack();
+    }
+
+    public void addTrumpCard(TrumpCard card) {
+        this.cardHand.addTrumpCard(card);
     }
 
     public boolean isBust() {

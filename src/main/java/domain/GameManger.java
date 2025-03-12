@@ -4,6 +4,7 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class GameManger {
 
     public GameManger(List<Player> users, Dealer dealer, CardDeck cardDeck) {
         validate(users);
-        this.users = new ArrayList<Player>(users);
+        this.users = new ArrayList<>(users);
         this.dealer = dealer;
         this.cardDeck = cardDeck;
     }
@@ -61,8 +62,8 @@ public class GameManger {
     }
 
     private GameResult compareScore(User player) {
-        int dealerScore = dealer.getCardHand().calculateScore();
-        int playerScore = player.getCardHand().calculateScore();
+        int dealerScore = dealer.calculateScore();
+        int playerScore = player.calculateScore();
 
         if (player.isBust()) {
             return GameResult.LOSE;
@@ -77,13 +78,13 @@ public class GameManger {
     }
 
     private GameResult compareSameScore(User player) {
-        if (dealer.getCardHand().isBlackjack() && !player.getCardHand().isBlackjack()) {
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
     }
 
-    public Map<User, GameResult> judgeResult() {
+    public Map<User, GameResult> calculatePlayerScore() {
         Map<User, GameResult> gameResult = new LinkedHashMap<>();
         if (dealer.isBust()) {
             users.forEach((user) -> putGameResultBust(user, gameResult));
@@ -99,5 +100,22 @@ public class GameManger {
             return;
         }
         gameResult.put(user, GameResult.WIN);
+    }
+
+    public Map<GameResult, Integer> calculateDealerScore() {
+        Map<GameResult, Integer> gameResult = new HashMap<>();
+        Map<User, GameResult> userGameResultMap = calculatePlayerScore();
+
+        gameResult.put(GameResult.LOSE, getResultStateCount(userGameResultMap, GameResult.WIN));
+        gameResult.put(GameResult.WIN, getResultStateCount(userGameResultMap, GameResult.LOSE));
+        gameResult.put(GameResult.DRAW, getResultStateCount(userGameResultMap, GameResult.DRAW));
+
+        return gameResult;
+    }
+
+    private int getResultStateCount(Map<User, GameResult> gameResult, GameResult status) {
+        return (int) gameResult.entrySet().stream()
+                .filter(entry -> entry.getValue() == status)
+                .count();
     }
 }
