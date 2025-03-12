@@ -1,6 +1,6 @@
 package domain.card;
 
-import constant.Suit;
+import domain.Suit;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

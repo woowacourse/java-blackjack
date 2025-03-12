@@ -1,6 +1,6 @@
 package domain.participant;
 
-import constant.DealerRoster;
+import domain.DealerRoster;
 import domain.card.Hand;
 
 public final class Dealer extends Participant {

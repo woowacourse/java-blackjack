@@ -1,6 +1,6 @@
 package domain.card;
 
-import constant.Suit;
+import domain.Suit;
 import java.util.Objects;
 
 public record TrumpCard(

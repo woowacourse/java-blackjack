@@ -2,8 +2,8 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import constant.DealerRoster;
-import constant.Suit;
+import domain.DealerRoster;
+import domain.Suit;
 import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.TrumpCard;

@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import constant.Suit;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.TrumpCard;
