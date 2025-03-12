@@ -95,7 +95,7 @@ class PlayerBetsTest {
     }
 
     @Test
-    @DisplayName("딜러가 패배할 경우 수익을 0으로 계산한다")
+    @DisplayName("딜러가 패배할 경우 수익을 플레이어의 베팅 금액을 차감한 값으로 계산한다")
     void dealerLoseTest() {
         // given
         PlayerBets playerBets = new PlayerBets();
@@ -112,7 +112,7 @@ class PlayerBetsTest {
         double actual = playerBets.getDealerProfit(dealer, players);
 
         // then
-        assertThat(actual).isEqualTo(0);
+        assertThat(actual).isEqualTo(-30000);
     }
 
     @ParameterizedTest

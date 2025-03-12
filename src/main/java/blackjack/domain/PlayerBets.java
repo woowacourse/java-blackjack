@@ -35,8 +35,11 @@ public class PlayerBets {
         double totalProfit = 0;
         for (Player player : players) {
             RoundResult roundResult = RoundResult.judgeResult(dealer, player);
-            if (roundResult == RoundResult.TIE) {
-
+            if (roundResult == RoundResult.LOSE && player.isBlackjack()) {
+                totalProfit -= (bets.get(player) * 1.5);
+            }
+            if (roundResult == RoundResult.LOSE) {
+                totalProfit -= bets.get(player);
             }
             if (roundResult == RoundResult.WIN) {
                 totalProfit += bets.get(player);
