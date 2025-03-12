@@ -38,7 +38,7 @@ public abstract class BlackjackParticipant {
 
     protected boolean isBust() {
         BlackjackCardSum blackjackCardSum = new BlackjackCardSum(cardHands);
-        return blackjackCardSum.isBUST();
+        return blackjackCardSum.isBust();
     }
 
     public int calculateCardSum() {

@@ -30,14 +30,14 @@ public class BlackjackCardSum {
     }
 
     private int calculateAceIncludeSum(int aceCount, int sum) {
-        while (isBUST() && aceCount != 0) {
+        while (isBust() && aceCount != 0) {
             sum = sum - ACE_DIFF;
             aceCount--;
         }
         return sum;
     }
 
-    public boolean isBUST() {
+    public boolean isBust() {
         return BUST_STANDARD < cardSum;
     }
 }
