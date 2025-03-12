@@ -6,6 +6,8 @@ import static domain.game.GameResult.WIN;
 import static domain.participants.Dealer.BUST_THRESHOLD;
 
 import domain.card.Card;
+import domain.game.BettingResultAmount;
+import domain.game.BettingStatistics;
 import domain.game.GameResult;
 import domain.game.GameStatistics;
 import domain.participants.Gamer;
@@ -76,6 +78,14 @@ public class OutputView {
         results.forEach((key, value) -> {
             System.out.printf("%s: %s\n", key.username(), GAME_RESULT.get(value));
         });
+        System.out.println();
+    }
+
+    public void printBettingStatistics(BettingStatistics bettingStatistics) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d\n", bettingStatistics.calculateDealerBettingResult().getMoney());
+        Map<PlayerName, BettingResultAmount> bettingResult = bettingStatistics.getBettingResult();
+        bettingResult.forEach((key, value) -> System.out.printf("%s: %d\n", key.username(), value.getMoney()));
     }
 
     private void printGamerScore(Gamer gamer) {
