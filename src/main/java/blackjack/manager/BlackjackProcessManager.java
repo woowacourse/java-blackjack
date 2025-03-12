@@ -4,7 +4,6 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
-import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.DealerResult;
@@ -50,55 +49,59 @@ public class BlackjackProcessManager {
         cards.forEach(participant::takeCard);
     }
 
-    public void calculateCardResult(Players players, Dealer dealer, GameRuleEvaluator gameRuleEvaluator) {
-        for (Player player : players.getPlayers()) {
-            saveResult(dealer, gameRuleEvaluator, player);
+    public void calculateChallengerResult(Participants participants, GameRuleEvaluator gameRuleEvaluator) {
+        Participant defender = participants.findDefender();
+
+        for (Participant participant : participants.getParticipants()) {
+            saveResult(defender, participant, gameRuleEvaluator);
         }
     }
 
-    private void saveResult(Dealer dealer, GameRuleEvaluator gameRuleEvaluator, Player player) {
-        boolean isBustedDealer = gameRuleEvaluator.isBustedFor(dealer);
-        boolean isBustedPlayer = gameRuleEvaluator.isBustedFor(player);
+    private void saveResult(Participant defender, Participant challenger, GameRuleEvaluator gameRuleEvaluator) {
+        boolean isDefenderBusted = gameRuleEvaluator.isBusted(defender);
+        boolean isChallengerBusted = gameRuleEvaluator.isBusted(challenger);
 
-        int playerValue = player.getOptimisticValue();
+        int challengerValue = challenger.getOptimisticValue();
 
-        if (isBustedDealer) {
-            processWhenDealerIsBusted(player, isBustedPlayer, playerValue);
+        if (isDefenderBusted) {
+            processWhenDefenderIsBusted(challenger, isChallengerBusted, challengerValue);
             return;
         }
 
+        if (isChallengerBusted) {
+            saveChallengerResult(challenger, GameResultType.LOSE, challengerValue);
+            return;
+        }
+
+        GameResultType resultOfChallenger = decideResultOfChallenger(challenger, defender);
+        saveChallengerResult(challenger, resultOfChallenger, challengerValue);
+    }
+
+    private void processWhenDefenderIsBusted(Participant participant, boolean isBustedPlayer, int playerValue) {
         if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.LOSE, playerValue);
+            saveChallengerResult(participant, GameResultType.TIE, playerValue);
             return;
         }
 
-        GameResultType resultOfPlayer = decideResultOfPlayer(player, dealer);
-        saveResultWithPlayerResult(player, resultOfPlayer, playerValue);
+        saveChallengerResult(participant, GameResultType.WIN, playerValue);
     }
 
-    private void processWhenDealerIsBusted(Player player, boolean isBustedPlayer, int playerValue) {
-        if (isBustedPlayer) {
-            saveResultWithPlayerResult(player, GameResultType.TIE, playerValue);
-            return;
-        }
-
-        saveResultWithPlayerResult(player, GameResultType.WIN, playerValue);
-    }
-
-    public GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
-        int playerValue = player.getOptimisticValue();
-        int dealerValue = dealer.getOptimisticValue();
+    private GameResultType decideResultOfChallenger(Participant challenger, Participant defender) {
+        int playerValue = challenger.getOptimisticValue();
+        int dealerValue = defender.getOptimisticValue();
 
         return GameResultType.find(playerValue, dealerValue);
     }
 
-    public void saveResultWithPlayerResult(Player player, GameResultType gameResultOfPlayer, int playerValue) {
-        PlayerResult playerResult = new PlayerResult(player, gameResultOfPlayer, playerValue);
+    private void saveChallengerResult(Participant challenger, GameResultType gameResultOfPlayer,
+                                      int playerValue) {
+        // TODO: 결과 저장시 카운트 관련해서 사용하는 것으로 바꾸기
+        PlayerResult playerResult = new PlayerResult((Player) challenger, gameResultOfPlayer, playerValue);
         playersResults.save(playerResult);
     }
 
-    public DealerResult calculateDealerResult(Dealer dealer) {
-        int dealerValue = dealer.getOptimisticValue();
+    public DealerResult calculateDefenderResult(Participant participant) {
+        int dealerValue = participant.getOptimisticValue();
         DealerResult dealerResult = new DealerResult(dealerValue);
 
         for (PlayerResult playerResult : playersResults.getAllResult()) {
@@ -110,6 +113,7 @@ public class BlackjackProcessManager {
 
         return dealerResult;
     }
+
 
     public List<PlayerResult> getPlayersResult() {
         return playersResults.getAllResult();

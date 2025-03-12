@@ -1,9 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
-import blackjack.domain.Players;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayersResults;
@@ -31,22 +29,18 @@ public class BlackjackController {
     public void run() {
         List<String> names = InputView.readNames();
 
-        Players players = blackJackInitManager.savePlayers(names);
-        Dealer dealer = blackJackInitManager.saveDealer();
-
-        List<PlayerResult> playerResults = getCardResultOfPlayer(players, dealer);
-        DealerResult dealerResult = getCardResultOfDealer(dealer);
-
-        OutputView.printCardResult(playerResults, dealerResult, dealer);
-        OutputView.printGameResult(dealerResult, playerResults);
-
-        //TODO: 위의 로직 제거
-
         Participants participants = blackJackInitManager.saveParticipants(names);
 
         giveStartingCards(participants);
         participants.getParticipants().forEach(this::giveMoreCard);
 
+        List<PlayerResult> resultOfChallengers = getResultOfChallengers(participants);
+        DealerResult resultOfDefender = getResultOfDefenders(participants);
+
+        Participant defender = participants.findDefender();
+
+        OutputView.printCardResult(resultOfChallengers, resultOfDefender, defender);
+        OutputView.printGameResult(resultOfChallengers, resultOfDefender);
     }
 
     private void giveMoreCard(Participant participant) {
@@ -90,12 +84,14 @@ public class BlackjackController {
         OutputView.printStartingCardsStatuses(participants);
     }
 
-    private List<PlayerResult> getCardResultOfPlayer(Players players, Dealer dealer) {
-        blackjackProcessManager.calculateCardResult(players, dealer, gameRuleEvaluator);
+    private List<PlayerResult> getResultOfChallengers(Participants participants) {
+        blackjackProcessManager.calculateChallengerResult(participants, gameRuleEvaluator);
         return blackjackProcessManager.getPlayersResult();
     }
 
-    private DealerResult getCardResultOfDealer(Dealer dealer) {
-        return blackjackProcessManager.calculateDealerResult(dealer);
+    // TODO: 리스트로 받아야 하는지 고민해보기
+    private DealerResult getResultOfDefenders(Participants participants) {
+        Participant defender = participants.findDefender();
+        return blackjackProcessManager.calculateDefenderResult(defender);
     }
 }

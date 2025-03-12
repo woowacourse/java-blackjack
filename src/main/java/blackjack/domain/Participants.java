@@ -30,4 +30,11 @@ public class Participants {
                 .map(participant -> participant.getName())
                 .toList();
     }
+
+    public Participant findDefender() {
+        return participants.stream()
+                .filter(participant -> !participant.isChallenger())
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("게임에 대적할 사람이 존재하지 않습니다."));
+    }
 }

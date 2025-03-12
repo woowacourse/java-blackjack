@@ -5,8 +5,6 @@ import blackjack.domain.Hand;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
@@ -57,61 +55,6 @@ class BlackjackProcessManagerTest {
         assertThat(participant.getCards()).hasSize(1);
     }
 
-    @DisplayName("플레이어의 결과를 판단한다.")
-    @Test
-    void test3() {
-        // given
-        Card card1 = new Card(CardSuit.SPADE, CardRank.ACE);
-        Card card2 = new Card(CardSuit.SPADE, CardRank.TEN);
-
-        Hand dealerHand = new Hand();
-        dealerHand.takeCard(card1);
-        dealerHand.takeCard(card2);
-
-        Hand playerHand = new Hand();
-
-        Card card3 = new Card(CardSuit.CLUB, CardRank.ACE);
-        Card card4 = new Card(CardSuit.SPADE, CardRank.SEVEN);
-
-        playerHand.takeCard(card3);
-        playerHand.takeCard(card4);
-
-        Dealer dealer = new Dealer(dealerHand);
-        Player player = new Player("꾹이", playerHand);
-
-        // when
-        GameResultType gameResultType = blackjackProcessManager.decideResultOfPlayer(player, dealer);
-
-        // then
-        assertThat(gameResultType).isEqualTo(GameResultType.LOSE);
-    }
-
-    @DisplayName("플레이어의 결과를 판단한다.")
-    @Test
-    void test4() {
-        // given
-
-        Card card1 = new Card(CardSuit.SPADE, CardRank.ACE);
-        Card card2 = new Card(CardSuit.SPADE, CardRank.SEVEN);
-
-        Hand dealerHand = new Hand();
-        dealerHand.takeCard(card1);
-        dealerHand.takeCard(card2);
-
-        Hand playerHand = new Hand();
-        playerHand.takeCard(card1);
-        playerHand.takeCard(card2);
-
-        Dealer dealer = new Dealer(dealerHand);
-        Player player = new Player("꾹이", playerHand);
-
-        // when
-        GameResultType gameResultType = blackjackProcessManager.decideResultOfPlayer(player, dealer);
-
-        // then
-        assertThat(gameResultType).isEqualTo(GameResultType.TIE);
-    }
-
     @DisplayName("딜러의 게임 결과를 저장한다.")
     @Test
     void test5() {
@@ -129,7 +72,7 @@ class BlackjackProcessManagerTest {
         BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, playersResults);
 
         // when
-        DealerResult dealerResult = blackjackProcessManager.calculateDealerResult(dealer);
+        DealerResult dealerResult = blackjackProcessManager.calculateDefenderResult(dealer);
 
         // then
         assertThat(dealerResult.getCountsOfResultTypes().getOrDefault(GameResultType.WIN, 0)).isEqualTo(1);

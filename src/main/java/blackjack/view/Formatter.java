@@ -50,12 +50,12 @@ public final class Formatter {
     }
 
     // TODO: Dealer 의 결과를 저장하는 기능을 구현한 뒤에 수정하기
-    public static String formatDealerCardResult(Dealer dealer, DealerResult dealerResult) {
-        return formatDealerCardStatus(dealer) + " - 결과: " + formatCardResultValue(dealerResult);
+    public static String formatDealerCardResult(Participant participant, DealerResult dealerResult) {
+        return formatDealerCardStatus(participant) + " - 결과: " + formatCardResultValue(dealerResult);
     }
 
-    private static String formatDealerCardStatus(Dealer dealer) {
-        return "딜러카드: " + formatStartingCardStatus(dealer);
+    private static String formatDealerCardStatus(Participant participant) {
+        return "딜러카드: " + formatStartingCardStatus(participant);
     }
 
     private static String formatCardResultValue(PlayerResult playerResult) {

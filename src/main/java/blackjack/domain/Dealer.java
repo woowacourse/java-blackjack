@@ -57,4 +57,9 @@ public class Dealer implements Participant {
         return hand.calculatePossibleSums().stream()
                 .allMatch(sum -> sum <= limit);
     }
+
+    @Override
+    public boolean isChallenger() {
+        return false;
+    }
 }

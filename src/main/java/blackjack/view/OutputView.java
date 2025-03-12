@@ -1,33 +1,17 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
-import blackjack.domain.Players;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
 
     private OutputView() {
-    }
-
-    public static void printStartingCardsStatuses(Dealer dealer, Players players) {
-        String names = players.getPlayers()
-                .stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(DELIMITER));
-
-        System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
-        System.out.println(Formatter.formatDealerStartCardStatus(dealer));
-        for (Player player : players.getPlayers()) {
-            System.out.println(Formatter.formatPlayerCardStatus(player));
-        }
     }
 
     public static void printStartingCardsStatuses(Participants participants) {
@@ -49,8 +33,9 @@ public final class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardResult(List<PlayerResult> playerResults, DealerResult dealerResult, Dealer dealer) {
-        System.out.println(Formatter.formatDealerCardResult(dealer, dealerResult));
+    public static void printCardResult(List<PlayerResult> playerResults, DealerResult dealerResult,
+                                       Participant participant) {
+        System.out.println(Formatter.formatDealerCardResult(participant, dealerResult));
 
         for (PlayerResult playerResult : playerResults) {
             System.out.println(Formatter.formatPlayerCardResult(playerResult));
@@ -61,10 +46,6 @@ public final class OutputView {
         System.out.println(Formatter.formatMultipleCardStatusWithName(participant));
     }
 
-    public static void printBustedPlayer(Player player) {
-        System.out.println(player.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
-    }
-
     public static void printBustedParticipantWithName(Participant participant) {
         if (participant.doesHaveName()) {
             Player player = (Player) participant;
@@ -73,8 +54,8 @@ public final class OutputView {
         throw new IllegalArgumentException("해당 참가자는 이름이 존재하지 않습니다.");
     }
 
-    public static void printGameResult(DealerResult dealerResult,
-                                       List<PlayerResult> playersResult) {
+    public static void printGameResult(List<PlayerResult> playersResult,
+                                       DealerResult dealerResult) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%n", Formatter.formatDealerGameResult(dealerResult));
         System.out.println(Formatter.formatPlayerGameResult(playersResult));

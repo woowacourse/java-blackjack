@@ -62,6 +62,11 @@ public class Player implements Participant {
                 .allMatch(sum -> sum <= limit);
     }
 
+    @Override
+    public boolean isChallenger() {
+        return true;
+    }
+
     public String getName() {
         return name;
     }
