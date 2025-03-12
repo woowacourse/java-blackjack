@@ -32,9 +32,14 @@ public class Players {
 
 	public void pickCardPlayersIfNotBust(final BooleanSupplier playerAnswer, final Deck deck, final int bustScore) {
 		for (final Player player : players) {
-			while (!player.isBust(bustScore) && playerAnswer.getAsBoolean()) {
-				player.addCards(deck.pickCards(1));
-			}
+			pickCard(playerAnswer, deck, bustScore, player);
+		}
+	}
+
+	private static void pickCard(final BooleanSupplier playerAnswer, final Deck deck, final int bustScore,
+		final Player player) {
+		while (!player.isBust(bustScore) && playerAnswer.getAsBoolean()) {
+			player.addCards(deck.pickCards(1));
 		}
 	}
 }
