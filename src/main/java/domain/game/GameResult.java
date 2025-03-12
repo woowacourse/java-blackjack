@@ -12,21 +12,21 @@ public class GameResult {
     }
 
     public int countDealerWin() {
-        return (int) playerWinningResult.values().stream()
-            .filter(winning -> winning == Winning.LOSE)
-            .count();
+        return convertWinning(Winning.LOSE);
     }
 
     public int countDealerDraw() {
-        return (int) playerWinningResult.values().stream()
-            .filter(winning -> winning == Winning.DRAW)
-            .count();
+        return convertWinning(Winning.DRAW);
     }
 
     public int countDealerLose() {
+        return convertWinning(Winning.WIN);
+    }
+
+    private int convertWinning(Winning winningStatus) {
         return (int) playerWinningResult.values().stream()
-            .filter(winning -> winning == Winning.WIN)
-            .count();
+                .filter(winning -> winning == winningStatus)
+                .count();
     }
 
     public Map<Player, Winning> getPlayerWinningResult() {
