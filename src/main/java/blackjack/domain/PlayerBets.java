@@ -18,6 +18,9 @@ public class PlayerBets {
     public double getPlayerProfit(Player player, Dealer dealer) {
         int playerBet = bets.get(player);
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
+        if (roundResult == RoundResult.LOSE) {
+            return -playerBet;
+        }
         if (roundResult == RoundResult.WIN && player.isBlackjack()) {
             return (double) playerBet * 1.5;
         }

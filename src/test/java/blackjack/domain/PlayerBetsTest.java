@@ -50,4 +50,22 @@ class PlayerBetsTest {
         // then
         assertThat(actual).isEqualTo(15000);
     }
+
+    @Test
+    @DisplayName("플레이어가 패배할 경우 수익을 0에서 베팅 금액을 차감한 값으로 계산한다")
+    void playerLoseTest() {
+        // given
+        PlayerBets playerBets = new PlayerBets();
+        playerBets.add(player, 20000);
+        Deck playerDeck = DeckFixture.deckOf(CardNumber.TWO, CardNumber.THREE);
+        player.initialize(playerDeck);
+        Deck dealerDeck = DeckFixture.deckOf(CardNumber.EIGHT, CardNumber.NINE);
+        dealer.initialize(dealerDeck);
+
+        // when
+        double actual = playerBets.getPlayerProfit(player, dealer);
+
+        // then
+        assertThat(actual).isEqualTo(-20000);
+    }
 }
