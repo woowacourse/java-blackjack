@@ -45,11 +45,6 @@ public class BlackJackController {
         showMatchResult(players, dealer);
     }
 
-    private void dealerHit(Gamer dealer, Deck deck) {
-        dealer.hit(deck);
-        outputView.printDealerHitSuccess();
-    }
-
     private Deck prepareDeck() {
         List<Card> cards = new CardsInitializer().initialize();
         return Deck.from(cards);
@@ -77,6 +72,15 @@ public class BlackJackController {
     private void processGame(List<Gamer> players, Deck deck) {
         for (Gamer player : players) {
             selectChoice(player, deck);
+        }
+    }
+
+    private void dealerHit(Gamer dealer, Deck deck) {
+        try {
+            dealer.hit(deck);
+            outputView.printDealerHitSuccess();
+        } catch (IllegalStateException e) {
+            outputView.printDealerNonHit();
         }
     }
 

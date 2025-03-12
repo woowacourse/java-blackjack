@@ -14,17 +14,14 @@ public class OutputView {
         String playerNames = getPlayerNames(players);
         System.out.printf(NEXT_LINE + "%s와 %s에게 2장을 나누었습니다.%s", "딜러", playerNames, NEXT_LINE);
 
-        System.out.printf("%s카드: %s%n", dealer.getName(),
-                formatSingleCard(dealer.getHand().getCards().getFirst()));
+        System.out.printf("%s카드: %s%n", dealer.getName(), formatSingleCard(dealer.getHand().getCards().getFirst()));
 
         players.forEach(this::printCards);
         System.out.println();
     }
 
     private String getPlayerNames(List<Gamer> players) {
-        return players.stream()
-                .map(Gamer::getName)
-                .collect(Collectors.joining(", "));
+        return players.stream().map(Gamer::getName).collect(Collectors.joining(", "));
     }
 
     public void printCards(Gamer player) {
@@ -47,8 +44,7 @@ public class OutputView {
     }
 
     private void cardFormat(Gamer player) {
-        String cards = player.getHand().getCards().stream()
-                .map(this::formatSingleCard)
+        String cards = player.getHand().getCards().stream().map(this::formatSingleCard)
                 .collect(Collectors.joining(", "));
         System.out.printf("%s카드: %s", player.getName(), cards);
     }
@@ -86,5 +82,9 @@ public class OutputView {
 
     private void printScore(Gamer gamer) {
         System.out.printf(" - 결과: %d%n", gamer.getScore());
+    }
+
+    public void printDealerNonHit() {
+        System.out.println(NEXT_LINE + "딜러의 점수가 16점을 초과하므로 카드를 뽑지 않았습니다." + NEXT_LINE);
     }
 }
