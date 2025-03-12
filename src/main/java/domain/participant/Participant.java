@@ -32,6 +32,10 @@ public abstract class Participant {
         return hand.isBlackJack();
     }
 
+    public int handSize() {
+        return hand.size();
+    }
+
     public Hand getHand() {
         return hand;
     }
