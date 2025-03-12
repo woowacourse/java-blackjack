@@ -3,7 +3,6 @@ package controller;
 import controller.dto.CardScoreDto;
 import domain.BlackJackGame;
 import domain.GameResult;
-import domain.Participant;
 import domain.Player;
 import domain.Score;
 import domain.TrumpCard;
@@ -53,7 +52,7 @@ public class BlackJackController {
 
     private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
         return players.stream()
-                .collect(Collectors.toMap(Player::getName, Participant::retrieveCards));
+                .collect(Collectors.toMap(Player::getName, Player::retrieveCards));
     }
 
     private void executePlayerHit(Player player) {
@@ -101,7 +100,7 @@ public class BlackJackController {
         return dealerGameResults;
     }
 
-    private static void calculateDealerGameResult(GameResult gameResult, List<GameResult> dealerGameResults) {
+    private void calculateDealerGameResult(GameResult gameResult, List<GameResult> dealerGameResults) {
         if (gameResult == GameResult.WIN) {
             dealerGameResults.add(GameResult.LOSE);
             return;
