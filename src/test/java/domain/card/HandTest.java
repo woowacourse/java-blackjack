@@ -82,15 +82,30 @@ public class HandTest {
         assertThat(hand.isBust()).isFalse();
     }
 
-    @Test
-    @DisplayName("Hand에 카드가 2장이 있으면서, 총 합이 21이면 블랙잭이다.")
-    void test7() {
-        Hand hand = new Hand();
+    @Nested
+    @DisplayName("블랙잭 판별 테스트")
+    class HandBlackJackTest{
+        @Test
+        @DisplayName("Hand에 카드가 2장이 있으면서, 총 합이 21이면 블랙잭이다.")
+        void test7() {
+            Hand hand = new Hand();
 
-        hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
-        hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
+            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
+            hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
-        assertThat(hand.isBlackJack()).isTrue();
+            assertThat(hand.isBlackJack()).isTrue();
+        }
+
+        @Test
+        @DisplayName("Hand에 카드가 2장이 있으면서, 총 합이 21이 아니면 블랙잭이 아니다.")
+        void test8() {
+            Hand hand = new Hand();
+
+            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
+            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
+
+            assertThat(hand.isBlackJack()).isFalse();
+        }
+
     }
-
 }

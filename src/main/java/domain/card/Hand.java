@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 public class Hand {
     private static final int ORIGINAL_ACE_VALUE = 11;
-    private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_MAX_SCORE = 21;
     public static final int INITIAL_SIZE = 2;
 
     private final List<Card> cards;
@@ -33,7 +33,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getTotal() > BUST_THRESHOLD;
+        return getTotal() > BLACKJACK_MAX_SCORE;
     }
 
     public void setAllCardValueToZero() {
@@ -47,6 +47,9 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
+        if(getSize() == INITIAL_SIZE && getTotal() == BLACKJACK_MAX_SCORE) {
+            return true;
+        }
         return false;
     }
 
