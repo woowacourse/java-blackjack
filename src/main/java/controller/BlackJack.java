@@ -53,7 +53,6 @@ public class BlackJack {
         printEveryOneCardsNamesWithTotal(players, dealer);
         Map<Player, Integer> profitPerParticipant = calculateProfit();
         printProfitPerParticipant(profitPerParticipant, dealer);
-
 //        printWinLossResult(players, dealer, countWinLoss(players, dealer));
     }
 
@@ -61,7 +60,7 @@ public class BlackJack {
         Map<Player, Integer> profitPerParticipant = new HashMap<>();
         int dealersProfit = 0;
         for (Player player : players.getPlayers()) {
-            int playersProfit = accountant.getProfit(player, computeWinLoss(player, dealer));   // 각 플레이어 수익금
+            int playersProfit = accountant.getProfit(player, computeWinLoss(player, dealer));
             profitPerParticipant.put(player, playersProfit);
             dealersProfit -= playersProfit;
         }
