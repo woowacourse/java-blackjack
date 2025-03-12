@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public enum WinningType {
-    BLACKJACK_WIN("블랙잭 승", 1.5),
+    BLACKJACK_WIN("블랙잭 승", 2.5),
     BLACKJACK_DRAW("블랙잭 무승부", 1.0),
     WIN("승", 2.0),
     DEFEAT("패", 0),
