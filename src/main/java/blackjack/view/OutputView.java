@@ -29,9 +29,9 @@ public class OutputView {
                 .map(this::formatCardMessage)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("%s카드: %s",
-                cards,
-                player.getName()
+        System.out.printf(NEW_LINE + "%s카드: %s",
+                player.getName(),
+                cards
         );
     }
 
@@ -47,16 +47,10 @@ public class OutputView {
     public void printGameResults(final GameResults gameResults) {
         Map<Gambler, GameResult> results = gameResults.getGameResults();
 
-        System.out.println("## 최종 승패");
+        System.out.println(NEW_LINE + "## 최종 승패");
         System.out.printf("딜러: %s" + NEW_LINE, formatDealerResultRate(gameResults));
 
         results.entrySet().forEach(this::printGamblerGameResult);
-    }
-
-    private void printGamblerGameResult(final Map.Entry<Gambler, GameResult> entry) {
-        String name = entry.getKey().getName();
-        GameResult gameResult = entry.getValue();
-        System.out.println(name + ": " + formatPlayerResultRate(gameResult));
     }
 
     public void printErrorMessage(String message) {
@@ -90,6 +84,12 @@ public class OutputView {
             dealerRate.append(String.format("%d패 ", gameResults.getDealerLose()));
         }
         return dealerRate.toString();
+    }
+
+    private void printGamblerGameResult(final Map.Entry<Gambler, GameResult> entry) {
+        String name = entry.getKey().getName();
+        GameResult gameResult = entry.getValue();
+        System.out.println(name + ": " + formatPlayerResultRate(gameResult));
     }
 
     private String formatPlayerResultRate(final GameResult gameResult) {
