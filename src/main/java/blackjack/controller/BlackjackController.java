@@ -1,11 +1,10 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGame;
 import blackjack.domain.DealerWinningResult;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Gamer;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.shuffle.ShuffleCardGenerator;
@@ -13,8 +12,13 @@ import blackjack.util.StringParser;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
+
+    private static final int DEALER_COUNT = 1;
+    private static final int SPREAD_CARD_SIZE_PER_PLAYER = 2;
+    private static final int SPREAD_SIZE = 1;
 
     private static final String YES = "y";
     private static final String NO = "n";
@@ -29,19 +33,18 @@ public class BlackjackController {
 
     public void run() {
         final Deck deck = new Deck(new ShuffleCardGenerator());
-        final Participants participants = makeParticipants();
-        final BlackjackGame blackjackGame = new BlackjackGame(deck, participants);
-
-        spreadInitialCards(blackjackGame);
-        spreadExtraCards(blackjackGame);
-        resultView.makeParticipantsWithScoreMessage(blackjackGame.showDealerCard(), blackjackGame.showPlayersCards());
-        showWinningResult(blackjackGame);
-    }
-
-    private Participants makeParticipants() {
         final Dealer dealer = Dealer.createEmpty();
         final Players players = makePlayers();
-        return new Participants(dealer, players);
+
+        spreadInitialCards(dealer, players, deck);
+        spreadExtraCards(dealer, players, deck);
+        showParticipantScore(dealer, players);
+        showWinningResult(dealer, players);
+    }
+
+    private void showParticipantScore(final Dealer dealer, final Players players) {
+        resultView.makeParticipantsWithScoreMessage(Map.entry(dealer.getNickname(), dealer.showAllCards()),
+                players.showTotalCards());
     }
 
     private Players makePlayers() {
@@ -52,28 +55,30 @@ public class BlackjackController {
                 .toList());
     }
 
-    private void spreadInitialCards(final BlackjackGame blackjackGame) {
-        blackjackGame.spreadInitialCards();
-        resultView.printSpreadCard(blackjackGame.getPlayersNames(), blackjackGame.showInitialDealerCard(),
-                blackjackGame.showInitialPlayersCards());
+    private void spreadInitialCards(final Dealer dealer, final Players players, final Deck deck) {
+        final int cardsCount = (DEALER_COUNT + players.getSize()) * SPREAD_CARD_SIZE_PER_PLAYER;
+        final Hand hand = deck.spreadCards(cardsCount);
+        dealer.receiveCards(hand.getPartialCards(0, SPREAD_CARD_SIZE_PER_PLAYER));
+        players.receiveCards(hand.getPartialCards(SPREAD_CARD_SIZE_PER_PLAYER, hand.getSize()),
+                SPREAD_CARD_SIZE_PER_PLAYER);
+
+        resultView.printSpreadCard(players.getNames(), Map.entry(dealer.getNickname(), dealer.showInitialCards()),
+                players.showTotalInitialCards());
     }
 
-    private void spreadExtraCards(final BlackjackGame blackjackGame) {
-        spreadPlayersExtraCards(blackjackGame);
-        spreadDealerExtraCards(blackjackGame);
-    }
-
-    private void spreadPlayersExtraCards(final BlackjackGame blackjackGame) {
-        Players players = blackjackGame.findExtraCardsAvailablePlayers();
-        for (Gamer gamer : players.getPlayers()) {
-            spreadExtraCards(blackjackGame, gamer);
+    private void spreadExtraCards(final Dealer dealer, final Players players, final Deck deck) {
+        Players availablePlayers = players.findHitAvailablePlayers();
+        for (Gamer gamer : availablePlayers.getPlayers()) {
+            while (gamer.canHit() && wantHit(gamer)) {
+                final Hand hand = deck.spreadCards(SPREAD_SIZE);
+                gamer.receiveCards(new Hand(List.of(hand.getFirstCard())));
+                resultView.printParticipantTotalCards(gamer.getNickname(), gamer.showAllCards());
+            }
         }
-    }
-
-    private void spreadExtraCards(final BlackjackGame blackjackGame, final Gamer gamer) {
-        while (gamer.canHit() && wantHit(gamer)) {
-            blackjackGame.spreadOneCardToPlayer(gamer);
-            resultView.printParticipantTotalCards(gamer.getNickname(), gamer.showAllCards());
+        while (dealer.canHit()) {
+            final Hand hand = deck.spreadCards(SPREAD_SIZE);
+            dealer.receiveCards(new Hand(List.of(hand.getFirstCard())));
+            resultView.printDealerExtraCard();
         }
     }
 
@@ -90,15 +95,8 @@ public class BlackjackController {
         return answer.equals(YES) || answer.equals(NO);
     }
 
-    private void spreadDealerExtraCards(final BlackjackGame blackjackGame) {
-        while (blackjackGame.canDealerHit()) {
-            blackjackGame.spreadOneCardToDealer();
-            resultView.printDealerExtraCard();
-        }
-    }
-
-    private void showWinningResult(final BlackjackGame blackjackGame) {
-        final DealerWinningResult result = blackjackGame.makeDealerWinningResult();
+    private void showWinningResult(final Dealer dealer, final Players players) {
+        final DealerWinningResult result = dealer.makeDealerWinningResult(players.calculateScores());
         resultView.showDealerWinningResult(result);
     }
 }
