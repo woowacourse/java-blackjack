@@ -14,13 +14,6 @@ public class Deck {
         this.cards = new ArrayList<>(shuffled(cards));
     }
 
-    private List<Card> shuffled(List<Card> cards) {
-        ArrayList<Card> copiedCards = new ArrayList<>(cards);
-        Collections.shuffle(copiedCards);
-
-        return copiedCards;
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -31,6 +24,13 @@ public class Deck {
         return IntStream.range(0, size)
                 .mapToObj(i -> cards.removeLast())
                 .toList();
+    }
+
+    private List<Card> shuffled(List<Card> cards) {
+        ArrayList<Card> copiedCards = new ArrayList<>(cards);
+        Collections.shuffle(copiedCards);
+
+        return copiedCards;
     }
 
     private void validateEmpty(int size) {

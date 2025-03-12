@@ -12,6 +12,13 @@ public class Result {
         this.playersResult = new PlayersResult();
     }
 
+    public static Result of(Players players, Dealer dealer) {
+        Result result = new Result();
+        players.saveResult(dealer, result);
+
+        return result;
+    }
+
     public void save(Player player, GameResultType gameResultType) {
         GameResultType gameResultTypeOfDealer = gameResultType.getOppositeType();
 

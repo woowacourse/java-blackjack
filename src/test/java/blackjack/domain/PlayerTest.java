@@ -109,4 +109,13 @@ class PlayerTest {
         // when & then
         assertThat(player.canTakeCard()).isEqualTo(expect);
     }
+
+    @DisplayName("딜러와의 카드를 비교하여 승패를 반환한다.")
+    @Test
+    void test9(){
+        Player player = new Player("꾹이", HandFixture.createHandWithOptimisticValue20());
+        Dealer dealer = new Dealer(HandFixture.createHandWithOptimisticValue15());
+
+        player.compareCard(dealer);
+    }
 }

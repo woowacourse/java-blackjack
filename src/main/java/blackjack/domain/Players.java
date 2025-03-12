@@ -22,12 +22,19 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
+    public void saveResult(Dealer dealer, Result result) {
+        for (Player player : players) {
+            GameResultType gameResultType = GameResultTypeJudgement.findForPlayer(player, dealer);
+            result.save(player, gameResultType);
+        }
+    }
+
     private void validate(List<Player> players) {
-        if (players.isEmpty()){
+        if (players.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
         }
 
-        if (players.size() > PLAYERS_VALID_SIZE ) {
+        if (players.size() > PLAYERS_VALID_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
         }
     }
