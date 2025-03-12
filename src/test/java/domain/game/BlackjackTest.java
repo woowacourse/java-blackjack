@@ -217,6 +217,31 @@ public class BlackjackTest {
 	}
 
 	@Nested
+	@DisplayName("듀얼을 진행")
+	class Duel {
+
+		@DisplayName("딜러와 모든 플레이들간의 듀얼을 진행한다.")
+		@Test
+		void duel() {
+			// given
+			final List<String> playerNames = List.of("부기", "파랑", "구구");
+			final Blackjack blackjack = Blackjack.from(playerNames);
+
+			// when
+			blackjack.duel();
+
+			// then
+			assertSoftly(s -> {
+				for (final Player player : blackjack.getPlayers().getPlayers()) {
+					s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(1);
+				}
+				s.assertThat(blackjack.getDealer().getParticipant().getDuelHistory().getWinCount())
+					.isEqualTo(playerNames.size());
+			});
+		}
+	}
+
+	@Nested
 	@DisplayName("BUST_SCORE를 기준으로 duel을 진행한다.")
 	class DuelDealerVsPlayer {
 

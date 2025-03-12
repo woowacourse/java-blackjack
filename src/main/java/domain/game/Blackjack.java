@@ -70,6 +70,10 @@ public class Blackjack {
 		return participant.calculateAllScore(BUST_SCORE);
 	}
 
+	public void duel() {
+
+	}
+
 	public void duelDealerVsPlayer(final Dealer dealer, final Player player) {
 		if (player.isBust(BUST_SCORE)) {
 			dealer.writeDuelResult(DuelResult.WIN);
