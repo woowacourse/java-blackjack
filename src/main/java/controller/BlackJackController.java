@@ -118,7 +118,7 @@ public class BlackJackController {
                 .map(card -> card.getName() + card.getCardSymbol())
                 .toList();
 
-        return new BlackJackResultResponse(playerNickname, playerCardNames, gameBoard.getScoreOf(player));
+        return new BlackJackResultResponse(playerNickname, playerCardNames, gameBoard.getScoreOf(player).getScore());
 
     }
 
@@ -129,7 +129,7 @@ public class BlackJackController {
                 .map(card -> card.getName() + card.getCardSymbol())
                 .toList();
 
-        return new BlackJackResultResponse(dealerNickname, dealerCardNames, gameBoard.getScoreOf(dealer));
+        return new BlackJackResultResponse(dealerNickname, dealerCardNames, gameBoard.getScoreOf(dealer).getScore());
     }
 
     private List<Player> getPlayers() {

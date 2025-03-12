@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.participant.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,24 +39,24 @@ public class CardDeck {
         return initCard;
     }
 
-    public int getScore() {
+    public Score getScore() {
         int totalScore = 0;
-        int aceCounts = 0;
+        int aceCount = 0;
 
         for (Card card : cards) {
             totalScore += card.getNumber();
             if (card.isAceCard()) {
-                aceCounts++;
+                aceCount++;
             }
         }
 
-        while (aceCounts-- > 0) {
+        while (aceCount-- > 0) {
             if (totalScore + 10 <= BUST_THRESHOLD) {
                 totalScore += 10;
             }
         }
 
-        return totalScore;
+        return Score.of(totalScore, cards.size());
     }
 
     public void shuffle() {

@@ -1,11 +1,12 @@
 package domain;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
 import domain.card.CardSymbol;
 import org.assertj.core.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -82,7 +83,7 @@ public class CardDeckTest {
         cardDeck.addCard(card2);
 
         // when
-        int actual = cardDeck.getScore();
+        int actual = cardDeck.getScore().getScore();
 
         // then
         Assertions.assertThat(actual).isEqualTo(expected);

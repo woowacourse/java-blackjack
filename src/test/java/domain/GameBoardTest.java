@@ -186,7 +186,7 @@ public class GameBoardTest {
         gameBoard.drawCardTo(targetParticipant);
 
         //when
-        int actual = gameBoard.getScoreOf(targetParticipant);
+        int actual = gameBoard.getScoreOf(targetParticipant).getScore();
 
         //then
         Assertions.assertThat(actual).isEqualTo(2);
@@ -282,7 +282,7 @@ public class GameBoardTest {
         gameBoard.drawCardTo(targetParticipant);
 
         //when
-        int actual = gameBoard.getScoreOf(targetParticipant);
+        int actual = gameBoard.getScoreOf(targetParticipant).getScore();
 
         //then
         Assertions.assertThat(actual).isEqualTo(expectedResult);
@@ -386,7 +386,7 @@ public class GameBoardTest {
     }
 
     @Test
-    void 모두가_버스트_무승부_발생_확인() {
+    void 모두가_버스트일때_플레이어_패배_확인() {
         //given
         Participant participant1 = Player.from("우가");
         Participant participant2 = Player.from("히스타");
@@ -433,9 +433,9 @@ public class GameBoardTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.DRAW)).isTrue(),
-                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.DRAW)).isTrue(),
-                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.DRAW)).isTrue()
+                () -> Assertions.assertThat(participant1.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(participant2.getGameRecord().containsKey(BattleResult.LOSE)).isTrue(),
+                () -> Assertions.assertThat(dealer.getGameRecord().containsKey(BattleResult.WIN)).isTrue()
         );
     }
 }

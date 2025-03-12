@@ -6,6 +6,7 @@ import domain.participant.BattleResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
+import domain.participant.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -34,15 +35,6 @@ public class GameBoard {
         return new GameBoard(participants);
     }
 
-    private Map<Participant, CardDeck> initializeCardDeckOfParticipant(final List<Participant> participants) {
-        return participants.stream()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        participant -> CardDeck.generateEmptySet(),
-                        (existing, replacement) -> replacement,
-                        LinkedHashMap::new));
-
-    }
 
     public void drawTwoCards() {
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
@@ -62,15 +54,15 @@ public class GameBoard {
     }
 
     public boolean ableToDraw(Participant participant) {
-        int score = getScoreOf(participant);
-        return participant.ableToDraw(score);
+        Score score = getScoreOf(participant);
+        return participant.ableToDraw(score.getScore());
     }
 
     public void shufflePlayingCard() {
         playingCard.shuffle();
     }
 
-    public int getScoreOf(Participant participant) {
+    public Score getScoreOf(Participant participant) {
         CardDeck ownedCardDeck = cardDeckOfParticipant.get(participant);
         return ownedCardDeck.getScore();
     }
@@ -83,53 +75,12 @@ public class GameBoard {
                 .orElseThrow();
 
         Participant dealer = cardDeckOfDealer.getKey();
-        int dealerScore = getScoreOf(dealer);
+        Score dealerScore = getScoreOf(dealer);
 
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
             Participant participant = entry.getKey();
             updateBattleResultBetween(dealer, participant, dealerScore);
         }
-    }
-
-    private void updateBattleResultBetween(Participant dealer, Participant participant, int dealerScore) {
-        if (participant.areYouDealer()) {
-            return;
-        }
-        int score = getScoreOf(participant);
-        if (score > BUST_THRESHOLD) {
-            if (dealerScore > BUST_THRESHOLD) {
-                updateBattleResultDraw(dealer, participant);
-                return;
-            }
-            updateBattleResult(dealer, participant);
-            return;
-        }
-
-        if (score > dealerScore) {
-            updateBattleResult(participant, dealer);
-            return;
-        }
-
-        if (score < dealerScore) {
-            if (dealerScore > BUST_THRESHOLD) {
-               updateBattleResult(participant, dealer);
-               return;
-            }
-            updateBattleResult(dealer, participant);
-            return;
-        }
-
-        updateBattleResultDraw(dealer, participant);
-    }
-
-    private void updateBattleResultDraw(Participant dealer, Participant player) {
-        dealer.addGameRecord(BattleResult.DRAW);
-        player.addGameRecord(BattleResult.DRAW);
-    }
-
-    private void updateBattleResult(Participant winner, Participant loser) {
-        winner.addGameRecord(BattleResult.WIN);
-        loser.addGameRecord(BattleResult.LOSE);
     }
 
     public CardDeck getCardDeckOf(Participant participant) {
@@ -161,5 +112,68 @@ public class GameBoard {
                 .filter(Participant::areYouDealer)
                 .findFirst()
                 .orElseThrow();
+    }
+
+    private Map<Participant, CardDeck> initializeCardDeckOfParticipant(final List<Participant> participants) {
+        return participants.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        participant -> CardDeck.generateEmptySet(),
+                        (existing, replacement) -> replacement,
+                        LinkedHashMap::new));
+
+    }
+
+    private void updateBattleResultBetween(Participant dealer, Participant participant, Score dealerScore) {
+        if (participant.areYouDealer()) {
+            return;
+        }
+
+        Score playerScore = getScoreOf(participant);
+
+        /*
+        용어 정리: 블랙잭 (첫 두장이 21인 경우)
+        베팅 1배: 자기가 베팅한 금액만큼 벌었다. (즉 2배)
+
+        1. 플레이어가 블랙잭이라면 1.5배 승리.
+        1.1. 하지만 딜러도 블랙잭이라면 무승부. 0배
+
+        2. 이기면 1배, 지면 베팅 금액을 잃는다.
+         */
+
+        if (playerScore.isBust()) {
+            // 무조건 플레이어 패배 (베팅 금액 잃음)
+            updateBattleResult(dealer, participant);
+            return;
+        }
+
+        if (playerScore.isBlackJack() && !dealerScore.isBlackJack()) {
+            // 플레이어 1.5배
+            updateBattleResult(participant, dealer);
+            return;
+        }
+
+        if (playerScore.getScore() > dealerScore.getScore()) {
+            // 플레이어 승리(1배)
+            updateBattleResult(participant, dealer);
+        }
+
+        if (playerScore.getScore() < dealerScore.getScore()) {
+            // 플레이어 패배(베팅 금액 잃음)
+            updateBattleResult(dealer, participant);
+        }
+
+        // 무승부
+        updateBattleResultDraw(dealer, participant);
+    }
+
+    private void updateBattleResultDraw(Participant dealer, Participant player) {
+        dealer.addGameRecord(BattleResult.DRAW);
+        player.addGameRecord(BattleResult.DRAW);
+    }
+
+    private void updateBattleResult(Participant winner, Participant loser) {
+        winner.addGameRecord(BattleResult.WIN);
+        loser.addGameRecord(BattleResult.LOSE);
     }
 }
