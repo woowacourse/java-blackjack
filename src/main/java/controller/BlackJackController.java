@@ -32,9 +32,7 @@ public class BlackJackController {
 
     public void run() {
         final Dealer dealer = new Dealer();
-        final List<Player> players = getPlayers();
-
-        final Participants participants = makeParticipants(dealer, players);
+        final Participants participants = makeParticipants(dealer);
         final GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
 
         startBlackJack(participants, gameCardDeck);
@@ -141,10 +139,10 @@ public class BlackJackController {
         outputView.printBattleResult(battleResultResponses);
     }
 
-    private Participants makeParticipants(final Dealer dealer, final List<Player> players) {
+    private Participants makeParticipants(final Dealer dealer) {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
-        participants.addAll(players);
+        participants.addAll(getPlayers());
 
         return new Participants(participants);
     }
