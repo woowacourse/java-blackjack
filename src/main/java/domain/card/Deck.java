@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.stream.IntStream;
 
-public class Deck {
+public final class Deck {
 
   private final Queue<TrumpCard> deck;
 

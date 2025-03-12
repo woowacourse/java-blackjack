@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
   private static final String NAME_DELIMITER = ",";
   private final Scanner sc;

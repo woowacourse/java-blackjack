@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Participants {
+public final class Participants {
 
   private static final int NUMBER_OF_DEALER = 1;
 

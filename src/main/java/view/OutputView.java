@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import java.util.Map;
 
-public class OutputView {
+public final class OutputView {
 
   private static final String PLAYER_NAME_DELIMITER = ", ";
 

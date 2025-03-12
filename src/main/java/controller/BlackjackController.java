@@ -10,7 +10,7 @@ import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackController {
+public final class BlackjackController {
 
   private static final DomainToTextConverter converter = DomainToTextConverter.getInstance();
 

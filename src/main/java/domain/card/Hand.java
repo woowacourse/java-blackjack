@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
 
   private final List<TrumpCard> cards;
 

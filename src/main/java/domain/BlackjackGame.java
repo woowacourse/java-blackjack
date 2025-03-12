@@ -6,7 +6,7 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 import java.util.List;
 
-public class BlackjackGame {
+public final class BlackjackGame {
 
   private static final int NUMBER_OF_DECK = 1;
 

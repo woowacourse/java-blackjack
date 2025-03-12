@@ -3,7 +3,7 @@ package domain.participant;
 import constant.DealerRoster;
 import domain.card.Hand;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
   private static final int STAND_SCORE = 17;
   private static final String DEFAULT_NAME = DealerRoster.DEFAULT.getName();

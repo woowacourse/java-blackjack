@@ -2,7 +2,7 @@ package controller.converter;
 
 import domain.card.Rank;
 
-public class RankToTextConverter {
+public final class RankToTextConverter {
 
   public static String convert(final Rank rank) {
     return switch (rank) {
