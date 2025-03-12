@@ -1,7 +1,7 @@
 package blackjack.manager;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -35,10 +35,9 @@ public class BlackjackProcessManager {
         cards.forEach(player::takeCard);
     }
 
-    public void giveCard(Hand hand) {
+    public void giveCard(Participant participant) {
         List<Card> cards = deck.takeCards(ADDITIONAL_CARD_SIZE);
-
-        cards.forEach(hand::takeCard);
+        cards.forEach(participant::takeCard);
     }
 
     public void calculateCardResult(Players players, Dealer dealer, GameRuleEvaluator gameRuleEvaluator) {
@@ -51,7 +50,7 @@ public class BlackjackProcessManager {
         boolean isBustedDealer = gameRuleEvaluator.isBustedFor(dealer);
         boolean isBustedPlayer = gameRuleEvaluator.isBustedFor(player);
 
-        int playerValue = player.getCardHolder().getOptimisticValue();
+        int playerValue = player.getOptimisticValue();
 
         if (isBustedDealer) {
             processWhenDealerIsBusted(player, isBustedPlayer, playerValue);
@@ -77,8 +76,8 @@ public class BlackjackProcessManager {
     }
 
     public GameResultType decideResultOfPlayer(Player player, Dealer dealer) {
-        int playerValue = player.getCardHolder().getOptimisticValue();
-        int dealerValue = dealer.getCardHolder().getOptimisticValue();
+        int playerValue = player.getOptimisticValue();
+        int dealerValue = dealer.getOptimisticValue();
 
         return GameResultType.find(playerValue, dealerValue);
     }
@@ -89,7 +88,7 @@ public class BlackjackProcessManager {
     }
 
     public DealerResult calculateDealerResult(Dealer dealer) {
-        int dealerValue = dealer.getCardHolder().getOptimisticValue();
+        int dealerValue = dealer.getOptimisticValue();
         DealerResult dealerResult = new DealerResult(dealerValue);
 
         for (PlayerResult playerResult : playersResults.getAllResult()) {

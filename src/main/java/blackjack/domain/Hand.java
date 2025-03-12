@@ -18,10 +18,6 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
-    private Hand(List<Card> cards) {
-        this.cards = cards;
-    }
-
     public List<Card> getAllCards() {
         return Collections.unmodifiableList(cards);
     }

@@ -2,6 +2,7 @@ package blackjack.manager;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
@@ -49,10 +50,11 @@ class BlackjackProcessManagerTest {
         Hand hand = new Hand();
 
         // when
-        blackjackProcessManager.giveCard(hand);
+        Participant participant = new Player("히로", new Hand());
+        blackjackProcessManager.giveCard(participant);
 
         // then
-        assertThat(hand.getAllCards()).hasSize(1);
+        assertThat(participant.getCards()).hasSize(1);
     }
 
     @DisplayName("플레이어의 결과를 판단한다.")

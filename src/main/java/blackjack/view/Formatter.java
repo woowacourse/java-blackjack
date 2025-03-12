@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
@@ -28,11 +28,12 @@ public final class Formatter {
     }
 
     public static String formatPlayerCardStatus(Player player) {
-        return player.getName() + "카드: " + formatStartingCardStatus(player.getCardHolder());
+        return player.getName() + "카드: " + formatStartingCardStatus(player);
     }
 
     public static String formatDealerStartCardStatus(Dealer dealer) {
-        return "딜러카드: " + Formatter.formatCard(dealer.revealFirstCard());
+        List<Card> cards = dealer.getCards();
+        return "딜러카드: " + Formatter.formatCard(cards.getFirst());
     }
 
     // TODO: Dealer 의 결과를 저장하는 기능을 구현한 뒤에 수정하기
@@ -41,7 +42,7 @@ public final class Formatter {
     }
 
     private static String formatDealerCardStatus(Dealer dealer) {
-        return "딜러카드: " + formatStartingCardStatus(dealer.getCardHolder());
+        return "딜러카드: " + formatStartingCardStatus(dealer);
     }
 
     private static String formatCardResultValue(PlayerResult playerResult) {
@@ -65,8 +66,8 @@ public final class Formatter {
         return java.lang.String.valueOf(value);
     }
 
-    private static String formatStartingCardStatus(Hand cardHolder) {
-        return cardHolder.getAllCards().stream()
+    private static String formatStartingCardStatus(Participant participant) {
+        return participant.getCards().stream()
                 .map(Formatter::formatCard)
                 .collect(Collectors.joining(", "));
     }

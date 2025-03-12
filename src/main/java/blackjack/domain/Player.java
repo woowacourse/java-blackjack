@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import java.util.List;
 
-public class Player {
+public class Player implements Participant {
 
     private final String name;
     private final Hand hand;
@@ -13,20 +13,39 @@ public class Player {
         this.hand = hand;
     }
 
+    @Override
+    public boolean tracksWinLossCount() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldRevealSingleCard() {
+        return false;
+    }
+
+    @Override
+    public boolean doesHaveName() {
+        return true;
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return hand.getAllCards();
+    }
+
+    @Override
     public List<Integer> getPossibleSums() {
         return hand.calculatePossibleSums();
     }
 
-    public List<Card> getAllCards() {
-        return hand.getAllCards();
-    }
-
+    @Override
     public void takeCard(Card newCard) {
         hand.takeCard(newCard);
     }
 
-    public Hand getCardHolder() {
-        return hand;
+    @Override
+    public int getOptimisticValue() {
+        return hand.getOptimisticValue();
     }
 
     public String getName() {

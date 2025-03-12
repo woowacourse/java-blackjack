@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface Participant {
 
-    boolean isWinningDecidedByCount();
+    boolean tracksWinLossCount();
 
     boolean shouldRevealSingleCard();
 
@@ -16,4 +16,6 @@ public interface Participant {
     List<Integer> getPossibleSums();
 
     void takeCard(Card newCard);
+
+    int getOptimisticValue();
 }

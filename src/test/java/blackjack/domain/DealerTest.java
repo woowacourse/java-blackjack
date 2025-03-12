@@ -40,7 +40,7 @@ class DealerTest {
         List<Card> expect = List.of(card1, card2);
 
         // when & then
-        assertThat(dealer.getAllCards()).isEqualTo(expect);
+        assertThat(dealer.getCards()).isEqualTo(expect);
     }
 
     @DisplayName("딜러는 카드를 가져올 수 있다.")
@@ -61,7 +61,7 @@ class DealerTest {
         dealer.takeCard(newCard);
 
         // then
-        assertThat(dealer.getAllCards()).isEqualTo(expect);
+        assertThat(dealer.getCards()).isEqualTo(expect);
     }
 
     @DisplayName("딜러는 첫번째 카드를 보여줄 수 있다.")
@@ -76,7 +76,8 @@ class DealerTest {
         Dealer dealer = new Dealer(hand);
 
         // when
-        Card revealedCard = dealer.revealFirstCard();
+        List<Card> cards = dealer.getCards();
+        Card revealedCard = cards.getFirst();
 
         // then
         assertThat(revealedCard).isEqualTo(card1);

@@ -43,7 +43,7 @@ class PlayerTest {
         List<Card> expect = List.of(card1, card2);
 
         // when & then
-        assertThat(player.getAllCards()).isEqualTo(expect);
+        assertThat(player.getCards()).isEqualTo(expect);
     }
 
     @DisplayName("플레이어는 카드를 가져올 수 있다.")
@@ -66,6 +66,6 @@ class PlayerTest {
         player.takeCard(newCard);
 
         // then
-        assertThat(player.getAllCards()).isEqualTo(expect);
+        assertThat(player.getCards()).isEqualTo(expect);
     }
 }
