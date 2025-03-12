@@ -145,10 +145,15 @@ class PlayerTest {
     @Test
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 21 이하일 경우, true를 반환한다")
     void should_return_true_when_can_pick() {
+        //given
         player.addCard(new Card(Shape.HEART, Rank.KING));
         player.addCard(new Card(Shape.HEART, Rank.QUEEN));
         player.addCard(new Card(Shape.HEART, Rank.ONE));
+
+        //when
         boolean canPick = player.canPick();
+
+        //then
         assertThat(canPick).isTrue();
     }
 

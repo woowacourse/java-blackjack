@@ -13,6 +13,7 @@ import domain.participant.Dealer;
 import domain.participant.GameResult;
 import domain.participant.Participant;
 import domain.participant.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class GameResultTest {
+
+    Participant player;
+    Participant dealer;
+
+    @BeforeEach
+    void initParticipants() {
+        player = new Player("pobi");
+        dealer = new Dealer();
+    }
 
     @Nested
     @DisplayName("버스트로 비기는 경우")
@@ -29,8 +39,6 @@ class GameResultTest {
         @DisplayName("딜러22, 플레이어 22로 둘 다 버스트 될 경우 DRAW가 반환되어야 한다")
         void should_return_draw_when_both_bust_and_player_is_same_dealer() {
             //given
-            Participant player = new Player("pobi");
-            Participant dealer = new Dealer();
             dealer.addCard(new Card(Shape.HEART, Rank.JACK));
             dealer.addCard(new Card(Shape.HEART, Rank.KING));
             dealer.addCard(new Card(Shape.HEART, Rank.TWO));
@@ -49,8 +57,6 @@ class GameResultTest {
         @DisplayName("딜러23, 플레이어 22로 딜러값이 플레이어보다 큰 경우에도 버스트 되었다면, 무승부가 반환되어야 한다")
         void should_return_draw_when_both_bust_and_dealer_is_over_than_player() {
             //given
-            Participant player = new Player("pobi");
-            Participant dealer = new Dealer();
             dealer.addCard(new Card(Shape.HEART, Rank.JACK));
             dealer.addCard(new Card(Shape.HEART, Rank.KING));
             dealer.addCard(new Card(Shape.HEART, Rank.THREE));
@@ -67,10 +73,8 @@ class GameResultTest {
 
         @Test
         @DisplayName("딜러22, 플레이어 23로 플레이어값이 딜러보다 큰 경우에도 버스트 되었다면, 무승부가 반환되어야 한다")
-        void should_return_draw_when_both_bust_and_player_is_over_than_dealier() {
+        void should_return_draw_when_both_bust_and_player_is_over_than_dealer() {
             //given
-            Participant player = new Player("pobi");
-            Participant dealer = new Dealer();
             dealer.addCard(new Card(Shape.HEART, Rank.JACK));
             dealer.addCard(new Card(Shape.HEART, Rank.KING));
             dealer.addCard(new Card(Shape.HEART, Rank.TWO));
@@ -90,8 +94,6 @@ class GameResultTest {
     @DisplayName("플레이어의 버스트로 버스트로 딜러가 승리하는 경우")
     void should_return_lose_when_player_burst() {
         //given
-        Participant player = new Player("pobi");
-        Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.A));
         player.addCard(new Card(Shape.HEART, Rank.JACK));
         player.addCard(new Card(Shape.HEART, Rank.QUEEN));
@@ -108,8 +110,6 @@ class GameResultTest {
     @DisplayName("딜러의 버스트로 플레이어가 승리하는 경우 딜러가 패배하는 경우")
     void should_return_win_when_dealer_burst() {
         //given
-        Participant player = new Player("pobi");
-        Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.TWO));
         dealer.addCard(new Card(Shape.HEART, Rank.JACK));
         dealer.addCard(new Card(Shape.HEART, Rank.QUEEN));
@@ -126,8 +126,6 @@ class GameResultTest {
     @DisplayName("점수가 동일하여 비기는 경우")
     void should_return_draw_when_same_value() {
         //given
-        Participant player = new Player("pobi");
-        Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.TWO));
         dealer.addCard(new Card(Shape.HEART, Rank.JACK));
         player.addCard(new Card(Shape.SPADE, Rank.TWO));
@@ -144,8 +142,6 @@ class GameResultTest {
     @DisplayName("딜러의 점수가 더 높아 지는 경우")
     void should_return_lose_when_dealer_value_high() {
         //given
-        Participant player = new Player("pobi");
-        Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.TWO));
         dealer.addCard(new Card(Shape.HEART, Rank.JACK));
         player.addCard(new Card(Shape.SPADE, Rank.TWO));
@@ -161,8 +157,6 @@ class GameResultTest {
     @DisplayName("딜러의 점수가 더 낮아 이기는 경우")
     void should_return_win_when_player_value_high() {
         //given
-        Participant player = new Player("pobi");
-        Participant dealer = new Dealer();
         dealer.addCard(new Card(Shape.HEART, Rank.TWO));
         player.addCard(new Card(Shape.HEART, Rank.TWO));
         player.addCard(new Card(Shape.SPADE, Rank.JACK));
@@ -187,7 +181,7 @@ class GameResultTest {
 
     @ParameterizedTest
     @DisplayName("버스트 값이면 true를 반환한다")
-    @CsvSource(value = {"21, false", "22,true"})
+    @CsvSource(value = {"21, false", "22, true"})
     void should_return_true_when_burst(int value, boolean expected) {
         // when
         boolean result = Participant.isBust(value);
