@@ -30,19 +30,17 @@ public class BlackJackController {
         List<PlayerName> playerUsernames = playerNames.getPlayerNames();
         Map<PlayerName, BettingAmount> bettingAmountsInfo = getBettingAmountsInfo(playerUsernames);
         Game game = initializeGame(bettingAmountsInfo);
-        for (PlayerName playerName : playerUsernames) {
-            askPlayer(game, playerName);
-        }
+        askPlayers(playerUsernames, game);
         askDealer(game);
         outputView.printFinalState(game.getPlayersInfo(), game.getDealer());
         outputView.printGameStatistics(game.getGameStatistics());
+        outputView.printBettingStatistics(game.getBettingStatistics());
     }
 
-    private Game initializeGame(Map<PlayerName, BettingAmount> bettingAmountsInfo) {
-        Game game = new Game(bettingAmountsInfo);
-        game.distributeStartingHands();
-        outputView.printInitialState(game.getPlayersInfo(), game.getDealerOneCard());
-        return game;
+    private void askPlayers(List<PlayerName> playerUsernames, Game game) {
+        for (PlayerName playerName : playerUsernames) {
+            askPlayer(game, playerName);
+        }
     }
 
     private void askPlayer(Game game, PlayerName playerName) {
@@ -50,6 +48,13 @@ public class BlackJackController {
             game.giveCardToPlayer(playerName, DEFAULT_CARDS_PER_TURN);
             outputView.printGamerCards(playerName.username(), game.getPlayerCards(playerName));
         }
+    }
+
+    private Game initializeGame(Map<PlayerName, BettingAmount> bettingAmountsInfo) {
+        Game game = new Game(bettingAmountsInfo);
+        game.distributeStartingHands();
+        outputView.printInitialState(game.getPlayersInfo(), game.getDealerOneCard());
+        return game;
     }
 
     private void askDealer(Game game) {

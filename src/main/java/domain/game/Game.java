@@ -64,6 +64,10 @@ public class Game {
         return players.calculateGameStatistics(dealer);
     }
 
+    public BettingStatistics getBettingStatistics() {
+        return players.calculateBettingStatistics(dealer);
+    }
+
     private List<Card> drawCards(int count) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
