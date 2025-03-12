@@ -27,6 +27,15 @@ public class CardRandomMachine implements CardMachine {
     @Override
     public Card drawOneCard() {
         Collections.shuffle(deck);
-        return deck.getFirst();
+        final Card drawCard = deck.getFirst();
+        if (isAlreadyUsed(drawCard)) {
+            drawOneCard();
+        }
+        cardUsage.replace(drawCard, true);
+        return drawCard;
+    }
+
+    private Boolean isAlreadyUsed(final Card drawCard) {
+        return cardUsage.get(drawCard);
     }
 }
