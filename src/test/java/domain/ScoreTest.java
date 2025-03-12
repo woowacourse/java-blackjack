@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ public class ScoreTest {
         // given
 
         // when
-        Score score = new Score(21);
+        Score score = new Score(21, 2);
 
         // then
         Assertions.assertThat(score).isInstanceOf(Score.class);
