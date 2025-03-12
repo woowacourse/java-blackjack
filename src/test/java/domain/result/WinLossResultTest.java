@@ -40,4 +40,18 @@ class WinLossResultTest {
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.WIN);
     }
+
+    @Test
+    @DisplayName("딜러와 플레이어의 총합이 같으면 무승부")
+    void test3() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Denomination.TEN, Suit.CLUB));
+        dealer.addCard(new Card(Denomination.NINE, Suit.DIAMOND));
+
+        Player player = new Player("모루");
+        player.addCard(new Card(Denomination.TEN, Suit.HEART));
+        player.addCard(new Card(Denomination.NINE, Suit.SPADE));
+
+        assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.DRAW);
+    }
 }
