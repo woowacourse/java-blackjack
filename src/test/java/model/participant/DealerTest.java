@@ -109,7 +109,6 @@ class DealerTest {
         }
         // when
         // then
-        System.out.println(dealer.getScore());
         assertThat(dealer.isHit()).isFalse();
     }
 
