@@ -65,6 +65,10 @@ public class Cards {
                 .sum();
     }
 
+    public boolean isLargerThan(Cards dealerCards) {
+        return this.calculateSum() > dealerCards.calculateSum();
+    }
+
     private int calculateSumWithAces(int aceCount, int cardsWithoutAceSum) {
         int result = cardsWithoutAceSum;
         for (int count = 0; count < aceCount; count++) {

@@ -1,5 +1,9 @@
 package domain;
 
+import static domain.GameResultStatus.DRAW;
+import static domain.GameResultStatus.LOSE;
+import static domain.GameResultStatus.WIN;
+
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -11,6 +15,10 @@ public class Player extends Participant {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public boolean hasBustCards() {
         return cards.isBust();
     }
@@ -19,8 +27,24 @@ public class Player extends Participant {
         return !cards.isBust();
     }
 
-    public String getName() {
-        return name;
+    public GameResultStatus calculateResultStatus(Cards dealerCards) {
+        if (cards.isBust()) {
+            return LOSE;
+        }
+        if (dealerCards.isBust()) {
+            return WIN;
+        }
+        return compareCardsSum(cards, dealerCards);
+    }
+
+    private GameResultStatus compareCardsSum(Cards playerCards, Cards dealerCards) {
+        if (playerCards.isLargerThan(dealerCards)) {
+            return WIN;
+        }
+        if (dealerCards.isLargerThan(playerCards)) {
+            return LOSE;
+        }
+        return DRAW;
     }
 
     @Override

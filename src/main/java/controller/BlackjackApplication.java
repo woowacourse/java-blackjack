@@ -2,7 +2,6 @@ package controller;
 
 import static view.AnswerType.*;
 
-import domain.GameResultCalculator;
 import domain.Players;
 import domain.Referee;
 import domain.CardGiver;
@@ -72,7 +71,7 @@ public class BlackjackApplication {
     }
 
     private void calculateResult(Dealer dealer, Players players) {
-        final Referee referee = new Referee(new GameResultCalculator());
+        final Referee referee = new Referee();
 
         outputView.printCardsResult(dealer, players);
         GameResults gameResults = referee.judge(dealer, players);
