@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,12 +14,9 @@ public class CardDeck {
     }
 
     private void initializeCardPack() {
-        for (Rank rank : Rank.values()) {
-            for (Shape shape : Shape.values()) {
-                Card card = new Card(rank, shape);
-                cards.add(card);
-            }
-        }
+        Arrays.stream(Rank.values())
+                .forEach(rank -> Arrays.stream(Shape.values())
+                        .forEach(shape -> cards.add(new Card(rank, shape))));
     }
 
     public void shuffle() {
@@ -26,7 +24,7 @@ public class CardDeck {
     }
 
     public Card poll() {
-        if(cards.isEmpty()) {
+        if (cards.isEmpty()) {
             initializeCardPack();
         }
         return cards.removeFirst();
