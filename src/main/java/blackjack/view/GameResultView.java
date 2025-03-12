@@ -14,7 +14,7 @@ public enum GameResultView {
         this.message = message;
     }
 
-    public static String getShapeMessage(final GameResult gameResult) {
+    public static String getResultMessage(final GameResult gameResult) {
         return GameResultView.valueOf(gameResult.name()).message;
     }
 }
