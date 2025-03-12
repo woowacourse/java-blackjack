@@ -27,8 +27,8 @@ public class WalletTest {
         Wallet appliedWallet = wallet.applyBetRate(BattleResult.WIN);
 
         // then
-        int expected = 2000;
-        int actual = appliedWallet.getEarnedMoney();
+        int expected = 1000;
+        int actual = appliedWallet.getProfit();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
 }

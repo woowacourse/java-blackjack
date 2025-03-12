@@ -134,7 +134,7 @@ public class BlackJackBoard {
 
         if (playerScore.isBlackJack() && !dealerScore.isBlackJack()) {
             // 플레이어 1.5배
-            updateBattleResult(participant, dealer);
+            updateBattleResultBlackJack(participant, dealer);
             return;
         }
 
@@ -157,6 +157,11 @@ public class BlackJackBoard {
     private void updateBattleResultDraw(Participant dealer, Participant player) {
         dealer.addGameRecord(BattleResult.DRAW);
         player.addGameRecord(BattleResult.DRAW);
+    }
+
+    private void updateBattleResultBlackJack(Participant winner, Participant loser) {
+        winner.addGameRecord(BattleResult.BLACKJACK_WIN);
+        loser.addGameRecord(BattleResult.LOSE);
     }
 
     private void updateBattleResult(Participant winner, Participant loser) {
