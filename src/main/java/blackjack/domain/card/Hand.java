@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Hand {
 
-    public static final int BLACKJACK_NUMBER = 21;
+    public static final int BURST_THRESHOLD = 21;
     private static final int ACE_SUBTRACT = 10;
 
     private final List<Card> hand;
@@ -18,7 +18,7 @@ public class Hand {
 
     public int calculateResult() {
         int maxScore = calculateMaxScore(hand);
-        if (isUnderThreshold(maxScore)) {
+        if (isNotBurst(maxScore)) {
             return maxScore;
         }
         return subtractAce(maxScore);
@@ -40,13 +40,13 @@ public class Hand {
                 .sum();
     }
 
-    private boolean isUnderThreshold(final int score) {
-        return score <= BLACKJACK_NUMBER;
+    private boolean isNotBurst(final int score) {
+        return score <= BURST_THRESHOLD;
     }
 
     private int subtractAce(int score) {
         int aceCount = countAce(hand);
-        while (!isUnderThreshold(score) && aceCount-- > 0) {
+        while (!isNotBurst(score) && aceCount-- > 0) {
             score -= ACE_SUBTRACT;
         }
         return score;

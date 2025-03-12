@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Hand.BLACKJACK_NUMBER;
+import static blackjack.domain.card.Hand.BURST_THRESHOLD;
 
 import blackjack.domain.card.Hand;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class Player extends Gamer {
     @Override
     public boolean canHit() {
         int score = hand.calculateWithSoftHand();
-        return score < BLACKJACK_NUMBER;
+        return score < BURST_THRESHOLD;
     }
 
     @Override

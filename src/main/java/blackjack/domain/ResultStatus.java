@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.card.Hand.BLACKJACK_NUMBER;
+import static blackjack.domain.card.Hand.BURST_THRESHOLD;
 
 public enum ResultStatus {
 
@@ -9,14 +9,14 @@ public enum ResultStatus {
     PUSH;
 
     public static ResultStatus calculateResultStatus(final int score, final int comparedScore) {
-        if (score <= BLACKJACK_NUMBER) {
+        if (score <= BURST_THRESHOLD) {
             return calculateResultStatusUnderBlackjackNumber(score, comparedScore);
         }
         return LOSE;
     }
 
     private static ResultStatus calculateResultStatusUnderBlackjackNumber(final int score, final int comparedScore) {
-        if (comparedScore <= BLACKJACK_NUMBER) {
+        if (comparedScore <= BURST_THRESHOLD) {
             return calculateResultStatusBothUnderBlackjackNumber(score, comparedScore);
         }
         return WIN;
