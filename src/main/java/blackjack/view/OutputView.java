@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.card.Cards;
+import blackjack.model.card.BlackJackCards;
 import blackjack.model.game.Result;
 import blackjack.model.player.BlackJackPlayer;
 import blackjack.model.player.Dealer;
@@ -26,8 +26,8 @@ public class OutputView {
         System.out.println(blackJackPlayer.getName() + "카드: " + formatCards(blackJackPlayer.openInitialCards()));
     }
 
-    private String formatCards(final Cards cards) {
-        return cards.getValues()
+    private String formatCards(final BlackJackCards blackJackCards) {
+        return blackJackCards.getValues()
                 .stream()
                 .map(card -> card.cardNumber().getName() + card.cardType().getName())
                 .collect(Collectors.joining(", "));

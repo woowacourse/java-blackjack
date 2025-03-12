@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
+import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import java.util.List;
 
@@ -66,13 +66,13 @@ public class Dealer extends BlackJackPlayer {
         return calculateOptimalPoint() > player.calculateOptimalPoint();
     }
 
-    private Cards drawCard(final int amount) {
+    private BlackJackCards drawCard(final int amount) {
         return cardDeck.draw(amount);
     }
 
     @Override
-    public Cards openInitialCards() {
-        return new Cards(cards.getFirst());
+    public BlackJackCards openInitialCards() {
+        return new BlackJackCards(blackJackCards.getFirst());
     }
 
     @Override

@@ -3,8 +3,8 @@ package blackjack.model.player;
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardNumber;
-import blackjack.model.card.Cards;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,14 +20,14 @@ public class BlackJackPlayerTest {
     private static Stream<Arguments> 비겼는지_확인한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
                         RawBlackJackPlayer.withCards(
                                 "challenger",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.EIGHT)
                                         )
@@ -36,7 +36,7 @@ public class BlackJackPlayerTest {
                         true
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT),
@@ -45,7 +45,7 @@ public class BlackJackPlayerTest {
                         ),
                         RawBlackJackPlayer.withCards(
                                 "challenger",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT),
@@ -61,14 +61,14 @@ public class BlackJackPlayerTest {
     private static Stream<Arguments> 이겼는지_확인한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
                         RawBlackJackPlayer.withCards(
                                 "challenger",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.EIGHT)
                                         )
@@ -77,7 +77,7 @@ public class BlackJackPlayerTest {
                         false
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT),
@@ -86,7 +86,7 @@ public class BlackJackPlayerTest {
                         ),
                         RawBlackJackPlayer.withCards(
                                 "challenger",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT),
@@ -97,7 +97,7 @@ public class BlackJackPlayerTest {
                         false
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT)
@@ -105,7 +105,7 @@ public class BlackJackPlayerTest {
                         ),
                         RawBlackJackPlayer.withCards(
                                 "challenger",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT),
@@ -116,7 +116,7 @@ public class BlackJackPlayerTest {
                         true
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT),
@@ -125,7 +125,7 @@ public class BlackJackPlayerTest {
                         ),
                         RawBlackJackPlayer.withCards(
                                 "challenger",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT)
@@ -135,7 +135,7 @@ public class BlackJackPlayerTest {
                         false
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT)
@@ -143,7 +143,7 @@ public class BlackJackPlayerTest {
                         ),
                         RawBlackJackPlayer.withCards(
                                 "challenger",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.SIX)
@@ -158,14 +158,14 @@ public class BlackJackPlayerTest {
     private static Stream<Arguments> 최적의_포인트를_반환한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 createCard(CardNumber.EIGHT),
                                 createCard(CardNumber.ACE)
                         ),
                         19
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 createCard(CardNumber.EIGHT),
                                 createCard(CardNumber.ACE),
                                 createCard(CardNumber.NINE)
@@ -173,7 +173,7 @@ public class BlackJackPlayerTest {
                         18
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 createCard(CardNumber.EIGHT),
                                 createCard(CardNumber.ACE),
                                 createCard(CardNumber.NINE),
@@ -191,7 +191,7 @@ public class BlackJackPlayerTest {
 
     @Test
     void 자신의_최저_포인트를_계산한다() {
-        blackJackPlayer.receiveCards(new Cards(
+        blackJackPlayer.receiveCards(new BlackJackCards(
                 List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
         ));
 
@@ -200,28 +200,28 @@ public class BlackJackPlayerTest {
 
     @Test
     void 카드를_받으면_자신의_카드에_추가한다() {
-        Cards cards = new Cards(
+        BlackJackCards blackJackCards = new BlackJackCards(
                 List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
         );
-        blackJackPlayer.receiveCards(cards);
+        blackJackPlayer.receiveCards(blackJackCards);
 
         assertThat(blackJackPlayer.getCards().getValues()).hasSize(3);
     }
 
     @Test
     void 자신의_모든_카드를_오픈한다() {
-        Cards cards = new Cards(
+        BlackJackCards blackJackCards = new BlackJackCards(
                 List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
         );
-        blackJackPlayer.receiveCards(cards);
+        blackJackPlayer.receiveCards(blackJackCards);
 
-        assertThat(blackJackPlayer.openAllCards()).isEqualTo(cards);
+        assertThat(blackJackPlayer.openAllCards()).isEqualTo(blackJackCards);
     }
 
     @ParameterizedTest
     @MethodSource("최적의_포인트를_반환한다_테스트_케이스")
-    void 최적의_포인트를_반환한다(final Cards cards, final int expected) {
-        blackJackPlayer.receiveCards(cards);
+    void 최적의_포인트를_반환한다(final BlackJackCards blackJackCards, final int expected) {
+        blackJackPlayer.receiveCards(blackJackCards);
 
         assertThat(blackJackPlayer.calculateOptimalPoint()).isEqualTo(expected);
     }
@@ -232,15 +232,15 @@ public class BlackJackPlayerTest {
             super(name);
         }
 
-        static RawBlackJackPlayer withCards(final String name, final Cards cards) {
+        static RawBlackJackPlayer withCards(final String name, final BlackJackCards blackJackCards) {
             RawBlackJackPlayer rawPlayer = new RawBlackJackPlayer(name);
-            rawPlayer.receiveCards(cards);
+            rawPlayer.receiveCards(blackJackCards);
 
             return rawPlayer;
         }
 
         @Override
-        public Cards openInitialCards() {
+        public BlackJackCards openInitialCards() {
             throw new IllegalStateException("이 메서드는 Player 에서 테스트할 수 없습니다.");
         }
 

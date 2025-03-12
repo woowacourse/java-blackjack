@@ -3,8 +3,8 @@ package blackjack.model.game;
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardNumber;
-import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
@@ -21,29 +21,34 @@ class ResultTest {
     private static Stream<Arguments> 딜러의_승패들을_계산한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        makeDealer(new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
+                        makeDealer(new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
                         List.of(
-                                makeUser("user1", new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
-                                makeUser("user2", new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO)))
+                                makeUser("user1",
+                                        new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
+                                makeUser("user2",
+                                        new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO)))
                         ),
                         makeEvaluations(0, 2, 0)
                 ),
                 Arguments.of(
-                        makeDealer(new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
+                        makeDealer(new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
                         List.of(
-                                makeUser("user1", new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO),
-                                        createCard(CardNumber.THREE))),
-                                makeUser("user2", new Cards(createCard(CardNumber.ACE)))
+                                makeUser("user1",
+                                        new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO),
+                                                createCard(CardNumber.THREE))),
+                                makeUser("user2", new BlackJackCards(createCard(CardNumber.ACE)))
                         ),
                         makeEvaluations(1, 0, 1)
                 ),
                 Arguments.of(
-                        makeDealer(new Cards(createCard(CardNumber.FIVE), createCard(CardNumber.TWO))),
+                        makeDealer(new BlackJackCards(createCard(CardNumber.FIVE), createCard(CardNumber.TWO))),
                         List.of(
-                                makeUser("user1", new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO),
-                                        createCard(CardNumber.THREE))),
-                                makeUser("user2", new Cards(createCard(CardNumber.TEN), createCard(CardNumber.NINE),
-                                        createCard(CardNumber.EIGHT)))
+                                makeUser("user1",
+                                        new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO),
+                                                createCard(CardNumber.THREE))),
+                                makeUser("user2",
+                                        new BlackJackCards(createCard(CardNumber.TEN), createCard(CardNumber.NINE),
+                                                createCard(CardNumber.EIGHT)))
                         ),
                         makeEvaluations(1, 0, 1)
                 )
@@ -51,15 +56,15 @@ class ResultTest {
     }
 
 
-    private static Dealer makeDealer(final Cards cards) {
+    private static Dealer makeDealer(final BlackJackCards blackJackCards) {
         Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
-        dealer.receiveCards(cards);
+        dealer.receiveCards(blackJackCards);
         return dealer;
     }
 
-    private static Player makeUser(final String name, final Cards cards) {
+    private static Player makeUser(final String name, final BlackJackCards blackJackCards) {
         Player player = new Player(name);
-        player.receiveCards(cards);
+        player.receiveCards(blackJackCards);
         return player;
     }
 
@@ -74,19 +79,19 @@ class ResultTest {
     private static Stream<Arguments> 유저의_승패를_계산한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        makeDealer(new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
-                        makeUser("user", new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
+                        makeDealer(new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
+                        makeUser("user", new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
                         Result.DRAW
                 ),
                 Arguments.of(
-                        makeDealer(new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
-                        makeUser("user", new Cards(createCard(CardNumber.NINE), createCard(CardNumber.TEN),
+                        makeDealer(new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO))),
+                        makeUser("user", new BlackJackCards(createCard(CardNumber.NINE), createCard(CardNumber.TEN),
                                 createCard(CardNumber.THREE))),
                         Result.LOSE
                 ),
                 Arguments.of(
-                        makeDealer(new Cards(createCard(CardNumber.FIVE), createCard(CardNumber.TWO))),
-                        makeUser("user", new Cards(createCard(CardNumber.ACE), createCard(CardNumber.TWO),
+                        makeDealer(new BlackJackCards(createCard(CardNumber.FIVE), createCard(CardNumber.TWO))),
+                        makeUser("user", new BlackJackCards(createCard(CardNumber.ACE), createCard(CardNumber.TWO),
                                 createCard(CardNumber.THREE))),
                         Result.WIN
                 )

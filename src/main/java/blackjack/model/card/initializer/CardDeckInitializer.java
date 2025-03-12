@@ -1,9 +1,9 @@
 package blackjack.model.card.initializer;
 
-import blackjack.model.card.Cards;
+import blackjack.model.card.BlackJackCards;
 
 @FunctionalInterface
 public interface CardDeckInitializer {
 
-    Cards initialize();
+    BlackJackCards initialize();
 }

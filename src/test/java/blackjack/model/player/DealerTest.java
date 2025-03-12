@@ -4,9 +4,9 @@ import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
+import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
-import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import java.util.List;
 import java.util.stream.Stream;
@@ -23,13 +23,13 @@ class DealerTest {
     private static Stream<Arguments> 최초로_받은_카드를_오픈한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))),
-                        new Cards(List.of(createCard(CardNumber.TEN)))
+                        new BlackJackCards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE))),
+                        new BlackJackCards(List.of(createCard(CardNumber.TEN)))
                 ),
                 Arguments.of(
-                        new Cards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
+                        new BlackJackCards(List.of(createCard(CardNumber.NINE), createCard(CardNumber.FIVE),
                                 createCard(CardNumber.TWO))),
-                        new Cards(List.of(createCard(CardNumber.NINE)))
+                        new BlackJackCards(List.of(createCard(CardNumber.NINE)))
                 )
         );
     }
@@ -37,7 +37,7 @@ class DealerTest {
     private static Stream<Arguments> 자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.SIX)
@@ -46,7 +46,7 @@ class DealerTest {
                         true
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.SEVEN)
@@ -60,14 +60,14 @@ class DealerTest {
     private static Stream<Arguments> 비겼는지_확인한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
                         makeUser(
                                 "user",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.EIGHT)
                                         )
@@ -76,7 +76,7 @@ class DealerTest {
                         true
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT),
@@ -85,7 +85,7 @@ class DealerTest {
                         ),
                         makeUser(
                                 "user",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT),
@@ -101,14 +101,14 @@ class DealerTest {
     private static Stream<Arguments> 이겼는지_확인한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.EIGHT)
                                 )
                         ),
                         makeUser(
                                 "user",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.EIGHT)
                                         )
@@ -117,7 +117,7 @@ class DealerTest {
                         false
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT),
@@ -126,7 +126,7 @@ class DealerTest {
                         ),
                         makeUser(
                                 "user",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT),
@@ -137,7 +137,7 @@ class DealerTest {
                         true
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT)
@@ -145,7 +145,7 @@ class DealerTest {
                         ),
                         makeUser(
                                 "user",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT),
@@ -156,7 +156,7 @@ class DealerTest {
                         true
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT),
@@ -165,7 +165,7 @@ class DealerTest {
                         ),
                         makeUser(
                                 "user",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.EIGHT)
@@ -175,7 +175,7 @@ class DealerTest {
                         false
                 ),
                 Arguments.of(
-                        new Cards(
+                        new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
                                         createCard(CardNumber.EIGHT)
@@ -183,7 +183,7 @@ class DealerTest {
                         ),
                         makeUser(
                                 "user",
-                                new Cards(
+                                new BlackJackCards(
                                         List.of(
                                                 createCard(CardNumber.TEN),
                                                 createCard(CardNumber.SIX)
@@ -195,26 +195,26 @@ class DealerTest {
         );
     }
 
-    private static Dealer makeDealer(final Cards cards) {
+    private static Dealer makeDealer(final BlackJackCards blackJackCards) {
         Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
-        dealer.receiveCards(cards);
+        dealer.receiveCards(blackJackCards);
         return dealer;
     }
 
-    private static Player makeUser(final String name, final Cards cards) {
+    private static Player makeUser(final String name, final BlackJackCards blackJackCards) {
         Player player = new Player(name);
-        player.receiveCards(cards);
+        player.receiveCards(blackJackCards);
         return player;
     }
 
     private static Stream<Arguments> 자신의_카드를_뽑는다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
-                        makeDealer(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.SIX)))),
+                        makeDealer(new BlackJackCards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.SIX)))),
                         true
                 ),
                 Arguments.of(
-                        makeDealer(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN),
+                        makeDealer(new BlackJackCards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN),
                                 createCard(CardNumber.FOUR)))),
                         false
                 )
@@ -252,7 +252,7 @@ class DealerTest {
 
     @Test
     void 게임_시작시_자신과_플레이어들에게_카드_두장을_나눠준다() {
-        CardDeck cardDeck = new CardDeck(new Cards(
+        CardDeck cardDeck = new CardDeck(new BlackJackCards(
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
                         createCard(CardNumber.FIVE))
         ));
@@ -302,7 +302,7 @@ class DealerTest {
 
     @Test
     void 카드를_받으면_자신의_카드에_추가한다() {
-        dealer.receiveCards(new Cards(
+        dealer.receiveCards(new BlackJackCards(
                 List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
         ));
 
@@ -311,7 +311,7 @@ class DealerTest {
 
     @Test
     void 자신의_최저_포인트를_계산한다() {
-        dealer.receiveCards(new Cards(
+        dealer.receiveCards(new BlackJackCards(
                 List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
         ));
 
@@ -320,34 +320,34 @@ class DealerTest {
 
     @ParameterizedTest
     @MethodSource("최초로_받은_카드를_오픈한다_테스트_케이스")
-    void 최초로_받은_카드를_오픈한다(final Cards cards, final Cards expected) {
+    void 최초로_받은_카드를_오픈한다(final BlackJackCards blackJackCards, final BlackJackCards expected) {
 
-        dealer.receiveCards(cards);
+        dealer.receiveCards(blackJackCards);
 
         assertThat(dealer.openInitialCards()).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("자신이_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
-    void 자신이_카드를_더_뽑을_수_있는지_반환한다(final Cards cards, final boolean expected) {
+    void 자신이_카드를_더_뽑을_수_있는지_반환한다(final BlackJackCards blackJackCards, final boolean expected) {
 
-        dealer.receiveCards(cards);
+        dealer.receiveCards(blackJackCards);
 
         assertThat(dealer.canDrawMoreCard()).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("비겼는지_확인한다_테스트_케이스")
-    void 비겼는지_확인한다(final Cards cards, final Player player, final boolean expected) {
-        dealer.receiveCards(cards);
+    void 비겼는지_확인한다(final BlackJackCards blackJackCards, final Player player, final boolean expected) {
+        dealer.receiveCards(blackJackCards);
 
         assertThat(dealer.isDraw(player)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("이겼는지_확인한다_테스트_케이스")
-    void 이겼는지_확인한다(final Cards cards, final Player player, final boolean expected) {
-        dealer.receiveCards(cards);
+    void 이겼는지_확인한다(final BlackJackCards blackJackCards, final Player player, final boolean expected) {
+        dealer.receiveCards(blackJackCards);
 
         assertThat(dealer.isWin(player)).isEqualTo(expected);
     }
@@ -362,7 +362,7 @@ class DealerTest {
         }
 
         @Override
-        public Cards openInitialCards() {
+        public BlackJackCards openInitialCards() {
             throw new IllegalStateException("이 메서드는 테스트할 수 없습니다.");
         }
 
