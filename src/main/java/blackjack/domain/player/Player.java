@@ -14,9 +14,9 @@ public abstract class Player {
     private final Name name;
     private final Hand hand;
 
-    public Player(final String name) {
+    public Player(final String name, final int batMoney) {
         this.name = new Name(name);
-        this.hand = new Hand();
+        this.hand = new Hand(batMoney);
     }
 
     abstract public List<Card> getOpenedCards();

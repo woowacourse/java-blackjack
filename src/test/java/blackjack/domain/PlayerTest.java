@@ -14,7 +14,7 @@ class PlayerTest {
     @DisplayName("카드의 합을 계산해 반환한다")
     void calculate_calculation_check_rot() {
         // given
-        Player player = new Gambler("두리");
+        Player player = new Gambler("두리", 0);
         player.pushDealCard(new CardPack(new SortedBlackjackShuffle()), 3);
 
         // when
@@ -27,7 +27,7 @@ class PlayerTest {
     @DisplayName("에이스가 2장이면 12로 계산한다")
     @Test
     void ace_test() {
-        Player player = new Gambler("두리");
+        Player player = new Gambler("두리", 0);
         player.pushDealCard(new CardPack(new ReversedBlackjackShuffle()), 2);
 
         // when

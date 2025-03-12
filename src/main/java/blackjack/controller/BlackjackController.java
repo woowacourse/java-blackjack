@@ -50,7 +50,7 @@ public class BlackjackController {
     public List<Gambler> parsePlayerByName(String namesInput) {
         List<String> playerNames = List.of(namesInput.split(PLAYER_NAME_DELIMITER));
         return playerNames.stream()
-                .map(Gambler::new)
+                .map(playerName -> new Gambler(playerName, 0))
                 .collect(Collectors.toList());
     }
 

@@ -9,7 +9,13 @@ public class Hand {
 
     private static final int BUST_THRESHOLD = 21;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+    private final int batAmount;
+
+    public Hand(final int batAmount) {
+        this.cards = new ArrayList<>();
+        this.batAmount = batAmount;
+    }
 
     public void addCards(final List<Card> cards) {
         this.cards.addAll(cards);
@@ -30,6 +36,10 @@ public class Hand {
         }
 
         return sum;
+    }
+
+    public int calculateBetAmountByMultiplier(final double v) {
+        return (int) (batAmount * v);
     }
 
     public List<Card> getCards() {

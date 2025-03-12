@@ -14,7 +14,7 @@ class GameResultTest {
     void win_if_bigger_than_dealer() {
         CardPack cardPack = new CardPack(new ReversedBlackjackShuffle());
         Dealer dealer = new Dealer();
-        Gambler gambler = new Gambler("두리");
+        Gambler gambler = new Gambler("두리", 0);
 
         dealer.pushDealCard(cardPack, 1);
         gambler.pushDealCard(cardPack, 2);
@@ -28,7 +28,7 @@ class GameResultTest {
     void win_if_bigger_than_dealer2() {
         CardPack cardPack = new CardPack(new ReversedBlackjackShuffle());
         Dealer dealer = new Dealer();
-        Gambler gambler = new Gambler("두리");
+        Gambler gambler = new Gambler("두리", 0);
 
         dealer.pushDealCard(cardPack, 2);
         gambler.pushDealCard(cardPack, 1);
@@ -42,7 +42,7 @@ class GameResultTest {
     void win_if_bigger_than_dealer3() {
         CardPack cardPack = new CardPack(new ReversedBlackjackShuffle());
         Dealer dealer = new Dealer();
-        Gambler gambler = new Gambler("두리");
+        Gambler gambler = new Gambler("두리", 0);
 
         dealer.pushDealCard(cardPack, 1);
         gambler.pushDealCard(cardPack, 1);
@@ -56,7 +56,7 @@ class GameResultTest {
     void both_bust_test() {
         CardPack cardPack = new CardPack(new SortedBlackjackShuffle());
         Dealer dealer = new Dealer();
-        Gambler gambler = new Gambler("두리");
+        Gambler gambler = new Gambler("두리", 0);
 
         dealer.pushDealCard(cardPack, 3); // 10, 10, 10 총합 30
         gambler.pushDealCard(cardPack, 3);
@@ -70,7 +70,7 @@ class GameResultTest {
     void both_bust_test2() {
         CardPack cardPack = new CardPack(new SortedBlackjackShuffle());
         Dealer dealer = new Dealer();
-        Gambler gambler = new Gambler("두리");
+        Gambler gambler = new Gambler("두리", 0);
 
         dealer.pushDealCard(cardPack, 1);
         gambler.pushDealCard(cardPack, 3); // 10, 10, 10 총합 30
@@ -84,7 +84,7 @@ class GameResultTest {
     void both_bust_test3() {
         CardPack cardPack = new CardPack(new SortedBlackjackShuffle());
         Dealer dealer = new Dealer();
-        Gambler gambler = new Gambler("두리");
+        Gambler gambler = new Gambler("두리", 0);
 
         dealer.pushDealCard(cardPack, 3); // 10, 10, 10 총합 30
         gambler.pushDealCard(cardPack, 1);
