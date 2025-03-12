@@ -5,9 +5,12 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,17 +43,16 @@ class PlayerTest {
 //        assertThat(result).isEqualTo(12);
 //    }
 
-    @Test
-    @DisplayName("플레이어가 블랙잭인지 판단해 반환한다")
-    void 플레이어가_블랙잭인지_판단해_반환한다() {
-        Card ace = new Card(CardNumber.ACE, CardShape.CLOVER);
-        Card ten = new Card(CardNumber.TEN, CardShape.CLOVER);
-
+    @ParameterizedTest
+    @MethodSource("blackJackHandTestCases")
+    @DisplayName("플레이어의 블랙잭을 판단해 결과를 반환한다")
+    void 플레이어가_블랙잭인지_판단해_반환한다(List<Card> cards, boolean excepted) {
         Player player = new TestPlayer();
-        player.addCards(List.of(ace, ten));
+        player.addCards(cards);
 
         boolean result = player.isBlackJack();
-        assertThat(result).isTrue();
+
+        assertThat(result).isEqualTo(excepted);
     }
 
     static class TestPlayer extends Player {
@@ -63,5 +65,18 @@ class PlayerTest {
         public List<Card> getOpenedCards() {
             return this.getCards().getCards();
         }
+    }
+
+    private static Stream<Arguments> blackJackHandTestCases() {
+        Card ace = new Card(CardNumber.ACE, CardShape.CLOVER);
+        Card five = new Card(CardNumber.FIVE, CardShape.CLOVER);
+        Card ten = new Card(CardNumber.TEN, CardShape.CLOVER);
+
+        return Stream.of(
+                Arguments.of(List.of(ace), false),
+                Arguments.of(List.of(ace, five), false),
+                Arguments.of(List.of(ace, five, five), false),
+                Arguments.of(List.of(ace, ten), true)
+        );
     }
 }
