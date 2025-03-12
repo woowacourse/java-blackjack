@@ -22,14 +22,19 @@ public class InputView {
     }
 
     public boolean readShouldHit(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getNickname().getValue());
+        String wantsHit = "Y";
+        String doesNotWantHit = "N";
+
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n",
+                player.getNickname().getValue(), wantsHit, doesNotWantHit);
 
         String shouldHit = scanner.nextLine().trim().toUpperCase();
 
-        if (shouldHit.equals("Y") || shouldHit.equals("N")) {
-            return shouldHit.equals("Y");
+        if (shouldHit.equals(wantsHit) || shouldHit.equals(doesNotWantHit)) {
+            return shouldHit.equals(wantsHit);
         }
 
-        throw new IllegalArgumentException("잘못된 입력입니다. 'Y' 또는 'N'만 입력해야 합니다.");
+        throw new IllegalArgumentException(String.format("잘못된 입력입니다. '%s' 또는 '%s'만 입력해야 합니다.",
+                wantsHit, doesNotWantHit));
     }
 }
