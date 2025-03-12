@@ -2,14 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.card.DeckGenerator;
-import domain.card.Rank;
-import domain.card.Suit;
 import domain.player.Dealer;
-import java.util.ArrayList;
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -36,30 +31,5 @@ class DealerTest {
         // when & then
         Assertions.assertThat(dealer.getName())
                 .isEqualTo("딜러");
-    }
-
-    @Test
-    void 점수합이_16이하면_true를_반환한다() {
-        // given
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck(new ArrayList<>(List.of(
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-
-                new Card(Suit.SPADE, Rank.EIGHT)
-        )));
-        dealer.drawOneCard(deck);
-
-        // when & then
-        Assertions.assertThat(dealer.drawOneCardIfLowScore(deck))
-                .isTrue();
     }
 }

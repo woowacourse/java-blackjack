@@ -1,24 +1,21 @@
 package domain.player;
 
-import domain.card.Deck;
-
 public class Dealer extends Player {
-    private static final int ADD_CARD_THRESHOLD = 16;
+    
+    private static final int DEALER_INITIAL_OPEN_CARD_COUNT = 1;
+    private static final int DEALER_HIT_THRESHOLD = 16;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super("딜러");
+        super(DEALER_NAME);
     }
 
     @Override
     public void openInitialCards() {
-        openCards(1);
+        openCards(DEALER_INITIAL_OPEN_CARD_COUNT);
     }
 
-    public boolean drawOneCardIfLowScore(Deck deck) {
-        if (computeOptimalSum() <= ADD_CARD_THRESHOLD) {
-            drawOneCard(deck);
-            return true;
-        }
-        return false;
+    public boolean canHit() {
+        return computeOptimalSum() <= DEALER_HIT_THRESHOLD;
     }
 }

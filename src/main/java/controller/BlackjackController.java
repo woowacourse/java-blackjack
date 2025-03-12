@@ -1,9 +1,5 @@
 package controller;
 
-import controller.dto.DealerMatchResultCountDto;
-import controller.dto.NameAndCardsDto;
-import controller.dto.NameAndSumsDto;
-import controller.dto.UsersMatchResultDto;
 import domain.BlackjackManager;
 import domain.card.Deck;
 import domain.card.DeckGenerator;
@@ -11,6 +7,8 @@ import domain.player.Dealer;
 import domain.player.Players;
 import domain.player.User;
 import domain.player.Users;
+import domain.profit.NormalProfitStrategy;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -19,42 +17,42 @@ public class BlackjackController {
 
     public void run() {
         BlackjackManager blackjackManager = createBlackjackManager();
-        
+
         distributeInitialCards(blackjackManager);
-        addMoreCards(blackjackManager);
-        printGameResult(blackjackManager);
+        hitUntilAllStay(blackjackManager);
+        printCardsAndSum(blackjackManager);
+        printProfit(blackjackManager);
     }
 
     private void distributeInitialCards(BlackjackManager blackjackManager) {
         blackjackManager.distributeInitialCards();
         blackjackManager.openInitialCards();
         OutputView.printInitialCards(
-                NameAndCardsDto.toNameAndOpenedCards(blackjackManager.getDealer()),
-                NameAndCardsDto.toNameAndOpenedCards(blackjackManager.getUsers())
+                blackjackManager.getDealer(),
+                blackjackManager.getUsers()
         );
     }
 
-    private void addMoreCards(BlackjackManager blackjackManager) {
-        blackjackManager.addMoreCardsToUsers(InputView::inputWantOneMoreCard, OutputView::printPlayerCards);
-
-        if (blackjackManager.addCardToDealerIfLowSum()) {
-            OutputView.printAddCardToDealer();
-        }
+    private void hitUntilAllStay(BlackjackManager blackjackManager) {
+        blackjackManager.allUsersHitUntilStay(InputView::inputWantHit, OutputView::printPlayerCards);
+        blackjackManager.dealerHitUntilStay(OutputView::printDealerHitMessage);
     }
 
-    private void printGameResult(BlackjackManager blackjackManager) {
-        OutputView.printPlayersCardsAndSum(NameAndCardsDto.toNameAndCards(blackjackManager.getDealer()),
-                NameAndCardsDto.toNameAndCards(blackjackManager.getUsers()),
-                NameAndSumsDto.from(blackjackManager.computePlayerSum()));
+    private void printCardsAndSum(BlackjackManager blackjackManager) {
+        OutputView.printCardsAndSum(blackjackManager.getDealer(),
+                blackjackManager.getUsers(),
+                blackjackManager.computePlayerSum());
+    }
 
-        OutputView.printMatchResults(blackjackManager.getDealerName(),
-                DealerMatchResultCountDto.from(blackjackManager.computeDealerMatchResultCount()),
-                UsersMatchResultDto.from(blackjackManager.computeUsersMatchResult()));
+    private void printProfit(BlackjackManager blackjackManager) {
+        OutputView.printProfit(
+                blackjackManager.computeDealerProfit(),
+                blackjackManager.computeUsersProfit(NormalProfitStrategy.getInstance())
+        );
     }
 
     private BlackjackManager createBlackjackManager() {
-        List<String> names = InputView.inputUserName();
-        Users users = createUsers(names);
+        Users users = createUsers(InputView.inputUserNames());
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
         Players players = createPlayers(dealer, users);
@@ -62,12 +60,13 @@ public class BlackjackController {
     }
 
     private Users createUsers(List<String> names) {
-        return new Users(
-                names.stream()
-                        .map(String::strip)
-                        .map(User::new)
-                        .toList()
-        );
+        List<User> users = new ArrayList<>();
+        // 팩터리 패턴 사용할 때 Map<name, bet> 사용
+        for (String name : names) {
+            int bet = InputView.inputBet(name);
+            users.add(new User(name, bet));
+        }
+        return new Users(users);
     }
 
     private Players createPlayers(Dealer dealer, Users users) {

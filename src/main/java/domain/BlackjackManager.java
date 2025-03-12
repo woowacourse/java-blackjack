@@ -6,14 +6,15 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import domain.player.User;
-import domain.stats.MatchResult;
-import java.util.LinkedHashMap;
+import domain.profit.Profit;
+import domain.profit.ProfitStrategy;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class BlackjackManager {
+
     private final Players players;
     private final Deck deck;
 
@@ -30,69 +31,44 @@ public class BlackjackManager {
         players.openInitialCards();
     }
 
-    public void addMoreCardsToUsers(Function<String, Boolean> wantMoreCard,
-                                    BiConsumer<String, List<Card>> callback) {
-        for (Player user : getUsers()) {
-            addMorCardsToUser(user, wantMoreCard, callback);
+    public void allUsersHitUntilStay(Function<User, Boolean> wantHit,
+                                     BiConsumer<User, List<Card>> onHit) {
+        for (User user : players.getUsers()) {
+            userHitUntilStay(user, wantHit, onHit);
         }
     }
 
-    private void addMorCardsToUser(Player user,
-                                   Function<String, Boolean> wantMoreCard,
-                                   BiConsumer<String, List<Card>> callback) {
-        while (!user.isBust() && wantMoreCard.apply(user.getName())) {
+    private void userHitUntilStay(User user,
+                                  Function<User, Boolean> wantHit,
+                                  BiConsumer<User, List<Card>> onHit) {
+        while (!user.isBust() && wantHit.apply(user)) {
             user.drawOneCard(deck);
-            callback.accept(user.getName(), user.getCards());
+            onHit.accept(user, user.getCards());
         }
     }
 
-    public boolean addCardToDealerIfLowSum() {
-        return getDealer().drawOneCardIfLowScore(deck);
+    public void dealerHitUntilStay(Runnable onHit) {
+        Dealer dealer = getDealer();
+        while (dealer.canHit()) {
+            dealer.drawOneCard(deck);
+            onHit.run();
+        }
     }
 
     public Map<Player, Integer> computePlayerSum() {
-        Map<Player, Integer> results = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            results.put(player, player.computeOptimalSum());
-        }
-        return results;
+        return players.computePlayerSum();
     }
 
-    public Map<MatchResult, Integer> computeDealerMatchResultCount() {
-        Map<Player, MatchResult> userNameAndMatchResult = computeUsersMatchResult();
-        Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
-        MatchResult.sortedValues().forEach(matchResult -> matchResultCount.put(matchResult, 0));
-
-        userNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
-                matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
-        return matchResultCount;
+    public Map<Dealer, Profit> computeDealerProfit() {
+        return players.computeDealerProfit();
     }
 
-    public Map<Player, MatchResult> computeUsersMatchResult() {
-        Dealer dealer = getDealer();
-        List<User> users = getUsers();
-
-        Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player user : users) {
-            MatchResult matchResult = computeUserMatchResult(dealer, user);
-            results.put(user, matchResult);
-        }
-        return results;
+    public Map<User, Profit> computeUsersProfit(ProfitStrategy profitStrategy) {
+        return players.computeUsersProfit(profitStrategy);
     }
 
-    private MatchResult computeUserMatchResult(Dealer dealer, Player user) {
-        if (user.isBust()) {
-            return MatchResult.LOSE;
-        }
-        if (dealer.isBust()) {
-            return MatchResult.WIN;
-        }
-        return MatchResult.compareBySum(user.computeOptimalSum(),
-                dealer.computeOptimalSum());
-    }
-
-    public String getDealerName() {
-        return getDealer().getName();
+    public Map<User, BattleResult> computeUsersBattleResult() {
+        return players.computeUsersBattleResult();
     }
 
     public Dealer getDealer() {

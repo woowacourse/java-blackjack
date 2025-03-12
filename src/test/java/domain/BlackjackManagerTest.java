@@ -6,11 +6,11 @@ import domain.card.DeckGenerator;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.player.Dealer;
-import domain.player.Player;
 import domain.player.Players;
 import domain.player.User;
 import domain.player.Users;
-import domain.stats.MatchResult;
+import domain.profit.NormalProfitStrategy;
+import domain.profit.Profit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,47 +40,7 @@ public class BlackjackManagerTest {
     }
 
     @Test
-    void 딜러의_카드_합이_16이하면_카드를_한장_추가한다() {
-        // given
-        Dealer dealer = new Dealer();
-        Users users = new Users(List.of(
-                new User("시소"),
-                new User("헤일러"),
-                new User("부기"),
-                new User("사나")
-        ));
-        Players players = new Players(
-                dealer, users
-        );
-
-        Deck deck = new Deck(new ArrayList<>(List.of(
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-
-                new Card(Suit.SPADE, Rank.EIGHT)
-        )));
-        BlackjackManager blackjackManager = new BlackjackManager(players, deck);
-        blackjackManager.distributeInitialCards();
-        final int beforeSize = dealer.getCards().size();
-
-        // when
-        blackjackManager.addCardToDealerIfLowSum();
-        final int afterSize = dealer.getCards().size();
-
-        // then
-        Assertions.assertThat(afterSize).isEqualTo(beforeSize + 1);
-    }
-
-    @Test
-    void 참여자들의_승패_결과를_반환한다() {
+    void 참여자들의_승부_결과를_반환한다() {
         // given
         Dealer dealer = new Dealer();
 
@@ -108,57 +68,103 @@ public class BlackjackManagerTest {
         blackjackManager.distributeInitialCards();
 
         // when
-        Map<Player, MatchResult> usersMatchResult
-                = blackjackManager.computeUsersMatchResult();
+        Map<User, BattleResult> usersBattleResult
+                = blackjackManager.computeUsersBattleResult();
 
         // then
-        SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(usersMatchResult.get(siso)).isEqualTo(MatchResult.WIN);
-            softly.assertThat(usersMatchResult.get(heiler)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(usersMatchResult.get(boogie)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(usersMatchResult.get(sana)).isEqualTo(MatchResult.DRAW);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(usersBattleResult.get(siso)).isEqualTo(BattleResult.NORMAL_WIN);
+            softAssertions.assertThat(usersBattleResult.get(heiler)).isEqualTo(BattleResult.LOSE);
+            softAssertions.assertThat(usersBattleResult.get(boogie)).isEqualTo(BattleResult.LOSE);
+            softAssertions.assertThat(usersBattleResult.get(sana)).isEqualTo(BattleResult.DRAW);
         });
     }
 
     @Test
-    void 딜러의_승패_결과를_반환한다() {
+    void 참여자들의_수익을_계산한다() {
         // given
         Dealer dealer = new Dealer();
 
-        User siso = new User("시소");
-        User heiler = new User("헤일러");
-        User boogie = new User("부기");
-        User sana = new User("사나");
+        User siso = new User("시소", 1000);
+        User heiler = new User("헤일러", 2000);
+        User boogie = new User("부기", 30000);
+        User sana = new User("사나", 4000);
 
         Users users = new Users(List.of(siso, heiler, boogie, sana));
         Players players = new Players(dealer, users);
 
         Deck deck = new Deck(new ArrayList<>(List.of(
+                // sana
                 new Card(Suit.SPADE, Rank.FIVE),
                 new Card(Suit.SPADE, Rank.FIVE),
+                // boogie
                 new Card(Suit.SPADE, Rank.THREE),
                 new Card(Suit.SPADE, Rank.THREE),
-                new Card(Suit.SPADE, Rank.TWO),
-                new Card(Suit.SPADE, Rank.TWO),
+                // heiler
+                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.SPADE, Rank.TEN),
+                // siso
                 new Card(Suit.SPADE, Rank.SEVEN),
                 new Card(Suit.SPADE, Rank.SEVEN),
+                // dealer
                 new Card(Suit.SPADE, Rank.FIVE),
                 new Card(Suit.SPADE, Rank.FIVE)
         )));
         BlackjackManager blackjackManager = new BlackjackManager(players, deck);
         blackjackManager.distributeInitialCards();
-        Map<Player, MatchResult> usersMatchResult
-                = blackjackManager.computeUsersMatchResult();
 
         // when
-        Map<MatchResult, Integer> dealerMatchResultCount
-                = blackjackManager.computeDealerMatchResultCount();
+        Map<User, Profit> userProfit = blackjackManager.computeUsersProfit(NormalProfitStrategy.getInstance());
 
         // then
-        SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealerMatchResultCount.get(MatchResult.WIN)).isEqualTo(2);
-            softly.assertThat(dealerMatchResultCount.get(MatchResult.LOSE)).isEqualTo(1);
-            softly.assertThat(dealerMatchResultCount.get(MatchResult.DRAW)).isEqualTo(1);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(userProfit.get(siso).getProfit()).isEqualTo(1000);
+            softAssertions.assertThat(userProfit.get(heiler).getProfit()).isEqualTo(3000);
+            softAssertions.assertThat(userProfit.get(boogie).getProfit()).isEqualTo(-30000);
+            softAssertions.assertThat(userProfit.get(sana).getProfit()).isEqualTo(0);
+        });
+    }
+
+    @Test
+    void 딜러의_수익을_계산한다() {
+        // given
+        Dealer dealer = new Dealer();
+
+        User siso = new User("시소", 1000);
+        User heiler = new User("헤일러", 2000);
+        User boogie = new User("부기", 30000);
+        User sana = new User("사나", 4000);
+
+        Users users = new Users(List.of(siso, heiler, boogie, sana));
+        Players players = new Players(dealer, users);
+
+        Deck deck = new Deck(new ArrayList<>(List.of(
+                // sana
+                new Card(Suit.SPADE, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.FIVE),
+                // boogie
+                new Card(Suit.SPADE, Rank.THREE),
+                new Card(Suit.SPADE, Rank.THREE),
+                // heiler
+                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.SPADE, Rank.TEN),
+                // siso
+                new Card(Suit.SPADE, Rank.SEVEN),
+                new Card(Suit.SPADE, Rank.SEVEN),
+                // dealer
+                new Card(Suit.SPADE, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.FIVE)
+        )));
+        BlackjackManager blackjackManager = new BlackjackManager(players, deck);
+        blackjackManager.distributeInitialCards();
+
+        // when
+        Map<Dealer, Profit> dealerProfit = blackjackManager.computeDealerProfit();
+        Profit profit = dealerProfit.get(dealer);
+
+        // then
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(profit.getProfit()).isEqualTo(26000);
         });
     }
 }

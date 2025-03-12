@@ -1,77 +1,63 @@
 package view;
 
-import controller.dto.DealerMatchResultCountDto;
-import controller.dto.NameAndCardsDto;
-import controller.dto.NameAndSumsDto;
-import controller.dto.NameAndSumsDto.NameAndSumDto;
-import controller.dto.UsersMatchResultDto;
 import domain.card.Card;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.User;
+import domain.profit.Profit;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
-    public static void printInitialCards(NameAndCardsDto dealer, List<NameAndCardsDto> users) {
+    public static void printInitialCards(Dealer dealer, List<User> users) {
         List<String> names = users.stream()
-                .map(NameAndCardsDto::name)
+                .map(Player::getName)
                 .toList();
 
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), String.join(", ", names));
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), String.join(", ", names));
 
-        printPlayerCards(dealer.name(), dealer.cards());
-        users.forEach(user -> printPlayerCards(user.name(), user.cards()));
+        printPlayerCards(dealer, dealer.getOpenedCards());
+        users.forEach(user -> printPlayerCards(user, user.getOpenedCards()));
         System.out.println();
     }
 
-    public static void printPlayerCards(String name, List<Card> cards) {
-        System.out.printf("%s카드: %s%n", name,
+    public static void printPlayerCards(Player player, List<Card> cards) {
+        System.out.printf("%s카드: %s%n",
+                player.getName(),
                 String.join(", ", cards.stream()
-                        .map(card -> String.format("%s%s", card.getRank().getTitle(),
-                                card.getSuit().getTitle()))
+                        .map(OutputView::convertToCardFormat)
                         .toList()));
     }
 
-    public static void printPlayersCardsAndSum(NameAndCardsDto dealer,
-                                               List<NameAndCardsDto> users,
-                                               NameAndSumsDto nameAndSumsDto) {
-        printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer.name(), nameAndSumsDto.nameAndSums()));
-        users.forEach(player ->
-                printPlayerCardsAndSum(player, findNameAndSumByName(player.name(), nameAndSumsDto.nameAndSums())));
+    public static void printCardsAndSum(Dealer dealer,
+                                        List<User> users,
+                                        Map<Player, Integer> playerSum) {
+        printPlayerCardsAndSum(dealer, playerSum.get(dealer));
+        users.forEach(player -> printPlayerCardsAndSum(player, playerSum.get(player)));
         System.out.println();
     }
 
-    private static NameAndSumDto findNameAndSumByName(String name, List<NameAndSumDto> nameAndSums) {
-        return nameAndSums.stream()
-                .filter(nameAndSum -> nameAndSum.name().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(name + "존재하지 않는 플레이어입니다."));
+    private static void printPlayerCardsAndSum(Player player, int sum) {
+        System.out.printf("%s카드: %s - 결과: %d%n",
+                player.getName(),
+                String.join(", ", player.getCards().stream()
+                        .map(OutputView::convertToCardFormat)
+                        .toList()),
+                sum);
     }
 
-    private static void printPlayerCardsAndSum(NameAndCardsDto player, NameAndSumDto nameAndSum) {
-        System.out.printf("%s카드: %s - 결과: %d%n", player.name(),
-                String.join(", ",
-                        player.cards().stream()
-                                .map(card -> String.format("%s%s", card.getRank().getTitle(),
-                                        card.getSuit().getTitle()))
-                                .toList()),
-                nameAndSum.sum());
-    }
-
-    public static void printAddCardToDealer() {
+    public static void printDealerHitMessage() {
         System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 
-    public static void printMatchResults(String dealerName, DealerMatchResultCountDto dealerResult,
-                                         UsersMatchResultDto usersMathResult) {
-        System.out.printf("%s: %s%n", dealerName, convertToDealerMatchResult(dealerResult));
+    public static void printProfit(Map<Dealer, Profit> dealerProfit, Map<User, Profit> usersProfit) {
+        Map.Entry<Dealer, Profit> dealer = dealerProfit.entrySet().iterator().next();
 
-        usersMathResult.nameMatchResult()
-                .forEach((key, value) -> System.out.printf("%s: %s%n", key, value.getTitle()));
+        System.out.printf("%s: %d%n", dealer.getKey().getName(), dealer.getValue().getProfit());
+        usersProfit.forEach((user, profit) -> System.out.printf("%s: %d%n", user.getName(), profit.getProfit()));
     }
 
-    private static String convertToDealerMatchResult(DealerMatchResultCountDto dealerResult) {
-        StringBuilder sb = new StringBuilder();
-        dealerResult.matchResultCount().forEach((key, value) ->
-                sb.append(String.format("%d%s ", value, key.getTitle()))
-        );
-        return sb.toString();
+    private static String convertToCardFormat(Card card) {
+        return String.format("%s%s", card.getRank().getTitle(), card.getSuit().getTitle());
     }
 }

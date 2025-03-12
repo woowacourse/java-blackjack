@@ -16,7 +16,7 @@ public class Users {
 
     private void validateSize(List<User> users) {
         if (users.isEmpty() || users.size() > MAX_SIZE) {
-            throw new IllegalArgumentException(users.size() + ": 유저 수는 1인 이상 5인 이하여야 합니다.");
+            throw new IllegalArgumentException(users.size() + ": 유저 수는 1인 이상 " + MAX_SIZE + "인 이하여야 합니다.");
         }
     }
 
@@ -32,7 +32,7 @@ public class Users {
     public int size() {
         return users.size();
     }
-    
+
     public List<User> getUsers() {
         return users;
     }

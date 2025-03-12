@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public class CardsTest {
     @Test
-    void 가진_카드_목록으로_21을_초과하지_않는_최대합_계산() {
+    void 가진_카드_목록으로_21을_초과하지_않는_최대합을_계산한다() {
         // given
         Cards cards = new Cards();
         cards.addAll(List.of(

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int BUST_LIMIT = 21;
+
+    private static final int MAXIMUM_SUM = 21;
+    private static final int BLACKJACK_SUM = 21;
 
     private final List<Card> cards;
 
@@ -19,7 +21,7 @@ public class Cards {
     public void openCards(int count) {
         while (count > 0) {
             Card willBeOpened = findNotOpenedCard();
-            willBeOpened.openCard();
+            willBeOpened.open();
             count--;
         }
     }
@@ -38,7 +40,11 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return computeOptimalSum() > BUST_LIMIT;
+        return computeOptimalSum() > MAXIMUM_SUM;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && computeOptimalSum() == BLACKJACK_SUM;
     }
 
     public int computeOptimalSum() {
@@ -46,10 +52,10 @@ public class Cards {
         computeCandidates(0, 0, cards, candidates);
 
         return candidates.stream()
-                .filter(sum -> sum <= BUST_LIMIT)
+                .filter(sum -> sum <= MAXIMUM_SUM)
                 .max(Integer::compareTo)
                 .orElseGet(() -> candidates.stream()
-                        .filter(sum -> sum > BUST_LIMIT)
+                        .filter(sum -> sum > MAXIMUM_SUM)
                         .min(Integer::compareTo)
                         .orElseThrow(() -> new IllegalStateException("논리적으로 도달할 수 없는 예외입니다.")));
     }

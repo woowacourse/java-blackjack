@@ -13,7 +13,7 @@ public class Card {
         this.isOpened = false;
     }
 
-    public void openCard() {
+    public void open() {
         this.isOpened = true;
     }
 
